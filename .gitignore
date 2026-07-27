@@ -1,0 +1,52 @@
+# =============================================================================
+# Aionis .gitignore — anti-leakage quant research project.
+# Golden rules: NEVER commit secrets (.env). NEVER commit data/ or *.parquet.
+# =============================================================================
+
+# --- Secrets (NEVER commit) ---
+.env
+.env.local
+.env.*.local
+.claude/settings.local.json
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyc
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.python-version
+
+# --- Data (all of data/ is cached / snapshot / regenerable; anti-leakage default) ---
+data/
+*.parquet
+*.tar.gz
+*.cache.json
+
+# --- Run artifacts (regenerable). The append-only ledger IS tracked. ---
+runs/results/
+runs/*.log
+runs/health_*.json
+
+# --- Tooling caches / coverage ---
+.benchmarks/
+.pytest_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# --- Editors / OS ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+.DS_Store
+
+# --- OMC operational state (.omc/skills/** is the intentional committable exception) ---
+.omc/
