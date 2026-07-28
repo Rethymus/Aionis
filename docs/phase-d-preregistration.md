@@ -57,6 +57,10 @@
 
 **13D ingest 诚实约束（必须处理）**：① 自报过计——BAC(59)/WFC(22)/JPM(15)/GS(12) 等金融股对**自身**股票报 SC 13D（信托/托管/优先股结构，非维权）→ cover 解析须 `filer_CIK != issuer_CIK` 且受益人 ≠ 发行人；② `recent` 1000-filing 切片仅覆盖 46.5% 到 2016 前，**须 files[] 分页**才能拿到完整历史（分页将 13D ticker 命中率从 30.3% 提到 34.8%）；③ 突发下 SSL EOF——复用 [`fundamentals.py`](../src/aionis/ingest/fundamentals.py) 的 exp backoff；④ 持股 % 需 cover-page HTML/iXBRL 抽取（非标准化 XML），事件指示特征不依赖它。
 
+**已知局限（code-review 披露，2026-07-29，非阻塞、写入结果）**：
+- **SIC 是当前快照，非历史 vintage**（MEDIUM-2）：submissions 顶层 `sic` 是发行人**当前** SIC，非 per-date vintage；跨窗改换 SIC 的公司会用其**当前**（非历史）SIC 分组——轻度分类 lookahead。SIC 对绝大多数发行人稳定，实际偏差小，但 §3 的「SIC G2✓（filed-date PIT）」措辞**过强**：SIC 过 G2 的依据是「不修订 + 稳定」，**非**逐日 vintage。诚实降级为此。
+- **efts 自报过滤基于 `ciks[]`，非 cover-page 受益人**（MEDIUM-3）：`filter_external_13d` 用「ciks[] 中第一个 ≠ 发行人 的 CIK」判 filer，命名第三方实体的托管/信托自报可能残留为假事件。BAC 实测 subject-side 已**全外部**（0 自报），故对大盘金融股影响低；残差假事件率作为已知数据质量局限在结果/ledger 披露，不冒充已净化的维权事件。
+
 ---
 
 ## 1. 单一可证伪 claim（预注册，**双尾**，第 3 条 confirmatory；**联合 bundle 检验**）
