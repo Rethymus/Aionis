@@ -355,12 +355,13 @@ def run_confirmatory(
         "leave_one_out": loo,
     }
 
-    if results_base is not None:
-        results.save_run(
-            sig, ic_state=ic_m, ic_base=ic_b, summary_state=sum_m, summary_base=sum_b,
-            differential=diff, controls=controls, config=config,
-            h6_deterministic=h6, base=results_base,
-        )
+    # save_run artifacts (base=None -> the default project runs dir, matching
+    # Phase B; passing an explicit base hermetically redirects for tests).
+    results.save_run(
+        sig, ic_state=ic_m, ic_base=ic_b, summary_state=sum_m, summary_base=sum_b,
+        differential=diff, controls=controls, config=config,
+        h6_deterministic=h6, base=results_base,
+    )
 
     result = {
         "config_sig": sig,
