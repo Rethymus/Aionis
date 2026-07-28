@@ -1,27 +1,28 @@
 """CBOE VIX daily close (FRED ``VIXCLS``) — the first risk-premium main-line feature.
 
 VIX is the cleanest policy / risk-premium proxy in the market-driver framework.
-FRED republishes it as ``VIXCLS``; ALFRED (FRED's archival twin) gives as-of
-vintages, so the value knowable at date t can be reconstructed with no revision
-leak. This module is exploratory / Phase-C prep — it does NOT enter Phase B.
+FRED republishes it as ``VIXCLS``. PIT SAFETY NOTE: unlike the macro series
+(CPIAUCSL / PAYEMS), ``VIXCLS`` is NOT vintage-tracked on ALFRED — its
+``realtime_start`` equals ``realtime_end`` (a single current vintage; the ALFRED
+realtime endpoint returns HTTP 400 for any historical realtime window). VIXCLS is
+also effectively UNREVISED: it is a real-time-computed index from option prices,
+and a historical close on day d is final. PIT safety therefore comes from the
+NO-REVISION contract (``docs/data-intake-rubric.md`` G3), NOT from revision
+tracking — the current series IS the point-in-time truth, and a close published on
+day d was knowable at d and has never changed.
 
 Two accessors:
   * :func:`fetch_vix` — the realized daily series via ``pandas_datareader`` (the
     current view; for inspection / Phase-C scaffolding).
   * :func:`vix_as_of` — the PIT-safe accessor for feature alignment. It mirrors
-    :mod:`aionis.features.macro_surprise`: ALFRED vintages downloaded from the
-    ``fred/series/observations`` endpoint (``realtime_start`` = publication
-    date), then a ``merge_asof(direction='backward')`` so the value at date d is
-    the latest vintage published on or before d. A VIX close released on day d is
-    therefore visible at d (the day's own close is knowable by end of session)
-    but NOT at d-1; dates before the first release are NaN.
-
-Divergence from macro_surprise's prior-month join: that one uses
-``allow_exact_matches=False`` because a prior-month revision republished on the
-release day itself must NOT be used. Here the join target IS the day's own
-close, so exact matches are kept (the default) — day-d's VIX close is knowable
-by end of session d. Everything else (ALFRED endpoint, paging, vintage frame
-shape, missing-value ``"."`` drop) is reused verbatim from macro_surprise.
+    :mod:`aionis.features.macro_surprise`'s as-of join: a vintage frame + a
+    ``merge_asof(direction='backward')`` so the value at date d is the latest
+    vintage published on or before d. For the unrevised VIXCLS the vintages are
+    SELF-DATED (one per date, ``realtime_start == date`` — see
+    :func:`_download_vix_vintages`), so the join returns the close knowable at d
+    (visible at d, NOT at d-1; NaN before the first observation). The mechanic is
+    shared with macro_surprise so a future revised series would be handled the same
+    way; only the vintage SOURCE differs.
 
 License: FRED public terms (permissive); ``pandas-datareader`` is BSD.
 Raw fetch cached at ``data/cache/``; one ``data_ingest`` row is appended to
@@ -43,10 +44,11 @@ from aionis.config import settings
 log = structlog.get_logger()
 
 _VIX_SERIES = "VIXCLS"
-_ALFRED_OBS_URL = "https://api.stlouisfed.org/fred/series/observations"
-_REALTIME_START = "1990-01-01"  # VIXCLS history begins 1990-01-02
-_REALTIME_END = "9999-12-31"
-_PAGE_LIMIT = 100_000  # FRED hard cap per request; page with offset past it
+# VIXCLS observation span for the non-realtime fetch (FRED clamps `end` to the
+# latest available). VIXCLS is NOT vintage-tracked on ALFRED (single current
+# vintage) and is effectively unrevised -> PIT via the no-revision contract
+# (rubric G3), realized as self-dated vintages in `_download_vix_vintages`.
+_OBS_START = "1990-01-02"  # VIXCLS observation_start
 
 
 def _cache_dir(cache_dir: Path | None = None) -> Path:
@@ -154,31 +156,42 @@ def fetch_vix(
 
 
 def _download_vix_vintages(fred_api_key: str) -> dict:
-    """Full ``VIXCLS`` vintage archive (paged; FRED caps rows per request).
+    """VIXCLS vintage archive for :func:`vix_as_of`'s as-of join.
 
-    Reuses macro_surprise's ``_download_vintages`` paging exactly."""
-    import requests
+    VIXCLS is NOT vintage-tracked on ALFRED (``realtime_start == realtime_end``
+    == today; the realtime endpoint returns HTTP 400 for any historical window)
+    and is effectively UNREVISED. PIT safety therefore comes from the no-revision
+    contract (``docs/data-intake-rubric.md`` G3), NOT revision tracking: the
+    current series IS the point-in-time truth.
 
-    observations: list[dict] = []
-    offset = 0
-    while True:
-        params = {
-            "series_id": _VIX_SERIES,
-            "api_key": fred_api_key,
-            "file_type": "json",
-            "realtime_start": _REALTIME_START,
-            "realtime_end": _REALTIME_END,
-            "limit": _PAGE_LIMIT,
-            "offset": offset,
+    We fetch the non-realtime series (``pandas_datareader``) over its full
+    observation span and synthesize a *self-dated* vintage frame — one observation
+    per date with ``realtime_start == date`` (the close was knowable at its own
+    date). :func:`vix_as_of`'s backward ``merge_asof`` then returns, at each as-of
+    date d, the latest self-dated vintage published <= d — i.e. the close at d (or
+    the most recent prior session). This is the honest vintage-framework
+    representation of an unrevised series, byte-identical to reindexing the
+    realized series while preserving the as-of-join mechanic shared with
+    :mod:`aionis.features.macro_surprise` (so a future revised series would be
+    handled identically).
+    """
+    import pandas_datareader as pdr
+
+    if fred_api_key:
+        os.environ.setdefault("FRED_API_KEY", fred_api_key)
+    end = datetime.now(tz=timezone.utc).date().isoformat()
+    raw = pdr.get_data_fred(_VIX_SERIES, start=_OBS_START, end=end)[_VIX_SERIES].dropna()
+    if raw.empty:
+        raise RuntimeError(f"FRED returned no VIXCLS observations over [{_OBS_START}, {end}]")
+    observations = [
+        {
+            "date": d.strftime("%Y-%m-%d"),
+            "realtime_start": d.strftime("%Y-%m-%d"),  # self-dated: knowable at its own date
+            "value": str(v),
         }
-        resp = requests.get(_ALFRED_OBS_URL, params=params, timeout=60)
-        resp.raise_for_status()
-        rows = resp.json().get("observations", [])
-        observations.extend(rows)
-        offset += len(rows)
-        if len(rows) < _PAGE_LIMIT:
-            break
-    log.info("vix_vintages_downloaded", series_id=_VIX_SERIES, n_obs=len(observations))
+        for d, v in raw.items()
+    ]
+    log.info("vix_self_dated_vintages_synthesized", series_id=_VIX_SERIES, n_obs=len(observations))
     return {"observations": observations}
 
 

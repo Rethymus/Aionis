@@ -183,3 +183,42 @@ def test_fetch_vix_writes_cache_and_logs_ingest(
     assert row["range"] == ["2024-01-02", "2024-01-04"]
     assert "data_sha256" in row and len(row["data_sha256"]) == 64
     assert "as_of" in row
+
+
+# --- unrevised-series synthesis (VIXCLS has no ALFRED vintages) --------------
+
+
+def test_vix_as_of_synthesizes_self_dated_vintages_when_no_cache(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """VIXCLS is unrevised and NOT vintage-tracked on ALFRED (the realtime endpoint
+    400s). With no cached vintages, ``_download_vix_vintages`` fetches the realized
+    series and synthesizes SELF-DATED vintages (``realtime_start == date``);
+    ``vix_as_of`` then returns the unrevised series PIT-correctly — value at d is
+    VIX[d], NaN before the first observation, carried forward after the last."""
+    synth = pd.Series(
+        [15.0, 16.0, 17.0],
+        index=pd.to_datetime(["2024-01-02", "2024-01-03", "2024-01-04"]),
+    )
+    synth.name = "VIXCLS"
+    monkeypatch.setattr("pandas_datareader.get_data_fred", lambda *a, **k: synth.to_frame())
+    monkeypatch.setattr(vix.settings, "fred_api_key", "test-key")
+    # no alfred_VIXCLS.json present -> forces the synthesized download path
+    dates = pd.DatetimeIndex(pd.date_range("2024-01-01", "2024-01-05")).normalize()
+
+    s = vix.vix_as_of(dates, cache_dir=tmp_path)
+
+    assert s.name == "vix"
+    assert pd.isna(s.loc["2024-01-01"])          # before the first observation
+    assert s.loc["2024-01-02"] == 15.0           # knowable at its own date
+    assert s.loc["2024-01-03"] == 16.0
+    assert s.loc["2024-01-04"] == 17.0
+    assert s.loc["2024-01-05"] == 17.0           # carries the last knowable close
+    # the synthesized self-dated vintages were cached
+    cache = tmp_path / "alfred_VIXCLS.json"
+    assert cache.exists()
+    import json as _json
+
+    rows = _json.loads(cache.read_text())["observations"]
+    assert all(r["date"] == r["realtime_start"] for r in rows)  # self-dated
+    assert len(rows) == 3
