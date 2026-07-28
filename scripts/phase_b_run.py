@@ -38,6 +38,7 @@ from aionis.eval.rank_ic import rank_ic_monthly, rank_ic_summary
 from aionis.eval.two_arm import compute_shared_folds, run_arm_oos
 from aionis.ingest.fundamentals import _DEFAULT_END_LAG
 from aionis.ingest.universe import load_pierrebrunelle_membership
+from aionis.reporting import results
 
 CACHE = settings.data_dir / "cache"
 HORIZON = 21
@@ -189,6 +190,15 @@ def main() -> None:
 
     # --- §6 multiple-testing (haircut sensitivity on each arm's IC t-stat) ---
     mt = {"arm_state": haircut_table(sum_s), "arm_base": haircut_table(sum_b)}
+
+    # --- persist run artifacts for the dashboard (results.save_run) ---
+    run_path = results.save_run(
+        sig, ic_state=ic_s, ic_base=ic_b,
+        summary_state=sum_s, summary_base=sum_b,
+        differential=diff, controls=ctrl, config=config,
+        h6_deterministic=det_ok,
+    )
+    print(f"[5f] saved run artifacts -> {run_path}", flush=True)
 
     # --- log result (the confirmatory:first entry, AFTER config_committed) ---
     _append({

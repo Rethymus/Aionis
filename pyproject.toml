@@ -37,6 +37,10 @@ extraction = [
 # Phase 4 robustness: combinatorial purged CV + Deflated Sharpe.
 robustness = ["purgedcv"]
 dev = ["pytest>=8.0", "ruff>=0.5"]
+dashboard = [
+    "plotly>=5.18",
+    "streamlit>=1.30",
+]
 
 [project.scripts]
 aionis = "aionis.cli:main"
