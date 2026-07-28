@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import json
 
+import pytest
 import requests
 
 from aionis.ingest import stakes_13d
@@ -18,9 +19,9 @@ CIK = 1098  # ANSYS
 
 
 class _Resp:
-    def __init__(self, payload): self._p = payload
-
-    def raise_for_status(self): pass
+    def __init__(self, payload, status_code=200):
+        self._p = payload
+        self.status_code = status_code
 
     def json(self): return self._p
 
@@ -193,3 +194,42 @@ def test_filings_13d_empty_is_safe(monkeypatch, tmp_path):
     df = stakes_13d.filings_13d(CIK, cache_dir=tmp_path)
     assert df.empty
     assert list(df.columns) == ["form", "filing_date", "accession", "primary_doc"]
+
+
+def test_permanent_4xx_fails_fast_without_retry(monkeypatch, tmp_path):
+    """A permanent 4xx (e.g. a 404 on an invalid CIK) must raise immediately
+    without burning the 4 exp-backoff retries (which are for transient SSL/5xx)."""
+    sleeps: list[float] = []
+    calls = {"n": 0}
+
+    def fake(url, headers=None, timeout=None):
+        calls["n"] += 1
+        return _Resp(None, status_code=404)
+
+    monkeypatch.setattr(requests, "get", fake)
+    monkeypatch.setattr(stakes_13d.time, "sleep", lambda s: sleeps.append(s))
+
+    with pytest.raises(RuntimeError, match="404"):
+        stakes_13d.fetch_submissions(CIK, cache_dir=tmp_path)
+    assert calls["n"] == 1  # no retry on a permanent client error
+    assert sleeps == []
+
+
+def test_server_5xx_is_retried(monkeypatch, tmp_path):
+    """A transient 5xx is retried (then succeeds) -- not treated as permanent."""
+    sleeps: list[float] = []
+    state = {"n": 0}
+    payload = _submissions([("SC 13D", "2020-01-01", "X")])
+
+    def flaky(url, headers=None, timeout=None):
+        state["n"] += 1
+        return _Resp(payload, status_code=503 if state["n"] < 2 else 200)
+
+    monkeypatch.setattr(requests, "get", flaky)
+    monkeypatch.setattr(stakes_13d.time, "sleep", lambda s: sleeps.append(s))
+
+    df = stakes_13d.filings_13d(CIK, cache_dir=tmp_path)
+
+    assert state["n"] == 2          # 1 retry (503) then success (200)
+    assert sleeps == [4, 0.15]      # one backoff before the retry, then fair-access pause
+    assert list(df["accession"]) == ["X"]
