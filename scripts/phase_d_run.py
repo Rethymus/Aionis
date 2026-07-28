@@ -44,6 +44,16 @@ def _sha(path: Path) -> str:
 def _build_rel_extra(px: pd.DataFrame) -> pd.DataFrame:
     """Assemble the per-(ticker, date) rel bundle [date, ticker, peer_mom,
     stakes_13d_event] from the cached SIC map + external 13D events."""
+    from aionis.features.alignment import nyse_sessions
+
+    # defense-in-depth: px.index MUST be the NYSE session grid (market.py reindexes
+    # prices to it). If a non-fetch-sourced px ever diverges, rel_extra dates would
+    # mismatch the panel's session grid and silently NaN the rel features.
+    sessions = nyse_sessions(px.index.min(), px.index.max())
+    assert pd.DatetimeIndex(px.index).normalize().equals(pd.DatetimeIndex(sessions)), (
+        "px.index is not the NYSE session grid — rel_extra would misalign with the panel"
+    )
+
     sic = pd.read_parquet(CACHE / "phase_d_sic_map.parquet")
     events = pd.read_parquet(CACHE / "phase_d_13d_events.parquet")
     sic_map = dict(zip(sic["ticker"], sic["sic"], strict=True))
@@ -85,6 +95,27 @@ def main() -> None:
           flush=True)
 
     rel_extra = _build_rel_extra(px)
+
+    # coverage guard: refuse to commit a degenerate config from a partial/smoke
+    # fetch (would write a meaningless confirmatory:first — or crash on missing
+    # rel columns). The full universe resolves ~588 tickers; <80% or an all-NaN
+    # peer_mom means the fetch is incomplete.
+    sic_df = pd.read_parquet(CACHE / "phase_d_sic_map.parquet")
+    cov = len(set(px.columns) & set(sic_df["ticker"])) / max(len(px.columns), 1)
+    peer_valid = int(rel_extra["peer_mom"].notna().sum())
+    stakes_sum = int(rel_extra["stakes_13d_event"].sum())
+    print(f"[D] coverage={cov:.0%}  peer_mom_valid={peer_valid}  stakes_events={stakes_sum}",
+          flush=True)
+    if cov < 0.8 or peer_valid == 0:
+        raise SystemExit(
+            f"[D] ABORT: sic coverage {cov:.0%} (<80%) or peer_mom has no valid values "
+            f"({peer_valid}) — the rel bundle is degenerate (fetch incomplete / smoke cache). "
+            "Refusing to commit a meaningless confirmatory:first. "
+            "Run: uv run python scripts/phase_d_fetch.py"
+        )
+    if stakes_sum == 0:
+        print("[D] WARNING: zero 13D events in the window — stakes_13d_event is all-0 "
+              "(no variance; proceeding but the 13D channel is degenerate).", flush=True)
 
     shas = {
         "fund_sha256": _sha(CACHE / "phase_b_fundamentals.parquet"),

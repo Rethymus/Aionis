@@ -83,6 +83,15 @@ def main() -> None:
         cik = int(cik_map[t])
         fp = PDIR / f"{t}.json"
         cached = _load_cached(fp)
+        # window-key self-invalidation: a cache from a different (START, END) is
+        # stale and MUST be re-fetched, or a window tweak would silently reuse the
+        # old-window event list (dropping filings outside it) — the silent-wrong-
+        # input failure an anti-leakage project cannot have.
+        if cached is not None and (cached.get("start") != START or cached.get("end") != END):
+            print(f"[phase_d]   invalidate {t}: window changed "
+                  f"({cached.get('start')}..{cached.get('end')} -> {START}..{END})",
+                  flush=True)
+            cached = None
         if cached is None:
             try:
                 sic, desc = sic_for_cik(cik, CACHE)
@@ -94,6 +103,8 @@ def main() -> None:
             cached = {
                 "ticker": t,
                 "cik": cik,
+                "start": START,
+                "end": END,
                 "sic": sic,
                 "sic_description": desc,
                 "events": _events_to_records(ev),
