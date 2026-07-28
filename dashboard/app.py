@@ -10,13 +10,16 @@ Reuses:
   * ``aionis.reporting.results`` as the results reader and the
     ``runs/ledger.jsonl`` parser (read-only).
 
-Four tabs:
-  1. Run history   — ledger table (ts, config_sig, event, verdict).
-  2. Selected run  — monthly rank-IC (arm_state vs arm_base) + differential with
-                     CI band, ±0.015 publishability gate (pre-reg §7) and the 0 line.
-  3. Coverage      — OOS universe 588/705, Jaccard ~0.93, dropped reuses {POM,SE,STI}.
-  4. Robustness    — H6 determinism, lag_shift + placebo control differentials,
-                     Harvey-Liu haircut sensitivity (pre-reg §5/§6).
+Five tabs:
+  1. Run history       — ledger table (ts, config_sig, event, verdict).
+  2. Selected run      — monthly rank-IC (arm_state vs arm_base) + differential with
+                         CI band, ±0.015 publishability gate (pre-reg §7) and the 0 line.
+  3. Coverage          — OOS universe 588/705, Jaccard ~0.93, dropped reuses {POM,SE,STI}.
+  4. Robustness        — H6 determinism, lag_shift + placebo control differentials,
+                         Harvey-Liu haircut sensitivity (pre-reg §5/§6).
+  5. Strategy Return   — the exploratory strategy-return eval (latest
+                         ``phase: "strategy_return"`` ledger row): per-strategy
+                         Sharpe bar chart, DSR p-value grid, Hansen-SPA / MCS.
 
 Runs on synthetic data when no real result dir exists yet, so the dashboard is
 demoable before the first confirmatory run lands (see :func:`_synthetic_run`).
@@ -87,6 +90,20 @@ def _coverage() -> dict:
                 cov["dropped_reuse"] = sorted(cr.keys())
                 cov["source"] = "ledger (oos_resolvable_universe)"
     return cov
+
+
+@st.cache_data(show_spinner=False)
+def _latest_strategy_return() -> dict | None:
+    """Latest ``phase: "strategy_return"`` ledger row, or None if absent.
+
+    The strategy-return eval is logged as an ``exploratory`` event row in
+    ``runs/ledger.jsonl`` (NOT under ``runs/results/``), so it is invisible to
+    :func:`list_runs` — this is the dedicated reader the Strategy Return tab uses.
+    """
+    rows = [r for r in _ledger_rows() if r.get("phase") == "strategy_return"]
+    if not rows:
+        return None
+    return max(rows, key=lambda r: r.get("ts", ""))
 
 
 def _synthetic_run() -> dict:
@@ -336,6 +353,120 @@ def _haircut_chart(run: dict) -> go.Figure:
 
 
 # ----------------------------------------------------------------------------
+# strategy-return view (exploratory lens — Phase D strategy_return ledger row)
+# ----------------------------------------------------------------------------
+
+
+def _fmt_num(x: object, ndigits: int = 3) -> str:
+    """Format a maybe-None / maybe-NaN number for a markdown table cell."""
+    if isinstance(x, bool) or not isinstance(x, (int, float)):
+        return "—"
+    if not np.isfinite(float(x)):
+        return "—"
+    return f"{float(x):.{ndigits}f}"
+
+
+def _sharpe_bar_chart(strategies: dict) -> go.Figure:
+    names = list(strategies.keys())
+    shrs = [float(strategies[n].get("sharpe_annualized", float("nan"))) for n in names]
+    fig = go.Figure()
+    fig.add_trace(go.Bar(x=names, y=shrs, name="Sharpe (ann.)", showlegend=False))
+    fig.add_hline(y=0, line_color="grey")
+    fig.update_layout(
+        xaxis_title="strategy", yaxis_title="Sharpe (annualized)",
+        height=320, margin=dict(l=10, r=10, t=20, b=10),
+    )
+    return fig
+
+
+def _dsr_grid_table(strategies: dict, grid: list, benchmark: str) -> str:
+    """Per-strategy markdown table: Sharpe, n_months, DSR p-value across the grid.
+
+    ``dsr_by_trials`` is keyed by string trial counts ("1","2","5","20"); we
+    probe both the string and int keys defensively. The benchmark arm is marked.
+    """
+    head = "| strategy | Sharpe (ann.) | months | " + " | ".join(f"DSR p@{n}" for n in grid) + " |"
+    sep = "|---" * (3 + len(grid)) + "|"
+    lines = [head, sep]
+    for name, s in strategies.items():
+        by_trials = s.get("dsr_by_trials") or {}
+        cells = []
+        for n in grid:
+            entry = by_trials.get(str(n)) or by_trials.get(n) or {}
+            cells.append(_fmt_num(entry.get("p_value")))
+        label = f"{name} (bench)" if name == benchmark else name
+        lines.append(
+            f"| {label} | {_fmt_num(s.get('sharpe_annualized'))} | "
+            f"{s.get('n_months', '—')} | " + " | ".join(cells) + " |"
+        )
+    return "\n".join(lines)
+
+
+def view_strategy_return() -> None:
+    st.subheader("Strategy-return evaluation (exploratory lens)")
+    row = _latest_strategy_return()
+    if not row:
+        st.info("no strategy-return eval run yet")
+        st.caption(
+            "Logged as `phase: \"strategy_return\"` in runs/ledger.jsonl once the "
+            "strategy-return evaluation lands (``scripts/strategy_eval_run.py``)."
+        )
+        return
+
+    strategies = row.get("strategies") or {}
+    grid = row.get("n_trials_grid") or [1, 2, 5, 20]
+    benchmark = row.get("benchmark", "arm_base")
+    n_months_common = row.get("n_months_common")
+    st.caption(
+        f"artifact ts: {row.get('ts')}  |  benchmark: `{benchmark}`  |  "
+        f"common months: {n_months_common}  |  grid: {list(grid)}"
+    )
+
+    st.markdown("**Sharpe (annualized) per strategy — monthly long-short**")
+    st.plotly_chart(_sharpe_bar_chart(strategies), use_container_width=True)
+
+    st.markdown("**Deflated Sharpe Ratio (DSR) p-value across the n_trials grid**")
+    st.markdown(_dsr_grid_table(strategies, grid, benchmark))
+    st.caption(
+        "`dsr_p_conservative` is the largest trial count (project-family floor). "
+        "The honest project-wide family is ≥10; nothing survives once deflated to it."
+    )
+
+    spa = row.get("spa") or {}
+    mcs_included = row.get("mcs_included")
+    if spa or mcs_included is not None:
+        st.markdown("**Hansen-SPA / Model Confidence Set**")
+        c1, c2 = st.columns(2)
+        if spa:
+            cp = spa.get("consistent_pvalue")
+            c1.metric(
+                "Hansen-SPA consistent p-value",
+                _fmt_num(cp),
+                help="H0: no strategy beats the benchmark (arm_base). "
+                "High p → cannot reject the null.",
+            )
+        if mcs_included is not None:
+            names = list(strategies.keys())
+            in_range = [i for i in mcs_included if isinstance(i, int) and 0 <= i < len(names)]
+            included = [names[i] for i in in_range]
+            c2.metric(
+                "Hansen-MCS included set",
+                ", ".join(included) if included else "—",
+                help="Strategies surviving the MCS pruning (not dominated at the family level).",
+            )
+
+    placebo_n1 = strategies.get("C_placebo", {})
+    placebo_n1 = (placebo_n1.get("dsr_by_trials") or {}).get("1", {}) if placebo_n1 else {}
+    placebo_str = _fmt_num(placebo_n1.get("p_value")) if placebo_n1 else "≈0.057"
+    st.markdown(
+        f"**Secondary / exploratory lens** — confirmatory claims remain the Phase B/C "
+        f"rank-IC differentials. No strategy survives the project-family DSR deflation. "
+        f"The placebo at n=1 ({placebo_str}) is the under-deflation cautionary tale: "
+        f"it looks marginal at one trial and dissolves once the family is inflated."
+    )
+
+
+# ----------------------------------------------------------------------------
 # layout
 # ----------------------------------------------------------------------------
 
@@ -363,8 +494,8 @@ def main() -> None:
         st.caption(f"results root: `{R.results_dir()}`")
         st.caption(f"runs scanned: {len(runs)}")
 
-    tabs = st.tabs(["Run history", "Selected run", "Coverage", "Robustness"])
-    tab_hist, tab_run, tab_cov, tab_rob = tabs
+    tabs = st.tabs(["Run history", "Selected run", "Coverage", "Robustness", "Strategy Return"])
+    tab_hist, tab_run, tab_cov, tab_rob, tab_sr = tabs
     with tab_hist:
         view_run_history()
     with tab_run:
@@ -373,6 +504,8 @@ def main() -> None:
         view_coverage()
     with tab_rob:
         view_robustness(run)
+    with tab_sr:
+        view_strategy_return()
 
 
 if __name__ == "__main__":  # pragma: no cover — Streamlit entrypoint
