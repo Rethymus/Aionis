@@ -1,0 +1,195 @@
+"""13D ingest + SIC accessor — hermetic (no network).
+
+Pins :mod:`aionis.ingest.stakes_13d`: the SC 13D / 13D/A event stream is filtered
+out of the full submissions history (10-K / SC 13G / 8-K dropped), paginated
+across the ``files[]`` archive blocks, date-ranged, filed-date PIT-anchored; SIC
+rides the same fetch; cache hits make no call; and the SEC-burst backoff retries
+on transient errors. Mirrors the offline-vintage pattern of ``test_fundamentals``.
+"""
+from __future__ import annotations
+
+import json
+
+import requests
+
+from aionis.ingest import stakes_13d
+
+CIK = 1098  # ANSYS
+
+
+class _Resp:
+    def __init__(self, payload): self._p = payload
+
+    def raise_for_status(self): pass
+
+    def json(self): return self._p
+
+
+def _submissions(recent_rows, files=None, sic="7372"):
+    return {
+        "cik": str(CIK), "sic": sic, "sicDescription": f"SIC {sic} desc",
+        "filings": {
+            "recent": {
+                "form": [r[0] for r in recent_rows],
+                "filingDate": [r[1] for r in recent_rows],
+                "accessionNumber": [r[2] for r in recent_rows],
+                "primaryDocument": ["d.htm"] * len(recent_rows),
+            },
+            "files": files or [],
+        },
+    }
+
+
+def _block(rows):
+    return {
+        "form": [r[0] for r in rows], "filingDate": [r[1] for r in rows],
+        "accessionNumber": [r[2] for r in rows],
+        "primaryDocument": ["d.htm"] * len(rows),
+    }
+
+
+def _no_network(monkeypatch, url_map, sleeps=None):
+    """Patch requests.get to serve url_map; patch time.sleep to record (no real waits)."""
+    calls: list[str] = []
+
+    def fake(url, headers=None, timeout=None):
+        calls.append(url)
+        if url in url_map:
+            return _Resp(url_map[url])
+        raise AssertionError(f"unexpected URL: {url}")
+
+    monkeypatch.setattr(requests, "get", fake)
+    monkeypatch.setattr(stakes_13d.time, "sleep",
+                        lambda s: sleeps.append(s) if sleeps is not None else None)
+    return calls
+
+
+# --- form filtering ---------------------------------------------------------
+
+
+def test_filings_13d_keeps_only_sc_13d_and_amendments(monkeypatch, tmp_path):
+    recent = [
+        ("SC 13D", "2021-03-15", "0000001098-21-000001"),
+        ("SC 13D/A", "2021-04-20", "0000001098-21-000007"),
+        ("SC 13G", "2021-05-01", "0000001098-21-000010"),  # passive -> drop
+        ("10-K", "2021-02-28", "0000001098-21-000020"),     # not a stake -> drop
+        ("8-K", "2021-06-01", "0000001098-21-000030"),      # not a stake -> drop
+    ]
+    url = stakes_13d._SUBMISSIONS_URL.format(cik=CIK)
+    _no_network(monkeypatch, {url: _submissions(recent)})
+
+    df = stakes_13d.filings_13d(CIK, cache_dir=tmp_path)
+
+    assert set(df["form"]) == {"SC 13D", "SC 13D/A"}
+    assert len(df) == 2
+    assert df["filing_date"].is_monotonic_increasing
+
+
+# --- pagination across archive blocks ---------------------------------------
+
+
+def test_filings_13d_paginates_archive_blocks(monkeypatch, tmp_path):
+    recent = [("SC 13D", "2024-01-10", "A-recent")]
+    block_name = "CIK0000001098-18.json"
+    files = [{"name": block_name, "from": "2018-01-01", "to": "2020-12-31"}]
+    sub = _submissions(recent, files=files)
+    block_rows = [("SC 13D", "2019-07-01", "A-archive")]
+    url_map = {
+        stakes_13d._SUBMISSIONS_URL.format(cik=CIK): sub,
+        stakes_13d._BLOCK_URL.format(name=block_name): _block(block_rows),
+    }
+    calls = _no_network(monkeypatch, url_map)
+
+    df = stakes_13d.filings_13d(CIK, cache_dir=tmp_path)
+
+    assert set(df["accession"]) == {"A-recent", "A-archive"}
+    assert stakes_13d._BLOCK_URL.format(name=block_name) in calls  # block fetched
+
+
+def test_filings_13d_skips_archive_block_outside_date_range(monkeypatch, tmp_path):
+    block_name = "CIK0000001098-12.json"
+    files = [{"name": block_name, "from": "2012-01-01", "to": "2014-12-31"}]  # before start
+    sub = _submissions([("SC 13D", "2020-06-01", "A")], files=files)
+    url = stakes_13d._SUBMISSIONS_URL.format(cik=CIK)
+    calls = _no_network(monkeypatch, {url: sub})
+
+    df = stakes_13d.filings_13d(CIK, start="2016-01-01", end="2026-06-30", cache_dir=tmp_path)
+
+    assert stakes_13d._BLOCK_URL.format(name=block_name) not in calls  # skipped
+    assert len(df) == 1 and df.iloc[0]["accession"] == "A"
+
+
+# --- date range on the filings themselves -----------------------------------
+
+
+def test_filings_13d_respects_date_range(monkeypatch, tmp_path):
+    recent = [
+        ("SC 13D", "2015-06-01", "pre"),   # before start -> drop
+        ("SC 13D", "2018-03-01", "in"),    # in window -> keep
+        ("SC 13D", "2027-01-01", "post"),  # after end -> drop
+    ]
+    url = stakes_13d._SUBMISSIONS_URL.format(cik=CIK)
+    _no_network(monkeypatch, {url: _submissions(recent)})
+
+    df = stakes_13d.filings_13d(CIK, start="2016-01-01", end="2026-06-30", cache_dir=tmp_path)
+
+    assert list(df["accession"]) == ["in"]
+
+
+# --- SIC rides the same fetch ----------------------------------------------
+
+
+def test_sic_for_cik_returns_code_and_description(monkeypatch, tmp_path):
+    url = stakes_13d._SUBMISSIONS_URL.format(cik=CIK)
+    _no_network(monkeypatch, {url: _submissions([], sic="7372")})
+
+    code, desc = stakes_13d.sic_for_cik(CIK, cache_dir=tmp_path)
+
+    assert code == "7372"
+    assert desc == "SIC 7372 desc"
+
+
+# --- cache + backoff --------------------------------------------------------
+
+
+def test_cache_hit_makes_no_call(monkeypatch, tmp_path):
+    # pre-seed the cache so fetch_submissions reads the file, not the network
+    fp = tmp_path / f"submissions_{CIK:010d}.json"
+    fp.write_text(json.dumps(_submissions([("SC 13D", "2020-01-01", "X")])))
+    calls = _no_network(monkeypatch, {})  # empty map -> any call raises
+
+    df = stakes_13d.filings_13d(CIK, cache_dir=tmp_path)
+
+    assert calls == []  # cache hit, no HTTP
+    assert list(df["accession"]) == ["X"]
+
+
+def test_backoff_retries_then_succeeds(monkeypatch, tmp_path):
+    sleeps: list[float] = []
+    payload = _submissions([("SC 13D", "2020-01-01", "X")])
+
+    state = {"n": 0}
+
+    def flaky(url, headers=None, timeout=None):
+        state["n"] += 1
+        if state["n"] < 3:
+            raise requests.ConnectionError("SSL: UNEXPECTED_EOF_WHILE_READING")
+        return _Resp(payload)
+
+    monkeypatch.setattr(requests, "get", flaky)
+    monkeypatch.setattr(stakes_13d.time, "sleep", lambda s: sleeps.append(s))
+
+    sub = stakes_13d.fetch_submissions(CIK, cache_dir=tmp_path)
+
+    assert sub == payload
+    assert state["n"] == 3            # 2 failures then success
+    # backoff (4*1, 4*2) between retries, then the 0.15s fair-access pause on success
+    assert sleeps == [4, 8, 0.15]
+
+
+def test_filings_13d_empty_is_safe(monkeypatch, tmp_path):
+    url = stakes_13d._SUBMISSIONS_URL.format(cik=CIK)
+    _no_network(monkeypatch, {url: _submissions([])})
+    df = stakes_13d.filings_13d(CIK, cache_dir=tmp_path)
+    assert df.empty
+    assert list(df.columns) == ["form", "filing_date", "accession", "primary_doc"]
