@@ -1,11 +1,12 @@
 # Phase D 预注册 — WRL.Relationship 主线：关系/网络特征的横截面选股增量
 
-> 状态：**v0.1 DRAFT · 2026-07-28 · 预冻结（pre-freeze）**。
-> **未冻结，且 run 显式 DEFERRED**（见 §8）：freeze 发生在至少一条
-> WRL.Relationship 数据通道**建成 + hermetic PIT 测试**之后（13D stake 事件最优先——
-> 结构化、PIT 干净；13F 所有权中心度 / 供应链客户披露可行性待工程验证）。届时
-> config 锁定 + sha256 入 `runs/ledger.jsonl`（先于首次 OOS rank-IC 结果）。本稿是规划文档，
-> **不含、不跑任何 Phase D OOS 结果**。
+> 状态：**v0.2 DRAFT · 2026-07-28 · 预冻结（pre-freeze）**。v0.1 → v0.2：数据可行性研究
+> （agent 实测 EDGAR 覆盖）已落地——**confirmatory bundle 钉为 {13D + SIC 同业}**，13F 与供应链
+> 降为 **exploratory leave-one-out 通道**（非冻结阻塞，见 §0.5）。run 仍 DEFERRED（§8）。
+>
+> **未冻结，且 run 显式 DEFERRED**（见 §8）：freeze 发生在 13D 事件 ingest + SIC 同业 ingest
+> **建成 + hermetic PIT 测试**之后，届时 config 锁定 + sha256 入 `runs/ledger.jsonl`（先于首次
+> OOS rank-IC 结果）。本稿是规划文档，**不含、不跑任何 Phase D OOS 结果**。
 >
 > **Durable registry（非一次性）**：与 [`phase-b-preregistration.md`](phase-b-preregistration.md) §9 /
 > [`phase-c-preregistration.md`](phase-c-preregistration.md) §9 同源——抗泄漏锚点 =「Phase D config 的
@@ -36,13 +37,36 @@
 
 ---
 
+## 0.5 数据可行性验证（2026-07-28 · agent 实测 EDGAR 覆盖 → 范围决策）
+
+可行性研究 agent 对 587-ticker 冻结 universe、2016-01..2026-06 窗口**实测**了每条通道的
+覆盖（非估算）。四通道均过 7 门（SEC public domain，G1✓G2✓ via filed-date，G3✓ 不可回改——
+比 ALFRED/EPU 更干净）；**唯一开放风险是工程，非许可/PIT**。
+
+| 通道 | 实测覆盖 | 工程量 | 判定 |
+|---|---|---|---|
+| **13D 维权持股事件** | 35–45% universe（196 原始 13D / 252 含 13D/A；478 原始 + 2556 修订）| efts 发现 + submissions/CIK{}.json（files[] 分页，~54% 需分页）+ cover HTML 取持股%；须滤自报（filer_CIK==issuer_CIK，金融股自报占大头）| **FEASIBLE — 结构化底盘** |
+| **SIC 同业** | 100%（568/568，200 SIC）| submissions 顶层 `sic` 字段，随 13D 同次拉取免费获得 | **FEASIBLE — trivial / sanity 锚** |
+| **13F 机构持仓中心度** | ~5000 filers/q × ~41q ≈ 200k 件、~100M holding 行；587×587 投影秒级 | CUSIP→ticker 无免费桥（走 nameOfIssuer fuzzy→CIK）；信号与规模/流动性强共线、季频 +45d lag 月频 stale | **FEASIBLE-BUT-HEAVY — 工程性价比最差** |
+| **10-K Item 101 供应链客户** | ~20.6%（121/587 union 多短语；真实 20–35%）| 非结构化文本（LLM 抽取，stateless 无泄漏）；客户多为私有/非美/脱敏 → ticker 桥有损 | **FEASIBLE-BUT-HEAVY / SPARSE** |
+
+**范围决策（coverage 驱动，durable-registry 合法迭代）**：
+- **confirmatory bundle 钉为 {13D 事件 + SIC 同业}**——13D 是唯一结构化、PIT 干净、覆盖充分的关系**事件**通道；SIC 100% 覆盖且免费，兼作 §5 #3 sanity 锚。
+- **13F 与供应链降为 exploratory leave-one-out 通道**（§5 #5，标 `mode: exploratory`，非冻结阻塞）——仅在 {13D+peers} confirmatory run 落地后按需建，保留升级路径而不劫持 N=3 预算。
+- **这不是对 WRL.Relationship claim 的科学收窄**——是覆盖驱动的范围决策（带实测证据），记于此。13F/供应链「未阻塞，仅重/稀疏」。
+
+**13D ingest 诚实约束（必须处理）**：① 自报过计——BAC(59)/WFC(22)/JPM(15)/GS(12) 等金融股对**自身**股票报 SC 13D（信托/托管/优先股结构，非维权）→ cover 解析须 `filer_CIK != issuer_CIK` 且受益人 ≠ 发行人；② `recent` 1000-filing 切片仅覆盖 46.5% 到 2016 前，**须 files[] 分页**才能拿到完整历史（分页将 13D ticker 命中率从 30.3% 提到 34.8%）；③ 突发下 SSL EOF——复用 [`fundamentals.py`](../src/aionis/ingest/fundamentals.py) 的 exp backoff；④ 持股 % 需 cover-page HTML/iXBRL 抽取（非标准化 XML），事件指示特征不依赖它。
+
+---
+
 ## 1. 单一可证伪 claim（预注册，**双尾**，第 3 条 confirmatory；**联合 bundle 检验**）
 
 > 在**同一 S&P 500 PIT universe**（Phase B 冻结的 2016+ 可解析窗）+ **同一 frozen LightGBM** +
-> **同一 PurgedGroupKFold(5, embargo=21, group=month)** 上，把一个 **WRL.Relationship bundle**——候选
-> {13D 维权持股事件指示（EDGAR 13D，filed-date）+ 13F 机构持仓中心度变化（EDGAR 13F，filed-date）+
-> 供应链客户收益传导（10-K Item 101，filed-date）+ 行业同业 ex-self 动量}——作为特征拼进横截面，
-> 是否在 OOS 窗带来**横截面月 rank-IC 的显著增量**（**双尾**）超过 **fundamentals-only 基线**（`arm_base`）。
+> **同一 PurgedGroupKFold(5, embargo=21, group=month)** 上，把一个 **WRL.Relationship bundle**——
+> **confirmatory：{13D 维权持股事件指示（EDGAR 13D，filed-date，filer≠issuer）+ 行业同业 ex-self
+> 动量（SIC，filed-date）}**（13F 中心度 / 供应链客户传导为 **exploratory leave-one-out**，非 gate，
+> 见 §0.5）——作为特征拼进横截面，是否在 OOS 窗带来**横截面月 rank-IC 的显著增量**（**双尾**）
+> 超过 **fundamentals-only 基线**（`arm_base`）。
 
 - **Differential** = IC(`arm_rel`) − IC(`arm_base`)。两臂同股 / 同价 / 同模型 / 同折 / **同基本面时点**
   （均 `align_on="end_lag"`）→ 增量**只**来自新增的关系 bundle 列。
@@ -165,10 +189,10 @@
 | **可发表性** | differential 95% CI 半宽 < 0.015 | 同 Phase B/C |
 | **版本钉** | lightgbm/purgedcv/arch（同 Phase B/C）+ 现有 EDGAR 栈 | H6 确定性 |
 
-- [ ] 13D 事件 ingest + hermetic PIT 测试（filed-date 锚）。
-- [ ] 13F 中心度可行性验证（覆盖率）或明确降级。
-- [ ] 供应链 Item 101 解析可行性验证或明确降级。
-- [ ] 同业动量（SIC）特征。
+- [x] 13F 中心度可行性验证（§0.5：FEASIBLE-BUT-HEAVY，~200k 件 / size-collinear → 降为 exploratory LOO）。
+- [x] 供应链 Item 101 可行性验证（§0.5：~20% 覆盖 / 客户→ticker 有损 → 降为 exploratory LOO）。
+- [ ] **13D 事件 ingest + hermetic PIT 测试**（efts 发现 + submissions files[] 分页 + filer≠issuer 自报过滤 + SSL backoff；filed-date 锚）。
+- [ ] **SIC 同业特征**（submissions 顶层 `sic`，随 13D 同次拉取；ex-self 月动量）。
 - [ ] joined-panel PIT 测试（§5 #4）。
 - [ ] **Phase-D 确定性测试（H6）**：两次 panel-build + rank-IC → bit-identical。
 - [ ] 控制门（§5）+ 多重检验 N=3 + primary = rank-IC 差（双尾）+ MBB-DM/HAC。
