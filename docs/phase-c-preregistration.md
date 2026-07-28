@@ -91,8 +91,12 @@
 
 - **macro-surprise**：ALFRED `CPIAUCSL`/`PAYEMS` as-of vintage（`features/macro_surprise.py`）。已落地、
   已缓存（`data/cache/alfred_*.json`，sha256-pinnable）。
-- **VIX-surprise**：FRED/ALFRED `VIXCLS`（`ingest/vix.py`，`fetch_vix`+`vix_as_of` 已落地）+ 新转换
-  `features/vix_surprise.py`（并行在建）。G1/G2/G3 全过（vintage 不可回改）。
+- **VIX-surprise**：FRED `VIXCLS`（`ingest/vix.py`，`fetch_vix`+`vix_as_of` 已落地）+ 新转换
+  `features/vix_surprise.py`（已建成）。G1/G2/G3 全过——**但 G3 的依据是「不修订」（VIXCLS 是实时计算的
+  指数、历史收盘恒定），而非 vintage 跟踪**：VIXCLS 在 ALFRED 上**无**实时 vintage（`realtime_start ==
+  realtime_end == 今日`，历史 realtime 窗口返回 HTTP 400），因此 `vix_as_of` 用非实时序列合成「自定日期
+  vintage」（每条 `realtime_start == date`），`merge_asof` 返回 d 日可知的收盘。这与 CPI/NFP（有真实
+  vintage、会被修订）的 G3 依据不同，诚实记录于此（2026-07-28 实跑发现并订正）。
 - **earnings-surprise**：EDGAR XBRL `net_income` + `shares_out`（**已在 `fundamentals.py:METRIC_TAGS`**，
   PIT via filed-date）+ 新转换 `features/earnings_surprise.py`（并行在建）。**不引入新数据源**——只对
   已有 PIT 基本面做派生。
@@ -100,8 +104,9 @@
   sha256 已入 ledger），原样复用。
 - **Reddit（未来）**：`PRAW`(BSD) + `FinBERT`(Apache)，**仅前向采集、到达即快照、不 backfill**。未
   累积足够历史前**不进** freeze；累积后作为 bundle 的第 4 分量并入。
-- **过 7 门**（[`data-intake-rubric.md`](data-intake-rubric.md)）：VIX via FRED = G1✓G2✓G3✓；CPI/NFP
-  via ALFRED 同；earnings via EDGAR = 每条 fact 带 `filed`，由构造 PIT ✓。**故 Phase C 不引入任何新
+- **过 7 门**（[`data-intake-rubric.md`](data-intake-rubric.md)）：VIX via FRED = G1✓G2✓G3✓（G3 依据＝不修订，
+  非 vintage——见上）；CPI/NFP
+  via ALFRED = G3 依据＝真实 vintage 不可回改；earnings via EDGAR = 每条 fact 带 `filed`，由构造 PIT ✓。**故 Phase C 不引入任何新
   第三方历史数据集**——保持「干净 confirmatory」的关键纪律（§5 机制 ⑤⑦ 仍 open）。
 
 ---
