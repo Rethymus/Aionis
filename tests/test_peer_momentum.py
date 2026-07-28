@@ -6,6 +6,7 @@ trailing return is strictly backward (PIT), and different SIC groups are isolate
 """
 from __future__ import annotations
 
+import numpy as np
 import pandas as pd
 import pytest
 
@@ -43,6 +44,30 @@ def test_singleton_sic_group_is_nan() -> None:
     px = _px({"A": [10, 11, 12]})
     w = peer_momentum_panel(px, {"A": "X"}, window=1)  # no peers
     assert w["A"].isna().all()
+
+
+def test_mixed_nan_group_ex_self_mean_is_exact() -> None:
+    """Regression for the pandas->3.0 `.stack()` retains-NaN bug: when a SIC group
+    has a peer whose trailing return is undefined (warmup / newly entered), the
+    ex-self mean must still be exact for the peers that DO have a trail.
+
+    group {A=0.20, B=0.10, C=NaN}: peer of A = mean(B) = 0.10 (C excluded);
+    peer of B = mean(A) = 0.20; C (no own trail) -> NaN. The old `transform(size)`
+    counted C and gave A=0.125 (wrong); `transform(count)` gives 0.10 (exact)."""
+    # window=1: trail[t] = px[t]/px[t-1]-1. Make C's trail NaN by giving it only
+    # one observation after the first date (NaN at d1 via a NaN close).
+    idx = pd.bdate_range("2024-01-02", periods=3)
+    px = pd.DataFrame(
+        {"A": [10.0, 12.0, 13.0],   # trail d1 = 0.20
+         "B": [100.0, 110.0, 120.0],  # trail d1 = 0.10
+         "C": [1.0, np.nan, 4.0]},    # trail d1 = NaN (NaN close)
+        index=idx,
+    )
+    w = peer_momentum_panel(px, {"A": "X", "B": "X", "C": "X"}, window=1)
+    d1 = idx[1]
+    assert w.loc[d1, "A"] == pytest.approx(0.10)   # peer = B only (C NaN excluded)
+    assert w.loc[d1, "B"] == pytest.approx(0.20)   # peer = A only
+    assert pd.isna(w.loc[d1, "C"])                  # C has no own trail -> NaN
 
 
 def test_different_sic_groups_are_isolated() -> None:

@@ -58,7 +58,12 @@ def peer_momentum_panel(
         )
     grp = long.groupby(["date", "sic"], sort=False)["trail"]
     gmean = grp.transform("mean")
-    gn = grp.transform("size")
+    # count of NON-NaN trails (NOT size): on pandas >=3.0 `.stack()` retains NaN
+    # rows, so `transform("size")` would count NaN-inclusive while `mean` skips
+    # them, making `(mean*size - self)/(size-1)` wrong whenever a peer's trailing
+    # return is undefined (warmup / newly entered). `count` keeps the leave-one-out
+    # algebra exact, and `.where(gn > 1)` then NaNs a group with <2 valid peers.
+    gn = grp.transform("count")
     # ex-self mean: (sum - self) / (n - 1), defined only when n >= 2
     long["peer_mom"] = (
         (gmean * gn - long["trail"]) / (gn - 1)
