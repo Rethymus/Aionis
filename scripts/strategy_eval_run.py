@@ -43,7 +43,7 @@ from aionis.eval.phase_c_controls import (
     shuffle_date_broadcast,
     shuffle_earnings_across_tickers,
 )
-from aionis.eval.strategy_returns import long_short_returns, strategy_eval
+from aionis.eval.strategy_returns import long_short_returns, sharpe_monthly, strategy_eval
 from aionis.eval.two_arm import compute_shared_folds, run_arm_oos
 from aionis.ingest.universe import load_pierrebrunelle_membership
 
@@ -102,37 +102,49 @@ def main() -> None:
           + ", ".join(f"{n}={len(s)}" for n, s in ls.items()), flush=True)
     for n, s in ls.items():
         if len(s):
-            ann = (s.mean() / s.std(ddof=1) * (12 ** 0.5)) if s.std(ddof=1) > 0 else float("nan")
+            # reuse the module's degeneracy-guarded Sharpe so the console matches
+            # the logged value (avoids the ~1e17 garbage a raw mean/std prints
+            # on a near-constant series).
+            ann = sharpe_monthly(s) * (12 ** 0.5)
             print(f"[S]   {n}: mean={s.mean():+.5f} sharpe_ann={ann:+.3f} n={len(s)}",
                   flush=True)
 
-    eval_out = strategy_eval(ls, benchmark="arm_base", n_trials=len(ls))
-    print(f"[S] strategy_eval (benchmark=arm_base, n_trials={len(ls)}, "
+    eval_out = strategy_eval(ls, benchmark="arm_base")
+    grid = eval_out["n_trials_grid"]
+    print(f"[S] strategy_eval (benchmark=arm_base, n_trials_grid={grid}, "
           f"n_months_common={eval_out['n_months_common']}):", flush=True)
     for n, m in eval_out["per_strategy"].items():
+        dsr_grid = ", ".join(
+            f"n{nt}:p{m['dsr_by_trials'][nt]['p_value']:.3f}" for nt in grid
+        )
         print(f"[S]   {n:12s} sharpe_ann={m['sharpe_annualized']:+.3f} "
-              f"dsr={m['dsr']:.3f} dsr_p={m['dsr_p_value']:.3f}", flush=True)
-    if "spa" in eval_out:
+              f"dsr_p_conservative(n{max(grid)})={m['dsr_p_conservative']:.3f} "
+              f"[{dsr_grid}]", flush=True)
+    if isinstance(eval_out.get("spa"), dict) and "consistent_pvalue" in eval_out["spa"]:
         print(f"[S]   Hansen-SPA consistent_p={eval_out['spa']['consistent_pvalue']:.3f} "
               f"(H0: nothing beats arm_base)", flush=True)
+    elif "spa" in eval_out:
+        print(f"[S]   Hansen-SPA skipped: {eval_out['spa']}", flush=True)
     if "mcs" in eval_out:
         inc = eval_out["mcs"]["included"]
         names = list(ls)
-        print(f"[S]   Hansen-MCS included={ [names[i] for i in inc] }", flush=True)
+        print(f"[S]   Hansen-MCS included={[names[i] for i in inc]}", flush=True)
 
     _append({
         "ts": _now(), "event": "exploratory", "phase": "strategy_return",
         "strategies": {n: {"sharpe_annualized": m["sharpe_annualized"],
-                           "dsr": m["dsr"], "dsr_p_value": m["dsr_p_value"],
+                           "dsr_p_conservative": m["dsr_p_conservative"],
+                           "dsr_by_trials": m["dsr_by_trials"],
                            "n_months": m["n_months"]}
                        for n, m in eval_out["per_strategy"].items()},
         "spa": eval_out.get("spa"),
         "mcs_included": eval_out.get("mcs", {}).get("included"),
-        "benchmark": "arm_base", "n_trials": len(ls),
+        "benchmark": "arm_base", "n_trials_grid": eval_out["n_trials_grid"],
         "n_months_common": eval_out["n_months_common"],
         "notes": ("Secondary/exploratory lens. Confirmatory claims remain the "
-                  "Phase B/C rank-IC differentials. DSR deflated at n_trials="
-                  f"{len(ls)} (the strategy family evaluated here)."),
+                  "Phase B/C rank-IC differentials. DSR reported across the grid "
+                  f"{grid} (the honest family is project-wide, >=10); "
+                  "dsr_p_conservative is at the largest trial count."),
     })
     print("[S] DONE", flush=True)
 

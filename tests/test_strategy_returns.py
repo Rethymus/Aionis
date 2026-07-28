@@ -114,7 +114,7 @@ def test_sharpe_monthly_zero_std_is_nan() -> None:
 # --- strategy_eval (multiple-testing over a strategy set) -------------------
 
 
-def test_strategy_eval_reports_per_strategy_sharpe_and_dsr() -> None:
+def test_strategy_eval_reports_per_strategy_sharpe_and_dsr_grid() -> None:
     rng = np.random.default_rng(0)
     idx = pd.date_range("2017-01-31", periods=60, freq="ME")
     good = pd.Series(0.05 + rng.normal(0, 0.02, 60), index=idx)   # positive Sharpe
@@ -122,17 +122,23 @@ def test_strategy_eval_reports_per_strategy_sharpe_and_dsr() -> None:
     bad = pd.Series(-0.03 + rng.normal(0, 0.02, 60), index=idx)   # negative Sharpe
 
     out = strategy_eval({"good": good, "flat": flat, "bad": bad},
-                        benchmark="flat", n_trials=3)
+                        benchmark="flat", n_trials_grid=(1, 2, 5))
 
     assert set(out["per_strategy"]) == {"good", "flat", "bad"}
     good_sharpe = out["per_strategy"]["good"]["sharpe_monthly"]
     bad_sharpe = out["per_strategy"]["bad"]["sharpe_monthly"]
     assert good_sharpe > bad_sharpe
     assert out["n_months_common"] == 60
-    assert out["n_trials"] == 3
-    # cross-strategy tests ran (>= 2 strategies, >= 2 months)
-    assert "spa" in out and "consistent_pvalue" in out["spa"]
-    assert "mcs" in out and "included" in out["mcs"]
+    assert out["n_trials_grid"] == [1, 2, 5]
+    # DSR reported at EACH trial count; conservative = largest (most deflation)
+    g = out["per_strategy"]["good"]
+    assert set(g["dsr_by_trials"]) == {1, 2, 5}
+    assert g["dsr_p_conservative"] == g["dsr_by_trials"][5]["p_value"]
+    # more deflation -> larger p-value (weaker); the project-rigor point
+    assert g["dsr_by_trials"][5]["p_value"] >= g["dsr_by_trials"][1]["p_value"]
+    # cross-strategy tests ran (>= 2 strategies, >= 12 months)
+    assert "consistent_pvalue" in out["spa"]
+    assert "included" in out["mcs"]
 
 
 def test_strategy_eval_rejects_unknown_benchmark() -> None:
@@ -142,11 +148,30 @@ def test_strategy_eval_rejects_unknown_benchmark() -> None:
         strategy_eval({"a": s}, benchmark="missing")
 
 
-def test_strategy_eval_single_strategy_skips_cross_tests() -> None:
+def test_strategy_eval_spa_detects_strategy_beating_benchmark() -> None:
+    """Loss-sign direction: a strategy that deterministically beats the benchmark
+    must trigger SPA rejection (small consistent_p) and survive in the MCS. Pins
+    that losses=-returns and the benchmark anchor are wired correctly (not just
+    structurally present)."""
+    rng = np.random.default_rng(1)
+    idx = pd.date_range("2017-01-31", periods=60, freq="ME")
+    bench = pd.Series(rng.normal(0, 0.02, 60), index=idx)
+    good = bench + 0.05  # exactly +0.05/month over benchmark -> strictly lower loss
+
+    out = strategy_eval({"bench": bench, "good": good}, benchmark="bench")
+
+    assert out["spa"]["consistent_pvalue"] < 0.05  # H0 (nothing beats bench) rejected
+    names = ["bench", "good"]
+    inc = [names[i] for i in out["mcs"]["included"]]
+    assert "good" in inc  # the beating strategy survives in the MCS
+
+
+def test_strategy_eval_single_strategy_marks_cross_tests_skipped() -> None:
     idx = pd.date_range("2017-01-31", periods=24, freq="ME")
     s = pd.Series(np.linspace(0.01, 0.02, 24), index=idx)
 
     out = strategy_eval({"only": s})
 
-    assert "spa" not in out and "mcs" not in out  # need >= 2 strategies
+    # single strategy -> cross-tests honestly skipped with a stated reason
+    assert out["spa"]["skipped"] == "insufficient_strategies"
     assert "sharpe_monthly" in out["per_strategy"]["only"]

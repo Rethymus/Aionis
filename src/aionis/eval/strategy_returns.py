@@ -89,6 +89,10 @@ def long_short_returns(
     return s.sort_index()
 
 
+_DEGEN_SCALE_EPS = 1e-12  # below this std the Sharpe is degenerate (identical values)
+_FLAT_SCALE_EPS = 1e-6    # below this std skip sample skew/kurt (scipy precision loss)
+
+
 def sharpe_monthly(returns: pd.Series) -> float:
     """Per-period Sharpe (NOT annualized) — the input DSR/haircut expect."""
     r = np.asarray(returns.to_numpy(dtype=float), dtype=float)
@@ -98,13 +102,17 @@ def sharpe_monthly(returns: pd.Series) -> float:
     sd = float(r.std(ddof=1))
     # identical values leave a ~1e-17 floating-point residual (not exactly 0);
     # treat a near-zero scale as degenerate -> NaN (no meaningful Sharpe).
-    if not np.isfinite(sd) or sd < 1e-12:
+    if not np.isfinite(sd) or sd < _DEGEN_SCALE_EPS:
         return float("nan")
     return float(r.mean() / sd)
 
 
 def _moments(returns: pd.Series) -> tuple[float, float, float, int]:
-    """(sharpe, skew, kurtosis-not-excess, n_obs) from a return series."""
+    """(sharpe, skew, kurtosis-not-excess, n_obs) from a return series.
+
+    Sample skew/kurtosis are only computed when the series is not near-constant
+    (``std >= _FLAT_SCALE_EPS``) — scipy emits a precision-loss warning and the
+    moments are unreliable for near-flat series (the rank-IC nulls predict these)."""
     from scipy import stats as _stats  # transitive via statsmodels/purgedcv
 
     r = np.asarray(returns.to_numpy(dtype=float), dtype=float)
@@ -113,9 +121,15 @@ def _moments(returns: pd.Series) -> tuple[float, float, float, int]:
     if n < 2:
         return float("nan"), 0.0, 3.0, n
     sd = float(r.std(ddof=1))
-    sharpe = float(r.mean() / sd) if (np.isfinite(sd) and sd >= 1e-12) else float("nan")
-    skew = float(_stats.skew(r, bias=False)) if n >= 3 else 0.0
-    kurt = float(_stats.kurtosis(r, fisher=False, bias=False)) if n >= 4 else 3.0
+    sharpe = float(r.mean() / sd) if (np.isfinite(sd) and sd >= _DEGEN_SCALE_EPS) else float("nan")
+    skew = 0.0
+    kurt = 3.0
+    if np.isfinite(sd) and sd >= _FLAT_SCALE_EPS:
+        with np.errstate(invalid="ignore"):
+            if n >= 3:
+                skew = float(_stats.skew(r, bias=False))
+            if n >= 4:
+                kurt = float(_stats.kurtosis(r, fisher=False, bias=False))
     return sharpe, skew, kurt, n
 
 
@@ -123,7 +137,8 @@ def strategy_eval(
     strategies: dict[str, pd.Series],
     *,
     benchmark: str | None = None,
-    n_trials: int = 1,
+    n_trials_grid: tuple[int, ...] = (1, 2, 5, 20),
+    min_months_for_cross_tests: int = 12,
 ) -> dict:
     """Evaluate a set of L-S strategy return series with multiple-testing corrections.
 
@@ -133,14 +148,18 @@ def strategy_eval(
             their common months for the cross-strategy tests.
         benchmark: strategy name used as the SPA benchmark (H0: no strategy beats
             it). Default: the first strategy.
-        n_trials: independent configurations tried (for DSR deflation). The
-            honest family size is the count of strategies actually evaluated
-            across the project (Phase B + Phase C arms + controls); pass the
-            intended value and report it.
+        n_trials_grid: DSR is reported at EACH trial count in the grid (mirrors
+            ``phase_c.N_TRIALS_GRID``), because the honest family is the
+            project-wide set of strategies tried (Phase B/C arms + controls ≈ 10+),
+            not just the few evaluated in this lens. ``dsr_p_conservative`` is the
+            p-value at the LARGEST trial count (the most deflation).
+        min_months_for_cross_tests: Hansen-SPA/MCS need a real track record to be
+            meaningful (studentizing loss differentials on n=2 is not). Below this
+            floor the cross-tests are skipped with an explicit record.
 
     Returns:
-        ``{"per_strategy": {name: {sharpe, dsr, ...}}, "spa": ..., "mcs": ...,
-        "n_trials", "n_months", "benchmark"}``.
+        ``{"per_strategy": {name: {sharpe, dsr_by_trials, dsr_p_conservative, ...}},
+        "spa": ..., "mcs": ..., "n_trials_grid", "n_months_common", "benchmark"}``.
     """
     names = list(strategies)
     if not names:
@@ -148,10 +167,13 @@ def strategy_eval(
     benchmark = benchmark or names[0]
     if benchmark not in strategies:
         raise ValueError(f"benchmark {benchmark!r} not in strategies {names}")
+    grid = tuple(int(t) for t in n_trials_grid)
+    if not grid or any(t < 1 for t in grid):
+        raise ValueError(f"n_trials_grid must be non-empty ints >= 1, got {n_trials_grid}")
+    conservative_trials = max(grid)
 
     # align all series on the common months (intersection) for cross-strategy tests
     aligned = pd.DataFrame({n: strategies[n] for n in names}).sort_index()
-    aligned = aligned.dropna(how="all")
     common = aligned.dropna()  # months where EVERY strategy has a return
     n_months = int(len(common))
 
@@ -159,30 +181,44 @@ def strategy_eval(
     for n in names:
         r = strategies[n].dropna()
         sharpe, skew, kurt, n_obs = _moments(r)
+        dsr_by: dict[int, dict] = {}
         if np.isfinite(sharpe):
-            dsr = deflated_sharpe(sharpe, n_trials, n_obs, skew=skew, kurtosis=kurt)
+            for nt in grid:
+                try:
+                    d = deflated_sharpe(sharpe, nt, n_obs, skew=skew, kurtosis=kurt)
+                except ValueError as e:  # denom_sq<=0 (extreme skew x sharpe) etc.
+                    d = {"dsr": float("nan"), "p_value": float("nan"),
+                         "sr_star": float("nan"), "dsr_error": str(e)}
+                dsr_by[nt] = {
+                    "dsr": float(d["dsr"]),
+                    "p_value": float(d["p_value"]),
+                    "sr_star": float(d["sr_star"]),
+                }
         else:
-            dsr = {"dsr": float("nan"), "p_value": float("nan"),
-                   "sr_star": float("nan"), "n_obs": n_obs, "n_trials": n_trials}
+            dsr_by = {nt: {"dsr": float("nan"), "p_value": float("nan"),
+                          "sr_star": float("nan")} for nt in grid}
         per[n] = {
             "sharpe_monthly": sharpe,
             "sharpe_annualized": sharpe * np.sqrt(12) if np.isfinite(sharpe) else float("nan"),
             "mean_monthly": float(r.mean()) if n_obs else float("nan"),
             "n_months": int(n_obs),
-            "dsr": float(dsr["dsr"]),
-            "dsr_p_value": float(dsr["p_value"]),
-            "sr_star": float(dsr["sr_star"]),
+            "dsr_by_trials": dsr_by,
+            "dsr_p_conservative": dsr_by[conservative_trials]["p_value"],
+            "survives_conservative": bool(
+                np.isfinite(sharpe)
+                and dsr_by[conservative_trials]["p_value"] < 0.05
+            ),
         }
 
     out: dict = {
         "per_strategy": per,
-        "n_trials": int(n_trials),
+        "n_trials_grid": list(grid),
         "n_months_common": n_months,
         "benchmark": benchmark,
     }
 
-    # cross-strategy tests need >= 2 strategies with overlapping months
-    if n_months >= 2 and len(names) >= 2 and len(common.columns) >= 2:
+    # cross-strategy tests need >= 2 strategies AND a meaningful common track record
+    if len(names) >= 2 and n_months >= min_months_for_cross_tests:
         # losses = -returns (lower = better); rows = strategies, cols = months
         loss = (-common).T.to_numpy(dtype=float)  # (n_strategies, n_months)
         try:
@@ -197,4 +233,10 @@ def strategy_eval(
             out["mcs"] = hansen_mcs(loss, seed=0)
         except Exception as e:  # noqa: BLE001
             out["mcs_error"] = str(e)
+    else:
+        reason = ("insufficient_strategies" if len(names) < 2
+                  else "insufficient_common_months")
+        out["spa"] = {"skipped": reason, "n_strategies": len(names),
+                      "n_months_common": n_months,
+                      "min_months_required": min_months_for_cross_tests}
     return out
