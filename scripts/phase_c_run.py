@@ -42,6 +42,16 @@ def _sha(path: Path) -> str:
 
 
 def main() -> None:
+    import hashlib
+    import json
+    import os
+
+    # PHASE_C_NO_LEDGER=1 -> reproducibility rerun (pre-reg §9): rebuild the SAME
+    # config (H6 -> identical sig + IC) and save_run artifacts, but write NOTHING
+    # to the ledger (the confirmatory:first headline is already locked). Used to
+    # regenerate dashboard artifacts without polluting the headline.
+    artifacts_only = os.environ.get("PHASE_C_NO_LEDGER") == "1"
+
     fund = pd.read_parquet(CACHE / "phase_b_fundamentals.parquet")
     px = pd.read_parquet(CACHE / "phase_b_prices.parquet")
     mem = load_pierrebrunelle_membership()
@@ -79,14 +89,18 @@ def main() -> None:
         "sanity_col_pinned": SANITY_COL,
     }
     config = build_config(shas, bundle_meta)
-    sig = commit_config(config, LEDGER)  # HIGH-1: BEFORE any result
-    print(f"[C] config_committed sig={sig}  (logged BEFORE result)", flush=True)
+    if artifacts_only:
+        sig = hashlib.sha256(json.dumps(config, sort_keys=True).encode()).hexdigest()
+        print(f"[C] ARTIFACTS-ONLY rerun (no ledger write); sig={sig}", flush=True)
+    else:
+        sig = commit_config(config, LEDGER)  # HIGH-1: BEFORE any result
+        print(f"[C] config_committed sig={sig}  (logged BEFORE result)", flush=True)
 
     result = run_confirmatory(
         fund, px, mem,
         bundle_broadcast=bundle_broadcast, earnings_long=earnings_long,
         sanity_broadcast=sanity_broadcast, config=config, sig=sig,
-        ledger_path=LEDGER, results_base=None,
+        ledger_path=None if artifacts_only else LEDGER, results_base=None,
     )
 
     d = result["differential_macro_minus_base"]
