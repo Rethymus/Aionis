@@ -22,6 +22,7 @@ from aionis.features.macro_surprise import (
     build_surprise_features,
     fetch_alfred_vintages,
     first_print_changes,
+    macro_surprise_date_broadcast,
     surprise_time_series,
 )
 
@@ -320,3 +321,62 @@ def test_no_forward_match_a_future_release_is_lookahead(
     assert out.loc[f"CPI_{day_before:%Y%m%d}"].tolist() == [0.0, 0.0]
     # The 5 exact-date matches still resolve (1/6 unmatched ~ 17% <= 20% guard).
     assert out["has_surprise"].sum() == 5.0
+
+
+# --- date-broadcast helper (Phase C cross-section feature) -------------------
+
+
+def test_date_broadcast_is_pit_step_function_nan_before_first_release(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """The broadcast at d = the most recent surprise_z published <= d; NaN before
+    the first release with a computable z. Verified by recomputing the expected
+    step function from the module's own transforms (offline)."""
+    _no_network(monkeypatch)
+    rows, _refs, _pubs = _make_archive(n_months=26, kind="pct", seed=0)
+    _write_cache(tmp_path, "CPIAUCSL", rows)
+
+    dates = pd.date_range("2018-12-01", "2021-06-01", freq="W-MON").normalize()
+    got = macro_surprise_date_broadcast(
+        "CPIAUCSL", dates, "offline", tmp_path, name="macro_cpi_surprise"
+    )
+
+    # expected: dropna surprise_z, dedup pub_date (headline), backward merge_asof
+    vint = fetch_alfred_vintages("CPIAUCSL", "offline", tmp_path)
+    ts = surprise_time_series(first_print_changes(vint, "pct"))
+    head = (
+        ts.dropna(subset=["surprise_z"])
+        .sort_values(["pub_date", "ref_date"])
+        .drop_duplicates("pub_date", keep="last")[["pub_date", "surprise_z"]]
+        .sort_values("pub_date")
+    )
+    head["pub_date"] = head["pub_date"].dt.normalize()
+    exp = pd.merge_asof(
+        pd.DataFrame({"date": dates}),
+        head.rename(columns={"pub_date": "date"}),
+        on="date", direction="backward",
+    )["surprise_z"].to_numpy()
+
+    np.testing.assert_array_equal(got.to_numpy(), exp)
+    assert got.name == "macro_cpi_surprise"
+    assert list(got.index) == list(dates)
+
+    # strictly before the first release with a computable z -> NaN (PIT)
+    first_pub = head["pub_date"].iloc[0]
+    pre = got.index[got.index < first_pub]
+    assert len(pre) > 0
+    assert got.loc[pre].isna().all()
+
+    # after the last release the value is constant (carries the last surprise)
+    last_pub = head["pub_date"].iloc[-1]
+    tail = got.loc[got.index > last_pub]
+    assert len(tail) > 0
+    assert tail.nunique() == 1
+    assert tail.iloc[0] == head["surprise_z"].iloc[-1]
+
+
+def test_date_broadcast_rejects_unknown_series() -> None:
+    import pytest as _pytest
+
+    with _pytest.raises(ValueError, match="no change_kind"):
+        macro_surprise_date_broadcast("NOTASERIES", pd.DatetimeIndex([]), "offline")

@@ -55,6 +55,10 @@ SERIES_FOR_EVENT_TYPE: dict[str, tuple[str, Literal["pct", "diff"]]] = {
     "CPI": ("CPIAUCSL", "pct"),  # index level -> MoM % change
     "NFP": ("PAYEMS", "diff"),  # level in thousands -> MoM change in thousands
 }
+# Inverse lookup (series_id -> change_kind) for the date-broadcast helper.
+_CHANGE_KIND_FOR_SERIES: dict[str, Literal["pct", "diff"]] = {
+    sid: kind for (_et, (sid, kind)) in SERIES_FOR_EVENT_TYPE.items()
+}
 
 EXPECTATION_WINDOW = 12  # trailing actual changes forming the expectation
 EXPECTATION_MIN = 6  # fewer strictly-prior changes -> NaN expectation
@@ -300,5 +304,72 @@ def build_surprise_features(
         n_events=len(out),
         n_macro=n_macro,
         n_with_surprise=int(out["has_surprise"].sum()),
+    )
+    return out
+
+
+def macro_surprise_date_broadcast(
+    series_id: str,
+    as_of_dates: pd.DatetimeIndex,
+    fred_api_key: str,
+    cache_dir: Path | None = None,
+    *,
+    name: str | None = None,
+) -> pd.Series:
+    """Date-broadcast macro surprise for the Phase C selection panel.
+
+    Phase C consumes the macro surprise as a *cross-section-broadcast* feature
+    (one value per session, identical across tickers) — not event-keyed. This
+    builds the per-release ``surprise_z`` with the *same* construction as
+    :func:`build_surprise_features`, then carries it forward to each as-of date
+    with a backward ``merge_asof``: the value at ``d`` is the surprise of the
+    most recent release published on or before ``d``; NaN before the first
+    release with a computable ``surprise_z``.
+
+    This is the PIT broadcast rule of ``docs/phase-c-preregistration.md`` §8 — a
+    release published at ``r`` is knowable at every ``d >= r`` and NEVER at
+    ``d < r`` (this is *not* price forward-fill; it is the legitimate "last known
+    macro surprise", PIT-correct because the surprise revealed at ``r`` remains
+    the latest knowable value until the next release). ``as_of_dates`` MUST be
+    sorted ascending (the session grid is).
+
+    Returns a date-indexed :class:`~pandas.Series` ready to hand to
+    :func:`aionis.features.selection_panel.build_selection_panel` via the
+    ``macro=`` argument (assemble multiple into one date-indexed frame).
+    """
+    if cache_dir is None:
+        from aionis.config import settings
+
+        cache_dir = settings.data_dir / "cache"
+    change_kind = _CHANGE_KIND_FOR_SERIES.get(series_id)
+    if change_kind is None:
+        raise ValueError(
+            f"no change_kind registered for series_id {series_id!r} "
+            f"(known: {sorted(_CHANGE_KIND_FOR_SERIES)})"
+        )
+    vintages = fetch_alfred_vintages(series_id, fred_api_key, cache_dir)
+    ts = surprise_time_series(first_print_changes(vintages, change_kind))
+    # One surprise_z per pub_date: a catch-up release first-prints two ref months
+    # on one pub_date; keep the headline (most recent ref month), same discipline
+    # as build_surprise_features. Drop NaN-z releases (insufficient strictly-prior
+    # history) so the broadcast is NaN until a real surprise exists.
+    head = (
+        ts.dropna(subset=["surprise_z"])
+        .sort_values(["pub_date", "ref_date"])
+        .drop_duplicates("pub_date", keep="last")[["pub_date", "surprise_z"]]
+        .sort_values("pub_date")
+    )
+    dates = pd.DatetimeIndex(as_of_dates).normalize()
+    head["pub_date"] = head["pub_date"].dt.normalize()
+    left = pd.DataFrame({"date": dates})
+    right = head.rename(columns={"pub_date": "date"})
+    m = pd.merge_asof(left, right, on="date", direction="backward")
+    out = pd.Series(
+        m["surprise_z"].to_numpy(), index=dates,
+        name=name or f"macro_{series_id.lower()}_surprise",
+    )
+    log.info(
+        "macro_surprise_broadcast_built",
+        series_id=series_id, n=len(out), n_valid=int(out.notna().sum()),
     )
     return out

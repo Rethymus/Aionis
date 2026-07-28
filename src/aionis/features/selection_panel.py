@@ -63,6 +63,7 @@ def build_selection_panel(
     ff: pd.DataFrame | None = None,
     macro: pd.DataFrame | None = None,
     align_on: str = "filed",
+    extra_features: pd.DataFrame | None = None,
 ) -> pd.DataFrame:
     """Assemble the PIT cross-section panel [date, ticker, features..., y_fwd_ret].
 
@@ -76,6 +77,14 @@ def build_selection_panel(
     — value knowable at period-end + a form-dependent lag; see
     :func:`aionis.ingest.fundamentals.pit_align`). The two arms share prices /
     universe / features; ONLY fundamental timing differs.
+
+    ``extra_features`` (Phase C) is a long frame ``[date, ticker, <cols>...]`` joined
+    on ``(date, ticker)`` with ``how="left"`` — for per-(ticker, date) features such as
+    earnings-surprise that are NOT date-broadcast (``macro``/``ff``) and NOT
+    fundamentals. It is a left join on the panel's existing rows, so it adds COLUMNS
+    only (never rows) — the ``(date, ticker)`` layout is unchanged, which is what lets
+    ``run_arm_oos`` assert layout equality across arms that differ only in their
+    feature set. Missing (ticker, date) pairs fill as NaN (native LightGBM handling).
     """
     tickers = list(tickers or prices.columns)
     sessions = nyse_sessions(prices.index.min(), prices.index.max())
@@ -111,4 +120,11 @@ def build_selection_panel(
         tidy = tidy.merge(ff.reset_index(names="date"), on="date", how="left")
     if macro is not None:
         tidy = tidy.merge(macro.reset_index(names="date"), on="date", how="left")
+
+    # Per-(ticker, date) extra features (Phase C bundle, e.g. earnings-surprise).
+    # Left join on the existing (date, ticker) rows -> columns only, never rows.
+    if extra_features is not None and len(extra_features):
+        ef = extra_features.copy()
+        ef["date"] = pd.to_datetime(ef["date"]).dt.normalize()
+        tidy = tidy.merge(ef, on=["date", "ticker"], how="left")
     return tidy

@@ -10,7 +10,7 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-from aionis.eval.two_arm import run_two_arm_oos
+from aionis.eval.two_arm import compute_shared_folds, run_arm_oos, run_two_arm_oos
 
 
 def _fixtures(seed: int = 0, n_sess: int = 120,
@@ -88,3 +88,93 @@ def test_scores_differ_when_fundamental_timing_differs() -> None:
     assert not np.array_equal(a.loc[common].to_numpy(), b.loc[common].to_numpy()), (
         "arm_state and arm_base produced identical scores despite different fund timing"
     )
+
+
+# --- Phase C feature-set axis (arm_macro = arm_base + bundle) -----------------
+
+
+def test_phase_c_bundle_adds_columns_without_changing_row_layout() -> None:
+    """The Phase C bundle (date-broadcast macro + per-(ticker,date) earnings) must
+    add COLUMNS only — the (date, ticker) layout stays identical to arm_base, so the
+    shared-fold layout assertion inside ``run_arm_oos`` still holds and both arms are
+    scored on exactly the same rows (the differential then isolates the bundle)."""
+    px, mem = _fixtures(seed=1, n_sess=80)
+    horizon, ns, emb, params = 5, 3, 5, {"n_estimators": 40}
+    folds, ref = compute_shared_folds(px, mem, horizon, n_splits=ns, embargo_sessions=emb)
+
+    base = run_arm_oos(px, pd.DataFrame(), mem, horizon, ["close"], "filed",
+                      folds, ref, params)
+
+    # date-broadcast macro (one value per session) + per-(ticker,date) earnings
+    sessions = pd.DatetimeIndex(sorted(px.index))
+    macro = pd.DataFrame(
+        {"macro_x": np.arange(len(sessions), dtype=float)}, index=sessions,
+    )
+    ref_dates = sorted(ref["date"].unique())
+    ref_tickers = sorted(ref["ticker"].unique())
+    earn_rows = [
+        (d, t, float((d.dayofweek + ord(t)) % 7))
+        for d in ref_dates for t in ref_tickers
+    ]
+    earn = pd.DataFrame(earn_rows, columns=["date", "ticker", "earn"])
+
+    # If the bundle changed the (date, ticker) layout, run_arm_oos would raise
+    # AssertionError here. It does not -> layout is invariant.
+    macro_arm = run_arm_oos(
+        px, pd.DataFrame(), mem, horizon, ["close", "macro_x", "earn"], "filed",
+        folds, ref, params, macro=macro, extra_features=earn,
+    )
+
+    base_layout = base[["date", "ticker"]].reset_index(drop=True)
+    macro_layout = macro_arm[["date", "ticker"]].reset_index(drop=True)
+    assert macro_layout.equals(base_layout)
+    # run_arm_oos returns only the score panel (columns not leaked out)
+    assert set(macro_arm.columns) == {"date", "ticker", "score", "y_fwd_ret"}
+    assert macro_arm["score"].notna().any()
+
+
+def test_phase_c_bundle_columns_actually_consumed_by_learner() -> None:
+    """Two-sided proof that the threaded extra_features column reaches the learner:
+
+    (a) when the column is in ``feature_cols`` it changes the scores vs arm_base;
+    (b) when it is NOT in ``feature_cols`` it is ignored and scores are bit-identical
+    to arm_base (deterministic LightGBM, same consumed columns). Robust to the
+    synthetic data having no real signal — it tests the WIRING, not IC sign."""
+    px, mem = _fixtures(seed=2, n_sess=120)
+    horizon, ns, emb, params = 5, 3, 5, {"n_estimators": 40}
+    folds, ref = compute_shared_folds(px, mem, horizon, n_splits=ns, embargo_sessions=emb)
+
+    base = run_arm_oos(px, pd.DataFrame(), mem, horizon, ["close"], "filed",
+                      folds, ref, params)
+
+    ref_dates = sorted(ref["date"].unique())
+    ref_tickers = sorted(ref["ticker"].unique())
+    sig_rows = [
+        (d, t, float((i * 7 + j * 3) % 11))
+        for i, d in enumerate(ref_dates)
+        for j, t in enumerate(ref_tickers)
+    ]
+    sig_long = pd.DataFrame(sig_rows, columns=["date", "ticker", "sig"])
+
+    # (a) sig IS consumed -> scores differ from base
+    used = run_arm_oos(
+        px, pd.DataFrame(), mem, horizon, ["close", "sig"], "filed",
+        folds, ref, params, extra_features=sig_long,
+    )
+    used_s = used.set_index(["date", "ticker"])["score"]
+    base_s = base.set_index(["date", "ticker"])["score"]
+    common = used_s.index.intersection(base_s.index)
+    assert not np.array_equal(
+        used_s.loc[common].to_numpy(), base_s.loc[common].to_numpy()
+    ), "sig in feature_cols did not change scores — column not consumed"
+
+    # (b) sig present in the panel but NOT in feature_cols -> ignored -> bit-identical
+    ignored = run_arm_oos(
+        px, pd.DataFrame(), mem, horizon, ["close"], "filed",
+        folds, ref, params, extra_features=sig_long,
+    )
+    ign_s = ignored.set_index(["date", "ticker"])["score"]
+    common2 = ign_s.index.intersection(base_s.index)
+    assert np.array_equal(
+        ign_s.loc[common2].to_numpy(), base_s.loc[common2].to_numpy()
+    ), "unused extra column leaked into the learner"

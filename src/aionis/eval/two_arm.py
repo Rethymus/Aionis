@@ -26,9 +26,15 @@ _ARMS = {"arm_state": "filed", "arm_base": "end_lag"}
 def _clean_panel(
     prices: pd.DataFrame, fundamentals_long: pd.DataFrame,
     membership: pd.DataFrame, horizon: int, align_on: str,
+    *,
+    macro: pd.DataFrame | None = None,
+    extra_features: pd.DataFrame | None = None,
 ) -> pd.DataFrame:
     """Build -> PIT-mask -> drop NaN-label -> canonical (date, ticker) order."""
-    p = build_selection_panel(prices, fundamentals_long, horizon, align_on=align_on)
+    p = build_selection_panel(
+        prices, fundamentals_long, horizon, align_on=align_on,
+        macro=macro, extra_features=extra_features,
+    )
     p = mask_panel_to_pit(p, membership)
     return (
         p.dropna(subset=["y_fwd_ret"])
@@ -74,14 +80,29 @@ def run_arm_oos(
     prices: pd.DataFrame, fundamentals_long: pd.DataFrame, membership: pd.DataFrame,
     horizon: int, feature_cols: list[str], align_on: str,
     folds: list[CVSplit], ref_layout: pd.DataFrame, params: dict | None = None,
+    *,
+    macro: pd.DataFrame | None = None,
+    extra_features: pd.DataFrame | None = None,
 ) -> pd.DataFrame:
     """Run ONE arm against pre-computed shared folds -> OOS panel
     ``[date, ticker, score, y_fwd_ret]``.
 
     Asserts the arm's ``(date, ticker)`` layout matches ``ref_layout`` so the fold
     indices align arm-to-arm. This is what lets a control gate run arm_state on a
-    perturbed frame while arm_base uses the real one, both on the same folds."""
-    p = _clean_panel(prices, fundamentals_long, membership, horizon, align_on)
+    perturbed frame while arm_base uses the real one, both on the same folds.
+
+    ``macro`` / ``extra_features`` (Phase C) thread straight into
+    :func:`build_selection_panel`: ``macro`` is a date-indexed frame broadcast across
+    tickers (macro/VIX surprise); ``extra_features`` is a long ``[date, ticker, ...]``
+    frame for per-(ticker, date) features (earnings surprise). Both are left joins on
+    the panel's existing rows, so they add columns only — the ``(date, ticker)``
+    layout is identical to any other arm built on the same prices/universe, and the
+    layout assertion still holds (this is why folds are computed from an
+    empty-fundamentals panel in :func:`compute_shared_folds`)."""
+    p = _clean_panel(
+        prices, fundamentals_long, membership, horizon, align_on,
+        macro=macro, extra_features=extra_features,
+    )
     layout = p[["date", "ticker"]].reset_index(drop=True)
     assert layout.equals(ref_layout), (
         f"align_on={align_on} row layout diverges from ref (PIT mask / y must match)"
