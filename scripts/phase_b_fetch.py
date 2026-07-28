@@ -62,7 +62,10 @@ def main() -> None:
         use_tiingo = bool(settings.tiingo_api_key)
         if use_tiingo:
             try:
-                _h = {"Authorization": f"Token {settings.tiingo_api_key}", "User-Agent": "aionis/0.1"}
+                _h = {
+                    "Authorization": f"Token {settings.tiingo_api_key}",
+                    "User-Agent": "aionis/0.1",
+                }
                 _r = _rq.get("https://api.tiingo.com/tiingo/daily/AAPL/prices", headers=_h,
                              params={"startDate": START, "endDate": END}, timeout=12)
                 if _r.status_code != 200:
