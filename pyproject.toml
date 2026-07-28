@@ -25,6 +25,7 @@ dependencies = [
     "openai>=2.48.0",
     "pandas-datareader>=0.10.0",
     "arch>=8.0.0",
+    "praw>=8.0.2",
 ]
 
 [project.optional-dependencies]
