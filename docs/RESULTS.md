@@ -21,15 +21,15 @@
   - **A** = Event（ERL 事件冲击，sector-ETF）→ **pilot**（underpowered）。
   - **B** = Entity/State（基本面 **filed-date vs period-end+lag** 时点）→ **confirmatory #1**。
   - **C** = Event 的「世界状态惊喜 bundle」（CPI/NFP/VIX/earnings surprise）→ **confirmatory #2**。
-  - **D** = Relationship（13D 维权持股 + SIC 同业）→ **PENDING**（run deferred）。
+  - **D** = Relationship（13D 维权持股 + SIC 同业）→ **confirmatory #3**（**NULL SUPPORTED，可发表**）。
   - **E** = （未来）组合/集成。
 - **null = betting favorite**（efficient-markets 先验）。CI 跨 0 **不得**宣称正向；只有当 CI **紧到
   半宽 < 0.015** 时，null 才算「可发表」。
 - **抗泄漏锚点 = durable registry**：每条 confirmatory config 的 sha256 **先于**首次 OOS 结果入
   `runs/ledger.jsonl`；同 config 重跑免费（H6 确定性），改 config = 新 ledger 行（绝不静默覆盖）。
 
-**一句话结论**：截至 2026-07-29，两条 confirmatory claim（B、C）**均判 NULL SUPPORTED**；
-其中 Phase C 的 differential **紧到可发表**（CI 半宽 0.0130 < 0.015 且跨 0）。策略回报侧
+**一句话结论**：截至 2026-07-29，三条 confirmatory claim（B、C、D）**均判 NULL SUPPORTED 且全部可发表**；
+其中 Phase D 的 differential **最紧**（CI 半宽 0.0107 < 0.015 且跨 0，三阶段最小）。策略回报侧
 （exploratory）无任何策略在项目族 deflation 下存活。
 
 ---
@@ -63,22 +63,22 @@ benchmark 从「事件窗 DA-lift」re-anchor 到「横截面月 rank-IC」（�
 
 | 字段 | **Phase B**（filed-date 时点） | **Phase C**（惊喜 bundle） | **Phase D**（关系 bundle） |
 |---|---|---|---|
-| config_sig | `17245a75…` | `a7fdb48f…` | — |
-| ledger event | `confirmatory:first` | `confirmatory:first` | **PENDING** |
+| config_sig | `17245a75…` | `a7fdb48f…` | `d3158063…` |
+| ledger event | `confirmatory:first` | `confirmatory:first` | `confirmatory:first` |
 | claim（双尾） | filed-date 臂是否优于 period-end+lag 臂 | 惊喜 bundle 是否优于 fundamentals-only | 13D+SIC 关系 bundle 是否优于 fundamentals-only |
-| 处理臂 mean IC | 0.01450（arm_state，filed） | 0.00882（arm_macro，bundle） | — |
-| 基线臂 mean IC | 0.01531（arm_base） | 0.01531（arm_base，同 B） | — |
+| 处理臂 mean IC | 0.01450（arm_state，filed） | 0.00882（arm_macro，bundle） | 0.01233（arm_rel，关系 bundle） |
+| 基线臂 mean IC | 0.01531（arm_base） | 0.01531（arm_base，同 B） | 0.01531（arm_base，同 B/C） |
 | sanity 臂 mean IC | — | 0.02087（Mkt-RF，已定价锚） | — |
-| **differential**（处理 − 基线） | **−0.00080** | **−0.00649** | — |
-| DM-p（MBB） | **0.870** | **0.355** | — |
-| differential CI | （单臂 ci_half 见下） | [−0.01953, 0.00656] | — |
-| differential ci_half | —（B 未单列；见注） | **0.01304** | — |
-| 处理臂 ci_half | 0.01599 | 0.01752 | — |
-| 基线臂 ci_half | 0.01499 | 0.01499 | — |
-| **publishable**（ci_half < 0.015） | 单臂贴边；differential CI 见注 | **是**（differential ci_half=0.0130） | — |
-| H6 deterministic | **true** | **true** | — |
-| 控制：placebo / shuffle | placebo DM-p=0.080；lag-shift DM-p=0.270 | bundle-shuffle DM-p=0.555；sanity DM-p=0.157 | — |
-| **verdict** | **NULL SUPPORTED** | **NULL SUPPORTED（可发表）** | **PENDING** |
+| **differential**（处理 − 基线） | **−0.00080** | **−0.00649** | **−0.00298** |
+| DM-p（MBB） | **0.870** | **0.355** | **0.597** |
+| differential CI | （单臂 ci_half 见下） | [−0.01953, 0.00656] | [−0.01371, 0.00775] |
+| differential ci_half | —（B 未单列；见注） | **0.01304** | **0.01073** |
+| 处理臂 ci_half | 0.01599 | 0.01752 | 0.01734 |
+| 基线臂 ci_half | 0.01499 | 0.01499 | 0.01499 |
+| **publishable**（ci_half < 0.015） | 单臂贴边；differential CI 见注 | **是**（differential ci_half=0.0130） | **是**（differential ci_half=0.0107，三阶段最紧） |
+| H6 deterministic | **true** | **true** | **true** |
+| 控制：placebo / shuffle | placebo DM-p=0.080；lag-shift DM-p=0.270 | bundle-shuffle DM-p=0.555；sanity DM-p=0.157 | bundle-shuffle DM-p=0.538 |
+| **verdict** | **NULL SUPPORTED** | **NULL SUPPORTED（可发表）** | **NULL SUPPORTED（可发表）** |
 
 **注（Phase B differential CI）**：Phase B 的 ledger 行只单列了各臂 ci_half（0.0150–0.0160，贴边）
 与 differential 的 DM-p（0.870），**未**单列 differential 自身的 HAC SE/CI。该 differential CI 在
@@ -96,9 +96,12 @@ leave-one-out 归因（exploratory，非 gate）：去掉任一单分量（CPI/N
 显著（DM-p 0.33–0.80），无单一主导分量。sanity 锚 Mkt-RF 显示**有限**增量（mean_diff=0.0056，
 DM-p=0.157），校准「本测试能检出已定价→无增量」。
 
-**Phase D**：config 尚未冻结、run 显式 DEFERRED（pending 13D ingest + SIC 同业特征 +
-joined-panel PIT 测试建成）。预注册确认 confirmatory bundle = {13D 维权持股 + SIC 同业}；
-13F 机构中心度 / 供应链客户传导降为 exploratory leave-one-out（覆盖驱动范围决策，见
+**Phase D 判读**：关系 bundle（SIC 同业动量 `peer_mom` + 13D 维权持股事件 `stakes_13d_event`）相对
+fundamentals-only 的增量 = **−0.0030**（DM-p=0.597），CI [−0.0137, 0.0078] **跨 0 且为三阶段最紧**
+（ci_half=0.0107 < 0.015）→「同业关系与维权持仓信号在月频已被有效定价」。bundle-shuffle placebo
+增量 ≈ 0（DM-p=0.538，扰动后增量消失）。leave-one-out 归因（exploratory，非 gate）：去掉 `peer_mom`
+增量 +0.0022（DM-p=0.369），去掉 `stakes_13d_event` 增量 −0.0062（DM-p=0.307）——均不显著，无单一
+主导分量。13F 机构中心度 / 供应链客户传导按覆盖降为 exploratory leave-one-out（见
 [`phase-d-preregistration.md`](phase-d-preregistration.md) §0.5）。
 
 ---
@@ -140,7 +143,7 @@ Aionis 的可信度不靠「单次 unblind」的仪式，而靠**结构性的、
   标签泄漏到训练折；两臂**共享同一组折**，differential 只来自被隔离的特征集。
 - **H6 bit-identical 确定性**：冻结 LightGBM（`n_jobs=1, random_state=0`，bagging/feature/drop
   seed 全 0）+ 版本钉（lightgbm 4.7.0 / purgedcv 0.1.2 / arch 8.0.0）。两次 panel-build + rank-IC
-  产出**位级相同**——Phase B/C 均实证 `H6_deterministic: true`。
+  产出**位级相同**——Phase B/C/D 均实证 `H6_deterministic: true`。
 - **数据接入 7 门**（[`data-intake-rubric.md`](data-intake-rubric.md)）：任何第三方数据集进栈前须过
   G1 license / G2 PIT / G3 no-revision / G4 reproducibility / G5 exploratory-only / G6 selection /
   G7 politeness。判定矩阵：**G1+G2 过 + G3 已验证 → confirmatory**；G3 不可证 → 快照冻结 +
@@ -184,6 +187,8 @@ Aionis 的可信度不靠「单次 unblind」的仪式，而靠**结构性的、
 | resolvable universe（588 clean） | #25 | 588/705 = 83.4% of pierrebrunelle 2016+ |
 | Phase C config_committed | #29 | — |
 | Phase C confirmatory:first | #30 | `runs/results/a7fdb48f…/{ic_state,ic_base}.parquet` + `differential.json` |
-| strategy-return（exploratory） | #31, #32 | DSR grid [1,2,5,20] + SPA + MCS |
+| Phase D config_committed | #33 | — |
+| Phase D confirmatory:first | #34 | `runs/results/d3158063…/{ic_state,ic_base}.parquet` + `differential.json` |
+| strategy-return（exploratory） | #31, #32 | DSR grid [1,2,5,20] + SPA + MCS（仅 B/C 策略；无 Phase D 策略行） |
 
-> 本快照随新 confirmatory 结果入 ledger 而更新。Phase D 落地后补表。
+> 本快照随新 confirmatory 结果入 ledger 而更新。
