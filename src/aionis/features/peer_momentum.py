@@ -17,8 +17,9 @@ licenses only (pandas / numpy).
 """
 from __future__ import annotations
 
-import numpy as np
 import pandas as pd
+
+from aionis.features.propagation import propagate_panel
 
 
 def peer_momentum_panel(
@@ -45,29 +46,6 @@ def peer_momentum_panel(
     tickers = list(tickers or prices.columns)
     # backward trailing return: close[t]/close[t-window] - 1 (only close <= t)
     trail = (prices[tickers] / prices[tickers].shift(window)) - 1.0
-    long = (
-        trail.stack().rename("trail").reset_index()
-        .rename(columns={"level_0": "date", "level_1": "ticker"})
-    )
-    long["sic"] = long["ticker"].map(sic_map)
-    # drop tickers with no SIC (cannot form a peer group) before grouping
-    long = long.dropna(subset=["sic"])
-    if long.empty:
-        return pd.DataFrame(
-            np.nan, index=pd.DatetimeIndex(prices.index), columns=tickers,
-        )
-    grp = long.groupby(["date", "sic"], sort=False)["trail"]
-    gmean = grp.transform("mean")
-    # count of NON-NaN trails (NOT size): on pandas >=3.0 `.stack()` retains NaN
-    # rows, so `transform("size")` would count NaN-inclusive while `mean` skips
-    # them, making `(mean*size - self)/(size-1)` wrong whenever a peer's trailing
-    # return is undefined (warmup / newly entered). `count` keeps the leave-one-out
-    # algebra exact, and `.where(gn > 1)` then NaNs a group with <2 valid peers.
-    gn = grp.transform("count")
-    # ex-self mean: (sum - self) / (n - 1), defined only when n >= 2
-    long["peer_mom"] = (
-        (gmean * gn - long["trail"]) / (gn - 1)
-    ).where(gn > 1)
-    wide = long.pivot(index="date", columns="ticker", values="peer_mom")
-    # reindex to the full price index + requested tickers (NaN where no peer signal)
-    return wide.reindex(index=pd.DatetimeIndex(prices.index), columns=tickers)
+    # delegate the ex-self SIC-peer aggregation to the general propagator
+    # (Phase E1 reuses the same mechanic for earnings surprises / 13D events)
+    return propagate_panel(trail, sic_map, tickers=tickers)
