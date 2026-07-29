@@ -182,28 +182,35 @@ def _headline_table(runs: list[dict]) -> None:
     for r in runs:
         phase, treat = _phase_of(r)
         d = r["differential"]
+        mean_diff = d.get("mean_diff", d.get("mean_ic_diff_state_minus_base", float("nan")))
+        ci_lo = d.get("ci_lo", float("nan"))
+        ci_hi = d.get("ci_hi", float("nan"))
         rows.append({
             "phase": phase, "claim (treatment)": treat,
             "treat mean IC": r["summary_state"].get("mean_ic", float("nan")),
             "base mean IC": r["summary_base"].get("mean_ic", float("nan")),
-            "differential": d.get("mean_diff", float("nan")),
+            "differential": mean_diff,
             "DM-p": d.get("dm_p_mbb", float("nan")),
             "ci_half": d.get("ci_half", float("nan")),
             "publishable": d.get("publishable_ci_half", False),
             "H6": r.get("h6_deterministic"),
+            "_ci_lo": ci_lo, "_ci_hi": ci_hi,
         })
     df = pd.DataFrame(rows)
     if df.empty:
         st.info("No real result dirs yet — synthetic demo only.")
         return
-    st.dataframe(df.style.format({k: "{:+.4f}" for k in
-                                  ["treat mean IC", "base mean IC", "differential",
-                                   "ci_half"]} | {"DM-p": "{:.3f}"}),
+    show = df.drop(columns=["_ci_lo", "_ci_hi"])
+    st.dataframe(show.style.format({k: "{:+.4f}" for k in
+                                    ["treat mean IC", "base mean IC", "differential",
+                                     "ci_half"]} | {"DM-p": "{:.3f}"}),
                  use_container_width=True, hide_index=True)
     n_pub = int(df["publishable"].sum())
-    n_null = int((df["differential"].abs() < PUBLISHABILITY_GATE).sum())
+    # NULL = the differential 95% CI brackets 0 (the project's actual criterion),
+    # NOT |mean_diff| < 0.015 (that's the precision gate on ci_half).
+    n_null = int(((df["_ci_lo"] <= 0) & (df["_ci_hi"] >= 0)).sum())
     st.caption(f"{len(df)} confirmatory claims · "
-               f"{n_null}/{len(df)} differentials within ±{PUBLISHABILITY_GATE} (NULL) · "
+               f"{n_null}/{len(df)} NULL (95% CI brackets 0) · "
                f"{n_pub}/{len(df)} publishable (ci_half < 0.015) · "
                f"all H6 deterministic: {bool(df['H6'].all())}")
 
@@ -381,11 +388,20 @@ def _score_vs_return_scatter(oos: pd.DataFrame) -> go.Figure:
 
 
 def _quantile_spread_chart(oos: pd.DataFrame) -> go.Figure:
-    """Fit: mean forward-return per score decile (alphalens-style monotonicity check)."""
+    """Fit: mean forward-return per score decile (alphalens-style monotonicity check).
+    Only dates that form exactly 10 clean deciles are pooled, so D1..D10 mean the
+    same thing across dates (ties-collapse dates are dropped, not mis-binned)."""
     df = oos.dropna(subset=["score", "y_fwd_ret"]).copy()
-    df["q"] = df.groupby("date")["score"].transform(
-        lambda s: pd.qcut(s, 10, labels=False, duplicates="drop"))
-    spread = df.dropna(subset=["q"]).groupby("q")["y_fwd_ret"].mean()
+
+    def _decile(s: pd.Series):
+        try:
+            return pd.qcut(s, 10, labels=False, duplicates="raise")
+        except ValueError:
+            return pd.Series(np.nan, index=s.index)  # <10 clean bins -> drop this date
+
+    df["q"] = df.groupby("date")["score"].transform(_decile)
+    df = df.dropna(subset=["q"])
+    spread = df.groupby("q")["y_fwd_ret"].mean()
     labels = [f"D{int(q) + 1}" for q in spread.index]
     fig = go.Figure(go.Bar(x=labels, y=spread.values, marker_color="#2ca02c",
                            text=[f"{v:+.4f}" for v in spread.values], textposition="outside"))
@@ -397,10 +413,17 @@ def _quantile_spread_chart(oos: pd.DataFrame) -> go.Figure:
     return fig
 
 
-def _car_chart(prices: pd.DataFrame, events: pd.DataFrame) -> go.Figure:
-    """Event study: cumulative abnormal return over offset with 95% CI band."""
+@st.cache_data(show_spinner=False)
+def _car_summary(prices: pd.DataFrame, events: pd.DataFrame) -> pd.DataFrame:
+    """Cached CAR compute (events × iterrows is ~seconds; cache by data hash)."""
     from aionis.eval.event_study import cumulative_abnormal_return
     summary, _ = cumulative_abnormal_return(prices, events, k_before=10, k_after=20)
+    return summary
+
+
+def _car_chart(prices: pd.DataFrame, events: pd.DataFrame) -> go.Figure:
+    """Event study: cumulative abnormal return over offset with 95% CI band."""
+    summary = _car_summary(prices, events)
     etype = events["event_type"].iloc[0] if len(events) else "?"
     n_ev = int(summary["n_events"].iloc[0]) if len(summary) else 0
     fig = go.Figure()
@@ -448,7 +471,7 @@ def view_fit_quality(run: dict, is_syn: bool) -> None:
     _kpi_row(run["ic_state"], treat)
     _kpi_row(run["ic_base"], "base")
     st.markdown("**Cumulative IC vs random-walk 95% band** — stays in band ⇒ no detectable skill")
-    se = run["summary_state"].get("se_hac") or _ic_kpi(run["ic_state"])["std"]
+    se = _ic_kpi(run["ic_state"])["std"]  # monthly σ (not se_hac=σ/√n) for the band
     st.plotly_chart(_cumulative_ic_chart(run["ic_state"], treat, se), use_container_width=True)
     st.markdown("**Monthly rank-IC — treatment vs base**")
     st.plotly_chart(_ic_chart(run), use_container_width=True)
@@ -478,7 +501,7 @@ def view_volatility(run: dict) -> None:
 def view_evolution(run: dict) -> None:
     phase, treat = _phase_of(run)
     st.subheader(f"Curve Evolution — phase {phase}")
-    se = run["summary_state"].get("se_hac") or _ic_kpi(run["ic_state"])["std"]
+    se = _ic_kpi(run["ic_state"])["std"]  # monthly σ (not se_hac=σ/√n) for the band
     st.markdown("**Cumulative IC with random-walk CI band** (evolution of the signal over time)")
     st.plotly_chart(_cumulative_ic_chart(run["ic_state"], treat, se), use_container_width=True)
     st.markdown("**Rolling 12-month IC + IC-vol** (trend + changing volatility)")
@@ -506,9 +529,12 @@ def view_event_study(run: dict) -> None:
         if events.empty:
             st.warning(f"no {etype} events to study.")
             return
-        st.plotly_chart(_car_chart(_prices(), events), use_container_width=True)
-        st.caption(f"{len(events)} {etype} events; CAR = mean across events of the per-event "
-                   "cumulative abnormal return (equal-weight cross-section benchmark).")
+        prices = _prices()
+        st.plotly_chart(_car_chart(prices, events), use_container_width=True)
+        n_surv = int(_car_summary(prices, events)["n_events"].iloc[0])
+        st.caption(f"{n_surv} of {len(events)} {etype} events survived the session/window "
+                   "filter; CAR = mean across survivors of the per-event cumulative abnormal "
+                   "return (equal-weight cross-section benchmark).")
     except Exception as e:  # noqa: BLE001
         st.warning(f"event-study compute failed: {e}")
 
@@ -532,9 +558,8 @@ def view_uncertainty(runs: list[dict], run: dict) -> None:
     if pl:
         st.caption(f"bundle-shuffle placebo: mean {pl.get('mean_diff', 0):+.4f} "
                    f"(DM-p {pl.get('dm_p_mbb', 0):.3f}) — must vanish if the signal is real.")
-    hc = _haircut_chart(run)
-    if hc.data:
-        st.plotly_chart(hc, use_container_width=True)
+    st.caption("Multiple-testing deflation (DSR / haircut across the strategy family) is in "
+               "the **Strategy Return** tab.")
 
 
 def view_run_history() -> None:
