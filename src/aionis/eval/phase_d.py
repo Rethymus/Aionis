@@ -232,12 +232,13 @@ def run_confirmatory(
 
     controls = {"bundle_shuffle_placebo": placebo, "leave_one_out": loo}
 
-    if results_base is not None:
-        results.save_run(
-            sig, ic_state=ic_r, ic_base=ic_b, summary_state=sum_r, summary_base=sum_b,
-            differential=diff, controls=controls, config=config,
-            h6_deterministic=h6, base=results_base,
-        )
+    # save_run artifacts (base=None -> the default project runs dir, matching
+    # Phase B/C; an explicit base hermetically redirects for tests).
+    results.save_run(
+        sig, ic_state=ic_r, ic_base=ic_b, summary_state=sum_r, summary_base=sum_b,
+        differential=diff, controls=controls, config=config,
+        h6_deterministic=h6, base=results_base,
+    )
 
     result = {
         "config_sig": sig,
