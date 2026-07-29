@@ -351,6 +351,77 @@ def _haircut_chart(run: dict) -> go.Figure:
 
 
 # ----------------------------------------------------------------------------
+# OOS-panel + event-study charts (dashboard v2 enablers)
+# ----------------------------------------------------------------------------
+
+
+@st.cache_data(show_spinner=False)
+def _prices() -> pd.DataFrame:
+    """The daily price panel (event-study CAR + benchmark)."""
+    from aionis.config import settings
+    return pd.read_parquet(settings.data_dir / "cache" / "phase_b_prices.parquet")
+
+
+def _score_vs_return_scatter(oos: pd.DataFrame) -> go.Figure:
+    """Fit: score vs forward-return (subsampled) + the full-data Spearman rank-corr."""
+    df = oos.dropna(subset=["score", "y_fwd_ret"])
+    rho = df["score"].corr(df["y_fwd_ret"], method="spearman")
+    n = len(df)
+    sub = df.sample(min(10_000, n), random_state=0) if n else df
+    fig = go.Figure(go.Scatter(x=sub["score"], y=sub["y_fwd_ret"], mode="markers",
+                               marker={"size": 3, "opacity": 0.2, "color": "#1f77b4"},
+                               showlegend=False))
+    fig.add_hline(y=0, line_dash="dot", line_color="grey")
+    fig.add_vline(x=0, line_dash="dot", line_color="grey")
+    fig.update_layout(xaxis_title="OOS score", yaxis_title="forward return",
+                      height=340, margin=dict(l=10, r=10, t=40, b=10),
+                      title=f"score vs forward-return (Spearman {rho:+.4f}; n={n}; "
+                            f"{len(sub)} plotted)")
+    return fig
+
+
+def _quantile_spread_chart(oos: pd.DataFrame) -> go.Figure:
+    """Fit: mean forward-return per score decile (alphalens-style monotonicity check)."""
+    df = oos.dropna(subset=["score", "y_fwd_ret"]).copy()
+    df["q"] = df.groupby("date")["score"].transform(
+        lambda s: pd.qcut(s, 10, labels=False, duplicates="drop"))
+    spread = df.dropna(subset=["q"]).groupby("q")["y_fwd_ret"].mean()
+    labels = [f"D{int(q) + 1}" for q in spread.index]
+    fig = go.Figure(go.Bar(x=labels, y=spread.values, marker_color="#2ca02c",
+                           text=[f"{v:+.4f}" for v in spread.values], textposition="outside"))
+    fig.add_hline(y=0, line_dash="dot", line_color="grey")
+    fig.update_layout(xaxis_title="score decile (1=low, 10=high)",
+                      yaxis_title="mean forward return", height=340,
+                      margin=dict(l=10, r=10, t=40, b=10),
+                      title="quantile spread (monotonic ⇒ score discriminates)")
+    return fig
+
+
+def _car_chart(prices: pd.DataFrame, events: pd.DataFrame) -> go.Figure:
+    """Event study: cumulative abnormal return over offset with 95% CI band."""
+    from aionis.eval.event_study import cumulative_abnormal_return
+    summary, _ = cumulative_abnormal_return(prices, events, k_before=10, k_after=20)
+    etype = events["event_type"].iloc[0] if len(events) else "?"
+    n_ev = int(summary["n_events"].iloc[0]) if len(summary) else 0
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=summary["offset"], y=summary["car_ci_hi"],
+                             line={"width": 0}, showlegend=False, hoverinfo="skip"))
+    fig.add_trace(go.Scatter(x=summary["offset"], y=summary["car_ci_lo"],
+                             fill="tonexty", fillcolor="rgba(100,150,255,0.15)",
+                             line={"width": 0}, showlegend=False, hoverinfo="skip"))
+    fig.add_trace(go.Scatter(x=summary["offset"], y=summary["car"], mode="lines",
+                             line={"color": "#1f77b4"}, name="CAR"))
+    fig.add_vline(x=0, line_dash="dash", line_color="red")
+    fig.add_hline(y=0, line_dash="dot", line_color="grey")
+    fig.update_layout(xaxis_title="sessions from event (0 = event)",
+                      yaxis_title="cumulative abnormal return",
+                      height=380, margin=dict(l=10, r=10, t=40, b=10),
+                      title=f"CAR ({etype}, {n_ev} events) ±95% CI — "
+                            "descriptive realized drift")
+    return fig
+
+
+# ----------------------------------------------------------------------------
 # views (tabs)
 # ----------------------------------------------------------------------------
 
@@ -383,12 +454,16 @@ def view_fit_quality(run: dict, is_syn: bool) -> None:
     st.plotly_chart(_ic_chart(run), use_container_width=True)
     oos = run.get("oos_state")
     if oos is not None and len(oos):
-        st.markdown("**Score vs forward-return scatter** + **quantile spread** "
-                    "(from the persisted OOS panel)")
-        st.caption("OOS-panel fit charts: TODO wire (oos panel present).")
+        c1, c2 = st.columns(2)
+        with c1:
+            st.markdown("**Score vs forward-return**")
+            st.plotly_chart(_score_vs_return_scatter(oos), use_container_width=True)
+        with c2:
+            st.markdown("**Quantile spread** (decile)")
+            st.plotly_chart(_quantile_spread_chart(oos), use_container_width=True)
     else:
         st.info("Score-vs-return scatter / quantile spread / R² need the per-ticker OOS panel, "
-                "which older runs didn't persist. A re-run with OOS persistence enables them.")
+                "which this run didn't persist (pre-schema-2). A re-run enables them.")
 
 
 def view_volatility(run: dict) -> None:
@@ -413,13 +488,29 @@ def view_evolution(run: dict) -> None:
 def view_event_study(run: dict) -> None:
     st.subheader("Event Study — pre/post-event differences (CAR)")
     try:
-        from aionis.eval import event_study  # noqa: F401 — present when agent B lands
-        st.caption("CAR around 13D / earnings / macro events (descriptive post-event drift).")
-        st.info("event_study module present — TODO: wire the CAR chart + event-type selector.")
+        from aionis.eval import event_study  # noqa: F401
     except Exception:  # noqa: BLE001
-        st.info("Event-study (CAR around 13D/earnings/macro) lands when the `event_study` "
-                "module is built. It's a DESCRIPTIVE visualization of realized post-event "
-                "drift (uses forward returns by design — not a PIT feature, so no leakage).")
+        st.info("Event-study (CAR around 13D/earnings/macro) needs the `event_study` module.")
+        return
+    st.caption("Cumulative abnormal return around events (descriptive realized post-event "
+               "drift — uses forward returns by design, like the strategy-return lens; NOT a "
+               "PIT feature, so no leakage).")
+    etype = st.selectbox("event type", ["13D", "earnings"], key="event_type")
+    try:
+        from aionis.config import settings
+        cache = settings.data_dir / "cache"
+        if etype == "13D":
+            events = event_study.events_13d(cache / "phase_d_13d_events.parquet")
+        else:
+            events = event_study.events_earnings(cache / "phase_b_fundamentals.parquet")
+        if events.empty:
+            st.warning(f"no {etype} events to study.")
+            return
+        st.plotly_chart(_car_chart(_prices(), events), use_container_width=True)
+        st.caption(f"{len(events)} {etype} events; CAR = mean across events of the per-event "
+                   "cumulative abnormal return (equal-weight cross-section benchmark).")
+    except Exception as e:  # noqa: BLE001
+        st.warning(f"event-study compute failed: {e}")
 
 
 def view_uncertainty(runs: list[dict], run: dict) -> None:
