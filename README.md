@@ -1,66 +1,100 @@
-# Aionis MVP
+# Aionis
 
-> **Autonomous Intelligence for Financial World Evolution** — but this repo is a
-> single, honest experiment, not a cognitive system.
+> A falsifiable, **anti-leakage** quantitative-finance research project. One
+> pre-registered, two-tailed claim per phase on cross-sectional monthly rank-IC of
+> S&P 500 point-in-time constituents. Null results with tight CIs are the intended,
+> publishable outcome.
 
-Aionis as a vision is a five-layer financial world model. This MVP does not
-build that. It builds **one falsifiable test of its foundation**:
-
-> **Does a structured event representation (ERL) extracted from scheduled macro
-> events (FOMC / CPI / NFP) carry information that improves sector-ETF return
-> prediction beyond a price-only baseline?**
-
-If structured events carry no price-independent signal here, the later layers
-(causal reasoning, self-evolution) have nothing to stand on. If they do, the
-foundation is worth building upward from.
+Aionis is **not** a cognitive system or a trading bot. It is a disciplined
+experiment harness: each phase poses one falsifiable question ("does feature set X
+add incremental cross-sectional predictability over fundamentals-only?"), answers
+it on real PIT data with a frozen pipeline, and records the verdict — including
+**null** — honestly. The discipline that makes any result trustworthy is the
+**anti-leakage pipeline** below.
 
 ---
 
-## The alignment rule (the whole experiment's validity hinges on this)
+## Headline — four confirmatory claims, four publishable nulls
 
-For each event with timestamp `event_ts` (NYSE-localized):
+Same S&P 500 PIT universe (588 clean tickers, 2016+), same frozen LightGBM, same
+`PurgedGroupKFold(5, embargo=21)`. Each phase's treatment arm is compared to a
+fundamentals-only baseline; the rank-IC **differential** is the falsifiable claim.
 
-```
-t_info      = the last NYSE close STRICTLY BEFORE event_ts
-label_start = the first NYSE close AT OR AFTER event_ts   (reaction embedded)
-label_end   = the NYSE close h trading sessions after label_start
-target      = close[label_end] / close[label_start] - 1
-```
+| phase | axis (treatment vs fundamentals-only) | differential | DM-p | ci_half | verdict |
+|---|---|---|---|---|---|
+| **B** | fundamental *timing* (filed vs period-end+lag) | −0.0008 | 0.87 | 0.0098 | NULL |
+| **C** | world-state *surprise* bundle (CPI/NFP/VIX/earnings) | −0.0065 | 0.36 | 0.0130 | NULL |
+| **D** | *relationship* bundle (SIC peer-mom + 13D events) | −0.0030 | 0.60 | 0.0107 | NULL |
+| **E1** | cross-firm *propagation* (SIC-peer shocks) | −0.0028 | 0.53 | 0.0087 | NULL |
 
-**Every feature column must be a function of closes ≤ `t_info`.** A single
-feature that touches a close ≥ `label_start` is a look-ahead leak and
-invalidates the with-vs-without comparison. `tests/test_alignment.py` asserts
-this invariant and is the most important test in the repo.
-
-## Pre-registered primary metric (frozen before unblinding)
-
-- **Pooled directional-accuracy lift** of `with-ERL` minus `price-only` at
-  **h = 1** — "pooled" = over all (event, symbol) rows; the headline is reported
-  **per learner** (XGBoost is the primary, MLP the secondary). Cluster-robust
-  bootstrap CI on the per-event-date lift mean, and a **Diebold-Mariano** test on
-  the squared-error loss differential (Newey–West HAC bandwidth h−1, Harvey–
-  Leybourne–Newbold small-sample correction, Student-t reference), clustered by
-  **event-date** (not by row).
-- Mandatory control gates must pass: **neutral-text** extraction and
-  **shuffled-date** pairing must show *no* lift. If lift survives a control, the
-  result is an artifact and the claim is killed.
-- A null result with a tight CI is a legitimate, publishable outcome.
+All four differentials have 95% CIs bracketing 0 (NULL SUPPORTED); all are
+publishable-as-null (ci_half < 0.015). A horizon-robustness sweep confirms B/C/D
+hold at h=10 and h=42. The efficient-markets prior holds across timing / surprise /
+relationship / propagation axes at monthly frequency. The strategy-return
+(secondary) lens agrees: no long-short Sharpe survives the project-family DSR
+deflation.
 
 ---
 
-## Why ERL is structural-only (important deviation from the vision doc)
+## The anti-leakage identity (why any result here is trustworthy)
 
-The original ERL design put `market_impact {direction, magnitude, confidence}` in
-the LLM-extracted event object. That is an **architectural leak**: the LLM has
-memorized macro-event outcomes, and post-hoc source text bakes in the move. With
-`market_impact` present, ERL "wins" by echoing the answer, not by carrying
-signal.
+Every result is anchored by a discipline that makes look-ahead/p-hacking detectable:
 
-This MVP therefore restricts the LLM-extracted ERL to **structural / semantic
-fields only** (who did what, to whom, why, expected temporal class, extraction
-uncertainty). **Market impact is the downstream model's prediction target**, not
-an extraction product. `historical_similarity` is likewise excluded from
-extraction (deferred to controlled retrieval over the event store).
+- **`config_committed` BEFORE result** — the frozen config's sha256 is written to
+  an append-only ledger (`runs/ledger.jsonl`) *before* any OOS metric is observed.
+  Same-sig reruns are bit-identical (H6 determinism, verified); a changed config is
+  a new ledger row, never a silent overwrite. A headline cannot be
+  "rerun-to-significance" rescued.
+- **Point-in-time data** — fundamentals via `filed` date (not period-end); macro via
+  ALFRED as-of vintages; VIXCLS unrevised (PIT via the no-revision contract); 13D
+  via filing date; the S&P 500 universe via PIT membership (`constituents_on`).
+- **PurgedGroupKFold + embargo** — group=month, embargo=21 sessions, no label leakage.
+- **H6 determinism** — `n_jobs=1`, all seeds pinned, version-pinned; the IC series
+  AND raw scores are bit-identical across reruns (asserted).
+- **7-gate intake rubric** (`docs/data-intake-rubric.md`) — license / PIT / no-revision
+  / snapshot / exploratory-only / selection-honesty / politeness. Permissive
+  licenses only (MIT/Apache/BSD).
+- **Controls** — bundle-shuffle placebo (must vanish), leave-one-out attribution,
+  publishability gate (differential ci_half < 0.015).
+
+---
+
+## Roadmap (TCR — Theory of Computable Reality)
+
+A→E, each phase one falsifiable claim on the same benchmark:
+
+- **A** (done) — ERL event representation pilot (underpowered).
+- **B** (done, null) — fundamental timing (filed vs period-end+lag).
+- **C** (done, null) — world-state surprise bundle.
+- **D** (done, null) — relationship/network bundle (13D + SIC peers).
+- **E1** (done, null) — structural cross-firm shock propagation (zero-leakage).
+- **E2** (designed) — LLM macro-causal hypothesis-generator (cutoff-controlled;
+  mitigates — does not eliminate — LLM hindsight leakage). *Design finding: the
+  cutoff gate makes the E2 backtest underpowered (~10-18 post-cutoff months).*
+- **E3** (designed) — **forward-live** accumulation: run E1+E2 forward from launch,
+  accumulate a real-time OOS track record. Forward = no future to leak *by
+  construction*; the only **powered** path for the causal-prediction vision.
+  Honest tradeoff: it takes calendar time (years) to power.
+
+The owner's vision — "see-through-to-essence" causal prediction (pandemic→pharma,
+AI→compute→NVIDIA→power) — is the E2/E3 work. It is inherently leakage-prone if
+backtested with a current LLM (it has memorized the outcomes); E3 forward-live is
+the honest path.
+
+---
+
+## Dashboard
+
+A near-final quant-evaluation interface (Streamlit + plotly), 10 tabs across the
+five analytical dimensions (fit / volatility / curve-evolution / event-study /
+uncertainty) + horizon-robustness + coverage + strategy-return + run-history:
+
+```bash
+uv run streamlit run dashboard/app.py
+```
+
+Current data demonstrates the analysis methods + interaction structure (not final
+conclusions). The confirmed findings are summarized in `docs/RESULTS.md`.
 
 ---
 
@@ -69,71 +103,45 @@ extraction (deferred to controlled retrieval over the event store).
 Requires Python ≥ 3.10 and [uv](https://docs.astral.sh/uv/).
 
 ```bash
-uv sync                              # light base (Phases 0–1 + tests)
-uv sync --extra extraction           # + OpenAI / FRED / embeddings (Phases 2–3)
-cp .env.example .env                 # fill OPENAI_API_KEY, FRED_API_KEY
+uv sync --all-extras          # base + extraction + dashboard + dev
+cp .env.example .env          # fill FRED_API_KEY, TIINGO_API_KEY, ALPACA_*, REDDIT_* (LLM keys optional)
 ```
 
-## Quickstart
+The LLM pool is **GLM / SiliconFlow / ModelScope only** (OpenAI-compatible); a
+policy-aware multi-key router auto-fails-over on rate-limits
+(`src/aionis/extraction/providers.py`).
+
+## Reproduce a confirmatory run
 
 ```bash
-# Phase 0 — data spine (needs FRED_API_KEY)
-uv run aionis ingest --start 2010-01-01 --end 2025-12-31
-uv run pytest tests/test_alignment.py      # leakage invariants (most critical)
+# one-time data fetch (fundamentals + prices for the 588-ticker PIT universe)
+uv run python scripts/phase_b_fetch.py
 
-# Phase 1 — the number ERL must beat (no LLM, no keys beyond FRED)
-uv run aionis eval-priceonly
+# a confirmatory run (e.g. Phase D): config_committed BEFORE result, H6-verified
+uv run python scripts/phase_d_run.py
 
-# Phase 2 — ERL extraction (needs OPENAI_API_KEY)
-uv run aionis extract
-
-# Phase 3 — the decisive comparison
-uv run aionis compare
+uv run pytest -q               # 305 hermetic tests, ruff clean
 ```
 
-A synthetic end-to-end smoke test runs without any keys:
-
-```bash
-uv run pytest tests/test_pipeline_smoke.py
-```
+Each `scripts/phase_{b,c,d,e1}_run.py` is a thin wrapper over its testable
+orchestrator (`src/aionis/eval/phase_*.py`); `scripts/strategy_eval_run.py` runs
+the secondary L-S lens; `scripts/sensitivity_horizon.py` the horizon sweep.
 
 ---
-
-## Multi-key provider router (auto key switching by policy)
-
-ERL extraction runs through a **policy-aware multi-key router** (`PROVIDER=router`
-in `.env`, the default). It holds a pool of OpenAI-compatible providers, each with
-its policy terms (RPM / TPM / daily quota), and auto-switches keys on rate-limit
-(429 → 60 s cooldown) or invalid output — so a free-tier limit on one provider
-transparently fails over to the next. Per-provider token/call accounting is logged.
-
-- **Provider catalog**: `src/aionis/extraction/providers.py` (add a provider = one
-  entry + its key in `.env`).
-- **Wheel**: the `openai` SDK with per-provider `base_url` (universal for
-  GLM / SiliconFlow / ModelScope OpenAI-compat).
-- **Select a single provider**: `uv run aionis extract --provider modelscope`.
-
-| provider | status | note |
-|---|---|---|
-| GLM (`glm-4-flash`) | ✅ priority 1 | free, concurrency-limited |
-| SiliconFlow (`Qwen2.5-7B`) | ⚠️ priority 2 | small model → invalid ERL → auto-failover |
-| ModelScope (`Qwen3-Next-80B`) | ✅ priority 3 | 2000 calls/day, failover backstop |
-
----
-
-## Status
-
-| Phase | Scope | Status |
-|-------|-------|--------|
-| 0 | Data spine + leakage tests | implemented |
-| 1 | Price-only baseline + eval harness | implemented |
-| 2 | ERL schema + offline extraction | implemented |
-| 3 | Decisive comparison + control gates | implemented |
-| 4 | Robustness (CPCV, per-type, post-cutoff) | deferred |
-| 5 | GDELT scale-up (BigQuery only — REST is 3-month rolling) | deferred |
 
 ## What is deliberately out of scope
 
-The five-layer cognitive architecture, causal-graph layer, and self-evolution
-engine are **not** in this MVP. They are the things this experiment is meant to
-justify building next.
+A learned generative "world model" is **infeasible at this scale and leakage-prone**
+(the `docs/frontier_positioning.md` + `docs/theory-of-computable-reality.md` §8.5
+verdict). Aionis stays discriminative / leakage-controlled / falsifiable every
+phase. The five-layer cognitive architecture and self-evolution engine are what
+this experiment is meant to *justify building next* — not built speculatively.
+
+## Docs
+
+- `docs/RESULTS.md` — the falsifiable-results snapshot (the table above, expanded).
+- `docs/phase-{b,c,d,e1,e,e2,e3}-preregistration.md` — each phase's pre-registered
+  claim + design (the discipline).
+- `docs/data-intake-rubric.md` + `docs/data-license-allowlist.md` — the 7 gates.
+- `docs/theory-of-computable-reality.md` — the TCR theoretical frame.
+- `.omc/wiki/` — durable knowledge base (anti-leakage pipeline, phased results, PIT sources).
