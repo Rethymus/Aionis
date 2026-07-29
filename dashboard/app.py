@@ -68,6 +68,28 @@ def _load_run(config_sig: str) -> dict:
 
 
 @st.cache_data(show_spinner=False)
+def _load_run_meta(config_sig: str) -> dict:
+    """Lightweight run (JSON only — no IC/OOS parquet) for the multi-run views
+    (Overview / Uncertainty / Horizon). Loading 4 full runs (each ~1.2M-row OOS
+    panel) would be heavy + memory-hostile; the multi-run views only need the
+    differential / summaries / controls / config, all small JSONs."""
+    d = R.run_dir(config_sig)
+    if not (d / "meta.json").exists():
+        return None  # type: ignore[return-value]
+    meta = R._read_json(d / "meta.json")
+    return {
+        "config_sig": config_sig,
+        "ts": meta.get("ts"),
+        "h6_deterministic": bool(meta.get("h6_deterministic", False)),
+        "differential": R._read_json(d / "differential.json"),
+        "summary_state": R._read_json(d / "summary_state.json"),
+        "summary_base": R._read_json(d / "summary_base.json"),
+        "controls": R._read_json(d / "controls.json"),
+        "config": R._read_json(d / "config.json"),
+    }
+
+
+@st.cache_data(show_spinner=False)
 def _ledger_rows() -> list[dict]:
     return R.read_ledger()
 
@@ -685,6 +707,70 @@ def view_strategy_return() -> None:
 # ----------------------------------------------------------------------------
 
 
+@st.cache_data(show_spinner=False)
+def _horizon_sweep() -> dict | None:
+    """The latest exploratory sensitivity_horizon ledger row (B/C/D at h=10, 42)."""
+    rows = [r for r in _ledger_rows() if r.get("phase") == "sensitivity_horizon"]
+    return max(rows, key=lambda r: r.get("ts", "")) if rows else None
+
+
+def _horizon_robustness_chart(runs: list[dict], sweep: dict) -> go.Figure:
+    """B/C/D differential (mean ± 95% CI) across h=10/21/42 — all NULL-robust.
+    h=21 from the confirmatory runs; h=10/42 from the exploratory sweep."""
+    h21 = {}
+    for r in runs:
+        p, _ = _phase_of(r)
+        d = r["differential"]
+        h21[p] = (d.get("mean_diff", float("nan")),
+                  d.get("ci_lo", float("nan")), d.get("ci_hi", float("nan")))
+    phases = ["B", "C", "D"]
+    horizons = [10, 21, 42]
+    sw = (sweep or {}).get("results", {})
+    fig = go.Figure()
+    for ph in phases:
+        ys, lo_err, hi_err = [], [], []
+        for h in horizons:
+            if h == 21:
+                m, lo, hi = h21.get(ph, (float("nan"),) * 3)
+            else:
+                e = sw.get(str(h), {}).get(ph, {})
+                m = e.get("mean_diff", float("nan"))
+                lo = e.get("ci_lo", float("nan"))
+                hi = e.get("ci_hi", float("nan"))
+            ys.append(m)
+            lo_err.append(m - lo if np.isfinite(m) and np.isfinite(lo) else 0)
+            hi_err.append(hi - m if np.isfinite(m) and np.isfinite(hi) else 0)
+        fig.add_trace(go.Scatter(
+            x=horizons, y=ys, mode="lines+markers", name=f"phase {ph}",
+            error_y={"type": "data", "array": hi_err, "arrayminus": lo_err, "thickness": 1}))
+    fig.add_hline(y=0, line_dash="dot", line_color="grey")
+    fig.update_layout(xaxis_title="horizon (sessions)",
+                      yaxis_title="differential (treatment − base) rank-IC",
+                      height=380, legend=dict(orientation="h", y=-0.2),
+                      margin=dict(l=10, r=10, t=45, b=10),
+                      title="horizon robustness — B/C/D across h=10/21/42 "
+                            "(CI brackets 0 ⇒ NULL)")
+    return fig
+
+
+def view_horizon_robustness(runs: list[dict]) -> None:
+    st.subheader("Horizon Robustness")
+    st.caption("The 3 confirmatory nulls re-tested at h=10 and h=42 (h=21 is the frozen "
+               "confirmatory horizon). All differentials stay ≈0 with CI bracketing 0 ⇒ "
+               "the nulls are horizon-robust, strengthening the publishable-as-null result.")
+    sweep = _horizon_sweep()
+    if not sweep:
+        st.info("No horizon-sensitivity sweep yet (run scripts/sensitivity_horizon.py).")
+        return
+    st.plotly_chart(_horizon_robustness_chart(runs, sweep), use_container_width=True)
+    sw = sweep.get("results", {})
+    n_cells = sum(
+        1 for h in ("10", "42") for ph in ("B", "C", "D")
+        if sw.get(h, {}).get(ph, {}).get("null_holds"))
+    st.caption(f"{n_cells}/6 exploratory cells hold NULL (CI brackets 0); plus the 3 frozen "
+               "h=21 confirmatory nulls.")
+
+
 def main() -> None:
     st.set_page_config(page_title="Aionis", page_icon="📊", layout="wide")
     st.title("Aionis — Research Dashboard v2")
@@ -694,6 +780,7 @@ def main() -> None:
 
     runs = _list_runs()
     options = [r["config_sig"] for r in runs] if runs else []
+    meta_runs = [m for s in options if (m := _load_run_meta(s))]  # JSON-only, multi-run views
     with st.sidebar:
         st.header("Run")
         if options:
@@ -707,11 +794,11 @@ def main() -> None:
         st.caption(f"runs scanned: {len(runs)}")
 
     tabs = st.tabs(["Overview", "Fit Quality", "Volatility", "Curve Evolution",
-                    "Event Study", "Uncertainty", "Coverage", "Strategy Return",
-                    "Run history"])
-    (t_over, t_fit, t_vol, t_evol, t_ev, t_unc, t_cov, t_sr, t_hist) = tabs
+                    "Event Study", "Uncertainty", "Horizon Robustness", "Coverage",
+                    "Strategy Return", "Run history"])
+    (t_over, t_fit, t_vol, t_evol, t_ev, t_unc, t_hr, t_cov, t_sr, t_hist) = tabs
     with t_over:
-        view_overview(runs)
+        view_overview(meta_runs)
     with t_fit:
         view_fit_quality(run, is_syn)
     with t_vol:
@@ -721,7 +808,9 @@ def main() -> None:
     with t_ev:
         view_event_study(run)
     with t_unc:
-        view_uncertainty(runs, run)
+        view_uncertainty(meta_runs, run)
+    with t_hr:
+        view_horizon_robustness(meta_runs)
     with t_cov:
         view_coverage()
     with t_sr:
