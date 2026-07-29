@@ -86,6 +86,20 @@ def _latest_strategy_return() -> dict | None:
     return max(rows, key=lambda r: r.get("ts", ""))
 
 
+@st.cache_data(show_spinner=False)
+def _ls_returns() -> pd.DataFrame | None:
+    """The monthly long-short returns wide frame written by
+    ``scripts/strategy_eval_run.py`` (``runs/strategy_returns.parquet``):
+    month-end ``DatetimeIndex`` (name ``date``), one column per strategy
+    (``B_arm_state``, ``arm_base``, ``C_arm_macro``, ``C_placebo``,
+    ``C_sanity``), values = monthly L-S return. Returns ``None`` when the
+    artifact is absent so the view can degrade to a graceful notice."""
+    path = R.results_dir().parent / "strategy_returns.parquet"
+    if not path.exists():
+        return None
+    return pd.read_parquet(path)
+
+
 def _synthetic_run() -> dict:
     """Demo run when no real result dir exists yet (dashboard is demoable first)."""
     rng = np.random.default_rng(7)
@@ -326,6 +340,36 @@ def _differential_forest(runs: list[dict]) -> go.Figure:
                       yaxis_title="phase", height=320,
                       margin=dict(l=10, r=10, t=20, b=10),
                       title="differential forest plot (CI brackets 0 ⇒ NULL)")
+    return fig
+
+
+def _equity_curve_chart(ls_wide: pd.DataFrame) -> go.Figure:
+    """Cumulative long-short equity curve: one ``cumsum`` line per strategy —
+    the tradeable evolution of each arm's L-S spread. The benchmark
+    (``arm_base``) is rendered dashed + grey so it reads as a reference
+    line distinct from the treatment arms."""
+    bench = "arm_base"
+    fig = go.Figure()
+    for col in ls_wide.columns:
+        s = ls_wide[col].dropna()
+        if s.empty:
+            continue
+        cum = s.cumsum()
+        is_bench = str(col) == bench
+        fig.add_trace(go.Scatter(
+            x=cum.index, y=cum.values,
+            name=f"{col} (benchmark)" if is_bench else str(col),
+            mode="lines",
+            line={"dash": "dash" if is_bench else "solid",
+                  "color": "#7f7f7f" if is_bench else None},
+        ))
+    fig.add_hline(y=0, line_dash="dot", line_color="grey")
+    fig.update_layout(
+        xaxis_title="month", yaxis_title="cumulative L-S return",
+        height=380, legend=dict(orientation="h", y=-0.2),
+        margin=dict(l=10, r=10, t=40, b=10),
+        title="cumulative long-short equity curve (strategy curve evolution)",
+    )
     return fig
 
 
@@ -621,6 +665,19 @@ def view_strategy_return() -> None:
                    f"MCS includes all → statistically indistinguishable.")
     st.caption("No L-S Sharpe survives the project-family DSR deflation; the placebo at "
                "n=1 ≈ 0.057 is the under-deflation cautionary tale.")
+
+    # curve evolution — the tradeable cumulative L-S equity curve per strategy
+    ls_wide = _ls_returns()
+    st.markdown("**Cumulative long-short equity curve** — strategy curve evolution")
+    if ls_wide is None or ls_wide.empty:
+        st.info("Equity curve needs ``runs/strategy_returns.parquet`` "
+                "(written by ``scripts/strategy_eval_run.py``); not found.")
+    else:
+        st.plotly_chart(_equity_curve_chart(ls_wide), use_container_width=True)
+        st.caption("Cumulative sum of each strategy's monthly long-short return "
+                   "(secondary/exploratory lens; gross-of-costs). Dashed grey = "
+                   f"{row.get('benchmark', 'arm_base')} benchmark. The rank-IC "
+                   "differentials remain the confirmatory claims.")
 
 
 # ----------------------------------------------------------------------------
