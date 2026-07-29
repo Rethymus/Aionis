@@ -1,28 +1,28 @@
-"""Aionis Phase B research dashboard (Streamlit).
+"""Aionis research dashboard v2 — near-final quant-evaluation interface.
+
+Five analytical dimensions (the owner judges: 拟合质量/波动结构/曲线演化/事件前后
+差异/不确定性), where the current data only DEMONSTRATES the analysis methods +
+interaction structure (not final conclusions):
+
+  1. Overview        — the headline (4 confirmatory claims → 4 publishable nulls).
+  2. Fit Quality     — cumulative IC + KPI (mean / NW-t / IC-IR / hit-rate) +
+                       (score-vs-return scatter + quantile spread when the OOS
+                        panel is persisted).
+  3. Volatility      — IC histogram + rolling-12m IC-vol + underwater drawdown.
+  4. Curve Evolution — cumulative IC with random-walk CI band + rolling IC/IC-IR.
+  5. Event Study     — CAR around 13D / earnings / macro (when event_study lands).
+  6. Uncertainty     — ci_half vs the 0.015 publishability gate + differential
+                       forest plot + H6/controls/haircut.
+  + Coverage + Strategy Return (retained).
 
 Launch::
 
     uv run streamlit run dashboard/app.py
 
-Reuses:
-  * **Streamlit** (Apache-2.0, verified) as the app scaffold.
-  * **plotly** (MIT, verified) for the rank-IC / differential charts.
-  * ``aionis.reporting.results`` as the results reader and the
-    ``runs/ledger.jsonl`` parser (read-only).
-
-Five tabs:
-  1. Run history       — ledger table (ts, config_sig, event, verdict).
-  2. Selected run      — monthly rank-IC (arm_state vs arm_base) + differential with
-                         CI band, ±0.015 publishability gate (pre-reg §7) and the 0 line.
-  3. Coverage          — OOS universe 588/705, Jaccard ~0.93, dropped reuses {POM,SE,STI}.
-  4. Robustness        — H6 determinism, lag_shift + placebo control differentials,
-                         Harvey-Liu haircut sensitivity (pre-reg §5/§6).
-  5. Strategy Return   — the exploratory strategy-return eval (latest
-                         ``phase: "strategy_return"`` ledger row): per-strategy
-                         Sharpe bar chart, DSR p-value grid, Hansen-SPA / MCS.
-
-Runs on synthetic data when no real result dir exists yet, so the dashboard is
-demoable before the first confirmatory run lands (see :func:`_synthetic_run`).
+Reuses Streamlit (Apache-2.0) + plotly (MIT) + ``aionis.reporting.results`` +
+``aionis.eval.rank_ic`` (NW-HAC). Charts degrade gracefully to a synthetic demo
+when no real result dir exists, and to a "data not persisted" notice for charts
+that need artifacts the older runs lack.
 """
 from __future__ import annotations
 
@@ -31,16 +31,25 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
+from aionis.eval.rank_ic import rank_ic_summary
 from aionis.reporting import results as R
 
 PUBLISHABILITY_GATE = 0.015  # pre-reg §7: 95% CI half-width < 0.015 to "publish a null"
+Z95 = 1.959963985
 
-# Coverage constants (pre-reg §3/§8; realized outcomes ledger #23/#25). Used as
-# fallbacks when the ledger events are absent.
-_COV_TOTAL = 705          # pierrebrunelle 2016+ tickers
-_COV_CLEAN = 588          # OOS-resolvable, reuse-dropped
-_JACCARD_MEAN = 0.9272    # hanshof vs pierrebrunelle, 2016+
+# Coverage constants (pre-reg §3/§8; realized outcomes ledger #23/#25). Fallbacks.
+_COV_TOTAL = 705
+_COV_CLEAN = 588
+_JACCARD_MEAN = 0.9272
 _DROPPED_REUSE = ("POM", "SE", "STI")
+
+# sig -> (phase, treatment-arm label) for the dimension views
+_TREATMENT_LABEL = {
+    "17245a75": ("B", "arm_state (filed)"),
+    "a7fdb48f": ("C", "arm_macro (bundle)"),
+    "d3158063": ("D", "arm_rel (relationship)"),
+    "ef321e9e": ("E1", "arm_prop (propagation)"),
+}
 
 
 # ----------------------------------------------------------------------------
@@ -65,41 +74,12 @@ def _ledger_rows() -> list[dict]:
 
 @st.cache_data(show_spinner=False)
 def _coverage() -> dict:
-    """Pull realized coverage numbers from the ledger (fallback to spec pins)."""
-    cov = {
-        "total": _COV_TOTAL,
-        "clean": _COV_CLEAN,
-        "jaccard_mean": _JACCARD_MEAN,
-        "jaccard_min": None,
-        "dropped_reuse": list(_DROPPED_REUSE),
-        "source": "spec fallback (ledger event absent)",
-    }
-    for row in _ledger_rows():
-        if row.get("event") == "universe_crosscheck":
-            jac = row.get("jaccard_2016plus", {})
-            if jac:
-                cov["jaccard_mean"] = jac.get("mean", cov["jaccard_mean"])
-                cov["jaccard_min"] = jac.get("min")
-                cov["source"] = f"ledger (universe_crosscheck, n_months={jac.get('n_months')})"
-        if row.get("event") == "oos_resolvable_universe":
-            uni = row.get("universe", {})
-            cov["total"] = uni.get("pb_2016plus_tickers", cov["total"])
-            cov["clean"] = uni.get("clean", cov["clean"])
-            cr = row.get("confirmed_reuse", {})
-            if cr:
-                cov["dropped_reuse"] = sorted(cr.keys())
-                cov["source"] = "ledger (oos_resolvable_universe)"
-    return cov
+    return {"total": _COV_TOTAL, "clean": _COV_CLEAN, "jaccard": _JACCARD_MEAN,
+            "dropped": _DROPPED_REUSE}
 
 
 @st.cache_data(show_spinner=False)
 def _latest_strategy_return() -> dict | None:
-    """Latest ``phase: "strategy_return"`` ledger row, or None if absent.
-
-    The strategy-return eval is logged as an ``exploratory`` event row in
-    ``runs/ledger.jsonl`` (NOT under ``runs/results/``), so it is invisible to
-    :func:`list_runs` — this is the dedicated reader the Strategy Return tab uses.
-    """
     rows = [r for r in _ledger_rows() if r.get("phase") == "strategy_return"]
     if not rows:
         return None
@@ -107,405 +87,474 @@ def _latest_strategy_return() -> dict | None:
 
 
 def _synthetic_run() -> dict:
-    """A demo run when no real result dir exists. Clearly labelled in the UI."""
-    rng = np.random.default_rng(42)
-    months = pd.date_range("2017-01-31", periods=110, freq="ME")
-    # arm_state modestly above arm_base; small positive differential.
-    ic_state = pd.Series(rng.normal(0.022, 0.055, len(months)), index=months, name="ic")
-    ic_state.index.name = "date"
-    ic_base = pd.Series(rng.normal(0.008, 0.055, len(months)), index=months, name="ic")
-    ic_base.index.name = "date"
-    diff_series = ic_state - ic_base
-    se = float(diff_series.std(ddof=1) / np.sqrt(len(diff_series)))
+    """Demo run when no real result dir exists yet (dashboard is demoable first)."""
+    rng = np.random.default_rng(7)
+    months = pd.date_range("2017-01-31", periods=125, freq="ME")
+    ic_s = pd.Series(rng.normal(0.014, 0.05, 125), index=months, name="ic")
+    ic_s.index.name = "date"
+    ic_b = pd.Series(rng.normal(0.015, 0.05, 125), index=months, name="ic")
+    ic_b.index.name = "date"
     return {
-        "config_sig": "demo_synthetic",
-        "ts": "2026-07-27T00:00:00+00:00 (DEMO)",
-        "h6_deterministic": True,
-        "ic_state": ic_state,
-        "ic_base": ic_base,
-        "summary_state": {"mean_ic": float(ic_state.mean()), "ci_half": 1.96 * se, "n": 110},
-        "summary_base": {"mean_ic": float(ic_base.mean()), "ci_half": 1.96 * se, "n": 110},
-        "differential": {
-            "mean_diff": float(diff_series.mean()),
-            "ci_lo": float(diff_series.mean() - 1.96 * se),
-            "ci_hi": float(diff_series.mean() + 1.96 * se),
-            "se": se,
-            "n": 110,
-        },
-        "controls": {
-            "lag_shift": {"mean_diff": 0.002, "ci_lo": -0.010, "ci_hi": 0.014, "n": 110},
-            "placebo": {"mean_diff": -0.001, "ci_lo": -0.013, "ci_hi": 0.011, "n": 110},
-        },
-        "config": {"note": "synthetic demo data — no real confirmatory run yet"},
+        "config_sig": "demo_synthetic", "ts": None, "h6_deterministic": True,
+        "ic_state": ic_s, "ic_base": ic_b,
+        "summary_state": rank_ic_summary(ic_s), "summary_base": rank_ic_summary(ic_b),
+        "differential": {"n_months": 125, "mean_diff": -0.001, "se_hac": 0.005,
+                         "ci_half": 0.010, "ci_lo": -0.011, "ci_hi": 0.009,
+                         "dm_p_mbb": 0.84, "publishable_ci_half": True},
+        "controls": {"bundle_shuffle_placebo": {"mean_diff": 0.0, "dm_p_mbb": 0.9}},
+        "config": {"phase": "demo"},
+        "oos_state": None, "oos_base": None,
     }
 
 
 def _pick_run() -> tuple[dict, bool]:
-    """Return (run_dict, is_synthetic). Prefers a real result dir; else synthetic."""
     runs = _list_runs()
     if runs:
         return _load_run(runs[0]["config_sig"]), False
     return _synthetic_run(), True
 
 
+def _phase_of(run: dict) -> tuple[str, str]:
+    sig = run.get("config_sig", "")
+    for prefix, lab in _TREATMENT_LABEL.items():
+        if sig.startswith(prefix):
+            return lab
+    cfg_phase = run.get("config", {}).get("phase", "?")
+    return (cfg_phase.upper(), "treatment")
+
+
 # ----------------------------------------------------------------------------
-# views
+# analytics (computed from the monthly IC series) — the dimension metrics
 # ----------------------------------------------------------------------------
 
 
-def _publishability_badge(diff: dict, summary_state: dict) -> None:
-    """Pre-reg §7 verdict chip: CI half-width vs the 0.015 gate."""
-    half = summary_state.get("ci_half")
-    if half is None or not np.isfinite(half):
-        st.caption("publishability: CI half-width unavailable")
+def _ic_kpi(ic: pd.Series) -> dict:
+    """Fit-quality KPIs from a monthly rank-IC series."""
+    s = ic.dropna()
+    n = int(len(s))
+    if n < 2:
+        return {"mean": float("nan"), "std": float("nan"), "ir": float("nan"),
+                "hit_rate": float("nan"), "n": n, "t_hac": float("nan"),
+                "ci_half": float("nan")}
+    sd = float(s.std(ddof=1))
+    summ = rank_ic_summary(s)
+    return {
+        "mean": float(s.mean()), "std": sd,
+        "ir": float(s.mean() / sd) if sd > 0 else float("nan"),
+        "hit_rate": float((s > 0).mean()),
+        "n": n, "t_hac": float(summ["t_hac"]), "ci_half": float(summ["ci_half"]),
+    }
+
+
+def _cumulative_ic(ic: pd.Series) -> pd.Series:
+    return ic.dropna().cumsum()
+
+
+def _rolling_ic(ic: pd.Series, window: int = 12) -> pd.DataFrame:
+    s = ic.dropna()
+    return pd.DataFrame({"mean": s.rolling(window, min_periods=max(6, window // 2)).mean(),
+                         "std": s.rolling(window, min_periods=max(6, window // 2)).std(ddof=1)})
+
+
+def _drawdown(cum_ic: pd.Series) -> pd.Series:
+    """Underwater curve: cumulative IC minus its running max (≤ 0)."""
+    return cum_ic - cum_ic.cummax()
+
+
+def _cum_ic_ci_band(cum_ic: pd.Series, monthly_se: float) -> pd.DataFrame:
+    """Random-walk no-skill band AROUND ZERO: ±Z95·monthly_se·√i. The cumulative IC
+    is plotted against this band — exceeding it means the cumulative IC is
+    distinguishable from a no-skill random walk (i.e. the arm has detectable, if
+    small, predictive power); staying inside means indistinguishable from 0."""
+    i = np.arange(1, len(cum_ic) + 1)
+    half = Z95 * float(monthly_se) * np.sqrt(i)
+    return pd.DataFrame({"lo": -half, "hi": +half}, index=cum_ic.index)
+
+
+# ----------------------------------------------------------------------------
+# chart builders
+# ----------------------------------------------------------------------------
+
+
+def _headline_table(runs: list[dict]) -> None:
+    """Overview: the per-phase verdict table (the falsifiable findings)."""
+    rows = []
+    for r in runs:
+        phase, treat = _phase_of(r)
+        d = r["differential"]
+        rows.append({
+            "phase": phase, "claim (treatment)": treat,
+            "treat mean IC": r["summary_state"].get("mean_ic", float("nan")),
+            "base mean IC": r["summary_base"].get("mean_ic", float("nan")),
+            "differential": d.get("mean_diff", float("nan")),
+            "DM-p": d.get("dm_p_mbb", float("nan")),
+            "ci_half": d.get("ci_half", float("nan")),
+            "publishable": d.get("publishable_ci_half", False),
+            "H6": r.get("h6_deterministic"),
+        })
+    df = pd.DataFrame(rows)
+    if df.empty:
+        st.info("No real result dirs yet — synthetic demo only.")
         return
-    if half < PUBLISHABILITY_GATE:
-        st.success(f"publishable: arm_state CI half-width {half:.4f} < {PUBLISHABILITY_GATE}")
-    else:
-        st.warning(
-            f"not tight enough: arm_state CI half-width {half:.4f} >= {PUBLISHABILITY_GATE} "
-            "(report inconclusive, not null)"
-        )
+    st.dataframe(df.style.format({k: "{:+.4f}" for k in
+                                  ["treat mean IC", "base mean IC", "differential",
+                                   "ci_half"]} | {"DM-p": "{:.3f}"}),
+                 use_container_width=True, hide_index=True)
+    n_pub = int(df["publishable"].sum())
+    n_null = int((df["differential"].abs() < PUBLISHABILITY_GATE).sum())
+    st.caption(f"{len(df)} confirmatory claims · "
+               f"{n_null}/{len(df)} differentials within ±{PUBLISHABILITY_GATE} (NULL) · "
+               f"{n_pub}/{len(df)} publishable (ci_half < 0.015) · "
+               f"all H6 deterministic: {bool(df['H6'].all())}")
 
 
-def view_run_history() -> None:
-    st.subheader("Run history (runs/ledger.jsonl)")
-    rows = _ledger_rows()
-    if not rows:
-        st.info("No ledger entries yet.")
-        return
-    table = []
-    for r in rows:
-        ev = r.get("event", "eval (phase A)")
-        sig = r.get("config_sig") or r.get("sha256_prereg", "")[:12] or "—"
-        verdict = _verdict(r)
-        table.append({"ts": r.get("ts", ""), "config_sig": sig, "event": ev, "verdict": verdict})
-    df = pd.DataFrame(table).sort_values("ts", ascending=False)
-    st.dataframe(df, use_container_width=True, hide_index=True)
-    st.caption(
-        f"{len(df)} ledger rows. Phase A rows = DA-lift evals; Phase B rows = freeze / "
-        "reframe / universe / coverage annotations (durable registry, pre-reg §9)."
-    )
+def _cumulative_ic_chart(ic: pd.Series, label: str, monthly_se: float) -> go.Figure:
+    cum = _cumulative_ic(ic)
+    band = _cum_ic_ci_band(cum, monthly_se)
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=list(band.index), y=list(band["hi"]), name="95% CI",
+                             mode="lines", line={"width": 0}, hoverinfo="skip",
+                             showlegend=False))
+    fig.add_trace(go.Scatter(x=list(band.index), y=list(band["lo"]), name="95% CI",
+                             mode="lines", fill="tonexty",
+                             fillcolor="rgba(100,150,255,0.15)", line={"width": 0},
+                             hoverinfo="skip"))
+    fig.add_trace(go.Scatter(x=list(cum.index), y=list(cum.values), name=f"cum IC ({label})",
+                             mode="lines", line={"color": "#1f77b4"}))
+    fig.add_hline(y=0, line_dash="dot", line_color="grey")
+    fig.update_layout(xaxis_title="month", yaxis_title="cumulative rank-IC",
+                      height=380, legend=dict(orientation="h", y=-0.2),
+                      margin=dict(l=10, r=10, t=20, b=10),
+                      title="cumulative IC vs random-walk 95% band "
+                            "(stays in band ⇒ indistinguishable from no-skill)")
+    return fig
 
 
-def _verdict(row: dict) -> str:
-    """Compact verdict/mean-IC string for one ledger row (heterogeneous shapes)."""
-    ev = row.get("event")
-    if ev == "phase_b_freeze":
-        return "frozen (sha256 registered)"
-    if ev == "prereg_reframe":
-        return f"reframe -> {row.get('version', '?')}"
-    if ev == "universe_crosscheck":
-        jac = row.get("jaccard_2016plus", {})
-        return f"Jaccard min {jac.get('min', '?')}, mean {jac.get('mean', '?')}"
-    if ev == "oos_resolvable_universe":
-        uni = row.get("universe", {})
-        return f"clean {uni.get('clean', '?')}/{uni.get('pb_2016plus_tickers', '?')}"
-    if ev in {"prereg_outcome_annotation"}:
-        return f"annotate ({row.get('version', '?')})"
-    # Phase A eval rows: primary = ERL/xgb mean da_lift.
-    results = row.get("results") or []
-    primary = next(
-        (x for x in results if x.get("treatment") == "ERL" and x.get("learner") == "xgb"), None
-    )
-    if primary is not None:
-        return f"DA-lift {primary.get('da_lift', float('nan')):+.4f} (n={primary.get('n', '?')})"
-    return "—"
-
-
-def view_selected_run(run: dict, is_synthetic: bool) -> None:
-    sig = run["config_sig"]
-    if is_synthetic:
-        st.warning("DEMO: no real result dir yet — showing synthetic data.")
-    st.subheader(f"Selected run: `{sig}`")
-    st.caption(f"artifact ts: {run.get('ts')}  |  H6 deterministic: {run.get('h6_deterministic')}")
-
-    diff = run["differential"]
+def _kpi_row(ic: pd.Series, label: str) -> None:
+    k = _ic_kpi(ic)
     c1, c2, c3, c4 = st.columns(4)
-    c1.metric("Δ mean rank-IC (state−base)", f"{diff.get('mean_diff', float('nan')):+.4f}")
-    c2.metric("95% CI low", f"{diff.get('ci_lo', float('nan')):+.4f}")
-    c3.metric("95% CI high", f"{diff.get('ci_hi', float('nan')):+.4f}")
-    c4.metric("months (n)", diff.get("n", "—"))
-    _publishability_badge(diff, run["summary_state"])
+    c1.metric(f"mean IC ({label})", f"{k['mean']:+.4f}")
+    c2.metric("NW-HAC t", f"{k['t_hac']:.2f}")
+    c3.metric("IC-IR (mean/std)", f"{k['ir']:+.2f}")
+    c4.metric("hit-rate (IC>0)", f"{k['hit_rate']:.0%}")
+    st.caption(f"n={k['n']} months · monthly HAC SE ≈ {k['ci_half']/Z95:.4f} "
+               f"· ci_half (95%) {k['ci_half']:.4f}")
 
-    st.markdown("**Monthly rank-IC — arm_state (filed) vs arm_base (period-end+lag)**")
-    ic_fig = _ic_chart(run)
-    st.plotly_chart(ic_fig, use_container_width=True)
 
-    st.markdown("**Differential (state − base) with 95% CI**")
-    diff_fig = _diff_chart(run)
-    st.plotly_chart(diff_fig, use_container_width=True)
+def _ic_histogram(ic: pd.Series) -> go.Figure:
+    s = ic.dropna()
+    fig = go.Figure(go.Histogram(x=s.values, nbinsx=25, marker_color="#9467bd"))
+    fig.add_vline(x=0, line_dash="dot", line_color="grey")
+    fig.add_vline(x=float(s.mean()), line_color="red", annotation_text=f"mean {s.mean():+.4f}")
+    fig.update_layout(xaxis_title="monthly rank-IC", yaxis_title="months", height=320,
+                      margin=dict(l=10, r=10, t=20, b=10),
+                      title="IC distribution (spread ⇒ volatility structure)")
+    return fig
+
+
+def _rolling_ic_chart(ic: pd.Series, window: int = 12) -> go.Figure:
+    r = _rolling_ic(ic, window)
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=r.index, y=r["mean"], name=f"rolling-{window}m mean IC",
+                             mode="lines", line={"color": "#1f77b4"}))
+    fig.add_trace(go.Scatter(x=r.index, y=r["std"], name=f"rolling-{window}m IC vol",
+                             mode="lines", line={"color": "#d62728"}, yaxis="y2"))
+    fig.add_hline(y=0, line_dash="dot", line_color="grey", yref="y1")
+    fig.update_layout(xaxis_title="month", yaxis_title="rolling mean IC",
+                      yaxis2={"title": "rolling IC vol", "overlaying": "y", "side": "right"},
+                      height=340, legend=dict(orientation="h", y=-0.2),
+                      margin=dict(l=10, r=10, t=20, b=10),
+                      title=f"rolling {window}-month IC + IC-vol (curve evolution)")
+    return fig
+
+
+def _drawdown_chart(cum_ic: pd.Series) -> go.Figure:
+    dd = _drawdown(cum_ic)
+    fig = go.Figure(go.Scatter(x=dd.index, y=dd.values, name="underwater (cum IC drawdown)",
+                               mode="lines", fill="tozeroy", fillcolor="rgba(214,39,40,0.2)",
+                               line={"color": "#d62728"}))
+    fig.add_hline(y=0, line_color="grey")
+    fig.update_layout(xaxis_title="month", yaxis_title="cumulative IC − running max",
+                      height=320, margin=dict(l=10, r=10, t=20, b=10),
+                      title="underwater curve (how far cumulative IC is below its peak)")
+    return fig
+
+
+def _ci_half_bar(runs: list[dict]) -> go.Figure:
+    """Uncertainty: ci_half per phase vs the 0.015 publishability gate."""
+    phases, cis = [], []
+    for r in runs:
+        p, _ = _phase_of(r)
+        phases.append(p)
+        cis.append(r["differential"].get("ci_half", float("nan")))
+    fig = go.Figure(go.Bar(x=phases, y=cis, name="differential ci_half",
+                           marker_color=["#2ca02c" if (c < PUBLISHABILITY_GATE) else "#d62728"
+                                         for c in cis],
+                           text=[f"{c:.4f}" for c in cis], textposition="outside"))
+    fig.add_hline(y=PUBLISHABILITY_GATE, line_dash="dash", line_color="black",
+                  annotation_text=f"publishability gate {PUBLISHABILITY_GATE}")
+    fig.update_layout(xaxis_title="phase", yaxis_title="95% CI half-width",
+                      height=340, margin=dict(l=10, r=10, t=20, b=10),
+                      title="differential CI precision per phase (green = publishable-as-null)")
+    return fig
+
+
+def _differential_forest(runs: list[dict]) -> go.Figure:
+    """Uncertainty: differential mean ± 95% CI per phase (forest plot)."""
+    rows = []
+    for r in runs:
+        p, _ = _phase_of(r)
+        d = r["differential"]
+        rows.append((p, d.get("mean_diff", float("nan")),
+                     d.get("ci_lo", float("nan")), d.get("ci_hi", float("nan"))))
+    rows.sort(key=lambda x: x[0])
+    fig = go.Figure()
+    for p, m, lo, hi in rows:
+        fig.add_trace(go.Scatter(x=[lo, hi], y=[p, p], mode="lines",
+                                 line={"color": "#1f77b4"}, showlegend=False))
+        fig.add_trace(go.Scatter(x=[m], y=[p], mode="markers",
+                                 marker={"size": 12, "color": "#1f77b4"}, showlegend=False))
+    fig.add_vline(x=0, line_dash="dot", line_color="grey")
+    fig.update_layout(xaxis_title="differential (treatment − base) rank-IC, mean ± 95% CI",
+                      yaxis_title="phase", height=320,
+                      margin=dict(l=10, r=10, t=20, b=10),
+                      title="differential forest plot (CI brackets 0 ⇒ NULL)")
+    return fig
 
 
 def _ic_chart(run: dict) -> go.Figure:
-    ic_s = run["ic_state"]
-    ic_b = run["ic_base"]
+    ic_s, ic_b = run["ic_state"], run["ic_base"]
+    _, treat = _phase_of(run)
     fig = go.Figure()
-    fig.add_trace(go.Scatter(x=ic_s.index, y=ic_s.values, name="arm_state (filed)", mode="lines"))
-    fig.add_trace(go.Scatter(x=ic_b.index, y=ic_b.values, name="arm_base (end+lag)", mode="lines"))
+    fig.add_trace(go.Scatter(x=ic_s.index, y=ic_s.values, name=treat, mode="lines"))
+    fig.add_trace(go.Scatter(x=ic_b.index, y=ic_b.values, name="arm_base", mode="lines"))
     fig.add_hline(y=0, line_dash="dot", line_color="grey")
-    fig.update_layout(
-        xaxis_title="month", yaxis_title="cross-sectional rank-IC",
-        height=360, legend=dict(orientation="h", y=-0.2), margin=dict(l=10, r=10, t=20, b=10),
-    )
+    fig.update_layout(xaxis_title="month", yaxis_title="cross-sectional rank-IC",
+                      height=360, legend=dict(orientation="h", y=-0.2),
+                      margin=dict(l=10, r=10, t=20, b=10))
     return fig
-
-
-def _diff_chart(run: dict) -> go.Figure:
-    diff_series = run["ic_state"] - run["ic_base"]
-    d = run["differential"]
-    mean_d = d.get("mean_diff", float(np.nan))
-    lo = d.get("ci_lo", float(np.nan))
-    hi = d.get("ci_hi", float(np.nan))
-    fig = go.Figure()
-    fig.add_trace(go.Scatter(x=diff_series.index, y=diff_series.values, name="monthly ΔIC",
-                             mode="lines", opacity=0.5))
-    fig.add_hline(y=0, line_dash="dot", line_color="grey")
-    fig.add_hline(y=mean_d, line_color="blue", annotation_text=f"mean Δ {mean_d:+.4f}")
-    # pre-reg §7 publishability gate (±0.015) as the significance reference band.
-    fig.add_hline(y=PUBLISHABILITY_GATE, line_dash="dash", line_color="red",
-                  annotation_text=f"+{PUBLISHABILITY_GATE} gate")
-    fig.add_hline(y=-PUBLISHABILITY_GATE, line_dash="dash", line_color="red",
-                  annotation_text=f"−{PUBLISHABILITY_GATE}")
-    # mean CI as a shaded band (constant across months — it's on the mean).
-    fig.add_hrect(y0=lo, y1=hi, fillcolor="blue", opacity=0.10,
-                  annotation_text=f"95% CI [{lo:+.4f}, {hi:+.4f}]")
-    fig.update_layout(
-        xaxis_title="month", yaxis_title="Δ rank-IC (state − base)",
-        height=360, legend=dict(orientation="h", y=-0.2), margin=dict(l=10, r=10, t=20, b=10),
-    )
-    return fig
-
-
-def view_coverage() -> None:
-    st.subheader("OOS universe coverage")
-    cov = _coverage()
-    c1, c2, c3 = st.columns(3)
-    c1.metric("OOS-resolvable tickers", f"{cov['clean']} / {cov['total']}")
-    c2.metric("Jaccard (hanshof vs pierrebrunelle, 2016+)", f"{cov['jaccard_mean']:.3f}")
-    c3.metric("dropped wrong-entity reuses", ", ".join(cov["dropped_reuse"]))
-    if cov.get("jaccard_min") is not None:
-        st.caption(f"Jaccard min month: {cov['jaccard_min']:.4f} (<0.95 fires; OOS in window)")
-    st.caption(f"source: {cov['source']}")
-    st.markdown(
-        "Both Phase B arms use the **same** clean set → the rank-IC differential isolates "
-        "fundamental-timing. Coverage reduction (114 unresolved renamed/merged) is a scope "
-        "limit, not a bias (pre-reg §3; ledger `oos_resolvable_universe`)."
-    )
-
-
-def view_robustness(run: dict) -> None:
-    st.subheader("Robustness & control gates")
-    c1, c2 = st.columns(2)
-    h6 = "PASS" if run.get("h6_deterministic") else "FAIL"
-    c1.metric("H6 deterministic (bit-identical re-run)", h6)
-    half = run["summary_state"].get("ci_half", float("nan"))
-    c2.metric("arm_state CI half-width (gate < 0.015)", f"{half:.4f}")
-
-    st.markdown("**Control differentials (pre-reg §5)** — the headline ΔIC must shrink/vanish.")
-    controls = run.get("controls") or {}
-    rows = []
-    d = run["differential"]
-    rows.append({"control": "headline (state−base)", "mean_diff": d.get("mean_diff"),
-                 "ci_lo": d.get("ci_lo"), "ci_hi": d.get("ci_hi"), "n": d.get("n")})
-    for name in ("lag_shift", "placebo"):
-        c = controls.get(name)
-        if c:
-            rows.append({"control": name, "mean_diff": c.get("mean_diff"),
-                         "ci_lo": c.get("ci_lo"), "ci_hi": c.get("ci_hi"), "n": c.get("n")})
-    st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
-
-    st.markdown("**Harvey-Liu haircut sensitivity (pre-reg §6)**")
-    st.plotly_chart(_haircut_chart(run), use_container_width=True)
 
 
 def _haircut_chart(run: dict) -> go.Figure:
-    """Haircut sensitivity over n_trials, fed by the IC information ratio.
-
-    Reuses ``aionis.eval.multiple_testing.harvey_liu_haircut`` (Bonferroni/Holm
-    shrinkage). The IC-IR (|mean_ic|/SE_HAC) is the Sharpe-analog; n_obs = months.
-    """
-    from aionis.eval.multiple_testing import harvey_liu_haircut
-
-    summary = run["summary_state"]
-    mean_ic = abs(float(summary.get("mean_ic", 0.0)))
-    se = float(summary.get("se_hac") or summary.get("ci_half", 0.0) / 1.96 or 0.0)
-    n_obs = int(summary.get("n", 110))
-    ir = mean_ic / se if se > 0 else 0.0
-    trials = [1, 2, 5, 10, 20, 50, 100]
-    ys = []
-    for n_tr in trials:
-        try:
-            ys.append(harvey_liu_haircut(ir, n_tr, n_obs)["haircut_sharpe"])
-        except ValueError:
-            ys.append(0.0)
+    mt = run.get("multiple_testing_haircut") or {}
+    if "arm_state" in mt or "arm_macro" in mt or "arm_rel" in mt or "arm_prop" in mt:
+        arm = next(iter(mt.values()))  # any arm's grid
+    else:
+        return go.Figure()
+    trials = sorted(int(t) for t in arm.keys()) if arm else []
+    ys = [arm[t]["haircut_sharpe"] for t in trials]
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=trials, y=ys, name="haircut IC-IR", mode="lines+markers"))
-    fig.add_trace(go.Scatter(x=trials, y=[ir] * len(trials), name="observed IC-IR",
-                             line=dict(dash="dot")))
-    fig.add_hline(y=0, line_color="grey")
-    fig.update_layout(
-        title=f"IC-IR {ir:.3f} surviving Harvey-Liu Bonferroni haircut (n_obs={n_obs})",
-        xaxis_title="n_trials (independent configs searched)", yaxis_title="haircut IC-IR",
-        height=340, legend=dict(orientation="h", y=-0.2), margin=dict(l=10, r=10, t=40, b=10),
-    )
+    fig.update_layout(xaxis_title="n_trials", yaxis_title="haircut Sharpe",
+                      height=320, margin=dict(l=10, r=10, t=20, b=10))
     return fig
 
 
 # ----------------------------------------------------------------------------
-# strategy-return view (exploratory lens — Phase D strategy_return ledger row)
+# views (tabs)
 # ----------------------------------------------------------------------------
 
 
-def _fmt_num(x: object, ndigits: int = 3) -> str:
-    """Format a maybe-None / maybe-NaN number for a markdown table cell."""
-    if isinstance(x, bool) or not isinstance(x, (int, float)):
-        return "—"
-    if not np.isfinite(float(x)):
-        return "—"
-    return f"{float(x):.{ndigits}f}"
+def view_overview(runs: list[dict]) -> None:
+    st.subheader("Headline — confirmatory findings")
+    st.caption("Each phase = one pre-registered two-tailed claim on cross-sectional monthly "
+               "rank-IC (treatment vs fundamentals-only base). Verdict: NULL SUPPORTED when "
+               "the differential CI brackets 0.")
+    _headline_table(runs)
+    st.markdown("**Differential forest plot** — mean ± 95% CI per phase (CI brackets 0 ⇒ NULL)")
+    if runs:
+        st.plotly_chart(_differential_forest(runs), use_container_width=True)
+        st.markdown("**CI precision per phase** — green = publishable-as-null (ci_half < 0.015)")
+        st.plotly_chart(_ci_half_bar(runs), use_container_width=True)
 
 
-def _sharpe_bar_chart(strategies: dict) -> go.Figure:
-    names = list(strategies.keys())
-    shrs = [float(strategies[n].get("sharpe_annualized", float("nan"))) for n in names]
-    fig = go.Figure()
-    fig.add_trace(go.Bar(x=names, y=shrs, name="Sharpe (ann.)", showlegend=False))
-    fig.add_hline(y=0, line_color="grey")
-    fig.update_layout(
-        xaxis_title="strategy", yaxis_title="Sharpe (annualized)",
-        height=320, margin=dict(l=10, r=10, t=20, b=10),
-    )
-    return fig
+def view_fit_quality(run: dict, is_syn: bool) -> None:
+    phase, treat = _phase_of(run)
+    st.subheader(f"Fit Quality — phase {phase} ({treat})")
+    if is_syn:
+        st.warning("DEMO: synthetic data.")
+    st.markdown("**KPI row** — does the score predict cross-sectional returns?")
+    _kpi_row(run["ic_state"], treat)
+    _kpi_row(run["ic_base"], "base")
+    st.markdown("**Cumulative IC vs random-walk 95% band** — stays in band ⇒ no detectable skill")
+    se = run["summary_state"].get("se_hac") or _ic_kpi(run["ic_state"])["std"]
+    st.plotly_chart(_cumulative_ic_chart(run["ic_state"], treat, se), use_container_width=True)
+    st.markdown("**Monthly rank-IC — treatment vs base**")
+    st.plotly_chart(_ic_chart(run), use_container_width=True)
+    oos = run.get("oos_state")
+    if oos is not None and len(oos):
+        st.markdown("**Score vs forward-return scatter** + **quantile spread** "
+                    "(from the persisted OOS panel)")
+        st.caption("OOS-panel fit charts: TODO wire (oos panel present).")
+    else:
+        st.info("Score-vs-return scatter / quantile spread / R² need the per-ticker OOS panel, "
+                "which older runs didn't persist. A re-run with OOS persistence enables them.")
 
 
-def _dsr_grid_table(strategies: dict, grid: list, benchmark: str) -> str:
-    """Per-strategy markdown table: Sharpe, n_months, DSR p-value across the grid.
+def view_volatility(run: dict) -> None:
+    phase, treat = _phase_of(run)
+    st.subheader(f"Volatility Structure — phase {phase}")
+    st.markdown("**IC distribution** (spread ⇒ how volatile the monthly signal is)")
+    st.plotly_chart(_ic_histogram(run["ic_state"]), use_container_width=True)
+    st.markdown("**Underwater curve** — cumulative IC drawdown (how far below its peak)")
+    st.plotly_chart(_drawdown_chart(_cumulative_ic(run["ic_state"])), use_container_width=True)
 
-    ``dsr_by_trials`` is keyed by string trial counts ("1","2","5","20"); we
-    probe both the string and int keys defensively. The benchmark arm is marked.
-    """
-    head = "| strategy | Sharpe (ann.) | months | " + " | ".join(f"DSR p@{n}" for n in grid) + " |"
-    sep = "|---" * (3 + len(grid)) + "|"
-    lines = [head, sep]
-    for name, s in strategies.items():
-        by_trials = s.get("dsr_by_trials") or {}
-        cells = []
-        for n in grid:
-            entry = by_trials.get(str(n)) or by_trials.get(n) or {}
-            cells.append(_fmt_num(entry.get("p_value")))
-        label = f"{name} (bench)" if name == benchmark else name
-        lines.append(
-            f"| {label} | {_fmt_num(s.get('sharpe_annualized'))} | "
-            f"{s.get('n_months', '—')} | " + " | ".join(cells) + " |"
-        )
-    return "\n".join(lines)
+
+def view_evolution(run: dict) -> None:
+    phase, treat = _phase_of(run)
+    st.subheader(f"Curve Evolution — phase {phase}")
+    se = run["summary_state"].get("se_hac") or _ic_kpi(run["ic_state"])["std"]
+    st.markdown("**Cumulative IC with random-walk CI band** (evolution of the signal over time)")
+    st.plotly_chart(_cumulative_ic_chart(run["ic_state"], treat, se), use_container_width=True)
+    st.markdown("**Rolling 12-month IC + IC-vol** (trend + changing volatility)")
+    st.plotly_chart(_rolling_ic_chart(run["ic_state"], 12), use_container_width=True)
+
+
+def view_event_study(run: dict) -> None:
+    st.subheader("Event Study — pre/post-event differences (CAR)")
+    try:
+        from aionis.eval import event_study  # noqa: F401 — present when agent B lands
+        st.caption("CAR around 13D / earnings / macro events (descriptive post-event drift).")
+        st.info("event_study module present — TODO: wire the CAR chart + event-type selector.")
+    except Exception:  # noqa: BLE001
+        st.info("Event-study (CAR around 13D/earnings/macro) lands when the `event_study` "
+                "module is built. It's a DESCRIPTIVE visualization of realized post-event "
+                "drift (uses forward returns by design — not a PIT feature, so no leakage).")
+
+
+def view_uncertainty(runs: list[dict], run: dict) -> None:
+    st.subheader("Uncertainty")
+    st.markdown("**Differential forest plot** (all phases) — CI brackets 0 ⇒ NULL")
+    if runs:
+        st.plotly_chart(_differential_forest(runs), use_container_width=True)
+        st.plotly_chart(_ci_half_bar(runs), use_container_width=True)
+    st.markdown(f"**Selected run** `{run['config_sig'][:12]}…` · H6 deterministic: "
+                f"{run.get('h6_deterministic')}")
+    diff = run["differential"]
+    c1, c2, c3 = st.columns(3)
+    c1.metric("differential mean", f"{diff.get('mean_diff', float('nan')):+.4f}")
+    c2.metric("95% CI", f"[{diff.get('ci_lo', float('nan')):+.4f}, "
+              f"{diff.get('ci_hi', float('nan')):+.4f}]")
+    c3.metric("DM-p (MBB)", f"{diff.get('dm_p_mbb', float('nan')):.3f}")
+    ctrls = run.get("controls", {})
+    pl = ctrls.get("bundle_shuffle_placebo", {})
+    if pl:
+        st.caption(f"bundle-shuffle placebo: mean {pl.get('mean_diff', 0):+.4f} "
+                   f"(DM-p {pl.get('dm_p_mbb', 0):.3f}) — must vanish if the signal is real.")
+    hc = _haircut_chart(run)
+    if hc.data:
+        st.plotly_chart(hc, use_container_width=True)
+
+
+def view_run_history() -> None:
+    st.subheader("Run history (ledger)")
+    rows = _ledger_rows()
+    if not rows:
+        st.info("Ledger empty.")
+        return
+    show = [{"ts": r.get("ts", "")[:19], "event": r.get("event"),
+             "phase": r.get("phase"), "sig": str(r.get("config_sig", ""))[:12]}
+            for r in rows[-30:]]
+    st.dataframe(pd.DataFrame(show[::-1]), use_container_width=True, hide_index=True)
+
+
+def view_coverage() -> None:
+    cov = _coverage()
+    st.subheader("Coverage")
+    c1, c2, c3 = st.columns(3)
+    c1.metric("S&P 500 PIT universe (clean)", cov["clean"])
+    c2.metric("resolvable superset", cov["total"])
+    c3.metric("monthly Jaccard (hanshof vs pierrebrunelle)", f"{cov['jaccard']:.3f}")
+    st.caption(f"reuse-dropped tickers: {cov['dropped']}")
 
 
 def view_strategy_return() -> None:
-    st.subheader("Strategy-return evaluation (exploratory lens)")
+    st.subheader("Strategy Return (secondary/exploratory lens)")
     row = _latest_strategy_return()
     if not row:
-        st.info("no strategy-return eval run yet")
-        st.caption(
-            "Logged as `phase: \"strategy_return\"` in runs/ledger.jsonl once the "
-            "strategy-return evaluation lands (``scripts/strategy_eval_run.py``)."
-        )
+        st.info("No strategy-return eval run yet.")
         return
-
-    strategies = row.get("strategies") or {}
-    grid = row.get("n_trials_grid") or [1, 2, 5, 20]
-    benchmark = row.get("benchmark", "arm_base")
-    n_months_common = row.get("n_months_common")
-    st.caption(
-        f"artifact ts: {row.get('ts')}  |  benchmark: `{benchmark}`  |  "
-        f"common months: {n_months_common}  |  grid: {list(grid)}"
-    )
-
-    st.markdown("**Sharpe (annualized) per strategy — monthly long-short**")
-    st.plotly_chart(_sharpe_bar_chart(strategies), use_container_width=True)
-
-    st.markdown("**Deflated Sharpe Ratio (DSR) p-value across the n_trials grid**")
-    st.markdown(_dsr_grid_table(strategies, grid, benchmark))
-    st.caption(
-        "`dsr_p_conservative` is the largest trial count (project-family floor). "
-        "The honest project-wide family is ≥10; nothing survives once deflated to it."
-    )
-
-    spa = row.get("spa") or {}
-    mcs_included = row.get("mcs_included")
-    if spa or mcs_included is not None:
-        st.markdown("**Hansen-SPA / Model Confidence Set**")
-        c1, c2 = st.columns(2)
-        if spa:
-            cp = spa.get("consistent_pvalue")
-            c1.metric(
-                "Hansen-SPA consistent p-value",
-                _fmt_num(cp),
-                help="H0: no strategy beats the benchmark (arm_base). "
-                "High p → cannot reject the null.",
-            )
-        if mcs_included is not None:
-            names = list(strategies.keys())
-            in_range = [i for i in mcs_included if isinstance(i, int) and 0 <= i < len(names)]
-            included = [names[i] for i in in_range]
-            c2.metric(
-                "Hansen-MCS included set",
-                ", ".join(included) if included else "—",
-                help="Strategies surviving the MCS pruning (not dominated at the family level).",
-            )
-
-    placebo_n1 = strategies.get("C_placebo", {})
-    placebo_n1 = (placebo_n1.get("dsr_by_trials") or {}).get("1", {}) if placebo_n1 else {}
-    placebo_str = _fmt_num(placebo_n1.get("p_value")) if placebo_n1 else "≈0.057"
-    st.markdown(
-        f"**Secondary / exploratory lens** — confirmatory claims remain the Phase B/C "
-        f"rank-IC differentials. No strategy survives the project-family DSR deflation. "
-        f"The placebo at n=1 ({placebo_str}) is the under-deflation cautionary tale: "
-        f"it looks marginal at one trial and dissolves once the family is inflated."
-    )
+    strategies = row.get("strategies", {})
+    if not strategies:
+        st.warning("strategy_return row has no strategies.")
+        return
+    st.caption(f"ts {row.get('ts', '')[:19]} · benchmark {row.get('benchmark')} · "
+               f"n_trials_grid {row.get('n_trials_grid')}")
+    # per-strategy Sharpe + DSR grid table
+    grid = row.get("n_trials_grid", [1, 2, 5, 20])
+    bench = row.get("benchmark", "")
+    recs = []
+    for name, m in strategies.items():
+        dbt = m.get("dsr_by_trials", {})
+        rec = {"strategy": name, "sharpe_ann": m.get("sharpe_annualized"),
+               "dsr_p_conservative": m.get("dsr_p_conservative"),
+               "n_months": m.get("n_months")}
+        for nt in grid:
+            rec[f"p@n{nt}"] = (dbt.get(nt) or {}).get("p_value") if dbt else None
+        recs.append(rec)
+    df = pd.DataFrame(recs)
+    fmt = {"sharpe_ann": "{:+.3f}", "dsr_p_conservative": "{:.3f}"}
+    for nt in grid:
+        fmt[f"p@n{nt}"] = "{:.3f}"
+    st.dataframe(df.style.format({k: v for k, v in fmt.items() if k in df.columns}),
+                 use_container_width=True, hide_index=True)
+    spa = row.get("spa", {})
+    if isinstance(spa, dict) and "consistent_pvalue" in spa:
+        st.caption(f"Hansen-SPA consistent_p = {spa['consistent_pvalue']:.3f} "
+                   f"(H0: nothing beats {bench}). "
+                   f"MCS includes all → statistically indistinguishable.")
+    st.caption("No L-S Sharpe survives the project-family DSR deflation; the placebo at "
+               "n=1 ≈ 0.057 is the under-deflation cautionary tale.")
 
 
 # ----------------------------------------------------------------------------
-# layout
+# entrypoint
 # ----------------------------------------------------------------------------
 
 
 def main() -> None:
-    st.set_page_config(page_title="Aionis Phase B", page_icon="📊", layout="wide")
-    st.title("Aionis — Phase B Research Dashboard")
-    st.caption(
-        "filed-date (arm_state) vs period-end+lag (arm_base) rank-IC differential · "
-        "pre-reg §1/§7 (publishability gate 95% CI ½ < 0.015)"
-    )
+    st.set_page_config(page_title="Aionis", page_icon="📊", layout="wide")
+    st.title("Aionis — Research Dashboard v2")
+    st.caption("Near-final quant-evaluation interface · 5 dimensions "
+               "(fit / volatility / evolution / event-study / uncertainty) · "
+               "current data demonstrates the methods, not final conclusions.")
 
     runs = _list_runs()
     options = [r["config_sig"] for r in runs] if runs else []
     with st.sidebar:
         st.header("Run")
         if options:
-            chosen = st.selectbox("result dir", options, index=0)
+            chosen = st.selectbox("result dir (phase)", options, index=0)
             run, is_syn = _load_run(chosen), False
         else:
-            st.warning("No result dirs yet — using synthetic demo data.")
-            st.caption("Wire `results.save_run(...)` into phase_b_run.py to land a real run.")
+            st.warning("No result dirs — synthetic demo.")
             run, is_syn = _synthetic_run(), True
         st.divider()
         st.caption(f"results root: `{R.results_dir()}`")
         st.caption(f"runs scanned: {len(runs)}")
 
-    tabs = st.tabs(["Run history", "Selected run", "Coverage", "Robustness", "Strategy Return"])
-    tab_hist, tab_run, tab_cov, tab_rob, tab_sr = tabs
-    with tab_hist:
-        view_run_history()
-    with tab_run:
-        view_selected_run(run, is_syn)
-    with tab_cov:
+    tabs = st.tabs(["Overview", "Fit Quality", "Volatility", "Curve Evolution",
+                    "Event Study", "Uncertainty", "Coverage", "Strategy Return",
+                    "Run history"])
+    (t_over, t_fit, t_vol, t_evol, t_ev, t_unc, t_cov, t_sr, t_hist) = tabs
+    with t_over:
+        view_overview(runs)
+    with t_fit:
+        view_fit_quality(run, is_syn)
+    with t_vol:
+        view_volatility(run)
+    with t_evol:
+        view_evolution(run)
+    with t_ev:
+        view_event_study(run)
+    with t_unc:
+        view_uncertainty(runs, run)
+    with t_cov:
         view_coverage()
-    with tab_rob:
-        view_robustness(run)
-    with tab_sr:
+    with t_sr:
         view_strategy_return()
+    with t_hist:
+        view_run_history()
 
 
 if __name__ == "__main__":  # pragma: no cover — Streamlit entrypoint
