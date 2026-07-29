@@ -23,7 +23,14 @@ Artifact layout (``runs/results/<config_sig>/``)::
     differential.json     arm_state - arm_base differential + CI (pre-reg §1/§7)
     controls.json         lag_shift + placebo control differentials (pre-reg §5)
     config.json           the frozen config that produced this run
-    meta.json             ts, config_sig, h6_deterministic, aionis version
+    meta.json             ts, config_sig, h6_deterministic, aionis version, schema
+
+Optional (schema 2; written only when the run supplies them — dashboard v2 reads
+them for fit-scatter / quantile / turnover charts)::
+
+    oos_state.parquet     per-ticker OOS score panel (treatment) [date, ticker, score, y_fwd_ret]
+    oos_base.parquet      per-ticker OOS score panel (base)      [date, ticker, score, y_fwd_ret]
+    ls_returns.parquet    monthly long-short return series       [Series, idx=date]
 
 The publishability gate (pre-reg §7) is a 95% CI half-width < 0.015; the
 dashboard draws that as a horizontal band — see ``dashboard/app.py``.
@@ -114,6 +121,9 @@ def save_run(
     config: dict,
     h6_deterministic: bool,
     base: Path | str | None = None,
+    oos_state: pd.DataFrame | None = None,
+    oos_base: pd.DataFrame | None = None,
+    ls_returns: pd.Series | None = None,
 ) -> Path:
     """Persist ONE Phase B run to ``runs/results/<config_sig>/`` and return that dir.
 
@@ -129,6 +139,16 @@ def save_run(
         config: the frozen config that produced this run.
         h6_deterministic: the Phase-B determinism flag (bit-identical re-run).
         base: override the ``runs`` dir (hermetic tests).
+        oos_state / oos_base: OPTIONAL per-ticker OOS score panels
+            ``[date, ticker, score, y_fwd_ret]`` for the treatment / base arms.
+            Persisted as ``oos_state.parquet`` / ``oos_base.parquet`` when not None
+            (schema 2); dashboard v2 renders fit-scatter / quantile / turnover from
+            them. Omitting them leaves the run dir unchanged (schema-1 callers).
+        ls_returns: OPTIONAL monthly long-short return series; persisted as
+            ``ls_returns.parquet`` when not None.
+
+    The ``config_sig`` (and thus the run's directory) depends ONLY on ``config``;
+    these optional panels are additive artifacts and never feed the config sha256.
     """
     d = run_dir(config_sig, base)
     d.mkdir(parents=True, exist_ok=True)
@@ -139,6 +159,14 @@ def save_run(
     _write_json(d / "differential.json", differential)
     _write_json(d / "controls.json", controls)
     _write_json(d / "config.json", config)
+    # schema-2 additive artifacts (dashboard v2 score panels); written only when
+    # the run supplies them, so schema-1 callers leave the dir untouched.
+    if oos_state is not None:
+        oos_state.to_parquet(d / "oos_state.parquet")
+    if oos_base is not None:
+        oos_base.to_parquet(d / "oos_base.parquet")
+    if ls_returns is not None:
+        _write_ic(d / "ls_returns.parquet", ls_returns)
     _write_json(
         d / "meta.json",
         {
@@ -146,7 +174,7 @@ def save_run(
             "config_sig": config_sig,
             "h6_deterministic": bool(h6_deterministic),
             "aionis_version": _project_version(),
-            "schema": 1,
+            "schema": 2,
         },
     )
     log.info(
@@ -164,14 +192,20 @@ def load_run(config_sig: str, base: Path | str | None = None) -> dict:
 
     Returns a dict with keys: ``config_sig``, ``ts``, ``h6_deterministic``,
     ``ic_state``, ``ic_base``, ``summary_state``, ``summary_base``,
-    ``differential``, ``controls``, ``config``. Raises ``FileNotFoundError`` if
-    the run directory or its ``meta.json`` is absent.
+    ``differential``, ``controls``, ``config``, plus the schema-2 additive
+    panels ``oos_state`` / ``oos_base`` / ``ls_returns`` — which are ``None`` when
+    the run predates schema 2 (or simply did not supply them), so old runs degrade
+    gracefully. Raises ``FileNotFoundError`` if the run directory or its
+    ``meta.json`` is absent.
     """
     d = run_dir(config_sig, base)
     meta_path = d / "meta.json"
     if not meta_path.exists():
         raise FileNotFoundError(f"No Phase B results at {d} (missing meta.json).")
     meta = _read_json(meta_path)
+    oos_state_path = d / "oos_state.parquet"
+    oos_base_path = d / "oos_base.parquet"
+    ls_returns_path = d / "ls_returns.parquet"
     return {
         "config_sig": config_sig,
         "ts": meta.get("ts"),
@@ -183,6 +217,9 @@ def load_run(config_sig: str, base: Path | str | None = None) -> dict:
         "differential": _read_json(d / "differential.json"),
         "controls": _read_json(d / "controls.json"),
         "config": _read_json(d / "config.json"),
+        "oos_state": pd.read_parquet(oos_state_path) if oos_state_path.exists() else None,
+        "oos_base": pd.read_parquet(oos_base_path) if oos_base_path.exists() else None,
+        "ls_returns": _read_ic(ls_returns_path) if ls_returns_path.exists() else None,
     }
 
 

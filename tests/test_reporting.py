@@ -127,6 +127,53 @@ def test_save_ic_rejects_non_series(tmp_path: Path) -> None:
 
 
 # ---------------------------------------------------------------------------
+# schema-2 additive OOS score panels
+# ---------------------------------------------------------------------------
+
+
+def _oos_panel(seed: int = 0) -> pd.DataFrame:
+    # 3 tickers x 8 month-end dates -> a realistic [date, ticker, score, y_fwd_ret]
+    # panel (the exact columns run_arm_oos emits).
+    rng = np.random.default_rng(seed)
+    dates = pd.date_range("2017-01-31", periods=8, freq="ME")
+    grid = pd.MultiIndex.from_product([dates, ["AAA", "BBB", "CCC"]]).to_frame(index=False)
+    grid.columns = ["date", "ticker"]
+    return grid.assign(
+        score=rng.normal(0.0, 1.0, len(grid)),
+        y_fwd_ret=rng.normal(0.0, 0.02, len(grid)),
+    )
+
+
+def test_save_run_with_oos_panels_round_trips(tmp_path: Path) -> None:
+    panel_state = _oos_panel(seed=0)
+    panel_base = _oos_panel(seed=1)
+    R.save_run(
+        "sig_oos", base=tmp_path,
+        **_run_payload(oos_state=panel_state, oos_base=panel_base),
+    )
+    loaded = R.load_run("sig_oos", base=tmp_path)
+    assert loaded["oos_state"] is not None
+    assert loaded["oos_base"] is not None
+    # the OOS score panels survive a parquet round-trip (cols + dtypes + values).
+    pd.testing.assert_frame_equal(loaded["oos_state"], panel_state)
+    pd.testing.assert_frame_equal(loaded["oos_base"], panel_base)
+    # the additive schema-2 files exist on disk.
+    d = tmp_path / "results" / "sig_oos"
+    assert (d / "oos_state.parquet").exists()
+    assert (d / "oos_base.parquet").exists()
+
+
+def test_load_run_returns_none_when_oos_panels_absent(tmp_path: Path) -> None:
+    # a schema-1 style save (no oos args) must still load, with None for the
+    # additive keys -- old runs degrade gracefully, no crash.
+    R.save_run("sig_no_oos", base=tmp_path, **_run_payload())
+    loaded = R.load_run("sig_no_oos", base=tmp_path)
+    assert loaded["oos_state"] is None
+    assert loaded["oos_base"] is None
+    assert loaded["ls_returns"] is None
+
+
+# ---------------------------------------------------------------------------
 # list_runs — scan + ledger reconciliation
 # ---------------------------------------------------------------------------
 

@@ -361,6 +361,7 @@ def run_confirmatory(
         sig, ic_state=ic_m, ic_base=ic_b, summary_state=sum_m, summary_base=sum_b,
         differential=diff, controls=controls, config=config,
         h6_deterministic=h6, base=results_base,
+        oos_state=pan_m, oos_base=pan_b,
     )
 
     result = {

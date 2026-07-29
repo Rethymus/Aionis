@@ -49,6 +49,7 @@ from aionis.ingest.universe import load_pierrebrunelle_membership
 
 CACHE = settings.data_dir / "cache"
 LEDGER = "runs/ledger.jsonl"
+STRATEGY_RETURNS = "runs/strategy_returns.parquet"
 
 
 def _now() -> str:
@@ -129,6 +130,11 @@ def main() -> None:
         inc = eval_out["mcs"]["included"]
         names = list(ls)
         print(f"[S]   Hansen-MCS included={[names[i] for i in inc]}", flush=True)
+
+    # dashboard v2: persist the monthly L-S returns as one wide parquet (strategy
+    # name -> column, month-end index) so the quant-eval charts read it if present.
+    pd.DataFrame(ls).to_parquet(STRATEGY_RETURNS)
+    print(f"[S] wrote {STRATEGY_RETURNS}", flush=True)
 
     _append({
         "ts": _now(), "event": "exploratory", "phase": "strategy_return",
