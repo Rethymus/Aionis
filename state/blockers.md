@@ -8,5 +8,15 @@
 - **GLM 5-hour usage limit (429, recurring).** Provider quota; resets on a rolling window.
   Mitigation: model tiering (opus for high-stakes), bounded single retry, patience. Not a code
   blocker.
-- **Phase B has no OOS panel.** `phase_b_run.py` predates the wiring → the dashboard shows the
-  "re-run to enable" notice for B. Backlog **S** task (not a blocker for the 4-null headline).
+- **Phase B OOS panel blocked by `uv.lock` stranding (benign).** The A1 same-sig guard
+  fired as designed: Phase B's frozen sig `17245a75…` was computed under the pre-Phase-C
+  `uv.lock` (`e045a023…`), while C/D/E1 + the current tree use `ee985437…` (the lock was
+  updated in commit `1e57335` for the Reddit/PRAW stack). The drift is **non-load-bearing** —
+  only `praw` / `prawcore` / `websocket-client` / `update-checker` / `defusedxml` were added;
+  `lightgbm`/`pandas`/`numpy`/`pyarrow`/`scikit-learn`/`purgedcv` versions are unchanged →
+  **Phase B's IC series is still bit-identically reproducible**; only the sig string moved (the
+  blanket `uv_lock_sha256` guard caught it). `phase_b_run.py` already carries the correct
+  `PHASE_B_NO_LEDGER` gate + additive oos wiring (uncommitted, ruff/305-tests clean). Resolution
+  is an **owner decision**: DROP (cosmetic; **recommended**) · restore `e045a023…` lock for one
+  rerun · re-freeze B under current lock (2nd baseline → needs ADR) · narrow the config sig to
+  load-bearing versions only (architectural, affects all phases). Not a blocker for the 4-null headline.
