@@ -1,5 +1,28 @@
 # TASK-STRAT Decision Brief — E2 (build) vs E3 (launch) vs other
 
+> **决策摘要（中文 TL;DR）—— 先读这段，再看下方英文详证**
+>
+> **要决策什么**：B/C/D/E1 四个 null 已发表，因果预测（event→sector）愿景下一步走哪条路？
+>
+> **决定性算术**：
+> - **E2 当回测 = 欠功率**。cutoff 门把 125 个月 OOS 压到 ~15 个月 → `ci_half≈0.025`，是发表门槛 `0.015` 的 **1.7×**；几乎检不出任何信号。
+> - **E2-as-confirmatory 无论功率都是白费**：项目 §6 硬约束——E2 的任何正向必须经 E3 前向复现才可信。**没有 E3，E2 的"成功"不能成 headline。**
+> - **E3 = 唯一零泄漏 + 有功率路径**；但需 **~42–62 个月**才到发表精度、**~7–16 年**才能检出中等效应；**一旦启动不可逆**（中途放弃清零累计月份）。
+>
+> **真正的三选一**：
+>
+> | 选项 | 一句话 | 泄漏 | 可逆性 |
+> |---|---|---|---|
+> | **(d) HOLD + 扩展 null** | 零新增泄漏，现在就可发表。**默认推荐。** | 无 | 高 |
+> | **(c) E2 仅作假设生成器** | 便宜，给 E3 探路，不作 headline。 | 可缓解 / 不可识别 | 高 |
+> | **(b) 立即启动 E3** | 唯一通向可信**正向**的路；日年级不可逆投入。 | 零（构造性） | **低 / 不可逆** |
+> | (a) E2-as-confirmatory | **几乎从不可取**（§6 使其无意义）。 | 可缓解 | 高 |
+>
+> **决策框架（三档拨盘）**：泄漏容忍度（低 / 中）× 时间线（短 <1年 / 长 3–7+年）× 发表目标（null-publishable / positive-claim）。
+> **唯一值得现在就投入日历的组合**：低泄漏 + 长时间线 + positive-claim → **E3**；其余基本都指向 **HOLD**。
+>
+> **Architect 建议：HOLD** —— 除非你明确要为一个 *positive-claim* 押注多年日历。详细证据见下方英文部分（§2 证据表、§3 功率算术、§4 泄漏分析、§7 决策框架）。
+
 > **Type:** decision-support brief — **NOT an ADR** (no verdict recorded yet). Feeds the `tasks/active/TASK-STRAT-e2-vs-e3-decision.md` owner gate.
 > **Status:** awaits owner verdict. **Default = HOLD.** Produced by the Architect role (read-only), 2026-07-30.
 > **Relationship:** extends `decisions/ADR-005-e2-underpowered-e3-forward-live.md` with a decision *framework*. It does **not** re-litigate ADR-005 or any inviolable anti-leakage anchor.
