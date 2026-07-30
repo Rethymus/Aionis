@@ -2,9 +2,11 @@
 
 - 编号: E3
 - 标题: Build + launch the E3 forward-live track (the only zero-leakage, powered path to a credible positive).
-- 状态: **awaiting plan/freeze/slice** (ADR-008 accepted; pre-reg exists; NO code yet)
+- 状态: **PLANNED — Slice 1 unblocked** (spec `docs/phase-e3-implementation-plan.md` done;
+  owner decisions 2026-07-30: **GLM** pinned + **shadow 1–2 mo** + defaults adopted.
+  Ready for Slice 1 = forward-ledger commit-reveal core, TDD with invariant tests I1–I9.)
 - 来源: [ADR-008](../../decisions/ADR-008-launch-e3-and-broaden-nulls.md) (TASK-STRAT verdict, 2026-07-30);
-  `docs/phase-e3-preregistration.md`.
+  `docs/phase-e3-preregistration.md`; **实施 spec**：`docs/phase-e3-implementation-plan.md`（架构 + 9 条零泄漏不变量 + 7 切片）。
 
 ## 目标 (Objective)
 Per ADR-008 + `docs/phase-e3-preregistration.md`: implement the forward-live, commit-then-reveal
