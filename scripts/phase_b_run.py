@@ -149,9 +149,28 @@ def main() -> None:
     print(f"[5c] fund rows={len(fund)}  prices={px.shape}  membership={mem.shape}",
           flush=True)
 
+    import os
+
+    artifacts_only = os.environ.get("PHASE_B_NO_LEDGER") == "1"
+
     config = build_config()
-    sig = commit_config(config)  # HIGH-1: BEFORE any result
-    print(f"[5c] config_committed sig={sig}  (logged BEFORE result)", flush=True)
+    if artifacts_only:
+        sig = hashlib.sha256(json.dumps(config, sort_keys=True).encode()).hexdigest()
+        print(f"[B] ARTIFACTS-ONLY rerun (no ledger write); sig={sig}", flush=True)
+        # sig-match guard: the rerun MUST be bit-identical (H6) to the frozen ledger
+        # row before any metric is observed / any artifact is written.
+        FROZEN = "17245a75d2d4cd17c68f36a9d0f4b4f7f3baf1db31b33b87be79e6e4a11400da"
+        if sig != FROZEN:
+            raise SystemExit(
+                f"[B] ABORT: rerun sig {sig} != frozen ledger sig {FROZEN} — "
+                "fund/prices/membership bytes, uv.lock, or lib versions drifted. "
+                "Do NOT write artifacts or a ledger row."
+            )
+        print(f"[B] sig matches frozen ledger sig ({sig}); proceeding artifacts-only",
+              flush=True)
+    else:
+        sig = commit_config(config)  # HIGH-1: BEFORE any result
+        print(f"[5c] config_committed sig={sig}  (logged BEFORE result)", flush=True)
 
     folds, ref = compute_shared_folds(px, mem, HORIZON, N_SPLITS, EMBARGO)
     print(f"[5c] shared folds={len(folds)}  ref rows={len(ref)}", flush=True)
@@ -197,24 +216,28 @@ def main() -> None:
         summary_state=sum_s, summary_base=sum_b,
         differential=diff, controls=ctrl, config=config,
         h6_deterministic=det_ok,
+        oos_state=pan_s, oos_base=pan_b,
     )
     print(f"[5f] saved run artifacts -> {run_path}", flush=True)
 
     # --- log result (the confirmatory:first entry, AFTER config_committed) ---
-    _append({
-        "ts": _now(), "event": "confirmatory:first", "phase": "B", "config_sig": sig,
-        "arm_state_cvproxy": sum_s, "arm_base_cvproxy": sum_b,
-        "differential_state_minus_base": diff, "H6_deterministic": det_ok,
-        "controls_state_perturbed_vs_base_real": ctrl,
-        "multiple_testing_haircut": mt,
-        "n_trials_grid": list(N_TRIALS_GRID),
-        "notes": ("Individual-arm ICs are CV-proxy (5-fold, not forward-OOS) so their "
-                  "publishability gates are optimistic; the §1 DIFFERENTIAL is the OOS "
-                  "claim and is valid under shared-fold CV. Controls perturb arm_state "
-                  "only (arm_base real). DSR/PBO/SPA wired in eval.multiple_testing for "
-                  "future strategy-return evaluation."),
-    })
-    print(f"[5f] logged confirmatory:first (config_sig={sig})", flush=True)
+    if not artifacts_only:
+        _append({
+            "ts": _now(), "event": "confirmatory:first", "phase": "B", "config_sig": sig,
+            "arm_state_cvproxy": sum_s, "arm_base_cvproxy": sum_b,
+            "differential_state_minus_base": diff, "H6_deterministic": det_ok,
+            "controls_state_perturbed_vs_base_real": ctrl,
+            "multiple_testing_haircut": mt,
+            "n_trials_grid": list(N_TRIALS_GRID),
+            "notes": ("Individual-arm ICs are CV-proxy (5-fold, not forward-OOS) so their "
+                      "publishability gates are optimistic; the §1 DIFFERENTIAL is the OOS "
+                      "claim and is valid under shared-fold CV. Controls perturb arm_state "
+                      "only (arm_base real). DSR/PBO/SPA wired in eval.multiple_testing for "
+                      "future strategy-return evaluation."),
+        })
+        print(f"[5f] logged confirmatory:first (config_sig={sig})", flush=True)
+    else:
+        print("[5f] ARTIFACTS-ONLY: skipped confirmatory:first ledger append", flush=True)
     print("[5f] DONE", flush=True)
 
 
