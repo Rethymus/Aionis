@@ -2,9 +2,10 @@
 
 - 编号: STRAT
 - 标题: Decision gate — build E2 (LLM macro-causal, cutoff-controlled) vs launch E3 (forward-live) vs 其他
-- 状态: awaiting owner steer（决策门禁 — HOLD）。**决策支持 brief 已就绪**：
-  `reports/TASK-STRAT-e2-e3-decision-brief.md`（证据表 + 功率算术 + 泄漏分析 + 三档拨盘决策框架；
-  非 verdict ADR — owner 裁决 GO/PIVOT/HOLD 后再写 `decisions/ADR-008-…`）。
+- 状态: **VERDICT RENDERED (2026-07-30) → ADR-008**。owner 裁决：启动 **E3 forward-live** + 并行
+  **扩展 null 家族**；**E2-as-confirmatory 否决**。决策支持 brief：
+  `reports/TASK-STRAT-e2-e3-decision-brief.md`；裁决记录：
+  `decisions/ADR-008-launch-e3-and-broaden-nulls.md`。→ `tasks/completed/`。
 - 目标: 产出一项**记录在案**的 GO / PIVOT / HOLD 决策（落在 `decisions/` 的一篇 ADR），
   决定 TCR 路线图在 E2 与 E3 之间的下一步投入方向。
 - 背景: E2 的回测**欠功率**——cutoff 门把 125 个月的 OOS 窗压缩到约 10–18 个 cutoff 后月份，
