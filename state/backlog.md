@@ -17,3 +17,14 @@
 - **SIC vintage.** SIC is current-snapshot (mild lookahead for reclassifiers) — a vintage SIC
   would close it; low priority (effect estimated small). **M** task.
 - **evals/cases golden fixtures.** Slot in once E3 forward-live produces commit/reveal fixtures.
+- **E3 Slice 2 review follow-ups (Reviewer APPROVE, 2026-07-30).** Advisory, non-blocking; filed from
+  the Slice 2 independent review. Priority order:
+  - **[MEDIUM] macro cumulative-preserve test.** 13D + 8-K pin "a later `snapshot_ts` preserves prior
+    rows"; macro does not (correct-by-shared `_common.append_cumulative_parquet`, just untested). Mirror
+    `test_13d_forward_cumulative_parquet_preserves_prior_rows` for macro. **S** — closes the asymmetric
+    anti-leakage invariant gap (a future regression to the shared helper would silently pass macro).
+  - **[LOW ×5]** first-run `last_poll_ts=None` seeding docstring note (all 3 collectors); structlog
+    `warning` when `runs_dir is None and forward_only=True` (real-ledger production path); drop the
+    redundant `keyfn = str.upper` branch in `earnings_8k_forward.py:143`; optional DRY extract
+    `_common.persist_snapshot(...)` for the shared archive+parquet+ledger+log tail; collector functions
+    slightly >50 lines (collapses if the DRY extract lands). Batch as one **S** cleanup.

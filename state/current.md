@@ -8,16 +8,19 @@
 - **done:** B/C/D/E1 nulls; horizon-robust all 4 phases; strategy-return lens; dashboard v2;
   TASK-STRAT brief + verdict (ADR-008); unified workflow scaffold (TASK-WF01); PR #1 merged to main.
 - **now / next:**
-  - **E3 launch** — primary workstream. **Slice 1 (forward-ledger commit-reveal keystone) DONE**
-    (commit `7ce7f08`, branch `feat/e3-forward-ledger`; 23 invariant tests, Reviewer APPROVE, pytest 328).
-    Next: Slice 2 (forward PIT-as-of-t ingest) → Slice 3 (forward commit) → 4/5/6. See
-    `docs/phase-e3-implementation-plan.md` + `tasks/active/TASK-E3-launch.md`.
+  - **E3 launch** — primary workstream. **Slice 1 (forward-ledger keystone) + Slice 2 (forward
+    PIT-as-of-t ingest) DONE** on `feat/e3-forward-ledger`. Slice 2 = 3 snapshot-on-arrival collectors
+    (13D poll / FRED-ALFRED macro / 8-K Item 2.02) + the I3 monotonic-forward clock; Verifier PASS
+    (pytest 343, 0 skip) + Reviewer APPROVE (0 CRITICAL/HIGH; 6 advisory → backlog). Next: Slice 3
+    (forward commit: fit-on-I_t → commit-before-reveal, reuses `two_arm` single-fit + `extra_features`)
+    → 4/5/6. See `docs/phase-e3-implementation-plan.md` + `tasks/active/TASK-E3-launch.md`.
   - **Null-broadening** — ongoing backlog (SIC vintage, more universes); low-risk, publishable.
   - **A1 (Phase B OOS panel)** — still blocked (benign `uv.lock` stranding; DROP recommended).
 - **known issues:** Phase B OOS panel blocked by benign `uv.lock` stranding (see `blockers.md`); SIC
   current-snapshot (mild lookahead); **E3 launch is multi-year + irreversible once the headline
   ignites** (shadow 1–2 mo first); GLM 5h quota can throttle agent throughput.
-- **last verification:** `uv run pytest -q` green (328); `uv run ruff check` clean; E3 Slice 1
-  Reviewer-APPROVE (keystone I1/I2/I7); ledger append-only (+1 exploratory [A2]; E3 forward rows in
-  temp test dirs only); real ledger 39 lines; latest confirmatory sig `ef321e9e` (E1).
+- **last verification:** `uv run pytest -q` green (343, 0 skip); `uv run ruff check` clean; E3 Slice 2
+  Verifier-PASS + Reviewer-APPROVE (I3 gate raises incl. NaT, called by all 3 collectors BEFORE any
+  side-effect; 8-K `\b2\.02\b` regex proven 7/7; idempotency 3-layered); real `runs/ledger.jsonl`
+  pinned at 39 lines across the run (forward rows in temp test dirs only); latest confirmatory sig `ef321e9e` (E1).
 - **updated:** 2026-07-30.
