@@ -137,9 +137,29 @@ verdict). Aionis stays discriminative / leakage-controlled / falsifiable every
 phase. The five-layer cognitive architecture and self-evolution engine are what
 this experiment is meant to *justify building next* — not built speculatively.
 
+## Operating frame (how this project is run)
+
+Aionis uses a unified AI-workflow scaffold. The entry points for any agent or contributor:
+
+- **`CLAUDE.md`** — stable project rules Claude Code reads natively (constraints, stack,
+  commands, agent boundaries, definition-of-done, forbidden). `AGENTS.md` is a symlink to it
+  for Codex portability.
+- **`WORKFLOW.md`** — the operating constitution (the 11-stage pipeline, agent roster, workflow
+  modes, token tiers, QA / review / stop-condition rules).
+- **`state/current.md`** — live status (read first each session); `state/handoff.md`,
+  `state/backlog.md`, `state/blockers.md` for continuity.
+- **`decisions/`** — ADRs (point-in-time, record-once); see `decisions/index.md`.
+
+New phases run the same anti-leakage pipeline: freeze config → `config_committed` ledger row →
+PIT data → PurgedGroupKFold + embargo → frozen LightGBM → rank-IC differential → controls → H6 →
+verdict. Acceptance gates are in `docs/05-acceptance.md`.
+
+---
+
 ## Docs
 
 - `docs/RESULTS.md` — the falsifiable-results snapshot (the table above, expanded).
+- `docs/00-vision.md` … `docs/08-lessons.md` — the numbered canonical index (vision → lessons).
 - `docs/phase-{b,c,d,e1,e,e2,e3}-preregistration.md` — each phase's pre-registered
   claim + design (the discipline).
 - `docs/data-intake-rubric.md` + `docs/data-license-allowlist.md` — the 7 gates.

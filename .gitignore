@@ -3,6 +3,11 @@
 # Golden rules: NEVER commit secrets (.env). NEVER commit data/ or *.parquet.
 # =============================================================================
 
+# --- Operating-frame dirs are TRACKED prose (do NOT ignore) ---
+# state/ decisions/ tasks/ evals/ reports/ archive/ + CLAUDE.md + WORKFLOW.md + AGENTS.md
+# hold markdown only — the durable cross-context handoff surface. Keep them tracked.
+# Any new broad rule (*.json, *.md, etc.) below must not swallow these.
+
 # --- Secrets (NEVER commit) ---
 .env
 .env.local
