@@ -13,9 +13,10 @@ without new evidence — see `../WORKFLOW.md` §5).
 | [ADR-005](ADR-005-e2-underpowered-e3-forward-live.md) | E2 backtest underpowered → E3 forward-live is the powered path | accepted | 2026-07-29 |
 | [ADR-006](ADR-006-no-disposable-artifacts-registry.md) | Durable registry, not disposable one-shot artifacts | accepted | 2026-07-27 |
 | [ADR-007](ADR-007-permissive-licenses-only.md) | Permissive licenses only (MIT / Apache / BSD) | accepted | 2026-07-26 |
+| [ADR-008](ADR-008-launch-e3-and-broaden-nulls.md) | TASK-STRAT verdict: launch E3 forward-live + broaden nulls in parallel (reject E2-as-confirmatory) | accepted | 2026-07-30 |
 
 ## How to add an ADR
-Number it next (`ADR-008-…`), write it **before** the decision is reversed, never delete (supersede
+Number it next (`ADR-009-…`), write it **before** the decision is reversed, never delete (supersede
 with a new ADR that points back). Fields (per `../WORKFLOW.md` §1):
 
 ```
