@@ -1,24 +1,20 @@
 # state/handoff.md — current-pass handoff
 
-- **round:** E3 Slice 2 (forward PIT-as-of-t ingest), 2026-07-30.
+- **round:** E3 Slice 3 (forward commit: fit-on-I_t → commit-before-reveal) + ADR-009 hybrid causal layer, 2026-07-31.
 - **this pass did:**
-  - Discovered + rescued **orphaned, unverified Slice 2 work** sitting untracked in the working tree
-    (prior handoff had listed Slice 2 as "next, not started"). Orchestrator triage found it RED (2 ruff
-    E501 + a `_macro_fixture_rows` month-13 `DateParseError`); ran 4 specialized agents per the
-    agent-boundary rule: **Engineer** (sonnet) fixed the test fixture + lints (collector untouched);
-    **Verifier** (sonnet) PASS; **Reviewer** (opus) APPROVE.
-  - Slice 2 = `src/aionis/ingest/forward/` (`_common`, `stakes_13d_forward`, `macro_forward`,
-    `earnings_8k_forward`, `__init__`) + `tests/test_forward_ingest.py` (15 invariant tests). Three
-    snapshot-on-arrival collectors on the `reddit_sentiment` discipline: immutable sha256 raw archive,
-    append-only cumulative parquet (concat, never overwrite), one `forward_only` `data_ingest` ledger
-    row, and the **I3 monotonic-forward clock** (`event_ts <= snapshot_ts`) asserted as a hard
-    post-filter gate by all three (raises incl. NaT, before any side-effect).
-- **files:** `src/aionis/ingest/forward/*` (new), `tests/test_forward_ingest.py` (new).
-- **verified:** ruff clean; pytest 328→343 (0 skip); real `runs/ledger.jsonl` byte-identical (39 lines,
-  sha256 stable across the run); 4 published nulls / frozen pre-reg untouched.
-- **next precise action:** E3 **Slice 3** (forward commit: fit-on-I_t → commit-before-reveal, reuses
-  `two_arm` single-fit + `extra_features`; wires the Slice 2 collectors into the monthly freeze). Also
-  close the **[MEDIUM] macro cumulative-preserve test** gap (backlog) — mirror the 13D test. Watch the
-  GLM 5h quota. Do NOT push without owner OK; do NOT ignite the headline until 1–2 mo shadow.
-- **do NOT repeat:** do NOT start E3 headline ignition until shadow validates GLM; do NOT re-litigate
-  E2-as-confirmatory (ADR-008); do NOT touch the 4 published nulls or the frozen pre-reg.
+  - Resumed after a GLM-5h-quota interruption mid-fix-round; diagnosed REAL state (code fixes FIX1/2/3/4/6/7 had landed before the agent died; the 3 gating tests + FIX8 doc note were missing).
+  - Closed the Reviewer's REQUEST-CHANGES (round 1): added the 4 missing gating tests (HIGH sign-flip→`config_sha256`, `frozen_params` flip, `no_ledger==live`, `_add_usage` token accounting) + FIX8 doc note + the cumulative-token log helper in `extract_event_edges`. Independent Verifier (sonnet) → **PASS** (0 blockers; 478→479 green; ruff clean; ledger 39).
+  - Slice 3 = the forward-commit plumbing + the ADR-009 hybrid causal layer:
+    - **3a** `src/aionis/schema/causal_edge.py` — closed enum `{sic_sector(FF-12, 12 members), direction, mechanism_keyword={earnings_signal,ownership_change,guidance,other}, horizon_bucket}` + I5 `extra="forbid"` + `assert_no_forbidden` (rejects `market_impact`/`expected_return`/`historical_similarity`).
+    - **3a′** `src/aionis/features/frozen_beta.py` — frozen sign-only β table (Boudt-Neely qualitative-v1 prior; `TODO(headline)`-gated before ignition) + `FROZEN_BETA_SHA256` content hash (I8 silent-mutation guard) + `broadcast_macro_beta` (event-time, PIT).
+    - **3b** `src/aionis/features/causal_broadcast.py` — event self-shocks → `propagate_panel`(FF-12) peer cols + macro sign-β broadcast + minimal closed-enum LLM event edge (`GLMCausalEdgeClient`, idempotent sha256 cache, per-call token usage) → `build_forward_extra_features` long frame.
+    - **3c** `src/aionis/eval/forward_freeze.py` — compose the 3 Slice-2 collectors under a shared clock → `iset_sha256` → `forward_iset_frozen` row (idempotent).
+    - **3d** `src/aionis/eval/forward_commit.py` — PIT single-fit (I4, embargo 21, opt-in membership no-forward-fill assert) + `build_forward_config` (FULL `FROZEN_PARAMS` + `frozen_beta_sha256` in the sig, I8) + `resolve_pinned_provider` (glm, I6) + `run_forward_commit` (config→fit→commit ordering, I1; refuses non-glm; `no_ledger` dry-run faithful to live sig).
+    - **3e** `scripts/forward_commit.py` + `src/aionis/eval/forward_commit_runner.py` — standalone runner, `PHASE_E3_NO_LEDGER=1` dry-run, NYSE month-end trigger.
+    - **3f** `tests/test_forward_commit_invariants.py` — I4/I6/I7 + I1/I2/I5 cross-checks.
+  - ADR-009 + `decisions/index.md` + E3 pre-reg §1/§2.2/§3 + impl plan amended (durable registry). Deep-interview spec at `.omc/specs/deep-interview-e3-causal-schema.md`.
+- **files:** 7 new src/script modules + 7 new test files + ADR-009 + 4 tracked-doc amendments.
+- **verified:** `uv run pytest -q` **479 passed** (0 skip, 0 fail; baseline 343 → +136 Slice-3 tests); `uv run ruff check` clean; `runs/ledger.jsonl` still **39 lines**; I5/I1 CRITICAL surfaces airtight (Reviewer opus); HIGH I8 silent-mutation guard closed (sign-content hash + gating test `test_config_sha256_flips_on_frozen_beta_sign_change`).
+- **next precise action:** E3 **Slice 4** — forward scoring + accumulation: reveal as `target_t` realizes → month rank-IC → accumulate forward differential IC + MBB-DM + NW-HAC + random-walk 95% band; net-new `src/aionis/eval/forward_score.py` + `scripts/forward_score.py`; writes `runs/forward/<sig>/ic_forward.parquet` + `summary_forward.json`. Then Slice 5 (dashboard Forward-IC tab) + Slice 6 (scheduler). Watch the GLM 5h quota. Do NOT push without owner OK; do NOT ignite the headline until the 1–2 mo shadow validates GLM.
+- **do NOT repeat:** do NOT ignite the headline until shadow validates GLM; do NOT re-litigate the hybrid causal-layer design (ADR-009) or E2-as-confirmatory (ADR-008); do NOT touch the 4 published nulls / frozen pre-reg core / confirmatory configs; do NOT silently mutate the frozen-β signs (the content hash makes any flip a new forward sequence).
+- **uncommitted:** all Slice-3 changes are in the working tree on `feat/e3-forward-ledger` (ahead 1 = the Slice-2 commit); commit follows the Slice 1/2 atomic pattern on owner OK.

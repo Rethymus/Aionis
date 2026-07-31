@@ -1,6 +1,8 @@
 # Phase E3 预注册 — 前向实时累积（投产真值，零泄漏）
 
 > 状态：**v0.1 DRAFT · 2026-07-30 · 规划文档 · run DEFERRED — E3 是 LIVE PROCESS，启动而非回测**。
+>
+> **修订 v0.2 · 2026-07-31 · [ADR-009](../decisions/ADR-009-e3-hybrid-causal-layer.md)**：因果层由「E2 LLM causal-broadcast」改为**混合方案**——宏观=冻结β sign-only（零-LLM）；事件(13D/8-K)=极简闭集 LLM 因果边；板块统一 FF-12。§1/§2.2/§3 已同步。pre-reg 仍 DRAFT（headline 未 ignite；shadow 1–2 月先行）。
 > 本稿**不含、不跑任何 Phase E3 OOS 结果**——既不产出前向预测，也不计任何前向 rank-IC。
 >
 > **来源**：E2 设计（[`phase-e2-preregistration.md`](phase-e2-preregistration.md) §7）揭示一个结构性事实——
@@ -44,7 +46,7 @@
 > （与 random-walk 95% 带）可区分？**（双尾）
 
 - **Differential** = 前向 IC(`arm_e13`) − 前向 IC(`arm_base`)。`arm_base` = **fundamentals-only，同月前向跑**（冻结
-  Phase B `arm_base`，`align_on="end_lag"`）；`arm_e13` = `arm_base` + E1 传播列 + E2 宏观因果链广播列，全部在
+  Phase B `arm_base`，`align_on="end_lag"`）；`arm_e13` = `arm_base` + E1 传播列(`propagate_panel`，FF-12 分组，零-LLM) + E2-宏观(冻结β sign-only，FF-12，CPI+NFP，零-LLM) + E2-事件(13D/8-K 极简闭集 LLM 因果边：`direction` 定号 + `mechanism_keyword` one-hot)，全部在
   live $I_t$ 上前向计算。两臂唯一差 = E1+E2 的因果推理 bundle（同 E1/E2 differential 结构，只是 OOS 区从历史回测
   改为前向累积）。
 - **这是 powered 检验**（E2 §7 的诚实续论）：E2 回测被 cutoff 门砍到 ~15 月 → underpowered；E3 **按月累积**，
@@ -77,6 +79,7 @@
   mechanism_keyword, horizon_bucket)]`），**绝不**输出 `market_impact`/`expected_return`/`historical_similarity`
   （同 E2 §2.2，[[aionis-erl-leakage-design]] 抗泄漏）。forward 不可泄漏 ≠ LLM 可输出预测——structural-only 是独立
   的护栏，防止 LLM 把其叙事先验伪装成结构信号。
+- **[ADR-009 修订]**：混合方案下，**宏观×板块通道零-LLM**（冻结β sign-only 表，无文本输入 → I5 泄漏面消失）；**事件通道(13D/8-K) 极简闭集 LLM 边**：`{sic_sector(FF-12), direction, mechanism_keyword, horizon_bucket}`，`extra="forbid"`，GLM-4-Flash 免费额度，幂等 sha256 缓存。`mechanism_keyword` = `{earnings_signal, ownership_change, guidance, other}`（4 词，事件机制向，低 N 可学）。
 
 ### 2.3 commit-then-reveal = live 层的「sha256 先于结果」
 - 项目核心抗泄漏锚点（[`data-intake-rubric.md`](data-intake-rubric.md) + [`phase-b-preregistration.md`](phase-b-preregistration.md)
@@ -93,8 +96,9 @@
   1. FREEZE   live I_t 快照: 截至 t 可知的全部 PIT 数据（filed ≤ t 的 filings、released ≤ t 的 macro、
               universe constituents-on(t)、当日 SIC、已提交 13D）→ sha256 快照入 forward ledger
               （event:"forward_iset_frozen", iset_sha256）。
-  2. RUN      E1 传播（features/propagation.py，ex-self SIC peer 冲击传播）+ E2 LLM 因果链广播
-              （E2 schema，今日可见宏观事件 → 板块归属），全部 on I_t → per-ticker forward score ŷ_t。
+  2. RUN      E1 传播（features/propagation.py，ex-self **FF-12** peer 冲击传播，零-LLM）+ E2-宏观（冻结β
+              sign-only × surprise_z，CPI+NFP，零-LLM）+ E2-事件（13D/8-K 极简闭集 LLM 因果边，GLM-4-Flash）
+              [ADR-009]，全部 on I_t → per-ticker forward score ŷ_t。
               LLM 调用幂等缓存（extraction/extract.py sha256 cache）；token/成本控制（[[aionis-dev-constraints]]）。
   3. COMMIT   预测向量 + 冻结 config sha256 入 forward ledger（event:"forward_prediction_committed",
               commit_ts, target_t = t + 21 sessions, scores_sha256）。← 结果可知之前，不可篡改。

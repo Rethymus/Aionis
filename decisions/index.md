@@ -14,6 +14,7 @@ without new evidence — see `../WORKFLOW.md` §5).
 | [ADR-006](ADR-006-no-disposable-artifacts-registry.md) | Durable registry, not disposable one-shot artifacts | accepted | 2026-07-27 |
 | [ADR-007](ADR-007-permissive-licenses-only.md) | Permissive licenses only (MIT / Apache / BSD) | accepted | 2026-07-26 |
 | [ADR-008](ADR-008-launch-e3-and-broaden-nulls.md) | TASK-STRAT verdict: launch E3 forward-live + broaden nulls in parallel (reject E2-as-confirmatory) | accepted | 2026-07-30 |
+| [ADR-009](ADR-009-e3-hybrid-causal-layer.md) | E3 causal-layer design: hybrid (zero-LLM frozen-β macro + minimal closed-enum LLM event edge); FF-12 unified taxonomy | accepted | 2026-07-31 |
 
 ## How to add an ADR
 Number it next (`ADR-009-…`), write it **before** the decision is reversed, never delete (supersede

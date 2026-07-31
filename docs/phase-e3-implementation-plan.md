@@ -5,6 +5,28 @@
 > research pre-reg `docs/phase-e3-preregistration.md`. **No code yet** — the owner must resolve the
 > blocking questions in §3 (Q1/Q2/Q3/Q6) before Slice 1 freeze. Changing the pre-reg requires a new ADR.
 > **Branch note:** E3 is net-new; branch from `main` (or the current branch if PR #1 is not yet merged).
+>
+> **修订 2026-07-31 · [ADR-009](../decisions/ADR-009-e3-hybrid-causal-layer.md) — Slice 3 causal layer RESCOPED.**
+> The original plan assumed `arm_e13` reuses an "E2 LLM causal-broadcast" module. Research (2026-07-30/31)
+> verified that module does **not** exist; the owner rejected the heavy LLM causal-graph approach as
+> 收支不平衡 for a zero-cost vibe-coded project. **Frozen hybrid design** (deep-interview, 4 rounds,
+> ambiguity 100%→18%; spec: `.omc/specs/deep-interview-e3-causal-schema.md`):
+> - **`arm_e13 = arm_base + E1 event propagation` (`propagate_panel`, FF-12 grouping, **zero-LLM**) `+ E2-macro` (frozen sign-only β × `surprise_z`, FF-12, CPI+NFP, **zero-LLM**) `+ E2-event` (13D/8-K minimal closed-enum LLM edge: `direction` signs the shock + `mechanism_keyword` one-hot).**
+> - **Taxonomy = FF-12 unified** — `propagate_panel(sic_map)` is sector-agnostic (`sic_map` = `ticker→group`), so feeding FF-12 grouping is a **zero-code-change** swap; frozen SIC→FF-12 concordance (Ken French).
+> - **Macro-β = Boudt–Neely–Sercu (Fed WP 2017-020), sign-only(±), CPI+NFP** — a frozen a-priori hyperparameter (zero estimation DOF → most falsifiable).
+> - **Event LLM edge**: closed enum `{sic_sector(FF-12), direction, mechanism_keyword, horizon_bucket}`, `extra="forbid"`, GLM-4-Flash free tier, idempotent sha256 cache. `mechanism_keyword = {earnings_signal, ownership_change, guidance, other}`; `direction = {POSITIVE+1, NEGATIVE-1, NEUTRAL→NaN}`; `horizon_bucket` reuses ERL `TemporalClass`.
+>
+> **Net effect on the §4 work-breakdown:** the "build E2-causal from scratch" assumption is gone. **3a** = close
+> the existing free-text `CausalLink` to the closed enum + I5 validator (simpler, not a new module). **3a′ (new)** =
+> the frozen-β macro table (hardcode Boudt–Neely signs). **3b** broadcast = event self-shocks → `propagate_panel`
+> (FF-12) for peer cols + macro sign-β broadcast for `macro_causal_shock` + the LLM event edge
+> (`direction × indicator` + `mechanism_keyword` one-hot). **3c/3d/3e/3f** unchanged (freeze / commit-core /
+> runner / invariants).
+>
+> **Note (macro channel):** `macro_causal_shock` is **event-time** (sign×z at the CPI/NFP release session, NOT
+> carry-forward) → it contributes to the `arm_e13−arm_base` differential only on CPI/NFP-release months, so its
+> effective N < total forward months (a power note, not a leakage note — PIT-correct by construction). A
+> per-predict-date carry, if ever wanted, is a separate frozen feature = a new sequence.
 
 ## 1. Architecture overview
 
