@@ -18,8 +18,10 @@ Raw files cached under ``data/cache/`` (sha256-pinnable) so reruns make no HTTP.
 """
 from __future__ import annotations
 
+import hashlib
 import io
 import tarfile
+from dataclasses import dataclass
 from io import StringIO
 from pathlib import Path
 from typing import Literal
@@ -206,17 +208,77 @@ def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+@dataclass(frozen=True)
+class ConstituentsManifest:
+    """Immutable snapshot manifest for a point-in-time constituent query.
+
+    Attributes:
+        members: Frozen set of ticker symbols in the snapshot
+        snapshot_date: Date of the membership snapshot used (None if no snapshot ≤ query date)
+        age_days: Days between query date and snapshot_date (None if no snapshot)
+        hash: SHA-256 hex digest of sorted member tickers (None if empty/no snapshot)
+    """
+    members: frozenset[str]
+    snapshot_date: pd.Timestamp | None
+    age_days: int | None
+    hash: str | None
+
+
+def _resolve_snapshot(membership: pd.DataFrame, date) -> tuple[set[str], pd.Timestamp | None]:
+    """Resolve the latest snapshot on or before date.
+
+    Returns:
+        (members, snapshot_date): Set of ticker symbols and the snapshot date.
+        snapshot_date is None if no snapshot exists ≤ date.
+    """
+    as_of = pd.Timestamp(date).normalize()
+    sub = membership[membership["date"] <= as_of]
+    if sub.empty:
+        return set(), None
+    latest = sub["date"].max()
+    return set(membership.loc[membership["date"] == latest, "ticker"]), latest
+
+
 # --- PIT access + cross-source agreement (pure, testable) ---
 
 def constituents_on(membership: pd.DataFrame, date) -> set[str]:
     """PIT constituent set as of ``date``: the membership of the latest snapshot
     on or before ``date``. Empty if no snapshot exists yet (no forward-fill)."""
+    members, _snapshot_date = _resolve_snapshot(membership, date)
+    return members
+
+
+def constituents_manifest_on(membership: pd.DataFrame, date) -> ConstituentsManifest:
+    """PIT constituent manifest as of ``date`` with snapshot metadata.
+
+    Returns an immutable structure containing:
+      - members: frozen set of ticker symbols
+      - snapshot_date: date of the snapshot used (None if no snapshot ≤ date)
+      - age_days: days between query date and snapshot_date (None if no snapshot)
+      - hash: SHA-256 hex digest of sorted member tickers (None if empty/no snapshot)
+
+    Age is REPORTED only; no freshness threshold is enforced.
+    """
     as_of = pd.Timestamp(date).normalize()
-    sub = membership[membership["date"] <= as_of]
-    if sub.empty:
-        return set()
-    latest = sub["date"].max()
-    return set(membership.loc[membership["date"] == latest, "ticker"])
+    members, snapshot_date = _resolve_snapshot(membership, date)
+
+    if snapshot_date is None:
+        return ConstituentsManifest(
+            members=frozenset(),
+            snapshot_date=None,
+            age_days=None,
+            hash=None,
+        )
+
+    age_days = (as_of - snapshot_date).days
+    hash_str = hashlib.sha256(",".join(sorted(members)).encode()).hexdigest() if members else None
+
+    return ConstituentsManifest(
+        members=frozenset(members),
+        snapshot_date=snapshot_date,
+        age_days=age_days,
+        hash=hash_str,
+    )
 
 
 def mask_panel_to_pit(panel: pd.DataFrame, membership: pd.DataFrame) -> pd.DataFrame:
