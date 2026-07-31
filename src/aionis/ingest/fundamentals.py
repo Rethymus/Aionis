@@ -12,14 +12,13 @@ Raw JSON cached at ``data/cache/`` so reruns make no HTTP calls.
 from __future__ import annotations
 
 import json
-import time
 from pathlib import Path
 
 import pandas as pd
 import structlog
 
 from aionis.config import settings
-from aionis.ingest.universe import normalize_ticker
+from aionis.ingest.universe import _policy_get, normalize_ticker
 
 log = structlog.get_logger()
 
@@ -56,9 +55,7 @@ def cik_map(cache_dir: Path | None = None) -> dict[str, int]:
     fp = _cache_dir(cache_dir) / "sec_tickers.json"
     if fp.exists():
         return json.loads(fp.read_text())
-    import requests
-
-    r = requests.get(_TICKERS_URL, headers={"User-Agent": _UA}, timeout=30)
+    r = _policy_get(_TICKERS_URL, headers={"User-Agent": _UA}, timeout=30)
     r.raise_for_status()
     raw = r.json()
     m = {v["ticker"].upper(): int(v["cik_str"]) for v in raw.values()}
@@ -71,34 +68,25 @@ def company_facts(
 ) -> dict:
     """Full as-filed XBRL facts for one CIK, cached.
 
-    SEC (``data.sec.gov``) drops connections under sustained burst
-    (``SSL: UNEXPECTED_EOF_WHILE_READING``); retries with exponential backoff
-    (matches ``market.py``'s polite pattern). 0.15s between successes respects the
-    fair-access <=10 req/s; the backoff handles transient resets."""
-    import requests
+    SEC requests use the shared host-scoped spacing and bounded-retry policy."""
 
     fp = _cache_dir(cache_dir) / f"sec_facts_{cik:010d}.json"
     if fp.exists():
         return json.loads(fp.read_text())
-    last: Exception | None = None
-    for attempt in range(retries):
-        try:
-            r = requests.get(
-                _FACTS_URL.format(cik=cik), headers={"User-Agent": _UA}, timeout=60,
-            )
-            r.raise_for_status()
-            data = r.json()
-            fp.write_text(json.dumps(data))
-            time.sleep(0.15)  # SEC fair-access: <=10 req/s
-            return data
-        except Exception as e:  # transient SSL/reset/timeout -> backoff and retry
-            last = e
-            log.warning(
-                "company_facts_retry", cik=cik, attempt=attempt + 1, of=retries, error=str(e),
-            )
-            if attempt < retries - 1:
-                time.sleep(backoff * (attempt + 1))  # 4s, 8s, 12s
-    raise RuntimeError(f"company_facts failed for CIK {cik} after {retries} retries: {last}")
+    try:
+        r = _policy_get(
+            _FACTS_URL.format(cik=cik),
+            total_attempts=retries,
+            backoff_base=backoff,
+            backoff_mode="linear",
+            headers={"User-Agent": _UA},
+            timeout=60,
+        )
+        data = r.json()
+        fp.write_text(json.dumps(data))
+        return data
+    except Exception as exc:
+        raise RuntimeError(f"company_facts failed for CIK {cik}: {exc}") from exc
 
 
 def _extract(facts: dict, tags: tuple[str, ...]) -> list[dict]:

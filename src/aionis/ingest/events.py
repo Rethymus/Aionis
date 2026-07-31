@@ -19,6 +19,7 @@ import pandas as pd
 import structlog
 
 from aionis.features.alignment import NYSE_TZ
+from aionis.ingest.universe import _policy_get
 
 log = structlog.get_logger()
 
@@ -45,10 +46,8 @@ def fetch_fred_release_events(
     release_time: str = MACRO_RELEASE_TIME,
 ) -> pd.DataFrame:
     """CPI/NFP: one event per historical release date of a FRED release."""
-    import requests
-
     params = {"release_id": release_id, "api_key": fred_api_key, "file_type": "json"}
-    resp = requests.get(_FRED_RELEASE_DATES, params=params, timeout=30)
+    resp = _policy_get(_FRED_RELEASE_DATES, params=params, timeout=30)
     resp.raise_for_status()
     dates = [pd.Timestamp(r["date"]) for r in resp.json().get("release_dates", [])]
     mask = (pd.Series(dates) >= pd.Timestamp(start)) & (pd.Series(dates) <= pd.Timestamp(end))
@@ -67,10 +66,9 @@ def fetch_fomc_events(start: str, end: str) -> pd.DataFrame:
     caller can fall back to ``load_events_csv`` rather than silently returning a
     wrong/partial calendar.
     """
-    import requests
     from bs4 import BeautifulSoup
 
-    resp = requests.get(_FOMC_CALENDAR, timeout=30, headers={"User-Agent": "aionis/0.1"})
+    resp = _policy_get(_FOMC_CALENDAR, timeout=30, headers={"User-Agent": "aionis/0.1"})
     resp.raise_for_status()
     soup = BeautifulSoup(resp.text, "html.parser")
 

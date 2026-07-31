@@ -1,20 +1,41 @@
 """Phase B full data fetch (slice 5b): fundamentals + prices for the clean
-OOS-resolvable universe. One-time, cached to parquet. Tolerant of missing symbols
-(renamed/delisted drop out of the cross-section; both arms same -> differential valid).
+OOS-resolvable universe. One-time, cached to parquet. The final price panel is
+written only when every requested symbol is present.
 
 Run:  uv run python scripts/phase_b_fetch.py   (~15-20 min; background-safe)
 """
 from __future__ import annotations
 
+from pathlib import Path
+
 import pandas as pd
 
 from aionis.config import settings
 from aionis.ingest.fundamentals import build_fundamentals
-from aionis.ingest.market import _from_alpaca, _from_tiingo
+from aionis.ingest.market import _from_alpaca, _from_tiingo, _missing_prices_error
 from aionis.ingest.universe import build_oos_resolvable_universe
 
 START, END = "2011-01-01", "2026-06-30"  # train 2011-2016 + OOS 2017-2026
 CACHE = settings.data_dir / "cache"
+
+
+def _require_complete_prices(tickers: list[str], series: dict[str, pd.Series]) -> None:
+    missing = [ticker for ticker in tickers if ticker not in series or series[ticker].empty]
+    if missing:
+        providers = []
+        if settings.tiingo_api_key:
+            providers.append("Tiingo")
+        if settings.alpaca_key_id and settings.alpaca_secret_key:
+            providers.append("Alpaca")
+        raise _missing_prices_error(missing, providers)
+
+
+def _final_panel_is_complete(path: Path, tickers: list[str]) -> bool:
+    try:
+        panel = pd.read_parquet(path)
+    except (OSError, ValueError):
+        return False
+    return all(ticker in panel and panel[ticker].notna().any() for ticker in tickers)
 
 
 def main() -> None:
@@ -33,9 +54,13 @@ def main() -> None:
               f"{fund['ticker'].nunique()} tickers -> {fund_path}", flush=True)
 
     px_path = CACHE / "phase_b_prices.parquet"
-    if px_path.exists():
+    reuse_prices = px_path.exists() and _final_panel_is_complete(px_path, tickers)
+    if reuse_prices:
         print(f"[5b] prices cached: {px_path}", flush=True)
     else:
+        if px_path.exists():
+            print(f"[5b] cached price panel incomplete; rebuilding: {px_path}", flush=True)
+            px_path.unlink()
 
         # Incremental + resumable: cache each symbol's series to cache/prices/<T>.parquet
         # as soon as it's fetched, so a kill/restart loses <= one batch (not 2h of work)
@@ -55,28 +80,7 @@ def main() -> None:
         todo = [t for t in tickers if t not in series]
         print(f"[5b] prices {START}..{END}: {len(series)} cached, {len(todo)} to fetch",
               flush=True)
-        # Tiingo health probe: a 429 (rate-limited for this IP) makes _from_tiingo
-        # retry per-symbol (~25s each -> multi-hour). If unhealthy, skip Tiingo and
-        # go straight to Alpaca (~1s/symbol).
-        import requests as _rq
         use_tiingo = bool(settings.tiingo_api_key)
-        if use_tiingo:
-            try:
-                _h = {
-                    "Authorization": f"Token {settings.tiingo_api_key}",
-                    "User-Agent": "aionis/0.1",
-                }
-                _r = _rq.get("https://api.tiingo.com/tiingo/daily/AAPL/prices", headers=_h,
-                             params={"startDate": START, "endDate": END}, timeout=12)
-                if _r.status_code != 200:
-                    print(f"[5b] Tiingo unhealthy ({_r.status_code}) -> Alpaca-only",
-                          flush=True)
-                    use_tiingo = False
-                else:
-                    print("[5b] Tiingo healthy -> Tiingo+Alpaca fallback", flush=True)
-            except Exception as _e:
-                print(f"[5b] Tiingo probe failed ({_e}) -> Alpaca-only", flush=True)
-                use_tiingo = False
         BATCH = 20
         for i in range(0, len(todo), BATCH):
             batch = todo[i:i + BATCH]
@@ -96,6 +100,7 @@ def main() -> None:
                   f"(+{len(got)}/{len(batch)} this batch; total {len(series)})",
                   flush=True)
         still_missing = [t for t in tickers if t not in series]
+        _require_complete_prices(tickers, series)
         px = pd.DataFrame(series)
         px.to_parquet(px_path)
         print(f"[5b] prices: {px.shape}  still-missing({len(still_missing)}): "

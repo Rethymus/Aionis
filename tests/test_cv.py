@@ -1,13 +1,59 @@
-"""Walk-forward CV invariants — now enforced by the ``purgedcv`` wheel."""
+"""Purged cross-fit and chronological validation contracts."""
 from __future__ import annotations
 
 import numpy as np
 import pandas as pd
 import pytest
 
-from aionis.eval.cv import purged_group_kfold_splits, purged_walk_forward_splits
+from aionis.eval.cv import (
+    CVSplit,
+    assert_chronological_split,
+    purged_group_kfold_splits,
+    purged_walk_forward_splits,
+)
 from aionis.features.alignment import nyse_sessions
 from aionis.synthetic import make_synthetic_events, make_synthetic_prices
+
+
+def _chronological_split() -> CVSplit:
+    return CVSplit(
+        train_idx=np.array([0]),
+        test_idx=np.array([1]),
+        fold=1,
+        validation_kind="chronological",
+    )
+
+
+def test_cvsplit_three_argument_construction_defaults_to_cross_fit() -> None:
+    split = CVSplit(np.array([0]), np.array([1]), 1)
+
+    assert split.validation_kind == "purged_cross_fit"
+
+
+def test_chronological_assertion_rejects_prediction_time_at_test_start() -> None:
+    times = pd.Series(pd.to_datetime(["2024-01-02", "2024-01-02"]))
+
+    with pytest.raises(ValueError, match="prediction_time is not strictly before"):
+        assert_chronological_split(_chronological_split(), times, times)
+
+
+def test_chronological_assertion_rejects_evaluation_time_after_test_start() -> None:
+    prediction_times = pd.Series(pd.to_datetime(["2024-01-01", "2024-01-02"]))
+    evaluation_times = pd.Series(pd.to_datetime(["2024-01-03", "2024-01-02"]))
+
+    with pytest.raises(ValueError, match="evaluation_time extends beyond"):
+        assert_chronological_split(
+            _chronological_split(), prediction_times, evaluation_times
+        )
+
+
+def test_chronological_assertion_allows_evaluation_time_at_test_start() -> None:
+    prediction_times = pd.Series(pd.to_datetime(["2024-01-01", "2024-01-02"]))
+    evaluation_times = pd.Series(pd.to_datetime(["2024-01-02", "2024-01-02"]))
+
+    assert_chronological_split(
+        _chronological_split(), prediction_times, evaluation_times
+    )
 
 
 @pytest.fixture(scope="module")
@@ -41,6 +87,14 @@ def test_train_strictly_before_test(times) -> None:
         train_pt_max = pt.iloc[s.train_idx].max()
         test_pt_min = pt.iloc[s.test_idx].min()
         assert train_pt_max < test_pt_min
+
+
+def test_walk_forward_is_explicitly_chronological(times) -> None:
+    pt, et = times
+    splits = purged_walk_forward_splits(pt, et, n_splits=5, embargo=pd.Timedelta(days=1))
+    for split in splits:
+        assert split.validation_kind == "chronological"
+        assert_chronological_split(split, pt, et)
 
 
 def test_train_labels_end_before_test(times) -> None:
@@ -112,3 +166,18 @@ def test_purged_group_kfold_no_train_test_index_overlap() -> None:
         df["date"], df["eval"], df["month"], n_splits=5, embargo=pd.Timedelta(days=21))
     for s in splits:
         assert len(np.intersect1d(s.train_idx, s.test_idx)) == 0
+
+
+def test_purged_group_kfold_is_cross_fit_not_chronological() -> None:
+    df = _monthly_panel()
+    splits = purged_group_kfold_splits(
+        df["date"], df["eval"], df["month"], n_splits=5, embargo=pd.Timedelta(days=21)
+    )
+    assert all(split.validation_kind == "purged_cross_fit" for split in splits)
+    assert any(
+        df["date"].iloc[split.train_idx].max()
+        >= df["date"].iloc[split.test_idx].min()
+        for split in splits
+    )
+    with pytest.raises(ValueError, match="not chronological"):
+        assert_chronological_split(splits[0], df["date"], df["eval"])

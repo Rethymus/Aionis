@@ -1,19 +1,19 @@
-"""Purged, embargoed walk-forward CV — delegated to the ``purgedcv`` wheel.
+"""Purged validation adapters delegated to the ``purgedcv`` wheel.
 
-The leakage invariants (purge + embargo, no train/test overlap) are enforced by
-``purgedcv.WalkForwardSplit`` itself: it raises ``TemporalLeakageError`` on any
-violation. This module is now a thin adapter preserving the project's ``CVSplit``
-shape so downstream code is unchanged. (Earlier hand-rolled purge/embargo logic
-removed in favor of the audited wheel — AFML chs.7 & 12 reference implementation.)
+``WalkForwardSplit`` is chronological; ``PurgedGroupKFold`` is purged cross-fit
+and may train on observations later than its test block. ``validation_kind`` makes
+that distinction explicit on every returned split.
 """
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Literal
 
 import numpy as np
 import pandas as pd
 
 _ZERO_EMBARGO = pd.Timedelta(0)
+ValidationKind = Literal["chronological", "purged_cross_fit"]
 
 
 @dataclass(frozen=True)
@@ -21,6 +21,41 @@ class CVSplit:
     train_idx: np.ndarray
     test_idx: np.ndarray
     fold: int
+    validation_kind: ValidationKind = "purged_cross_fit"
+
+
+def assert_chronological_split(
+    split: CVSplit,
+    prediction_times: pd.Series,
+    evaluation_times: pd.Series,
+) -> None:
+    """Fail unless ``split`` satisfies the strict chronological contract."""
+    if split.validation_kind != "chronological":
+        raise ValueError(
+            f"fold {split.fold} is {split.validation_kind!r}, not chronological"
+        )
+    pt = pd.Series(pd.to_datetime(prediction_times)).reset_index(drop=True)
+    et = pd.Series(pd.to_datetime(evaluation_times)).reset_index(drop=True)
+    if len(pt) != len(et):
+        raise ValueError("prediction_times / evaluation_times length mismatch")
+    if len(split.train_idx) == 0 or len(split.test_idx) == 0:
+        raise ValueError(f"fold {split.fold} has an empty train or test partition")
+    try:
+        train_prediction_time = pt.iloc[split.train_idx].max()
+        train_evaluation_time = et.iloc[split.train_idx].max()
+        test_start = pt.iloc[split.test_idx].min()
+    except IndexError as exc:
+        raise ValueError(f"fold {split.fold} contains an out-of-bounds index") from exc
+    if pd.isna(train_prediction_time) or pd.isna(train_evaluation_time) or pd.isna(test_start):
+        raise ValueError(f"fold {split.fold} contains missing validation times")
+    if not train_prediction_time < test_start:
+        raise ValueError(
+            f"fold {split.fold} prediction_time is not strictly before test_start"
+        )
+    if not train_evaluation_time <= test_start:
+        raise ValueError(
+            f"fold {split.fold} evaluation_time extends beyond test_start"
+        )
 
 
 def _safe_test_size(n_samples: int, n_splits: int) -> int:
@@ -68,7 +103,14 @@ def purged_walk_forward_splits(
         test_idx = np.asarray(test_idx, dtype=int)
         if len(train_idx) == 0 or len(test_idx) == 0:
             continue
-        out.append(CVSplit(train_idx=train_idx, test_idx=test_idx, fold=fold))
+        split = CVSplit(
+            train_idx=train_idx,
+            test_idx=test_idx,
+            fold=fold,
+            validation_kind="chronological",
+        )
+        assert_chronological_split(split, pt, et)
+        out.append(split)
     if not out:
         raise ValueError("CV produced no usable splits (too few events?)")
     return out
@@ -81,14 +123,14 @@ def purged_group_kfold_splits(
     n_splits: int = 5,
     embargo: pd.Timedelta = _ZERO_EMBARGO,
 ) -> list[CVSplit]:
-    """Purged, embargoed K-fold grouped by ``groups`` (Phase B §8.0: month).
+    """Purged, embargoed cross-fit grouped by ``groups`` (Phase B §8.0: month).
 
     Each group is wholly in train OR test (a split group raises
     ``purgedcv.GroupLeakageError``); train samples whose label (evaluation_time)
     overlaps a test group are purged; ``embargo`` enforces a buffer after each test
-    block (``purgedcv.EmbargoViolationError`` on violation). Both Phase B arms share
-    the SAME folds (computed once on the aligned panel), so the rank-IC differential
-    isolates fundamental-timing, not CV noise.
+    block (``purgedcv.EmbargoViolationError`` on violation). Candidate train rows
+    are the test complement, so this is not chronological validation. Both Phase B
+    arms share the same frozen fold indices.
     """
     if n_splits < 2:
         raise ValueError("n_splits must be >= 2")
@@ -115,7 +157,14 @@ def purged_group_kfold_splits(
         test_idx = np.asarray(test_idx, dtype=int)
         if len(train_idx) == 0 or len(test_idx) == 0:
             continue
-        out.append(CVSplit(train_idx=train_idx, test_idx=test_idx, fold=fold))
+        out.append(
+            CVSplit(
+                train_idx=train_idx,
+                test_idx=test_idx,
+                fold=fold,
+                validation_kind="purged_cross_fit",
+            )
+        )
     if not out:
         raise ValueError("CV produced no usable splits (too few groups?)")
     return out

@@ -9,53 +9,56 @@ Aionis is **not** a cognitive system or a trading bot. It is a disciplined
 experiment harness: each phase poses one falsifiable question ("does feature set X
 add incremental cross-sectional predictability over fundamentals-only?"), answers
 it on real PIT data with a frozen pipeline, and records the verdict — including
-**null** — honestly. The discipline that makes any result trustworthy is the
-**anti-leakage pipeline** below.
+**null** — honestly. The **anti-leakage pipeline** below makes those claims auditable;
+it does not erase their stated validation and data limitations.
 
 ---
 
-## Headline — four confirmatory claims, four publishable nulls
+## Headline — four historical cross-fitted results
 
-Same S&P 500 PIT universe (588 clean tickers, 2016+), same frozen LightGBM, same
-`PurgedGroupKFold(5, embargo=21)`. Each phase's treatment arm is compared to a
-fundamentals-only baseline; the rank-IC **differential** is the falsifiable claim.
+Same S&P 500 PIT universe (588 clean tickers, 2016+), frozen nine-column baseline,
+fixed LightGBM, and `PurgedGroupKFold(5, embargo=21)`. These are shared-fold,
+purged cross-fitted/OOF comparisons, not strictly chronological or live OOS tests.
+The treatment-minus-baseline monthly rank-IC differential is the falsifiable claim.
 
-| phase | axis (treatment vs fundamentals-only) | differential | DM-p | ci_half | verdict |
+| phase | axis (treatment vs baseline) | differential | 95% CI | DM-p | evidence-bound verdict |
 |---|---|---|---|---|---|
-| **B** | fundamental *timing* (filed vs period-end+lag) | −0.0008 | 0.87 | 0.0098 | NULL |
-| **C** | world-state *surprise* bundle (CPI/NFP/VIX/earnings) | −0.0065 | 0.36 | 0.0130 | NULL |
-| **D** | *relationship* bundle (SIC peer-mom + 13D events) | −0.0030 | 0.60 | 0.0107 | NULL |
-| **E1** | cross-firm *propagation* (SIC-peer shocks) | −0.0028 | 0.53 | 0.0087 | NULL |
+| **B** | fundamental *timing* (filed vs period-end+lag) | -0.000800 | **not recorded** | 0.870 | no significant positive increment; precision unknown |
+| **C** | world-state *surprise* bundle (CPI/NFP/VIX/earnings) | -0.006487 | [-0.01953, 0.00656] | 0.355 | no significant positive increment; not strictly equivalent within post-hoc +/-0.015 |
+| **D** | *relationship* bundle (SIC peer-mom + 13D events) | -0.002980 | [-0.01371, 0.00775] | 0.597 | no significant positive increment |
+| **E1** | cross-firm *propagation* beyond own shocks | -0.002793 | [-0.01146, 0.00587] | 0.533 | no significant positive increment |
 
-All four differentials have 95% CIs bracketing 0 (NULL SUPPORTED); all are
-publishable-as-null (ci_half < 0.015). A horizon-robustness sweep confirms B/C/D
-hold at h=10 and h=42. The efficient-markets prior holds across timing / surprise /
-relationship / propagation axes at monthly frequency. The strategy-return
-(secondary) lens agrees: no long-short Sharpe survives the project-family DSR
-deflation.
+All four point estimates are negative; C/D/E1 intervals bracket zero. Phase B's
+ledger row records its differential mean and DM p-value but no paired HAC SE or CI,
+so its precision gate cannot be audited. None of B/C/D/E1 uses an LLM feature.
+The h=10/42 sweep is exploratory, covers all four phases, and reuses the same
+historical research family; it is sensitivity evidence, not independent replication.
+The secondary strategy lens covers B/C only and is gross of costs with no turnover.
 
 ---
 
-## The anti-leakage identity (why any result here is trustworthy)
+## The anti-leakage identity (what makes results auditable)
 
-Every result is anchored by a discipline that makes look-ahead/p-hacking detectable:
+Every result is anchored by controls intended to make look-ahead and p-hacking detectable:
 
 - **`config_committed` BEFORE result** — the frozen config's sha256 is written to
-  an append-only ledger (`runs/ledger.jsonl`) *before* any OOS metric is observed.
+  an append-only ledger (`runs/ledger.jsonl`) *before* any outcome-bearing metric is observed.
   Same-sig reruns are bit-identical (H6 determinism, verified); a changed config is
   a new ledger row, never a silent overwrite. A headline cannot be
   "rerun-to-significance" rescued.
 - **Point-in-time data** — fundamentals via `filed` date (not period-end); macro via
   ALFRED as-of vintages; VIXCLS unrevised (PIT via the no-revision contract); 13D
   via filing date; the S&P 500 universe via PIT membership (`constituents_on`).
-- **PurgedGroupKFold + embargo** — group=month, embargo=21 sessions, no label leakage.
+- **PurgedGroupKFold + embargo** — group=month, embargo=21 sessions. It purges
+  overlapping labels but cross-fits from the test complement, which may include
+  later months; it does not establish chronological validation.
 - **H6 determinism** — `n_jobs=1`, all seeds pinned, version-pinned; the IC series
   AND raw scores are bit-identical across reruns (asserted).
 - **7-gate intake rubric** (`docs/data-intake-rubric.md`) — license / PIT / no-revision
   / snapshot / exploratory-only / selection-honesty / politeness. Permissive
   licenses only (MIT/Apache/BSD).
-- **Controls** — bundle-shuffle placebo (must vanish), leave-one-out attribution,
-  publishability gate (differential ci_half < 0.015).
+- **Controls** — bundle-shuffle placebo and leave-one-out attribution. The historical
+  `ci_half < 0.015` precision flag is not a pre-registered equivalence test.
 
 ---
 
@@ -64,17 +67,17 @@ Every result is anchored by a discipline that makes look-ahead/p-hacking detecta
 A→E, each phase one falsifiable claim on the same benchmark:
 
 - **A** (done) — ERL event representation pilot (underpowered).
-- **B** (done, null) — fundamental timing (filed vs period-end+lag).
-- **C** (done, null) — world-state surprise bundle.
-- **D** (done, null) — relationship/network bundle (13D + SIC peers).
-- **E1** (done, null) — structural cross-firm shock propagation (zero-leakage).
+- **B** (done; paired CI not recorded) — fundamental timing (filed vs period-end+lag).
+- **C** (done; cross-fitted result) — world-state surprise bundle.
+- **D** (done; cross-fitted result) — relationship/network bundle (13D + SIC peers).
+- **E1** (done; cross-fitted result) — structural cross-firm shock propagation.
 - **E2** (designed) — LLM macro-causal hypothesis-generator (cutoff-controlled;
   mitigates — does not eliminate — LLM hindsight leakage). *Design finding: the
   cutoff gate makes the E2 backtest underpowered (~10-18 post-cutoff months).*
-- **E3** (designed) — **forward-live** accumulation: run E1+E2 forward from launch,
-  accumulate a real-time OOS track record. Forward = no future to leak *by
-  construction*; the only **powered** path for the causal-prediction vision.
-  Honest tradeoff: it takes calendar time (years) to power.
+- **E3** (engineering in progress; headline **NO-GO**) — forward-live accumulation.
+  Commit/reveal primitives and dashboard work exist, but no scheduler, real E2E,
+  shadow result, or live track record exists. Forward operation reduces outcome
+  leakage only when its input and execution contracts are actually enforced.
 
 The owner's vision — "see-through-to-essence" causal prediction (pandemic→pharma,
 AI→compute→NVIDIA→power) — is the E2/E3 work. It is inherently leakage-prone if
@@ -94,7 +97,7 @@ uv run streamlit run dashboard/app.py
 ```
 
 Current data demonstrates the analysis methods + interaction structure (not final
-conclusions). The confirmed findings are summarized in `docs/RESULTS.md`.
+conclusions). The recorded evidence is summarized in `docs/RESULTS.md`.
 
 ---
 
@@ -120,7 +123,7 @@ uv run python scripts/phase_b_fetch.py
 # a confirmatory run (e.g. Phase D): config_committed BEFORE result, H6-verified
 uv run python scripts/phase_d_run.py
 
-uv run pytest -q               # 305 hermetic tests, ruff clean
+uv run pytest -q               # run the current hermetic suite
 ```
 
 Each `scripts/phase_{b,c,d,e1}_run.py` is a thin wrapper over its testable
@@ -151,7 +154,7 @@ Aionis uses a unified AI-workflow scaffold. The entry points for any agent or co
 - **`decisions/`** — ADRs (point-in-time, record-once); see `decisions/index.md`.
 
 New phases run the same anti-leakage pipeline: freeze config → `config_committed` ledger row →
-PIT data → PurgedGroupKFold + embargo → frozen LightGBM → rank-IC differential → controls → H6 →
+PIT data → declared validation kind → frozen learner → rank-IC differential → controls → H6 →
 verdict. Acceptance gates are in `docs/05-acceptance.md`.
 
 ---
@@ -159,6 +162,8 @@ verdict. Acceptance gates are in `docs/05-acceptance.md`.
 ## Docs
 
 - `docs/RESULTS.md` — the falsifiable-results snapshot (the table above, expanded).
+- `reports/audits/claim-reconciliation.md` — Fact/Inference/Hypothesis reconciliation
+  and the evidence boundary for current public claims.
 - `docs/00-vision.md` … `docs/08-lessons.md` — the numbered canonical index (vision → lessons).
 - `docs/phase-{b,c,d,e1,e,e2,e3}-preregistration.md` — each phase's pre-registered
   claim + design (the discipline).

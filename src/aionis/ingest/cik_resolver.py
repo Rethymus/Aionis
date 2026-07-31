@@ -58,13 +58,12 @@ The set of tickers fundamentals are fetched for is governed by PIT
 from __future__ import annotations
 
 import json
-import time
 from pathlib import Path
 
 import structlog
 
 from aionis.config import settings
-from aionis.ingest.universe import normalize_ticker
+from aionis.ingest.universe import _policy_get, normalize_ticker
 
 log = structlog.get_logger()
 
@@ -108,23 +107,18 @@ def _parse_sec_tickers(raw: dict) -> dict[str, int]:
 def _fetch_with_backoff(url: str, retries: int = 4, backoff: int = 2) -> dict:
     """Polite GET -> parsed JSON. >=2s exponential backoff on every retry; the
     snapshot is a single one-time ~1 MB fetch cached forever after."""
-    import requests
-
-    last: Exception | None = None
-    for attempt in range(retries):
-        try:
-            r = requests.get(url, headers={"User-Agent": _UA}, timeout=30)
-            r.raise_for_status()
-            return r.json()
-        except Exception as e:  # pragma: no cover - network path
-            last = e
-            log.warning(
-                "cik_resolver_fetch_retry",
-                url=url, attempt=attempt + 1, of=retries, error=str(e),
-            )
-            if attempt < retries - 1:
-                time.sleep(backoff * (2**attempt))  # 2s, 4s, 8s
-    raise RuntimeError(f"cik_resolver: failed to fetch {url}: {last}")
+    try:
+        r = _policy_get(
+            url,
+            total_attempts=retries,
+            backoff_base=backoff,
+            backoff_mode="exponential",
+            headers={"User-Agent": _UA},
+            timeout=30,
+        )
+        return r.json()
+    except Exception as exc:  # pragma: no cover - network path
+        raise RuntimeError(f"cik_resolver: failed to fetch {url}: {exc}") from exc
 
 
 def _load_sec_ticker_map(
@@ -209,10 +203,9 @@ def cik_name_history(
     fp = _cache_dir(cache_dir) / f"cik_names_{int(cik):010d}.json"
     if fp.exists() and not force:
         return json.loads(fp.read_text())
-    import requests
-
-    r = requests.get(
-        _SUBMISSIONS_URL.format(cik=int(cik)),
+    url = _SUBMISSIONS_URL.format(cik=int(cik))
+    r = _policy_get(
+        url,
         headers={"User-Agent": _UA}, timeout=30,
     )
     r.raise_for_status()
@@ -222,5 +215,4 @@ def cik_name_history(
         "former": [str(f.get("name", "")) for f in d.get("formerNames", [])],
     }
     fp.write_text(json.dumps(out))
-    time.sleep(0.15)  # SEC fair-access (matches fundamentals.py)
     return out

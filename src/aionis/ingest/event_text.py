@@ -32,6 +32,7 @@ import structlog
 from bs4 import BeautifulSoup
 
 from aionis.config import settings
+from aionis.ingest.universe import _policy_get
 
 log = structlog.get_logger()
 
@@ -96,14 +97,18 @@ def _clean(html: str, event_type: str) -> str:
     return text[:_MAX_CHARS]
 
 
-def _http_get(url: str) -> str | None:
+def _http_get(url: str, *, use_policy: bool = False) -> str | None:
     """GET with browser UA + 30s timeout; one retry on connection errors.
 
     Returns raw HTML on 2xx, None on 404 / persistent failure (fail-soft).
     """
-    for attempt in (1, 2):
+    attempts = (1,) if use_policy else (1, 2)
+    for attempt in attempts:
         try:
-            resp = requests.get(url, timeout=_TIMEOUT_S, headers=_HTTP_HEADERS)
+            if use_policy:
+                resp = _policy_get(url, timeout=_TIMEOUT_S, headers=_HTTP_HEADERS)
+            else:
+                resp = requests.get(url, timeout=_TIMEOUT_S, headers=_HTTP_HEADERS)
             if resp.status_code == 404:
                 log.warning("text_fetch_404", url=url)
                 return None
@@ -111,7 +116,7 @@ def _http_get(url: str) -> str | None:
             return resp.text
         except requests.exceptions.ConnectionError as e:
             # Transient host issues (rate-limit, TCP reset): one retry.
-            if attempt == 1:
+            if not use_policy and attempt == 1:
                 continue
             log.warning("text_fetch_conn_error", url=url, error=str(e))
             return None
@@ -128,7 +133,7 @@ def _fetch_text(event_type: str, event_ts: pd.Timestamp) -> str | None:
     except ValueError as e:
         log.warning("text_fetch_unknown_type", event_type=event_type, error=str(e))
         return None
-    raw = _http_get(url)
+    raw = _http_get(url, use_policy=event_type == "FOMC")
     if raw is None:
         return None
     return _clean(raw, event_type)
@@ -169,7 +174,7 @@ def fetch_event_text(events: pd.DataFrame, cache_dir: Path | None = None) -> pd.
             rows.append({"event_id": ev.event_id, "text": text})
             continue
 
-        if http_calls_made > 0:
+        if http_calls_made > 0 and ev.event_type != "FOMC":
             time.sleep(_POLITE_DELAY_S)
         raw = _fetch_text(ev.event_type, ev.event_ts)
         http_calls_made += 1

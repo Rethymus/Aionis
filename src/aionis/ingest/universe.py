@@ -22,11 +22,14 @@ import io
 import tarfile
 from io import StringIO
 from pathlib import Path
+from typing import Literal
 
 import pandas as pd
+import requests
 import structlog
 
 from aionis.config import settings
+from aionis.ingest.http_policy import HttpRequestPolicy, RetryPolicy
 
 log = structlog.get_logger()
 
@@ -38,6 +41,32 @@ _PB_TARBALL = (
     "https://codeload.github.com/pierrebrunelle/"
     "sp500-historical-constituents/tar.gz/refs/heads/main"
 )
+
+_HTTP_POLICY = HttpRequestPolicy(retry_exceptions=(requests.RequestException,))
+
+
+def _policy_get(
+    url: str,
+    *,
+    total_attempts: int | None = None,
+    backoff_base: float = 2.0,
+    backoff_mode: Literal["exponential", "linear"] = "exponential",
+    **kwargs: object,
+) -> requests.Response:
+    """Issue one approved direct GET through the process-wide HTTP policy."""
+    retry = None
+    if total_attempts is not None:
+        retry = RetryPolicy(
+            max_retries=total_attempts - 1,
+            backoff_base=backoff_base,
+            backoff_mode=backoff_mode,
+        )
+    def operation() -> requests.Response:
+        return requests.get(url, **kwargs)
+
+    if retry is None:
+        return _HTTP_POLICY.request(url, operation)
+    return _HTTP_POLICY.request(url, operation, retry=retry)
 
 
 def _cache_dir(cache_dir: Path | None = None) -> Path:
@@ -117,10 +146,8 @@ def load_hanshof_membership(
         return pd.read_parquet(pq)
     text = csv.read_text() if csv.exists() else None
     if text is None:
-        import requests
-
         log.info("universe_fetch_hanshof", url=_HANSHOF_URL)
-        r = requests.get(_HANSHOF_URL, headers={"User-Agent": "aionis/0.1"}, timeout=120)
+        r = _policy_get(_HANSHOF_URL, headers={"User-Agent": "aionis/0.1"}, timeout=120)
         r.raise_for_status()
         text = r.text
         csv.write_text(text)
@@ -148,10 +175,8 @@ def load_pierrebrunelle_membership(
     if tgz.exists():
         files = _read_spy_files_from_tarball(tgz)
     else:
-        import requests
-
         log.info("universe_fetch_pierrebrunelle")
-        r = requests.get(_PB_TARBALL, headers={"User-Agent": "aionis/0.1"}, timeout=180)
+        r = _policy_get(_PB_TARBALL, headers={"User-Agent": "aionis/0.1"}, timeout=180)
         r.raise_for_status()
         tgz.write_bytes(r.content)
         files = _read_spy_files_from_tarball(tgz)

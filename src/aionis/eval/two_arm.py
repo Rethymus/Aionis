@@ -1,4 +1,4 @@
-"""Phase B two-arm OOS runner (arm_state=filed vs arm_base=period-end+lag).
+"""Phase B two-arm cross-fit runner (arm_state=filed vs arm_base=period-end+lag).
 
 Builds arms on the SAME prices / universe / features, masks each to PIT
 constituents, computes the folds ONCE (PurgedGroupKFold, group= month) and applies
@@ -84,7 +84,7 @@ def run_arm_oos(
     macro: pd.DataFrame | None = None,
     extra_features: pd.DataFrame | None = None,
 ) -> pd.DataFrame:
-    """Run ONE arm against pre-computed shared folds -> OOS panel
+    """Run one arm against pre-computed shared folds -> cross-fitted/OOF panel
     ``[date, ticker, score, y_fwd_ret]``.
 
     Asserts the arm's ``(date, ticker)`` layout matches ``ref_layout`` so the fold
@@ -130,10 +130,10 @@ def run_two_arm_oos(
     embargo_sessions: int = 21,
     params: dict | None = None,
 ) -> dict[str, pd.DataFrame]:
-    """Run both Phase B arms (shared fundamentals) -> ``{arm: OOS panel}``.
+    """Run both Phase B arms (shared fundamentals) -> ``{arm: OOF panel}``.
 
     The two arms share prices / universe / features / folds / learner; ONLY the
-    fundamental-timing (``align_on``) differs. OOS rows are the union of every
+    fundamental-timing (``align_on``) differs. OOF rows are the union of every
     fold's test block. Feed each arm's panel to ``eval.rank_ic`` for the headline."""
     folds, ref = compute_shared_folds(prices, membership, horizon, n_splits, embargo_sessions)
     return {

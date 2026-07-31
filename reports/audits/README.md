@@ -1,7 +1,10 @@
 # reports/audits/ — Security / Leakage / Dependency Audits
 
-**Placeholder.** No audits are fabricated here yet; this directory reserves
-space for future audit reports (security, leakage, dependency-license).
+## Audit index
+
+- [`2026-07-31-quant-llm-research-audit.md`](2026-07-31-quant-llm-research-audit.md) —
+  Quant-selection, statistical/time-extrapolation, E3 readiness, small-model LLM,
+  cost, literature, and open-source ecosystem audit.
 
 The **standing intake audit** is already enforced via the 7-gate rubric applied
 to every third-party dataset:

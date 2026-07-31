@@ -16,7 +16,8 @@ import pandas as pd
 import pytest
 import requests
 
-from aionis.ingest import stakes_13d_efts
+from aionis.ingest import stakes_13d_efts, universe
+from aionis.ingest.http_policy import HttpRequestPolicy
 
 ISSUER = 320193  # AAPL
 FILER = 1234567
@@ -27,6 +28,7 @@ class _Resp:
     def __init__(self, payload, status_code=200):
         self._p = payload
         self.status_code = status_code
+        self.headers = {}
 
     def json(self): return self._p
 
@@ -46,8 +48,27 @@ def _efts(hits, total=None):
     }}
 
 
+def _install_policy(monkeypatch, sleeps=None):
+    now = [0.0]
+
+    def sleep(seconds):
+        if sleeps is not None:
+            sleeps.append(seconds)
+        now[0] += seconds
+
+    monkeypatch.setattr(
+        universe,
+        "_HTTP_POLICY",
+        HttpRequestPolicy(
+            clock=lambda: now[0],
+            sleeper=sleep,
+            retry_exceptions=(requests.RequestException,),
+        ),
+    )
+
+
 def _no_network(monkeypatch, url_map, sleeps=None):
-    """Patch requests.get to serve url_map; patch time.sleep to record (no waits)."""
+    """Serve a URL map through the shared policy with fake time."""
     calls: list[str] = []
 
     def fake(url, headers=None, timeout=None):
@@ -57,8 +78,7 @@ def _no_network(monkeypatch, url_map, sleeps=None):
         raise AssertionError(f"unexpected URL: {url}")
 
     monkeypatch.setattr(requests, "get", fake)
-    monkeypatch.setattr(stakes_13d_efts.time, "sleep",
-                        lambda s: sleeps.append(s) if sleeps is not None else None)
+    _install_policy(monkeypatch, sleeps)
     return calls
 
 
@@ -225,14 +245,13 @@ def test_backoff_retries_then_succeeds(monkeypatch, tmp_path):
         return _Resp(payload)
 
     monkeypatch.setattr(requests, "get", flaky)
-    monkeypatch.setattr(stakes_13d_efts.time, "sleep", lambda s: sleeps.append(s))
+    _install_policy(monkeypatch, sleeps)
 
     df = _fetch(tmp_path)
 
     assert list(df["accession"]) == ["X"]
     assert state["n"] == 3                 # 2 failures then success
-    # backoff (4*1, 4*2) between retries, then the 0.15s fair-access pause on success
-    assert sleeps == [4, 8, 0.15]
+    assert sleeps == [4.0, 8.0]
 
 
 def test_server_5xx_is_retried(monkeypatch, tmp_path):
@@ -246,12 +265,12 @@ def test_server_5xx_is_retried(monkeypatch, tmp_path):
         return _Resp(payload, status_code=503 if state["n"] < 2 else 200)
 
     monkeypatch.setattr(requests, "get", flaky)
-    monkeypatch.setattr(stakes_13d_efts.time, "sleep", lambda s: sleeps.append(s))
+    _install_policy(monkeypatch, sleeps)
 
     df = _fetch(tmp_path)
 
     assert state["n"] == 2
-    assert sleeps == [4, 0.15]
+    assert sleeps == [4.0]
     assert list(df["accession"]) == ["X"]
 
 
@@ -265,7 +284,7 @@ def test_permanent_4xx_fails_fast_without_retry(monkeypatch, tmp_path):
         return _Resp(None, status_code=404)
 
     monkeypatch.setattr(requests, "get", fake)
-    monkeypatch.setattr(stakes_13d_efts.time, "sleep", lambda s: sleeps.append(s))
+    _install_policy(monkeypatch, sleeps)
 
     with pytest.raises(RuntimeError, match="404"):
         _fetch(tmp_path)

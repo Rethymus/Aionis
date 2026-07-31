@@ -23,13 +23,14 @@ feature; :func:`filings_13d` returns the raw event stream and documents this.
 from __future__ import annotations
 
 import json
-import time
 from pathlib import Path
 
 import pandas as pd
 import structlog
 
 from aionis.config import settings
+from aionis.ingest.http_policy import HTTPStatusError
+from aionis.ingest.universe import _policy_get
 
 log = structlog.get_logger()
 
@@ -52,38 +53,28 @@ def _get_json(url: str, fp: Path, *, retries: int = 4, backoff: int = 4) -> dict
     (bad CIK / URL — e.g. a 404 on an invalid CIK) fails fast without retrying,
     matching the fundamentals.py polite pattern but not wasting 4 backoffs on a
     permanent client error."""
-    import requests
-
     if fp.exists():
         return json.loads(fp.read_text())
-    last: Exception | None = None
-    for attempt in range(retries):
-        try:
-            r = requests.get(url, headers={"User-Agent": _UA}, timeout=60)
-        except Exception as e:  # network / SSL / timeout -> backoff and retry
-            last = e
-            log.warning("submissions_retry", url=url, attempt=attempt + 1,
-                        of=retries, error=str(e))
-            if attempt < retries - 1:
-                time.sleep(backoff * (attempt + 1))
-            continue
-        # permanent client error (bad CIK / URL) -> fail fast, do NOT retry
-        if 400 <= r.status_code < 500 and r.status_code != 429:
+    try:
+        r = _policy_get(
+            url,
+            total_attempts=retries,
+            backoff_base=backoff,
+            backoff_mode="linear",
+            headers={"User-Agent": _UA},
+            timeout=60,
+        )
+    except HTTPStatusError as exc:
+        if 400 <= exc.status_code < 500 and exc.status_code != 429:
             raise RuntimeError(
-                f"{r.status_code} Client Error for {url} (permanent; not retried)"
-            )
-        if r.status_code != 200:  # 5xx / 429 -> backoff and retry
-            last = RuntimeError(f"{r.status_code} for {url}")
-            log.warning("submissions_retry", url=url, attempt=attempt + 1,
-                        of=retries, error=str(last))
-            if attempt < retries - 1:
-                time.sleep(backoff * (attempt + 1))
-            continue
-        data = r.json()
-        fp.write_text(json.dumps(data))
-        time.sleep(0.15)  # SEC fair-access: <=10 req/s
-        return data
-    raise RuntimeError(f"fetch failed for {url} after {retries} retries: {last}")
+                f"{exc.status_code} Client Error for {url} (permanent; not retried)"
+            ) from exc
+        raise RuntimeError(f"fetch failed for {url}: {exc}") from exc
+    except Exception as exc:
+        raise RuntimeError(f"fetch failed for {url}: {exc}") from exc
+    data = r.json()
+    fp.write_text(json.dumps(data))
+    return data
 
 
 def fetch_submissions(

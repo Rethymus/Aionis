@@ -7,19 +7,24 @@ fundamentals-only baseline on monthly cross-sectional rank-IC of S&P 500 PIT
 constituents (588 clean tickers, 2016+, n=125 months). The treatment-vs-baseline
 rank-IC **differential** is the falsifiable claim — never the standalone arm IC.
 
-**The intended outcome.** Null-with-tight-95%-CI (ci_half < 0.015) is the
-publishable result. A CI crossing 0 forbids claiming a positive effect; only a CI
-tight enough to bound the effect counts as a settled null.
+**The intended outcome.** A precisely estimated null is useful and publishable,
+but a CI crossing zero is only a failure to detect a differential, not proof of
+equivalence. The historical `ci_half < 0.015` flag is a precision rule; no economic
+SESOI or TOST was pre-registered for B/C/D/E1.
 
 **The evaluation backbone.**
 - Frozen LightGBM (`n_jobs=1`, all seeds pinned, version-pinned).
-- `PurgedGroupKFold(5, group=month, embargo=21)` — shared folds across arms so the
-  differential isolates only the held-out feature set.
+- `PurgedGroupKFold(5, group=month, embargo=21)` — shared purged cross-fitting
+  across arms. Candidate training rows can include later months, so this is not
+  strictly chronological validation.
 - Newey-West HAC (maxlag=4) + moving-block-bootstrap Diebold-Mariano for the
   differential SE/CI and p-value.
 
-**Status.** Phases B, C, D, and E1 each filed one claim; all four returned NULL
-SUPPORTED with ci_half < 0.015. See RESULTS.md for the numbers.
+**Status.** B/C/D/E1 produced four negative point estimates and no significant
+positive incremental rank-IC under the frozen implementation. B has no recorded
+paired differential CI; C/D/E1 CIs cross zero, and C extends outside a post-hoc
++/-0.015 equivalence band. All four headline feature sets are zero-LLM. See
+RESULTS.md for the evidence boundary.
 
 ## See also
 

@@ -28,3 +28,17 @@
     redundant `keyfn = str.upper` branch in `earnings_8k_forward.py:143`; optional DRY extract
     `_common.persist_snapshot(...)` for the shared archive+parquet+ledger+log tail; collector functions
     slightly >50 lines (collapses if the DRY extract lands). Batch as one **S** cleanup.
+
+## Audit remediation candidates (not current execution)
+
+- **[P1] SESOI/TOST + sequential-monitoring decision gate.** Produce an outcome-blind statistical
+  decision brief before any E3 outcome-bearing shadow view or headline ignition; no pre-reg/ledger/code
+  mutation in the brief task. **M / HIGH**. See
+  `../tasks/active/TASK-AUD-07-sesoi-tost-sequential-gate.md`.
+- **[P2] Strong-baseline ladder.** Evaluate momentum/reversal/volatility/liquidity, industry/size
+  neutrality and a rank-aware learner only under a new owner-approved pre-registration/config; never
+  mutate B/C/D/E1. **L candidate — Planner must split before assignment.**
+- **[P2] Economic-validity lens.** Add next-open execution, turnover, slippage, liquidity, borrow,
+  delisting and capacity after the chronological contract is accepted. **L candidate — split first.**
+- **[P2] LLM extractor evaluation.** Build a licensed, timestamped human gold set and compare closed-enum
+  GLM extraction against zero-LLM/rule baselines using precision, recall, coverage and abstention. **M / HIGH**.

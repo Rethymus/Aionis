@@ -1,43 +1,46 @@
 # state/handoff.md — current-pass handoff
 
-- **round:** Dashboard → near-final-product analysis interface (5 axes), 2026-07-31.
-- **this pass did:**
-  - **Task pivot (owner sharpened)**: the "github page 展示方案" was a misread — the owner wants the
-    EXISTING streamlit dashboard (`dashboard/app.py`) taken to a near-final-product form on 5 axes
-    (**拟合质量 / 波动结构 / 曲线演化 / 事件前后差异 / 不确定性**), data = method/interaction DEMO only
-    (NOT research conclusions). The GitHub Pages plan (`c2b5908`/`9575cfd`) is **PAUSED** (DRAFT留档).
-  - 2 Researcher (sonnet) → quant-viz canon (pyfolio/QuantStats/López de Prado) + the existing 11-tab
-    maturity map (FULL/DEMO/STUB) + open-source refs (`quantstats` Apache-2.0, `ffn` MIT — DESIGN refs
-    only, NOT deps). → Planner (sonnet) 7 sub-slice plan.
-  - 2 Engineer passes (sonnet) TDD:
-    - **Pass A (6a-6d)**: `dashboard/theme.py` (palette + `AIONIS_TEMPLATE` + `apply_theme`); Fit Quality
-      (+R² KPI, regression-line scatter, IC-by-regime box); Volatility (+Sharpe/Calmar/downside/vol-of-vol
-      KPIs, return-distribution histogram); Curve Evolution (+monthly heatmap, top-drawdowns table).
-    - **Pass B (6e-6g)**: Event Study **STUB REPLACED** with a demo CAR view (`_car_curve`/`_car_ci`/
-      `_demo_event_windows`; CAR(−t_pre)=0 baseline; 95% CI = mean ± 1.96·std/√n across events);
-      Uncertainty (+CV-fold stability box); consolidated demo-discipline test.
-  - Verifier (sonnet) **PASS** (0 blockers; 576 green); Reviewer (opus) **APPROVE** (0 CRITICAL/HIGH;
-    2 MEDIUM follow-ups: `app.py`=1629 lines → extract a `dashboard/views/` submodule; apply `apply_theme`
-    to pre-existing chart builders for style consistency).
-- **decisions**: NO new deps (metrics inline: R²/Sharpe/Calmar/downside/CAR — all simple formulas);
-  demo data `np.random.default_rng(7)` + `st.warning("DEMO ... not a research conclusion.")` on every
-  demo view; real-path view logic UNCHANGED (new plots are additions/demo fallbacks).
-- **files**: NEW `dashboard/theme.py` + `dashboard/__init__.py` + 7 test files; MODIFIED `dashboard/app.py`
-  (+~1000 lines). +59 tests (517→576, 0 skip).
-- **verified**: `uv run pytest -q` **576 passed** (0 skip); `uv run ruff check` clean; `runs/ledger.jsonl`
-  still **39**; 5 axes each gated by tests; demo-discipline enforced (warnings + rng=7 reproducibility +
-  in-memory); formulas verified; no new deps; no fake completion.
-- **next precise action**:
-  - **(optional follow-up, MEDIUM)** refactor `dashboard/app.py` (1629 lines → extract `dashboard/views/`
-    submodule) — not blocking.
-  - **(optional follow-up, LOW)** apply `apply_theme` to pre-existing chart builders (style consistency).
-  - **E3 Slice 6** (forward scheduler: NYSE month-end trigger, `scripts/forward_tick.py`) + **Slice 7**
-    (E2E smoke + full I1–I9 gate suite) remain.
-  - **GitHub Pages** paused (DRAFT `docs/github-pages-plan.md`); revisit if owner wants.
-  - Watch the GLM 5h quota. Do NOT push without owner OK; do NOT ignite the headline until the 1–2 mo
-    shadow validates GLM.
-- **do NOT repeat**: do NOT confuse dashboard DEMO data with research output (clearly labeled DEMO);
-  do NOT add quantstats/ffn as deps (inline formulas); do NOT touch the 4 published nulls / frozen
-  pre-reg / `forward_ledger.py` / `save_run` / real-path view logic.
-- **uncommitted**: dashboard-maturation changes in the working tree on `feat/e3-forward-ledger`
-  (ahead 3 from the last push: Slice 5 + Pages DRAFT v0.1/v0.2); commit on owner OK.
+- **round:** AUD remediation SATURATED — all autonomous priority work done; everything remaining owner-gated. 2026-07-31.
+- **outcome:** project remains an evidence-first PIT research harness, not a validated stock-picking strategy.
+  Historical B/C/D/E1 are shared-fold purged CV-proxies (not chronological OOS); LLM not in headlines;
+  E3 NO-GO for headline.
+- **COMPLETE:** AUD-01/02/03/04/05A/05B (each Verifier PASS + Reviewer APPROVE); AUD-05C disposition
+  (Reviewer APPROVE; 10 boundaries → C1-C5 + Kenneth-French task files); **AUD-07 FROZEN** via
+  [ADR-010](../decisions/ADR-010-sesoi-tost-sequential-gate.md) + E3 pre-reg §7 (SESOI ±0.010 / HAC-TOST
+  90% / O'Brien-Fleming 60·90·120mo / n_trials=30; 3× cross-validated; equivalence+sequential
+  construction amended).
+- **C-series prepped → owner-decidable:**
+  - **C3 (PRAW 7-gate)**: CLEAR-WITH-CONDITIONS (all 7 gates PASS; G1 BSD-2/Apache-2.0, G2 PIT,
+    G3 snapshot handles user-edits, G4 sha256+append, G5/G6 exploratory-only, G7 PRAW 1.5s+ToS).
+    Conditions: Reddit ToS internal-only/no-redistribute; permanent `mode:exploratory`. → owner GO/REJECT.
+  - **C4 (health_check)**: remove `akshare/EastMoney` (BLOCKED); keep EDGAR/FRED/Tiingo/Alpaca/gh;
+    **standalone (Option A)** recommended (auxiliary monitor, own 2.0s gap+retry, off-peak cron).
+    → owner GO.
+  - **C5 (model-API ≥2s)**: **Option A (SDK-exempt)** recommended — model APIs throttled by provider
+    RPM/TPM + ProviderRouter cooldown + idempotent cache; ≥2s redundant for GLM (RPM 30), harmful for
+    SiliconFlow (RPM 1000). Rule wording drafted. → owner accept.
+- **P2 split → owner-authorizable**: 10 S/M OWNER-GATED `TASK-RES-01..10` created (baseline-ladder
+  RES-01/02/03 [mom/FF5/rank-objective]; economic-lens RES-04/05/06/07 [next-open/turnover-slippage/
+  liquidity-borrow/delisting-capacity]; LLM-eval RES-08/09/10 [gold-set/zero-LLM-ablation/eval-metrics]).
+  Each registers a NEW trial, respects ADR-010, touches only `tasks/active/`. RES-08 (gold-set) is
+  highest-leverage + owner-participatory.
+- **owner-decision queue (consolidated — further progress needs these):**
+  - **C1/C2**: held or GO? (BLS-disable S/LOW; VIX-FRED-wrapper M/MED, preserves ADR-003).
+  - **C3**: accept CLEAR-with-conditions (GO wrapper) or reject (disable PRAW live)?
+  - **C4**: GO remove akshare + standalone health_check?
+  - **C5**: accept Option A + record the rule wording?
+  - **Kenneth-French / selection-panel FRED+Fama-French**: data-intake 7-gate decision.
+  - **AUD-06**: owner contract (E3 live-input readiness acceptance points).
+  - **RES-01..10**: which to authorize first? (RES-08 gold-set highest-leverage).
+  - **Commit?** large uncommitted set (prior audit pass + AUD-01..05C + ADR-009/010 + RES tasks);
+    HEAD `87af583`, ahead 4.
+- **verification:** 620 hermetic tests green; ruff clean; `runs/ledger.jsonl` 39; frozen prereg/ADR/
+  config/ledger/results/data untouched across ALL AUD/RES-prep work; no E3 outcome observed; no
+  confirmatory/strategy/horizon/forward script run.
+- **proxy note:** 3-parallel subagent spawns fail with proxy 400 `[1210]`; ≤2-parallel / single work.
+  Future dispatch ≤2 concurrent.
+- **do NOT:** run confirmatory/strategy/horizon/forward scripts; edit frozen prereg/ADR/config; infer
+  B's paired differential CI; call historical cross-fit chronological OOS; inspect E3 outcome metrics;
+  ignite E3 headline.
+- **git:** branch `feat/e3-forward-ledger`, HEAD `87af583`, ahead 4; + large uncommitted AUD-01..05C
+  + ADR-009/010 + RES-01..10 + prior-audit doc/code pass.

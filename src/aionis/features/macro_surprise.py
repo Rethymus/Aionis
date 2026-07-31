@@ -42,6 +42,7 @@ import pandas as pd
 import structlog
 
 from aionis.features.alignment import NYSE_TZ
+from aionis.ingest.universe import _policy_get
 
 log = structlog.get_logger()
 
@@ -71,8 +72,6 @@ MAX_UNMATCHED_SHARE = 0.20
 
 def _download_vintages(series_id: str, fred_api_key: str) -> dict:
     """Full vintage archive for one series (paged; FRED caps rows per request)."""
-    import requests
-
     observations: list[dict] = []
     offset = 0
     while True:
@@ -85,7 +84,7 @@ def _download_vintages(series_id: str, fred_api_key: str) -> dict:
             "limit": _PAGE_LIMIT,
             "offset": offset,
         }
-        resp = requests.get(_ALFRED_OBS_URL, params=params, timeout=60)
+        resp = _policy_get(_ALFRED_OBS_URL, params=params, timeout=60)
         resp.raise_for_status()
         rows = resp.json().get("observations", [])
         observations.extend(rows)

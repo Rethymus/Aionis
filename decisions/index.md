@@ -15,9 +15,10 @@ without new evidence — see `../WORKFLOW.md` §5).
 | [ADR-007](ADR-007-permissive-licenses-only.md) | Permissive licenses only (MIT / Apache / BSD) | accepted | 2026-07-26 |
 | [ADR-008](ADR-008-launch-e3-and-broaden-nulls.md) | TASK-STRAT verdict: launch E3 forward-live + broaden nulls in parallel (reject E2-as-confirmatory) | accepted | 2026-07-30 |
 | [ADR-009](ADR-009-e3-hybrid-causal-layer.md) | E3 causal-layer design: hybrid (zero-LLM frozen-β macro + minimal closed-enum LLM event edge); FF-12 unified taxonomy | accepted | 2026-07-31 |
+| [ADR-010](ADR-010-sesoi-tost-sequential-gate.md) | E3 statistical gate: SESOI ±0.010 / HAC-TOST 90% / O'Brien-Fleming sequential / n_trials=30 (freeze before outcome inspection) | accepted | 2026-07-31 |
 
 ## How to add an ADR
-Number it next (`ADR-009-…`), write it **before** the decision is reversed, never delete (supersede
+Number it next (`ADR-011-…`), write it **before** the decision is reversed, never delete (supersede
 with a new ADR that points back). Fields (per `../WORKFLOW.md` §1):
 
 ```
