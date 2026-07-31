@@ -126,7 +126,7 @@ def test_fetch_vix_cache_hit_makes_no_call(
     def _boom(*args: object, **kwargs: object) -> None:
         raise AssertionError("pdr fetch attempted on cache hit")
 
-    monkeypatch.setattr("pandas_datareader.get_data_fred", _boom)
+    monkeypatch.setattr(vix, "_fetch_fred_observations", _boom)
     cached = pd.Series(
         [15.0, 16.0], index=pd.to_datetime(["2024-01-02", "2024-01-03"]), name="vix"
     )
@@ -152,7 +152,7 @@ def test_fetch_vix_writes_cache_and_logs_ingest(
         {"VIXCLS": [15.0, 16.0, 17.0]},
         index=pd.to_datetime(["2024-01-02", "2024-01-03", "2024-01-04"]),
     )
-    monkeypatch.setattr("pandas_datareader.get_data_fred", lambda *a, **k: synth)
+    monkeypatch.setattr(vix, "_fetch_fred_observations", lambda *a, **k: synth["VIXCLS"])
     # redirect ledger writes into the tmp tree (hermetic — real ledger untouched)
     monkeypatch.setattr(vix.settings, "runs_dir", tmp_path)
     cdir = tmp_path / "cache"
@@ -167,7 +167,7 @@ def test_fetch_vix_writes_cache_and_logs_ingest(
     def _boom(*args: object, **kwargs: object) -> None:
         raise AssertionError("fetch attempted on cache hit")
 
-    monkeypatch.setattr("pandas_datareader.get_data_fred", _boom)
+    monkeypatch.setattr(vix, "_fetch_fred_observations", _boom)
     s2 = vix.fetch_vix("2024-01-02", "2024-01-04", cache_dir=cdir)
     pd.testing.assert_series_equal(s, s2)
 
@@ -201,7 +201,7 @@ def test_vix_as_of_synthesizes_self_dated_vintages_when_no_cache(
         index=pd.to_datetime(["2024-01-02", "2024-01-03", "2024-01-04"]),
     )
     synth.name = "VIXCLS"
-    monkeypatch.setattr("pandas_datareader.get_data_fred", lambda *a, **k: synth.to_frame())
+    monkeypatch.setattr(vix, "_fetch_fred_observations", lambda *a, **k: synth)
     monkeypatch.setattr(vix.settings, "fred_api_key", "test-key")
     # no alfred_VIXCLS.json present -> forces the synthesized download path
     dates = pd.DatetimeIndex(pd.date_range("2024-01-01", "2024-01-05")).normalize()
@@ -222,3 +222,47 @@ def test_vix_as_of_synthesizes_self_dated_vintages_when_no_cache(
     rows = _json.loads(cache.read_text())["observations"]
     assert all(r["date"] == r["realtime_start"] for r in rows)  # self-dated
     assert len(rows) == 3
+
+
+def test_fred_adapter_uses_shared_policy_and_filters_missing_values(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A cache miss reaches FRED only through the approved policy adapter."""
+    calls: list[tuple[str, dict]] = []
+
+    class _Response:
+        def raise_for_status(self) -> None:
+            return None
+
+        def json(self) -> dict:
+            return {
+                "observations": [
+                    {"date": "2024-01-02", "value": "15.0"},
+                    {"date": "2024-01-03", "value": "."},
+                ]
+            }
+
+    def _policy_get(url: str, **kwargs: object) -> _Response:
+        calls.append((url, kwargs))
+        return _Response()
+
+    monkeypatch.setattr(vix, "_policy_get", _policy_get)
+    series = vix._fetch_fred_observations("2024-01-01", "2024-01-31", "test-key")
+
+    assert series.tolist() == [15.0]
+    assert list(series.index.strftime("%Y-%m-%d")) == ["2024-01-02"]
+    assert calls == [
+        (
+            vix._FRED_OBSERVATIONS_URL,
+            {
+                "params": {
+                    "series_id": "VIXCLS",
+                    "api_key": "test-key",
+                    "file_type": "json",
+                    "observation_start": "2024-01-01",
+                    "observation_end": "2024-01-31",
+                },
+                "timeout": 60,
+            },
+        )
+    ]

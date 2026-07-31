@@ -2,7 +2,7 @@
 
 - 编号: AUD-05C-C2
 - Parent: AUD-05C
-- 状态: **READY (awaiting owner GO after AUD-05C disposition-complete)**
+- 状态: **Engineer complete; independent Verifier PASS; Reviewer APPROVE**
 - Priority: **P0**
 - Size: **M**
 - Risk: **MEDIUM** (VIX is critical risk-premium feature; must preserve PIT/no-revision/cache/ledger semantics)
@@ -56,17 +56,17 @@
 
 ## Acceptance criteria
 
-- [ ] `fetch_vix()` uses approved FRED adapter with shared host-spacing policy
-- [ ] `_download_vix_vintages()` uses approved FRED adapter
-- [ ] Cache hit → no HTTP call (same as before)
-- [ ] Cache miss → HTTP call through shared policy (≥2s spacing, retry discipline)
-- [ ] Ledger row appended on actual fetch (same as before)
-- [ ] Self-dated vintage synthesis unchanged
-- [ ] PIT as-of join (`vix_as_of()`) produces identical results to current implementation
-- [ ] Hermetic tests pass (fake clock, no network)
-- [ ] `uv run pytest -q` all tests pass
-- [ ] `uv run ruff check` clean
-- [ ] No direct `pandas_datareader` HTTP calls remain in `vix.py`
+- [x] `fetch_vix()` uses approved FRED adapter with shared host-spacing policy
+- [x] `_download_vix_vintages()` uses approved FRED adapter
+- [x] Cache hit → no HTTP call (same as before)
+- [x] Cache miss → HTTP call through shared policy (≥2s spacing, retry discipline)
+- [x] Ledger row appended on actual fetch (same as before)
+- [x] Self-dated vintage synthesis unchanged
+- [x] PIT as-of join (`vix_as_of()`) produces identical results to current implementation
+- [x] Hermetic tests pass (fake clock, no network)
+- [x] `uv run pytest -q` all tests pass
+- [x] `uv run ruff check` clean
+- [x] No direct `pandas_datareader` HTTP calls remain in `vix.py`
 
 ## Engineer → Verifier → Reviewer gate
 
@@ -106,3 +106,26 @@
 - PIT safety comes from NO-REVISION contract (G3), NOT revision tracking
 - Self-dated vintages (realtime_start == date) are the honest representation of an unrevised series
 - The wrapper should use the same `http_policy.py` primitive as AUD-05B adapters
+
+## 2026-08-01 owner authorization + Engineer evidence
+
+- Owner authorized FRED as the continuing source for the critical VIX feature and approved replacing
+  the SDK transport with an adapter routed through the shared host-spacing policy.
+- `fetch_vix()` and `_download_vix_vintages()` now call one FRED observations adapter; cache-hit,
+  append-only ingest ledger, self-dated vintage synthesis, function signatures and `vix_as_of()`
+  semantics remain unchanged. No `pandas_datareader` call remains in `vix.py`.
+- Added a hermetic fake-response test that asserts the FRED URL and request parameters are dispatched
+  through `_policy_get`, filtering FRED's missing-value marker without network access.
+- Engineer checks PASS: VIX/policy tests, repository ruff, direct-SDK scan, diff check and full
+  hermetic pytest suite. No frozen VIX config, ADR, ledger/data artifact or outcome-bearing workflow
+  changed.
+- Required next gate: independent read-only Verifier, then Reviewer. Do not commit this task until
+  those gates approve it.
+
+## 2026-08-01 independent gate evidence
+
+- Verifier: **PASS** (fresh read-only session; mirrored to `/dev/shm/c2-verifier.txt`)
+- Reviewer: **APPROVE** (fresh read-only session; mirrored to `/dev/shm/c2-reviewer.txt`); no
+  blocking findings; advisory only about optional fake-clock adapter-test polish and task metadata
+  consistency.
+- No frozen VIX config, ADR, ledger/data artifact or outcome-bearing workflow changed during the gates.

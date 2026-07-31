@@ -11,21 +11,27 @@
   and Reviewer APPROVE. AUD-04 is also COMPLETE after repair re-Verifier PASS and Reviewer APPROVE. AUD-02
   documentation reconciliation and AUD-05A are COMPLETE after independent Verifier PASS and Reviewer APPROVE.
   AUD-05B is COMPLETE after re-Verifier PASS and authorized re-Reviewer APPROVE. AUD-05C disposition
-  is recorded, while C1--C3/C5 remain owner-gated. The dashboard view extraction and owner-authorized
-  C4 standalone cleanup passed review and are committed in `05ec7af`.
+  is recorded. C1, C2 and C3 are COMPLETE after owner authorization, Engineer evidence, independent
+  Verifier PASS and Reviewer APPROVE. C5 remains owner-gated. The dashboard view extraction and
+  owner-authorized C4 standalone cleanup passed review and are committed in `7dede9b`.
 - **E3:** engineering may continue, but headline is **NO-GO**. No scheduler, real E2E, or forward result
   exists; shadow/headline must not observe outcome-bearing metrics before AUD-07 and owner approval.
 - **agents:** wave-based supervisor pattern active: one writer per file boundary, read-only preflights in
   parallel, then independent Verifier and Reviewer. Multi-agent inference is not part of the stock-selection signal.
 - **known issues:** protected historical claims may retain superseded wording; non-chronological historical CV;
-  blocked market-source fallbacks and sub-2s fetch paths; Phase B A1 lock stranding; current SIC snapshot.
-- **last verification (2026-07-31):** the full hermetic pytest suite passed with only existing
-  forward-score warnings. Dashboard extraction repair now passes all dashboard tests, full pytest,
-  repository ruff and `git diff --check`; it still needs independent verification/review before
-  acceptance. Health-check cleanup retains `EastMoney` in a script comment, so it does not yet meet
-  C4's strict no-reference criterion now has hermetic coverage and passes. AUD-05B re-Reviewer is
-  APPROVE; dashboard import/compatibility checks and all scoped tests pass.
-  AUD-01/AUD-02/AUD-03/AUD-04/AUD-05A Reviewer APPROVE. No frozen config,
-  preregistration, ledger/result artifact, or forward outcome changed.
+  blocked market-source fallbacks and sub-2s fetch paths; Phase B A1 lock stranding; current SIC snapshot;
+  ADR-010 TOST p-value direction/sequential-equivalence construction requires AUD-07B strong review.
+- **last verification (2026-08-01):** the full hermetic pytest suite passed with only existing
+  forward-score warnings, `uv run --offline ruff check` is clean, `git diff --check` is clean, and
+  the frozen prereg/ADR/config/ledger/results/data/forward diff is empty. C1/C2/C3 now have
+  independent Verifier PASS and Reviewer APPROVE. No frozen config, preregistration,
+  ledger/result artifact, or forward outcome changed.
+- **planning (2026-08-01):** a planning-only low-reasoning development program was frozen as
+  `reports/milestone/2026-08-01-low-reasoning-development-roadmap.md`, the Wave-A launch brief,
+  `TASK-RD-00..17` and strong-only `TASK-AUD-07B`. The first offline wave is estimated at
+  10.75–16 Engineer hours. The final unattended prompt narrows execution to C1/C2/C3 plus
+  RD-04/05/06/07/09/10/12, includes context/token controls, and passed independent planning Review.
+  Wave-A execution is in progress under the owner-provided Goal prompt; Group A transport closures
+  are ready for commit.
 - **evidence:** `reports/audits/2026-07-31-quant-llm-research-audit.md` and `tasks/active/TASK-AUD-00-remediation-coordination.md`.
-- **updated:** 2026-07-31.
+- **updated:** 2026-08-01.

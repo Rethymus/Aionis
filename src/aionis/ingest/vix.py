@@ -12,7 +12,7 @@ tracking — the current series IS the point-in-time truth, and a close publishe
 day d was knowable at d and has never changed.
 
 Two accessors:
-  * :func:`fetch_vix` — the realized daily series via ``pandas_datareader`` (the
+  * :func:`fetch_vix` — the realized daily series via FRED observations (the
     current view; for inspection / Phase-C scaffolding).
   * :func:`vix_as_of` — the PIT-safe accessor for feature alignment. It mirrors
     :mod:`aionis.features.macro_surprise`'s as-of join: a vintage frame + a
@@ -24,7 +24,7 @@ Two accessors:
     shared with macro_surprise so a future revised series would be handled the same
     way; only the vintage SOURCE differs.
 
-License: FRED public terms (permissive); ``pandas-datareader`` is BSD.
+License: FRED public terms (permissive).
 Raw fetch cached at ``data/cache/``; one ``data_ingest`` row is appended to
 ``runs/ledger.jsonl`` on first fetch (``mode: exploratory``).
 """
@@ -32,7 +32,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-import os
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -40,10 +39,12 @@ import pandas as pd
 import structlog
 
 from aionis.config import settings
+from aionis.ingest.universe import _policy_get
 
 log = structlog.get_logger()
 
 _VIX_SERIES = "VIXCLS"
+_FRED_OBSERVATIONS_URL = "https://api.stlouisfed.org/fred/series/observations"
 # VIXCLS observation span for the non-realtime fetch (FRED clamps `end` to the
 # latest available). VIXCLS is NOT vintage-tracked on ALFRED (single current
 # vintage) and is effectively unrevised -> PIT via the no-revision contract
@@ -93,6 +94,31 @@ def _to_vix_series(dates, values) -> pd.Series:
     return s
 
 
+def _fetch_fred_observations(start: str, end: str, fred_api_key: str) -> pd.Series:
+    """Fetch VIXCLS through the approved shared-policy FRED adapter."""
+    if not fred_api_key:
+        raise RuntimeError("FRED_API_KEY is required to fetch VIXCLS on a cache miss")
+    response = _policy_get(
+        _FRED_OBSERVATIONS_URL,
+        params={
+            "series_id": _VIX_SERIES,
+            "api_key": fred_api_key,
+            "file_type": "json",
+            "observation_start": start,
+            "observation_end": end,
+        },
+        timeout=60,
+    )
+    response.raise_for_status()
+    rows = response.json().get("observations", [])
+    if not rows:
+        return pd.Series(dtype=float, name=_VIX_SERIES)
+    values = pd.to_numeric([row.get("value") for row in rows], errors="coerce")
+    dates = pd.to_datetime([row.get("date") for row in rows], errors="coerce")
+    valid = ~(pd.isna(dates) | pd.isna(values))
+    return pd.Series(values[valid], index=pd.DatetimeIndex(dates[valid]), name=_VIX_SERIES)
+
+
 def fetch_vix(
     start: str,
     end: str,
@@ -107,8 +133,8 @@ def fetch_vix(
     ``data/cache/vix_cls.parquet`` and sha256-pinned; a cache hit makes no fetch.
     The ``data_ingest`` ledger row is appended ONLY on an actual fetch.
 
-    ``pandas_datareader`` reads ``FRED_API_KEY`` from the environment, so it is
-    seeded from ``settings.fred_api_key`` before the call when set.
+    A cache miss requires ``settings.fred_api_key`` and uses the approved FRED
+    observations adapter through the shared host-spacing policy.
     """
     cdir = _cache_dir(cache_dir)
     pq = cdir / "vix_cls.parquet"
@@ -118,12 +144,7 @@ def fetch_vix(
         log.info("vix_cache_hit", path=str(pq), n=len(s))
         return s
 
-    import pandas_datareader as pdr
-
-    key = settings.fred_api_key
-    if key:
-        os.environ.setdefault("FRED_API_KEY", key)
-    raw = pdr.get_data_fred(_VIX_SERIES, start=start, end=end)[_VIX_SERIES].dropna()
+    raw = _fetch_fred_observations(start, end, settings.fred_api_key).dropna()
     if raw.empty:
         raise RuntimeError(f"FRED returned no VIXCLS observations for [{start}, {end}]")
     s = _to_vix_series(raw.index, raw.to_numpy())
@@ -164,7 +185,7 @@ def _download_vix_vintages(fred_api_key: str) -> dict:
     contract (``docs/data-intake-rubric.md`` G3), NOT revision tracking: the
     current series IS the point-in-time truth.
 
-    We fetch the non-realtime series (``pandas_datareader``) over its full
+    We fetch the non-realtime series through the approved FRED adapter over its full
     observation span and synthesize a *self-dated* vintage frame — one observation
     per date with ``realtime_start == date`` (the close was knowable at its own
     date). :func:`vix_as_of`'s backward ``merge_asof`` then returns, at each as-of
@@ -175,12 +196,8 @@ def _download_vix_vintages(fred_api_key: str) -> dict:
     :mod:`aionis.features.macro_surprise` (so a future revised series would be
     handled identically).
     """
-    import pandas_datareader as pdr
-
-    if fred_api_key:
-        os.environ.setdefault("FRED_API_KEY", fred_api_key)
     end = datetime.now(tz=timezone.utc).date().isoformat()
-    raw = pdr.get_data_fred(_VIX_SERIES, start=_OBS_START, end=end)[_VIX_SERIES].dropna()
+    raw = _fetch_fred_observations(_OBS_START, end, fred_api_key).dropna()
     if raw.empty:
         raise RuntimeError(f"FRED returned no VIXCLS observations over [{_OBS_START}, {end}]")
     observations = [

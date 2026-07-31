@@ -2,7 +2,7 @@
 
 - 编号: AUD-05C-C1
 - Parent: AUD-05C
-- 状态: **READY (awaiting owner GO after AUD-05C disposition-complete)**
+- 状态: **COMPLETE — Engineer evidence; independent Verifier PASS; Reviewer APPROVE**
 - Priority: **P0**
 - Size: **S**
 - Risk: **LOW** (disable-only, no new code)
@@ -44,13 +44,13 @@
 
 ## Acceptance criteria
 
-- [ ] `_fetch_text(event_type="CPI", ...)` raises RuntimeError with clear "BLS blocked" message
-- [ ] `_fetch_text(event_type="NFP", ...)` raises RuntimeError with clear "BLS blocked" message
-- [ ] `_fetch_text(event_type="FOMC", ...)` still works (unaffected)
-- [ ] Hermetic test `tests/test_event_text.py::test_bls_blocked` passes
-- [ ] `uv run pytest -q` (all tests pass)
-- [ ] `uv run ruff check` clean
-- [ ] No direct `requests.get()` calls to `www.bls.gov` remain in codebase
+- [x] `_fetch_text(event_type="CPI", ...)` raises RuntimeError with clear "BLS blocked" message
+- [x] `_fetch_text(event_type="NFP", ...)` raises RuntimeError with clear "BLS blocked" message
+- [x] `_fetch_text(event_type="FOMC", ...)` still works (unaffected)
+- [x] Hermetic test `tests/test_event_text.py::test_bls_blocked` passes
+- [x] `uv run pytest -q` (all tests pass)
+- [x] `uv run ruff check` clean
+- [x] No direct `requests.get()` calls to `www.bls.gov` remain in codebase
 
 ## Engineer → Verifier → Reviewer gate
 
@@ -76,3 +76,48 @@
 ## Dependencies
 
 - None (disposition is already decided; owner GO is the only gate)
+
+## 2026-08-01 owner authorization + Engineer evidence
+
+- Owner authorized the already-decided disable-only disposition. CPI/NFP cache misses now raise a
+  clear BLS-blocked error before URL construction or any HTTP attempt; existing cache hits remain
+  readable and the FOMC shared-policy path is unchanged.
+- Updated hermetic event-text tests to exercise FOMC for live/fallback behavior and added separate
+  CPI/NFP fail-closed assertions that reject any attempted HTTP call.
+- Engineer checks PASS: targeted event-text/policy tests, repository ruff, diff check, exact BLS
+  direct-request scan, and the full hermetic pytest suite. No network, BLS adapter, frozen research
+  surface, ledger, data, or outcome-bearing workflow changed.
+- Required next gate: independent read-only Verifier, then Reviewer. Do not commit this task until
+  those gates approve it.
+
+## 2026-08-01 independent Verifier evidence
+
+- Verifier: **PASS** (fresh read-only session; mirrored to `/dev/shm/c1-verifier.txt`)
+- Commands:
+  - `TMPDIR=/dev/shm UV_CACHE_DIR=/dev/shm/uv-cache uv run --offline pytest -q tests/test_event_text.py tests/test_http_policy_adapters.py` -> 29 passed
+  - `TMPDIR=/dev/shm UV_CACHE_DIR=/dev/shm/uv-cache uv run --offline ruff check` -> clean
+- direct BLS `requests.get` scan -> no matches
+- frozen-surface `git diff --name-only` -> empty
+- Required next gate: independent Reviewer.
+
+## 2026-08-01 Reviewer round 1 + repair + re-Verifier evidence
+
+- Reviewer round 1: **REQUEST CHANGES** (blocking finding: FOMC cache round-trip test did not
+  explicitly patch `event_text._policy_get`, so the claimed hermeticity was not robust).
+- Repair: `test_cache_roundtrip_first_call_writes_second_call_reads` now patches
+  `event_text._policy_get` to the fake HTTP responder and uses a single FOMC event.
+- Re-Verifier: **PASS** (fresh read-only session; mirrored to `/dev/shm/c1-verifier2.txt`);
+  targeted event-text/policy pytest 29 passed, scoped ruff clean, diff check clean, direct BLS
+  `requests.get` scan no matches, C1-relevant diff limited to the two allowed files.
+- Required next gate: Reviewer re-review.
+
+## 2026-08-01 Reviewer round 2 evidence
+
+- Reviewer: **APPROVE** (fresh read-only session; mirrored to `/dev/shm/c1-reviewer3.txt`)
+- No blocking findings. The diff is scoped to the two allowed files; CPI/NFP fail before URL
+  construction or any HTTP call; cache hits remain readable; FOMC continues through `_policy_get`;
+  tests patch `event_text._policy_get` so they are hermetic.
+- Advisory only: BLS URL constants and the generic `requests.get` helper remain unreachable for
+  BLS and may be future cleanup; direct BLS live transport is gone.
+- Group A full gate: `uv run --offline pytest -q`, `uv run --offline ruff check`,
+  `git diff --check`, and the frozen-surface diff all passed.

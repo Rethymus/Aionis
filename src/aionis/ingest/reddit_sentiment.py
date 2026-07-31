@@ -24,8 +24,9 @@ Intake-rubric clearance (``docs/data-intake-rubric.md``):
   * **G5** — ``mode: exploratory``; does NOT enter confirmatory / Phase-B.
   * **G6** — retail-attention data is selection-biased (which tickers get
     discussed); declared as a scope limit, never ground truth.
-  * **G7** — PRAW only (no scrape), descriptive User-Agent, 1.5s sleep between
-    subreddit pulls (PRAW honors Reddit's 100 QPM + ToS internally).
+  * **G7** — PRAW only (no scrape), descriptive User-Agent, shared ≥2s host
+    spacing through a custom requestor, 1.5s sleep between subreddit pulls
+    (PRAW honors Reddit's 100 QPM + ToS internally).
 
 Reuses the project's existing extraction stack (``transformers``+``torch`` arrive
 via the ``extraction`` extra's ``sentence-transformers``) for FinBERT — no new
@@ -45,8 +46,12 @@ import pandas as pd
 import structlog
 
 from aionis.config import settings
+from aionis.ingest import universe
+from aionis.ingest.http_policy import HostSpacingPolicy
 
 log = structlog.get_logger()
+
+_HOST_SPACING_POLICY = universe._HTTP_POLICY.spacing
 
 # --- tunables -----------------------------------------------------------------
 
@@ -132,6 +137,33 @@ def _resolve_creds(client_id: str | None, client_secret: str | None) -> tuple[st
 # --- I/O seams (monkeypatch targets for hermetic tests) -----------------------
 
 
+class _SpacingRequestorMixin:
+    """Reserve a shared host slot before delegating each request URL."""
+
+    _spacing: HostSpacingPolicy
+
+    def request(self, *args, **kwargs):
+        url = kwargs.get("url")
+        if url is None and len(args) >= 2:
+            url = args[1]
+        if not isinstance(url, str):
+            raise TypeError("PRAW request must include a URL")
+        self._spacing.wait(url)
+        return super().request(*args, **kwargs)
+
+
+def _spacing_requestor_class(spacing: HostSpacingPolicy | None = None):
+    """Build a ``prawcore.Requestor`` subclass bound to ``spacing``."""
+    if spacing is None:
+        spacing = _HOST_SPACING_POLICY
+    from prawcore import Requestor
+
+    class _PrawSpacingRequestor(_SpacingRequestorMixin, Requestor):
+        _spacing = spacing
+
+    return _PrawSpacingRequestor
+
+
 def _connect_reddit(client_id: str, client_secret: str, user_agent: str):
     """Build a read-only PRAW client. Lazy-imported so the module imports without praw."""
     import praw
@@ -142,6 +174,7 @@ def _connect_reddit(client_id: str, client_secret: str, user_agent: str):
         client_id=client_id,
         client_secret=client_secret,
         user_agent=user_agent,
+        requestor_class=_spacing_requestor_class(_HOST_SPACING_POLICY),
     )
 
 

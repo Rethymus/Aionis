@@ -14,13 +14,16 @@ from __future__ import annotations
 
 import json
 import re
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
+from types import SimpleNamespace
 
 import pandas as pd
 import pytest
 
 from aionis.ingest import reddit_sentiment as rs
+from aionis.ingest.http_policy import HostSpacingPolicy
 
 # --- fake PRAW (synthetic submissions, newest-first) --------------------------
 
@@ -103,6 +106,41 @@ def _wire(
     monkeypatch.setattr(rs, "_build_sentiment_fn", lambda cache_dir: _stub_sentiment)
     monkeypatch.setattr(rs, "_SUB_SLEEP", 0.0)
     monkeypatch.setattr(rs.settings, "runs_dir", runs_dir)
+
+
+class _FakeClock:
+    def __init__(self) -> None:
+        self.now = 0.0
+        self.sleeps: list[float] = []
+
+    def monotonic(self) -> float:
+        return self.now
+
+    def sleep(self, seconds: float) -> None:
+        self.sleeps.append(seconds)
+        self.now += seconds
+
+
+class _FakeSession:
+    def __init__(self) -> None:
+        self.calls: list[tuple[str, str, dict]] = []
+        self.headers: dict[str, str] = {}
+
+    def request(self, method: str, url: str, **kwargs: object) -> object:
+        self.calls.append((method, url, kwargs))
+        return object()
+
+
+class _FakeRequestor:
+    def __init__(self, session: _FakeSession | None = None) -> None:
+        self.session = session
+        self.calls: list[tuple[str, str, dict]] = []
+
+    def request(self, method: str, url: str, **kwargs: object) -> object:
+        self.calls.append((method, url, kwargs))
+        if self.session is not None:
+            return self.session.request(method, url, **kwargs)
+        return object()
 
 
 # --- ticker extraction --------------------------------------------------------
@@ -327,3 +365,91 @@ def test_collect_empty_window_returns_empty_snapshot(
     row = json.loads((tmp_path / "ledger.jsonl").read_text().strip())
     assert row["n_tickers"] == 0
     assert row["n_posts"] == 0
+
+
+# --- shared PRAW host-spacing wrapper -----------------------------------------
+
+
+def test_praw_requestor_reserves_host_slots_for_token_and_oauth_urls() -> None:
+    clock = _FakeClock()
+    spacing = HostSpacingPolicy(clock=clock.monotonic, sleeper=clock.sleep)
+    session = _FakeSession()
+
+    class _FakeSpacingRequestor(rs._SpacingRequestorMixin, _FakeRequestor):
+        _spacing = spacing
+
+    requestor = _FakeSpacingRequestor(session)
+
+    requestor.request(
+        "POST",
+        "https://www.reddit.com/api/v1/access_token",
+        data={"grant_type": "client_credentials"},
+    )
+    requestor.request(
+        "GET",
+        "https://oauth.reddit.com/r/wallstreetbets/new",
+        params={"limit": 100},
+    )
+
+    assert [(method, url) for method, url, _ in session.calls] == [
+        ("POST", "https://www.reddit.com/api/v1/access_token"),
+        ("GET", "https://oauth.reddit.com/r/wallstreetbets/new"),
+    ]
+    assert clock.sleeps == []  # token and oauth hosts have independent slots
+
+
+def test_praw_requestor_spaces_consecutive_pagination_requests() -> None:
+    clock = _FakeClock()
+    spacing = HostSpacingPolicy(clock=clock.monotonic, sleeper=clock.sleep)
+    session = _FakeSession()
+
+    class _FakeSpacingRequestor(rs._SpacingRequestorMixin, _FakeRequestor):
+        _spacing = spacing
+
+    requestor = _FakeSpacingRequestor(session)
+    urls = [
+        "https://oauth.reddit.com/r/wallstreetbets/new?limit=100",
+        "https://oauth.reddit.com/r/wallstreetbets/new?after=t3_abc&limit=100",
+        "https://oauth.reddit.com/r/wallstreetbets/new?after=t3_def&limit=100",
+    ]
+
+    for url in urls:
+        requestor.request("GET", url)
+
+    assert [url for _, url, _ in session.calls] == urls
+    assert clock.sleeps == [2.0, 2.0]
+    assert clock.now == 4.0
+
+
+def test_connect_reddit_passes_requestor_class_through_praw(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    class _RecordingSpacing:
+        def __init__(self) -> None:
+            self.urls: list[str] = []
+
+        def wait(self, url: str) -> None:
+            self.urls.append(url)
+
+    captured: dict[str, object] = {}
+
+    class _FakePraw:
+        class Reddit:
+            def __init__(self, **kwargs: object) -> None:
+                captured.update(kwargs)
+
+    spacing = _RecordingSpacing()
+    monkeypatch.setattr(rs, "_HOST_SPACING_POLICY", spacing)
+    monkeypatch.setitem(sys.modules, "praw", _FakePraw)
+    monkeypatch.setitem(sys.modules, "prawcore", SimpleNamespace(Requestor=_FakeRequestor))
+
+    rs._connect_reddit("client-id", "client-secret", "aionis/0.1 research")
+
+    assert captured["client_id"] == "client-id"
+    assert captured["client_secret"] == "client-secret"
+    assert captured["user_agent"] == "aionis/0.1 research"
+    requestor_class = captured["requestor_class"]
+    assert requestor_class is not None
+    requestor = requestor_class()
+    requestor.request("GET", "https://oauth.reddit.com/r/stocks/new")
+    assert spacing.urls == ["https://oauth.reddit.com/r/stocks/new"]

@@ -1,8 +1,8 @@
-# AUD-05C-C3 — PRAW wrapper (owner-held: 7-gate clearance first)
+# AUD-05C-C3 — PRAW wrapper (owner-authorized with 7-gate conditions)
 
 - 编号: AUD-05C-C3
 - Parent: AUD-05C
-- 状态: **OWNER-HELD (blocked: 7-gate data-intake clearance required)**
+- 状态: **COMPLETE — owner-authorized; Engineer complete; independent Verifier PASS; Reviewer APPROVE**
 - Priority: **P0**
 - Size: **S** (if approved) / **BLOCKED** (if rejected)
 - Risk: **MEDIUM** (Reddit/PRAW has license/ToS/politeness considerations)
@@ -23,31 +23,35 @@
   - PRAW makes its own HTTP calls (SDK-owned, no shared host policy)
   - PRAW honors Reddit's 100 QPM + ToS internally
 
-**Disposition: C3 — owner-held (7-gate clearance first)**
-- PRAW is PARTIALLY cleared (G1: BSD-2 ✓, G7: politeness ✓, G5: exploratory-only ✓)
-- BUT: Reddit ToS, content license, and selection bias (G6) need owner review
-- `docs/data-intake-rubric.md` 7-gate MUST be explicitly cleared before wrapper integration
-- If 7-gate fails → BLOCKED, disable PRAW live transport
+**Disposition: C3 — owner-approved with conditions.** The earlier partial-clearance review is resolved
+by the recorded decision below. Implementation remains bounded to transport policy + hermetic tests.
 
 ## 7-Gate clearance checklist (OWNER decision)
 
-- [ ] **G1 — License**: PRAW is BSD-2-Clause ✓ (already on allowlist)
-- [ ] **G2 — PIT**: Every snapshot has UTC `snapshot_ts` ✓ (forward-collection by construction)
-- [ ] **G3 — No-revision**: Raw pulls are sha256-archived, immutable ✓
-- [ ] **G4 — Snapshot**: Cache-pinned, ledger row records sha256 ✓
-- [ ] **G5 — Exploratory-only**: `mode: exploratory` ✓ (does NOT enter confirmatory)
-- [ ] **G6 — Selection-honesty**: Retail-attention is selection-biased (declared as scope limit) — **OWNER CONFIRM**
-- [ ] **G7 — Politeness**: PRAW honors 100 QPM + ToS; 1.5s sleep between subreddits ✓
+- [x] **G1 — License**: PRAW is BSD-2-Clause ✓ (already on allowlist)
+- [x] **G2 — PIT**: Every snapshot has UTC `snapshot_ts` ✓ (forward-collection by construction)
+- [x] **G3 — No-revision**: Raw pulls are sha256-archived, immutable ✓
+- [x] **G4 — Snapshot**: Cache-pinned, ledger row records sha256 ✓
+- [x] **G5 — Exploratory-only**: `mode: exploratory` ✓ (does NOT enter confirmatory)
+- [x] **G6 — Selection-honesty**: Owner accepts the declared retail-attention selection bias only as a
+  permanent exploratory scope limit.
+- [x] **G7 — Politeness**: PRAW honors 100 QPM + ToS; 1.5s sleep remains and the shared host floor is
+  the implementation target.
 
 **Owner decision:**
 - If ALL 7 gates pass → APPROVE wrapper task
 - If ANY gate fails → BLOCKED, disable PRAW live transport
 
+**Recorded decision (2026-08-01): APPROVE WITH CONDITIONS.** Reddit/PRAW material is internal research
+only, must not be redistributed, and remains permanently `mode: exploratory`. This authorizes the
+bounded wrapper task but not a live pull, confirmatory use, or research run.
+
 ## Allowed changes (ONLY after 7-gate APPROVE)
 
 - `src/aionis/ingest/http_policy.py`: Add PRAW-specific adapter or helper (if needed)
 - `ingest/reddit_sentiment.py`:
-  - Integrate with shared host-spacing policy (≥2s floor)
+  - Integrate with shared host-spacing policy (≥2s floor) through a custom PRAW
+    `requestor_class`, so every token/oauth/pagination HTTP request reserves a host slot
   - Preserve PRAW's internal 100 QPM + ToS
   - Keep 1.5s subreddit-level politeness (can coexist with ≥2s floor)
   - Preserve cache/ledger/forward-only discipline
@@ -57,7 +61,8 @@
 
 ## Forbidden
 
-- Do NOT integrate wrapper BEFORE 7-gate owner APPROVE
+- The historical pre-approval prohibition is satisfied by the recorded owner decision; do not expand it
+  into live collection or research execution
 - Do NOT modify frozen specs, ledger, results, data
 - Do NOT change forward-collection-only discipline
 - Do NOT remove cache/ledger discipline
@@ -65,21 +70,24 @@
 
 ## Acceptance criteria (AFTER 7-gate APPROVE)
 
-- [ ] 7-gate checklist signed by owner
-- [ ] `collect_reddit_sentiment()` uses shared host-spacing policy
-- [ ] PRAW's internal politeness (100 QPM) preserved
-- [ ] Subreddit-level 1.5s sleep preserved (or increased to ≥2s if policy requires)
-- [ ] Cache/ledger discipline unchanged
-- [ ] Forward-collection-only discipline unchanged
-- [ ] Hermetic tests pass
-- [ ] `uv run pytest -q` all tests pass
-- [ ] `uv run ruff check` clean
+- [x] 7-gate checklist signed by owner
+- [x] `collect_reddit_sentiment()` uses shared host-spacing policy
+- [x] PRAW's internal politeness (100 QPM) preserved
+- [x] Subreddit-level 1.5s sleep preserved (or increased to ≥2s if policy requires)
+- [x] Cache/ledger discipline unchanged
+- [x] Forward-collection-only discipline unchanged
+- [x] Hermetic tests pass
+- [x] `uv run pytest -q` all tests pass
+- [x] `uv run ruff check` clean
 
 ## Engineer → Verifier → Reviewer gate (AFTER 7-gate APPROVE)
 
 1. **Engineer**:
-   - Integrate shared policy (leverage `http_policy.py` primitive)
-   - Add hermetic tests (fake clock, mock PRAW)
+   - Subclass/wrap `prawcore.Requestor.request()` and pass it through
+     `praw.Reddit(requestor_class=...)`; call the shared spacing primitive on the actual request URL
+     immediately before delegating. PRAW retains retry/rate-limit ownership.
+   - Add hermetic tests (fake clock, mock Requestor) covering token host, oauth host and multiple
+     pagination requests. A single wait before each subreddit is insufficient for `_PULL_LIMIT=1000`.
    - Run pytest + ruff + frozen-surface checks
 2. **Verifier** (independent, read-only):
    - Confirm shared policy integrated
@@ -89,7 +97,7 @@
 
 ## Stop condition
 
-- **BEFORE 7-gate APPROVE**: Do NOT implement wrapper (BLOCKED)
+- **Historical pre-approval state**: implementation was BLOCKED; approval is now recorded above
 - **AFTER 7-gate APPROVE**: If cache/ledger discipline changes → STOP, revert
 
 ## Dependencies
@@ -97,12 +105,11 @@
 - 7-gate owner clearance (G1-G7)
 - AUD-05B APPROVED (shared policy primitive exists)
 
-## Owner decision items
+## Resolved owner decision items
 
-1. **G6 — Selection-honesty**: Is Reddit/StockTwits retail-attention selection bias acceptable as "exploratory-only, declared scope limit"?
-2. **Reddit ToS**: Does Reddit's ToS allow programmatic collection for research (display, no-resale)?
-3. **Content license**: Is Reddit user-generated content licensable for research use?
-4. **Outcome**: APPROVE wrapper → C3 task proceeds; REJECT → disable PRAW live transport
+1. **G6 — Selection-honesty**: accepted only as a declared exploratory scope limit.
+2. **Reddit ToS/content**: internal research/display only; no resale or redistribution.
+3. **Outcome**: wrapper engineering may proceed; live collection and confirmatory use remain unauthorized.
 
 ## If BLOCKED (7-gate fails)
 
@@ -114,6 +121,34 @@
 ## Success metrics (if APPROVE)
 
 - PRAW integrated with shared host-spacing policy
+- Every SDK-owned HTTP request (including pagination), not merely every subreddit loop, is covered
 - PRAW internal politeness (100 QPM) preserved
 - Cache/ledger/forward-only discipline 100% preserved
 - No regressions in existing PRAW tests
+
+## 2026-08-01 Engineer + independent Verifier evidence
+
+- Engineer implementation is complete per the approved bounded scope: `praw.Reddit` receives a
+  custom `requestor_class`; the requestor mixin reserves a shared host-spacing slot from the real
+  request URL before delegating to `super().request()`, so token, OAuth and pagination requests are
+  covered. PRAW retry/rate-limit ownership, `_SUB_SLEEP=1.5`, cache, ledger and forward-only
+  semantics are unchanged.
+- Verifier: **PASS** (fresh read-only session; mirrored to `/dev/shm/c3-verifier.txt`)
+- Commands:
+  - `TMPDIR=/dev/shm UV_CACHE_DIR=/dev/shm/uv-cache uv run --offline pytest -q tests/test_reddit_sentiment.py tests/test_http_policy_adapters.py` -> 30 passed
+  - `TMPDIR=/dev/shm UV_CACHE_DIR=/dev/shm/uv-cache uv run --offline ruff check` -> clean
+  - no direct `requests.get`, `urlopen`, or `http.client` in `reddit_sentiment.py` -> no matches
+  - frozen-surface `git diff --name-only` -> empty
+- Required next gate: independent Reviewer.
+
+## 2026-08-01 independent Reviewer evidence
+
+- Reviewer: **APPROVE** (fresh read-only session; mirrored to `/dev/shm/c3-reviewer2.txt`)
+- No blocking findings. `praw.Reddit` receives the custom `requestor_class`; the requestor calls
+  `HostSpacingPolicy.wait(url)` before `super().request()`, covering token, OAuth and pagination
+  requests. PRAW retry/rate-limit ownership, `_SUB_SLEEP=1.5`, cache, ledger and forward-only
+  semantics are unchanged.
+- Advisory only: the recorded C3 test evidence was a targeted 30-test pass before the final Group A
+  full-suite gate; the full suite has now passed.
+- Group A full gate: `uv run --offline pytest -q`, `uv run --offline ruff check`,
+  `git diff --check`, and the frozen-surface diff all passed.

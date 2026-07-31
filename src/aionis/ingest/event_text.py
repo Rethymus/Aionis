@@ -5,15 +5,13 @@ a post-hoc analysis (which would bake the market move into the text). For each
 event type we hit a stable archive URL:
 
   FOMC : https://www.federalreserve.gov/newsevents/pressreleases/monetary{yyyymmdd}a.htm
-  CPI  : https://www.bls.gov/news.release/archives/cpi_{MMDDYYYY}.htm
-  NFP  : https://www.bls.gov/news.release/archives/empsit_{MMDDYYYY}.htm
+  CPI/NFP : live BLS transport is blocked. Existing cached documents remain
+            readable, but a cache miss fails closed rather than reaching BLS.
 
-BLS publishes the CPI and Employment Situation (NFP) prints at 08:30 ET on
-release day, so the archive URL is as-released (no lookahead). BLS blocks
-non-browser user agents, so we send a realistic browser UA. Any fetch failure
-(404, 403, network) falls back to a minimal outcome-free stub: an uninformative
-text cannot manufacture spurious signal, and stubs are never cached so a later
-run can retry the live URL.
+FOMC statements are fetched from their as-released archive URL. Any FOMC fetch
+failure (404, 403, network) falls back to a minimal outcome-free stub: an
+uninformative text cannot manufacture spurious signal, and stubs are never
+cached so a later run can retry the live URL.
 
 Fetched HTML is cleaned (HTML -> text, leading boilerplate stripped, whitespace
 collapsed) and hard-truncated to 4000 chars for token control, then cached to
@@ -23,7 +21,6 @@ disk per ``event_id`` so re-runs make zero HTTP calls.
 from __future__ import annotations
 
 import re
-import time
 from pathlib import Path
 
 import pandas as pd
@@ -59,7 +56,6 @@ _HTTP_HEADERS = {
     "Accept-Language": "en-US,en;q=0.9",
 }
 _TIMEOUT_S = 30
-_POLITE_DELAY_S = 0.5
 
 
 def _build_url(event_type: str, event_ts: pd.Timestamp) -> str:
@@ -128,6 +124,10 @@ def _http_get(url: str, *, use_policy: bool = False) -> str | None:
 
 def _fetch_text(event_type: str, event_ts: pd.Timestamp) -> str | None:
     """Cleaned+truncated primary text for one event, or None on fail-soft."""
+    if event_type in ("CPI", "NFP"):
+        raise RuntimeError(
+            "BLS is blocked per data-source constraints; cache-only event text is allowed"
+        )
     try:
         url = _build_url(event_type, event_ts)
     except ValueError as e:
@@ -163,7 +163,6 @@ def fetch_event_text(events: pd.DataFrame, cache_dir: Path | None = None) -> pd.
     cache_dir.mkdir(parents=True, exist_ok=True)
 
     fetched = cached = stubbed = 0
-    http_calls_made = 0  # politeness: sleep before each HTTP call after the first
     rows: list[dict[str, str]] = []
     for ev in events.itertuples(index=False):
         cache_file = cache_dir / f"{ev.event_id}.txt"
@@ -174,10 +173,7 @@ def fetch_event_text(events: pd.DataFrame, cache_dir: Path | None = None) -> pd.
             rows.append({"event_id": ev.event_id, "text": text})
             continue
 
-        if http_calls_made > 0 and ev.event_type != "FOMC":
-            time.sleep(_POLITE_DELAY_S)
         raw = _fetch_text(ev.event_type, ev.event_ts)
-        http_calls_made += 1
         if raw is None:
             text = _stub(ev.event_id, ev.event_type, ev.event_ts)
             log.info(

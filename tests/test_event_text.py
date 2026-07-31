@@ -127,8 +127,7 @@ def test_cache_roundtrip_first_call_writes_second_call_reads(
 ) -> None:
     # Arrange
     events = _make_events(
-        ("CPI_20240312", "CPI", "2024-03-12 08:30"),
-        ("NFP_20230106", "NFP", "2023-01-06 08:30"),
+        ("FOMC_20240320", "FOMC", "2024-03-20 14:00"),
     )
     calls = {"n": 0}
 
@@ -137,17 +136,16 @@ def test_cache_roundtrip_first_call_writes_second_call_reads(
         return _FakeResp(f"<p>body for {url}</p>")
 
     monkeypatch.setattr(event_text.requests, "get", fake_get)
-    monkeypatch.setattr(event_text.time, "sleep", lambda *_: None)
+    monkeypatch.setattr(event_text, "_policy_get", fake_get)
     cache = tmp_path / "cache"
 
-    # Act — first pass: both events miss cache and hit HTTP.
+    # Act — first pass: the event misses cache and hits HTTP.
     out1 = fetch_event_text(events, cache_dir=cache)
 
     # Assert — one fetch per event, files written, content cleaned.
-    assert calls["n"] == 2
-    assert (cache / "CPI_20240312.txt").exists()
-    assert (cache / "NFP_20230106.txt").exists()
-    assert len(out1) == 2
+    assert calls["n"] == 1
+    assert (cache / "FOMC_20240320.txt").exists()
+    assert len(out1) == 1
     assert all("body for" in t for t in out1["text"].tolist())
 
     # Act — second pass: all cache hits, no HTTP, identical content.
@@ -164,13 +162,13 @@ def test_stub_fallback_on_connection_error_is_not_cached(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
     # Arrange — every HTTP attempt fails with a connection error.
-    events = _make_events(("CPI_20240312", "CPI", "2024-03-12 08:30"))
+    events = _make_events(("FOMC_20240320", "FOMC", "2024-03-20 14:00"))
 
     def fake_get(url: str, **_: Any) -> _FakeResp:
         raise requests.exceptions.ConnectionError(f"blocked {url}")
 
     monkeypatch.setattr(event_text.requests, "get", fake_get)
-    monkeypatch.setattr(event_text.time, "sleep", lambda *_: None)
+    monkeypatch.setattr(event_text, "_policy_get", lambda *_, **__: fake_get(""))
     cache = tmp_path / "cache"
 
     # Act
@@ -179,20 +177,20 @@ def test_stub_fallback_on_connection_error_is_not_cached(
     # Assert — outcome-free stub returned, NOT written to cache (so we can retry).
     assert len(out) == 1
     assert "Structural description only" in out.iloc[0]["text"]
-    assert not (cache / "CPI_20240312.txt").exists()
+    assert not (cache / "FOMC_20240320.txt").exists()
 
 
 def test_stub_fallback_on_404_is_not_cached(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
     # Arrange — BLS/Fed returns 404 for an unknown archive date.
-    events = _make_events(("CPI_20240312", "CPI", "2024-03-12 08:30"))
+    events = _make_events(("FOMC_20240320", "FOMC", "2024-03-20 14:00"))
 
     def fake_get(url: str, **_: Any) -> _FakeResp:
         return _FakeResp("not found", status_code=404)
 
     monkeypatch.setattr(event_text.requests, "get", fake_get)
-    monkeypatch.setattr(event_text.time, "sleep", lambda *_: None)
+    monkeypatch.setattr(event_text, "_policy_get", lambda *_, **__: fake_get(""))
     cache = tmp_path / "cache"
 
     # Act
@@ -200,7 +198,7 @@ def test_stub_fallback_on_404_is_not_cached(
 
     # Assert
     assert "Structural description only" in out.iloc[0]["text"]
-    assert not (cache / "CPI_20240312.txt").exists()
+    assert not (cache / "FOMC_20240320.txt").exists()
 
 
 def test_default_cache_dir_used_when_none(
@@ -208,16 +206,29 @@ def test_default_cache_dir_used_when_none(
 ) -> None:
     # Arrange — point settings.data_dir at tmp_path so the default cache lives there.
     monkeypatch.setattr(event_text.settings, "data_dir", tmp_path)
-    events = _make_events(("CPI_20240312", "CPI", "2024-03-12 08:30"))
+    events = _make_events(("FOMC_20240320", "FOMC", "2024-03-20 14:00"))
 
     def fake_get(url: str, **_: Any) -> _FakeResp:
         return _FakeResp("<p>hi</p>")
 
     monkeypatch.setattr(event_text.requests, "get", fake_get)
-    monkeypatch.setattr(event_text.time, "sleep", lambda *_: None)
+    monkeypatch.setattr(event_text, "_policy_get", lambda *_, **__: fake_get(""))
 
     # Act
     fetch_event_text(events, cache_dir=None)
 
     # Assert — default path data/cache/event_text was created and written.
-    assert (tmp_path / "cache" / "event_text" / "CPI_20240312.txt").exists()
+    assert (tmp_path / "cache" / "event_text" / "FOMC_20240320.txt").exists()
+
+
+@pytest.mark.parametrize("event_type", ["CPI", "NFP"])
+def test_bls_blocked(event_type: str, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Blocked BLS event types must not make a live request on a cache miss."""
+    monkeypatch.setattr(
+        event_text.requests,
+        "get",
+        lambda *_, **__: pytest.fail("BLS cache miss attempted an HTTP request"),
+    )
+
+    with pytest.raises(RuntimeError, match="BLS is blocked"):
+        event_text._fetch_text(event_type, pd.Timestamp("2024-03-12 08:30"))
