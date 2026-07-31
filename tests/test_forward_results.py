@@ -10,7 +10,7 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from aionis.reporting.forward_results import save_forward_run
+from aionis.reporting.forward_results import list_forward_runs, load_forward_run, save_forward_run
 
 
 @pytest.fixture
@@ -286,3 +286,208 @@ def test_save_forward_run_base_override(
     assert result_dir == custom_base / "forward" / sample_config_sig
     assert result_dir.exists()
     assert (result_dir / "ic_forward.parquet").exists()
+
+
+# Test 7: load_forward_run round-trips a save_forward_run fixture
+def test_load_forward_run_round_trip(
+    tmp_runs_dir: Path,
+    sample_config_sig: str,
+    sample_ic_forward: pd.Series,
+    sample_summary: dict,
+    sample_config: dict,
+) -> None:
+    """load_forward_run loads all artifacts saved by save_forward_run."""
+    # First, save a forward run
+    save_forward_run(
+        sample_config_sig,
+        ic_forward=sample_ic_forward,
+        summary=sample_summary,
+        config=sample_config,
+        runs_dir=tmp_runs_dir,
+    )
+
+    # Load it back
+    loaded = load_forward_run(sample_config_sig, base=tmp_runs_dir)
+
+    # Verify all fields
+    assert loaded["config_sig"] == sample_config_sig
+    assert "ts" in loaded
+    assert loaded["h6_deterministic"] is True
+    assert loaded["phase"] == "E3"
+    # ic_forward is a Series
+    pd.testing.assert_series_equal(
+        loaded["ic_forward"],
+        sample_ic_forward.rename("ic"),
+        check_names=False,
+        check_dtype=False,
+    )
+    assert loaded["summary"] == sample_summary
+    assert loaded["config"] == sample_config
+    assert loaded["meta"]["schema"] == 2
+    assert loaded["meta"]["phase"] == "E3"
+
+
+# Test 8: load_forward_run raises FileNotFoundError for missing dir
+def test_load_forward_run_missing_dir(
+    tmp_runs_dir: Path,
+    sample_config_sig: str,
+) -> None:
+    """load_forward_run raises FileNotFoundError when directory doesn't exist."""
+    with pytest.raises(FileNotFoundError, match="No E3 forward results"):
+        load_forward_run("nonexistent_sig", base=tmp_runs_dir)
+
+
+# Test 9: list_forward_runs finds only phase=="E3" dirs
+def test_list_forward_runs_filters_phase_e3(
+    tmp_runs_dir: Path,
+    sample_config_sig: str,
+    sample_ic_forward: pd.Series,
+    sample_summary: dict,
+    sample_config: dict,
+) -> None:
+    """list_forward_runs only returns dirs with phase=='E3' in meta.json."""
+    # Create a valid E3 forward run
+    save_forward_run(
+        sample_config_sig,
+        ic_forward=sample_ic_forward,
+        summary=sample_summary,
+        config=sample_config,
+        runs_dir=tmp_runs_dir,
+    )
+
+    # Create a non-E3 dir (simulate old schema or different phase)
+    fake_dir = tmp_runs_dir / "forward" / "old_phase_sig"
+    fake_dir.mkdir(parents=True, exist_ok=True)
+    (fake_dir / "meta.json").write_text(
+        json.dumps({"schema": 1, "phase": "B", "ts": "2026-01-01T00:00:00+00:00"})
+    )
+
+    # List forward runs
+    runs = list_forward_runs(base=tmp_runs_dir)
+
+    # Should only find the E3 run
+    assert len(runs) == 1
+    assert runs[0]["config_sig"] == sample_config_sig
+    assert runs[0]["phase"] == "E3"
+    assert "ts" in runs[0]
+    assert runs[0]["h6_deterministic"] is True
+    assert runs[0]["n_months"] == 3  # from summary_forward
+
+
+# Test 10: list_forward_runs sorted deterministically
+def test_list_forward_runs_sorted_deterministically(
+    tmp_runs_dir: Path,
+    sample_ic_forward: pd.Series,
+    sample_summary: dict,
+    sample_config: dict,
+) -> None:
+    """list_forward_runs returns runs sorted by ts (newest first)."""
+    # Save 3 runs with different timestamps (by creating them in sequence)
+    sig1 = "sig_early"
+    sig2 = "sig_middle"
+    sig3 = "sig_late"
+
+    # Save in order
+    save_forward_run(
+        sig1,
+        ic_forward=sample_ic_forward,
+        summary=sample_summary,
+        config=sample_config,
+        runs_dir=tmp_runs_dir,
+    )
+    save_forward_run(
+        sig2,
+        ic_forward=sample_ic_forward,
+        summary=sample_summary,
+        config=sample_config,
+        runs_dir=tmp_runs_dir,
+    )
+    save_forward_run(
+        sig3,
+        ic_forward=sample_ic_forward,
+        summary=sample_summary,
+        config=sample_config,
+        runs_dir=tmp_runs_dir,
+    )
+
+    # List runs
+    runs = list_forward_runs(base=tmp_runs_dir)
+
+    # Should find all 3 runs
+    assert len(runs) == 3
+    # All should be present (order may vary if timestamps are identical)
+    sigs = {r["config_sig"] for r in runs}
+    assert sigs == {sig1, sig2, sig3}
+    # All should have phase E3
+    assert all(r["phase"] == "E3" for r in runs)
+
+
+# Test 11: I9 - load_forward_run only touches runs/forward/
+def test_load_forward_run_i9_separation(
+    tmp_runs_dir: Path,
+    sample_config_sig: str,
+    sample_ic_forward: pd.Series,
+    sample_summary: dict,
+    sample_config: dict,
+) -> None:
+    """load_forward_run only reads from runs/forward/, never runs/results/ (I9 gate)."""
+    # Create a forward run
+    save_forward_run(
+        sample_config_sig,
+        ic_forward=sample_ic_forward,
+        summary=sample_summary,
+        config=sample_config,
+        runs_dir=tmp_runs_dir,
+    )
+
+    # Create a runs/results/ dir with same config_sig (should never be touched)
+    results_dir = tmp_runs_dir / "results" / sample_config_sig
+    results_dir.mkdir(parents=True, exist_ok=True)
+    (results_dir / "dummy.json").write_text('{"results": "data"}')
+
+    # Load forward run - should only read from forward/
+    loaded = load_forward_run(sample_config_sig, base=tmp_runs_dir)
+
+    # Verify it loaded from forward/
+    assert loaded["config_sig"] == sample_config_sig
+    assert loaded["phase"] == "E3"
+
+    # Verify results/ is untouched
+    dummy_path = tmp_runs_dir / "results" / sample_config_sig / "dummy.json"
+    assert dummy_path.read_text() == '{"results": "data"}'
+
+
+# Test 12: I9 - list_forward_runs only scans runs/forward/
+def test_list_forward_runs_i9_separation(
+    tmp_runs_dir: Path,
+    sample_config_sig: str,
+    sample_ic_forward: pd.Series,
+    sample_summary: dict,
+    sample_config: dict,
+) -> None:
+    """list_forward_runs only scans runs/forward/, never runs/results/ (I9 gate)."""
+    # Create a forward run
+    save_forward_run(
+        sample_config_sig,
+        ic_forward=sample_ic_forward,
+        summary=sample_summary,
+        config=sample_config,
+        runs_dir=tmp_runs_dir,
+    )
+
+    # Create runs/results/ dirs (should never be scanned)
+    results_sig = "results_only_sig"
+    results_dir = tmp_runs_dir / "results" / results_sig
+    results_dir.mkdir(parents=True, exist_ok=True)
+    (results_dir / "meta.json").write_text(
+        json.dumps({"schema": 2, "phase": "B", "ts": "2026-01-01T00:00:00+00:00"})
+    )
+
+    # List forward runs - should only scan forward/
+    runs = list_forward_runs(base=tmp_runs_dir)
+
+    # Should only find the forward run, not the results run
+    assert len(runs) == 1
+    assert runs[0]["config_sig"] == sample_config_sig
+    assert runs[0]["phase"] == "E3"
+

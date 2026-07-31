@@ -1,33 +1,35 @@
 # state/handoff.md — current-pass handoff
 
-- **round:** E3 Slice 4 (forward scoring + accumulation), 2026-07-31.
+- **round:** E3 Slice 5 (dashboard Forward-IC tab) + GitHub Pages plan draft, 2026-07-31.
 - **this pass did:**
-  - Slice 4 = as each committed prediction's `target_t` (= predict_ts + 21 sessions) realizes: REVEAL
-    (I1-gated), compute the month's cross-sectional rank-IC per arm, ACCUMULATE the forward differential
-    IC series (arm_e13 − arm_base), apply NW-HAC + MBB-DM + publishability gate; write
-    `runs/forward/<sig>/{ic_forward.parquet, summary_forward.json, config.json, meta.json}`.
-  - 2 Engineer passes (sonnet) TDD:
-    - **Pass A (4a/4b/4c)** `src/aionis/eval/forward_score.py` — `fetch_realized_forward_returns`
-      (cached Phase-B price parquet; PIT endpoints only) + `reveal_and_score_forward_month` (delegates to
-      `forward_ledger.reveal_forward_outcome`; I1 gate) + `accumulate_forward_ic_series` (differential
-      ic_e13 − ic_base; `rank_ic_summary` NW-HAC + `diebold_mariano_mbb`; H6 bit-deterministic).
-    - **Pass B (4d/4e/4f)** `src/aionis/reporting/forward_results.py` `save_forward_run` (mirrors
-      `results.py:save_run` schema v2; idempotent overwrite) + `src/aionis/eval/forward_score_runner.py`
-      + `scripts/forward_score.py` + invariant suite (I1/I2/I9/H6).
-  - Verifier (sonnet) **PASS** (0 blockers; 506 green); Reviewer (opus) **APPROVE** (1 HIGH doc-only —
-    a comment/arg-order mismatch on the DM call where the CODE was correct — fixed; 2 MEDIUM optional,
-    skipped as YAGNI/future-proofing).
-- **files:** 4 new src/script modules + 4 new test files (+27 tests: 479→506, 0 skip).
-- **verified:** `uv run pytest -q` **506 passed** (0 skip); `uv run ruff check` clean; `runs/ledger.jsonl`
-  still **39 lines**; `runs/results/` untouched (**I9**); I1/I2/I9/H6 gated; accumulator differential sign +
-  DM convention match `phase_e1.differential`; H6 bit-deterministic (makes the idempotent overwrite safe).
-- **next precise action:** E3 **Slice 5** — dashboard Forward-IC tab (new `st.tabs` reading ONLY
-  `phase:"E3"` + `forward_*`; accrued forward IC+CI, committed-vs-revealed count, months-to-parity vs
-  ~42-mo parity, random-walk 95% band via `_cum_ic_ci_band`, **EXPLORATORY banner** until the calendar
-  gate). Then **Slice 6** (scheduler: NYSE month-end trigger; `scripts/forward_tick.py`). Watch the GLM 5h
-  quota. Do NOT push without owner OK; do NOT ignite the headline until the 1–2 mo shadow validates GLM.
-- **do NOT repeat:** do NOT ignite headline until shadow validates GLM; do NOT re-litigate ADR-009/ADR-008;
-  do NOT touch the 4 published nulls / frozen pre-reg / `forward_ledger.py` primitives / `save_run`; do NOT
-  let forward re-accumulation become non-deterministic (H6 is what makes the overwrite safe).
-- **uncommitted:** Slice-4 changes in the working tree on `feat/e3-forward-ledger` (ahead 2 = Slice-2 +
-  Slice-3 commits); commit on owner OK.
+  - **Slice 5** = a new read-only "Forward IC" `st.tabs` entry rendering Slice-4 forward artifacts:
+    EXPLORATORY banner, cumulative differential IC + random-walk 95% band (monthly_se=`se_hac`),
+    committed-vs-revealed counts, months-to-parity vs the pre-reg §7 **60–120 month RANGE**.
+  - 1 Engineer pass (sonnet) TDD: `reporting/forward_results.py` ADDED `load_forward_run` +
+    `list_forward_runs` (mirror `results.py`); `dashboard/app.py` ADDED pure helpers (`_forward_kpi`,
+    `_parity_progress`, `_committed_vs_revealed`) + cached wrappers + `view_forward_ic` + the
+    "Forward IC" tab wired in (10→11 tabs, no off-by-one).
+  - Verifier (sonnet) **PASS** (0 blockers; 517 green); Reviewer (opus) **APPROVE** (0 issues all
+    severities; I9 separation PERFECT; `se_hac` band + 60–120 range + EXPLORATORY banner +
+    `publishable = ci_half < 0.015` all verified; tab unpacking correct).
+  - **Parallel (background)**: a fresh GitHub Pages 展示方案 drafted (mkdocs-material Apache-2.0 +
+    GitHub Actions, $0, anti-leakage-safe, phased MVP→v2→v3). **No prior artifact existed** (grep across
+    docs/tasks/state/decisions/reports/archive/evals/.omc found nothing) — flagged as fresh. Persisted
+    as `docs/github-pages-plan.md` (DRAFT). Open owner decision: the E3 public-display strategy.
+- **files:** 2 modified src/dashboard (`dashboard/app.py` +146, `reporting/forward_results.py` +99) +
+  1 extended test (`test_forward_results.py`) + 1 new test (`test_forward_dashboard.py`) [+11 tests:
+  506→517, 0 skip] + `docs/github-pages-plan.md` (DRAFT).
+- **verified:** `uv run pytest -q` **517 passed** (0 skip); `uv run ruff check` clean;
+  `runs/ledger.jsonl` still **39**; `runs/results/` untouched (**I9**); forward tab + readers/scanners
+  query ONLY `runs/forward/`; published-null views untouched.
+- **next precise action:** E3 **Slice 6** — forward scheduler (deterministic NYSE month-end trigger;
+  `scripts/forward_tick.py`; `--dry-run` resolves the next trigger). Then the **Slice-7** E2E smoke +
+  full I1–I9 gate suite. Separately: owner decision on the GitHub Pages plan (E3 public-display
+  strategy, `docs/github-pages-plan.md` §8.3) → if approved, implement the Phase-1 MVP. Watch the GLM
+  5h quota. Do NOT push without owner OK; do NOT ignite the headline until the 1–2 mo shadow validates GLM.
+- **do NOT repeat:** do NOT ignite headline until shadow validates GLM; do NOT publish LIVE forward
+  progress on the public GitHub Pages site until the owner decides (anti-leakage — the forward IC is
+  EXPLORATORY until the calendar gate; see `docs/github-pages-plan.md` §8.3); do NOT touch the 4
+  published nulls / frozen pre-reg / `forward_ledger.py` primitives.
+- **uncommitted:** Slice-5 changes (+ the GitHub Pages DRAFT) in the working tree on
+  `feat/e3-forward-ledger` (origin synced through Slice 4); commit on owner OK.

@@ -2,15 +2,15 @@
 
 - 编号: E3
 - 标题: Build + launch the E3 forward-live track (the only zero-leakage, powered path to a credible positive).
-- 状态: **IN PROGRESS — Slice 1 + Slice 2 + Slice 3 + Slice 4 DONE** (spec `docs/phase-e3-implementation-plan.md`;
+- 状态: **IN PROGRESS — Slice 1 + Slice 2 + Slice 3 + Slice 4 + Slice 5 DONE** (spec `docs/phase-e3-implementation-plan.md`;
   owner decisions 2026-07-30: **GLM** pinned + **shadow 1–2 mo** + defaults adopted; **ADR-009 (2026-07-31)
   hybrid causal layer**: zero-LLM frozen-β macro + minimal closed-enum LLM event edge, FF-12 unified).
   Slice 1 = forward-ledger commit-reveal core (`7ce7f08`). Slice 2 = forward PIT-as-of-t ingest
-  (3 collectors + I3 clock; `5c564f8`). Slice 3 = forward-commit plumbing + hybrid causal layer (`6f04f26`;
-  Verifier PASS pytest 479 / Reviewer REQUEST-CHANGES resolved). Slice 4 = forward scoring + accumulation
-  (reveal→rank-IC→differential IC + NW-HAC + MBB-DM; `forward_score.py` + `forward_results.py` + runner;
-  Verifier PASS pytest 506 / Reviewer APPROVE, 1 HIGH doc-only fixed).
-  Next: Slice 5 = dashboard Forward-IC tab → Slice 6 = scheduler.
+  (3 collectors + I3 clock; `5c564f8`). Slice 3 = forward-commit plumbing + hybrid causal layer (`6f04f26`).
+  Slice 4 = forward scoring + accumulation (`d86ecd7`; Verifier PASS pytest 506 / Reviewer APPROVE).
+  Slice 5 = dashboard Forward-IC tab (`forward_results.py` reader + `dashboard/app.py` view; Verifier PASS
+  pytest 517 / Reviewer APPROVE 0 issues).
+  Next: Slice 6 = scheduler (NYSE month-end trigger) → Slice 7 = E2E + full I1–I9 gate suite.
 - 来源: [ADR-008](../../decisions/ADR-008-launch-e3-and-broaden-nulls.md) (TASK-STRAT verdict, 2026-07-30);
   `docs/phase-e3-preregistration.md`; **实施 spec**：`docs/phase-e3-implementation-plan.md`（架构 + 9 条零泄漏不变量 + 7 切片）。
 
