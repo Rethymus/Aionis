@@ -10,16 +10,21 @@
 - **active:** `TASK-AUD-00` remediation program. AUD-01 and AUD-03 are COMPLETE after independent Verifier PASS
   and Reviewer APPROVE. AUD-04 is also COMPLETE after repair re-Verifier PASS and Reviewer APPROVE. AUD-02
   documentation reconciliation and AUD-05A are COMPLETE after independent Verifier PASS and Reviewer APPROVE.
-  AUD-05B repair round 1 independent re-Verifier PASS is awaiting re-Reviewer; AUD-05C is
-  materialized but held behind 05B Reviewer.
+  AUD-05B is COMPLETE after re-Verifier PASS and authorized re-Reviewer APPROVE. AUD-05C disposition
+  is recorded, while C1--C3/C5 remain owner-gated. The dashboard view extraction and owner-authorized
+  C4 standalone cleanup passed review and are committed in `05ec7af`.
 - **E3:** engineering may continue, but headline is **NO-GO**. No scheduler, real E2E, or forward result
   exists; shadow/headline must not observe outcome-bearing metrics before AUD-07 and owner approval.
 - **agents:** wave-based supervisor pattern active: one writer per file boundary, read-only preflights in
   parallel, then independent Verifier and Reviewer. Multi-agent inference is not part of the stock-selection signal.
 - **known issues:** protected historical claims may retain superseded wording; non-chronological historical CV;
   blocked market-source fallbacks and sub-2s fetch paths; Phase B A1 lock stranding; current SIC snapshot.
-- **last verification (2026-07-31):** AUD-05B repair round 1 independent re-Verifier PASS: 75
-  targeted and all 620 hermetic tests, ruff, scans, diff and frozen-surface checks passed.
+- **last verification (2026-07-31):** the full hermetic pytest suite passed with only existing
+  forward-score warnings. Dashboard extraction repair now passes all dashboard tests, full pytest,
+  repository ruff and `git diff --check`; it still needs independent verification/review before
+  acceptance. Health-check cleanup retains `EastMoney` in a script comment, so it does not yet meet
+  C4's strict no-reference criterion now has hermetic coverage and passes. AUD-05B re-Reviewer is
+  APPROVE; dashboard import/compatibility checks and all scoped tests pass.
   AUD-01/AUD-02/AUD-03/AUD-04/AUD-05A Reviewer APPROVE. No frozen config,
   preregistration, ledger/result artifact, or forward outcome changed.
 - **evidence:** `reports/audits/2026-07-31-quant-llm-research-audit.md` and `tasks/active/TASK-AUD-00-remediation-coordination.md`.

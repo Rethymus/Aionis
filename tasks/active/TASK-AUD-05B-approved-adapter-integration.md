@@ -1,7 +1,7 @@
 # AUD-05B — Integrate the shared policy into approved direct-request adapters
 
 - 编号: AUD-05B
-- 状态: **Repair round 1 independent re-Verifier PASS; awaiting re-Reviewer**
+- 状态: **COMPLETE (re-Reviewer APPROVE)**
 - Priority: **P0**
 - Size: **M**
 - Risk: **HIGH**（跨多个数据 adapter，但不改变数据/特征语义）
@@ -95,3 +95,11 @@
   forward script, or outcome inspection occurred.
 - Residual non-blocker: the shared private transport entry point remains housed in `universe.py`;
   this coupling is reserved for a future non-functional cleanup, not this repair.
+
+## 2026-07-31 authorized re-Reviewer
+
+- Verdict: **APPROVE**. The repair retains one process-wide host-spacing policy while preserving
+  caller-supplied total-attempt and backoff semantics. No affected frozen, E3, or deferred boundary
+  changed after the recorded re-Verifier PASS.
+- Rechecked dashboard/C4 worktree changes are disjoint from the AUD-05B files. Policy/adapters,
+  dashboard compatibility tests, and repository ruff pass in the resulting worktree.

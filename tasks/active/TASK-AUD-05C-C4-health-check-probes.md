@@ -2,7 +2,7 @@
 
 - 编号: AUD-05C-C4
 - Parent: AUD-05C
-- 状态: **OWNER-HELD (blocked: probe inventory + shared-policy hookup decision required)**
+- 状态: **COMPLETE**
 - Priority: **P0**
 - Size: **S** (inventory) → **M** (shared-policy hookup, if approved)
 - Risk: **LOW** (health-check is auxiliary monitoring, not in research pipeline)
@@ -119,12 +119,28 @@
 - Owner decision on Step 2 (keep independent vs. integrate shared policy)
 - AUD-05B APPROVED (shared policy primitive exists, if using Option B)
 
-## Owner decision items
+## 2026-07-31 owner decision + Engineer evidence
 
-1. **Step 1**: Remove `akshare/EastMoney` probe? (APPROVE → proceed)
-2. **Step 2**: Integrate shared policy or keep health_check independent?
-   - **Option A**: Keep independent (simpler, recommended)
-   - **Option B**: Integrate shared policy (more unified)
+- Owner instruction authorized C4 completion using **Option A**: remove the blocked probe and keep
+  `health_check.py` standalone. No shared-policy hookup was authorized or added.
+- Removed the `akshare/EastMoney` data probe and `akfamily/akshare` wheel-repo probe while keeping
+  EDGAR, FRED, GitHub, Tiingo, Alpaca, and the remaining non-data wheel checks.
+- Removed stale blocked-source names from the script documentation and added a hermetic regression
+  test that rejects blocked-source text anywhere in `scripts/health_check.py`.
+- Engineer checks PASS: `uv run --offline pytest -q tests/test_health_check.py` (7 passed), scoped
+  ruff, blocked-source scan, and `git diff --check`. The real health-check command was deliberately
+  not run because it makes external requests.
+- Required next gate: independent read-only Verifier, then Reviewer. No research pipeline, shared
+  HTTP policy, ledger, data, or frozen research surface changed.
+
+## 2026-07-31 authorized verification + review
+
+- Verdict: **APPROVE for commit**. The standalone Option A scope is preserved: no shared-policy
+  integration, no research-pipeline changes, and no real health-check network invocation.
+- Rechecked `tests/test_health_check.py` (7 passed), repository ruff, `git diff --check`, and an
+  exact blocked-source scan of `scripts/health_check.py`; all passed.
+- Committed atomically with the separately reviewed dashboard extraction and state/task records as
+  `05ec7af` (`chore: finalize dashboard and health remediation`).
 
 ## Success metrics
 

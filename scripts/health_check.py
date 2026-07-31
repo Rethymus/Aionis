@@ -4,8 +4,8 @@ Per the data-source registry (`docs/quant-selection-research.md` §8): probe eac
 data source's reachability and each wheel repo's last-commit freshness.
 
 Strictly rate-limited — >=MIN_GAP_S between any two network calls + exponential
-backoff. Short bursts get rate-limited/blocked from this egress (empirically:
-gh search EOF, EastMoney RemoteDisconnected, Yahoo 429). Run off-peak via cron.
+backoff. Short bursts can be rate-limited or blocked from this egress; run
+off-peak via cron.
 
 Usage:
   python scripts/health_check.py              # full probe (sources + wheels)
@@ -140,9 +140,6 @@ DATA_SOURCES = [
      "https://data.sec.gov/api/xbrl/companyconcept/CIK0000320193/us-gaap/Assets.json", 200),
     ("FRED (macro)",
      "https://api.stlouisfed.org/fred/series?series_id=SP500&file_type=json&api_key=none", 400),
-    ("akshare/EastMoney (prices)",
-     "https://push2his.eastmoney.com/api/qt/stock/kline/get?secid=105.AAPL&klt=101&fqt=1"
-     "&beg=20240102&end=20240105&fields1=f1&fields2=f51", 200),
     ("GitHub raw-redirect (reference data)",
      "https://github.com/datasets/s-and-p-500-companies/raw/main/data/constituents.csv", 200),
 ]
@@ -157,7 +154,6 @@ WHEEL_REPOS = [
     "pydata/pandas-datareader",
     "mlflow/mlflow",
     "dgunning/edgartools",
-    "akfamily/akshare",
     "DoubleML/doubleml",
     "posit-dev/great-tables",
     "ranaroussi/quantstats",
