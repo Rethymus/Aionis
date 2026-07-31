@@ -263,6 +263,223 @@ def _cum_ic_ci_band(cum_ic: pd.Series, monthly_se: float) -> pd.DataFrame:
 
 
 # ----------------------------------------------------------------------------
+# fit-quality pure helpers (6b)
+# ----------------------------------------------------------------------------
+
+
+def _r2(oos: pd.DataFrame) -> float:
+    """Out-of-sample R² (1 - SS_res/SS_tot) of y_fwd_ret ~ score."""
+    from sklearn.linear_model import LinearRegression
+
+    df = oos.dropna(subset=["score", "y_fwd_ret"])
+    if len(df) < 2:
+        return float("nan")
+    X = df[["score"]].values
+    y = df["y_fwd_ret"].values
+    model = LinearRegression().fit(X, y)
+    y_pred = model.predict(X)
+    ss_res = ((y - y_pred) ** 2).sum()
+    ss_tot = ((y - y.mean()) ** 2).sum()
+    if ss_tot == 0:
+        return float("nan")
+    return float(1 - ss_res / ss_tot)
+
+
+def _ic_by_regime(ic: pd.Series, n_regimes: int = 4) -> pd.DataFrame:
+    """IC-by-regime using rolling-σ quartiles (regime discovery)."""
+    s = ic.dropna()
+    if len(s) < n_regimes * 2:
+        # Not enough data for regimes
+        return pd.DataFrame({"ic": s, "regime": np.nan})
+    rolling_std = s.rolling(12, min_periods=6).std()
+    quartiles = pd.qcut(rolling_std, n_regimes, labels=False, duplicates="drop")
+    return pd.DataFrame({"ic": s, "regime": quartiles}).dropna(subset=["regime"])
+
+
+def _regression_line_coords(oos: pd.DataFrame) -> tuple[list[float], list[float], float]:
+    """Regression line (x, y) coords + R² for score vs return."""
+    from scipy.stats import linregress
+
+    df = oos.dropna(subset=["score", "y_fwd_ret"])
+    if len(df) < 2:
+        return [0.0, 0.0], [0.0, 0.0], float("nan")
+    result = linregress(df["score"], df["y_fwd_ret"])
+    x_min, x_max = df["score"].min(), df["score"].max()
+    x_line = [x_min, x_max]
+    y_line = [result.slope * x_min + result.intercept, result.slope * x_max + result.intercept]
+    r2 = result.rvalue ** 2
+    return x_line, y_line, r2
+
+
+# ----------------------------------------------------------------------------
+# volatility pure helpers (6c)
+# ----------------------------------------------------------------------------
+
+
+def _sharpe(returns: pd.Series) -> float:
+    """Annualized Sharpe ratio (mean/std·√12 for monthly data)."""
+    s = returns.dropna()
+    if len(s) < 2:
+        return float("nan")
+    mean = float(s.mean())
+    std = float(s.std(ddof=1))
+    if std == 0 or not np.isfinite(std):
+        return float("nan")
+    return mean / std * np.sqrt(12)
+
+
+def _calmar(returns: pd.Series) -> float:
+    """Calmar ratio = cumulative_return / max_drawdown."""
+    s = returns.dropna()
+    if len(s) < 2:
+        return float("nan")
+    cum = s.cumsum()
+    running_max = cum.cummax()
+    drawdown = cum - running_max
+    max_dd = -drawdown.min()  # Positive value
+    if max_dd <= 0:
+        return float("inf")
+    total_return = cum.iloc[-1]
+    return total_return / max_dd
+
+
+def _downside_deviation(returns: pd.Series) -> float:
+    """Downside deviation = std of negative returns only."""
+    s = returns.dropna()
+    neg = s[s < 0]
+    if len(neg) < 2:
+        return 0.0
+    return float(neg.std(ddof=1))
+
+
+def _vol_of_vol(returns: pd.Series, window: int = 12) -> float:
+    """Vol-of-vol = std of rolling-σ."""
+    s = returns.dropna()
+    if len(s) < window:
+        return float("nan")
+    rolling_std = s.rolling(window, min_periods=max(6, window // 2)).std()
+    return float(rolling_std.std())
+
+
+def _return_distribution(returns: pd.Series) -> go.Figure:
+    """Return distribution histogram with normal PDF overlay."""
+    s = returns.dropna()
+    fig = go.Figure()
+
+    if len(s) == 0:
+        fig.update_layout(title="No returns data")
+        return fig
+
+    # Histogram
+    fig.add_trace(go.Histogram(x=s.values, nbinsx=30, name="returns",
+                               marker_color="#9467bd", showlegend=False))
+
+    # Normal overlay
+    mu, sigma = float(s.mean()), float(s.std(ddof=1))
+    if sigma > 0:
+        x_norm = np.linspace(s.min(), s.max(), 100)
+        scale_factor = ((s.max() - s.min()) / 30) * len(s)
+        y_norm = scale_factor * (1 / (sigma * np.sqrt(2 * np.pi))) * np.exp(
+            -0.5 * ((x_norm - mu) / sigma) ** 2
+        )
+        fig.add_trace(go.Scatter(x=x_norm, y=y_norm, mode="lines",
+                                 line={"color": "#d62728", "width": 2},
+                                 name=f"normal (μ={mu:.3f}, σ={sigma:.3f})", showlegend=True))
+
+    fig.add_vline(x=0, line_dash="dot", line_color="grey")
+    fig.update_layout(xaxis_title="return", yaxis_title="frequency",
+                      height=340, margin=dict(l=10, r=10, t=40, b=10),
+                      title="return distribution vs normal overlay")
+    return fig
+
+
+# ----------------------------------------------------------------------------
+# curve-evolution pure helpers (6d)
+# ----------------------------------------------------------------------------
+
+
+def _monthly_heatmap(returns_or_ic: pd.Series) -> pd.DataFrame:
+    """Monthly returns/IC heatmap pivot table (year×month)."""
+    s = returns_or_ic.dropna()
+    if s.empty:
+        return pd.DataFrame()
+
+    # Extract year and month
+    df = pd.DataFrame({"value": s})
+    df["year"] = df.index.year
+    df["month"] = df.index.month
+
+    # Pivot to year×month
+    pivot = df.pivot_table(index="year", columns="month", values="value", aggfunc="mean")
+    # Ensure all months 1-12 are present
+    for m in range(1, 13):
+        if m not in pivot.columns:
+            pivot[m] = np.nan
+    pivot = pivot[sorted(pivot.columns)]
+    return pivot
+
+
+def _top_drawdowns(returns: pd.Series, k: int = 5) -> pd.DataFrame:
+    """Top k drawdown periods: peak date, trough date, depth, duration."""
+    s = returns.dropna()
+    if len(s) < 3:
+        return pd.DataFrame(columns=["peak_date", "trough_date", "depth", "duration"])
+
+    cum = s.cumsum()
+    running_max = cum.cummax()
+
+    # Find all drawdown periods
+    drawdowns = []
+    peak_idx = None
+    peak_val = None
+    trough_idx = None
+    trough_val = None
+
+    for i in range(len(cum)):
+        val = cum.iloc[i]
+        if val >= running_max.iloc[i]:
+            # New peak
+            if peak_idx is not None and trough_idx is not None:
+                # Record the previous drawdown
+                depth = trough_val - peak_val
+                duration = (trough_idx - peak_idx)
+                drawdowns.append({
+                    "peak_date": s.index[peak_idx],
+                    "trough_date": s.index[trough_idx],
+                    "depth": depth,
+                    "duration": duration,
+                })
+            peak_idx = i
+            peak_val = val
+            trough_idx = None
+            trough_val = None
+        else:
+            # In drawdown
+            if peak_idx is not None:
+                if trough_idx is None or val < trough_val:
+                    trough_idx = i
+                    trough_val = val
+
+    # Record the last drawdown if we're in one
+    if peak_idx is not None and trough_idx is not None:
+        depth = trough_val - peak_val
+        duration = (trough_idx - peak_idx)
+        drawdowns.append({
+            "peak_date": s.index[peak_idx],
+            "trough_date": s.index[trough_idx],
+            "depth": depth,
+            "duration": duration,
+        })
+
+    if not drawdowns:
+        return pd.DataFrame(columns=["peak_date", "trough_date", "depth", "duration"])
+
+    df = pd.DataFrame(drawdowns)
+    df = df.sort_values("depth").head(k)
+    return df.reset_index(drop=True)
+
+
+# ----------------------------------------------------------------------------
 # chart builders
 # ----------------------------------------------------------------------------
 
@@ -508,6 +725,56 @@ def _score_vs_return_scatter(oos: pd.DataFrame) -> go.Figure:
     return fig
 
 
+def _score_vs_return_scatter_with_fit(oos: pd.DataFrame) -> go.Figure:
+    """Fit: score vs forward-return with regression line + R² annotation."""
+    df = oos.dropna(subset=["score", "y_fwd_ret"])
+    rho = df["score"].corr(df["y_fwd_ret"], method="spearman")
+    n = len(df)
+    sub = df.sample(min(10_000, n), random_state=0) if n else df
+
+    # Get regression line and R²
+    x_line, y_line, r2 = _regression_line_coords(df)
+
+    fig = go.Figure(go.Scatter(x=sub["score"], y=sub["y_fwd_ret"], mode="markers",
+                               marker={"size": 3, "opacity": 0.2, "color": "#1f77b4"},
+                               showlegend=False, name="observations"))
+
+    # Add regression line
+    if not np.isnan(r2):
+        fig.add_trace(go.Scatter(x=x_line, y=y_line, mode="lines",
+                                line={"color": "#d62728", "width": 2},
+                                name=f"regression (R²={r2:.3f})", showlegend=True))
+
+    fig.add_hline(y=0, line_dash="dot", line_color="grey")
+    fig.add_vline(x=0, line_dash="dot", line_color="grey")
+    fig.update_layout(xaxis_title="OOS score", yaxis_title="forward return",
+                      height=340, margin=dict(l=10, r=10, t=40, b=10),
+                      title=f"score vs forward-return (Spearman {rho:+.4f}; n={n}; "
+                            f"{len(sub)} plotted)")
+    return fig
+
+
+def _ic_by_regime_box(ic: pd.Series) -> go.Figure:
+    """Fit: IC distribution by volatility regime (box plot)."""
+    regimes = _ic_by_regime(ic, n_regimes=4)
+    if regimes.empty:
+        return go.Figure()
+
+    # Create box traces for each regime
+    fig = go.Figure()
+    for regime_id in sorted(regimes["regime"].unique()):
+        regime_data = regimes[regimes["regime"] == regime_id]["ic"]
+        fig.add_trace(go.Box(y=regime_data, name=f"Regime {int(regime_id)}",
+                            marker_color="#9467bd", showlegend=False))
+
+    fig.add_hline(y=0, line_dash="dot", line_color="grey")
+    fig.update_layout(xaxis_title="volatility regime (rolling-σ quartile)",
+                      yaxis_title="monthly rank-IC", height=340,
+                      margin=dict(l=10, r=10, t=40, b=10),
+                      title="IC by volatility regime (regime discovery)")
+    return fig
+
+
 def _quantile_spread_chart(oos: pd.DataFrame) -> go.Figure:
     """Fit: mean forward-return per score decile (alphalens-style monotonicity check).
     Only dates that form exactly 10 clean deciles are pooled, so D1..D10 mean the
@@ -532,6 +799,162 @@ def _quantile_spread_chart(oos: pd.DataFrame) -> go.Figure:
                       margin=dict(l=10, r=10, t=40, b=10),
                       title="quantile spread (monotonic ⇒ score discriminates)")
     return fig
+
+
+# ----------------------------------------------------------------------------
+# event-study CAR helpers (demo-capable, no external module dependency)
+# ----------------------------------------------------------------------------
+
+
+def _car_curve(event_windows: pd.DataFrame, t_pre: int = 10, t_post: int = 21) -> pd.Series:
+    """Compute mean CAR (cumulative abnormal return) curve across events.
+
+    CAR(τ) = cumulative mean across events of Σ_{s=-t_pre}^{τ} abnormal_return_{event,s}.
+    Baseline: CAR(-t_pre) = 0 by construction.
+
+    Args:
+        event_windows: DataFrame with columns [event_type, event_id, tau, abnormal_return].
+        t_pre: Sessions before event to include (window starts at τ=-t_pre).
+        t_post: Sessions after event to include (window ends at τ=+t_post).
+
+    Returns:
+        Series indexed by τ (int) with mean CAR across events at each τ.
+    """
+    # Filter to window
+    window = event_windows[
+        (event_windows["tau"] >= -t_pre) & (event_windows["tau"] <= t_post)
+    ].copy()
+
+    if window.empty:
+        return pd.Series(dtype=float)
+
+    # Compute per-event cumulative abnormal returns
+    # For each event, compute cumulative sum from baseline (τ=-t_pre)
+    event_cars = []
+    for event_id in window["event_id"].unique():
+        ev = window[window["event_id"] == event_id].sort_values("tau")
+        car = ev.set_index("tau")["abnormal_return"].cumsum()
+        # Subtract baseline (first value) to set CAR(-t_pre) = 0
+        car = car - car.iloc[0]
+        event_cars.append(car)
+
+    # Stack and compute mean across events at each τ
+    stacked = pd.concat(event_cars, axis=1)
+    mean_car = stacked.mean(axis=1)
+
+    # Reindex to full window range (fill missing with NaN)
+    full_index = pd.RangeIndex(-t_pre, t_post + 1, name="tau")
+    result = mean_car.reindex(full_index)
+    result.index.name = None  # Remove index name to match test expectations
+    return result
+
+
+def _car_ci(
+    event_windows: pd.DataFrame,
+    t_pre: int = 10,
+    t_post: int = 21,
+    z: float = 1.96,
+) -> pd.DataFrame:
+    """Compute 95% CI band for CAR curve across events.
+
+    CI = mean_CAR ± z * (std_across_events / sqrt(n_events)).
+
+    Args:
+        event_windows: DataFrame with columns [event_type, event_id, tau, abnormal_return].
+        t_pre: Sessions before event to include.
+        t_post: Sessions after event to include.
+        z: Z-score for CI (1.96 → 95%, default).
+
+    Returns:
+        DataFrame with columns [mean, lo, hi] indexed by τ.
+    """
+    window = event_windows[
+        (event_windows["tau"] >= -t_pre) & (event_windows["tau"] <= t_post)
+    ].copy()
+
+    if window.empty:
+        return pd.DataFrame(columns=["mean", "lo", "hi"])
+
+    # Compute per-event CAR series
+    event_cars = []
+    for event_id in window["event_id"].unique():
+        ev = window[window["event_id"] == event_id].sort_values("tau")
+        car = ev.set_index("tau")["abnormal_return"].cumsum()
+        # Subtract baseline (first value) to set CAR(-t_pre) = 0
+        car = car - car.iloc[0]
+        event_cars.append(car)
+
+    stacked = pd.concat(event_cars, axis=1)
+    mean_car = stacked.mean(axis=1)
+    n_events = stacked.shape[1]
+
+    # Handle single-event case: use time-series volatility as CI proxy
+    if n_events == 1:
+        # For a single event, use the event's CAR range as uncertainty proxy
+        car_series = stacked.iloc[:, 0]
+        ci_half = pd.Series(index=car_series.index, dtype=float)
+        # Use half the range as a rough CI estimate (wider than multi-event CI)
+        car_range = car_series.max() - car_series.min()
+        ci_half[:] = car_range / 2 if car_range > 0 else 0.01  # Fallback to 1% if flat
+    else:
+        std_car = stacked.std(axis=1, ddof=1)  # sample std across events
+        se = std_car / np.sqrt(n_events)
+        ci_half = z * se
+
+    full_index = pd.RangeIndex(-t_pre, t_post + 1, name="tau")
+    result = pd.DataFrame({
+        "mean": mean_car.reindex(full_index),
+        "lo": (mean_car - ci_half).reindex(full_index),
+        "hi": (mean_car + ci_half).reindex(full_index),
+    })
+    result.index.name = None  # Remove index name to match test expectations
+    return result
+
+
+def _demo_event_windows(
+    event_types: list[str],
+    n_per_type: int = 3,
+    rng: np.random.Generator | None = None,
+) -> pd.DataFrame:
+    """Generate reproducible demo event-window data for CAR visualization.
+
+    Args:
+        event_types: List of event types (e.g., ["earnings", "13D", "macro"]).
+        n_per_type: Number of synthetic events per type.
+        rng: Random number generator (if None, uses seeded default_rng(7) for reproducibility).
+
+    Returns:
+        DataFrame with columns [event_type, event_id, tau, abnormal_return].
+    """
+    if rng is None:
+        rng = np.random.default_rng(7)  # Fixed seed for reproducible demo
+
+    t_pre, t_post = 10, 20
+    rows = []
+
+    for etype in event_types:
+        for i in range(n_per_type):
+            event_id = f"{etype}_demo_{i}"
+            # Create small post-event drift patterns (demo only)
+            for tau in range(-t_pre, t_post + 1):
+                # Baseline noise
+                ar = rng.normal(0, 0.001)
+
+                # Add small post-event drift for earnings/13D (demo pattern)
+                if tau > 0 and etype in ("earnings", "13D"):
+                    ar += rng.normal(0.0005, 0.0005)  # Tiny drift
+                # Add reaction for macro (demo pattern)
+                elif tau == 0 and etype == "macro":
+                    ar += rng.normal(-0.002, 0.001)  # Immediate reaction
+
+                rows.append({
+                    "event_type": etype,
+                    "event_id": event_id,
+                    "tau": tau,
+                    "abnormal_return": ar,
+                })
+
+    return pd.DataFrame(rows)
 
 
 @st.cache_data(show_spinner=False)
@@ -588,23 +1011,36 @@ def view_fit_quality(run: dict, is_syn: bool) -> None:
     st.subheader(f"Fit Quality — phase {phase} ({treat})")
     if is_syn:
         st.warning("DEMO: synthetic data.")
+
     st.markdown("**KPI row** — does the score predict cross-sectional returns?")
     _kpi_row(run["ic_state"], treat)
     _kpi_row(run["ic_base"], "base")
+
+    # Add R² KPI when OOS data is available
+    oos = run.get("oos_state")
+    if oos is not None and len(oos):
+        r2 = _r2(oos)
+        st.metric("Out-of-sample R² (y ~ score)", f"{r2:.3f}" if not np.isnan(r2) else "N/A")
+
     st.markdown("**Cumulative IC vs random-walk 95% band** — stays in band ⇒ no detectable skill")
     se = _ic_kpi(run["ic_state"])["std"]  # monthly σ (not se_hac=σ/√n) for the band
     st.plotly_chart(_cumulative_ic_chart(run["ic_state"], treat, se), use_container_width=True)
+
     st.markdown("**Monthly rank-IC — treatment vs base**")
     st.plotly_chart(_ic_chart(run), use_container_width=True)
-    oos = run.get("oos_state")
+
     if oos is not None and len(oos):
         c1, c2 = st.columns(2)
         with c1:
-            st.markdown("**Score vs forward-return**")
-            st.plotly_chart(_score_vs_return_scatter(oos), use_container_width=True)
+            st.markdown("**Score vs forward-return with regression line**")
+            st.plotly_chart(_score_vs_return_scatter_with_fit(oos), use_container_width=True)
         with c2:
             st.markdown("**Quantile spread** (decile)")
             st.plotly_chart(_quantile_spread_chart(oos), use_container_width=True)
+
+        # Add IC-by-regime box plot
+        st.markdown("**IC by volatility regime** (rolling-σ quartiles)")
+        st.plotly_chart(_ic_by_regime_box(run["ic_state"]), use_container_width=True)
     else:
         st.info("Score-vs-return scatter / quantile spread / R² need the per-ticker OOS panel, "
                 "which this run didn't persist (pre-schema-2). A re-run enables them.")
@@ -613,8 +1049,29 @@ def view_fit_quality(run: dict, is_syn: bool) -> None:
 def view_volatility(run: dict) -> None:
     phase, treat = _phase_of(run)
     st.subheader(f"Volatility Structure — phase {phase}")
+
+    # Use IC series as a proxy for returns in volatility metrics
+    ic = run["ic_state"]
+
+    # New KPI tiles
+    st.markdown("**Volatility metrics**")
+    sharpe_val = _sharpe(ic)
+    calmar_val = _calmar(ic)
+    downside_val = _downside_deviation(ic)
+    vov_val = _vol_of_vol(ic)
+
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric("Annualized Sharpe", f"{sharpe_val:+.3f}" if np.isfinite(sharpe_val) else "N/A")
+    c2.metric("Calmar", f"{calmar_val:+.3f}" if np.isfinite(calmar_val) else "∞")
+    c3.metric("Downside deviation", f"{downside_val:.4f}")
+    c4.metric("Vol-of-vol", f"{vov_val:.4f}" if np.isfinite(vov_val) else "N/A")
+
     st.markdown("**IC distribution** (spread ⇒ how volatile the monthly signal is)")
     st.plotly_chart(_ic_histogram(run["ic_state"]), use_container_width=True)
+
+    st.markdown("**Return distribution** vs normal overlay")
+    st.plotly_chart(_return_distribution(ic), use_container_width=True)
+
     st.markdown("**Underwater curve** — cumulative IC drawdown (how far below its peak)")
     st.plotly_chart(_drawdown_chart(_cumulative_ic(run["ic_state"])), use_container_width=True)
 
@@ -622,50 +1079,238 @@ def view_volatility(run: dict) -> None:
 def view_evolution(run: dict) -> None:
     phase, treat = _phase_of(run)
     st.subheader(f"Curve Evolution — phase {phase}")
-    se = _ic_kpi(run["ic_state"])["std"]  # monthly σ (not se_hac=σ/√n) for the band
+
+    # Use IC series as the primary metric for evolution analysis
+    ic = run["ic_state"]
+
+    # Monthly returns heatmap
+    st.markdown("**Monthly IC heatmap** (year×month)")
+    pivot = _monthly_heatmap(ic)
+    if not pivot.empty:
+        fig = go.Figure(data=go.Heatmap(
+            z=pivot.values,
+            x=[f"{m:02d}" for m in pivot.columns],  # Month columns "01"-"12"
+            y=[str(y) for y in pivot.index],  # Year rows
+            colorscale="RdBu",
+            zmid=0,
+            colorbar={"title": "IC"},
+        ))
+        fig.update_layout(
+            xaxis_title="month",
+            yaxis_title="year",
+            height=400,
+            margin=dict(l=10, r=10, t=20, b=10),
+            title="monthly IC (red=negative, blue=positive)"
+        )
+        st.plotly_chart(fig, use_container_width=True)
+    else:
+        st.info("Not enough data for monthly heatmap.")
+
+    # Top drawdown periods table
+    st.markdown("**Top drawdown periods**")
+    drawdowns = _top_drawdowns(ic, k=5)
+    if not drawdowns.empty:
+        show = drawdowns.copy()
+        show["peak_date"] = show["peak_date"].dt.strftime("%Y-%m-%d")
+        show["trough_date"] = show["trough_date"].dt.strftime("%Y-%m-%d")
+        show["depth"] = show["depth"].apply(lambda x: f"{x:.3f}")
+        show["duration"] = show["duration"].apply(lambda x: f"{int(x)}m")
+        st.dataframe(show, use_container_width=True, hide_index=True)
+    else:
+        st.info("No significant drawdowns detected.")
+
+    # Existing cumulative IC and rolling IC charts
+    se = _ic_kpi(ic)["std"]  # monthly σ (not se_hac=σ/√n) for the band
     st.markdown("**Cumulative IC with random-walk CI band** (evolution of the signal over time)")
-    st.plotly_chart(_cumulative_ic_chart(run["ic_state"], treat, se), use_container_width=True)
+    st.plotly_chart(_cumulative_ic_chart(ic, treat, se), use_container_width=True)
+
     st.markdown("**Rolling 12-month IC + IC-vol** (trend + changing volatility)")
-    st.plotly_chart(_rolling_ic_chart(run["ic_state"], 12), use_container_width=True)
+    st.plotly_chart(_rolling_ic_chart(ic, 12), use_container_width=True)
 
 
-def view_event_study(run: dict) -> None:
+def view_event_study(run: dict, is_syn: bool = False) -> None:
+    """Event Study: CAR (cumulative abnormal return) around events.
+
+    Demo-capable: when is_syn=True or real event_study module unavailable,
+    renders reproducible demo CAR curves with synthetic event windows.
+    """
     st.subheader("Event Study — pre/post-event differences (CAR)")
-    try:
-        from aionis.eval import event_study  # noqa: F401
-    except Exception:  # noqa: BLE001
-        st.info("Event-study (CAR around 13D/earnings/macro) needs the `event_study` module.")
-        return
     st.caption("Cumulative abnormal return around events (descriptive realized post-event "
                "drift — uses forward returns by design, like the strategy-return lens; NOT a "
                "PIT feature, so no leakage).")
-    etype = st.selectbox("event type", ["13D", "earnings"], key="event_type")
-    try:
-        from aionis.config import settings
-        cache = settings.data_dir / "cache"
-        if etype == "13D":
-            events = event_study.events_13d(cache / "phase_d_13d_events.parquet")
-        else:
-            events = event_study.events_earnings(cache / "phase_b_fundamentals.parquet")
-        if events.empty:
-            st.warning(f"no {etype} events to study.")
+
+    # Try real path first (only when not synthetic and module exists)
+    if not is_syn:
+        try:
+            from aionis.config import settings
+            from aionis.eval import event_study  # noqa: F401
+
+            cache = settings.data_dir / "cache"
+            etype = st.selectbox("event type", ["13D", "earnings"], key="event_type_real")
+            if etype == "13D":
+                events = event_study.events_13d(cache / "phase_d_13d_events.parquet")
+            else:
+                events = event_study.events_earnings(cache / "phase_b_fundamentals.parquet")
+
+            if events.empty:
+                st.warning(f"no {etype} events to study.")
+                return
+
+            prices = _prices()
+            st.plotly_chart(_car_chart(prices, events), use_container_width=True)
+            n_surv = int(_car_summary(prices, events)["n_events"].iloc[0])
+            st.caption(f"{n_surv} of {len(events)} {etype} events survived the session/window "
+                       "filter; CAR = mean across survivors of the per-event cumulative abnormal "
+                       "return (equal-weight cross-section benchmark).")
             return
-        prices = _prices()
-        st.plotly_chart(_car_chart(prices, events), use_container_width=True)
-        n_surv = int(_car_summary(prices, events)["n_events"].iloc[0])
-        st.caption(f"{n_surv} of {len(events)} {etype} events survived the session/window "
-                   "filter; CAR = mean across survivors of the per-event cumulative abnormal "
-                   "return (equal-weight cross-section benchmark).")
-    except Exception as e:  # noqa: BLE001
-        st.warning(f"event-study compute failed: {e}")
+        except ImportError:
+            pass  # Fall through to demo
+        except Exception as e:  # noqa: BLE001
+            st.warning(f"event-study compute failed: {e}")
+            return
+
+    # Demo path (is_syn=True or module missing)
+    st.warning("DEMO: synthetic data — illustrates method/interaction, not a research conclusion.")
+
+    event_types = ["earnings", "13D", "macro"]
+    demo_windows = _demo_event_windows(event_types, n_per_type=3, rng=None)  # Uses default rng=7
+
+    for etype in event_types:
+        st.markdown(f"**{etype}**")
+        subset = demo_windows[demo_windows["event_type"] == etype]
+        if subset.empty:
+            continue
+
+        # Compute CAR curve and CI band
+        car_result = _car_ci(subset, t_pre=10, t_post=21)
+
+        # Build Plotly figure
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(
+            x=car_result.index,
+            y=car_result["hi"],
+            line={"width": 0},
+            showlegend=False,
+            hoverinfo="skip",
+        ))
+        fig.add_trace(go.Scatter(
+            x=car_result.index,
+            y=car_result["lo"],
+            fill="tonexty",
+            fillcolor="rgba(100,150,255,0.15)",
+            line={"width": 0},
+            showlegend=False,
+            hoverinfo="skip",
+        ))
+        fig.add_trace(go.Scatter(
+            x=car_result.index,
+            y=car_result["mean"],
+            mode="lines",
+            line={"color": "#1f77b4"},
+            name="CAR",
+        ))
+        fig.add_vline(x=0, line_dash="dash", line_color="red")
+        fig.add_hline(y=0, line_dash="dot", line_color="grey")
+        fig.update_layout(
+            xaxis_title="sessions from event (0 = event)",
+            yaxis_title="cumulative abnormal return",
+            height=380,
+            margin=dict(l=10, r=10, t=40, b=10),
+            title=f"CAR ({etype}, {subset['event_id'].nunique()} events) ±95% CI — demo data",
+        )
+        from dashboard.theme import apply_theme
+        fig = apply_theme(fig)
+        st.plotly_chart(fig, use_container_width=True)
+
+    st.caption("Demo: synthetic event windows (rng=7) illustrate CAR computation. "
+               "Real event-study requires the event_study module + cached event parquet files.")
+
+
+# ----------------------------------------------------------------------------
+# uncertainty CV-fold helpers (demo-capable)
+# ----------------------------------------------------------------------------
+
+
+def _cv_fold_box(fold_ics: pd.DataFrame) -> go.Figure:
+    """Box plot of per-fold IC values (CV stability visualization).
+
+    Args:
+        fold_ics: DataFrame with columns [fold, repeat, arm, ic].
+
+    Returns:
+        Plotly Figure with box traces per arm.
+    """
+    fig = go.Figure()
+
+    for arm in fold_ics["arm"].unique():
+        arm_data = fold_ics[fold_ics["arm"] == arm]["ic"]
+        fig.add_trace(go.Box(
+            x=arm_data.values,
+            name=arm,
+            boxpoints="outliers",
+        ))
+
+    fig.add_vline(x=0, line_dash="dot", line_color="grey")
+    fig.update_layout(
+        xaxis_title="cross-sectional rank-IC",
+        yaxis_title="arm",
+        height=320,
+        margin=dict(l=10, r=10, t=20, b=10),
+        title="CV-fold stability (per-arm IC distribution across folds)",
+        showlegend=False,
+    )
+    from dashboard.theme import apply_theme
+    fig = apply_theme(fig)
+    return fig
+
+
+def _demo_fold_ics(
+    n_folds: int = 5,
+    n_repeats: int = 3,
+    rng: np.random.Generator | None = None,
+) -> pd.DataFrame:
+    """Generate reproducible demo CV-fold IC data for uncertainty visualization.
+
+    Args:
+        n_folds: Number of CV folds.
+        n_repeats: Number of repeats per fold.
+        rng: Random number generator (if None, uses seeded default_rng(7) for reproducibility).
+
+    Returns:
+        DataFrame with columns [fold, repeat, arm, ic].
+    """
+    if rng is None:
+        rng = np.random.default_rng(7)  # Fixed seed for reproducible demo
+
+    rows = []
+    arms = ["treatment", "base"]
+
+    for fold in range(1, n_folds + 1):
+        for repeat in range(1, n_repeats + 1):
+            for arm in arms:
+                # Demo: treatment has slightly higher mean IC than base
+                if arm == "treatment":
+                    ic = rng.normal(0.05, 0.02)  # Mean 0.05, vol 0.02
+                else:
+                    ic = rng.normal(0.03, 0.02)  # Mean 0.03, vol 0.02
+                rows.append({
+                    "fold": fold,
+                    "repeat": repeat,
+                    "arm": arm,
+                    "ic": ic,
+                })
+
+    return pd.DataFrame(rows)
 
 
 def view_uncertainty(runs: list[dict], run: dict) -> None:
+    """Uncertainty: differential forest + CI precision + CV-fold stability."""
     st.subheader("Uncertainty")
     st.markdown("**Differential forest plot** (all phases) — CI brackets 0 ⇒ NULL")
     if runs:
         st.plotly_chart(_differential_forest(runs), use_container_width=True)
         st.plotly_chart(_ci_half_bar(runs), use_container_width=True)
+
     st.markdown(f"**Selected run** `{run['config_sig'][:12]}…` · H6 deterministic: "
                 f"{run.get('h6_deterministic')}")
     diff = run["differential"]
@@ -679,6 +1324,25 @@ def view_uncertainty(runs: list[dict], run: dict) -> None:
     if pl:
         st.caption(f"bundle-shuffle placebo: mean {pl.get('mean_diff', 0):+.4f} "
                    f"(DM-p {pl.get('dm_p_mbb', 0):.3f}) — must vanish if the signal is real.")
+
+    # CV-fold stability section (demo-capable)
+    st.markdown("**CV-fold stability** (per-arm IC distribution across folds)")
+    fold_data = run.get("fold_ics")  # Real path: persist fold ICs in run artifact
+    if fold_data is None or not isinstance(fold_data, pd.DataFrame) or fold_data.empty:
+        # Demo path
+        st.warning(
+            "DEMO: synthetic data — illustrates method/interaction, "
+            "not a research conclusion."
+        )
+        demo_folds = _demo_fold_ics(n_folds=5, n_repeats=3, rng=None)  # Uses default rng=7
+        st.plotly_chart(_cv_fold_box(demo_folds), use_container_width=True)
+        st.caption("Demo: synthetic fold ICs (rng=7) illustrate CV stability visualization. "
+                   "Real CV-fold data requires fold-level IC persistence in run artifacts.")
+    else:
+        st.plotly_chart(_cv_fold_box(fold_data), use_container_width=True)
+        n_folds = fold_data["fold"].nunique()
+        st.caption(f"CV stability across {n_folds} folds — IC spread by arm.")
+
     st.caption("Multiple-testing deflation (DSR / haircut across the strategy family) is in "
                "the **Strategy Return** tab.")
 
@@ -936,7 +1600,7 @@ def main() -> None:
     with t_evol:
         view_evolution(run)
     with t_ev:
-        view_event_study(run)
+        view_event_study(run, is_syn)
     with t_unc:
         view_uncertainty(meta_runs, run)
     with t_hr:
