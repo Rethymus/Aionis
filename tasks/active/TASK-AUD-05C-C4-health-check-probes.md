@@ -140,7 +140,7 @@
 - Rechecked `tests/test_health_check.py` (7 passed), repository ruff, `git diff --check`, and an
   exact blocked-source scan of `scripts/health_check.py`; all passed.
 - Committed atomically with the separately reviewed dashboard extraction and state/task records as
-  `05ec7af` (`chore: finalize dashboard and health remediation`).
+  `7dede9b` (`chore: finalize dashboard and health remediation`).
 
 ## Success metrics
 

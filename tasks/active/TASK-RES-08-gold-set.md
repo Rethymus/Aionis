@@ -1,13 +1,17 @@
 # RES-08 — LLM-extractor eval: human gold-set construction (M; owner-gated)
 
 - 编号: RES-08
-- 状态: **owner-gated — awaiting explicit authorization; DO NOT start without owner GO**
+- 状态: **HOLD — REPLAN REQUIRED into schema/sample/annotation/adjudication/freeze tasks**
 - Priority: **P2**（审计 §11 P2 后续研究方向；§7 LLM 贡献与成本审计）
 - Size: **M**（人工标注数据集构建；4-6 周工作量；需 owner 亲自参与）
 - Risk: **HIGH**（人工标注质量决定 LLM ablation 可信度；无 gold set 无法评估）
 - 建议 agent role / model tier: **Owner（亲自标注）→ Engineer（数据管理）→ Verifier（质量检查）→ Reviewer（文献对齐）**
 
 ## 目标 + 为什么重要
+
+> 2026-08-01 planning correction: do not store durable annotations under gitignored `data/**`.
+> The replacement design uses tracked `evals/cases/` records keyed by accession/source sha256 and
+> text offsets, without redistributing filing text. RD-04/RD-05 must land before human annotation.
 
 **目标**：构建 **人工标注的 13D/8-K 事件抽取 gold set**（至少 100 个 13D + 100 个 8-K 样本），每个样本包含 **事件文本、人工标注的 direction、mechanism_keyword、abstention 标记**，作为 LLM ablation 的评估基准。
 

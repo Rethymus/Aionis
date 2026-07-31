@@ -1,13 +1,18 @@
 # RES-02 — Strong baseline ladder: FF5 + DFF macro features (S; owner-gated)
 
 - 编号: RES-02
-- 状态: **owner-gated — awaiting explicit authorization; DO NOT start without owner GO**
+- 状态: **HOLD — REPLAN REQUIRED; raw monthly FF5/DFF lacks cross-sectional variation and intake is unresolved**
 - Priority: **P2**（审计 §11 P2 后续研究方向；§4.2 基线不足）
 - Size: **S**（单个特征族添加；2-3 周工作量）
 - Risk: **MEDIUM**（新增特征但仅探索性；不触碰 frozen B/C/D/E1 结果）
 - 建议 agent role / model tier: **Engineer (Sonnet) → Verifier (Sonnet) → Reviewer (Opus)**
 
 ## 目标 + 为什么重要
+
+> 2026-08-01 planning correction: this task must not be executed as written. Raw monthly FF5/DFF
+> values are common to every security in a month and therefore cannot directly rank the cross-section.
+> A replacement task must first define stock-specific rolling exposures/interactions, prove no
+> same-month future use, pass `TASK-RD-13`, and separately clear French-data license/release/PIT intake.
 
 **目标**：在 Aionis 现有九列基本面基线基础上，增加 **Fama-French 5 因子 + DFF 宏观特征**（MKTRF、SMB、HML、RMW、CMA + DFF 利差），形成一个新的 baseline config，注册为 **BASELINE-FF5-001**。
 

@@ -1,13 +1,17 @@
 # RES-10 — LLM-extractor eval: precision/recall/coverage/abstention reporting (S; owner-gated)
 
 - 编号: RES-10
-- 状态: **owner-gated — awaiting explicit authorization; DO NOT start without owner GO**
+- 状态: **HOLD — REPLAN REQUIRED after RD-04/06/07/08/11**
 - Priority: **P2**（审计 §11 P2 后续研究方向；§7 LLM 贡献与成本审计）
 - Size: **S**（评估指标实现；2-3 周工作量）
 - Risk: **MEDIUM**（评估指标但仅探索性；不触碰 frozen B/C/D/E1 结果）
 - 建议 agent role / model tier: **Engineer (Sonnet) → Verifier (Sonnet) → Reviewer (Opus)**
 
 ## 目标 + 为什么重要
+
+> 2026-08-01 planning correction: `temperature=0` does not make a remote model API bit-deterministic.
+> Reproducibility must use immutable raw-response hashes/cache plus a pinned parser/schema replay.
+> The replacement task must also consume tracked `evals/cases/` annotations, not `data/gold_set/**`.
 
 **目标**：实现 **LLM 抽取评估指标**（precision、recall、coverage、abstention rate），使用 RES-08 的 gold set，形成一个新的 eval config，注册为 **EVAL-LLM-001**。
 

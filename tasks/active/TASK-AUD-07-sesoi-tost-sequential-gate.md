@@ -2,7 +2,7 @@
 
 - 编号: AUD-07
 - 标题: Define practical-equivalence and repeated-look inference before any E3 outcome-bearing metric is viewed.
-- 状态: **awaiting owner steer — backlog candidate; hard gate before headline ignition**
+- 状态: **POLICY VALUES FROZEN; implementation-level formula is HOLD pending AUD-07B**
 - Priority: **P1**
 - Size: **M**
 - Risk: **HIGH**（inferential policy 不可在看到 forward outcomes 后倒订）

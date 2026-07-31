@@ -1,7 +1,7 @@
 # AUD-05C — Disposition uncovered transport boundaries
 
 - 编号: AUD-05C
-- 状态: **DISPOSITION COMPLETE (awaiting owner review of C1-C5 sub-tasks)**
+- 状态: **DISPOSITION COMPLETE; downstream C1/C2/C3/C5 acceptance work remains**
 - Priority: **P0**
 - Size: **M**
 - Risk: **HIGH**
@@ -101,4 +101,3 @@
 5. Independent Verifier validates each task
 6. Reviewer approves each task
 7. AUD-05C marked COMPLETE → AUD-06 fetch-readiness dependency unblocked
-

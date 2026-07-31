@@ -1,10 +1,16 @@
 # state/blockers.md — what is blocking and why
 
-- **BLS CPI/NFP live transport is BLOCKED.** BLS is blocked per CLAUDE.md data-source constraints (“Blocked: yfinance/Yahoo, BLS, Stooq”). Resolution = C1: disable BLS live transport in `ingest/event_text.py:_fetch_text()` (CPI/NFP branch); cache miss → fail-closed; no BLS adapter allowed. See `TASK-AUD-05C-C1-disable-bls-transport.md`.
+- **BLS CPI/NFP live transport remains BLOCKED by policy; C1 code is implemented but not yet accepted.**
+  Cache miss now fails closed in the local diff, but independent Verifier/Reviewer are still required before
+  commit. No BLS adapter is allowed. See `TASK-AUD-05C-C1-disable-bls-transport.md`.
 - **E3 headline is NO-GO pending live-input readiness.** Scheduler/E2E are incomplete and the current
   runner can drop the unlabeled current cross-section, fall back to the last labeled date, skip empty
   event text, omit the membership assertion, and record ambiguous provider cutoff metadata. Resolution
   path = AUD-04/AUD-05 source contracts → `TASK-AUD-06` → existing E3 Slice 6/7 → AUD-07 + owner GO.
+- **E3 inferential verdict is HOLD pending AUD-07B statistical correction audit.** ADR-010 currently
+  says both TOST p-values must exceed the look-specific alpha, which appears directionally reversed;
+  the fixed 90% CI plus O'Brien-Fleming spending construction also needs a strong proof of sequential
+  equivalence error control. No low-reasoning implementation is allowed before resolution.
 - **E2 is underpowered as a backtest.** The cutoff gate collapses the 125-month OOS window to
   ~10-18 post-cutoff months → no statistical power. Resolution path = E3 forward-live (the only
   powered zero-leak route). This blocks the E-sequence's *primary confirmatory claim*; it does NOT
@@ -13,7 +19,10 @@
 - **GLM 5-hour usage limit (429, recurring).** Provider quota; resets on a rolling window.
   Mitigation: model tiering (opus for high-stakes), bounded single retry, patience. Not a code
   blocker.
-- **PRAW (Reddit) wrapper is OWNER-HELD pending 7-gate clearance.** PRAW wrapper integration requires 7-gate data-intake rubric clearance (`docs/data-intake-rubric.md`), particularly G6 (selection-honesty: retail-attention bias) and Reddit ToS/content license approval. Resolution = owner decision on G1-G7 → if APPROVE, C3 wrapper task proceeds; if REJECT, disable PRAW live transport. See `TASK-AUD-05C-C3-praw-wrapper-7gate.md`.
+- **PRAW (Reddit) wrapper is authorized but not implemented.** Owner accepted the 7-gate conditions:
+  internal research only, no redistribution, permanent `mode: exploratory`, and declared selection
+  bias. Resolution = bounded C3 Engineer → independent Verifier → Reviewer; no live pull or research
+  run is authorized by that decision. See `TASK-AUD-05C-C3-praw-wrapper-7gate.md`.
 - **Kenneth French / Fama-French data intake is OWNER-HELD.** `features/selection_panel.py:fama_french_daily` uses `pandas_datareader.get_data_famafrench()` (SDK-owned HTTP, no shared policy). Resolution = owner data-intake review; until approved, cache miss BLOCKED or disable. See AUD-05C disposition table.
 - **Model API transport (≥2s rule scope) is OWNER-HELD.** GLM/SiliconFlow/ModelScope model APIs (GLMEmbedder, GLMCausalEdgeClient, OpenAICompatClient, ProviderRouter) need owner clarification: does the ≥2s host-spacing rule apply to model APIs (SDK-exempt) or all HTTP calls? Resolution = owner decision on politeness rule scope; if ≥2s applies, implementation needed. See `TASK-AUD-05C-C5-model-api-transport-disposition.md`.
 - **Phase B OOS panel blocked by `uv.lock` stranding (benign).** The A1 same-sig guard

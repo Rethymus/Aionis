@@ -1,13 +1,20 @@
 # RES-03 — Strong baseline ladder: rank-aware objective (S; owner-gated)
 
 - 编号: RES-03
-- 状态: **owner-gated — awaiting explicit authorization; DO NOT start without owner GO**
+- 状态: **HOLD — REPLAN REQUIRED; ranking label/query contract is undefined**
 - Priority: **P2**（审计 §11 P2 后续研究方向；§4.2 目标函数错配）
 - Size: **S**（单目标函数替换；2 周工作量）
 - Risk: **MEDIUM**（目标函数变更但仅探索性；不触碰 frozen B/C/D/E1 结果）
 - 建议 agent role / model tier: **Engineer (Sonnet) → Verifier (Sonnet) → Reviewer (Opus)**
 
 ## 目标 + 为什么重要
+
+> 2026-08-01 planning correction: do not execute this task as written. LightGBM's supported ranking
+> objectives are `lambdarank` and `rank_xendcg`; `rank_net` / `rank_pairwise` are not valid objective
+> names. Continuous forward returns must first be converted to pre-frozen integer ordinal relevance
+> labels within each month, with month as query/group and explicit tie/missing/binning policies. A
+> strong-method feasibility task must choose and justify that contract before implementation.
+> See `TASK-RD-15-rank-objective-contract.md`.
 
 **目标**：在 Aionis 现有 MSE LightGBM 基线基础上，增加 **rank-aware objective**（如 `lambdarank`、`rank_net` 或 `rank_pairwise`），形成一个新的 baseline config，注册为 **BASELINE-RANK-001**。
 

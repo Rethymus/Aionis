@@ -2,7 +2,7 @@
 
 - 编号: AUD-05
 - 标题: Centralize and test minimum request spacing plus bounded exponential backoff for research fetchers.
-- 状态: **coordination only; AUD-05A COMPLETE, 05B ready, 05C held behind 05B**
+- 状态: **coordination only; AUD-05A/05B COMPLETE; 05C C1/C2/C3/C5 downstream gates remain**
 - Priority: **P0**
 - Size: **L — split into policy primitive, approved-adapter integration, and uncovered-boundary disposition**
 - Risk: **HIGH**（横跨 live ingest；错误实现可导致封禁、重复请求或不可测试的长 sleep）

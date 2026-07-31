@@ -42,7 +42,8 @@ credible positive OR a tight publishable null.
 ## 前置条件
 - [x] ADR-008 accepted.
 - [x] E3 pre-reg exists (`docs/phase-e3-preregistration.md`).
-- [ ] Planner slices this into verifiable sub-tasks (scheduler / forward-ledger / scoring / ingest / dashboard).
+- [x] Planner sliced forward-ledger, ingest, commit, scoring and dashboard; scheduler/E2E remain downstream
+      of AUD-06 and AUD-07B.
 
 ## 完成后需要更新
 - `state/current.md`, `state/handoff.md`; `docs/RESULTS.md` (once forward predictions begin accruing).

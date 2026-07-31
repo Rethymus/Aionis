@@ -68,10 +68,14 @@
 
 ## Overnight checkpoint (Wave-A)
 
-- Goal: execute Wave-A C1/C2/C3 + RD-04/05/06/07/09/10/12 with independent gates and safe push.
-- Current task: Group A commit.
-- Completed gates: C1 PASS+APPROVE, C2 PASS+APPROVE, C3 PASS+APPROVE; full pytest/ruff/diff/frozen clean.
-- Files changed: approved ingest source/tests, task evidence, state/current/handoff.
-- Last tests: full hermetic pytest passed; ruff and diff clean.
-- Blockers: none so far.
-- Next exact action: stage Group A explicit files and commit `fix(ingest): close remaining transport policy gaps`.
+- Goal: execute Wave-A C1/C2/C3 + RD-04/05/06/07/09/10/12 with independent gates and safe push. **COMPLETE.**
+- All gates passed: C1/C2/C3 + RD-04/05/06/07/09/10/12 each have independent Verifier PASS + Reviewer APPROVE.
+  Fixes applied and re-gated: RD-07 (generated_at caller-provided for byte-stability), RD-10 (vol_adj_mom
+  last-12 window + std<=0), RD-12 (additive constituents_manifest_on + 3 unskipped manifest oracles;
+  constituents_on behavior unchanged).
+- Commits: `6085e92` Group A, `2653907` Group B, `5f884a3` Group C. Final docs/state bundle (this commit).
+- Final gates: full hermetic pytest green (zero skips; only pre-existing forward_score warnings);
+  `uv run --offline ruff check` clean; `git diff --check` clean; frozen/ledger/results/data/forward diff
+  empty; no data/.env/*.parquet staged; no real network/LLM/research/forward script ran; E3 outcome unobserved.
+- Files: RD-01/02/03/08/11/13..17 task specs remain PLANNED (future waves) — committed as planning docs.
+- Blockers: none. Next: optional fast-forward push HEAD:main (origin/main is ancestor of HEAD).

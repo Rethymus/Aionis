@@ -21,17 +21,18 @@
 - **known issues:** protected historical claims may retain superseded wording; non-chronological historical CV;
   blocked market-source fallbacks and sub-2s fetch paths; Phase B A1 lock stranding; current SIC snapshot;
   ADR-010 TOST p-value direction/sequential-equivalence construction requires AUD-07B strong review.
-- **last verification (2026-08-01):** the full hermetic pytest suite passed with only existing
-  forward-score warnings, `uv run --offline ruff check` is clean, `git diff --check` is clean, and
-  the frozen prereg/ADR/config/ledger/results/data/forward diff is empty. C1/C2/C3 now have
-  independent Verifier PASS and Reviewer APPROVE. No frozen config, preregistration,
-  ledger/result artifact, or forward outcome changed.
+- **last verification (2026-08-01):** Wave-A complete. The full hermetic pytest suite passes (zero skips;
+  only the existing forward-score warnings), `uv run --offline ruff check` is clean, `git diff --check` is
+  clean, and the frozen prereg/ADR/config/ledger/results/data/forward diff is empty. C1/C2/C3 and
+  RD-04/05/06/07/09/10/12 each have independent Verifier PASS + Reviewer APPROVE; committed as `6085e92`
+  (Group A), `2653907` (Group B), `5f884a3` (Group C). No frozen config, preregistration, ledger/result
+  artifact, or forward outcome changed; no real network/LLM/research/forward script ran.
 - **planning (2026-08-01):** a planning-only low-reasoning development program was frozen as
   `reports/milestone/2026-08-01-low-reasoning-development-roadmap.md`, the Wave-A launch brief,
-  `TASK-RD-00..17` and strong-only `TASK-AUD-07B`. The first offline wave is estimated at
-  10.75–16 Engineer hours. The final unattended prompt narrows execution to C1/C2/C3 plus
-  RD-04/05/06/07/09/10/12, includes context/token controls, and passed independent planning Review.
-  Wave-A execution is in progress under the owner-provided Goal prompt; Group A transport closures
-  are ready for commit.
+  `TASK-RD-00..17` and strong-only `TASK-AUD-07B`. **Wave-A has executed under the owner-provided Goal
+  prompt: C1/C2/C3 + RD-04/05/06/07/09/10/12 are all COMPLETE** (independent Verifier PASS + Reviewer
+  APPROVE each; RD-07 byte-stability, RD-10 window/std, and RD-12 manifest-oracle findings were fixed
+  and re-gated). RD-01/02/03/08/11/13..17 remain PLANNED for future waves. No real
+  network/LLM/data/trial ran; no frozen surface, ledger, result, or E3 outcome changed.
 - **evidence:** `reports/audits/2026-07-31-quant-llm-research-audit.md` and `tasks/active/TASK-AUD-00-remediation-coordination.md`.
 - **updated:** 2026-08-01.
