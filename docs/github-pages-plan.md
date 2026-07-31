@@ -1,9 +1,9 @@
 # GitHub Pages 展示方案（DRAFT v0.1 · 2026-07-31）
 
-> **状态：DRAFT — 待业主决策。** 本方案为全新起草（grep 确认 `docs/ tasks/ state/ decisions/
-> reports/ archive/ evals/ .omc/` 内无先前产物）。**承重阻塞**：仓库当前为 **PRIVATE**
->（`gh repo view --json visibility` 确认），而 GitHub Pages 免费档**仅对 PUBLIC 仓库**。须先决策
-> 托管路径（§1），再实施。
+> **状态：DRAFT v0.2 — 承重决策已定（2026-07-31）：托管 = B（私有 + Cloudflare Pages）；
+> E3 公开 = B（冻结快照 + EXPLORATORY 横幅）。** 本方案为全新起草（grep 确认 `docs/ tasks/
+> state/ decisions/ reports/ archive/ evals/ .omc/` 内无先前产物）。原承重阻塞（仓库 PRIVATE，
+> GitHub Pages 免费需 PUBLIC）已由路径 B 绕开（Cloudflare Pages 免费档支持私有仓库）。
 
 ## 1. 托管路径决策（承重 — 业主定）
 
@@ -14,8 +14,9 @@
 | **C. 保持私有 + GitHub Pro** | $4/月 | 私有 | GitHub Pages 原生 + 私有；但违反"零成本"约束 |
 | **D. 暂不做** | $0 | — | dashboard + RESULTS.md 内部够用；延后 |
 
-**推荐 B**（零成本 + 私有，最贴项目"零成本 + vibe-coding"约束）。若业主不介意公开且想要
-`github.io` URL，则 A 最简。**C 被零成本约束排除**（除非业主明确接受付费）。
+**✅ CHOSEN: B（2026-07-31）** — 私有 + Cloudflare Pages 免费档。**Cloudflare Pages 优先于
+Netlify**（更慷慨的免费档 + 无构建分钟限制 + 全球 CDN；二者都支持私有仓库 via GitHub 集成）。
+A/C/D 未选。
 
 ## 2. 静态站点生成器：mkdocs-material（Apache-2.0）
 - 许可证 **Apache-2.0** → 过 ADR-007 闸门（仅 MIT/Apache/BSD）。
@@ -38,9 +39,10 @@
 `runs/results/` / `dashboard/app.py`（动态，需服务器）/ 任何前向实时信号或未实现前向数据。
 
 ## 4. E3 前向公开策略（承重 — 业主定）
-- **A. 只发 E3 预注册**（不公开任何累积进展）— 反泄漏最保守。**推荐**。
-- **B. 冻结快照 + EXPLORATORY 横幅**（公开累积进展）— 增泄漏面：前向 IC 被公众观察 → 可能影响 headline 决策（即便有横幅）。
-- 依据：pre-reg §1/§7 — 前向 IC 在 calendar gate（≥ 阈值月数 + ci_half<0.015）前为 EXPLORATORY，**不得**当 confirmatory。
+- A. 只发 E3 预注册 — 未选。
+- **✅ B. 冻结快照 + EXPLORATORY 横幅（CHOSEN 2026-07-31）** — 公开累积进展的**冻结快照** + 显眼 EXPLORATORY 横幅。
+- **冻结快照纪律（反泄漏关键）**：快照由 `scripts/` 脚本从**已 commit 的** `runs/forward/<sig>/` 产物生成（图表 PNG + `summary_forward` 数值），**显式写入** `docs/images/` + `docs/forward-snapshot.json` 并 `git commit`；CI 只部署已 commit 内容（**绝不**自动从 live `runs/` 读）。刷新快照 = 一次 deliberate commit，非静默同步。
+- 依据：pre-reg §1/§7 — 前向 IC 在 calendar gate（≥ 阈值月数 + ci_half<0.015）前为 EXPLORATORY；横幅须明示"非 confirmatory，不构成投资建议"。
 
 ## 5. 反泄漏硬防护
 1. 只发已 `git commit` 的冻结内容（时间戳早于部署）。
@@ -49,6 +51,8 @@
 4. CI 只读权限；无密钥/数据访问；`.gitignore` 保护 `.env`/`data/`/`*.parquet`。
 5. 不暴露 config hash / 可复现实验配置（防 rerun-to-significance）。
 6. 图表为冻结快照（带时间戳水印）。
+7. **E3 快照 commit-only**（路径 B）：CI 只读 `docs/`（已 commit），**绝不**读 `runs/forward/`；快照刷新 = deliberate `git commit`（防静默刷新 = rerun-to-significance 面）。
+8. **EXPLORATORY 横幅**在 E3 页顶部 + 每张前向图注脚（"frozen snapshot · not confirmatory · not investment advice"）。
 
 ## 6. 分阶段实施
 - **Phase 1 (MVP)**：`/docs`（站点根）+ `mkdocs.yml` + 一个 CI（Pages 或 Cloudflare/Netlify）+ `RESULTS.md` + 预注册 + ADR 注册表 + 数据闸门。~2h。
