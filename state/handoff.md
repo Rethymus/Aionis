@@ -1,20 +1,33 @@
 # state/handoff.md — current-pass handoff
 
-- **round:** E3 Slice 3 (forward commit: fit-on-I_t → commit-before-reveal) + ADR-009 hybrid causal layer, 2026-07-31.
+- **round:** E3 Slice 4 (forward scoring + accumulation), 2026-07-31.
 - **this pass did:**
-  - Resumed after a GLM-5h-quota interruption mid-fix-round; diagnosed REAL state (code fixes FIX1/2/3/4/6/7 had landed before the agent died; the 3 gating tests + FIX8 doc note were missing).
-  - Closed the Reviewer's REQUEST-CHANGES (round 1): added the 4 missing gating tests (HIGH sign-flip→`config_sha256`, `frozen_params` flip, `no_ledger==live`, `_add_usage` token accounting) + FIX8 doc note + the cumulative-token log helper in `extract_event_edges`. Independent Verifier (sonnet) → **PASS** (0 blockers; 478→479 green; ruff clean; ledger 39).
-  - Slice 3 = the forward-commit plumbing + the ADR-009 hybrid causal layer:
-    - **3a** `src/aionis/schema/causal_edge.py` — closed enum `{sic_sector(FF-12, 12 members), direction, mechanism_keyword={earnings_signal,ownership_change,guidance,other}, horizon_bucket}` + I5 `extra="forbid"` + `assert_no_forbidden` (rejects `market_impact`/`expected_return`/`historical_similarity`).
-    - **3a′** `src/aionis/features/frozen_beta.py` — frozen sign-only β table (Boudt-Neely qualitative-v1 prior; `TODO(headline)`-gated before ignition) + `FROZEN_BETA_SHA256` content hash (I8 silent-mutation guard) + `broadcast_macro_beta` (event-time, PIT).
-    - **3b** `src/aionis/features/causal_broadcast.py` — event self-shocks → `propagate_panel`(FF-12) peer cols + macro sign-β broadcast + minimal closed-enum LLM event edge (`GLMCausalEdgeClient`, idempotent sha256 cache, per-call token usage) → `build_forward_extra_features` long frame.
-    - **3c** `src/aionis/eval/forward_freeze.py` — compose the 3 Slice-2 collectors under a shared clock → `iset_sha256` → `forward_iset_frozen` row (idempotent).
-    - **3d** `src/aionis/eval/forward_commit.py` — PIT single-fit (I4, embargo 21, opt-in membership no-forward-fill assert) + `build_forward_config` (FULL `FROZEN_PARAMS` + `frozen_beta_sha256` in the sig, I8) + `resolve_pinned_provider` (glm, I6) + `run_forward_commit` (config→fit→commit ordering, I1; refuses non-glm; `no_ledger` dry-run faithful to live sig).
-    - **3e** `scripts/forward_commit.py` + `src/aionis/eval/forward_commit_runner.py` — standalone runner, `PHASE_E3_NO_LEDGER=1` dry-run, NYSE month-end trigger.
-    - **3f** `tests/test_forward_commit_invariants.py` — I4/I6/I7 + I1/I2/I5 cross-checks.
-  - ADR-009 + `decisions/index.md` + E3 pre-reg §1/§2.2/§3 + impl plan amended (durable registry). Deep-interview spec at `.omc/specs/deep-interview-e3-causal-schema.md`.
-- **files:** 7 new src/script modules + 7 new test files + ADR-009 + 4 tracked-doc amendments.
-- **verified:** `uv run pytest -q` **479 passed** (0 skip, 0 fail; baseline 343 → +136 Slice-3 tests); `uv run ruff check` clean; `runs/ledger.jsonl` still **39 lines**; I5/I1 CRITICAL surfaces airtight (Reviewer opus); HIGH I8 silent-mutation guard closed (sign-content hash + gating test `test_config_sha256_flips_on_frozen_beta_sign_change`).
-- **next precise action:** E3 **Slice 4** — forward scoring + accumulation: reveal as `target_t` realizes → month rank-IC → accumulate forward differential IC + MBB-DM + NW-HAC + random-walk 95% band; net-new `src/aionis/eval/forward_score.py` + `scripts/forward_score.py`; writes `runs/forward/<sig>/ic_forward.parquet` + `summary_forward.json`. Then Slice 5 (dashboard Forward-IC tab) + Slice 6 (scheduler). Watch the GLM 5h quota. Do NOT push without owner OK; do NOT ignite the headline until the 1–2 mo shadow validates GLM.
-- **do NOT repeat:** do NOT ignite the headline until shadow validates GLM; do NOT re-litigate the hybrid causal-layer design (ADR-009) or E2-as-confirmatory (ADR-008); do NOT touch the 4 published nulls / frozen pre-reg core / confirmatory configs; do NOT silently mutate the frozen-β signs (the content hash makes any flip a new forward sequence).
-- **uncommitted:** all Slice-3 changes are in the working tree on `feat/e3-forward-ledger` (ahead 1 = the Slice-2 commit); commit follows the Slice 1/2 atomic pattern on owner OK.
+  - Slice 4 = as each committed prediction's `target_t` (= predict_ts + 21 sessions) realizes: REVEAL
+    (I1-gated), compute the month's cross-sectional rank-IC per arm, ACCUMULATE the forward differential
+    IC series (arm_e13 − arm_base), apply NW-HAC + MBB-DM + publishability gate; write
+    `runs/forward/<sig>/{ic_forward.parquet, summary_forward.json, config.json, meta.json}`.
+  - 2 Engineer passes (sonnet) TDD:
+    - **Pass A (4a/4b/4c)** `src/aionis/eval/forward_score.py` — `fetch_realized_forward_returns`
+      (cached Phase-B price parquet; PIT endpoints only) + `reveal_and_score_forward_month` (delegates to
+      `forward_ledger.reveal_forward_outcome`; I1 gate) + `accumulate_forward_ic_series` (differential
+      ic_e13 − ic_base; `rank_ic_summary` NW-HAC + `diebold_mariano_mbb`; H6 bit-deterministic).
+    - **Pass B (4d/4e/4f)** `src/aionis/reporting/forward_results.py` `save_forward_run` (mirrors
+      `results.py:save_run` schema v2; idempotent overwrite) + `src/aionis/eval/forward_score_runner.py`
+      + `scripts/forward_score.py` + invariant suite (I1/I2/I9/H6).
+  - Verifier (sonnet) **PASS** (0 blockers; 506 green); Reviewer (opus) **APPROVE** (1 HIGH doc-only —
+    a comment/arg-order mismatch on the DM call where the CODE was correct — fixed; 2 MEDIUM optional,
+    skipped as YAGNI/future-proofing).
+- **files:** 4 new src/script modules + 4 new test files (+27 tests: 479→506, 0 skip).
+- **verified:** `uv run pytest -q` **506 passed** (0 skip); `uv run ruff check` clean; `runs/ledger.jsonl`
+  still **39 lines**; `runs/results/` untouched (**I9**); I1/I2/I9/H6 gated; accumulator differential sign +
+  DM convention match `phase_e1.differential`; H6 bit-deterministic (makes the idempotent overwrite safe).
+- **next precise action:** E3 **Slice 5** — dashboard Forward-IC tab (new `st.tabs` reading ONLY
+  `phase:"E3"` + `forward_*`; accrued forward IC+CI, committed-vs-revealed count, months-to-parity vs
+  ~42-mo parity, random-walk 95% band via `_cum_ic_ci_band`, **EXPLORATORY banner** until the calendar
+  gate). Then **Slice 6** (scheduler: NYSE month-end trigger; `scripts/forward_tick.py`). Watch the GLM 5h
+  quota. Do NOT push without owner OK; do NOT ignite the headline until the 1–2 mo shadow validates GLM.
+- **do NOT repeat:** do NOT ignite headline until shadow validates GLM; do NOT re-litigate ADR-009/ADR-008;
+  do NOT touch the 4 published nulls / frozen pre-reg / `forward_ledger.py` primitives / `save_run`; do NOT
+  let forward re-accumulation become non-deterministic (H6 is what makes the overwrite safe).
+- **uncommitted:** Slice-4 changes in the working tree on `feat/e3-forward-ledger` (ahead 2 = Slice-2 +
+  Slice-3 commits); commit on owner OK.

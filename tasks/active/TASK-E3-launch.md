@@ -2,15 +2,15 @@
 
 - 编号: E3
 - 标题: Build + launch the E3 forward-live track (the only zero-leakage, powered path to a credible positive).
-- 状态: **IN PROGRESS — Slice 1 + Slice 2 + Slice 3 DONE** (spec `docs/phase-e3-implementation-plan.md`;
+- 状态: **IN PROGRESS — Slice 1 + Slice 2 + Slice 3 + Slice 4 DONE** (spec `docs/phase-e3-implementation-plan.md`;
   owner decisions 2026-07-30: **GLM** pinned + **shadow 1–2 mo** + defaults adopted; **ADR-009 (2026-07-31)
   hybrid causal layer**: zero-LLM frozen-β macro + minimal closed-enum LLM event edge, FF-12 unified).
   Slice 1 = forward-ledger commit-reveal core (`7ce7f08`). Slice 2 = forward PIT-as-of-t ingest
-  (3 collectors + I3 clock; `5c564f8`). Slice 3 = forward-commit plumbing + hybrid causal layer
-  (Verifier PASS pytest 479 / Reviewer REQUEST-CHANGES resolved: HIGH I8 silent-mutation guard closed
-  via `FROZEN_BETA_SHA256` content hash + gating test; I5/I1 CRITICAL airtight; all MEDIUM/LOW fixed).
-  Next: Slice 4 = forward scoring + accumulation (reveal → month rank-IC → forward differential IC +
-  MBB-DM + NW-HAC + random-walk band).)
+  (3 collectors + I3 clock; `5c564f8`). Slice 3 = forward-commit plumbing + hybrid causal layer (`6f04f26`;
+  Verifier PASS pytest 479 / Reviewer REQUEST-CHANGES resolved). Slice 4 = forward scoring + accumulation
+  (reveal→rank-IC→differential IC + NW-HAC + MBB-DM; `forward_score.py` + `forward_results.py` + runner;
+  Verifier PASS pytest 506 / Reviewer APPROVE, 1 HIGH doc-only fixed).
+  Next: Slice 5 = dashboard Forward-IC tab → Slice 6 = scheduler.
 - 来源: [ADR-008](../../decisions/ADR-008-launch-e3-and-broaden-nulls.md) (TASK-STRAT verdict, 2026-07-30);
   `docs/phase-e3-preregistration.md`; **实施 spec**：`docs/phase-e3-implementation-plan.md`（架构 + 9 条零泄漏不变量 + 7 切片）。
 
