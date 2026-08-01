@@ -2,7 +2,7 @@
 
 - 编号: RD-16
 - 标题: 为 coverage、schema failure 与字段质量增加确定性不确定性报告。
-- 状态: **PLANNED — not implementation-authorized**
+- 状态: **COMPLETE — owner-authorized via /goal 2026-08-01 (P1); 独立 Verifier PASS (Wilson 公式独立手算验证 ≠ Wald; bootstrap byte-identical; RD-06 核心 0 diff) + 独立 Reviewer APPROVE (0 阻塞; 2 LOW 非阻塞函数长度). Wilson score + seed=0 分层 bootstrap；边界返回 warning 不伪造精度。**
 - Priority: **P1**
 - Size: **M**（90–150 分钟）
 - Risk: **MEDIUM**
