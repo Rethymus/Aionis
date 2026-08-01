@@ -262,3 +262,19 @@ ADR-010 Jennison-Turnbull amendment (opus design + independent opus review + app
 
 All owner decisions 2026-08-01 are now executed except RES restart (intentionally held) and optional follow-ups
 (RD-08 rule-table re-review, eval-code RCI implementation). Everything is on origin/main.
+
+## Dashboard v2 — near-final-product analysis interface (2026-08-01, built + gated)
+
+Per owner intent ("把现有研究工作台做成接近最终产品形态的分析界面"; data demonstrative only), built a Streamlit+plotly
+dashboard realizing `docs/dashboard-v2-design.md`'s 5 dimensions on deterministic synthetic data:
+- `dashboard/{demo_data,charts_v2,app_v2}.py` + `dashboard/README_v2.md` + `tests/test_dashboard_v2.py` +
+  `reports/design/2026-08-01-dashboard-v2-deploy-research.md`.
+- 5 tabs (拟合质量/波动结构/曲线演化/事件前后差异/不确定性), sidebar (Phase/Arm/Horizon/Event-type), publishability gate
+  (ci_half<0.015) + "Preliminary data — demonstrates the method" caption on every tab. 11 plotly chart builders
+  (alphalens/pyfolio/empyrical methodology, Apache-2.0; no new deps).
+- Gated: independent Verifier (AppTest headless render — caught + fixed a `StreamlitDuplicateElementId` crash via
+  unique `key=`) + Reviewer APPROVE. 32 tests pass; ruff clean. `src/aionis/**`, `dashboard/app.py` (v1),
+  `runs/ledger.jsonl`, data, frozen surfaces all UNMODIFIED.
+- RUN: `uv run streamlit run dashboard/app_v2.py`. Deploy: GitHub Pages CANNOT host Streamlit (static-only);
+  for the interactive dashboard on a private repo, Hugging Face Spaces (Streamlit runtime, free, private-OK) is
+  the recommended host (see the research report). Not yet deployed — owner's call.
