@@ -40,6 +40,12 @@ dev = ["pytest>=8.0", "ruff>=0.5"]
 dashboard = [
     "plotly>=5.18",
     "streamlit>=1.30",
+    # OSS tearsheet libraries (Apache-2.0 verified per reuse catalog)
+    "quantstats>=0.0.62",
+    "alphalens-reloaded>=0.0.1",
+    "pyfolio-reloaded>=0.0.1",
+    # Matplotlib for static figure export from OSS libraries
+    "matplotlib>=3.7",
 ]
 
 [project.scripts]

@@ -234,3 +234,55 @@ def _ci_half_by_phase() -> pd.DataFrame:
     # Show some phases near the 0.015 gate, some above
     ci_halves = [0.018, 0.012, 0.014, 0.020]  # C and D "near publishable"
     return pd.DataFrame({"phase": phases, "ci_half": ci_halves})
+
+
+def _factor_data_and_prices(
+    months: int = 125,
+    n_tickers: int = 500,
+) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Generate factor data and price data for alphalens factor analysis.
+
+    Returns:
+        factor_data: DataFrame with index=[date, ticker], column='factor'
+        prices: DataFrame with index=date, columns=tickers
+    """
+    # Use month-end dates with explicit frequency
+    month_end_dates = pd.date_range(start="2014-01-31", periods=months, freq="ME")
+
+    # Generate daily dates for the entire period (approx 20 trading days per month)
+    start_date = "2014-01-01"
+    end_date = pd.Timestamp(month_end_dates[-1]) + pd.DateOffset(months=1)
+    dates = pd.date_range(start=start_date, end=end_date, freq="B")  # Business days
+
+    tickers = [f"T{i:04d}" for i in range(n_tickers)]
+    rng = _rng()
+
+    # Generate prices (random walk starting from $100)
+    # Use month-end frequency to match factor_data and avoid alphalens frequency errors
+    price_data = {}
+    for ticker in tickers:
+        # Daily returns ~ N(0.0005, 0.02) (slight upward drift, 2% daily vol)
+        daily_ret = rng.normal(0.0005, 0.02, len(dates))
+        price_data[ticker] = 100 * np.cumprod(1 + daily_ret)
+
+    prices = pd.DataFrame(price_data, index=dates)
+    prices.index.name = "date"
+
+    # Resample prices to month-end frequency to match factor_data
+    # This is required by alphalens to avoid frequency mismatch errors
+    prices = prices.resample("ME").last()
+    prices.index = pd.DatetimeIndex(prices.index, freq="ME")
+
+    # Generate factor scores (monthly, aligned to month ends)
+    factor_rows = []
+
+    for date in month_end_dates:
+        for ticker in tickers:
+            # Factor score ~ N(0, 1)
+            factor_score = rng.normal(0, 1)
+            factor_rows.append({"date": date, "ticker": ticker, "factor": factor_score})
+
+    factor_data = pd.DataFrame(factor_rows)
+    factor_data = factor_data.set_index(["date", "ticker"])
+
+    return factor_data, prices
