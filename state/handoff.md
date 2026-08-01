@@ -284,3 +284,11 @@ dashboard realizing `docs/dashboard-v2-design.md`'s 5 dimensions on deterministi
   gate). `.github/workflows/deploy-pages.yml` (astral-sh/setup-uv + `uv sync --extra dashboard`; build→upload→deploy
   on push to main). Repo stays PRIVATE; Pages site is public (owner account supports private-repo Pages). Verified
   live (HTTP 200, full content). Independent Verifier PASSED (build, 13 Plotly.newPlot, MD5-deterministic, boundaries).
+- **J-T SESOI gate IMPLEMENTED (2026-08-01):** `src/aionis/eval/sesoi_gate.py` + `tests/test_sesoi_gate.py` — the
+  executable follow-through of ADR-010's Amendment 2026-08-01. Pure statistical functions (obf_z/obf_alpha/rci_level/
+  compute_rci/equivalence_verdict/look_summary/sequential_equivalence_gate) implementing the frozen OBF zₖ=(2.772,
+  2.263, 1.960), look-specific RCI levels (99.44/97.64/95.00%), strict-containment equivalence RCIₖ⊂[−0.010,+0.010],
+  first-look stopping; reuses `aionis.eval.rank_ic.rank_ic_summary` for HAC SE (not reimplemented). Consumes
+  caller-provided IC series ONLY (no E3/ledger/result reads — pure gate logic). Independent Verifier PASS (oracle
+  recomputed, strict-boundary, first-look stopping) + Reviewer APPROVE. 28 tests; ruff clean. NOTE: implementing the
+  gate does NOT ignite E3 or observe any outcome; E3 still needs AUD-06 + owner GO.
