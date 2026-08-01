@@ -2,7 +2,7 @@
 
 - 编号: RD-13
 - 标题: 在进入 rank learner 前拒绝月内常数或近常数特征。
-- 状态: **PLANNED — not implementation-authorized**
+- 状态: **COMPLETE — owner-authorized via /goal 2026-08-01 (P1); 独立 Verifier PASS (20 tests) + 独立 Reviewer APPROVE (0 issues 全 severity)。report-only 截面变化诊断 guard（CONSTANT/NEAR_CONSTANT/ALL_MISSING/FEW_VALID/VARIATION；显式阈值；不构造 interaction）。**
 - Priority: **P1**
 - Size: **S**（60–90 分钟）
 - Risk: **MEDIUM**
