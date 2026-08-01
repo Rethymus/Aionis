@@ -2,7 +2,7 @@
 
 - 编号: RD-02
 - 标题: 定义不含 outcome 的验证证据 manifest。
-- 状态: **PLANNED — not implementation-authorized**
+- 状态: **OWNER-AUTHORIZED via /goal 2026-08-01 (按优先等级推进) — Engineer + 独立 Verifier PASS (38 tests, ruff clean, 边界干净) + 独立 Reviewer APPROVE (授权是唯一门禁，现满足；代码无改动)；进入 atomic commit**
 - Priority: **P1**
 - Size: **S**（60–90 分钟）
 - Risk: **MEDIUM**
