@@ -20,7 +20,7 @@
   parallel, then independent Verifier and Reviewer. Multi-agent inference is not part of the stock-selection signal.
 - **known issues:** protected historical claims may retain superseded wording; non-chronological historical CV;
   blocked market-source fallbacks and sub-2s fetch paths; Phase B A1 lock stranding; current SIC snapshot;
-  ADR-010 TOST p-value direction/sequential-equivalence construction requires AUD-07B strong review.
+  ADR-010 TOST p-value direction/sequential-equivalence construction CONFIRMED BROKEN by AUD-07B (2 CRITICAL, double-opus review); E3 verdict/headline HOLD pending owner-authorized ADR-010 + prereg §7 amendment.
 - **last verification (2026-08-01):** Wave-A complete. The full hermetic pytest suite passes (zero skips;
   only the existing forward-score warnings), `uv run --offline ruff check` is clean, `git diff --check` is
   clean, and the frozen prereg/ADR/config/ledger/results/data/forward diff is empty. C1/C2/C3 and

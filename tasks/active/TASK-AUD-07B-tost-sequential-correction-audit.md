@@ -2,7 +2,7 @@
 
 - 编号: AUD-07B
 - 标题: 在任何 E3 outcome 可见或裁决代码实现前，重新证明 ADR-010 的等价判定方向与错误率控制。
-- 状态: **P0 HOLD — requires strong statistician + owner decision; do not delegate to low-reasoning model**
+- 状态: **REVIEW COMPLETE — 独立 opus 统计审查 + 独立 opus Reviewer APPROVE（从第一性原理独立复核）。确认 ADR-010 两处 CRITICAL：(1) TOST p-value 方向反转（Schuirmann 1987：应为 p<α，现写 p>α，会把不等价误判为等价）；(2) 序贯 CI 对偶破坏（固定 90% CI 配 look-specific αₖ，首 look Type I 通胀 ~9.6×；应用 look-specific (1−2αₖ) CI 或公认 group-sequential equivalence 构造）。CI 对偶(α=0.05)/复合 null/HAC SE PASS。报告 reports/audits/e3-tost-sequential-correction-review.md。E3 inferential verdict + headline 继续 HOLD，直至 owner 授权修订 ADR-010 Line 42 与 prereg §7。未改任何 frozen/code。**
 - Priority: **P0**
 - Size: **M**
 - Risk: **CRITICAL**（错误公式会把不等价误判为等价）

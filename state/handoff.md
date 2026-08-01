@@ -155,3 +155,34 @@ Remaining (NOT started — legitimately blocked, not merely unauthorized):
 
 Git: branch `feat/e3-forward-ledger` ahead of origin by 13 (Wave-A + Wave-B). Not pushed — owner's call.
 Safe RD queue now exhausted for the sonnet tier.
+
+## AUD-07B — statistical review COMPLETE (2026-08-01, CRITICAL finding)
+
+AUD-07B (P0 / CRITICAL) is now reviewed by TWO opus agents (a strong-statistician audit + an INDEPENDENT
+opus Reviewer, APPROVE). Both confirm ADR-010's equivalence/sequential gate has TWO CRITICAL defects:
+1. **TOST rejection direction is REVERSED.** ADR-010 Line 42 requires the two one-sided p-values to
+   "exceed alpha" (p > α); the correct Schuirmann (1987) rule is: declare equivalence iff p1 < α AND p2 < α.
+   As written, the gate would declare NON-equivalence, not equivalence.
+2. **Sequential CI duality is BROKEN.** ADR-010 pairs a fixed 90% CI with look-specific O'Brien-Fleming αk,
+   which breaks the TOST⇔CI duality at looks 2–3 and inflates first-look Type I error ~9.6× (0.05 vs
+   ~0.0052). Correct construction: look-specific (1−2αk) CIs (98.96% / 96.84% / 91.26%), or a recognized
+   group-sequential equivalence construction (Jennison–Turnbull 2000).
+CI duality at α=0.05 (90% CI), the union–intersection composite null, and HAC (Newey-West) SE all PASS.
+Report: `reports/audits/e3-tost-sequential-correction-review.md`.
+
+CONSEQUENCE (binding): the E3 inferential-verdict and headline remain HOLD. Implementing or exposing any E3
+equivalence verdict before the owner authorizes an ADR-010 + prereg §7 amendment (p < αk; look-specific CI)
+is FORBIDDEN. This is an owner decision — ADR-010 and the prereg are frozen; the audit does NOT modify them.
+Open non-blocking note: ADR-010's αk source (0.0052 / 0.0158 / 0.0437) is undocumented and did not match the
+reviewer's independent Lan-DeMets OBF recomputation — owner should confirm the αk provenance as part of the
+amendment.
+
+## Model-differentiation policy (2026-08-01, per owner /goal)
+
+opus subagent routing was fixed (`ANTHROPIC_DEFAULT_OPUS_MODEL` now `claude-opus-4-8`, no `[1M]` suffix).
+Difficulty-based dispatch is now in effect to save tokens:
+- **opus** — only genuinely hard analysis/decisions (AUD-07B statistician + reviewer done; RD-15 rank-objective
+  contract and the RD-08 zero-LLM rule-table draft are the next opus candidates).
+- **sonnet** — standard code/review (Wave-B RD tasks).
+- **haiku** — mechanical verification, simple doc/grep checks.
+Writers remain SERIALIZED (one Engineer per message; parallel-writer rule still binds).
