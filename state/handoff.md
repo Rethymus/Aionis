@@ -278,3 +278,9 @@ dashboard realizing `docs/dashboard-v2-design.md`'s 5 dimensions on deterministi
 - RUN: `uv run streamlit run dashboard/app_v2.py`. Deploy: GitHub Pages CANNOT host Streamlit (static-only);
   for the interactive dashboard on a private repo, Hugging Face Spaces (Streamlit runtime, free, private-OK) is
   the recommended host (see the research report). Not yet deployed — owner's call.
+- **STATIC site DEPLOYED to GitHub Pages (2026-08-01):** `https://rethymus.github.io/Aionis/` — owner chose
+  "static, no interactivity, early-stage presentation." `scripts/build_static_site.py` reuses charts_v2/demo_data
+  read-only → `site/index.html` (13 plotly charts, 5 dimensions, EXPLORATORY/DEMONSTRATIVE banner, publishability
+  gate). `.github/workflows/deploy-pages.yml` (astral-sh/setup-uv + `uv sync --extra dashboard`; build→upload→deploy
+  on push to main). Repo stays PRIVATE; Pages site is public (owner account supports private-repo Pages). Verified
+  live (HTTP 200, full content). Independent Verifier PASSED (build, 13 Plotly.newPlot, MD5-deterministic, boundaries).
