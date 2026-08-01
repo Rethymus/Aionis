@@ -35,4 +35,12 @@
   and re-gated). RD-01/02/03/08/11/13..17 remain PLANNED for future waves. No real
   network/LLM/data/trial ran; no frozen surface, ledger, result, or E3 outcome changed.
 - **evidence:** `reports/audits/2026-07-31-quant-llm-research-audit.md` and `tasks/active/TASK-AUD-00-remediation-coordination.md`.
+- **Wave-B (2026-08-01):** owner `/goal` authorized the priority offline RD program ("启用更多 agents 根据优先
+  等级…各自推进"). 8 sonnet-tier tasks COMPLETE, each Engineer → independent Verifier PASS → independent
+  Reviewer APPROVE → atomic commit: RD-01/02/03/11/13/14/16/17 (commits `97e5688`…`f397383`). Full hermetic
+  pytest GREEN (only pre-existing forward-score warnings); `ruff check` clean; ledger 0 diff; no frozen
+  surface touched; no real network/LLM/trial ran; E3 outcome unobserved. Writers serialized (parallel-writer
+  race; see memory aionis-parallel-writer-race). `opus`/`fable` aliases blocked by `[1M]` resolver values →
+  AUD-07B + RD-15 deferred; RD-08 HOLD (needs frozen rule table). Safe RD queue exhausted for sonnet tier.
+  Not pushed. Detail: `state/handoff.md` § Wave-B FINAL.
 - **updated:** 2026-08-01.
