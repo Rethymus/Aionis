@@ -240,3 +240,25 @@ Independent opus review outcomes:
 
 Still queued (owner-authorized, not yet done this session): RD-08 sonnet implementation of `zero_llm_baseline.py`;
 ADR-010 Jennison-Turnbull amendment (opus design + independent opus review + apply to frozen ADR-010/prereg §7).
+
+## ADR-010 Amendment APPLIED (2026-08-01) — Jennison-Turnbull; RD-08 implemented
+
+- **RD-08 zero-LLM baseline COMPLETE** — `src/aionis/extraction/zero_llm_baseline.py` (sonnet Engineer + haiku
+  lint-fix + independent Verifier functional PASS + independent Reviewer APPROVE). Mechanically applies the
+  FROZEN rule table (11 rules; lowercase enum values; sha256 provenance; 6 abstain paths; fomc_guidance_abstain_001
+  precedence-110 suppresses forward-guidance false positives). Structural-only (no sentiment/market_impact);
+  providers/llm_client/frozen table untouched. Committed + pushed.
+- **ADR-010 Amendment 2026-08-01 APPLIED** (owner Decision 1 = option B). The broken "Cross-validation amendment
+  (2026-07-31)" is VOID; replaced by a Jennison-Turnbull (2000) group-sequential equivalence construction
+  (OBF zₖ = z_α/√Iₖ → look-specific RCI levels 99.44 / 97.64 / 95.00%; equivalence iff RCIₖ ⊂ [−SESOI, +SESOI],
+  which structurally prevents the reversed-direction error; Type I ≤ 0.05). Prereg §7 amended in lockstep.
+  Ratified sub-choices: standard OBF (over Lan-DeMets — more conservative early), no futility, 95% final look.
+  Frozen params unchanged (SESOI ±0.010, looks {60,90,120}, n_trials=30, HAC SE). Double-opus (design +
+  independent review) at `reports/audits/e3-jt-amendment-proposal.md`; audit at
+  `reports/audits/e3-tost-sequential-correction-review.md`.
+- **CONSEQUENCE:** the E3 statistical-gate HOLD from AUD-07B is LIFTED (the gate is now mathematically valid).
+  E3 itself remains gated by AUD-06 (live-input readiness) + a separate owner GO (per the AUD-00 dependency
+  graph); no E3 ignition is authorized here. Eval-code implementation of the RCI rule is a separate future task.
+
+All owner decisions 2026-08-01 are now executed except RES restart (intentionally held) and optional follow-ups
+(RD-08 rule-table re-review, eval-code RCI implementation). Everything is on origin/main.

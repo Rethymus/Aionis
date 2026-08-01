@@ -32,16 +32,46 @@ outcome-bearing E3 inspection (audit P1; owner decisions 2026-07-31).
 4. **Trial registry n_trials = 30** for DSR / Hansen-SPA / Hansen-MCS deflation (historical B/C/D/E1 +
    horizon sweeps + placebo + prospective E3 / provider / schema variants).
 
-### Cross-validation amendment (2026-07-31) — equivalence + sequential construction
-Independent read-only cross-check (3 parallel researchers) CONFIRMED the SESOI, the HAC-TOST @ 90% CI, and
-the O'Brien-Fleming alpha-spending values — but **FLAGGED** that OF boundaries were designed for
-**superiority** testing, whereas TOST is a **composite null** (two one-sided tests). Directly applying OF
-alpha-spending to the 90% CI does **not** by itself control the equivalence Type I error at each look.
-The required construction (per Walker & Todd 2022; Phillips et al. 2024 — sequential equivalence /
-non-inferiority): **at each look k, an EQUIVALENCE verdict requires BOTH (i) the 90% HAC-CI falls entirely
-within [−SESOI, +SESOI] AND (ii) both one-sided TOST p-values exceed the OF-adjusted αₖ at that look.**
-A more complex alternative (full equivalence-specific repeated confidence intervals) is deferred unless
-this dual condition proves insufficient at AUD-07 implementation.
+### Amendment 2026-08-01 (AUD-07B correction: Jennison-Turnbull group-sequential equivalence)
+
+**The "Cross-validation amendment (2026-07-31)" above is VOID.** An independent double-opus audit
+(`reports/audits/e3-tost-sequential-correction-review.md`, AUD-07B) confirmed it had two CRITICAL defects:
+(i) the TOST rejection direction was reversed ("p-values exceed αₖ" — TOST rejects each one-sided null when
+p < α, per Schuirmann 1987); (ii) a fixed 90% CI paired with look-specific αₖ breaks the TOST⇔CI duality at
+looks 2–3 (first-look Type I inflation ~9.6×). Owner decision 2026-08-01 (option B) replaces it with a
+recognized Jennison-Turnbull (2000) group-sequential equivalence construction. Frozen params UNCHANGED:
+SESOI ±0.010, looks n ∈ {60,90,120}, n_trials = 30, Newey-West HAC SE, forward track EXPLORATORY between looks.
+
+**Construction (Jennison-Turnbull group-sequential equivalence; O'Brien-Fleming boundaries; repeated CIs):**
+At each look k (k=1,2,3; nₖ ∈ {60,90,120}) compute the repeated confidence interval
+RCIₖ = [μ̂ − zₖ·σ̂, μ̂ + zₖ·σ̂], where μ̂ = observed cross-sectional rank-IC (HAC), σ̂ = Newey-West HAC SE,
+zₖ = z_α/√Iₖ with z_α = Φ⁻¹(1−0.05/2) = 1.960 and Iₖ = nₖ/120.
+
+| Look k | n (months) | Iₖ | zₖ | αₖ (one-sided) | RCI level (1−2αₖ) |
+|---|---|---|---|---|---|
+| 1 | 60  | 0.50 | 2.772 | 0.0028 | 99.44% |
+| 2 | 90  | 0.75 | 2.263 | 0.0118 | 97.64% |
+| 3 | 120 | 1.00 | 1.960 | 0.0250 | 95.00% |
+
+αₖ = 1−Φ(zₖ) is the one-sided marginal Type I error at look k; the RCI level varies with k (NOT a fixed 90%),
+which restores the TOST⇔CI duality at every look.
+
+**Equivalence verdict at look k:** declare EQUIVALENCE iff RCIₖ ⊂ [−SESOI, +SESOI]
+(i.e., μ̂ − zₖ·σ̂ > −0.010 AND μ̂ + zₖ·σ̂ < +0.010). This union–intersection rule is dual to rejecting both
+one-sided nulls (Berger 1982) and **structurally prevents the reversed-direction error** (no "p exceed α" clause).
+
+**Type I error control:** P(declare equivalence at or before look K | |μ| ≥ SESOI) ≤ 0.05 under the OBF
+group-sequential boundary, even under optional stopping (Jennison & Turnbull 2000, Thm. 8.1 / §8.3;
+O'Brien & Fleming 1979).
+
+**Sub-choices ratified 2026-08-01 (owner):** standard OBF zₖ = z_α/√Iₖ (over Lan-DeMets OBF — more conservative
+early, appropriate since false-positive equivalence is the cardinal sin); **no futility boundaries**; exactly
+95% RCI at the final look. Reopen via the re-evaluation trigger if a different spending function or futility is
+later warranted. Design + independent opus review: `reports/audits/e3-jt-amendment-proposal.md`.
+
+**Primary sources:** Jennison & Turnbull, *Group Sequential Methods with Applications to Clinical Trials* (2000),
+Ch. 3/4/8; Jennison & Turnbull (1989) Biometrika 76(3) (repeated CIs); O'Brien & Fleming (1979) Biometrics 35(3);
+Berger (1982) Technometrics 24(4) (union–intersection); Walker & Todd (2022) Pharm. Stat. 21(5) (sequential equivalence).
 
 ## Cost
 $0 (statistical methodology; no runtime/data cost).

@@ -176,12 +176,15 @@
 
 - **powered 的来源**：E3 的 N = 累积前向月数，**按日历线性增长**（≈ +1 月 / 月）。E2 回测被 cutoff 门锁死在 ~15 月；
   E3 从 launch 日起逐月累积，无上限——**这是因果推理假设唯一能攒到 publishability 的路径**。
-- **publishability 门**（同家族）**〔[ADR-010](../decisions/ADR-010-sesoi-tost-sequential-gate.md) 修订 2026-07-31〕**：
-  不再是"95% CI 跨零 + ci_half<0.015"的精度门，而是**预注册等价 + 序贯** —— (a) **SESOI = ±0.010**（事后成本门槛）；
-  (b) **HAC-aware TOST @ 90% CI** 整体落入 [−0.010, +0.010] 才算等价（Lakens 2018；Newey-West HAC）；
-  (c) **O'Brien-Fleming 序贯**，n ∈ {60, 90, 120} 月 alpha-spending 三 look（早期保守，末 look≈nominal；look 间仍 EXPLORATORY）；
+- **publishability 门**（同家族）**〔[ADR-010](../decisions/ADR-010-sesoi-tost-sequential-gate.md) 修订 2026-08-01〕**：
+  不再是"95% CI 跨零 + ci_half<0.015"的精度门，而是**预注册等价 + Jennison-Turnbull 群序贯** —— (a) **SESOI = ±0.010**（事后成本门槛）；
+  (b) **Jennison-Turnbull 重复置信区间 (RCI)**：每次 look k (nₖ ∈ {60, 90, 120} 月) 构造 100(1−2αₖ)% RCIₖ = [μ̂ − zₖσ̂, μ̂ + zₖσ̂]，
+  zₖ = z_α/√Iₖ (z_α=1.960, Iₖ=nₖ/120)，**look-specific 置信水平**——Look1 99.44% (z₁=2.772)、Look2 97.64% (z₂=2.263)、Look3 95.00% (z₃=1.960)；
+  **等价裁决**当且仅当 RCIₖ ⊂ [−0.010, +0.010]（即 μ̂ − zₖσ̂ > −0.010 且 μ̂ + zₖσ̂ < +0.010）—— **结构性杜绝"p>α"方向反转**；
+  (c) **O'Brien-Fleming 边界**（早期高保守，末次≈名义，整体 Type I ≤ α=0.05，即使 optional stopping；Jennison-Turnbull 2000）；
   (d) **n_trials = 30** 多重校正（DSR/SPA/MCS）。粗算：σ(IC)≈0.06 下 80% power 需 ~283 月 → **E3 的 verdict 以年计，不以周/月计**。
   "非等价" ≠ "市场有效"，只 = "此 bundle 在此实现下未达 SESOI"。旧 B/C/D/E1 ledger 不改写（语言更新为 CV-proxy）。
+  （2026-07-31 的 TOST@固定90%-CI + "p exceed αₖ" 旧修订**作废**——双 opus 审计 AUD-07B 确认其 TOST 方向反转 + 序贯对偶破坏；详见 ADR-010 Amendment 2026-08-01。）
 - **诚实代价**：E3 **不能「现在跑出 verdict」**——它启动一个 live process，verdict 由日历 gate。这是用「回测的速度（可泄漏）」
   换「前向的诚实（不可泄漏）」。任何「快速验证因果预测」的诉求，E3 的诚实回答是「不行，只能等」。
 - **可发表性 = realized σ(IC) 的函数**（同 E2 §7）：CI 跨 0 不得宣称正向；攒不够月 = 干净 inconclusive（合法、可发表）。
