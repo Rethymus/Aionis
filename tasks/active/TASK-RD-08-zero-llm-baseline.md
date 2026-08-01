@@ -2,7 +2,7 @@
 
 - 编号: RD-08
 - 标题: 建立保守、可 abstain 的零 LLM 抽取对照。
-- 状态: **RULE TABLE PROPOSED (opus strong-Researcher) — evals/expected/zero_llm_rules_v1.yaml，待 owner 冻结。10 条保守 abstain-heavy 规则（FOMC×3, CPI×2, NFP×2, 13D×3；default/conflict=abstain；8k_2_02 暂缓）。YAML 可加载、enum 值均合法。2 处待 owner：13D actor_type (COLLECTIVE vs ORGANIZATION)、8k_2_02 是否纳入。冻结后由 sonnet Engineer 机械实现 zero_llm_baseline.py。**
+- 状态: **RULE TABLE FROZEN (owner 2026-08-01) — 独立 opus 复核发现 4 CRITICAL+2 MAJOR，已由 opus fixer 全部修复：enum NAME→小写 VALUE、加 FOMC 前瞻指引 abstain 规则（fomc_guidance_abstain_001, precedence 110）、13D→13d、negation_window=空白分词、CPI/NFP 次 pattern 收紧。event_type 语义核实：FOMC/CPI/NFP 见于 config.ECONOMIC_EVENT_TYPES（合法；gold Literal 仅限 filings）。11 条规则，abstain-default。FROZEN，待 sonnet 实现 zero_llm_baseline.py。**
 - Priority: **P1**
 - Size: **M**（90–150 分钟）
 - Risk: **MEDIUM**

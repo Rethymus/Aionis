@@ -1,4 +1,4 @@
-# Zero-LLM baseline rule table v1 — PROPOSED (pending owner freeze)
+# Zero-LLM baseline rule table v1 — FROZEN
 #
 # CONSERVATIVE PHILOSOPHY (binding):
 # - ABSTAIN by default. Low recall is acceptable; false positives are NOT.
@@ -10,25 +10,35 @@
 #
 # DELIVERABLE — each rule specifies:
 # - rule_id: stable identifier (e.g., fomc_hold_001)
-# - event_type: one of the real event types (FOMC, CPI, NFP, 13D)
+# - event_type: one of the real event types (FOMC, CPI, NFP, 13d)
 # - edge: the ERL edge tuple it produces:
-#   - action: from ActionType enum (INCREASE/DECREASE/HOLD/ANNOUNCE/etc.)
-#   - actor.type: from ActorType enum (CENTRAL_BANK/ORGANIZATION/etc.)
-#   - object.type: from ObjectType enum (MACRO/INDUSTRY/ENTITY)
-#   - temporal.class: from TemporalClass enum (INSTANT/SHORT/MEDIUM/LONG)
+#   - action: from ActionType enum (increase/decrease/hold/announce/etc.)
+#   - actor.type: from ActorType enum (central_bank/organization/etc.)
+#   - object.type: from ObjectType enum (macro/industry/entity)
+#   - temporal.class: from TemporalClass enum (instant/short/medium/long)
 # - pattern: token/regex pattern over filing/event text (keyword or simple regex)
-# - negation_window: tokens before/after that suppress the match
+# - negation_window: WHITESPACE-SEPARATED WORDS before/after that suppress the match
 # - precedence: integer or rule-id list for conflict resolution
 # - on_conflict: abstain (the baseline MUST abstain on ambiguity, never guess)
 #
 # HARD RULES:
 # - The YAML must be valid and loadable.
-# - Every edge field references values that exist in frozen enums.
+# - Every edge field references values that exist in frozen enums (lowercase).
 # - Deterministic: same input → same rule matches; rule ordering explicit via precedence.
 
 # Schema and provenance
 schema_version: "zero-llm-v1"
-provenance: "PROPOSED — pending owner freeze before RD-08 implementation"
+provenance: "FROZEN — post independent opus review fixes (2026-08-01)"
+frozen_at: "2026-08-01"
+frozen_by: "owner (post independent opus review fixes)"
+freeze_notes: >
+  Fixed 4 CRITICAL + 2 MAJOR defects from independent opus review:
+  1. Enum values changed from uppercase names to lowercase values (hold, central_bank, macro, medium, etc.)
+  2. Added FOMC forward-guidance abstain-only rules (precedence 110) to prevent false positives on guidance language
+  3. Changed event_type 13D to 13d to match gold schema Literal
+  4. Added explicit negation_window specification (whitespace-separated words)
+  5. Tightened CPI/NFP secondary patterns to require release/announcement language
+  6. Updated rule-count comment to reflect actual count
 default_policy: "abstain"
 conflict_policy: "abstain"
 
@@ -37,7 +47,7 @@ event_types_covered:
   - FOMC   # Federal Open Market Committee policy rate decisions
   - CPI    # Consumer Price Index releases
   - NFP    # Non-Farm Payroll (employment situation) releases
-  - 13D    # SC 13D beneficial ownership filings
+  - 13d    # SC 13D beneficial ownership filings
 
 # Event types deliberately deferred (pending owner decision):
 # - 8k_2_02  # Item 2.02 of Form 8-K (results of operations) — requires richer context
@@ -47,13 +57,25 @@ rules:
   # ============================================================================
   # FOMC Rules — Federal Reserve policy rate decisions
   # ============================================================================
+  # Forward-guidance abstain-only rules (precedence 110 — higher than action rules)
+  # Prevent false positives on guidance language like "anticipates raising rates"
+  - rule_id: fomc_guidance_abstain_001
+    event_type: FOMC
+    edge: null
+    pattern: "(?:anticipat(?:e|es|ed|ing)|expect(?:s|ed)?|project(?:s|ed|ing)?|forecast(?:s|ed|ing)?|likely|appropriate).{0,50}(?:raise|cut|lower|hike|increase|decrease|tighten|ease).{0,30}(?:target.{0,20}(?:range|rate|level)|federal.{0,30}funds.{0,20}rate|interest.{0,20}rate)"
+    negation_window: {before: 0, after: 0}
+    negation_keywords: []
+    precedence: 110
+    on_conflict: abstain
+    conservative_rationale: "Forward-guidance abstain: matches guidance language (anticipate/expect/project/forecast/likely/appropriate + directional verb) to prevent false positives on FOMC guidance. Produces NO edge (abstain)."
+
   - rule_id: fomc_hold_001
     event_type: FOMC
     edge:
-      action: HOLD
-      actor_type: CENTRAL_BANK
-      object_type: MACRO
-      temporal_class: MEDIUM
+      action: hold
+      actor_type: central_bank
+      object_type: macro
+      temporal_class: medium
     pattern: "(?:unchanged|maintain(?:s|ing)?|keeping|kept|remain(?:s|ing)?|steady).{0,50}(?:target.{0,20}(?:range|rate|level)|federal.{0,30}funds.{0,20}rate)"
     negation_window: {before: 10, after: 10}
     negation_keywords: ["raise", "increase", "hike", "cut", "lower", "decrease", "reduce", "tighten", "ease"]
@@ -64,10 +86,10 @@ rules:
   - rule_id: fomc_increase_001
     event_type: FOMC
     edge:
-      action: INCREASE
-      actor_type: CENTRAL_BANK
-      object_type: MACRO
-      temporal_class: MEDIUM
+      action: increase
+      actor_type: central_bank
+      object_type: macro
+      temporal_class: medium
     pattern: "(?:raise|increase|hike|tighten)(?:s|d|ing)?.{0,50}(?:target.{0,20}(?:range|rate|level)|federal.{0,30}funds.{0,20}rate|interest.{0,20}rate)"
     negation_window: {before: 8, after: 8}
     negation_keywords: ["cut", "lower", "decrease", "reduce", "ease", "hold", "maintain"]
@@ -78,10 +100,10 @@ rules:
   - rule_id: fomc_decrease_001
     event_type: FOMC
     edge:
-      action: DECREASE
-      actor_type: CENTRAL_BANK
-      object_type: MACRO
-      temporal_class: MEDIUM
+      action: decrease
+      actor_type: central_bank
+      object_type: macro
+      temporal_class: medium
     pattern: "(?:cut|lower|decrease|reduce|ease)(?:s|d|ing)?.{0,50}(?:target.{0,20}(?:range|rate|level)|federal.{0,30}funds.{0,20}rate|interest.{0,20}rate)"
     negation_window: {before: 8, after: 8}
     negation_keywords: ["raise", "increase", "hike", "tighten", "hold", "maintain"]
@@ -95,10 +117,10 @@ rules:
   - rule_id: cpi_announce_001
     event_type: CPI
     edge:
-      action: ANNOUNCE
-      actor_type: ORGANIZATION
-      object_type: MACRO
-      temporal_class: INSTANT
+      action: announce
+      actor_type: organization
+      object_type: macro
+      temporal_class: instant
     pattern: "(?:consumer.{0,20}price.{0,20}index|CPI).{0,100}(?:released|publish(?:ed|es)?|announce(?:d|s)?|report(?:ed|s)?)"
     negation_window: {before: 5, after: 5}
     negation_keywords: ["delayed", "postponed", "cancelled", "withdrawn"]
@@ -109,16 +131,16 @@ rules:
   - rule_id: cpi_announce_002
     event_type: CPI
     edge:
-      action: ANNOUNCE
-      actor_type: ORGANIZATION
-      object_type: MACRO
-      temporal_class: INSTANT
-    pattern: "(?:Bureau.{0,30}Labor.{0,30}Statistics|BLS).{0,150}(?:CPI|consumer.{0,20}price.{0,20}index)"
+      action: announce
+      actor_type: organization
+      object_type: macro
+      temporal_class: instant
+    pattern: "(?:Bureau.{0,30}Labor.{0,30}Statistics|BLS).{0,150}(?:released|publish(?:ed|es)?|announce(?:d|s)?|report(?:ed|s)?).{0,100}(?:CPI|consumer.{0,20}price.{0,20}index)"
     negation_window: {before: 5, after: 5}
     negation_keywords: ["delayed", "postponed", "cancelled", "withdrawn"]
     precedence: 90
     on_conflict: abstain
-    conservative_rationale: "BLS + CPI keyword pattern as secondary confirmation. Same conservative filters."
+    conservative_rationale: "BLS + CPI keyword pattern as secondary confirmation (tightened to require release language). Same conservative filters."
 
   # ============================================================================
   # NFP Rules — Non-Farm Payroll releases (BLS)
@@ -126,10 +148,10 @@ rules:
   - rule_id: nfp_announce_001
     event_type: NFP
     edge:
-      action: ANNOUNCE
-      actor_type: ORGANIZATION
-      object_type: MACRO
-      temporal_class: INSTANT
+      action: announce
+      actor_type: organization
+      object_type: macro
+      temporal_class: instant
     pattern: "(?:non.{0,20}farm.{0,20}payroll|NFP|employment.{0,20}situation).{0,100}(?:released|publish(?:ed|es)?|announce(?:d|s)?|report(?:ed|s)?)"
     negation_window: {before: 5, after: 5}
     negation_keywords: ["delayed", "postponed", "cancelled", "withdrawn"]
@@ -140,27 +162,27 @@ rules:
   - rule_id: nfp_announce_002
     event_type: NFP
     edge:
-      action: ANNOUNCE
-      actor_type: ORGANIZATION
-      object_type: MACRO
-      temporal_class: INSTANT
-    pattern: "(?:Bureau.{0,30}Labor.{0,30}Statistics|BLS).{0,150}(?:NFP|non.{0,20}farm.{0,20}payroll|employment.{0,20}situation)"
+      action: announce
+      actor_type: organization
+      object_type: macro
+      temporal_class: instant
+    pattern: "(?:Bureau.{0,30}Labor.{0,30}Statistics|BLS).{0,150}(?:released|publish(?:ed|es)?|announce(?:d|s)?|report(?:ed|s)?).{0,100}(?:NFP|non.{0,20}farm.{0,20}payroll|employment.{0,20}situation)"
     negation_window: {before: 5, after: 5}
     negation_keywords: ["delayed", "postponed", "cancelled", "withdrawn"]
     precedence: 90
     on_conflict: abstain
-    conservative_rationale: "BLS + NFP keyword pattern as secondary confirmation. Same conservative filters."
+    conservative_rationale: "BLS + NFP keyword pattern as secondary confirmation (tightened to require release language). Same conservative filters."
 
   # ============================================================================
-  # 13D Rules — SC 13D beneficial ownership filings (ownership_change)
+  # 13d Rules — SC 13D beneficial ownership filings (ownership_change)
   # ============================================================================
   - rule_id: 13d_ownership_increase_001
-    event_type: 13D
+    event_type: 13d
     edge:
-      action: INCREASE
-      actor_type: COLLECTIVE
-      object_type: ENTITY
-      temporal_class: SHORT
+      action: increase
+      actor_type: collective
+      object_type: entity
+      temporal_class: short
     pattern: "(?:beneficial.{0,20}owner|reporting.{0,20}person).{0,200}(?:acquired|purchased|now.{0,20}owns|increased.{0,30}beneficial.{0,30}ownership).{0,200}(?:beneficial.{0,30}ownership|shares|percent)"
     negation_window: {before: 10, after: 10}
     negation_keywords: ["sold", "disposed", "decreased", "reduced", "no longer"]
@@ -169,12 +191,12 @@ rules:
     conservative_rationale: "13D filings report ownership changes. Only matches explicit acquisition/increase language near 'beneficial ownership'. Abstains on disposal language."
 
   - rule_id: 13d_ownership_decrease_001
-    event_type: 13D
+    event_type: 13d
     edge:
-      action: DECREASE
-      actor_type: COLLECTIVE
-      object_type: ENTITY
-      temporal_class: SHORT
+      action: decrease
+      actor_type: collective
+      object_type: entity
+      temporal_class: short
     pattern: "(?:beneficial.{0,20}owner|reporting.{0,20}person).{0,200}(?:sold|disposed|decreased.{0,30}beneficial.{0,30}ownership|reduced.{0,30}holding).{0,200}(?:beneficial.{0,30}ownership|shares|percent)"
     negation_window: {before: 10, after: 10}
     negation_keywords: ["acquired", "purchased", "increased", "now owns"]
@@ -183,12 +205,12 @@ rules:
     conservative_rationale: "13D decrease pattern. Only matches explicit disposal/decrease language near 'beneficial ownership'. Abstains on acquisition keywords."
 
   - rule_id: 13d_ownership_announce_001
-    event_type: 13D
+    event_type: 13d
     edge:
-      action: ANNOUNCE
-      actor_type: COLLECTIVE
-      object_type: ENTITY
-      temporal_class: SHORT
+      action: announce
+      actor_type: collective
+      object_type: entity
+      temporal_class: short
     pattern: "(?:Schedule.{0,20}13D|SC.{0,20}13D|form.{0,20}13D).{0,300}(?:filed|statement|beneficial.{0,30}ownership)"
     negation_window: {before: 5, after: 5}
     negation_keywords: ["withdrawn", "amended to show zero"]
@@ -200,9 +222,9 @@ rules:
 # OWNER DECISION REQUIRED — underdetermined fields (explicitly marked)
 # ============================================================================
 owner_decision_required:
-  - note: "13D actor_type currently COLLECTIVE; may need ORGANIZATION for institutions."
+  - note: "13d actor_type currently COLLECTIVE; may need ORGANIZATION for institutions."
     field: "actor_type"
-    event_type: "13D"
+    event_type: "13d"
     alternatives: ["COLLECTIVE", "ORGANIZATION"]
     rationale: "13D filers can be individuals, groups, or institutions. COLLECTIVE is conservative (covers groups). Owner to decide."
 
@@ -223,12 +245,14 @@ conflict_resolution:
       outcome: "abstain"
     - scenario: "event_type is 8k_2_02 (not yet covered)"
       outcome: "abstain"
+    - scenario: "Forward-guidance language matches (anticipate/expect + directional verb)"
+      outcome: "abstain (via fomc_guidance_abstain_001)"
 
 # ============================================================================
 # END OF RULE TABLE
 # ============================================================================
-# Total rules: 11
-# Event types covered: FOMC, CPI, NFP, 13D
+# Total rules: 11 (1 forward-guidance abstain + 10 action rules)
+# Event types covered: FOMC, CPI, NFP, 13d
 # Event types deferred: 8k_2_02 (pending owner decision)
 # Default policy: abstain
 # Conflict policy: abstain

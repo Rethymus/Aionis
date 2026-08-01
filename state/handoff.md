@@ -220,3 +220,23 @@ After owner freeze, a sonnet Engineer implements `src/aionis/eval/ranking_contra
   verifications/reviews (standard). haiku unused — no remaining priority task is mechanical-tier (forcing it
   would be false economy). Reviewer `[1210]` proxy errors were bypassed by switching `oh-my-claudecode:code-
   reviewer` → `general-purpose` (same sonnet tier) when they recurred.
+
+## Owner decisions + independent opus reviews (2026-08-01)
+
+Owner decisions: ADR-010 → Jennison-Turnbull construction (B); RD-15 bin_count → quintiles/5 (A); RD-08 → freeze
+(A) + COLLECTIVE + defer 8k_2_02; RES → hold (A); commission independent opus review of RD-08 + RD-15 (5B);
+housekeeping done (local main FF to origin/main; remote feat/e3-forward-ledger deleted). All Wave-B/AUD-07B/
+RD-15/RD-08 work pushed to origin/main (HEAD e58b16e).
+
+Independent opus review outcomes:
+- **RD-15 decision packet: APPROVE** (0 CRITICAL/MAJOR; leakage guards sufficient, implementation faithful).
+  Owner froze bin_count=5.
+- **RD-08 rule table: REQUEST CHANGES → FIXED → FROZEN.** Review found 4 CRITICAL (enum NAME vs lowercase VALUE;
+  FOMC forward-guidance false positives; 13D→13d; negation-window unit undefined) + 2 MAJOR (CPI/NFP secondary
+  patterns; rule-count comment). An opus fixer resolved all: lowercase enum values; added fomc_guidance_abstain_001
+  (precedence 110, abstain-only); 13d; negation = whitespace words; tightened CPI/NFP; accurate count (now 11).
+  event_type semantics confirmed: FOMC/CPI/NFP are valid (`src/aionis/config.py` ECONOMIC_EVENT_TYPES); the gold
+  `Literal["13d","8k_2_02"]` is filing-specific. Table FROZEN.
+
+Still queued (owner-authorized, not yet done this session): RD-08 sonnet implementation of `zero_llm_baseline.py`;
+ADR-010 Jennison-Turnbull amendment (opus design + independent opus review + apply to frozen ADR-010/prereg §7).
