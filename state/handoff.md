@@ -202,3 +202,21 @@ specified (month-permutation, future-truncation, train-fold-only fit, group-size
 
 After owner freeze, a sonnet Engineer implements `src/aionis/eval/ranking_contract.py` + tests mechanically
 (no self-selection). No code/learner/frozen surface changed by the decision packet.
+
+### Update (2026-08-01, continued — model-differentiated dispatch)
+- **RD-15 implementation COMPLETE** — `ea335c8` (sonnet Engineer + independent Verifier PASS + Reviewer
+  APPROVE; 0 blocking). `src/aionis/eval/ranking_contract.py` implements the decision packet (objective enum
+  lambdarank/rank_xendcg; per-month train-fold-only binning; out-of-range clamp+reason; group=query-month; 4
+  leakage invariants). `bin_count` is a parameter (default 5/quintiles, supports 10/deciles) — the methodology
+  freeze of the actual value remains the owner's (via config), not hard-coded. learner.py untouched (0 diff);
+  31 module tests + full suite (1348) green.
+- **RD-08 rule table PROPOSED** — `evals/expected/zero_llm_rules_v1.yaml` (opus strong-Researcher), pending
+  owner freeze. 10 conservative abstain-heavy rules (FOMC×3, CPI×2, NFP×2, 13D×3); default/conflict=abstain;
+  8k_2_02 deferred. Two owner decisions flagged: 13D actor_type (COLLECTIVE vs ORGANIZATION) and whether to
+  include 8k_2_02. After freeze, a sonnet Engineer implements `src/aionis/extraction/zero_llm_baseline.py`
+  verbatim from the table.
+- **Tier usage this session:** opus for AUD-07B (statistician + independent reviewer) and RD-15 decision +
+  RD-08 rule-table draft (genuinely hard analysis/domain-modeling); sonnet for all Wave-B code + RD-15 impl +
+  verifications/reviews (standard). haiku unused — no remaining priority task is mechanical-tier (forcing it
+  would be false economy). Reviewer `[1210]` proxy errors were bypassed by switching `oh-my-claudecode:code-
+  reviewer` → `general-purpose` (same sonnet tier) when they recurred.
