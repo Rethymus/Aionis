@@ -2,7 +2,7 @@
 
 - 编号: RD-01
 - 标题: 为 active task 建立确定性规格静态检查器。
-- 状态: **PLANNED — not implementation-authorized**
+- 状态: **COMPLETE — owner-authorized via /goal 2026-08-01 (P0); 独立 Verifier PASS (28 tests, 确定性双运行证明 byte-identical) + 独立 Reviewer APPROVE (0 CRITICAL/HIGH; 2 MEDIUM 非阻塞：冗余 .get() 与 main() 53 行，留待清理)。首轮产物因并行 writer 竞争丢失，本轮串行重做（见 memory aionis-parallel-writer-race）。**
 - Priority: **P0**
 - Size: **S**（60–90 分钟）
 - Risk: **LOW**

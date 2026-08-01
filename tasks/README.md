@@ -74,3 +74,67 @@ markdown 文件，单目标、可独立回滚、可审计。
 - 清晰的验收方法（可证伪 checklist + 必跑测试）。
 - 可独立回滚（改一个 config = 新 ledger 行，绝不静默覆盖）。
 - 理想情况下能在**一个 context window** 内由单一 agent 完成；不能 → 先拆。
+
+---
+
+## 5. 任务规格静态检查（Task Contract Linter）
+
+`scripts/check_task_contracts.py` 是一个确定性的任务规格静态检查器，用于验证 active task 的必填字段、Size=L 禁止下发、owner gate 与危险命令声明。
+
+### 用法
+
+```bash
+# 检查所有 active tasks
+uv run python scripts/check_task_contracts.py tasks/active
+
+# 指定其他目录
+uv run python scripts/check_task_contracts.py tasks/completed
+```
+
+### 输出格式
+
+每行一个 finding，格式：`{reason_code}|{task_file}|{detail}`
+
+输出按文件路径和 reason code **确定性地排序**，同一文件多次运行结果一致。
+
+### Reason Codes
+
+- `MISSING_REQUIRED_FIELD:{field_name}` — 缺少必填字段
+- `SIZE_L_FORBIDDEN` — Size = L（禁止整体下发）
+- `OWNER_GATE_DECLARED` — 状态包含 owner-gate 关键词（需 owner 授权）
+- `DANGEROUS_COMMAND_DECLARED` — 禁止修改部分包含危险命令（如 phase_/strategy_/horizon_/forward_ 脚本）
+- `PARSE_ERROR` — 无法解析文件
+
+### 必填字段
+
+以下字段必须在任务文件中声明（按任务模板约定）：
+
+- `编号` — 任务 ID（如 RD-01, RES-01, AUD-00）
+- `标题` — 一句话标题
+- `状态` — in progress / owner-gated / completed / rejected / awaiting 等
+- `Priority` — P0 / P1 / P2
+- `Size` — S / M / L（L 禁止整体下发）
+- `Risk` — LOW / MEDIUM / HIGH / CRITICAL
+- `目标` — 本任务要达成什么
+- `允许修改` — 本任务可动的文件/模块白名单
+- `禁止修改` — 绝不可动的文件/模块黑名单
+- `前置条件` — 开工前必须已成立的条件
+- `验收标准` — 可证伪的 checklist
+- `必须运行的测试` — 验收前必须执行的命令
+
+### 设计原则
+
+- **仅解析 Markdown**：不执行任何代码、不调用网络、不修改现有任务文件
+- **确定性输出**：同一文件多次运行结果完全一致（H6 确定性）
+- **历史任务有 findings 是预期输出**：本工具报告缺陷，不自动修复
+- **运行在真实 corpus 上不能崩溃**：parse error 是唯一的失败模式
+
+### 测试
+
+```bash
+# 运行测试套件（使用 synthetic fixtures）
+uv run pytest -q tests/test_task_contracts.py
+
+# 代码检查
+uv run ruff check scripts/check_task_contracts.py tests/test_task_contracts.py
+```
