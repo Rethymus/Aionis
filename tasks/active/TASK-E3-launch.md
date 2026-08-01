@@ -11,6 +11,11 @@
   Slice 5 = dashboard Forward-IC tab (`forward_results.py` reader + `dashboard/app.py` view; Verifier PASS
   pytest 517 / Reviewer APPROVE 0 issues).
   Next: Slice 6 = scheduler (NYSE month-end trigger) → Slice 7 = E2E + full I1–I9 gate suite.
+  **2026-08-01 update:** the Slice 6/7 code-level blockers are cleared — AUD-07B RESOLVED (ADR-010 amended to
+  Jennison-Turnbull + `src/aionis/eval/sesoi_gate.py` implements the RCI equivalence gate); AUD-06 implemented
+  (`src/aionis/eval/forward_live_readiness.py`, opt-in `enforce_live_readiness`, parameterized owner contracts).
+  Slice 6/7 launch now awaits: owner freeze of the 2 AUD-06 contracts (`membership_freshness_contract`,
+  `provider_cutoff_policy`) + a separate owner GO (headline still gated per ADR-010).
 - 来源: [ADR-008](../../decisions/ADR-008-launch-e3-and-broaden-nulls.md) (TASK-STRAT verdict, 2026-07-30);
   `docs/phase-e3-preregistration.md`; **实施 spec**：`docs/phase-e3-implementation-plan.md`（架构 + 9 条零泄漏不变量 + 7 切片）。
 
@@ -42,8 +47,10 @@ credible positive OR a tight publishable null.
 ## 前置条件
 - [x] ADR-008 accepted.
 - [x] E3 pre-reg exists (`docs/phase-e3-preregistration.md`).
-- [x] Planner sliced forward-ledger, ingest, commit, scoring and dashboard; scheduler/E2E remain downstream
-      of AUD-06 and AUD-07B.
+- [x] Planner sliced forward-ledger, ingest, commit, scoring and dashboard.
+      2026-08-01: AUD-07B RESOLVED (ADR-010 Jennison-Turnbull + `sesoi_gate.py`); AUD-06 implemented
+      parameterized (`forward_live_readiness.py`). scheduler/E2E (Slice 6/7) now await owner freeze of the
+      2 AUD-06 contracts + a separate owner GO.
 
 ## 完成后需要更新
 - `state/current.md`, `state/handoff.md`; `docs/RESULTS.md` (once forward predictions begin accruing).
