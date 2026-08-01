@@ -2,7 +2,7 @@
 
 - 编号: RD-15
 - 标题: 在 learner 集成前固定按月 ranking labels、groups 与合法 objective。
-- 状态: **DECISION PACKET PROPOSED (opus Architect) — reports/design/2026-08-01-rd15-rank-objective-contract.md，待 owner 冻结。7/8 决策由理论确定（objective=lambdarank，rank_xendcg 被否；per-month train-fold 分箱；group=query-month；tie/missing/out-of-range policy；4 条 leakage 不变量）。1/8 待 owner 选择：bin count = quintiles(5,稳健) vs deciles(10,激进)。冻结后由 sonnet Engineer 机械实现 src/aionis/eval/ranking_contract.py + tests。未改 learner/frozen。**
+- 状态: **IMPLEMENTATION COMPLETE (sonnet Engineer) — 独立 Verifier PASS (31 模块 + 全套 1348 tests; learner.py 0 diff; 4 条 leakage 不变量) + 独立 Reviewer APPROVE (0 阻塞; 2 非阻塞：transform_to_relevance 72 行、Literal[5,10] 略窄)。按 opus 决策包实现 ranking_contract.py：lambdarank/rank_xendcg enum、per-month train-fold 分箱、out-of-range clamp+reason、group=query-month、4 条 leakage 不变量。bin_count 为参数（默认 5），实际冻结值待 owner 在 config 设定。决策包 reports/design/2026-08-01-rd15-rank-objective-contract.md。learner.py/frozen 未改。**
 - Priority: **P2**
 - Size: **M**（120–180 分钟，实现时间；不含强模型决策）
 - Risk: **HIGH**
