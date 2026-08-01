@@ -1,0 +1,9 @@
+{
+  "choices": [
+    {
+      "message": {
+        "content": "Here is the extracted event for dummy test_event_001:\n{\"event_type\": \"FOMC\", \"actor\": {\"name\": \"Federal Reserve\", \"type\": \"central_bank\", \"influence_scope\": \"global\"}, \"action\": \"hold\", \"action_detail\": \"Federal Reserve holds interest rates unchanged\", \"object\": {\"name\": \"policy interest rate\", \"type\": \"macro\", \"sector\": \"macro\"}, \"summary\": \"Rate unchanged\", \"temporal\": \"medium\", \"causal_structure\": [{\"cause\": \"policy rate\", \"effect\": \"borrowing cost\"}], \"uncertainty\": 0.1}\n\nLet me know if you need anything else."
+      }
+    }
+  ]
+}

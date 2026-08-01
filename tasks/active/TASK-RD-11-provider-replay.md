@@ -2,7 +2,7 @@
 
 - 编号: RD-11
 - 标题: 用合规 fixture 离线重放模型响应并检验解析稳定性。
-- 状态: **PLANNED — not implementation-authorized**
+- 状态: **COMPLETE — owner-authorized via /goal 2026-08-01 (P1); 独立 Verifier PASS (providers/llm_client 0 diff; 5 distinct verdicts; byte-identical; fixtures 不修复; 秘密干净) + 独立 Reviewer APPROVE (0 issues)。离线 replay harness；salvaged 半成品经审计修复了控制流缺陷。**
 - Priority: **P1**
 - Size: **M**（90–150 分钟）
 - Risk: **MEDIUM**

@@ -1,0 +1,9 @@
+{
+  "choices": [
+    {
+      "message": {
+        "content": "{\"event_type\": \"FOMC\", \"actor\": {\"name\": \"Federal Reserve\", \"type\": \"central_bank\", \"influence_scope\": \"global\"}, \"action\": \"invalid_action_value\", \"action_detail\": \"Federal Reserve holds interest rates unchanged\", \"object\": {\"name\": \"EXAMPLE CORP policy rate\", \"type\": \"macro\", \"sector\": \"macro\"}, \"summary\": \"dummy test response\", \"temporal\": \"medium\", \"causal_structure\": [{\"cause\": \"policy rate\", \"effect\": \"borrowing cost\"}], \"uncertainty\": 0.1}"
+      }
+    }
+  ]
+}

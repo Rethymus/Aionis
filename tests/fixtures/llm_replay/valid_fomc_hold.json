@@ -1,0 +1,9 @@
+{
+  "choices": [
+    {
+      "message": {
+        "content": "{\"event_type\": \"FOMC\", \"actor\": {\"name\": \"Federal Reserve\", \"type\": \"central_bank\", \"influence_scope\": \"global\"}, \"action\": \"hold\", \"action_detail\": \"Federal Reserve holds interest rates unchanged at 5.25-5.50% (EXAMPLE CORP dummy test)\", \"object\": {\"name\": \"policy interest rate\", \"type\": \"macro\", \"sector\": \"macro\"}, \"summary\": \"Federal Reserve holds policy rate unchanged; no market outcome described.\", \"temporal\": \"medium\", \"causal_structure\": [{\"cause\": \"policy rate\", \"effect\": \"borrowing cost\"}, {\"cause\": \"borrowing cost\", \"effect\": \"economic activity\"}], \"uncertainty\": 0.1}"
+      }
+    }
+  ]
+}
