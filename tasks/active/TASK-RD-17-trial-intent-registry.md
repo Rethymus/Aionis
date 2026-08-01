@@ -2,7 +2,7 @@
 
 - 编号: RD-17
 - 标题: 为新研究 trial 建立结果观察前的 tracked intent manifest 与 validator。
-- 状态: **PLANNED — not implementation-authorized**
+- 状态: **COMPLETE — owner-authorized via /goal 2026-08-01 (P1, HIGH-risk); 独立 Verifier PASS (ledger byte-identical to HEAD; 无 bypass 写入代码; metric 注入被拒) + 独立 Reviewer APPROVE (0 issues 全 severity; ledger-bypass 多层防御). trial-intent manifest 明确不替代 config_committed ledger。**
 - Priority: **P1**
 - Size: **M**（90–180 分钟）
 - Risk: **HIGH**（必须补充而不能替代 config_committed ledger）
