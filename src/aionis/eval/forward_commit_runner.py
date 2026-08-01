@@ -38,6 +38,11 @@ from aionis.eval.forward_freeze import (
     iset_manifest,
     iset_sha256_from_manifest,
 )
+from aionis.eval.forward_live_readiness import (
+    MembershipFreshnessContract,
+    ProviderCutoffPolicy,
+    check_forward_readiness,
+)
 from aionis.eval.two_arm import _clean_panel
 from aionis.features.alignment import nyse_sessions, session_close_ts
 from aionis.features.causal_broadcast import GLMCausalEdgeClient, build_forward_extra_features
@@ -184,13 +189,21 @@ def main(
     runs_dir: Path | str = "runs",
     today: pd.Timestamp | None = None,
     cache_dir: Path | str | None = None,
+    *,
+    enforce_live_readiness: bool = False,
+    membership_freshness_contract: MembershipFreshnessContract | None = None,
+    provider_cutoff_policy: ProviderCutoffPolicy | None = None,
+    provider_cutoff: str | None = None,
 ) -> dict:
     """Run one forward-commit step at the month-end NYSE session.
 
     ORDER: resolve pinned provider -> freeze I_t -> ``forward_iset_frozen`` row ->
-    build extra_features -> assemble panels -> frozen config -> fit+commit. In
-    ``PHASE_E3_NO_LEDGER=1`` mode the freeze writes to a throwaway runs dir and no
-    ledger rows are appended (the sig is still computed).
+    build extra_features -> assemble panels -> READINESS GATE -> frozen config ->
+    fit+commit. In ``PHASE_E3_NO_LEDGER=1`` mode the freeze writes to a throwaway
+    runs dir and no ledger rows are appended (the sig is still computed).
+
+    AUD-06 readiness gate: validates the commit targets the requested live session
+    with complete PIT inputs BEFORE any fit/LLM call/artifact write/ledger append.
     """
     artifacts_only = os.environ.get("PHASE_E3_NO_LEDGER") == "1"
     runs = Path(runs_dir)
@@ -260,6 +273,39 @@ def main(
     panel_base, panel_e13 = _assemble_panels(px, fund, mem, extra, tickers)
     print(f"[E3] panel_base={panel_base.shape} panel_e13={panel_e13.shape}", flush=True)
 
+    # --- AUD-06 readiness gate (BEFORE any fit/LLM call/artifact write/ledger append)
+    # Only enforced when enforce_live_readiness=True (opt-in for live paths)
+    # Use real provider_cutoff (owner-provided), not faked to predict_ts
+    actual_provider_cutoff = provider_cutoff if provider_cutoff is not None else predict_ts
+
+    if enforce_live_readiness:
+        readiness = check_forward_readiness(
+            requested_predict_ts=predict_ts,
+            panel=panel_base,  # Use base panel (has date grid)
+            fundamentals=fund,
+            prices=px,
+            membership=mem,
+            freeze_out=freeze_out,
+            membership_freshness_contract=membership_freshness_contract,
+            provider_cutoff=actual_provider_cutoff,
+            provider_cutoff_policy=provider_cutoff_policy,
+            freeze_clock=pd.Timestamp(predict_ts),
+            requires_llm_channel=True,  # arm_e13 requires LLM event channel
+        )
+        if not readiness.is_ready:
+            # Fail-closed: return early WITHOUT any fit/LLM call/write/ledger operation
+            print(
+                f"[E3] READINESS FAILED: {readiness.reason_code} - no fit/commit performed",
+                flush=True,
+            )
+            return {
+                "committed": False,
+                "readiness_failed": True,
+                "reason_code": readiness.reason_code,
+                "manifest": readiness.manifest,
+            }
+        print("[E3] READINESS PASS - proceeding to fit/commit", flush=True)
+
     raw = freeze_out["raw_sha256s"]
     shas = {
         "iset_sha256": iset_sha,
@@ -287,8 +333,8 @@ def main(
     res = run_forward_commit(
         predict_ts=predict_ts, target_t=target_t,
         panel_base=panel_base, panel_e13=panel_e13, config=config,
-        iset_sha256=iset_sha, provider="glm", provider_cutoff=predict_ts,
-        runs_dir=runs, no_ledger=artifacts_only,
+        iset_sha256=iset_sha, provider="glm", provider_cutoff=actual_provider_cutoff,
+        runs_dir=runs, no_ledger=artifacts_only, membership=mem,
     )
     print(
         f"[E3] committed={res['committed']} config_sha256={res['config_sha256'][:12]} "

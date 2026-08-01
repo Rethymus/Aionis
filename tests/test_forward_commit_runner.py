@@ -77,7 +77,14 @@ def _px_stub() -> pd.DataFrame:
 
 
 def _mem_stub() -> pd.DataFrame:
-    return pd.DataFrame(columns=["date", "ticker"])
+    """Stub membership with tickers matching the test panel (T0-T5)."""
+    dates = pd.bdate_range("2026-01-05", periods=10)
+    tickers = [f"T{i}" for i in range(6)]  # T0-T5 to match _synth_panel
+    rows = []
+    for d in dates:
+        for t in tickers:
+            rows.append({"date": d.normalize(), "ticker": t})
+    return pd.DataFrame(rows)
 
 
 def _sic_stub() -> pd.DataFrame:

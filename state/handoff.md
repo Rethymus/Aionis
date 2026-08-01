@@ -292,3 +292,15 @@ dashboard realizing `docs/dashboard-v2-design.md`'s 5 dimensions on deterministi
   caller-provided IC series ONLY (no E3/ledger/result reads — pure gate logic). Independent Verifier PASS (oracle
   recomputed, strict-boundary, first-look stopping) + Reviewer APPROVE. 28 tests; ruff clean. NOTE: implementing the
   gate does NOT ignite E3 or observe any outcome; E3 still needs AUD-06 + owner GO.
+- **AUD-06 live-input readiness gate IMPLEMENTED (2026-08-01, parameterized):** `src/aionis/eval/forward_live_readiness.py`
+  (+ tests) + opt-in wiring in `forward_commit_runner.py` (`enforce_live_readiness: bool = False` → historical/no-ledger
+  paths SKIP the gate, preserving `_clean_panel`/forward behavior; the live Slice 6/7 caller sets the flag). Fail-closed
+  preflight BEFORE any fit/LLM/write/ledger (spy-asserted fit_calls==0 on failure); 25 actionable reason codes; concrete
+  checks (predict_session via NYSE, train realized+21-embargo / test retains unknown labels via a forward-specific helper
+  NOT `_clean_panel`, price coverage, universe match `constituents_on(t)`, empty-LLM-text→fail, provider-cutoff-not-faked).
+  The 2 OWNER-GATED checks are PARAMETERIZED + FAIL-CLOSED when unset: `membership_freshness_contract` (max age /
+  authoritative refresh) + `provider_cutoff_policy` (block_on_unknown) — the owner must freeze these before E3 launch
+  (the task forbids self-freezing, e.g. treating a 2026-04 snapshot as fresh for 2026-07). Salvaged from a rate-limited
+  partial (opus fixer: opt-in flag fixed 2 regressions; fixture/timezone fixes for 8 new tests; ruff). Independent opus
+  Verifier PASS (historical-preserved, `_mem_stub` change benign, spy-asserts, fail-closed) + sonnet Reviewer APPROVE.
+  47 forward tests pass; ruff clean; ledger/prereg/forward_commit.py untouched. Does NOT ignite E3.
