@@ -1,0 +1,59 @@
+name: E3 Forward Commit Trigger
+
+# Trigger: MANUAL ONLY (workflow_dispatch)
+# The automated cron schedule is DISABLED until owner ratifies the contracts
+# in config/e3_live_contracts.yaml and explicitly enables the schedule.
+#
+# To enable automation after ratification:
+# 1. Review and ratify the proposed contract values in config/e3_live_contracts.yaml
+# 2. Uncomment the schedule block below and set the appropriate cron time
+# 3. Remove PHASE_E3_NO_LEDGER=1 from the env section to enable ledger writes
+# 4. Commit and push
+
+on:
+  workflow_dispatch:  # Manual trigger only (owner must explicitly trigger)
+
+  # TODO: OWNER GO - Enable on owner ratification
+  # Uncomment the schedule block below to enable automated monthly runs
+  # schedule:
+  #   # Run at 17:00 UTC (12:00 ET) on the last trading day of each month
+  #   # Note: The trigger script will only execute if this IS the NYSE month-end session
+  #   - cron: '0 17 28-31 * *'  # Runs on days 28-31; trigger script checks actual month-end
+
+jobs:
+  e3_forward:
+    name: E3 Forward Commit (NYSE Month-End)
+    runs-on: ubuntu-latest
+
+    # IMPORTANT: Shadow mode by default - no ledger writes
+    # Remove PHASE_E3_NO_LEDGER=1 ONLY after owner ratifies contracts
+    # and wants to enable irreversible headline commits
+    env:
+      PHASE_E3_NO_LEDGER: "1"  # Shadow mode - no ledger writes (safe default)
+      PYTHONUNBUFFERED: "1"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v1
+        with:
+          version: "latest"
+
+      - name: Install dependencies
+        run: |
+          uv sync --extra dashboard --extra extraction
+
+      - name: Run E3 forward trigger
+        run: |
+          uv run python scripts/e3_forward_trigger.py
+
+      - name: Verify shadow mode (no ledger writes)
+        run: |
+          if [ -f "runs/ledger.jsonl" ]; then
+            echo "ERROR: Ledger was modified in shadow mode!"
+            echo "This should not happen. PHASE_E3_NO_LEDGER=1 prevents writes."
+            exit 1
+          fi
+          echo "✓ Shadow mode verified - no ledger writes"

@@ -1,0 +1,56 @@
+# E3 Live-Readiness Contracts (PROPOSED - pending owner ratification)
+#
+# These are the AUD-06 owner-gated contracts for E3 forward commits.
+# They are marked PROPOSED and must be ratified by the owner before any
+# headline (irreversible) commit is enabled.
+#
+# The scheduler (.github/workflows/e3-forward.yml) runs in shadow mode
+# by default (PHASE_E3_NO_LEDGER=1), which computes everything but writes
+# no ledger rows. The automated cron is commented out and should only be
+# enabled after the owner ratifies these values.
+
+# Membership Freshness Contract
+#
+# The max_age_sessions limit ensures the membership snapshot is fresh enough
+# for the forward commit. A value of 23 sessions means the snapshot must be
+# within ~1 month of NYSE trading sessions of the predict date.
+#
+# PROPOSED VALUE: max_age_sessions: 23
+#   - Conservative: ~1 month of NYSE sessions (21-23 sessions per month)
+#   - Ensures the S&P 500 universe snapshot is reasonably current
+#   - Owner may adjust based on refresh frequency and risk tolerance
+#
+# NOTE: This contract is FAIL-CLOSED when not configured. The forward commit
+# will refuse to run if this value is not set.
+membership_freshness_contract:
+  max_age_sessions: 23  # PROPOSED — pending owner ratification before headline ignition
+  # authoritative_refresh: null  # Optional: path to refresh script if required
+
+# Provider Cutoff Policy
+#
+# The GLM provider's knowledge cutoff must be verifiable (not "unknown").
+# This policy determines whether the forward commit blocks when the provider
+# cutoff is unknown.
+#
+# PROPOSED VALUE: block_on_unknown: true
+#   - Conservative: fail-closed when we cannot verify the knowledge cutoff
+#   - Prevents commits with unknown model provenance
+#   - Owner may set to false if unknown cutoffs are acceptable
+#
+# NOTE: This contract is FAIL-CLOSED when not configured. The forward commit
+# will refuse to run if this value is not set.
+provider_cutoff_policy:
+  block_on_unknown: true  # PROPOSED — pending owner ratification before headline ignition
+
+# -----------------------------------------------------------------------------
+# IMPORTANT: OWNER ACTION REQUIRED BEFORE HEADLINE COMMITS
+# -----------------------------------------------------------------------------
+#
+# 1. Review the proposed values above for max_age_sessions and block_on_unknown.
+# 2. Adjust if needed based on your operational requirements and risk tolerance.
+# 3. Remove the "PROPOSED" comments once ratified.
+# 4. ONLY THEN enable the cron schedule in .github/workflows/e3-forward.yml.
+# 5. Remove PHASE_E3_NO_LEDGER=1 from the workflow env to enable ledger writes.
+#
+# Until ratified, the workflow runs in shadow mode (no ledger writes, no
+# irreversible commits). This is the safe default for bring-up.
