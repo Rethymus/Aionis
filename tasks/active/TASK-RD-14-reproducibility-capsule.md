@@ -2,7 +2,7 @@
 
 - 编号: RD-14
 - 标题: 汇总代码、lock、config、schema、parser 与输入 manifest hash。
-- 状态: **PLANNED — not implementation-authorized**
+- 状态: **COMPLETE — owner-authorized via /goal 2026-08-01 (P1); 独立 Verifier PASS (55 tests; uv.lock/pyproject 0 diff; 8 hash 变化→新 capsule_id; 缺 hash fail closed; 无 subprocess/git/network) + 独立 Reviewer APPROVE (0 issues)。无指标 reproducibility capsule；确定性 capsule_id（sha256 over sorted JSON）；原子写+默认拒覆盖。**
 - Priority: **P1**
 - Size: **M**（90–150 分钟）
 - Risk: **MEDIUM**
