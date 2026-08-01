@@ -2,7 +2,7 @@
 
 - 编号: RD-03
 - 标题: 用合成数据固定 chronological split 的合法边界。
-- 状态: **PLANNED — not implementation-authorized**
+- 状态: **COMPLETE — owner-authorized via /goal 2026-08-01 (P1, HIGH-risk); 独立 Verifier PASS (cv.py 0 diff; 36 tests = 15 cv + 21 oracle; lookahead 拒绝; 无 IC 计算) + 独立 Reviewer APPROVE (0 issues; lookahead 构造+拒绝经独立核实; 真 purgedcv 非 stub)。chronological oracle 747 行；cv.py 未改。**
 - Priority: **P1**
 - Size: **M**（90–150 分钟）
 - Risk: **HIGH**（方法学 load-bearing，但仅测试）
