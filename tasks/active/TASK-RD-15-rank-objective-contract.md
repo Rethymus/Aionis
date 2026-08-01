@@ -2,7 +2,7 @@
 
 - 编号: RD-15
 - 标题: 在 learner 集成前固定按月 ranking labels、groups 与合法 objective。
-- 状态: **PLANNED — strong-method decision required before low-reasoning implementation**
+- 状态: **DECISION PACKET PROPOSED (opus Architect) — reports/design/2026-08-01-rd15-rank-objective-contract.md，待 owner 冻结。7/8 决策由理论确定（objective=lambdarank，rank_xendcg 被否；per-month train-fold 分箱；group=query-month；tie/missing/out-of-range policy；4 条 leakage 不变量）。1/8 待 owner 选择：bin count = quintiles(5,稳健) vs deciles(10,激进)。冻结后由 sonnet Engineer 机械实现 src/aionis/eval/ranking_contract.py + tests。未改 learner/frozen。**
 - Priority: **P2**
 - Size: **M**（120–180 分钟，实现时间；不含强模型决策）
 - Risk: **HIGH**

@@ -186,3 +186,19 @@ Difficulty-based dispatch is now in effect to save tokens:
 - **sonnet** — standard code/review (Wave-B RD tasks).
 - **haiku** — mechanical verification, simple doc/grep checks.
 Writers remain SERIALIZED (one Engineer per message; parallel-writer rule still binds).
+
+## RD-15 — rank-objective DECISION PACKET proposed (2026-08-01, pending owner freeze)
+
+RD-15 (P2 / HIGH-risk) decision precondition is now drafted by an opus Architect at
+`reports/design/2026-08-01-rd15-rank-objective-contract.md` (PROPOSED — pending owner freeze). 7 of 8
+choices are determined by theory; ONE is an owner-preference question:
+- **Open owner question:** bin count for monthly relevance — **quintiles (5, robust, default)** vs
+  **deciles (10, aggressive)**. Ranking theory does not uniquely determine this for the rank-IC estimand.
+Theory-fixed choices: objective = **lambdarank** (rank_xendcg rejected; allowed-enum fixed so non-existent
+objectives are rejected); per-month quantile binning fit ONLY on the train fold; group = query-month; ties
+share the relevance integer; NaN returns excluded (NaN features → LightGBM default); test out-of-range
+returns clamped to nearest train-fold edge + reason code (never refit). Four testable leakage invariants
+specified (month-permutation, future-truncation, train-fold-only fit, group-size stability).
+
+After owner freeze, a sonnet Engineer implements `src/aionis/eval/ranking_contract.py` + tests mechanically
+(no self-selection). No code/learner/frozen surface changed by the decision packet.
