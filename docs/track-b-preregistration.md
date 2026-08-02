@@ -35,7 +35,7 @@ Track B 是**全新的预注册线**，与现有 B/C/D/E1 冻结面完全隔离�
 
 - **主源**：`hanshof/sp500_constituents`（MIT，日频 1996+）—— PIT 成分，按 `constituents_on(date)` 查询。
 - **交叉校验**：`pierrebrunelle/sp500-historical-constituents`（MIT，月频 2016+）—— 可复现窗口。
-- **分歧规则**（同 Phase B 预注册规则）：2016+ 月度 Jaccard < 0.95 → headline 限 2016+；1996–2016 只作敏感性。**Jaccard 实测待 S0-S① 审计任务执行后填入**（hanshof vs pierrebrunelle 交叉校验）；若 < 0.95 则 headline 自动限 2016+（与 OOS 窗一致）。
+- **分歧规则**（同 Phase B 预注册规则）：2016+ 月度 Jaccard < 0.95 → headline 限 2016+；1996–2016 只作敏感性。**S0-S① 实测（2026-08-02，已由编排者独立复跑核验）**：min Jaccard **0.8544** @ 2016-01-01、mean 0.9272、106 月中 71 月 < 0.95 → headline 自动限 2016+（verdict: agreement=False）。见 [`reports/audits/track-b-universe-audit.md`](../reports/audits/track-b-universe-audit.md)。
 - **幸存者偏差**：经 hanshof PIT 成分缓解，**不可根除**（无免费 Russell/退市 PIT 数据）。headline = 保守上界（v0.2 §8.4 措辞保留）。
 - **可复现性**：2016+ 窗口可用 pierrebrunelle 交叉验证；1996–2016 部分依赖 hanshof 历史来源（透明度声明）。
 
@@ -201,7 +201,7 @@ Track B 是**全新的预注册线**，与现有 B/C/D/E1 冻结面完全隔离�
 2. **horizon 是否钉 h=21**？— h=10/42 已声明 exploratory；confirmatory 需钉单一值。
 3. **bin_count quintiles(5)** — RD-15 已选；owner 最终确认？
 4. **新闻情绪是否进 S3**？— 还是留作 exploratory ablation？
-5. **universe 分歧阈值** — Jaccard < 0.95 规则待 S0-S① 实测；若 < 0.95 是否接受 2016+ 限制？
+5. **universe 分歧阈值** — S0-S① 实测 min Jaccard **0.8544 < 0.95**（@2016-01-01，已独立复跑核验）→ 已触发 2016+ 限制规则。owner 确认接受？
 
 ---
 
