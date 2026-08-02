@@ -3,6 +3,7 @@
 > **状态：FROZEN — config_committed 2026-08-02（owner 裁断 5 KEEP）**
 >
 > **config_sig**：`7a13579eb0ad4db0d5d04489bd8bc6eb7c36b74b0157ea302b2d5449cb708436`（`runs/ledger.jsonl` 行 #40, phase=track_b）。
+> **config_sig（feature_cols 修订 #41）**：`bf620bdf756810d5aab4db639b70856613885ce48e11e6a198884ab4c32ba4f9`——amends #40，23 预指定特征冻结（首次模型拟合前的完整 config）。
 > **owner 冻结决议**：5 点全 KEEP — SESOI ±0.010 / horizon h=21 / bin_count 5 / 新闻情绪=S3 ablation / universe 2016+（S0-S① 实测 min Jaccard 0.8544 已确认）。
 > **feature_cols 修订**：S0-S② 构造后，精确特征列作为 config 修订（新 ledger 行）冻结于首次模型拟合前；无 outcome-based 选择。
 > **约束**：config_committed 已先于任何 OOS 结果；此后可跑 S0 数据构造（不写新 ledger、不观察 rank-IC）。
@@ -165,7 +166,7 @@ Track B 是**全新的预注册线**，与现有 B/C/D/E1 冻结面完全隔离�
 | 键 | 冻结值（PROPOSED） | 依据 |
 |---|-------------------|------|
 | **universe_source** | S&P 500 PIT（hanshof 主 + pierrebrunelle 校验） | §2 |
-| **feature_cols** | 七主题特征列（见 S0/S1 实施后清单） | §3 |
+| **feature_cols** | **23 预指定特征（FROZEN 行 #41）**：13 基本面（roa/roe/profit_margin/asset_growth_1m/12m/revenue_growth_1m/12m/equity_growth_1m/leverage/debt_to_equity/book_value_per_share/accruals/investment_12m）+ 10 价格（momentum{5,10,21,42}d/reversal_5d/volatility{21,63}d/turnover_21d/beta_252d/amihud_illiquidity_21d）；NO outcome-based 选择 | §3 + S0-S② 物化 |
 | **learner_objective** | `lambdarank`（RD-15） | §4 |
 | **learner_params** | LightGBM frozen（同 Phase B §8） | §4 |
 | **validation_method** | `chronological_walk_forward` | §5 |
