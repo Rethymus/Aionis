@@ -110,6 +110,7 @@ def fit_track_b_baseline(
     frozen_params: dict | None = None,
     bin_count: Literal[5, 10] = _DEFAULT_BIN_COUNT,
     date_col: str = "date",
+    ticker_col: str = "ticker",
     y_col: str = "forward_return_h",
 ) -> TrackBBaselineResult:
     """Fit Track B S1-M① price-only baseline with chronological walk-forward.
@@ -160,6 +161,20 @@ def fit_track_b_baseline(
 
     # Sort panel by date for monotonic prediction_times (purgedcv requirement)
     panel = panel.sort_values(date_col).reset_index(drop=True)
+
+    # Sample month-end cross-sections (monthly rebalancing decision points): collapse the
+    # daily panel to one row per (ticker, month-end) so each lambdarank query (calendar
+    # month, via construct_month_groups) is a clean cross-section (~566 tickers) — within
+    # LightGBM's 10000-rows-per-query limit. forward_return_h at month-end = next ~21
+    # sessions (≈ next-month) return, matching the monthly rank-IC estimand (pre-reg §6).
+    panel["_ym"] = panel[date_col].dt.to_period("M").astype(str)
+    _month_end_idx = panel.groupby([ticker_col, "_ym"])[date_col].idxmax()
+    panel = (
+        panel.loc[_month_end_idx]
+        .drop(columns=["_ym"])
+        .sort_values(date_col)
+        .reset_index(drop=True)
+    )
 
     # --- Frozen params (config #41: objective=lambdarank, RD-15) ---
     # LightGBMFrozen.fit_predict_rank (learner.py) implements the lambdarank
