@@ -157,6 +157,10 @@ Remaining (NOT started — legitimately blocked, not merely unauthorized):
 Git: branch `feat/e3-forward-ledger` ahead of origin by 13 (Wave-A + Wave-B). Not pushed — owner's call.
 Safe RD queue now exhausted for the sonnet tier.
 
+## Track B 首个 OOS 观察（2026-08-02）
+
+**treatment 臂（config #41）**: mean_ic 0.0055, 95% HAC CI (-0.021, 0.033), p=0.689（null）。**price-only 臂（#42）**: mean_ic -0.0021, CI (-0.032, 0.028), p=0.891（null）。**差分（#41 − #42, §1 headline）**: mean_diff 0.0076, CI (-0.004, 0.020) 跨零, p=0.219 → treatment 未显著优于 price-only（null，符合 null-favored）；CI 上界 0.020 > SESOI 0.010 → 不构成严格等价（需更多样本）。见 docs/track-b-results.md。
+
 ## AUD-07B — statistical review COMPLETE (2026-08-01, CRITICAL finding)
 
 AUD-07B (P0 / CRITICAL) is now reviewed by TWO opus agents (a strong-statistician audit + an INDEPENDENT

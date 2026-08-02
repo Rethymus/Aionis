@@ -1,50 +1,91 @@
-"""Track B (a-run): first OOS rank-IC observation. Binds to config #41 (ledger row 41).
+"""Track B rank-IC runner. Binds to config #41 (treatment, 23 features) or #42 (price-only, 10).
 
-Anti-leakage: config_committed (row #41, sig bf620bdf...c32ba4f9) PRECEDES this
-observation. The 23 feature_cols match the materialized panel (all materialized with
-good coverage after volume+SPY fetch).
+Anti-leakage: config_committed (rows #41/#42) PRECEDE these observations.
+Modes:
+  treatment    -> 23-feature arm (config #41)
+  price_only   -> 10-price-feature baseline arm (config #42)
+  differential -> both arms + paired monthly IC differential (treatment - price_only),
+                  the pre-reg section 1 headline claim (HAC CI via rank_ic_summary).
 
-Loads data/cache/track_b_panel.parquet, runs the chronological walk-forward lambdarank
-baseline (fit_track_b_baseline), prints rank-IC + HAC CI + DM vs equal-weight.
-
-Run:  uv run python scripts/track_b_a_run.py
+Run:  uv run python scripts/track_b_a_run.py --mode differential
 """
 from __future__ import annotations
+
+import argparse
 
 import pandas as pd
 
 from aionis.config import settings
+from aionis.eval.rank_ic import rank_ic_summary
 from aionis.eval.track_b_baseline import fit_track_b_baseline
 from aionis.features.corporate_vital_signs import TRACK_B_FEATURE_COLS
 from aionis.features.price_features import TRACK_B_PRICE_FEATURE_COLS
 
 PANEL_PATH = settings.data_dir / "cache" / "track_b_panel.parquet"
-FEATURE_COLS = [*TRACK_B_FEATURE_COLS, *TRACK_B_PRICE_FEATURE_COLS]  # 23, config #41
+ARMS: dict[str, list[str]] = {
+    "treatment": [*TRACK_B_FEATURE_COLS, *TRACK_B_PRICE_FEATURE_COLS],  # 23, config #41
+    "price_only": TRACK_B_PRICE_FEATURE_COLS,  # 10, config #42
+}
+ARM_CONFIG = {"treatment": "#41 (sig bf620b...)", "price_only": "#42 (sig 9af9e8b...)"}
 
 
-def main() -> None:
-    panel = pd.read_parquet(PANEL_PATH)
-    print(f"panel: {panel.shape}, dates {panel['date'].min()}..{panel['date'].max()}", flush=True)
-    print(f"features: {len(FEATURE_COLS)} (config #41, sig bf620b...)", flush=True)
-
+def _run_arm(panel: pd.DataFrame, arm: str) -> object:
+    feats = ARMS[arm]
+    print(f"--- arm: {arm} ({len(feats)} features, config {ARM_CONFIG[arm]}) ---", flush=True)
     result = fit_track_b_baseline(
         panel=panel,
-        feature_cols=FEATURE_COLS,
+        feature_cols=feats,
         horizon=21,
         min_train_months=60,
         embargo_sessions=21,
         bin_count=5,
     )
+    lo, hi = result.ci_95
+    print(f"mean_ic: {result.mean_ic:.6f}   ci_95: ({lo:.6f}, {hi:.6f})", flush=True)
+    print(
+        f"  p_hac: {result.p_hac:.4f}   dm_stat: {result.dm_stat:.4f}   "
+        f"dm_p: {result.dm_p:.4f}",
+        flush=True,
+    )
+    print(
+        f"  n_folds: {result.n_walk_folds}   ic_start: {result.ic_series.index.min()}",
+        flush=True,
+    )
+    return result
 
-    print("=== Track B first rank-IC (config #41, chronological walk-forward lambdarank) ===",
-          flush=True)
-    print(f"mean_ic:     {result.mean_ic:.6f}", flush=True)
-    print(f"hac_se:      {result.hac_se:.6f}", flush=True)
-    print(f"ci_95:       ({result.ci_95[0]:.6f}, {result.ci_95[1]:.6f})", flush=True)
-    print(f"t_hac:       {result.t_hac:.4f}    p_hac: {result.p_hac:.4f}", flush=True)
-    print(f"dm_stat:     {result.dm_stat:.4f}    dm_p:  {result.dm_p:.4f}", flush=True)
-    print(f"n_walk_folds:{result.n_walk_folds}    n_test_obs: {result.n_test_obs}", flush=True)
-    print(f"ic_series (first 6 months):\n{result.ic_series.head(6)}", flush=True)
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--mode",
+        choices=["treatment", "price_only", "differential"],
+        default="treatment",
+    )
+    args = parser.parse_args()
+
+    panel = pd.read_parquet(PANEL_PATH)
+    print(f"panel: {panel.shape}, dates {panel['date'].min()}..{panel['date'].max()}", flush=True)
+    print(f"mode: {args.mode}", flush=True)
+
+    if args.mode == "differential":
+        rt = _run_arm(panel, "treatment")
+        rp = _run_arm(panel, "price_only")
+        # Paired monthly IC differential (pre-reg section 1 headline): align, subtract.
+        diff = (rt.ic_series - rp.ic_series).dropna()
+        summary = rank_ic_summary(diff)
+        mean_d = summary["mean_ic"]
+        half_d = summary["ci_half"]
+        lo_d, hi_d = mean_d - half_d, mean_d + half_d
+        print("=== DIFFERENTIAL (treatment - price_only, paired by month, HAC) ===", flush=True)
+        print(f"mean_diff: {mean_d:.6f}   hac_se: {summary['se_hac']:.6f}", flush=True)
+        print(f"ci_95:     ({lo_d:.6f}, {hi_d:.6f})", flush=True)
+        print(
+            f"t_hac: {summary['t_hac']:.4f}   p_hac: {summary['p_hac']:.4f}   "
+            f"n_months: {len(diff)}",
+            flush=True,
+        )
+    else:
+        _run_arm(panel, args.mode)
 
 
 if __name__ == "__main__":
