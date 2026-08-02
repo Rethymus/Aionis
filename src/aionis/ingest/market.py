@@ -109,6 +109,49 @@ def _from_alpaca(
     return out
 
 
+def _volume_from_alpaca(
+    symbols: list[str], start: str, end: str, key_id: str, secret_key: str,
+    retries: int = 3, backoff: int = 4,
+) -> dict[str, pd.Series]:
+    """Fetch volume from Alpaca (adj close + volume per symbol).
+
+    Returns dict {symbol: Series(volume)} with datetime index.
+    """
+    out: dict[str, pd.Series] = {}
+    headers = {"APCA-API-KEY-ID": key_id, "APCA-API-SECRET-KEY": secret_key,
+               "User-Agent": "aionis/0.1"}
+    for sym in symbols:
+        col: pd.Series | None = None
+        try:
+            r = _policy_get(
+                f"https://data.alpaca.markets/v2/stocks/{sym}/bars",
+                total_attempts=retries,
+                backoff_base=backoff,
+                backoff_mode="linear",
+                headers=headers,
+                params={
+                    "timeframe": "1Day",
+                    "start": start,
+                    "end": end,
+                    "adjustment": "all",
+                    "limit": 10000,
+                },
+                timeout=30,
+            )
+            bars = r.json().get("bars", [])
+            if bars:
+                df = pd.DataFrame(bars)
+                idx = pd.DatetimeIndex(pd.to_datetime(df["t"], utc=True)).tz_localize(
+                    None
+                ).normalize()
+                col = pd.Series(df["v"].to_numpy(float), index=idx, name=sym)
+        except Exception:
+            pass
+        if col is not None and not col.empty:
+            out[sym] = col
+    return out
+
+
 def _missing_prices_error(symbols: list[str], providers: list[str]) -> RuntimeError:
     configured = ", ".join(providers) if providers else "none"
     missing = ", ".join(symbols)

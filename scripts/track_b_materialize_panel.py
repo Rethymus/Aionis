@@ -175,6 +175,77 @@ def _load_universe() -> pd.DataFrame:
     return membership
 
 
+def _load_volume(tickers: list[str]) -> pd.DataFrame | None:
+    """Load volume from per-ticker cache.
+
+    Returns wide DataFrame [dates x tickers] or None if cache missing/empty.
+    """
+    volume_dir = settings.data_dir / "cache" / "volumes"
+    if not volume_dir.exists():
+        log.warning("volume_cache_dir_missing", path=str(volume_dir))
+        return None
+
+    series: dict[str, pd.Series] = {}
+    for t in tickers:
+        fp = volume_dir / f"{t}.parquet"
+        if fp.exists():
+            try:
+                df = pd.read_parquet(fp)
+                if not df.empty and "volume" in df.columns:
+                    series[t] = pd.Series(
+                        df["volume"].to_numpy(float),
+                        index=pd.to_datetime(df["date"]).dt.normalize(),
+                        name=t,
+                    )
+            except Exception:
+                pass
+
+    if not series:
+        log.warning("volume_cache_empty", tickers=tickers[:5])
+        return None
+
+    volume_wide = pd.DataFrame(series)
+    log.info(
+        "volume_loaded",
+        n_tickers=len(series),
+        n_requested=len(tickers),
+        dates=int(volume_wide.index.nunique()),
+        date_min=str(volume_wide.index.min()),
+        date_max=str(volume_wide.index.max()),
+    )
+    return volume_wide
+
+
+def _load_spy_benchmark() -> pd.Series | None:
+    """Load SPY benchmark from cache.
+
+    Returns Series with datetime index (adjClose) or None if missing.
+    """
+    path = settings.data_dir / "cache" / "spy_benchmark.parquet"
+    if not path.exists():
+        log.warning("spy_benchmark_missing", path=str(path))
+        return None
+
+    df = pd.read_parquet(path)
+    if df.empty or "adjClose" not in df.columns:
+        log.warning("spy_benchmark_invalid", path=str(path))
+        return None
+
+    spy_series = pd.Series(
+        df["adjClose"].to_numpy(float),
+        index=pd.to_datetime(df["date"]).dt.normalize(),
+        name="SPY",
+    )
+
+    log.info(
+        "spy_benchmark_loaded",
+        rows=len(spy_series),
+        date_min=str(spy_series.index.min()),
+        date_max=str(spy_series.index.max()),
+    )
+    return spy_series
+
+
 def _compute_coverage(panel: pd.DataFrame) -> dict[str, float]:
     """Compute per-feature coverage (% non-NaN)."""
     coverage = {}
@@ -245,15 +316,50 @@ def main() -> None:
     # Convert prices to wide format for compute_price_features
     prices_wide = pd.read_parquet(settings.data_dir / "cache" / "phase_b_prices.parquet")
 
-    # Check if volume is available (it's not in the current cache)
-    volume_wide = None
-    log.info("volume_check", has_volume=False, note="turnover_amihud_will_be_nan")
+    # Load volume and SPY benchmark if available
+    volume_wide = _load_volume(tickers)
+    spy_benchmark = _load_spy_benchmark()
 
-    # Compute price features (no volume, no market benchmark)
+    if volume_wide is not None:
+        log.info("volume_available", n_tickers=int(volume_wide.shape[1]))
+        # Align volume to prices date range (volume may have shorter history)
+        # Use inner join to ensure only common dates are used
+        common_dates = prices_wide.index.intersection(volume_wide.index)
+        if len(common_dates) < len(volume_wide.index):
+            log.warning(
+                "volume_date_truncated",
+                volume_dates=len(volume_wide.index),
+                common_dates=len(common_dates),
+            )
+        volume_wide = volume_wide.loc[common_dates]
+        # Also truncate prices to common dates for feature computation
+        prices_for_features = prices_wide.loc[common_dates]
+    else:
+        log.info("volume_unavailable", note="turnover_amihud_will_be_nan")
+        prices_for_features = prices_wide
+
+    if spy_benchmark is not None:
+        log.info("spy_benchmark_available")
+        # Normalize SPY index to tz-naive (matching prices)
+        if spy_benchmark.index.tz is not None:
+            spy_benchmark.index = spy_benchmark.index.tz_localize(None)
+        # Align SPY to prices date range
+        common_dates = prices_for_features.index.intersection(spy_benchmark.index)
+        if len(common_dates) < len(spy_benchmark.index):
+            log.warning(
+                "spy_date_truncated",
+                spy_dates=len(spy_benchmark.index),
+                common_dates=len(common_dates),
+            )
+        spy_benchmark = spy_benchmark.loc[common_dates]
+    else:
+        log.info("spy_benchmark_unavailable", note="beta_will_be_nan")
+
+    # Compute price features (with volume and/or market benchmark if available)
     price_features = compute_price_features(
-        prices=prices_wide,
+        prices=prices_for_features,
         volume=volume_wide,
-        market_prices=None,  # No SPY in cache, beta will be NaN
+        market_prices=spy_benchmark,
     )
 
     # Convert to long format
@@ -271,7 +377,7 @@ def main() -> None:
 
     # Add Amihud (separate function)
     if volume_wide is not None:
-        amihud = compute_amihud_from_wide(prices_wide, volume_wide, window=21)
+        amihud = compute_amihud_from_wide(prices_for_features, volume_wide, window=21)
         amihud_long = amihud.stack().reset_index()
         amihud_long.columns = ["date", "ticker", "amihud_illiquidity_21d"]
         price_features_wide = price_features_wide.merge(
@@ -305,7 +411,8 @@ def main() -> None:
         coverage_summary={
             col: f"{pct:.1f}%" for col, pct in coverage.items()
         },
-        volume_available=False,
+        volume_available=volume_wide is not None,
+        spy_available=spy_benchmark is not None,
         turnover_coverage=f"{coverage.get('turnover_21d', 0):.1f}%",
         amihud_coverage=f"{coverage.get('amihud_illiquidity_21d', 0):.1f}%",
         beta_coverage=f"{coverage.get('beta_252d', 0):.1f}%",
@@ -338,11 +445,13 @@ def main() -> None:
         status = "✓ OK" if cov > 50 else "✗ LOW" if cov > 0 else "✗ NaN"
         print(f"  {col:25s} {cov:6.2f}% {status}")
 
-    print("\n--- Data Availability Notes ---")
-    print("  Volume: NOT AVAILABLE in cache → turnover_21d = NaN")
-    print("  Market benchmark: NOT AVAILABLE in cache → beta_252d = NaN")
-    print("  Amihud: REQUIRES volume → amihud_illiquidity_21d = NaN")
-    print("\n  (These NaNs are expected; features can be added when data available)")
+    print("\n--- Data Availability ---")
+    print(f"  Volume: {'AVAILABLE' if volume_wide is not None else 'NOT AVAILABLE'}")
+    print(f"  SPY benchmark: {'AVAILABLE' if spy_benchmark is not None else 'NOT AVAILABLE'}")
+    if volume_wide is None:
+        print("    → turnover_21d = NaN, amihud_illiquidity_21d = NaN")
+    if spy_benchmark is None:
+        print("    → beta_252d = NaN")
     print("=" * 60)
 
 
