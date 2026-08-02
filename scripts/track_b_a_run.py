@@ -84,6 +84,27 @@ def main() -> None:
             f"n_months: {len(diff)}",
             flush=True,
         )
+        # Persist real IC series + headline numbers for the static site (GitHub Pages).
+        import json
+
+        site_data = {
+            "treatment": {
+                "mean_ic": rt.mean_ic, "ci95": list(rt.ci_95), "p_hac": rt.p_hac,
+                "ic_series": {str(k): v for k, v in rt.ic_series.items()},
+            },
+            "price_only": {
+                "mean_ic": rp.mean_ic, "ci95": list(rp.ci_95), "p_hac": rp.p_hac,
+                "ic_series": {str(k): v for k, v in rp.ic_series.items()},
+            },
+            "differential": {
+                "mean_diff": mean_d, "ci95": [lo_d, hi_d], "p_hac": summary["p_hac"],
+                "ic_series": {str(k): v for k, v in diff.items()},
+            },
+        }
+        site_path = settings.data_dir.parent / "site" / "track_b_data.json"
+        site_path.parent.mkdir(parents=True, exist_ok=True)
+        site_path.write_text(json.dumps(site_data, indent=2), encoding="utf-8")
+        print(f"saved site data -> {site_path}", flush=True)
     else:
         _run_arm(panel, args.mode)
 

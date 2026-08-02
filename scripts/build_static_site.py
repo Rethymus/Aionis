@@ -1,771 +1,306 @@
-"""Build script for static Aionis dashboard v2 site using OSS tearsheet libraries.
+"""构建 Aionis 静态研究站点（中文、内容驱动、真实结果）→ site/index.html。
 
-This script is DETERMINISTIC with seed=0 — same output on every run.
-Imports dashboard.demo_data (read-only) and uses permissive OSS libraries:
-- quantstats (Apache-2.0): standalone HTML tearsheet
-- alphalens-reloaded (Apache-2.0): factor analysis tearsheets
-- pyfolio-reloaded (Apache-2.0): drawdown/rolling tearsheets
-- empyrical (Apache-2.0): KPI metrics
+设计原则（业主反馈 2026-08-02）：
+- 全中文（项目身份、结论、边界）。
+- 内容驱动：呈现真实研究故事（战略复盘 + Track B 首个差分结果 + 七主题覆盖 + 反泄漏纪律），
+  非通用 demo。
+- 复用优先：统计量（rank-IC / HAC CI）由项目真实函数预计算（rank_ic_summary），嵌入真实数字；
+  图表用 plotly（数据驱动的 CI/折线图，非手搓 tearsheet 轮子）。
+- 数据源：site/track_b_data.json（由 scripts/track_b_a_run.py --mode differential 生成）；
+  若缺失则用嵌入的 headline 数字（无 IC 时间序列图）。
 
-Event-study (Dim 4): Minimal Brown & Warner (1980/1985) implementation.
+Run:  uv run python scripts/build_static_site.py
 """
-
 from __future__ import annotations
 
-import sys
-from io import BytesIO
+import json
 from pathlib import Path
 
-import matplotlib
-import numpy as np
-
-# Configure matplotlib for deterministic non-interactive output
-matplotlib.use("Agg")
-import base64
-
-import matplotlib.pyplot as plt
-
-# Add project root to path for imports
-project_root = Path(__file__).parent.parent
-sys.path.insert(0, str(project_root))
-
-# Import OSS libraries (will be installed via uv sync)
-import pyfolio  # noqa: E402
-import quantstats as qs  # noqa: E402
-from alphalens import utils as alphalens_utils  # noqa: E402
-
-# Import demo data
-from dashboard import demo_data  # noqa: E402
-
-# Output directory
-SITE_DIR = project_root / "site"
+PROJECT_ROOT = Path(__file__).parent.parent
+SITE_DIR = PROJECT_ROOT / "site"
 SITE_DIR.mkdir(exist_ok=True)
 
-# Temporary directory for OSS library outputs
-TMP_DIR = SITE_DIR / "_tmp"
-TMP_DIR.mkdir(exist_ok=True)
+# --- 真实 headline 结果（Track B 首个差分，config #41/#42，2026-08-02）---
+# 来源：scripts/track_b_a_run.py --mode differential 的输出（chronological walk-forward,
+# expanding min_train=60, embargo=21, 2021-01..2026-06, 66 folds）。
+TREATMENT = {"name": "treatment（七主题，23 特征，#41）", "mean": 0.005511,
+             "ci": (-0.021441, 0.032463), "p": 0.6886}
+PRICE_ONLY = {"name": "price-only baseline（10 价格特征，#42）", "mean": -0.002062,
+              "ci": (-0.031623, 0.027500), "p": 0.8913}
+DIFFERENTIAL = {"name": "差分（treatment − price-only，§1 headline）", "mean": 0.007572,
+                "ci": (-0.004492, 0.019636), "p": 0.2186}
+SESOI = 0.010  # 预注册 §7 经济等价门槛
+
+# --- 七主题覆盖矩阵（来源：reports/2026-08-02-strategic-review + reuse-catalog-v2）---
+SEVEN_THEMES = [
+    ("① 行情 / 价格", "Tiingo + Alpaca（adjClose）", "已覆盖", "退市价缺失（结构性，保守上界）"),
+    ("② 宏观", "ALFRED vintage（FRED）", "已覆盖", "macro 会修订 → 必须 vintage"),
+    ("③ 基本面", "EDGAR XBRL filed-date（edgartools）", "已覆盖（13 特征）", "filed 非 period-end"),
+    ("④ 新闻情绪", "E3 闭集 13D/8-K 抽取 + FinGPT embedding", "延后（S3 ablation）",
+     "LLM 参数记忆泄漏；不作主 alpha"),
+    ("⑤ 风险", "alphalens / pyfolio / empyrical（Apache）", "评估层（待挂接）",
+     " tearsheet 在评估层覆盖"),
+    ("⑥ 回测净成本", "FINSABER（Apache，KDD 2026）", "待挂接",
+     "next-open / slippage / liquidity"),
+    ("⑦ 市场结构", "FF5 残差 + Amihud（statsmodels + 文献）", "已实现（ff5_residual.py）",
+     "FF 无 vintage（声明）"),
+]
+
+# --- 反泄漏链 ---
+ANTI_LEAKAGE = [
+    ("config_committed 先于 result", "ledger 行 #40/#41/#42 在任何 OOS 观察前入 ledger"),
+    ("PIT 数据", "EDGAR filed-date / ALFRED vintage / S&P constituents_on（非今日快照）"),
+    ("chronological walk-forward", "expanding，min_train=60 月，embargo=21 sessions，"
+                                  "assert max(train)<min(test)（非 shared-fold CV-proxy）"),
+    ("H6 确定性", "n_jobs=1，全 seed=0，version-pinned；同 config 重跑 bit-identical"),
+    ("两尾、预注册、null-favored", "每条 claim 预注册；null-with-tight-CI 是可发表成果"),
+]
 
 
-def _setup_determinism() -> None:
-    """Set up deterministic environment for reproducible builds."""
-    np.random.seed(0)
-    # Use deterministic matplotlib settings
-    plt.rcParams["figure.dpi"] = 100
-    plt.rcParams["savefig.dpi"] = 100
-    # Disable interactive mode
-    plt.ioff()
+def _load_ic_series() -> dict | None:
+    """加载 site/track_b_data.json（IC 月度序列）；缺失则返回 None。"""
+    path = SITE_DIR / "track_b_data.json"
+    if not path.exists():
+        return None
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
 
 
-def _fig_to_base64(fig: plt.Figure) -> str:
-    """Convert matplotlib figure to base64-encoded data URL."""
-    buf = BytesIO()
-    fig.savefig(buf, format="png", bbox_inches="tight")
-    plt.close(fig)
-    buf.seek(0)
-    data_uri = base64.b64encode(buf.read()).decode("utf-8")
-    return f"data:image/png;base64,{data_uri}"
-    """Convert matplotlib figure to base64-encoded data URL."""
-    buf = BytesIO()
-    fig.savefig(buf, format="png", bbox_inches="tight")
-    plt.close(fig)
-    buf.seek(0)
-    data_uri = base64.b64encode(buf.read()).decode("utf-8")
-    return f"data:image/png;base64,{data_uri}"
-
-
-def _generate_dimension_1_fit_quality() -> dict[str, str]:
-    """Dimension 1: Fit Quality (拟合质量) — alphalens tearsheets.
-
-    Returns:
-        Dict with keys: 'title', 'charts' (list of base64 PNG data URLs)
-    """
-    print("  → Generating Dimension 1: Fit Quality (alphalens tearsheets)...")
-
-    _setup_determinism()
-
-    # Get factor data and prices from demo_data
-    factor_data, prices = demo_data._factor_data_and_prices()
-
-    # Align factor data with forward returns (alphalens format)
-    # Use a 1-month forward period for demonstrative analysis
-    factor_data_clean = alphalens_utils.get_clean_factor_and_forward_returns(
-        factor_data,
-        prices,
-        periods=[1],
-        max_loss=0.35,
-        quantiles=5,
+def _theme_table_html() -> str:
+    rows = "\n".join(
+        f"<tr><td>{theme}</td><td>{src}</td><td>{status}</td><td>{gap}</td></tr>"
+        for theme, src, status, gap in SEVEN_THEMES
+    )
+    return (
+        '<table class="data-table"><thead><tr>'
+        "<th>主题</th><th>数据源 / 轮子</th><th>覆盖状态</th><th>泄漏 gotcha / 注</th>"
+        f"</tr></thead><tbody>{rows}</tbody></table>"
     )
 
-    # Generate alphalens-style figures using lower-level plotting functions
-    from alphalens import performance, plotting
 
-    charts_html = []
-
-    # IC time series chart
-    fig = plt.figure(figsize=(14, 6))
-    ic = performance.factor_information_coefficient(factor_data_clean)
-    plotting.plot_ic_ts(ic)
-    plt.title("Information Coefficient (IC) Time Series", fontsize=14, fontweight="bold")
-    plt.tight_layout()
-    charts_html.append(_fig_to_base64(fig))
-
-    # Quantile returns chart
-    fig = plt.figure(figsize=(14, 6))
-    mean_ret = performance.mean_return_by_quantile(factor_data_clean)[0]
-    plotting.plot_quantile_returns_bar(mean_ret)
-    plt.title("Mean Return by Quantile", fontsize=14, fontweight="bold")
-    plt.tight_layout()
-    charts_html.append(_fig_to_base64(fig))
-
-    return {"title": "Fit Quality (拟合质量)", "charts": charts_html}
-
-
-def _generate_dimension_2_volatility() -> dict[str, str]:
-    """Dimension 2: Volatility Structure (波动结构) — pyfolio tearsheets.
-
-    Returns:
-        Dict with keys: 'title', 'charts'
-    """
-    print("  → Generating Dimension 2: Volatility Structure (OSS tearsheets)...")
-
-    _setup_determinism()
-
-    # Get L-S returns from demo_data
-    ls_returns = demo_data._ls_returns()
-    ls_series = ls_returns.set_index("date")["state"]
-
-    # Generate OSS tearsheet figures
-    charts_html = []
-
-    # Drawdown chart using pyfolio's plotting function
-    fig = plt.figure(figsize=(14, 6))
-    ax = fig.add_subplot(111)
-    pyfolio.plotting.plot_drawdown_underwater(ls_series, ax=ax)
-    plt.title("Drawdown (Underwater Plot)", fontsize=14, fontweight="bold")
-    plt.tight_layout()
-    charts_html.append(_fig_to_base64(fig))
-
-    # Rolling Sharpe using quantstats (OSS library)
-    fig = plt.figure(figsize=(14, 6))
-    rolling_sharpe = qs.stats.rolling_sharpe(ls_series)
-    plt.plot(rolling_sharpe.index, rolling_sharpe.values, color="#2563eb", linewidth=2)
-    plt.title("Rolling Sharpe Ratio (12-Month Window)", fontsize=14, fontweight="bold")
-    plt.xlabel("Date")
-    plt.ylabel("Sharpe Ratio")
-    plt.grid(True, alpha=0.3)
-    plt.tight_layout()
-    charts_html.append(_fig_to_base64(fig))
-
-    return {"title": "Volatility Structure (波动结构)", "charts": charts_html}
-
-
-def _generate_dimension_3_evolution() -> dict[str, str]:
-    """Dimension 3: Curve Evolution (曲线演化) — quantstats tearsheet.
-
-    Returns:
-        Dict with keys: 'title', 'tearsheet_html' (embedded HTML)
-    """
-    print("  → Generating Dimension 3: Curve Evolution (quantstats tearsheet)...")
-
-    _setup_determinism()
-
-    # Get L-S returns from demo_data
-    ls_returns = demo_data._ls_returns()
-    ls_series = ls_returns.set_index("date")["state"]
-
-    # Generate quantstats tearsheet HTML
-    tearsheet_path = TMP_DIR / "quantstats_tearsheet.html"
-    qs.reports.html(
-        ls_series,
-        output=str(tearsheet_path),
-        title="Aionis — Demonstrative L-S Tearsheet",
-        download=False,
-        grayscale=True,
+def _antileakage_html() -> str:
+    items = "\n".join(
+        f'<li><strong>{title}</strong>：{desc}</li>' for title, desc in ANTI_LEAKAGE
     )
-
-    # Read the generated HTML and extract the body content
-    tearsheet_html = tearsheet_path.read_text(encoding="utf-8")
-
-    # Extract just the tearsheet body (not the full HTML doc)
-    # Quantstats generates a full HTML doc, we'll embed the body content
-    body_start = tearsheet_html.find("<body>")
-    body_end = tearsheet_html.find("</body>")
-    if body_start != -1 and body_end != -1:
-        body_content = tearsheet_html[body_start + 7 : body_end]
-    else:
-        body_content = tearsheet_html  # Fallback
-
-    return {
-        "title": "Curve Evolution (曲线演化)",
-        "tearsheet_html": body_content,
-    }
-
-
-def _generate_dimension_4_event_study() -> dict[str, str]:
-    """Dimension 4: Event Study (事件前后差异) — Brown & Warner CAR.
-
-    Implements minimal Brown & Warner (1980/1985) market-model CAR with bootstrap CI.
-
-    Returns:
-        Dict with keys: 'title', 'charts_html'
-    """
-    print("  → Generating Dimension 4: Event Study (Brown & Warner CAR)...")
-
-    _setup_determinism()
-
-    # Get CAR path data from demo_data
-    car_data = demo_data._car_path()
-
-    # Generate CAR plot with bootstrap CI band
-    fig = plt.figure(figsize=(14, 6))
-
-    t = np.array(car_data["t"])
-    car = np.array(car_data["car"])
-    ci_lo = np.array(car_data["ci_lo"])
-    ci_hi = np.array(car_data["ci_hi"])
-
-    # Plot CAR path
-    plt.plot(t, car, color="#2563eb", linewidth=2, label="CAR")
-    plt.fill_between(t, ci_lo, ci_hi, color="#2563eb", alpha=0.2, label="95% CI")
-
-    # Add event day marker
-    plt.axvline(x=0, color="#dc2626", linestyle="--", linewidth=1.5, label="Event Day")
-    plt.axhline(y=0, color="black", linestyle="-", linewidth=0.5, alpha=0.5)
-
-    plt.title(
-        f"Cumulative Abnormal Returns (CAR) — {car_data['n_events']} Events",
-        fontsize=14,
-        fontweight="bold",
-    )
-    plt.xlabel("Days Relative to Event")
-    plt.ylabel("CAR (%)")
-    plt.legend(loc="best")
-    plt.grid(True, alpha=0.3)
-    plt.tight_layout()
-
-    chart_html = _fig_to_base64(fig)
-
-    # Add methodology citation
-    citation_html = """
-    <div class="methodology-note">
-        <p><strong>Methodology:</strong> Brown & Warner (1980/1985) market-model CAR
-        with bootstrap confidence bands. This is a minimal implementation of the
-        published event-study methodology — not a reinvention of a wheel.</p>
-    </div>
-    """
-
-    return {
-        "title": "Pre/Post Event Differences (事件前后差异)",
-        "charts": [chart_html],
-        "citation": citation_html,
-    }
-
-
-def _generate_dimension_5_uncertainty() -> dict[str, str]:
-    """Dimension 5: Uncertainty (不确定性) — CI half-width + forest plot.
-
-    Returns:
-        Dict with keys: 'title', 'kpi_html', 'charts'
-    """
-    print("  → Generating Dimension 5: Uncertainty (CI analysis + forest plot)...")
-
-    _setup_determinism()
-
-    # Get uncertainty data from demo_data
-    ci_df = demo_data._ci_half_by_phase()
-    diff_df = demo_data._differential_forest_plot()
-    bootstrap_samples = demo_data._bootstrap_distribution()
-    observed_ic = 0.008  # From demo_data generation
-
-    # Compute KPI metrics using quantstats.stats (OSS library)
-    ls_returns = demo_data._ls_returns()
-    ls_series = ls_returns.set_index("date")["state"]
-
-    # Extract scalar values from quantstats (may return Series for some metrics)
-    sharpe_val = qs.stats.sharpe(ls_series)
-    sharpe_val = sharpe_val.iloc[-1] if hasattr(sharpe_val, "iloc") else sharpe_val
-    sortino_val = qs.stats.sortino(ls_series)
-    sortino_val = sortino_val.iloc[-1] if hasattr(sortino_val, "iloc") else sortino_val
-
-    kpi_metrics = {
-        "Max Drawdown": f"{qs.stats.max_drawdown(ls_series):.2%}",
-        "Annual Volatility": f"{qs.stats.volatility(ls_series):.2%}",
-        "Sharpe Ratio": f"{sharpe_val:.2f}",
-        "Sortino Ratio": f"{sortino_val:.2f}",
-        "Calmar Ratio": f"{qs.stats.calmar(ls_series):.2f}",
-    }
-
-    # Generate KPI tile row HTML
-    kpi_html = '<div class="kpi-tiles">'
-    for metric, value in kpi_metrics.items():
-        kpi_html += f"""
-        <div class="kpi-tile">
-            <div class="kpi-label">{metric}</div>
-            <div class="kpi-value">{value}</div>
-        </div>
-        """
-    kpi_html += "</div>"
-
-    # Generate CI half-width bar chart
-    charts_html = []
-
-    fig = plt.figure(figsize=(12, 6))
-    colors = ["#dc2626" if ci > 0.015 else "#16a34a" for ci in ci_df["ci_half"]]
-    plt.bar(ci_df["phase"], ci_df["ci_half"], color=colors, alpha=0.7)
-    plt.axhline(y=0.015, color="black", linestyle="--", linewidth=2, label="Publishability Gate")
-    plt.title("CI Half-Width by Phase", fontsize=14, fontweight="bold")
-    plt.xlabel("Phase")
-    plt.ylabel("CI Half-Width")
-    plt.legend()
-    plt.grid(True, alpha=0.3, axis="y")
-    plt.tight_layout()
-
-    charts_html.append(_fig_to_base64(fig))
-
-    # Forest plot
-    fig = plt.figure(figsize=(10, 6))
-    y_pos = np.arange(len(diff_df))
-    plt.errorbar(
-        diff_df["mean_diff"],
-        y_pos,
-        xerr=[diff_df["mean_diff"] - diff_df["ci_lo"], diff_df["ci_hi"] - diff_df["mean_diff"]],
-        fmt="o",
-        color="#2563eb",
-        ecolor="#2563eb",
-        elinewidth=2,
-        capsize=5,
-    )
-    plt.axvline(x=0, color="black", linestyle="--", linewidth=1)
-    plt.yticks(y_pos, diff_df["label"])
-    plt.title("Forest Plot — Differential vs Controls", fontsize=14, fontweight="bold")
-    plt.xlabel("Mean Differential")
-    plt.grid(True, alpha=0.3, axis="x")
-    plt.tight_layout()
-
-    charts_html.append(_fig_to_base64(fig))
-
-    # Bootstrap distribution
-    fig = plt.figure(figsize=(12, 6))
-    plt.hist(bootstrap_samples, bins=50, color="#2563eb", alpha=0.5, edgecolor="black")
-    plt.axvline(
-        x=observed_ic,
-        color="#dc2626",
-        linestyle="--",
-        linewidth=2,
-        label=f"Observed ({observed_ic:.3f})",
-    )
-    plt.axvline(x=0, color="black", linestyle="-", linewidth=1, label="Null (0)")
-    plt.title("Bootstrap Distribution — Mean Differential", fontsize=14, fontweight="bold")
-    plt.xlabel("Bootstrap Mean Differential")
-    plt.ylabel("Frequency")
-    plt.legend()
-    plt.grid(True, alpha=0.3, axis="y")
-    plt.tight_layout()
-
-    charts_html.append(_fig_to_base64(fig))
-
-    return {
-        "title": "Uncertainty (不确定性)",
-        "kpi_html": kpi_html,
-        "charts": charts_html,
-    }
-
-
-def assemble_html_page(dim_data: list[dict]) -> str:
-    """Assemble the complete HTML page with all dimensions."""
-
-    # Generate dimension section HTML
-    dim_sections_html = ""
-    for i, dim in enumerate(dim_data, 1):
-        section_id = ["fit-quality", "volatility", "evolution", "event-study", "uncertainty"][i - 1]
-
-        charts_html = ""
-        if "charts" in dim:
-            for chart_data_url in dim["charts"]:
-                charts_html += (
-                    f'<img src="{chart_data_url}" class="chart-image" '
-                    f'alt="{dim["title"]}">'
-                )
-
-        tearsheet_html = dim.get("tearsheet_html", "")
-        citation_html = dim.get("citation", "")
-        kpi_html = dim.get("kpi_html", "")
-
-        dim_sections_html += f'''
-        <!-- Dimension {i}: {dim["title"]} -->
-        <div id="{section_id}" class="dimension-section{' active' if i == 1 else ''}">
-            <h2 class="section-title">Dimension {i}: {dim["title"]}</h2>
-            <p class="section-subtitle">
-                {get_dimension_subtitle(i)}
-            </p>
-            <div class="caption">
-                Preliminary data — demonstrates the method, not a final conclusion.
-            </div>
-            {kpi_html if i == 5 else ''}
-            {charts_html}
-            {f'<div class="tearsheet-container">{tearsheet_html}</div>' if tearsheet_html else ''}
-            {citation_html}
-        </div>
-        '''
-
-    html_content = f'''<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aionis Dashboard v2 — Quant Model-Evaluation Interface (OSS-Powered)</title>
-    <style>
-        * {{
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }}
-
-        body {{
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-                Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: #f8fafc;
-            color: #1e293b;
-            line-height: 1.6;
-        }}
-
-        /* Banner styles */
-        .banner {{
-            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-            color: white;
-            text-align: center;
-            padding: 1.5rem 2rem;
-            font-weight: 600;
-            font-size: 1.1rem;
-            letter-spacing: 0.5px;
-            border-bottom: 4px solid #991b1b;
-        }}
-
-        /* Main container */
-        .container {{
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-        }}
-
-        /* Header */
-        .header {{
-            text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid #e2e8f0;
-        }}
-
-        .header h1 {{
-            font-size: 2.5rem;
-            color: #0f172a;
-            margin-bottom: 0.5rem;
-        }}
-
-        .header p {{
-            color: #64748b;
-            font-size: 1.1rem;
-        }}
-
-        /* Tab navigation */
-        .tabs {{
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 2rem;
-            border-bottom: 2px solid #e2e8f0;
-        }}
-
-        .tab {{
-            background: none;
-            border: none;
-            padding: 1rem 1.5rem;
-            font-size: 1rem;
-            font-weight: 500;
-            color: #64748b;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border-bottom: 3px solid transparent;
-            font-family: inherit;
-        }}
-
-        .tab:hover {{
-            color: #2563eb;
-            background-color: #eff6ff;
-        }}
-
-        .tab.active {{
-            color: #2563eb;
-            border-bottom-color: #2563eb;
-            font-weight: 600;
-        }}
-
-        /* Dimension sections */
-        .dimension-section {{
-            display: none;
-        }}
-
-        .dimension-section.active {{
-            display: block;
-        }}
-
-        .section-title {{
-            font-size: 1.8rem;
-            color: #0f172a;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #e2e8f0;
-        }}
-
-        .section-subtitle {{
-            font-size: 1.2rem;
-            color: #64748b;
-            margin-bottom: 1.5rem;
-            font-weight: 500;
-        }}
-
-        /* Chart containers */
-        .chart {{
-            background: white;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }}
-
-        .chart-image {{
-            width: 100%;
-            height: auto;
-            border-radius: 4px;
-            margin-bottom: 1.5rem;
-        }}
-
-        .tearsheet-container {{
-            background: white;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }}
-
-        /* Caption styling */
-        .caption {{
-            text-align: center;
-            color: #dc2626;
-            font-weight: 600;
-            font-size: 0.95rem;
-            padding: 1rem;
-            background-color: #fef2f2;
-            border-radius: 4px;
-            margin-bottom: 1.5rem;
-            border-left: 4px solid #dc2626;
-        }}
-
-        /* Methodology note */
-        .methodology-note {{
-            background-color: #f0f9ff;
-            border-left: 4px solid #0284c7;
-            padding: 1rem;
-            margin-top: 1rem;
-            border-radius: 4px;
-            font-size: 0.9rem;
-        }}
-
-        /* Publishability gate reminder */
-        .publishability-reminder {{
-            background-color: #fef3c7;
-            border: 2px solid #f59e0b;
-            border-radius: 8px;
-            padding: 1rem 1.5rem;
-            margin-bottom: 2rem;
-            font-weight: 500;
-            color: #92400e;
-        }}
-
-        .publishability-reminder code {{
-            background-color: #fffbeb;
-            padding: 0.2rem 0.5rem;
-            border-radius: 3px;
-            font-family: monospace;
-            font-weight: 600;
-        }}
-
-        /* KPI tiles */
-        .kpi-tiles {{
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }}
-
-        .kpi-tile {{
-            flex: 1;
-            min-width: 150px;
-            background: white;
-            border-radius: 8px;
-            padding: 1.5rem;
-            text-align: center;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }}
-
-        .kpi-label {{
-            font-size: 0.9rem;
-            color: #64748b;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-        }}
-
-        .kpi-value {{
-            font-size: 1.5rem;
-            color: #0f172a;
-            font-weight: 700;
-        }}
-
-        /* Footer */
-        .footer {{
-            text-align: center;
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid #e2e8f0;
-            color: #94a3b8;
-            font-size: 0.9rem;
-        }}
-
-        /* Responsive */
-        @media (max-width: 768px) {{
-            .container {{
-                padding: 1rem;
-            }}
-
-            .header h1 {{
-                font-size: 1.8rem;
-            }}
-
-            .tabs {{
-                flex-direction: column;
-            }}
-
-            .tab {{
-                width: 100%;
-                text-align: left;
-            }}
-        }}
-    </style>
-</head>
-<body>
-    <div class="banner">
-        ⚠️ EXPLORATORY · DEMONSTRATIVE DATA · not a conclusion · not investment advice
-    </div>
-
-    <div class="container">
-        <div class="header">
-            <h1>Aionis Dashboard v2</h1>
-            <p>Quant Model-Evaluation Interface — Demonstrative Analysis Methods (OSS-Powered)</p>
-        </div>
-
-        <div class="publishability-reminder">
-            📊 Publishability Gate: A result is "publishable" only when
-            CI half-width &lt; <code>0.015</code>
-            (see pre-registration §7). The charts below demonstrate the analysis
-            methods on synthetic data using permissive OSS libraries.
-        </div>
-
-        <div class="tabs">
-            <button class="tab active" data-tab="fit-quality">1. Fit Quality (拟合质量)</button>
-            <button class="tab" data-tab="volatility">2. Volatility Structure (波动结构)</button>
-            <button class="tab" data-tab="evolution">3. Curve Evolution (曲线演化)</button>
-            <button class="tab" data-tab="event-study">4. Event Study (事件前后差异)</button>
-            <button class="tab" data-tab="uncertainty">5. Uncertainty (不确定性)</button>
-        </div>
-
-        {dim_sections_html}
-
-        <div class="footer">
-            <p>
-                Aionis Quantitative Finance Research ·
-                Falsifiable, Anti-Leakage Analysis Framework
-            </p>
-            <p>
-                Generated from deterministic synthetic data (seed=0) ·
-                Powered by permissive OSS: quantstats, alphalens-reloaded,
-                pyfolio-reloaded
-            </p>
-        </div>
-    </div>
-
-    <script>
-        // Tab switching logic
-        document.addEventListener('DOMContentLoaded', function() {{
-            const tabs = document.querySelectorAll('.tab');
-            const sections = document.querySelectorAll('.dimension-section');
-
-            tabs.forEach(tab => {{
-                tab.addEventListener('click', function() {{
-                    const targetTab = this.getAttribute('data-tab');
-
-                    // Remove active class from all tabs and sections
-                    tabs.forEach(t => t.classList.remove('active'));
-                    sections.forEach(s => s.classList.remove('active'));
-
-                    // Add active class to clicked tab and target section
-                    this.classList.add('active');
-                    document.getElementById(targetTab).classList.add('active');
-                }});
-            }});
-        }});
-    </script>
-</body>
-</html>'''
-
-    return html_content
-
-
-def get_dimension_subtitle(dim_num: int) -> str:
-    """Get subtitle for each dimension."""
-    subtitles = {
-        1: "How well do the OOS scores predict cross-sectional returns?",
-        2: "Is the edge stable, or clustered / fat-tailed / drawdown-prone?",
-        3: "How does performance accumulate, and does it drift?",
-        4: "Do returns behave differently around real-world events?",
-        5: "How tight is the inference — and is it publishable?",
-    }
-    return subtitles.get(dim_num, "")
+    return f'<ul class="anti-leakage">{items}</ul>'
 
 
 def build() -> Path:
-    """Build the static site and return the path to index.html."""
-    print("🔨 Building static Aionis dashboard v2 site (OSS-Powered)...")
+    ic_data = _load_ic_series()
+    ic_data_json = json.dumps(ic_data) if ic_data else "null"
 
-    # Set up determinism
-    _setup_determinism()
+    diff_verdict = (
+        "差分 95% CI 跨零、p=0.219 → <strong>treatment 未显著优于 price-only baseline</strong>"
+        "（符合 null-favored 预注册）。"
+    )
+    equiv_note = (
+        f"但 CI 上界 {DIFFERENTIAL['ci'][1]:+.4f} &gt; SESOI ±{SESOI} → "
+        "<strong>不构成严格等价</strong>（RCI ⊄ [−0.010,+0.010]），差分可能高达 ~0.020，"
+        "需更多样本才能宣称等价。"
+    )
 
-    # Generate all dimension data using OSS libraries
-    print("  → Calling OSS libraries for each dimension...")
-    dim1_data = _generate_dimension_1_fit_quality()
-    dim2_data = _generate_dimension_2_volatility()
-    dim3_data = _generate_dimension_3_evolution()
-    dim4_data = _generate_dimension_4_event_study()
-    dim5_data = _generate_dimension_5_uncertainty()
+    ic_section = (
+        '<div class="chart-card"><div id="ic-series-chart"></div>'
+        '<p class="caption">月度 rank-IC 序列（2021-01..2026-06，chronological walk-forward，'
+        "真实 OOS 数据）。</p></div>"
+        if ic_data
+        else '<p class="muted">IC 月度序列图待 site/track_b_data.json 生成'
+        '（运行 <code>track_b_a_run.py --mode differential</code>）。</p>'
+    )
 
-    dim_data = [dim1_data, dim2_data, dim3_data, dim4_data, dim5_data]
+    html = f"""<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aionis — 可证伪、反泄漏的横截面选股研究</title>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<style>
+* {{ margin:0; padding:0; box-sizing:border-box; }}
+body {{ font-family:"PingFang SC","Noto Sans SC","Microsoft YaHei",-apple-system,sans-serif;
+       background:#f8fafc; color:#1e293b; line-height:1.7; }}
+.banner {{ background:linear-gradient(135deg,#b45309,#92400e); color:#fff; text-align:center;
+          padding:.8rem 1rem; font-weight:600; font-size:.95rem; letter-spacing:.3px; }}
+.container {{ max-width:1000px; margin:0 auto; padding:2rem 1.2rem; }}
+.hero {{ text-align:center; margin-bottom:2rem; padding-bottom:1.5rem; border-bottom:1px solid #e2e8f0; }}
+.hero h1 {{ font-size:2rem; color:#0f172a; margin-bottom:.4rem; }}
+.hero .tagline {{ color:#64748b; font-size:1.05rem; }}
+.hero .badges {{ margin-top:.8rem; }}
+.badge {{ display:inline-block; background:#eff6ff; color:#1d4ed8; border:1px solid #bfdbfe;
+         border-radius:999px; padding:.2rem .8rem; font-size:.85rem; margin:.15rem; }}
+.finding {{ background:#fff; border:1px solid #e2e8f0; border-left:5px solid #0f172a;
+           border-radius:8px; padding:1.5rem; margin-bottom:2rem; box-shadow:0 1px 3px rgba(0,0,0,.06); }}
+.finding h2 {{ font-size:1.25rem; margin-bottom:.6rem; }}
+.finding .verdict {{ font-size:1.05rem; }}
+.finding .equiv {{ margin-top:.5rem; color:#92400e; font-size:.95rem; }}
+section {{ margin-bottom:2rem; }}
+section h2 {{ font-size:1.3rem; color:#0f172a; margin-bottom:.8rem; padding-bottom:.4rem;
+             border-bottom:2px solid #e2e8f0; }}
+.data-table {{ width:100%; border-collapse:collapse; background:#fff; border-radius:8px;
+              overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,.06); font-size:.92rem; }}
+.data-table th {{ background:#f1f5f9; padding:.7rem .6rem; text-align:left; font-weight:600;
+                 border-bottom:2px solid #e2e8f0; }}
+.data-table td {{ padding:.6rem; border-bottom:1px solid #f1f5f9; vertical-align:top; }}
+.data-table tr:last-child td {{ border-bottom:none; }}
+.chart-card {{ background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:1rem;
+              margin:1rem 0; box-shadow:0 1px 3px rgba(0,0,0,.06); }}
+.anti-leakage {{ list-style:none; }}
+.anti-leakage li {{ background:#fff; border:1px solid #e2e8f0; border-left:4px solid #16a34a;
+                   border-radius:6px; padding:.7rem 1rem; margin-bottom:.5rem; }}
+.boundary {{ background:#fef2f2; border:1px solid #fecaca; border-left:4px solid #dc2626;
+            border-radius:6px; padding:1rem 1.2rem; }}
+.boundary ul {{ margin-left:1.2rem; }}
+.caption {{ text-align:center; color:#94a3b8; font-size:.85rem; margin-top:.4rem; }}
+.muted {{ color:#94a3b8; }}
+code {{ background:#f1f5f9; padding:.1rem .35rem; border-radius:3px; font-size:.9em; }}
+.footer {{ text-align:center; margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid #e2e8f0;
+          color:#94a3b8; font-size:.9rem; }}
+.footer a {{ color:#2563eb; text-decoration:none; }}
+@media (max-width:640px) {{ .hero h1 {{ font-size:1.5rem; }} .data-table {{ font-size:.82rem; }} }}
+</style>
+</head>
+<body>
+<div class="banner">⚠️ 探索性 · 首个 OOS 结果 · 非投资建议 · null-favored（null 是预期可发表成果）</div>
+<div class="container">
+  <div class="hero">
+    <h1>Aionis</h1>
+    <div class="tagline">可证伪、反泄漏的横截面选股研究 · S&amp;P 500 月频 rank-IC</div>
+    <div class="badges">
+      <span class="badge">config_committed 先于 result</span>
+      <span class="badge">PIT 数据</span>
+      <span class="badge">chronological walk-forward</span>
+      <span class="badge">H6 确定性</span>
+      <span class="badge">null-favored 两尾</span>
+    </div>
+  </div>
 
-    # Assemble HTML
-    print("  → Assembling HTML page with OSS output...")
-    html_content = assemble_html_page(dim_data)
+  <div class="finding">
+    <h2>📊 核心发现：Track B 首个 headline 差分（null）</h2>
+    <div class="verdict">{diff_verdict}</div>
+    <div class="equiv">{equiv_note}</div>
+    <div class="chart-card"><div id="ci-chart"></div></div>
+  </div>
 
-    # Write to file
-    output_path = SITE_DIR / "index.html"
-    output_path.write_text(html_content, encoding="utf-8")
+  <section>
+    <h2>🔎 战略复盘结论（2026-08-02）</h2>
+    <p>方向<strong>没跑偏</strong>——反泄漏纪律与 null-first 立场是稀缺且正确的价值。存在两处"失调"：
+    目标叙事双轨（窄 harness vs 宽选股平台）已裁断为 <strong>Track B（七主题平台）</strong>；
+    治理机器复杂度曾超过研究产出，现已切换到"用治理产出研究"。详见
+    <code>reports/2026-08-02-strategic-review-coverage-and-alignment.md</code>。</p>
+  </section>
 
-    # Clean up temporary directory
-    if TMP_DIR.exists():
-        import shutil
-        shutil.rmtree(TMP_DIR)
+  <section>
+    <h2>🌐 七主题覆盖矩阵</h2>
+    {_theme_table_html()}
+  </section>
 
-    file_size = output_path.stat().st_size
-    print(f"✅ Built static site: {output_path} ({file_size:,} bytes)")
+  <section>
+    <h2>📈 首个差分结果（chronological walk-forward, 2021-01..2026-06, 66 折）</h2>
+    <table class="data-table">
+      <thead><tr><th>臂</th><th>mean</th><th>95% HAC CI</th><th>p</th></tr></thead>
+      <tbody>
+        <tr><td>{TREATMENT['name']}</td><td>{TREATMENT['mean']:+.4f}</td>
+            <td>({TREATMENT['ci'][0]:+.4f}, {TREATMENT['ci'][1]:+.4f})</td><td>{TREATMENT['p']:.3f}</td></tr>
+        <tr><td>{PRICE_ONLY['name']}</td><td>{PRICE_ONLY['mean']:+.4f}</td>
+            <td>({PRICE_ONLY['ci'][0]:+.4f}, {PRICE_ONLY['ci'][1]:+.4f})</td><td>{PRICE_ONLY['p']:.3f}</td></tr>
+        <tr><td><strong>{DIFFERENTIAL['name']}</strong></td>
+            <td><strong>{DIFFERENTIAL['mean']:+.4f}</strong></td>
+            <td><strong>({DIFFERENTIAL['ci'][0]:+.4f}, {DIFFERENTIAL['ci'][1]:+.4f})</strong></td>
+            <td><strong>{DIFFERENTIAL['p']:.3f}</strong></td></tr>
+      </tbody>
+    </table>
+    {ic_section}
+  </section>
 
-    return output_path
+  <section>
+    <h2>🛡️ 反泄漏纪律（不可妥协）</h2>
+    {_antileakage_html()}
+  </section>
+
+  <section>
+    <h2>⚠️ 诚实边界</h2>
+    <div class="boundary">
+      <ul>
+        <li>此结果仅适用于：lambdarank / 23 vs 10 特征 / 2016+ PIT S&amp;P 500 / 幸存者偏差"可缓解不可根除"。</li>
+        <li><strong>不证明</strong>："市场有效" / "七主题无效" / "可交易" / "策略可承载资金"。</li>
+        <li><strong>可写</strong>："在此实现与样本下，未观察到 treatment 显著优于 price-only 的横截面 rank-IC。"</li>
+        <li>差分 CI 上界 0.020 &gt; SESOI 0.010 → 非严格等价，需更多样本。</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="footer">
+    <p>Aionis · 可证伪、反泄漏的量化选股研究 harness（非交易机器人）</p>
+    <p><a href="https://github.com/Rethymus/Aionis">GitHub 仓库</a> ·
+       <a href="https://github.com/Rethymus/Aionis/blob/main/docs/track-b-preregistration.md">Track B 预注册</a> ·
+       <a href="https://github.com/Rethymus/Aionis/blob/main/docs/track-b-results.md">完整结果快照</a></p>
+  </div>
+</div>
+
+<script>
+const SESOI = {SESOI};
+const treatment = {{mean: {TREATMENT['mean']}, lo: {TREATMENT['ci'][0]}, hi: {TREATMENT['ci'][1]}, name: {json.dumps(TREATMENT['name'], ensure_ascii=False)}}};
+const priceOnly = {{mean: {PRICE_ONLY['mean']}, lo: {PRICE_ONLY['ci'][0]}, hi: {PRICE_ONLY['ci'][1]}, name: {json.dumps(PRICE_ONLY['name'], ensure_ascii=False)}}};
+const differential = {{mean: {DIFFERENTIAL['mean']}, lo: {DIFFERENTIAL['ci'][0]}, hi: {DIFFERENTIAL['ci'][1]}, name: {json.dumps(DIFFERENTIAL['name'], ensure_ascii=False)}}};
+
+// 差分 CI 条形图（水平 error bars + SESOI 带 + 零线）
+const arms = [treatment, priceOnly, differential];
+const ciTrace = {{
+  x: arms.map(a => a.mean), y: arms.map(a => a.name),
+  error_x: {{type:'data', symmetric:false,
+             array: arms.map(a => a.hi-a.mean), arrayminus: arms.map(a => a.mean-a.lo),
+             thickness:2, color:'#1e293b'}},
+  mode:'markers', marker:{{size:14, color:['#2563eb','#64748b','#dc2626']}},
+  type:'scatter', name:'mean ± 95% CI'
+}};
+const sesoiLo = {{x:[-SESOI,-SESOI], y:[differential.name, differential.name], mode:'lines',
+                 line:{{color:'#16a34a',dash:'dash',width:2}}, showlegend:false, type:'scatter'}};
+const sesoiHi = {{x:[SESOI,SESOI], y:[differential.name, differential.name], mode:'lines',
+                 line:{{color:'#16a34a',dash:'dash',width:2}}, name:'SESOI ±0.010', type:'scatter'}};
+const zero = {{x:[0,0], y:[treatment.name, differential.name], mode:'lines',
+              line:{{color:'#94a3b8',width:1}}, showlegend:false, type:'scatter'}};
+Plotly.newPlot('ci-chart', [ciTrace, sesoiLo, sesoiHi, zero],
+  {{margin:{{l:260,r:40,t:20,b:50}}, height:300,
+    xaxis:{{title:'月频 rank-IC / 差分（95% HAC CI）', zeroline:true}},
+    legend:{{x:0.01, y:-0.25, orientation:'h'}}}},
+  {{displayModeBar:false, responsive:true}});
+
+// IC 月度时间序列（若数据存在）
+const icData = {ic_data_json};
+if (icData) {{
+  const months = Object.keys(icData.differential.ic_series).sort();
+  const toSeries = arm => months.map(m => icData[arm].ic_series[m] ?? null);
+  const rolling = arr => {{  // 6 月滚动均值
+    const out = []; const W = 6;
+    for (let i=0;i<arr.length;i++) {{
+      const w = arr.slice(Math.max(0,i-W+1), i+1).filter(v=>v!==null);
+      out.push(w.length ? w.reduce((a,b)=>a+b,0)/w.length : null);
+    }} return out;
+  }};
+  const traces = [
+    {{x:months, y:toSeries('treatment'), mode:'lines', name:'treatment', line:{{color:'#2563eb',width:1}}, opacity:0.5}},
+    {{x:months, y:toSeries('price_only'), mode:'lines', name:'price-only', line:{{color:'#64748b',width:1}}, opacity:0.5}},
+    {{x:months, y:toSeries('differential'), mode:'lines', name:'差分', line:{{color:'#dc2626',width:1}}, opacity:0.6}},
+    {{x:months, y:rolling(toSeries('differential')), mode:'lines', name:'差分（6月滚动均值）',
+      line:{{color:'#dc2626',width:3}}}},
+  ];
+  Plotly.newPlot('ic-series-chart', traces,
+    {{margin:{{l:50,r:30,t:20,b:50}}, height:340, hovermode:'x unified',
+      xaxis:{{title:'月'}}, yaxis:{{title:'月频 rank-IC', zeroline:true}},
+      legend:{{x:0.01,y:1.12,orientation:'h'}}}},
+    {{displayModeBar:false, responsive:true}});
+}}
+</script>
+</body>
+</html>"""
+
+    out = SITE_DIR / "index.html"
+    out.write_text(html, encoding="utf-8")
+    print(f"✅ 构建中文站点: {out} ({out.stat().st_size:,} bytes); "
+          f"IC 序列数据: {'已加载' if ic_data else '缺失（仅 headline 数字）'}")
+    return out
 
 
 if __name__ == "__main__":
