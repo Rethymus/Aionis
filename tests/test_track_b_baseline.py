@@ -185,8 +185,8 @@ class TestWalkForwardExecution:
             panel=synthetic_panel,
             feature_cols=feature_cols,
             horizon=_TEST_HORIZON,
-            min_train_months=60,
-            embargo_sessions=21,
+            min_train_months=6,  # Synthetic data has only 12 months
+            embargo_sessions=5,
         )
 
         assert isinstance(result, TrackBBaselineResult)
@@ -208,8 +208,8 @@ class TestWalkForwardExecution:
             panel=minimal_panel,
             feature_cols=["momentum_21d"],
             horizon=21,
-            min_train_months=12,  # Lower for minimal panel
-            embargo_sessions=5,
+            min_train_months=2,  # Minimal panel has only 3 month-ends
+            embargo_sessions=1,
         )
 
         assert result.n_walk_folds >= 1
@@ -223,8 +223,8 @@ class TestWalkForwardExecution:
             panel=synthetic_panel,
             feature_cols=feature_cols,
             horizon=21,
-            min_train_months=60,
-            embargo_sessions=21,
+            min_train_months=6,  # Synthetic data has only 12 months
+            embargo_sessions=5,
         )
 
         for fold_info in result.per_fold:
@@ -243,8 +243,8 @@ class TestWalkForwardExecution:
             panel=synthetic_panel,
             feature_cols=feature_cols,
             horizon=21,
-            min_train_months=60,
-            embargo_sessions=21,
+            min_train_months=6,  # Synthetic data has only 12 months
+            embargo_sessions=5,
         )
 
         for fold_info in result.per_fold:
@@ -263,12 +263,12 @@ class TestWalkForwardExecution:
             panel=synthetic_panel,
             feature_cols=feature_cols,
             horizon=21,
-            min_train_months=60,
-            embargo_sessions=21,
+            min_train_months=6,  # Synthetic data has only 12 months
+            embargo_sessions=5,
         )
 
-        # With 250 dates and 5 splits, we expect significant test coverage
-        # (excluding initial warmup period)
+        # With 12 dates and 6 month warmup, we expect ~6 test folds
+        # Each fold is a single month-end cross-section (~50 tickers)
         assert result.n_test_obs > 100  # Reasonable coverage
 
 
@@ -283,8 +283,8 @@ class TestRankICComputation:
             panel=synthetic_panel,
             feature_cols=feature_cols,
             horizon=21,
-            min_train_months=60,
-            embargo_sessions=21,
+            min_train_months=6,  # Synthetic data has only 12 months
+            embargo_sessions=5,
         )
 
         # Check that index is approximately monthly spaced
@@ -306,8 +306,8 @@ class TestRankICComputation:
             panel=synthetic_panel,
             feature_cols=feature_cols,
             horizon=21,
-            min_train_months=60,
-            embargo_sessions=21,
+            min_train_months=6,  # Synthetic data has only 12 months
+            embargo_sessions=5,
         )
 
         assert np.isfinite(result.hac_se)
@@ -321,8 +321,8 @@ class TestRankICComputation:
             panel=synthetic_panel,
             feature_cols=feature_cols,
             horizon=21,
-            min_train_months=60,
-            embargo_sessions=21,
+            min_train_months=6,  # Synthetic data has only 12 months
+            embargo_sessions=5,
         )
 
         lower, upper = result.ci_95
@@ -344,8 +344,8 @@ class TestDieboldMariano:
             panel=synthetic_panel,
             feature_cols=feature_cols,
             horizon=21,
-            min_train_months=60,
-            embargo_sessions=21,
+            min_train_months=6,  # Synthetic data has only 12 months
+            embargo_sessions=5,
         )
 
         assert np.isfinite(result.dm_p)
@@ -359,8 +359,8 @@ class TestDieboldMariano:
             panel=synthetic_panel,
             feature_cols=feature_cols,
             horizon=21,
-            min_train_months=60,
-            embargo_sessions=21,
+            min_train_months=6,  # Synthetic data has only 12 months
+            embargo_sessions=5,
         )
 
         assert np.isfinite(result.dm_stat)
@@ -377,16 +377,16 @@ class TestDeterminism:
             panel=synthetic_panel,
             feature_cols=feature_cols,
             horizon=21,
-            min_train_months=60,
-            embargo_sessions=21,
+            min_train_months=6,  # Synthetic data has only 12 months
+            embargo_sessions=5,
         )
 
         result2 = fit_track_b_baseline(
             panel=synthetic_panel,
             feature_cols=feature_cols,
             horizon=21,
-            min_train_months=60,
-            embargo_sessions=21,
+            min_train_months=6,  # Synthetic data has only 12 months
+            embargo_sessions=5,
         )
 
         # Results should be identical (H6 determinism)
@@ -434,8 +434,8 @@ class TestResultImmutability:
             panel=synthetic_panel,
             feature_cols=feature_cols,
             horizon=21,
-            min_train_months=60,
-            embargo_sessions=21,
+            min_train_months=6,  # Synthetic data has only 12 months
+            embargo_sessions=5,
         )
 
         # Attempting to mutate should raise (frozen dataclass)

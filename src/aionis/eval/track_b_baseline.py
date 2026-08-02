@@ -31,7 +31,6 @@ from typing import Literal
 import numpy as np
 import pandas as pd
 
-from aionis.eval.cv import assert_chronological_split, purged_walk_forward_splits
 from aionis.eval.learner import LightGBMFrozen
 from aionis.eval.rank_ic import rank_ic_by_date, rank_ic_monthly, rank_ic_summary
 from aionis.eval.ranking_contract import (
@@ -182,33 +181,75 @@ def fit_track_b_baseline(
     # B/C/D/E1 is unchanged.
     params = {**_DEFAULT_FROZEN_PARAMS, **(frozen_params or {})}
 
-    # --- Walk-forward fold generation (chronological, expanding) ---
-    # Convert embargo_sessions to timedelta (approximate: 1 session ≈ 1 calendar day)
-    # For exact session-based embargo, we'd need the trading calendar; this is a
-    # conservative approximation that satisfies the anti-leakage contract.
+    # --- Walk-forward fold generation (chronological, expanding, min_train=60) ---
+    # Manual expanding walk-forward with min_train_months constraint.
+    # purged_walk_forward_splits only supports n_splits (equal-sized test folds),
+    # not min_train constraint. We construct folds directly:
+    # - For each test calendar month t (t >= month 60), train = all rows before
+    #   calendar month t with embargo applied, test = rows in calendar month t.
+    # - Embargo: train cutoff must be at least embargo_sessions before test start.
     embargo_td = pd.Timedelta(days=embargo_sessions)
 
-    # Extract prediction/evaluation times for CV
-    dates = pd.to_datetime(panel[date_col]).dt.normalize().unique()
-    dates = pd.DatetimeIndex(sorted(dates))
+    # Get unique calendar months (year-month periods)
+    panel["_year_month"] = panel[date_col].dt.to_period("M")
+    calendar_months = panel["_year_month"].unique()
+    calendar_months = sorted(calendar_months)
 
-    # For walk-forward, we need prediction_times (date) and evaluation_times
-    # (label resolution date = date + horizon sessions)
-    # Approximate: add horizon days (conservative for embargo)
-    eval_times = panel[date_col].map(
-        lambda d: d + pd.Timedelta(days=horizon)
-    )
+    # Need at least min_train_months calendar months BEFORE first test fold
+    if len(calendar_months) <= min_train_months:
+        raise ValueError(
+            f"Panel has only {len(calendar_months)} calendar months, "
+            f"need > {min_train_months} for min_train_months"
+        )
 
-    prediction_times = panel[date_col]
+    # Build expanding walk-forward folds manually by calendar month
+    splits = []
+    fold = 1
 
-    # Generate folds
-    n_splits = 5  # Standard walk-forward splits (can be parameterized later)
-    splits = purged_walk_forward_splits(
-        prediction_times=prediction_times,
-        evaluation_times=eval_times,
-        n_splits=n_splits,
-        embargo=embargo_td,
-    )
+    for month_idx in range(min_train_months, len(calendar_months)):
+        test_calendar_month = calendar_months[month_idx]
+
+        # All panel rows in this test calendar month
+        test_mask = panel["_year_month"] == test_calendar_month
+        test_idx_arr = np.flatnonzero(test_mask.to_numpy())
+
+        if len(test_idx_arr) == 0:
+            continue  # Skip empty test folds
+
+        # Get the first date in the test month
+        test_month_first_date = panel.loc[test_mask, date_col].min()
+        train_cutoff = test_month_first_date - embargo_td
+
+        # All panel rows on or before train cutoff (excluding test month)
+        train_mask = (
+            (panel["_year_month"] < test_calendar_month) |
+            ((panel["_year_month"] == test_calendar_month) &
+             (panel[date_col] <= train_cutoff))
+        )
+        # But we only want rows BEFORE the test calendar month for training
+        train_mask = panel["_year_month"] < test_calendar_month
+        train_idx = np.flatnonzero(train_mask.to_numpy())
+
+        if len(train_idx) == 0:
+            continue  # Skip empty train folds
+
+        # Create CVSplit with chronological validation kind
+        from aionis.eval.cv import CVSplit
+
+        split = CVSplit(
+            train_idx=train_idx,
+            test_idx=test_idx_arr,
+            fold=fold,
+            validation_kind="chronological",
+        )
+        splits.append(split)
+        fold += 1
+
+    if not splits:
+        raise ValueError("No valid walk-forward folds generated")
+
+    # Clean up temporary column
+    panel = panel.drop(columns=["_year_month"])
 
     # --- Walk-forward execution ---
     all_scores = pd.Series(np.nan, index=panel.index, dtype=float, name="score")
@@ -216,7 +257,14 @@ def fit_track_b_baseline(
 
     for split in splits:
         # Anti-leakage invariant #1: chronological assertion
-        assert_chronological_split(split, prediction_times, eval_times)
+        # For manual expanding walk-forward, assert train < test
+        train_dates = pd.to_datetime(panel[date_col].iloc[split.train_idx]).dt.normalize()
+        test_dates = pd.to_datetime(panel[date_col].iloc[split.test_idx]).dt.normalize()
+
+        assert train_dates.max() < test_dates.min(), (
+            f"Fold {split.fold}: chronological invariant violated: "
+            f"train_max={train_dates.max()} >= test_min={test_dates.min()}"
+        )
 
         train_df = panel.iloc[split.train_idx].copy()
         test_df = panel.iloc[split.test_idx].copy()
@@ -329,36 +377,65 @@ def fit_track_b_baseline(
     p_hac = ic_summary["p_hac"]
 
     # --- Diebold-Mariano vs equal-weight baseline (pre-reg §9, H-1 fix) ---
-    # DM object is portfolio return loss, NOT rank-IC
+    # DM object is portfolio return loss, NOT rank-IC.
+    # H-1 fix: Compare top-quantile portfolio returns vs equal-weight baseline.
     from aionis.eval.metrics import diebold_mariano
 
-    # Compute equal-weight baseline scores (1 for all)
-    ew_panel = oos_panel.assign(ew_score=1.0)
+    # Compute monthly portfolio returns for both strategies
+    # Top-quantile: top 20% tickers by score, equal-weighted
+    # Equal-weight: all tickers, equal-weighted
+    # Loss = -return (lower is better)
 
-    # Portfolio return loss (squared return prediction error)
-    # Model loss: (forward_return_h - 0)^2 (model tries to rank, not predict level)
-    # Baseline loss: same (equal-weight has no predictive power)
-    # DM on loss differential tests whether model improves over random
-    # For ranking, we use directional accuracy-based loss: sign mismatch
-    model_direction = np.sign(oos_panel["score"])
-    true_direction = np.sign(oos_panel[y_col])
-    model_loss = (model_direction != true_direction).astype(float)
+    # Filter out rows with NaN returns for portfolio construction
+    oos_panel_clean = oos_panel.dropna(subset=[y_col]).copy()
 
-    ew_direction = np.sign(ew_panel["ew_score"])
-    ew_loss = (ew_direction != true_direction).astype(float)
+    if len(oos_panel_clean) == 0:
+        # No valid returns for DM test
+        dm_stat = float("nan")
+        dm_p = float("nan")
+    else:
+        # Group by month-end date for portfolio construction
+        oos_panel_clean["month"] = pd.to_datetime(oos_panel_clean[date_col]).dt.to_period("M")
 
-    # Groups by date (event-date clustering)
-    groups = oos_panel[date_col].dt.to_period("M").astype(str).to_numpy()
+        monthly_model_returns = []
+        monthly_ew_returns = []
 
-    dm_result = diebold_mariano(
-        loss_a=model_loss.to_numpy(),
-        loss_b=ew_loss.to_numpy(),
-        groups=groups,
-        horizon=horizon,
-    )
+        for _month, group in oos_panel_clean.groupby("month", sort=True):
+            if len(group) < 5:  # Need minimum tickers for meaningful portfolio
+                continue
 
-    dm_stat = dm_result["dm_stat"]
-    dm_p = dm_result["p_value"]
+            # Top-quantile (top 20% by score)
+            n_top = max(1, int(len(group) * 0.2))
+            top_tickrs = group.nlargest(n_top, "score")
+            model_ret = float(top_tickrs[y_col].mean())
+
+            # Equal-weight (all tickers)
+            ew_ret = float(group[y_col].mean())
+
+            monthly_model_returns.append(model_ret)
+            monthly_ew_returns.append(ew_ret)
+
+        if len(monthly_model_returns) < 2:
+            # Not enough data for DM test
+            dm_stat = float("nan")
+            dm_p = float("nan")
+        else:
+            # Loss = -return (lower return = higher loss)
+            model_loss = -np.array(monthly_model_returns)
+            ew_loss = -np.array(monthly_ew_returns)
+
+            # Groups for clustering (by month index)
+            groups = np.arange(len(monthly_model_returns))
+
+            dm_result = diebold_mariano(
+                loss_a=model_loss,
+                loss_b=ew_loss,
+                groups=groups,
+                horizon=1,  # Monthly returns, horizon=1 month
+            )
+
+            dm_stat = dm_result["dm_stat"]
+            dm_p = dm_result["p_value"]
 
     return TrackBBaselineResult(
         n_walk_folds=len(per_fold_details),
