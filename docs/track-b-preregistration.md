@@ -1,12 +1,13 @@
 # Track B 预注册 — 七主题选股平台（chronological walk-forward）
 
-> **状态：PROPOSED — pending owner config freeze (sha256)**
+> **状态：FROZEN — config_committed 2026-08-02（owner 裁断 5 KEEP）**
 >
-> 本文档为预注册提案（PROPOSED），在 owner 冻结 config sha256 之前**不生效**。
-> 冻结前：不得跑真实数据、不得写 ledger、不得观察任何 OOS 结果。
-> 冻结后：config_committed sha256 先于首次 OOS 结果入 `runs/ledger.jsonl`，durable registry 机制启动（同 Phase B §9）。
+> **config_sig**：`7a13579eb0ad4db0d5d04489bd8bc6eb7c36b74b0157ea302b2d5449cb708436`（`runs/ledger.jsonl` 行 #40, phase=track_b）。
+> **owner 冻结决议**：5 点全 KEEP — SESOI ±0.010 / horizon h=21 / bin_count 5 / 新闻情绪=S3 ablation / universe 2016+（S0-S① 实测 min Jaccard 0.8544 已确认）。
+> **feature_cols 修订**：S0-S② 构造后，精确特征列作为 config 修订（新 ledger 行）冻结于首次模型拟合前；无 outcome-based 选择。
+> **约束**：config_committed 已先于任何 OOS 结果；此后可跑 S0 数据构造（不写新 ledger、不观察 rank-IC）。
 >
-> **修订历史**：v0.1 PROPOSED · 2026-08-02 · 初稿
+> **修订历史**：v0.1 PROPOSED · 2026-08-02 · 初稿 → v1.0 FROZEN · 2026-08-02 · config_committed（sig 7a1357…08436）
 
 ---
 
@@ -205,11 +206,12 @@ Track B 是**全新的预注册线**，与现有 B/C/D/E1 冻结面完全隔离�
 
 ---
 
-## 13. 不越界声明（PROPOSED 状态）
+## 13. 不越界声明（FROZEN 状态，2026-08-02）
 
-- `[F]` 本文档**未运行任何 confirmatory/strategy/forward 脚本、未观察任何 outcome**。
-- `[F]` 本文档是**预注册提案**（PROPOSED）；owner 冻结 config sha256 后才生效。
-- `[F]` 冻结前：不跑真实数据、不写 `runs/ledger.jsonl`、不观察任何 OOS 结果。
+- `[F]` **config_committed 已入 ledger**（行 #40, sig `7a1357…08436`），先于任何 OOS 结果。
+- `[F]` 冻结后允许：S0 数据构造（不写新 ledger、不观察 rank-IC/收益）。
+- `[F]` 首次模型拟合前需 feature_cols 修订行（新 ledger row）。
+- `[F]` 本文档 FROZEN 前未运行 confirmatory/strategy/forward 脚本、未观察任何 outcome。
 - `[F]` Track B 的任何落地都是**新预注册 + 新 config + 新 ledger row**，绝不静默修改 B/C/D/E1。
 - `[F]` "可缓解不可根除"的幸存者偏差（无免费 Russell/退市 PIT 数据）依然成立（v0.2 §8.4）。
 
