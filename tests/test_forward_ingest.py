@@ -490,7 +490,8 @@ def test_8k_forward_ledger_row_forward_only_and_snapshot_ts(
 def test_real_ledger_jsonl_untouched(tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     """Sanity: a forward freeze writes ONLY to the temp runs_dir, never the real
-    ``runs/ledger.jsonl`` (which stays at its baseline 39 lines)."""
+    ``runs/ledger.jsonl`` (whose line count must be unchanged by this op — the real
+    ledger holds the authorized Track B config rows #40/#41 post-2026-08-02)."""
     real_ledger = Path("runs/ledger.jsonl")
     before = (
         len(real_ledger.read_text(encoding="utf-8").splitlines()) if real_ledger.exists() else 0
@@ -506,4 +507,4 @@ def test_real_ledger_jsonl_untouched(tmp_path: Path, monkeypatch: pytest.MonkeyP
     after = (
         len(real_ledger.read_text(encoding="utf-8").splitlines()) if real_ledger.exists() else 0
     )
-    assert before == after == 39
+    assert before == after  # forward freeze must not append to the real ledger

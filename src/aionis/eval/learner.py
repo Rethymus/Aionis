@@ -9,6 +9,7 @@ fundamentals are NaN before a firm's first filing.
 """
 from __future__ import annotations
 
+import numpy as np
 import pandas as pd
 
 FROZEN_PARAMS: dict = {
@@ -60,3 +61,43 @@ class LightGBMFrozen:
         dtr = lgb.Dataset(Xtr, label=ytr)
         bst = lgb.train(train_params, dtr, num_boost_round=n_rounds)
         return pd.Series(bst.predict(Xte), index=test.index, name="score")
+
+    def fit_predict_rank(
+        self,
+        train: pd.DataFrame,
+        test: pd.DataFrame,
+        feature_cols: list[str],
+        relevance: np.ndarray,
+        group_sizes: np.ndarray,
+    ) -> pd.Series:
+        """Fit LightGBM **lambdarank** (relevance label + query groups), predict test scores.
+
+        Additive ranking path (Track B; config #41 objective=lambdarank, RD-15) —
+        does NOT alter :meth:`fit_predict` (the regression path used by B/C/D/E1).
+        H6-deterministic via the frozen seed pins (random_state / bagging_seed /
+        feature_fraction_seed / drop_seed = 0, n_jobs=1, version-pinned).
+
+        Args:
+            train: training rows; MUST be sorted by group so rows of the same query
+                (month) are consecutive (LightGBM ``group`` requirement).
+            test: test rows to score.
+            feature_cols: pre-specified feature columns (config #41).
+            relevance: integer relevance labels (0..n_bins-1) aligned with ``train``;
+                from ``ranking_contract.transform_to_relevance`` on FROZEN train-fold bins.
+            group_sizes: query-group sizes (``ranking_contract.get_group_sizes``),
+                summing to ``len(train)`` and ordered by ascending group ID (== train order).
+
+        Returns:
+            Series of ranking scores indexed like ``test``.
+        """
+        import lightgbm as lgb
+
+        params = {**self.params, "objective": "lambdarank", "metric": "ndcg"}
+        n_rounds = int(params.pop("n_estimators", 100))
+        xtr = train[feature_cols].to_numpy(dtype=float)
+        xte = test[feature_cols].to_numpy(dtype=float)
+        rel = np.asarray(relevance, dtype=np.int32)
+        groups = np.asarray(group_sizes, dtype=np.int32)
+        dtr = lgb.Dataset(xtr, label=rel, group=groups)
+        bst = lgb.train(params, dtr, num_boost_round=n_rounds)
+        return pd.Series(bst.predict(xte), index=test.index, name="score")
