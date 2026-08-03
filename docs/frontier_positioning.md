@@ -32,8 +32,9 @@
   price-only baseline* is the harder question, and the 2025-26 LLM-trading
   replications show most reported alpha is look-ahead leakage / multiple-testing /
   pre-cost fantasy: **Look-Ahead-Bench** (`arxiv.org/abs/2601.13770`),
-  **Profit Mirage** (`2510.07920`, 51-62% Sharpe decay past cutoff),
-  **Alpha Illusion** (`2605.16895`), **Can LLMs outperform long-run** (`2505.07078`).
+  **Profit Mirage** (`arxiv.org/abs/2510.07920`, 51-62% Sharpe decay past
+  cutoff), **Alpha Illusion** (`arxiv.org/abs/2605.16895`), **Can LLMs
+  outperform long-run** (`arxiv.org/abs/2505.07078`).
   ⇒ **Pre-register the null as the betting favorite**; a clean positive is a
   *contrarian* finding worth publishing. Aionis's honest underpowered-positive is
   exactly what the field predicts.
@@ -46,7 +47,9 @@
     at small n; this is the publishable default for clustered event panels.
   - **Harvey-Liu haircut** (`ssrn.com/abstract_id=2249314`) — t > 3.0 hurdle for any
     surviving sector×horizon result.
-  - **Point-in-time one-switch audit** (`arxiv.org/abs/2605.23959`).
+  - **One-switch decision-time-leakage audit** ("When Alpha Disappears: A One-Switch
+    Benchmark for Decision-Time Leakage in Financial Backtests"
+    `arxiv.org/abs/2605.23959`).
 
 ### B. Event representation & LLM extraction (the ERL question)
 - **Representation**: FinGPT/BloombergGPT dominate domain NLP; **FinDKG** (KDD 2024,
@@ -60,9 +63,12 @@
   schema-by-construction) over open JSON prompting; place a reasoning field before
   answer fields. Benchmark against **FinBen-FOMC / OP-FED** (LLM zero-shot F1 ≈ 0.57).
 - **The deep leakage is parametric, not schema-level.** Lopez-Lira et al. 2025
-  (`arxiv.org/abs/2504.14765`) prove LLM weights encode post-t outcomes even with
-  no explicit `market_impact` field and even after entity anonymization
-  ("functional lookahead bias"). ⇒ Aionis's structural-only ERL is **necessary but
+  (`arxiv.org/abs/2504.14765`) show LLMs memorize realized economic/financial
+  data up to the cutoff (recall-level, extending into the embedding layer);
+  instruction-based boundary respect fails, and entity anonymization leaks
+  (entities/dates recoverable from minimal context). (The abstract's own wording
+  is recall-level memorization, not "functional lookahead bias".) ⇒ Aionis's
+  structural-only ERL is **necessary but
   insufficient**; it must be paired with point-in-time discipline + a memorization
   audit (PiT models like ChronoGPT for pre-cutoff history; FinCAD / MemGuard-Alpha).
 
