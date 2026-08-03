@@ -121,6 +121,38 @@ def _metrics_section_html(mount: dict | None) -> str:
     )
 
 
+def _ff5_section_html(mount: dict | None) -> str:
+    if not mount:
+        return '<p class="text-slate-500 text-sm">FF5 待 mount_metrics.json。</p>'
+    try:
+        tf = mount["treatment"]["ff5"]
+        pf = mount["price_only"]["ff5"]
+    except (KeyError, TypeError):
+        return '<p class="text-slate-500 text-sm">FF5 未取得。</p>'
+    if not tf or not pf:
+        note = mount.get("treatment", {}).get("ff5_note") or "FF5 数据未取得（网络）"
+        return f'<p class="text-slate-500 text-sm">{note}</p>'
+    betas = [("beta_mkt", "β MKT"), ("beta_smb", "β SMB"), ("beta_hml", "β HML"),
+             ("beta_rmw", "β RMW"), ("beta_cma", "β CMA")]
+    rows = [("α（月）", f"{tf['alpha']:.4f}", f"{pf['alpha']:.4f}")]
+    rows += [(lbl, f"{tf[k]:+.2f}", f"{pf[k]:+.2f}") for k, lbl in betas]
+    rows.append(("R²", f"{tf['r_squared']:.3f}", f"{pf['r_squared']:.3f}"))
+    body = "".join(
+        f"<tr class='border-b border-slate-800'><td class='py-2 px-3 font-medium text-slate-100'>{l}</td>"
+        f"<td class='py-2 px-3 text-blue-300'>{tv}</td><td class='py-2 px-3 text-slate-300'>{pv}</td></tr>"
+        for l, tv, pv in rows
+    )
+    return (
+        '<div class="bg-amber-500/10 border border-amber-500/30 rounded-lg p-2 mb-3 text-xs text-amber-300">'
+        "⚠️ GROSS · FF5 无 vintage（潜在轻微泄漏）· R² 低则因子解释力弱 · 探索性。</div>"
+        '<div class="overflow-x-auto"><table class="w-full text-sm">'
+        '<thead><tr class="text-left text-slate-400 border-b border-slate-700">'
+        "<th class='py-2 px-3'>FF5 分解</th><th class='py-2 px-3'>treatment</th>"
+        "<th class='py-2 px-3'>price-only</th></tr></thead>"
+        f"<tbody>{body}</tbody></table></div>"
+    )
+
+
 def _kpi_tile(label: str, value: str, sub: str = "", accent: str = "slate") -> str:
     color = {"emerald": "text-emerald-400", "rose": "text-rose-400",
              "amber": "text-amber-400", "slate": "text-slate-100"}.get(accent, "text-slate-100")
@@ -166,6 +198,7 @@ def build() -> Path:
     ic_data_json = json.dumps(ic_data) if ic_data else "null"
     mount = _load_mount_metrics()
     metrics_section = _metrics_section_html(mount)
+    ff5_section = _ff5_section_html(mount)
     ci_crosses_zero = DIFFERENTIAL["ci"][0] < 0 < DIFFERENTIAL["ci"][1]
     equiv = abs(DIFFERENTIAL["ci"][1]) <= SESOI and abs(DIFFERENTIAL["ci"][0]) <= SESOI
 
@@ -210,6 +243,7 @@ def build() -> Path:
       <a href="#themes" class="hover:text-slate-100">七主题</a>
       <a href="#result" class="hover:text-slate-100">差分结果</a>
       <a href="#metrics" class="hover:text-slate-100">风险指标</a>
+      <a href="#ff5" class="hover:text-slate-100">FF5</a>
       <a href="#discipline" class="hover:text-slate-100">反泄漏</a>
       <a href="#boundary" class="hover:text-slate-100">边界</a>
     </div>
@@ -300,6 +334,12 @@ def build() -> Path:
   <section id="metrics" class="mb-6 bg-slate-800/40 border border-slate-700 rounded-xl p-5">
     <h2 class="text-lg font-bold text-slate-50 mb-3">📊 风险指标（gross · 探索性）</h2>
     {metrics_section}
+  </section>
+
+  <!-- FF5 分解 -->
+  <section id="ff5" class="mb-6 bg-slate-800/40 border border-slate-700 rounded-xl p-5">
+    <h2 class="text-lg font-bold text-slate-50 mb-3">🧩 FF5 残差分解（market structure · gross）</h2>
+    {ff5_section}
   </section>
 
   <!-- 诚实边界 -->
