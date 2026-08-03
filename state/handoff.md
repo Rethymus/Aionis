@@ -1,5 +1,33 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-08-03 `/goal` 批次 — Option A′ 推进（docs/design only，未 commit）
+
+owner `/goal` 授权推进 Option A′（多 agent 按优先级 + 模型分层省 token + reuse-first 禁造轮子）。**[1210] 现实**：opus/sonnet 子代理今天执行不稳；本批分层 = ① orchestrator 直接 opus 设计 + ② sonnet 后台 agent + ③ haiku 后台 agent。
+
+**产出（全部 PROPOSED/docs，未触冻结面/ledger/E3）：**
+- `reports/design/2026-08-03-conditional-rank-ic-multiplicity.md` — **gate 7 解决**：conditioning = 单个预指定交互项（预算 1，非 K），批判者 #4 "完全炸掉 n_trials" → PARTIAL 解决；复用 `purgedcv`/`arch`/`YannickKae`；Deflated-RankICIR（FARS 2026，DSR 适配因子级 RankIC）待 license。
+- `reports/design/2026-08-03-track-c-prereg-skeleton.md` — **Track C（A 股 + 条件化 rank-IC）预注册骨架 PROPOSED v0.1**；§3 features / §5 双区域折设计 / §1 regime PIT 定义 = TBD（待 T1 + owner 冻结）；§4/§6/§7/§8/§9 复用 Track B + ADR-010。
+
+**后台 agent（运行中，待回报）：**
+- `ashare-gate-research`（sonnet）— A 股 filed-date 基本面源 7-gate 调研（cninfo / Tushare-`ann_date` / akshare）。**P0 关键路径**（gate 4，解 baostock G3 结构性失败）。
+- `drankicir-check`（haiku）— Deflated-RankICIR 代码/license 核查（解 gate 7 待查）。
+
+**未解 / 下一步：** T1 回报 → 填 Track C §3 + 定 A 股源（headline 可行 vs exploratory-only）；drankicir 回报 → 定 gate 7 主轮子；A 股**价格** PIT（§3 ①，survivorship 退市/停牌→NaN/复权）+ 中国宏观 vintage（§3 ②，NBS G3）待后续 intake 调研。regime PIT 定义（TACO 范式）待 owner 冻结。
+
+**边界：** 本批仅 docs/design + state；未 commit；未运行 confirmatory/strategy/forward 脚本；未观察 E3；网络仅 GitHub/PyPI/WebSearch（无 baostock.com 数据调用）。
+
+**Track C v1.0 PROPOSED（2026-08-03 续）：** owner approved §12 默认 → 起草完整 `docs/track-c-preregistration.md`（PROPOSED v1.0，12KB；§12 全填：联合折叠 / 三层 PIT regime / cninfo 源 / qlib scaffold；§3 ①②③ 全调研解决）。取代 `reports/design/2026-08-03-track-c-prereg-skeleton.md`。**未冻结**——无 `config_committed` ledger 行；feature_cols 待冻结前完整枚举（US 复用 Track B 23 + A 股 price/cninfo/ALFRED/regime 字段）。**待 owner**：审 v1.0 → 授权 `config_committed` 冻结（写 ledger 行，= owner 动作）→ impl 切片（post-freeze）。agents 7/7 `[1210]` 死，全 orchestrator 直接完成。冻结面守卫 = 空（仅新增 docs/track-c-preregistration.md，未改 phase-*/track-b/ADR/ledger/config）。
+
+## 2026-08-03 qlib 双区域 POC（Option A 可行性取证，docs/state only — 未 commit）
+
+owner 授权的可逆证据 POC，解决 Option A 辩论（独立批判者 REJECT；辩护/裁断 agent 因 `[1210]` 5 次失败缺失）。完整报告 `reports/2026-08-03-qlib-dualregion-poc.md`。
+- **5 硬证据:** ①qlib 双区域特性存在（`REG_CN/US`+`LocalPITProvider`+CSI300/500 采集器[从 csindex 历史公告重建]+pit 采集器）→**推翻批判者 #2/#8/#10**; ②cp313 门（pyqlib 0.9.7 无 cp313 wheel；3.11 隔离 venv `IMPORT_OK` 0.9.7 已验绕过）; ③RobustZScoreNorm 泄漏陷阱实证确认 + 折内钉 fit 修复有效（CLEAN train z-median 0.0000 vs LEAKY −0.3453）; ④DatasetH 手术点③需 3h 接线; ⑤**baostock G3 结构性不可合规**（`query_profit/balance_data(code,year,quarter)` 期末键、无 as-of/vintage）→**验证并强化批判者 #1**。
+- **Net:** Option A′ **条件-sound**，8 门实证背书（报告 §3）。A 股基本面须换 filed-date 键源（cninfo/Tushare-`ann_date`/自建）或降 exploratory-only；baostock 不可进 headline。
+- **边界:** scratch `/home/re/code/aionis-qlib-poc/`（仓库外），合成数据，未 commit/未触冻结面/ledger；网络仅 GitHub+PyPI；无 baostock.com 数据调用、无 research/forward 脚本、未观察 E3。
+- **未解:** baostock 返回字段 pubDate 可重建性; A 股 filed-date 源 7-gate; DatasetH 手术点③接线; `index-constitution` 7-gate。
+- **loop cron `3219e84b` 已取消**（POC scope 完成，避免与暂停冲突）。
+- **独立性局限:** 批判者真独立; 辩护/裁断由 orchestrator 非独立核查替代（已做偏向校正）。proxy 恢复后可补完整三方辩论。
+
 - **2026-08-03 `/goal` batch 8 — BASELINE-FF5-001 + BASELINE-RANK-001 EXECUTED (COMMITTED `104b21e`):**
   owner authorized real-data execution ("全部approved"). Both baselines now have REAL CV-proxy results:
   - **BASELINE-FF5-001** (sig `0b0b9934…`, 18 cols: 9 frozen + 9 FF5 exposures; `beta_dff`/`beta_dff_x_lev`
