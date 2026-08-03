@@ -1,5 +1,18 @@
 # state/handoff.md — current-pass handoff
 
+- **2026-08-03 `/goal` batch 3 — citation-integrity audit (COMMITTED + pushed, `20191fd`):** directly
+  answered the hook's (a)/(c)/(d) requirements. **4 parallel verification agents, tiered by difficulty**
+  (haiku ×2: 1-entry E3 + 3 inline IDs; sonnet ×2: 5 frontier + 4 E2 entries) audited ALL arXiv
+  citations across frontier_positioning.md / phase-e2 / phase-e3 / theory-of-computable-reality.
+  **Result: 11/11 real, none fabricated.** Precision fixes applied to frontier_positioning.md:
+  L62-65 overstatement (`2504.14765` = recall-level memorization; "functional lookahead bias" term +
+  `market_impact` detail NOT in abstract — possible sister-paper conflation), L49 anchored to real
+  title, L35-36 bare IDs → full URLs. **External-reuse verdict (7-gate)**: purgedcv (MIT, installed/
+  pinned/importable) = only compliant wheel; lookaheadbench + CAMEF no LICENSE → non-reusable;
+  Alpha Illusion code link dead (404); 2504.14765 CC BY-NC-ND → citation-only; CausalStock no repo;
+  **FINSABER = Apache-2.0 → passes allowlist (the wheel Track B is mounting — independent license
+  evidence)**. Profit Mirage's "51-62% Sharpe decay" verified verbatim. Full ledger:
+  `reports/design/2026-08-03-citation-integrity-audit.md`. Docs-only, no code/frozen-surface change.
 - **2026-08-03 `/goal` batch 2 — Slice-2 backlog fully closed (COMMITTED + pushed):** completed the
   remaining Slice-2 items. (1) **`5ffdbe1`** — first-run `last_poll_ts=None` seeding docstring notes in
   all 3 forward collectors (13D/macro/8-K; docstring-only). (2) **`758d87e`** — structlog warning when
