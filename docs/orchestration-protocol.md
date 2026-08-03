@@ -116,3 +116,8 @@ Observed in the inaugural ORCH-01 wave (2026-08-03); binding for future waves:
   failures) and proceed on the Orchestrator's independent deterministic verification + line-by-line
   diff review, with the reviewer-lane deviation explicitly disclosed in the task `状态` line and the
   commit message. Do NOT infinite-loop ping.
+- **A "failed" subagent may have already mutated the working tree.** An `idle_reason: "failed"`
+  (e.g. a `[1210]` API error) can fire mid-turn AFTER the worker has already written files. After
+  ANY failed subagent, run `git status` + `git diff` to detect partial work before re-dispatching
+  or concluding — never assume "failed = no changes." Decide keep-vs-discard on merit: a correct
+  partial deliverable may be kept with explicit attribution; a redundant or wrong one is discarded.

@@ -1,5 +1,19 @@
 # state/handoff.md — current-pass handoff
 
+- **2026-08-03 ORCH-02 second wave (REJECTED — no code change):** attempted to mirror the
+  cumulative-preserve test for 8-K, but the premise was a **grep-suffix miss**: 8-K already has the
+  invariant via `test_8k_forward_idempotent_and_cumulative_preserve` (`tests/test_forward_ingest.py:504`).
+  A `[1210]`-failed executor had nonetheless written a complete (redundant) test into the working tree
+  before its API error; detected via `git diff`, discarded via `git restore` (redundant duplication,
+  contra 治理复杂度 ≤ 产出). **Three binding findings**: (1) `[1210]` hit 2 consecutive sonnet spawns
+  (`oh-my-claudecode:executor` + `general-purpose`) — today's proxy is flakier than the handoff's
+  "transient, single retry works" note, and `general-purpose` did NOT bypass it this time; (2) a
+  "failed" subagent can mutate the tree before its API error — always `git status`/`git diff` after a
+  failed spawn (folded into `docs/orchestration-protocol.md §8`); (3) gap-analysis must grep the
+  CONCEPT (`grep -iE "cumulative.*preserve"`), not a name suffix — the suffix grep manufactured a
+  false gap. Task recorded as REJECTED in `tasks/rejected/TASK-ORCH-02-*.md`. Subagent dispatch is
+  currently unreliable in this proxy — for the next wave, prefer direct-write (opus) for S test
+  mirrors unless the proxy recovers.
 - **2026-08-03 ORCH-01 first wave (COMMITTED `8d19b28`):** validated the ADR-012 dispatch protocol
   end-to-end. Picked the backlog "macro cumulative-preserve test" (S, hermetic). Ran
   `scripts/orchestrate_dispatch.py --lane executor` → clean 6-layer contract (exit 0). Dispatched sonnet
