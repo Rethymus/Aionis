@@ -1,0 +1,83 @@
+# BASELINE-RANK-001 — rank-aware objective baseline (RES-03)
+#
+# Status: NEW config, registered as trial BASELINE-RANK-001 (exploratory
+# baseline-enhancement). OWNER GATE: a run requires explicit owner authorization;
+# this config must be frozen (config_committed ledger row) BEFORE any out-of-sample
+# metric is observed. Until then the runner (scripts/res_03_baseline_rank_run.py)
+# runs exploratory CV-proxy only and writes NO ledger row.
+#
+# Contract anchors (all frozen — RD-15 decision packet 2026-08-01 +
+# src/aionis/eval/ranking_contract.py, READ-ONLY):
+#   * objective  = "lambdarank"   (RD-15 decision #1; LightGBM >= 4.3)
+#   * rank_bins  = 5              (RD-15 decision #2; owner chose quintiles)
+#   * group      = query-month    (RD-15 decision #4; group_id = year*12 + month-1)
+#   * ties       = shared relevance (RD-15 decision #5; quantile binning)
+#   * missing    = NaN forward return -> relevance -1, EXCLUDED (RD-15 decision #6)
+#   * out-of-range = clamp to nearest train-fold bin edge + reason code
+#                                 (RD-15 decision #7; NEVER refit bin edges)
+#
+# feature_cols are IDENTICAL to the frozen Phase B runner
+# (scripts/phase_b_run.py FEATURE_COLS) — only the objective changes. Frozen
+# params mirror src/aionis/eval/learner.py FROZEN_PARAMS (H6 determinism pins).
+
+trial_id: "BASELINE-RANK-001"
+trial_family: "baseline-ladder"
+type: "exploratory-baseline-enhancement"
+primary_parent: "frozen Phase B (numeric fundamentals)"
+
+objective: "lambdarank"
+rank_bins: 5
+
+feature_cols:
+  - "mktcap"
+  - "pb_ratio"
+  - "roa"
+  - "fund_assets"
+  - "fund_revenue"
+  - "fund_net_income"
+  - "fund_equity"
+  - "fund_shares_out"
+  - "fund_long_term_debt"
+
+# Cross-fitted CV evidence strength matches frozen B/C/D/E1
+# (5-fold PurgedGroupKFold, group=month, embargo=21 sessions).
+horizon: 21
+n_splits: 5
+embargo_sessions: 21
+align_on: "filed"
+
+frozen_params:
+  n_estimators: 500
+  learning_rate: 0.05
+  num_leaves: 31
+  min_child_samples: 20
+  reg_lambda: 1.0
+  feature_fraction: 0.8
+  bagging_fraction: 0.8
+  bagging_freq: 1
+  n_jobs: 1              # H6 determinism
+  random_state: 0        # H6 determinism
+  bagging_seed: 0        # H6 determinism (LightGBM default made explicit)
+  feature_fraction_seed: 0
+  drop_seed: 0
+  verbose: -1
+
+y_col: "y_fwd_ret"
+date_col: "date"
+ticker_col: "ticker"
+
+# RD-15 frozen rank-label contract (documentation mirror of ranking_contract.py).
+rank_label_contract:
+  label_source: "forward return -> ordinal relevance (quintiles, n_bins=5)"
+  binning: "per-month quantiles, train-fold-only fitting"
+  group: "query-month (group_id = year*12 + month-1)"
+  ties: "share relevance"
+  missing: "NaN forward return excluded"
+  out_of_range: "clamp to nearest train-fold bin edge + reason code"
+
+primary_metric: "Spearman rank-IC"
+universe: "588 clean ticker PIT"
+n_jobs: 1
+random_seed: 0
+h6_determinism: true
+status: "pending-owner-authorization"

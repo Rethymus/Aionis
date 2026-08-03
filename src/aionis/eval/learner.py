@@ -12,6 +12,8 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
+from aionis.eval.ranking_contract import validate_objective
+
 FROZEN_PARAMS: dict = {
     "objective": "regression",
     "n_estimators": 500,
@@ -92,7 +94,11 @@ class LightGBMFrozen:
         """
         import lightgbm as lgb
 
-        params = {**self.params, "objective": "lambdarank", "metric": "ndcg"}
+        # Rank-aware branch: enforce the RD-15 frozen objective enum via the
+        # ranking_contract API (fail-fast gate — never a free-form objective
+        # string here). ``lambdarank`` is the fixed objective for this branch.
+        objective = validate_objective("lambdarank")
+        params = {**self.params, "objective": objective.value, "metric": "ndcg"}
         n_rounds = int(params.pop("n_estimators", 100))
         xtr = train[feature_cols].to_numpy(dtype=float)
         xte = test[feature_cols].to_numpy(dtype=float)

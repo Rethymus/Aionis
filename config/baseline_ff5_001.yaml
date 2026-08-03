@@ -1,0 +1,72 @@
+# BASELINE-FF5-001 — exploratory baseline-enhancement config (TASK-RES-02)
+#
+# Trial: BASELINE-FF5-001 (baseline-ladder family; owner-gated; NOT yet
+# authorized — pending owner GO, see docs/baseline-ladder.md).
+# Mode: exploratory (FF5 via French Data Library has NO vintages — G3
+# snapshot-frozen; DFF via FRED/ALFRED is confirmatory-tier).
+#
+# This file is a human-auditable REGISTRY RECORD of the feature columns. The
+# executable source of truth for the runner is
+# scripts/res_02_baseline_ff5_run.py (FROZEN_FEATURE_COLS + the RD-13-gated
+# new columns); keep the two in sync. The runner NEVER writes runs/ledger.jsonl
+# — the owner commits the config (sha256 = config_sig) BEFORE any result.
+
+mode: exploratory
+trial_id: BASELINE-FF5-001
+universe: "588 clean ticker PIT (same as frozen Phase B)"
+objective: "regression"
+n_jobs: 1
+random_seed: 0
+h6_determinism: true
+horizon_sessions: 21
+n_splits: 5
+embargo_sessions: 21
+cv_scheme: "5-fold PurgedGroupKFold (group=month, embargo=21 sessions)"
+
+# Rolling exposure estimation (all stock-specific — never raw market factors).
+beta_window_days: 252
+beta_min_obs: 126
+
+feature_cols:
+  # --- frozen Phase B numeric fundamentals (unchanged) -----------------------
+  - mktcap
+  - pb_ratio
+  - roa
+  - fund_assets
+  - fund_revenue
+  - fund_net_income
+  - fund_equity
+  - fund_shares_out
+  - fund_long_term_debt
+  # --- new stock-specific FF5/DFF exposure columns (RD-13-gated) -------------
+  - beta_mkt
+  - beta_smb
+  - beta_hml
+  - beta_rmw
+  - beta_cma
+  - beta_dff
+  # --- new loading × stock-feature interactions (RD-13-gated) ----------------
+  - beta_smb_x_size
+  - beta_hml_x_value
+  - beta_rmw_x_prof
+  - beta_cma_x_invest
+  - beta_dff_x_lev
+
+rd13_gate: "every new column must pass per-month cross-sectional variation
+  diagnostics (no CONSTANT / NEAR_CONSTANT / ALL_MISSING / FEW_VALID) — fail
+  closed; market-wide raw factor columns (MKTRF/SMB/HML/RMW/CMA/DFF) are
+  structurally ineligible and never enter this config."
+
+pit:
+  ff5: "daily factor d-values posted after the d close -> knowable d+1;
+    exposure window at month-end t uses observations with date <= t only;
+    month-end feature knowable from the first session of month t+1"
+  dff: "ALFRED vintage as-of join, allow_exact_matches=False (strictly-before);
+    one-day-conservative ΔDFF; never the revised current series"
+  fundamentals: "filed-date PIT (aionis.ingest.fundamentals.pit_align)"
+
+data_sources:
+  ff5: "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_5_Factors_2x3_daily_CSV.zip"
+  ff5_snapshot: "data/cache/ff5_daily_snapshot.csv + .sha256 (G3 freeze)"
+  dff: "FRED/ALFRED series DFF (US-gov public domain; vintage-immutable G3)"
+  dff_cache: "data/cache/alfred_DFF.json"
