@@ -48,9 +48,14 @@ credible positive OR a tight publishable null.
 - [x] ADR-008 accepted.
 - [x] E3 pre-reg exists (`docs/phase-e3-preregistration.md`).
 - [x] Planner sliced forward-ledger, ingest, commit, scoring and dashboard.
-      2026-08-01: AUD-07B RESOLVED (ADR-010 Jennison-Turnbull + `sesoi_gate.py`); AUD-06 implemented
-      parameterized (`forward_live_readiness.py`). scheduler/E2E (Slice 6/7) now await owner freeze of the
-      2 AUD-06 contracts + a separate owner GO.
+- [x] **AUD-06 owner contracts FROZEN (owner approval 2026-08-03, all recommendations approved):**
+      `membership_freshness_contract = MembershipFreshnessContract(max_age_sessions=22,
+      authoritative_refresh=None)` — ≈1 个月新鲜度上限(NYSE 会话),符合"2026-04 快照不可视为
+      2026-07 新鲜"语义;`authoritative_refresh=None` 如实标注:无独立 universe 刷新脚本,以
+      `scripts/phase_b_fetch.py` 为刷新入口。`provider_cutoff_policy = ProviderCutoffPolicy(
+      block_on_unknown=True)` — fail-closed:未知 cutoff 阻塞就绪(与 C1 fail-closed 一致)。
+- [x] AUD-06 owner contracts frozen (values above) — **scheduler/E2E (Slice 6/7) may now proceed**
+      to implementation; headline still gated by the separate owner GO (ADR-010).
 
 ## 完成后需要更新
 - `state/current.md`, `state/handoff.md`; `docs/RESULTS.md` (once forward predictions begin accruing).

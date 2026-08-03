@@ -46,7 +46,7 @@ cognitive system or a trading bot.
   + real models. Mock/synthetic are allowed ONLY as labeled unit-test fixtures.
 - **Strict token + memory control.** Cheapest model that works; bounded single retry; log
   per-call token usage. No lingering background processes.
-- **Politeness is binding:** ≥2s spacing + exponential backoff on all fetches.
+- **Politeness is binding:** ≥2s spacing + exponential backoff on all data-fetch sites (SEC/EDGAR/FRED/Tiingo/Alpaca/PRAW). For **model APIs (GLM/SiliconFlow/ModelScope)**: the ≥2s host-spacing rule does NOT apply — rate limiting is enforced by provider RPM/TPM + `ProviderRouter` cooldown + idempotent disk cache (Option A, owner 2026-08-03; see `TASK-AUD-05C-C5`).
 - **Working sources:** FRED/ALFRED, Tiingo, Alpaca, EDGAR. **Blocked:** yfinance/Yahoo, BLS,
   Stooq. 13D via EDGAR submissions (filed-date PIT).
 

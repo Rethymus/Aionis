@@ -63,5 +63,6 @@
 ## 5. 遗留(非阻塞)
 
 - Profit Mirage FinLake-Bench 与 `2607.04958` artifact 链接声称存在但未定位 → 如需用作记忆探针, 可邮件索取或自建等价探针。
-- `mr-sharath/KAIROS` 未验证 → 建议 E2 定稿前核。
+  **2026-08-03 更新 (haiku verify-agent): FinLake-Bench 确认未公开发布** — arXiv:2510.07920 全文无任何发布 URL (WebSearch 3 次均无果), 且论文内部命名不一致 (摘要 "FinLake-Bench" vs Table 2/Figure 2 "FinLeak-Bench")。引用其"发布"需降级表述或邮件索取。
+- `mr-sharath/KAIROS` 已验证 (2026-08-03, haiku agent): 存在, **MIT License**, 与 E2 引用用途吻合 (二阶效应因果分析); 活跃度低 (0 stars / 18 commits, 演示级) → 引用有效, 可复用但需评估质量。
 - FINSABER Apache-2.0 的挂接已在 Track B lane 推进(`finsaber_mount.py` 在树), 本审计确认其许可证合规。

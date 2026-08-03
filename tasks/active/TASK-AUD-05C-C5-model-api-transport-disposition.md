@@ -2,7 +2,7 @@
 
 - 编号: AUD-05C-C5
 - Parent: AUD-05C
-- 状态: **OWNER-HELD (blocked: clarify if ≥2s rule applies to GLM/SiliconFlow/ModelScope model APIs)**
+- 状态: **OWNER-APPROVED (2026-08-03, Option A)** — ≥2s host-spacing rule applies to data-fetch sites only; model APIs (GLM/SiliconFlow/ModelScope) are governed by provider RPM/TPM + `ProviderRouter` cooldown + idempotent disk cache. Rule wording recorded in `CLAUDE.md` L49. No code change needed (SDK-owned transports already compliant).
 - Priority: **P0**
 - Size: **S** (decision-only) → **M** (if implementation needed)
 - Risk: **MEDIUM** (model APIs are core to E3 extraction; token/cost control is critical)
