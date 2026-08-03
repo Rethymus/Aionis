@@ -1,5 +1,15 @@
 # state/handoff.md — current-pass handoff
 
+- **2026-08-03 `/goal` batch 4 — approved owner decisions executed (COMMITTED + pushed, `c09bd0b`):**
+  owner approved all recommendations (D1-D8). Evidence in `reports/design/2026-08-03-owner-decision-execution.md`.
+  D1: Track B config VERIFIED already frozen 2026-08-02 (ledger #41/#42) — no new row. D2: AUD-06 contracts
+  FROZEN (`max_age_sessions=22`, `authoritative_refresh=None` — factual, no standalone universe script;
+  `block_on_unknown=True`) → **E3 Slice 6/7 may proceed to implementation** (headline still gated by owner GO).
+  D3: C5 Option A — politeness split in CLAUDE.md L49 (data-fetch ≥2s; model APIs RPM/TPM+cooldown+cache);
+  C5 → OWNER-APPROVED. D4: FF 7-gate recorded. D5: RES restart approved (4 specs need rewrite first). D6: RD
+  safe queue exhausted. D7: KAIROS verified (MIT, 0-star demo-grade — cite valid). D8: FinLake-Bench CONFIRMED
+  NOT RELEASED (name inconsistency FinLake/FinLeak); audit §5 corrected. Docs/state only; no frozen
+  surface/ledger/data touched; verification agents used WebFetch only.
 - **2026-08-03 `/goal` batch 3 — citation-integrity audit (COMMITTED + pushed, `20191fd`):** directly
   answered the hook's (a)/(c)/(d) requirements. **4 parallel verification agents, tiered by difficulty**
   (haiku ×2: 1-entry E3 + 3 inline IDs; sonnet ×2: 5 frontier + 4 E2 entries) audited ALL arXiv
