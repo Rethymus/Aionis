@@ -1,5 +1,18 @@
 # state/handoff.md — current-pass handoff
 
+- **2026-08-03 `/goal` reuse-first batch (COMMITTED + pushed, `f6e0536` + `e6c71ec`):** resumed the
+  priority offline program under the owner `/goal` (更多 agents 按优先等级推进; 难度分级模型; 复用轮子禁止重造).
+  Proxy is `[1210]`-flaky → direct-write (opus) chosen over dispatch for coherence + token-efficiency.
+  (1) **`f6e0536`** — Slice-2 "S cleanup": DRY'd the identical archive→cumulative→ledger tail of the 3
+  forward collectors (13D/macro/8-K) into `_common.persist_snapshot(...)` (n_rows appended LAST to keep
+  per-collector ledger key order → byte-identical output, H6). Also dropped the redundant `keyfn=str.upper`
+  dead branch in earnings_8k. (2) **`e6c71ec`** — full-suite was RED (12 `test_static_site.py` failures,
+  pre-existing on clean HEAD): tests were stale vs the committed Track B page (English/base64/tabs). Aligned
+  them (Chinese Track B assertions: 探索性/非投资建议/null-预期可发表, SESOI 0.010, 诚实边界, 七主题, 差分
+  #41/#42, FF5/mounts, data-driven plotly, no runtime fetch, H6 determinism) AND added `--out-dir` so tests
+  build to tmp_path — **hermetic, never touches the `site/` WIP** (Track B's uncommitted `M site/index.html`
+  + `D` 2 JSON files stay untouched). **Full hermetic suite now 1352 passed / 0 failed; ruff clean.** Both
+  pushed. 状态: state/current.md updated.
 - **2026-08-03 ORCH-02 second wave (REJECTED — no code change):** attempted to mirror the
   cumulative-preserve test for 8-K, but the premise was a **grep-suffix miss**: 8-K already has the
   invariant via `test_8k_forward_idempotent_and_cumulative_preserve` (`tests/test_forward_ingest.py:504`).
