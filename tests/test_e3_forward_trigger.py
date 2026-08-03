@@ -85,7 +85,7 @@ class TestContractConfig:
         with tempfile.NamedTemporaryFile(mode="w", suffix=".yaml", delete=False) as f:
             f.write("""
 membership_freshness_contract:
-  max_age_sessions: 23
+  max_age_sessions: 22
   authoritative_refresh: null
 
 provider_cutoff_policy:
@@ -97,7 +97,7 @@ provider_cutoff_policy:
             membership, provider = _load_contracts(config_path)
 
             assert isinstance(membership, MembershipFreshnessContract)
-            assert membership.max_age_sessions == 23
+            assert membership.max_age_sessions == 22
             assert membership.authoritative_refresh is None
 
             assert isinstance(provider, ProviderCutoffPolicy)
@@ -144,7 +144,7 @@ class TestTriggerMain:
             # Write a valid config
             config_path.write_text("""
 membership_freshness_contract:
-  max_age_sessions: 23
+  max_age_sessions: 22
 provider_cutoff_policy:
   block_on_unknown: true
 """)
@@ -172,7 +172,7 @@ provider_cutoff_policy:
             config_path = Path(tmpdir) / "contracts.yaml"
             config_path.write_text("""
 membership_freshness_contract:
-  max_age_sessions: 23
+  max_age_sessions: 22
 provider_cutoff_policy:
   block_on_unknown: true
 """)
@@ -188,7 +188,7 @@ provider_cutoff_policy:
             mock_forward_main.assert_called_once()
             call_kwargs = mock_forward_main.call_args.kwargs
             assert call_kwargs["enforce_live_readiness"] is True
-            assert call_kwargs["membership_freshness_contract"].max_age_sessions == 23
+            assert call_kwargs["membership_freshness_contract"].max_age_sessions == 22
             assert call_kwargs["provider_cutoff_policy"].block_on_unknown is True
 
             # Verify result
@@ -237,7 +237,7 @@ provider_cutoff_policy:
             config_path = Path(tmpdir) / "contracts.yaml"
             config_path.write_text("""
 membership_freshness_contract:
-  max_age_sessions: 23
+  max_age_sessions: 22
 provider_cutoff_policy:
   block_on_unknown: true
 """)
@@ -256,20 +256,20 @@ provider_cutoff_policy:
             assert result["reason_code"] == "membership_freshness_contract_violated"
 
 
-class TestProposedContractValues:
-    """Test that the proposed config values are present and marked."""
+class TestFrozenContractValues:
+    """Test that the frozen config values are present and marked."""
 
-    def test_config_has_proposed_marker(self):
-        """Verify the actual config file has PROPOSED markers."""
+    def test_config_has_frozen_marker(self):
+        """Verify the actual config file is marked FROZEN (owner ratified)."""
         config_path = Path("config/e3_live_contracts.yaml")
         if not config_path.exists():
             pytest.skip("Config file not found (not created yet)")
 
         content = config_path.read_text()
 
-        # Should have PROPOSED markers
-        assert "PROPOSED" in content
-        assert "pending owner ratification" in content.lower()
+        # Should be marked FROZEN (owner ratified 2026-08-03, D2)
+        assert "FROZEN" in content
+        assert "owner ratified" in content.lower()
 
     def test_config_has_required_contracts(self):
         """Verify the actual config has both required contracts."""
@@ -283,6 +283,6 @@ class TestProposedContractValues:
         assert isinstance(contracts[0], MembershipFreshnessContract)
         assert isinstance(contracts[1], ProviderCutoffPolicy)
 
-        # Verify proposed values
-        assert contracts[0].max_age_sessions == 23
+        # Verify frozen values
+        assert contracts[0].max_age_sessions == 22
         assert contracts[1].block_on_unknown is True

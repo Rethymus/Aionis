@@ -1,30 +1,33 @@
-# E3 Live-Readiness Contracts (PROPOSED - pending owner ratification)
+# E3 Live-Readiness Contracts (FROZEN - owner ratified 2026-08-03, D2 decision)
 #
-# These are the AUD-06 owner-gated contracts for E3 forward commits.
-# They are marked PROPOSED and must be ratified by the owner before any
-# headline (irreversible) commit is enabled.
+# These are the AUD-06 owner-gated contracts for E3 forward commits. The owner
+# ratified the values below on 2026-08-03 (D2 decision):
+#   - max_age_sessions: 22        (~1 month of NYSE sessions; the earlier
+#                                  PROPOSED value of 23 was NOT adopted)
+#   - authoritative_refresh: null (no standalone refresh script; the refresh
+#                                  entry remains scripts/phase_b_fetch.py)
+#   - block_on_unknown: true      (fail-closed when the provider cutoff is unknown)
 #
-# The scheduler (.github/workflows/e3-forward.yml) runs in shadow mode
-# by default (PHASE_E3_NO_LEDGER=1), which computes everything but writes
-# no ledger rows. The automated cron is commented out and should only be
-# enabled after the owner ratifies these values.
+# The scheduler (.github/workflows/e3-forward.yml) still runs in shadow mode
+# (PHASE_E3_NO_LEDGER=1), which computes everything but writes no ledger rows.
+# The automated cron remains DISABLED: headline ignition still needs the owner's
+# explicit GO before any irreversible forward commit is enabled.
 
 # Membership Freshness Contract
 #
 # The max_age_sessions limit ensures the membership snapshot is fresh enough
-# for the forward commit. A value of 23 sessions means the snapshot must be
+# for the forward commit. A value of 22 sessions means the snapshot must be
 # within ~1 month of NYSE trading sessions of the predict date.
 #
-# PROPOSED VALUE: max_age_sessions: 23
+# FROZEN VALUE: max_age_sessions: 22 (owner ratified 2026-08-03, D2)
 #   - Conservative: ~1 month of NYSE sessions (21-23 sessions per month)
 #   - Ensures the S&P 500 universe snapshot is reasonably current
-#   - Owner may adjust based on refresh frequency and risk tolerance
 #
 # NOTE: This contract is FAIL-CLOSED when not configured. The forward commit
 # will refuse to run if this value is not set.
 membership_freshness_contract:
-  max_age_sessions: 23  # PROPOSED — pending owner ratification before headline ignition
-  # authoritative_refresh: null  # Optional: path to refresh script if required
+  max_age_sessions: 22  # FROZEN — owner ratified 2026-08-03 (D2)
+  authoritative_refresh: null  # FROZEN: no standalone refresh script; scripts/phase_b_fetch.py is the refresh entry
 
 # Provider Cutoff Policy
 #
@@ -32,25 +35,24 @@ membership_freshness_contract:
 # This policy determines whether the forward commit blocks when the provider
 # cutoff is unknown.
 #
-# PROPOSED VALUE: block_on_unknown: true
+# FROZEN VALUE: block_on_unknown: true (owner ratified 2026-08-03, D2)
 #   - Conservative: fail-closed when we cannot verify the knowledge cutoff
 #   - Prevents commits with unknown model provenance
-#   - Owner may set to false if unknown cutoffs are acceptable
 #
 # NOTE: This contract is FAIL-CLOSED when not configured. The forward commit
 # will refuse to run if this value is not set.
 provider_cutoff_policy:
-  block_on_unknown: true  # PROPOSED — pending owner ratification before headline ignition
+  block_on_unknown: true  # FROZEN — owner ratified 2026-08-03 (D2)
 
 # -----------------------------------------------------------------------------
-# IMPORTANT: OWNER ACTION REQUIRED BEFORE HEADLINE COMMITS
+# STATUS: FROZEN (owner ratified 2026-08-03, D2) - HEADLINE IGNITION STILL GATED
 # -----------------------------------------------------------------------------
 #
-# 1. Review the proposed values above for max_age_sessions and block_on_unknown.
-# 2. Adjust if needed based on your operational requirements and risk tolerance.
-# 3. Remove the "PROPOSED" comments once ratified.
-# 4. ONLY THEN enable the cron schedule in .github/workflows/e3-forward.yml.
-# 5. Remove PHASE_E3_NO_LEDGER=1 from the workflow env to enable ledger writes.
-#
-# Until ratified, the workflow runs in shadow mode (no ledger writes, no
-# irreversible commits). This is the safe default for bring-up.
+# 1. The values above are FROZEN. Changing any of them (e.g. max_age_sessions)
+#    is a NEW contract decision - record it in the ADR/backlog, never edit
+#    silently (mirrors the config_committed-before-result anchor).
+# 2. The automated cron in .github/workflows/e3-forward.yml remains DISABLED.
+#    Headline (irreversible) forward commits still need the owner's explicit GO.
+# 3. Until then the workflow runs in shadow mode (PHASE_E3_NO_LEDGER=1): it
+#    computes everything but writes no ledger rows and makes no irreversible
+#    commits. This remains the safe default for bring-up.
