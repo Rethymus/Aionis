@@ -1,6 +1,18 @@
 # state/handoff.md — current-pass handoff
 
-- **2026-08-03 orchestration protocol (landed, not committed):** owner directive — "主agent编排+验收,
+- **2026-08-03 ORCH-01 first wave (COMMITTED `8d19b28`):** validated the ADR-012 dispatch protocol
+  end-to-end. Picked the backlog "macro cumulative-preserve test" (S, hermetic). Ran
+  `scripts/orchestrate_dispatch.py --lane executor` → clean 6-layer contract (exit 0). Dispatched sonnet
+  `executor` (orch01-executor) → implemented `test_macro_forward_cumulative_parquet_preserves_prior_rows`
+  (tests/test_forward_ingest.py:373, +75 lines; faithful 13D mirror — cumulative==24, snapshot_ts=={t1,t2},
+  T1+T2 pub-dates ⊂ cum). Orchestrator independent verify: pytest 16/16 green, ruff clean.
+  **Reviewer-lane operability gap (binding finding)**: the dispatched `code-reviewer` (sonnet) went idle
+  WITHOUT returning a verdict (×2); per WORKFLOW §17 (2-identical-failures stop) the Orchestrator
+  proceeded on independent deterministic verification + line-by-line diff review, deviation explicitly
+  disclosed in the commit. **Harness behavior**: sync subagents return via `idle_notification`, not inline
+  — reclaim L6 via SendMessage; for code lanes, recover from repo state (git diff + pytest + ruff), never
+  trust worker prose. Folded into `docs/orchestration-protocol.md §8`.
+- **2026-08-03 orchestration protocol (COMMITTED `daa92e8`):** owner directive — "主agent编排+验收,
   高等级模型监工(低频), 分配任务给其他模型, review+e2e会话, 跨会话降噪, issue编排任务" — implemented by
   **binding existing OMC primitives**, not building a new framework (reuse-first). Owner chose **local task
   files = issues** (zero GitHub surface; minimizes the 治理复杂度>产出 drift). New additive artifacts:

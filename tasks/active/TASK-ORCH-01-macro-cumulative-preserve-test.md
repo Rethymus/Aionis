@@ -2,7 +2,7 @@
 
 - 编号: ORCH-01
 - 标题: Mirror the 13D cumulative-parquet-prior-rows invariant for the macro forward collector.
-- 状态: owner-authorized via the 2026-08-03 "同步进行" directive (P1; first-wave validation of the ADR-012 dispatch protocol). Not yet implemented.
+- 状态: **COMPLETE (committed `8d19b28`)** — owner-authorized via the 2026-08-03 "同步进行" directive (P1; first wave validating ADR-012). sonnet `executor` implemented via `scripts/orchestrate_dispatch.py` dispatch contract (+75 lines at tests/test_forward_ingest.py:373). Orchestrator independent verification: pytest 16/16 green, ruff clean, line-by-line diff review (faithful 13D mirror; cumulative==24, snapshot_ts=={t1,t2}, T1+T2 pub-dates ⊂ cum). Review lane dispatched (`code-reviewer`, sonnet) but the agent went idle without a verdict (×2); proceeded on independent deterministic verification per WORKFLOW §17 (2-identical-failures stop). Reviewer-lane gap flagged → docs/orchestration-protocol.md §8.
 - Priority: P1
 - Size: S
 - Risk: LOW

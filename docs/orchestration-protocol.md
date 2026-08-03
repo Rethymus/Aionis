@@ -98,3 +98,21 @@ ID / status / priority / size / risk / acceptance / allowed+forbidden files / re
 full ticket semantics. Cross-session "issue state" = the task `状态` line + `state/handoff.md`.
 The dispatch helper reads issue state from the task file and validates it via the RD-01 contract
 checker before any dispatch — an invalid issue cannot be dispatched.
+
+## 8. Operability notes (known harness behaviors)
+
+Observed in the inaugural ORCH-01 wave (2026-08-03); binding for future waves:
+
+- **Synchronous subagents return via `idle_notification`, not inline.** A `run_in_background: false`
+  Agent call spawns successfully, but the Orchestrator receives an `idle_notification` rather than the
+  worker's final report. Recovery: reclaim the worker's L6 structured result via `SendMessage(to:
+  <name>)`. Do NOT end the Orchestrator turn before reclaiming (a completed child cannot notify a
+  parent whose turn has ended).
+- **Code-producing lanes: recover from repo state, never from worker prose.** A worker may go idle
+  without sending its L6 result; the deliverable lives in the repo (`git diff` + the specified tests).
+  The Orchestrator's acceptance evidence is the deterministic gate (§5), not the worker's self-report.
+- **Prose-only lanes (reviewer) have no repo artifact.** If a reviewer goes idle without delivering its
+  verdict, reclaim once via `SendMessage`. If it idles again, STOP (WORKFLOW §17 — two identical
+  failures) and proceed on the Orchestrator's independent deterministic verification + line-by-line
+  diff review, with the reviewer-lane deviation explicitly disclosed in the task `状态` line and the
+  commit message. Do NOT infinite-loop ping.
