@@ -18,6 +18,8 @@ owner `/goal` 授权推进 Option A′（多 agent 按优先级 + 模型分层�
 
 **Track C v1.0 PROPOSED（2026-08-03 续）：** owner approved §12 默认 → 起草完整 `docs/track-c-preregistration.md`（PROPOSED v1.0，12KB；§12 全填：联合折叠 / 三层 PIT regime / cninfo 源 / qlib scaffold；§3 ①②③ 全调研解决）。取代 `reports/design/2026-08-03-track-c-prereg-skeleton.md`。**未冻结**——无 `config_committed` ledger 行；feature_cols 待冻结前完整枚举（US 复用 Track B 23 + A 股 price/cninfo/ALFRED/regime 字段）。**待 owner**：审 v1.0 → 授权 `config_committed` 冻结（写 ledger 行，= owner 动作）→ impl 切片（post-freeze）。agents 7/7 `[1210]` 死，全 orchestrator 直接完成。冻结面守卫 = 空（仅新增 docs/track-c-preregistration.md，未改 phase-*/track-b/ADR/ledger/config）。
 
+**Track C FROZEN（2026-08-03 续 2，owner 二次 approved）：** owner 确认 4 个冻结子参数（regime expanding-as-of σ TACO；DY spillover window=250/H=10/generalized FEVD；三层等权 composite；A 股 FF v1.0 排除）→ 写 `scripts/track_c_commit.py`（纯 stdlib，复用 phase_b `commit_config` 机制：`sig=sha256(json.dumps(config,sort_keys=True))`，行格式 `{ts,event:"config_committed",phase,config_sig,config}`）。**dry-run → --commit**：ledger 45→46 行，phase=track_c，`config_sig=758ca4d739f09331ee4dceb726d9d0d0f7c5110303acc6dcac59919701374fad`，**sha256 自洽已验**（重算==行内 sig），**未观察任何 OOS**（config_committed 行 only）。`docs/track-c-preregistration.md` §0/§13 更新为 FROZEN。**Track C 反泄漏 anchor 就位**；冻结后允许 S0 数据构造（不写新 ledger、不观察 rank-IC）。`runs/ledger.jsonl` 现有未提交改动（+1 行，TRACKED，按惯例提交时机 owner 定）。
+
 ## 2026-08-03 qlib 双区域 POC（Option A 可行性取证，docs/state only — 未 commit）
 
 owner 授权的可逆证据 POC，解决 Option A 辩论（独立批判者 REJECT；辩护/裁断 agent 因 `[1210]` 5 次失败缺失）。完整报告 `reports/2026-08-03-qlib-dualregion-poc.md`。

@@ -1,8 +1,9 @@
 # Track C 预注册 — 双区域条件化 rank-IC（A 股 + 美股，chronological walk-forward）
 
-> **状态：PROPOSED v1.0 · 2026-08-03 · owner 已裁断 §12 默认；待 owner `config_committed` 冻结（写 ledger 行）才生效。**
+> **状态：FROZEN v1.0 · 2026-08-03 · `config_committed` 已入 ledger（行 #46，sig `758ca4d7…`，先于任何 OOS）。**
 >
-> **尚未冻结**：无 `config_committed` ledger 行；未运行任何 OOS；未观察任何 rank-IC/收益。
+> **config_sig**：`758ca4d739f09331ee4dceb726d9d0d0f7c5110303acc6dcac59919701374fad`（`runs/ledger.jsonl` 行 #46，phase=track_c；sha256 自洽已验）。
+> **冻结后允许**：S0 数据构造（不写新 ledger、不观察 rank-IC/收益）；首次 OOS rank-IC 前须有 frozen config（已满足）。
 > **owner §12 裁断（2026-08-03）**：① 双区域 = **联合折叠**；② regime = **三层 PIT 复合**（meso+macro+global，等权，TACO as-of）；③ A 股源 = **cninfo**（MIT fetch + 自建解析）；④ scaffold = **qlib 双区域挂载**。
 >
 > **关联**：[`track-b-preregistration.md`](track-b-preregistration.md)（文体 + 共享统计门）、[`ADR-010`](../decisions/ADR-010-sesoi-tost-sequential-gate.md)（J-T 等价门）、[`theory-of-computable-reality.md`](theory-of-computable-reality.md) §3.1、[`market-driver-framework.md`](market-driver-framework.md) §2/§6.1/§8。
@@ -171,7 +172,7 @@ price-only S1（momentum/reversal/vol/liquidity）+ 等权。DM 检验对象 = *
 ---
 
 ## 13. 不越界声明（PROPOSED，未冻结）
-- `[F]` **无 `config_committed` ledger 行**；未运行 confirmatory/strategy/horizon/forward 脚本；未观察任何 outcome/E3。
+- `[F]` **`config_committed` 已入 ledger**（行 #46，sig `758ca4d739f09331ee4dceb726d9d0d0f7c5110303acc6dcac59919701374fad`，2026-08-03，先于任何 OOS；sha256 自洽已验）；未运行 confirmatory/strategy/horizon/forward 脚本；未观察任何 outcome/E3（S0 尚未执行）。
 - `[F]` 未触 B/C/D/E1 + Track B 冻结面 / prereg / ADR / config / 结果 / data。
 - `[F]` 本预注册 PROPOSED；owner 写 `config_committed` ledger 行 = 冻结（= 授权我执行首次 OOS 前的 config 哈希入账）。
 - `[I]` 任何落地 = 新预注册 + 新 config + 新 ledger 行，绝不静默修改历史。
