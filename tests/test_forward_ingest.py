@@ -370,6 +370,81 @@ def test_macro_forward_idempotent_rerun_stable_sha(
     assert n1 == n2
 
 
+def test_macro_forward_cumulative_parquet_preserves_prior_rows(
+    tmp_path: Path,
+) -> None:
+    """Cumulative preserve: a LATER snapshot appends new rows; priors survive.
+
+    Mirrors the 13D invariant (test_13d_forward_cumulative_parquet_preserves_prior_rows).
+    Two snapshot freezes at T1 then T2 (with last_poll_ts=T1). The T1 freeze captures
+    releases in (None, T1]; the T2 freeze captures releases in (T1, T2]. The cumulative
+    parquet must hold BOTH sets of rows — prior rows are never overwritten.
+    """
+    # T1 fixture: 6 months of releases (Jan-Jun 2023, pub Feb-Jul 2023)
+    t1_rows = [
+        _alfred_obs("2023-01-01", "2023-02-01", 291.0),
+        _alfred_obs("2023-02-01", "2023-03-01", 292.0),
+        _alfred_obs("2023-03-01", "2023-04-01", 293.0),
+        _alfred_obs("2023-04-01", "2023-05-01", 294.0),
+        _alfred_obs("2023-05-01", "2023-06-01", 295.0),
+        _alfred_obs("2023-06-01", "2023-07-01", 296.0),
+    ]
+    _write_alfred_cache(tmp_path, "CPIAUCSL", t1_rows)
+    _write_alfred_cache(tmp_path, "PAYEMS", t1_rows)
+
+    t1 = "2023-07-31T13:30:00+00:00"
+    macro_forward.collect_macro_forward(
+        snapshot_ts=t1, fred_api_key="fixture-key", cache_dir=tmp_path, runs_dir=tmp_path
+    )
+    n_after_t1 = len(pd.read_parquet(tmp_path / f"{macro_forward.DATASET}.parquet"))
+    assert n_after_t1 == 12  # 6 CPI + 6 PAYEMS releases
+
+    # T2 fixture: 6 NEW months of releases (Jul-Dec 2023, pub Aug-Jan 2024)
+    # The T1 rows remain in cache (cache hit, no network)
+    t2_rows = t1_rows + [
+        _alfred_obs("2023-07-01", "2023-08-01", 297.0),
+        _alfred_obs("2023-08-01", "2023-09-01", 298.0),
+        _alfred_obs("2023-09-01", "2023-10-01", 299.0),
+        _alfred_obs("2023-10-01", "2023-11-01", 300.0),
+        _alfred_obs("2023-11-01", "2023-12-01", 301.0),
+        _alfred_obs("2023-12-01", "2024-01-01", 302.0),
+    ]
+    _write_alfred_cache(tmp_path, "CPIAUCSL", t2_rows)
+    _write_alfred_cache(tmp_path, "PAYEMS", t2_rows)
+
+    t2 = "2024-01-31T13:30:00+00:00"
+    macro_forward.collect_macro_forward(
+        snapshot_ts=t2, last_poll_ts=t1, fred_api_key="fixture-key",
+        cache_dir=tmp_path, runs_dir=tmp_path,
+    )
+
+    cum = pd.read_parquet(tmp_path / f"{macro_forward.DATASET}.parquet")
+    assert len(cum) == 24  # T1 rows (12) + T2 rows (12) = 24 preserved
+    assert set(cum["snapshot_ts"]) == {t1, t2}
+
+    # The T1 rows (pub_date <= 2023-07-01) survived the T2 freeze.
+    t1_pub_dates = {
+        pd.Timestamp("2023-02-01"),
+        pd.Timestamp("2023-03-01"),
+        pd.Timestamp("2023-04-01"),
+        pd.Timestamp("2023-05-01"),
+        pd.Timestamp("2023-06-01"),
+        pd.Timestamp("2023-07-01"),
+    }
+    assert t1_pub_dates.issubset(set(cum["pub_date"]))
+
+    # The T2 rows (pub_date >= 2023-08-01) were appended.
+    t2_pub_dates = {
+        pd.Timestamp("2023-08-01"),
+        pd.Timestamp("2023-09-01"),
+        pd.Timestamp("2023-10-01"),
+        pd.Timestamp("2023-11-01"),
+        pd.Timestamp("2023-12-01"),
+        pd.Timestamp("2024-01-01"),
+    }
+    assert t2_pub_dates.issubset(set(cum["pub_date"]))
+
+
 # ===========================================================================
 # collector 3 — 8-K Item 2.02 forward (NET-NEW form-type filter)
 # ===========================================================================
