@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 from pathlib import Path
 
 import numpy as np
@@ -204,9 +205,61 @@ def _scores_equal(a: pd.DataFrame, b: pd.DataFrame) -> bool:
     return bool(np.array_equal(sa.to_numpy(), sb.to_numpy()))
 
 
+def _ledger() -> list[dict]:
+    """Read the append-only ledger (the owner's config_committed audit trail)."""
+    ledger_path = Path("runs/ledger.jsonl")
+    if not ledger_path.exists():
+        return []
+    rows = []
+    for line in ledger_path.read_text().splitlines():
+        line = line.strip()
+        if line:
+            rows.append(json.loads(line))
+    return rows
+
+
+def _require_owner_commit(cfg: dict, sig: str) -> None:
+    """config_committed BEFORE result: abort unless the owner's ledger row
+    for BASELINE-RANK-001 carries the exact config sig.
+
+    Mirrors scripts/res_02_baseline_ff5_run.py::_require_owner_commit — the
+    runner must never observe an out-of-sample metric before the owner has
+    committed the frozen config.
+    """
+    for r in _ledger():
+        if r.get("event") != "config_committed":
+            continue
+        cfg_row = r.get("config") or {}
+        if cfg_row.get("trial_id") != "BASELINE-RANK-001":
+            continue
+        if r.get("config_sig") == sig:
+            print(f"[RES-03] owner config_committed row found (sig={sig})", flush=True)
+            return
+    raise SystemExit(
+        f"[RES-03] ABORT: no config_committed ledger row for BASELINE-RANK-001 "
+        f"with the exact config sig {sig}. The owner must authorize the trial "
+        "and append the config_committed row (config_committed BEFORE result) "
+        "before this runner may observe any out-of-sample metric. Use "
+        "RES_03_NO_LEDGER=1 only for H6 reproducibility checks."
+    )
+
+
 def main() -> None:
     cfg = load_config()
     sig = config_sig(cfg)
+    artifacts_only = os.environ.get("RES_03_NO_LEDGER") == "1"
+    if os.environ.get("RES_03_SIG_ONLY") == "1":
+        print(
+            f"[RES-03] config_sig={sig}  RES_03_SIG_ONLY=1 — sig printed; EXITING "
+            "BEFORE any out-of-sample metric (config_committed-before-result "
+            "discipline)",
+            flush=True,
+        )
+        return
+    if not artifacts_only:
+        _require_owner_commit(cfg, sig)
+    else:
+        print("[RES-03] RES_03_NO_LEDGER=1 reproducibility mode", flush=True)
     print(
         f"[RES-03] config_sig={sig}  EXPLORATORY ONLY — no ledger row; "
         f"config_committed for BASELINE-RANK-001 requires owner authorization",

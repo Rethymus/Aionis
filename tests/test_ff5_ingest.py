@@ -137,6 +137,29 @@ def test_parse_skips_arbitrary_doc_lines_and_finds_data_by_8_digit_dates() -> No
     assert df["mkt_rf"].iloc[0] == pytest.approx(0.0012)
 
 
+def test_parse_skips_copyright_footer_after_data_rows() -> None:
+    """2026-era French files carry a 'Copyright ...' footer after the data rows;
+    the parser must drop those rows instead of failing date coercion."""
+    csv = (
+        "This file was created by using the 202605 CRSP database.\n"
+        "The Tbill return is the simple daily rate that, over the number of"
+        " trading days\n"
+        "compounds to 1-month TBill rate.\n"
+        "\n"
+        "Mkt-RF,SMB,HML,RMW,CMA,RF\n"
+        + "\n".join(_ROWS)
+        + "\n"
+        "Copyright 2026 Eugene F. Fama and Kenneth R. French\n"
+    )
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w") as zf:
+        zf.writestr("F-F_Research_Data_5_Factors_2x3_daily.csv", csv)
+    df = parse_ff5_daily_csv(buf.getvalue())
+    assert len(df) == len(_ROWS)
+    assert df["date"].iloc[-1] == pd.Timestamp("2024-01-05")
+    assert df["mkt_rf"].iloc[0] == pytest.approx(0.0012)
+
+
 def test_parse_rejects_zip_without_csv() -> None:
     buf = io.BytesIO()
     with zipfile.ZipFile(buf, "w") as zf:

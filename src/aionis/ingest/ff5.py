@@ -136,6 +136,10 @@ def parse_ff5_daily_csv(raw: bytes) -> pd.DataFrame:
         }
     )
     df = df.apply(lambda c: c.str.strip())  # whitespace-tolerant (dtype=str)
+    # French files sometimes carry trailing annotation lines (e.g. a
+    # "Copyright ..." footer after the data rows); filter any row whose
+    # date cell is not exactly 8 digits before dtype coercion.
+    df = df[df["date"].str.fullmatch(r"\d{8}", na=False)]
     df["date"] = pd.to_datetime(df["date"], format="%Y%m%d")
     for col in _NUMERIC_COLS:
         df[col] = pd.to_numeric(df[col], errors="coerce") / 100.0

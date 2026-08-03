@@ -294,6 +294,13 @@ def main() -> None:
     sig = _config_sig(config)
     n_cols = len(config["feature_cols"])
     print(f"[RES-02] config sig={sig}  feature_cols={n_cols}", flush=True)
+    if os.environ.get("RES_02_SIG_ONLY") == "1":
+        print(
+            "[RES-02] RES_02_SIG_ONLY=1 — sig printed; EXITING BEFORE any "
+            "out-of-sample metric (config_committed-before-result discipline)",
+            flush=True,
+        )
+        return
     if not artifacts_only:
         _require_owner_commit(config, sig)
     else:
