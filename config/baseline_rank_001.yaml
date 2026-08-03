@@ -28,6 +28,13 @@ primary_parent: "frozen Phase B (numeric fundamentals)"
 objective: "lambdarank"
 rank_bins: 5
 
+# Analysis window (owner decision 2026-08-03, option A): DFF vintages begin
+# 2015-01-01; the first valid month-end exposure is 2015-07-31, so sessions
+# from 2015-08-01 on carry a broadcast value. Aligns with BASELINE-FF5-001
+# and keeps every query-month under LightGBM's 10,000-row-per-group cap
+# (the full-history panel has 13k+ rows in 2011 months).
+analysis_start: "2015-08-01"
+
 feature_cols:
   - "mktcap"
   - "pb_ratio"

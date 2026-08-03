@@ -152,20 +152,26 @@ def rolling_factor_exposures(
                 rows.append((t, ticker, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan))
                 continue
             y = rets[lo:j] - rf[lo:j]
-            ok = np.isfinite(y) & np.isfinite(x5[lo:j]).all(axis=1) & np.isfinite(x_dff[lo:j])
-            n = int(ok.sum())
-            if n < BETA_MIN_OBS:
+            ok5 = np.isfinite(y) & np.isfinite(x5[lo:j]).all(axis=1)
+            ok_dff = ok5 & np.isfinite(x_dff[lo:j])
+            n5 = int(ok5.sum())
+            n_dff = int(ok_dff.sum())
+            if n5 < BETA_MIN_OBS:
                 rows.append((t, ticker, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan))
                 continue
-            yv = y[ok]
-            x5v = x5[lo:j][ok]
-            x_dff_v = x_dff[lo:j][ok]
+            yv5 = y[ok5]
+            x5v = x5[lo:j][ok5]
             betas5, *_ = np.linalg.lstsq(
-                np.column_stack([np.ones(n), x5v]), yv, rcond=None
+                np.column_stack([np.ones(n5), x5v]), yv5, rcond=None
             )
-            beta_dff, *_ = np.linalg.lstsq(
-                np.column_stack([np.ones(n), x_dff_v]), yv, rcond=None
-            )
+            if n_dff < BETA_MIN_OBS:
+                beta_dff = np.nan
+            else:
+                yv_dff = y[ok_dff]
+                x_dff_v = x_dff[lo:j][ok_dff]
+                beta_dff, *_ = np.linalg.lstsq(
+                    np.column_stack([np.ones(n_dff), x_dff_v]), yv_dff, rcond=None
+                )
             rows.append(
                 (
                     t,
@@ -175,7 +181,7 @@ def rolling_factor_exposures(
                     float(betas5[3]),
                     float(betas5[4]),
                     float(betas5[5]),
-                    float(beta_dff[1]),
+                    float(beta_dff[1]) if isinstance(beta_dff, np.ndarray) else np.nan,
                 )
             )
 

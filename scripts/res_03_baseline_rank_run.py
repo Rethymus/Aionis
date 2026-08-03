@@ -103,14 +103,41 @@ def build_rank_panel(
     membership: pd.DataFrame,
     horizon: int = HORIZON,
     align_on: str = ALIGN_ON,
+    analysis_start: str | None = None,
 ) -> pd.DataFrame:
-    """PIT-masked, NaN-label-dropped panel in canonical (date, ticker) order.
+    """PIT-masked, NaN-label-dropped panel in canonical (date, ticker) order,
+    SAMPLED TO MONTH-END SESSIONS ONLY.
 
     Mirrors ``eval.two_arm._clean_panel`` so fold indices produced by
     ``compute_shared_folds`` align with this panel's rows.
+
+    **Month-end sampling (load-bearing)**: the rank estimand is the
+    CROSS-SECTIONAL monthly rank-IC, so each calendar month is one query group
+    (RD-15: group = query-month) containing exactly the month-end session's
+    cross-section (~500 rows). LightGBM lambdarank has a hard 10,000-rows-per-
+    group cap; the full daily panel would put ~11,300 rows (23 sessions x ~490
+    tickers) in one month group and fail. The month-end session of each month
+    is selected (last session per calendar month, same rule as
+    scripts/res_02_baseline_ff5_run.py::_month_ends).
+
+    ``analysis_start`` (e.g. "2015-08-01", owner decision 2026-08-03 option A):
+    when set, rows before that date are dropped. This aligns the rank baseline
+    with BASELINE-FF5-001's window (DFF vintages begin 2015-01-01; the first
+    valid month-end exposure is 2015-07-31).
     """
     p = build_selection_panel(prices, fundamentals_long, horizon, align_on=align_on)
     p = mask_panel_to_pit(p, membership)
+    if analysis_start is not None:
+        p = p[p["date"] >= pd.Timestamp(analysis_start)]
+    # MONTH-END SAMPLING (load-bearing, RD-15 group=query-month): the rank
+    # estimand is the cross-sectional monthly rank-IC, so each calendar month is
+    # one query group of the month-end session's cross-section (~500 rows).
+    # LightGBM lambdarank hard-caps a query at 10,000 rows; the daily panel
+    # would put ~11,300 rows in one month group and fail. Keep only the LAST
+    # session of each calendar month (same rule as res_02 _month_ends).
+    p["_month"] = pd.to_datetime(p["date"]).dt.to_period("M")
+    p = p.loc[p.groupby("_month")["date"].transform("max") == p["date"]]
+    p = p.drop(columns=["_month"])
     return (
         p.dropna(subset=["y_fwd_ret"])
         .sort_values(["date", "ticker"])
@@ -266,18 +293,20 @@ def main() -> None:
         flush=True,
     )
 
-    from aionis.eval.two_arm import compute_shared_folds
+    from aionis.eval.two_arm import _folds_from_panel
 
     fund = pd.read_parquet(CACHE / "phase_b_fundamentals.parquet")
     px = pd.read_parquet(CACHE / "phase_b_prices.parquet")
     mem = load_pierrebrunelle_membership()
 
-    # Shared folds (same evidence strength as frozen B/C/D/E1) + canonical layout.
-    folds, ref = compute_shared_folds(px, mem, HORIZON, N_SPLITS, EMBARGO)
-    panel = build_rank_panel(px, fund, mem, HORIZON, ALIGN_ON)
-    layout = panel[["date", "ticker"]].reset_index(drop=True)
-    if not layout.equals(ref):
-        raise SystemExit("ABORT: panel layout diverges from shared-fold reference")
+    # Month-end-sampled panel (RD-15 group=query-month; see build_rank_panel).
+    analysis_start = cfg.get("analysis_start")
+    panel = build_rank_panel(px, fund, mem, HORIZON, ALIGN_ON, analysis_start=analysis_start)
+    # PurgedGroupKFold ON THE MONTH-END PANEL (group=month, embargo=21 sessions):
+    # the daily-granularity shared folds from two_arm.compute_shared_folds do NOT
+    # align with the month-end-sampled rows, so folds are computed here from the
+    # panel's own dates via the SAME purgedcv primitive (_folds_from_panel, reused).
+    folds = _folds_from_panel(panel, HORIZON, N_SPLITS, EMBARGO)
     print(f"[RES-03] panel={panel.shape} folds={len(folds)}", flush=True)
 
     feature_cols = cfg["feature_cols"]

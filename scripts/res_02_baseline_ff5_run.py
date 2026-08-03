@@ -174,12 +174,20 @@ def build_config(
     passing_cols: list[str],
     ff5_sha: str,
     dff_sha: str,
+    analysis_start: str = "2015-07-01",
 ) -> dict:
     """The complete frozen config for this trial; its sha256 is the anchor the
-    owner commits to the ledger BEFORE any result is observed."""
+    owner commits to the ledger BEFORE any result is observed.
+
+    ``analysis_start`` is the earliest month-end exposure date (2015-07-01 —
+    DFF vintages begin 2015-01-01 + a 126-session beta warm-up; owner decision
+    2026-08-03 option A). It is part of the frozen config so the window is
+    auditable in the ledger row.
+    """
     return {
         "trial_id": TRIAL_ID,
         "mode": "exploratory",  # FF5 G3 (no vintages) -> snapshot-frozen exploratory
+        "analysis_start": analysis_start,
         "feature_cols": FROZEN_FEATURE_COLS + passing_cols,
         "frozen_feature_cols": FROZEN_FEATURE_COLS,
         "new_feature_cols": passing_cols,
@@ -248,6 +256,28 @@ def main() -> None:
     month_ends = _month_ends(sessions)
     print(f"[RES-02] sessions={len(sessions)} month_ends={len(month_ends)}", flush=True)
 
+    # --- ANALYSIS WINDOW (owner decision 2026-08-03, option A) ---------------
+    # DFF vintages only exist from 2015-01-01 (FRED ALFRED earliest vintage,
+    # verified). The first valid month-end exposure is 2015-07-31 (2015-01-02
+    # + 126-observation beta minimum warm-up + month-end). Sessions before that
+    # month-end get NO broadcast value (broadcast_monthly_exposures yields NaN
+    # before the first month-end — structurally expected), and RD-13 fail-closes
+    # ANY month with ALL_MISSING. The analysis window therefore starts the day
+    # AFTER the first month-end (2015-08-01): from there every session carries a
+    # broadcast value. IMPORTANT: month_ends must be computed from the FULL
+    # session grid (before the window filter) so the first month-end (2015-07-31)
+    # still produces the exposure that fills August via the broadcast.
+    # Option B (drop DFF) is NOT selected — the owner approved A; RD-13 still
+    # auto-excludes any column that fails within the window.
+    analysis_start = pd.Timestamp("2015-08-01")
+    month_ends = _month_ends(sessions)
+    sessions = sessions[sessions >= analysis_start]
+    print(
+        f"[RES-02] ANALYSIS WINDOW: {analysis_start.date()} -> "
+        f"{sessions.max().date()}  sessions={len(sessions)} month_ends={len(month_ends)}",
+        flush=True,
+    )
+
     # --- daily returns + factor frame (ΔDFF as-of, one-day lagged) -----------
     rets = _daily_returns(px)
     dff_chg = dff_daily_changes(rets.index, vintages)
@@ -290,7 +320,7 @@ def main() -> None:
         )
 
     # --- frozen config + owner ledger gate (config_committed BEFORE result) ---
-    config = build_config(passing, ff5_sha, dff_sha)
+    config = build_config(passing, ff5_sha, dff_sha, analysis_start=str(analysis_start.date()))
     sig = _config_sig(config)
     n_cols = len(config["feature_cols"])
     print(f"[RES-02] config sig={sig}  feature_cols={n_cols}", flush=True)
@@ -298,6 +328,20 @@ def main() -> None:
         print(
             "[RES-02] RES_02_SIG_ONLY=1 — sig printed; EXITING BEFORE any "
             "out-of-sample metric (config_committed-before-result discipline)",
+            flush=True,
+        )
+        # The exact ledger row the owner must append (copy-paste ready).
+        print(
+            "\n[RES-02] LEDGER ROW (append to runs/ledger.jsonl):\n"
+            + json.dumps(
+                {
+                    "event": "config_committed",
+                    "phase": "baseline_ff5",
+                    "config_sig": sig,
+                    "config": config,
+                },
+                indent=2,
+            ),
             flush=True,
         )
         return
