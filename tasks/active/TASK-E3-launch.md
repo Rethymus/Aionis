@@ -10,7 +10,10 @@
   Slice 4 = forward scoring + accumulation (`d86ecd7`; Verifier PASS pytest 506 / Reviewer APPROVE).
   Slice 5 = dashboard Forward-IC tab (`forward_results.py` reader + `dashboard/app.py` view; Verifier PASS
   pytest 517 / Reviewer APPROVE 0 issues).
-  Next: Slice 6 = scheduler (NYSE month-end trigger) → Slice 7 = E2E + full I1–I9 gate suite.
+  Slice 6 = NYSE month-end scheduler (`162702d`; manual + shadow, reuse pandas_market_calendars).
+  **Slice 7 = E2E + I1–I9 gate suite COMPLETE (`0f94620`)**: `tests/test_forward_e2e.py` (hermetic
+  commit → fast-forward 21 → reveal/score → accumulate chain + I1/I2/I9; I3–I8 owned by existing
+  invariant suites), full forward suites 84 passed, full hermetic suite exit 0, ruff clean.
   **2026-08-01 update:** the Slice 6/7 code-level blockers are cleared — AUD-07B RESOLVED (ADR-010 amended to
   Jennison-Turnbull + `src/aionis/eval/sesoi_gate.py` implements the RCI equivalence gate); AUD-06 implemented
   (`src/aionis/eval/forward_live_readiness.py`, opt-in `enforce_live_readiness`, parameterized owner contracts).

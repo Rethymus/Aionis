@@ -47,7 +47,12 @@
   race; see memory aionis-parallel-writer-race). `opus`/`fable` aliases blocked by `[1M]` resolver values →
   AUD-07B + RD-15 deferred; RD-08 HOLD (needs frozen rule table). Safe RD queue exhausted for sonnet tier.
   Not pushed. Detail: `state/handoff.md` § Wave-B FINAL.
-- **updated:** 2026-08-03. **Orchestration protocol + reuse-first batch all committed & pushed; full hermetic
+- **updated:** 2026-08-03. **E3 Slice 7 E2E COMPLETE + AUD-06 contracts FROZEN (D2) — `0f94620`.** `tests/test_forward_e2e.py`
+  (hermetic chain: commit → I1 gate → reveal/score → I2 idempotency + immutable sealed-scores sha256 → accumulate →
+  I9 separation; I3–I8 owned by existing suites). `config/e3_live_contracts.yaml`: max_age_sessions 23 → **22** +
+  authoritative_refresh null + PROPOSED → FROZEN; cron stays DISABLED (headline needs owner GO). `test_e3_forward_trigger.py`
+  aligned 7×. 7 forward suites 84 passed; full hermetic suite exit 0; ruff clean; real-ledger guard PASS.
+  E3 code surface COMPLETE (Slices 1–7); remaining: owner GO for shadow/headline. **Orchestration protocol + reuse-first batch all committed & pushed; full hermetic
   suite back to 1352 passed / 0 failed.** **Track B 首个 rank-IC（2026-08-02, treatment 臂, config #41）**: mean_ic 0.0055, CI (-0.021, 0.033), p=0.689 null; DM -1.78/p=0.079 边际（vs 等权）。**差分（#41 treatment - #42 price-only, headline）**: mean_diff 0.0076, CI (-0.004, 0.020) 跨零, p=0.219 → 未显著优于 price-only（null，符合 null-favored）；CI 上界 0.020 > SESOI 0.010 → 不构成严格等价（需更多样本）。
 - **orchestration (2026-08-03):** `ADR-012` + `docs/orchestration-protocol.md` + `scripts/orchestrate_dispatch.py`
   (11/11 tests green, ruff clean) + dispatch-contract template landed — owner chose **local task files = issues**

@@ -1,5 +1,19 @@
 # state/handoff.md — current-pass handoff
 
+- **2026-08-03 `/goal` batch 7 — E3 Slice 7 E2E + AUD-06 contract freeze (COMMITTED `0f94620`):**
+  closed the final E3 code gap. `tests/test_forward_e2e.py` (NEW, 290 lines, 2 tests) wires the full
+  hermetic chain on labeled synthetic fixtures in tmp_path: COMMIT (Slice 3d, long-scores both arms,
+  sha256 seal) → **I1** gate (reveal before target_t refused, no scored rows) → REVEAL+SCORE (Slice 4b,
+  both arms ic_point float) → **I2** (idempotent re-reveal appends nothing + immutable sealed-scores
+  sha256, byte-mutation flips hash) → ACCUMULATE (Slice 4c, n_months=1, summary key set,
+  dm_flag=degenerate) → **I9** (forward chain writes ONLY runs/forward/ + ledger.jsonl, never
+  runs/results/). I3–I8 explicitly NOT duplicated (owned by existing invariant suites).
+  `config/e3_live_contracts.yaml`: `max_age_sessions` 23 → **22** + `authoritative_refresh: null`
+  explicit + PROPOSED → **FROZEN (D2, 2026-08-03)**; cron stays DISABLED, headline still needs owner GO.
+  `tests/test_e3_forward_trigger.py`: 7× 23 → 22 + proposed-marker test renamed frozen-marker.
+  **Verified: 7 forward suites 84 passed; full hermetic suite exit 0; ruff clean; real-ledger guard
+  PASS; git diff --name-only = the 3 files; pre-existing Track-B WIP untouched.** Slice 7 code complete;
+  only E3 headline (AUD-06 done + owner GO) and RES-08/RES-10 (owner-gated) remain.
 - **2026-08-03 `/goal` batch 6 — RES-02 + RES-03 EXECUTED via 2 worktree-isolated agents (COMMITTED
   + pushed, `825658b`):** owner authorized execution ("授权你继续执行"). **2 sonnet agents in isolated
   git worktrees** (the correct "各自推进/不影响各自进程" mechanism — no writer race, no Track-B WIP
