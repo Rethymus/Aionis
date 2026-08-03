@@ -58,6 +58,69 @@ def _load_ic_series() -> dict | None:
         return None
 
 
+def _load_mount_metrics() -> dict | None:
+    path = SITE_DIR / "mount_metrics.json"
+    if not path.exists():
+        return None
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+
+
+def _fmt_pct(x):
+    return f"{x * 100:.1f}%" if isinstance(x, (int, float)) else "—"
+
+
+def _fmt_num(x, nd=2):
+    return f"{x:.{nd}f}" if isinstance(x, (int, float)) else "—"
+
+
+def _metrics_section_html(mount: dict | None) -> str:
+    if not mount:
+        return '<p class="text-slate-500 text-sm">风险指标待 site/mount_metrics.json'
+        '（运行 <code>track_b_mounts_run.py</code>）。</p>'
+    try:
+        tm = mount["treatment"]["tearsheet"]["model"]
+        pm = mount["price_only"]["tearsheet"]["model"]
+        ew = mount["treatment"]["tearsheet"]["ew"]
+    except (KeyError, TypeError):
+        return '<p class="text-slate-500 text-sm">mount_metrics 结构异常。</p>'
+    rows = [
+        ("年化收益", _fmt_pct(tm["annual_return"]), _fmt_pct(pm["annual_return"]),
+         _fmt_pct(ew["annual_return"])),
+        ("年化波动", _fmt_pct(tm["annual_volatility"]), _fmt_pct(pm["annual_volatility"]),
+         _fmt_pct(ew["annual_volatility"])),
+        ("Sharpe", _fmt_num(tm["sharpe_ratio"]), _fmt_num(pm["sharpe_ratio"]),
+         _fmt_num(ew["sharpe_ratio"])),
+        ("Sortino", _fmt_num(tm["sortino_ratio"]), _fmt_num(pm["sortino_ratio"]),
+         _fmt_num(ew["sortino_ratio"])),
+        ("最大回撤", _fmt_pct(tm["max_drawdown"]), _fmt_pct(pm["max_drawdown"]),
+         _fmt_pct(ew["max_drawdown"])),
+        ("Calmar", _fmt_num(tm["calmar_ratio"]), _fmt_num(pm["calmar_ratio"]),
+         _fmt_num(ew["calmar_ratio"])),
+    ]
+    body = "".join(
+        f"<tr class='border-b border-slate-800'>"
+        f"<td class='py-2 px-3 font-medium text-slate-100'>{label}</td>"
+        f"<td class='py-2 px-3 text-blue-300'>{tm_v}</td>"
+        f"<td class='py-2 px-3 text-slate-300'>{pm_v}</td>"
+        f"<td class='py-2 px-3 text-slate-400'>{ew_v}</td></tr>"
+        for label, tm_v, pm_v, ew_v in rows
+    )
+    return (
+        '<div class="bg-amber-500/10 border border-amber-500/30 rounded-lg p-2 mb-3 text-xs '
+        'text-amber-300">⚠️ GROSS（未扣成本）· 探索性 top-quantile 等权组合月度收益 · '
+        "非净成本/非可交易策略；指标由 empyrical 计算。</div>"
+        '<div class="overflow-x-auto"><table class="w-full text-sm">'
+        '<thead><tr class="text-left text-slate-400 border-b border-slate-700">'
+        "<th class='py-2 px-3'>指标</th><th class='py-2 px-3'>treatment(top-q)</th>"
+        "<th class='py-2 px-3'>price-only(top-q)</th>"
+        "<th class='py-2 px-3'>等权(universe)</th></tr></thead>"
+        f"<tbody>{body}</tbody></table></div>"
+    )
+
+
 def _kpi_tile(label: str, value: str, sub: str = "", accent: str = "slate") -> str:
     color = {"emerald": "text-emerald-400", "rose": "text-rose-400",
              "amber": "text-amber-400", "slate": "text-slate-100"}.get(accent, "text-slate-100")
@@ -101,6 +164,8 @@ def _antileakage_cards() -> str:
 def build() -> Path:
     ic_data = _load_ic_series()
     ic_data_json = json.dumps(ic_data) if ic_data else "null"
+    mount = _load_mount_metrics()
+    metrics_section = _metrics_section_html(mount)
     ci_crosses_zero = DIFFERENTIAL["ci"][0] < 0 < DIFFERENTIAL["ci"][1]
     equiv = abs(DIFFERENTIAL["ci"][1]) <= SESOI and abs(DIFFERENTIAL["ci"][0]) <= SESOI
 
@@ -144,6 +209,7 @@ def build() -> Path:
       <a href="#finding" class="hover:text-slate-100">核心结论</a>
       <a href="#themes" class="hover:text-slate-100">七主题</a>
       <a href="#result" class="hover:text-slate-100">差分结果</a>
+      <a href="#metrics" class="hover:text-slate-100">风险指标</a>
       <a href="#discipline" class="hover:text-slate-100">反泄漏</a>
       <a href="#boundary" class="hover:text-slate-100">边界</a>
     </div>
@@ -228,6 +294,12 @@ def build() -> Path:
       <tbody>{arm_row(TREATMENT)}{arm_row(PRICE_ONLY)}{arm_row(DIFFERENTIAL, emphasis=True)}</tbody>
     </table>
     {ic_section}
+  </section>
+
+  <!-- 风险指标 -->
+  <section id="metrics" class="mb-6 bg-slate-800/40 border border-slate-700 rounded-xl p-5">
+    <h2 class="text-lg font-bold text-slate-50 mb-3">📊 风险指标（gross · 探索性）</h2>
+    {metrics_section}
   </section>
 
   <!-- 诚实边界 -->
