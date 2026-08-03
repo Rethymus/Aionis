@@ -1,5 +1,14 @@
 # state/handoff.md — current-pass handoff
 
+- **2026-08-03 `/goal` batch 2 — Slice-2 backlog fully closed (COMMITTED + pushed):** completed the
+  remaining Slice-2 items. (1) **`5ffdbe1`** — first-run `last_poll_ts=None` seeding docstring notes in
+  all 3 forward collectors (13D/macro/8-K; docstring-only). (2) **`758d87e`** — structlog warning when
+  `persist_snapshot` writes the REAL ledger (`runs_dir=None`): the shared persist tail covers all 3
+  collectors at once; the backlog's `forward_only=True` wording was stale (row-level constant, not a
+  param). Not unit-tested by design (exercising the branch would write the real ledger, which
+  `test_real_ledger_jsonl_untouched` pins as forbidden). **Full hermetic suite: 1352 passed / 0 failed**
+  (final verification); ruff clean; forward-ingest 16/16. Both pushed. Track-B WIP untouched; no frozen
+  surface / ledger / data touched; no real network/LLM/trial.
 - **2026-08-03 `/goal` reuse-first batch (COMMITTED + pushed, `f6e0536` + `e6c71ec`):** resumed the
   priority offline program under the owner `/goal` (更多 agents 按优先等级推进; 难度分级模型; 复用轮子禁止重造).
   Proxy is `[1210]`-flaky → direct-write (opus) chosen over dispatch for coherence + token-efficiency.
