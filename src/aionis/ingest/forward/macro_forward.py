@@ -56,6 +56,10 @@ def collect_macro_forward(
     """One forward snapshot of CPI/NFP first-print surprises published in
     ``(last_poll_ts, snapshot_ts]``.
 
+    First run: pass ``last_poll_ts=None`` (lower bound open) to collect ALL
+    releases published ``<= snapshot_ts``; subsequent runs pass the prior
+    ``snapshot_ts`` to collect only net-new releases.
+
     For each CPI/NFP series, fetches the cached ALFRED vintages, rebuilds the
     strictly-PIT surprise time series, and emits one row per release with
     ``pub_date`` in the forward window. Emits

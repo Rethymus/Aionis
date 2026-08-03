@@ -117,6 +117,10 @@ def collect_8k_forward(
     """One forward snapshot of 8-K Item 2.02 earnings releases filed in
     ``(last_poll_ts, snapshot_ts]``.
 
+    First run: pass ``last_poll_ts=None`` (lower bound open) to collect ALL
+    8-K Item 2.02 filings filed ``<= snapshot_ts``; subsequent runs pass the
+    prior ``snapshot_ts`` to collect only net-new filings.
+
     Resolves each ticker to a CIK via :func:`fundamentals.cik_map` (or
     ``cik_override``), fetches the cached submissions JSON, slices the 8-K Item
     2.02 filings in the forward window, and emits a long frame

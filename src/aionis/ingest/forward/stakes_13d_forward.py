@@ -94,6 +94,10 @@ def collect_13d_forward(
 ) -> pd.DataFrame:
     """One forward snapshot of SC 13D / 13D-A filings filed in ``(last_poll_ts, snapshot_ts]``.
 
+    First run: pass ``last_poll_ts=None`` (lower bound open) to collect ALL
+    filings filed ``<= snapshot_ts``; subsequent runs pass the prior
+    ``snapshot_ts`` to collect only net-new filings.
+
     For each ``(ticker, cik)`` in ``ciks``, fetches the cached submissions JSON,
     slices the 13D filings in the forward window, and emits a long frame
     ``[ticker, cik, feature, value, form, filing_date, accession, event_ts,
