@@ -1,5 +1,19 @@
 # state/handoff.md — current-pass handoff
 
+- **2026-08-03 `/goal` batch 5 — RES specs rewritten via 4 parallel agents (COMMITTED + pushed, `2f87970`):**
+  executed approved D5 (RES restart) the RIGHT way this time: **4 sonnet agents dispatched in 2 batches of
+  2 (≤2 concurrent proxy cap), file-isolated (each writes only its own task file — parallel without the
+  writer race), verified each touched ONLY its target**. Each rewrite fixes its root defect:
+  - RES-02: raw market-wide FF5/DFF columns (zero cross-sectional variation → unrankable) → stock-specific
+    rolling beta-to-factor + loading×characteristic interactions; PIT proof + RD-13 guard + French 7-gate
+  - RES-03: defined the rank-label/query contract anchored to FROZEN RD-15 + ranking_contract.py; removed
+    invalid objective names; forbidden to modify frozen impl
+  - RES-08: monolithic → durable 5-stage schema/sample/annotation/adjudication/freeze (ADR-006), REUSING
+    the existing docs/llm-extractor-eval.md + src/aionis/schema/gold_annotation.py schema (not reinventing)
+  - RES-10: every metric anchored to RD-04/06/07/08/11 + RES-08 gold set (no re-spec from scratch)
+  All 4 agents went idle without reports (idle-without-result pattern) but their work landed in the tree —
+  verified from repo state, NOT prose (§8 recovery path). 8 files (+679/-340); ledger 0 diff; no
+  src/frozen-surface change. All 4 specs now "REWRITTEN 2026-08-03 — ready for owner authorization".
 - **2026-08-03 `/goal` batch 4 — approved owner decisions executed (COMMITTED + pushed, `c09bd0b`):**
   owner approved all recommendations (D1-D8). Evidence in `reports/design/2026-08-03-owner-decision-execution.md`.
   D1: Track B config VERIFIED already frozen 2026-08-02 (ledger #41/#42) — no new row. D2: AUD-06 contracts
