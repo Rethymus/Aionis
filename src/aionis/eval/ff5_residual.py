@@ -260,11 +260,92 @@ def amihud_illiquidity(
     return result
 
 
+def _fallback_load_ff5(start: str, end: str) -> pd.DataFrame | None:
+    """Fallback: Download FF5 from Kenneth-French bulk ZIP directly.
+
+    Uses the official 2x3 CSV ZIP file as fallback when pandas-datareader fails.
+    This is a POST-2014 update to the FF5 factor construction.
+
+    Args:
+        start: Start date (YYYY-MM-DD).
+        end: End date (YYYY-MM-DD).
+
+    Returns:
+        DataFrame with columns: date, Mkt-RF, SMB, HML, RMW, CMA, RF.
+        Returns None if download fails.
+    """
+    import io
+    import time
+    import urllib.request
+    import zipfile
+
+    # Official Kenneth-French bulk ZIP (2x3 construction, post-2014)
+    zip_url = "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_5_Factors_2x3_CSV.zip"
+
+    log.info("ff5_fallback_attempt", url=zip_url)
+
+    try:
+        # Polite: single retry with 2s delay
+        for attempt in range(2):
+            try:
+                with urllib.request.urlopen(zip_url, timeout=30) as response:
+                    raw_zip = response.read()
+                break
+            except Exception as e:
+                if attempt == 0:
+                    log.warning("ff5_fallback_retry", error=str(e))
+                    time.sleep(2.0)
+                else:
+                    raise
+    except Exception as e:
+        log.error("ff5_fallback_failed", error=str(e))
+        return None
+
+    # Read CSV from ZIP in memory
+    try:
+        with zipfile.ZipFile(io.BytesIO(raw_zip)) as zf:
+            # The CSV file is named 'F-F_Research_Data_5_Factors_2x3.csv'
+            csv_name = "F-F_Research_Data_5_Factors_2x3.csv"
+            with zf.open(csv_name) as f:
+                # Format: 3 doc lines, 1 blank line, header line, then monthly data
+                # Skip first 4 rows (3 doc + 1 blank)
+                # Read monthly data only (755 rows from 196307 to 202605)
+                df = pd.read_csv(f, skiprows=4, encoding="latin1", nrows=755)
+    except Exception as e:
+        log.error("ff5_zip_parse_failed", error=str(e))
+        return None
+
+    # Parse period column (YYYYMM format like "196307")
+    period_col = df.columns[0]  # First unnamed column is the period
+    df = df.rename(columns={period_col: "period"})
+
+    # Convert period (YYYYMM) to datetime (month-end)
+    df["date"] = pd.to_datetime(df["period"].astype(str), format="%Y%m") + pd.offsets.MonthEnd(0)
+    df = df.drop(columns=["period"])
+
+    # Convert from percentage to decimal
+    for col in ["Mkt-RF", "SMB", "HML", "RMW", "CMA", "RF"]:
+        if col in df.columns:
+            df[col] = df[col] / 100.0
+
+    # Ensure column order and filter by date range
+    expected_cols = ["date", "Mkt-RF", "SMB", "HML", "RMW", "CMA", "RF"]
+    df = df[expected_cols]
+
+    start_dt = pd.to_datetime(start).normalize()
+    end_dt = pd.to_datetime(end).normalize()
+    df = df[(df["date"] >= start_dt) & (df["date"] <= end_dt)]
+
+    log.info("ff5_fallback_success", n_rows=len(df))
+    return df
+
+
 def load_ff5(start: str, end: str) -> pd.DataFrame:
     """Load Fama-French 5-factor data from Kenneth-French database.
 
     This is a convenience wrapper around pandas_datareader for fetching
-    FF5 factor returns. DO NOT call this in tests (network dependency).
+    FF5 factor returns, with fallback to direct bulk ZIP download.
+    DO NOT call this in tests (network dependency).
 
     Args:
         start: Start date (YYYY-MM-DD).
@@ -284,27 +365,35 @@ def load_ff5(start: str, end: str) -> pd.DataFrame:
     """
     import pandas_datareader.data as web
 
-    # Fetch FF5 research data (monthly frequency)
-    # dataset name: "Fama_French_5_Factors"
-    df = web.DataReader("Fama_French_5_Factors", "famafrench", start=start, end=end)[0]
+    try:
+        # Fetch FF5 research data (monthly frequency)
+        # dataset name: "Fama_French_5_Factors"
+        df = web.DataReader("Fama_French_5_Factors", "famafrench", start=start, end=end)[0]
 
-    # Reset index to make date a column
-    df = df.reset_index()
+        # Reset index to make date a column
+        df = df.reset_index()
 
-    # Rename columns to match expected names (pandas_datareader uses "Mkt-RF" etc.)
-    # The data comes with "Date" as period; convert to datetime
-    df.columns = [col.replace("Mkt-RF", "Mkt-RF") for col in df.columns]
+        # Rename columns to match expected names (pandas_datareader uses "Mkt-RF" etc.)
+        # The data comes with "Date" as period; convert to datetime
+        df.columns = [col.replace("Mkt-RF", "Mkt-RF") for col in df.columns]
 
-    # Convert Period to datetime
-    df["date"] = df["Date"].dt.to_timestamp()
-    df = df.drop(columns=["Date"])
+        # Convert Period to datetime
+        df["date"] = df["Date"].dt.to_timestamp()
+        df = df.drop(columns=["Date"])
 
-    # Ensure column order
-    expected_cols = ["date", "Mkt-RF", "SMB", "HML", "RMW", "CMA", "RF"]
-    df = df[expected_cols]
+        # Ensure column order
+        expected_cols = ["date", "Mkt-RF", "SMB", "HML", "RMW", "CMA", "RF"]
+        df = df[expected_cols]
 
-    # Convert from percentage basis points to decimal
-    for col in ["Mkt-RF", "SMB", "HML", "RMW", "CMA", "RF"]:
-        df[col] = df[col] / 100.0
+        # Convert from percentage basis points to decimal
+        for col in ["Mkt-RF", "SMB", "HML", "RMW", "CMA", "RF"]:
+            df[col] = df[col] / 100.0
 
-    return df
+        return df
+    except Exception as e:
+        log.warning("ff5_pdr_failed", error=str(e))
+        # Fallback to direct bulk ZIP download
+        df = _fallback_load_ff5(start, end)
+        if df is None:
+            raise
+        return df
