@@ -99,6 +99,12 @@ class TrackBBaselineResult:
     # Fold count for sanity checks
     n_test_obs: int
 
+    # Monthly portfolio returns (top-quantile vs equal-weight) for downstream
+    # evaluation-layer mounts (tearsheet / FINSABER net-cost / FF5 residual).
+    monthly_dates: list[str]
+    monthly_model_returns: list[float]
+    monthly_ew_returns: list[float]
+
 
 def fit_track_b_baseline(
     panel: pd.DataFrame,
@@ -389,6 +395,9 @@ def fit_track_b_baseline(
     # Filter out rows with NaN returns for portfolio construction
     oos_panel_clean = oos_panel.dropna(subset=[y_col]).copy()
 
+    monthly_dates: list[str] = []
+    monthly_model_returns: list[float] = []
+    monthly_ew_returns: list[float] = []
     if len(oos_panel_clean) == 0:
         # No valid returns for DM test
         dm_stat = float("nan")
@@ -396,9 +405,6 @@ def fit_track_b_baseline(
     else:
         # Group by month-end date for portfolio construction
         oos_panel_clean["month"] = pd.to_datetime(oos_panel_clean[date_col]).dt.to_period("M")
-
-        monthly_model_returns = []
-        monthly_ew_returns = []
 
         for _month, group in oos_panel_clean.groupby("month", sort=True):
             if len(group) < 5:  # Need minimum tickers for meaningful portfolio
@@ -412,6 +418,7 @@ def fit_track_b_baseline(
             # Equal-weight (all tickers)
             ew_ret = float(group[y_col].mean())
 
+            monthly_dates.append(str(_month))
             monthly_model_returns.append(model_ret)
             monthly_ew_returns.append(ew_ret)
 
@@ -449,6 +456,9 @@ def fit_track_b_baseline(
         dm_stat=dm_stat,
         dm_p=dm_p,
         n_test_obs=len(oos_panel),
+        monthly_dates=monthly_dates,
+        monthly_model_returns=monthly_model_returns,
+        monthly_ew_returns=monthly_ew_returns,
     )
 
 

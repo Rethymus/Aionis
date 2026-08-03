@@ -91,10 +91,16 @@ def main() -> None:
             "treatment": {
                 "mean_ic": rt.mean_ic, "ci95": list(rt.ci_95), "p_hac": rt.p_hac,
                 "ic_series": {str(k): v for k, v in rt.ic_series.items()},
+                "monthly_dates": rt.monthly_dates,
+                "monthly_model_returns": rt.monthly_model_returns,
+                "monthly_ew_returns": rt.monthly_ew_returns,
             },
             "price_only": {
                 "mean_ic": rp.mean_ic, "ci95": list(rp.ci_95), "p_hac": rp.p_hac,
                 "ic_series": {str(k): v for k, v in rp.ic_series.items()},
+                "monthly_dates": rp.monthly_dates,
+                "monthly_model_returns": rp.monthly_model_returns,
+                "monthly_ew_returns": rp.monthly_ew_returns,
             },
             "differential": {
                 "mean_diff": mean_d, "ci95": [lo_d, hi_d], "p_hac": summary["p_hac"],
