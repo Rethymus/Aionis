@@ -16,8 +16,11 @@
   owner-authorized C4 standalone cleanup passed review and are committed in `7dede9b`.
 - **E3:** engineering may continue, but headline is **NO-GO**. No scheduler, real E2E, or forward result
   exists; shadow/headline must not observe outcome-bearing metrics before AUD-07 and owner approval.
-- **agents:** wave-based supervisor pattern active: one writer per file boundary, read-only preflights in
-  parallel, then independent Verifier and Reviewer. Multi-agent inference is not part of the stock-selection signal.
+- **agents:** supervisor+worker protocol codified in `docs/orchestration-protocol.md` (ADR-012): opus
+  Orchestrator + low-freq opus Supervisor (gates only) + sonnet `executor`/haiku workers (serialized,
+  ≤2 concurrent) + independent `verifier`/`code-reviewer`/`qa-tester` lanes; dispatch via
+  `scripts/orchestrate_dispatch.py`. One writer per file boundary still binds. Multi-agent inference
+  is not part of the stock-selection signal.
 - **known issues:** protected historical claims may retain superseded wording; non-chronological historical CV;
   blocked market-source fallbacks and sub-2s fetch paths; Phase B A1 lock stranding; current SIC snapshot;
   ADR-010 TOST p-value direction/sequential-equivalence construction CONFIRMED BROKEN by AUD-07B (2 CRITICAL, double-opus review); E3 verdict/headline HOLD pending owner-authorized ADR-010 + prereg §7 amendment.
@@ -45,3 +48,8 @@
   AUD-07B + RD-15 deferred; RD-08 HOLD (needs frozen rule table). Safe RD queue exhausted for sonnet tier.
   Not pushed. Detail: `state/handoff.md` § Wave-B FINAL.
 - **updated:** 2026-08-02. **Track B 首个 rank-IC（treatment 臂, config #41）**: mean_ic 0.0055, CI (-0.021, 0.033), p=0.689 null; DM -1.78/p=0.079 边际（vs 等权）。**差分（#41 treatment - #42 price-only, headline）**: mean_diff 0.0076, CI (-0.004, 0.020) 跨零, p=0.219 → 未显著优于 price-only（null，符合 null-favored）；CI 上界 0.020 > SESOI 0.010 → 不构成严格等价（需更多样本）。
+- **orchestration (2026-08-03):** `ADR-012` + `docs/orchestration-protocol.md` + `scripts/orchestrate_dispatch.py`
+  (11/11 tests green, ruff clean) + dispatch-contract template landed — owner chose **local task files = issues**
+  (zero GitHub surface). Lane model = opus Orchestrator + low-freq opus Supervisor (监工) + sonnet/haiku workers
+  (serialized) + independent verifier/reviewer/e2e lanes; 6-layer denoised dispatch; anti-leakage guardrails binding.
+  Additive only — no frozen surface / ledger / data / Track-B code touched; no real network/LLM/trial ran. Not committed.

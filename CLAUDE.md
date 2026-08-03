@@ -123,6 +123,7 @@ irreversible/high-impact→strong.
 
 ## See also
 - `WORKFLOW.md` — the full 11-stage operating pipeline + 5 modes + stop-conditions (constitution).
+- `docs/orchestration-protocol.md` — supervisor + worker dispatch protocol (ADR-012); binds OMC agents to Aionis anti-leakage guardrails.
 - `CONTRIBUTING.md` — git conventions (Conventional Commits, ledger rule, secrets/data policy).
 - `state/current.md` — live status (read first).
 - `docs/RESULTS.md` — the falsifiable-results snapshot. `decisions/index.md` — the ADR registry.

@@ -1,5 +1,22 @@
 # state/handoff.md — current-pass handoff
 
+- **2026-08-03 orchestration protocol (landed, not committed):** owner directive — "主agent编排+验收,
+  高等级模型监工(低频), 分配任务给其他模型, review+e2e会话, 跨会话降噪, issue编排任务" — implemented by
+  **binding existing OMC primitives**, not building a new framework (reuse-first). Owner chose **local task
+  files = issues** (zero GitHub surface; minimizes the 治理复杂度>产出 drift). New additive artifacts:
+  `decisions/ADR-012-orchestration-protocol.md` (ACCEPTED) + `docs/orchestration-protocol.md` (operational
+  spec) + `scripts/orchestrate_dispatch.py` (6-layer contract emitter, reuses RD-01 `lint_task_file`) +
+  `tests/test_orchestrate_dispatch.py` (11/11 green, ruff clean) + `tasks/templates/DISPATCH-CONTRACT.md`.
+  Registered ADR-011 + ADR-012 in `decisions/index.md`; added CLAUDE.md see-also pointer. Lane model: opus
+  Orchestrator + **low-freq opus Supervisor (监工, gates only)** + sonnet `executor`/haiku workers
+  (serialized, ≤2 concurrent — parallel-writer race + `[1210]` cap) + independent `verifier`(验收) /
+  `code-reviewer` / `qa-tester`(e2e) lanes. Denoising = 6-layer dispatch contract (WORKFLOW §10) + structured
+  handoff (workers return files/tests/evidence/next-action, never narrative; no full-chat forwarding).
+  Anti-leakage guardrails binding on every dispatch (no real network/LLM/forward; frozen surfaces read-only;
+  config_committed-before-result; ledger 0-diff). **Additive only** — no frozen surface / ledger / data /
+  Track-B code touched; no real network/LLM/trial ran. Next: owner commissions the first wave (pick a task →
+  run the helper → dispatch to `executor`).
+
 - **2026-08-02 strategic review:** "是否跑偏 + 七主题低成本覆盖" deep-dive → `reports/2026-08-02-strategic-review-coverage-and-alignment.md` + 6 `reports/design/` artifacts (Track A/B slice plans, slice review, qlib POC, wheel-mount pack, reuse-catalog v2) + `src/aionis/eval/ff5_residual.py` (挂接③, 18 tests green, ruff clean; exploratory, not wired to pipeline/ledger). Verdict: direction sound; two失调. **Owner decision (2026-08-02):** Track B adopted + new prereg (`decisions/ADR-011-track-b-seven-theme-platform.md` + `docs/track-b-preregistration.md` PROPOSED); 挂接③ first slice done. **Pending:** owner freezes config sha256 before real-data. 未触冻结面/ledger/E3；无真实 network/LLM/trial.
 - **round:** Wave-A execution. AUD-05B is closed after authorized re-Review. Dashboard extraction
   and C4 Option A cleanup are committed in `7dede9b`. C1 BLS disable, C2 VIX FRED adapter and C3
