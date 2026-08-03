@@ -1,0 +1,22 @@
+{
+  "schema_version": "trial-intent-v1",
+  "trial_id": "BASELINE-RANK-001",
+  "owner_decision_ref": "2026-08-03 owner approval (all recommendations approved)",
+  "planned_config_sha256": "228179801a905869f971afeb9687a83ca2554c7923d28d4916a6fe8e990571a6",
+  "validation_kind": "purged_cross_fit",
+  "estimand": "rank_ic",
+  "family_id": "baseline-ladder",
+  "parent_trial_id": "frozen Phase B (numeric fundamentals)",
+  "multiplicity": {
+    "n_trials": 2,
+    "n_completed": 0,
+    "n_superseded": 0,
+    "n_failed": 0
+  },
+  "status": "planned",
+  "previous_status": null,
+  "created_at": "2026-08-03T12:52:31.059666+00:00",
+  "updated_at": null,
+  "description": "lambdarank objective (RD-15), rank_bins=5, month-end-sampled panel; 9 frozen cols",
+  "estimand_description": "cross-sectional monthly Spearman rank-IC (CV-proxy)"
+}

@@ -1,0 +1,22 @@
+{
+  "schema_version": "trial-intent-v1",
+  "trial_id": "BASELINE-FF5-001",
+  "owner_decision_ref": "2026-08-03 owner approval (all recommendations approved)",
+  "planned_config_sha256": "0b0b9934b3aa82b5fac86a5b4cde5c71c005ba51dc74010b25175e4c7ad2e9ca",
+  "validation_kind": "purged_cross_fit",
+  "estimand": "rank_ic",
+  "family_id": "baseline-ladder",
+  "parent_trial_id": "frozen Phase B (numeric fundamentals)",
+  "multiplicity": {
+    "n_trials": 2,
+    "n_completed": 0,
+    "n_superseded": 0,
+    "n_failed": 0
+  },
+  "status": "planned",
+  "previous_status": null,
+  "created_at": "2026-08-03T12:52:31.059666+00:00",
+  "updated_at": null,
+  "description": "FF5 daily-factor stock exposures + loading interactions; 18 cols (9 frozen + 9 new)",
+  "estimand_description": "cross-sectional monthly Spearman rank-IC (CV-proxy)"
+}
