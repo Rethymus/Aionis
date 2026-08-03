@@ -26,16 +26,63 @@ it).
 """
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import pandas as pd
 import structlog
 
-from aionis.features.macro_surprise import fetch_alfred_vintages
-
 log = structlog.get_logger()
 
 DFF_SERIES_ID = "DFF"
+
+# FRED ALFRED hard cap: at most 2000 vintage dates per request. DFF is a DAILY
+# series (vintages accrue daily), so a full-history request (realtime_start=2000-01-01
+# ... realtime_end=9999-12-31) exceeds the cap (5093 vintages) and FRED returns 400.
+# The workaround is to SLICE the realtime window per calendar year — each slice is
+# within the cap (verified: 2016/2020/2024 each return ~23-26k observations) — and
+# accumulate. The per-year window must cover every vintage the analysis period needs.
+_DFF_REALTIME_START_YEAR = 2015   # one year before the analysis window (2016+)
+_DFF_REALTIME_END_YEAR = 2026     # current year (2026-08-03)
+
+# FRED page cap (matches aionis.features.macro_surprise._PAGE_LIMIT).
+_DFF_PAGE_LIMIT = 100_000
+
+
+def _download_dff_vintage_year(fred_api_key: str, year: int) -> list[dict]:
+    """One ALFRED observations page (or set of pages) for DFF within a year window.
+
+    FRED rejects a ``realtime_end`` AFTER today's date (400), so the current
+    year's window is clamped to today (the analysis never needs a future
+    vintage anyway — only vintages with ``realtime_start <= today`` exist).
+    """
+    from datetime import datetime, timezone
+
+    from aionis.ingest.universe import _policy_get
+
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    realtime_end = f"{year}-12-31" if year < int(today[:4]) else today
+    url = "https://api.stlouisfed.org/fred/series/observations"
+    observations: list[dict] = []
+    offset = 0
+    while True:
+        params = {
+            "series_id": DFF_SERIES_ID,
+            "api_key": fred_api_key,
+            "file_type": "json",
+            "realtime_start": f"{year}-01-01",
+            "realtime_end": realtime_end,
+            "limit": _DFF_PAGE_LIMIT,
+            "offset": offset,
+        }
+        resp = _policy_get(url, params=params, timeout=60)
+        resp.raise_for_status()
+        rows = resp.json().get("observations", [])
+        observations.extend(rows)
+        offset += len(rows)
+        if len(rows) < _DFF_PAGE_LIMIT:
+            break
+    return observations
 
 
 def fetch_dff_vintages(fred_api_key: str, cache_dir: Path) -> pd.DataFrame:
@@ -43,10 +90,59 @@ def fetch_dff_vintages(fred_api_key: str, cache_dir: Path) -> pd.DataFrame:
 
     Raw ALFRED JSON is cached at ``data/cache/alfred_DFF.json`` (the shared
     ALFRED cache); a cache hit makes no HTTP call.
+
+    DFF is a DAILY FRED series: a single ALFRED request for the full realtime
+    window exceeds FRED's 2000-vintage hard cap (5093 vintages -> HTTP 400).
+    This fetcher therefore SLICES the realtime window per calendar year and
+    accumulates the pages (each slice is within the cap; verified 2016/2020/2024
+    each return ~23-26k observations). The merged payload is cached the same
+    way as the shared ALFRED cache.
     """
-    vintages = fetch_alfred_vintages(DFF_SERIES_ID, fred_api_key, cache_dir)
-    log.info("dff_vintages_loaded", n_obs=len(vintages))
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    cache_file = cache_dir / f"alfred_{DFF_SERIES_ID}.json"
+    if cache_file.exists():
+        payload = json.loads(cache_file.read_text())
+        vintages = _vintages_frame(payload)
+        log.info("dff_alfred_cache_hit", path=str(cache_file), n_obs=len(vintages))
+        return vintages
+
+    observations: list[dict] = []
+    for year in range(_DFF_REALTIME_START_YEAR, _DFF_REALTIME_END_YEAR + 1):
+        obs_year = _download_dff_vintage_year(fred_api_key, year)
+        observations.extend(obs_year)
+        log.info(
+            "dff_alfred_slice_fetched",
+            year=year,
+            n_obs=len(obs_year),
+        )
+    payload = {"observations": observations}
+    cache_file.write_text(json.dumps(payload))
+    vintages = _vintages_frame(payload)
+    log.info("dff_alfred_cache_written", path=str(cache_file), n_obs=len(vintages))
     return vintages
+
+
+def _vintages_frame(payload: dict) -> pd.DataFrame:
+    """Raw ALFRED payload -> [ref_date, realtime_start, value] frame (missing dropped)."""
+    rows = payload.get("observations", [])
+    recs = []
+    for o in rows:
+        value = o.get("value")
+        if value is None or value == ".":
+            continue
+        recs.append(
+            {
+                "ref_date": o["date"],
+                "realtime_start": o["realtime_start"],
+                "value": float(value),
+            }
+        )
+    df = pd.DataFrame(recs)
+    # FRED serializes dates as ISO strings; coerce to datetime64 so the
+    # as-of merge (merge_asof on realtime_start) has matching dtypes.
+    df["ref_date"] = pd.to_datetime(df["ref_date"])
+    df["realtime_start"] = pd.to_datetime(df["realtime_start"])
+    return df
 
 
 def dff_as_of_levels(
