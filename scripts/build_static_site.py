@@ -11,12 +11,12 @@ Run:  uv run python scripts/build_static_site.py
 """
 from __future__ import annotations
 
+import argparse
 import json
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).parent.parent
 SITE_DIR = PROJECT_ROOT / "site"
-SITE_DIR.mkdir(exist_ok=True)
 
 # 真实 headline（Track B 首个差分，config #41/#42，chronological walk-forward 2021-01..2026-06）
 TREATMENT = {"name": "treatment", "sub": "七主题 23 特征 (#41)", "mean": 0.005511,
@@ -48,8 +48,8 @@ ANTI_LEAKAGE = [
 STATUS_STYLE = {"ok": ("已覆盖", "emerald"), "warn": ("延后", "amber"), "todo": ("待挂", "slate")}
 
 
-def _load_ic_series() -> dict | None:
-    path = SITE_DIR / "track_b_data.json"
+def _load_ic_series(site_dir: Path) -> dict | None:
+    path = site_dir / "track_b_data.json"
     if not path.exists():
         return None
     try:
@@ -58,8 +58,8 @@ def _load_ic_series() -> dict | None:
         return None
 
 
-def _load_mount_metrics() -> dict | None:
-    path = SITE_DIR / "mount_metrics.json"
+def _load_mount_metrics(site_dir: Path) -> dict | None:
+    path = site_dir / "mount_metrics.json"
     if not path.exists():
         return None
     try:
@@ -193,10 +193,11 @@ def _antileakage_cards() -> str:
     return "".join(cards)
 
 
-def build() -> Path:
-    ic_data = _load_ic_series()
+def build(site_dir: Path = SITE_DIR) -> Path:
+    site_dir.mkdir(exist_ok=True)
+    ic_data = _load_ic_series(site_dir)
     ic_data_json = json.dumps(ic_data) if ic_data else "null"
-    mount = _load_mount_metrics()
+    mount = _load_mount_metrics(site_dir)
     metrics_section = _metrics_section_html(mount)
     ff5_section = _ff5_section_html(mount)
     ci_crosses_zero = DIFFERENTIAL["ci"][0] < 0 < DIFFERENTIAL["ci"][1]
@@ -398,7 +399,7 @@ if(icData){{
 </script>
 </body></html>"""
 
-    out = SITE_DIR / "index.html"
+    out = site_dir / "index.html"
     out.write_text(html, encoding="utf-8")
     print(f"✅ 构建中文站点（Tailwind 暗色）: {out} ({out.stat().st_size:,} bytes); "
           f"IC 序列: {'已加载' if ic_data else '缺失'}")
@@ -406,4 +407,14 @@ if(icData){{
 
 
 if __name__ == "__main__":
-    build()
+    parser = argparse.ArgumentParser(
+        description="构建 Aionis 静态研究站点（默认 site/；hermetic 测试用 --out-dir）",
+    )
+    parser.add_argument(
+        "--out-dir",
+        type=Path,
+        default=SITE_DIR,
+        help="输出目录（默认 %(default)s；测试传 tmp_path，避免触碰 site/ 工作树）",
+    )
+    args = parser.parse_args()
+    build(args.out_dir)

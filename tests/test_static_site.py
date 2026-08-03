@@ -1,18 +1,18 @@
-"""Hermetic tests for the static site build script.
+"""Hermetic tests for the static site build script (Track B results page).
 
 Tests verify:
-- Build script runs without errors
-- Generated HTML contains all required elements
-- Anti-leakage framing is present (banner, caption, publishability gate)
-- All 5 dimensions are represented
-- At least one chart per dimension (OSS-generated)
-- Deterministic build (same output on re-run)
-- No real-data/ledger/network references leak in
+- Build runs and emits a deterministic HTML file (byte-identical on re-run)
+- Output path/size are reported on stdout
+- Anti-leakage framing is present (EXPLORATORY banner, SESOI gate, 诚实边界)
+- Track B content is present (七主题 / 差分结果 / FF5 / risk metrics)
+- Plotly charts are data-driven via embedded JSON — no runtime network fetch
+- No real-data/ledger paths leak in
+- Hermetic: builds go to a temp out-dir via ``--out-dir``; the real ``site/``
+  working tree is NEVER touched (Track B WIP must not be disturbed).
 """
 
 from __future__ import annotations
 
-import shutil
 import subprocess
 from pathlib import Path
 
@@ -20,14 +20,13 @@ import pytest
 
 # Project root
 PROJECT_ROOT = Path(__file__).parent.parent
-SITE_DIR = PROJECT_ROOT / "site"
 BUILD_SCRIPT = PROJECT_ROOT / "scripts" / "build_static_site.py"
 
 
-def _run_build() -> subprocess.CompletedProcess:
-    """Run build script using uv run to ensure dependencies are available."""
+def _run_build(out_dir: Path) -> subprocess.CompletedProcess:
+    """Run the build script into ``out_dir`` (never the real site/)."""
     return subprocess.run(
-        ["uv", "run", "python", str(BUILD_SCRIPT)],
+        ["uv", "run", "python", str(BUILD_SCRIPT), "--out-dir", str(out_dir)],
         cwd=PROJECT_ROOT,
         capture_output=True,
         text=True,
@@ -35,23 +34,15 @@ def _run_build() -> subprocess.CompletedProcess:
 
 
 @pytest.fixture
-def build_env():
-    """Set up build environment and run the build script."""
-    # Ensure clean state
-    if SITE_DIR.exists():
-        shutil.rmtree(SITE_DIR)
-    SITE_DIR.mkdir(exist_ok=True)
-
-    # Run build
-    result = _run_build()
-
-    return result
+def build_env(tmp_path):
+    """Build the site into tmp_path and return the subprocess result."""
+    return _run_build(tmp_path)
 
 
 @pytest.fixture
-def generated_html(build_env):
-    """Read the generated HTML file."""
-    html_path = SITE_DIR / "index.html"
+def generated_html(tmp_path, build_env):
+    """Read the generated HTML from tmp_path (never site/)."""
+    html_path = tmp_path / "index.html"
     assert html_path.exists(), "index.html should be generated"
     return html_path.read_text(encoding="utf-8")
 
@@ -66,191 +57,120 @@ class TestBuildScript:
     def test_build_output_mentions_path_and_size(self, build_env):
         """Build stdout should mention output path and byte size."""
         stdout = build_env.stdout
-        assert "Built static site:" in stdout
         assert "index.html" in stdout
         assert "bytes" in stdout
 
-    def test_index_html_exists(self):
-        """index.html should exist after build."""
-        assert (SITE_DIR / "index.html").exists()
-
-    def test_index_html_size_reasonable(self):
-        """index.html should be reasonable size (>100KB for embedded base64 PNGs)."""
-        size = (SITE_DIR / "index.html").stat().st_size
-        assert size > 100_000, f"index.html too small: {size} bytes"
-        # Allow up to 2MB since we're embedding base64 PNG images from OSS libraries
-        assert size < 2_000_000, f"index.html too large: {size} bytes"
+    def test_index_html_size_reasonable(self, tmp_path, generated_html):
+        """index.html should be a reasonable size (new Track B page is ~17 KB)."""
+        size = (tmp_path / "index.html").stat().st_size
+        assert 5_000 < size < 2_000_000, f"index.html unexpected size: {size} bytes"
 
 
 class TestAntiLeakageFraming:
     """Test anti-leakage framing is present."""
 
     def test_exploratory_banner_present(self, generated_html):
-        """EXPLORATORY/DEMONSTRATIVE banner should be prominent."""
-        assert "EXPLORATORY" in generated_html
-        assert "DEMONSTRATIVE DATA" in generated_html
-        assert "not a conclusion" in generated_html
-        assert "not investment advice" in generated_html
+        """EXPLORATORY banner should be prominent."""
+        assert "探索性" in generated_html
+        assert "非投资建议" in generated_html
+        assert "null 是预期可发表成果" in generated_html
 
-    def test_preliminary_caption_present(self, generated_html):
-        """'Preliminary data' caption should appear per dimension."""
-        # Count occurrences — should appear once per dimension
-        caption_count = generated_html.count("Preliminary data — demonstrates the method")
-        assert caption_count == 5, f"Expected 5 preliminary captions, found {caption_count}"
-
-    def test_publishability_gate_visible(self, generated_html):
-        """Publishability gate (0.015) should be visible."""
-        assert "0.015" in generated_html
-        assert "publishability" in generated_html.lower()
-        assert "CI half-width" in generated_html
+    def test_sesoi_gate_present(self, generated_html):
+        """SESOI / publishability gate should be visible."""
+        assert "SESOI" in generated_html
+        assert "0.010" in generated_html
+        assert "不构成严格等价" in generated_html
 
     def test_no_real_results_claimed(self, generated_html):
-        """HTML should not claim real results or conclusions."""
-        # Check for anti-leakage language
-        assert "demonstrat" in generated_html.lower()  # demonstrative, demonstrates
-        assert "synthetic" in generated_html.lower()
-        assert "seed=0" in generated_html
+        """HTML should not claim real conclusions — 诚实边界 marks what is NOT proven."""
+        assert "不证明" in generated_html
+        assert "可写" in generated_html
 
     def test_no_ledger_or_real_data_paths(self, generated_html):
         """No references to runs/ledger.jsonl or real data paths."""
         assert "runs/ledger.jsonl" not in generated_html
         assert "runs/results/" not in generated_html
-        assert "data/" not in generated_html or "data/cache" not in generated_html
+        assert "data/cache" not in generated_html
 
 
-class TestDimensionCoverage:
-    """Test all 5 dimensions are present with OSS-generated charts."""
+class TestTrackBContent:
+    """Test the Track B results page content is present."""
 
-    def test_dimension_1_fit_quality_present(self, generated_html):
-        """Dimension 1: Fit Quality should be present (alphalens output)."""
-        assert "Fit Quality" in generated_html or "fit-quality" in generated_html
-        assert "拟合质量" in generated_html
+    def test_seven_themes_matrix_present(self, generated_html):
+        """Seven-theme coverage matrix should be present."""
+        assert "七主题覆盖矩阵" in generated_html
+        assert "新闻情绪" in generated_html
+        assert "FINSABER" in generated_html
 
-    def test_dimension_2_volatility_present(self, generated_html):
-        """Dimension 2: Volatility Structure should be present (pyfolio-style output)."""
-        assert "Volatility" in generated_html or "volatility" in generated_html
-        assert "波动结构" in generated_html
+    def test_differential_result_present(self, generated_html):
+        """The first headline differential (treatment − price-only) should be shown."""
+        assert "差分" in generated_html
+        assert "treatment" in generated_html
+        assert "price-only" in generated_html
+        assert "#41" in generated_html
+        assert "#42" in generated_html
 
-    def test_dimension_3_evolution_present(self, generated_html):
-        """Dimension 3: Curve Evolution should be present (quantstats tearsheet)."""
-        assert "Evolution" in generated_html or "evolution" in generated_html
-        assert "曲线演化" in generated_html
+    def test_anti_leakage_discipline_present(self, generated_html):
+        """Anti-leakage discipline items should be listed."""
+        assert "config_committed" in generated_html
+        assert "PIT 数据" in generated_html
+        assert "chronological walk-forward" in generated_html
+        assert "H6 确定性" in generated_html
 
-    def test_dimension_4_event_study_present(self, generated_html):
-        """Dimension 4: Event Study should be present (Brown & Warner CAR)."""
-        assert "Event Study" in generated_html or "event-study" in generated_html
-        assert "事件前后差异" in generated_html
+    def test_ff5_and_risk_metrics_sections(self, generated_html):
+        """FF5 residual + risk-metrics sections (mount placeholders) should be present."""
+        assert "FF5" in generated_html
+        assert "mount_metrics.json" in generated_html
 
-    def test_dimension_5_uncertainty_present(self, generated_html):
-        """Dimension 5: Uncertainty should be present (empyrical KPIs + plots)."""
-        assert "Uncertainty" in generated_html or "uncertainty" in generated_html
-        assert "不确定性" in generated_html
+    def test_honest_boundary_present(self, generated_html):
+        """The honest-boundary section should be present."""
+        assert "诚实边界" in generated_html
 
-    def test_oss_charts_present(self, generated_html):
-        """OSS-generated charts should be embedded as base64 PNGs."""
-        # At least one embedded image per dimension (5 total minimum)
-        png_count = generated_html.count("data:image/png;base64")
-        assert png_count >= 5, f"Expected at least 5 OSS-generated PNG charts, found {png_count}"
-
-    def test_oss_libraries_mentioned(self, generated_html):
-        """Footer should mention the OSS libraries used."""
-        assert "quantstats" in generated_html.lower()
-        assert "alphalens" in generated_html.lower()
-        assert "pyfolio" in generated_html.lower()
-        # Note: Using quantstats.stats for KPI metrics instead of empyrical
-
-
-class TestChartSnippets:
-    """Test specific OSS-generated chart markers are present."""
-
-    def test_dimension_1_charts_present(self, generated_html):
-        """Dimension 1 should have embedded PNG charts (alphalens output)."""
-        # Check for base64-encoded PNG images
-        assert "data:image/png;base64" in generated_html
-        # Should have at least 2 alphalens tearsheet charts
-        png_count = generated_html.count("data:image/png;base64")
-        assert png_count >= 2, f"Expected at least 2 PNG charts from alphalens, found {png_count}"
-
-    def test_dimension_2_charts_present(self, generated_html):
-        """Dimension 2 should have embedded PNG charts (pyfolio-style)."""
-        # Drawdown and rolling volatility charts
-        assert "Drawdown" in generated_html or "drawdown" in generated_html.lower()
-        assert "Rolling Volatility" in generated_html or "rolling vol" in generated_html.lower()
-
-    def test_dimension_3_tearsheet_present(self, generated_html):
-        """Dimension 3 should have quantstats tearsheet HTML embedded."""
-        # Quantstats tearsheet markers
-        assert "tearsheet" in generated_html.lower() or "Tearsheet" in generated_html
-        # Check for quantstats-specific CSS/classes
-        assert "qs" in generated_html.lower() or "quantstats" in generated_html.lower()
-
-    def test_dimension_4_car_chart_present(self, generated_html):
-        """Dimension 4 should have CAR chart with methodology citation."""
-        # The CAR chart may have different labels, check for methodology citation
-        assert "Brown & Warner" in generated_html
-        # Check for event study content
-        assert "Event Study" in generated_html or "Event" in generated_html
-
-    def test_dimension_5_kpi_and_charts_present(self, generated_html):
-        """Dimension 5 should have KPI tiles + uncertainty charts."""
-        # KPI tiles
-        assert "kpi-tiles" in generated_html or "kpi-tile" in generated_html
-        assert "Max Drawdown" in generated_html or "drawdown" in generated_html.lower()
-        assert "Sharpe" in generated_html
-        # CI half-width chart with publishability gate
-        assert "CI" in generated_html and "half" in generated_html.lower()
-        # Check for at least 7 charts total across all dimensions
-        png_count = generated_html.count("data:image/png;base64")
-        assert png_count >= 7, f"Expected at least 7 OSS-generated charts, found {png_count}"
+    def test_data_driven_plotly_charts(self, generated_html):
+        """Plotly charts should be data-driven via embedded JSON (no static PNGs)."""
+        assert "Plotly.newPlot" in generated_html
+        assert "icData" in generated_html
 
 
 class TestDeterminism:
-    """Test build is deterministic."""
+    """Test build is deterministic (H6)."""
 
-    def test_build_is_deterministic(self):
-        """Two builds should produce identical or section-count-stable output."""
-        # First build
-        if SITE_DIR.exists():
-            shutil.rmtree(SITE_DIR)
-        SITE_DIR.mkdir(exist_ok=True)
+    def test_build_is_deterministic(self, tmp_path):
+        """Two builds into the same out-dir should be byte-identical."""
+        _run_build(tmp_path)
+        first_build = (tmp_path / "index.html").read_bytes()
+        _run_build(tmp_path)
+        second_build = (tmp_path / "index.html").read_bytes()
+        assert first_build == second_build
 
-        _run_build()
-        first_build = (SITE_DIR / "index.html").read_bytes()
-
-        # Second build
-        shutil.rmtree(SITE_DIR)
-        SITE_DIR.mkdir(exist_ok=True)
-
-        _run_build()
-        second_build = (SITE_DIR / "index.html").read_bytes()
-
-        # Check exact byte-for-byte identical
-        if first_build != second_build:
-            # Fallback: check that key markers are identical (search in bytes)
-            first_markers = first_build.count(b"data:image/png;base64")
-            second_markers = second_build.count(b"data:image/png;base64")
-            assert first_markers == second_markers, "Chart count should be stable"
-
-    def test_seed_pinned_for_determinism(self):
-        """Build script should use seed=0 for determinism."""
-        build_script_content = (BUILD_SCRIPT).read_text(encoding="utf-8")
-        assert "seed=0" in build_script_content or "seed = 0" in build_script_content
+    def test_no_randomness_sources(self):
+        """Build script must not use randomness or wall-clock time."""
+        content = (BUILD_SCRIPT).read_text(encoding="utf-8")
+        assert "seed=0" in content or "seed = 0" in content
+        assert "import random" not in content
+        assert "import datetime" not in content
 
 
-class TestTabNavigation:
-    """Test client-side tab navigation works."""
+class TestChartsAndScripts:
+    """Test chart libraries and the no-network-fetch discipline."""
 
-    def test_tab_buttons_present(self, generated_html):
-        """Tab buttons for all 5 dimensions should be present."""
-        # Count buttons with data-tab attribute (more flexible than class)
-        tab_count = generated_html.count('data-tab="')
-        assert tab_count == 5, f"Expected 5 tab buttons, found {tab_count}"
+    def test_plotly_and_tailwind_cdn_present(self, generated_html):
+        """Tailwind (styling) + plotly (charts) are loaded via CDN scripts."""
+        assert "https://cdn.tailwindcss.com" in generated_html
+        assert "https://cdn.plot.ly/plotly-2.35.2.min.js" in generated_html
 
-    def test_tab_javascript_present(self, generated_html):
-        """Client-side JS for tab switching should be present."""
-        assert "addEventListener('click'" in generated_html
-        assert "classList.add('active')" in generated_html
-        assert "classList.remove('active')" in generated_html
+    def test_no_runtime_network_fetch(self, generated_html):
+        """No runtime network fetch — all data is embedded at build time."""
+        assert "fetch(" not in generated_html
+        assert "XMLHttpRequest" not in generated_html
+        assert "axios" not in generated_html
+
+    def test_no_secrets_or_api_keys(self, generated_html):
+        """No API keys or secrets should be in the generated HTML."""
+        assert "api_key" not in generated_html.lower()
+        assert "apikey" not in generated_html.lower()
+        assert "api-key" not in generated_html.lower()
+        assert "secret" not in generated_html.lower()
 
 
 class TestHtmlStructure:
@@ -273,52 +193,3 @@ class TestHtmlStructure:
         """Viewport meta tag for responsive design should be present."""
         assert "viewport" in generated_html
         assert "width=device-width" in generated_html
-
-    def test_css_included(self, generated_html):
-        """Inline CSS should be present for styling."""
-        assert "<style>" in generated_html
-        assert "</style>" in generated_html
-
-
-class TestSecurity:
-    """Test security and safety constraints."""
-
-    def test_no_secrets_or_api_keys(self, generated_html):
-        """No API keys or secrets should be in the generated HTML."""
-        # Check for common API key patterns
-        assert "api_key" not in generated_html.lower()
-        assert "apikey" not in generated_html.lower()
-        assert "api-key" not in generated_html.lower()
-        assert "secret" not in generated_html.lower()
-
-    def test_no_external_network_requests(self, generated_html):
-        """No external network requests — all images are embedded base64."""
-        # Check that images are embedded as base64, not external URLs
-        assert "data:image/png;base64" in generated_html
-        # Note: quantstats tearsheet HTML may contain some references to external
-        # CSS/fonts, but all chart content is embedded as base64 images
-
-
-class TestCompleteness:
-    """Test all charts from design doc are present (OSS-generated)."""
-
-    def test_all_oss_charts_present(self, generated_html):
-        """Verify all chart types from OSS libraries are embedded."""
-        # Dimension 1 (alphalens): information + returns tearsheets
-        # Dimension 2 (pyfolio-style): drawdown + rolling vol
-        # Dimension 3 (quantstats): full tearsheet HTML
-        # Dimension 4 (event study): CAR plot
-        # Dimension 5 (empyrical + custom): KPIs + CI bar + forest + bootstrap
-
-        # Check for embedded base64 images (OSS matplotlib output)
-        png_count = generated_html.count("data:image/png;base64")
-        assert png_count >= 7, f"Expected at least 7 OSS-generated charts, found {png_count}"
-
-        # Check for quantstats tearsheet HTML
-        assert "tearsheet-container" in generated_html or "Tearsheet" in generated_html
-
-        # Check for KPI tiles (Dimension 5)
-        assert "kpi-tiles" in generated_html or "kpi-tile" in generated_html
-
-        # Check for Brown & Warner methodology citation (Dimension 4)
-        assert "Brown & Warner" in generated_html
