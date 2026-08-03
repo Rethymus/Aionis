@@ -1,5 +1,23 @@
 # state/handoff.md — current-pass handoff
 
+- **2026-08-03 `/goal` batch 8 — BASELINE-FF5-001 + BASELINE-RANK-001 EXECUTED (COMMITTED `104b21e`):**
+  owner authorized real-data execution ("全部approved"). Both baselines now have REAL CV-proxy results:
+  - **BASELINE-FF5-001** (sig `0b0b9934…`, 18 cols: 9 frozen + 9 FF5 exposures; `beta_dff`/`beta_dff_x_lev`
+    excluded by RD-13: 42 CONSTANT months 2024-08+ — rate-plateau): **mean_IC=0.0106, ci_half=0.0196,
+    t_hac=1.059, n_months=125; H6=True**.
+  - **BASELINE-RANK-001** (sig `22817980…`, lambdarank/rank_bins=5, month-end-sampled panel,
+    analysis_start=2015-08-01): **mean rank-IC=0.015420, ci_half=0.014870, t_hac=2.0323, p_hac=0.0421,
+    n_months=125; H6=True**.
+  Both EXPLORATORY CV-proxy only; config_committed ledger rows appended BEFORE results (2 RES-02 + 2 RES-03 rows).
+  **Fixes surfaced by real runs**: (1) RES-02 SIG_ONLY mode (exit before OOS) + analysis window
+  2015-08-01 (DFF vintages begin 2015-01-01; owner decision option A) + month_ends pre-window;
+  (2) features/ff5.py beta_dff NaN no longer contaminates FF5 5-factor betas (independent OLS masks);
+  (3) RES-03 month-end sampling (RD-15 group=query-month ~500 rows, not ~11,300 — LightGBM 10k/group cap)
+  + folds on month-end panel via two_arm._folds_from_panel + config-driven analysis_start;
+  (4) RES-03 _require_owner_commit ledger gate. Full suite exit 0; ruff clean.
+  **Data acquisitions**: FF5 daily snapshot frozen (`ccf509fb…`, 15833 rows) + DFF ALFRED vintages
+  293,510 rows (2015→2026, sharded yearly — FRED 2000-vintage cap workaround).
+  **NOT yet done**: evals/trials registry entries for both trials; RES-08/RES-10 (owner gold-set annotation).
 - **2026-08-03 `/goal` batch 7 — E3 Slice 7 E2E + AUD-06 contract freeze (COMMITTED `0f94620`):**
   closed the final E3 code gap. `tests/test_forward_e2e.py` (NEW, 290 lines, 2 tests) wires the full
   hermetic chain on labeled synthetic fixtures in tmp_path: COMMIT (Slice 3d, long-scores both arms,
