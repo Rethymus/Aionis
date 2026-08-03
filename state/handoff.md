@@ -1,5 +1,21 @@
 # state/handoff.md — current-pass handoff
 
+- **2026-08-03 `/goal` batch 6 — RES-02 + RES-03 EXECUTED via 2 worktree-isolated agents (COMMITTED
+  + pushed, `825658b`):** owner authorized execution ("授权你继续执行"). **2 sonnet agents in isolated
+  git worktrees** (the correct "各自推进/不影响各自进程" mechanism — no writer race, no Track-B WIP
+  conflict), each delivered INLINE this time. Merged into main; both exploratory baselines PREPARED but
+  NOT registered (runners refuse to run until the owner's `config_committed` ledger row exists):
+  - **RES-02 (BASELINE-FF5-001)**: ff5.py ingest (bulk-ZIP, sha256 snapshot, ≥2s politeness) + macro_dff.py
+    (ALFRED vintage, strictly-before as-of) + features/ff5.py (stock-specific rolling exposures +
+    interactions, RD-13 gate) + runner (aborts without owner ledger row) + config (20 cols) + 41 tests.
+  - **RES-03 (BASELINE-RANK-001)**: learner.py rank-aware branch enforcing frozen RD-15 enum
+    (validate_objective("lambdarank"); "regression" branch untouched) + runner (frozen chain
+    construct_month_groups→…→fit_predict_rank) + config + 15 tests. `ranking_contract.py` 0-diff.
+  - **Full hermetic suite: 1408 passed / 0 failed** (+56 new tests); ruff clean; ledger 0 diff; no
+    frozen surface touched; no real data run. docs: data-intake-french-ff5.md (7-gate, owner 签注
+    PENDING) + baseline-ladder{,-ff5,-rank}.md (index + per-baseline, conflict-merged).
+  - **Both baselines now await: owner authorization + `config_committed` ledger row before any OOS
+    metric.**
 - **2026-08-03 `/goal` batch 5 — RES specs rewritten via 4 parallel agents (COMMITTED + pushed, `2f87970`):**
   executed approved D5 (RES restart) the RIGHT way this time: **4 sonnet agents dispatched in 2 batches of
   2 (≤2 concurrent proxy cap), file-isolated (each writes only its own task file — parallel without the
