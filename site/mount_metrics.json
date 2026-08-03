@@ -1,0 +1,66 @@
+{
+  "treatment": {
+    "tearsheet": {
+      "model": {
+        "annual_return": 0.18917386344791276,
+        "annual_volatility": 0.21456687882067654,
+        "sharpe_ratio": 0.9175881215021677,
+        "sortino_ratio": 1.6445039505814711,
+        "max_drawdown": -0.1943796288332706,
+        "calmar_ratio": 0.9732185650492055,
+        "omega_ratio": null
+      },
+      "ew": {
+        "annual_return": 0.1202258919252368,
+        "annual_volatility": 0.1611821251070977,
+        "sharpe_ratio": 0.7868588982883732,
+        "sortino_ratio": 1.3106350245507825,
+        "max_drawdown": -0.16759120535536265,
+        "calmar_ratio": 0.7173759009030827,
+        "omega_ratio": null
+      },
+      "diff": {
+        "annual_return": 0.06894797152267595,
+        "annual_volatility": 0.05338475371357884,
+        "sharpe_ratio": 0.13072922321379454,
+        "sortino_ratio": 0.33386892603068863,
+        "max_drawdown": -0.02678842347790794,
+        "calmar_ratio": 0.2558426641461228,
+        "omega_ratio": null
+      }
+    },
+    "ff5": null
+  },
+  "price_only": {
+    "tearsheet": {
+      "model": {
+        "annual_return": 0.1687309033371902,
+        "annual_volatility": 0.21974457484514878,
+        "sharpe_ratio": 0.8204338847241586,
+        "sortino_ratio": 1.4811494997340058,
+        "max_drawdown": -0.23495087996191483,
+        "calmar_ratio": 0.7181539535605963,
+        "omega_ratio": null
+      },
+      "ew": {
+        "annual_return": 0.1202258919252368,
+        "annual_volatility": 0.1611821251070977,
+        "sharpe_ratio": 0.7868588982883732,
+        "sortino_ratio": 1.3106350245507825,
+        "max_drawdown": -0.16759120535536265,
+        "calmar_ratio": 0.7173759009030827,
+        "omega_ratio": null
+      },
+      "diff": {
+        "annual_return": 0.0485050114119534,
+        "annual_volatility": 0.05856244973805108,
+        "sharpe_ratio": 0.03357498643578538,
+        "sortino_ratio": 0.17051447518322327,
+        "max_drawdown": -0.06735967460655218,
+        "calmar_ratio": 0.0007780526575136282,
+        "omega_ratio": null
+      }
+    },
+    "ff5": null
+  }
+}
