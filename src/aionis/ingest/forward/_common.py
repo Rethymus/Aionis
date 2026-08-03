@@ -265,6 +265,11 @@ def persist_snapshot(
     raw_path, digest = archive_raw(cdir, dataset, snapshot_ts, raw_payload)
     cumulative = cdir / f"{dataset}.parquet"
     append_cumulative_parquet(cumulative, frame)
+    if runs_dir is None:
+        # Real-ledger production path: the persist tail writes to the REAL
+        # runs/ledger.jsonl. Log a warning so an accidental None (intended for
+        # a hermetic test scratch dir) cannot silently hit the real ledger.
+        log.warning("forward_persist_real_ledger", dataset=dataset, snapshot_ts=snapshot_ts)
     extra: dict[str, object] = dict(extra_ledger_fields or {})
     extra["n_rows"] = int(len(frame))
     append_data_ingest_ledger(
