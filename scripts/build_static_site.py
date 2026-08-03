@@ -138,9 +138,9 @@ def _ff5_section_html(mount: dict | None) -> str:
     rows += [(lbl, f"{tf[k]:+.2f}", f"{pf[k]:+.2f}") for k, lbl in betas]
     rows.append(("R²", f"{tf['r_squared']:.3f}", f"{pf['r_squared']:.3f}"))
     body = "".join(
-        f"<tr class='border-b border-slate-800'><td class='py-2 px-3 font-medium text-slate-100'>{l}</td>"
+        f"<tr class='border-b border-slate-800'><td class='py-2 px-3 font-medium text-slate-100'>{lbl}</td>"
         f"<td class='py-2 px-3 text-blue-300'>{tv}</td><td class='py-2 px-3 text-slate-300'>{pv}</td></tr>"
-        for l, tv, pv in rows
+        for lbl, tv, pv in rows
     )
     return (
         '<div class="bg-amber-500/10 border border-amber-500/30 rounded-lg p-2 mb-3 text-xs text-amber-300">'
