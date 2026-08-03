@@ -125,18 +125,16 @@ def collect_macro_forward(
     # I3 leakage gate (defensive post-condition; the window filter already excluded future pubs).
     _common.assert_forward_clock(frame, _EVENT_TS_COL, snapshot_ts)
 
-    raw_path, digest = _common.archive_raw(cdir, DATASET, snapshot_ts, raw_payload)
-    cumulative = cdir / f"{DATASET}.parquet"
-    _common.append_cumulative_parquet(cumulative, frame)
-    _common.append_data_ingest_ledger(
+    _common.persist_snapshot(
+        cdir,
         runs_dir,
         dataset=DATASET,
         snapshot_ts=snapshot_ts,
-        data_sha256=digest,
+        raw_payload=raw_payload,
+        frame=frame,
         source=SOURCE,
         license=LICENSE,
-        series=list(macro_surprise.SERIES_FOR_EVENT_TYPE.keys()),
-        n_rows=int(len(frame)),
+        extra_ledger_fields={"series": list(macro_surprise.SERIES_FOR_EVENT_TYPE.keys())},
     )
     log.info(
         "forward_macro_collected",

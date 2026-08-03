@@ -238,6 +238,48 @@ def append_data_ingest_ledger(
 
 
 # ---------------------------------------------------------------------------
+# shared forward-collector persist tail (archive + cumulative + ledger)
+# ---------------------------------------------------------------------------
+
+
+def persist_snapshot(
+    cdir: Path,
+    runs_dir: Path | str | None,
+    *,
+    dataset: str,
+    snapshot_ts: str,
+    raw_payload: dict,
+    frame: pd.DataFrame,
+    source: str,
+    license: str,
+    extra_ledger_fields: dict[str, object] | None = None,
+) -> tuple[Path, str]:
+    """Shared forward-collector tail: archive raw + append cumulative + ledger row.
+
+    DRYs the identical archive→cumulative→ledger sequence used by the three
+    forward collectors (13D / macro / 8-K). Returns ``(raw_path, digest)`` so the
+    caller may log them. ``extra_ledger_fields`` carries per-collector specifics
+    (e.g. ``n_tickers`` / ``series``); ``n_rows`` is appended LAST to preserve the
+    original per-collector ledger key order (byte-identical ledger output, H6).
+    """
+    raw_path, digest = archive_raw(cdir, dataset, snapshot_ts, raw_payload)
+    cumulative = cdir / f"{dataset}.parquet"
+    append_cumulative_parquet(cumulative, frame)
+    extra: dict[str, object] = dict(extra_ledger_fields or {})
+    extra["n_rows"] = int(len(frame))
+    append_data_ingest_ledger(
+        runs_dir,
+        dataset=dataset,
+        snapshot_ts=snapshot_ts,
+        data_sha256=digest,
+        source=source,
+        license=license,
+        **extra,
+    )
+    return raw_path, digest
+
+
+# ---------------------------------------------------------------------------
 # I3 leakage gate — the monotonic-forward clock
 # ---------------------------------------------------------------------------
 
@@ -284,5 +326,6 @@ __all__ = [
     "archive_raw",
     "append_cumulative_parquet",
     "append_data_ingest_ledger",
+    "persist_snapshot",
     "assert_forward_clock",
 ]

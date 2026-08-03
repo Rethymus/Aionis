@@ -138,12 +138,8 @@ def collect_8k_forward(
     snapshot_ts = _common.canonical_snapshot_ts(snapshot_ts)
     cdir = _common.cache_dir(cache_dir)
 
-    if cik_override is not None:
-        cmap = cik_override
-        keyfn = str.upper
-    else:
-        cmap = fundamentals.cik_map(cdir)
-        keyfn = str.upper
+    keyfn = str.upper
+    cmap = cik_override if cik_override is not None else fundamentals.cik_map(cdir)
 
     raw_payload: dict[str, list[dict]] = {}
     rows: list[dict] = []
@@ -184,18 +180,16 @@ def collect_8k_forward(
     # I3 leakage gate (defensive post-condition; the slice already filtered).
     _common.assert_forward_clock(frame, _EVENT_TS_COL, snapshot_ts)
 
-    raw_path, digest = _common.archive_raw(cdir, DATASET, snapshot_ts, raw_payload)
-    cumulative = cdir / f"{DATASET}.parquet"
-    _common.append_cumulative_parquet(cumulative, frame)
-    _common.append_data_ingest_ledger(
+    _common.persist_snapshot(
+        cdir,
         runs_dir,
         dataset=DATASET,
         snapshot_ts=snapshot_ts,
-        data_sha256=digest,
+        raw_payload=raw_payload,
+        frame=frame,
         source=SOURCE,
         license=LICENSE,
-        n_tickers=len(tickers),
-        n_rows=int(len(frame)),
+        extra_ledger_fields={"n_tickers": len(tickers)},
     )
     log.info(
         "forward_8k_collected",
