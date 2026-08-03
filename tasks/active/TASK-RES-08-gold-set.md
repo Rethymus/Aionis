@@ -1,7 +1,8 @@
 # RES-08 — LLM-extractor eval: human gold-set construction (M; owner-gated)
 
 - 编号: RES-08
-- 状态: **REWRITTEN 2026-08-03 — 5-stage durable gold-set; ready for owner authorization**
+- 状态: **STAGE 1 COMPLETE (2026-08-03) — schema 契约核对通过 (22 tests green, e3-causal-gold-v1 frozen);
+  STAGE 2 (sample) 需 owner 审阅样本池; STAGE 3-5 (annotation/adjudication/freeze) 需 owner 亲自标注**
 - Priority: **P2**（审计 §11 P2 后续研究方向；§7 LLM 贡献与成本审计）
 - Size: **M**（人工标注数据集构建；4-6 周工作量；需 owner 亲自参与）
 - Risk: **HIGH**（人工标注质量决定 LLM ablation 可信度；无 gold set 无法评估）
