@@ -1,5 +1,31 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-08-04 Track C 联合 US-CN 折叠估计量（confirmatory machinery；exploratory 走通中）
+
+owner 授权"按推荐方式处理 + 难度分层派 agent + 并行不互扰 + 冲突最高价值优先 + 结果不乐观再调整重测"。**边界**：null-favored，"不乐观"= 工程/测试 bug 迭代修复，**非** rerun-to-significance（若现 rescue 诱惑则交 owner）。
+
+**双车道并行（文件隔离）**：
+- **Lane A（sonnet `general-purpose`，后台）→ [1210] 死，orchestrator(opus) 直接接手完成**：`reports/design/2026-08-04-shenwan-meso-7gate.md`。**裁定：CN 申万 meso via baostock = G3 结构性 fail（无 as-of/vintage，SWFC 回填，同 baostock-基本面先例）→ 快照冻结 + exploratory-only，不进 confirmatory headline**。**关键后果：confirmatory meso = US-only（SIC），= 当前实现状态，正式化为 spec-faithful config；不需 CN 申万 fetch**。本会话早先「3-layer US-only-meso 双区 conditional-IC null」即 spec-faithful exploratory 结果。正式化需 owner 在新 ledger 行修订 §1.1（meso=US-only for confirmatory；CN 申万 exploratory）。
+- **Lane B（opus = 我，会话内）**：联合折叠估计量设计 + 实现（slop 高危件，本会话 agent 翻车 3 次同类）。
+
+**Lane B 已交付 + 验证（未 commit）**：
+- `reports/design/2026-08-04-track-c-joint-fold-spec.md`（设计 spec；D1 区域-月 group / D2 区域内 IC 等权联合 / D3 per-region 时序断言 / D4 regime as-of 月末 / D5 共享 10 price 特征；7 项 owner-decision 旗标 Q1-Q5）。
+- `src/aionis/eval/track_c_joint.py`：`fit_track_c_joint` + `build_joint_panel` + `construct_region_month_groups`（D1）+ per-region 时序断言。核心洞察：**month-end 采样 + 日历月折边界 = per-region 21-session embargo 自动满足**（相邻月末 ≈ 21 sessions/区），无需逐区数交易日 → `cv.py`/`purgedcv` 0 改动。
+- `tests/test_track_c_joint.py`：9 反退化测试（区域-月 group、build_joint_panel 双区+窗口、per-region 时序断言抓违反、月末逐区采样幂等、单区拒绝、**e2e H6 bit-identical 双跑**、combined_ic=区域 IC 等权）。**9/9 绿**。
+- `scripts/track_c_joint_run.py`：exploratory runner（PHASE_C_NO_LEDGER；产出 `runs/track_c_joint_*` gitignored）。
+- **验证**：`tests/test_track_c_joint.py` 9/9 ✓；全套 hermetic pytest **exit 0**（无回归）；`ruff check` 全清。
+
+**Lane B 待最后一块证据**：真实 US(`track_b_panel`,日频,588) + CN(`cn_price_panel`,月末,929) 联合跑（`scripts/track_c_joint_run.py`，后台 PID 486143，100% CPU 训练中，~67 expanding folds × 500 树）。产出 = machinery 在真实数据上的集成证明（**非 confirmatory 判读**，NO ledger）。
+
+**关键设计决策（confirmatory 前需 owner 签注，spec §7 Q1-Q5）**：
+- Q1 lambdarank group = **区域-月**（D1，币种干净；#46 未冻结 group 构造）。
+- Q2 联合 IC = 区域内 IC 等权（D2）。
+- Q3 confirmatory feature_cols = 全 #46 54 列（exploratory 用共享 10 price）。
+- Q4 meso（依赖 Lane A 裁定）。
+- Q5 confirmatory 跑 = owner GO + 新 ledger 行。
+
+**0 冻结面/ledger/prereg/ADR 改动**；纯新建文件 + state。未观察 confirmatory rank-IC 结论；未触 E3。
+
 ## 2026-08-04 Track C conditional-IC（3-layer regime，null）— 会话 culmination
 
 meso 3rd 层完成（`33b5cfb`，US SIC=EDGAR 公共域 `phase_d_sic_map.parquet` 588 tickers；CN 申万 baostock `ENABLE_CN_FETCH=1` 门控默认 off → meso 现 US-only，sha256 `e9f30d94`）。composite builder 升级 3-layer（`f7c5789`，sha256 `0cb7409e`，3021 日/valid 2592）。

@@ -35,6 +35,7 @@ data/
 # --- Run artifacts (regenerable). The append-only ledger IS tracked. ---
 runs/results/
 runs/*.log
+runs/*.json
 runs/health_*.json
 
 # --- Tooling caches / coverage ---
