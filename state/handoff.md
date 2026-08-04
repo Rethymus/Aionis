@@ -24,7 +24,15 @@ owner 授权"按推荐方式处理 + 难度分层派 agent + 并行不互扰 + �
 - Q4 meso（依赖 Lane A 裁定）。
 - Q5 confirmatory 跑 = owner GO + 新 ledger 行。
 
-**0 冻结面/ledger/prereg/ADR 改动**；纯新建文件 + state。未观察 confirmatory rank-IC 结论；未触 E3。
+**Lane C 独立 review 结果（agent 车道失败 → 确定性自审 + 披露）**：`jointfold-review`（sonnet）2 次 idle-without-verdict（[1210] proxy 日，agent 车道不稳：Lane A 死、Lane C idle）。按 WORKFLOW §17（2 次相同失败 → stop）+ §8（从 repo 状态恢复，勿信 worker prose），停重试，改**确定性自审**（opus 自审 + grep 核验关键接线 + 测试/真实跑证据），**独立性局限明示**：
+- **I1 per-region 时序**：`_assert_per_region_chronological`（track_c_joint.py:359）在折循环内、`splits.append`（:360）前调用，无 try/except 包裹 → 不可跳过 ✓（grep 核验）。
+- **I2 train-only binner**：`fit_monthly_bins(train_returns=...)`（:382-383）仅喂 train ✓。
+- **I5 region-month group**：`(y*12+m)*2+code`（:111），us/cn 分离 ✓。
+- **测试实质性**：e2e fixture 70 月×50 ticker+signal 0.3+`check_exact=True`（H6 严格）→ 非化妆品测试 ✓。
+- **证据**：9/9 反退化测试 + 全套 pytest exit 0 + 真实跑非退化（score std 0.508）双区正确 shape。
+- **Verdict**：machinery 确定性验证通过（self-audit + tests + real run）。**独立性局限**：非真正独立 pass（agent 车道 [1210] 失败）；proxy 恢复后可补独立 review。2 个 LOW note（e2e 未 assert IC>0；per-region assert 对单边缺席区域 skip——真实数据两区恒在，不影响）。
+
+**边界**：本轮纯新建文件 + state；0 冻结面/ledger/prereg/ADR 改动；未观察 confirmatory rank-IC 结论；未触 E3。
 
 ## 2026-08-04 Track C conditional-IC（3-layer regime，null）— 会话 culmination
 
