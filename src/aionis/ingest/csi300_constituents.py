@@ -1,0 +1,244 @@
+"""CSI300 PIT historical constituents ingestion via index-constitution (MIT).
+
+Track C S0 universe source for CSI300 cross-sectional membership.
+
+This module provides point-in-time CSI300 constituents from the
+`index-constitution` PyPI package (MIT license, Python 3.13 compatible).
+Data is embedded in the package (no runtime HTTP), sourced from official
+CSIndex (csindex.com.cn) announcements.
+
+G3 no-revision contract: index composition announcements are immutable
+historical facts (like EDGAR filings). Once announced, a constituent
+addition/removal is fixed. The `index-constitution` package embeds a
+snapshot of this reconstruction; version changes = new ledger row.
+
+G6 survivorship: the CSV includes `opt-out` dates for delisted/removed
+stocks. `constituents_on(t)` returns membership AS-OF date t (reconstructed
+from historical announcements), NOT a today-snapshot.
+
+Lazy import: index-constitution is intentionally NOT a core dependency.
+Activate with `uv add index-constitution` before the first real pull
+(MIT license, Python 3.13 compatible). Tests mock the module via `sys.modules`.
+
+7-gate intake: `docs/data-intake-csi300-constituents.md` (PROPOSED, PASS).
+"""
+from __future__ import annotations
+
+from pathlib import Path
+from typing import Any
+
+import pandas as pd
+import structlog
+
+from aionis.config import settings
+
+log = structlog.get_logger()
+
+# Expected columns from index-constitution CSV
+_CSV_COLUMNS = ["symbol", "name", "opt-in", "opt-out"]
+_LONG_COLUMNS = ["date", "ticker"]
+
+
+def _require_index_constitution() -> Any:
+    """Lazy-import index-constitution (intentionally not a core dependency)."""
+    try:
+        import index_constitution as ic
+    except ImportError as e:  # pragma: no cover - exercised when package missing
+        raise ImportError(
+            "index-constitution is required for CSI300 constituents (Track C S0). "
+            "It is intentionally NOT a core dependency. Activate with "
+            "`uv add index-constitution` (MIT license, Python 3.13 compatible)."
+        ) from e
+    return ic
+
+
+def _cache_dir(cache_dir: Path | None = None) -> Path:
+    """Get the cache directory for storing parquet snapshots."""
+    d = cache_dir or settings.data_dir / "cache"
+    d.mkdir(parents=True, exist_ok=True)
+    return d
+
+
+def _parse_opt_in_opt_out_to_long(df: pd.DataFrame) -> pd.DataFrame:
+    """Convert opt-in/opt-out wide format to long [date, ticker] daily membership.
+
+    Each row in the input represents one stock's membership period:
+    - symbol: stock ticker (e.g., "SZ000001", "SH600000")
+    - name: company name
+    - opt-in: date added to CSI300
+    - opt-out: date removed (empty string if still a member)
+
+    This function expands each period into daily [date, ticker] rows,
+    creating a long frame suitable for PIT queries like constituents_on(t).
+    """
+    if df.empty:
+        return pd.DataFrame(columns=_LONG_COLUMNS)
+
+    rows: list[tuple[pd.Timestamp, str]] = []
+
+    for _, row in df.iterrows():
+        symbol = str(row["symbol"]).strip()
+        opt_in = pd.to_datetime(row["opt-in"])
+        opt_out_raw = row.get("opt-out", None)
+
+        if pd.isna(opt_out_raw) or opt_out_raw == "" or str(opt_out_raw).strip() == "":
+            # Still a member: extend to a far future date (2099-12-31)
+            opt_out = pd.Timestamp("2099-12-31")
+        else:
+            opt_out = pd.to_datetime(opt_out_raw)
+
+        # Generate daily rows from opt-in to opt_out (exclusive)
+        # If opt-in == opt_out, stock was only member on that day
+        dates = pd.date_range(start=opt_in, end=opt_out, freq="D")
+        for date in dates:
+            rows.append((date, symbol))
+
+    long_df = pd.DataFrame(rows, columns=_LONG_COLUMNS)
+    long_df["date"] = pd.to_datetime(long_df["date"]).dt.normalize()
+    return (
+        long_df.drop_duplicates(["date", "ticker"])
+        .sort_values(["date", "ticker"])
+        .reset_index(drop=True)
+    )
+
+
+def fetch_csi300_constituents(
+    cache_dir: Path | None = None,
+    force: bool = False,
+    enable_fetch: bool = False,
+) -> pd.DataFrame:
+    """Fetch CSI300 historical constituents as a long [date, ticker] DataFrame.
+
+    The function reads from the embedded index-constitution CSV, converts
+    opt-in/opt-out dates to daily membership, and caches the result as parquet.
+
+    Args:
+        cache_dir: Directory for cache files (default: settings.data_dir / "cache")
+        force: If True, bypass cache and recompute from source CSV
+        enable_fetch: If False (default), return cached data only; if True,
+                      allow reading from index-constitution package (requires it installed)
+
+    Returns:
+        Long DataFrame with columns [date, ticker] representing daily CSI300
+        membership. Each row indicates that a stock was a constituent on that date.
+
+    Raises:
+        ImportError: If enable_fetch=True and index-constitution not installed
+        FileNotFoundError: If cache miss and enable_fetch=False
+
+    Examples:
+        >>> df = fetch_csi300_constituents(enable_fetch=True)
+        >>> # Query PIT membership on a specific date
+        >>> constituents_2020 = df[df["date"] == "2020-06-30"]["ticker"].tolist()
+        >>> # Check if a stock was in CSI300 on a date
+        >>> is_member = df[(df["ticker"] == "SZ000001") & (df["date"] == "2020-06-30")].shape[0] > 0
+    """
+    cdir = _cache_dir(cache_dir)
+    pq_path = cdir / "csi300_constituents.parquet"
+
+    # Return cached if available and not forcing refresh
+    if pq_path.exists() and not force:
+        log.info("csi300_constituents_cache_hit", path=str(pq_path))
+        return pd.read_parquet(pq_path)
+
+    # Cache miss: need to read from source (requires enable_fetch=True)
+    if not enable_fetch:
+        raise FileNotFoundError(
+            f"Cached CSI300 constituents not found at {pq_path}. "
+            "Set enable_fetch=True to read from index-constitution package "
+            "(requires `uv add index-constitution`)."
+        )
+
+    # Lazy import index-constitution
+    ic = _require_index_constitution()
+
+    # Read history CSV from embedded package data
+    log.info("csi300_constituents_fetch", source="index-constitution")
+    history_df = ic.history("csi300")
+
+    # Convert to long format
+    long_df = _parse_opt_in_opt_out_to_long(history_df)
+
+    # Cache as parquet
+    long_df.to_parquet(pq_path)
+    log.info(
+        "csi300_constituents_loaded",
+        rows=len(long_df),
+        date_min=str(long_df["date"].min()),
+        date_max=str(long_df["date"].max()),
+        n_dates=int(long_df["date"].nunique()),
+        n_tickers=int(long_df["ticker"].nunique()),
+        cache_path=str(pq_path),
+    )
+
+    return long_df
+
+
+def constituents_on(df: pd.DataFrame, date: str | pd.Timestamp) -> set[str]:
+    """Query PIT membership as of a specific date (no forward-fill).
+
+    This function returns the set of tickers that were CSI300 constituents
+    on the exact date specified. It does NOT forward-fill from the most recent
+    announcement, preventing look-ahead bias.
+
+    Args:
+        df: Long DataFrame from fetch_csi300_constituents (columns: date, ticker)
+        date: Date to query (string YYYY-MM-DD or pd.Timestamp)
+
+    Returns:
+        Set of ticker symbols that were CSI300 members on the queried date.
+
+    Examples:
+        >>> df = fetch_csi300_constituents(enable_fetch=True)
+        >>> members_2020 = constituents_on(df, "2020-06-30")
+        >>> len(members_2020)
+        300
+    """
+    date_norm = pd.to_datetime(date).normalize()
+    subset = df[df["date"] == date_norm]
+    return set(subset["ticker"].astype(str).tolist())
+
+
+def verify_snapshot_integrity(
+    df: pd.DataFrame,
+    expected_date_range: tuple[str, str],
+    expected_n_constituents: int | None = None,
+) -> bool:
+    """Verify that the CSI300 constituents snapshot meets basic integrity checks.
+
+    Args:
+        df: Long DataFrame from fetch_csi300_constituents
+        expected_date_range: (start_date, end_date) expected coverage
+        expected_n_constituents: Expected number of unique tickers (optional)
+
+    Returns:
+        True if all checks pass, False otherwise
+
+    Raises:
+        ValueError: If any check fails with details
+    """
+    if df.empty:
+        raise ValueError("CSI300 constituents DataFrame is empty")
+
+    date_min, date_max = expected_date_range
+    actual_min = df["date"].min()
+    actual_max = df["date"].max()
+
+    if pd.to_datetime(date_min) > actual_min:
+        raise ValueError(
+            f"Date range start mismatch: expected <= {date_min}, got {actual_min}"
+        )
+    if pd.to_datetime(date_max) < actual_max:
+        raise ValueError(
+            f"Date range end mismatch: expected >= {date_max}, got {actual_max}"
+        )
+
+    if expected_n_constituents is not None:
+        actual_n = df["ticker"].nunique()
+        if actual_n != expected_n_constituents:
+            raise ValueError(
+                f"Unique ticker count mismatch: expected {expected_n_constituents}, "
+                f"got {actual_n}"
+            )
+
+    return True
