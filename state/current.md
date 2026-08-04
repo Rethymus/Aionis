@@ -47,6 +47,16 @@
   race; see memory aionis-parallel-writer-race). `opus`/`fable` aliases blocked by `[1M]` resolver values →
   AUD-07B + RD-15 deferred; RD-08 HOLD (needs frozen rule table). Safe RD queue exhausted for sonnet tier.
   Not pushed. Detail: `state/handoff.md` § Wave-B FINAL.
+- **updated:** 2026-08-04 (b). **Track C confirmatory machinery staged (joint US-CN fold).** 3 commits
+  on main (unpushed): `841fee4` joint fold estimator (`src/aionis/eval/track_c_joint.py`: `fit_track_c_joint`
+  + `build_joint_panel` + region-month groups + per-region chronological assert; core insight: month-end
+  sampling + calendar-month boundary = auto per-region 21-session embargo, so cv.py/purgedcv 0 change) +
+  9/9 anti-degeneracy tests + exploratory runner; `d2606d7` shenwan 7-gate verdict (CN meso G3 fail →
+  exploratory-only; confirmatory meso = US-only = current state formalized); `f4bbab7` amendment #48
+  PROPOSED (meso US-only). Full hermetic pytest exit 0; ruff clean; 0 frozen-surface/ledger change.
+  **Pending**: real-data exploratory joint run (proves machinery on US 588 + CN 929 panels) + independent
+  review (Lane C). Confirmatory run needs owner GO + new ledger row #48 + Q1 group-construction sign-off.
+  Detail: `state/handoff.md` § 2026-08-04 联合 US-CN 折叠估计量.
 - **updated:** 2026-08-03. **BASELINE-FF5-001 + BASELINE-RANK-001 EXECUTED (owner-authorized, `104b21e`).**
   FF5: mean_IC=0.0106 (ci 0.0196, t 1.059, n=125, H6 True) — 18 cols (beta_dff pair RD-13-excluded:
   42 CONSTANT months 2024-08+). RANK: mean 0.015420 (ci 0.014870, t 2.0323, p 0.0421, n=125, H6 True).
