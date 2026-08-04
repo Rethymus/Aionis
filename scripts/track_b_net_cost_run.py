@@ -1,158 +1,145 @@
 """Track B net-cost runner — mount② exploratory utility (no ledger write).
 
-Evaluates the Track B treatment OOS scores with execution costs applied.
-This is an exploratory lens, NOT a confirmatory claim. The runner loads Track B
-OOS scores + daily session opens, prints net-cost metrics, and writes ONLY to
-runs/ (gitignored). NEVER writes to runs/ledger.jsonl.
+Loads the Track B treatment OOS score panel (``oos_state.parquet`` persisted by
+``aionis.reporting.results.save_run``) and computes the after-cost per-period Sharpe
+(linear-bps slippage on monthly turnover). Exploratory lens, NOT a confirmatory claim.
+Writes ONLY to ``runs/`` (gitignored); NEVER to ``runs/ledger.jsonl``.
 
-Data dependency: requires daily open prices per ticker. If phase_b_prices.parquet
-or a sibling daily-opens cache does not contain an 'open' column, the runner
-fails-closed with a clear message: "daily opens not found; owner-gated fetch
-required."
+The cost model is turnover-based and does NOT require daily open prices.
+``long_short_returns`` subsamples a daily panel to month-end cross-sections automatically
+(rebalance="monthly"), so the daily ``oos_state.parquet`` is a valid input.
 
-Run:  uv run python scripts/track_b_net_cost_run.py
+Usage::
 
-Environment variable:
-    PHASE_B_NO_LEDGER=1 — reproducibility mode (artifacts only, no ledger write).
-        This is the default for exploratory utilities.
+    uv run python scripts/track_b_net_cost_run.py                   # latest run, bps=5
+    uv run python scripts/track_b_net_cost_run.py --bps 10          # scenario sensitivity
+    uv run python scripts/track_b_net_cost_run.py --run-sig <sig>   # specific run
+    PHASE_B_NO_LEDGER=1 uv run python scripts/track_b_net_cost_run.py   # explicit artifacts-only
 """
 from __future__ import annotations
 
+import argparse
+import glob
 import os
 import sys
 
 import pandas as pd
 import structlog
 
-from aionis.config import settings
+from aionis.eval.net_cost import NetCostMetrics, net_cost_summary
 
 log = structlog.get_logger()
 
-CACHE = settings.data_dir / "cache"
-TRACK_B_RESULTS = "runs/track_b_net_cost.parquet"
+OUT_PATH = "runs/track_b_net_cost.parquet"
+
+
+def _latest_oos_state() -> str | None:
+    """Most recently modified treatment OOS panel under runs/results/."""
+    paths = sorted(glob.glob("runs/results/*/oos_state.parquet"), key=os.path.getmtime)
+    return paths[-1] if paths else None
+
+
+def _infer_freq(n_dates: int, span_days: int) -> str:
+    """Coarse frequency label for the loaded panel (informational only)."""
+    if span_days <= 0:
+        return "unknown"
+    per_day = n_dates / span_days
+    if per_day > 0.5:
+        return "daily"
+    if per_day > 0.1:
+        return "weekly"
+    return "monthly"
+
+
+def _print_metrics(m: NetCostMetrics, bps: float, quantile: float) -> None:
+    print(f"[S] net-cost (bps={bps}, quantile={quantile}):", flush=True)
+    print(f"[S]   gross_sharpe  (per-period)  = {m.gross_sharpe:.4f}", flush=True)
+    print(f"[S]   net_sharpe    (per-period)  = {m.net_sharpe:.4f}", flush=True)
+    print(f"[S]   avg_turnover  (one-way)     = {m.avg_turnover:.4f}", flush=True)
+    print(f"[S]   total_cost_bps (cumulative) = {m.total_cost_bps:.1f}", flush=True)
+    print(f"[S]   n_rebalance                 = {m.n_rebalance}", flush=True)
+    print(f"[S]   gross_max_drawdown          = {m.gross_max_drawdown:.4f}", flush=True)
+    print(f"[S]   gross_annual_volatility     = {m.gross_annual_volatility:.4f}", flush=True)
 
 
 def main() -> None:
-    """Run Track B net-cost evaluation.
+    """Run Track B net-cost evaluation on the persisted treatment OOS panel."""
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument(
+        "--bps",
+        type=float,
+        default=5.0,
+        help="slippage bps per dollar traded (default 5 = S&P 500 liquid scenario)",
+    )
+    ap.add_argument("--quantile", type=float, default=0.2, help="leg size fraction (default 0.2)")
+    ap.add_argument(
+        "--run-sig",
+        default=None,
+        help="specific runs/results/<sig> (default: most recent run)",
+    )
+    args = ap.parse_args()
 
-    Loads:
-      * Track B treatment OOS scores (from aionis.eval.two_arm.run_arm_oos)
-      * Daily session opens (wide DataFrame, index=dates, columns=tickers)
-
-    Prints net-cost metrics to console and writes to runs/track_b_net_cost.parquet.
-    """
-    # Check for daily opens cache
-    daily_opens_path = CACHE / "phase_b_daily_opens.parquet"
-
-    if not daily_opens_path.exists():
-        # Fall back to phase_b_prices.parquet and check for 'open' column
-        prices_path = CACHE / "phase_b_prices.parquet"
-        if not prices_path.exists():
-            log.error(
-                "price_cache_missing",
-                path=str(prices_path),
-                error="phase_b_prices.parquet not found. Run scripts/phase_b_fetch.py first.",
-            )
-            print(
-                "[ERROR] Price cache not found. Run scripts/phase_b_fetch.py first.",
-                file=sys.stderr,
-            )
-            sys.exit(1)
-
-        prices = pd.read_parquet(prices_path)
-        if "open" not in prices.columns:
-            log.error(
-                "daily_opens_missing",
-                path=str(prices_path),
-                columns=list(prices.columns),
-                error=(
-                    "Daily open prices not cached. phase_b_prices.parquet contains "
-                    f"{list(prices.columns)} only. Owner-gated fetch required to add "
-                    "'open' column (Tiingo/Alpaca EOD provide open)."
-                ),
-            )
-            print(
-                f"[ERROR] Daily opens not found in cache. {prices_path} has columns: "
-                f"{list(prices.columns)}. Owner-gated fetch required to add 'open' column.",
-                file=sys.stderr,
-            )
-            sys.exit(1)
-
-        # Has 'open' column — use it as session_opens
-        session_opens = prices
+    if args.run_sig:
+        panel_path = f"runs/results/{args.run_sig}/oos_state.parquet"
     else:
-        # Use dedicated daily opens cache if available
-        session_opens = pd.read_parquet(daily_opens_path)
+        panel_path = _latest_oos_state() or ""
 
+    if not panel_path or not os.path.exists(panel_path):
+        print(
+            "[ERROR] No oos_state.parquet found under runs/results/. "
+            "Run scripts/track_b_a_run.py first to persist the Track B treatment OOS panel.",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    oos_panel = pd.read_parquet(panel_path)
+    dates = pd.to_datetime(oos_panel["date"])
+    n_dates = int(oos_panel["date"].nunique())
+    span_days = int((dates.max() - dates.min()).days)
+    freq = _infer_freq(n_dates, span_days)
+
+    log.info(
+        "net_cost_panel_loaded",
+        path=panel_path,
+        shape=list(oos_panel.shape),
+        n_dates=n_dates,
+        n_tickers=int(oos_panel["ticker"].nunique()),
+        span_days=span_days,
+        inferred_freq=freq,
+    )
     print(
-        f"[S] loaded session_opens: {session_opens.shape} "
-        f"(dates={len(session_opens.index)}, tickers={len(session_opens.columns)})",
+        f"[S] panel: {panel_path}  shape={oos_panel.shape} n_dates={n_dates} "
+        f"n_tickers={oos_panel['ticker'].nunique()} inferred_freq={freq}",
         flush=True,
     )
+    print("[S] long_short_returns subsamples to month-end (rebalance=monthly)", flush=True)
 
-    # Load Track B OOS scores
-    # TODO: this should load the actual Track B treatment OOS panel from
-    # aionis.eval.two_arm.run_arm_oos. For now, fail-closed with a clear message.
-    log.error(
-        "oos_panel_not_loaded",
-        error=(
-            "Track B OOS panel not loaded. This is a TODO — the runner should load "
-            "the actual OOS score panel from aionis.eval.two_arm.run_arm_oos or from "
-            "a cached parquet file. Current implementation is incomplete."
-        ),
+    metrics = net_cost_summary(oos_panel, bps=args.bps, quantile=args.quantile)
+    _print_metrics(metrics, args.bps, args.quantile)
+
+    # Write to gitignored runs/ (NEVER to ledger).
+    out = pd.DataFrame(
+        [
+            {
+                "bps": args.bps,
+                "quantile": args.quantile,
+                "panel": panel_path,
+                "gross_sharpe": metrics.gross_sharpe,
+                "net_sharpe": metrics.net_sharpe,
+                "avg_turnover": metrics.avg_turnover,
+                "total_cost_bps": metrics.total_cost_bps,
+                "n_rebalance": metrics.n_rebalance,
+                "gross_max_drawdown": metrics.gross_max_drawdown,
+                "gross_annual_volatility": metrics.gross_annual_volatility,
+            }
+        ]
     )
-    print(
-        "[ERROR] Track B OOS panel not loaded. TODO: implement loading from "
-        "aionis.eval.two_arm.run_arm_oos or cached parquet.",
-        file=sys.stderr,
-    )
-    sys.exit(1)
-
-    # When OOS panel is available, uncomment the following:
-    # oos_panel = pd.read_parquet(CACHE / "track_b_oos_scores.parquet")
-    # print(f"[S] loaded OOS panel: {oos_panel.shape}", flush=True)
-
-    # Compute net-cost metrics with default bps=5.0 (S&P 500 liquid scenario)
-    # metrics = net_cost_summary(
-    #     oos_panel,
-    #     session_opens,
-    #     bps=5.0,
-    #     quantile=0.2,
-    # )
-
-    # Print results
-    # print(f"[S] Net-cost metrics (bps=5.0):", flush=True)
-    # print(f"[S]   gross_sharpe={metrics.gross_sharpe:.3f}", flush=True)
-    # print(f"[S]   net_sharpe={metrics.net_sharpe:.3f}", flush=True)
-    # print(f"[S]   avg_turnover={metrics.avg_turnover:.4f}", flush=True)
-    # print(f"[S]   total_cost_bps={metrics.total_cost_bps:.1f}", flush=True)
-    # print(f"[S]   n_rebalance={metrics.n_rebalance}", flush=True)
-    # print(f"[S]   gross_max_drawdown={metrics.gross_max_drawdown:.3f}", flush=True)
-    # print(f"[S]   gross_annual_volatility={metrics.gross_annual_volatility:.3f}", flush=True)
-
-    # Write to gitignored runs/ directory
-    # pd.DataFrame([{
-    #     "gross_sharpe": metrics.gross_sharpe,
-    #     "net_sharpe": metrics.net_sharpe,
-    #     "avg_turnover": metrics.avg_turnover,
-    #     "total_cost_bps": metrics.total_cost_bps,
-    #     "n_rebalance": metrics.n_rebalance,
-    #     "gross_max_drawdown": metrics.gross_max_drawdown,
-    #     "gross_annual_volatility": metrics.gross_annual_volatility,
-    # }]).to_parquet(TRACK_B_RESULTS)
-    # print(f"[S] wrote {TRACK_B_RESULTS}", flush=True)
-
+    out.to_parquet(OUT_PATH)
+    print(f"[S] wrote {OUT_PATH}", flush=True)
     print("[S] DONE", flush=True)
 
 
 if __name__ == "__main__":
-    # Check for PHASE_B_NO_LEDGER environment variable
-    artifacts_only = os.environ.get("PHASE_B_NO_LEDGER") == "1"
-
-    if artifacts_only:
-        print(
-            "[S] ARTIFACTS-ONLY mode (no ledger write); net-cost runner is exploratory",
-            flush=True,
-        )
-
+    if os.environ.get("PHASE_B_NO_LEDGER") == "1":
+        print("[S] ARTIFACTS-ONLY (exploratory; never writes ledger)", flush=True)
     main()

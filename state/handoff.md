@@ -1,5 +1,25 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-08-04 OSS-survey + 并行派发批次（完成）
+
+owner 授权"按推荐的数据与方式处理 + 难度分层派 agent + 并行不互扰 + 冲突高价值优先 + 结果不佳再调整重测"。
+
+**已完成：**
+- **修订 #47 提交**（`6bd360f`，owner 本会话明示授权）：A 股 cninfo 基本面 → exploratory-only（G1 处置），claim 收窄为 US-rank-IC（确认性）+ A 股 exploratory 条件化。ledger #47 sig `252cf7df` sha256 自洽已验；#46 冻结不变（append-only）。含 docs/track-c-preregistration.md §0+§3、ashare-fundamentals-source.md §3、scripts/track_c_amend1.py（可复现）、state 沉积。
+- **清除 GPL orphan** `src/aionis/eval/finsaber_mount.py`（import backtrader GPLv3；真正的净成本层是 `eval/execution_costs.py`，已实现）。
+- **baostock G3=raw** 已是 `ingest/ashare_price.py` 默认（adjustflag="3"）；intake 文档（`ab43454`）已覆盖。视作冻结默认。
+- **OSS 轮子调研**（`420fba1`，今上午 + 同日勘误）+ 本轮补验：qlib=library-import CN 采集器（MIT,PIT-DB 实）；akshare=MIT 但 SSRN 论文实证其 PIT 不安全（重述值）→ 坐实"A 股 filed-date 基本面无 permissive 轮子"=结构性数据 gap，非手搓失败。
+
+**完成（2 agent 回报 + 集成 + 修复；commits `5b561e4`/`8bbe6a6` cherry-pick + 本批 fix）：**
+- **`csi300-intake`（Task#3，DONE clean）**：选 `index-constitution`（PyPI 实证 MIT + `py3-none-any` wheel=3.13✓ + 0.6.2/2026-07 + 内嵌 CSIndex 历史公告=零运行时 HTTP + opt-in/opt-out=PIT+survivorship-safe）。7-gate 全 PASS。`ingest/csi300_constituents.py`（lazy import 非 core dep + `enable_fetch=False` 默认 + snapshot+sha256 + `constituents_on(t)`）+ intake doc + 14 hermetic 测试（无 stub）。潜在风险：适配器调 `ic.history("csi300")` 而 PyPI 示例是 `ic.constituents_at(...)`——API 名待真实拉取时核实（owner-gated+fail-closed，不阻塞）。
+- **`mount2-netcost`（Task#2，agent 交付 defective → orchestrator opus 重写 3 文件修复）**：agent 的 net_cost.py 有 **3 blocker**（turnover 退化：pre_trade 两分支都=0 + 注释撒谎；test 有空 `pass` stub；runner 整个计算被注释 `sys.exit(1)`）；且 11 测试是**欺骗性绿**（3-ticker fixture 致 long_short_returns 跳过→NaN→`if isfinite` 跳过 assert + 5 测的是 execution_costs 内核）。**重写后**：turnover 追踪 prev_target（union 对齐、逐期成本、no-drift 简化已诚实标注）；去 session_opens（turnover-bps 模型不需 open 价）；runner 加载真实 `oos_state.parquet`（`long_short_returns` 自动月末子采样）→ **本轮出真实数字**；12 测试含**反退化测试**（稳定分数→低 turnover，洗牌→高 turnover，直接抓 always-2.0）。
+- **集成**：cherry-pick 两 commit（worktree 基是 `30ae69f` 非 `6bd360f`——worktree 创建时序问题；但两 commit 自身 diff 各 3 新文件纯新增→cherry-pick 安全，#47 未被回退，已验）。全套 hermetic pytest **exit 0**；ruff 干净；零 stub/TODO/pass。
+- **⚠️ 运维教训（fold 进 orchestration-protocol §8）**：① worktree 基可能滞后——merge/前**必查 merge-base + commit 自身 diff**，勿信 `branch..HEAD` 累积 diff；② agent"全绿"必须**代码级核验**——A 的测试空洞绿（小 fixture→NaN→跳过 assert）肉眼不可见，靠反退化测试 + 真实数据跑才暴露；③"reuse-first"≠"import 了就算复用"——A import 了 execution_costs 却喂退化输入。
+
+**mount② 真实结果（Track B treatment panel `ef321e9…`，bps=5，125 月 2016-2026）**：gross_sharpe 0.1487（月，年化≈0.51）→ **net_sharpe 0.1250**（年化≈0.43，成本吃 ~16%）；**avg_turnover 1.1444**（真实换手，非退化 2.0）；total_cost 715 bps 累计（≈5.7 bps/月，=5×1.14×1e-4 自洽）。注：此 panel 是 mtime 最新 run（未必 #41）；策略在 5bps 滑点下保住大部分 Sharpe。
+
+**边界：** 本批仅 #47 commit（owner 授权）+ cherry-pick 2 agent commit + mount② fix；**未观察 OOS rank-IC**（net-cost 是 L-S 收益视角，非 rank-IC 估计量）；未触 B/C/D/E1/Track-B 冻结面；net_cost 是探索性工具（类比 ff5_residual，不接管线、不写 ledger）。`runs/track_b_net_cost.parquet` gitignored。
+
 ## 2026-08-04 `/loop` 批次 — 未提交在途工作批判性审计（GPL 清除 + site 恢复；未 commit）
 
 owner `/loop` 授权"推进推荐项 + 批判性思维 + reuse-first + 模型分层省 token"。进入会话发现 main 上有一批**未提交的在途工作**（非本会话创建），独立审计发现 **2 个缺陷**，已采取明确正确的恢复/安全动作；judgment 项交 owner。
