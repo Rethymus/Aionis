@@ -1,5 +1,21 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-08-04 Track C conditional-IC（3-layer regime，null）— 会话 culmination
+
+meso 3rd 层完成（`33b5cfb`，US SIC=EDGAR 公共域 `phase_d_sic_map.parquet` 588 tickers；CN 申万 baostock `ENABLE_CN_FETCH=1` 门控默认 off → meso 现 US-only，sha256 `e9f30d94`）。composite builder 升级 3-layer（`f7c5789`，sha256 `0cb7409e`，3021 日/valid 2592）。
+
+**双区域 conditional rank-IC（IC_t ~ regime_t, HAC）**：
+| regime 组成 | US β (p) | CN β (p) |
+|---|---|---|
+| 2-layer (macro+global) | -0.008 (0.48) | **+0.034 (0.07 边际)** |
+| 3-layer (+meso US-only) | -0.001 (0.95) | +0.015 (0.36) |
+
+**关键发现（方法论）**：2-layer 的 CN 边际交互（β=0.034, p=0.07）**被 meso 稀释到 null**（β=0.015, p=0.36）。**conditional-IC 对 regime 组成敏感**；spec-faithful 3-layer regime 下两区域 conditional-IC **均 null**（null-favored-consistent）。此前"CN 非对称 regime 交互"是 2-layer artifact，不稳健。
+
+**待办（confirmatory，owner-gated）**：① 全 US+CN meso（CN 申万 fetch ~30min baostock）；② 联合 US-CN 折叠（per-region 日历 + 时序）；③ confirmatory 跑（冻结 #46/#47 + **新 ledger 行 = owner 动作**）+ J-T SESOI 门。当前 conditional-IC 用 Track B fitter on 单区域 + 独立 IC 系列回归（非联合折叠 confirmatory 估计量）。
+
+**本会话总账（17 commits，main，未 push）**：S0 数据（CSI300 universe `425f5535` + A 股价格 `a4614876`）→ mount② 净成本（5bps net Sharpe ~0.43 年化）→ 首个 CN rank-IC(null, mean 0.0098 p=0.46) → 3 regime 层（macro `4bfd1949`/global DY `d189f53c`/meso `e9f30d94`）+ composite（3-layer `0cb7409e`）→ conditional-IC（3-layer null）。全套 hermetic pytest 绿，ruff 干净（预存 `track_c_commit.py:180` E501 仍待 owner）。
+
 ## 2026-08-04 regime composite（完成；2-layer exploratory）
 
 owner `/goal`×5 推进 Track C regime_state。3 层中 **macro + global + composite** 完成，meso deferred。
