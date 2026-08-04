@@ -1,5 +1,20 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-08-04 regime composite（完成；2-layer exploratory）
+
+owner `/goal`×5 推进 Track C regime_state。3 层中 **macro + global + composite** 完成，meso deferred。
+
+- **macro 层**（`abab13e`，agent clean——本会话首个无需修复的）：vix+credit_spread(BAA-AAA)+term_spread(DGS10-DGS1)+dff_surprise 等权 past-only z-score。**EPU 4-line**：无 permissive 中国 EPU 源（license+PIT+no-revision 门 fail）；frozen #46 本标 EPU"(exploratory)"，排除=保守合规；**confirmatory 需 config 修订（新 ledger 行）**。sha256 `4bfd1949`。
+- **global DY 层**（`9093100`，agent + 我核验）：US-CN EW 市场收益 → Diebold-Yilmaz 广义 FEVD（**statsmodels VAR + 标准公式**，未 vendor spillover-lab 因 PySide6 重）→ rolling-250 总 spillover。**GFEVD 公式逐行核验正确**（GIR=(ΦΣ)[i,j]/√Σ_jj；θ 行和 1；total=(θ01+θ10)/2；sanity：independent→~1%、correlated→~35%）。2 caveat：sha256 标签是 series-hash(`d189f53c`) 非 file-hash(`eb873732`)；lag-0 fallback 触发 30%（agent 误报"罕见"，建模选择非 bug）。
+- **composite**（`df57a4a`，opus）：等权 past-only z-score 两层 + **TACO expanding σ**（[t0,t] 不回溯重算，frozen #46 normalization）。regime_state n=3021/valid 2585，mean 0.018/std 0.83，sha256 `deee9cf1`。
+- **meso deferred**：申万/SIC 行业动量（数据源 7-gate 最难）→ composite 暂 2-layer（exploratory）。
+- **Agent 质量教训强化**：macro(clean) + DY(公式正确，因 spec 含精确公式 + sanity 测试) → **精确 spec + 反退化/边界测试 = agent 能做对硬量化方法**（对比 net_cost/CSI300/cn_panel 盲派都出错）。
+
+**下一步（待做，opus 设计重——conditional rank-IC 是 Track C 真正的 confirmatory 估计量）**：
+1. **score × regime_state 交互 → conditional rank-IC**（IC 系列随 regime 变化？）。需 conditional-IC 框架设计（参考 `reports/design/2026-08-03-conditional-rank-ic-multiplicity.md`）——这是设计重活，slop 风险高，宜先定方案。
+2. **meso 3rd 层**（申万/SIC，for full 3-layer composite）。
+3. **联合 US-CN 折叠 + confirmatory 跑**（冻结 #46/#47 + 新 ledger 行）。
+
 ## 2026-08-04 Track C CN rank-IC 首探（完成；exploratory）
 
 owner `/goal`×4 推进 Task#6。A 股 price-only 面板 → 首个 CN rank-IC。
