@@ -1,5 +1,15 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-08-04 方法学+结果 draft v0.1（可发表单元；process→product）
+
+owner 4× 重发 standing auth → 执行推荐 ②（方法学写定稿）。产出 `docs/methods-and-results-draft.md` v0.1（PROPOSED，业主审阅中文稿）：
+- **METHODS 段（§1-3）= 贡献**：反泄漏纪律作为研究对象（config-before-result / PIT 全栈 / purged+chronological 验证 / H6 确定性 / J-T 等价门 / 两尾 null-favored 预注册 / multiplicity 预算 1 条件化）——全部 code/ledger-asserted，非叙述。Track C 联合折叠作为方法学新点（§3）。
+- **RESULTS 段（§4）= 12 行 null 证据表**，诚实分级（CV-proxy vs chronological；exploratory vs confirmatory）。全部 null；0 条 confirmatory。
+- **§5 占位** = Track C confirmatory GO（首条 confirmatory）。
+- **§6 局限** 诚实（CV-proxy≠chronological；exploratory≠confirmatory；Track B 等价欠功率；幸存者；币种）。
+- 数字源自 ledger/artifact；**独立核对**派 `evidence-audit`（sonnet，后台，read-only）→ `reports/audits/2026-08-04-evidence-integrity-audit.md`（运行中）。
+- **治 "治理>产出" 失调**：把累积 process 转 product。未触冻结面/ledger；confirmatory 段 owner-gated。
+
 ## 2026-08-04 Track C 联合 US-CN 折叠估计量（confirmatory machinery；exploratory 走通中）
 
 owner 授权"按推荐方式处理 + 难度分层派 agent + 并行不互扰 + 冲突最高价值优先 + 结果不乐观再调整重测"。**边界**：null-favored，"不乐观"= 工程/测试 bug 迭代修复，**非** rerun-to-significance（若现 rescue 诱惑则交 owner）。
