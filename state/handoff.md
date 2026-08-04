@@ -15,7 +15,7 @@ owner 授权"按推荐方式处理 + 难度分层派 agent + 并行不互扰 + �
 - `scripts/track_c_joint_run.py`：exploratory runner（PHASE_C_NO_LEDGER；产出 `runs/track_c_joint_*` gitignored）。
 - **验证**：`tests/test_track_c_joint.py` 9/9 ✓；全套 hermetic pytest **exit 0**（无回归）；`ruff check` 全清。
 
-**Lane B 待最后一块证据**：真实 US(`track_b_panel`,日频,588) + CN(`cn_price_panel`,月末,929) 联合跑（`scripts/track_c_joint_run.py`，后台 PID 486143，100% CPU 训练中，~67 expanding folds × 500 树）。产出 = machinery 在真实数据上的集成证明（**非 confirmatory 判读**，NO ledger）。
+**Lane B 真实数据证据（DONE；exploratory，NO ledger）**：`scripts/track_c_joint_run.py` 在真实 US(566 tickers) + CN(929) 联合月末面板跑通（68 folds / 71 IC 月，oos_scores 94,438 行双区，score std 0.508 非退化）。**combined rank-IC −0.0070，CI(−0.030,+0.016) 跨零，p_hac=0.55 → null**；US IC −0.002 / CN IC −0.014（双区均 null）；**conditional-IC β=−0.015，p=0.20（无 regime 交互），R²=0.018**。= 又一条 null（符合 null-favored；与 Track B null + 早先 CN 单区 conditional-IC null 一致）。产物 `runs/track_c_joint_{summary.json,ic_series.parquet,oos_scores.parquet}`（gitignored）。**非 confirmatory 判读**（10 共享 price 特征 + region-month group D1 默认，#46 group 未冻结）。
 
 **关键设计决策（confirmatory 前需 owner 签注，spec §7 Q1-Q5）**：
 - Q1 lambdarank group = **区域-月**（D1，币种干净；#46 未冻结 group 构造）。
