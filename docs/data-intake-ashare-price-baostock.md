@@ -206,6 +206,22 @@ Provider **不得**追溯重算历史。若不可证：首次接入即**快照 +
 
 ---
 
+## 快照记录（2026-08-04 首次真实拉取）
+
+Owner 授权后首次 S0 真实拉取。`baostock==0.9.3`（PyPI MIT），lazy-import（**非 core dep**：`uv add` 临时激活 → 拉取 → `uv remove` 复原；pyproject/uv.lock 净零）。脚本 `scripts/ashare_price_fetch_csi300.py`（单 login、逐 ticker try/except 隔离、≥2s 礼貌、停牌 NaN）。
+
+- **产物**：`data/cache/ashare_prices_csi300.parquet`（gitignored；37.5 MB；2,578,783 行）
+- **sha256**：`a461487604b27aaa20be4400a445ccb20ba598e64573c4308618044b3ecb2562`（记于本 doc；**不入 ledger**——S0 数据快照非 `config_committed`，按 Track C 冻结后 S0 规则不写新 ledger 行）
+- **覆盖**：2014-01-02 .. 2026-08-03（2yr 回看，供 252d 特征）；929 tickers 有数据
+- **survivorship + 覆盖核验**：949 CSI300 历史成分中 20 个返回空（`sh.600001/2/3`、`sz.000406` 等 = **2016 前-only 成员**，Track C 2016+ 窗口 **0 覆盖缺口**）→ 2016-2026 全部 CSI300 成员均有价格数据 ✅
+- **G6 停牌**：68,201 个停牌日 OHLCV 正确置 NaN（`tradestatus != "1"`）
+- **G3**：`adjustflag="3"` raw（方案 A，冻结本地快照）；0 失败；≥2s 间距
+- **复现**：`uv add baostock && uv run python scripts/ashare_price_fetch_csi300.py` → 同源应重算得同一 sha256（H6；raw 价交易所固定，低回改风险）
+
+> 注：上方「阶段 1 §sha256 入 ledger」「待 owner 裁断」「不越界声明（未拉真实数据）」为本快照前的 PROPOSED 状态；本快照以实际拉取结果为准（owner 已授权；G3=raw 已冻结为默认）。
+
+---
+
 ## 引用
 
 - 内部：[`track-c-preregistration.md`](track-c-preregistration.md)、[`data-intake-rubric.md`](data-intake-rubric.md)、[`data-license-allowlist.md`](data-license-allowlist.md)、[`reports/2026-08-03-qlib-dualregion-poc.md`](../reports/2026-08-03-qlib-dualregion-poc.md)、[`reports/design/2026-08-03-ashare-fundamentals-source.md`](../reports/design/2026-08-03-ashare-fundamentals-source.md)
