@@ -171,6 +171,12 @@ def fit_monthly_bins(
     for month_id in unique_months:
         month_returns = returns_series[month_id]
 
+        # Ensure month_returns is always a Series (single-row months return scalar)
+        if not isinstance(month_returns, pd.Series):
+            # Single row or missing month_id: treat as having no valid data
+            fitted_bins[month_id] = pooled_edges.copy()
+            continue
+
         # Remove NaN returns for quantile computation
         month_valid = month_returns.dropna()
 

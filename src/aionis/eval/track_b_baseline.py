@@ -105,6 +105,10 @@ class TrackBBaselineResult:
     monthly_model_returns: list[float]
     monthly_ew_returns: list[float]
 
+    # OOS per-(date, ticker) scores for net-cost backtest (mount② FINSABER).
+    # Columns: [date, ticker, score]. Only test-fold predictions included.
+    oos_scores: pd.DataFrame
+
 
 def fit_track_b_baseline(
     panel: pd.DataFrame,
@@ -459,6 +463,11 @@ def fit_track_b_baseline(
         monthly_dates=monthly_dates,
         monthly_model_returns=monthly_model_returns,
         monthly_ew_returns=monthly_ew_returns,
+        oos_scores=panel[[date_col, ticker_col]].assign(
+            score=all_scores.to_numpy()
+        ).dropna(subset=["score"])[[date_col, ticker_col, "score"]].reset_index(
+            drop=True
+        ),
     )
 
 

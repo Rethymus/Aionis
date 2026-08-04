@@ -84,33 +84,54 @@ def main() -> None:
             f"n_months: {len(diff)}",
             flush=True,
         )
-        # Persist real IC series + headline numbers for the static site (GitHub Pages).
+        # Persist real IC series + headline numbers + OOS scores for the static site
+        # (GitHub Pages) and net-cost backtest (mount② FINSABER).
         import json
+
+        # Convert oos_scores to dict for JSON serialization
+        treatment_scores_dict = {
+            "dates": rt.oos_scores["date"].dt.strftime("%Y-%m-%d").tolist(),
+            "tickers": rt.oos_scores["ticker"].tolist(),
+            "scores": rt.oos_scores["score"].tolist(),
+        }
+        price_only_scores_dict = {
+            "dates": rp.oos_scores["date"].dt.strftime("%Y-%m-%d").tolist(),
+            "tickers": rp.oos_scores["ticker"].tolist(),
+            "scores": rp.oos_scores["score"].tolist(),
+        }
 
         site_data = {
             "treatment": {
-                "mean_ic": rt.mean_ic, "ci95": list(rt.ci_95), "p_hac": rt.p_hac,
+                "mean_ic": rt.mean_ic,
+                "ci95": list(rt.ci_95),
+                "p_hac": rt.p_hac,
                 "ic_series": {str(k): v for k, v in rt.ic_series.items()},
                 "monthly_dates": rt.monthly_dates,
                 "monthly_model_returns": rt.monthly_model_returns,
                 "monthly_ew_returns": rt.monthly_ew_returns,
+                "oos_scores": treatment_scores_dict,
             },
             "price_only": {
-                "mean_ic": rp.mean_ic, "ci95": list(rp.ci_95), "p_hac": rp.p_hac,
+                "mean_ic": rp.mean_ic,
+                "ci95": list(rp.ci_95),
+                "p_hac": rp.p_hac,
                 "ic_series": {str(k): v for k, v in rp.ic_series.items()},
                 "monthly_dates": rp.monthly_dates,
                 "monthly_model_returns": rp.monthly_model_returns,
                 "monthly_ew_returns": rp.monthly_ew_returns,
+                "oos_scores": price_only_scores_dict,
             },
             "differential": {
-                "mean_diff": mean_d, "ci95": [lo_d, hi_d], "p_hac": summary["p_hac"],
+                "mean_diff": mean_d,
+                "ci95": [lo_d, hi_d],
+                "p_hac": summary["p_hac"],
                 "ic_series": {str(k): v for k, v in diff.items()},
             },
         }
         site_path = settings.data_dir.parent / "site" / "track_b_data.json"
         site_path.parent.mkdir(parents=True, exist_ok=True)
         site_path.write_text(json.dumps(site_data, indent=2), encoding="utf-8")
-        print(f"saved site data -> {site_path}", flush=True)
+        print(f"saved site data + OOS scores -> {site_path}", flush=True)
     else:
         _run_arm(panel, args.mode)
 
