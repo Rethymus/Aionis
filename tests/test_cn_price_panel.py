@@ -65,6 +65,47 @@ def _make_synthetic_ashare_panel(
     return close_wide, volume_wide, tradestatus_wide
 
 
+def test_build_features_columns_regression() -> None:
+    """_build_features flattens the compute_price_features MultiIndex -> [date, ticker, *features].
+
+    Regression guard: a prior version mis-renamed the stacked frame ('Length mismatch: 11
+    vs 4') and a leakage-self-check date lookup was out-of-bounds — both undetected because
+    the suite exercised compute_price_features directly, not this wrapper. This test runs
+    the real wrapper and asserts the column set.
+    """
+    from scripts.build_cn_price_panel import _build_features
+
+    close_wide, volume_wide, tradestatus_wide = _make_synthetic_ashare_panel(
+        n_dates=300, n_tickers=20
+    )
+    panel = _build_features(close_wide, volume_wide, tradestatus_wide)
+
+    expected = {
+        "date",
+        "ticker",
+        "momentum_5d",
+        "momentum_10d",
+        "momentum_21d",
+        "momentum_42d",
+        "reversal_5d",
+        "volatility_21d",
+        "volatility_63d",
+        "turnover_21d",
+        "beta_252d",
+        "amihud_illiquidity_21d",
+        "limit_up_down_distance",
+        "suspension_flag",
+    }
+    assert set(panel.columns) == expected, (
+        f"column set mismatch (symmetric diff): {set(panel.columns) ^ expected}"
+    )
+    # No residual melt columns from the buggy version.
+    assert "feature" not in panel.columns
+    assert "value" not in panel.columns
+    assert panel["ticker"].nunique() == 20
+    assert "momentum_21d" in panel.columns  # the leakage self-check reads this
+
+
 class TestAshareExtras:
     """Unit tests for A-share-specific features."""
 

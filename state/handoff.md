@@ -1,5 +1,16 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-08-04 Track C CN rank-IC 首探（完成；exploratory）
+
+owner `/goal`×4 推进 Task#6。A 股 price-only 面板 → 首个 CN rank-IC。
+
+- **CN 价格面板**（`data/cache/cn_price_panel.parquet`，gitignored）：141,208 行 / 929 tickers / 152 月末 (2014-01..2026-08) / 12 特征 (10 Track B price + limit_up_down_distance + suspension_flag) + forward_return_h。leakage self-check PASSED（特征只用 close≤t，标签用 close[t+21]）。
+- **agent 质量第 3 例**：`cn-price-panel` agent 交付的 `build_cn_price_panel.py` 有 3 bug（① MultiIndex stack 后误赋 4 列名实为 11→Length mismatch；② leakage self-check 取非月末 raw 日期→越界；③ stack 依赖 index.name="date" 不健壮）。agent 的 15 测试又"绿"但空洞（测了 `compute_price_features` 被复用函数，没测 `_build_features` 包装）。opus 修 3 bug + 补 `_build_features` 回归测试（set 对比 + 排除 melt 残余）。
+- **首个 CN rank-IC**（`scripts/track_c_a_run.py`，Track B fitter on CN，92 折 2019-01..2026-06）：**mean_ic 0.009836，ci_95 (-0.0165, 0.0362) 跨零，p_hac 0.4639 → NULL**；DM vs EW stat -2.19 / p=0.031（边际；n_trials=30 haircut 会洗掉）；IC std 0.1289。**与美股 Track B null 一致，符合 null-favored 预期**。corr(momentum_21d, fwd_ret)=-0.015（A 股短期反转 hint）。
+- **诚实结论**：A 股 price-only rank-IC null = 可发表结果，**非"不佳"——不调整重测**（rerun-to-significance 禁）。下一步是 Track C 真正的 confirmatory 跑（regime 交互 + 联合折叠 + 冻结 #46/#47），不是"rescue"这个 exploratory null。
+- **边界**：exploratory（Track B fitter on CN），**非 Track C confirmatory 估计量**，不写 ledger。IC series + OOS scores 存 `runs/track_c_cn_*`（gitignored）。
+- **commits**：cherry-pick `78f7d5af`（agent 原始，3 文件）+ 本批 fix commit（3 bug 修复 + 回归测试 + runner）。
+
 ## 2026-08-04 OSS-survey + 并行派发批次（完成）
 
 owner 授权"按推荐的数据与方式处理 + 难度分层派 agent + 并行不互扰 + 冲突高价值优先 + 结果不佳再调整重测"。

@@ -109,15 +109,15 @@ def _build_features(
         prices=close_wide, volume=volume_wide, market_prices=market_prices
     )
 
-    # Flatten MultiIndex columns to long format
-    # price_features_multiidx has columns (feature, ticker)
-    price_features_long = price_features_multiidx.stack().reset_index()
-    price_features_long.columns = ["date", "ticker", "feature", "value"]
-
-    # Pivot to get one column per feature
-    features_wide = price_features_long.pivot(
-        index=["date", "ticker"], columns="feature", values="value"
-    ).reset_index()
+    # Flatten MultiIndex columns to [date, ticker, *features].
+    # compute_price_features returns DataFrame[index=date, columns=MultiIndex(feature, ticker)].
+    # stack() moves the innermost column level (ticker) onto the index; reset_index() then
+    # yields [date, ticker, feature_1 ... feature_9] directly — no melt/pivot needed.
+    features_wide = price_features_multiidx.stack().reset_index()
+    features_wide.columns.name = None
+    # Force the date column name — the real pivot names the index "date", but don't
+    # depend on it (robust to unnamed indices, e.g. synthetic test fixtures).
+    features_wide = features_wide.rename(columns={features_wide.columns[0]: "date"})
 
     log.info(
         "computed_price_features",
@@ -204,17 +204,17 @@ def _leakage_self_check(panel: pd.DataFrame, close_wide: pd.DataFrame) -> bool:
     """
     log.info("running_leakage_self_check")
 
-    # Sample one ticker and one mid-series date
-    sample_ticker = close_wide.columns[0]
-    mid_idx = len(close_wide) // 2
-    test_date = close_wide.index[mid_idx]
+    # Pick a (ticker, date) that EXISTS in the month-end-sampled panel. A raw mid-series
+    # date from close_wide is absent after month-end sampling -> illic out-of-bounds.
+    clean = panel.dropna(subset=["momentum_21d", "forward_return_h"])
+    sample = clean.iloc[len(clean) // 2]
+    sample_ticker = sample["ticker"]
+    test_date = sample["date"]
+    feature_row = sample
+    # Future date = H sessions after test_date in the raw close_wide index.
+    mid_idx = close_wide.index.get_loc(test_date)
     future_idx = min(mid_idx + H, len(close_wide) - 1)
     future_date = close_wide.index[future_idx]
-
-    # Get the feature value at test_date
-    feature_row = panel[
-        (panel["ticker"] == sample_ticker) & (panel["date"] == test_date)
-    ].iloc[0]
     original_momentum = feature_row["momentum_21d"]
     original_label = feature_row["forward_return_h"]
 
