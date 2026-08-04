@@ -12,6 +12,15 @@
 - **E3 forward-live launch.** The only POWERED zero-leak path; commit-then-reveal, PIT-safe live
   sources (13D / FRED / earnings). Takes calendar time (years) to power.
   See `../docs/phase-e3-preregistration.md`.
+- **Earnings as abstain / event-study event.** The zero-LLM abstention table (RD-08) covers
+  FOMC/CPI/NFP/13D but NOT earnings; `earnings_8k_forward.py` already exists, so the PIT data path
+  is open. Hypothesis: earnings-filing windows may inject jump noise into the cross-sectional
+  rank-IC estimand — candidate for an abstain rule or an event-study window in a NEW
+  pre-registered arm. **BLOCKED until**: E3 headline HOLD lifted (AUD-06 + owner GO) AND a new
+  owner-approved pre-registration/config (new event type = scope expansion; 7-gate intake; new
+  ledger row). Never mutate B/C/D/E1. **M** task (eval-layer only). Source: 2026-08-02 owner-shared
+  trading-report debrief — only the methodological point transferred (sector rotation / hedging /
+  "beat the market" are out of scope by design).
 - **Horizon-robustness extension.** Sweep E1 at h=10 / h=42 (B/C/D already done) for symmetry.
   **S** task.
 - **SIC vintage.** SIC is current-snapshot (mild lookahead for reclassifiers) — a vintage SIC

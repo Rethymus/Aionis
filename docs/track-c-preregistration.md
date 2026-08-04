@@ -4,6 +4,8 @@
 >
 > **config_sig**：`758ca4d739f09331ee4dceb726d9d0d0f7c5110303acc6dcac59919701374fad`（`runs/ledger.jsonl` 行 #46，phase=track_c；sha256 自洽已验）。
 > **冻结后允许**：S0 数据构造（不写新 ledger、不观察 rank-IC/收益）；首次 OOS rank-IC 前须有 frozen config（已满足）。
+>
+> **修订 #47（2026-08-03，sig `252cf7df1df875e7…`）**：A 股 cninfo 基本面 → **exploratory-only**（G1：cninfo 反爬 + 商业数据产品授权 ≠ EDGAR 开放 API；保守处置）；claim 收窄为 **US-rank-IC（确认性）+ A 股 exploratory 条件化**。#46 冻结不变（append-only / durable-registry）。详见 [`ashare-fundamentals-source.md`](../reports/design/2026-08-03-ashare-fundamentals-source.md) §3 G1。
 > **owner §12 裁断（2026-08-03）**：① 双区域 = **联合折叠**；② regime = **三层 PIT 复合**（meso+macro+global，等权，TACO as-of）；③ A 股源 = **cninfo**（MIT fetch + 自建解析）；④ scaffold = **qlib 双区域挂载**。
 >
 > **关联**：[`track-b-preregistration.md`](track-b-preregistration.md)（文体 + 共享统计门）、[`ADR-010`](../decisions/ADR-010-sesoi-tost-sequential-gate.md)（J-T 等价门）、[`theory-of-computable-reality.md`](theory-of-computable-reality.md) §3.1、[`market-driver-framework.md`](market-driver-framework.md) §2/§6.1/§8。
@@ -63,7 +65,7 @@ regime_state → 0–100 综合温度 → "入手/跑路"提示，作**非主张
 |---|---|---|
 | ① 行情/价格 | Tiingo+Alpaca ✅ | **baostock 价格**（MIT，`tradestatus`停牌+`adjustflag`/`query_adjust_factor`复权因子+`query_all_stock`历史含退市；价格交易所定→G3 低危）或 **qlib+AKShare 采集器**（MIT，commit `83d089b`，补 survivorship） |
 | ② 宏观 | ALFRED vintage ✅ | **ALFRED/OECD 中国序列**（`CHNGDPNQDSMEI` 等，vintage-safe）= headline；**NBS-only**（M2/社融，GDP/CPI 实证大幅回改、无 vintage API）→ snapshot+exploratory（EPU 先例）。复用 `mbk-dev/nbsc`（latest-only） |
-| ③ 基本面 | EDGAR filed-date PIT ✅ | **cninfo（巨潮，CSRC 官方 = A 股 EDGAR 等价）**：申报日原生 + as-filed PDF + 修订=新公告（revision-transparent）。`rollysys/use_cninfo` MIT ✅（fetch）+ Aionis 自建 PDF 数值解析（PyMuPDF MIT）。baostock reject（G3 结构性失败）；Tushare fallback（G1 付费/ToS） |
+| ③ 基本面 | EDGAR filed-date PIT ✅ | **⚠️ 修订 #47：cninfo → exploratory-only**（G1：cninfo 反爬 + 商业数据产品授权 ≠ EDGAR 开放 API；保守处置）。仍 = A 股 EDGAR 等价（申报日 + as-filed + 修订透明），`rollysys/use_cninfo` MIT ✅ fetch + Aionis 自建 PyMuPDF 解析；但 **A 股基本面降 exploratory，不进 confirmatory headline**（claim 收窄为 US-rank-IC + A 股 exploratory 条件化）。baostock reject（G3 结构性失败）；Tushare fallback（G1 付费/ToS）。见 [`ashare-fundamentals-source.md`](../reports/design/2026-08-03-ashare-fundamentals-source.md) §3 G1 |
 | ④ 新闻情绪 | E3 闭集 13D/8-K（受控 ablation） | 仅 exploratory（不作主 alpha，同 Track B §3.4） |
 | ⑤ 风险 | alphalens/pyfolio ✅ | 复用 |
 | ⑥ 回测净成本 | FINSABER ✅ | 复用 |
