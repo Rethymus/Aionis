@@ -20,6 +20,7 @@ from aionis.features.regime_composite import regime_composite
 CACHE = settings.data_dir / "cache"
 MACRO_PATH = CACHE / "regime_macro.parquet"
 GLOBAL_PATH = CACHE / "regime_global_dy.parquet"
+MESO_PATH = CACHE / "regime_meso.parquet"
 OUT_PATH = CACHE / "regime_composite.parquet"
 
 
@@ -47,14 +48,20 @@ def main() -> None:
 
     macro = _load_date_indexed(MACRO_PATH, "macro_regime")
     glob = _load_date_indexed(GLOBAL_PATH, "total_spillover")
+    layers = {"macro": macro, "global": glob}
+    if MESO_PATH.exists():
+        meso = _load_date_indexed(MESO_PATH, "meso_regime")
+        layers["meso"] = meso
+        print(f"[S] meso: n={len(meso)} ({meso.index.min()}..{meso.index.max()})", flush=True)
+    else:
+        print("[S] meso: NOT FOUND -> 2-layer composite (macro+global)", flush=True)
     print(
         f"[S] macro: n={len(macro)} ({macro.index.min()}..{macro.index.max()}) | "
         f"global: n={len(glob)} ({glob.index.min()}..{glob.index.max()})",
         flush=True,
     )
 
-    # 2-layer composite (meso deferred -> exploratory; documented).
-    layers = {"macro": macro, "global": glob}
+    # 3-layer composite when meso present (else 2-layer). Equal-weight z-scored + TACO.
     regime = regime_composite(layers)
     print(
         f"[S] regime_state: n={len(regime)} | valid={int(regime.notna().sum())} | "
@@ -79,8 +86,8 @@ def main() -> None:
         flush=True,
     )
     print(
-        "[S] CAVEAT: 2-layer composite (macro+global); meso (shenwan/SIC) deferred -> "
-        "EXPLORATORY. Confirmatory Track C claim needs the 3-layer composite + a new ledger row.",
+        "[S] CAVEAT: composite includes meso=US-only (CN shenwan fetch deferred) -> the "
+        "meso layer is partial. Confirmatory Track C claim needs full US+CN meso + new ledger row.",
         flush=True,
     )
 
