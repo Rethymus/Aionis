@@ -67,14 +67,38 @@ def test_parse_opt_in_opt_out_to_long_expands_daily(_mock_index_constitution):
         _mock_index_constitution.history_data
     )
 
-    # Assert: should generate daily rows from 2018-01-15 to far future
+    # Assert: still-member is capped at the SNAPSHOT date (today), not 2099-12-31.
+    today = pd.Timestamp.today().normalize()
     assert list(df.columns) == ["date", "ticker"]
     assert df["ticker"].unique()[0] == "SZ000001"
     assert df["date"].min() == pd.Timestamp("2018-01-15")
-    assert df["date"].max() == pd.Timestamp("2099-12-31")  # far future
-    # Count days from 2018-01-15 to 2099-12-31 inclusive
-    expected_days = (pd.Timestamp("2099-12-31") - pd.Timestamp("2018-01-15")).days + 1
+    assert df["date"].max() == today
+    expected_days = (today - pd.Timestamp("2018-01-15")).days + 1
     assert len(df) == expected_days
+
+
+def test_parse_handles_nat_opt_in_as_data_start(_mock_index_constitution):
+    """NaT opt-in (stock predates dataset) -> member from earliest known opt-in."""
+    _mock_index_constitution.history_data = pd.DataFrame([
+        {"symbol": "SZ000001", "name": "anchor", "opt-in": "2010-01-04", "opt-out": ""},
+        {"symbol": "SH600549", "name": "NaTin", "opt-in": None, "opt-out": "2019-06-17"},
+    ])
+    df = csi300_constituents._parse_opt_in_opt_out_to_long(_mock_index_constitution.history_data)
+    sub = df[df["ticker"] == "SH600549"]
+    # NaT opt-in falls back to data_start (2010-01-04); opt-out honored.
+    assert sub["date"].min() == pd.Timestamp("2010-01-04")
+    assert sub["date"].max() == pd.Timestamp("2019-06-17")
+
+
+def test_parse_skips_row_with_both_nat(_mock_index_constitution):
+    """Both opt-in and opt-out NaT -> row skipped (cannot place membership)."""
+    _mock_index_constitution.history_data = pd.DataFrame([
+        {"symbol": "SZ000001", "name": "good", "opt-in": "2018-01-15", "opt-out": "2019-01-15"},
+        {"symbol": "SH999999", "name": "unplaceable", "opt-in": None, "opt-out": None},
+    ])
+    df = csi300_constituents._parse_opt_in_opt_out_to_long(_mock_index_constitution.history_data)
+    assert "SH999999" not in set(df["ticker"])
+    assert "SZ000001" in set(df["ticker"])
 
 
 def test_parse_opt_in_opt_out_with_exit_date(_mock_index_constitution):

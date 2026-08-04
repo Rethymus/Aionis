@@ -243,6 +243,21 @@ universe:
 
 ---
 
+## 快照记录（2026-08-04 首次真实拉取）
+
+Owner 授权"按推荐的数据与方式处理"后的首次 S0 真实拉取。`index-constitution==0.6.2`（PyPI MIT，`py3-none-any` wheel，3.13 兼容），lazy-import（**非 core dep**：`uv add` 临时激活 → 拉取 → `uv remove` 复原 lean-deps；pyproject/uv.lock 净零）。
+
+- **产物**：`data/cache/csi300_constituents.parquet`（gitignored；0.52 MB；2,343,482 行；`[date,ticker]` 长表）
+- **sha256**：`425f5535322ed7487261c90f2d187266f6b2be3e859c84fb3c091c51b120f0af`（记于本 doc；**不入 ledger**——S0 数据快照非 `config_committed`，按 Track C 冻结后 S0 规则不写新 ledger 行）
+- **覆盖**：2005-04-08 .. 2026-08-04（快照日 cap）；949 唯一 tickers（含已退市/移除 → survivorship-safe）
+- **PIT 校验**：任一查询日成员数 = **300**（CSI300 标定）；SH600549（NaT opt-in, opt-out 2019-06-17）2016-06-30 在册 ✅、2020-06-30（opt-out 后）不在 ✅
+- **NaT 处置**（本次适配器修复）：4 行 opt-in NaT（数据集记录起点前的早期/创始成员）→ 用数据最早 opt-in 兜底（保守，视为数据起点即在册）；300 行 opt-out NaT（现仍在册）→ cap 到快照日（**非 2099**——避免 ~12M 行膨胀）；both NaT → 跳过
+- **复现**：`uv add index-constitution && uv run python -c "from aionis.ingest.csi300_constituents import fetch_csi300_constituents; fetch_csi300_constituents(enable_fetch=True, force=True)"` → 同源数据 + 同版本包应重算得同一 sha256（H6）
+
+> 注：上方「阶段 1 §sha256 记录入 ledger」「待 owner 裁断」「不越界声明（未拉真实数据）」为本快照前的 PROPOSED 状态；本快照记录以实际拉取结果为准（owner 已授权）。
+
+---
+
 ## 引用
 
 - 内部：[`track-c-preregistration.md`](track-c-preregistration.md)、[`data-intake-rubric.md`](data-intake-rubric.md)、[`data-license-allowlist.md`](data-license-allowlist.md)、[`ingest/universe.py`](../src/aionis/ingest/universe.py)（美股侧模式）

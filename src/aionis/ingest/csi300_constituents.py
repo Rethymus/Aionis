@@ -62,33 +62,40 @@ def _cache_dir(cache_dir: Path | None = None) -> Path:
 def _parse_opt_in_opt_out_to_long(df: pd.DataFrame) -> pd.DataFrame:
     """Convert opt-in/opt-out wide format to long [date, ticker] daily membership.
 
-    Each row in the input represents one stock's membership period:
-    - symbol: stock ticker (e.g., "SZ000001", "SH600000")
-    - name: company name
-    - opt-in: date added to CSI300
-    - opt-out: date removed (empty string if still a member)
+    Each row is one stock's CSI300 membership period; opt-in/opt-out are datetime
+    (NaT allowed). NaT handling (the raw data has 4 NaT opt-in + 300 NaT opt-out):
 
-    This function expands each period into daily [date, ticker] rows,
-    creating a long frame suitable for PIT queries like constituents_on(t).
+    * NaT opt-in, known opt-out → the stock predates the dataset's recording window
+      (early/founding member); treat opt-in as the dataset's earliest known opt-in
+      (conservative: member from data start).
+    * NaT opt-out → still a member → extend to the SNAPSHOT DATE (not 2099-12-31 — the
+      prior cap materialized ~73 years of future daily rows per current member, ~12M
+      rows total). A future re-pull extends the cap; constituents_on(t) for t <= snapshot
+      date is exact, t > snapshot returns nothing (we never query future membership).
+    * both NaT → skip (cannot place membership).
     """
     if df.empty:
         return pd.DataFrame(columns=_LONG_COLUMNS)
 
+    opt_in_col = pd.to_datetime(df["opt-in"])
+    opt_out_col = pd.to_datetime(df["opt-out"])
+    data_start = opt_in_col.min()  # earliest recorded opt-in (fallback for NaT opt-in)
+    snapshot_date = pd.Timestamp.today().normalize()  # cap for still-members
+
     rows: list[tuple[pd.Timestamp, str]] = []
+    for symbol, opt_in, opt_out in zip(df["symbol"], opt_in_col, opt_out_col, strict=True):
+        symbol = str(symbol).strip()
+        in_missing = bool(pd.isna(opt_in))
+        out_missing = bool(pd.isna(opt_out))
+        if in_missing and out_missing:
+            continue  # cannot place membership at all
+        if in_missing:
+            opt_in = data_start  # predates dataset → member from data start
+        if out_missing:
+            opt_out = snapshot_date  # still a member → cap at snapshot date
+        if opt_out < opt_in:
+            continue  # defensive: malformed interval
 
-    for _, row in df.iterrows():
-        symbol = str(row["symbol"]).strip()
-        opt_in = pd.to_datetime(row["opt-in"])
-        opt_out_raw = row.get("opt-out", None)
-
-        if pd.isna(opt_out_raw) or opt_out_raw == "" or str(opt_out_raw).strip() == "":
-            # Still a member: extend to a far future date (2099-12-31)
-            opt_out = pd.Timestamp("2099-12-31")
-        else:
-            opt_out = pd.to_datetime(opt_out_raw)
-
-        # Generate daily rows from opt-in to opt_out (exclusive)
-        # If opt-in == opt_out, stock was only member on that day
         dates = pd.date_range(start=opt_in, end=opt_out, freq="D")
         for date in dates:
             rows.append((date, symbol))
