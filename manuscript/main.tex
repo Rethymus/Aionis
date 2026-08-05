@@ -194,6 +194,22 @@ $0.109$, all within the documented $[0.08, 0.15]$ range. The confirmatory combin
 $\sigma = 0.106$ sits at the median. The power floor is thus both literature-anchored
 and empirically replicated across our configurations.
 
+\subsection{Theoretical pure-noise bound and the ML noise excess}
+
+The cross-sectional Spearman rank-IC under the null of no predictability has the
+closed-form standard deviation $\sigma_{\text{null}} = 1/\sqrt{N_{\text{cross}}-1}$
+for a cross-section of $N_{\text{cross}}$ assets. For our cross-sections
+($N \in \{462, 465, 929, 1386\}$), this gives $\sigma_{\text{null}} \in [0.027, 0.047]$---yet
+the observed $\sigma(\text{IC})$ across 21 series is consistently
+\emph{2.0--4.4$\times$} this bound (median excess $3.4\times$; minimum $2.03\times$).
+The power floor is therefore not a pure statistical necessity: at the pure-noise
+bound $\sigma \approx 0.047$, look-3 would be marginally powered ($n_{\min} \approx 83$
+months $< 120$); the floor binds because real ML-based rank-IC carries a robust
+noise excess (model fitting noise, cross-sectional heteroskedasticity, and
+overlapping forward returns). This refines the claim from ``$\sigma \approx 0.10$ is
+a floor'' to a mechanistic statement: the floor is the gap between the closed-form
+sampling bound and the empirically robust ML noise excess.
+
 \section{Evidence}\label{sec:evidence}
 
 Table~\ref{tab:evidence} reports 15 pre-registered two-tailed configurations on the

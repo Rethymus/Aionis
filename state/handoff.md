@@ -1,5 +1,37 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-08-05 (i) power-floor 理论推导 — 纯噪声界 + ML 噪声超额（机制性定理）
+
+业主第三次问"最具价值方向" + Stop hook 纠偏（自审通过即执行，勿再请示）。批判性过滤后选 power-floor
+理论推导（唯一能显著抬高王冠贡献的方向；其余 ceremony/diminishing）。自审循环通过（闭式可推、复用既有
+面板、不触冻结面）→ 直接执行。
+
+**核心数学事实**：横截面 Spearman rank-IC 在无预测力零假设下 σ_null = 1/√(N−1)（闭式）。
+N=462→0.047，N=929→0.033，N=1386→0.027。但 Aionis 21 个 IC 系列实测 σ(IC) 一致地是 σ_null 的
+**2.0-4.4×（median 3.41×，min 2.03×，无例外）**。
+
+**机制性结论**（比"σ≈0.10 floor"更精确诚实）：
+- 纯噪声界 σ=0.047 时 look-3 n_min = (1.96×0.047/0.010)² ≈ **83 月 < 120** → 纯噪声本可在 look-3 达等价。
+- 实测中位 σ=0.109 时 look-3 n_min ≈ **456 月** → 不可行。
+- **power floor 不是纯数学必然，而是由 ML 噪声超额驱动**（拟合噪声 + 异方差 + 重叠）——稳健跨 21 系列。
+
+**交付**：
+- `scripts/ic_pure_noise_bound.py` — 算 N_cross（从中位 OOS 面板）+ σ_null + σ_obs + 超额比；21 系列。
+  ruff clean。`runs/ic_pure_noise_bound.json`（gitignored）。
+- `tests/test_ic_pure_noise_bound.py` — 6 测试（闭式 1/√(N−1) 正确性 + 单调 + 已知值 + N<2 NaN + n_cross_eff
+  中位/分区/min-max + 缺列空）。6/6 绿。
+- `reports/design/2026-08-05-power-floor-theoretical-derivation.md` — 闭式推导 + 21 系列超额表 + 机制分解
+  （ML 拟合噪声/异方差/重叠）+ refined honest claim（"floor = 纯抽样界 + ML 超额"，非"σ≈0.10 规律"）。
+- `manuscript/main.tex` §5.3 — 加"Theoretical pure-noise bound and the ML noise excess"子节
+  （power-floor 升为"理论 + 经验 + 文献"三支撑）。
+
+**批判性自审记录**（业主要求）：① 纯噪声界 0.047 < 实测 0.10，会否削弱？→ 不削弱，反而更 sharp（floor
+由超额驱动，非纯界）；② 推导会否成兔子洞？→ 限定为闭式界 + 经验超额，不推一般理论；③ 外部 GKX 验证？
+→ 先不做（可行性未证），内部 21 系列 + 闭式已足。
+
+**边界**：本轮 1 新 script + 1 新 test + 1 新 note + manuscript §5.3 编辑 + state；**0 ledger / frozen surface /
+prereg / ADR / config / data / E3 改动**；未跑 confirmatory/forward/strategy/research；未触 E3；未外发。
+
 ## 2026-08-05 (h) arXiv preprint scaffold（rec #2；framing a；PREP，未上传）
 
 owner approved framing **(a)**（power-floor 定理为 lead）+ LaTeX 预制。交付 `manuscript/` 三件套：
