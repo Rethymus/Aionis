@@ -51,6 +51,12 @@
   race; see memory aionis-parallel-writer-race). `opus`/`fable` aliases blocked by `[1M]` resolver values →
   AUD-07B + RD-15 deferred; RD-08 HOLD (needs frozen rule table). Safe RD queue exhausted for sonnet tier.
   Not pushed. Detail: `state/handoff.md` § Wave-B FINAL.
+- **updated:** 2026-08-05 (h). **arXiv preprint scaffold（rec #2；framing a；PREP，未上传）。**
+  owner approved framing (a) + LaTeX 预制。`manuscript/` 三件套：`main.tex`（arXiv 通用 article class，仅标准宏包；
+  power-floor 为 lead）+ `references.bib`（6 cited，4 WebSearch verified + 2 标准 + 5 extras）+ `README.md`（构建 +
+  provenance + gaps）。结构性自查：9 begin=9 end，6 cite key 全在 .bib。**未编译**（无本地 TeX 工具链）。
+  **边界**：预制非上传——arXiv 上传不可逆外发，仍待业主单独点头；纯新建 manuscript/ + state；0 ledger/frozen surface/
+  prereg/ADR/config/data/E3；未外发。**待业主**：首次编译 + 授权 arXiv 上传 + venue 定位 → tailoring + 作者占位。
 - **updated:** 2026-08-05 (g). **发表强化 — power-floor 文献锚定 + 复现声明（2 新 PROPOSED 文档）。**
   owner 第二次 `/goal` 推方向 1。powerfloor sonnet agent [1210] 失败（与 positioning 同模式，§17 停重试）→ opus §8 fallback。
   ① `reports/design/2026-08-05-power-floor-literature-anchoring.md`：把 σ≈0.10 锚定到 Gu-Kelly-Xiu (2020 RFS, 月 OOS R²

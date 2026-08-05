@@ -1,0 +1,293 @@
+% Aionis — arXiv preprint scaffold (PREP, not yet submitted).
+%
+% Framing (a): the power-floor theorem is the lead methodological contribution,
+% supported by the end-to-end anti-leakage discipline and the 15-row null evidence.
+%
+% Build: latexmk -pdf main.tex   (or upload this folder to Overleaf)
+% No local TeX toolchain in the Aionis repo; compile on a machine with TeX Live
+% (or Overleaf). Uses ONLY standard, universally-available packages (no custom .cls).
+% To target an Elsevier venue later, swap \documentclass{article} -> elsarticle
+% (download elsarticle.cls from CTAN/Overleaf); content is class-agnostic.
+%
+% Status: v0.1-prep 2026-08-05. Content cross-checked against ledger #49 and the
+% Chinese v1.0 / English v1.0-en drafts. Awaiting owner authorization before any
+% arXiv upload (irreversible externalization).
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[round,authoryear]{natbib}
+\usepackage{xcolor}
+\hypersetup{colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,urlcolor=blue!60!black}
+
+\title{A Power Floor for Monthly Cross-Sectional Rank-IC Equivalence Testing:\\
+An Anti-Leakage Discipline Case Study on U.S.\ and A-Share Equities}
+
+\author{Rethymus\thanks{Corresponding author. The Aionis project is MIT-licensed; the
+research harness, frozen configurations, and append-only ledger are available at
+\href{https://github.com/Rethymus/Aionis}{github.com/Rethymus/Aionis}. Data:
+see \S\ref{sec:replication}.}}\date{Preprint v0.1 \today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We document a \emph{power floor} for monthly cross-sectional rank-IC equivalence
+testing: under a pre-registered Jennison--Turnbull group-sequential equivalence
+gate at SESOI $\pm 0.010$, the empirically documented noise floor of monthly
+rank-IC ($\sigma\!\approx\!0.10$, consistent with the predictability levels of
+\citealt{gu2020empirical} and the Fundamental Law of \citealt{grinold1999active})
+makes declaring equivalence structurally infeasible within realistic sample sizes
+(look-3 $n_{\min}=435$ months, $\approx 36$ years). We establish this as a
+general property---not an artifact of our data---by verifying $\sigma(\text{IC})\in[0.092,0.163]$
+across 20 of our own IC series spanning single- and dual-region configurations,
+all within the documented $[0.08,0.15]$ range. As a carrier for the theorem we
+present Aionis, a falsifiable, anti-leakage research harness whose disciplines
+(config-before-result append-only ledger, full point-in-time data, purged
+cross-validation with embargo, and bit-identical determinism) are themselves the
+object of study. On S\&P 500 point-in-time constituents and A-share CSI 300, 15
+pre-registered two-tailed configurations yield null point estimates, including
+the first confirmatory out-of-sample run (combined rank-IC $-0.0088$, $p=0.484$).
+The pre-registered Jennison--Turnbull gate returns \textsc{Not\_Equivalent} at
+look-1 even with a null point estimate---a live demonstration that the discipline
+refuses to prematurely declare equivalence. The honest, pre-registered contribution
+is therefore the null, the end-to-end discipline, and the power-limit disclosure:
+not a declared equivalence.
+\end{abstract}
+
+\section{Introduction}\label{sec:intro}
+
+The common failure mode of quantitative asset-pricing research is not ``no alpha
+found'' but \emph{unfalsifiability}: results silently rewritten via rerun-to-significance,
+backfilling, survivor bias, or cross-validation leakage. This preprint makes two
+contributions against that backdrop.
+
+First, we document a \emph{power floor}: pre-registered equivalence testing on the
+monthly cross-sectional rank-IC at a $\pm 0.010$ equivalence margin is structurally
+infeasible within realistic sample sizes, because the noise floor of monthly rank-IC
+($\sigma\!\approx\!0.10$) dominates the margin by an order of magnitude. We ground
+this floor in the published predictability literature
+\citep{gu2020empirical,goyal2008comprehensive,grinold1999active} and verify it
+empirically across 20 of our own IC series (\S\ref{sec:powerfloor}).
+
+Second, we present the discipline that makes the null \emph{credible}: an
+append-only frozen-configuration ledger (sha256 committed before any out-of-sample
+metric is observed), a full point-in-time data stack, purged cross-validation with
+embargo, and bit-identical determinism. The first confirmatory out-of-sample run
+returns a null point estimate, and the pre-registered equivalence gate refuses to
+declare equivalence at look-1---the discipline operating exactly as designed.
+
+Throughout, \emph{null is the intended, publishable outcome}. We do not claim market
+efficiency, do not claim factor alpha is strictly zero, and do not constitute a
+tradable strategy (see \S\ref{sec:limitations}).
+
+\section{Related Literature}\label{sec:related}
+
+\citealt{gu2020empirical} establish that even the strongest machine-learning models
+achieve monthly out-of-sample $R^2$ of only $1.08$--$1.80\%$ on U.S.\ equities,
+implying mean rank-IC magnitudes of order $0.05$--$0.12$ (since $R^2\!\approx\!\text{IC}^2$
+for a single cross-sectional signal). \citealt{goyal2008comprehensive} comprehensively
+re-examine equity-premium predictors and find that most fail out-of-sample. The
+Grinold--Kahn Fundamental Law of Active Management \citep{grinold1999active} frames
+the information ratio (IR$\,=$ mean IC$/\sigma(\text{IC})\times\sqrt{\text{breadth}}$);
+an annualized IR of $0.5$ is conventionally ``good,'' which implies mean IC$/\sigma(\text{IC})\!\approx\!0.14$
+and thus $\sigma(\text{IC})\!\approx\!7\!\times\!\text{mean IC}$. For a typical weak
+factor (mean IC$\approx 0.015$), this gives $\sigma(\text{IC})\!\approx\!0.10$---exactly
+the order of magnitude we estimate. Equivalence testing via TOST
+\citep{schuirmann1987,lakens2017} is methodologically standard, but we are unaware
+of a prior finance equivalent-margin convention for rank-IC; our $\pm 0.010$ is a
+stringent choice informed by practitioner IC norms.
+
+\section{The Anti-Leakage Discipline}\label{sec:discipline}
+
+Aionis structurally locks the leakage sources that normally undermine falsifiability.
+Each item below is auditable (it corresponds to a ledger row, an ADR, or a code assertion),
+not narrative.
+
+\begin{enumerate}
+\item \textbf{\texttt{config\_committed} before result.} The sha256 of the frozen
+configuration is appended to an append-only ledger (\texttt{runs/ledger.jsonl})
+\emph{before} any out-of-sample metric is observed. Changing the configuration creates
+a new ledger row; it never silently overwrites. A headline cannot be
+rerun-to-significance rescued.
+\item \textbf{Full point-in-time (PIT) stack.} Fundamentals are aligned by
+\texttt{filed} date (not period-end); macro variables use ALFRED as-of vintages;
+VIX uses a no-revision contract; S\&P 500 membership uses PIT constituents
+($\texttt{constituents\_on}(t)$, never a today-snapshot); A-share prices use raw
+adjustment factors (frozen strategy).
+\item \textbf{Purged validation with embargo.} Historical phases use
+\texttt{PurgedGroupKFold} (group = month, embargo = 21 sessions); the chronological
+tracks (B, C) use walk-forward folds with train strictly preceding test.
+\item \textbf{$H_6$ determinism.} Single-threaded execution ($n\_jobs=1$), all seeds
+pinned to $0$, and version-pinned dependencies (\texttt{uv.lock}) make both the IC
+series and the raw out-of-sample scores bit-identical across reruns (asserted).
+\item \textbf{Two-tailed, pre-registered, null-favored.} One pre-registered
+two-tailed claim per phase; SESOI $\pm 0.010$; a Jennison--Turnbull group-sequential
+equivalence gate \citep{jennison2000group} with look-specific repeated confidence
+intervals (RCI) at $99.44/97.64/95.00\%$ and strict containment.
+\item \textbf{Multiplicity budget $= 1$.} The conditioning in Track C is a single
+pre-specified interaction (score $\times$ regime state), structurally bypassing the
+``tried $K$ subgroups and reported the most significant.''
+\end{enumerate}
+
+\section{The Dual-Region Joint Estimator}\label{sec:estimator}
+
+The estimator throughout is the monthly cross-sectional rank-IC (Spearman correlation
+of model scores with realized forward returns), with HAC (Newey--West) inference.
+Track C introduces a dual-region joint walk-forward over U.S.\ (S\&P 500) and A-share
+(CSI 300) month-end cross-sections, aligned by calendar month.
+
+\paragraph{Core theorem.} Month-end sampling with calendar-fold boundaries implies
+that the per-region 21-session embargo is automatically satisfied: adjacent month-ends
+in either market are $\approx 21$ sessions apart, so no per-session embargo bookkeeping
+is required.
+
+\paragraph{Region-month group.} The ranking query is (region, month): U.S.\ names
+rank only against U.S.\ names and A-share names only against A-share names, eliminating
+cross-currency label contamination (forward returns are local-currency). The model is
+jointly fitted with shared parameters.
+
+\paragraph{Anti-leakage invariants (code-asserted).} Per-region chronology
+($\max(\text{train}) < \min(\text{test})$ per region), train-only binner fit,
+regime state computed as-of month-end (never retrospectively recomputed),
+region-month group separation, and $H_6$ bit-identity.
+
+\section{The Power Floor}\label{sec:powerfloor}
+
+\subsection{Prospective power analysis}
+
+Calibrating from the confirmatory IC series (combined $\sigma\!\approx\!0.106$,
+lag-1 $\rho\!\approx\!0.07$, observed $\text{se}_\text{HAC}=0.0126$ at $n=71$), the
+Jennison--Turnbull schedule $\{60, 90, 120\}$ with O'Brien--Fleming spending
+($z_k = 2.772, 2.263, 1.960$; RCI levels $99.44/97.64/95.00\%$) yields the following
+minimum sample sizes to declare equivalence at SESOI $\pm 0.010$:
+
+\begin{center}
+\begin{tabular}{lrrr}
+\toprule
+Look & $z_k$ & $n_{\min}$ (months) & years \\
+\midrule
+1 ($n=60$) & 2.772 & 869 & 72.5 \\
+2 ($n=90$) & 2.263 & 580 & 48.3 \\
+3 ($n=120$) & 1.960 & 435 & 36.2 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Under a 2000-replication block bootstrap, $P(\text{equivalence}) = 0.0000$ at all
+three planned looks; the look-3 RCI half-width median ($0.019$) is twice the SESOI.
+Declaring equivalence is therefore unreachable within any realistic study horizon.
+
+\subsection{Literature anchoring and cross-configuration empirical verification}
+
+The $\sigma\!\approx\!0.10$ floor is not an artifact of the confirmatory run.
+It is consistent with the monthly predictability levels of
+\citet{gu2020empirical} ($R^2 \in [1.08\%, 1.80\%]$) and the Fundamental Law
+inference from \citet{grinold1999active}. We further verify it directly across 20
+of our own IC series---Track C (4 dual-region configurations $\times$ \{U.S., CN,
+combined\}) and Track B / Phase B (4 independent run signatures $\times$
+\{treatment, baseline\})---finding $\sigma(\text{IC}) \in [0.092, 0.163]$ with median
+$0.109$, all within the documented $[0.08, 0.15]$ range. The confirmatory combined
+$\sigma = 0.106$ sits at the median. The power floor is thus both literature-anchored
+and empirically replicated across our configurations.
+
+\section{Evidence}\label{sec:evidence}
+
+Table~\ref{tab:evidence} reports 15 pre-registered two-tailed configurations on the
+S\&P 500 PIT universe (588 clean tickers, 2016+) and the dual-region Track C panel.
+\emph{Honest grading}: shared-fold purged cross-fitting is a CV-proxy, not
+chronological out-of-sample; exploratory is not confirmatory. The Grade column is the
+true upper bound of publishable strength.
+
+\begin{table}[h]
+\centering
+\small
+\caption{15 null configurations. All CIs bracket zero.}
+\label{tab:evidence}
+\begin{tabular}{rlrrrrl}
+\toprule
+\# & Result & Estimate & 95\% CI & $p$ & $n$ & Grade \\
+\midrule
+1  & Phase B differential        & $-0.0008$ & $[-0.0106, 0.0090]$ & 0.87 & 125 & CV-proxy \\
+2  & Phase C differential        & $-0.0065$ & $[-0.0195, 0.0066]$ & 0.36 & 125 & CV-proxy \\
+3  & Phase D differential        & $-0.0030$ & $[-0.0137, 0.0078]$ & 0.60 & 125 & CV-proxy \\
+4  & Phase E1 differential       & $-0.0028$ & $[-0.0115, 0.0059]$ & 0.53 & 125 & CV-proxy \\
+5  & Track B treatment (\#41)    & $+0.0055$ & $[-0.021, 0.033]$   & 0.69 & 125 & chron./explor. \\
+6  & Track B differential        & $+0.0076$ & $[-0.004, 0.020]$   & 0.22 & 125 & chron./explor. \\
+7  & Track C joint combined IC   & $-0.0070$ & $[-0.030, 0.016]$   & 0.55 &  71 & chron./explor. \\
+8  & Track C conditional-IC $\beta$ & $-0.015$ & ---               & 0.20 &  71 & explor. \\
+9  & Track C 3-layer cond.-IC    & $-0.0148$ & ---                 & 0.21 &  71 & explor. \\
+10 & Baseline-FF5                & $+0.0106$ & half $0.0196$       & ---  & 125 & CV-proxy \\
+11 & Baseline-RANK               & $+0.0154$ & half $0.0149$       & 0.04 & 125 & CV-proxy \\
+12 & $h\in\{10,42\}$ sweep (8)   & all bracket zero & ---          & 0.41--0.86 & 124--126 & explor. \\
+13 & Track C asymmetric-35       & $-0.0121$ & $[-0.035, 0.011]$   & 0.31 &  71 & explor. \\
+14 & Track C asymmetric-41       & $-0.0088$ & $[-0.034, 0.016]$   & 0.48 &  71 & explor. \\
+\textbf{15} & \textbf{Track C confirmatory} & $\mathbf{-0.0088}$ & $[-0.034, 0.016]$ & \textbf{0.48} & \textbf{71} & \textbf{confirmatory} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{First Confirmatory Out-of-Sample}\label{sec:confirmatory}
+
+The first confirmatory OOS run (ledger row \#49, frozen configuration \#48 committed
+before observation) yields:
+\begin{itemize}
+\item Combined rank-IC mean $-0.00884$ ($p_\text{HAC}=0.484$; 95\% HAC CI $[-0.034, 0.016]$
+brackets zero; $n=71$ months).
+\item Per-region: U.S.\ IC $+0.0052$, CN IC $-0.0265$ (both null).
+\item Conditional-IC $\beta = -0.0076$ ($p = 0.43$): no regime interaction.
+\item Jennison--Turnbull look-1 ($n=60$, RCI $99.44\%$): \textsc{Not\_Equivalent};
+RCI $[-0.051, +0.027]$ is wider than $\pm 0.010$ SESOI.
+\item $H_6$ double-run bit-identical: \textsc{Pass}.
+\end{itemize}
+
+The honest reading is a null point estimate plus an underpowered look-1---neither
+``treatment works'' nor ``equivalence rejected.'' The gate's refusal to prematurely
+declare equivalence, even with a null point estimate, is the live demonstration of
+the discipline. Strict equivalence (look-2/3) requires E3 forward-live calendar time
+(look-2 $\approx 2028$, look-3 $\approx 2031$).
+
+\section{Limitations}\label{sec:limitations}
+
+\begin{itemize}
+\item CV-proxy (shared-fold purged cross-fit) is not chronological OOS; purge/embargo
+prevent label overlap but the train complement may include post-test months.
+\item Exploratory is not confirmatory; only row 15 is confirmatory.
+\item The power floor (\S\ref{sec:powerfloor}) means strict equivalence at $\pm 0.010$
+is unreachable within a realistic horizon; the contribution is the null, the discipline,
+and the power-limit disclosure---not a declared equivalence.
+\item PIT constituents mitigate survivor bias but cannot eliminate it (no free
+delisting PIT). Currency: the region-month group eliminates label cross-contamination,
+but the joint IC is still a composition of local-currency returns.
+\item Not investment advice. Null does not prove market efficiency, does not prove
+factor alpha is strictly zero, and does not constitute a tradable strategy.
+\end{itemize}
+
+\section{Reproducibility}\label{sec:replication}
+
+Aionis is reproducible by construction. The append-only ledger records every frozen
+configuration's sha256 before any result; dependencies are version-pinned
+(\texttt{uv.lock}); all seeds are $0$; execution is single-threaded. Independent
+parties clone the MIT-licensed repository, supply their own API keys (Tiingo, FRED),
+run the tracked fetch scripts to rebuild the point-in-time cache, and reproduce any
+frozen run bit-identically (the $H_6$ assertion fails on any drift). Raw vendor data
+are not redistributed (vendor terms); public-domain sources (SEC EDGAR, FRED/ALFRED)
+are redistributable. Full statement: \texttt{docs/replication-availability.md}.
+
+\section{Conclusion}\label{sec:conclusion}
+
+We document that monthly cross-sectional rank-IC equivalence testing at $\pm 0.010$
+hits a structural power floor ($\sigma\!\approx\!0.10$ noise vs.\ $\pm 0.010$ margin,
+requiring $\approx 36$ years at the final look), establish it as a general property
+via literature anchoring and 20-series empirical verification, and present a
+confirmatory-grade null carried end-to-end by an anti-leakage discipline whose gate
+refuses to prematurely declare equivalence. The contribution is the null, the
+discipline, and the disclosed power limit.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

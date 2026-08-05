@@ -1,5 +1,29 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-08-05 (h) arXiv preprint scaffold（rec #2；framing a；PREP，未上传）
+
+owner approved framing **(a)**（power-floor 定理为 lead）+ LaTeX 预制。交付 `manuscript/` 三件套：
+- **`manuscript/main.tex`** — arXiv 通用 `\documentclass{article}`（仅标准宏包 amsmath/booktabs/hyperref/natbib；
+  无自定义 .cls → 任何 TeX Live/Overleaf 可编译）。framing (a) 重排：power-floor 入 abstract+intro，§5 详述
+  （n_min 869/580/435 + 跨 20 系列 σ∈[0.092,0.163] 实测）。§4 证据表 15 行；§7 复现声明指向 `docs/replication-availability.md`。
+  数字与 ledger #49 + 中文 v1.0 + 英文 v1.0-en 交叉一致。
+- **`manuscript/references.bib`** — 6 cited（gu2020empirical/goyal2008comprehensive/grinold1999active/lakens2017
+  = WebSearch verified；schuirmann1987/jennison2000group = 标准 methods）+ 5 标准 extras（neweywest/obrienfleming/
+  dieboldmariano/ke2017lightgbm/deprado2018）供扩展。
+- **`manuscript/README.md`** — 构建（latexmk / Overleaf）+ framing 说明 + provenance + prep-to-submission gaps（诚实：
+  uncompiled / 引用细节待确认 / 无图 / 作者占位 / venue 待选）+ elsarticle 可在定 venue 后替换。
+
+**验证（无本地 TeX 工具链，无法编译）**：结构性自查——9 \begin = 9 \end，环境全配对
+（abstract/center/enumerate/itemize×2/table/tabular×2），6 cite key 全部在 .bib 定义。
+
+**边界（关键）**：owner 批准的是**预制**，**非上传**——arXiv 上传是不可逆外发，仍需业主单独点头。
+本轮纯新建 `manuscript/` + state；**0 ledger / frozen surface / prereg / ADR / config / data / E3 改动**；
+未跑 confirmatory/forward/strategy/research；未触 E3；**未外发**（无 arXiv 上传）。
+
+**待业主**：① 在 Overleaf/自带 TeX 首次编译（修可能的 minor LaTeX 问题，标准宏包风险低）；② **授权 arXiv 上传**
+（不可逆外发）；③ venue 定位（CFR/JFEc/RevFin，positioning brief §4）→ venue-specific tailoring（篇幅/强调）；
+④ 作者+单位占位填充。
+
 ## 2026-08-05 (g) 发表强化 — power-floor 文献锚定 + 复现/数据可用性声明（2 新 PROPOSED 文档）
 
 owner 第二次 `/goal` 授权"推进推荐项 + 批判性比对 + 并行 agents + 分层省 token + reuse-first"。
