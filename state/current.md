@@ -51,6 +51,16 @@
   race; see memory aionis-parallel-writer-race). `opus`/`fable` aliases blocked by `[1M]` resolver values →
   AUD-07B + RD-15 deferred; RD-08 HOLD (needs frozen rule table). Safe RD queue exhausted for sonnet tier.
   Not pushed. Detail: `state/handoff.md` § Wave-B FINAL.
+- **updated:** 2026-08-05 (d). **Power analysis 揭示 J-T schedule 结构性欠功率（设计级发现，业主决策待定）。**
+  prospective power analysis（`scripts/track_c_power_analysis.py`，复用 #49 IC series 噪声 σ≈0.106 + ρ≈0.07）
+  显示 SESOI ±0.010 + looks 60/90/120 **任何一眼都无法宣布等价**：n_min = 869/580/435 月（72/48/36 年）；
+  block bootstrap P(equiv)=0.0000 at all 3 looks；look-3 (n=120) RCI half 0.019 >> SESOI 0.010。**判读**：
+  look-1 NOT_EQUIVALENT 不是局部保守，是整个 schedule 的必然状态（月频 rank-IC 噪声地板 vs ±0.010 SESOI）。
+  E3 forward-live 即使点火也需 ~36 年才达 look-3 等价。**贡献 reframing**：null 点估计 + 反泄漏纪律 + power-limit
+  披露（非"等价已宣告"）。业主 3 选项（`reports/design/2026-08-05-track-c-power-analysis-options.md`）：
+  A 接受 reframing（推荐）/ B 拓宽 SESOI ±0.025（新 amendment，post-hoc 嫌疑）/ C 延长 horizon n=435（不可行）。
+  draft §5/§6 已更新（诚实披露 power floor）。sonnet review 待回报。**边界**：本轮纯新建 script + design brief
+  + docs/state；**0 ledger / frozen surface 改动**；未跑 confirmatory/forward；power analysis 用 gitignored artifact。
 - **updated:** 2026-08-05 (c). **CONFIRMATORY CLIMAX — 首条 confirmatory OOS 入账（ledger #49）。**
   owner D6 GO 授权后，opus 直接建 `scripts/track_c_confirmatory_run.py`（frozen #48 sig 校验 + H6 双跑
   bit-identical + J-T 门 look-reachable + `confirmatory:first` 沉积；artifact-reuse 模式避免 GO 重跑）

@@ -113,11 +113,16 @@ H6 双跑 bit-identical 在真实数据上 PASS；J-T 门（`eval/sesoi_gate.py`
 1. **点估计 null**：combined IC −0.00884 与本 draft §4 全部 14 条 exploratory null 一致（覆盖 CV-proxy、
    chronological 单区/联合、4 个特征族、3 个区域）。confirmatory 等级下，treatment 模型仍未显示可靠正增量。
 2. **look-1 NOT_EQUIVALENT 是 power 声明，非效应信号**：OBF look-1 用 z=2.772（RCI 99.44%，极保守）；
-   月频 rank-IC 噪声 se≈0.014 → 99.44% RCI 半宽 ≈0.039，**结构性宽于** ±0.010 SESOI。任何现实月频
-   IC 系列在 n=60 都无法过 look-1 等价门。门的设计意图就是 look-2(n=90)/look-3(n=120)（z 降到 2.263/1.960
-   + 更多数据）才判定等价。
-3. **门的纪律演示**：J-T 门**拒绝在欠功率下过早宣布等价**，即使点估计 null。这正是"反泄漏纪律作为研究对象"
-   的活体证据——一个可被 rerun-to-significance 或宽 CI 救回的框架会草率宣布"null 即等价"；预注册的 J-T 门不会。
+   月频 rank-IC 噪声 se≈0.014 → 99.44% RCI 半宽 ≈0.039，**结构性宽于** ±0.010 SESOI。
+3. **power analysis 揭示更深层的结构性欠功率**（2026-08-05，`scripts/track_c_power_analysis.py`，
+   详见 §6）：prospective 投影显示**look-2 (n=90) 与 look-3 (n=120) 也无法宣布等价** —— 宣布等价需
+   n_min = 580 / 435 月（48 / 36 年）。block bootstrap 下 P(equivalence) = 0.0000 at all 3 planned looks。
+   **因此 look-1 NOT_EQUIVALENT 不是"look-1 太保守"的局部现象，而是整个 60/90/120 schedule 在 SESOI ±0.010
+   下的必然状态**。月频 rank-IC 的噪声地板（σ≈0.10）使 ±0.010 等价宣告在现实样本量下不可达。
+4. **门的纪律演示**：即使结构性欠功率，J-T 门仍**拒绝在数据不足时过早宣布等价**（即使点估计 null）。
+   这正是"反泄漏纪律作为研究对象"的活体证据——一个可被 rerun-to-significance 或宽 CI 救回的框架会草率宣布
+   "null 即等价"；预注册的 J-T 门不会。**结合 power analysis，项目的诚实贡献 = null 点估计 + 反泄漏纪律 +
+   power-limit 披露**（而非"等价已宣告"）。
 
 **climax 叙事**：Aionis 完成了首条 confirmatory OOS（config #48 frozen 先于观察，H6 真实数据证明）。
 点估计 null，与全部 exploratory 一致。**严格等价判定（look-2/3）需 E3 forward-live 累积日历时间
@@ -137,7 +142,18 @@ confirmatory 重现同一 IC）。
 
 - **CV-proxy ≠ chronological OOS**：B/C/D/E1（#1-4）是 shared-fold purged cross-fit，train 补集可含测试块之后月份；purge/embargo 防标签重叠但不等于时序 OOS。Track B/C（#5-9）才是 chronological。
 - **exploratory ≠ confirmatory**：#5-9 均 exploratory；无 confirmatory 级结果（待 §5）。
-- **欠功率的等价性**：Track B 差分 CI 上界 0.020 > SESOI 0.010 → 不构成严格等价，需更多样本（= 日历时间，E3 forward-live）。
+- **欠功率的等价性（已实测，2026-08-05 power analysis）**：Track B 差分 CI 上界 0.020 > SESOI 0.010 →
+  不构成严格等价。**Track C confirmatory 的 prospective power analysis**（`scripts/track_c_power_analysis.py`，
+  复用 ledger #49 的 combined_ic_series 噪声 σ≈0.106 + lag-1 ρ≈0.07）显示：J-T 60/90/120 look schedule 在
+  SESOI ±0.010 下**结构性欠功率** —— 宣布等价所需的最小样本 n_min：look-1 (z=2.772) 869 月(72.5 年)、
+  look-2 (z=2.263) 580 月(48.3 年)、look-3 (z=1.960) 435 月(36.2 年)。block bootstrap（2000 次重采样）
+  下 P(equivalence) = **0.0000** at all 3 planned looks；look-3 (n=120) 的 RCI half-width 中位数 0.019 > SESOI 0.010。
+  **判读**：look-1 NOT_EQUIVALENT 不是"look-1 太保守"的局部现象，而是**整个 60/90/120 schedule 在该 SESOI 下的
+  必然状态**。月频 rank-IC 的噪声地板（σ≈0.10）使 ±0.010 等价宣告在现实样本量下不可达。E3 forward-live 即使点火，
+  也需 ~36+ 年才能达 look-3 等价判定。**这是诚实的方法学发现**（power floor），非 bug；它把项目贡献从"宣布等价"
+  收窄为"null 点估计 + 反泄漏纪律 + power-limit 披露"。业主选项（非本 draft 自决）：① 接受此 framing（推荐）；
+  ② 拓宽 SESOI（如 ±0.025 → look-3 n=120 可达，但等价意义减弱，需新 ledger amendment）；③ 延长 look horizon
+  （n=435+，不可行）。
 - **幸存者偏差**：PIT 成分缓解，不可根除（无免费退市 PIT）。universe = 2016+ 588/705 可解析 ticker → headline = 保守上界。
 - **币种**：D1 区域-月排序消除 label 跨币种污染，但联合 IC 仍是本币收益的区域内排序合成，非汇率中性组合收益。
 - **SIC 当前快照**（非 historical vintage）；13D self-report filtering 残余误差；baostock 复权 G3 策略冻结（raw）。

@@ -1,5 +1,38 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-08-05 (d) Power analysis — J-T schedule 结构性欠功率（设计级发现，业主决策待定）
+
+climax #49 后的自然跟进："look-1 NOT_EQUIVALENT → look-2/3 能否宣布等价？" opus 直接写
+`scripts/track_c_power_analysis.py`（analytic HAC-SE 投影 + block bootstrap 2000 次 + min-n 计算）+
+`runs/track_c_confirmatory_power_analysis.json`（gitignored artifact）。
+
+**发现**（用 ledger #49 IC series 噪声 σ≈0.106 + ρ≈0.07，校准自 observed se_hac=0.0126@n=71）：
+| Look | z | n_min 宣布等价 | P(equiv) | RCI half med |
+|---|---:|---:|---:|---:|
+| 1 (60) | 2.772 | 869 月（72.5y）| 0.0000 | 0.037 |
+| 2 (90) | 2.263 | 580 月（48.3y）| 0.0000 | 0.025 |
+| 3 (120) | 1.960 | 435 月（36.2y）| 0.0000 | 0.019 |
+
+**判读**：look-1 NOT_EQUIVALENT 不是"look-1 太保守"的局部现象，而是**整个 60/90/120 schedule 在
+SESOI ±0.010 下的必然状态**。月频 rank-IC 噪声地板（σ≈0.10）使 ±0.010 等价宣告在现实样本量不可达；
+E3 forward-live 即使点火也需 ~36 年才达 look-3 等价。**这是诚实的方法学发现（power floor），非 bug**。
+
+**贡献 reframing**（已写进 draft §5/§6）：项目主贡献 = ① 反泄漏纪律作为研究对象（不变）；② 15 条 null
+点估计（强 evidence 无 alpha）；③ **power-limit 披露**（J-T ±0.010 在月频 rank-IC 的 power floor）。
+非"等价已宣告"。draft §5 的 look-1 框架已从"局部保守"升级为"结构性欠功率"。
+
+**业主 3 选项**（`reports/design/2026-08-05-track-c-power-analysis-options.md`）：
+- **A（推荐）** 接受 reframing：不动冻结面，贡献 = null + 纪律 + power-limit。
+- B 拓宽 SESOI ±0.025：新 amendment #49b；look-3 (n=120) RCI half 0.019 < 0.025 → 可达等价；
+  但 post-hoc "moving goalposts" 嫌疑 + 等价意义减弱。
+- C 延长 horizon n=435：不可行（36 年）。
+
+**独立性**：sonnet review of power analysis methodology 派发中（`reports/audits/2026-08-05-power-analysis-review.md`
+待回报）。数字由 opus 自算；bootstrap seed=0 pinned（H6 精神）。
+
+**边界**：本轮纯新建 script + design brief + docs(state) 更新；**0 ledger / frozen surface / prereg / ADR 改动**；
+未跑 confirmatory/forward/strategy；power analysis 用 gitignored artifact（不改 frozen surface）。
+
 ## 2026-08-05 (c) CONFIRMATORY CLIMAX — 首条 confirmatory OOS 入账（ledger #49）
 
 owner D6 GO 授权（"按推荐方式处理 + 难度分层派 agent + 并行不互扰 + 冲突最高价值优先 + 结果不乐观再调整重测"）。
