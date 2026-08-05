@@ -4,7 +4,7 @@
 
 | phase | claim (treatment vs fundamentals-only) | status |
 |---|---|---|
-| **B** | fundamental *timing* (filed vs period-end+lag) | done — cross-fitted; paired CI not recorded |
+| **B** | fundamental *timing* (filed vs period-end+lag) | done — cross-fitted; paired HAC CI computed 2026-08-05 |
 | **C** | world-state *surprise* bundle (CPI/NFP/VIX/earnings) | done — cross-fitted; no positive increment detected |
 | **D** | *relationship* bundle (SIC peer-momentum + 13D events) | done — cross-fitted; no positive increment detected |
 | **E** | E-sequence umbrella design | designed |

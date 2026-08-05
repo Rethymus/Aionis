@@ -14,7 +14,7 @@ it does not erase their stated validation and data limitations.
 
 ---
 
-## Headline — four historical cross-fitted results
+## Headline — historical cross-fitted results + first confirmatory OOS
 
 Same S&P 500 PIT universe (588 clean tickers, 2016+), frozen nine-column baseline,
 fixed LightGBM, and `PurgedGroupKFold(5, embargo=21)`. These are shared-fold,
@@ -23,17 +23,38 @@ The treatment-minus-baseline monthly rank-IC differential is the falsifiable cla
 
 | phase | axis (treatment vs baseline) | differential | 95% CI | DM-p | evidence-bound verdict |
 |---|---|---|---|---|---|
-| **B** | fundamental *timing* (filed vs period-end+lag) | -0.000800 | **not recorded** | 0.870 | no significant positive increment; precision unknown |
+| **B** | fundamental *timing* (filed vs period-end+lag) | -0.000800 | [-0.01057, 0.00897] | 0.872 | no significant positive increment; paired HAC CI computed 2026-08-05 |
 | **C** | world-state *surprise* bundle (CPI/NFP/VIX/earnings) | -0.006487 | [-0.01953, 0.00656] | 0.355 | no significant positive increment; not strictly equivalent within post-hoc +/-0.015 |
 | **D** | *relationship* bundle (SIC peer-mom + 13D events) | -0.002980 | [-0.01371, 0.00775] | 0.597 | no significant positive increment |
 | **E1** | cross-firm *propagation* beyond own shocks | -0.002793 | [-0.01146, 0.00587] | 0.533 | no significant positive increment |
 
 All four point estimates are negative; C/D/E1 intervals bracket zero. Phase B's
-ledger row records its differential mean and DM p-value but no paired HAC SE or CI,
-so its precision gate cannot be audited. None of B/C/D/E1 uses an LLM feature.
+ledger row records its differential mean and DM p-value; the paired HAC 95% CI
+[-0.01057, +0.00897] was computed 2026-08-05 from the saved IC series (the ledger
+row itself is append-only and unchanged). None of B/C/D/E1 uses an LLM feature.
 The h=10/42 sweep is exploratory, covers all four phases, and reuses the same
 historical research family; it is sensitivity evidence, not independent replication.
 The secondary strategy lens covers B/C only and is gross of costs with no turnover.
+
+### First confirmatory OOS — Track C dual-region climax (ledger #49)
+
+Beyond the shared-fold historical results above, Track C is the project's first
+**chronological** confirmatory OOS: a joint US (S&P 500) + CN (CSI 300)
+walk-forward cross-sectional monthly rank-IC with a single pre-specified regime
+interaction (multiplicity budget 1).
+
+| metric | value | reading |
+|---|---:|---|
+| combined rank-IC mean | **-0.0088** | null (p_hac=0.484; 95% HAC CI [-0.034, +0.016] brackets zero; n=71 months) |
+| J-T look-1 (n=60, RCI 99.44%) | **NOT_EQUIVALENT** | RCI [-0.051, +0.027] wider than ±0.010 SESOI = underpowered look, **not** an effect signal |
+| H6 double-run bit-identical | PASS | determinism verified on real data |
+
+A prospective power analysis shows the frozen 60/90/120-month Jennison-Turnbull
+schedule is **structurally underpowered** for SESOI ±0.010 at monthly rank-IC noise
+σ≈0.10 (declaring equivalence would need ~36+ years). The honest, pre-registered
+contribution is therefore the **null point estimate + the end-to-end anti-leakage
+discipline + the power-limit disclosure** — not a declared equivalence. Full
+methods and the 15-row evidence table live in `docs/methods-and-results-draft.md` (v1.0).
 
 ---
 
@@ -67,7 +88,7 @@ Every result is anchored by controls intended to make look-ahead and p-hacking d
 A→E, each phase one falsifiable claim on the same benchmark:
 
 - **A** (done) — ERL event representation pilot (underpowered).
-- **B** (done; paired CI not recorded) — fundamental timing (filed vs period-end+lag).
+- **B** (done; paired CI computed 2026-08-05) — fundamental timing (filed vs period-end+lag).
 - **C** (done; cross-fitted result) — world-state surprise bundle.
 - **D** (done; cross-fitted result) — relationship/network bundle (13D + SIC peers).
 - **E1** (done; cross-fitted result) — structural cross-firm shock propagation.
