@@ -51,6 +51,18 @@
   race; see memory aionis-parallel-writer-race). `opus`/`fable` aliases blocked by `[1M]` resolver values →
   AUD-07B + RD-15 deferred; RD-08 HOLD (needs frozen rule table). Safe RD queue exhausted for sonnet tier.
   Not pushed. Detail: `state/handoff.md` § Wave-B FINAL.
+- **updated:** 2026-08-05 (e). **选项 A 定稿（accept reframing）— draft v1.0-draft → v1.0。** 业主授权"按推荐方式处理"
+  = 选项 A（贡献 = null 点估计 + 反泄漏纪律 + power-limit 披露；**不**拓宽 SESOI、**不**动冻结面、**不**
+  rerun-to-significance）。两份独立审计 APPROVE：① power-analysis sonnet review APPROVE（0 blocking/HIGH/MEDIUM，
+  3 LOW advisory：AR(1) 近似 / block size / 舍入——不影响"结构性欠功率"结论，analytic + bootstrap 双支撑）；
+  ② climax diff review APPROVE（0 CRITICAL/HIGH/MEDIUM/LOW，跨文件数字完全一致，"publish as-is"）。draft 4 处
+  定稿（标题+状态、§6 选项段标记 A 已选、§7 边界行、§7 残留 v1.0-draft→v1.0）。**预存 lint 债修复**：
+  `scripts/track_c_commit.py:180` E501（跨多 session 的 print 行过长，非本轮 2 commit 引入）→ 提取局部变量；
+  **#46 frozen sig 精确复现**（`758ca4d7...` dry-run == ledger，证明编辑未触 config 逻辑）。**验证**：ruff clean；
+  全套 hermetic pytest exit 0（仅预存 forward-score/numpy warnings）；frozen-surface diff 仅 `runs/ledger.jsonl` +1
+（=#49 append-only）。下一步：commit（lint fix + draft v1.0 + state）+ push origin/main。**边界**：本轮
+  docs/scripts(state-only print 行)/state；无 frozen surface / ledger / prereg / ADR / config 改动；未跑
+  confirmatory/forward/strategy；未触 E3。
 - **updated:** 2026-08-05 (d). **Power analysis 揭示 J-T schedule 结构性欠功率（设计级发现，业主决策待定）。**
   prospective power analysis（`scripts/track_c_power_analysis.py`，复用 #49 IC series 噪声 σ≈0.106 + ρ≈0.07）
   显示 SESOI ±0.010 + looks 60/90/120 **任何一眼都无法宣布等价**：n_min = 869/580/435 月（72/48/36 年）；

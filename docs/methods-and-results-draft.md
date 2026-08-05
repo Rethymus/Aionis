@@ -1,9 +1,10 @@
-# Aionis — 方法学与结果 draft（v1.0-draft，可发表稿；首条 confirmatory 已含）
+# Aionis — 方法学与结果 draft（v1.0，可发表稿；首条 confirmatory 已含）
 
-> 状态：**v1.0-draft · 2026-08-05 · 业主审阅稿（中文）**。本稿把累积的反泄漏纪律 + 全部 null 证据 +
+> 状态：**v1.0 · 2026-08-05 · 业主授权选项 A 定稿（中文）**。本稿把累积的反泄漏纪律 + 全部 null 证据 +
 > **首条 confirmatory OOS 结果（ledger #49）** 组织成可发表单元。METHODS 段完备（= 贡献）；
 > RESULTS §5 confirmatory 已实填（点估计 null + J-T look-1 欠功率 NOT_EQUIVALENT，诚实分级）。
-> v0.1 → v1.0：§5 占位升格为真实结果。最终英文版 + "v1.0 final" 待业主审签。
+> v1.0-draft → v1.0：业主 2026-08-05 授权"按推荐方式处理"= 选项 A（accept reframing：贡献 = null 点估计 + 反泄漏纪律 + power-limit 披露，**不**拓宽 SESOI、**不**动冻结面）。最终英文版 + 期刊定位仍待业主。
+> 独立验证：power-analysis sonnet review APPROVE（0 blocking/HIGH/MEDIUM，3 LOW advisory）+ climax diff review APPROVE（0 CRITICAL/HIGH/MEDIUM/LOW，跨文件一致，"publish as-is"）。
 >
 > 取代关系：本稿最终将取代 `docs/RESULTS.md`（v0.1 factual snapshot）作为项目的结果叙述；RESULTS.md 在此之前保留为底层 factual 快照。证据数字以 [`runs/ledger.jsonl`](../runs/ledger.jsonl)（权威，含行 #49 confirmatory:first）+ `runs/track_c_confirmatory_summary.json` 为准；本稿数字经 [`reports/audits/2026-08-04-evidence-integrity-audit.md`](../reports/audits/2026-08-04-evidence-integrity-audit.md) + [`reports/audits/2026-08-05-confirmatory-runner-review.md`](../reports/audits/2026-08-05-confirmatory-runner-review.md)（sonnet APPROVE）独立核对。
 
@@ -151,9 +152,9 @@ confirmatory 重现同一 IC）。
   **判读**：look-1 NOT_EQUIVALENT 不是"look-1 太保守"的局部现象，而是**整个 60/90/120 schedule 在该 SESOI 下的
   必然状态**。月频 rank-IC 的噪声地板（σ≈0.10）使 ±0.010 等价宣告在现实样本量下不可达。E3 forward-live 即使点火，
   也需 ~36+ 年才能达 look-3 等价判定。**这是诚实的方法学发现**（power floor），非 bug；它把项目贡献从"宣布等价"
-  收窄为"null 点估计 + 反泄漏纪律 + power-limit 披露"。业主选项（非本 draft 自决）：① 接受此 framing（推荐）；
-  ② 拓宽 SESOI（如 ±0.025 → look-3 n=120 可达，但等价意义减弱，需新 ledger amendment）；③ 延长 look horizon
-  （n=435+，不可行）。
+  收窄为"null 点估计 + 反泄漏纪律 + power-limit 披露"。**业主 2026-08-05 已选 ①（授权"按推荐方式处理"）**：接受
+  reframing，不拓宽 SESOI、不动冻结面。② 拓宽 SESOI ±0.025（post-hoc "moving goalposts" 嫌疑 + 与反泄漏精神相悖，
+  不采纳）；③ 延长 look horizon n=435+（36 年不可行，不采纳）。
 - **幸存者偏差**：PIT 成分缓解，不可根除（无免费退市 PIT）。universe = 2016+ 588/705 可解析 ticker → headline = 保守上界。
 - **币种**：D1 区域-月排序消除 label 跨币种污染，但联合 IC 仍是本币收益的区域内排序合成，非汇率中性组合收益。
 - **SIC 当前快照**（非 historical vintage）；13D self-report filtering 残余误差；baostock 复权 G3 策略冻结（raw）。
@@ -163,6 +164,6 @@ confirmatory 重现同一 IC）。
 
 ## 7. 不越界声明
 
-- `[F]` 本 draft v1.0-draft 含首条 confirmatory OOS 结果（ledger #49，config #48 frozen 先于观察，H6 真实数据 bit-identical PASS）；METHODS 段基于已建完备的反泄漏纪律（ADR-001..012 + preregs + ledger）。
+- `[F]` 本 draft v1.0 含首条 confirmatory OOS 结果（ledger #49，config #48 frozen 先于观察，H6 真实数据 bit-identical PASS）；METHODS 段基于已建完备的反泄漏纪律（ADR-001..012 + preregs + ledger）。
 - `[F]` 本轮 sediment 了 1 行 `confirmatory:first`（ledger #49，append-only）；B/C/D/E1 + Track B 冻结面 / prereg / ADR 未改。
-- `[I]` "v1.0 final" 定稿、最终发表语言（中/英）、期刊定位、是否含 E3 forward-live（年级别，续作 look-2/3）待业主裁断。
+- `[I]` 业主 2026-08-05 已授权选项 A（accept reframing）→ 中文 v1.0 据此定稿。仍待业主：最终英文版、期刊/会议定位、是否启动 E3 forward-live（年级别，续作 look-2/3；power analysis 后目的降级为"延续 null OOS 积累"，可选非必需）。
