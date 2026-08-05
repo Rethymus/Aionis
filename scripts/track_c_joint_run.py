@@ -1,23 +1,30 @@
 """Track C joint US-CN rank-IC runner (EXPLORATORY machinery proof).
 
 Runs the joint dual-region chronological walk-forward estimator on the REAL US (track_b)
-+ CN (cn_price) month-end panels with the 10 shared price features, conditioned on the
-existing regime_state composite. Proves the confirmatory machinery on real data.
++ CN (cn_price) month-end panels, conditioned on the existing regime_state composite.
+Two feature modes (env ``TRACK_C_JOINT_MODE``):
+  * ``shared`` (default): 10 shared price features (``TRACK_B_PRICE_FEATURE_COLS``).
+  * ``asymmetric35``: US 23 (13 EDGAR fundamentals + 10 price) + CN 12 (10 price mirror +
+    2 A-share extras) = 25 unique union cols (region-missing = NaN, LightGBM default).
+    Uses ``build_joint_panel`` asymmetric mode (A1, commit c98f4c8). Validates A1 on real
+    data + yields an exploratory US-fundamental-signal IC point.
 
 EXPLORATORY — NOT the Track C confirmatory claim:
-  * Uses 10 shared price features only (confirmatory needs the full frozen feature_cols
-    per ledger #46, including fundamentals — cninfo fetch is a separate owner-gated slice).
-  * Uses whichever regime composite currently exists in data/cache/regime_composite.parquet
-    (2-layer or 3-layer-US-only-meso) — NOT necessarily the spec-faithful 3-layer with CN
-    shenwan meso (pending the shenwan 7-gate verdict).
-  * group = region-month (currency-clean D1 default); #46 did not freeze group construction,
-    so this is a recommended default pending owner sign-off (Q1).
-  * Writes NO ledger. The confirmatory run = owner GO + new ledger row.
+  * ``asymmetric35`` lacks ``macro_headline_6`` (confirmatory needs 41 = 35 + 6 macro;
+    macro fetch is A2, pending macro-7gate readiness).
+  * Uses whichever regime composite currently exists in ``regime_composite.parquet``
+    (2-layer or 3-layer-US-only-meso) — NOT necessarily the spec-faithful 3-layer.
+  * group = region-month (currency-clean D1 default; #48 froze this per amendment #48).
+  * Writes NO ledger. Confirmatory run = owner GO + new ledger row.
 
-Anti-leakage: shared features are price-only (past-only); forward_return_h is label-only;
-regime_state is PIT (TACO as-of); per-region chronological asserted inside fit_track_c_joint.
+Anti-leakage: features are past-only (price) or filed-date PIT (EDGAR fundamentals);
+forward_return_h is label-only; regime_state is PIT (TACO as-of); per-region chronological
+asserted inside ``fit_track_c_joint``.
 
-Run:  uv run python scripts/track_c_joint_run.py
+Run::
+
+    uv run python scripts/track_c_joint_run.py                       # shared (10 price)
+    TRACK_C_JOINT_MODE=asymmetric35 uv run python scripts/track_c_joint_run.py
 """
 
 from __future__ import annotations
@@ -36,6 +43,21 @@ CN_PANEL = settings.data_dir / "cache" / "cn_price_panel.parquet"
 REGIME_PANEL = settings.data_dir / "cache" / "regime_composite.parquet"
 WINDOW_START = "2016-01-01"  # ledger #46 universe.{us,cn}.window_start
 
+# Asymmetric-35 feature sets (must match ledger #46/#48 feature_cols.us_fundamentals_13
+# + CN extras; #48 confirmatory adds macro_headline_6 separately in A2/A3).
+US_FUNDAMENTALS_13 = [
+    "roa", "roe", "profit_margin", "asset_growth_1m", "asset_growth_12m",
+    "revenue_growth_1m", "revenue_growth_12m", "equity_growth_1m",
+    "leverage", "debt_to_equity", "book_value_per_share", "accruals",
+    "investment_12m",
+]
+CN_EXTRAS_2 = ["limit_up_down_distance", "suspension_flag"]
+US_23 = US_FUNDAMENTALS_13 + list(TRACK_B_PRICE_FEATURE_COLS)
+CN_12 = list(TRACK_B_PRICE_FEATURE_COLS) + CN_EXTRAS_2
+UNION_35 = sorted(set(US_23) | set(CN_12))  # 25 unique (10 shared price + 13 US fund + 2 CN extras)
+
+MODE = os.environ.get("TRACK_C_JOINT_MODE", "shared")
+
 
 def main() -> None:
     """Run the joint US-CN rank-IC estimator (exploratory, no ledger)."""
@@ -43,17 +65,47 @@ def main() -> None:
         if not p.exists():
             raise SystemExit(f"[ERROR] missing {p}")
 
-    print(f"[S] building joint panel (window_start={WINDOW_START})...", flush=True)
-    joint = build_joint_panel(
-        US_PANEL, CN_PANEL, feature_cols=TRACK_B_PRICE_FEATURE_COLS, window_start=WINDOW_START
-    )
+    if MODE == "asymmetric35":
+        print(
+            f"[S] building ASYMMETRIC joint panel "
+            f"(US 23 / CN 12 -> union {len(UNION_35)} unique)...",
+            flush=True,
+        )
+        joint = build_joint_panel(
+            US_PANEL,
+            CN_PANEL,
+            feature_cols=[],
+            us_feature_cols=US_23,
+            cn_feature_cols=CN_12,
+            window_start=WINDOW_START,
+        )
+        feature_cols_for_fit = UNION_35
+        mode_tag = "asym35"
+        mode_caveat = (
+            "exploratory: 35 asymmetric per-ticker (US 23 fund+price / CN 12 price+extras; "
+            "macro 6 pending A2)"
+        )
+    elif MODE == "shared":
+        print("[S] building SHARED joint panel (10 price)...", flush=True)
+        joint = build_joint_panel(
+            US_PANEL, CN_PANEL,
+            feature_cols=TRACK_B_PRICE_FEATURE_COLS, window_start=WINDOW_START,
+        )
+        feature_cols_for_fit = list(TRACK_B_PRICE_FEATURE_COLS)
+        mode_tag = "shared10"
+        mode_caveat = "exploratory: 10 shared price feats (confirmatory needs full #48 41 cols)"
+    else:
+        raise SystemExit(
+            f"[ERROR] unknown TRACK_C_JOINT_MODE={MODE!r}; use 'shared' or 'asymmetric35'"
+        )
+
     print(
         f"[S] joint panel: {joint.shape} | dates {joint['date'].min()}..{joint['date'].max()} "
         f"| regions {dict(joint['region'].value_counts())}",
         flush=True,
     )
     print(
-        f"[S] feature_cols ({len(TRACK_B_PRICE_FEATURE_COLS)}): {TRACK_B_PRICE_FEATURE_COLS}",
+        f"[S] feature_cols ({len(feature_cols_for_fit)}, mode={MODE}): {feature_cols_for_fit}",
         flush=True,
     )
 
@@ -69,10 +121,13 @@ def main() -> None:
         flush=True,
     )
 
-    print("[S] fitting joint walk-forward (lambdarank, region-month groups)...", flush=True)
+    print(
+        f"[S] fitting joint walk-forward (lambdarank, region-month groups, mode={MODE})...",
+        flush=True,
+    )
     result = fit_track_c_joint(
         panel=joint,
-        feature_cols=TRACK_B_PRICE_FEATURE_COLS,
+        feature_cols=feature_cols_for_fit,
         regime_state=regime_state,
         horizon=21,
         min_train_months=60,
@@ -81,7 +136,7 @@ def main() -> None:
     )
 
     lo, hi = result.ci_95
-    print("=== Track C joint US-CN rank-IC (EXPLORATORY machinery) ===", flush=True)
+    print(f"=== Track C joint US-CN rank-IC (EXPLORATORY, mode={MODE}) ===", flush=True)
     print(
         f"  n_folds: {result.n_walk_folds}   n_months(IC): {len(result.combined_ic_series)}",
         flush=True,
@@ -106,7 +161,7 @@ def main() -> None:
 
     out_dir = settings.data_dir.parent / "runs"
     out_dir.mkdir(parents=True, exist_ok=True)
-    result.oos_scores.to_parquet(out_dir / "track_c_joint_oos_scores.parquet")
+    result.oos_scores.to_parquet(out_dir / f"track_c_joint_{mode_tag}_oos_scores.parquet")
     pd.concat(
         [
             result.us_ic_series.rename("us"),
@@ -114,10 +169,11 @@ def main() -> None:
             result.combined_ic_series.rename("combined"),
         ],
         axis=1,
-    ).to_parquet(out_dir / "track_c_joint_ic_series.parquet")
-    (out_dir / "track_c_joint_summary.json").write_text(
+    ).to_parquet(out_dir / f"track_c_joint_{mode_tag}_ic_series.parquet")
+    (out_dir / f"track_c_joint_{mode_tag}_summary.json").write_text(
         json.dumps(
             {
+                "mode": MODE,
                 "n_folds": result.n_walk_folds,
                 "n_months_ic": len(result.combined_ic_series),
                 "combined_mean_ic": result.mean_ic,
@@ -132,10 +188,11 @@ def main() -> None:
                 "cond_beta_p": result.cond_beta_p,
                 "cond_r_squared": result.cond_r_squared,
                 "cond_n_months": result.cond_n_months,
+                "feature_cols_union_count": len(feature_cols_for_fit),
                 "caveats": [
-                    "exploratory: 10 shared price feats (confirmatory needs full #46 cols)",
+                    mode_caveat,
                     "exploratory: regime from regime_composite.parquet (CN meso pending 7-gate)",
-                    "exploratory: group=region-month (D1 default; #46 did not freeze groups)",
+                    "exploratory: group=region-month (D1, #48 frozen)",
                     "NO ledger; NOT the confirmatory claim",
                 ],
             },
@@ -143,7 +200,10 @@ def main() -> None:
         ),
         encoding="utf-8",
     )
-    print(f"[S] saved -> {out_dir}/track_c_joint_{{oos_scores,ic_series,summary}}", flush=True)
+    print(
+        f"[S] saved -> {out_dir}/track_c_joint_{mode_tag}_{{oos_scores,ic_series,summary}}",
+        flush=True,
+    )
     print("[S] DONE (exploratory; no ledger)", flush=True)
 
 
