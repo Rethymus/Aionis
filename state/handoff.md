@@ -1,5 +1,56 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-08-05 (c) CONFIRMATORY CLIMAX — 首条 confirmatory OOS 入账（ledger #49）
+
+owner D6 GO 授权（"按推荐方式处理 + 难度分层派 agent + 并行不互扰 + 冲突最高价值优先 + 结果不乐观再调整重测"）。
+**目标**：把 Track C 联合折叠从 exploratory 升格为首条 confirmatory（项目的 logical climax）。
+
+**判据**：null 在本项目是预期可发表产物，**非"不乐观"**；只有工程 bug（H6 失败 / 退化 / 时序违反）才触发
+"调整重测"。实际结果 = null 点估计 + 欠功率 look-1，属预期，未触发调整。
+
+**交付**：
+- **`scripts/track_c_confirmatory_run.py`**（opus 直接写，反泄漏 climax 件）：
+  - `verify_frozen_config()` 校验 `track_c_amend2.build_amendment()` 重现 sig `e14b9d44...`（漂移即 abort）
+  - `assert_h6_identical()` 双跑 bit-identical（`.equals` + `.tobytes` + CSV hash 三重）
+  - `jt_reachable_looks()` 作用在 `combined_ic_series`（Reading A：rank-IC 是 gated 估计量；cond_beta 仅 explanatory）
+  - `build_confirmatory_row()` 构造 `confirmatory:first` ledger 行
+  - artifact-reuse 模式（`TRACK_C_CONFIRMATORY_FROM_ARTIFACT=1`）：dry-run 已双跑证明 H6 → GO 直接 load
+    summary.json 写 ledger，避免 46min 重跑（4 守卫：缺文件 / sig 错 / H6 False / 正常 append）
+- **`tests/test_track_c_confirmatory_run.py`**：19/19 hermetic 绿（frozen sig 校验 + H6 pass/fail + look
+  reachability 边界 + row 构造 + artifact-reuse 4 守卫 + 空/NaN 边缘用例）
+- **dry-run 双跑**（~46min，macro join ONCE 优化后）：H6 bit-identical PASS → artifact-reuse GO commit 瞬时
+
+**结果（ledger #49，bit-identical 于 asym41 exploratory）**：
+| 量 | 值 | 判读 |
+|---|---:|---|
+| combined rank-IC 均值 | −0.008841 | null（p_hac=0.484，CI [−0.034,+0.016] 跨零）|
+| US IC / CN IC | +0.0052 / −0.0265 | 双区均 null |
+| conditional-IC β（regime 交互）| −0.0076（p=0.43）| null；multiplicity 预算 1 保持 |
+| **J-T look-1**（n=60，RCI 99.44%）| **NOT_EQUIVALENT** | RCI [−0.051,+0.027] 宽于 ±0.010 SESOI = 欠功率 |
+| H6 双跑 bit-identical | PASS | 真实数据确定性验证 |
+
+**climax 判读（诚实）**：null 点估计 + 欠功率 look-1 = **预期结果**。
+- 点估计 null（−0.0088）与全部 14 条 exploratory null 一致（confirmatory 等级下 treatment 仍无正增量）。
+- look-1 NOT_EQUIVALENT 是 **power 声明**（OBF z=2.772 极保守 + 月频 IC se≈0.014 → 99.44% RCI 必然宽于
+  SESOI），**非效应信号**。门设计意图就是 look-2(n=90)/look-3(n=120) 才判等价。
+- **J-T 门拒绝在欠功率下过早宣布等价，即使点估计 null = 反泄漏纪律的活体演示 = 方法学贡献**。
+- 严格等价判定需 E3 forward-live 累积日历时间（look-2 ≈ 2028，look-3 ≈ 2031）。
+
+**独立性**：sonnet `general-purpose` code-reviewer APPROVE（0 CRITICAL / 1 HIGH=informational estimand
+稳健 / 1 MEDIUM=test 边缘 gap[已补]/ 2 LOW）；7 项反泄漏审查全 PASS。报告
+`reports/audits/2026-08-05-confirmatory-runner-review.md`。J-T + H6 + 沉积的可复现性由 frozen #48 + 脚本保证。
+
+**docs**：`docs/methods-and-results-draft.md` v0.1 → **v1.0-draft**（§5 实填 confirmatory + §4 加 #14 asym41
+彩排 / #15 confirmatory climax + §0 摘要 + §7 不越界声明更新）。
+
+**边界**：本轮 1 行 ledger（#49 append-only confirmatory:first）+ 新建 scripts/tests/docs(state) + 1 份
+audit report；**B/C/D/E1 + Track B 冻结面 / prereg / ADR / config 未改**；未跑 research/forward/strategy；
+未触 E3。artifact-reuse 是持久化已 dry-run 验证的结果（config #48 frozen 先于 dry-run 观察 → config_committed
+BEFORE result 保持）。
+
+**待业主**：① 审 v1.0-draft → 定稿（中/英 + 期刊定位）；② 是否 push（origin/main 落后若干 commits）；
+③ look-2/3 长期路径（E3 forward-live ignition，年级别）。
+
 ## 2026-08-05 P1 整合 + P0 confirmatory-GO brief（process→product 收尾）
 
 owner 授权"按推荐方式处理 + 难度分层派 agent + 并行不互扰 + 冲突最高价值优先 + 结果不乐观再调整重测"。

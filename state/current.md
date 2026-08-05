@@ -1,9 +1,13 @@
 # state/current.md — read first each session
 
 - **version:** 0.1.0 (pyproject)
-- **milestone:** B/C/D/E1 ledger results and h={10,42} sensitivity exist; E3 Slices 1–5 and the
-  near-final dashboard are implemented. The 2026-07-31 quant+LLM audit reclassifies the historical
-  evidence as **purged cross-fitted/CV-proxy**, not chronological/live OOS.
+- **milestone:** **CONFIRMATORY CLIMAX ACHIEVED (2026-08-05)** — first confirmatory OOS run sediments
+  ledger row #49 (`confirmatory:first`, phase=track_c, sig `e14b9d44...` → frozen #48). Combined rank-IC
+  = **−0.0088** (null, p_hac=0.484, n=71); J-T look-1 (n=60, RCI 99.44%) = **NOT_EQUIVALENT** (RCI
+  [−0.051,+0.027] wider than ±0.010 SESOI = underpowered look-1, NOT an effect signal). H6 double-run
+  bit-identical PASS on real data. draft v0.1 → **v1.0-draft** (§5 confirmatory filled). Prior: B/C/D/E1
+  ledger results + h={10,42} sensitivity exist; E3 Slices 1–7 + AUD-06 contracts frozen; 2026-07-31 audit
+  reclassifies historical evidence as **purged cross-fitted/CV-proxy**, not chronological/live OOS.
 - **research verdict:** no B/C/D/E1 treatment arm shows reliable positive incremental rank-IC under
   the frozen nine-column baseline. Phase B has no recorded paired differential CI; Phase C is not
   strictly equivalent within post-hoc ±0.015; none of the four headline arms uses LLM features.
@@ -47,6 +51,20 @@
   race; see memory aionis-parallel-writer-race). `opus`/`fable` aliases blocked by `[1M]` resolver values →
   AUD-07B + RD-15 deferred; RD-08 HOLD (needs frozen rule table). Safe RD queue exhausted for sonnet tier.
   Not pushed. Detail: `state/handoff.md` § Wave-B FINAL.
+- **updated:** 2026-08-05 (c). **CONFIRMATORY CLIMAX — 首条 confirmatory OOS 入账（ledger #49）。**
+  owner D6 GO 授权后，opus 直接建 `scripts/track_c_confirmatory_run.py`（frozen #48 sig 校验 + H6 双跑
+  bit-identical + J-T 门 look-reachable + `confirmatory:first` 沉积；artifact-reuse 模式避免 GO 重跑）
+  + `tests/test_track_c_confirmatory_run.py`（19/19 hermetic 绿，含空/NaN/边界边缘用例 + artifact-reuse
+  4 守卫）。dry-run 双跑（~46min）证明 H6 → artifact-reuse GO commit 瞬时入账。**结果**：combined rank-IC
+  **−0.0088**（p_hac=0.484，CI [−0.034,+0.016] 跨零 = null）；US IC +0.005 / CN IC −0.026；cond-IC β
+  −0.0076（p=0.43，regime 交互 null，multiplicity 预算 1 保持）；**J-T look-1 NOT_EQUIVALENT**（RCI 99.44%
+  [−0.051,+0.027] 宽于 ±0.010 SESOI = look-1 OBF 欠功率，非效应信号；look-2/3 需 E3 forward-live）。
+  **bit-identical 于 asym41 exploratory**（cross-invocation H6）。**独立性**：sonnet code-review APPROVE
+  （0 CRITICAL，estimand Reading A 可辩护，H6 充分，look 截断 Type-I 正确）。draft v0.1 → **v1.0-draft**
+  （§5 实填 + §4 加 #14/#15 + §0/§7 更新）。**边界**：本轮 1 行 ledger（#49 append-only）+ 新建 scripts/tests
+  /docs/state；**B/C/D/E1 + Track B 冻结面 / prereg / ADR 未改**；未跑 research/forward/strategy；未触 E3。
+  **climax 判读**：null 点估计 + 欠功率 look-1 = 预期结果（非"不乐观"，非 bug）；J-T 门拒绝过早等价 = 反泄漏
+  纪律的活体演示 = 方法学贡献。待业主审 v1.0-draft → 定稿 + 是否 push。
 - **updated:** 2026-08-05. **P1 整合（audit 3 caveat 关闭）+ P0 confirmatory-GO 业主签注包交付。**
   **P1(a)** Phase B paired HAC CI 补算 = **[−0.01057, +0.00897]**（ci_half 0.00977，p_hac 0.872，n=125，maxlag=4；
   mean bit-identical #28；orchestrator opus 直接重算，Agent A `phaseb-ci` idle-without-result → memory

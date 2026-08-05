@@ -1,14 +1,17 @@
-# Aionis — 方法学与结果 draft（v0.1，PROPOSED 可发表稿骨架）
+# Aionis — 方法学与结果 draft（v1.0-draft，可发表稿；首条 confirmatory 已含）
 
-> 状态：**v0.1 draft · 2026-08-04 · 业主审阅稿（中文）**。本稿把累积的反泄漏纪律 + 全部 null 证据组织成可发表单元。METHODS 段已完备（= 贡献）；RESULTS 段的 confirmatory 行占位待 owner GO。最终英文版待 owner 定发表语言后转写。
+> 状态：**v1.0-draft · 2026-08-05 · 业主审阅稿（中文）**。本稿把累积的反泄漏纪律 + 全部 null 证据 +
+> **首条 confirmatory OOS 结果（ledger #49）** 组织成可发表单元。METHODS 段完备（= 贡献）；
+> RESULTS §5 confirmatory 已实填（点估计 null + J-T look-1 欠功率 NOT_EQUIVALENT，诚实分级）。
+> v0.1 → v1.0：§5 占位升格为真实结果。最终英文版 + "v1.0 final" 待业主审签。
 >
-> 取代关系：本稿最终将取代 `docs/RESULTS.md`（v0.1 factual snapshot）作为项目的结果叙述；RESULTS.md 在此之前保留为底层 factual 快照。证据数字以 [`runs/ledger.jsonl`](../runs/ledger.jsonl)（权威）+ `runs/track_c_joint_summary.json` 为准；本稿数字经 [`reports/audits/2026-08-04-evidence-integrity-audit.md`](../reports/audits/2026-08-04-evidence-integrity-audit.md)（若 agent 完成）独立核对。
+> 取代关系：本稿最终将取代 `docs/RESULTS.md`（v0.1 factual snapshot）作为项目的结果叙述；RESULTS.md 在此之前保留为底层 factual 快照。证据数字以 [`runs/ledger.jsonl`](../runs/ledger.jsonl)（权威，含行 #49 confirmatory:first）+ `runs/track_c_confirmatory_summary.json` 为准；本稿数字经 [`reports/audits/2026-08-04-evidence-integrity-audit.md`](../reports/audits/2026-08-04-evidence-integrity-audit.md) + [`reports/audits/2026-08-05-confirmatory-runner-review.md`](../reports/audits/2026-08-05-confirmatory-runner-review.md)（sonnet APPROVE）独立核对。
 
 ---
 
 ## 摘要（draft）
 
-本项目把**反泄漏纪律本身作为研究对象**：在 S&P 500 point-in-time 成分 + A 股 CSI 300 上，以每月横截面 rank-IC 为估计量，预注册、两尾、null-favored 地检验"treatment 是否优于 price-only"。**在所有已跑配置下，未观察到显著正增量**；且其中差分 CI 多跨零。这不是"策略失败"——**null 是预期可发表结果**，且其可信度由 config-before-result / PIT / purged CV / H6 确定性 / J-T 等价门等结构性纪律保证，而非靠事后叙述。
+本项目把**反泄漏纪律本身作为研究对象**：在 S&P 500 point-in-time 成分 + A 股 CSI 300 上，以每月横截面 rank-IC 为估计量，预注册、两尾、null-favored 地检验"treatment 是否优于 price-only"。**在所有已跑配置下（含首条 confirmatory OOS，ledger #49），未观察到显著正增量**；且其中差分 CI 多跨零。这不是"策略失败"——**null 是预期可发表结果**，且其可信度由 config-before-result / PIT / purged CV / H6 确定性 / J-T 等价门等结构性纪律保证，而非靠事后叙述。**首条 confirmatory 的 J-T 门在 look-1 欠功率下拒绝过早宣布等价（即使点估计 null）——这正是该纪律的活体演示。**
 
 ---
 
@@ -73,16 +76,60 @@ Learner：LightGBM（frozen，`objective=lambdarank`，RD-15 ranking contract，
 | 11 | BASELINE-RANK | +0.0154 | ci_half 0.0149 | t=2.03 | 125 | CV-proxy / exploratory（p=0.042，n_trials=30 haircut 会洗掉） | baseline_rank |
 | 12 | h=10/42 sensitivity（8 行） | 全跨零 | — | 0.41–0.86 | 124–126 | CV-proxy / exploratory | #39 |
 | 13 | Track C 联合 asymmetric35 combined IC（A1 验证，本 session） | −0.0121 | [−0.035, +0.011] | 0.31 | 71 | chronological 联合 / exploratory（US 23 fund+price / CN 12 price+extras = 25 unique 列；US IC −0.002 / CN IC −0.020；**US fundamentals 无 alpha → 坐实 null-favored**） | `track_c_joint_asym35_summary.json` |
+| 14 | Track C 联合 asymmetric41 combined IC（confirmatory 彩排） | −0.0088 | [−0.034, +0.016] | 0.48 | 71 | chronological 联合 / exploratory（全 41 特征含 macro 6；bit-identical 于 #15 confirmatory） | `track_c_joint_asym41_summary.json` |
+| 15 | **Track C 联合 confirmatory:first（本 session climax）** | **−0.0088** | [−0.034, +0.016] | **0.48** | 71 | **chronological 联合 / CONFIRMATORY**（frozen #48；J-T look-1 NOT_EQUIVALENT：RCI 99.44% [−0.051, +0.027] 宽于 ±0.010 SESOI = 欠功率，**非**效应信号；H6 双跑 bit-identical PASS） | **ledger #49** + `track_c_confirmatory_summary.json` |
 
 **策略收益次级透镜**（gross-of-cost，B/C，n=125）：B_arm_state Sharpe 0.42 / arm_base 0.62 / C_arm_macro 0.24 / C_placebo 0.54；SPA consistent p=0.69，MCS 保留全部。**gross**——无 turnover/滑点/借券/退市/capacity，不可解释为可交易收益。净成本透镜（mount②，bps=5）：net Sharpe ≈0.43 年化，turnover 1.14（非退化）。
 
-**判读**：12 行全部 null（CI 跨零或差分不显著）。在**chronological** 等级（#5-9，最高可发表强度），Track B 与 Track C 联合均 null；条件化 regime 交互 null。**无一条 confirmatory**（#7-9 是 exploratory；#5-6 差分 CI 上界 > SESOI）。结论：**在所试特征/learner/验证下，未发现可靠的正向横截面增量**——这与"双区域月频已定价/因子 alpha 为泄漏 artifact/成本侵蚀"的 null-favored 先验一致。
+**判读**：15 行全部 null（CI 跨零或差分不显著）。在 **confirmatory** 等级（#15，最高可发表强度），
+首条 confirmatory OOS 点估计 null（−0.0088）；J-T look-1 因 OBF 保守性（99.44% RCI）欠功率，
+返回 NOT_EQUIVALENT（= power 声明，非效应信号；look-2/3 需 E3 forward-live 日历时间）。chronological
+等级（#5-9, #14）均 null；条件化 regime 交互 null。**结论**：在所试特征/learner/验证下，未发现可靠的正向
+横截面增量——这与"双区域月频已定价/因子 alpha 为泄漏 artifact/成本侵蚀"的 null-favored 先验一致。**项目
+logical climax 已达**：反泄漏纪律作为研究对象，在首条 confirmatory 上端到端演示（config 先于结果 + H6 真实
+数据证明 + J-T 门拒绝过早等价）。
 
 ---
 
-## 5. 待补：首条 confirmatory（Track C GO）
+## 5. 首条 confirmatory（Track C GO 已执行；ledger #49）
 
-唯一缺口 = 把 #7（Track C 联合 exploratory null）升格为 **confirmatory**：冻结全特征 #46 config（54 列）+ 修订 #48（meso US-only，G3-fail 收窄）+ Q1 group 构造签注（推荐 region-month）→ 写 `config_committed` ledger 行 #48 → 跑 → J-T 等价门作用在交互项 rank-IC 差分序列。**= owner GO**（写 ledger 行 + 观察 confirmatory OOS = 业主动作，我不擅自触发）。
+**状态：confirmatory OOS 已跑 + 沉积**（2026-08-05，owner D6 GO；`runs/ledger.jsonl` 行 #49，
+`config_sig=e14b9d44...` 引用 frozen #48）。runner `scripts/track_c_confirmatory_run.py`；
+H6 双跑 bit-identical 在真实数据上 PASS；J-T 门（`eval/sesoi_gate.py`）作用在 `combined_ic_series`
+均值（Reading A：rank-IC 是 gated 估计量；`cond_beta` 仅 explanatory，multiplicity 预算保持 1）。
+
+**结果**（n=71 月，68 折，2016-01..2026-08 双区域月末）：
+
+| 量 | 值 | 判读 |
+|---|---:|---|
+| combined rank-IC 均值 | **−0.00884** | null（p_hac=0.484，95% HAC CI [−0.034, +0.016] 跨零）|
+| US IC / CN IC 均值 | +0.0052 / −0.0265 | 双区均 null（与 asym41 exploratory bit-identical）|
+| conditional-IC β（regime 交互）| −0.0076（p=0.43）| null；交互项不显著（multiplicity 预算 1）|
+| **J-T look-1 判定**（n=60，RCI 99.44%）| **NOT_EQUIVALENT** | RCI [−0.051, +0.027] 远宽于 ±0.010 SESOI |
+| H6 双跑 bit-identical | PASS | 真实数据上确定性验证 |
+
+**诚实判读（关键）**：这是一条 **null 点估计 + 欠功率 look-1** 的结果，**不是"treatment 有效"也非"等价被拒"**：
+
+1. **点估计 null**：combined IC −0.00884 与本 draft §4 全部 14 条 exploratory null 一致（覆盖 CV-proxy、
+   chronological 单区/联合、4 个特征族、3 个区域）。confirmatory 等级下，treatment 模型仍未显示可靠正增量。
+2. **look-1 NOT_EQUIVALENT 是 power 声明，非效应信号**：OBF look-1 用 z=2.772（RCI 99.44%，极保守）；
+   月频 rank-IC 噪声 se≈0.014 → 99.44% RCI 半宽 ≈0.039，**结构性宽于** ±0.010 SESOI。任何现实月频
+   IC 系列在 n=60 都无法过 look-1 等价门。门的设计意图就是 look-2(n=90)/look-3(n=120)（z 降到 2.263/1.960
+   + 更多数据）才判定等价。
+3. **门的纪律演示**：J-T 门**拒绝在欠功率下过早宣布等价**，即使点估计 null。这正是"反泄漏纪律作为研究对象"
+   的活体证据——一个可被 rerun-to-significance 或宽 CI 救回的框架会草率宣布"null 即等价"；预注册的 J-T 门不会。
+
+**climax 叙事**：Aionis 完成了首条 confirmatory OOS（config #48 frozen 先于观察，H6 真实数据证明）。
+点估计 null，与全部 exploratory 一致。**严格等价判定（look-2/3）需 E3 forward-live 累积日历时间
+（look-2 n=90 ≈ 2028，look-3 n=120 ≈ 2031）**。这不是"失败"——null 是预期可发表产物，且门的拒绝过早等价
+本身就是方法学贡献的演示。
+
+**独立性局限（披露）**：runner 由 opus orchestrator 直接构建 + 独立 sonnet code-review APPROVE（0 CRITICAL，
+estimand Reading A 可辩护，H6 充分，look 截断 Type-I 正确）；J-T 门 + H6 + 沉积的可复现性由 frozen #48 +
+`scripts/track_c_confirmatory_run.py` 保证——任何独立方可从 frozen config 重跑验证 bit-identical。
+exploratory asym41（2026-08-05 13:48）在 confirmatory 沉积前已观察 IC≈−0.0088；config #48 由 D1-D5 spec
+决策选定（machinery readiness + spec faithfulness），**非** IC 优化 → 无 result-peeking 泄漏（H6 保证
+confirmatory 重现同一 IC）。
 
 ---
 
@@ -100,6 +147,6 @@ Learner：LightGBM（frozen，`objective=lambdarank`，RD-15 ranking contract，
 
 ## 7. 不越界声明
 
-- `[F]` 本 draft 是 PROPOSED 可发表骨架；METHODS 段基于已建完备的反泄漏纪律（ADR-001..012 + preregs + ledger）；RESULTS 数字源自 ledger/artifact（待 evidence-audit 独立核对）。
-- `[F]` 未触冻结面/ledger/prereg/ADR；confirmatory 段（§5）占位，= owner GO。
-- `[I]` 最终发表语言（中/英）、期刊定位、是否含 E3 forward-live（年级别）待 owner 裁断。
+- `[F]` 本 draft v1.0-draft 含首条 confirmatory OOS 结果（ledger #49，config #48 frozen 先于观察，H6 真实数据 bit-identical PASS）；METHODS 段基于已建完备的反泄漏纪律（ADR-001..012 + preregs + ledger）。
+- `[F]` 本轮 sediment 了 1 行 `confirmatory:first`（ledger #49，append-only）；B/C/D/E1 + Track B 冻结面 / prereg / ADR 未改。
+- `[I]` "v1.0 final" 定稿、最终发表语言（中/英）、期刊定位、是否含 E3 forward-live（年级别，续作 look-2/3）待业主裁断。

@@ -11,6 +11,13 @@ B/C/D/E1 的历史结果来自 shared-fold `PurgedGroupKFold(5, embargo=21)`：�
 **purged cross-fitted/OOF differential**，不是 train 严格早于 test 的 chronological OOS，
 也不是 live track record。purge/embargo 防止标签区间重叠，但候选训练补集可包含测试块之后的月份。
 
+**Track C 联合 confirmatory（ledger #49，2026-08-05 climax）**是项目首条 chronological
+confirmatory OOS：双区域（US S&P500 + CN CSI300）联合 walk-forward，41 特征 + regime 条件化，
+combined rank-IC = **−0.0088**（null，p_hac=0.484，n=71 月）；J-T look-1（n=60，RCI 99.44%）
+= **NOT_EQUIVALENT**（RCI [−0.051,+0.027] 宽于 ±0.010 SESOI = look-1 OBF 欠功率，非效应信号；
+look-2/3 需 E3 forward-live）。H6 双跑 bit-identical PASS。详见
+[`docs/methods-and-results-draft.md`](methods-and-results-draft.md) §5（v1.0-draft）。
+
 在 2016+、125 个月、588 个可解析 ticker、冻结九列基线和固定 MSE LightGBM 下，四个
 treatment-minus-baseline 点估计均为负，没有观察到显著正增量。这个结论只适用于上述实现和样本：
 它不证明市场有效、信息已完全定价、效应严格等价于零或策略可交易。
@@ -103,5 +110,6 @@ next-open execution、slippage/impact、borrow、delisting return 或 capacity�
 | Phase E1 | #37 | `confirmatory:first` |
 | strategy lens | #38 | `exploratory` |
 | h=10/42 sensitivity | #39 | `exploratory` |
+| **Track C 联合 confirmatory（climax）** | **#49** | **`confirmatory:first`** |
 
 历史 pre-registration/ADR/ledger 不因本次术语校正而改写；冲突的旧措辞只代表历史状态。
