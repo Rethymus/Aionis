@@ -169,6 +169,7 @@ def main() -> None:
             result.combined_ic_series.rename("combined"),
         ],
         axis=1,
+        sort=True,
     ).to_parquet(out_dir / f"track_c_joint_{mode_tag}_ic_series.parquet")
     (out_dir / f"track_c_joint_{mode_tag}_summary.json").write_text(
         json.dumps(

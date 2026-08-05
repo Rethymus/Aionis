@@ -69,8 +69,12 @@ opus 核验（非独立 verifier lane）。proxy 恢复后可补独立验证（�
 - **数据齐备性（Agent `feat-readiness` 调研）**：US 23 + CN 12 = **100% on disk**（track_b_panel 1.17M
   行含 13 fund+10 price；cn_price_panel 141K 行含 10 price+2 extras）；macro_headline 6 = **0% on disk**
   需 A2 fetch（复用 `macro_dff.py` 模式）。报告 `reports/design/2026-08-05-confirmatory-41-feature-readiness.md`。
-- **asymmetric35 exploratory 跑中**（验证 A1 真实数据 + US fund signal）：25 特征联合折叠 LightGBM，
-  PHASE_C_NO_LEDGER；`runs/track_c_joint_asym35_*`（gitignored）；100% CPU fit 中（25 特征慢，>10min）。
+- **asymmetric35 exploratory DONE**（验证 A1 真实数据 + US fund signal）：25 特征联合折叠（68 folds /
+  71 IC 月），**combined IC −0.0121 (CI [−0.035, +0.011], p=0.31) null**；US IC −0.0019 (n=65) / CN IC
+  −0.0200 (n=66)；conditional-IC β=−0.0057 (p=0.61, R²=0.002)。**判读**：加 US fundamentals (13) + CN
+  extras 未改善 IC（vs shared10 combined −0.007；asymmetric35 −0.012 更负但均 null）；US IC 几乎零 →
+  US fundamentals 无 alpha → **坐实 null-favored**（双区域月频已定价）。产物 `runs/track_c_joint_asym35_*`
+  （gitignored）。**Pandas4 concat-sort deprecation warning**（runner:165，非阻塞，待 sort=False fix）。
 - **A2 macro 7-gate 调研中**（Agent `macro-7gate`，read-only web search）：US 4 (FRED) + CN 2 (OECD/ALFRED)
   vintage + 7-gate verdict；报告 `reports/design/2026-08-05-macro-6-7gate-readiness.md`（待）。
 

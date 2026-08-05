@@ -217,7 +217,7 @@ def build_joint_panel(
     us = us[pd.to_datetime(us[date_col]) >= ws]
     cn = cn[pd.to_datetime(cn[date_col]) >= ws]
 
-    joint = pd.concat([us, cn], ignore_index=True)
+    joint = pd.concat([us, cn], ignore_index=True, sort=False)
     joint[date_col] = pd.to_datetime(joint[date_col])
     joint = joint.sort_values([date_col, region_col, ticker_col]).reset_index(drop=True)
 
