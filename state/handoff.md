@@ -84,14 +84,13 @@ opus 核验（非独立 verifier lane）。proxy 恢复后可补独立验证（�
   （macro broadcast signal 弱），但 spec-faithful climax（J-T 门）需 41。**业主授权 A2/A3 完整 41 路径**。
 
 **下一步（推进中）**：① ✅ asymmetric35 DONE（combined IC −0.0121 null，坐实 null-favored）；② ✅ A2 verdict
-= YELLOW（orchestrator 判断；US 4 GREEN + CN 2 snapshot+exploratory）；③ **A2/A3 完整 41 路径推进中** → A2/A3 spec `reports/design/2026-08-05-macro-6-fetch-broadcast-spec.md` 就绪；
-  **A2a DONE**（`src/aionis/features/macro_headline.py` 12KB，复用 `fetch_alfred_vintages` + `merge_asof` PIT + trailing z-score；
-  hermetic test 10p/7s；**cap bug FIXED + 真实 fetch 验证 done** commit `edc1add`：generic `_download_vintage_year_generic` +
-  `_fetch_daily_vintages_per_year`（复用 `macro_dff` per-year-slice + `_vintages_frame`）绕 2000-vintage cap；BAA10Y ~111K obs
-  cached；US macro 4 surprise 全 valid：term/credit 107/128，vix/dff 106/128）。**A2b verdict GREEN**（WebSearch：`MKTGDPCNA646NWDB`
-  + `CPALTT01CNM659N` ALFRED vintage + FRED non-commercial OK）。**下一步**：A2b CN macro fetch（CPI monthly 复用 `first_print_changes`；
-  GDP annual sparse — releases 少，surprise 可能 NaN）+ A3 broadcast join（复用 `macro_surprise_date_broadcast`）+ runner asymmetric41；
-  ④ 业主 d6_go → confirmatory OOS（41 + J-T 门）→ draft v1.0 climax。
+= YELLOW（orchestrator 判断；US 4 GREEN + CN 2 snapshot+exploratory）；③ **A2/A3 完整 41 路径 — 前置 machinery 全部就绪**：A2a DONE（cap fix 验证 `edc1add`，US macro 4 valid：
+  term/credit 107/128，vix/dff 106/128）；**A2b DONE**（commit `9a13518`）：CN CPI（CPALTT01CNM659N）122/128 valid +
+  CN GDP（MKTGDPCNA646NWDB annual）**0/128 NaN**（releases ~10 < Z_MIN=12，数据限制诚实披露）；**A3 DONE**：
+  `MACRO_HEADLINE_6` + `join_macro_to_joint_panel`（per-region by-date map）；**runner asymmetric41 DONE**（第三模式
+  `TRACK_C_JOINT_MODE=asymmetric41`）。**asymmetric41 exploratory 跑中**（验证 41 特征 machinery 真实数据；
+  confirmatory 41 effective macro = US 4 + CN CPI = 5，GDP NaN，LightGBM native missing）。
+  ④ **业主 d6_go**（第二个 GO）→ confirmatory OOS（41 + J-T 门）→ draft v1.0 climax。**climax 前置全部就绪，待业主 GO。**
 
 ## 2026-08-04 方法学+结果 draft v0.1（可发表单元；process→product）
 
