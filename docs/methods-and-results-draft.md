@@ -72,6 +72,7 @@ Learner：LightGBM（frozen，`objective=lambdarank`，RD-15 ranking contract，
 | 10 | BASELINE-FF5 | +0.0106 | ci_half 0.0196 | t=1.06 | 125 | CV-proxy / exploratory | baseline_ff5 |
 | 11 | BASELINE-RANK | +0.0154 | ci_half 0.0149 | t=2.03 | 125 | CV-proxy / exploratory（p=0.042，n_trials=30 haircut 会洗掉） | baseline_rank |
 | 12 | h=10/42 sensitivity（8 行） | 全跨零 | — | 0.41–0.86 | 124–126 | CV-proxy / exploratory | #39 |
+| 13 | Track C 联合 asymmetric35 combined IC（A1 验证，本 session） | −0.0121 | [−0.035, +0.011] | 0.31 | 71 | chronological 联合 / exploratory（US 23 fund+price / CN 12 price+extras = 25 unique 列；US IC −0.002 / CN IC −0.020；**US fundamentals 无 alpha → 坐实 null-favored**） | `track_c_joint_asym35_summary.json` |
 
 **策略收益次级透镜**（gross-of-cost，B/C，n=125）：B_arm_state Sharpe 0.42 / arm_base 0.62 / C_arm_macro 0.24 / C_placebo 0.54；SPA consistent p=0.69，MCS 保留全部。**gross**——无 turnover/滑点/借券/退市/capacity，不可解释为可交易收益。净成本透镜（mount②，bps=5）：net Sharpe ≈0.43 年化，turnover 1.14（非退化）。
 
