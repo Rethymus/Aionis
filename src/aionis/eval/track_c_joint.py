@@ -146,35 +146,57 @@ def build_joint_panel(
     us_panel_path: str | Path,
     cn_panel_path: str | Path,
     feature_cols: list[str],
+    *,
+    us_feature_cols: list[str] | None = None,
+    cn_feature_cols: list[str] | None = None,
     window_start: str = "2016-01-01",
     date_col: str = "date",
     ticker_col: str = "ticker",
     y_col: str = "forward_return_h",
     region_col: str = "region",
 ) -> pd.DataFrame:
-    """Build the joint US+CN month-end panel with a region tag (D5 shared features).
+    """Build the joint US+CN month-end panel with a region tag.
 
-    Loads the US Track B panel (daily) and the CN price panel (already month-end),
-    restricts both to ``window_start`` (#46: 2016-01-01), keeps the shared feature
-    columns + label, tags region, and concatenates. Month-end sampling of the daily US
-    rows is performed downstream by ``fit_track_c_joint`` (idempotent on CN month-end).
+    Two modes:
+      * **Shared** (default, backward-compatible): ``feature_cols`` lists columns present
+        in BOTH panels (the exploratory 10 price cols). US-only and CN-only columns drop.
+      * **Asymmetric** (confirmatory #48, 41-feature path): pass ``us_feature_cols`` AND
+        ``cn_feature_cols``; US rows keep US-specific columns (e.g. 13 EDGAR fundamentals +
+        10 price = 23), CN rows keep CN-specific columns (e.g. 10 price mirror + 2 A-share
+        extras = 12). The concatenated panel has the UNION of columns; US rows are NaN in
+        CN-only columns and vice versa (LightGBM's default missing-value handling covers
+        this — no manual fillna).
+
+    In both modes, loads US (daily or month-end) + CN (month-end), restricts to
+    ``window_start`` (#46: 2016-01-01), tags region, concatenates. Month-end sampling of
+    daily US rows is performed downstream by ``fit_track_c_joint`` (idempotent on CN).
 
     Args:
         us_panel_path: Path to ``track_b_panel.parquet`` (US, daily or month-end).
         cn_panel_path: Path to ``cn_price_panel.parquet`` (CN, month-end).
-        feature_cols: Shared feature columns present in BOTH panels (the 10 price cols).
+        feature_cols: Shared feature columns (shared mode). Kept as a required positional
+               for backward-compat; ignored in asymmetric mode.
+        us_feature_cols: US-specific feature columns (asymmetric mode). When both this and
+               ``cn_feature_cols`` are non-None, asymmetric mode activates.
+        cn_feature_cols: CN-specific feature columns (asymmetric mode).
         window_start: Inclusive lower date bound (#46 ``universe.*.window_start``).
         date_col, ticker_col, y_col, region_col: Column names.
 
     Returns:
-        Long panel [date, ticker, region, *feature_cols, y_col], unrestricted granularity
-        (US may be daily; the fitter month-end-samples).
+        Long panel [date, ticker, region, *<features>, y_col]. In asymmetric mode the
+        feature columns are the union of ``us_feature_cols`` and ``cn_feature_cols``
+        (region-missing columns auto-filled NaN by pandas concat alignment).
 
     Raises:
         ValueError: If required columns are missing in either panel.
     """
-    keep_us = [date_col, ticker_col, *feature_cols, y_col]
-    keep_cn = [date_col, ticker_col, *feature_cols, y_col]
+    asymmetric = us_feature_cols is not None and cn_feature_cols is not None
+    if asymmetric:
+        keep_us = [date_col, ticker_col, *us_feature_cols, y_col]
+        keep_cn = [date_col, ticker_col, *cn_feature_cols, y_col]
+    else:
+        keep_us = [date_col, ticker_col, *feature_cols, y_col]
+        keep_cn = [date_col, ticker_col, *feature_cols, y_col]
 
     us = pd.read_parquet(us_panel_path)
     cn = pd.read_parquet(cn_panel_path)

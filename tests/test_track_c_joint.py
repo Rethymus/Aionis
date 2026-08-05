@@ -303,3 +303,104 @@ def test_combined_ic_is_equal_weight_mean_of_regions() -> None:
         check_names=False,
         check_dtype=False,
     )
+
+
+# ---------------------------------------------------------------------------
+# build_joint_panel asymmetric mode (#48 confirmatory: region-specific features)
+# ---------------------------------------------------------------------------
+
+
+def test_build_joint_panel_asymmetric_union_and_region_nan(tmp_path) -> None:
+    """Asymmetric mode: US-specific + CN-specific cols -> UNION; cross-region cols NaN.
+
+    Catches the failure mode where asymmetric degrades to shared (dropping region-specific
+    cols) or where concat does not auto-align missing cols to NaN.
+    """
+    us_feat = ["roa", "momentum_21d"]  # US-specific fund + shared price
+    cn_feat = ["momentum_21d", "limit_up_down_distance"]  # shared price + CN-specific extra
+    us = pd.DataFrame(
+        {
+            "date": pd.to_datetime(["2016-01-31", "2016-02-28"]),
+            "ticker": ["AAPL", "AAPL"],
+            "roa": [0.05, 0.06],
+            "momentum_21d": [0.1, 0.2],
+            "forward_return_h": [0.01, 0.02],
+        }
+    )
+    cn = pd.DataFrame(
+        {
+            "date": pd.to_datetime(["2016-01-31", "2016-02-28"]),
+            "ticker": ["sh.600000", "sh.600000"],
+            "momentum_21d": [0.7, 0.8],
+            "limit_up_down_distance": [0.0, 0.1],
+            "forward_return_h": [0.03, 0.04],
+        }
+    )
+    usp, cnp = tmp_path / "us.parquet", tmp_path / "cn.parquet"
+    us.to_parquet(usp)
+    cn.to_parquet(cnp)
+
+    joint = build_joint_panel(
+        usp,
+        cnp,
+        feature_cols=[],  # ignored in asymmetric mode
+        us_feature_cols=us_feat,
+        cn_feature_cols=cn_feat,
+        window_start="2016-01-01",
+    )
+
+    # Union columns present (US-specific + CN-specific + shared)
+    assert "roa" in joint.columns, "US-specific col must survive into union"
+    assert "limit_up_down_distance" in joint.columns, "CN-specific col must survive into union"
+    assert "momentum_21d" in joint.columns, "shared col must be present"
+    # Cross-region NaN discipline (pandas concat auto-align, NOT explicit fillna)
+    us_rows = joint[joint["region"] == "us"]
+    cn_rows = joint[joint["region"] == "cn"]
+    assert us_rows["limit_up_down_distance"].isna().all(), "US rows must be NaN in CN-only col"
+    assert cn_rows["roa"].isna().all(), "CN rows must be NaN in US-only col"
+    # Own-region cols populated
+    assert us_rows["roa"].notna().all(), "US rows must carry US-specific values"
+    assert cn_rows["limit_up_down_distance"].notna().all(), "CN rows must carry CN-specific values"
+    # Both regions survived
+    assert set(joint["region"]) == {"us", "cn"}
+
+
+def test_build_joint_panel_asymmetric_drops_non_listed_cols(tmp_path) -> None:
+    """Asymmetric mode drops columns not in the respective region's feature list.
+
+    Catches the failure mode where asymmetric keeps every column from each panel
+    (leaking unlisted cols into the union).
+    """
+    us = pd.DataFrame(
+        {
+            "date": pd.to_datetime(["2016-01-31"]),
+            "ticker": ["AAPL"],
+            "roa": [0.05],
+            "drop_me_us": [999.0],  # not in us_feature_cols -> must drop
+            "forward_return_h": [0.01],
+        }
+    )
+    cn = pd.DataFrame(
+        {
+            "date": pd.to_datetime(["2016-01-31"]),
+            "ticker": ["sh.600000"],
+            "limit_up_down_distance": [0.0],
+            "drop_me_cn": [888.0],  # not in cn_feature_cols -> must drop
+            "forward_return_h": [0.03],
+        }
+    )
+    usp, cnp = tmp_path / "us.parquet", tmp_path / "cn.parquet"
+    us.to_parquet(usp)
+    cn.to_parquet(cnp)
+
+    joint = build_joint_panel(
+        usp,
+        cnp,
+        feature_cols=[],
+        us_feature_cols=["roa"],
+        cn_feature_cols=["limit_up_down_distance"],
+        window_start="2016-01-01",
+    )
+    assert "drop_me_us" not in joint.columns, "US non-listed col must be dropped"
+    assert "drop_me_cn" not in joint.columns, "CN non-listed col must be dropped"
+    assert "roa" in joint.columns and "limit_up_down_distance" in joint.columns
