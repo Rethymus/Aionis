@@ -75,7 +75,7 @@ opus 核验（非独立 verifier lane）。proxy 恢复后可补独立验证（�
   extras 未改善 IC（vs shared10 combined −0.007；asymmetric35 −0.012 更负但均 null）；US IC 几乎零 →
   US fundamentals 无 alpha → **坐实 null-favored**（双区域月频已定价）。产物 `runs/track_c_joint_asym35_*`
   （gitignored）。**Pandas4 concat-sort deprecation warning**（runner:165，非阻塞，待 sort=False fix）。
-- **A2 macro 7-gate 调研**：Agent `macro-7gate` 跑 ~30min **idle 无 report**（同 Agent A idle 模式）。
+- **A2 macro 7-gate 调研**：Agent `macro-7gate` 跑 ~30min 后 **failed [1210]** API error（proxy 参数错；非 idle-without-result）。
   **Orchestrator WebSearch 实证 verdict = GREEN**（US 4 macro = GREEN，FRED public domain + ALFRED vintage PIT-safe；
   CN 2 macro = GREEN，WebSearch 确认 `MKTGDPCNA646NWDB`[World Bank, ALFRED vintage] + `CPALTT01CNM659N`[OECD, ALFRED vintage]
   都支持 PIT vintage；license：FRED non-commercial research OK（Aionis = research，no redistribution）；OECD non-commercial OK）。
