@@ -36,6 +36,7 @@ import pandas as pd
 
 from aionis.config import settings
 from aionis.eval.track_c_joint import build_joint_panel, fit_track_c_joint
+from aionis.features.macro_headline import MACRO_HEADLINE_6, join_macro_to_joint_panel
 from aionis.features.price_features import TRACK_B_PRICE_FEATURE_COLS
 
 US_PANEL = settings.data_dir / "cache" / "track_b_panel.parquet"
@@ -84,6 +85,27 @@ def main() -> None:
         mode_caveat = (
             "exploratory: 35 asymmetric per-ticker (US 23 fund+price / CN 12 price+extras; "
             "macro 6 pending A2)"
+        )
+    elif MODE == "asymmetric41":
+        print(
+            f"[S] building ASYMMETRIC joint panel + joining macro_headline_6 "
+            f"(US 23 / CN 12 + macro 6 -> {len(UNION_35) + len(MACRO_HEADLINE_6)} unique)...",
+            flush=True,
+        )
+        joint = build_joint_panel(
+            US_PANEL,
+            CN_PANEL,
+            feature_cols=[],
+            us_feature_cols=US_23,
+            cn_feature_cols=CN_12,
+            window_start=WINDOW_START,
+        )
+        joint = join_macro_to_joint_panel(joint)
+        feature_cols_for_fit = UNION_35 + MACRO_HEADLINE_6
+        mode_tag = "asym41"
+        mode_caveat = (
+            "confirmatory-spec 41 (US 23 + CN 12 + macro_headline_6); "
+            "GDP NaN (annual releases < Z_MIN, data limit)"
         )
     elif MODE == "shared":
         print("[S] building SHARED joint panel (10 price)...", flush=True)

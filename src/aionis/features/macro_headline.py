@@ -421,6 +421,222 @@ def fetch_us_macro_4(
     return df
 
 
+# ---------------------------------------------------------------------------
+# A2b: CN macro 2 (CPI monthly + GDP annual surprise) — GREEN verdict
+# (WebSearch 2026-08-05: MKTGDPCNA646NWDB World Bank + CPALTT01CNM659N OECD,
+# both ALFRED vintage; FRED non-commercial research OK). Reuses
+# macro_surprise.first_print_changes (monthly CPI) + surprise_time_series +
+# the macro_surprise_date_broadcast merge_asof-backward PIT rule. CN GDP is
+# ANNUAL (first_print_changes is monthly-specific -> custom annual prior_ref),
+# with ~10 releases 2015-2026 < Z_MIN=12 -> surprise_z likely NaN (data limit,
+# disclosed; GDP column broadcasts NaN, LightGBM handles missing).
+# ---------------------------------------------------------------------------
+
+
+def _broadcast_surprise_z(
+    ts: pd.DataFrame,
+    as_of_dates: pd.DatetimeIndex,
+    name: str,
+) -> pd.Series:
+    """Broadcast release-based ``surprise_z`` to ``as_of_dates`` (PIT backward).
+
+    Reuses the macro_surprise_date_broadcast merge_asof rule: a release at r is
+    knowable at every d >= r and never at d < r (last-known-macro-surprise, PIT).
+    """
+    head = (
+        ts.dropna(subset=["surprise_z"])
+        .sort_values(["pub_date", "ref_date"])
+        .drop_duplicates("pub_date", keep="last")[["pub_date", "surprise_z"]]
+        .sort_values("pub_date")
+    )
+    dates = pd.DatetimeIndex(as_of_dates).normalize()
+    head["pub_date"] = head["pub_date"].dt.normalize()
+    left = pd.DataFrame({"date": dates})
+    right = head.rename(columns={"pub_date": "date"})
+    merged = pd.merge_asof(left, right, on="date", direction="backward")
+    return pd.Series(merged["surprise_z"].to_numpy(), index=dates, name=name)
+
+
+def cn_cpi_surprise(
+    as_of_dates: pd.DatetimeIndex,
+    fred_api_key: str | None = None,
+    cache_dir: Path | None = None,
+) -> pd.Series:
+    """CN CPI surprise (CPALTT01CNM659N, monthly, release-based).
+
+    Reuses macro_surprise.first_print_changes (monthly prior_ref = ref - 1M)
+    + surprise_time_series + _broadcast_surprise_z.
+    """
+    from aionis.features.macro_surprise import (
+        fetch_alfred_vintages,
+        first_print_changes,
+        surprise_time_series,
+    )
+
+    if cache_dir is None:
+        cache_dir = settings.data_dir / "cache"
+    vintages = fetch_alfred_vintages("CPALTT01CNM659N", fred_api_key or "", cache_dir)
+    changes = first_print_changes(vintages, change_kind="pct")  # monthly CPI, MoM pct
+    ts = surprise_time_series(changes)
+    out = _broadcast_surprise_z(ts, as_of_dates, "cn_cpi_surprise_zscore")
+    log.info(
+        "cn_cpi_surprise_built",
+        n=len(out), n_valid=int(out.notna().sum()),
+    )
+    return out
+
+
+def cn_gdp_surprise(
+    as_of_dates: pd.DatetimeIndex,
+    fred_api_key: str | None = None,
+    cache_dir: Path | None = None,
+) -> pd.Series:
+    """CN GDP surprise (MKTGDPCNA646NWDB, ANNUAL, release-based).
+
+    first_print_changes is monthly-specific (prior_ref = ref - 1M), so this
+    builds an ANNUAL variant (prior_ref = ref - 1Y) inline, then reuses
+    surprise_time_series + _broadcast_surprise_z. Annual releases ~10 over
+    2015-2026 < Z_MIN=12 -> surprise_z likely NaN (data limit; the column
+    broadcasts NaN, which LightGBM's native missing handling covers).
+    """
+    from aionis.features.macro_surprise import (
+        fetch_alfred_vintages,
+        surprise_time_series,
+    )
+
+    if cache_dir is None:
+        cache_dir = settings.data_dir / "cache"
+    vintages = fetch_alfred_vintages("MKTGDPCNA646NWDB", fred_api_key or "", cache_dir)
+    if "ref_date" not in vintages.columns or vintages.empty:
+        return pd.Series(
+            [float("nan")] * len(as_of_dates),
+            index=pd.DatetimeIndex(as_of_dates),
+            name="cn_gdp_surprise_zscore",
+        )
+    fp_idx = vintages.groupby("ref_date")["realtime_start"].idxmin()
+    fp = (
+        vintages.loc[fp_idx]
+        .rename(columns={"realtime_start": "pub_date", "value": "first_print"})
+        .sort_values("pub_date")
+        .reset_index(drop=True)
+    )
+    fp["prior_ref"] = fp["ref_date"] - pd.DateOffset(years=1)  # ANNUAL prior
+    prior_pool = (
+        vintages.rename(
+            columns={
+                "ref_date": "prior_ref",
+                "realtime_start": "prior_pub",
+                "value": "prior_value",
+            }
+        )
+        .sort_values("prior_pub")
+        .reset_index(drop=True)
+    )
+    merged = pd.merge_asof(
+        fp,
+        prior_pool,
+        left_on="pub_date",
+        right_on="prior_pub",
+        by="prior_ref",
+        direction="backward",
+        allow_exact_matches=False,
+    )
+    merged["actual_change"] = (
+        merged["first_print"] / merged["prior_value"] - 1.0
+    ) * 100.0  # YoY pct
+    ts = surprise_time_series(
+        merged[["ref_date", "pub_date", "first_print", "prior_pub", "prior_value", "actual_change"]]
+    )
+    out = _broadcast_surprise_z(ts, as_of_dates, "cn_gdp_surprise_zscore")
+    log.info(
+        "cn_gdp_surprise_built",
+        n=len(out), n_valid=int(out.notna().sum()),
+        caveat="annual releases < Z_MIN -> likely NaN (data limit)",
+    )
+    return out
+
+
+def fetch_cn_macro_2(
+    as_of_dates: pd.DatetimeIndex,
+    fred_api_key: str | None = None,
+    cache_dir: Path | None = None,
+) -> pd.DataFrame:
+    """Fetch CN macro 2 (CPI monthly surprise + GDP annual surprise).
+
+    Args:
+        as_of_dates: Target dates (sorted ascending).
+        fred_api_key: FRED API key (CN series via FRED; non-commercial research OK).
+        cache_dir: Override default cache dir.
+
+    Returns:
+        DataFrame [cn_cpi_surprise_zscore, cn_gdp_surprise_zscore] indexed by as_of_dates.
+        GDP column is likely NaN (annual releases < Z_MIN=12).
+    """
+    if fred_api_key is None:
+        fred_api_key = settings.fred_api_key
+    return pd.DataFrame(
+        {
+            "cn_cpi_surprise_zscore": cn_cpi_surprise(as_of_dates, fred_api_key, cache_dir),
+            "cn_gdp_surprise_zscore": cn_gdp_surprise(as_of_dates, fred_api_key, cache_dir),
+        }
+    )
+
+
+# ---------------------------------------------------------------------------
+# A3: join macro_headline_6 to the joint panel (per-region, by date)
+# ---------------------------------------------------------------------------
+
+MACRO_HEADLINE_6: list[str] = [
+    "term_spread_1y_10y_zscore",
+    "credit_spread_zscore",
+    "vix_surprise_zscore",
+    "dff_surprise_zscore",
+    "cn_cpi_surprise_zscore",
+    "cn_gdp_surprise_zscore",
+]
+
+
+def join_macro_to_joint_panel(
+    joint_panel: pd.DataFrame,
+    fred_api_key: str | None = None,
+    cache_dir: Path | None = None,
+    date_col: str = "date",
+    region_col: str = "region",
+) -> pd.DataFrame:
+    """A3: join US macro 4 + CN macro 2 to the joint panel (per-region, by date).
+
+    US rows get the 4 US macro cols; CN rows get the 2 CN macro cols. Cross-region
+    macro cols are NaN (e.g. CN rows NaN in US macro). The GDP col is NaN (annual
+    releases < Z_MIN; data limit — disclosed). Reuses fetch_us_macro_4 +
+    fetch_cn_macro_2. The macro values are already PIT (merge_asof backward inside
+    each builder), so the per-region by-date map preserves PIT.
+
+    Returns:
+        Copy of joint_panel with the 6 MACRO_HEADLINE_6 columns added.
+    """
+    if fred_api_key is None:
+        fred_api_key = settings.fred_api_key
+    if cache_dir is None:
+        cache_dir = settings.data_dir / "cache"
+    as_of = pd.DatetimeIndex(sorted(joint_panel[date_col].unique())).normalize()
+    us_macro = fetch_us_macro_4(as_of, fred_api_key, cache_dir)
+    cn_macro = fetch_cn_macro_2(as_of, fred_api_key, cache_dir)
+    out = joint_panel.copy()
+    out[date_col] = pd.to_datetime(out[date_col]).dt.normalize()
+    us_mask = out[region_col] == "us"
+    cn_mask = out[region_col] == "cn"
+    for col in us_macro.columns:
+        out.loc[us_mask, col] = out.loc[us_mask, date_col].map(us_macro[col])
+    for col in cn_macro.columns:
+        out.loc[cn_mask, col] = out.loc[cn_mask, date_col].map(cn_macro[col])
+    log.info(
+        "macro_headline_6_joined",
+        n_rows=len(out), n_us=int(us_mask.sum()), n_cn=int(cn_mask.sum()),
+        macro_cols=MACRO_HEADLINE_6,
+    )
+    return out
+
+
 __all__ = [
     "term_spread_1y_10y",
     "credit_spread",
