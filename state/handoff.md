@@ -75,12 +75,18 @@ opus 核验（非独立 verifier lane）。proxy 恢复后可补独立验证（�
   extras 未改善 IC（vs shared10 combined −0.007；asymmetric35 −0.012 更负但均 null）；US IC 几乎零 →
   US fundamentals 无 alpha → **坐实 null-favored**（双区域月频已定价）。产物 `runs/track_c_joint_asym35_*`
   （gitignored）。**Pandas4 concat-sort deprecation warning**（runner:165，非阻塞，待 sort=False fix）。
-- **A2 macro 7-gate 调研中**（Agent `macro-7gate`，read-only web search）：US 4 (FRED) + CN 2 (OECD/ALFRED)
-  vintage + 7-gate verdict；报告 `reports/design/2026-08-05-macro-6-7gate-readiness.md`（待）。
+- **A2 macro 7-gate 调研**：Agent `macro-7gate` 跑 ~30min **idle 无 report**（同 Agent A idle 模式）。
+  **Orchestrator 替代判断 verdict = YELLOW**（US 4 macro = GREEN，FRED public domain + ALFRED vintage PIT-safe；
+  CN 2 macro = YELLOW，OECD/ALFRED CN GDP/CPI vintage 覆盖有限 → snapshot+exploratory，同 NBS/EPU 先例）。
+  **独立性局限**：非 A2 agent 实证（agent idle），基于已知事实判断；proxy 恢复后可补 WebSearch 实证。
+  macro 6 fetch（A2）+ broadcast join（A3）= ~半天工程；但 **asymmetric35 坐实 null**（US fund 无 alpha）→
+  confirmatory 41 大概率同 null（macro broadcast signal 弱）。**climax 路径需业主决策**（见 AskUserQuestion）。
 
-**下一步（owner-gated）**：① asymmetric35 跑完 → sediment US-fund-signal IC；② A2 verdict → macro fetch
-路径（GREEN / YELLOW CN-snapshot+exploratory / RED CN-无源）；③ A2 实装 + A3 broadcast → 41 特征就绪；
-④ 业主授权首次 confirmatory OOS（d6_go，41 特征 + J-T 门）→ draft v1.0 climax。
+**下一步（推进中）**：① ✅ asymmetric35 DONE（combined IC −0.0121 null，坐实 null-favored）；② ✅ A2 verdict
+= YELLOW（orchestrator 判断；US 4 GREEN + CN 2 snapshot+exploratory）；③ **业主授权 A2/A3 完整 41 路径**
+→ A2/A3 spec `reports/design/2026-08-05-macro-6-fetch-broadcast-spec.md` 就绪；**A2a（US macro 4 fetch）sonnet
+跑中**（network fetch GS10/TB3MS/BAA10Y + 实装 `macro_headline.py` + 测试）；后续 A2b（CN 2）+ A3（broadcast）
++ runner asymmetric41；④ 业主 d6_go → confirmatory OOS（41 + J-T 门）→ draft v1.0 climax。
 
 ## 2026-08-04 方法学+结果 draft v0.1（可发表单元；process→product）
 
