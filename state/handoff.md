@@ -1,5 +1,42 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-08-05 (g) 发表强化 — power-floor 文献锚定 + 复现/数据可用性声明（2 新 PROPOSED 文档）
+
+owner 第二次 `/goal` 授权"推进推荐项 + 批判性比对 + 并行 agents + 分层省 token + reuse-first"。
+方向 1（power-floor 文献锚定）+ 互补的复现声明交付。**两 sonnet agent 均 [1210] 失败 → 全 opus §8 fallback**。
+
+- **`reports/design/2026-08-05-power-floor-literature-anchoring.md`** — 把 σ≈0.10 从"我们的观察"升级为
+  "有文献支撑的方法学结果"。WebSearch 验证 4 引用（出版商页 403 → 用作者公开 PDF + 搜索摘要）：
+  ① **Gu-Kelly-Xiu (2020, RFS)** "Empirical Asset Pricing via Machine Learning"：最佳 ML 月 OOS R² **1.08-1.80%**
+  → mean IC ~0.05-0.12 量级（R²≈IC²）；② **Goyal-Welch (2008, RFS 21(4):1455-1508)** 综评预测难度；
+  ③ **Grinold-Kahn** *Active Portfolio Management* + Fundamental Law：年化 IR **0.5="good"** ⟹ mean IC/σ(IC)≈0.14
+  ⟹ σ(IC)≈7×mean IC；若 mean IC≈0.015 → **σ(IC)≈0.10**（与 Aionis 0.106 量级一致）；④ **Schuirmann (1987) TOST** +
+  **Lakens (2017)** equivalence primer（cited 2792）。**诚实边界**：精确 σ(IC)=0.10 的单一标准文献未找到——
+  通过 mean IC 水平 + Fundamental Law 间接推断（§5 标注 ⚠️）。但 power-floor 结论稳健：只要 σ(IC)∈0.08-0.15
+  文献一致区间，SESOI ±0.010 等价宣告即不可达（look-3 n_min σ=0.08 时 ~21 年，σ=0.15 时 ~58 年）。**推荐强 framing (a)**
+  把 power-floor 升为一等方法学贡献（JFEc 计量 / CFR 再检验轨道）。
+
+- **`docs/replication-availability.md`** — reproducible-by-construction 声明（positioning brief §6 标记的审稿人关切）。
+  反泄漏纪律即复现契约（`config_committed` ledger + H6 bit-identical + tracked fetch 脚本）；逐源 license 表
+  （EDGAR/FRED/ALFRED = US-gov 公共领域可再分发 / Tiingo/Alpaca 需自有 key 不再分发 / baostock A 股 / hanshof+pierrebrunelle
+  MIT 成分）；独立方复现步骤（clone → .env → fetch → runner → H6 断言 bit-identical）；cover-letter 简版。
+  引用全部核验真实（`.env.example` ✓ / `TIINGO_API_KEY`+`FRED_API_KEY` ✓ / H6 三重断言 ✓ / ledger 行号 ✓）。
+
+**批判性比对（业主"先比对再选择"）**：研究新切片（强基线/LLM eval/新特征）低于产出收尾且重引入"治理>产出"失调；
+E3 被 power floor 证可选。剩下自主高价值 = 抬高论文天花板（power-floor 锚定）+ 移除外发摩擦（复现声明）。
+
+**分层 + reuse + 独立性**：2 sonnet `general-purpose` agent 均因 [1210] 失败（positioning→powerfloor 同模式，
+WORKFLOW §17 停重试）→ opus §8 fallback 直接写。文献/复用：WebSearch（非 403 出版商页）+ 既有 ledger/脚本引用。
+独立性局限：两文档均 opus 自写（非独立 subagent pass，已披露）；数字（climax #49 + power analysis）由既有双独立审计背书。
+
+**边界**：本轮纯 docs（2 新 PROPOSED 文档）+ state；**0 ledger / frozen surface / prereg / ADR / config / data / E3 改动**；
+未跑 confirmatory/forward/strategy/research；未触 E3；未外发（无 arXiv 上传）。**未改已定稿的 draft v1.0 / v1.0-en**
+（两新文档通过 state + git 可发现；venue tailoring 时由业主决定是否并入引用，避免为边际指针重开定稿）。
+
+**待业主**：① framing 选择（a 强 power-floor / b 中 / c 弱）；② 是否补 σ 直接实证（重算 Gu-Kelly-Xiu 公开 IC 系列 σ，
+或合成 IC 噪声实验）；③ arXiv 投稿时把 4 引用并入 `references.bib`；④ 复现 package 形态（仅公共领域子集 + 用户自有 key /
+Zenodo DOI 归档——外发需点头）。
+
 ## 2026-08-05 (f) 产物化收尾 — 英文 draft + 经济透镜 sweep + venue 定位 brief
 
 owner `/goal` 授权"推进推荐项 + 批判性比对 + 并行 agents + 分层省 token + reuse-first 禁造轮子"。

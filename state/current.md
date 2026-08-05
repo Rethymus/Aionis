@@ -51,6 +51,16 @@
   race; see memory aionis-parallel-writer-race). `opus`/`fable` aliases blocked by `[1M]` resolver values →
   AUD-07B + RD-15 deferred; RD-08 HOLD (needs frozen rule table). Safe RD queue exhausted for sonnet tier.
   Not pushed. Detail: `state/handoff.md` § Wave-B FINAL.
+- **updated:** 2026-08-05 (g). **发表强化 — power-floor 文献锚定 + 复现声明（2 新 PROPOSED 文档）。**
+  owner 第二次 `/goal` 推方向 1。powerfloor sonnet agent [1210] 失败（与 positioning 同模式，§17 停重试）→ opus §8 fallback。
+  ① `reports/design/2026-08-05-power-floor-literature-anchoring.md`：把 σ≈0.10 锚定到 Gu-Kelly-Xiu (2020 RFS, 月 OOS R²
+  **1.08-1.80%**) + Goyal-Welch (2008 RFS) + Grinold-Kahn Fundamental Law（年化 IR **0.5="good"** → σ(IC)≈7×mean → σ≈0.10
+  与 Aionis 0.106 一致）+ Schuirmann/Lakens TOST；WebSearch 验证 4 引用，诚实标注精确 σ 为间接推断（§5 ⚠️）；结论稳健
+  （σ∈0.08-0.15 区间内 ±0.010 等价均不可达）；推荐强 framing (a) 升 power-floor 为一等方法学贡献。② `docs/replication-availability.md`：
+  reproducible-by-conconstruction（`config_committed` ledger + H6 bit-identical + tracked fetch 脚本）+ 逐源 license 表 +
+  独立方复现步骤 + cover-letter 简版；引用核验真实。**边界**：纯 docs（2 新 PROPOSED）+ state；未改已定稿 draft v1.0/v1.0-en
+  （venue tailoring 时由业主决定并入引用）；0 ledger/frozen surface/prereg/ADR/config/data/E3；未外发。**待业主**：
+  framing 选择 + 是否补 σ 直接实证 + arXiv 引用并入 + 复现 package 形态。
 - **updated:** 2026-08-05 (f). **产物化收尾（process→product）— 3 推荐 + 1 fallback 全交付（4 commit + 1 memory，push origin/main）。**
   owner `/goal` 授权"推进推荐项 + 批判性比对 + 并行 agents + 分层省 token + reuse-first"。① 静态站点 Track C climax section
   （`e94eac2`，25/25 测试绿，CI 部署成功）；② bps 敏感度 sweep（`3a3c2cf`，复用 `net_cost_summary` 0 造轮子；衰减 gross 0.149→bps=5
