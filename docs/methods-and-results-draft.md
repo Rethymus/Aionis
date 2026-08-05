@@ -80,7 +80,7 @@ Learner：LightGBM（frozen，`objective=lambdarank`，RD-15 ranking contract，
 | 14 | Track C 联合 asymmetric41 combined IC（confirmatory 彩排） | −0.0088 | [−0.034, +0.016] | 0.48 | 71 | chronological 联合 / exploratory（全 41 特征含 macro 6；bit-identical 于 #15 confirmatory） | `track_c_joint_asym41_summary.json` |
 | 15 | **Track C 联合 confirmatory:first（本 session climax）** | **−0.0088** | [−0.034, +0.016] | **0.48** | 71 | **chronological 联合 / CONFIRMATORY**（frozen #48；J-T look-1 NOT_EQUIVALENT：RCI 99.44% [−0.051, +0.027] 宽于 ±0.010 SESOI = 欠功率，**非**效应信号；H6 双跑 bit-identical PASS） | **ledger #49** + `track_c_confirmatory_summary.json` |
 
-**策略收益次级透镜**（gross-of-cost，B/C，n=125）：B_arm_state Sharpe 0.42 / arm_base 0.62 / C_arm_macro 0.24 / C_placebo 0.54；SPA consistent p=0.69，MCS 保留全部。**gross**——无 turnover/滑点/借券/退市/capacity，不可解释为可交易收益。净成本透镜（mount②，bps=5）：net Sharpe ≈0.43 年化，turnover 1.14（非退化）。
+**策略收益次级透镜**（gross-of-cost，B/C，n=125）：B_arm_state Sharpe 0.42 / arm_base 0.62 / C_arm_macro 0.24 / C_placebo 0.54；SPA consistent p=0.69，MCS 保留全部。**gross**——无 turnover/滑点/借券/退市/capacity，不可解释为可交易收益。净成本透镜（mount②，bps=5）：net Sharpe ≈0.43 年化，turnover 1.14（非退化）。bps 敏感度（mount② 姐妹脚本 `track_b_net_cost_sweep_run`，exploratory，2026-08-05）：per-period Sharpe 从 gross 0.149（bps=0）线性衰减至 bps=50 时 −0.088；break-even ≈31 bps（turnover 1.14 跨 bps 恒等）→ 即便经济透镜也无稳健可交易 edge。
 
 **判读**：15 行全部 null（CI 跨零或差分不显著）。在 **confirmatory** 等级（#15，最高可发表强度），
 首条 confirmatory OOS 点估计 null（−0.0088）；J-T look-1 因 OBF 保守性（99.44% RCI）欠功率，

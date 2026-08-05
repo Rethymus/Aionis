@@ -51,6 +51,17 @@
   race; see memory aionis-parallel-writer-race). `opus`/`fable` aliases blocked by `[1M]` resolver values →
   AUD-07B + RD-15 deferred; RD-08 HOLD (needs frozen rule table). Safe RD queue exhausted for sonnet tier.
   Not pushed. Detail: `state/handoff.md` § Wave-B FINAL.
+- **updated:** 2026-08-05 (f). **产物化收尾（process→product）— 3 推荐 + 1 fallback 全交付（4 commit + 1 memory，push origin/main）。**
+  owner `/goal` 授权"推进推荐项 + 批判性比对 + 并行 agents + 分层省 token + reuse-first"。① 静态站点 Track C climax section
+  （`e94eac2`，25/25 测试绿，CI 部署成功）；② bps 敏感度 sweep（`3a3c2cf`，复用 `net_cost_summary` 0 造轮子；衰减 gross 0.149→bps=5
+  0.125→bps=50 −0.088，break-even ~31 bps；8/8 测试绿）；③ 英文 v1.0-en draft（`52a3d69`，sonnet agent 忠实翻译，数字与 ledger #49
+  + 中文 v1.0 交叉核对一致）；④ venue 定位 brief（`reports/design/2026-08-05-publishable-unit-positioning.md`，web search 验证：
+  CFR 免费/~28 天/null-再检验 fit / RevFin null 友好 / JFEc 计量 / arXiv baseline；出版商 403 处诚实标注）。positioning agent
+  [1210] 失败 → opus §8 fallback 直接写（独立性局限已披露）。分层：2 sonnet agent 并行（draft ✅ / positioning ❌）+ opus 集成。
+  memory `aionis-publication-framing-option-a` 写入（锁战略约束：勿再提议拓宽 SESOI / 救 equivalence / 追新 alpha）。全套 pytest
+  exit 0；ruff clean。**待业主**：选 venue 路径 + 授权 arXiv preprint（外发不可逆）+ framing 选择 + 英文 v1.0-en venue tailoring。
+  **边界**：纯 docs/scripts(state-only)/state/memory；0 ledger/frozen surface/prereg/ADR/config/data/E3 改动；未跑
+  confirmatory/forward/strategy；未触 E3；未外发。
 - **updated:** 2026-08-05 (e). **选项 A 定稿（accept reframing）— draft v1.0-draft → v1.0。** 业主授权"按推荐方式处理"
   = 选项 A（贡献 = null 点估计 + 反泄漏纪律 + power-limit 披露；**不**拓宽 SESOI、**不**动冻结面、**不**
   rerun-to-significance）。两份独立审计 APPROVE：① power-analysis sonnet review APPROVE（0 blocking/HIGH/MEDIUM，

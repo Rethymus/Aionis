@@ -1,5 +1,45 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-08-05 (f) 产物化收尾 — 英文 draft + 经济透镜 sweep + venue 定位 brief
+
+owner `/goal` 授权"推进推荐项 + 批判性比对 + 并行 agents + 分层省 token + reuse-first 禁造轮子"。
+3 推荐 + 1 fallback 全部交付（4 commit + 1 memory，全 push origin/main）：
+
+- **`e94eac2` feat(site)** — 静态站点 Track C climax section（KPI tile + 表 + power-floor reframing）；
+  3 新 hermetic 测试，25/25 绿；CI 部署成功（Pages 已更新）。
+- **`3a3c2cf` feat(scripts)** — bps 敏感度 sweep（`track_b_net_cost_sweep_run`，**复用 `net_cost_summary`**，0 造轮子）：
+  真实 Track B treatment 面板（ef321e9，125 月）衰减曲线 gross 0.149（bps=0）→ bps=5 0.125（≈0.43 年化，匹配 mount② / draft 引用）
+  → bps=20 0.054 → bps=50 −0.088；**break-even ≈31 bps**；turnover 1.1444 跨 bps 恒等。8/8 hermetic 测试绿（含反退化：
+  gross 跨 bps 恒等 + net 单调衰减 + 线性 cost scaling + break-even 插值 + _parse_bps 校验）。
+- **`52a3d69` docs(draft)** — 英文 v1.0-en（`docs/methods-and-results-draft-en.md`，18KB）：sonnet agent 忠实翻译；
+  全部关键数字（−0.0088/0.484/NOT_EQUIVALENT/RCI[−0.051,+0.027]/n_min 869/580/435/36.2y/2.772/99.44%）与 ledger #49
+  + 中文 v1.0 交叉核对一致；framing 忠实（null + 纪律 + power-limit，非 equivalence declared）。
+- **positioning brief**（本 commit）— `reports/design/2026-08-05-publishable-unit-positioning.md`：venue 匹配决策包。
+
+**批判性比对（业主"先比对再选择"）**：英文 draft 不盲目翻 12KB——venue 决定语气/篇幅/重点，故 positioning brief
+与翻译并行（而非串行）。venue 规格 web search 验证：**CFR**（Ivo Welch，免费 boutique，10-20 篇/年，~28 天 turnaround，
+"takes more risks"/"all types of documents"，replication/re-examination 导向 = 最高 fit）/ **RevFin**（明示"irrespective
+of whether the findings"= null 友好）/ **JFEc**（计量方法 fit，power-floor + J-T 门归宿）/ **Quant Finance**（理论+实证，
+rapid）/ **arXiv q-fin.ST**（免费 baseline）。出版商精确页 403 处诚实标注 ⚠️，未编造数字。
+
+**推荐路径**（brief §4）：① arXiv preprint（立即/免费/时间戳）；② CFR 首选（免费 + ~28 天 + null-再检验 fit，
+frameworking (a) 反泄漏纪律为主）；③ 备选 JFEc（框架 b 计量）或 RevFin（null 友好）。
+
+**分层 + reuse 合规**：2 sonnet `general-purpose` agent 并行（英文 draft ✅ 交付 / positioning ❌ [1210] 失败）；
+positioning 失败 → **opus §8 fallback 直接写**（非独立 subagent pass，已披露）。sweep 复用既有 `net_cost_summary`
+（0 造轮子）；CI 复用既有 deploy workflow；定位复用公开 venue 规格。
+
+**独立性局限（披露）**：positioning 非独立 pass（agent [1210] 死，opus 自写）；英文 draft 单 agent + opus 数字核验；
+sweep opus 自写 + 8 反退化测试。数字（climax #49 + power analysis）由既有 2026-08-05 双独立审计背书
+（power-analysis sonnet review + climax diff review 均 APPROVE）。
+
+**待业主**：① 选 venue 路径（CFR / JFEc / RevFin / 仅 arXiv）；② **授权 arXiv preprint 上传**（外发不可逆，需点头）；
+③ framing 选择（a 治理 / b 计量 / c 估计量）；④ 英文 v1.0-en → venue-specific tailoring（brief §4 映射表已给）。
+
+**边界**：本轮纯 docs/scripts(state-only)/state/memory；**0 ledger / frozen surface / prereg / ADR / config / data / E3
+改动**；未跑 confirmatory/forward/strategy/research；未触 E3；未外发（无 arXiv 上传）。全套 hermetic pytest exit 0
+（仅预存 forward-score/numpy warnings）；ruff clean。
+
 ## 2026-08-05 (d) Power analysis — J-T schedule 结构性欠功率（设计级发现，业主决策待定）
 
 climax #49 后的自然跟进："look-1 NOT_EQUIVALENT → look-2/3 能否宣布等价？" opus 直接写
