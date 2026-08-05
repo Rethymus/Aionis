@@ -53,14 +53,94 @@ DAILY_Z_CLIP = 5.0  # |z| cap
 _FRED_CALL_SPACING = 2.0
 
 
+# Daily FRED series whose full-history ALFRED request exceeds the 2000-vintage
+# cap (vintages accrue daily) -> need per-year realtime slice (macro_dff pattern).
+_DAILY_SERIES_PER_YEAR: set[str] = {"GS10", "BAA10Y"}
+_REALTIME_START_YEAR = 2015  # one year before the 2016+ analysis window
+_REALTIME_END_YEAR = 2026    # current year
+_GENERIC_PAGE_LIMIT = 100_000
+
+
+def _download_vintage_year_generic(
+    series_id: str, fred_api_key: str, year: int,
+) -> list[dict]:
+    """One ALFRED observations page for ``series_id`` within a year realtime window.
+
+    Generic form of ``macro_dff._download_dff_vintage_year`` (series_id parameterized).
+    Per-year slice dodges FRED's 2000-vintage hard cap for daily series (GS10/BAA10Y).
+    Current year is clamped to today (FRED rejects future realtime_end with 400).
+    """
+    from datetime import datetime, timezone
+
+    from aionis.ingest.universe import _policy_get
+
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    realtime_end = f"{year}-12-31" if year < int(today[:4]) else today
+    url = "https://api.stlouisfed.org/fred/series/observations"
+    observations: list[dict] = []
+    offset = 0
+    while True:
+        params = {
+            "series_id": series_id,
+            "api_key": fred_api_key,
+            "file_type": "json",
+            "realtime_start": f"{year}-01-01",
+            "realtime_end": realtime_end,
+            "limit": _GENERIC_PAGE_LIMIT,
+            "offset": offset,
+        }
+        resp = _policy_get(url, params=params, timeout=60)
+        resp.raise_for_status()
+        rows = resp.json().get("observations", [])
+        observations.extend(rows)
+        offset += len(rows)
+        if len(rows) < _GENERIC_PAGE_LIMIT:
+            break
+    return observations
+
+
+def _fetch_daily_vintages_per_year(
+    series_id: str, fred_api_key: str, cache_dir: Path,
+) -> pd.DataFrame:
+    """Daily-series ALFRED vintages via per-year slice; cache ``alfred_{id}.json``.
+
+    Reuses the macro_dff per-year-slice pattern (generic series_id) +
+    ``macro_dff._vintages_frame`` for payload→frame. Cache hit makes no HTTP call.
+    """
+    import json as _json
+
+    from aionis.ingest.macro_dff import _vintages_frame
+
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    cache_file = cache_dir / f"alfred_{series_id}.json"
+    if cache_file.exists():
+        payload = _json.loads(cache_file.read_text())
+        log.info("macro_headline_daily_cache_hit", series_id=series_id, path=str(cache_file))
+        return _vintages_frame(payload)
+    observations: list[dict] = []
+    for year in range(_REALTIME_START_YEAR, _REALTIME_END_YEAR + 1):
+        obs_year = _download_vintage_year_generic(series_id, fred_api_key, year)
+        observations.extend(obs_year)
+        log.info(
+            "macro_headline_daily_slice_fetched",
+            series_id=series_id, year=year, n_obs=len(obs_year),
+        )
+    payload = {"observations": observations}
+    cache_file.write_text(_json.dumps(payload))
+    log.info(
+        "macro_headline_daily_cache_written",
+        series_id=series_id, path=str(cache_file), n_obs=len(observations),
+    )
+    return _vintages_frame(payload)
+
+
 def _fetch_with_polite_spacing(
     series_id: str,
     fred_api_key: str,
     cache_dir: Path,
     last_call_time: list[float],
 ) -> pd.DataFrame:
-    """Fetch ALFRED vintages with ≥2s politeness between FRED calls."""
-    # Reuse macro_surprise.fetch_alfred_vintages via import to avoid code dup
+    """Fetch ALFRED vintages with ≥2s politeness; per-year slice for daily series."""
     from aionis.features.macro_surprise import fetch_alfred_vintages
 
     now = time.monotonic()
@@ -73,7 +153,10 @@ def _fetch_with_polite_spacing(
             sleep_s=sleep_time,
         )
         time.sleep(sleep_time)
-    vintages = fetch_alfred_vintages(series_id, fred_api_key, cache_dir)
+    if series_id in _DAILY_SERIES_PER_YEAR:
+        vintages = _fetch_daily_vintages_per_year(series_id, fred_api_key, cache_dir)
+    else:
+        vintages = fetch_alfred_vintages(series_id, fred_api_key, cache_dir)
     last_call_time[0] = time.monotonic()
     return vintages
 
