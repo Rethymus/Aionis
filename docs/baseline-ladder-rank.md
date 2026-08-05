@@ -1,9 +1,13 @@
 # Baseline ladder — rank-aware objective (BASELINE-RANK-001)
 
-**Status**: DRAFT — implementation-ready (RES-03; trial status
-`pending-owner-authorization`). **Owner gate**: running the trial requires explicit
-owner authorization; the frozen config must be committed (`config_committed` ledger
-row) BEFORE any out-of-sample metric is observed.
+**Status**: **EXECUTED 2026-08-03** (commit `104b21e`, owner-authorized). EXPLORATORY
+CV-proxy only — **no ledger result row by design** (same pattern as Track C joint;
+`config_committed` ledger row #45 sig `22817980...` appended BEFORE any result).
+
+**Result** (verified from commit `104b21e` msg): **mean rank-IC=0.015420,
+ci_half=0.014870, t_hac=2.0323, p_hac=0.0421, n_months=125, H6=True** (lambdarank,
+rank_bins=5, month-end sampled panel, analysis_start=2015-08-01). p=0.0421 nominal
+but `n_trials=30` haircut will wash out → null-favored.
 
 ## Purpose
 

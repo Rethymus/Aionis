@@ -1,6 +1,8 @@
 # Baseline Ladder — BASELINE-FF5-001（RES-02）
 
-> 状态：**v0.1 · 2026-08-03 · 准备完成（prepared），owner 授权前不注册、不写 ledger**。
+> 状态：**EXECUTED 2026-08-03（commit [`104b21e`](../) ，owner authorized "全部approved"）· EXPLORATORY CV-proxy（不写 ledger result 行 by design；同 Track C joint 模式）**。
+> 结果（commit 104b21e msg 核验）：**mean_IC=0.0106, ci_half=0.0196, t_hac=1.059, n_months=125, H6=True**（18 cols：9 frozen + 9 FF5 exposures；`beta_dff`/`beta_dff_x_lev` 被 RD-13 排除：42 CONSTANT months 2024-08+）。
+> ledger 行 #43 `config_committed`（sig `0b0b9934...`）先于 result；**无 result 行**（exploratory by design；handoff §2026-08-03 batch 8）。
 > 对应任务：`tasks/active/TASK-RES-02-baseline-ff5.md`（REWRITTEN 2026-08-03 — cross-sectional-valid）。
 > 7-gate 数据准入落表：`docs/data-intake-french-ff5.md`（**owner 签注 PENDING**）。
 

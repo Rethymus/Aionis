@@ -23,7 +23,7 @@
   is not part of the stock-selection signal.
 - **known issues:** protected historical claims may retain superseded wording; non-chronological historical CV;
   blocked market-source fallbacks and sub-2s fetch paths; Phase B A1 lock stranding; current SIC snapshot;
-  ADR-010 TOST p-value direction/sequential-equivalence construction CONFIRMED BROKEN by AUD-07B (2 CRITICAL, double-opus review); E3 verdict/headline HOLD pending owner-authorized ADR-010 + prereg §7 amendment.
+  ADR-010 Amendment 2026-08-01 APPLIED (Jennison-Turnbull group-sequential equivalence; RCI 99.44/97.64/95.00%; strict-containment; double-opus AUD-07B correction; prereg §7 amended in lockstep) — **E3 statistical-gate HOLD LIFTED**. E3 still gated by AUD-06 live-input readiness + owner GO (no scheduler/real-E2E/forward result yet).
 - **last verification (2026-08-01):** Wave-A complete. The full hermetic pytest suite passes (zero skips;
   only the existing forward-score warnings), `uv run --offline ruff check` is clean, `git diff --check` is
   clean, and the frozen prereg/ADR/config/ledger/results/data/forward diff is empty. C1/C2/C3 and

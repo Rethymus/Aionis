@@ -59,9 +59,24 @@ opus 核验（非独立 verifier lane）。proxy 恢复后可补独立验证（�
   冻结 + baostock G3 adjustflag=3 raw。**✅ ledger #48 已入账**（sig `e14b9d44...`，owner `--commit` 授权 2026-08-05；sha256 自洽已验；
   ledger 47→48 行）。**待第二个业主 GO**（d6_go：授权首次 confirmatory OOS 跑）。
 
-**下一步（owner-gated）**：业主授权首次 confirmatory OOS 跑（d6_go）→ 我执行
-`scripts/track_c_joint_run.py` 在全 41 特征上 + J-T 门（`eval/sesoi_gate.py`）作用在
-`score × regime_state` 交互项 rank-IC 差分系列 → draft v1.0 含首条 confirmatory（项目 climax）。
+**Extension A 进展（confirmatory 前置 machinery，`/goal` 推进）**：
+- **A1 DONE（commit `c98f4c8`）**：`build_joint_panel` 支持 asymmetric region-specific feature_cols
+  （`us_feature_cols`/`cn_feature_cols` keyword-only，向后兼容 shared）；2 反退化测试（union+NaN /
+  drops non-listed）；11/11 track_c_joint 测试绿；ruff clean。**自验（opus 直接），非独立 verifier lane**
+  （proxy [1210] subagent 不稳）。
+- **runner 更新（commit `b178a67`）**：`track_c_joint_run.py` 加 `TRACK_C_JOINT_MODE` env toggle
+  （shared 默认 / asymmetric35）；mode-tagged 产物不覆盖 shared。
+- **数据齐备性（Agent `feat-readiness` 调研）**：US 23 + CN 12 = **100% on disk**（track_b_panel 1.17M
+  行含 13 fund+10 price；cn_price_panel 141K 行含 10 price+2 extras）；macro_headline 6 = **0% on disk**
+  需 A2 fetch（复用 `macro_dff.py` 模式）。报告 `reports/design/2026-08-05-confirmatory-41-feature-readiness.md`。
+- **asymmetric35 exploratory 跑中**（验证 A1 真实数据 + US fund signal）：25 特征联合折叠 LightGBM，
+  PHASE_C_NO_LEDGER；`runs/track_c_joint_asym35_*`（gitignored）；100% CPU fit 中（25 特征慢，>10min）。
+- **A2 macro 7-gate 调研中**（Agent `macro-7gate`，read-only web search）：US 4 (FRED) + CN 2 (OECD/ALFRED)
+  vintage + 7-gate verdict；报告 `reports/design/2026-08-05-macro-6-7gate-readiness.md`（待）。
+
+**下一步（owner-gated）**：① asymmetric35 跑完 → sediment US-fund-signal IC；② A2 verdict → macro fetch
+路径（GREEN / YELLOW CN-snapshot+exploratory / RED CN-无源）；③ A2 实装 + A3 broadcast → 41 特征就绪；
+④ 业主授权首次 confirmatory OOS（d6_go，41 特征 + J-T 门）→ draft v1.0 climax。
 
 ## 2026-08-04 方法学+结果 draft v0.1（可发表单元；process→product）
 
