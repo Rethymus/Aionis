@@ -177,7 +177,8 @@ def main() -> int:
     print(f"[track_c] config_sig={row['config_sig']}")
     print(f"[track_c] phase={row['phase']} event={row['event']} ledger={LEDGER}")
     print(f"[track_c] config keys={sorted(TRACK_C_CONFIG.keys())}")
-    print(f"[track_c] row preview: {json.dumps({k: row[k] for k in ('ts','event','phase','config_sig')})}")
+    preview = {k: row[k] for k in ('ts', 'event', 'phase', 'config_sig')}
+    print(f"[track_c] row preview: {json.dumps(preview)}")
 
     if not args.commit:
         print("[track_c] DRY-RUN (no append). Re-run with --commit to freeze.")
