@@ -76,17 +76,22 @@ opus 核验（非独立 verifier lane）。proxy 恢复后可补独立验证（�
   US fundamentals 无 alpha → **坐实 null-favored**（双区域月频已定价）。产物 `runs/track_c_joint_asym35_*`
   （gitignored）。**Pandas4 concat-sort deprecation warning**（runner:165，非阻塞，待 sort=False fix）。
 - **A2 macro 7-gate 调研**：Agent `macro-7gate` 跑 ~30min **idle 无 report**（同 Agent A idle 模式）。
-  **Orchestrator 替代判断 verdict = YELLOW**（US 4 macro = GREEN，FRED public domain + ALFRED vintage PIT-safe；
-  CN 2 macro = YELLOW，OECD/ALFRED CN GDP/CPI vintage 覆盖有限 → snapshot+exploratory，同 NBS/EPU 先例）。
-  **独立性局限**：非 A2 agent 实证（agent idle），基于已知事实判断；proxy 恢复后可补 WebSearch 实证。
-  macro 6 fetch（A2）+ broadcast join（A3）= ~半天工程；但 **asymmetric35 坐实 null**（US fund 无 alpha）→
-  confirmatory 41 大概率同 null（macro broadcast signal 弱）。**climax 路径需业主决策**（见 AskUserQuestion）。
+  **Orchestrator WebSearch 实证 verdict = GREEN**（US 4 macro = GREEN，FRED public domain + ALFRED vintage PIT-safe；
+  CN 2 macro = GREEN，WebSearch 确认 `MKTGDPCNA646NWDB`[World Bank, ALFRED vintage] + `CPALTT01CNM659N`[OECD, ALFRED vintage]
+  都支持 PIT vintage；license：FRED non-commercial research OK（Aionis = research，no redistribution）；OECD non-commercial OK）。
+  **修正之前 YELLOW 判断**（过保守）。CN macro 2 可作 headline（confirmatory 41，与 #48 macro_headline_6 一致，不需 amend）。
+  macro 6 fetch（A2）+ broadcast join（A3）= ~半天工程；**asymmetric35 坐实 null**（US fund 无 alpha）→ confirmatory 41 大概率同 null
+  （macro broadcast signal 弱），但 spec-faithful climax（J-T 门）需 41。**业主授权 A2/A3 完整 41 路径**。
 
 **下一步（推进中）**：① ✅ asymmetric35 DONE（combined IC −0.0121 null，坐实 null-favored）；② ✅ A2 verdict
-= YELLOW（orchestrator 判断；US 4 GREEN + CN 2 snapshot+exploratory）；③ **业主授权 A2/A3 完整 41 路径**
-→ A2/A3 spec `reports/design/2026-08-05-macro-6-fetch-broadcast-spec.md` 就绪；**A2a（US macro 4 fetch）sonnet
-跑中**（network fetch GS10/TB3MS/BAA10Y + 实装 `macro_headline.py` + 测试）；后续 A2b（CN 2）+ A3（broadcast）
-+ runner asymmetric41；④ 业主 d6_go → confirmatory OOS（41 + J-T 门）→ draft v1.0 climax。
+= YELLOW（orchestrator 判断；US 4 GREEN + CN 2 snapshot+exploratory）；③ **业主授权 A2/A3 完整 41 路径** → A2/A3 spec `reports/design/2026-08-05-macro-6-fetch-broadcast-spec.md` 就绪；
+  **A2a（US macro 4）sonnet 实装** `src/aionis/features/macro_headline.py`（12KB，复用 `fetch_alfred_vintages` +
+  `merge_asof` PIT + trailing z-score；FRED_API_KEY from settings；≥2s politeness）+ hermetic test（352 行，10 pass + 7 skip）。
+  **实装 bug 待修**（memory 盲派又一例）：`fetch_us_macro_4` 对 daily series（GS10/BAA10Y）没 per-year slice
+  → 3 real-fetch test HTTP 400（`fetch_alfred_vintages` 没处理 2000-vintage cap；fix = generic 化 `macro_dff._download_dff_vintage_year`
+  模式，series_id 参数化）。**A2b verdict GREEN**（WebSearch：`MKTGDPCNA646NWDB`[World Bank] + `CPALTT01CNM659N`[OECD]
+  都 ALFRED vintage + FRED non-commercial research OK → CN macro 2 可 headline）。后续：修 cap bug + A2b CN fetch +
+  A3 broadcast + runner asymmetric41；④ 业主 d6_go → confirmatory OOS（41 + J-T 门）→ draft v1.0 climax。
 
 ## 2026-08-04 方法学+结果 draft v0.1（可发表单元；process→product）
 
