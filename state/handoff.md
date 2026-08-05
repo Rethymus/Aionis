@@ -84,14 +84,14 @@ opus 核验（非独立 verifier lane）。proxy 恢复后可补独立验证（�
   （macro broadcast signal 弱），但 spec-faithful climax（J-T 门）需 41。**业主授权 A2/A3 完整 41 路径**。
 
 **下一步（推进中）**：① ✅ asymmetric35 DONE（combined IC −0.0121 null，坐实 null-favored）；② ✅ A2 verdict
-= YELLOW（orchestrator 判断；US 4 GREEN + CN 2 snapshot+exploratory）；③ **业主授权 A2/A3 完整 41 路径** → A2/A3 spec `reports/design/2026-08-05-macro-6-fetch-broadcast-spec.md` 就绪；
-  **A2a（US macro 4）sonnet 实装** `src/aionis/features/macro_headline.py`（12KB，复用 `fetch_alfred_vintages` +
-  `merge_asof` PIT + trailing z-score；FRED_API_KEY from settings；≥2s politeness）+ hermetic test（352 行，10 pass + 7 skip）。
-  **实装 bug 待修**（memory 盲派又一例）：`fetch_us_macro_4` 对 daily series（GS10/BAA10Y）没 per-year slice
-  → 3 real-fetch test HTTP 400（`fetch_alfred_vintages` 没处理 2000-vintage cap；fix = generic 化 `macro_dff._download_dff_vintage_year`
-  模式，series_id 参数化）。**A2b verdict GREEN**（WebSearch：`MKTGDPCNA646NWDB`[World Bank] + `CPALTT01CNM659N`[OECD]
-  都 ALFRED vintage + FRED non-commercial research OK → CN macro 2 可 headline）。后续：修 cap bug + A2b CN fetch +
-  A3 broadcast + runner asymmetric41；④ 业主 d6_go → confirmatory OOS（41 + J-T 门）→ draft v1.0 climax。
+= YELLOW（orchestrator 判断；US 4 GREEN + CN 2 snapshot+exploratory）；③ **A2/A3 完整 41 路径推进中** → A2/A3 spec `reports/design/2026-08-05-macro-6-fetch-broadcast-spec.md` 就绪；
+  **A2a DONE**（`src/aionis/features/macro_headline.py` 12KB，复用 `fetch_alfred_vintages` + `merge_asof` PIT + trailing z-score；
+  hermetic test 10p/7s；**cap bug FIXED + 真实 fetch 验证 done** commit `edc1add`：generic `_download_vintage_year_generic` +
+  `_fetch_daily_vintages_per_year`（复用 `macro_dff` per-year-slice + `_vintages_frame`）绕 2000-vintage cap；BAA10Y ~111K obs
+  cached；US macro 4 surprise 全 valid：term/credit 107/128，vix/dff 106/128）。**A2b verdict GREEN**（WebSearch：`MKTGDPCNA646NWDB`
+  + `CPALTT01CNM659N` ALFRED vintage + FRED non-commercial OK）。**下一步**：A2b CN macro fetch（CPI monthly 复用 `first_print_changes`；
+  GDP annual sparse — releases 少，surprise 可能 NaN）+ A3 broadcast join（复用 `macro_surprise_date_broadcast`）+ runner asymmetric41；
+  ④ 业主 d6_go → confirmatory OOS（41 + J-T 门）→ draft v1.0 climax。
 
 ## 2026-08-04 方法学+结果 draft v0.1（可发表单元；process→product）
 
