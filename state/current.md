@@ -47,6 +47,21 @@
   race; see memory aionis-parallel-writer-race). `opus`/`fable` aliases blocked by `[1M]` resolver values →
   AUD-07B + RD-15 deferred; RD-08 HOLD (needs frozen rule table). Safe RD queue exhausted for sonnet tier.
   Not pushed. Detail: `state/handoff.md` § Wave-B FINAL.
+- **updated:** 2026-08-05. **P1 整合（audit 3 caveat 关闭）+ P0 confirmatory-GO 业主签注包交付。**
+  **P1(a)** Phase B paired HAC CI 补算 = **[−0.01057, +0.00897]**（ci_half 0.00977，p_hac 0.872，n=125，maxlag=4；
+  mean bit-identical #28；orchestrator opus 直接重算，Agent A `phaseb-ci` idle-without-result → memory
+  `aionis-agent-dispatch-verification` 从 repo 恢复）。**P1(c)** Track C 3-layer conditional-IC 沉积 =
+  combined β=−0.0148 (p=0.21) / us β=−0.0287 (p=0.13) / cn β=+0.004 (p=0.80)（joint-fold IC × 3-layer
+  composite；Agent B `trackc-3layer` 交付 + opus 核验；与 handoff culmination 的 Track-B-fitter 单区
+  β=−0.001/+0.015 是不同 IC series 的 sensitivity，诚实分级）。**P1(b)** Baseline FF5/RANK 措辞校准
+  （exploratory-by-design 非 ledger，audit HIGH #2）+ RESULTS.md §2 行 B 补 CI + draft §4 行 #1/#9 补数字。
+  **P0**：`reports/design/2026-08-05-track-c-confirmatory-go-brief.md` 交付；**owner 签 D1=A** → 起草
+  `scripts/track_c_amend2.py`（amendment #48，dry-run sig `e14b9d44...`，累积 #46+#47+#48：meso US-only +
+  41 列 + Q1/D2/D3/D5 冻结 + baostock G3 raw）+ amend2 doc。ruff clean + sig 自洽；ledger 仍 47 行。
+  **✅ ledger #48 已入账**（sig `e14b9d44...`，owner `--commit` 授权 2026-08-05；sha256 自洽；47→48 行）。
+  **待第二个业主 GO**（d6_go：授权首次 confirmatory OOS 跑 → J-T 门 → draft v1.0 climax）。**边界**：0 ledger / frozen surface / prereg / ADR 改动；
+  未跑 research/forward/strategy；未观察 confirmatory rank-IC / E3。独立性局限：A 由 orchestrator 替代
+  （非独立 pass），B 单一交付 + opus 核验（非独立 verifier lane）。
 - **updated:** 2026-08-04 (b). **Track C confirmatory machinery staged (joint US-CN fold).** 3 commits
   on main (unpushed): `841fee4` joint fold estimator (`src/aionis/eval/track_c_joint.py`: `fit_track_c_joint`
   + `build_joint_panel` + region-month groups + per-region chronological assert; core insight: month-end

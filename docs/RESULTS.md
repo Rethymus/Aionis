@@ -31,14 +31,18 @@ Phase A 口径必须分开报告：历史 extraction log 记录 prompt 41,689 + 
 
 | Phase | treatment - baseline mean rank-IC | 95% paired HAC CI | DM p (MBB) | LLM feature | 证据判读 |
 |---|---:|---:|---:|---|---|
-| B filed-date vs end+lag | -0.0008003561696833403 | **not recorded** | 0.8695652173913043 | 否 | 未发现显著正增量；paired precision gate 无法审计 |
+| B filed-date vs end+lag | -0.0008003561696833403 | [-0.01057, +0.00897]（2026-08-05 补算） | 0.8695652173913043 | 否 | 未发现显著正增量；paired CI 跨零（补算见下注） |
 | C surprise bundle | -0.006487473568317837 | [-0.019530768568940524, 0.006555821432304851] | 0.3553223388305847 | 否 | 未发现显著正增量；不满足事后 +/-0.015 严格等价 |
 | D peer momentum + 13D | -0.0029798406036171702 | [-0.013714495699179569, 0.007754814491945227] | 0.5972013993003499 | 否 | 未发现显著正增量；区间在事后 +/-0.015 内 |
 | E1 propagation beyond own shocks | -0.0027928949986939897 | [-0.01145659242594545, 0.005870802428557472] | 0.5332333833083458 | 否 | 未发现显著正增量；区间在事后 +/-0.015 内 |
 
-Phase B 的 ledger differential 对象只记录 `mean_ic_diff_state_minus_base`、`dm_stat`、
-`dm_p_mbb` 和 `n_months`，没有 paired `se_hac`、`ci_half`、`ci_lo` 或 `ci_hi`。不得用单臂 CI、
-本地产物或估算值替代。C/D/E1 的 95% CI 均跨零。D/E1 的区间落在事后 +/-0.015 内只能作为
+Phase B 的 ledger 行 #28 只记录 `mean_ic_diff_state_minus_base`、`dm_stat`、`dm_p_mbb`、
+`n_months`（无 paired `se_hac`/`ci_half`/`ci_lo`/`ci_hi`）。**2026-08-05 补算**：对 #28 save_run
+产物 `ic_state`/`ic_base` 月度系列配对差分，复用 `aionis.eval.rank_ic.rank_ic_summary(maxlag=4)` 得
+paired HAC 95% CI = [−0.01057, +0.00897]（ci_half 0.00977，se_hac 0.00499，t_hac −0.1605，p_hac
+0.872，与 dm_p_mbb=0.870 同尾）；mean_diff **bit-identical** 于 #28（same-input 重算，非 rerun）。
+**ledger 行 #28 未改（append-only）**；补算独立性局限与方法见
+[`reports/audits/2026-08-05-phase-b-paired-ci-recompute.md`](../reports/audits/2026-08-05-phase-b-paired-ci-recompute.md)。C/D/E1 的 95% CI 均跨零。D/E1 的区间落在事后 +/-0.015 内只能作为
 敏感性描述；项目未预注册 SESOI/TOST，非显著与 historical `ci_half` flag 都不是严格等价证明。
 
 四条 headline 都是 **zero-LLM**：B 是 EDGAR 数值基本面时点，C 是宏观/盈利数值 surprise，

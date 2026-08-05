@@ -1,5 +1,68 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-08-05 P1 整合 + P0 confirmatory-GO brief（process→product 收尾）
+
+owner 授权"按推荐方式处理 + 难度分层派 agent + 并行不互扰 + 冲突最高价值优先 + 结果不乐观再调整重测"。
+**目标**：关闭 audit 3 caveat（HIGH #1 Phase B paired CI / HIGH #2 baseline 措辞 / MEDIUM #3 3-layer
+沉积）+ 产出首条 confirmatory GO 的业主签注包。
+
+**P1(a) Phase B paired HAC CI 补算 — DONE（orchestrator 直接做）**：
+- Agent A `phaseb-ci`（sonnet）idle-without-result（handoff 反复记录的 OMC idle 模式）；按 memory
+  `aionis-agent-dispatch-verification`（勿信 agent，从 repo 状态恢复）→ opus 直接重算 < 5s。
+- 数字：mean −0.0008003561696833403（**bit-identical #28**）/ se_hac 0.00499 / ci_half 0.00977 /
+  **CI [−0.01057, +0.00897]** / t_hac −0.1605 / p_hac 0.872（与 dm_p_mbb=0.870 同尾）/ n=125 / maxlag=4。
+  CI 跨零，与全家族 null 一致。
+- 产物：`runs/phase_b_differential_ci_recompute.json` + `reports/audits/2026-08-05-phase-b-paired-ci-recompute.md`。
+- ledger 行 #28 **未改**（append-only）；`phase_b_run.py` **未跑**（用 #28 save_run 的 `ic_state`/`ic_base` parquet + `rank_ic_summary`）。
+
+**P1(c) Track C 3-layer conditional-IC 沉积 — DONE（Agent B 交付 + opus 核验）**：
+- Agent B `trackc-3layer`（sonnet）交付 `runs/track_c_3layer_conditional_ic.json`（opus 核验自洽）。
+- 重建 3-layer composite（macro+global+meso-US-SIC，valid_n=2592 日）+ joint-fold IC 三臂 HAC 回归：
+  **combined β=−0.0148 (p=0.21)** / us β=−0.0287 (p=0.13) / cn β=+0.004 (p=0.80)。全 null。
+- **与 handoff § culmination 数字的差异**（诚实分级）：culmination 的 β_US=−0.001/β_CN=+0.015 用的是
+  Track-B-fitter **单区** IC；本 artifact 用 **joint-fold per-region** IC（`track_c_joint_ic_series.parquet`
+  的 us/cn/combined 列）。不同 series，两份均 exploratory sensitivity。
+- combined 3-layer β=−0.0148 ≈ joint 2-layer cond_beta=−0.015（meso 加入影响微小，方向同）。
+- 产物：json + `reports/audits/2026-08-05-track-c-3layer-artifact.md`。composite **未覆盖** cache（仍 2-layer）。
+
+**P1(b) 措辞校准**：
+- `docs/RESULTS.md` §2 行 B：`**not recorded**` → `[−0.01057, +0.00897]（2026-08-05 补算）` + §2 段落补 audit 链接。
+- `docs/methods-and-results-draft.md` §4 行 #1（Phase B CI）+ 行 #9（3-layer）补实际数字 + 诚实分级脚注。
+- **Baseline FF5/RANK 校准（audit HIGH #2）**：2026-08-03 batch 8 的"Both baselines now have REAL
+  CV-proxy results"措辞应理解为 results 在 `docs/baseline-ladder-{ff5,rank}.md` + runner 输出，
+  **非 ledger**（exploratory-by-design，同 Track C joint 模式）；ledger 只含 `config_committed` 行
+  （#43 FF5 / #45 RANK）。RESULTS.md 正确未引用 baseline 数字（不入 ledger = 不进 RESULTS headline）。
+
+**P0 — Track C confirmatory GO 业主签注包 — DELIVERED**：
+- `reports/design/2026-08-05-track-c-confirmatory-go-brief.md`：6 决策（D1 估计量定义 / D2 区域-月
+  group / D3 区域内 IC 等权 / D4 feature_cols 41 列不对称 / D5 meso US-only + 修 #48 / D6 GO+新 ledger
+  行）+ 推荐一揽子（业主可回复"全部推荐"即开闸）。
+- **核心张力**（brief D1）：amendment #47（A 股 cninfo→exploratory）与 #46 frozen"联合折叠"在
+  confirmatory feature_cols 上有张力；推荐 D1=A（保留联合 machinery，feature 收窄为 US 23 / CN 12 +
+  宏观 6 + regime 3 = 41 列不对称，LightGBM 默认处理 CN 行的 US-fundamental missing）。
+- 签注后流程：起草修 #48 + confirmatory config → `config_committed`（业主动作）→ 首次 confirmatory
+  OOS 跑 → J-T 门（已实现 `sesoi_gate.py`）→ draft v0.1 → v1.0 含首条 confirmatory。
+
+**边界**：本轮纯 docs/audit/state + gitignored json；**0 ledger / frozen surface / prereg / ADR 改动**；
+未跑 research/forward/strategy（Phase B 用现有 parquet；3-layer 用现有 IC series + composite 重建）；
+未观察 confirmatory rank-IC / E3。A/B agent 只写 gitignored + final message（避 writer race：
+`git clean -fd` 清 untracked 不清 gitignored，memory 事件证实）。
+
+**独立性局限（披露）**：A idle 由 orchestrator 直接重算替代（非独立 subagent pass）；B 单一交付 +
+opus 核验（非独立 verifier lane）。proxy 恢复后可补独立验证（同 Lane C self-audit 披露模式）。
+
+**P0 跟进（owner D1=A 签注后，2026-08-05 续）**：起草 `scripts/track_c_amend2.py`（amendment #48，
+  复用 commit_config/amend1 机制，累积 #46+#47+#48）+ `reports/design/2026-08-05-track-c-amend2-meso-us-only.md`。
+  dry-run sig `e14b9d445411e74cc3418af3bde1148163725875b01ab75175bdde002225e738`（自洽 build==dryrun）；
+  ruff clean；ledger 仍 47 行（未 append）。amendment 内容：meso 收窄 US-only SIC + confirmatory
+  feature_cols 41（US 23 + CN 12 + macro 6）+ Q1 区域-月 group / D3 区域内 IC 等权 / D5 meso US-only
+  冻结 + baostock G3 adjustflag=3 raw。**✅ ledger #48 已入账**（sig `e14b9d44...`，owner `--commit` 授权 2026-08-05；sha256 自洽已验；
+  ledger 47→48 行）。**待第二个业主 GO**（d6_go：授权首次 confirmatory OOS 跑）。
+
+**下一步（owner-gated）**：业主授权首次 confirmatory OOS 跑（d6_go）→ 我执行
+`scripts/track_c_joint_run.py` 在全 41 特征上 + J-T 门（`eval/sesoi_gate.py`）作用在
+`score × regime_state` 交互项 rank-IC 差分系列 → draft v1.0 含首条 confirmatory（项目 climax）。
+
 ## 2026-08-04 方法学+结果 draft v0.1（可发表单元；process→product）
 
 owner 4× 重发 standing auth → 执行推荐 ②（方法学写定稿）。产出 `docs/methods-and-results-draft.md` v0.1（PROPOSED，业主审阅中文稿）：

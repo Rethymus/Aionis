@@ -60,7 +60,7 @@ Learner：LightGBM（frozen，`objective=lambdarank`，RD-15 ranking contract，
 
 | # | 结果 | 点估计 | 95% CI | p | n（月） | 等级 | ledger/artifact |
 |---|---|---:|---|---:|---:|---|---|
-| 1 | Phase B 差分 | −0.0008 | **未记录** | 0.870 | 125 | CV-proxy / **paired CI 缺** | #28 |
+| 1 | Phase B 差分 | −0.0008 | [−0.0106, +0.0090] | 0.872 | 125 | CV-proxy（2026-08-05 补 paired HAC CI；ledger #28 未改，append-only） | #28 + 补算 |
 | 2 | Phase C 差分 | −0.0065 | [−0.0195, +0.0066] | 0.355 | 125 | CV-proxy | #30 |
 | 3 | Phase D 差分 | −0.0030 | [−0.0137, +0.0078] | 0.597 | 125 | CV-proxy | #34 |
 | 4 | Phase E1 差分 | −0.0028 | [−0.0115, +0.0059] | 0.533 | 125 | CV-proxy | #37 |
@@ -68,7 +68,7 @@ Learner：LightGBM（frozen，`objective=lambdarank`，RD-15 ranking contract，
 | 6 | Track B 差分(#41−#42) | +0.0076 | [−0.004, +0.020] | 0.219 | 125 | chronological / **CI 上界 0.020 > SESOI 0.010 → 非严格等价** | #41/#42 |
 | 7 | **Track C 联合 combined IC**（本 session） | **−0.0070** | [−0.030, +0.016] | **0.55** | 71 | chronological 联合 / **exploratory**（10 price 特征） | `track_c_joint_summary.json` |
 | 8 | Track C 联合 conditional-IC β | −0.015 | — | 0.20 | 71 | exploratory（无 regime 交互；R²=0.018） | 同上 |
-| 9 | Track C 条件化 3-layer β_US / β_CN | −0.001 / +0.015 | — | 0.95 / 0.36 | 90 | exploratory（US-only-meso） | handoff § culmination |
+| 9 | Track C 3-layer conditional-IC（combined β） | −0.0148 | — | 0.21 | 71 | chronological 联合 / exploratory；per-region us β=−0.029 (p=0.13) / cn β=+0.004 (p=0.80)（joint-fold IC）。handoff culmination 的 β_US=−0.001/β_CN=+0.015 是 **Track-B-fitter 单区 IC** 的 sensitivity（不同 series，仍 prose） | `track_c_3layer_conditional_ic.json` |
 | 10 | BASELINE-FF5 | +0.0106 | ci_half 0.0196 | t=1.06 | 125 | CV-proxy / exploratory | baseline_ff5 |
 | 11 | BASELINE-RANK | +0.0154 | ci_half 0.0149 | t=2.03 | 125 | CV-proxy / exploratory（p=0.042，n_trials=30 haircut 会洗掉） | baseline_rank |
 | 12 | h=10/42 sensitivity（8 行） | 全跨零 | — | 0.41–0.86 | 124–126 | CV-proxy / exploratory | #39 |
