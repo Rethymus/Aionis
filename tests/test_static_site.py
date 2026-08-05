@@ -132,6 +132,30 @@ class TestTrackBContent:
         assert "icData" in generated_html
 
 
+class TestTrackCContent:
+    """Track C first confirmatory OOS climax section (added 2026-08-05)."""
+
+    def test_trackc_section_present(self, generated_html):
+        """The Track C confirmatory climax section should be present."""
+        assert "Track C" in generated_html
+        assert "confirmatory" in generated_html
+        assert "#49" in generated_html
+
+    def test_trackc_climax_numbers_present(self, generated_html):
+        """The climax numbers (combined IC, J-T verdict, p-value) should be shown."""
+        assert "-0.0088" in generated_html
+        assert "NOT_EQUIVALENT" in generated_html
+        assert "0.484" in generated_html
+
+    def test_trackc_honest_reframing(self, generated_html):
+        """Honest reframing: structural underpower + power-limit, NOT equivalence declared."""
+        assert "结构性欠功率" in generated_html
+        assert "power-limit" in generated_html
+        # Phrase appears inside the negation 非"等价已宣告" — site must NOT
+        # declare equivalence.
+        assert "等价已宣告" in generated_html
+
+
 class TestDeterminism:
     """Test build is deterministic (H6)."""
 

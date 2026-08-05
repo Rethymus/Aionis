@@ -27,6 +27,19 @@ DIFFERENTIAL = {"name": "差分", "sub": "treatment − price-only (§1 headline
                 "ci": (-0.004492, 0.019636), "p": 0.2186}
 SESOI = 0.010
 
+# Track C 首条 confirmatory OOS climax（ledger #49, 2026-08-05）。诚实 framing：
+# null 点估计 + look-1 欠功率（power-floor 披露），NOT "等价已宣告"。
+# 数字源自 ledger #49（与 docs/methods-and-results-draft.md v1.0 §5 / docs/RESULTS.md §0 一致）。
+TRACK_C_CLIMAX = {
+    "combined_ic": -0.0088,
+    "p_hac": 0.484,
+    "ci": (-0.034, 0.016),
+    "n_months": 71,
+    "rci": (-0.051, 0.027),
+    "jt_verdict": "NOT_EQUIVALENT",
+    "h6": "PASS",
+}
+
 SEVEN_THEMES = [
     ("① 行情/价格", "Tiingo + Alpaca", "已覆盖", "退市价缺失（保守上界）", "ok"),
     ("② 宏观", "ALFRED vintage", "已覆盖", "macro 会修订→vintage", "ok"),
@@ -193,6 +206,44 @@ def _antileakage_cards() -> str:
     return "".join(cards)
 
 
+def _trackc_section_html() -> str:
+    """Track C 首条 confirmatory OOS climax section（ledger #49, 2026-08-05）。
+
+    诚实 framing：null 点估计 + look-1 欠功率（power-floor 披露），NOT "等价已宣告"。
+    纯新增 section（Track B sections 不动）；复用 _kpi_tile + section-card 模式。
+    确定性：仅用模块常量，无 random/time → byte-identical 重建。
+    """
+    c = TRACK_C_CLIMAX
+    ic_str = f"{c['combined_ic']:+.4f}"
+    ci_lo, ci_hi = f"{c['ci'][0]:+.3f}", f"{c['ci'][1]:+.3f}"
+    rci_lo, rci_hi = f"{c['rci'][0]:+.3f}", f"{c['rci'][1]:+.3f}"
+    return f"""
+  <!-- Track C 首条 confirmatory（climax）-->
+  <section id="track-c" class="mb-6 bg-slate-800/40 border border-emerald-700/40 rounded-xl p-5">
+    <h2 class="text-lg font-bold text-slate-50 mb-1">🏆 首条 confirmatory OOS — Track C 双区域 climax（ledger #49）</h2>
+    <p class="text-slate-400 text-xs mb-3">2026-08-05 · US (S&amp;P 500) + CN (CSI 300) 联合 chronological walk-forward · 41 特征 · regime 条件化（multiplicity 预算 1）</p>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-3">
+      {_kpi_tile("combined rank-IC", ic_str, "null · p_hac=0.484", "amber")}
+      {_kpi_tile("J-T look-1", c['jt_verdict'], "RCI 99.44% · 欠功率（非效应）", "amber")}
+      {_kpi_tile("H6 双跑", c['h6'], "真实数据 bit-identical", "emerald")}
+      {_kpi_tile("IC 月数", str(c['n_months']), "68 折 · 2016-01..2026-08", "slate")}
+    </div>
+    <div class="bg-slate-900/50 border border-slate-700 rounded-lg p-3 mb-3 overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead><tr class="text-left text-slate-400 border-b border-slate-700">
+          <th class="py-2 px-3">量</th><th class="py-2 px-3">值</th><th class="py-2 px-3">判读</th>
+        </tr></thead>
+        <tbody>
+          <tr class="border-b border-slate-800"><td class="py-2 px-3 font-medium text-slate-100">combined rank-IC 均值</td><td class="py-2 px-3 text-amber-300">{ic_str}</td><td class="py-2 px-3 text-slate-300">null（95% HAC CI [{ci_lo}, {ci_hi}] 跨零；p_hac={c['p_hac']:.3f}）</td></tr>
+          <tr class="border-b border-slate-800"><td class="py-2 px-3 font-medium text-slate-100">J-T look-1 (n=60, RCI 99.44%)</td><td class="py-2 px-3 text-amber-300">{c['jt_verdict']}</td><td class="py-2 px-3 text-slate-300">RCI [{rci_lo}, {rci_hi}] 宽于 ±{SESOI} SESOI = 欠功率，<strong>非</strong>效应信号</td></tr>
+          <tr><td class="py-2 px-3 font-medium text-slate-100">H6 双跑 bit-identical</td><td class="py-2 px-3 text-emerald-300">{c['h6']}</td><td class="py-2 px-3 text-slate-300">真实数据确定性验证</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-sm text-slate-300">prospective power analysis：J-T 60/90/120 schedule 在 SESOI ±{SESOI} + 月频 rank-IC 噪声 σ≈0.10 下<strong class="text-amber-300">结构性欠功率</strong>（宣告等价需 ~36+ 年）。因此项目诚实、预注册的贡献 = <strong class="text-slate-100">null 点估计 + 反泄漏纪律 + power-limit 披露</strong>，<strong>非</strong>“等价已宣告”。详见 <a class="text-blue-400 hover:underline" href="https://github.com/Rethymus/Aionis/blob/main/docs/methods-and-results-draft.md">方法学与结果 draft v1.0</a>。</p>
+  </section>"""
+
+
 def build(site_dir: Path = SITE_DIR) -> Path:
     site_dir.mkdir(exist_ok=True)
     ic_data = _load_ic_series(site_dir)
@@ -241,6 +292,7 @@ def build(site_dir: Path = SITE_DIR) -> Path:
     </div>
     <div class="flex gap-3 text-sm text-slate-400">
       <a href="#finding" class="hover:text-slate-100">核心结论</a>
+      <a href="#track-c" class="hover:text-slate-100">🏆 Climax</a>
       <a href="#themes" class="hover:text-slate-100">七主题</a>
       <a href="#result" class="hover:text-slate-100">差分结果</a>
       <a href="#metrics" class="hover:text-slate-100">风险指标</a>
@@ -253,7 +305,7 @@ def build(site_dir: Path = SITE_DIR) -> Path:
 
 <!-- 探索性横幅 -->
 <div class="bg-amber-500/10 border-b border-amber-500/30 text-amber-300 text-center text-xs py-1.5">
-  ⚠️ 探索性 · 首个 OOS 结果 · 非投资建议 · null 是预期可发表成果
+  ⚠️ 含探索性（Track B）+ 首条 confirmatory（Track C climax）· 非投资建议 · null 是预期可发表成果
 </div>
 
 <main class="max-w-6xl mx-auto px-4 py-6">
@@ -290,6 +342,8 @@ def build(site_dir: Path = SITE_DIR) -> Path:
      （RCI ⊄ [−0.010,+0.010]，差分可能高达 ~0.020，需更多样本）。</p>
     <div class="mt-3 bg-slate-800/40 border border-slate-700 rounded-lg p-2"><div id="ci-chart"></div></div>
   </section>
+
+  {_trackc_section_html()}
 
   <div class="grid lg:grid-cols-2 gap-4 mb-6">
     <!-- 战略复盘 -->
