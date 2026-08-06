@@ -11,6 +11,7 @@ import reddit from "./reddit.json";
 import smartMoney from "./smart_money.json";
 import pickConviction from "./pick_conviction.json";
 import form4 from "./form4.json";
+import cot from "./cot.json";
 
 export type Pick = {
   rank: number;
@@ -45,4 +46,5 @@ export const aionis = {
   smartMoney: smartMoney as typeof smartMoney,
   pickConviction: pickConviction as typeof pickConviction,
   form4: form4 as typeof form4,
+  cot: cot as typeof cot,
 };

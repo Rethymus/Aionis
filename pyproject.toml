@@ -46,6 +46,9 @@ dashboard = [
     "pyfolio-reloaded>=0.0.1",
     # Matplotlib for static figure export from OSS libraries
     "matplotlib>=3.7",
+    # CFTC Commitments of Traders (MIT) — free, no-API, public-domain futures
+    # positioning data. Used by scripts/cot_fetch.py for the long/short pressure index.
+    "cot_reports>=0.1.3",
 ]
 # Quarto research-site rendering (python-cell execution via Jupyter).
 quarto = [

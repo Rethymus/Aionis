@@ -23,6 +23,7 @@ import {
   FlameIcon,
   BriefcaseIcon,
   UsersIcon,
+  BarChartHorizontalIcon,
 } from "lucide-react";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -35,6 +36,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     { title: t("nav.conviction"), url: "/conviction", icon: <ActivityIcon /> },
   ];
   const navAlternative = [
+    { title: t("nav.positioning"), url: "/positioning", icon: <BarChartHorizontalIcon /> },
     { title: t("nav.smartmoney"), url: "/smart-money", icon: <BriefcaseIcon /> },
     { title: t("nav.insiders"), url: "/insiders", icon: <UsersIcon /> },
     { title: t("nav.taco"), url: "/taco", icon: <FlameIcon /> },

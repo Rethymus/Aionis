@@ -113,6 +113,18 @@ export const dict = {
     "insiders.sell": "卖",
     "insiders.explain": "Form 4 = 内部人（高管/董事/10%股东）买卖强制披露（SEC，2 个工作日内）。仅非衍生品纯买(A)/卖(D)，排除行权/期权。filed-date PIT，公共域 permissive。展示用，非研究 claim。",
     "insiders.awaiting": "Bounded fetch 待运行（scripts/form4_fetch.py）",
+
+    "nav.positioning": "多空压力",
+    "positioning.title": "多空压力指数",
+    "positioning.window": "CFTC COT · 投机净持仓 · 周频 · 公共域",
+    "positioning.composite": "综合净多空 z",
+    "positioning.crowding": "拥挤度强度",
+    "positioning.latest": "最新周",
+    "positioning.markets": "各市场投机净持仓拥挤度",
+    "positioning.netlong": "净多拥挤",
+    "positioning.netshort": "净空拥挤",
+    "positioning.series": "综合 z 时序（近 78 周）",
+    "positioning.explain": "CFTC COT = 商品期货交易委员会持仓报告（非商业=投机者）。净多空 = 多头−空头合约；52 周滚动 z = 拥挤度（z>0 净多拥挤，z<0 净空拥挤）。周频（周五），归档快照不可修订（最干净 PIT）。free、无 API、美国政府公共域。展示用，非研究 claim。",
   },
   en: {
     "brand.name": "Aionis",
@@ -226,6 +238,18 @@ export const dict = {
     "insiders.sell": "Sell",
     "insiders.explain": "Form 4 = mandatory insider (officer/director/10% owner) buy/sell disclosure (SEC, within 2 business days). Non-derivative pure buy (A) / sell (D) only — exercises and options excluded. Filed-date PIT, public domain, permissive. Display-only, not a research claim.",
     "insiders.awaiting": "Bounded fetch pending (scripts/form4_fetch.py)",
+
+    "nav.positioning": "Positioning",
+    "positioning.title": "Long/short positioning index",
+    "positioning.window": "CFTC COT · speculator net positioning · weekly · public domain",
+    "positioning.composite": "Composite net z",
+    "positioning.crowding": "Crowding intensity",
+    "positioning.latest": "Latest week",
+    "positioning.markets": "Per-market speculator crowding",
+    "positioning.netlong": "Net-long crowded",
+    "positioning.netshort": "Net-short crowded",
+    "positioning.series": "Composite z time series (last 78w)",
+    "positioning.explain": "CFTC COT = Commodity Futures Trading Commission commitments (non-commercial = speculators). Net = Long - Short contracts; 52-week rolling z = crowding (z>0 net-long crowded, z<0 net-short crowded). Weekly (Friday), archived snapshots NOT revised (cleanest PIT). Free, no-API, US-gov public domain. Display-only, not a research claim.",
   },
 } as const;
 

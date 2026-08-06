@@ -1,7 +1,7 @@
 # state/current.md — read first each session
 
 - **active (2026-08-06):** fintech 数据终端**已上线** + special 另类数据持续扩展：TACO（真实 VIX）+ EDGAR 13D 聪明钱 + **选股确信度（Aionis 独有模型元信号，截面分散度）** + Reddit（待激活，政策阻塞）。
-  10 页：Overview/选股决策/证据墙/选股确信度/**内部人**/聪明钱/TACO/Reddit/Power Floor/反泄漏。**Form 4 /insiders 已上线真实数据**（AAPL 83 内部人销售，Tim Cook 等；修了 2 个 parser schema bug：transactionCode P/S 非 A/D + transactionDate 双 schema）。邮箱可避免（SEC 容忍占位 UA）。详见 `state/handoff.md` § (b)..(h)。
+  11 页：Overview/选股决策/证据墙/选股确信度/**多空压力**/内部人/聪明钱/TACO/Reddit/Power Floor/反泄漏。**CFTC COT 多空压力指数已上线**（free/无 API/公共域，6 市场投机净持仓 + 52w 拥挤 z；复用 cot_reports MIT）。散户情绪结构性受阻（Reddit 审批 + Trends alpha 受限），诚实 decline。详见 `state/handoff.md` § (b)..(i)。
   **待业主**：审 /conviction + Form 4 agent 回报后审 + 13D 刷新 + Quarto/旧站去留。
 - **version:** 0.1.0 (pyproject)
 - **milestone:** **CONFIRMATORY CLIMAX ACHIEVED (2026-08-05)** — first confirmatory OOS run sediments

@@ -1,5 +1,22 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-08-06 (i) 多空压力指数（CFTC COT）上线 —— 调研落地，free/no-API/公共域
+
+业主问"散户情绪 + 多空资本流能不能找 free/no-API 源"。派 2 sonnet 调研 agent **都 [1210] fail** → opus 主线直接 web 搜索完成。**批判性结论（不对称）**：散户情绪**结构性受阻**（StockTwits 同 Reddit 式审批门；Google Trends 官方 API 2025-07 alpha 只给极少数、pytrends 脆弱 scrape + 修订）；多空资本流**干净可得**（CFTC COT + FINRA 空头）。业主授权做最有价值项 → 做**多空压力指数**。
+
+**CFTC COT 多空压力指数 `/positioning`（已上线）**：
+- 数据：CFTC Commitments of Traders（free、**无 API**、US 政府公共域、周频、归档快照**不可修订** = 最干净 PIT）。复用 MIT [`cot_reports`](https://github.com/NDelventhal/cot_reports)（0 造轮子）。
+- 6 市场（legacy_fut，精确名匹配）：S&P 500 / Nasdaq 100 / VIX / WTI / Gold / Copper（US Dollar + 10Y Treasury 在 TFF 报告，legacy 缺，留 enrichment）。
+- 构造：净非商业持仓 = Long−Short；52 周滚动 z-score（拥挤度）。综合 = 跨市场 mean z + 拥挤度强度 + 78 周 composite_series。
+- 实测（2026-07-28）：composite z +0.19，crowding 0.9；S&P z+2.09（空头回补）、Nasdaq z−1.22（净空拥挤）、Gold 净多 +182k。
+- 模块：KPI（composite z / crowding / latest）+ 综合 z 时序（recharts）+ **各市场 diverging z 条**（← 净空拥挤 / 净多拥挤 →，emerald/rose）+ methodology。
+
+**脚本**：`scripts/cot_fetch.py`（cot_year × 3 年 legacy_fut → 精确名过滤 → net + 52w z → `data/cache/cot_aggregate.parquet`）。`export_cot`（读 parquet → `cot.json`，awaiting_fetch guard）。pyproject dashboard extra += `cot_reports>=0.1.3`（MIT permissive ✓）。
+
+**散户情绪（诚实 decline）**：无干净 free/no-API/permissive/PIT-stable 源；Reddit 待激活；情绪维度由 Aionis 独有"选股确信度"覆盖。
+
+**边界**：本轮 `scripts/cot_fetch.py` + `export_terminal_data.py`（export_cot）+ `pyproject.toml`/`uv.lock`（cot_reports MIT）+ `web/`（positioning 模块 + cot.json）+ state；**0 ledger / frozen / prereg / ADR / config / runs-data / E3**；COT US 政府公共域 permissive（filed 周五，归档不修订）；无 API（bulk CSV via cot_reports）。
+
 ## 2026-08-06 (h) Form 4 内部人模块上线（真实数据）+ 两个 parser schema bug 修复
 
 业主问"为什么需要邮箱，能否避免" → 实测**能避免**：SEC 对 polite + 占位 UA + 小规模容忍（AAPL EFTS 返回 26 条无 429；Aionis 现有 584 个 13D 也是占位 UA 拉的）。

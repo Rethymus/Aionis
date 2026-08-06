@@ -127,6 +127,74 @@ def export_taco() -> None:
     (WEB / "taco.json").write_text(json.dumps(payload, indent=2))
 
 
+def export_cot() -> None:
+    """CFTC COT positioning-pressure index (display-only, exploratory).
+
+    Reads ``data/cache/cot_aggregate.parquet`` (gitignored; produced by
+    ``scripts/cot_fetch.py``). Free, no-API, US-government public domain; weekly
+    (filed Friday) and archived snapshots are NOT revised (cleanest PIT surface).
+    """
+    import statistics
+
+    fp = Path("data/cache/cot_aggregate.parquet")
+    if not fp.exists():
+        payload = {
+            "status": "awaiting_fetch",
+            "methodology": (
+                "CFTC Commitments of Traders (COT) net non-commercial positioning "
+                "+ 52-week crowding z-score. Free, no-API, US-gov public domain. "
+                "Bounded fetch pending — run scripts/cot_fetch.py."
+            ),
+            "markets": [],
+            "composite": {},
+            "composite_series": [],
+            "latest_date": None,
+        }
+        (WEB / "cot.json").write_text(json.dumps(payload, indent=2))
+        return
+
+    df = pd.read_parquet(fp)
+    markets: list[dict] = []
+    latest_zs: list[float] = []
+    for mkt, sub in df.sort_values("date").groupby("market"):
+        sub = sub.dropna(subset=["zscore"])
+        if sub.empty:
+            continue
+        last = sub.iloc[-1]
+        markets.append({
+            "name": str(mkt),
+            "net": int(last["net"]),
+            "z": round(float(last["zscore"]), 2),
+            "long": int(last["long"]),
+            "short": int(last["short"]),
+        })
+        latest_zs.append(float(last["zscore"]))
+
+    markets.sort(key=lambda m: m["z"], reverse=True)
+    mean_z = round(statistics.mean(latest_zs), 2) if latest_zs else 0.0
+    crowding = round(statistics.mean(abs(z) for z in latest_zs), 2) if latest_zs else 0.0
+    comp = df.dropna(subset=["zscore"]).groupby("date")["zscore"].mean().sort_index()
+    composite_series = [
+        {"date": str(d)[:10], "z": round(float(z), 2)} for d, z in comp.tail(78).items()
+    ]
+    payload = {
+        "status": "ok",
+        "methodology": (
+            "CFTC Commitments of Traders (COT) — net non-commercial (speculator) "
+            "positioning (Long - Short contracts) per key futures market, with a "
+            "trailing 52-week crowding z-score. z>0 = net-long more crowded than "
+            "usual; z<0 = net-short crowded. Free, no-API, US-gov public domain, "
+            "weekly (filed Friday, archived and NOT revised). Display-only, not a "
+            "research claim."
+        ),
+        "markets": markets,
+        "composite": {"mean_z": mean_z, "crowding": crowding, "n": len(markets)},
+        "composite_series": composite_series,
+        "latest_date": str(df["date"].max())[:10],
+    }
+    (WEB / "cot.json").write_text(json.dumps(payload, indent=2, default=str))
+
+
 def export_form4() -> None:
     """Form 4 insider transactions (SEC EDGAR, display-only, exploratory).
 
@@ -323,6 +391,7 @@ def main() -> None:
     export_metrics(latest, n_total)
     export_taco()
     export_pick_conviction()
+    export_cot()
     export_form4()
     export_smart_money()
     export_reddit_meta()
