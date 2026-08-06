@@ -1,5 +1,24 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-08-06 (f) Form 4 内部人 ingest — sonnet agent 交付，独立验证通过，已合并
+
+agent (sonnet, worktree) 交付 Form 4 ingest；按 [[aionis-agent-dispatch-verification]] **独立核验（不信自述）**：
+- `form4_efts.py`（152 行）：EFTS Form 4 metadata client，复用 `_policy_get`（≥2s polite）+ 幂等 disk cache + exp-backoff（transient only，4xx fast-fail）+ pagination。VERIFIED efts query（10-digit CIK + forms=4 + dateRange）。不 auto-fetch。
+- `form4.py`（267 行）：XML parser，SEC `<value>` wrapper + nonDerivativeTable + transactionCode A/D 过滤 + shares/price 校验 + frozen dataclass。
+- `docs/data-intake-edgar-form4.md`（177 行）：7-gate 全 PASS（SEC public domain G1✓ / filed-date PIT G2✓ / immutable G3✓ / exploratory G5 / polite G7）。
+- `tests/test_form4.py`（409 行）：11 测试，5 XML fixture + 3 inline edge，assert **真实值**（CIK/ticker/date/A-D/shares/price/dtype/sort）+ degeneracy（empty/malformed/missing-filer/derivative-only/invalid-code/negative-shares）——**非空洞绿**。
+
+**独立验证（我跑，非 agent 自述）**：ruff clean + pytest **11/11 passed**（main env, python 3.13.7）+ collection 无 error。merge-base 干净（worktree 落后 main 仅 conviction commit，无冲突）+ 0 frozen surface。
+
+**Form 4 可见模块的剩余门槛（诚实）**：
+- efts client 只给 metadata（accession list）；要真实交易需 **XML-fetch orchestrator**（按 accession 拉 EDGAR XML + parse）—— agent 未做（scope 外），是下一切片。
+- User-Agent 占位 `contact@example.com`（SEC fair-access 要真实邮箱）—— 真实 fetch 前需业主邮箱。
+- 真实 fetch 业主授权（bounded：小 CIK 集 + 近窗，polite ≥2s）。
+
+**模型分层 + 复用账**：opus 主线（选股确信度方法论判断 + Form 4 验收判断）+ sonnet agent（Form 4 ingest 工程，复用 stakes_13d 模式，worktree 隔离并行）。复用：`_policy_get`/`http_policy`（polite）+ `stakes_13d_efts` 模式 + structlog。**0 造轮子**。
+
+**边界**：本轮 `src/aionis/ingest/form4*.py` + `docs/data-intake-edgar-form4.md` + `tests/test_form4.py`（全 additive）+ state；**0 ledger / frozen / prereg / ADR / config / runs-data / E3**；Form 4 SEC public domain permissive；**无真实 EDGAR fetch**（hermetic only）。
+
 ## 2026-08-06 (e) 选股确信度指数（Aionis 独有模型元信号）+ Form 4 内部人 ingest（agent 并行中）
 
 业主 `/goal` 授权推进推荐项（批判性比对 + agents 并行 + 模型分层 + 复用轮子禁造）。
