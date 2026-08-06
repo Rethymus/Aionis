@@ -1,5 +1,45 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-08-06 (b) 前端转向 fintech 数据终端 — Next.js + shadcn 复刻小隐寺风（已部署）
+
+业主反馈：Quarto 学术站方向错（忘"个人兴趣研究、不公开发表"定位）+ 语言 tab 分页错（要单独切换按钮）+
+要 **小隐寺数据中心 https://data.xiaoyinsi.com/ 那种金融科技风**（卡片墙、实时榜、数字密集）+ 加选股决策模块。
+方法：深入研究小隐寺 → 找开源仓库复刻 → 不手搓。
+
+**调研**：小隐寺 = Next.js 黑白极简（theme #fafafa/#000）另类数据终端（Reddit 情绪/政客交易/13F/IPO），
+**不开源**（github 只有 investing-for-beginners 投资百科）。最佳相近 = **[abderrahimghazali/shadcn-fintech](https://github.com/abderrahimghazali/shadcn-fintech)**
+（Next.js 16 + shadcn/ui + Tailwind v4 + recharts + live ticker + 深色模式 + 拖拽）。复刻基础。
+
+**执行**（复用 shadcn-fintech 设计系统 + 组件，0 手搓；替换所有个人理财页面为 Aionis 模块）：
+- clone shadcn-fintech 到 scratch `/home/re/code/aionis-web-poc/`，复用其 shadcn ui 组件库 + Tailwind oklch 黑白主题 +
+  `live-ticker`（marquee 滚动）+ next-themes 深色 + Geist 字体。
+- 新建 i18n（`src/i18n/`：context + localStorage + 中/英字典 + `LangToggle` 独立切换按钮，非 tab 分页）。
+- 新建 Aionis 数据模块（学小隐寺卡片墙）：
+  - **Overview**（`/dashboard`）：Hero + 5 KPI 卡 + 评分滚动条 + 选股预览 + 模块卡网格。
+  - **选股决策榜**（`/picks`）：top-20 多头 + 5 空头，排名 + ticker + region + 模型评分 + 排名变化箭头（学散户情绪榜）。
+  - **证据墙**（`/evidence`）：14 null 卡片流 + 统计计数（学政客交易卡片流）。
+  - **Power Floor 监测**（`/power-floor`）：n_min KPI 三联 + look 表 + recharts σ_obs-vs-σ_null 散点。
+  - **反泄漏仪表盘**（`/discipline`）：6 状态卡（PIT/embargo/H6/ledger/2-tail/k=1，全 PASS）。
+- 删个人理财页面（accounts/transactions/transfers/cards/budgets/crypto/analytics/investments/sign-in/sign-up/...）。
+- `next.config.ts`：`output: export` + `basePath: /Aionis`（GitHub Pages 静态导出）。
+- 数据：`scripts/export_terminal_data.py`（复用 `export_quarto_data` 共享载荷 + 加 picks/shorts/metrics 从
+  `track_c_confirmatory_oos_scores.parquet` 94438 行），输出 `web/src/data/aionis/*.json`（8 tracked JSON）。
+- 修一个 build 阻塞：`ic_monthly.json` 含非法 `NaN`（CN 某月缺失）→ export 加 `pd.isna`→null + `allow_nan=False`（`export_quarto_data.py` 同修）。
+- recharts Tooltip formatter 类型修正（value 含 undefined）。
+
+**验证**：本地 `pnpm dev` 5 页全 200 + 截图（terminal-overview/picks/evidence/power-floor，深色中文 fintech 风）；
+`pnpm build` exit 0，8 路由静态导出（含 `output: export`）。语言切换按钮工作（中/EN toggle）。
+
+**移植 + 部署**：cp Next.js 项目到 `Aionis/web/`（排除 node_modules/.next/out）+ `scripts/export_terminal_data.py` +
+`web/.gitignore`。CI `.github/workflows/deploy-pages.yml` 改为 pnpm + Node 22 → `pnpm build` → 部署 `web/out`。
+
+**边界**：本轮 `web/`（新 Next.js 终端）+ `scripts/export_terminal_data.py` + `scripts/export_quarto_data.py`（ic_monthly sanitize）+
+`.github/workflows/deploy-pages.yml`（Node 部署）+ state；**0 ledger / frozen surface / prereg / ADR / config / runs-data / E3 改动**；
+web/src/data/aionis 是聚合 tracked JSON（非 frozen，从 gitignored runs/ 派生，类似 Quarto data 模式）；未跑 confirmatory/forward/strategy；
+未触 E3。Quarto 站（`quarto-site/`）+ 旧站（`site/` + `build_static_site.py`）暂留 repo 不部署，待业主后续定去留（降级方法子页 / 归档 / 删）。
+
+**待业主**：① 审线上 fintech 终端（部署后 https://rethymus.github.io/Aionis/）② Quarto 站 + 旧 site/ 去留（降级/归档/删）③ 选股榜是否加 forward-return 涨跌列（当前仅模型评分 + 排名变化）④ 是否加"实时感"（当前数据是 frozen 快照，非实时流）。
+
 ## 2026-08-06 (a) 研究站点前端改造 — Quarto 品牌化 + 交互表 + 复用轮子（本地验证完成，待业主授权提交/部署）
 
 业主反馈：线上静态站（`site/index.html`，`scripts/build_static_site.py` 474 行手搓 HTML）"观感廉价、没复用

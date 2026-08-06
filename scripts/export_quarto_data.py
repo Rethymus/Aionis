@@ -120,9 +120,12 @@ def export_ic_monthly() -> None:
     """
     df = pd.read_parquet("runs/track_c_confirmatory_ic_series.parquet")
     df.index = pd.to_datetime(df.index).strftime("%Y-%m")
-    rows = [{"month": str(idx), "us": float(r.us), "cn": float(r.cn),
-             "combined": float(r.combined)} for idx, r in df.iterrows()]
-    (OUT / "ic_monthly.json").write_text(json.dumps(rows, indent=2))
+    rows = [{"month": str(idx),
+             "us": None if pd.isna(r.us) else float(r.us),
+             "cn": None if pd.isna(r.cn) else float(r.cn),
+             "combined": None if pd.isna(r.combined) else float(r.combined)}
+            for idx, r in df.iterrows()]
+    (OUT / "ic_monthly.json").write_text(json.dumps(rows, indent=2, allow_nan=False))
 
 
 def main() -> None:

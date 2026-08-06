@@ -31,6 +31,7 @@ data/
 # Tracked research-site data payloads — Quarto CI renders against these JSON
 # files (anti-leakage: only aggregated outputs, never runs/ parquet or raw data).
 !quarto-site/data/
+!web/src/data/
 *.parquet
 *.tar.gz
 *.cache.json

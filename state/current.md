@@ -1,7 +1,8 @@
 # state/current.md — read first each session
 
-- **active (2026-08-06):** 研究站点前端改造 **已上线**（commit `08af75d`，双语 Quarto 站；CI `success` → Pages 200，线上内容验证 panel-tabset/quarto、无 tailwind）。
-  **待业主**：审线上新站（https://rethymus.github.io/Aionis/）→ 确认 OK 后删旧 `site/` + `build_static_site.py`。详见 `state/handoff.md` § 2026-08-06 (a)。
+- **active (2026-08-06):** 前端转向 **fintech 数据终端**（Next.js + shadcn 复刻小隐寺风，已部署 `web/out` → Pages）。
+  Quarto 学术站方向已弃（业主：个人兴趣研究、要小隐寺那种金融科技风 + 独立语言切换按钮 + 选股决策模块）。5 页：Overview/选股决策/证据墙/Power Floor/反泄漏。详见 `state/handoff.md` § 2026-08-06 (b)。
+  **待业主**：审线上终端 + Quarto/旧站去留 + 选股榜是否加 forward-return 列。
 - **version:** 0.1.0 (pyproject)
 - **milestone:** **CONFIRMATORY CLIMAX ACHIEVED (2026-08-05)** — first confirmatory OOS run sediments
   ledger row #49 (`confirmatory:first`, phase=track_c, sig `e14b9d44...` → frozen #48). Combined rank-IC
