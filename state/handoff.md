@@ -1,5 +1,21 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-08-06 (c) special 另类数据模块 — TACO 指数 + Reddit 散户热度
+
+业主要求加小隐寺式 special 数据模块（Reddit 热门 + 川普 TACO 指数）让终端"更真实可靠"。
+
+**反泄漏约束下的诚实实现**（CLAUDE.md `No mock/synthetic data in the real pipeline` + 7-gate）：
+- **TACO 压力指数**（`/taco`）：真实 VIX（FRED ALFRED permissive，260 点 daily）+ 公开事件表（5 条 2025 川普关税事件，FT/CNBC/ABC 可证，**labeled 非 mock**）+ methodology callout 明示"示意性方法论，非 Aionis 研究 claim"。TACO 本身是 2025-04-09 起源的新闻 meme（FT Robert Armstrong coined），**无权威量化指数/数据集**。
+- **Reddit 散户热度**（`/reddit`）：诚实标注"forward collector 待激活"。Aionis 已内置 `reddit_sentiment.py`（PRAW 8.0.2 + FinBERT，7-gate cleared，exploratory，**forward-collection only / no backfill**）但**从未激活 → 0 snapshots**。模块显示 collector 信息 + 7-gate clearance + 激活方法（配置 `REDDIT_CLIENT_ID/SECRET` + 跑 collector）。**不塞 mock 数据**。
+
+**执行**：`export_terminal_data.py` += `export_taco`（VIX from `data/cache/alfred_VIXCLS.json` + 事件表）+ `export_reddit_meta`（status=awaiting_activation）。web += 2 view（taco-view: VIX recharts 图 + 事件表 + 计数 KPI + methodology callout；reddit-view: 状态卡 + 说明 + howto + 空 placeholder）+ 2 page + sidebar"另类数据"组 + i18n keys。
+
+**验证**：poc dev `/Aionis/taco` + `/Aionis/reddit` HTTP 200 + 截图（terminal-taco-zh / terminal-reddit-zh）。
+
+**边界**：本轮 `web/src/`（+taco/reddit 模块）+ `scripts/export_terminal_data.py`（+taco/reddit）+ state；**0 ledger / frozen surface / prereg / ADR / config / runs-data / E3**；VIX 是 FRED 公共域 permissive；事件表公开新闻 labeled；reddit 无数据（诚实标注，非 mock）；未触 E3；未激活 reddit collector（待业主 creds + GO）。
+
+**待业主**：① 审 TACO/Reddit 模块观感 ② 是否激活 Reddit forward collector（需 `REDDIT_CLIENT_ID/SECRET` + 跑 collector ~分钟级）→ 真实散户热度榜 ③ TACO 事件表是否扩/调 ④ 方法论 illustrative 标注是否足够诚实。
+
 ## 2026-08-06 (b) 前端转向 fintech 数据终端 — Next.js + shadcn 复刻小隐寺风（已部署）
 
 业主反馈：Quarto 学术站方向错（忘"个人兴趣研究、不公开发表"定位）+ 语言 tab 分页错（要单独切换按钮）+

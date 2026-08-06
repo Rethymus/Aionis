@@ -6,6 +6,8 @@ import powerFloor from "./power_floor.json";
 import icMonthly from "./ic_monthly.json";
 import sigmaSurvey from "./sigma_survey.json";
 import bpsSweep from "./bps_sweep.json";
+import taco from "./taco.json";
+import reddit from "./reddit.json";
 
 export type Pick = {
   rank: number;
@@ -35,4 +37,6 @@ export const aionis = {
   icMonthly: icMonthly as { month: string; us: number; cn: number; combined: number }[],
   sigmaSurvey: sigmaSurvey as typeof sigmaSurvey,
   bpsSweep: bpsSweep as { bps: number; net_sharpe: number; gross_sharpe: number; avg_turnover: number }[],
+  taco: taco as typeof taco,
+  reddit: reddit as typeof reddit,
 };

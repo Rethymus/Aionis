@@ -89,6 +89,62 @@ def export_metrics(latest: str, n_total: int) -> None:
     (WEB / "metrics.json").write_text(json.dumps(payload, indent=2))
 
 
+def export_taco() -> None:
+    """TACO pressure index — illustrative methodology, real data.
+
+    VIX (FRED ALFRED, permissive) as the market-stress proxy; the event table is
+    hand-curated from public news reports (labeled, not mock). NOT an Aionis
+    research claim — methodology is demonstrative.
+    """
+    raw = json.loads(Path("data/cache/alfred_VIXCLS.json").read_text())
+    by_date = {
+        o["date"]: o["value"]
+        for o in raw["observations"]
+        if o.get("value") not in (None, ".", "")
+    }
+    recent = sorted(by_date)[-260:]
+    vix_series = [{"date": d, "vix": float(by_date[d])} for d in recent]
+    events = [
+        {"date": "2025-02-01", "label": "Canada/Mexico/China tariff hike", "type": "escalation"},
+        {"date": "2025-04-02", "label": "Reciprocal tariffs announced (Liberation Day)", "type": "escalation"},
+        {"date": "2025-04-09", "label": "Reciprocal tariffs suspended (TACO origin)", "type": "concession"},
+        {"date": "2025-05-12", "label": "US-China Geneva truce (tariffs cut)", "type": "concession"},
+        {"date": "2025-07-21", "label": "Multiple tariff deadlines delayed", "type": "concession"},
+    ]
+    payload = {
+        "methodology": (
+            "Illustrative: VIX (FRED ALFRED, permissive) as the market-stress proxy; "
+            "event table hand-curated from public news (FT, CNBC, ABC). Not an Aionis "
+            "research claim — methodology demonstrative."
+        ),
+        "vix_series": vix_series,
+        "events": events,
+        "climbdowns_count": sum(1 for e in events if e["type"] == "concession"),
+        "escalations_count": sum(1 for e in events if e["type"] == "escalation"),
+        "latest_vix": vix_series[-1]["vix"] if vix_series else None,
+        "latest_date": vix_series[-1]["date"] if vix_series else None,
+    }
+    (WEB / "taco.json").write_text(json.dumps(payload, indent=2))
+
+
+def export_reddit_meta() -> None:
+    """Reddit retail-sentiment collector status — reported honestly.
+
+    The forward collector (reddit_sentiment.py, PRAW + FinBERT, 7-gate cleared)
+    exists but has never been activated, so no forward snapshot exists yet.
+    """
+    payload = {
+        "status": "awaiting_activation",
+        "collector": "src/aionis/ingest/reddit_sentiment.py (PRAW 8.0.2 BSD-2 + FinBERT Apache-2.0)",
+        "mode": "exploratory · forward-collection only · no backfill (Pushshift dead)",
+        "subreddits": ["wallstreetbets", "stocks", "investing"],
+        "clearance": "7-gate (docs/data-intake-rubric.md): license / PIT / no-revision / selection-bias / politeness",
+        "n_snapshots": 0,
+        "picks": [],
+    }
+    (WEB / "reddit.json").write_text(json.dumps(payload, indent=2))
+
+
 def main() -> None:
     # Shared payloads (reused from the Quarto exporter, redirected to web/).
     eq.export_sigma_survey()
@@ -99,6 +155,8 @@ def main() -> None:
     # Terminal-specific.
     latest, n_total = export_picks()
     export_metrics(latest, n_total)
+    export_taco()
+    export_reddit_meta()
     written = sorted(p.name for p in WEB.glob("*.json"))
     print(f"[export-terminal] wrote {len(written)} files to {WEB}/: {written}", flush=True)
 

@@ -1,0 +1,13 @@
+{
+  "status": "awaiting_activation",
+  "collector": "src/aionis/ingest/reddit_sentiment.py (PRAW 8.0.2 BSD-2 + FinBERT Apache-2.0)",
+  "mode": "exploratory \u00b7 forward-collection only \u00b7 no backfill (Pushshift dead)",
+  "subreddits": [
+    "wallstreetbets",
+    "stocks",
+    "investing"
+  ],
+  "clearance": "7-gate (docs/data-intake-rubric.md): license / PIT / no-revision / selection-bias / politeness",
+  "n_snapshots": 0,
+  "picks": []
+}

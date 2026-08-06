@@ -18,6 +18,8 @@ import {
   GaugeIcon,
   ShieldCheckIcon,
   FileTextIcon,
+  MessageCircleIcon,
+  FlameIcon,
 } from "lucide-react";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -27,6 +29,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     { title: t("nav.overview"), url: "/dashboard", icon: <LayoutDashboardIcon /> },
     { title: t("nav.picks"), url: "/picks", icon: <TrendingUpIcon /> },
     { title: t("nav.evidence"), url: "/evidence", icon: <ScaleIcon /> },
+  ];
+  const navAlternative = [
+    { title: t("nav.reddit"), url: "/reddit", icon: <MessageCircleIcon /> },
+    { title: t("nav.taco"), url: "/taco", icon: <FlameIcon /> },
   ];
   const navMonitor = [
     { title: t("nav.powerfloor"), url: "/power-floor", icon: <GaugeIcon /> },
@@ -61,6 +67,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={navInsights} label={t("nav.group.insights")} />
+        <NavMain items={navAlternative} label={t("nav.group.alternative")} />
         <NavMain items={navMonitor} label={t("nav.group.monitor")} />
         <NavMain items={navReference} label={t("nav.group.reference")} />
       </SidebarContent>
