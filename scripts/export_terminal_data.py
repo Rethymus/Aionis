@@ -127,6 +127,52 @@ def export_taco() -> None:
     (WEB / "taco.json").write_text(json.dumps(payload, indent=2))
 
 
+def export_pick_conviction() -> None:
+    """Pick-conviction index — cross-sectional dispersion of OOS model scores.
+
+    Standard factor-research dispersion (std + top/bottom-decile spread; cf.
+    Kelly-Pruitt-Su). High dispersion = the model finds clear winners; low =
+    the market is hard to separate (a "low-conviction" regime). Aionis-unique
+    model meta-signal. Illustrative methodology, not a research claim.
+    """
+    df = pd.read_parquet("runs/track_c_confirmatory_oos_scores.parquet")
+    rows: list[dict] = []
+    for date, sub in df.groupby("date"):
+        s = sub["score"].dropna()
+        if len(s) < 10:
+            continue
+        top = float(s.quantile(0.9))
+        bot = float(s.quantile(0.1))
+        rows.append({
+            "date": str(date)[:10],
+            "n": int(len(s)),
+            "std": round(float(s.std()), 4),
+            "decile_spread": round(top - bot, 4),
+            "top_q": round(top, 3),
+            "bot_q": round(bot, 3),
+        })
+    rows.sort(key=lambda r: r["date"])
+    recent = rows[-12:]
+    trailing_mean = sum(r["std"] for r in recent) / len(recent) if recent else None
+    latest = rows[-1] if rows else None
+    conviction = (
+        "high" if latest and trailing_mean and latest["std"] > trailing_mean else "low"
+    ) if latest else "unknown"
+    payload = {
+        "methodology": (
+            "Cross-sectional dispersion of OOS model scores (std + top/bottom decile "
+            "spread). High dispersion = model finds clear winners; low = market hard "
+            "to separate. Standard factor-research dispersion. Aionis-unique model "
+            "meta-signal; illustrative, not a research claim."
+        ),
+        "series": rows[-24:],
+        "latest": latest,
+        "conviction": conviction,
+        "trailing_std_mean": round(trailing_mean, 4) if trailing_mean else None,
+    }
+    (WEB / "pick_conviction.json").write_text(json.dumps(payload, indent=2))
+
+
 def export_smart_money() -> None:
     """Recent SC 13D institutional stake filings (SEC EDGAR EFTS, filed-date PIT).
 
@@ -210,6 +256,7 @@ def main() -> None:
     latest, n_total = export_picks()
     export_metrics(latest, n_total)
     export_taco()
+    export_pick_conviction()
     export_smart_money()
     export_reddit_meta()
     written = sorted(p.name for p in WEB.glob("*.json"))

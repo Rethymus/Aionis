@@ -9,6 +9,7 @@ import bpsSweep from "./bps_sweep.json";
 import taco from "./taco.json";
 import reddit from "./reddit.json";
 import smartMoney from "./smart_money.json";
+import pickConviction from "./pick_conviction.json";
 
 export type Pick = {
   rank: number;
@@ -41,4 +42,5 @@ export const aionis = {
   taco: taco as typeof taco,
   reddit: reddit as typeof reddit,
   smartMoney: smartMoney as typeof smartMoney,
+  pickConviction: pickConviction as typeof pickConviction,
 };

@@ -90,6 +90,16 @@ export const dict = {
     "smartmoney.new": "新持仓",
     "smartmoney.amendment": "修正",
     "smartmoney.explain": "SC 13D = 持股超 5% 的机构建仓申报（SEC 强制）。filed-date PIT，公共域 permissive。展示近期聪明钱动向，非 Aionis 研究 claim。",
+
+    "nav.conviction": "选股确信度",
+    "conviction.title": "选股确信度指数",
+    "conviction.window": "模型 OOS 评分的截面分散度 · 每月",
+    "conviction.latest": "最新确信度",
+    "conviction.trailing": "近 12 月均值",
+    "conviction.high": "高确信",
+    "conviction.low": "低确信",
+    "conviction.series": "分散度时序",
+    "conviction.explain": "截面分散度 = 模型对当月股票评分的离散程度（标准差 + 头尾 decile 价差）。分散度高 = 模型找到清晰赢家；低 = 市场难分（低确信 regime，动量易失效）。标准因子研究方法（Kelly-Pruitt-Su）。Aionis 独有模型元信号，示意性，非研究 claim。",
   },
   en: {
     "brand.name": "Aionis",
@@ -180,6 +190,16 @@ export const dict = {
     "smartmoney.new": "New stake",
     "smartmoney.amendment": "Amendment",
     "smartmoney.explain": "SC 13D = mandatory SEC disclosure when an institution crosses 5% ownership. Filed-date PIT, public domain, permissive. Descriptive display of recent smart-money moves, not an Aionis research claim.",
+
+    "nav.conviction": "Pick conviction",
+    "conviction.title": "Pick-conviction index",
+    "conviction.window": "Cross-sectional dispersion of model OOS scores · monthly",
+    "conviction.latest": "Latest conviction",
+    "conviction.trailing": "Trailing 12m mean",
+    "conviction.high": "High conviction",
+    "conviction.low": "Low conviction",
+    "conviction.series": "Dispersion time series",
+    "conviction.explain": "Cross-sectional dispersion = how spread the model's monthly scores are (std + top/bottom decile spread). High dispersion = the model finds clear winners; low = the market is hard to separate (a low-conviction regime where momentum tends to fail). Standard factor-research dispersion (Kelly-Pruitt-Su). Aionis-unique model meta-signal; illustrative, not a research claim.",
   },
 } as const;
 

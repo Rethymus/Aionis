@@ -1,8 +1,8 @@
 # state/current.md — read first each session
 
-- **active (2026-08-06):** fintech 数据终端（Next.js + shadcn 复刻小隐寺风）**已上线** + special 另类数据：TACO 指数（真实 VIX）+ **EDGAR 13D 聪明钱动向**（真实 SEC 公共域）+ Reddit（诚实待激活，被 Responsible Builder Policy 拦截）。
-  8 页：Overview/选股决策/证据墙/**聪明钱/TACO/Reddit**/Power Floor/反泄漏。详见 `state/handoff.md` § 2026-08-06 (b)(c)(d)。
-  **待业主**：审 /smart-money + 13D 数据是否重拉刷新到最新 + Reddit 是否走 approval + Quarto/旧站去留。
+- **active (2026-08-06):** fintech 数据终端**已上线** + special 另类数据持续扩展：TACO（真实 VIX）+ EDGAR 13D 聪明钱 + **选股确信度（Aionis 独有模型元信号，截面分散度）** + Reddit（待激活，政策阻塞）。
+  9 页：Overview/选股决策/证据墙/**选股确信度**/聪明钱/TACO/Reddit/Power Floor/反泄漏。**Form 4 内部人 ingest（sonnet agent, worktree 隔离）并行中**，回报后集成。详见 `state/handoff.md` § (b)(c)(d)(e)。
+  **待业主**：审 /conviction + Form 4 agent 回报后审 + 13D 刷新 + Quarto/旧站去留。
 - **version:** 0.1.0 (pyproject)
 - **milestone:** **CONFIRMATORY CLIMAX ACHIEVED (2026-08-05)** — first confirmatory OOS run sediments
   ledger row #49 (`confirmatory:first`, phase=track_c, sig `e14b9d44...` → frozen #48). Combined rank-IC

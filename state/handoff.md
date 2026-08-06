@@ -1,5 +1,26 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-08-06 (e) 选股确信度指数（Aionis 独有模型元信号）+ Form 4 内部人 ingest（agent 并行中）
+
+业主 `/goal` 授权推进推荐项（批判性比对 + agents 并行 + 模型分层 + 复用轮子禁造）。
+
+**批判性修正**：原"选股确信度"想用峰度 → 不严谨（语义模糊）。改用**截面分散度（std + top/bottom decile spread）**，标准因子研究方法（Kelly-Pruitt-Su），有学术依据。
+
+**选股确信度 `/conviction`（Aionis 独有，已上线）**：
+- 数据：`track_c_confirmatory_oos_scores`（94k 行）→ 每月截面 std + decile spread
+- 逻辑：latest std (0.6752) > trailing 12m mean (0.5763) → **high conviction**（模型当前找到清晰赢家）；低分散 = 低确信 regime（动量易失效）
+- 复用：标准因子研究分散度概念（非 alphalens 库依赖，简单 std，避免造轮子）；recharts dual-line 图（std + decile_spread）
+- export_pick_conviction + conviction-view（KPI + 时序图 + methodology callout）；sidebar insights 组加确信度
+
+**Form 4 内部人 ingest（sonnet agent, worktree 隔离, 后台并行）**：
+- 复用 `stakes_13d_efts` + `stakes_13d` 模式，EDGAR EFTS Form 4，7-gate doc + hermetic 测试，mode=exploratory
+- 学术依据：Lakonishok-Lee 2001 / Cohen-Malloy-Pomorski 2012（内部人交易经典信号）
+- agent 进行中（worktree 不干扰主线），回报后核验+集成（[[aionis-agent-dispatch-verification]]：不信 agent 自述，验 worktree diff + 测试）
+
+**模型分层 + 复用账**：opus 主线（方法论判断 = 选股确信度定义）+ sonnet agent（Form 4 工程，复用 13D 模式）；选股确信度复用标准因子分散度（非自造指标）+ recharts（非自造图）。
+
+**边界**：本轮 `web/src/`（+conviction）+ `scripts/export_terminal_data.py`（+export_pick_conviction）+ state；**0 ledger / frozen / prereg / ADR / config / runs-data / E3**；oos_scores 是已有 PIT 产物（派生分散度，非新数据）；Form 4 agent 在 worktree。
+
 ## 2026-08-06 (d) EDGAR 13D 聪明钱动向模块（Reddit 被政策闸门挡后的真实另类数据替代）
 
 业主选 A（用 Aionis 已有 EDGAR 另类数据替代被 Reddit 拦截的散户热度）。
