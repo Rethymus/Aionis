@@ -90,3 +90,7 @@ select = ["E", "F", "I", "W", "UP", "B"]
 [tool.ruff.lint.per-file-ignores]
 # HTML/JS template generation inherently produces long lines.
 "scripts/build_static_site.py" = ["E501"]
+# Data-export script: long event labels + collector/clearance descriptions.
+"scripts/export_terminal_data.py" = ["E501"]
+# Form 4 orchestrator tests: compact XML fixtures + monkeypatch chains run long.
+"tests/test_form4_orchestrator.py" = ["E501"]

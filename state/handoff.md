@@ -1,5 +1,19 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-08-06 (g) Form 4 XML orchestrator（opus fallback）+ export_terminal_data ruff bugfix
+
+- Form 4 orchestrator agent (sonnet) **[1210] API 错失败**（memory 既定 proxy 不稳）。按 handoff 策略（agent fail → orchestrator opus 直接接），主线写 `src/aionis/ingest/form4_orchestrator.py`：
+  - accession → EDGAR Archives `index.json` → pick Form 4 doc（robust `directory.item[]`/`items[]` schema，prefer `.xml` → accession `.txt` → fallback）→ fetch XML → parse（复用 `parse_form4_xml`）。
+  - 复用 `_policy_get`（≥2s polite）+ 幂等 cache（index + xml 分别 cache）。`fetch_form4_transactions` 批量 + 容错（单 filing 失败不中断）。
+  - `tests/test_form4_orchestrator.py`：9 hermetic 测试（monkeypatch `_policy_get`/`fetch_form4_filings`），URL 构造 / doc 选择 / 幂等 cache / parse pipeline / batch / empty。**9/9 绿**。
+- **修了 `export_terminal_data.py` 的真实 lint bug**（之前 commit 没跑 ruff，疏忽）：B905 `zip()` 无 `strict=`（加 `strict=True`，长度不等即报错更安全）+ F841 `rl` 死变量（删）+ E501 长行（events label / reddit description，per-file-ignore 同 `build_static_site` 惯例）。**full repo ruff 现全 clean**。
+
+**模型分层 + 复用账**：sonnet agent（[1210] fail）→ opus 主线 fallback（orchestrator + 验收）。复用 `_policy_get` / `parse_form4_xml` / `stakes_13d_efts` cache 模式。**0 造轮子**。
+
+**边界**：本轮 `src/aionis/ingest/form4_orchestrator.py` + `tests/test_form4_orchestrator.py` + `scripts/export_terminal_data.py`（bugfix）+ `pyproject.toml`（per-file-ignore）+ state；**0 ledger / frozen / prereg / ADR / config / runs-data / E3**；无真实 EDGAR fetch（hermetic）。
+
+**Form 4 可见模块**：ingest（efts + parser）+ orchestrator（fetch + parse pipeline）**都就绪 + 验证**。离可见仅差：① 真实 fetch 授权（bounded CIK 集 + 近窗）② SEC User-Agent 真实邮箱（现占位 `contact@example.com`）。业主给邮箱 + 授权后一次性跑通 → 终端模块。
+
 ## 2026-08-06 (f) Form 4 内部人 ingest — sonnet agent 交付，独立验证通过，已合并
 
 agent (sonnet, worktree) 交付 Form 4 ingest；按 [[aionis-agent-dispatch-verification]] **独立核验（不信自述）**：

@@ -41,9 +41,9 @@ def export_picks() -> tuple[str, int]:
     def ranks(d: object) -> dict[str, int]:
         g = df[df["date"] == d].copy()
         g["r"] = g["score"].rank(ascending=False, method="first").astype(int)
-        return dict(zip(g["ticker"], g["r"]))
+        return dict(zip(g["ticker"], g["r"], strict=True))
 
-    rl, rp = ranks(latest), ranks(prev)
+    rp = ranks(prev)
     top = df[df["date"] == latest].nlargest(20, "score")
     picks = [
         {
