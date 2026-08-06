@@ -1,7 +1,7 @@
 # state/current.md — read first each session
 
-- **active (2026-08-06):** 研究站点前端改造（Quarto 品牌化 + itables 交互表 + 复用轮子，0 手搓 HTML）本地验证完成。
-  **待业主**：语言确认（默认英文）+ 授权 commit/push 部署 Pages + evidence `#12`(14 vs 15)。详见 `state/handoff.md` § 2026-08-06 (a)。
+- **active (2026-08-06):** 研究站点前端改造 **已上线**（commit `08af75d`，双语 Quarto 站；CI `success` → Pages 200，线上内容验证 panel-tabset/quarto、无 tailwind）。
+  **待业主**：审线上新站（https://rethymus.github.io/Aionis/）→ 确认 OK 后删旧 `site/` + `build_static_site.py`。详见 `state/handoff.md` § 2026-08-06 (a)。
 - **version:** 0.1.0 (pyproject)
 - **milestone:** **CONFIRMATORY CLIMAX ACHIEVED (2026-08-05)** — first confirmatory OOS run sediments
   ledger row #49 (`confirmatory:first`, phase=track_c, sig `e14b9d44...` → frozen #48). Combined rank-IC
