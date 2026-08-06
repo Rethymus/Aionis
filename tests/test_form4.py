@@ -54,7 +54,7 @@ _FORM4_XML_FIXTURE = """<?xml version="1.0" encoding="UTF-8"?>
                 <day>15</day>
             </transactionDate>
             <transactionCoding>
-                <transactionCode>A</transactionCode>
+                <transactionCode>P</transactionCode>
                 <equitySwapInvolved>0</equitySwapInvolved>
             </transactionCoding>
             <transactionAmounts>
@@ -77,7 +77,7 @@ _FORM4_XML_FIXTURE = """<?xml version="1.0" encoding="UTF-8"?>
                 <day>18</day>
             </transactionDate>
             <transactionCoding>
-                <transactionCode>D</transactionCode>
+                <transactionCode>S</transactionCode>
                 <equitySwapInvolved>0</equitySwapInvolved>
             </transactionCoding>
             <transactionAmounts>
@@ -130,7 +130,7 @@ _FORM4_XML_MISSING_FILER = """<?xml version="1.0" encoding="UTF-8"?>
                 <day>15</day>
             </transactionDate>
             <transactionCoding>
-                <transactionCode>A</transactionCode>
+                <transactionCode>P</transactionCode>
             </transactionCoding>
             <transactionAmounts>
                 <transactionShares>
@@ -168,7 +168,7 @@ _FORM4_XML_DERIVATIVE_ONLY = """<?xml version="1.0" encoding="UTF-8"?>
                 <day>15</day>
             </transactionDate>
             <transactionCoding>
-                <transactionCode>A</transactionCode>
+                <transactionCode>P</transactionCode>
             </transactionCoding>
         </derivativeTransaction>
     </derivativeTable>
@@ -190,7 +190,7 @@ def test_parse_form4_xml_basic() -> None:
     assert tx1.filer_name == "JOHN DOE"
     assert tx1.ticker == "AAPL"
     assert tx1.transaction_date == "2024-01-15"
-    assert tx1.acquired_or_disposed == "A"
+    assert tx1.buy_or_sell == "buy"
     assert tx1.shares == 1000.0
     assert tx1.price_per_share == 185.50
 
@@ -200,9 +200,52 @@ def test_parse_form4_xml_basic() -> None:
     assert tx2.filer_name == "JOHN DOE"
     assert tx2.ticker == "AAPL"
     assert tx2.transaction_date == "2024-01-18"
-    assert tx2.acquired_or_disposed == "D"
+    assert tx2.buy_or_sell == "sell"
     assert tx2.shares == 500.0
     assert tx2.price_per_share == 190.00
+
+
+def test_parse_form4_xml_new_schema_value_date() -> None:
+    """SEC X0508+ schema wraps the date in <value>YYYY-MM-DD</value>, not legacy
+    <year>/<month>/<day>. Parser must handle both (regression: real AAPL filings
+    2024-2026 use the value-wrapped form, which the legacy-only parser dropped)."""
+    xml_new_schema = """<?xml version="1.0"?>
+<ownershipDocument>
+  <documentType>4</documentType>
+  <issuer>
+    <issuerCik>0000320193</issuerCik>
+    <issuerTradingSymbol>AAPL</issuerTradingSymbol>
+  </issuer>
+  <reportingOwner>
+    <reportingOwnerId>
+      <rptOwnerCik>0001234567</rptOwnerCik>
+      <rptOwnerName>COOK TIMOTHY D</rptOwnerName>
+    </reportingOwnerId>
+  </reportingOwner>
+  <nonDerivativeTable>
+    <nonDerivativeTransaction>
+      <securityTitle><value>Common Stock</value></securityTitle>
+      <transactionDate><value>2026-04-02</value></transactionDate>
+      <transactionCoding>
+        <transactionFormType>4</transactionFormType>
+        <transactionCode>S</transactionCode>
+        <equitySwapInvolved>0</equitySwapInvolved>
+      </transactionCoding>
+      <transactionAmounts>
+        <transactionShares><value>50000</value></transactionShares>
+        <transactionPricePerShare><value>170.50</value></transactionPricePerShare>
+        <transactionAcquiredDisposedCode><value>D</value></transactionAcquiredDisposedCode>
+      </transactionAmounts>
+    </nonDerivativeTransaction>
+  </nonDerivativeTable>
+</ownershipDocument>"""
+    txns = parse_form4_xml(xml_new_schema)
+    assert len(txns) == 1
+    assert txns[0].transaction_date == "2026-04-02"
+    assert txns[0].buy_or_sell == "sell"
+    assert txns[0].shares == 50000.0
+    assert txns[0].price_per_share == 170.50
+    assert txns[0].filer_name == "COOK TIMOTHY D"
 
 
 def test_parse_form4_xml_empty() -> None:
@@ -242,7 +285,7 @@ def test_form4_filings_to_dataframe_basic() -> None:
         "filer_name",
         "ticker",
         "transaction_date",
-        "acquired_or_disposed",
+        "buy_or_sell",
         "shares",
         "price_per_share",
     ]
@@ -269,7 +312,7 @@ def test_form4_filings_to_dataframe_empty() -> None:
         "filer_name",
         "ticker",
         "transaction_date",
-        "acquired_or_disposed",
+        "buy_or_sell",
         "shares",
         "price_per_share",
     ]
@@ -282,8 +325,8 @@ def test_parse_form4_filing_from_text_convenience() -> None:
     assert isinstance(df, pd.DataFrame)
     assert len(df) == 2
     assert df.iloc[0]["ticker"] == "AAPL"
-    assert df.iloc[0]["acquired_or_disposed"] == "A"
-    assert df.iloc[1]["acquired_or_disposed"] == "D"
+    assert df.iloc[0]["buy_or_sell"] == "buy"
+    assert df.iloc[1]["buy_or_sell"] == "sell"
 
 
 def test_parse_form4_xml_invalid_transaction_code() -> None:
@@ -350,7 +393,7 @@ def test_parse_form4_xml_missing_price_or_shares() -> None:
                 <day>15</day>
             </transactionDate>
             <transactionCoding>
-                <transactionCode>A</transactionCode>
+                <transactionCode>P</transactionCode>
             </transactionCoding>
             <transactionAmounts>
                 <transactionShares>
@@ -391,7 +434,7 @@ def test_parse_form4_xml_negative_shares() -> None:
                 <day>15</day>
             </transactionDate>
             <transactionCoding>
-                <transactionCode>A</transactionCode>
+                <transactionCode>P</transactionCode>
             </transactionCoding>
             <transactionAmounts>
                 <transactionShares>

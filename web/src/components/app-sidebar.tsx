@@ -22,6 +22,7 @@ import {
   MessageCircleIcon,
   FlameIcon,
   BriefcaseIcon,
+  UsersIcon,
 } from "lucide-react";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -35,6 +36,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   ];
   const navAlternative = [
     { title: t("nav.smartmoney"), url: "/smart-money", icon: <BriefcaseIcon /> },
+    { title: t("nav.insiders"), url: "/insiders", icon: <UsersIcon /> },
     { title: t("nav.taco"), url: "/taco", icon: <FlameIcon /> },
     { title: t("nav.reddit"), url: "/reddit", icon: <MessageCircleIcon /> },
   ];

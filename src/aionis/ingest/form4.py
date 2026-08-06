@@ -10,18 +10,30 @@ amendments are NEW filings with new accession numbers, never silent overwrites)
 — G3✓ (cleanest possible surface, strictly better than ALFRED/EPU).
 
 PARSING DISCIPLINE: Form 4 filings are XML with a stable schema
-(https://www.sec.gov/info/edgar/edgarfm.htm). We extract:
+(https://www.sec.gov/info/edgar/edgarfm.htm). We extract OPEN-MARKET insider
+trades only — the SEC ``transactionCode`` convention:
+  * ``P`` = open-market purchase (buy)
+  * ``S`` = open-market sale (sell)
+Other codes are excluded as non-discretionary noise: ``M`` (exercise/exchange),
+``A`` (award/grant — compensation), ``F`` (tax/fee withholding), ``G`` (gift),
+``D`` (distribution), ``J`` (other). NOTE: ``acquiredOrDisposedCode`` (A/D) is
+the *direction* and is a DIFFERENT element from ``transactionCode`` (P/S/M/...) —
+do not confuse the two (verified against real AAPL filings 2026-08-06: the
+nonDerivative transactions carry transactionCode in {P,S,M,A,F,G}, never the
+bare A/D the parser initially assumed).
+
+Fields extracted:
   * ``filer_cik`` — the reporting person's CIK
   * ``filer_name`` — the reporting person's name
   * ``ticker`` — issuer ticker symbol
   * ``transaction_date`` — when the trade occurred
-  * ``acquired_or_disposed`` — ``A`` (buy) or ``D`` (sell) per SEC coding
+  * ``buy_or_sell`` — ``"buy"`` (SEC code P) or ``"sell"`` (SEC code S)
   * ``shares`` — number of shares traded
   * ``price_per_share`` — price in USD
 
-Only non-derivative, non-ownership-change transactions are extracted (pure
-buy/sell events). Derivative securities, exercises, and ownership changes are
-excluded to avoid double-counting and noise.
+Only non-derivative, open-market (P/S) transactions are extracted. Derivative
+securities, exercises, awards, gifts, and ownership changes are excluded to
+isolate discretionary insider open-market activity (cf. Lakonishok-Lee 2001).
 
 NOTE: This module parses Form 4 XML content. The EFTS search layer lives in
 :mod:`aionis.ingest.form4_efts` (mirrors :mod:`aionis.ingest.stakes_13d_efts`).
@@ -45,7 +57,7 @@ class Form4Transaction:
     filer_name: str
     ticker: str
     transaction_date: str  # YYYY-MM-DD
-    acquired_or_disposed: str  # "A" (buy) or "D" (sell)
+    buy_or_sell: str  # "buy" (SEC code P) or "sell" (SEC code S)
     shares: float
     price_per_share: float
 
@@ -130,28 +142,31 @@ def parse_form4_xml(xml_text: str) -> list[Form4Transaction]:
 
     # Extract non-derivative transactions
     for tx_node in root.findall(".//nonDerivativeTransaction"):
-        # Transaction date
+        # Transaction date — SEC Form 4 has TWO schemas:
+        #   new (X0508+): <transactionDate><value>YYYY-MM-DD</value></transactionDate>
+        #   legacy:       <transactionDate><year/><month/><day/></transactionDate>
         date_node = tx_node.find("transactionDate")
         if date_node is None:
             continue
-
-        year_elem = date_node.find("year")
-        month_elem = date_node.find("month")
-        day_elem = date_node.find("day")
-
-        if not all([year_elem is not None, month_elem is not None, day_elem is not None]):
-            continue
-        if not all([year_elem.text, month_elem.text, day_elem.text]):
-            continue
-
-        try:
-            tx_date = (
-                f"{int(year_elem.text):04d}-"
-                f"{int(month_elem.text):02d}-"
-                f"{int(day_elem.text):02d}"
-            )
-        except (ValueError, TypeError):
-            continue
+        date_val = date_node.find("value")
+        if date_val is not None and date_val.text and date_val.text.strip():
+            tx_date = date_val.text.strip()[:10]
+        else:
+            year_elem = date_node.find("year")
+            month_elem = date_node.find("month")
+            day_elem = date_node.find("day")
+            if not all([year_elem is not None, month_elem is not None, day_elem is not None]):
+                continue
+            if not all([year_elem.text, month_elem.text, day_elem.text]):
+                continue
+            try:
+                tx_date = (
+                    f"{int(year_elem.text):04d}-"
+                    f"{int(month_elem.text):02d}-"
+                    f"{int(day_elem.text):02d}"
+                )
+            except (ValueError, TypeError):
+                continue
 
         # Transaction coding (A=acquire, D=dispose)
         coding_node = tx_node.find("transactionCoding")
@@ -162,8 +177,8 @@ def parse_form4_xml(xml_text: str) -> list[Form4Transaction]:
             continue
 
         code = code_elem.text.strip().upper()
-        if code not in ("A", "D"):
-            continue  # Only pure buy (A) or sell (D)
+        if code not in ("P", "S"):
+            continue  # Open-market purchase (P) or sale (S) only — SEC Form 4 convention
 
         # Amounts (SEC wraps values in <value> tags)
         amount_node = tx_node.find("transactionAmounts")
@@ -210,7 +225,7 @@ def parse_form4_xml(xml_text: str) -> list[Form4Transaction]:
                 filer_name=filer_name,
                 ticker=ticker,
                 transaction_date=tx_date,
-                acquired_or_disposed=code,
+                buy_or_sell=("buy" if code == "P" else "sell"),
                 shares=float(shares),
                 price_per_share=float(price),
             )
@@ -224,7 +239,7 @@ def form4_filings_to_dataframe(transactions: list[Form4Transaction]) -> pd.DataF
     """Convert a list of Form 4 transactions to a tidy pandas DataFrame.
 
     Returns columns: ``[filer_cik, filer_name, ticker, transaction_date,
-    acquired_or_disposed, shares, price_per_share]`` sorted by transaction_date.
+    buy_or_sell, shares, price_per_share]`` sorted by transaction_date.
     """
     if not transactions:
         return pd.DataFrame(
@@ -233,7 +248,7 @@ def form4_filings_to_dataframe(transactions: list[Form4Transaction]) -> pd.DataF
                 "filer_name",
                 "ticker",
                 "transaction_date",
-                "acquired_or_disposed",
+                "buy_or_sell",
                 "shares",
                 "price_per_share",
             ]
@@ -245,7 +260,7 @@ def form4_filings_to_dataframe(transactions: list[Form4Transaction]) -> pd.DataF
             "filer_name": tx.filer_name,
             "ticker": tx.ticker,
             "transaction_date": tx.transaction_date,
-            "acquired_or_disposed": tx.acquired_or_disposed,
+            "buy_or_sell": tx.buy_or_sell,
             "shares": tx.shares,
             "price_per_share": tx.price_per_share,
         }

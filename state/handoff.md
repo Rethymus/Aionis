@@ -1,5 +1,23 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-08-06 (h) Form 4 内部人模块上线（真实数据）+ 两个 parser schema bug 修复
+
+业主问"为什么需要邮箱，能否避免" → 实测**能避免**：SEC 对 polite + 占位 UA + 小规模容忍（AAPL EFTS 返回 26 条无 429；Aionis 现有 584 个 13D 也是占位 UA 拉的）。
+
+**跑通真实 fetch + 暴露/修了两个 parser schema bug**（agent fixture ≠ 真实 schema → 空洞绿，[[aionis-agent-dispatch-verification]] 既定 failure mode）：
+1. **transactionCode A/D 错误**：parser 初版过滤 `transactionCode ∈ {A,D}`——但 SEC 惯例 `transactionCode = P(买)/S(卖)/M(行权)/A(award)/F/G`；A/D 是 `acquiredOrDisposedCode`（direction，**另一元素**）。修为 P/S（open-market）。AAPL 实测：nonDeriv codes = {S:83, M:54, F:31, G:8}（83 真实销售）。
+2. **transactionDate 双 schema**：parser 初版只读 legacy `<year>/<month>/<day>`，但 SEC X0508+ 用 `<value>YYYY-MM-DD</value>`。真实 AAPL 申报用新 schema → 全 drop（110 文件 0 产出）。修为 dual-schema（value 优先，fallback year/month/day）。加 regression test 锁定。
+
+**结果**：AAPL 近 2.5 年 → **83 真实内部人 SELL**（Tim Cook 21 / Katherine Adams 16 / Arthur Levinson 等 9 内部人，真实 shares + price）。`form4.json` status=ok。
+
+**模块**：`/insiders` 上线（KPI buys/sells/insiders + top insiders + 近期交易流 + methodology）。sidebar alternative 组加内部人。`export_form4` 读 `form4_aggregate.parquet`（`scripts/form4_fetch.py` bounded 拉取，5 大盘 issuer；AAPL 已跑 + cache，多 issuer 一键扩）。
+
+**复用 + 验证**：`_policy_get`（polite）+ `stakes_13d_efts` cache 模式 + `parse_form4_xml`。ruff clean + **21 测试绿**（含 new-schema regression）。**主线亲自验证**（re-parse 110 AAPL → 83 sells，非 agent 自述）。
+
+**边界**：本轮 `src/aionis/ingest/form4*.py`（P/S + dual-schema fix）+ tests + scripts（`export_form4` + `form4_fetch.py`）+ web（insiders 模块 + `form4.json` 真实数据）+ state；**0 ledger / frozen / prereg / ADR / config / runs-data / E3**；Form 4 SEC 公共域 permissive（filed-date PIT）；占位 UA（SEC 容忍，业主无需邮箱）；AAPL 单 issuer 真实数据（多 issuer `form4_fetch.py` 一键扩）。
+
+**待业主**：① 审 `/insiders`（真实 AAPL 内部人销售）② 多 issuer 扩展（跑 `form4_fetch.py`，~10min，加 MSFT/NVDA/GOOGL/AMZN）③ Quarto/旧站去留。
+
 ## 2026-08-06 (g) Form 4 XML orchestrator（opus fallback）+ export_terminal_data ruff bugfix
 
 - Form 4 orchestrator agent (sonnet) **[1210] API 错失败**（memory 既定 proxy 不稳）。按 handoff 策略（agent fail → orchestrator opus 直接接），主线写 `src/aionis/ingest/form4_orchestrator.py`：

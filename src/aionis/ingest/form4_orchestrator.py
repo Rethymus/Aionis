@@ -148,7 +148,7 @@ def fetch_form4_transactions(
         return pd.DataFrame(
             columns=[
                 "filer_cik", "filer_name", "ticker", "transaction_date",
-                "acquired_or_disposed", "shares", "price_per_share", "accession",
+                "buy_or_sell", "shares", "price_per_share", "accession",
             ]
         )
 

@@ -1,7 +1,7 @@
 # state/current.md — read first each session
 
 - **active (2026-08-06):** fintech 数据终端**已上线** + special 另类数据持续扩展：TACO（真实 VIX）+ EDGAR 13D 聪明钱 + **选股确信度（Aionis 独有模型元信号，截面分散度）** + Reddit（待激活，政策阻塞）。
-  9 页：Overview/选股决策/证据墙/**选股确信度**/聪明钱/TACO/Reddit/Power Floor/反泄漏。**Form 4 ingest + XML orchestrator 都就绪验证**（ingest sonnet agent + orchestrator opus fallback，我跑 20/20 绿；full repo ruff clean）。可见模块待业主 SEC 邮箱 + bounded fetch 授权。详见 `state/handoff.md` § (b)(c)(d)(e)(f)(g)。
+  10 页：Overview/选股决策/证据墙/选股确信度/**内部人**/聪明钱/TACO/Reddit/Power Floor/反泄漏。**Form 4 /insiders 已上线真实数据**（AAPL 83 内部人销售，Tim Cook 等；修了 2 个 parser schema bug：transactionCode P/S 非 A/D + transactionDate 双 schema）。邮箱可避免（SEC 容忍占位 UA）。详见 `state/handoff.md` § (b)..(h)。
   **待业主**：审 /conviction + Form 4 agent 回报后审 + 13D 刷新 + Quarto/旧站去留。
 - **version:** 0.1.0 (pyproject)
 - **milestone:** **CONFIRMATORY CLIMAX ACHIEVED (2026-08-05)** — first confirmatory OOS run sediments

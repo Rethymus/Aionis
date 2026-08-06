@@ -36,7 +36,7 @@ _FORM4_XML = """<?xml version="1.0"?>
   <reportingOwner><reportingOwnerId><rptOwnerCik>0001234567</rptOwnerCik><rptOwnerName>JOHN DOE</rptOwnerName></reportingOwnerId></reportingOwner>
   <nonDerivativeTable><nonDerivativeTransaction>
     <transactionDate><year>2024</year><month>1</month><day>15</day></transactionDate>
-    <transactionCoding><transactionCode>A</transactionCode></transactionCoding>
+    <transactionCoding><transactionCode>P</transactionCode></transactionCoding>
     <transactionAmounts><transactionShares><value>1000</value></transactionShares>
     <transactionPricePerShare><value>185.50</value></transactionPricePerShare></transactionAmounts>
   </nonDerivativeTransaction></nonDerivativeTable>
@@ -98,7 +98,7 @@ def test_parse_form4_filing_pipeline(monkeypatch, tmp_path) -> None:
     row = df.iloc[0]
     assert row["ticker"] == "AAPL"
     assert row["filer_name"] == "JOHN DOE"
-    assert row["acquired_or_disposed"] == "A"
+    assert row["buy_or_sell"] == "buy"
     assert row["shares"] == 1000.0
 
 

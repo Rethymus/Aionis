@@ -127,6 +127,72 @@ def export_taco() -> None:
     (WEB / "taco.json").write_text(json.dumps(payload, indent=2))
 
 
+def export_form4() -> None:
+    """Form 4 insider transactions (SEC EDGAR, display-only, exploratory).
+
+    Reads the bounded fetch aggregate (``data/cache/form4_aggregate.parquet``,
+    gitignored) if present; else reports ``awaiting_fetch`` honestly (no mock).
+    Real public-domain data; filed-date PIT; non-derivative buy(A)/sell(D) only.
+    """
+    from collections import Counter
+
+    fp = Path("data/cache/form4_aggregate.parquet")
+    if not fp.exists():
+        payload = {
+            "status": "awaiting_fetch",
+            "methodology": (
+                "Form 4 insider transactions (SEC EDGAR EFTS, filed-date PIT, public "
+                "domain). Non-derivative buy (A) / sell (D) only. Bounded large-cap "
+                "fetch pending — run scripts/form4_fetch.py."
+            ),
+            "recent": [],
+            "buys": 0,
+            "sells": 0,
+            "n_filers": 0,
+            "top_insiders": [],
+            "window": "pending",
+            "n_issuers": 0,
+        }
+        (WEB / "form4.json").write_text(json.dumps(payload, indent=2))
+        return
+
+    df = pd.read_parquet(fp).sort_values("transaction_date", ascending=False)
+    rows = [
+        {
+            "filer": str(r.get("filer_name", "")),
+            "ticker": str(r.get("issuer_ticker") or r.get("ticker", "")),
+            "date": str(r["transaction_date"])[:10],
+            "action": str(r["buy_or_sell"]),
+            "shares": int(r["shares"]) if pd.notna(r.get("shares")) else None,
+            "price": (
+                round(float(r["price_per_share"]), 2)
+                if pd.notna(r.get("price_per_share"))
+                else None
+            ),
+        }
+        for _, r in df.head(50).iterrows()
+    ]
+    buys = int((df["buy_or_sell"] == "buy").sum())
+    sells = int((df["buy_or_sell"] == "sell").sum())
+    filer_counts = Counter(df["filer_name"].dropna()).most_common(10)
+    payload = {
+        "status": "ok",
+        "methodology": (
+            "Form 4 insider transactions (SEC EDGAR EFTS, filed-date PIT, public "
+            "domain). Non-derivative pure buy (A) / sell (D) only — exercises and "
+            "options excluded. Display-only, exploratory, not a research claim."
+        ),
+        "recent": rows,
+        "buys": buys,
+        "sells": sells,
+        "n_filers": int(df["filer_name"].nunique()),
+        "top_insiders": [{"filer": filer, "count": count} for filer, count in filer_counts],
+        "window": "2024-01..2026-06 (bounded large-cap set)",
+        "n_issuers": int(df["issuer_ticker"].nunique()) if "issuer_ticker" in df else 0,
+    }
+    (WEB / "form4.json").write_text(json.dumps(payload, indent=2, default=str))
+
+
 def export_pick_conviction() -> None:
     """Pick-conviction index — cross-sectional dispersion of OOS model scores.
 
@@ -257,6 +323,7 @@ def main() -> None:
     export_metrics(latest, n_total)
     export_taco()
     export_pick_conviction()
+    export_form4()
     export_smart_money()
     export_reddit_meta()
     written = sorted(p.name for p in WEB.glob("*.json"))
