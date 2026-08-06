@@ -1,5 +1,20 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-08-06 (d) EDGAR 13D 聪明钱动向模块（Reddit 被政策闸门挡后的真实另类数据替代）
+
+业主选 A（用 Aionis 已有 EDGAR 另类数据替代被 Reddit 拦截的散户热度）。
+
+- **Reddit 现实**：业主点 create app 被 Responsible Builder Policy 直接拦截（2025-11 self-service API 关闭 + 新 app 须 approval，社区广泛报告被卡/拒）。Aionis 侧无法绕过。Reddit 页保持诚实"待激活"。
+- **13D 数据**：`data/cache/efts_13d_<CIK>_*.json` 584 文件（历史 EFTS full-text-search），2872 条申报 / 417 机构 / 最新 **2024-12-16**（数据窗口到 2024-12，cached pulls 略滞后，真实但非实时）。SEC 公共域 permissive，filed-date PIT。
+- **8K 数据不足**：`earnings_8k_forward_raw_20260731` 只有 1 条 T0/cik=1 测试条，跳过。
+- **export_smart_money**：聚合 584 文件 → 近 60 申报 + 最活跃 10 机构（active #1 = Bank of America 44 次）。
+- **修复一个 bug**：初版把 EDGAR `display_names[0]` 当 filer、`[1]` 当 target——反了。13D 惯例 `[0]`=subject company(issuer/target)、`[1]`=filer(reporting person/smart money)。证据：原 recent #1 显示 filer="CARVANA CO." target="GARCIA ERNEST C. II"（自然人不可能当 issuer）→ 修正后 filer=Garcia、target=Carvana(CVNA)，语义正确。
+- **模块** `/smart-money`：KPI(total/filers/latest) + 最活跃机构排行 + 近期申报流（filer→target + ticker + new/amendment badge）。sidebar"另类数据"组加聪明钱。
+
+**边界**：本轮 `web/src/`（+smart-money）+ `scripts/export_terminal_data.py`（+export_smart_money + 13D swap fix）+ state；**0 ledger / frozen / prereg / ADR / config / runs-data / E3**；13D 是 SEC 公共域 permissive（filed-date PIT，真实历史）；Reddit 仍待激活（政策阻塞，非 mock）。
+
+**待业主**：① 审 `/smart-money` 观感 ② 13D 数据滞后到 2024-12（cached pulls），要不要重拉 EFTS 刷新到最新 ③ Reddit 是否走 approval（不阻塞当前）。
+
 ## 2026-08-06 (c) special 另类数据模块 — TACO 指数 + Reddit 散户热度
 
 业主要求加小隐寺式 special 数据模块（Reddit 热门 + 川普 TACO 指数）让终端"更真实可靠"。

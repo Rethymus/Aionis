@@ -78,6 +78,18 @@ export const dict = {
     "taco.events.title": "关税事件时间线",
     "taco.event.escalation": "升级",
     "taco.event.concession": "让步",
+
+    "nav.smartmoney": "聪明钱",
+    "smartmoney.title": "聪明钱动向",
+    "smartmoney.window": "SC 13D 机构持仓申报 · SEC EDGAR · filed-date PIT",
+    "smartmoney.total": "申报总数",
+    "smartmoney.filers": "机构数",
+    "smartmoney.latest": "最新申报",
+    "smartmoney.active": "最活跃机构（近期）",
+    "smartmoney.recent": "近期申报流",
+    "smartmoney.new": "新持仓",
+    "smartmoney.amendment": "修正",
+    "smartmoney.explain": "SC 13D = 持股超 5% 的机构建仓申报（SEC 强制）。filed-date PIT，公共域 permissive。展示近期聪明钱动向，非 Aionis 研究 claim。",
   },
   en: {
     "brand.name": "Aionis",
@@ -156,6 +168,18 @@ export const dict = {
     "taco.events.title": "Tariff event timeline",
     "taco.event.escalation": "Escalation",
     "taco.event.concession": "Concession",
+
+    "nav.smartmoney": "Smart money",
+    "smartmoney.title": "Smart-money moves",
+    "smartmoney.window": "SC 13D institutional stakes · SEC EDGAR · filed-date PIT",
+    "smartmoney.total": "Total filings",
+    "smartmoney.filers": "Institutions",
+    "smartmoney.latest": "Latest filing",
+    "smartmoney.active": "Most active filers (recent)",
+    "smartmoney.recent": "Recent filings feed",
+    "smartmoney.new": "New stake",
+    "smartmoney.amendment": "Amendment",
+    "smartmoney.explain": "SC 13D = mandatory SEC disclosure when an institution crosses 5% ownership. Filed-date PIT, public domain, permissive. Descriptive display of recent smart-money moves, not an Aionis research claim.",
   },
 } as const;
 

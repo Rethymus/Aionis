@@ -127,6 +127,60 @@ def export_taco() -> None:
     (WEB / "taco.json").write_text(json.dumps(payload, indent=2))
 
 
+def export_smart_money() -> None:
+    """Recent SC 13D institutional stake filings (SEC EDGAR EFTS, filed-date PIT).
+
+    Aggregated from the cached per-filer full-text-search pulls. Real public-domain
+    data (SEC), permissive. NOT a research claim — descriptive display of recent
+    smart-money stake disclosures.
+    """
+    import glob
+    import re
+
+    rows: list[dict] = []
+    for f in glob.glob("data/cache/efts_13d_*.json"):
+        try:
+            for item in json.loads(Path(f).read_text()):
+                names = item.get("display_names") or []
+                if len(names) < 2 or not item.get("file_date"):
+                    continue
+                # EDGAR 13D convention: display_names[0] = subject company (issuer/target);
+                # display_names[1] = filer (reporting person / the smart-money entity).
+                issuer = names[0]
+                m = re.search(r"\(([A-Z]{1,6})\)", issuer)
+                ticker = m.group(1) if m else ""
+                target_clean = re.sub(r"\s*\(CIK.*$", "", issuer).strip()
+                filer_clean = re.sub(r"\s*\(CIK.*$", "", names[1]).strip()
+                form = item.get("form", "SC 13D")
+                rows.append({
+                    "filer": filer_clean,
+                    "target": target_clean,
+                    "ticker": ticker,
+                    "date": item["file_date"],
+                    "form": form,
+                    "is_amendment": form.endswith("/A"),
+                })
+        except (json.JSONDecodeError, KeyError):
+            continue
+    rows.sort(key=lambda r: r["date"], reverse=True)
+    recent = rows[:60]
+    from collections import Counter
+    active = Counter(r["filer"] for r in rows[:300]).most_common(10)
+    payload = {
+        "methodology": (
+            "Recent SC 13D institutional stake filings (SEC EDGAR EFTS full-text "
+            "search, filed-date point-in-time). Public domain, permissive. Real "
+            "data; descriptive display, not an Aionis research claim."
+        ),
+        "recent_filings": recent,
+        "active_filers": [{"filer": filer, "count": count} for filer, count in active],
+        "total_filings": len(rows),
+        "n_filers": len({r["filer"] for r in rows}),
+        "latest_date": rows[0]["date"] if rows else None,
+    }
+    (WEB / "smart_money.json").write_text(json.dumps(payload, indent=2))
+
+
 def export_reddit_meta() -> None:
     """Reddit retail-sentiment collector status — reported honestly.
 
@@ -156,6 +210,7 @@ def main() -> None:
     latest, n_total = export_picks()
     export_metrics(latest, n_total)
     export_taco()
+    export_smart_money()
     export_reddit_meta()
     written = sorted(p.name for p in WEB.glob("*.json"))
     print(f"[export-terminal] wrote {len(written)} files to {WEB}/: {written}", flush=True)

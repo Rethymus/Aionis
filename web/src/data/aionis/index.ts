@@ -8,6 +8,7 @@ import sigmaSurvey from "./sigma_survey.json";
 import bpsSweep from "./bps_sweep.json";
 import taco from "./taco.json";
 import reddit from "./reddit.json";
+import smartMoney from "./smart_money.json";
 
 export type Pick = {
   rank: number;
@@ -39,4 +40,5 @@ export const aionis = {
   bpsSweep: bpsSweep as { bps: number; net_sharpe: number; gross_sharpe: number; avg_turnover: number }[],
   taco: taco as typeof taco,
   reddit: reddit as typeof reddit,
+  smartMoney: smartMoney as typeof smartMoney,
 };
