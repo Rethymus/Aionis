@@ -1,0 +1,63 @@
+# Aionis brand — single source of truth for the Quarto research site.
+# Spec:  https://posit-dev.github.io/brand-yml/
+# Quarto: https://quarto.org/docs/authoring/brand.html
+#
+# Design intent: a calm, credible, *academic-research* aesthetic — NOT a trading
+# dashboard. The palette encodes the project's evidence grading so every chart,
+# value box, and table reads as one system:
+#   grey  = CV-proxy            (weakest; shared-fold purged cross-fit, not chronological)
+#   blue  = chronological / exploratory
+#   red   = CONFIRMATORY        (the climax result)
+#   amber = the power floor     (the infeasibility warning)
+# System font stacks only — no external webfont CDN, so the static site stays
+# offline-reproducible and fast (no third-party render-blocking).
+
+meta:
+  name: Aionis
+  link:
+    url: https://rethymus.github.io/Aionis/
+
+color:
+  palette:
+    # --- Evidence grading (semantic; referenced by every chart / value box) ---
+    grade-cvproxy: "#94a3b8"        # slate-400 — weakest evidence
+    grade-chron: "#2563eb"          # blue-600 — chronological / exploratory
+    grade-confirmatory: "#dc2626"   # red-600  — the confirmatory climax
+    # --- Analytical accents ---
+    power: "#d97706"                # amber-600 — the power floor
+    positive: "#059669"             # emerald-600 — gross / null-positive
+    neutral: "#0ea5e9"              # sky-500
+    # --- Surfaces ---
+    bg: "#ffffff"
+    bg-muted: "#f8fafc"             # slate-50 — cards / alt rows
+    fg: "#1e293b"                   # slate-800 — body text
+    fg-muted: "#64748b"             # slate-500 — secondary text
+    border: "#e2e8f0"               # slate-200 — hairlines
+    # --- Brand primary ---
+    primary: "#0b3d61"              # deep academic navy
+  foreground: fg
+  background: bg
+  primary: primary
+  link: primary
+  danger: grade-confirmatory
+  success: positive
+  warning: power
+  info: grade-chron
+  light: bg-muted
+  dark: fg
+
+typography:
+  # Serif headings + sans body = the classic journal / distill.pub register.
+  base:
+    family: "system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif"
+    size: 1.02rem
+    line-height: 1.65
+  headings:
+    family: "ui-serif, Georgia, Cambria, Times New Roman, Times, serif"
+    weight: 600
+    line-height: 1.2
+  link:
+    weight: 500
+    decoration: underline
+  monospace:
+    family: "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"

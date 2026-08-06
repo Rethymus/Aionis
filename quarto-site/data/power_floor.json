@@ -1,0 +1,34 @@
+{
+  "sesoi": 0.01,
+  "looks": [
+    {
+      "look": 1,
+      "n": 60,
+      "z": 2.772,
+      "n_min_months": 869,
+      "n_min_years": 72.5,
+      "rci_level_pct": 99.44
+    },
+    {
+      "look": 2,
+      "n": 90,
+      "z": 2.263,
+      "n_min_months": 580,
+      "n_min_years": 48.3,
+      "rci_level_pct": 97.64
+    },
+    {
+      "look": 3,
+      "n": 120,
+      "z": 1.96,
+      "n_min_months": 435,
+      "n_min_years": 36.2,
+      "rci_level_pct": 95.0
+    }
+  ],
+  "sigma_observed_median": 0.109,
+  "sigma_pure_noise_n462": 0.0466,
+  "n_min_at_pure_noise_look3_months": 83,
+  "n_min_at_observed_look3_months": 456,
+  "verdict": "power floor binds via ML noise excess (2.0-4.4x pure-noise bound), not the pure 1/sqrt(N-1) bound"
+}

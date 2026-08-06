@@ -28,6 +28,9 @@ venv/
 
 # --- Data (all of data/ is cached / snapshot / regenerable; anti-leakage default) ---
 data/
+# Tracked research-site data payloads — Quarto CI renders against these JSON
+# files (anti-leakage: only aggregated outputs, never runs/ parquet or raw data).
+!quarto-site/data/
 *.parquet
 *.tar.gz
 *.cache.json

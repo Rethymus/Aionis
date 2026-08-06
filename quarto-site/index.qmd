@@ -1,0 +1,120 @@
+---
+title: "Aionis"
+subtitle: "可证伪、反泄漏的量化金融研究框架 · A falsifiable, anti-leakage quant-finance research harness"
+format:
+  html:
+    toc: false
+---
+
+::: panel-tabset
+## 中文
+
+::: {.callout-note title="先读这里"}
+**Null 是预期的、可发表的成果。** Aionis 不是交易机器人，也不是认知系统——它是一个有纪律的实验框架：每个阶段对 S&P 500 点在时间成分股（Track C 含 CSI 300）的横截面月频 rank-IC 做一条预注册、双尾的声明。
+
+[→ 方法与结果草稿](https://github.com/Rethymus/Aionis/blob/main/docs/methods-and-results-draft.md)
+:::
+
+### 首个 confirmatory 结果一览
+
+::: columns
+::: {.column width="33%"}
+::: {.callout-important title="Combined rank-IC"}
+**−0.0088** — null
+
+$p = 0.484$ · $n = 71$ 月 · 95% HAC CI $[-0.034, +0.016]$
+:::
+:::
+
+::: {.column width="33%"}
+::: {.callout-warning title="Jennison–Turnbull look-1"}
+**NOT_EQUIVALENT**
+
+欠功率的一眼（RCI 99.44%），**非**效应信号
+:::
+:::
+
+::: {.column width="34%"}
+::: {.callout-tip title="H₆ 确定性"}
+**PASS**
+
+真实数据上双跑 bit-identical
+:::
+:::
+:::
+
+### 研究结论
+
+跨 **14 条预注册配置**（历史四阶段 B/C/D/E1、两条时序 track B/C、首条 confirmatory 样本外运行），没有任何 treatment 臂相对 price-only 基线显示可靠的正向增量 rank-IC。**所有置信区间都跨越零。**
+
+### 贡献
+
+诚实、预注册的贡献是 **null 点估计**、**端到端反泄漏纪律**、与 **power-limit 披露**——而非已宣告的等价。前瞻 power 分析显示，冻结的 60/90/120 月 Jennison–Turnbull 日程在文献记录的月频 rank-IC 噪声地板 $\sigma \approx 0.10$ 下**结构性欠功率**（宣告等价约需 36+ 年）。
+
+### 探索
+
+- [**证据 · Evidence**](results.qmd) — 交互式 14 行证据表、双区域 71 月 IC 时序、成本衰减曲线。
+- [**Power Floor · 功率地板**](power-floor.qmd) — 理论界、跨 21 个 IC 系列的 ML 噪声超额、不可行性结论。
+
+## English
+
+::: {.callout-note title="Read this first"}
+**Null is the intended, publishable outcome.** Aionis is not a trading bot or a
+cognitive system — it is a disciplined experiment harness: one pre-registered,
+two-tailed claim per phase on the cross-sectional monthly rank-IC of S&P 500
+point-in-time constituents (and CSI 300 in Track C).
+
+[→ Methods & results draft](https://github.com/Rethymus/Aionis/blob/main/docs/methods-and-results-draft.md)
+:::
+
+### The first confirmatory result, at a glance
+
+::: columns
+::: {.column width="33%"}
+::: {.callout-important title="Combined rank-IC"}
+**−0.0088** — null
+
+$p = 0.484$ · $n = 71$ months · 95% HAC CI $[-0.034, +0.016]$
+:::
+:::
+
+::: {.column width="33%"}
+::: {.callout-warning title="Jennison–Turnbull look-1"}
+**NOT_EQUIVALENT**
+
+underpowered look (RCI 99.44%), **not** an effect signal
+:::
+:::
+
+::: {.column width="34%"}
+::: {.callout-tip title="H₆ determinism"}
+**PASS**
+
+bit-identical double run on real data
+:::
+:::
+:::
+
+### Research verdict
+
+Across **14 pre-registered configurations** spanning four historical phases
+(B/C/D/E1), two chronological tracks (B, C), and the first **confirmatory**
+out-of-sample run, no treatment arm shows a reliable positive incremental rank-IC
+over the price-only baseline. **All confidence intervals bracket zero.**
+
+### Contribution
+
+The honest, pre-registered contribution is the **null point estimate**, the
+**end-to-end anti-leakage discipline**, and the **power-limit disclosure** — not a
+declared equivalence. A prospective power analysis shows the frozen
+60/90/120-month Jennison–Turnbull schedule is **structurally underpowered** for
+SESOI $\pm 0.010$ at the documented monthly rank-IC noise floor
+$\sigma \approx 0.10$ (declaring equivalence would need ~36+ years).
+
+### Explore
+
+- [**Evidence**](results.qmd) — the interactive 14-row evidence table, the
+  dual-region 71-month IC time series, and the cost-decay curve.
+- [**Power Floor**](power-floor.qmd) — the theoretical bound, the ML noise
+  excess across 21 IC series, and the infeasibility result.
+:::

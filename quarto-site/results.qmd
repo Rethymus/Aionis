@@ -1,0 +1,145 @@
+---
+title: "证据 · Evidence"
+subtitle: "14 条 null 配置 + 经济透镜 · 14 null configurations + the economic lens"
+format:
+  html:
+    toc: true
+---
+
+```{python}
+#| echo: false
+import json
+from pathlib import Path
+
+import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
+from itables import show as itables_show
+
+DATA = Path("data")
+evidence = json.loads((DATA / "evidence.json").read_text())
+bps = json.loads((DATA / "bps_sweep.json").read_text())
+icm = json.loads((DATA / "ic_monthly.json").read_text())
+ev = pd.DataFrame(evidence)
+```
+
+::: panel-tabset
+## 中文
+
+**全部为 null——每一条置信区间都跨越零。** 诚实分级：共享折的 purged cross-fitting 是 **CV-proxy**，不是时序样本外；**exploratory** 不等于 **confirmatory**。仅第 15 行（n=15）是 confirmatory。
+
+::: {.callout-caution title="非投资建议"}
+Null 不证明市场有效，不证明因子 alpha 严格为零，也不构成可交易策略。
+:::
+
+## English
+
+**All null — every confidence interval brackets zero.** Honest grading:
+shared-fold purged cross-fitting is a **CV-proxy**, not chronological
+out-of-sample; **exploratory** is not **confirmatory**. Only row 15 is confirmatory.
+
+::: {.callout-caution title="Non-investment advice"}
+Null does not prove market efficiency, does not prove factor alpha is strictly
+zero, and does not constitute a tradable strategy.
+:::
+:::
+
+## 证据表 · Evidence table
+
+```{python}
+#| echo: false
+# Interactive evidence table — searchable / sortable / paginated (itables, MIT).
+ev_disp = ev.copy()
+for c in ["estimate", "ci_lo", "ci_hi"]:
+    ev_disp[c] = ev_disp[c].round(4)
+itables_show(
+    ev_disp[["n", "result", "estimate", "ci_lo", "ci_hi", "p", "n_months", "grade"]],
+    classes="display nowrap",
+    scrollY="340px",
+    scrollCollapse=True,
+    column_filters="header",
+    columnDefs=[{"className": "dt-head-center", "targets": "_all"}],
+)
+```
+
+```{python}
+#| echo: false
+#| label: fig-forest
+#| fig-cap: "每条结果的 rank-IC 差分与 95% CI，按证据等级着色。 / Rank-IC differential with 95% CI per result, colored by evidence grade."
+ev_ci = ev.dropna(subset=["ci_lo", "ci_hi", "estimate"]).copy()
+ev_ci["label"] = "#" + ev_ci["n"].astype(str) + " " + ev_ci["result"]
+fig = go.Figure()
+for grade, color in [("CV-proxy", "#94a3b8"), ("chron./explor.", "#2563eb"),
+                     ("CONFIRMATORY", "#dc2626")]:
+    g = ev_ci[ev_ci["grade"] == grade]
+    for _, r in g.iterrows():
+        fig.add_trace(go.Scatter(
+            x=[r["ci_lo"], r["estimate"], r["ci_hi"]], y=[r["label"]] * 3,
+            mode="lines+markers", line={"color": color, "width": 2},
+            marker={"size": [5, 11, 5], "symbol": "diamond"},
+            name=grade, legendgroup=grade, showlegend=False,
+            hovertemplate=f"{r['result']}<br>est={r['estimate']:+.4f} "
+                          f"CI=[{r['ci_lo']:+.4f}, {r['ci_hi']:+.4f}]<extra></extra>",
+        ))
+fig.add_vline(x=0, line={"color": "#dc2626", "dash": "dash", "width": 1})
+for grade, color in [("CV-proxy", "#94a3b8"), ("chron./explor.", "#2563eb"),
+                     ("CONFIRMATORY", "#dc2626")]:
+    fig.add_trace(go.Scatter(x=[None], y=[None], mode="markers",
+                             marker={"color": color, "size": 10}, name=grade))
+fig.update_layout(
+    template="plotly_white", height=520,
+    xaxis={"title": "rank-IC differential (95% CI)", "zeroline": False},
+    font={"family": "system-ui, sans-serif"},
+    margin={"l": 8, "r": 8, "t": 8, "b": 8},
+)
+fig.show()
+```
+
+## 双区域 IC 时序 · Dual-region IC time series
+
+```{python}
+#| echo: false
+#| label: fig-ic-series
+#| fig-cap: "Confirmatory 月频 rank-IC（US / CN / combined），71 个月，均在零附近震荡。 / Per-month confirmatory rank-IC (US / CN / combined), 71 months; all oscillate around zero."
+df_m = pd.DataFrame(icm)
+fig = go.Figure()
+for col, color, name in [("combined", "#0b3d61", "Combined"),
+                         ("us", "#2563eb", "US"), ("cn", "#dc2626", "CN")]:
+    fig.add_trace(go.Scatter(
+        x=df_m["month"], y=df_m[col], mode="lines+markers",
+        name=name, line={"color": color, "width": 1.5}, marker={"size": 4},
+        hovertemplate=f"{name}<br>%{{x}}: %{{y:+.4f}}<extra></extra>",
+    ))
+fig.add_hline(y=0, line={"color": "#94a3b8", "dash": "dash"})
+fig.update_layout(
+    template="plotly_white", height=380,
+    xaxis={"title": "month", "dtick": "M6"},
+    yaxis={"title": "monthly rank-IC"},
+    legend={"orientation": "h", "y": -0.25},
+    font={"family": "system-ui, sans-serif"},
+    margin={"l": 8, "r": 8, "t": 8, "b": 8},
+)
+fig.show()
+```
+
+## 经济透镜 · Economic lens
+
+```{python}
+#| echo: false
+#| label: fig-bps
+#| fig-cap: "不同滑点假设下的净/毛 per-period Sharpe。盈亏平衡 ≈ 31 bps。 / Net vs gross per-period Sharpe across slippage assumptions. Break-even ≈ 31 bps."
+df_bps = pd.DataFrame(bps)
+fig = px.line(df_bps, x="bps", y=["gross_sharpe", "net_sharpe"], markers=True,
+              labels={"value": "per-period Sharpe",
+                      "bps": "slippage (bps per $ traded)", "variable": ""},
+              color_discrete_map={"gross_sharpe": "#059669", "net_sharpe": "#d97706"})
+fig.add_hline(y=0, line={"color": "#dc2626", "dash": "dash"})
+break_even = (round(float(df_bps.loc[df_bps["net_sharpe"].le(0), "bps"].iloc[0]), 1)
+              if (df_bps["net_sharpe"] <= 0).any() else None)
+fig.update_layout(template="plotly_white", height=360,
+                  title=f"break-even ≈ {break_even} bps" if break_even else "",
+                  legend={"orientation": "h", "y": -0.25},
+                  font={"family": "system-ui, sans-serif"},
+                  margin={"l": 8, "r": 8, "t": 40, "b": 8})
+fig.show()
+```

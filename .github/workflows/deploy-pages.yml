@@ -30,16 +30,20 @@ jobs:
           enable-cache: true
 
       - name: Install dependencies
-        run: uv sync --extra dashboard
+        run: uv sync --extra dashboard --extra quarto
 
-      - name: Build static site
-        run: |
-          uv run python scripts/build_static_site.py
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Render Quarto site
+        env:
+          QUARTO_PYTHON: ${{ github.workspace }}/.venv/bin/python3
+        run: quarto render quarto-site
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./site
+          path: ./quarto-site/_site
 
   deploy:
     environment:

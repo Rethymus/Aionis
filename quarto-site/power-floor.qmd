@@ -1,0 +1,163 @@
+---
+title: "Power Floor · 功率地板"
+subtitle: "为何 ±0.010 等价检验在月频 rank-IC 上结构性不可行 · Why ±0.010 equivalence testing is structurally infeasible on monthly rank-IC"
+format:
+  html:
+    toc: true
+---
+
+```{python}
+#| echo: false
+import json
+from pathlib import Path
+
+import pandas as pd
+import plotly.graph_objects as go
+from itables import show as itables_show
+
+DATA = Path("data")
+sigma = json.loads((DATA / "sigma_survey.json").read_text())
+pf = json.loads((DATA / "power_floor.json").read_text())
+df = pd.DataFrame(sigma["rows"])
+```
+
+::: panel-tabset
+## 中文
+
+### 不可行性结论
+
+在 SESOI $\pm 0.010$ 下通过 Jennison–Turnbull 群序贯门宣告等价，需要各眼的重复 CI 落入 $[-0.010, +0.010]$。在文献记录的月频 rank-IC 噪声地板（$\sigma \approx 0.10$）下，**宣告等价**所需最小样本量为：
+
+::: columns
+::: {.column width="33%"}
+::: {.callout-important title="Look 1（计划 n=60）"}
+**72.5 年**
+
+$z_1 = 2.772$ · RCI 99.44%
+:::
+:::
+
+::: {.column width="33%"}
+::: {.callout-warning title="Look 2（计划 n=90）"}
+**48.3 年**
+
+$z_2 = 2.263$ · RCI 97.64%
+:::
+:::
+
+::: {.column width="34%"}
+::: {.callout-tip title="Look 3（计划 n=120）"}
+**36.2 年**
+
+$z_3 = 1.960$ · RCI 95.00%
+:::
+:::
+:::
+
+2000 次 block bootstrap 给出三眼 $P(\text{等价}) = 0.0000$。
+
+### 观测 $\sigma$ vs 纯噪声界
+
+零预测力假设下 Spearman rank-IC 的闭式标准差为 $\sigma_{\text{null}} = 1/\sqrt{N_{\text{cross}}-1}$，对我们的横截面给出 $\sigma_{\text{null}} \in [0.027, 0.047]$。然而跨 **21 个 IC 系列**的观测 $\sigma(\text{IC})$ 一致地是该界的 **2.0–4.4 倍**（中位 **3.4 倍**）。
+
+::: {.callout-important title="地板来自 ML 噪声超额，非纯数学"}
+在纯噪声界 $\sigma = 0.047$ 下，look-3 本可勉强达标（$n_{\min} \approx 83 < 120$ 月）。地板之所以绑定，是因为真实 ML rank-IC 带有相对闭式界 **2.0–4.4×**（中位 3.4×）的稳健噪声超额——源于模型拟合噪声、横截面异方差、与重叠前瞻收益。
+:::
+
+### 解读
+
+这把"$\sigma \approx 0.10$ 是地板"细化为机制性陈述：**功率地板 = 闭式抽样界与经验稳健 ML 噪声超额之间的差距。** 该超额可复现——任何研究者都能在自己的月频 rank-IC 系列上算 $\sigma(\text{IC})$ 并与 $1/\sqrt{N-1}$ 比较。
+
+## English
+
+### The infeasibility result
+
+Declaring equivalence at SESOI $\pm 0.010$ via a Jennison–Turnbull group-sequential gate requires the look-specific repeated CI to fit inside $[-0.010, +0.010]$. At the documented monthly rank-IC noise floor ($\sigma \approx 0.10$), the minimum sample sizes needed to *declare equivalence* are:
+
+::: columns
+::: {.column width="33%"}
+::: {.callout-important title="Look 1 (planned n=60)"}
+**72.5 years**
+
+$z_1 = 2.772$ · RCI 99.44%
+:::
+:::
+
+::: {.column width="33%"}
+::: {.callout-warning title="Look 2 (planned n=90)"}
+**48.3 years**
+
+$z_2 = 2.263$ · RCI 97.64%
+:::
+:::
+
+::: {.column width="34%"}
+::: {.callout-tip title="Look 3 (planned n=120)"}
+**36.2 years**
+
+$z_3 = 1.960$ · RCI 95.00%
+:::
+:::
+:::
+
+A 2,000-replication block bootstrap gives $P(\text{equivalence}) = 0.0000$ at all three planned looks.
+
+### Observed $\sigma$ vs the pure-noise bound
+
+The closed-form std of a Spearman rank-IC under the null of no predictability is $\sigma_{\text{null}} = 1/\sqrt{N_{\text{cross}}-1}$, giving $\sigma_{\text{null}} \in [0.027, 0.047]$ for our cross-sections. Yet observed $\sigma(\text{IC})$ across **21 IC series** is consistently **2.0–4.4×** this bound (median **3.4×**).
+
+::: {.callout-important title="The floor is the ML noise excess, not pure math"}
+At the pure-noise bound $\sigma = 0.047$, look-3 would be marginally powered ($n_{\min} \approx 83 < 120$ months). The floor binds because real ML-based rank-IC carries a robust noise excess of **2.0–4.4×** (median 3.4×) over the closed-form bound — reflecting model fitting noise, cross-sectional heteroskedasticity, and overlapping forward returns.
+:::
+
+### Interpretation
+
+This refines the claim from "$\sigma \approx 0.10$ is a floor" to a mechanistic statement: **the power floor is the gap between the closed-form sampling bound and the empirically robust ML noise excess.** The excess is replicable — any researcher can compute $\sigma(\text{IC})$ on their own monthly rank-IC series and compare to $1/\sqrt{N-1}$.
+:::
+
+## 各眼最小样本 · Minimum-n per look
+
+```{python}
+#| echo: false
+# Interactive look table — searchable / sortable (itables, MIT).
+looks = pd.DataFrame(pf["looks"])
+itables_show(
+    looks[["look", "n", "z", "rci_level_pct", "n_min_months", "n_min_years"]].rename(
+        columns={"look": "Look", "n": "planned n", "z": "z_k",
+                 "rci_level_pct": "RCI %", "n_min_months": "n_min (months)",
+                 "n_min_years": "n_min (years)"}),
+    classes="display nowrap",
+    scrollY="220px",
+    scrollCollapse=True,
+    columnDefs=[{"className": "dt-head-center", "targets": "_all"}],
+)
+```
+
+## 观测 $\sigma$ vs 纯噪声界 · Observed σ vs pure-noise bound
+
+```{python}
+#| echo: false
+#| label: fig-sigma-excess
+#| fig-cap: "观测 σ(IC) vs 纯噪声界 1/√(N−1)，所有系列均明显高于 y=x 对角线。 / Observed σ(IC) vs the pure-noise bound 1/√(N−1); every series sits well above the y=x diagonal."
+df["series"] = df["source"] + " / " + df["arm"]
+fig = go.Figure()
+fig.add_trace(go.Scatter(
+    x=df["sigma_pure_noise"], y=df["sigma_observed"], mode="markers",
+    text=df["series"],
+    marker={"color": df["excess_ratio"], "colorscale": "YlOrRd", "size": 11,
+            "colorbar": {"title": "excess ×"}, "line": {"color": "#1e293b", "width": 0.5}},
+    name="IC series",
+    hovertemplate="%{text}<br>σ_null=%{x:.4f}  σ_obs=%{y:.4f}<extra></extra>",
+))
+lims = [0, df["sigma_observed"].max() * 1.05]
+fig.add_trace(go.Scatter(x=lims, y=lims, mode="lines",
+                         line={"color": "#dc2626", "dash": "dash"}, name="σ_obs = σ_null"))
+fig.update_layout(
+    template="plotly_white", height=460,
+    xaxis={"title": "σ_null = 1/√(N−1) (pure-noise bound)"},
+    yaxis={"title": "σ(IC) observed", "scaleanchor": "x", "scaleratio": 1},
+    font={"family": "system-ui, sans-serif"},
+    margin={"l": 8, "r": 8, "t": 8, "b": 8},
+)
+fig.show()
+```

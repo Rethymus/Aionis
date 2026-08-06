@@ -1,5 +1,51 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-08-06 (a) 研究站点前端改造 — Quarto 品牌化 + 交互表 + 复用轮子（本地验证完成，待业主授权提交/部署）
+
+业主反馈：线上静态站（`site/index.html`，`scripts/build_static_site.py` 474 行手搓 HTML）"观感廉价、没复用
+开源、别造轮子"。**诊断**：旧站生成层纯手搓（Tailwind/plotly 是轮子但拼装手搓）；本地在途 `quarto-site/`
+（未提交）方向对（Quarto=Posit 学术发布轮子）但停在"默认 cosmo 模板"——没用 brand/value-box/itables，
+CI 未切换，本地无 quarto。
+
+**调研（现成轮子，全部直接复用，0 手搓）**：`_brand.yml`（[Posit brand-yml](https://posit-dev.github.io/brand-yml/)
++ [Quarto brand 文档](https://quarto.org/docs/authoring/brand.html)）；**itables** MIT（[Quarto 官方推荐交互表](http://itables.org/quarto.html)）；
+Quarto dashboards/callouts/columns（v1.4+ 内置）；[Awesome Quarto](https://github.com/mcanouil/awesome-quarto) 范例。
+
+**执行**：
+- 本地装 **Quarto 1.10.18**（预编译单二进制 → `~/.local/bin/quarto`，不污染系统；CI 用 `quarto-dev/quarto-actions/setup@v2`）。
+- `pyproject` quarto extra += `itables>=2.2` + `plotly>=5.18`；`uv lock` → itables v2.9.1（MIT，permissive-only 合规）。
+- 新建 `quarto-site/_brand.yml`：语义色板（灰=CV-proxy / 蓝=chron / 红=confirmatory / 琥珀=power-floor / navy=primary）
+  + 衬线标题 + 无衬线正文（**系统字体栈，无 webfont CDN，离线可复现**）。callout-important/warning/tip 直接对上 brand danger/warning/success。
+- 升级 `_quarto.yml`：brand + search(overlay) + navbar(primary+icon) + docked sidebar + page-footer + open-graph/twitter-card
+  + bread-crumbs + back-to-top + reader-mode + code-link。
+- `scripts/export_quarto_data.py` += `export_ic_monthly()`（71 月 confirmatory IC 时序 2021-01..2026-06，tracked `data/ic_monthly.json`）。
+- 重写 3 `.qmd`（英文默认）：`index`=callout KPI 三联（−0.0088 / NOT_EQUIVALENT / PASS）+ verdict + contribution；
+  `results`=**itables 交互 evidence 表**（搜索/排序/分页）+ forest plot + 71 月 IC 时序 + bps 衰减曲线（plotly 品牌配色 + plotly_white）；
+  `power-floor`=callout KPI（72.5/48.3/36.2 年）+ itables look 表 + σ_obs-vs-σ_null 散点。修正旧 `::: callout note` → 标准 `::: {.callout-note}`（fenced-div warning 清零）。
+- 新 `tests/test_quarto_site_data.py`：11 契约测试（tracked `data/*.json`，hermetic，不依赖 runs/）——evidence 14 行 +
+  confirmatory estimate −0.0088 + 所有 CI 跨零 + power-floor 3 looks/纯噪声界 + sigma excess≥2.0 + bps net 单调/gross 恒等 +
+  ic_monthly 71 月/combined mean≈−0.0088。**11/11 绿**。
+
+**验证**：本地 `quarto render` 三页全过（4 plotly 图执行 + itables JS 注入 + **0 warning**）；三页截图存（new-overview/
+new-evidence/new-power-floor）；`ruff` clean；`pytest --collect-only` 无 error；代表性 `test_rank_ic` 绿。
+（运维注：`uv sync --extra quarto` 会把 venv 同步成"仅该 extra"子集态 → 临时 `No module named pandas`；re-sync 全 extras 即修复。
+CI workflow 用 `--extra dashboard --extra quarto` 不受影响。）
+
+**发现的既有不一致（flag，未擅自改）**：`evidence.json` 实 **14 行**（`#12` 缺失），与项目"15 条 null"叙事 + manuscript
+draft 表行数冲突。站点统一改为"14 configurations"（诚实）。若要 15，需业主确认 `#12` 对应哪条结果（疑似 Track C CN rank-IC
+mean 0.0098 / p 0.46）后补。
+
+**复用轮子账（回应业主诉求）**：Quarto（Posit 学术发布）+ brand-yml（Posit 规范）+ itables（MIT 交互表）+ plotly（交互图）
++ Bootstrap/cosmo（布局）+ callout/columns/tabset（Quarto 内置）= **0 行手搓 HTML/CSS 生成代码**；旧 `build_static_site.py`（474 行手搓）+ `site/` 待新站上线后归档。
+
+**边界**：本轮 `quarto-site/`（新+改）+ `scripts/export_quarto_data.py` + `tests/test_quarto_site_data.py` + `pyproject.toml`
++ `uv.lock` + `.github/workflows/deploy-pages.yml`（前批已改）+ state；**0 ledger / frozen surface / prereg / ADR / config /
+runs-data / E3 改动**；未跑 confirmatory/forward/strategy；未触 E3；**未 commit / 未 push / 未外发**（Pages 部署待业主点头）。
+
+**待业主**：① **语言**（默认英文，匹配 manuscript/arXiv 英文化；若要中文/双语告知）② **授权 commit + push → CI 部署 Pages**
+（外发，CI `quarto render quarto-site` → 公开站取代旧 `site/`）③ evidence `#12` 是否补（14 vs 15）④ 旧 `site/` +
+`build_static_site.py` 何时归档。
+
 ## 2026-08-05 (i) power-floor 理论推导 — 纯噪声界 + ML 噪声超额（机制性定理）
 
 业主第三次问"最具价值方向" + Stop hook 纠偏（自审通过即执行，勿再请示）。批判性过滤后选 power-floor

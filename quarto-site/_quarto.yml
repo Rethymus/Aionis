@@ -1,0 +1,92 @@
+project:
+  type: website
+  output-dir: _site
+  lib-dir: site-lib
+  preview:
+    port: 5678
+
+website:
+  title: "Aionis"
+  site-url: "https://rethymus.github.io/Aionis/"
+  description: >-
+    A falsifiable, anti-leakage quant-finance research harness. Null results are
+    the intended, publishable outcome.
+  repo-url: https://github.com/Rethymus/Aionis
+  repo-subdir: quarto-site
+  repo-actions: [source, issue]
+
+  navbar:
+    background: primary
+    foreground: light
+    pinned: true
+    left:
+      - href: index.qmd
+        text: Overview
+        icon: house-door
+      - href: results.qmd
+        text: Evidence
+        icon: table
+      - href: power-floor.qmd
+        text: Power Floor
+        icon: graph-up-arrow
+    tools:
+      - icon: file-text
+        text: Methods & results draft
+        href: https://github.com/Rethymus/Aionis/blob/main/docs/methods-and-results-draft.md
+      - icon: github
+        text: Source repository
+        href: https://github.com/Rethymus/Aionis
+
+  sidebar:
+    style: docked
+    collapse-level: 2
+    contents:
+      - section: "Results"
+        contents:
+          - results.qmd
+          - power-floor.qmd
+
+  page-footer:
+    left: "Aionis · anti-leakage research harness"
+    center: "Exploratory + first confirmatory · non-investment advice · null is the intended outcome"
+    right:
+      - text: "GitHub"
+        href: https://github.com/Rethymus/Aionis
+      - icon: github
+        href: https://github.com/Rethymus/Aionis
+    border: false
+
+  search:
+    location: navbar
+    type: overlay
+  page-navigation: true
+  bread-crumbs: true
+  back-to-top-navigation: true
+  open-graph: true
+  twitter-card: true
+  reader-mode: true
+
+format:
+  html:
+    brand: _brand.yml
+    theme: cosmo
+    toc: true
+    toc-location: right
+    toc-title: "On this page"
+    toc-depth: 3
+    anchor-sections: true
+    smooth-scroll: true
+    code-fold: false
+    code-link: true
+    code-copy: hover
+    highlight-style: github
+    mainfont: sans-serif
+    grid:
+      body-width: 1000px
+      margin-width: 250px
+      gutter-width: 1.5rem
+
+# Cache executed cells (freeze) so CI re-renders only when cells change.
+execute:
+  freeze: auto
+  warning: false

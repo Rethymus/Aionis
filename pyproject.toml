@@ -47,6 +47,19 @@ dashboard = [
     # Matplotlib for static figure export from OSS libraries
     "matplotlib>=3.7",
 ]
+# Quarto research-site rendering (python-cell execution via Jupyter).
+quarto = [
+    "ipykernel>=6.0",
+    "nbclient>=0.10",
+    "jupyter-client>=8.0",
+    "pyyaml>=6.0",
+    # Interactive (searchable/sortable/paginated) DataFrame tables in Quarto.
+    # MIT: https://mwouts.github.io/itables/ — Quarto-official recommendation.
+    "itables>=2.2",
+    # Plotly interactive charts (kept here so the quarto extra is self-contained
+    # for CI render, independent of the dashboard extra).
+    "plotly>=5.18",
+]
 
 [project.scripts]
 aionis = "aionis.cli:main"
