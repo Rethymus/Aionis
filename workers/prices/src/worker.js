@@ -65,9 +65,16 @@ async function usPrices(url, env, ctx) {
     const data = await resp.json();
     const out = {};
     for (const item of data) {
+      const last = item.last ?? item.tngoLast ?? null;
+      const open = item.open ?? null;
+      // Tiingo free tier doesn't include `chp` (change %); calculate from
+      // last vs open (intraday change). If open unavailable, leave null.
+      const calcChange = last != null && open != null && open > 0
+        ? ((last - open) / open) * 100
+        : item.chp ?? null;
       out[item.ticker] = {
-        price: item.last ?? item.tngoLast ?? null,
-        change_pct: item.chp ?? null,
+        price: last,
+        change_pct: calcChange,
         as_of: new Date().toISOString(),
       };
     }
@@ -81,50 +88,62 @@ async function usPrices(url, env, ctx) {
 // ─── A-share prices via 东方财富 push2 ─────────────────────────
 
 async function cnPrices(url, env, ctx) {
-  const tickers = url.searchParams.get("tickers") || ""; // sh.688041,sz.300223
-  if (!tickers) return json({ error: "missing tickers param" }, 400);
+  const tickersParam = url.searchParams.get("tickers") || ""; // sh.688041,sz.300223
+  if (!tickersParam) return json({ error: "missing tickers param" }, 400);
 
   const cache = caches.default;
-  const cacheKey = new Request(`https://cache.local/cn/${tickers}`, { method: "GET" });
+  const cacheKey = new Request(`https://cache.local/cn/${tickersParam}`, { method: "GET" });
   const hit = await cache.match(cacheKey);
   if (hit) return hit;
 
   // Convert baostock format (sh.688041) → East Money secid (1.688041).
-  // Market codes: sh=1 (Shanghai), sz=0 (Shenzhen), bj=0 (Beijing).
-  const secids = tickers
-    .split(",")
-    .map((t) => {
-      const [prefix, code] = t.split(".");
-      const market = prefix === "sh" ? 1 : 0;
-      return `${market}.${code}`;
-    })
-    .join(",");
+  const parsed = tickersParam.split(",").map((t) => {
+    const [prefix, code] = t.split(".");
+    const market = prefix === "sh" ? 1 : prefix === "bj" ? 0 : 0;
+    return { ticker: t, secid: `${market}.${code}`, code };
+  });
 
-  try {
-    const resp = await fetch(
-      `https://push2.eastmoney.com/api/qt/ulist.np/get?fields=f2,f3,f12,f14&secids=${secids}`,
-      { headers: { Referer: "https://quote.eastmoney.com" } },
-    );
-    if (!resp.ok) return json({ error: `eastmoney:${resp.status}` }, 502);
-    const raw = await resp.json();
-    const out = {};
-    for (const item of raw?.data?.diff ?? []) {
-      // f2 = current price (元, not 分 — ulist.np returns actual price), f3 = change %,
-      // f12 = code, f14 = Chinese name
-      const code = String(item.f12);
-      const prefix = code.startsWith("6") ? "sh" : code.startsWith("4") || code.startsWith("8") ? "bj" : "sz";
-      out[`${prefix}.${code}`] = {
-        price: item.f2 ?? null,
-        change_pct: item.f3 ?? null,
-        name: item.f14 ?? "",
+  // Fetch each ticker via stock/get (more reliable than ulist.np from edge).
+  const results = await Promise.all(
+    parsed.map(async ({ ticker, secid, code }) => {
+      try {
+        const resp = await fetch(
+          `https://push2.eastmoney.com/api/qt/stock/get?secid=${secid}&fields=f43,f57,f58,f169,f170&fltt=2&_=${Date.now()}`,
+          { headers: { Referer: "https://quote.eastmoney.com" } },
+        );
+        if (!resp.ok) return { ticker, error: resp.status };
+        const raw = await resp.json();
+        const d = raw?.data;
+        if (!d) return { ticker, error: "no data" };
+        // With fltt=2: f43=price (actual), f170=change%, f58=name
+        const baostockPrefix = String(d.f57 || code).startsWith("6") ? "sh"
+          : String(d.f57 || code).startsWith("4") || String(d.f57 || code).startsWith("8") ? "bj" : "sz";
+        return {
+          ticker: `${baostockPrefix}.${d.f57 || code}`,
+          price: d.f43 ?? null,
+          change_pct: d.f170 ?? null,
+          name: d.f58 ?? "",
+        };
+      } catch (e) {
+        return { ticker, error: String(e) };
+      }
+    }),
+  );
+
+  const out = {};
+  for (const r of results) {
+    if (r.error === undefined) {
+      out[r.ticker] = {
+        price: r.price,
+        change_pct: r.change_pct,
+        name: r.name,
         as_of: new Date().toISOString(),
       };
     }
-    const ttl = isCnMarketOpen() ? 30 : 86400;
-    return cached(json(out), cacheKey, cache, ctx, ttl);
-  } catch (e) {
-    return json({ error: String(e) }, 502);
   }
+  const nOk = Object.keys(out).length;
+  const ttl = isCnMarketOpen() ? 30 : 86400;
+  return cached(json({ ...out, _meta: { ok: nOk, total: parsed.length } }), cacheKey, cache, ctx, ttl);
 }
 
 // ─── Health check ──────────────────────────────────────────────
@@ -141,7 +160,7 @@ async function health(env, ctx) {
   }
   try {
     const r = await fetch(
-      "https://push2.eastmoney.com/api/qt/ulist.np/get?fields=f2,f12&secids=1.600000",
+      "https://push2.eastmoney.com/api/qt/stock/get?secid=1.600000&fields=f43,f57&fltt=2",
       { headers: { Referer: "https://quote.eastmoney.com" } },
     );
     out.cn = r.ok ? "ok" : `error:${r.status}`;
