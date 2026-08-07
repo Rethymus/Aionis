@@ -1,5 +1,39 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-08-08 (a) 历史数据推进至 2016 — COT 全量 + Form4 深化（display 层）
+
+业主要求"推进所有历史数据年份至 2016 + 低消耗模型带 agent 执行以省 token"。**范围 = fintech 终端 display 层**（研究管线冻结，climax #49 null 不动）。
+
+**2016 覆盖核账**：
+| 数据集 | 2016 覆盖 | 动作 |
+|---|---|---|
+| market_context (VIX+EW 指数) | ✅ 2016-01..2026-07 (127mo) | 既有 |
+| picks_backtest (track record) | ✅ 131mo | 既有 |
+| smart_money (13D) | ✅ raw 2015+，2622 条≥2016 | 既有（latest 2024-12，cached pulls）|
+| **COT (positioning)** | ✅ **2016-01..2026-08**（9/10 市场连续；Russell 2017-08+）| **本轮扩展** |
+| **Form4 (insiders)** | ⏳ 机制就绪，后台深化中 | **本轮扩展** |
+| ic_monthly / pick_conviction | ❄️ 2021+ 冻结 OOS | **不动**（反泄漏；延展 = rerun-to-significance 禁）|
+
+**COT 扩展（CFTC 公共域，weekly 不修订，filed Fri）** — `scripts/cot_fetch.py`：
+- `YEARS (2024,25,26)` → `range(2016,2027)`（全 Trump 元年）。
+- **variant-union**：CFTC ~2022 重命名 S&P/Russell/Copper 合约（`E-MINI S&P 500 STOCK INDEX`→`E-MINI S&P 500` 等），单名 exact-match 改多变体 union + 按 (date,market) 去重 → 恢复 3 市场全 2016。
+- **单调 merge**：cftc.gov 边缘网络间歇 ConnectTimeout（2018/2019/2023 跨多次 run timeout），新 run 与既有 parquet union、重叠 keep existing → 数据只增不减（实测 v4 补回 2023 gap）。
+- 结果：10 市场 / 5446 行；9 市场 553 wks 连续 2016-01-05..2026-08-04；Russell 2000 2017-08+（其 e-mini 当年精确名 2016 缺，市场特异小 gap）。
+- `export_cot`：`comp.tail(78)` → 全量 `comp`（完整 2016→today arc）+ methodology 标注 2016。
+
+**Form4 扩展（SEC EDGAR 公共域，filed-date PIT）** — `scripts/form4_fetch.py` + `export_form4`：
+- `START "2024-01-01"` → `"2016-01-01"`；**merge-by-issuer checkpoint**（每 issuer 完成即写 + 保留未重跑 issuer；5 大盘 × 2016→today = 数千次礼貌 XML 拉 ~小时级，merge 保证 live 广度不退化；XML cache 幂等，重跑即续）。
+- `export_form4`：动态 window（df min/max 交易月）+ 新 `yearly` 聚合（逐年 buy/sell）+ methodology 标注 2016。
+- 数据：当前 2023-07..2026-06（5 issuer / 2415 txns / yearly [2023,24,25,26]）；后台 fetch 深化至 2016（AAPL 处理中 ~440 filings），完成后 cron re-export 自动反映。
+
+**模型分层 + 省 token（业主诉求）**：opus 编排（调研/计划/反泄漏核账/fetcher 精确编辑/独立验证）+ **sonnet agent 执行 export 显示逻辑 + 测试**（精确 spec，1 轮交付，orchestrator 独立核验 diff + ruff + pytest）+ 后台 bash fetch（网络 bound，0 model token）。
+
+**验证**：ruff 全 repo clean；affected tests 37 绿（web terminal + form4）；COT/Form4 JSON 实测 2016+（COT composite_series 534 wks 自 2016-05，z-score 52w 预热）；全套 hermetic pytest 提交前确认绿。
+
+**边界**：本轮 `scripts/cot_fetch.py` + `scripts/form4_fetch.py` + `scripts/export_terminal_data.py` + `tests/test_web_terminal_data.py` + `web/src/data/aionis/*.json`（regenerated）+ state；**0 ledger / frozen / prereg / ADR / config / E3 / runs-data 改动**；未跑 research/forward/strategy；未触 ic_monthly/pick_conviction（冻结 OOS）；display 层不进研究管线（CLAUDE.md display-only 契约）。
+
+**待业主**：① 审线上 `/positioning`（2016→today arc）② Form4 后台 fetch 完成后（~小时）`/insiders` 显示 2016→today 逐年 ③ Russell 2000 2016 gap（需查 CFTC 当年第三变体名）④ smart_money latest 2024-12 是否重刷 EFTS（独立切片）。
+
 ## 2026-08-07 (a) 路径 A 上线 — 校准概率读数 + 板块聚合 + 公司名 + 诚实 null 免责
 
 业主反馈"量化选股策略但没体现选股、ticker 没有公司名、要涨跌概率、要实时数据"。批判性自审后业主授权**路径 A**（保守：校准概率 + 板块 + 公司名 + 条件式读数 + 反泄漏护栏，非 trading bot）。`bb83117` 已 push origin/main。

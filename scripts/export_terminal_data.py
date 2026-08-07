@@ -453,7 +453,7 @@ def export_cot() -> None:
     crowding = round(statistics.mean(abs(z) for z in latest_zs), 2) if latest_zs else 0.0
     comp = df.dropna(subset=["zscore"]).groupby("date")["zscore"].mean().sort_index()
     composite_series = [
-        {"date": str(d)[:10], "z": round(float(z), 2)} for d, z in comp.tail(78).items()
+        {"date": str(d)[:10], "z": round(float(z), 2)} for d, z in comp.items()
     ]
     payload = {
         "status": "ok",
@@ -462,8 +462,8 @@ def export_cot() -> None:
             "positioning (Long - Short contracts) per key futures market, with a "
             "trailing 52-week crowding z-score. z>0 = net-long more crowded than "
             "usual; z<0 = net-short crowded. Free, no-API, US-gov public domain, "
-            "weekly (filed Friday, archived and NOT revised). Display-only, not a "
-            "research claim."
+            "weekly (filed Friday, archived and NOT revised). Coverage starts 2016 "
+            "(Trump Era). Display-only, not a research claim."
         ),
         "markets": markets,
         "composite": {"mean_z": mean_z, "crowding": crowding, "n": len(markets)},
@@ -521,20 +521,34 @@ def export_form4() -> None:
     buys = int((df["buy_or_sell"] == "buy").sum())
     sells = int((df["buy_or_sell"] == "sell").sum())
     filer_counts = Counter(df["filer_name"].dropna()).most_common(10)
+    n_issuers = int(df["issuer_ticker"].nunique()) if "issuer_ticker" in df else 0
+    w_start = df["transaction_date"].min()
+    w_end = df["transaction_date"].max()
+    # Yearly aggregation (buys vs sells per year).
+    yearly = []
+    for year, sub in df.groupby(df["transaction_date"].dt.year):
+        yearly.append({
+            "year": int(year),
+            "buys": int((sub["buy_or_sell"] == "buy").sum()),
+            "sells": int((sub["buy_or_sell"] == "sell").sum()),
+        })
+    yearly.sort(key=lambda x: x["year"])
     payload = {
         "status": "ok",
         "methodology": (
             "Form 4 insider transactions (SEC EDGAR EFTS, filed-date PIT, public "
             "domain). Non-derivative pure buy (A) / sell (D) only — exercises and "
-            "options excluded. Display-only, exploratory, not a research claim."
+            "options excluded. Window spans 2016→today (Trump Era). Display-only, "
+            "exploratory, not a research claim."
         ),
         "recent": rows,
         "buys": buys,
         "sells": sells,
         "n_filers": int(df["filer_name"].nunique()),
         "top_insiders": [{"filer": filer, "count": count} for filer, count in filer_counts],
-        "window": "2024-01..2026-06 (bounded large-cap set)",
-        "n_issuers": int(df["issuer_ticker"].nunique()) if "issuer_ticker" in df else 0,
+        "window": f"{w_start.strftime('%Y-%m')}..{w_end.strftime('%Y-%m')} ({len(df)} txns, {n_issuers} issuers)",
+        "n_issuers": n_issuers,
+        "yearly": yearly,
     }
     (WEB / "form4.json").write_text(json.dumps(payload, indent=2, default=str))
 

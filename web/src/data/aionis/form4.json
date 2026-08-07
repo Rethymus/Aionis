@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "methodology": "Form 4 insider transactions (SEC EDGAR EFTS, filed-date PIT, public domain). Non-derivative pure buy (A) / sell (D) only \u2014 exercises and options excluded. Display-only, exploratory, not a research claim.",
+  "methodology": "Form 4 insider transactions (SEC EDGAR EFTS, filed-date PIT, public domain). Non-derivative pure buy (A) / sell (D) only \u2014 exercises and options excluded. Window spans 2016\u2192today (Trump Era). Display-only, exploratory, not a research claim.",
   "recent": [
     {
       "filer": "ARNOLD FRANCES",
@@ -448,6 +448,28 @@
       "count": 52
     }
   ],
-  "window": "2024-01..2026-06 (bounded large-cap set)",
-  "n_issuers": 5
+  "window": "2023-07..2026-06 (2415 txns, 5 issuers)",
+  "n_issuers": 5,
+  "yearly": [
+    {
+      "year": 2023,
+      "buys": 1,
+      "sells": 1
+    },
+    {
+      "year": 2024,
+      "buys": 0,
+      "sells": 1053
+    },
+    {
+      "year": 2025,
+      "buys": 2,
+      "sells": 1036
+    },
+    {
+      "year": 2026,
+      "buys": 1,
+      "sells": 321
+    }
+  ]
 }

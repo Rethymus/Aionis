@@ -1,5 +1,6 @@
 # state/current.md — read first each session
 
+- **active (2026-08-08):** 终端历史数据推进至 2016 — COT 全量（10 市场，2016-01..2026-08 连续；CFTC ~2022 重名 variant-union + 单调 merge 抗 cftc 超时；`comp.tail(78)`→全量 series）+ Form4 深化（fetcher `START`→2016 + merge-by-issuer checkpoint + export `yearly` 聚合；后台 fetch ~小时级深化至 2016，当前 2023-2026）。market_context/picks_backtrack/smart_money 既有 2016；ic_monthly/pick_conviction 冻结 OOS **不动**（反泄漏；延展 = rerun-to-significance）。display-only；0 frozen/ledger/E3。详见 `state/handoff.md` §2026-08-08(a)。
 - **active (2026-08-06):** fintech 数据终端**已上线** + special 另类数据持续扩展：TACO（真实 VIX）+ EDGAR 13D 聪明钱 + **选股确信度（Aionis 独有模型元信号，截面分散度）** + Reddit（待激活，政策阻塞）。
   11 页：Overview/选股决策/证据墙/选股确信度/**多空压力**/内部人/聪明钱/TACO/Reddit/Power Floor/反泄漏。**多空压力（CFTC COT，6 市场上线；10 市场代码就绪待 cftc 恢复）+ 内部人（5 issuer，2415 txns，Jensen Huang 720 卖主导）**。散户情绪结构性受阻（Reddit 审批 + Trends alpha）。详见 `state/handoff.md` § (b)..(j)。
   **待业主**：审 /conviction + Form 4 agent 回报后审 + 13D 刷新 + Quarto/旧站去留。

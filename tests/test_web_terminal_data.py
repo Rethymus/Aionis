@@ -54,6 +54,9 @@ def test_cot_composite_series_when_ok() -> None:
     for pt in series:
         assert {"date", "z"} <= set(pt)
         assert isinstance(pt["z"], int | float)
+    # Dates must be strictly ascending (time-series invariant).
+    dates = [pt["date"] for pt in series]
+    assert dates == sorted(dates), "composite_series dates must be ascending"
 
 
 # --- Form 4 insiders ----------------------------------------------------------
@@ -77,6 +80,28 @@ def test_form4_action_enum_when_ok() -> None:
     # buys/sells are full-window counters (recent is top-50); just sanity-check types.
     assert isinstance(f["buys"], int) and isinstance(f["sells"], int)
     assert f["buys"] >= 0 and f["sells"] >= 0
+
+
+def test_form4_yearly_breakdown_when_present() -> None:
+    """Validate the yearly buy/sell breakdown if present (guarded for stale JSON)."""
+    f = _load("form4.json")
+    if f["status"] != "ok":
+        return
+    if "yearly" not in f:
+        return  # Stale JSON before re-export
+    yearly = f["yearly"]
+    assert isinstance(yearly, list)
+    if len(yearly) > 0:
+        # Years must be ascending integers.
+        years = [entry["year"] for entry in yearly]
+        assert years == sorted(years), "yearly years must be ascending"
+        for entry in yearly:
+            assert {"year", "buys", "sells"} <= set(entry)
+            assert isinstance(entry["year"], int)
+            assert isinstance(entry["buys"], int) and entry["buys"] >= 0
+            assert isinstance(entry["sells"], int) and entry["sells"] >= 0
+    # Window must be a non-empty string (dynamic from data).
+    assert isinstance(f["window"], str) and len(f["window"]) > 0
 
 
 # --- Pick conviction ----------------------------------------------------------
@@ -177,7 +202,8 @@ def test_picks_backtest_shape() -> None:
     assert 0.0 <= s["hit_rate"] <= 1.0
     assert isinstance(s["avg_excess"], (int, float))
     for m in bt["months"]:
-        assert {"month", "region", "picks", "top_mean_return", "base_mean_return", "excess"} <= set(m)
+        expected = {"month", "region", "picks", "top_mean_return", "base_mean_return", "excess"}
+        assert expected <= set(m)
         assert m["region"] in {"us", "cn"}
         for p in m["picks"]:
             assert {"ticker", "name", "score", "realized_return", "hit"} <= set(p)
