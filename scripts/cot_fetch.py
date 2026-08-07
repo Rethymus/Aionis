@@ -28,12 +28,14 @@ from cot_reports import cot_year
 MARKETS: dict[str, str] = {
     "S&P 500": "E-MINI S&P 500 - CHICAGO MERCANTILE EXCHANGE",
     "Nasdaq 100": "NASDAQ-100 Consolidated - CHICAGO MERCANTILE EXCHANGE",
+    "Russell 2000": "RUSSELL E-MINI - CHICAGO MERCANTILE EXCHANGE",
     "VIX": "VIX FUTURES - CBOE FUTURES EXCHANGE",
     "WTI Crude": "CRUDE OIL, LIGHT SWEET-WTI - ICE FUTURES EUROPE",
     "Gold": "GOLD - COMMODITY EXCHANGE INC.",
-    "US Dollar": "U.S. DOLLAR INDEX - ICE FUTURES U.S.",
+    "Silver": "SILVER - COMMODITY EXCHANGE INC.",
     "Copper": "COPPER- #1 - COMMODITY EXCHANGE INC.",
-    "10Y Treasury": "10-YEAR U.S. TREASURY NOTES - CHICAGO BOARD OF TRADE",
+    "Euro FX": "EURO FX - CHICAGO MERCANTILE EXCHANGE",
+    "Japanese Yen": "JAPANESE YEN - CHICAGO MERCANTILE EXCHANGE",
 }
 YEARS: tuple[int, ...] = (2024, 2025, 2026)
 LONG_C = "Noncommercial Positions-Long (All)"
@@ -45,7 +47,17 @@ OUT = Path("data/cache/cot_aggregate.parquet")
 
 
 def main() -> None:
-    frames = [cot_year(y, cot_report_type="legacy_fut") for y in YEARS]
+    # Fetch per-year, resiliently: cftc.gov historical zips occasionally time out
+    # (transient). Skip a failed year and use what's available rather than aborting.
+    frames: list[pd.DataFrame] = []
+    for y in YEARS:
+        try:
+            frames.append(cot_year(y, cot_report_type="legacy_fut"))
+        except Exception as exc:  # noqa: BLE001 — a flaky source year must not abort the batch
+            print(f"[cot] year {y} fetch failed ({type(exc).__name__}), skipping", flush=True)
+    if not frames:
+        print("[cot] no years fetched; nothing written", flush=True)
+        return
     df = pd.concat(frames, ignore_index=True)
     df[DATE_C] = pd.to_datetime(df[DATE_C])
 
