@@ -1,5 +1,29 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-08-07 (a) 路径 A 上线 — 校准概率读数 + 板块聚合 + 公司名 + 诚实 null 免责
+
+业主反馈"量化选股策略但没体现选股、ticker 没有公司名、要涨跌概率、要实时数据"。批判性自审后业主授权**路径 A**（保守：校准概率 + 板块 + 公司名 + 条件式读数 + 反泄漏护栏，非 trading bot）。`bb83117` 已 push origin/main。
+
+**新增 3 模块（0 新 runtime deps）**：
+- `src/aionis/eval/score_calibration.py` — Platt（默认）/ isotonic 校准：score → P(forward_return>0)，per-region，fit on realized OOS history，latest month 预测 OOS。**反泄漏契约**：latest month 从 fit 排除（NaN fwd_return drop），walk_forward=False 披露。**诚实 null 信号**：实测 US spread=0.20（prob range [0.42, 0.61]），CN spread=**0.05**（[0.44, 0.49] 基本平坦 = 模型承认无法区分涨跌）。
+- `scripts/build_ticker_metadata.py` — cache ticker→(name, sector)：A 股 GitHub listing（5207 CN，`ZhuLinsen/daily_stock_analysis` 公开数据）+ SEC company_tickers.json（10398 US，公共域）+ EDGAR SIC map。25/25 picks 有公司名（海光信息/寒武纪/兆易创新/Coinbase 等）。
+- `tests/test_score_calibration.py` — 15 hermetic 测试（单调性、null→紧 range、强信号→宽 range、反泄漏 latest-excluded、per-region、JSON round-trip）。
+
+**enriched export（`export_terminal_data.py`）**：
+- `export_picks`：**per-region 选择**（US top-10 + CN top-10 long；3+2 short），enriched name+sector+prob_up。**修了一个 bug**：原 global-latest（2026-08-03 = CN）静默丢掉 US（latest 2026-06-30）→ per-region latest 修复。
+- `export_sector_breakdown`：板块聚合 mean score + mean P(up)，top/least favored。A 股 sector "Unclassified"（诚实标注非隐藏）。
+- `picks_meta.json`：校准 meta + 诚实 null 免责。
+
+**前端**：`picks-view.tsx` 重写（per-region 分组 + 双行渲染 name/ticker/sector + prob_up chip 按 base_rate 距离着色 + null 免责 banner）；新 `/sectors` 页（板块排行 + favor bar + 免责）；sidebar 加 Sectors；i18n zh+en。`pnpm build` exit 0。
+
+**验证**：6 新 web 契约测试（enriched schema + 双 region 覆盖 + 校准披露 + sector shape + unclassified 披露）；27/27 新测试绿；全套 pytest exit 0；ruff clean（顺带修了 cot_fetch/form4_fetch 2 个预存 lint）；build exit 0。
+
+**边界**：本轮 web/ + scripts/ + src/aionis/eval/ + tests/ + state；**0 ledger / frozen / prereg / ADR / config / E3**；无 real network/LLM/trial。校准是 display utility（类比 ff5_residual），不写 ledger，不改研究结论（rank-IC −0.0088 NULL 不受影响）。
+
+**诚实 null 的可视化**：top picks（score +2.28 海光信息）的 prob_up = **0.444**（<base_rate 0.4751）= 模型在 CN 的轻微反向信号；top 板块（Natural Gas Transmission）mean prob = 0.484 ≈ base rate。概率聚集在 base rate 附近 = NULL 的概率空间可视化。
+
+**待业主**：① 审线上 `/picks` + `/sectors`（部署后）② 实时价格（Alpaca 免费层 + GitHub Actions cron，下一切片）③ A 股 sector（需申万/东财行业源，当前 Unclassified）④ push 已完成。
+
 ## 2026-08-06 (j) Form 4 /insiders 升级 5-issuer（真实大额内部人卖出）+ COT 10-市场代码就绪
 
 业主授权"优化到不能优化"。两条并行收尾：
