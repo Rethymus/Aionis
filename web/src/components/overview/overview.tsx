@@ -155,11 +155,14 @@ function PicksPreview() {
       <CardContent>
         <div className="divide-y">
           {top5.map((p) => (
-            <div key={p.ticker} className="flex items-center gap-3 py-2.5">
+            <div key={`${p.region}-${p.ticker}`} className="flex items-center gap-3 py-2.5">
               <span className="w-6 text-sm font-semibold tabular-nums text-muted-foreground">
                 {p.rank}
               </span>
-              <span className="font-medium">{p.ticker}</span>
+              <div className="flex min-w-0 flex-col">
+                <span className="truncate text-sm font-medium">{p.name || p.ticker}</span>
+                <span className="font-mono text-[10px] text-muted-foreground">{p.ticker}</span>
+              </div>
               <Badge variant="secondary" className="px-1.5 py-0 text-[10px]">
                 {t(p.region === "us" ? "picks.region.us" : "picks.region.cn")}
               </Badge>
