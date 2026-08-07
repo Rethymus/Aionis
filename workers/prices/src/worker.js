@@ -92,7 +92,7 @@ async function cnPrices(url, env, ctx) {
   if (!tickersParam) return json({ error: "missing tickers param" }, 400);
 
   const cache = caches.default;
-  const cacheKey = new Request(`https://cache.local/cn/${tickersParam}`, { method: "GET" });
+  const cacheKey = new Request(`https://cache.local/cn/v2/${tickersParam}`, { method: "GET" });
   const hit = await cache.match(cacheKey);
   if (hit) return hit;
 
