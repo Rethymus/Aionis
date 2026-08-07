@@ -24,6 +24,7 @@ import {
   BriefcaseIcon,
   UsersIcon,
   BarChartHorizontalIcon,
+  BlocksIcon,
 } from "lucide-react";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -32,6 +33,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const navInsights = [
     { title: t("nav.overview"), url: "/dashboard", icon: <LayoutDashboardIcon /> },
     { title: t("nav.picks"), url: "/picks", icon: <TrendingUpIcon /> },
+    { title: t("nav.sectors"), url: "/sectors", icon: <BlocksIcon /> },
     { title: t("nav.evidence"), url: "/evidence", icon: <ScaleIcon /> },
     { title: t("nav.conviction"), url: "/conviction", icon: <ActivityIcon /> },
   ];

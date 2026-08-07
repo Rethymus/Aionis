@@ -29,46 +29,227 @@ WEB.mkdir(parents=True, exist_ok=True)
 eq.OUT = WEB
 
 
-def export_picks() -> tuple[str, int]:
-    """Stock-pick ranking: latest OOS month, top-20 long + bottom-5 short.
+def _load_ticker_metadata() -> pd.DataFrame:
+    """Load cached ticker→(name, sector) map (built by scripts/build_ticker_metadata.py).
 
-    Rank change compares against the previous month (positive = moved up).
+    Returns an empty-frame fallback if the cache is missing (export must never
+    block on metadata — picks render with empty name/sector instead).
     """
+    fp = Path("data/cache/ticker_metadata.parquet")
+    if not fp.exists():
+        return pd.DataFrame(columns=["ticker", "region", "name", "sector"])
+    return pd.read_parquet(fp)
+
+
+def _enrich_with_metadata(df: pd.DataFrame, meta: pd.DataFrame) -> pd.DataFrame:
+    """Left-join OOS scores with ticker metadata. Missing names ⇒ empty string."""
+    if meta.empty:
+        df = df.copy()
+        df["name"] = ""
+        df["sector"] = ""
+        return df
+    return df.merge(meta[["ticker", "name", "sector"]], on="ticker", how="left").fillna(
+        {"name": "", "sector": ""}
+    )
+
+
+def _calibration_disclaimer(calibration: dict) -> str:
+    """Honest null-aware disclosure, shown beside every prob_up readout."""
+    regions = calibration.get("regions", {})
+    parts = []
+    for r, payload in regions.items():
+        m = payload["meta"]  # CalibrationMeta dataclass
+        br = m.base_rate
+        spread = m.prob_max - m.prob_min
+        parts.append(
+            f"{r.upper()}: {m.n_pairs}-pair calibration, base rate "
+            f"{br:.2f}, calibrated range [{m.prob_min:.2f}, "
+            f"{m.prob_max:.2f}] (spread {spread:.2f})"
+        )
+    return (
+        "Model-readout probabilities (NOT investment advice). Method: "
+        f"{calibration.get('method', 'platt')} calibration on historical OOS "
+        "(score, realized forward-return) pairs; latest month predicted "
+        "out-of-sample. Research verdict (ledger #49): combined rank-IC "
+        "−0.0088, NULL — model discrimination is weak; calibrated probabilities "
+        "cluster near the base rate. "
+        + " | ".join(parts)
+    )
+
+
+def export_picks() -> tuple[str, int]:
+    """Stock-pick ranking, top long + bottom short PER REGION (each region's own latest).
+
+    Each region's panels are PIT-aligned on their own calendar (US ends
+    2026-06-30, CN ends 2026-08-03 in the current snapshot); selecting top-N
+    globally would silently drop whichever region lags. Per-region selection
+    surfaces both markets. Enriches each pick with display name + sector +
+    calibrated ``prob_up``. Writes:
+      - picks.json / shorts.json: enriched rank lists
+      - picks_meta.json: calibration meta + honest-null disclaimer
+    """
+    from aionis.eval.score_calibration import calibrate_latest_month, meta_to_jsonable
+
     df = pd.read_parquet("runs/track_c_confirmatory_oos_scores.parquet")
-    dates = sorted(df["date"].unique())
-    latest, prev = dates[-1], dates[-2]
+    df["date"] = pd.to_datetime(df["date"])
+    meta = _load_ticker_metadata()
 
-    def ranks(d: object) -> dict[str, int]:
-        g = df[df["date"] == d].copy()
-        g["r"] = g["score"].rank(ascending=False, method="first").astype(int)
-        return dict(zip(g["ticker"], g["r"], strict=True))
+    # Calibration on real OOS history (per-region latest, walk-forward=False).
+    us_panel_path = Path("data/cache/track_b_panel.parquet")
+    cn_panel_path = Path("data/cache/cn_price_panel.parquet")
+    us_panel = pd.read_parquet(us_panel_path) if us_panel_path.exists() else pd.DataFrame()
+    cn_panel = pd.read_parquet(cn_panel_path) if cn_panel_path.exists() else pd.DataFrame()
+    calibration = calibrate_latest_month(df, us_panel, cn_panel)
 
-    rp = ranks(prev)
-    top = df[df["date"] == latest].nlargest(20, "score")
-    picks = [
-        {
-            "rank": i + 1,
-            "ticker": r.ticker,
-            "region": r.region,
-            "score": round(float(r.score), 3),
-            "rank_change": (rp.get(r.ticker) - (i + 1)) if rp.get(r.ticker) else None,
-        }
-        for i, (_, r) in enumerate(top.iterrows())
-    ]
+    # Per-region prob_up lookup.
+    prob_lookup: dict[tuple[str, str], float] = {}
+    for r, payload in calibration["regions"].items():
+        if "latest" not in payload:
+            continue
+        for _, row in payload["latest"].iterrows():
+            prob_lookup[(r, row["ticker"])] = float(row["prob_up"])
+
+    # Per-region picks: top 10 US + top 10 CN long; bottom 3 US + bottom 2 CN short.
+    picks: list[dict] = []
+    shorts: list[dict] = []
+    rank_counter = 0
+    short_rank = 0
+    for region, payload in calibration["regions"].items():
+        if "latest" not in payload:
+            continue
+        region_latest = pd.Timestamp(payload["latest_date"])
+        region_df = df[(df["region"] == region) & (df["date"] == region_latest)].copy()
+        if region_df.empty:
+            continue
+        region_df = _enrich_with_metadata(region_df, meta)
+        # Rank-change baseline: previous month in this region's OOS.
+        region_dates = sorted(df[df["region"] == region]["date"].unique())
+        prev_idx = region_dates.index(region_latest) - 1
+        rp = {}
+        if prev_idx >= 0:
+            prev_df = df[df["date"] == region_dates[prev_idx]].copy()
+            prev_df["r"] = prev_df["score"].rank(ascending=False, method="first").astype(int)
+            rp = dict(zip(prev_df["ticker"], prev_df["r"], strict=True))
+        # Top 10 long per region.
+        top = region_df.nlargest(10, "score")
+        for _, r in top.iterrows():
+            rank_counter += 1
+            picks.append({
+                "rank": rank_counter,
+                "ticker": r["ticker"],
+                "region": r["region"],
+                "name": r["name"],  # NOT r.name (Series index collision)
+                "sector": r["sector"],
+                "score": round(float(r["score"]), 3),
+                "prob_up": round(prob_lookup.get((r["region"], r["ticker"]), 0.5), 3),
+                "rank_change": (rp.get(r["ticker"]) - rank_counter) if rp.get(r["ticker"]) else None,
+            })
+        # Bottom 3 US / 2 CN short per region.
+        n_short = 3 if region == "us" else 2
+        bot = region_df.nsmallest(n_short, "score")
+        for _, r in bot.iterrows():
+            short_rank += 1
+            shorts.append({
+                "rank": short_rank,
+                "ticker": r["ticker"],
+                "region": r["region"],
+                "name": r["name"],
+                "sector": r["sector"],
+                "score": round(float(r["score"]), 3),
+                "prob_up": round(prob_lookup.get((r["region"], r["ticker"]), 0.5), 3),
+            })
     (WEB / "picks.json").write_text(json.dumps(picks, indent=2))
-
-    bot = df[df["date"] == latest].nsmallest(5, "score")
-    shorts = [
-        {
-            "rank": i + 1,
-            "ticker": r.ticker,
-            "region": r.region,
-            "score": round(float(r.score), 3),
-        }
-        for i, (_, r) in enumerate(bot.iterrows())
-    ]
     (WEB / "shorts.json").write_text(json.dumps(shorts, indent=2))
-    return str(latest)[:10], int(len(df[df["date"] == latest]))
+
+    # Calibration meta + honest-null disclaimer (display layer disclosure).
+    meta_payload = {
+        "latest_date": calibration["latest_date"],
+        "method": calibration["method"],
+        "walk_forward": calibration["walk_forward"],
+        "regions": {
+            r: {
+                "latest_date": p["latest_date"],
+                "meta": meta_to_jsonable(p["meta"]),
+            }
+            for r, p in calibration["regions"].items()
+        },
+        "disclaimer": _calibration_disclaimer(calibration),
+    }
+    (WEB / "picks_meta.json").write_text(json.dumps(meta_payload, indent=2, default=str))
+
+    return str(pd.Timestamp(calibration["latest_date"]).date), len(picks) + len(shorts)
+
+
+def export_sector_breakdown() -> None:
+    """Aggregate latest-month OOS scores by sector — relative-favor ranking.
+
+    Per sector: stock count, mean model score, mean calibrated P(up).
+    Sectors with fewer than 3 stocks are dropped (noisy). A-share rows have
+    empty sector (the listing file lacks industry) so they fall into the
+    "Unclassified" bucket — disclosed in the methodology string, not hidden.
+    Output: ``sector_breakdown.json`` with top/bottom sectors + methodology.
+    """
+    from aionis.eval.score_calibration import calibrate_latest_month
+
+    oos = pd.read_parquet("runs/track_c_confirmatory_oos_scores.parquet")
+    meta = _load_ticker_metadata()
+    if meta.empty:
+        (WEB / "sector_breakdown.json").write_text(json.dumps({
+            "status": "awaiting_fetch",
+            "methodology": "Run scripts/build_ticker_metadata.py first.",
+            "sectors": [],
+        }, indent=2))
+        return
+
+    latest_dates = oos.groupby("region")["date"].max().to_dict()
+    latest = oos[oos.apply(lambda r: r["date"] == latest_dates.get(r["region"]), axis=1)].copy()
+    latest = _enrich_with_metadata(latest, meta)
+    latest["sector"] = latest["sector"].replace("", "Unclassified").fillna("Unclassified")
+
+    us_panel_path = Path("data/cache/track_b_panel.parquet")
+    cn_panel_path = Path("data/cache/cn_price_panel.parquet")
+    us_panel = pd.read_parquet(us_panel_path) if us_panel_path.exists() else pd.DataFrame()
+    cn_panel = pd.read_parquet(cn_panel_path) if cn_panel_path.exists() else pd.DataFrame()
+    calibration = calibrate_latest_month(oos, us_panel, cn_panel)
+    prob_lookup: dict[tuple[str, str], float] = {}
+    for r, payload in calibration["regions"].items():
+        if "latest" not in payload:
+            continue
+        for _, row in payload["latest"].iterrows():
+            prob_lookup[(r, row["ticker"])] = float(row["prob_up"])
+    latest["prob_up"] = [
+        prob_lookup.get((row.region, row.ticker), 0.5) for row in latest.itertuples()
+    ]
+
+    grouped = []
+    for sector, sub in latest.groupby("sector"):
+        if len(sub) < 3:
+            continue
+        grouped.append({
+            "sector": str(sector),
+            "n_stocks": int(len(sub)),
+            "mean_score": round(float(sub["score"].mean()), 3),
+            "mean_prob_up": round(float(sub["prob_up"].mean()), 3),
+            "regions": sorted(sub["region"].unique().tolist()),
+        })
+    grouped.sort(key=lambda s: s["mean_score"], reverse=True)
+    payload = {
+        "status": "ok",
+        "latest_dates": {r: str(pd.Timestamp(d).date()) for r, d in latest_dates.items()},
+        "methodology": (
+            "Sector aggregation of latest-month OOS model scores + calibrated "
+            "P(up), per region's own latest PIT-aligned date (US and CN panels "
+            "may end on different months). US sectors from EDGAR SIC (public "
+            "domain); A-share sectors not in the listing file ⇒ 'Unclassified' "
+            "bucket (disclosed, not hidden). Sectors with <3 stocks dropped. "
+            "Display-only, NOT a research claim — relative model favor."
+        ),
+        "n_sectors": len(grouped),
+        "top_favored": grouped[:8],
+        "least_favored": grouped[-5:][::-1] if len(grouped) >= 5 else grouped[::-1],
+        "all_sectors": grouped,
+    }
+    (WEB / "sector_breakdown.json").write_text(json.dumps(payload, indent=2, default=str))
 
 
 def export_metrics(latest: str, n_total: int) -> None:
@@ -389,6 +570,7 @@ def main() -> None:
     # Terminal-specific.
     latest, n_total = export_picks()
     export_metrics(latest, n_total)
+    export_sector_breakdown()
     export_taco()
     export_pick_conviction()
     export_cot()

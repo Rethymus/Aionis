@@ -1,0 +1,40 @@
+{
+  "latest_date": "2026-08-03",
+  "method": "platt",
+  "walk_forward": false,
+  "regions": {
+    "us": {
+      "latest_date": "2026-06-30",
+      "meta": {
+        "region": "us",
+        "n_pairs": 30774,
+        "base_rate": 0.5351,
+        "ece": 0.0072,
+        "brier": 0.2484,
+        "score_min": -3.402,
+        "score_max": 2.881,
+        "prob_min": 0.4147,
+        "prob_max": 0.6096,
+        "method": "platt",
+        "walk_forward": false
+      }
+    },
+    "cn": {
+      "latest_date": "2026-08-03",
+      "meta": {
+        "region": "cn",
+        "n_pairs": 58416,
+        "base_rate": 0.4751,
+        "ece": 0.0,
+        "brier": 0.2494,
+        "score_min": -2.441,
+        "score_max": 2.869,
+        "prob_min": 0.4388,
+        "prob_max": 0.4897,
+        "method": "platt",
+        "walk_forward": false
+      }
+    }
+  },
+  "disclaimer": "Model-readout probabilities (NOT investment advice). Method: platt calibration on historical OOS (score, realized forward-return) pairs; latest month predicted out-of-sample. Research verdict (ledger #49): combined rank-IC \u22120.0088, NULL \u2014 model discrimination is weak; calibrated probabilities cluster near the base rate. US: 30774-pair calibration, base rate 0.54, calibrated range [0.41, 0.61] (spread 0.19) | CN: 58416-pair calibration, base rate 0.48, calibrated range [0.44, 0.49] (spread 0.05)"
+}

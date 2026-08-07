@@ -19,7 +19,6 @@ from __future__ import annotations
 from pathlib import Path
 
 import pandas as pd
-
 from cot_reports import cot_year
 
 # Curated exact COT "Market and Exchange Names" (legacy futures-only). Each must

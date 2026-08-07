@@ -1,0 +1,664 @@
+{
+  "status": "ok",
+  "latest_dates": {
+    "cn": "2026-08-03",
+    "us": "2026-06-30"
+  },
+  "methodology": "Sector aggregation of latest-month OOS model scores + calibrated P(up), per region's own latest PIT-aligned date (US and CN panels may end on different months). US sectors from EDGAR SIC (public domain); A-share sectors not in the listing file \u21d2 'Unclassified' bucket (disclosed, not hidden). Sectors with <3 stocks dropped. Display-only, NOT a research claim \u2014 relative model favor.",
+  "n_sectors": 59,
+  "top_favored": [
+    {
+      "sector": "Natural Gas Transmission",
+      "n_stocks": 3,
+      "mean_score": 0.658,
+      "mean_prob_up": 0.484,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Wholesale-Drugs, Proprietaries & Druggists' Sundries",
+      "n_stocks": 3,
+      "mean_score": 0.636,
+      "mean_prob_up": 0.484,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Electric & Other Services Combined",
+      "n_stocks": 12,
+      "mean_score": 0.628,
+      "mean_prob_up": 0.485,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Air Transportation, Scheduled",
+      "n_stocks": 3,
+      "mean_score": 0.56,
+      "mean_prob_up": 0.487,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Insurance Agents, Brokers & Service",
+      "n_stocks": 5,
+      "mean_score": 0.515,
+      "mean_prob_up": 0.488,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Fire, Marine & Casualty Insurance",
+      "n_stocks": 11,
+      "mean_score": 0.457,
+      "mean_prob_up": 0.49,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Water Transportation",
+      "n_stocks": 3,
+      "mean_score": 0.435,
+      "mean_prob_up": 0.491,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Semiconductors & Related Devices",
+      "n_stocks": 15,
+      "mean_score": 0.407,
+      "mean_prob_up": 0.492,
+      "regions": [
+        "us"
+      ]
+    }
+  ],
+  "least_favored": [
+    {
+      "sector": "State Commercial Banks",
+      "n_stocks": 5,
+      "mean_score": -1.276,
+      "mean_prob_up": 0.544,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Life Insurance",
+      "n_stocks": 3,
+      "mean_score": -1.092,
+      "mean_prob_up": 0.539,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "National Commercial Banks",
+      "n_stocks": 11,
+      "mean_score": -1.08,
+      "mean_prob_up": 0.538,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Retail-Building Materials, Hardware, Garden Supply",
+      "n_stocks": 3,
+      "mean_score": -1.05,
+      "mean_prob_up": 0.537,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Operative Builders",
+      "n_stocks": 3,
+      "mean_score": -0.988,
+      "mean_prob_up": 0.535,
+      "regions": [
+        "us"
+      ]
+    }
+  ],
+  "all_sectors": [
+    {
+      "sector": "Natural Gas Transmission",
+      "n_stocks": 3,
+      "mean_score": 0.658,
+      "mean_prob_up": 0.484,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Wholesale-Drugs, Proprietaries & Druggists' Sundries",
+      "n_stocks": 3,
+      "mean_score": 0.636,
+      "mean_prob_up": 0.484,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Electric & Other Services Combined",
+      "n_stocks": 12,
+      "mean_score": 0.628,
+      "mean_prob_up": 0.485,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Air Transportation, Scheduled",
+      "n_stocks": 3,
+      "mean_score": 0.56,
+      "mean_prob_up": 0.487,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Insurance Agents, Brokers & Service",
+      "n_stocks": 5,
+      "mean_score": 0.515,
+      "mean_prob_up": 0.488,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Fire, Marine & Casualty Insurance",
+      "n_stocks": 11,
+      "mean_score": 0.457,
+      "mean_prob_up": 0.49,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Water Transportation",
+      "n_stocks": 3,
+      "mean_score": 0.435,
+      "mean_prob_up": 0.491,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Semiconductors & Related Devices",
+      "n_stocks": 15,
+      "mean_score": 0.407,
+      "mean_prob_up": 0.492,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Electric Services",
+      "n_stocks": 14,
+      "mean_score": 0.363,
+      "mean_prob_up": 0.493,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Food and Kindred Products",
+      "n_stocks": 3,
+      "mean_score": 0.362,
+      "mean_prob_up": 0.493,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Television Broadcasting Stations",
+      "n_stocks": 3,
+      "mean_score": 0.354,
+      "mean_prob_up": 0.493,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Beverages",
+      "n_stocks": 4,
+      "mean_score": 0.329,
+      "mean_prob_up": 0.494,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Petroleum Refining",
+      "n_stocks": 6,
+      "mean_score": 0.29,
+      "mean_prob_up": 0.495,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Electronic Computers",
+      "n_stocks": 3,
+      "mean_score": 0.269,
+      "mean_prob_up": 0.496,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Services-Computer Programming Services",
+      "n_stocks": 3,
+      "mean_score": 0.186,
+      "mean_prob_up": 0.499,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Services-Computer Processing & Data Preparation",
+      "n_stocks": 3,
+      "mean_score": 0.161,
+      "mean_prob_up": 0.499,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Crude Petroleum & Natural Gas",
+      "n_stocks": 7,
+      "mean_score": 0.159,
+      "mean_prob_up": 0.499,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Computer Storage Devices",
+      "n_stocks": 3,
+      "mean_score": 0.072,
+      "mean_prob_up": 0.502,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Soap, Detergents, Cleang Preparations, Perfumes, Cosmetics",
+      "n_stocks": 3,
+      "mean_score": 0.06,
+      "mean_prob_up": 0.503,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Computer & office Equipment",
+      "n_stocks": 3,
+      "mean_score": 0.029,
+      "mean_prob_up": 0.503,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Services-Prepackaged Software",
+      "n_stocks": 19,
+      "mean_score": 0.027,
+      "mean_prob_up": 0.504,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Perfumes, Cosmetics & Other Toilet Preparations",
+      "n_stocks": 3,
+      "mean_score": -0.062,
+      "mean_prob_up": 0.506,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Services-Computer Programming, Data Processing, Etc.",
+      "n_stocks": 6,
+      "mean_score": -0.078,
+      "mean_prob_up": 0.507,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Security & Commodity Brokers, Dealers, Exchanges & Services",
+      "n_stocks": 4,
+      "mean_score": -0.167,
+      "mean_prob_up": 0.51,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Services-Computer Integrated Systems Design",
+      "n_stocks": 3,
+      "mean_score": -0.181,
+      "mean_prob_up": 0.51,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Finance Services",
+      "n_stocks": 3,
+      "mean_score": -0.184,
+      "mean_prob_up": 0.51,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Retail-Eating  Places",
+      "n_stocks": 4,
+      "mean_score": -0.245,
+      "mean_prob_up": 0.512,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Pharmaceutical Preparations",
+      "n_stocks": 11,
+      "mean_score": -0.294,
+      "mean_prob_up": 0.514,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Motor Vehicles & Passenger Car Bodies",
+      "n_stocks": 4,
+      "mean_score": -0.35,
+      "mean_prob_up": 0.515,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Electronic & Other Electrical Equipment (No Computer Equip)",
+      "n_stocks": 4,
+      "mean_score": -0.37,
+      "mean_prob_up": 0.516,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Hospital & Medical Service Plans",
+      "n_stocks": 6,
+      "mean_score": -0.379,
+      "mean_prob_up": 0.516,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Services-Commercial Physical & Biological Research",
+      "n_stocks": 3,
+      "mean_score": -0.423,
+      "mean_prob_up": 0.518,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Unclassified",
+      "n_stocks": 930,
+      "mean_score": -0.431,
+      "mean_prob_up": 0.47,
+      "regions": [
+        "cn",
+        "us"
+      ]
+    },
+    {
+      "sector": "Real Estate Investment Trusts",
+      "n_stocks": 28,
+      "mean_score": -0.44,
+      "mean_prob_up": 0.518,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Plastic Materials, Synth Resins & Nonvulcan Elastomers",
+      "n_stocks": 4,
+      "mean_score": -0.444,
+      "mean_prob_up": 0.518,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Computer Communications Equipment",
+      "n_stocks": 3,
+      "mean_score": -0.449,
+      "mean_prob_up": 0.519,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Cable & Other Pay Television Services",
+      "n_stocks": 3,
+      "mean_score": -0.495,
+      "mean_prob_up": 0.52,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "General Industrial Machinery & Equipment",
+      "n_stocks": 3,
+      "mean_score": -0.506,
+      "mean_prob_up": 0.52,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Retail-Variety Stores",
+      "n_stocks": 5,
+      "mean_score": -0.514,
+      "mean_prob_up": 0.521,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Air-Cond & Warm Air Heatg Equip & Comm & Indl Refrig Equip",
+      "n_stocks": 3,
+      "mean_score": -0.554,
+      "mean_prob_up": 0.522,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Biological Products, (No Diagnostic Substances)",
+      "n_stocks": 5,
+      "mean_score": -0.584,
+      "mean_prob_up": 0.523,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Retail-Lumber & Other Building Materials Dealers",
+      "n_stocks": 3,
+      "mean_score": -0.595,
+      "mean_prob_up": 0.523,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Services-Business Services, NEC",
+      "n_stocks": 15,
+      "mean_score": -0.599,
+      "mean_prob_up": 0.523,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Laboratory Analytical Instruments",
+      "n_stocks": 4,
+      "mean_score": -0.671,
+      "mean_prob_up": 0.526,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Railroads, Line-Haul Operating",
+      "n_stocks": 3,
+      "mean_score": -0.782,
+      "mean_prob_up": 0.529,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Industrial Instruments For Measurement, Display, and Control",
+      "n_stocks": 5,
+      "mean_score": -0.79,
+      "mean_prob_up": 0.529,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Security Brokers, Dealers & Flotation Companies",
+      "n_stocks": 6,
+      "mean_score": -0.79,
+      "mean_prob_up": 0.529,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Orthopedic, Prosthetic & Surgical Appliances & Supplies",
+      "n_stocks": 5,
+      "mean_score": -0.806,
+      "mean_prob_up": 0.53,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Surgical & Medical Instruments & Apparatus",
+      "n_stocks": 10,
+      "mean_score": -0.81,
+      "mean_prob_up": 0.53,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Investment Advice",
+      "n_stocks": 7,
+      "mean_score": -0.841,
+      "mean_prob_up": 0.531,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Measuring & Controlling Devices, NEC",
+      "n_stocks": 3,
+      "mean_score": -0.855,
+      "mean_prob_up": 0.531,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Search, Detection, Navigation, Guidance, Aeronautical Sys",
+      "n_stocks": 4,
+      "mean_score": -0.885,
+      "mean_prob_up": 0.532,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Services-Consumer Credit Reporting, Collection Agencies",
+      "n_stocks": 3,
+      "mean_score": -0.916,
+      "mean_prob_up": 0.533,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Hotels & Motels",
+      "n_stocks": 6,
+      "mean_score": -0.948,
+      "mean_prob_up": 0.534,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Operative Builders",
+      "n_stocks": 3,
+      "mean_score": -0.988,
+      "mean_prob_up": 0.535,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Retail-Building Materials, Hardware, Garden Supply",
+      "n_stocks": 3,
+      "mean_score": -1.05,
+      "mean_prob_up": 0.537,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "National Commercial Banks",
+      "n_stocks": 11,
+      "mean_score": -1.08,
+      "mean_prob_up": 0.538,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "Life Insurance",
+      "n_stocks": 3,
+      "mean_score": -1.092,
+      "mean_prob_up": 0.539,
+      "regions": [
+        "us"
+      ]
+    },
+    {
+      "sector": "State Commercial Banks",
+      "n_stocks": 5,
+      "mean_score": -1.276,
+      "mean_prob_up": 0.544,
+      "regions": [
+        "us"
+      ]
+    }
+  ]
+}

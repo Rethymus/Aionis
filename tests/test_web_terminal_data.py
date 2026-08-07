@@ -89,3 +89,77 @@ def test_pick_conviction_shape() -> None:
     if pc["series"]:
         for pt in pc["series"]:
             assert {"date", "std", "decile_spread"} <= set(pt)
+
+
+# --- Enriched picks (name + sector + prob_up) --------------------------------
+
+
+def test_picks_enriched_schema() -> None:
+    """Each pick must carry the enriched display fields + calibrated prob_up."""
+    picks = _load("picks.json")
+    assert isinstance(picks, list) and len(picks) >= 10
+    for p in picks:
+        assert {"rank", "ticker", "region", "name", "sector", "score", "prob_up"} <= set(p)
+        assert p["region"] in {"us", "cn"}
+        assert 0.0 <= p["prob_up"] <= 1.0, f"prob_up out of [0,1]: {p['prob_up']}"
+        assert isinstance(p["name"], str)
+        assert isinstance(p["sector"], str)
+
+
+def test_picks_cover_both_regions() -> None:
+    """Per-region selection must surface BOTH US and CN (regression for the
+    earlier bug where global-latest silently dropped the lagging region)."""
+    picks = _load("picks.json")
+    regions = {p["region"] for p in picks}
+    assert regions == {"us", "cn"}, f"picks must cover both regions, got {regions}"
+
+
+def test_shorts_enriched_schema() -> None:
+    shorts = _load("shorts.json")
+    assert isinstance(shorts, list) and len(shorts) >= 3
+    for s in shorts:
+        assert {"rank", "ticker", "region", "name", "sector", "score", "prob_up"} <= set(s)
+        assert 0.0 <= s["prob_up"] <= 1.0
+
+
+def test_picks_meta_calibration_disclosed() -> None:
+    """picks_meta.json must disclose method + walk_forward + per-region meta +
+    a disclaimer string that references the null verdict (anti-overclaiming)."""
+    meta = _load("picks_meta.json")
+    assert meta["method"] in {"platt", "isotonic"}
+    assert meta["walk_forward"] is False
+    assert isinstance(meta["regions"], dict) and len(meta["regions"]) >= 1
+    for region, payload in meta["regions"].items():
+        m = payload["meta"]
+        assert m["region"] == region
+        assert m["n_pairs"] >= 30
+        assert 0.0 <= m["base_rate"] <= 1.0
+        assert 0.0 <= m["prob_min"] <= m["prob_max"] <= 1.0
+    assert isinstance(meta["disclaimer"], str) and len(meta["disclaimer"]) > 50
+    assert "NULL" in meta["disclaimer"] or "null" in meta["disclaimer"].lower()
+
+
+# --- Sector breakdown --------------------------------------------------------
+
+
+def test_sector_breakdown_shape() -> None:
+    sb = _load("sector_breakdown.json")
+    assert sb["status"] in {"ok", "awaiting_fetch"}
+    if sb["status"] != "ok":
+        return
+    assert isinstance(sb["top_favored"], list)
+    assert isinstance(sb["all_sectors"], list)
+    assert sb["n_sectors"] == len(sb["all_sectors"])
+    for row in sb["all_sectors"]:
+        assert {"sector", "n_stocks", "mean_score", "mean_prob_up"} <= set(row)
+        assert row["n_stocks"] >= 3  # min group size enforced by export
+        assert 0.0 <= row["mean_prob_up"] <= 1.0
+
+
+def test_sector_breakdown_methodology_discloses_unclassified() -> None:
+    """A-share sectors are not in the listing file → 'Unclassified' bucket.
+    The methodology string must disclose this honestly (not hide it)."""
+    sb = _load("sector_breakdown.json")
+    if sb["status"] != "ok":
+        return
+    assert "Unclassified" in sb["methodology"] or "unclassified" in sb["methodology"].lower()

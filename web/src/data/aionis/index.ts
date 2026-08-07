@@ -1,6 +1,8 @@
 import metrics from "./metrics.json";
 import picks from "./picks.json";
 import shorts from "./shorts.json";
+import picksMeta from "./picks_meta.json";
+import sectorBreakdown from "./sector_breakdown.json";
 import evidence from "./evidence.json";
 import powerFloor from "./power_floor.json";
 import icMonthly from "./ic_monthly.json";
@@ -17,8 +19,33 @@ export type Pick = {
   rank: number;
   ticker: string;
   region: "us" | "cn";
+  name: string | "";
+  sector: string | "";
   score: number;
+  prob_up: number;
   rank_change: number | null;
+};
+
+export type CalibrationMeta = {
+  region: string;
+  n_pairs: number;
+  base_rate: number;
+  ece: number;
+  brier: number;
+  score_min: number;
+  score_max: number;
+  prob_min: number;
+  prob_max: number;
+  method: "platt" | "isotonic";
+  walk_forward: boolean;
+};
+
+export type SectorRow = {
+  sector: string;
+  n_stocks: number;
+  mean_score: number;
+  mean_prob_up: number;
+  regions: ("us" | "cn")[];
 };
 
 export type Evidence = {
@@ -36,6 +63,8 @@ export const aionis = {
   metrics: metrics as typeof metrics,
   picks: picks as Pick[],
   shorts: shorts as Pick[],
+  picksMeta: picksMeta as typeof picksMeta,
+  sectorBreakdown: sectorBreakdown as typeof sectorBreakdown,
   evidence: evidence as Evidence[],
   powerFloor: powerFloor as typeof powerFloor,
   icMonthly: icMonthly as { month: string; us: number; cn: number; combined: number }[],

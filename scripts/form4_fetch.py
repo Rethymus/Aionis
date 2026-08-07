@@ -41,7 +41,7 @@ def main() -> None:
         print(f"[form4-fetch] {ticker} (CIK {cik:010d}) {START}..{END}", flush=True)
         df = fetch_form4_transactions(cik, start=START, end=END)
         if df.empty:
-            print(f"  -> 0 transactions (graceful skip)", flush=True)
+            print("  -> 0 transactions (graceful skip)", flush=True)
             continue
         df["issuer_ticker"] = ticker
         frames.append(df)
