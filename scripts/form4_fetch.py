@@ -45,8 +45,8 @@ def main() -> None:
             continue
         df["issuer_ticker"] = ticker
         frames.append(df)
-        buys = (df["acquired_or_disposed"] == "A").sum()
-        sells = (df["acquired_or_disposed"] == "D").sum()
+        buys = (df["buy_or_sell"] == "buy").sum()
+        sells = (df["buy_or_sell"] == "sell").sum()
         print(f"  -> {len(df)} txns ({buys} buys / {sells} sells)", flush=True)
 
     if not frames:
