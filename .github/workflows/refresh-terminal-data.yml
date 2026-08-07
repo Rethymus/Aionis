@@ -66,8 +66,7 @@ jobs:
 
       - name: Re-export all terminal payloads
         run: uv run python scripts/export_terminal_data.py
-        env:
-          BACKTEST_MONTHS: '24'  # 2-year track record (env-configurable)
+        # BACKTEST_MONTHS defaults to 99 (full OOS history) in the script.
 
       - name: Verify JSON validity
         run: |

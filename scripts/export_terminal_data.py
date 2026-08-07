@@ -272,9 +272,10 @@ def export_picks_backtest() -> None:
     cn_panel = pd.read_parquet(Path("data/cache/cn_price_panel.parquet"))
     cn_panel["date"] = pd.to_datetime(cn_panel["date"])
 
-    # Number of months to show in the track record (env-configurable; default 24
-    # = ~2 years. The OOS panel has up to 68 months 2021-2026 available.)
-    N_MONTHS = int(os.environ.get("BACKTEST_MONTHS", "24"))
+    # Number of months to show in the track record (env-configurable; default 99
+    # = effectively all available OOS history. The OOS panel has up to 68 months
+    # 2021-2026; reduce via BACKTEST_MONTHS env if the UI gets too long.)
+    N_MONTHS = int(os.environ.get("BACKTEST_MONTHS", "99"))
     TOP_N = 5
     months_payload: list[dict] = []
     all_top_returns: list[float] = []
