@@ -1,5 +1,20 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-08-06 (j) Form 4 /insiders 升级 5-issuer（真实大额内部人卖出）+ COT 10-市场代码就绪
+
+业主授权"优化到不能优化"。两条并行收尾：
+
+**Form 4 /insiders 5-issuer 升级（真实数据，已 re-export）**：
+- `scripts/form4_fetch.py` 跑通 5 大盘（AAPL/MSFT/NVDA/GOOGL/AMZN，2024-01..2026-06）→ `form4_aggregate.parquet` 2415 txns（4 buys / **2411 sells**）/ 62 内部人 / 5 issuer。
+- top 内部人：**Jensen Huang 720 卖**（NVDA CEO 10b5-1 密集减持）、Pichai 227、Kress 190（NVDA CFO）、Hennessy 123、Herrington 107。NVDA 内部人卖出信号极强（1271/1272 是卖）。
+- export_form4 re-run → `form4.json` 5-issuer。契约测试 `test_web_terminal_data` 仍绿（action buy/sell + buys/sells int）。
+
+**COT 多空压力 10-市场代码就绪（数据刷新延后）**：
+- `scripts/cot_fetch.py` 升级 10 市场跨资产集（S&P/Nasdaq/Russell/VIX/WTI/Gold/Silver/Copper/Euro FX/Yen）+ per-year resilient（cftc 单年超时跳过，不中断）。
+- cftc.gov 当前 SSL/Connect 不稳（2024-2026 全 timeout/SSL），10-市场数据刷新延后；6-市场 parquet 保留（live cot.json 仍有效）。cftc 恢复后一键 `cot_fetch.py` → 10 市场。
+
+**边界**：本轮 `web/src/data/aionis/form4.json`（5-issuer 真实）+ `scripts/cot_fetch.py`（10 市场 + resilient，已 commit 77f6311）+ state；**0 ledger / frozen / prereg / ADR / config / runs-data / E3**；Form 4 SEC 公共域（filed-date PIT）；COT 公共域。
+
 ## 2026-08-06 (i) 多空压力指数（CFTC COT）上线 —— 调研落地，free/no-API/公共域
 
 业主问"散户情绪 + 多空资本流能不能找 free/no-API 源"。派 2 sonnet 调研 agent **都 [1210] fail** → opus 主线直接 web 搜索完成。**批判性结论（不对称）**：散户情绪**结构性受阻**（StockTwits 同 Reddit 式审批门；Google Trends 官方 API 2025-07 alpha 只给极少数、pytrends 脆弱 scrape + 修订）；多空资本流**干净可得**（CFTC COT + FINRA 空头）。业主授权做最有价值项 → 做**多空压力指数**。
