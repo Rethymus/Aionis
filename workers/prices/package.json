@@ -1,0 +1,15 @@
+{
+  "name": "aionis-prices-worker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cloudflare Worker — real-time price proxy for the Aionis fintech terminal",
+  "main": "src/worker.js",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "secret": "wrangler secret put TIINGO_API_KEY"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}

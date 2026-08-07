@@ -120,6 +120,9 @@ irreversible/high-impact→strong.
 - Silently mutating a frozen config. Renaming/moving existing tracked docs (breaks refs).
 - "Rerun-to-significance." Fabricating anti-leakage facts. Committing without verification.
 - Infinite review loops — after 2 failed fix rounds, escalate (BLOCKED), don't keep iterating.
+- **Live prices via Cloudflare Worker (`workers/prices/`) are DISPLAY ONLY.** Any research module
+  (`features/`, `eval/`, `ingest/`, `extraction/`) that imports or fetches live/current prices into
+  the OOS pipeline = **lookahead leakage**. Prices serve the terminal display layer only.
 
 ## See also
 - `WORKFLOW.md` — the full 11-stage operating pipeline + 5 modes + stop-conditions (constitution).

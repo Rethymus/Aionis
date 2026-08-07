@@ -11,12 +11,14 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { aionis, type Pick } from "@/data/aionis";
+import { useLivePrices, type PriceMap } from "@/lib/live-prices";
 import {
   ArrowUpIcon,
   ArrowDownIcon,
   MinusIcon,
   AlertTriangleIcon,
 } from "lucide-react";
+import { useMemo } from "react";
 
 /** Honest-null disclaimer banner — shown above every prob_up readout. */
 function NullDisclaimer() {
@@ -87,10 +89,11 @@ type PickRowProps = {
   p: Pick;
   baseRate: number;
   showChange: boolean;
+  livePrice?: { price: number | null; change_pct: number | null };
 };
 
-/** One pick row: rank | name (main) + ticker (small) + sector badge | prob_up | score | change */
-function PickRow({ p, baseRate, showChange }: PickRowProps) {
+/** One pick row: rank | name + ticker + sector | live% | prob_up | score | change */
+function PickRow({ p, baseRate, showChange, livePrice }: PickRowProps) {
   const { t } = useI18n();
   const positive = p.score >= 0;
   const displayName = p.name && p.name.length > 0 ? p.name : p.ticker;
@@ -120,6 +123,22 @@ function PickRow({ p, baseRate, showChange }: PickRowProps) {
         </div>
       </div>
       <ProbUpChip probUp={p.prob_up} baseRate={baseRate} />
+      {livePrice?.change_pct !== undefined && livePrice?.change_pct !== null ? (
+        <span
+          className={cn(
+            "w-16 shrink-0 text-right font-mono text-xs tabular-nums",
+            livePrice.change_pct >= 0
+              ? "text-emerald-600 dark:text-emerald-400"
+              : "text-rose-600 dark:text-rose-400",
+          )}
+          title={livePrice.price ? `¥${livePrice.price.toFixed(2)} / $${livePrice.price.toFixed(2)}` : undefined}
+        >
+          {livePrice.change_pct >= 0 ? "+" : ""}
+          {livePrice.change_pct.toFixed(2)}%
+        </span>
+      ) : (
+        <span className="w-16 shrink-0 text-right text-xs text-muted-foreground/30">—</span>
+      )}
       <span
         className={cn(
           "w-12 shrink-0 text-right font-mono text-sm tabular-nums",
@@ -144,9 +163,10 @@ type RegionGroupProps = {
   baseRate: number;
   latestDate: string;
   showChange: boolean;
+  prices: PriceMap;
 };
 
-function RegionGroup({ title, picks, baseRate, latestDate, showChange }: RegionGroupProps) {
+function RegionGroup({ title, picks, baseRate, latestDate, showChange, prices }: RegionGroupProps) {
   if (picks.length === 0) return null;
   return (
     <Card className="overflow-hidden py-0">
@@ -166,6 +186,7 @@ function RegionGroup({ title, picks, baseRate, latestDate, showChange }: RegionG
               p={p}
               baseRate={baseRate}
               showChange={showChange}
+              livePrice={prices[p.ticker]}
             />
           ))}
         </div>
@@ -188,6 +209,13 @@ export function PicksView() {
   const cnPicks = aionis.picks.filter((p) => p.region === "cn");
   const usShorts = aionis.shorts.filter((p) => p.region === "us");
   const cnShorts = aionis.shorts.filter((p) => p.region === "cn");
+
+  // Live price overlay (graceful degradation: empty prices when Worker is off).
+  const allTickers = useMemo(
+    () => [...aionis.picks, ...aionis.shorts].map((p) => ({ ticker: p.ticker, region: p.region })),
+    [],
+  );
+  const { prices } = useLivePrices(allTickers);
 
   return (
     <div className="space-y-6 p-4 md:p-6">
@@ -228,6 +256,7 @@ export function PicksView() {
         baseRate={usBase}
         latestDate={usLatest}
         showChange
+        prices={prices}
       />
       <RegionGroup
         title={`Top 10 · A股 long · ${cnPicks.length}/10`}
@@ -235,6 +264,7 @@ export function PicksView() {
         baseRate={cnBase}
         latestDate={cnLatest}
         showChange
+        prices={prices}
       />
 
       <Card className="overflow-hidden py-0">
@@ -250,6 +280,7 @@ export function PicksView() {
                 p={{ ...p, rank_change: null }}
                 baseRate={usBase}
                 showChange={false}
+                livePrice={prices[p.ticker]}
               />
             ))}
             {cnShorts.map((p) => (
@@ -258,6 +289,7 @@ export function PicksView() {
                 p={{ ...p, rank_change: null }}
                 baseRate={cnBase}
                 showChange={false}
+                livePrice={prices[p.ticker]}
               />
             ))}
           </div>

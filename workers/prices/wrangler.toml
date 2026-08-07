@@ -1,0 +1,10 @@
+name = "aionis-prices"
+main = "src/worker.js"
+compatibility_date = "2024-09-23"
+
+# Deploy: npx wrangler login && npx wrangler secret put TIINGO_API_KEY && npx wrangler deploy
+# Worker URL after deploy: https://aionis-prices.<your-subdomain>.workers.dev
+
+# Pre-warm US mega-cap cache before market open (reduces first-visitor latency).
+[triggers]
+crons = ["25 13 * * 1-5"]  # 13:25 UTC = 9:25 ET (5 min before US open)
