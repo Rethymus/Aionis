@@ -156,10 +156,35 @@ def test_sector_breakdown_shape() -> None:
         assert 0.0 <= row["mean_prob_up"] <= 1.0
 
 
-def test_sector_breakdown_methodology_discloses_unclassified() -> None:
-    """A-share sectors are not in the listing file → 'Unclassified' bucket.
-    The methodology string must disclose this honestly (not hide it)."""
+def test_sector_breakdown_methodology_discloses_classification() -> None:
+    """The methodology must disclose how sectors are classified (US SIC vs
+    A-share board tiers), honestly distinguishing industry from tier."""
     sb = _load("sector_breakdown.json")
     if sb["status"] != "ok":
         return
-    assert "Unclassified" in sb["methodology"] or "unclassified" in sb["methodology"].lower()
+    assert "board" in sb["methodology"].lower() or "SIC" in sb["methodology"]
+
+
+# --- Picks backtest (track record: prediction vs reality) --------------------
+
+
+def test_picks_backtest_shape() -> None:
+    """Track record must have months + summary with hit_rate + excess."""
+    bt = _load("picks_backtest.json")
+    assert {"months", "summary", "methodology"} <= set(bt)
+    s = bt["summary"]
+    assert s["n_picks"] >= 20
+    assert 0.0 <= s["hit_rate"] <= 1.0
+    assert isinstance(s["avg_excess"], (int, float))
+    for m in bt["months"]:
+        assert {"month", "region", "picks", "top_mean_return", "base_mean_return", "excess"} <= set(m)
+        assert m["region"] in {"us", "cn"}
+        for p in m["picks"]:
+            assert {"ticker", "name", "score", "realized_return", "hit"} <= set(p)
+            assert isinstance(p["hit"], bool)
+
+
+def test_picks_backtest_methodology_mentions_null() -> None:
+    """The track record methodology must honestly disclose the null verdict."""
+    bt = _load("picks_backtest.json")
+    assert "NULL" in bt["methodology"] or "null" in bt["methodology"].lower()

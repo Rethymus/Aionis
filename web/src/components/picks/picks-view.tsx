@@ -263,6 +263,76 @@ export function PicksView() {
           </div>
         </CardContent>
       </Card>
+
+      <TrackRecord />
     </div>
+  );
+}
+
+/** Track record: past months' top picks vs their realized forward returns. */
+function TrackRecord() {
+  const { t } = useI18n();
+  const bt = aionis.picksBacktest;
+  if (!bt?.months?.length) return null;
+  const s = bt.summary;
+  const hitPct = (s.hit_rate * 100).toFixed(0);
+  const excessPct = (s.avg_excess * 100).toFixed(2);
+  const excessTone =
+    s.avg_excess > 0.005
+      ? "text-emerald-700 dark:text-emerald-300"
+      : s.avg_excess < -0.005
+        ? "text-rose-700 dark:text-rose-300"
+        : "text-muted-foreground";
+  return (
+    <Card className="overflow-hidden py-0">
+      <CardHeader className="border-b">
+        <CardTitle className="text-base">{t("picks.track.title")}</CardTitle>
+        <CardDescription className="flex flex-wrap gap-x-4 text-[10px]">
+          <span>{t("picks.track.hit_rate")}: <span className="font-mono">{hitPct}%</span></span>
+          <span>{t("picks.track.excess")}: <span className={cn("font-mono", excessTone)}>{excessPct}%</span></span>
+          <span>{t("picks.track.n_picks")}: <span className="font-mono">{s.n_picks}</span></span>
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-0 p-0">
+        {bt.months.map((m) => {
+          const regionLabel = t(m.region === "us" ? "picks.region.us" : "picks.region.cn");
+          const excess = m.excess;
+          const excessColor =
+            excess > 0.005
+              ? "text-emerald-600 dark:text-emerald-400"
+              : excess < -0.005
+                ? "text-rose-600 dark:text-rose-400"
+                : "text-muted-foreground";
+          return (
+            <div key={`${m.month}-${m.region}`} className="border-b px-4 py-2 last:border-b-0">
+              <div className="mb-1 flex items-center justify-between text-[10px]">
+                <span className="font-mono text-muted-foreground">
+                  {m.month} · {regionLabel}
+                </span>
+                <span className={cn("font-mono", excessColor)}>
+                  {t("picks.track.top")}: {(m.top_mean_return * 100).toFixed(2)}% · {t("picks.track.base")}: {(m.base_mean_return * 100).toFixed(2)}% · Δ:{(excess * 100).toFixed(2)}%
+                </span>
+              </div>
+              <div className="flex flex-wrap gap-x-3 gap-y-0.5">
+                {m.picks.map((p) => {
+                  const retPct = (p.realized_return * 100).toFixed(2);
+                  const tone = p.realized_return > 0
+                    ? "text-emerald-600 dark:text-emerald-400"
+                    : "text-rose-600 dark:text-rose-400";
+                  return (
+                    <span key={p.ticker} className={cn("font-mono text-[10px]", tone)} title={`${p.name} · score ${p.score}`}>
+                      {p.name || p.ticker} {retPct}%
+                    </span>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+        <div className="px-4 py-2 text-[10px] text-muted-foreground">
+          {bt.methodology}
+        </div>
+      </CardContent>
+    </Card>
   );
 }

@@ -82,6 +82,28 @@ def _to_baostock_code(code: str, exchange: str) -> str:
     return f"sz.{code}"
 
 
+def _board_classification(code: str) -> str:
+    """A-share exchange-board tier from code prefix (lightweight sector proxy).
+
+    The GitHub listing lacks industry data; board tier is a real, meaningful
+    categorization for display (科创板 = STAR/tech-heavy, 创业板 = ChiNext/growth,
+    主板 = main board, 北交所 = Beijing). Not an industry sector, but better
+    than 'Unclassified' for the terminal's sector-grouping view.
+    """
+    head = code[0] if code else "0"
+    if code.startswith("688"):
+        return "科创板 (STAR Market)"
+    if code.startswith("300") or code.startswith("301"):
+        return "创业板 (ChiNext)"
+    if head in {"6"}:
+        return "沪主板 (SSE Main)"
+    if code.startswith("003") or code.startswith("002") or code.startswith("000"):
+        return "深主板 (SZSE Main)"
+    if head in {"8", "4", "9"}:
+        return "北交所 (BSE)"
+    return "其他 (Other)"
+
+
 def fetch_a_share_metadata() -> pd.DataFrame:
     """Pull A-share (code, name) from the GitHub-hosted listing. 1 HTTP call."""
     try:
@@ -110,7 +132,8 @@ def fetch_a_share_metadata() -> pd.DataFrame:
         if exchange.upper() not in {"SH", "SZ", "BJ"}:
             continue
         ticker = _to_baostock_code(code, exchange)
-        out.append({"ticker": ticker, "region": "cn", "name": name, "sector": ""})
+        sector = _board_classification(code)
+        out.append({"ticker": ticker, "region": "cn", "name": name, "sector": sector})
     return pd.DataFrame(out)
 
 

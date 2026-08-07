@@ -68,6 +68,13 @@ export const dict = {
     "sectors.methodology_title": "方法论",
     "sectors.awaiting": "板块数据待构建——请先运行 scripts/build_ticker_metadata.py。",
 
+    "picks.track.title": "历史追踪：预测 vs 真实",
+    "picks.track.hit_rate": "命中率（top picks 实际上涨比例）",
+    "picks.track.excess": "超额收益（top − base）",
+    "picks.track.n_picks": "追踪 picks 数",
+    "picks.track.top": "top 均值",
+    "picks.track.base": "全市场均值",
+
     "evidence.intro": "跨 14 条预注册配置，没有任何 treatment 臂相对 price-only 基线显示可靠的正向增量 rank-IC。所有置信区间都跨越零。",
     "evidence.grade.CV-proxy": "CV 代理",
     "evidence.grade.chron": "时序/探索",
@@ -211,6 +218,13 @@ export const dict = {
     "sectors.least_favored_desc": "Ascending by latest-month mean score — relative disfavor, not a short signal.",
     "sectors.methodology_title": "Methodology",
     "sectors.awaiting": "Sector data pending — run scripts/build_ticker_metadata.py first.",
+
+    "picks.track.title": "Track record: prediction vs reality",
+    "picks.track.hit_rate": "Hit rate (top picks that actually rose)",
+    "picks.track.excess": "Excess return (top − base)",
+    "picks.track.n_picks": "Tracked picks",
+    "picks.track.top": "top mean",
+    "picks.track.base": "market mean",
 
     "evidence.intro": "Across 14 pre-registered configurations, no treatment arm shows a reliable positive incremental rank-IC over the price-only baseline. All CIs bracket zero.",
     "evidence.grade.CV-proxy": "CV-proxy",

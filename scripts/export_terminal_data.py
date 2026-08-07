@@ -240,9 +240,9 @@ def export_sector_breakdown() -> None:
             "Sector aggregation of latest-month OOS model scores + calibrated "
             "P(up), per region's own latest PIT-aligned date (US and CN panels "
             "may end on different months). US sectors from EDGAR SIC (public "
-            "domain); A-share sectors not in the listing file ⇒ 'Unclassified' "
-            "bucket (disclosed, not hidden). Sectors with <3 stocks dropped. "
-            "Display-only, NOT a research claim — relative model favor."
+            "domain, industry-level); A-share 'sectors' are exchange-board tiers "
+            "(科创板/创业板/主板/北交所 — a real tier classification, not industry). "
+            "Sectors with <3 stocks dropped. Display-only, NOT a research claim."
         ),
         "n_sectors": len(grouped),
         "top_favored": grouped[:8],
@@ -250,6 +250,99 @@ def export_sector_breakdown() -> None:
         "all_sectors": grouped,
     }
     (WEB / "sector_breakdown.json").write_text(json.dumps(payload, indent=2, default=str))
+
+
+def export_picks_backtest() -> None:
+    """Track record: past N months' top picks vs their realized forward returns.
+
+    This is the honest 'prediction vs reality' audit — the soul of the
+    anti-leakage project. For each of the past 6 realized months per region,
+    take the top-5 picks by score, join the realized forward_return_h, and
+    report hit rate + mean return vs base rate. If the model is null (rank-IC
+    −0.0088), top picks' realized returns should cluster around the base rate.
+
+    Output: ``picks_backtest.json`` with per-month entries + summary stats.
+    """
+    oos = pd.read_parquet("runs/track_c_confirmatory_oos_scores.parquet")
+    oos["date"] = pd.to_datetime(oos["date"])
+    meta = _load_ticker_metadata()
+    us_panel = pd.read_parquet(Path("data/cache/track_b_panel.parquet"))
+    us_panel["date"] = pd.to_datetime(us_panel["date"])
+    cn_panel = pd.read_parquet(Path("data/cache/cn_price_panel.parquet"))
+    cn_panel["date"] = pd.to_datetime(cn_panel["date"])
+
+    N_MONTHS = 6
+    TOP_N = 5
+    months_payload: list[dict] = []
+    all_top_returns: list[float] = []
+    all_base_returns: list[float] = []
+    n_hits = 0
+    n_total_picks = 0
+
+    for region, panel in (("us", us_panel), ("cn", cn_panel)):
+        region_oos = oos[oos["region"] == region][["date", "ticker", "score"]].copy()
+        fwd = panel[["date", "ticker", "forward_return_h"]].copy()
+        merged = region_oos.merge(fwd, on=["date", "ticker"], how="inner")
+        merged = merged.dropna(subset=["forward_return_h", "score"])
+        months = sorted(merged["date"].unique())
+        # Last N_MONTHS realized months (exclude the very latest if partial).
+        recent_months = months[-(N_MONTHS):]
+        for month_ts in recent_months:
+            month_df = merged[merged["date"] == month_ts]
+            if len(month_df) < TOP_N:
+                continue
+            top = month_df.nlargest(TOP_N, "score")
+            top = _enrich_with_metadata(top, meta)
+            base_rate_return = float(month_df["forward_return_h"].mean())
+            top_mean_return = float(top["forward_return_h"].mean())
+            picks_list = []
+            for _, r in top.iterrows():
+                ret = float(r["forward_return_h"])
+                hit = ret > 0
+                if hit:
+                    n_hits += 1
+                n_total_picks += 1
+                all_top_returns.append(ret)
+                picks_list.append({
+                    "ticker": r["ticker"],
+                    "name": r["name"],
+                    "score": round(float(r["score"]), 3),
+                    "realized_return": round(ret, 4),
+                    "hit": hit,
+                })
+            all_base_returns.append(base_rate_return)
+            months_payload.append({
+                "month": str(pd.Timestamp(month_ts).date()),
+                "region": region,
+                "picks": picks_list,
+                "top_mean_return": round(top_mean_return, 4),
+                "base_mean_return": round(base_rate_return, 4),
+                "excess": round(top_mean_return - base_rate_return, 4),
+            })
+
+    hit_rate = n_hits / n_total_picks if n_total_picks > 0 else 0.0
+    avg_top = sum(all_top_returns) / len(all_top_returns) if all_top_returns else 0.0
+    avg_base = sum(all_base_returns) / len(all_base_returns) if all_base_returns else 0.0
+    payload = {
+        "methodology": (
+            f"Past {N_MONTHS} realized months per region, top-{TOP_N} picks by "
+            "model score vs their actual forward_return_h (≈21-session forward "
+            "return). Hit rate = fraction of top picks that actually went up. "
+            "Excess = top-picks mean return − all-stocks mean return that month. "
+            "If the model is NULL (rank-IC −0.0088), hit rate ≈ base rate and "
+            "excess ≈ 0. This is the honest 'prediction vs reality' audit."
+        ),
+        "months": months_payload,
+        "summary": {
+            "n_months": len(months_payload),
+            "n_picks": n_total_picks,
+            "hit_rate": round(hit_rate, 4),
+            "avg_top_return": round(avg_top, 4),
+            "avg_base_return": round(avg_base, 4),
+            "avg_excess": round(avg_top - avg_base, 4),
+        },
+    }
+    (WEB / "picks_backtest.json").write_text(json.dumps(payload, indent=2, default=str))
 
 
 def export_metrics(latest: str, n_total: int) -> None:
@@ -571,6 +664,7 @@ def main() -> None:
     latest, n_total = export_picks()
     export_metrics(latest, n_total)
     export_sector_breakdown()
+    export_picks_backtest()
     export_taco()
     export_pick_conviction()
     export_cot()

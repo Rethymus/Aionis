@@ -120,7 +120,9 @@ export function SectorsView() {
   const maxScore = Math.max(...scores, 0);
   const top = sb.top_favored as SectorRow[];
   const bot = sb.least_favored as SectorRow[];
-  const latestDates = sb.latest_dates ? Object.values(sb.latest_dates as Record<string, string>).join(" · ") : sb.latest_date ?? "";
+  const latestDates = sb.latest_dates
+    ? Object.values(sb.latest_dates as Record<string, string>).join(" · ")
+    : "";
 
   return (
     <div className="space-y-6 p-4 md:p-6">

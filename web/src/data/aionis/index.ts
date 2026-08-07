@@ -3,6 +3,7 @@ import picks from "./picks.json";
 import shorts from "./shorts.json";
 import picksMeta from "./picks_meta.json";
 import sectorBreakdown from "./sector_breakdown.json";
+import picksBacktest from "./picks_backtest.json";
 import evidence from "./evidence.json";
 import powerFloor from "./power_floor.json";
 import icMonthly from "./ic_monthly.json";
@@ -65,6 +66,7 @@ export const aionis = {
   shorts: shorts as Pick[],
   picksMeta: picksMeta as typeof picksMeta,
   sectorBreakdown: sectorBreakdown as typeof sectorBreakdown,
+  picksBacktest: picksBacktest as typeof picksBacktest,
   evidence: evidence as Evidence[],
   powerFloor: powerFloor as typeof powerFloor,
   icMonthly: icMonthly as { month: string; us: number; cn: number; combined: number }[],
