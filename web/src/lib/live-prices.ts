@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 // ─── Set this after deploying the Worker ───────────────────────
 // Example: "https://aionis-prices.your-subdomain.workers.dev"
 // Leave empty to disable live prices (terminal renders score-only).
-const WORKER_URL = "https://aionis-prices.aionis-prices.workers.dev";
+const WORKER_URL = "https://api.aionis-prices.workers.dev";
 // ───────────────────────────────────────────────────────────────
 
 export type LivePrice = {
