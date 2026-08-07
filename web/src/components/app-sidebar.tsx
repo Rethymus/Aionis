@@ -34,6 +34,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     { title: t("nav.overview"), url: "/dashboard", icon: <LayoutDashboardIcon /> },
     { title: t("nav.picks"), url: "/picks", icon: <TrendingUpIcon /> },
     { title: t("nav.sectors"), url: "/sectors", icon: <BlocksIcon /> },
+    { title: t("nav.market"), url: "/market", icon: <TrendingUpIcon /> },
     { title: t("nav.evidence"), url: "/evidence", icon: <ScaleIcon /> },
     { title: t("nav.conviction"), url: "/conviction", icon: <ActivityIcon /> },
   ];

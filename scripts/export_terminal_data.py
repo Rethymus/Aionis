@@ -656,6 +656,82 @@ def export_reddit_meta() -> None:
     (WEB / "reddit.json").write_text(json.dumps(payload, indent=2))
 
 
+def export_market_context() -> None:
+    """Market context since 川普元年 (2016) — VIX + equal-weight market index + events.
+
+    Provides the 'Trump Era' narrative anchor the terminal lacks: a 2016→today
+    view of market stress (VIX) and broad-market growth (equal-weight US index),
+    with curated event markers (elections, tariff wars, COVID, TACO). Uses panel
+    data already covering 2016+ (no new fetch). Display-only, not a research claim.
+    """
+    # --- VIX monthly (FRED ALFRED, permissive, 2016+) ---
+    vix_raw = json.loads(Path("data/cache/alfred_VIXCLS.json").read_text())
+    vix_by_date = {
+        o["date"]: float(o["value"])
+        for o in vix_raw["observations"]
+        if o.get("value") not in (None, ".", "")
+    }
+    # Resample to monthly mean.
+    vix_monthly: dict[str, float] = {}
+    for date_str, val in vix_by_date.items():
+        month = date_str[:7]
+        vix_monthly.setdefault(month, []).append(val)
+    vix_series = [
+        {"month": m, "vix": round(sum(v) / len(v), 2)}
+        for m, v in sorted(vix_monthly.items())
+        if m >= "2016-01"
+    ]
+
+    # --- US equal-weight market index (from panel close prices, 2016+) ---
+    us = pd.read_parquet(Path("data/cache/track_b_panel.parquet"))
+    us["date"] = pd.to_datetime(us["date"])
+    us = us[["date", "ticker", "close"]].dropna()
+    # Month-end close per ticker.
+    month_end = us.groupby([us["date"].dt.to_period("M"), "ticker"])["close"].last().reset_index()
+    month_end["month"] = month_end["date"].astype(str)
+    # Per-ticker monthly return, then equal-weight cross-sectional mean.
+    pivoted = month_end.pivot(index="month", columns="ticker", values="close").sort_index()
+    monthly_ret = pivoted.pct_change()
+    ew_ret = monthly_ret.mean(axis=1).dropna()
+    ew_ret = ew_ret[ew_ret.index >= "2016-02"]  # first return needs prior month
+    # Cumulative index (2016-02 = 100).
+    cum_index = (1 + ew_ret).cumprod() * 100
+    market_series = [
+        {"month": m, "ret": round(float(r), 4), "index": round(float(cum_index.loc[m]), 2)}
+        for m, r in ew_ret.items()
+    ]
+
+    # --- Curated market events (publicly verifiable, 2016-2026) ---
+    events = [
+        {"date": "2016-11-08", "label": "Trump elected (first term)", "type": "political", "region": "us"},
+        {"date": "2018-03-22", "label": "US-China tariff war begins", "type": "trade", "region": "us"},
+        {"date": "2020-03-23", "label": "COVID market bottom", "type": "crisis", "region": "global"},
+        {"date": "2020-11-03", "label": "Biden elected", "type": "political", "region": "us"},
+        {"date": "2022-06-15", "label": "Fed emergency +75bp hike", "type": "monetary", "region": "us"},
+        {"date": "2024-11-05", "label": "Trump re-elected", "type": "political", "region": "us"},
+        {"date": "2025-04-09", "label": "Reciprocal tariffs suspended (TACO origin)", "type": "trade", "region": "us"},
+        {"date": "2025-05-12", "label": "US-China Geneva truce", "type": "trade", "region": "us"},
+    ]
+
+    payload = {
+        "methodology": (
+            "Market context since 川普元年 (Trump Era, 2016). VIX = monthly mean "
+            "of FRED VIXCLS (permissive, US-gov public domain). US market index = "
+            "equal-weight cross-sectional mean of monthly returns across the "
+            "Track B panel (~566 S&P 500 PIT constituents), rebased to 100 at "
+            "2016-02. Events are publicly verifiable market-moving milestones. "
+            "Display-only context layer — NOT a research claim."
+        ),
+        "start_label": "川普元年 (2016)",
+        "vix_series": vix_series,
+        "market_series": market_series,
+        "events": events,
+        "n_months": len(market_series),
+        "date_range": [market_series[0]["month"], market_series[-1]["month"]] if market_series else [],
+    }
+    (WEB / "market_context.json").write_text(json.dumps(payload, indent=2, default=str))
+
+
 def main() -> None:
     # Shared payloads (reused from the Quarto exporter, redirected to web/).
     eq.export_sigma_survey()
@@ -672,6 +748,7 @@ def main() -> None:
     export_pick_conviction()
     export_cot()
     export_form4()
+    export_market_context()
     export_smart_money()
     export_reddit_meta()
     written = sorted(p.name for p in WEB.glob("*.json"))

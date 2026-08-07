@@ -188,3 +188,23 @@ def test_picks_backtest_methodology_mentions_null() -> None:
     """The track record methodology must honestly disclose the null verdict."""
     bt = _load("picks_backtest.json")
     assert "NULL" in bt["methodology"] or "null" in bt["methodology"].lower()
+
+
+# --- Market context (Trump Era overview) -------------------------------------
+
+
+def test_market_context_shape() -> None:
+    """market_context.json must have VIX + market series + events from 2016."""
+    mc = _load("market_context.json")
+    assert {"vix_series", "market_series", "events", "methodology"} <= set(mc)
+    assert mc["vix_series"][0]["month"] <= "2016-02"
+    assert len(mc["vix_series"]) >= 100  # ~10 years monthly
+    assert len(mc["market_series"]) >= 100
+    # Market index starts at ~100 (2016 rebase).
+    first_idx = mc["market_series"][0]["index"]
+    assert 90 <= first_idx <= 105, f"first index should be ~100, got {first_idx}"
+    # Events are curated + have required fields.
+    assert len(mc["events"]) >= 5
+    for e in mc["events"]:
+        assert {"date", "label", "type", "region"} <= set(e)
+        assert e["type"] in {"political", "trade", "crisis", "monetary"}
