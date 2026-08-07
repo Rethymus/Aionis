@@ -96,54 +96,47 @@ async function cnPrices(url, env, ctx) {
   const hit = await cache.match(cacheKey);
   if (hit) return hit;
 
-  // Convert baostock format (sh.688041) → East Money secid (1.688041).
-  const parsed = tickersParam.split(",").map((t) => {
-    const [prefix, code] = t.split(".");
-    const market = prefix === "sh" ? 1 : prefix === "bj" ? 0 : 0;
-    return { ticker: t, secid: `${market}.${code}`, code };
-  });
+  // Sina real-time quote API: hq.sinajs.cn/list=sh688041,sz300223
+  // Returns GBK-encoded text: var hq_str_sh688041="海光信息,open,prevClose,price,...";
+  // Fields: 0=name, 1=open, 2=prevClose, 3=currentPrice, 4=high, 5=low
+  const sinaTickers = tickersParam.split(",").map((t) => t.replace(".", "")).join(","); // sh.688041 → sh688041
 
-  // Fetch each ticker via stock/get (more reliable than ulist.np from edge).
-  const results = await Promise.all(
-    parsed.map(async ({ ticker, secid, code }) => {
-      try {
-        const resp = await fetch(
-          `https://push2.eastmoney.com/api/qt/stock/get?secid=${secid}&fields=f43,f57,f58,f169,f170&fltt=2&_=${Date.now()}`,
-          { headers: { Referer: "https://quote.eastmoney.com" } },
-        );
-        if (!resp.ok) return { ticker, error: resp.status };
-        const raw = await resp.json();
-        const d = raw?.data;
-        if (!d) return { ticker, error: "no data" };
-        // With fltt=2: f43=price (actual), f170=change%, f58=name
-        const baostockPrefix = String(d.f57 || code).startsWith("6") ? "sh"
-          : String(d.f57 || code).startsWith("4") || String(d.f57 || code).startsWith("8") ? "bj" : "sz";
-        return {
-          ticker: `${baostockPrefix}.${d.f57 || code}`,
-          price: d.f43 ?? null,
-          change_pct: d.f170 ?? null,
-          name: d.f58 ?? "",
-        };
-      } catch (e) {
-        return { ticker, error: String(e) };
-      }
-    }),
-  );
+  try {
+    const resp = await fetch(`https://hq.sinajs.cn/list=${sinaTickers}`, {
+      headers: { Referer: "https://finance.sina.com.cn" },
+    });
+    if (!resp.ok) return json({ error: `sina:${resp.status}` }, 502);
 
-  const out = {};
-  for (const r of results) {
-    if (r.error === undefined) {
-      out[r.ticker] = {
-        price: r.price,
-        change_pct: r.change_pct,
-        name: r.name,
+    // Sina returns GBK — decode to UTF-8 for the name field.
+    const buffer = await resp.arrayBuffer();
+    const text = new TextDecoder("gbk").decode(buffer);
+
+    const out = {};
+    for (const line of text.trim().split("\n")) {
+      const m = line.match(/var hq_str_(\w+)="(.*)";/);
+      if (!m) continue;
+      const rawTicker = m[1]; // sh688041
+      const fields = m[2].split(",");
+      if (fields.length < 4 || !fields[3]) continue;
+      const name = fields[0];
+      const prevClose = parseFloat(fields[2]);
+      const current = parseFloat(fields[3]);
+      const changePct = prevClose > 0 ? ((current - prevClose) / prevClose) * 100 : null;
+      // Convert back: sh688041 → sh.688041
+      const prefix = rawTicker.match(/^(sh|sz|bj)/)?.[1] ?? "sz";
+      const code = rawTicker.replace(/^(sh|sz|bj)/, "");
+      out[`${prefix}.${code}`] = {
+        price: current,
+        change_pct: changePct !== null ? Math.round(changePct * 100) / 100 : null,
+        name,
         as_of: new Date().toISOString(),
       };
     }
+    const ttl = isCnMarketOpen() ? 30 : 86400;
+    return cached(json(out), cacheKey, cache, ctx, ttl);
+  } catch (e) {
+    return json({ error: String(e) }, 502);
   }
-  const nOk = Object.keys(out).length;
-  const ttl = isCnMarketOpen() ? 30 : 86400;
-  return cached(json({ ...out, _meta: { ok: nOk, total: parsed.length } }), cacheKey, cache, ctx, ttl);
 }
 
 // ─── Health check ──────────────────────────────────────────────
@@ -159,10 +152,9 @@ async function health(env, ctx) {
     out.tiingo = "unreachable";
   }
   try {
-    const r = await fetch(
-      "https://push2.eastmoney.com/api/qt/stock/get?secid=1.600000&fields=f43,f57&fltt=2",
-      { headers: { Referer: "https://quote.eastmoney.com" } },
-    );
+    const r = await fetch("https://hq.sinajs.cn/list=sh600000", {
+      headers: { Referer: "https://finance.sina.com.cn" },
+    });
     out.cn = r.ok ? "ok" : `error:${r.status}`;
   } catch {
     out.cn = "unreachable";
