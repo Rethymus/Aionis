@@ -25,6 +25,7 @@ import {
   UsersIcon,
   BarChartHorizontalIcon,
   BlocksIcon,
+  HeartPulseIcon,
 } from "lucide-react";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -48,6 +49,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     // { title: t("nav.reddit"), url: "/reddit", icon: <MessageCircleIcon /> },
   ];
   const navMonitor = [
+    { title: t("nav.modelhealth"), url: "/model-health", icon: <HeartPulseIcon /> },
     { title: t("nav.powerfloor"), url: "/power-floor", icon: <GaugeIcon /> },
     { title: t("nav.discipline"), url: "/discipline", icon: <ShieldCheckIcon /> },
   ];

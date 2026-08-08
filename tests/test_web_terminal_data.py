@@ -236,6 +236,31 @@ def test_market_context_shape() -> None:
         assert e["type"] in {"political", "trade", "crisis", "monetary"}
 
 
+# --- Model-health / drift monitor (leakage-safe, display-only) ---------------
+
+
+def test_model_health_shape() -> None:
+    """model_health.json: per-region PSI drift + rolling IC, leakage-safe display."""
+    mh = _load("model_health.json")
+    assert mh["status"] in {"ok", "awaiting_fetch"}
+    assert "methodology" in mh
+    if mh["status"] != "ok":
+        return
+    assert "regions" in mh and isinstance(mh["regions"], dict)
+    for region, m in mh["regions"].items():
+        assert m["region"] == region
+        assert m["regime"] in {"stable", "moderate", "significant"}
+        assert isinstance(m["psi"], (int, float)) and m["psi"] >= 0
+        # Realized-pair counts must be positive integers.
+        assert isinstance(m["n_history"], int) and m["n_history"] > 0
+        assert isinstance(m["n_recent"], int) and m["n_recent"] > 0
+        # IC is bounded in [-1, 1]; base rates in [0, 1].
+        assert -1.0 <= m["ic_full"] <= 1.0 and -1.0 <= m["ic_recent"] <= 1.0
+        assert 0.0 <= m["base_rate_full"] <= 1.0 and 0.0 <= m["base_rate_recent"] <= 1.0
+    # Honest-disclosure: methodology must say it is NOT a retrain trigger.
+    assert "retrain" in mh["methodology"].lower() or "not a research" in mh["methodology"].lower()
+
+
 # --- TACO pressure index ------------------------------------------------------
 
 

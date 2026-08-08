@@ -84,6 +84,21 @@
 
 **边界**：本轮纯 docs（2 新 PROPOSED）+ state；**0 frozen / ledger / config / E3 / 代码**改动；未跑 research/forward。**待业主**：选 Track A（推荐）/ Track B（gated，需新预注册）/ 拓宽 framing（与 null 发表定帧冲突）。
 
+## 2026-08-08 (e) Track A 落地 — 模型漂移监测模块（leakage-safe，display-only）
+
+业主授权"建最有价值内容直至不可再优化"。依 (d) 的 Track A 推荐，落地漂移监测（"自适应循环"的 leakage-safe 信号，不喂回训练）：
+
+- `src/aionis/eval/model_drift.py`（新）：PSI（score 分布漂移，recent 6 实现月 vs 历史）+ 滚动截面 rank-IC（recent vs full）。**realized-only**（复用 `score_calibration.build_pair_frame` + latest 未实现月排除契约）。regime 阈值 stable<0.1<moderate<0.25<significant。11 hermetic 测试（PSI 正确性/常数退化、rank-IC 方向、**反泄漏：未实现最新月排除**、degeneracy→None、summary skip）。
+- `scripts/export_terminal_data.py`：`export_model_health()` → `model_health.json`（per-region drift + methodology）。
+- `web/`：`model-health-view.tsx` + `/model-health` route + sidebar Monitor 组 + i18n zh/en；契约测试 `test_model_health_shape`。
+- **实测（真实 OOS）**：US PSI 0.156（moderate，IC 全程 +0.004 / 最近 +0.012 均 null）；CN PSI 0.534（significant，score 分布漂 + base rate 0.475→0.385；IC −0.036→+0.07 噪声翻转 = null）。
+
+**为何这是"自适应循环"的合规解**：漂移检测 = "模型注意到近期行为偏离历史" → 给人看（**不自动重训**）。把"用最新数据自校正"实现为校准/漂移/跟踪的诚实显示，而非喂回训练（rerun-to-significance 禁）。这是 (d) Track A 的第一块；A2（漂移）已交付，A3（forward 命中率累加器）= 既有 `export_picks_backtest`（131 月 track record），A1（walk-forward 校准 eval）留后续。
+
+**边界**：本轮 `src/aionis/eval/model_drift.py`（新 display 工具，类比 `ff5_residual`/`score_calibration`，不写 ledger/frozen）+ export（additive）+ tests + web + state；**0 ledger / frozen / prereg / ADR / config / E3**；display-only，不进研究管线。
+
+**验证**：ruff 全 repo clean；model_drift 11 + web 契约 19 测试绿；web build OK（18/18，`/model-health` 渲染）；全套 hermetic pytest 提交前确认。
+
 ## 2026-08-07 (a) 路径 A 上线 — 校准概率读数 + 板块聚合 + 公司名 + 诚实 null 免责
 
 业主反馈"量化选股策略但没体现选股、ticker 没有公司名、要涨跌概率、要实时数据"。批判性自审后业主授权**路径 A**（保守：校准概率 + 板块 + 公司名 + 条件式读数 + 反泄漏护栏，非 trading bot）。`bb83117` 已 push origin/main。

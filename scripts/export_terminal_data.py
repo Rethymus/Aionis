@@ -414,6 +414,40 @@ def export_taco() -> None:
     (WEB / "taco.json").write_text(json.dumps(payload, indent=2))
 
 
+def export_model_health() -> None:
+    """Model-drift + calibration health monitor (display-only, leakage-safe).
+
+    Reads the frozen OOS scores + PIT panels (same realized-pairs contract as
+    ``export_picks`` / ``score_calibration``) and writes a per-region drift
+    summary (score-distribution PSI + rolling cross-sectional rank-IC) so the
+    terminal can surface 'is the model drifting lately' honestly. NOT a research
+    claim and NOT a retrain trigger (rerun-to-significance is forbidden).
+    """
+    from aionis.eval.model_drift import drift_summary
+
+    oos_path = Path("runs/track_c_confirmatory_oos_scores.parquet")
+    if not oos_path.exists():
+        payload = {
+            "status": "awaiting_fetch",
+            "methodology": (
+                "Leakage-safe model-drift monitor (display-only). Awaiting OOS "
+                "scores — run the confirmatory pipeline. NOT a research claim."
+            ),
+            "regions": {},
+        }
+        (WEB / "model_health.json").write_text(json.dumps(payload, indent=2))
+        return
+    oos = pd.read_parquet(oos_path)
+    oos["date"] = pd.to_datetime(oos["date"])
+    us_panel_path = Path("data/cache/track_b_panel.parquet")
+    cn_panel_path = Path("data/cache/cn_price_panel.parquet")
+    us_panel = pd.read_parquet(us_panel_path) if us_panel_path.exists() else pd.DataFrame()
+    cn_panel = pd.read_parquet(cn_panel_path) if cn_panel_path.exists() else pd.DataFrame()
+    summary = drift_summary(oos, us_panel, cn_panel)
+    summary["status"] = "ok"
+    (WEB / "model_health.json").write_text(json.dumps(summary, indent=2, default=str))
+
+
 def export_cot() -> None:
     """CFTC COT positioning-pressure index (display-only, exploratory).
 
@@ -829,6 +863,7 @@ def main() -> None:
     export_picks_backtest()
     export_taco()
     export_pick_conviction()
+    export_model_health()
     export_cot()
     export_form4()
     export_market_context()
