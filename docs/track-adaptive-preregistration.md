@@ -3,6 +3,8 @@
 > **状态：FROZEN — `config_committed` 2026-08-08（owner "全默认" = D1-D6 全推荐默认，含 D6 GO）。**
 > **config_sig**：`892fb5068ed1e994db937e23c5b95f2d35ea796825c0c97937253e34605515ad`（`runs/ledger.jsonl` 行 #51, phase=track_adaptive；sha256 自洽已验）。
 > **约束**：config_committed 已先于任何 OOS 结果；此后允许 `scripts/track_adaptive_run.py` 实现 + 首次 OOS（不写新 ledger、首次 OOS metric 入新行）。冻结后改任何参数 = 新 ledger 行，绝不静默覆盖。
+>
+> **amend1（FROZEN，supersedes #51）**：owner 2026-08-08 "选择① + 改为周频（周收盘后重训）"。#51（monthly-A）被发现与 Track C 估计器恒等（Track C 本身就是扩窗月重训）→ 作废。amend1 = **WEEKLY ①**：基线 = 真·冻结单次拟合（永不重训）；处理 = 周扩窗重训（周收盘后）；估计量 = 周截面 rank-IC 差（5-session 前瞻，HAC 两尾，null-expected）；US-only（CN panel 是月末）；sig `ffd0c9227e692fe826faeac964607577f3a9ff3de3384907297bc396887c4659`（`runs/ledger.jsonl` 行 #52）。#51 保留（append-only）。
 
 > **命名澄清**：本 "Track Adaptive" 与既有冻结的 **Track B（七主题选股平台，`docs/track-b-preregistration.md`，
 > FROZEN 2026-08-02）无关**——后者是另一条已 `config_committed` 的研究线。本预注册用 "Track Adaptive"

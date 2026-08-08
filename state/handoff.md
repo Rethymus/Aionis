@@ -131,6 +131,21 @@
 
 **验证**：ruff clean；20 web 契约测试绿（含新 themes）；web build OK（**19/19**，`/themes` 渲染）。
 
+## 2026-08-08 (i) Track Adaptive amend1 → WEEKLY ①（supersedes #51，真正有意义的比较）
+
+业主 "选择① + 时间改为一周（周收盘后）"。但**先查清 Track C 训练机制**（反泄漏纪律：跑前核验估量是否 ill-posed）发现：Track C 的 "冻结基线" **本身就是扩窗月重训**（每 fold test = 1 个月，refit on growing past）→ **#51 的 mechanism A（月扩窗重训）≡ Track C 估计器**，IC_diff≈0 by construction，**恒等无意义**。
+
+**amend1（#52，FROZEN）把比较做成有意义的 + 周频**：
+- 基线 = **真·冻结**单次 LightGBM 拟合（2016-2020 周频，**永不重训**）——Track C 从未做过的真冻结；处理 = 周扩窗重训（每个 OOS 周收盘后 refit on expanding realized + 5-session embargo）。
+- 估计量 = 周截面 rank-IC 差（5-session forward，HAC 两尾，null-expected）。
+- **可行性核验**：`track_b_panel` 实为**日频**（2637 日，非月末）→ 周频管线可行（周末采样 + 从 close 算 5-session fwd + embargo=5）。
+- **范围约束**：US-only（CN panel 是月末）；substrate = 日可得特征（价格+基本面+raw macro；Track C regime composite 月末 → 周频排除）。
+- `scripts/track_adaptive_amend1.py`（新）；ledger 51→52，sig `ffd0c9227e692fe826faeac964607577f3a9ff3de3384907297bc396887c4659`，sha256 自洽，supersedes #51（append-only，#51 保留为作废记录）。
+
+**关键纪律**：本轮**未跑任何 learner、未观察任何 OOS metric**（config_committed BEFORE result）。下一步 = `scripts/track_adaptive_run.py`（日 panel 周末采样 + 5-session fwd + 真冻结 vs 周扩窗重训 + IC_diff_weekly + HAC + DSR + H6 双跑）；首次 OOS 入新 ledger 行。诚实预期仍 null（周 IC 比 月 IC 更噪；power floor）。
+
+**边界**：本轮 `scripts/track_adaptive_amend1.py`（新）+ `runs/ledger.jsonl`（+1 行 #52）+ `docs/track-adaptive-preregistration.md`（amend1 banner）+ state；**0 既有 frozen/prereg/ADR/config 改动**（新增独立行，#49 monthly null 不动）；未跑 research/forward。
+
 ## 2026-08-08 (h) Track Adaptive `config_committed` 冻结 —— climax 后首条新研究线 OOS 的反泄漏门
 
 业主 "全默认"（D1-D6 全推荐默认 + D6 GO）。落地反泄漏硬锚（**config_committed 先于任何 OOS**）：
