@@ -376,12 +376,20 @@ def export_taco() -> None:
     """
     raw = json.loads(Path("data/cache/alfred_VIXCLS.json").read_text())
     by_date = {
-        o["date"]: o["value"]
+        o["date"]: float(o["value"])
         for o in raw["observations"]
         if o.get("value") not in (None, ".", "")
     }
-    recent = sorted(by_date)[-260:]
-    vix_series = [{"date": d, "vix": float(by_date[d])} for d in recent]
+    # Resample to monthly mean (2016-01 → today), mirroring export_market_context,
+    # so the TACO stress chart shows the full Trump-era arc (not just ~1yr daily).
+    monthly: dict[str, list[float]] = {}
+    for date_str, val in by_date.items():
+        monthly.setdefault(date_str[:7], []).append(val)
+    vix_series = [
+        {"month": m, "vix": round(sum(v) / len(v), 2)}
+        for m, v in sorted(monthly.items())
+        if m >= "2016-01"
+    ]
     events = [
         {"date": "2025-02-01", "label": "Canada/Mexico/China tariff hike", "type": "escalation"},
         {"date": "2025-04-02", "label": "Reciprocal tariffs announced (Liberation Day)", "type": "escalation"},
@@ -391,16 +399,17 @@ def export_taco() -> None:
     ]
     payload = {
         "methodology": (
-            "Illustrative: VIX (FRED ALFRED, permissive) as the market-stress proxy; "
-            "event table hand-curated from public news (FT, CNBC, ABC). Not an Aionis "
-            "research claim — methodology demonstrative."
+            "Illustrative: VIX (FRED ALFRED, permissive) monthly mean from 2016-01 → "
+            "today as the market-stress proxy; the 2025 TACO events are shown against "
+            "the full Trump-era stress history. Event table hand-curated from public "
+            "news (FT, CNBC, ABC). Not an Aionis research claim — demonstrative."
         ),
         "vix_series": vix_series,
         "events": events,
         "climbdowns_count": sum(1 for e in events if e["type"] == "concession"),
         "escalations_count": sum(1 for e in events if e["type"] == "escalation"),
         "latest_vix": vix_series[-1]["vix"] if vix_series else None,
-        "latest_date": vix_series[-1]["date"] if vix_series else None,
+        "latest_date": vix_series[-1]["month"] if vix_series else None,
     }
     (WEB / "taco.json").write_text(json.dumps(payload, indent=2))
 
@@ -638,6 +647,10 @@ def export_smart_money() -> None:
     recent = rows[:60]
     from collections import Counter
     active = Counter(r["filer"] for r in rows[:300]).most_common(10)
+    yearly = [
+        {"year": int(y), "filings": sum(1 for r in rows if r["date"][:4] == y)}
+        for y in sorted({r["date"][:4] for r in rows})
+    ]
     payload = {
         "methodology": (
             "Recent SC 13D institutional stake filings (SEC EDGAR EFTS full-text "
@@ -649,6 +662,7 @@ def export_smart_money() -> None:
         "total_filings": len(rows),
         "n_filers": len({r["filer"] for r in rows}),
         "latest_date": rows[0]["date"] if rows else None,
+        "yearly": yearly,
     }
     (WEB / "smart_money.json").write_text(json.dumps(payload, indent=2))
 

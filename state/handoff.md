@@ -34,6 +34,23 @@
 
 **待业主**：① 审线上 `/positioning`（2016→today arc）② Form4 后台 fetch 完成后（~小时）`/insiders` 显示 2016→today 逐年 ③ Russell 2000 2016 gap（需查 CFTC 当年第三变体名）④ smart_money latest 2024-12 是否重刷 EFTS（独立切片）。
 
+## 2026-08-08 (b) TACO/smart_money 推至 2016 + Form4 首批 2016 落地 + 并发 worker 观测
+
+业主授权"创建最有价值内容直至不可再优化"。代码侧 2016 优化收尾：
+
+- **TACO `/taco`**：VIX 由 `[-260:]` 近 1 年日线 → **月均 2016-01..2026-07**（127 点，复用 market_context 月聚合），2025 TACO 事件现置于完整 Trump-era 压力史背景。web 契约测试加 `test_taco_vix_monthly_from_2016`。
+- **smart_money `/smart-money`**：加 `yearly`（逐年申报数，镜像 form4 yearly），实测 [2015..2024]。
+- **COT Russell 2000 2016 gap**：找到第三变体名 `RUSSELL 2000 MINI INDEX FUTURE - ICE FUTURES U.S.`（2016 在 ICE，~2017 才转 CME），加入 variant-union。**但 cftc.gov 本会话持续 ConnectTimeout（2016/2024/2025 多年跨多次 run 超时）**→ Russell 仍 2017-01 起；ICE 变体代码已就位，cftc 恢复后任一 run（merge-protected）即补 2016。9/10 市场已连续 2016-01..2026-08。
+- **Form4 2016 首批落地**：AAPL checkpoint（merge-by-issuer）→ form4.json 现 `window=2016-02..2026-06`，`yearly=[2016..2026]` 全 11 年（AAPL 深，其余 4 issuer 仍 2024-2026，后台 MSFT 深化中）。
+
+**⚠️ 并发 worker 观测（非本会话产物，勿混入我的提交）**：工作树出现另一 actor 的未提交 reddit 升级——`src/aionis/ingest/reddit_sentiment.py`（M，双传输 PRAW+zero-cred Atom RSS）、`scripts/reddit_fetch.py`（??）、`tests/test_reddit_sentiment.py`（M）、`runs/ledger.jsonl`（M，疑 reddit data_ingest 行）。我派发的 sonnet agent 一度把 `export_reddit_meta` 改成读 `reddit_snapshots.parquet` 的 cache-or-await（schema 核验属实：reddit_fetch.py 确写该 parquet + reddit_sentiment.py 列匹配）**但漏掉前端 `subreddits` 字段 → web build 类型检查失败**。处置：**revert 该 reddit export 改动到 HEAD**（export_reddit_meta 回到 awaiting_activation + subreddits），只保留我本轮的 TACO + smart_money；reddit 模块整体留给并发 worker（避免 file-boundary 冲突 + 不冻结其 in-flight 描述）。**amend 仅 stage 我的 7 文件**，reddit_sentiment.py/test_reddit_sentiment.py/reddit_fetch.py/ledger.jsonl 不入提交。
+
+**验证**：ruff 全 repo clean；web 终端 18 测试绿（含新 taco + smart_money）；**web build OK**（✓ Compiled + 17/17 静态页，类型检查过）；COT/Form4/TACO/smart_money JSON 实测 2016+；全套 hermetic pytest 跑中（含并发 worker 的 test_reddit_sentiment.py 改动）。
+
+**后台作业（额度恢复后可继续/验收）**：form4_fetch（MSFT 深化中，EDGAR）；13D sequenced refresh（等 form4 释放 EDGAR）；COT Russell 2016（cftc 阻塞，待恢复）。日志 `runs/{form4_fetch_2016_v3,refresh_13d_sequenced,cot_fetch_russell_retry}.log`。
+
+**边界**：本轮 `scripts/cot_fetch.py` + `scripts/export_terminal_data.py`（TACO+smart_money）+ `tests/test_web_terminal_data.py` + `web/src/data/aionis/{cot,form4,smart_money,taco}.json` + state；**0 ledger / frozen / prereg / ADR / config / E3**（mine）；display-only。
+
 ## 2026-08-07 (a) 路径 A 上线 — 校准概率读数 + 板块聚合 + 公司名 + 诚实 null 免责
 
 业主反馈"量化选股策略但没体现选股、ticker 没有公司名、要涨跌概率、要实时数据"。批判性自审后业主授权**路径 A**（保守：校准概率 + 板块 + 公司名 + 条件式读数 + 反泄漏护栏，非 trading bot）。`bb83117` 已 push origin/main。

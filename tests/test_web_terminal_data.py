@@ -234,3 +234,40 @@ def test_market_context_shape() -> None:
     for e in mc["events"]:
         assert {"date", "label", "type", "region"} <= set(e)
         assert e["type"] in {"political", "trade", "crisis", "monetary"}
+
+
+# --- TACO pressure index ------------------------------------------------------
+
+
+def test_taco_vix_monthly_from_2016() -> None:
+    """TACO VIX series is monthly mean from 2016 (full Trump-era stress arc),
+    not just recent daily obs — consistent with the market_context baseline."""
+    taco = _load("taco.json")
+    assert {"vix_series", "events", "methodology"} <= set(taco)
+    vs = taco["vix_series"]
+    assert len(vs) >= 100, "VIX should span ~10 years monthly"
+    for pt in vs:
+        assert {"month", "vix"} <= set(pt)
+        assert len(pt["month"]) == 7  # YYYY-MM
+    assert vs[0]["month"] <= "2016-02"
+    # 2025 TACO events partition cleanly into escalations + climbdowns.
+    assert taco["escalations_count"] + taco["climbdowns_count"] == len(taco["events"])
+
+
+# --- Smart money (13D) --------------------------------------------------------
+
+
+def test_smart_money_yearly_when_present() -> None:
+    """Smart-money yearly filing-volume breakdown (mirrors form4 yearly)."""
+    sm = _load("smart_money.json")
+    assert {"recent_filings", "total_filings", "methodology"} <= set(sm)
+    if "yearly" not in sm:
+        return  # stale JSON before re-export
+    yearly = sm["yearly"]
+    assert isinstance(yearly, list)
+    if yearly:
+        years = [y["year"] for y in yearly]
+        assert years == sorted(years), "yearly years must be ascending"
+        for y in yearly:
+            assert {"year", "filings"} <= set(y)
+            assert isinstance(y["filings"], int) and y["filings"] >= 0
