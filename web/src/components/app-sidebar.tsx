@@ -44,9 +44,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     { title: t("nav.smartmoney"), url: "/smart-money", icon: <BriefcaseIcon /> },
     { title: t("nav.insiders"), url: "/insiders", icon: <UsersIcon /> },
     { title: t("nav.taco"), url: "/taco", icon: <FlameIcon /> },
-    // Reddit temporarily hidden — API access blocked (2025-11 self-service closure).
-    // Page still exists at /reddit; restore nav when API is reactivated.
-    // { title: t("nav.reddit"), url: "/reddit", icon: <MessageCircleIcon /> },
+    // Reddit activated via zero-credential Atom RSS (OAuth gated behind the 2026
+    // Responsible Builder Policy; unauth .json 403). Live when a snapshot exists.
+    { title: t("nav.reddit"), url: "/reddit", icon: <MessageCircleIcon /> },
   ];
   const navMonitor = [
     { title: t("nav.modelhealth"), url: "/model-health", icon: <HeartPulseIcon /> },
