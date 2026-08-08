@@ -1,13 +1,69 @@
 {
-  "status": "awaiting_activation",
-  "collector": "src/aionis/ingest/reddit_sentiment.py (PRAW 8.0.2 BSD-2 + FinBERT Apache-2.0)",
-  "mode": "exploratory \u00b7 forward-collection only \u00b7 no backfill (Pushshift dead)",
+  "status": "live",
+  "methodology": "Reddit retail-sentiment (mention volume + FinBERT sentiment) from r/wallstreetbets, r/stocks, r/investing. Forward-collection only (Pushshift dead 2023; no permissive historical corpus) -> no PIT history -> exploratory, display-only, NOT an Aionis research claim. Zero-credential Atom RSS transport (Reddit blocked unauth .json + new OAuth via the Responsible Builder Policy, 2026); upvote score available only when PRAW creds are present. Ticker extraction: $TICKER cashtags (any case) + bare UPPERCASE tokens >=4 chars (WSB ticker convention; lowercase = English prose).",
+  "collector": "src/aionis/ingest/reddit_sentiment.py + scripts/reddit_fetch.py",
+  "mode": "exploratory \u00b7 forward-collection only \u00b7 no backfill",
+  "clearance": "7-gate (docs/data-intake-rubric.md): license / PIT / no-revision / selection-bias / politeness",
   "subreddits": [
     "wallstreetbets",
     "stocks",
     "investing"
   ],
-  "clearance": "7-gate (docs/data-intake-rubric.md): license / PIT / no-revision / selection-bias / politeness",
-  "n_snapshots": 0,
-  "picks": []
+  "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
+  "latest_snapshot_ts": "2026-08-08T03:45:06+00:00",
+  "n_snapshots": 1,
+  "transport": "rss",
+  "score_available": false,
+  "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
+  "picks": [
+    {
+      "ticker": "PLTR",
+      "mentions": 1,
+      "sentiment": 0.021,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "SMCI",
+      "mentions": 1,
+      "sentiment": 0.851,
+      "bull_ratio": 1.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "TSLA",
+      "mentions": 1,
+      "sentiment": -0.559,
+      "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "UBER",
+      "mentions": 1,
+      "sentiment": -0.03,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "TTWO",
+      "mentions": 1,
+      "sentiment": -0.091,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "EPAM",
+      "mentions": 1,
+      "sentiment": -0.962,
+      "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "SNDK",
+      "mentions": 1,
+      "sentiment": 0.629,
+      "bull_ratio": 1.0,
+      "score_sum": 0
+    }
+  ]
 }

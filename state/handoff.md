@@ -51,6 +51,27 @@
 
 **边界**：本轮 `scripts/cot_fetch.py` + `scripts/export_terminal_data.py`（TACO+smart_money）+ `tests/test_web_terminal_data.py` + `web/src/data/aionis/{cot,form4,smart_money,taco}.json` + state；**0 ledger / frozen / prereg / ADR / config / E3**（mine）；display-only。
 
+## 2026-08-08 (c) Reddit 散户情绪激活 — 零凭证 Atom RSS（OAuth 堵死的唯一存活路径）
+
+**背景**：业主报告 Reddit API 申请失败（2026 Responsible Builder 政策）。实证三路 `.json` 全 403（通用 UA / 描述性 UA / old.reddit）→ 论坛"加 .json 免密钥"捷径已死；`.rss` 端点 200 存活（Reddit 自家公开 Atom 订阅源，ToS-clean，G7）。OAuth token 端点 401（在线，只等凭证，但凭证申请被堵）。StockTwits 免费 API 从数据中心 IP 被 Cloudflare 403。
+
+**交付**（`reddit_sentiment.py` 双传输 + 新 fetch + export）：
+- `transport=auto|praw|rss`（`auto`=有凭证 PRAW / 无凭证 RSS）；`.rss` 经 `defusedxml`（XXE-safe）解析 + `bs4` HTML→text + 复用既有 `_aggregate_snapshot`/ledger/sha256 纪律；每 subreddit 失败/畸形 XML 跳过不中断；`HostSpacingPolicy` ≥2s + 有界 429 重试。
+- **ticker 抽取实证修正**：原 case-insensitive 裸词把英文词当 ticker（首跑 top = ARE/SO/NOW/well/tech 全是英文）。真实 WSB `/new` 数据驱动：cashtag 几乎不用（仅 `$HTZ`×1），真 ticker 大写裸词（PLTR×10/SMCI×10/TTWO×4），英文词小写 → **case 是判别器**。改为：cashtag（任意大小写）+ 大写裸词 ≥4（短 ticker 如 ARE/SO/M 仍需 `$`）。修后 live 输出全真 S&P（PLTR/SMCI/TSLA/UBER/TTWO/EPAM/SNDK）。
+- **修 ordering bug**：曾把 FinBERT 下载移到凭证检查前 → 缺凭证 `transport=praw` 先下 438MB 再 raise，撑爆 `/tmp` 致全套 pytest 挂起。改回 pull（含凭证检查）→ FinBERT 下载后。
+- `scripts/reddit_fetch.py`（零凭证，扫 566 S&P panel；`auto` 将来业主有凭证自动升级 PRAW 带 score）。
+- `export_reddit_meta` 稳定 superset schema（13 key 两分支同构）→ `tsc --noEmit` CLEAN。修了并发 session 的 build-break（其版 reddit export 漏 `subreddits`/`collector`/`mode` → web 类型检查失败；已 revert）。`reddit.json` 现 `status: live`，7 真实 ticker picks。
+
+**反泄漏底线（unchanged）**：forward-only（Pushshift 2023 死，无 permissive 历史源）→ 无 PIT 历史 → **进不了回测**；`mode: exploratory`，仅终端展示，绝不进 OOS 管线（7-gate rubric L108 判决不变）。1 行 `data_ingest` ledger（RSS，`score_available: false`）。
+
+**与并发 session 协调**：handoff (b) 记录并发 session 观测到我的 reddit 改动（"并发 worker"），其 sonnet agent 试同款 export 改动但漏 `subreddits` → build-break → 已 revert；其提交仅 stage 自己 7 文件，reddit 模块整体留我。**前端 `reddit-view.tsx` 仍为占位符**（不渲染 picks）——留前端 owner 接 `status==="live"` 分支（需配套 i18n key），避免与并发 session 的 web-build 管护冲突。
+
+**验证**：23 reddit 测试绿（含 malformed-XML 跳过 / case-aware 抽取 / auto-fallback）；全套 hermetic pytest exit 0（ordering bug 修后无 FinBERT 下载、无挂起）；ruff clean；`tsc --noEmit` CLEAN；真实 RSS 拉取 E2E（FinBERT 缓存于 `data/cache/`，首跑下载 ~438MB 一次性）。
+
+**未提交**：`reddit_sentiment.py`(M) + `reddit_fetch.py`(??) + `test_reddit_sentiment.py`(M) + `export_terminal_data.py`(M, reddit export 增量) + `reddit.json`(M, live) + `runs/ledger.jsonl`(M, 1 data_ingest 行) + state(M)。留业主审阅后提交（或与并发 session 协调）。
+
+**边界**：本轮 display-only ingest；**0 frozen surface / prereg / ADR / config / E3 改动**；未跑 confirmatory/forward/strategy；未触研究管线。
+
 ## 2026-08-07 (a) 路径 A 上线 — 校准概率读数 + 板块聚合 + 公司名 + 诚实 null 免责
 
 业主反馈"量化选股策略但没体现选股、ticker 没有公司名、要涨跌概率、要实时数据"。批判性自审后业主授权**路径 A**（保守：校准概率 + 板块 + 公司名 + 条件式读数 + 反泄漏护栏，非 trading bot）。`bb83117` 已 push origin/main。

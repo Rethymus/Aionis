@@ -668,21 +668,75 @@ def export_smart_money() -> None:
 
 
 def export_reddit_meta() -> None:
-    """Reddit retail-sentiment collector status — reported honestly.
+    """Reddit retail-sentiment — live if a forward snapshot exists, else honest 'awaiting_fetch'.
 
-    The forward collector (reddit_sentiment.py, PRAW + FinBERT, 7-gate cleared)
-    exists but has never been activated, so no forward snapshot exists yet.
+    Reads ``data/cache/reddit_snapshots.parquet`` (append-only cumulative) +
+    ``reddit_last_run.json`` (status sidecar) written by
+    ``scripts/reddit_fetch.py``. The collector runs zero-credential Atom RSS
+    (Reddit blocked unauth ``.json`` + new OAuth via the Responsible Builder
+    Policy, 2026). Forward-collection only -> no PIT history -> exploratory,
+    display-only, NEVER an Aionis research claim. Matches the cot/form4
+    'read-cache-or-await' pattern (no mock data).
     """
+    pq = Path("data/cache/reddit_snapshots.parquet")
+    status_path = Path("data/cache/reddit_last_run.json")
+    methodology = (
+        "Reddit retail-sentiment (mention volume + FinBERT sentiment) from "
+        "r/wallstreetbets, r/stocks, r/investing. Forward-collection only "
+        "(Pushshift dead 2023; no permissive historical corpus) -> no PIT history "
+        "-> exploratory, display-only, NOT an Aionis research claim. Zero-credential "
+        "Atom RSS transport (Reddit blocked unauth .json + new OAuth via the "
+        "Responsible Builder Policy, 2026); upvote score available only when PRAW "
+        "creds are present. Ticker extraction: $TICKER cashtags (any case) + bare "
+        "UPPERCASE tokens >=4 chars (WSB ticker convention; lowercase = English prose)."
+    )
+    # Stable schema: EVERY key is present in both the live and awaiting branches so
+    # the web's resolveJsonModule type (inferred from this file) is stable and the
+    # build never breaks on a status transition.
+    subreddits = ["wallstreetbets", "stocks", "investing"]
+    if not pq.exists():
+        latest_snapshot_ts = None
+        n_snapshots = 0
+        picks: list[dict] = []
+        transport = None
+        score_available = False
+        reddit_status = "awaiting_fetch"
+    else:
+        df = pd.read_parquet(pq)
+        side = json.loads(status_path.read_text()) if status_path.exists() else {}
+        latest_ts = str(df["snapshot_ts"].max())
+        latest = df[df["snapshot_ts"] == latest_ts].sort_values("mentions", ascending=False)
+        picks = [
+            {
+                "ticker": r["ticker"],
+                "mentions": int(r["mentions"]),
+                "sentiment": round(float(r["sentiment_mean"]), 3),
+                "bull_ratio": None if pd.isna(r["bull_ratio"]) else round(float(r["bull_ratio"]), 3),
+                "score_sum": int(r["score_sum"]),
+            }
+            for _, r in latest.head(15).iterrows()
+        ]
+        latest_snapshot_ts = latest_ts
+        n_snapshots = int(df["snapshot_ts"].nunique())
+        transport = side.get("transport")
+        score_available = bool(side.get("score_available", False))
+        reddit_status = "live"
     payload = {
-        "status": "awaiting_activation",
-        "collector": "src/aionis/ingest/reddit_sentiment.py (PRAW 8.0.2 BSD-2 + FinBERT Apache-2.0)",
-        "mode": "exploratory · forward-collection only · no backfill (Pushshift dead)",
-        "subreddits": ["wallstreetbets", "stocks", "investing"],
+        "status": reddit_status,
+        "methodology": methodology,
+        "collector": "src/aionis/ingest/reddit_sentiment.py + scripts/reddit_fetch.py",
+        "mode": "exploratory · forward-collection only · no backfill",
         "clearance": "7-gate (docs/data-intake-rubric.md): license / PIT / no-revision / selection-bias / politeness",
-        "n_snapshots": 0,
-        "picks": [],
+        "subreddits": subreddits,
+        "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
+        "latest_snapshot_ts": latest_snapshot_ts,
+        "n_snapshots": n_snapshots,
+        "transport": transport,
+        "score_available": score_available,
+        "score_note": None if score_available else "upvote score needs PRAW (OAuth); RSS path records 0",
+        "picks": picks,
     }
-    (WEB / "reddit.json").write_text(json.dumps(payload, indent=2))
+    (WEB / "reddit.json").write_text(json.dumps(payload, indent=2, default=str))
 
 
 def export_market_context() -> None:

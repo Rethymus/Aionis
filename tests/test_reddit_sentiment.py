@@ -15,9 +15,10 @@ from __future__ import annotations
 import json
 import re
 import sys
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from types import SimpleNamespace
+from xml.sax.saxutils import escape as _xml_escape
 
 import pandas as pd
 import pytest
@@ -146,15 +147,15 @@ class _FakeRequestor:
 # --- ticker extraction --------------------------------------------------------
 
 
-def test_ticker_extraction_cashtag_and_bare_case_insensitive() -> None:
+def test_ticker_extraction_cashtag_any_case_and_uppercase_bare() -> None:
     universe = {"AAPL", "MSFT", "TSLA"}
-    text = "$AAPL to the moon; aapl again; $aapl lowercase; MSFT lagging"
+    # $AAPL + $aapl (cashtags, any case) both count; bare "MSFT" UPPERCASE counts;
+    # bare lowercase "aapl"/"msft"/"tsla" are English prose -> NOT counted.
+    text = "$AAPL to the moon; aapl again; $aapl lowercase; MSFT lagging; msft?; tsla"
 
     counts = rs._count_ticker_mentions(text, universe)
 
-    # $AAPL + bare "aapl" + lowercase cashtag $aapl all resolve to AAPL = 3;
-    # bare "MSFT" = 1; function words ignored; no false positives.
-    assert counts == {"AAPL": 3, "MSFT": 1}
+    assert counts == {"AAPL": 2, "MSFT": 1}
 
 
 def test_ticker_extraction_ignores_non_universe_tokens() -> None:
@@ -170,6 +171,17 @@ def test_ticker_extraction_ignores_non_universe_tokens() -> None:
 def test_ticker_extraction_empty_text() -> None:
     assert rs._count_ticker_mentions("", {"AAPL"}) == {}
     assert rs._count_ticker_mentions(None, {"AAPL"}) == {}  # type: ignore[arg-type]
+
+
+def test_ticker_extraction_short_ticker_requires_cashtag() -> None:
+    # 1-3 char tickers (ARE, SO, NOW) collide with English words -> the bare word
+    # is NOT counted; only the $TICKER cashtag is. Longer tickers (NVDA) bare-match.
+    universe = {"ARE", "SO", "NOW", "NVDA"}
+    text = "we are all so happy now; $ARE and $SO are hot; NVDA to the moon"
+
+    counts = rs._count_ticker_mentions(text, universe)
+    # bare "are"/"so"/"now" suppressed; cashtags counted; NVDA bare-word counted.
+    assert counts == {"ARE": 1, "SO": 1, "NVDA": 1}
 
 
 # --- sentiment aggregation (pure) ---------------------------------------------
@@ -225,12 +237,13 @@ def test_aggregate_empty_universe_raises() -> None:
 
 
 def test_missing_creds_raises_clear_error(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    # No creds in args, none in env -> clear RuntimeError, never a silent fake pull.
+    # No creds in args, none in env -> the PRAW transport raises clearly, never a
+    # silent fake pull. (auto/rss fall back to the zero-credential feed instead.)
     monkeypatch.delenv("REDDIT_CLIENT_ID", raising=False)
     monkeypatch.delenv("REDDIT_CLIENT_SECRET", raising=False)
 
     with pytest.raises(RuntimeError, match="Reddit credentials required"):
-        rs.collect_reddit_sentiment(["AAPL"], cache_dir=tmp_path)
+        rs.collect_reddit_sentiment(["AAPL"], cache_dir=tmp_path, transport="praw")
 
 
 def test_collect_writes_snapshot_and_archives_raw_and_logs_ledger(
@@ -453,3 +466,231 @@ def test_connect_reddit_passes_requestor_class_through_praw(
     requestor = requestor_class()
     requestor.request("GET", "https://oauth.reddit.com/r/stocks/new")
     assert spacing.urls == ["https://oauth.reddit.com/r/stocks/new"]
+
+
+# --- zero-credential Atom RSS transport ---------------------------------------
+#
+# Reddit blocked unauthenticated .json (403, 2026) + gated new OAuth tokens
+# (Responsible Builder Policy). The public /new.rss Atom feed is the surviving
+# keyless path. These tests pin the RSS parsing + the rss/auto transports without
+# touching the network (a canned Atom feed stands in for _fetch_feed).
+
+
+def _iso(hours_ago: float = 0.0) -> str:
+    return (
+        datetime.now(tz=timezone.utc) - timedelta(hours=hours_ago)
+    ).isoformat(timespec="seconds")
+
+
+def _atom(entries: list[dict]) -> bytes:
+    """Build a minimal Reddit-style Atom feed; HTML content is entity-escaped
+    exactly as Reddit emits it (so defusedxml -> bs4 exercises the real path)."""
+    parts = []
+    for e in entries:
+        sub = e.get("sub", "wallstreetbets")
+        parts.append(
+            "<entry>"
+            f"<id>tag:reddit.com,/r/{sub}/comments/{e['id']}/x</id>"
+            f"<title>{e['title']}</title>"
+            f'<link href="https://www.reddit.com/r/{sub}/comments/{e["id"]}/x"/>'
+            f"<updated>{e.get('updated', _iso())}</updated>"
+            f"<author><name>/u/{e.get('author', 'tester')}</name></author>"
+            f'<content type="html">{_xml_escape(e.get("content", ""))}</content>'
+            "</entry>"
+        )
+    return (
+        '<?xml version="1.0" encoding="UTF-8"?>'
+        '<feed xmlns="http://www.w3.org/2005/Atom">'
+        + "".join(parts)
+        + "</feed>"
+    ).encode()
+
+
+class _FakeResp:
+    def __init__(self, content: bytes, status_code: int = 200) -> None:
+        self.content = content
+        self.status_code = status_code
+        self.headers: dict[str, str] = {}
+
+
+def _fake_fetch_factory(by_sub: dict[str, bytes]):
+    """A stand-in for ``rs._fetch_feed`` serving canned Atom per subreddit."""
+    empty = b'<?xml version="1.0"?><feed xmlns="http://www.w3.org/2005/Atom"></feed>'
+
+    def _fetch(url: str, user_agent: str) -> _FakeResp:
+        for name, atom in by_sub.items():
+            if f"/r/{name}/" in url:
+                return _FakeResp(atom)
+        return _FakeResp(empty)
+
+    return _fetch
+
+
+def _wire_rss(
+    monkeypatch: pytest.MonkeyPatch,
+    runs_dir: Path,
+    *,
+    fetch=None,
+) -> None:
+    """Inject stub FinBERT + zero politeness sleep + hermetic ledger + (opt) RSS fetch."""
+    monkeypatch.setattr(rs, "_build_sentiment_fn", lambda cache_dir: _stub_sentiment)
+    monkeypatch.setattr(rs, "_SUB_SLEEP", 0.0)
+    monkeypatch.setattr(rs.settings, "runs_dir", runs_dir)
+    if fetch is not None:
+        monkeypatch.setattr(rs, "_fetch_feed", fetch)
+
+
+def test_html_to_text_strips_reddit_content_html() -> None:
+    html = '<!-- SC_OFF --><div class="md"><p>NVDA to the moon</p><p>buy calls</p></div>'
+    assert rs._html_to_text(html) == "NVDA to the moon buy calls"
+    assert rs._html_to_text("") == ""
+    assert rs._html_to_text(None) == ""  # type: ignore[arg-type]
+
+
+def test_parse_atom_extracts_fields_and_scores_zero() -> None:
+    atom = _atom(
+        [
+            {
+                "id": "abc123",
+                "title": "$NVDA earnings beat",
+                "content": "<p>NVDA guidance raised</p>",
+                "updated": _iso(1.0),
+            }
+        ]
+    )
+    entries = rs._parse_atom_entries(atom)
+    assert len(entries) == 1
+    post = rs._entry_to_post(entries[0], "wallstreetbets")
+    assert post["id"] == "abc123"  # extracted from the /comments/<id>/ link
+    assert post["subreddit"] == "wallstreetbets"
+    assert "NVDA earnings beat" in post["title"]
+    assert "NVDA guidance raised" in post["selftext"]
+    assert post["score"] == 0  # RSS carries no upvote count
+    assert post["created_utc"] > 0
+
+
+def test_resolve_transport_dispatch(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv("REDDIT_CLIENT_ID", raising=False)
+    monkeypatch.delenv("REDDIT_CLIENT_SECRET", raising=False)
+    # explicit values pass through
+    assert rs._resolve_transport("rss", None, None) == "rss"
+    assert rs._resolve_transport("praw", "x", "y") == "praw"
+    # auto: creds present -> praw; absent -> rss
+    assert rs._resolve_transport("auto", "x", "y") == "praw"
+    assert rs._resolve_transport("auto", None, None) == "rss"
+    with pytest.raises(ValueError):
+        rs._resolve_transport("bogus", None, None)
+
+
+def test_pull_posts_rss_filters_by_lookback(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(rs, "_SUB_SLEEP", 0.0)
+    atom = _atom(
+        [
+            {"id": "fresh1", "title": "$AAPL moon", "updated": _iso(1.0)},
+            {"id": "oldold", "title": "$MSFT ancient", "updated": _iso(200.0)},
+        ]
+    )
+    posts = rs._pull_posts_rss(
+        ("wallstreetbets",),
+        lookback_hours=24,
+        user_agent="t",
+        fetch=_fake_fetch_factory({"wallstreetbets": atom}),
+    )
+    by_id = {p["id"]: p for p in posts}
+    assert set(by_id) == {"fresh1"}  # 200h-old dropped; default lookback 24h
+    assert by_id["fresh1"]["score"] == 0
+
+
+def test_pull_posts_rss_skips_failed_subreddit_and_continues(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    # A 403/429-exhausted on one subreddit is logged + skipped; others collected.
+    monkeypatch.setattr(rs, "_SUB_SLEEP", 0.0)
+
+    def _fetch(url: str, user_agent: str) -> _FakeResp:
+        if "/r/wallstreetbets/" in url:
+            raise rs.HTTPStatusError(403, 1)
+        return _FakeResp(_atom([{"id": "ss111", "title": "$TSLA", "updated": _iso(1.0)}]))
+
+    posts = rs._pull_posts_rss(
+        ("wallstreetbets", "stocks"),
+        lookback_hours=24,
+        user_agent="t",
+        fetch=_fetch,
+    )
+    assert {p["id"] for p in posts} == {"ss111"}  # stocks still served
+
+
+def test_pull_posts_rss_skips_malformed_feed_and_continues(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    # A corrupt Atom payload on one subreddit is skipped; others still collected.
+    monkeypatch.setattr(rs, "_SUB_SLEEP", 0.0)
+
+    def _fetch(url: str, user_agent: str) -> _FakeResp:
+        if "/r/wallstreetbets/" in url:
+            return _FakeResp(b"<?xml version='1.0'?><feed><not-closed>")  # malformed
+        return _FakeResp(_atom([{"id": "ok1234", "title": "$MSFT", "updated": _iso(1.0)}]))
+
+    posts = rs._pull_posts_rss(
+        ("wallstreetbets", "stocks"),
+        lookback_hours=24,
+        user_agent="t",
+        fetch=_fetch,
+    )
+    assert {p["id"] for p in posts} == {"ok1234"}  # malformed WSB skipped, stocks served
+
+
+def test_collect_rss_writes_snapshot_ledger_sidecar(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    atom = _atom(
+        [
+            {
+                "id": "a1",
+                "title": "$AAPL to the moon",
+                "content": "<p>calls</p>",
+                "updated": _iso(1.0),
+            },
+            {"id": "m1", "title": "MSFT crashing hard", "content": "", "updated": _iso(2.0)},
+        ]
+    )
+    _wire_rss(monkeypatch, tmp_path, fetch=_fake_fetch_factory({"wallstreetbets": atom}))
+    cdir = tmp_path / "cache"
+
+    df = rs.collect_reddit_sentiment(["AAPL", "MSFT"], transport="rss", cache_dir=cdir)
+
+    assert set(df["ticker"]) == {"AAPL", "MSFT"}
+    # score unavailable on RSS -> 0
+    assert int(df.set_index("ticker").loc["AAPL", "score_sum"]) == 0
+
+    # ledger: RSS source + transport + score_available honesty
+    row = json.loads((tmp_path / "ledger.jsonl").read_text().strip())
+    assert row["source"] == "RSS-atom+FinBERT (zero-credential)"
+    assert row["transport"] == "rss"
+    assert row["score_available"] is False
+    assert row["forward_only"] is True
+    assert row["n_tickers"] == 2
+
+    # status sidecar for the terminal display
+    sidecar = json.loads((cdir / "reddit_last_run.json").read_text())
+    assert sidecar["transport"] == "rss"
+    assert sidecar["score_available"] is False
+    assert sidecar["n_tickers"] == 2
+
+
+def test_collect_auto_without_creds_uses_rss(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # default transport="auto" + no creds -> zero-credential RSS (not a raise).
+    monkeypatch.delenv("REDDIT_CLIENT_ID", raising=False)
+    monkeypatch.delenv("REDDIT_CLIENT_SECRET", raising=False)
+    atom = _atom([{"id": "a1", "title": "$AAPL to the moon", "updated": _iso(1.0)}])
+    _wire_rss(monkeypatch, tmp_path, fetch=_fake_fetch_factory({"wallstreetbets": atom}))
+    cdir = tmp_path / "cache"
+
+    df = rs.collect_reddit_sentiment(["AAPL"], cache_dir=cdir)  # default auto -> rss
+
+    assert set(df["ticker"]) == {"AAPL"}
+    row = json.loads((tmp_path / "ledger.jsonl").read_text().strip())
+    assert row["transport"] == "rss"  # auto fell back to the keyless feed
