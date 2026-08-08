@@ -131,6 +131,19 @@
 
 **验证**：ruff clean；20 web 契约测试绿（含新 themes）；web build OK（**19/19**，`/themes` 渲染）。
 
+## 2026-08-08 (h) Track Adaptive `config_committed` 冻结 —— climax 后首条新研究线 OOS 的反泄漏门
+
+业主 "全默认"（D1-D6 全推荐默认 + D6 GO）。落地反泄漏硬锚（**config_committed 先于任何 OOS**）：
+
+- **`scripts/track_adaptive_commit.py`**（新）：frozen config 17 keys —— 两尾 null-expected claim（`IC_diff = mean(IC_adaptive) − mean(IC_frozen)`，HAC）；mechanism A 扩窗月重训；**复用 Track C #48 sig `e14b9d44…` 的 41 特征/宇宙/learner 作基底**（零改动，隔离"更新 cadence"单一变量）；purge+embargo=21；SESOI_diff ±0.010；两门（主=HAC p α0.05，次=RCI 等价，非救场）；`n_trials=1`（**纠正 pre-reg D4** 把重训 cycle 误算 trial——重训 cycle 是单策略的 OOS walk-forward，非独立 trial）；DSR/PBO（`deflated_sharpe.py`）；H6；frozen 隔离。
+- **ledger 50→51**：phase=`track_adaptive`, sig `892fb5068ed1e994db937e23c5b95f2d35ea796825c0c97937253e34605515ad`，**sha256 自洽已验**（recompute==stored）。
+- pre-reg `docs/track-adaptive-preregistration.md` PROPOSED→**FROZEN**。
+- 反转 memory `aionis-publication-framing-option-a`（2026-08-08 addendum 记录的"勿追新 alpha"，仅此纪律路径）。
+
+**关键纪律**：本轮**未跑任何 adaptive learner、未观察任何 OOS metric**（`config_committed BEFORE result`）。下一步 = `scripts/track_adaptive_run.py`（扩窗月重训 + OOS + `IC_diff` + HAC + DSR + H6 双跑）；首次 OOS 结果入**新 ledger 行**。
+
+**边界**：本轮 `scripts/track_adaptive_commit.py`（新）+ `runs/ledger.jsonl`（+1 行 #51）+ `docs/track-adaptive-preregistration.md`（FROZEN）+ state；**0 既有 frozen/prereg/ADR/config 改动**（新增独立行，不触 Track C #49 null）；未跑 research/forward。
+
 ## 2026-08-07 (a) 路径 A 上线 — 校准概率读数 + 板块聚合 + 公司名 + 诚实 null 免责
 
 业主反馈"量化选股策略但没体现选股、ticker 没有公司名、要涨跌概率、要实时数据"。批判性自审后业主授权**路径 A**（保守：校准概率 + 板块 + 公司名 + 条件式读数 + 反泄漏护栏，非 trading bot）。`bb83117` 已 push origin/main。

@@ -1,4 +1,8 @@
-# Track Adaptive 预注册 — 自适应（扩窗/在线重训）rank-IC vs 冻结基线（PROPOSED，未冻结）
+# Track Adaptive 预注册 — 自适应（扩窗/在线重训）rank-IC vs 冻结基线（FROZEN 2026-08-08）
+
+> **状态：FROZEN — `config_committed` 2026-08-08（owner "全默认" = D1-D6 全推荐默认，含 D6 GO）。**
+> **config_sig**：`892fb5068ed1e994db937e23c5b95f2d35ea796825c0c97937253e34605515ad`（`runs/ledger.jsonl` 行 #51, phase=track_adaptive；sha256 自洽已验）。
+> **约束**：config_committed 已先于任何 OOS 结果；此后允许 `scripts/track_adaptive_run.py` 实现 + 首次 OOS（不写新 ledger、首次 OOS metric 入新行）。冻结后改任何参数 = 新 ledger 行，绝不静默覆盖。
 
 > **命名澄清**：本 "Track Adaptive" 与既有冻结的 **Track B（七主题选股平台，`docs/track-b-preregistration.md`，
 > FROZEN 2026-08-02）无关**——后者是另一条已 `config_committed` 的研究线。本预注册用 "Track Adaptive"
