@@ -99,6 +99,20 @@
 
 **验证**：ruff 全 repo clean；model_drift 11 + web 契约 19 测试绿；web build OK（18/18，`/model-health` 渲染）；全套 hermetic pytest 提交前确认。
 
+## 2026-08-08 (f) Track Adaptive 启动 — 自适应重训预注册（PROPOSED，业主授权反转 framing）
+
+业主 4 指令处置：①**push**（`4b8d583`+`a755339` 已推 origin/main）②**reddit nav 恢复**（`a755339`：取消注释 `/reddit` 入口，现经零凭证 RSS live）③**form4 5-issuer 完成 re-export**（`a755339`，16564 txns，全 5 issuer × 2013-2026）④**"真的要走 Track B（在线学习追 IC）"**。
+
+**命名撞车处置**：既有 `docs/track-b-preregistration.md` 是**冻结的七主题平台**（ADR-011，2026-08-02，config_committed）。把"在线学习追 IC"重命名为 **Track Adaptive** 避免污染冻结面。
+
+**Track Adaptive = 重大方向反转**：业主显式授权反转 2026-08-05 option A 的"勿追新 alpha"锁（**仅对该特定路径**）。memory `aionis-publication-framing-option-a` 已加 2026-08-08 addendum（Track Adaptive 授权，仅限有纪律路径；无纪律 alpha-chasing 仍禁）。
+
+**交付 `docs/track-adaptive-preregistration.md`（PROPOSED，未冻结）**：两尾 null-expected claim（`IC_adaptive − IC_frozen` 配对差，HAC）；扩窗重训默认（GKX 2020 先例）+ purge+embargo 反泄漏；**DSR/PBO 多重检验预算**（每重训 cycle = 1 trial，deflate 后才报；PBO>0.5=过拟合高危）；复用 Track C 冻结 learner+universe+features 作比较器（隔离"更新"单一变量）；与 Track C **硬隔离**（新 config/ledger 行，不触 #49）。**待 owner 裁断 D1-D6**（更新机制 A/B/C、OOS 窗口、SESOI_diff、n_trials 预算、是否要 PBO、GO）→ `config_committed` → 首次 OOS。
+
+**关键纪律**：本轮**未跑任何 adaptive learner、未观察任何 OOS metric**（反泄漏：config_committed BEFORE result）。诚实预期仍 null（power floor σ≈0.10 + GKX"更新频率非主导"）；价值 = 自适应基建 + 诚实跟踪，非制造正 IC。
+
+**边界**：本轮 `docs/track-adaptive-preregistration.md`（新 PROPOSED）+ state + memory；**0 ledger / frozen / 既有 prereg / ADR / config / OOS / E3** 改动。
+
 ## 2026-08-07 (a) 路径 A 上线 — 校准概率读数 + 板块聚合 + 公司名 + 诚实 null 免责
 
 业主反馈"量化选股策略但没体现选股、ticker 没有公司名、要涨跌概率、要实时数据"。批判性自审后业主授权**路径 A**（保守：校准概率 + 板块 + 公司名 + 条件式读数 + 反泄漏护栏，非 trading bot）。`bb83117` 已 push origin/main。
