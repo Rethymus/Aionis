@@ -72,6 +72,18 @@
 
 **边界**：本轮 display-only ingest；**0 frozen surface / prereg / ADR / config / E3 改动**；未跑 confirmatory/forward/strategy；未触研究管线。
 
+## 2026-08-08 (d) 实时数据 + 自适应校正循环 — 调研 + 深度分析（PROPOSED，业主决策）
+
+业主提"历史数据补完后→实时更新 + 用最新数据自校正模型→迭代至可观预测"。派 2 sonnet 调研：**web 路 [1210] ×2 死**（proxy 今日不稳）→ opus 直接 WebSearch（3 路：walk-forward 重校准 / DSR·PBO / adaptive-vs-frozen OOS 证据）；repo 路成功。交付 2 文档：① `reports/2026-08-08-live-data-calibration-infrastructure-report.md`（既有基建盘点，908 行，34 文件引用，核对属实）；② `reports/design/2026-08-08-live-adaptive-calibration-analysis.md`（综合分析 + 推荐）。
+
+**核心结论**：「用最新数据自校正」**合法 iff "更好" = 校准更准 + 漂移报警 + 诚实 forward 跟踪**（Track A，复用 `score_calibration` + E3，display-only，0 frozen/ledger/config）。**"更好" = IC 变正 则数据不可达**——power floor σ(IC)≈0.10（look-3 等价需 ~36 年）；Gu-Kelly-Xiu 2020 最佳月 OOS R² 仅 1.08–1.80%，且**主导因素是模型类不是更新频率**。自适应追 IC = rerun-to-significance + 多重检验膨胀（Bailey-López de Prado 2014："DSR/PBO especially useful when research is highly adaptive"；每轮 auto-tune = 一次 trial，必须 deflate）。
+
+**两轨**：**Track A（推荐，合规）** = A1 walk-forward 校准重训（expanding realized 窗，`walk_forward=True` display 变体）+ A2 漂移报警（滚动 OOS 分布/cond-IC vs 历史，纯显示）+ A3 诚实 forward 累加器（E3-lite 或 E3 本体 owner-GO；commit→reveal(+21d)→score→显示序列，**绝不喂回训练**）。**Track B（gated，大概率仍 null）** = 研究层在线学习追 IC：需新预注册 + 逐周期 `config_committed` + DSR/PBO 预算 + 硬隔离 Track C；且冲突发表 framing（memory 勿追新 alpha）→ **需业主显式 GO**。
+
+**"可观"重定义**：校准可靠性（reliability 图近对角）+ 漂移诚实 + forward 命中率序列——**非 IC 变正**。这是数据允许且对 fintech 终端真正有用的胜条件。
+
+**边界**：本轮纯 docs（2 新 PROPOSED）+ state；**0 frozen / ledger / config / E3 / 代码**改动；未跑 research/forward。**待业主**：选 Track A（推荐）/ Track B（gated，需新预注册）/ 拓宽 framing（与 null 发表定帧冲突）。
+
 ## 2026-08-07 (a) 路径 A 上线 — 校准概率读数 + 板块聚合 + 公司名 + 诚实 null 免责
 
 业主反馈"量化选股策略但没体现选股、ticker 没有公司名、要涨跌概率、要实时数据"。批判性自审后业主授权**路径 A**（保守：校准概率 + 板块 + 公司名 + 条件式读数 + 反泄漏护栏，非 trading bot）。`bb83117` 已 push origin/main。
