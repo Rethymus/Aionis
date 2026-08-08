@@ -124,6 +124,47 @@ def test_expanding_arm_embargo_enforced(monkeypatch: pytest.MonkeyPatch) -> None
         )
 
 
+def test_expanding_arm_train_labels_realized_by_predict_time(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Decisive leakage invariant: every train row's fwd_5s is REALIZED by the
+    predict point (predict is at the week's CLOSE, so close[t_w] is known; train
+    labels may use close[<=t_w] but NOT close[t_w+k]).
+
+    Settles whether embargo=5 suffices: the latest train week (W-1, close ≈
+    t_w − 5 sessions) has fwd_5s realizing at t_w (close[t_w] known) — realized
+    BY the predict point, no lookahead. If this fails, embargo must grow.
+    """
+    daily = _syn_daily(n_days=80)
+    daily_sessions = np.sort(pd.to_datetime(daily["date"]).unique())
+    weekly = ta.weekly_reduce(daily)
+    edges = ta.fit_binner(weekly["fwd_5s"])
+    captured: list = []
+
+    class _Stub:
+        def __init__(self, params: dict) -> None:
+            pass
+
+        def fit_predict_rank(self, train, test, feats, rel, groups):  # noqa: ANN001
+            captured.append({"train_max": train["date"].max(), "test_date": test["date"].iloc[0]})
+            return pd.Series(np.zeros(len(test)), index=test.index, name="score")
+
+    monkeypatch.setattr(ta, "LightGBMFrozen", _Stub)
+    ta.MIN_TRAIN_ROWS = 20
+    ta.run_expanding_arm(weekly, daily_sessions, _FEATURES, edges, embargo=5)
+
+    sess = pd.DatetimeIndex(daily_sessions)
+    for c in captured:
+        idx_train_max = sess.get_loc(pd.Timestamp(c["train_max"]))
+        idx_test = sess.get_loc(pd.Timestamp(c["test_date"]))
+        # train_max's fwd_5s realizes 5 sessions later; must be <= predict session.
+        realize_idx = min(idx_train_max + 5, len(sess) - 1)
+        assert realize_idx <= idx_test, (
+            f"LEAK: train_max {c['train_max']}'s fwd_5s realizes at session "
+            f"{sess[realize_idx]} > predict {sess[idx_test]} ({c['test_date']})"
+        )
+
+
 def test_expanding_arm_skips_weeks_with_insufficient_train(monkeypatch: pytest.MonkeyPatch) -> None:
     # First OOS week has almost no realized train → must be skipped (no fit).
     daily = _syn_daily(n_days=80)
