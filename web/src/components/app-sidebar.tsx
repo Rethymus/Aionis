@@ -26,6 +26,7 @@ import {
   BarChartHorizontalIcon,
   BlocksIcon,
   HeartPulseIcon,
+  LayersIcon,
 } from "lucide-react";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -38,6 +39,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     { title: t("nav.market"), url: "/market", icon: <TrendingUpIcon /> },
     { title: t("nav.evidence"), url: "/evidence", icon: <ScaleIcon /> },
     { title: t("nav.conviction"), url: "/conviction", icon: <ActivityIcon /> },
+    { title: t("nav.themes"), url: "/themes", icon: <LayersIcon /> },
   ];
   const navAlternative = [
     { title: t("nav.positioning"), url: "/positioning", icon: <BarChartHorizontalIcon /> },

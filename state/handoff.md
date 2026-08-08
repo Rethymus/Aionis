@@ -113,6 +113,24 @@
 
 **边界**：本轮 `docs/track-adaptive-preregistration.md`（新 PROPOSED）+ state + memory；**0 ledger / frozen / 既有 prereg / ADR / config / OOS / E3** 改动。
 
+## 2026-08-08 (g) /themes 展示模块落地 —— 七主题数据"被看见"（display-only）
+
+业主选"七主题数据被看见"（display 路径，非研究）。建 `export_themes()` + `/themes` 视图：**7 主题 × 真实聚合信号**（cross-sectional mean @ 最新实现月）：
+- **① 价格**（live）：momentum_21d 0.021 / volatility_63d 0.023 / β_252d 0.68 / reversal_5d −0.019 + 12 月 sparkline
+- **② 宏观**（live）：regime_macro composite z = **−0.28**（VIX+credit+term+DFF 惊喜）+ 60 日 sparkline
+- **③ 基本面**（live）：ROE 0.044 / profit_margin 0.32 / revenue_growth_12m 0.005 / leverage 0.25 + sparkline
+- **⑦ 市场结构**（live）：Amihud ~0（S&P 高流动性）/ β 0.68 + sparkline
+- **⑥ 净成本**（partial）：bps sweep net_sharpe@5bps 0.125 / gross 0.149 / turnover 1.14
+- **④ 新闻情绪**（forward_only，诚实空）、**⑤ 风险**（needs_work，alphalens adapter 待建，诚实空）
+
+视图：themes-view.tsx（状态 Badge + 信号表 + 内联 SVG sparkline）+ `/themes` route + sidebar insights 组（LayersIcon）+ i18n zh/en。契约测试锁：7 主题、live/partial 必有 signal、非-live 必空（**禁 mock**）、methodology 披露"非 Track-B 冻结判语"。
+
+**为何这是合规的"不被埋没"**：把七主题平台的特征工程（Track B 冻结的 feature infrastructure）以**聚合展示**形式见光——**不碰研究管线、不写 claim、不动 Track-B 冻结判语、不 mock**（④⑤诚实标 forward_only/needs_work）。这是 (d) 分析里 Track A display 路径的延续。
+
+**边界**：本轮 `scripts/export_terminal_data.py`（additive `export_themes` + helpers + main call）+ `tests/test_web_terminal_data.py`（themes 契约）+ `web/`（新 view/route/nav/i18n + index.ts + themes.json）+ state；**0 ledger / frozen / 既有 prereg / ADR / config / OOS / E3**；display-only。
+
+**验证**：ruff clean；20 web 契约测试绿（含新 themes）；web build OK（**19/19**，`/themes` 渲染）。
+
 ## 2026-08-07 (a) 路径 A 上线 — 校准概率读数 + 板块聚合 + 公司名 + 诚实 null 免责
 
 业主反馈"量化选股策略但没体现选股、ticker 没有公司名、要涨跌概率、要实时数据"。批判性自审后业主授权**路径 A**（保守：校准概率 + 板块 + 公司名 + 条件式读数 + 反泄漏护栏，非 trading bot）。`bb83117` 已 push origin/main。

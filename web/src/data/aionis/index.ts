@@ -17,6 +17,7 @@ import pickConviction from "./pick_conviction.json";
 import form4 from "./form4.json";
 import cot from "./cot.json";
 import modelHealth from "./model_health.json";
+import themes from "./themes.json";
 
 export type Pick = {
   rank: number;
@@ -82,4 +83,5 @@ export const aionis = {
   form4: form4 as typeof form4,
   cot: cot as typeof cot,
   modelHealth: modelHealth as typeof modelHealth,
+  themes: themes as typeof themes,
 };

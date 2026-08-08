@@ -261,6 +261,39 @@ def test_model_health_shape() -> None:
     assert "retrain" in mh["methodology"].lower() or "not a research" in mh["methodology"].lower()
 
 
+# --- Seven-theme signal overview (display-only) ------------------------------
+
+
+def test_themes_shape() -> None:
+    """themes.json: per-theme status + signals, honest about non-live themes."""
+    th = _load("themes.json")
+    assert th["status"] in {"ok", "awaiting_fetch"}
+    assert "methodology" in th
+    if th["status"] != "ok":
+        return
+    themes = th["themes"]
+    assert isinstance(themes, list) and len(themes) == 7
+    keys = {t["key"] for t in themes}
+    assert keys == {
+        "price", "macro", "fundamentals", "news_sentiment",
+        "risk", "net_cost", "market_structure",
+    }
+    for t in themes:
+        assert t["status"] in {"live", "partial", "forward_only", "needs_work"}
+        # Live/partial themes must carry real signal values; the honest-empty
+        # themes (forward_only/needs_work) must have NO signals (no mock data).
+        signals = t.get("signals", [])
+        if t["status"] in {"live", "partial"}:
+            assert len(signals) >= 1
+            for s in signals:
+                assert {"name", "value"} <= set(s)
+        else:
+            assert signals == []
+    # Methodology must disclose it is not the frozen Track-B research verdict.
+    low = th["methodology"].lower()
+    assert "not" in low and ("research" in low or "track-b" in low)
+
+
 # --- TACO pressure index ------------------------------------------------------
 
 

@@ -414,6 +414,140 @@ def export_taco() -> None:
     (WEB / "taco.json").write_text(json.dumps(payload, indent=2))
 
 
+def _theme_mean_signals(df: pd.DataFrame, cols: list[str]) -> list[dict]:
+    """Cross-sectional mean of each column at the latest date → [{name, value}]."""
+    out = []
+    for c in cols:
+        if c in df.columns:
+            val = df[c].dropna()
+            out.append({"name": c, "value": round(float(val.mean()), 4) if len(val) else None})
+    return out
+
+
+def _theme_monthly_series(panel: pd.DataFrame, col: str, n_months: int) -> list[dict]:
+    """Last n_months of cross-sectional mean of `col` → [{month, value}]."""
+    if col not in panel.columns:
+        return []
+    p = panel[["date", col]].dropna().copy()
+    p["month"] = p["date"].dt.to_period("M").astype(str)
+    series = p.groupby("month")[col].mean().sort_index().tail(n_months)
+    return [{"month": m, "value": round(float(v), 4)} for m, v in series.items()]
+
+
+def export_themes() -> None:
+    """Seven-theme signal overview — display-only, NOT a research claim.
+
+    Surfaces the frozen seven-theme platform's feature engineering (Track B,
+    ``docs/track-b-preregistration.md``) so it is visible in the terminal.
+    Aggregates are cross-sectional means at the latest realized month from the
+    shared PIT panel (+ the Track-C macro-regime composite + the bps net-cost
+    sweep). No new model fit, no ledger, no frozen-surface touch.
+    """
+    panel_path = Path("data/cache/track_b_panel.parquet")
+    if not panel_path.exists():
+        payload = {
+            "status": "awaiting_fetch",
+            "methodology": (
+                "Seven-theme signal overview (display-only). Awaiting the shared "
+                "PIT panel — run the data fetchers. Not an Aionis research claim."
+            ),
+            "themes": [],
+        }
+        (WEB / "themes.json").write_text(json.dumps(payload, indent=2))
+        return
+
+    panel = pd.read_parquet(panel_path)
+    panel["date"] = pd.to_datetime(panel["date"])
+    as_of = panel["date"].max()
+    latest = panel[panel["date"] == as_of]
+
+    # ① Price/market
+    price = {
+        "key": "price",
+        "status": "live",
+        "headline": "21d momentum + 63d vol + 252d β (cross-sectional mean)",
+        "signals": _theme_mean_signals(latest, ["momentum_21d", "volatility_63d", "beta_252d", "reversal_5d"]),
+        "series": _theme_monthly_series(panel, "momentum_21d", 12),
+    }
+    # ② Macro (Track-C macro-regime composite from regime_macro.parquet)
+    macro = {"key": "macro", "status": "live", "signals": [], "series": []}
+    macro_path = Path("data/cache/regime_macro.parquet")
+    if macro_path.exists():
+        mr = pd.read_parquet(macro_path)
+        mr["date"] = pd.to_datetime(mr["date"])
+        if "macro_regime" in mr.columns and len(mr):
+            macro["headline"] = "macro-regime composite z (VIX+credit+term+DFF surprise)"
+            macro["signals"] = [{"name": "macro_regime", "value": round(float(mr["macro_regime"].iloc[-1]), 4)}]
+            macro["series"] = [
+                {"date": str(d.date()), "value": round(float(v), 3)}
+                for d, v in mr.tail(60)[["date", "macro_regime"]].values.tolist()
+            ]
+    # ③ Fundamentals
+    fundamentals = {
+        "key": "fundamentals",
+        "status": "live",
+        "headline": "ROE / margin / revenue growth / leverage (cross-sectional mean)",
+        "signals": _theme_mean_signals(latest, ["roe", "profit_margin", "revenue_growth_12m", "leverage"]),
+        "series": _theme_monthly_series(panel, "roe", 12),
+    }
+    # ④ News sentiment — forward-only (no historical corpus; honest)
+    news = {
+        "key": "news_sentiment",
+        "status": "forward_only",
+        "headline": "LLM extraction pool ready; no permissive historical corpus",
+        "signals": [],
+        "series": [],
+    }
+    # ⑤ Risk — alphalens tearsheet adapter not built (honest)
+    risk = {
+        "key": "risk",
+        "status": "needs_work",
+        "headline": "alphalens tearsheet adapter pending (empyrical metrics available)",
+        "signals": [],
+        "series": [],
+    }
+    # ⑥ Net cost — partial; surface the bps sweep net Sharpe (already exported)
+    net_cost = {"key": "net_cost", "status": "partial", "signals": [], "series": []}
+    bps_path = WEB / "bps_sweep.json"
+    if bps_path.exists():
+        try:
+            sweep = json.loads(bps_path.read_text())
+            rows = sweep if isinstance(sweep, list) else sweep.get("rows", [])
+            row5 = next((r for r in rows if int(r.get("bps", -1)) == 5), None)
+            if row5:
+                net_cost["headline"] = "net Sharpe at 5 bps (from the bps sweep)"
+                net_cost["signals"] = [
+                    {"name": "net_sharpe_bps5", "value": round(float(row5["net_sharpe"]), 4)},
+                    {"name": "gross_sharpe", "value": round(float(row5["gross_sharpe"]), 4)},
+                    {"name": "avg_turnover", "value": round(float(row5["avg_turnover"]), 4)},
+                ]
+        except (json.JSONDecodeError, KeyError, ValueError, TypeError):
+            pass
+    # ⑦ Market structure — liquidity + factor exposure
+    market_structure = {
+        "key": "market_structure",
+        "status": "live",
+        "headline": "Amihud illiquidity + 252d β (cross-sectional mean)",
+        "signals": _theme_mean_signals(latest, ["amihud_illiquidity_21d", "beta_252d"]),
+        "series": _theme_monthly_series(panel, "amihud_illiquidity_21d", 12),
+    }
+
+    payload = {
+        "status": "ok",
+        "as_of_date": str(as_of.date()),
+        "methodology": (
+            "Seven-theme signal overview (display-only, NOT a research claim). "
+            "Aggregates are cross-sectional means over the S&P 500 PIT panel at "
+            "the latest realized month; the macro theme uses the Track-C macro-"
+            "regime composite; net cost uses the bps sweep. Themes marked "
+            "forward_only / needs_work / partial have no real historical signal "
+            "yet — shown honestly, never mocked. Not the frozen Track-B verdict."
+        ),
+        "themes": [price, macro, fundamentals, news, risk, net_cost, market_structure],
+    }
+    (WEB / "themes.json").write_text(json.dumps(payload, indent=2, default=str))
+
+
 def export_model_health() -> None:
     """Model-drift + calibration health monitor (display-only, leakage-safe).
 
@@ -863,6 +997,7 @@ def main() -> None:
     export_picks_backtest()
     export_taco()
     export_pick_conviction()
+    export_themes()
     export_model_health()
     export_cot()
     export_form4()
