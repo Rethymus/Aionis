@@ -1,5 +1,22 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-08-09 (l) Track A 切片 A1 — walk-forward 校准可靠性（display 层，已交付待提交）
+
+业主重提"历史数据补到 2016 后 → 实时更新 + 用新数据不断自校正模型参数往可观走"。**关键事实：此问题 2026-08-08 已问、已分析、已实测**——[`reports/design/2026-08-08-live-adaptive-calibration-analysis.md`](../reports/design/2026-08-08-live-adaptive-calibration-analysis.md) 切 Track A（显示层，推荐）/ Track B（研究层）；Track B（扩窗周重训）已冻结+跑 = **NULL（ledger #54，IC_diff_weekly −0.0037，p=0.26，adaptive 略差于冻结）**。新增 2024-2026 调研确认重训频率非主导/常恶化（[Inquire Europe "Less is more"](https://www.inquire-europe.org/news/in-case-you-missed-it-less-is-more-biases-and-overfitting-in-cross-sectional-machine-learning-return-predictions/)）；唯一未测合法变体 = 固定模型集 Bayesian/stacking（[Gelman](https://sites.stat.columbia.edu/gelman/research/published/stacking_paper_discussion_rejoinder.pdf) ：BMA 在 M-open 失效）；唯一有希望新数据方向 = LLM 文本信号（项目 extraction 模块已有，但无 frozen 臂用 LLM 特征）。**业主裁 = 路径甲（显示层自适应校准）**（AskUserQuestion 四选一）。
+
+**Track A 现状盘点**：A2（漂移报警）已建（`model_drift.py`+`export_model_health()`，backend done；UI 归前端 owner）；A3（诚实 track record）已建为 `export_picks_backtest()`（历史命中），前瞻累计半 = E3 owner-GO 门。**A1（walk-forward 校准）此前未建** = 本轮唯一真新增。
+
+**A1 交付**（纯 display 变换，0 ledger/frozen/E3/研究估计量）：
+- `src/aionis/eval/score_calibration.py`：+`_reliability_bins()` + `calibrate_walk_forward()`。对每个 realized OOS 月 T，用**严格 T 之前**的 realized (score, fwd_return) 对重拟合 Platt 显示映射，预测 T 的 P(up)；T 的 realized 结果回测打分（backward audit）。产出 per-month OOS-ECE 序列 + pooled OOS 可靠性图。反泄漏契约镜像 `calibrate_latest_month`（T 仅预测不入拟合；仅 2 参显示映射重拟合，frozen LightGBM 永不触；单调映射不能制造判别力）。
+- `scripts/export_terminal_data.py`：+`export_calibration_reliability()`→`calibration_reliability.json`（awaiting_fetch 守卫 + 诚实方法学串），接入 `main()`。
+- `tests/test_score_calibration.py`：+8 hermetic 测试（反泄漏 T 不入拟合 / walk_forward=True / 强信号可靠性单调 / null 信号概率带紧 / H6 跨调用确定性 / 太少月跳过 / 双区域 / jsonable）。
+
+**验证**：score_calibration(23)+model_drift(11)+web_terminal_data(20)=54 display 测试绿；ruff clean（3 文件）；**真实数据跑**（read-only，未写 tracked JSON）：US pooled_ece=0.0369 / 概率带 [0.435,0.553] 紧绕 base rate≈0.51（诚实 null 签名）/ ECE 随样本增长 0.18→0.115（校准更可信）；CN pooled_ece=0.0196 / 带 [0.438,0.480]；训练对扩 5399→30282(US) / 10538→57537(CN)。**判读**：概率保持可信（低 ECE），但判别力弱（带紧）—— 这是 leakage-safe 的"用新数据自校正**校准**"，**非**制造正 IC（与 #49 null 一致）。
+
+**边界**：本轮 3 文件（2 src/script + 1 test，+291/-2）+ state；**0 ledger / frozen / prereg / ADR / config / E3 / data / web-artifact** 改动（真实数据跑 read-only，未写 `web/src/data/`）；未跑 research/forward/strategy；未触 #49/#54。git status 仅 3 文件 M。
+
+**待业主**：① 审 A1 数字 + 授权 commit（Conventional Commits）② 是否跑 `export_terminal_data.py` 写 `calibration_reliability.json` 进 web（前端 owner 管护，需协调）③ A3 前瞻累计是否过 E3 owner-GO 门 ④ A2/A1 终端 UI 渲染（前端 owner）。
+
 ## 2026-08-08 (a) 历史数据推进至 2016 — COT 全量 + Form4 深化（display 层）
 
 业主要求"推进所有历史数据年份至 2016 + 低消耗模型带 agent 执行以省 token"。**范围 = fintech 终端 display 层**（研究管线冻结，climax #49 null 不动）。
