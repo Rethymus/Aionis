@@ -131,6 +131,22 @@
 
 **验证**：ruff clean；20 web 契约测试绿（含新 themes）；web build OK（**19/19**，`/themes` 渲染）。
 
+## 2026-08-08 (j) Track Adaptive OOS 执行 — embargo 核验 + n_estimators amend + threading 崩溃→sequential
+
+业主多次催"启用更多agents + 避免空转"。OOS 执行历程（高 stakes，climax 后首条新 OOS）：
+
+- **embargo 核验**：独立 review agent 标 embargo=5 **CRITICAL**（train fwd 与 predict 重叠）。批判性核查 → **false positive**（predict 在周收盘 t_w，close[t_w] 已知；train fwd 用 close[<=t_w]，realized by predict point）。加 `test_expanding_arm_train_labels_realized_by_predict_time` realization-invariant 测试证 leak-free（8/8 runner 测试绿）。
+- **n_estimators amend**：500 树 = 16.8s/fit → 285 fits ~27min 太慢；**amend2 (#53, sig b7621e6b)** 减到 100 树（3.2s/fit，both arms，comparison 自洽）。
+- **threading 崩溃 ×3**：joblib threading n_jobs=4/2 均**静默崩溃**（LightGBM concurrency race，非内存——单独跑也崩，无 traceback）。→ **sequential (n_jobs=1)** 可靠（原 500-tree sequential 跑 15min 稳定）。
+- **OOM 教训**：并发 full pytest + OOS → OOM kill（"不影响各自进程"的违反）。→ **重活不并发**；OOS 单独跑。
+- **并行**：reuse-first OSS adaptive-learning 调研 agent 后台跑（river/scikit-multiflow/alibi-detect 等 license + Aionis 适配性 → `reports/design/` 待回报）。
+
+**当前**：sequential OOS 跑中（100 树，n_jobs=1，~20min，frozen IC=0.0156 n=285，reliable single-thread）。完成 → H6 双跑（bit-identical）+ result-ledger 行 + 报告（诚实预期 null）。
+
+**模型分层 + 复用账**：opus 编排（embargo 批判判断 + 集成）+ sonnet agent（review + OSS 调研）+ LightGBM frozen learner 复用（Track C #48 substrate）+ deflated_sharpe.py（DSR）+ joblib（sequential 走其 infra）。
+
+**边界**：本轮 `scripts/track_adaptive_{run,amend1,amend2}.py` + `tests/test_track_adaptive_run.py` + `runs/ledger.jsonl`（#51/#52/#53）+ state；**0 既有 frozen/prereg/ADR 改动**（新增独立行，#49 null 不动）；**未观察 OOS metric**（run 中，config_committed #53 先于结果）。
+
 ## 2026-08-08 (i) Track Adaptive amend1 → WEEKLY ①（supersedes #51，真正有意义的比较）
 
 业主 "选择① + 时间改为一周（周收盘后）"。但**先查清 Track C 训练机制**（反泄漏纪律：跑前核验估量是否 ill-posed）发现：Track C 的 "冻结基线" **本身就是扩窗月重训**（每 fold test = 1 个月，refit on growing past）→ **#51 的 mechanism A（月扩窗重训）≡ Track C 估计器**，IC_diff≈0 by construction，**恒等无意义**。
