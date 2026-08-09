@@ -17,6 +17,15 @@
 
 **待业主**：① 审 A1 数字 + 授权 commit（Conventional Commits）② 是否跑 `export_terminal_data.py` 写 `calibration_reliability.json` 进 web（前端 owner 管护，需协调）③ A3 前瞻累计是否过 E3 owner-GO 门 ④ A2/A1 终端 UI 渲染（前端 owner）。
 
+**业主授权自主推进至不可再优化（2026-08-09 续）**：业主"授权创建最有价值最推荐内容，直到该环节不可再优化"。已全栈交付 A1：
+- **后端** commit `df34979`（feat(eval)）+ state `681b7df`（docs(state)）。
+- **前端** commit `459d96e`（feat(web)）：`/calibration` 路由 + `calibration-view.tsx`（recharts 可靠性图：预测 P(up) vs 实现频率 + 完美校准对角线 ReferenceLine；ECE-随样本增长折线 + 0.05 绿阈值；per-region stat 行 + 诚实 null 披露）+ data namespace/CalibrationReliability 类型 + zh/en i18n + navMonitor TargetIcon 入口 + 真实 `calibration_reliability.json`（US pooled_ece 0.0369 / CN 0.0196）。
+- **验证**：`pnpm tsc --noEmit` clean + eslint clean + `next build` 绿（`/calibration` 已 prerender）。0 frozen/ledger/E3/研究估计量改动。
+
+**Track A 现状（优化到位）**：A1（校准可靠性）全栈完成；A2（漂移）既有完成（model-health-view）；A3（诚实 track record）后向既有完成（picks-view），**前瞻累计半 = E3 owner-GO 门（cron 仍 disabled，不可擅自解冻）**。再加图（概率带随时间、US/CN 叠加）= 边际收益递减 / 过度工程，KISS 不做。
+
+**剩余业主杠杆（非我可自主）**：① E3 owner-GO → 启用前瞻命中累计（A3 前瞻半，display-only forward ledger）② venue/arXiv 发表决策（option A framing）③ 若要新研究线 → 路径乙（固定模型集 stacking）或路径丙（LLM 文本信号），均需新 prereg/frozen/ledger。
+
 ## 2026-08-08 (a) 历史数据推进至 2016 — COT 全量 + Form4 深化（display 层）
 
 业主要求"推进所有历史数据年份至 2016 + 低消耗模型带 agent 执行以省 token"。**范围 = fintech 终端 display 层**（研究管线冻结，climax #49 null 不动）。
