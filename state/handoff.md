@@ -1,5 +1,22 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-08-09 (n) 部署站仪表盘诊断 + IA 重设计提案（已 push 上线）
+
+业主看**部署站**，批"数据缺失/taco 空图/reddit 只一快照/没标川普两任就职/七主题生硬/整体像拼凑杂烩不构成有机整体"。**系统化诊断（DOM + 审计 + dev server 实测）**：
+
+- **数据层大多 2016+ 且健康**（market/taco/cot 都 2016→2026）；部署站看着缺 = **未重新部署**（近期回填没上线）。已 push → Actions 重建中。
+- **真凶 1（已修 commit `e3274e3`）**：`next.config.ts` 硬编码 `basePath:/Aionis` → `next dev` 下每路由 404（业主若跑 dev 看到全空）。改 production-only。
+- **真凶 2（已修 `e3274e3`）**：taco `XAxis dataKey="date"` 但数据是 `month` → 0 path 空图。改 `month`。
+- **川普就职（已修 commit + IA-doc 一起 push）**：market 事件表补 2017-01-20/2021-01-20/2025-01-20 就职 + 2025-02 关税，新增 `inauguration` 类型（emerald 样式）。
+- **硬约束（不可粉饰）**：reddit **forward-only**（Pushshift 2023 死，无 2016 历史）；ic_monthly/picks_backtest/pick_conviction **OOS 2021+ 研究冻结**（延 2016 = rerun-to-significance 禁）；须诚实标注。
+- **实测渲染正常**：dashboard/market/positioning/conviction/powerfloor/calibration（DOM 验 path/line 计数）。reddit-view 仍是 stub（current.md 既标，前端 owner 待接 picks 表）。
+
+**P3 IA 重设计提案** `reports/design/2026-08-09-terminal-ia-redesign.md`（PROPOSED，待业主审）：核心 = 把扁平 nav 重构成 **6 步决策漏斗**（①定调 Regime→②定向 Themes→③定标 Picks→④佐证 Confirmation→⑤问责 Track→⑥边界 Discipline），每模块加"角色导语"；七主题可操作化（方向×强度×利好股）；诚实标注约束；删模板遗留（accounts/cards/budgets/crypto/…）；P2 扩周频 cron（现有 `refresh-terminal-data.yml` 只 re-export 不 fetch → smart_money 卡 2024-12；扩成 fetch+re-export）。
+
+**已 push** `27a18f3..b1d195d`（含本会话所有 commit：Track A 校准视图、Track LLM pilot/prereg、dashboard 修复、川普就职、IA 提案）→ Actions 重建部署中。
+
+**待业主**：① 审 IA 漏斗提案 → 授权 P3（nav 重排+角色导语+删模板+七主题可操作化）② 裁 cron 频率（周频 Fri 收盘后 vs 保持日频）③ reddit picks 表要不要我补 ④ P4 主题 ④⑤（news LLM forward-only / risk pyfolio）。
+
 ## 2026-08-09 (m) Track LLM Phase-0 可行性已证 + PROPOSED 预注册（D-first 单变量）
 
 业主问"C+D 结合"→ 分析后推荐 **D-first 单变量**（EDGAR-LLM filings-tone 作第 42 列，1 trial 干净归因；C/stacking 条件后续仅当 D 显示信号）。业主再授权"创建最有价值内容至优化"→ 交付 **Phase-0 可行性 pilot + PROPOSED 预注册**（0 ledger / 0 frozen / 0 OOS）。
