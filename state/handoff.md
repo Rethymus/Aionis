@@ -1,5 +1,22 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-08-09 (m) Track LLM Phase-0 可行性已证 + PROPOSED 预注册（D-first 单变量）
+
+业主问"C+D 结合"→ 分析后推荐 **D-first 单变量**（EDGAR-LLM filings-tone 作第 42 列，1 trial 干净归因；C/stacking 条件后续仅当 D 显示信号）。业主再授权"创建最有价值内容至优化"→ 交付 **Phase-0 可行性 pilot + PROPOSED 预注册**（0 ledger / 0 frozen / 0 OOS）。
+
+**Phase-0 实测（本地门，真数据）**：`scripts/track_llm_feasibility_pilot.py`（+8 hermetic 测试绿，ruff clean）：
+- **G1 CIK 解析 = 100%**（US OOS 2021-2026，533 distinct tickers 全解析；2911 ticker-years）。cik_resolver 的 ~60% gap 是**历史全宇宙**问题，OOS 窗口不绑定。
+- **G2 token 投影 = ~11.71M（一次性）**（5576 10-K MD&A extractions；idempotent accession cache → 重跑 0 token）。两本地门 GREEN → **FEASIBLE**。
+- **待 owner（需凭证）**：G3 真实 per-call token + G4 temp=0 稳定性（`--measure-llm N`，scaffolded，freeze 前校准）。
+
+**PROPOSED 预注册** `docs/track-llm-preregistration.md`（未冻结）：两尾 null-expected claim（`IC_{41+LLM} − IC_{41-frozen}` 配对 HAC）；EDGAR 10-K MD&A excerpt（filed-date PIT + embargo 21）→ GLM temp=0 → `clip(bullish−bearish,−1,+1)` scalar → forward-fill；复用 Track C #48 learner（仅 41→42 列）；n_trials=1（DSR 平凡）；H6 走 cache-pin；stacking(C) 条件触发（仅当 IC_diff CI 不跨零）；US-only v1；D1-D6 owner 裁断点。可行情报告 `reports/design/2026-08-09-track-llm-feasibility-pilot.md`。
+
+**诚实预期**：大概率 null-to-modest（power floor 封顶），但 null = 第三条独立 null（#49 月频 / #54 周频 / LLM），**强化** power-floor 发表 framing。
+
+**边界**：本轮纯新建 1 script + 1 test + 2 docs（prereg PROPOSED + 可行情报告）+ state；**0 ledger / frozen / prereg-freeze / ADR / config / E3 / OOS** 改动；未跑任何 LLM 增强估计量；未做任何 GLM API 调用（G3/G4 待 owner 凭证）；Track C / Track Adaptive / Track B 冻结面完全未触。
+
+**待业主**：① 审 PROPOSED 预注册 + 可行情数字 ② 用凭证跑 `--measure-llm 8` 校准 G3/G4 ③ 裁 D1-D6（universe/filing-type/excerpt/scalar/model+temp/cost）→ 若 GO：`config_committed` 冻结 → 首次抽取 → OOS。④ 或：弃 D（接受 null-to-modest 预期，走发表/收尾）。
+
 ## 2026-08-09 (l) Track A 切片 A1 — walk-forward 校准可靠性（display 层，已交付待提交）
 
 业主重提"历史数据补到 2016 后 → 实时更新 + 用新数据不断自校正模型参数往可观走"。**关键事实：此问题 2026-08-08 已问、已分析、已实测**——[`reports/design/2026-08-08-live-adaptive-calibration-analysis.md`](../reports/design/2026-08-08-live-adaptive-calibration-analysis.md) 切 Track A（显示层，推荐）/ Track B（研究层）；Track B（扩窗周重训）已冻结+跑 = **NULL（ledger #54，IC_diff_weekly −0.0037，p=0.26，adaptive 略差于冻结）**。新增 2024-2026 调研确认重训频率非主导/常恶化（[Inquire Europe "Less is more"](https://www.inquire-europe.org/news/in-case-you-missed-it-less-is-more-biases-and-overfitting-in-cross-sectional-machine-learning-return-predictions/)）；唯一未测合法变体 = 固定模型集 Bayesian/stacking（[Gelman](https://sites.stat.columbia.edu/gelman/research/published/stacking_paper_discussion_rejoinder.pdf) ：BMA 在 M-open 失效）；唯一有希望新数据方向 = LLM 文本信号（项目 extraction 模块已有，但无 frozen 臂用 LLM 特征）。**业主裁 = 路径甲（显示层自适应校准）**（AskUserQuestion 四选一）。
