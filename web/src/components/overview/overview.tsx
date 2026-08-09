@@ -6,9 +6,12 @@ import {
   ArrowUpIcon,
   ArrowDownIcon,
   MinusIcon,
-  ShieldCheckIcon,
   GaugeIcon,
   ScaleIcon,
+  TrendingUpIcon,
+  BarChart3Icon,
+  TargetIcon,
+  CheckCircle2Icon,
 } from "lucide-react";
 import {
   Card,
@@ -181,47 +184,87 @@ function PicksPreview() {
   );
 }
 
-function ModuleCards() {
+function FunnelCards() {
   const { t } = useI18n();
+
+  // Calculate stats from real data
+  const latestVix = aionis.marketContext.vix_series[aionis.marketContext.vix_series.length - 1]?.vix ?? 0;
+
+  const themeSignalsList = Object.values(aionis.themeSignals.signals);
+  const bullishCount = themeSignalsList.filter(s => s.direction === "bullish").length;
+  const bearishCount = themeSignalsList.filter(s => s.direction === "bearish").length;
+
+  const topPick = aionis.picks[0];
+  const topPickDisplay = topPick ? `${topPick.ticker} ${topPick.score > 0 ? "+" : ""}${topPick.score.toFixed(2)}` : "N/A";
+
+  const totalFilings = aionis.smartMoney.total_filings ?? 0;
+
+  const usEce = aionis.calibrationReliability.regions?.us?.pooled_ece ?? 0;
+  const cnEce = aionis.calibrationReliability.regions?.cn?.pooled_ece ?? 0;
+
+  const combinedIc = aionis.metrics.combined_ic ?? 0;
+  const jtLook1 = aionis.metrics.jt_look1 ?? "N/A";
+
   const cards: {
     href: string;
     icon: React.ReactNode;
     titleKey: DictKey;
-    windowKey: DictKey;
-    ctaKey: DictKey;
+    roleKey: DictKey;
     stat: string;
     tone: "muted" | "amber" | "emerald";
   }[] = [
     {
-      href: "/evidence",
-      icon: <ScaleIcon className="size-4" />,
-      titleKey: "module.evidence.title",
-      windowKey: "module.evidence.window",
-      ctaKey: "module.evidence.cta",
-      stat: "14 / 14 null",
+      href: "/market",
+      icon: <GaugeIcon className="size-4" />,
+      titleKey: "nav.group.regime",
+      roleKey: "market.role",
+      stat: `VIX ${latestVix.toFixed(1)}`,
       tone: "muted",
     },
     {
-      href: "/power-floor",
-      icon: <GaugeIcon className="size-4" />,
-      titleKey: "module.powerfloor.title",
-      windowKey: "module.powerfloor.window",
-      ctaKey: "module.evidence.cta",
-      stat: "look-3 · 36.2y",
+      href: "/themes",
+      icon: <TrendingUpIcon className="size-4" />,
+      titleKey: "nav.group.themes",
+      roleKey: "themes.role",
+      stat: `${bullishCount} bullish / ${bearishCount} bearish`,
+      tone: "muted",
+    },
+    {
+      href: "/picks",
+      icon: <TargetIcon className="size-4" />,
+      titleKey: "nav.group.picks",
+      roleKey: "picks.role",
+      stat: topPickDisplay,
+      tone: "emerald",
+    },
+    {
+      href: "/smart-money",
+      icon: <BarChart3Icon className="size-4" />,
+      titleKey: "nav.group.confirm",
+      roleKey: "smartmoney.role",
+      stat: `${totalFilings} filings`,
+      tone: "muted",
+    },
+    {
+      href: "/calibration",
+      icon: <CheckCircle2Icon className="size-4" />,
+      titleKey: "nav.group.track",
+      roleKey: "calibration.role",
+      stat: `ECE ${((usEce + cnEce) / 2).toFixed(3)}`,
       tone: "amber",
     },
     {
-      href: "/discipline",
-      icon: <ShieldCheckIcon className="size-4" />,
-      titleKey: "module.discipline.title",
-      windowKey: "module.discipline.window",
-      ctaKey: "module.evidence.cta",
-      stat: "H6 PASS · PIT",
-      tone: "emerald",
+      href: "/evidence",
+      icon: <ScaleIcon className="size-4" />,
+      titleKey: "nav.group.discipline",
+      roleKey: "evidence.role",
+      stat: `IC ${combinedIc.toFixed(3)} · ${jtLook1}`,
+      tone: "amber",
     },
   ];
+
   return (
-    <div className="grid gap-3 md:grid-cols-3">
+    <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
       {cards.map((c) => (
         <Link key={c.href} href={c.href} className="group">
           <Card className="h-full transition-colors group-hover:border-foreground/20">
@@ -241,11 +284,11 @@ function ModuleCards() {
                 </span>
               </div>
               <CardTitle className="text-base">{t(c.titleKey)}</CardTitle>
-              <CardDescription>{t(c.windowKey)}</CardDescription>
+              <CardDescription className="text-xs">{t(c.roleKey)}</CardDescription>
             </CardHeader>
             <CardContent>
               <span className="inline-flex items-center gap-1 text-xs font-medium text-muted-foreground group-hover:text-foreground">
-                {t(c.ctaKey)}
+                {t("module.evidence.cta")}
                 <ArrowRightIcon className="size-3 transition-transform group-hover:translate-x-0.5" />
               </span>
             </CardContent>
@@ -263,7 +306,7 @@ export function Overview() {
       <KpiCards />
       <ScoreTicker />
       <PicksPreview />
-      <ModuleCards />
+      <FunnelCards />
     </div>
   );
 }

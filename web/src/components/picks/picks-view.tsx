@@ -42,26 +42,30 @@ function NullDisclaimer() {
   );
 }
 
-/** prob_up chip: color encodes distance from base_rate (no overclaiming). */
-function ProbUpChip({ probUp, baseRate }: { probUp: number; baseRate: number }) {
-  const delta = probUp - baseRate;
-  // Tight band around base_rate (±0.03) = "no edge" (gray). Beyond = tinted.
-  const tone =
-    delta > 0.03
-      ? "text-emerald-700 dark:text-emerald-300"
-      : delta < -0.03
-        ? "text-rose-700 dark:text-rose-300"
-        : "text-muted-foreground";
+/** prob_up horizontal bar: visual encoding of calibrated P(up) with directional color. */
+function ProbUpBar({ probUp, baseRate }: { probUp: number; baseRate: number }) {
+  const widthPct = Math.round(probUp * 100);
+  // Green when prob_up > 0.5 (bullish edge), rose when < 0.5 (bearish)
+  const barColor =
+    probUp > 0.5
+      ? "bg-emerald-500 dark:bg-emerald-400"
+      : "bg-rose-500 dark:bg-rose-400";
+
   return (
-    <span
-      className={cn(
-        "inline-flex w-14 shrink-0 justify-end font-mono text-xs tabular-nums",
-        tone,
-      )}
-      title={`P(up) = ${(probUp * 100).toFixed(1)}% · base_rate ${(baseRate * 100).toFixed(1)}%`}
-    >
-      {(probUp * 100).toFixed(0)}%
-    </span>
+    <div className="flex w-20 shrink-0 flex-col gap-0.5">
+      <div className="flex items-center gap-1.5">
+        <div className="h-2 w-full overflow-hidden rounded-full bg-muted/50">
+          <div
+            className={cn("h-full rounded-full transition-all", barColor)}
+            style={{ width: `${widthPct}%` }}
+            title={`P(up) = ${(probUp * 100).toFixed(1)}% · base_rate ${(baseRate * 100).toFixed(1)}%`}
+          />
+        </div>
+        <span className="text-[10px] font-mono tabular-nums text-muted-foreground">
+          {widthPct}%
+        </span>
+      </div>
+    </div>
   );
 }
 
@@ -122,7 +126,7 @@ function PickRow({ p, baseRate, showChange, livePrice }: PickRowProps) {
           )}
         </div>
       </div>
-      <ProbUpChip probUp={p.prob_up} baseRate={baseRate} />
+      <ProbUpBar probUp={p.prob_up} baseRate={baseRate} />
       {livePrice?.change_pct !== undefined && livePrice?.change_pct !== null ? (
         <span
           className={cn(

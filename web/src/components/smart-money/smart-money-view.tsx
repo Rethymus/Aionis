@@ -11,10 +11,20 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 
 export function SmartMoneyView() {
   const { t } = useI18n();
   const sm = aionis.smartMoney;
+  const yearlyHeading = "年度 13D 申报趋势 / Yearly 13D filings";
 
   return (
     <div className="space-y-6 p-4 md:p-6">
@@ -99,6 +109,35 @@ export function SmartMoneyView() {
           </div>
         </CardContent>
       </Card>
+
+      {sm.yearly && sm.yearly.length > 0 && (
+        <Card>
+          <CardHeader className="border-b">
+            <CardTitle className="text-base">{yearlyHeading}</CardTitle>
+          </CardHeader>
+          <CardContent className="p-2">
+            <div className="h-[180px] w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={sm.yearly} margin={{ top: 12, right: 20, bottom: 24, left: 12 }}>
+                  <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
+                  <XAxis
+                    dataKey="year"
+                    tickFormatter={(v) => String(v)}
+                    className="text-xs"
+                  />
+                  <YAxis className="text-xs" />
+                  <Tooltip
+                    formatter={(v) => [Number(v).toLocaleString(), "13D Filings"]}
+                    labelFormatter={(l) => `Year: ${l}`}
+                    contentStyle={{ fontSize: "12px" }}
+                  />
+                  <Bar dataKey="filings" fill="hsl(var(--primary))" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       <p className="text-xs text-muted-foreground">{t("smartmoney.explain")}</p>
     </div>

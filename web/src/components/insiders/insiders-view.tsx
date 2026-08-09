@@ -11,10 +11,21 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  Legend,
+} from "recharts";
 
 export function InsidersView() {
   const { t } = useI18n();
   const f = aionis.form4;
+  const yearlyHeading = "年度内部人买卖 / Yearly insider buys vs sells";
 
   if (f.status === "awaiting_fetch") {
     return (
@@ -86,6 +97,37 @@ export function InsidersView() {
           </div>
         </CardContent>
       </Card>
+
+      {f.yearly && f.yearly.length > 0 && (
+        <Card>
+          <CardHeader className="border-b">
+            <CardTitle className="text-base">{yearlyHeading}</CardTitle>
+          </CardHeader>
+          <CardContent className="p-2">
+            <div className="h-[180px] w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={f.yearly} margin={{ top: 12, right: 20, bottom: 24, left: 12 }}>
+                  <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
+                  <XAxis
+                    dataKey="year"
+                    tickFormatter={(v) => String(v)}
+                    className="text-xs"
+                  />
+                  <YAxis className="text-xs" />
+                  <Tooltip
+                    formatter={(v) => [Number(v).toLocaleString(), ""]}
+                    labelFormatter={(l) => `Year: ${l}`}
+                    contentStyle={{ fontSize: "12px" }}
+                  />
+                  <Legend />
+                  <Bar dataKey="buys" stackId="a" fill="#10b981" name="Buys" />
+                  <Bar dataKey="sells" stackId="a" fill="#f43f5e" name="Sells" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       <Card className="overflow-hidden py-0">
         <CardHeader className="border-b">
