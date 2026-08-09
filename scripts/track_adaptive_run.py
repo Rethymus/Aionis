@@ -42,7 +42,7 @@ from aionis.eval.deflated_sharpe import deflated_sharpe_ratio
 from aionis.eval.learner import LightGBMFrozen
 from aionis.eval.rank_ic import rank_ic_by_date
 
-FROZEN_SIG = "ffd0c9227e692fe826faeac964607577f3a9ff3de3384907297bc396887c4659"
+FROZEN_SIG = "b7621e6b089bb8c3d0a692d671c8446eec23b16e48b709efc51dc9b97a632116"  # amend2 #53 (n_estimators=100)
 PANEL = Path("data/cache/track_b_panel.parquet")
 OUT_DIR = Path("runs")
 
