@@ -35,6 +35,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+from joblib import Parallel, delayed
 from scipy.stats import norm
 
 from aionis.eval.deflated_sharpe import deflated_sharpe_ratio
@@ -80,7 +81,7 @@ OOS_START = "2021-01-01"
 MIN_TRAIN_ROWS = 5000  # min realized train rows for a stable weekly refit
 
 _FROZEN_LGBM = {
-    "n_estimators": 500,
+    "n_estimators": 100,  # amend2: 500→100 for feasibility (~5min vs ~27min); both arms
     "learning_rate": 0.05,
     "num_leaves": 31,
     "min_child_samples": 20,
@@ -154,32 +155,58 @@ def run_frozen_arm(
     return oos[["date", "ticker", "score", "fwd_5s"]]
 
 
+def _refit_one_week(
+    t_w: pd.Timestamp,
+    weekly: pd.DataFrame,
+    sess_list: pd.DatetimeIndex,
+    features: list[str],
+    edges: np.ndarray,
+    embargo: int,
+) -> pd.DataFrame | None:
+    """Refit lambdarank on realized rows (date <= t_w − embargo), predict week t_w.
+
+    Extracted so joblib can parallelize the per-week refits across cores. Each
+    refit is independent + deterministic (n_jobs=1 LightGBM, seed=0), so running
+    weeks concurrently yields identical per-week scores to sequential (H6 holds).
+    """
+    idx_t = sess_list.get_loc(pd.Timestamp(t_w))
+    cutoff = sess_list[max(idx_t - embargo, 0)]  # embargo sessions before predict
+    train = weekly[weekly["date"] <= cutoff].dropna(subset=["fwd_5s"])
+    if len(train) < MIN_TRAIN_ROWS:
+        return None
+    train = train.sort_values(["week_id", "ticker"])
+    rel = to_relevance(train["fwd_5s"].to_numpy(), edges)
+    groups = week_group_sizes(train["week_id"].to_numpy())
+    test = weekly[weekly["date"] == pd.Timestamp(t_w)].sort_values("ticker")
+    model = LightGBMFrozen(_FROZEN_LGBM)
+    test = test.assign(
+        score=model.fit_predict_rank(train, test, features, rel, groups).to_numpy()
+    )
+    return test[["date", "ticker", "score", "fwd_5s"]]
+
+
 def run_expanding_arm(
     weekly: pd.DataFrame,
     daily_sessions: np.ndarray,
     features: list[str],
     edges: np.ndarray,
     embargo: int = EMBARGO,
+    n_jobs: int = 2,
 ) -> pd.DataFrame:
-    """Each OOS week: refit on realized rows (date <= week_close − embargo), predict."""
+    """Each OOS week: refit on realized rows (date <= week_close − embargo), predict.
+
+    Parallelized via joblib ``threading`` (read-only shared panel; LightGBM
+    n_jobs=1 fits release the GIL). n_jobs=2 — not 4: 4 concurrent late-stage
+    fits on the full expanding window spike memory / race in LightGBM and crash
+    silently; 2 is the reliable ceiling on this 4-core / ~6GB box.
+    """
     oos_dates = sorted(weekly.loc[weekly["date"] > pd.Timestamp(OOS_START), "date"].unique())
-    out: list[pd.DataFrame] = []
-    sess_list = pd.DatetimeIndex(daily_sessions)  # sorted ascending daily sessions
-    for t_w in oos_dates:
-        idx_t = sess_list.get_loc(pd.Timestamp(t_w))
-        cutoff = sess_list[max(idx_t - embargo, 0)]  # 5 sessions before the predict close
-        train = weekly[weekly["date"] <= cutoff].dropna(subset=["fwd_5s"])
-        if len(train) < MIN_TRAIN_ROWS:
-            continue
-        train = train.sort_values(["week_id", "ticker"])
-        rel = to_relevance(train["fwd_5s"].to_numpy(), edges)
-        groups = week_group_sizes(train["week_id"].to_numpy())
-        test = weekly[weekly["date"] == pd.Timestamp(t_w)].sort_values("ticker")
-        model = LightGBMFrozen(_FROZEN_LGBM)
-        test = test.assign(
-            score=model.fit_predict_rank(train, test, features, rel, groups).to_numpy()
-        )
-        out.append(test[["date", "ticker", "score", "fwd_5s"]])
+    sess_list = pd.DatetimeIndex(daily_sessions)
+    results = Parallel(n_jobs=n_jobs, backend="threading")(
+        delayed(_refit_one_week)(t_w, weekly, sess_list, features, edges, embargo)
+        for t_w in oos_dates
+    )
+    out = [r for r in results if r is not None]
     return (
         pd.concat(out, ignore_index=True)
         if out
