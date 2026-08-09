@@ -74,7 +74,7 @@ export function TacoView() {
               <LineChart data={data} margin={{ top: 12, right: 20, bottom: 24, left: 12 }}>
                 <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
                 <XAxis
-                  dataKey="date"
+                  dataKey="month"
                   minTickGap={32}
                   tickFormatter={(v) => String(v).slice(0, 7)}
                   className="text-xs"
