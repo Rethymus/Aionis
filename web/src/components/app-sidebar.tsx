@@ -27,6 +27,7 @@ import {
   BlocksIcon,
   HeartPulseIcon,
   LayersIcon,
+  TargetIcon,
 } from "lucide-react";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -52,6 +53,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   ];
   const navMonitor = [
     { title: t("nav.modelhealth"), url: "/model-health", icon: <HeartPulseIcon /> },
+    { title: t("nav.calibration"), url: "/calibration", icon: <TargetIcon /> },
     { title: t("nav.powerfloor"), url: "/power-floor", icon: <GaugeIcon /> },
     { title: t("nav.discipline"), url: "/discipline", icon: <ShieldCheckIcon /> },
   ];

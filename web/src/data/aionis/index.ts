@@ -17,6 +17,7 @@ import pickConviction from "./pick_conviction.json";
 import form4 from "./form4.json";
 import cot from "./cot.json";
 import modelHealth from "./model_health.json";
+import calibrationReliability from "./calibration_reliability.json";
 import themes from "./themes.json";
 
 export type Pick = {
@@ -63,6 +64,36 @@ export type Evidence = {
   grade: "CV-proxy" | "chron./explor." | "explor." | "CONFIRMATORY";
 };
 
+export type CalibrationReliability = {
+  status: string;
+  method?: string;
+  walk_forward?: boolean;
+  min_train_months?: number;
+  methodology?: string;
+  regions: {
+    [region: string]: {
+      n_months: number;
+      series: {
+        month: string;
+        n_train_pairs: number;
+        n_pred: number;
+        ece_oos: number;
+        base_rate: number;
+        prob_min: number;
+        prob_max: number;
+      }[];
+      pooled_ece: number;
+      pooled_reliability: {
+        bin_lo: number;
+        bin_hi: number;
+        pred_mean: number | null;
+        emp_freq: number | null;
+        n: number;
+      }[];
+    };
+  };
+};
+
 export const aionis = {
   metrics: metrics as typeof metrics,
   picks: picks as Pick[],
@@ -83,5 +114,6 @@ export const aionis = {
   form4: form4 as typeof form4,
   cot: cot as typeof cot,
   modelHealth: modelHealth as typeof modelHealth,
+  calibrationReliability: calibrationReliability as CalibrationReliability,
   themes: themes as typeof themes,
 };
