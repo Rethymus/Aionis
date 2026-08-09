@@ -582,6 +582,55 @@ def export_model_health() -> None:
     (WEB / "model_health.json").write_text(json.dumps(summary, indent=2, default=str))
 
 
+def export_calibration_reliability() -> None:
+    """Walk-forward calibration reliability series + pooled OOS reliability diagram.
+
+    Display-only, leakage-safe. For each realized month T, refits the Platt
+    calibration on all realized (score, forward-return) pairs STRICTLY before T
+    and predicts T's tickers' P(up); T's realized outcome then scores the
+    prediction (backward audit). Surfaces 'does the calibrated P(up) stay
+    trustworthy as the sample grows' — the leakage-safe form of 'use the latest
+    data to self-correct the calibration'. NOT a research claim; the frozen
+    LightGBM learner is never touched (research verdict ledger #49: NULL).
+    """
+    from aionis.eval.score_calibration import calibrate_walk_forward
+
+    oos_path = Path("runs/track_c_confirmatory_oos_scores.parquet")
+    if not oos_path.exists():
+        payload = {
+            "status": "awaiting_fetch",
+            "methodology": (
+                "Walk-forward calibration reliability (display-only). Awaiting OOS "
+                "scores — run the confirmatory pipeline. NOT a research claim."
+            ),
+            "regions": {},
+        }
+        (WEB / "calibration_reliability.json").write_text(json.dumps(payload, indent=2))
+        return
+    oos = pd.read_parquet(oos_path)
+    oos["date"] = pd.to_datetime(oos["date"])
+    us_panel_path = Path("data/cache/track_b_panel.parquet")
+    cn_panel_path = Path("data/cache/cn_price_panel.parquet")
+    us_panel = pd.read_parquet(us_panel_path) if us_panel_path.exists() else pd.DataFrame()
+    cn_panel = pd.read_parquet(cn_panel_path) if cn_panel_path.exists() else pd.DataFrame()
+    reliability = calibrate_walk_forward(oos, us_panel, cn_panel)
+    reliability["status"] = "ok"
+    reliability["methodology"] = (
+        "Walk-forward calibration reliability (display-only, leakage-safe). For "
+        "each realized OOS month T, the Platt calibration map is refit on all "
+        "realized (score, forward-return) pairs STRICTLY before T, then T's "
+        "tickers are predicted; T's own realized outcome scores the prediction "
+        "(backward audit). Per-month OOS ECE shows whether the calibrated P(up) "
+        "stays trustworthy as the realized sample grows; the pooled reliability "
+        "diagram bins all walk-forward OOS predictions (mean predicted P vs "
+        "empirical up-frequency). Only the 2-param display map is refit — the "
+        "frozen LightGBM learner is NEVER touched, and no ledger / frozen surface "
+        "/ research estimator is affected. NOT a research claim and NOT a path to "
+        "positive rank-IC (research verdict ledger #49: combined rank-IC −0.0088, NULL)."
+    )
+    (WEB / "calibration_reliability.json").write_text(json.dumps(reliability, indent=2, default=str))
+
+
 def export_cot() -> None:
     """CFTC COT positioning-pressure index (display-only, exploratory).
 
@@ -999,6 +1048,7 @@ def main() -> None:
     export_pick_conviction()
     export_themes()
     export_model_health()
+    export_calibration_reliability()
     export_cot()
     export_form4()
     export_market_context()

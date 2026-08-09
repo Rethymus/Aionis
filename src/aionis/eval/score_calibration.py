@@ -22,8 +22,12 @@ Anti-leakage contract (this is the load-bearing part):
   - Both Platt and isotonic are monotonic by construction → calibrated
     ``prob_up`` preserves score rank (does not shuffle picks). Neither can
     manufacture discrimination the score does not have.
-  - Walk-forward refit is NOT enforced (display utility, not a research
-    estimator). Disclosed in ``CalibrationMeta.walk_forward = False``.
+  - Walk-forward refit is available as an opt-in DISPLAY variant
+    (``calibrate_walk_forward``): each realized month is predicted by a map
+    refit on strictly-prior realized pairs, producing a per-month OOS ECE series
+    + a pooled OOS reliability diagram. The default ``calibrate_latest_month``
+    remains a single fit on all realized history (``walk_forward = False``).
+    Neither is a research estimator.
   - This module writes NO ledger / frozen surface / E3 outcome — it is a pure
     display transform, analogous to ``ff5_residual``. The research verdict
     (combined rank-IC = −0.0088, null) is unaffected.
@@ -248,6 +252,152 @@ def calibrate_latest_month(
             "meta": cr.meta,
             "latest_date": str(region_latest.date()),
             "latest": latest.reset_index(drop=True),
+        }
+    return out
+
+
+def _reliability_bins(
+    y_true: np.ndarray, y_prob: np.ndarray, n_bins: int = 10
+) -> tuple[list[dict[str, Any]], float]:
+    """Bin predicted probs → ([{bin_lo, bin_hi, pred_mean, emp_freq, n}], ECE).
+
+    Per-bin reliability table (mean predicted P vs empirical frequency) plus the
+    scalar Expected Calibration Error. Both inputs must be finite, aligned, and
+    non-empty. ECE is computed from the same binned counts as the table (single
+    pass, identical definition to ``_ece``).
+    """
+    bins = np.linspace(0.0, 1.0, n_bins + 1)
+    rows: list[dict[str, Any]] = []
+    ece = 0.0
+    n = len(y_true)
+    for i in range(n_bins):
+        lo, hi = bins[i], bins[i + 1]
+        mask = (y_prob >= lo) & (y_prob < hi if i < n_bins - 1 else y_prob <= hi)
+        cnt = int(mask.sum())
+        if cnt == 0:
+            rows.append(
+                {
+                    "bin_lo": round(float(lo), 3),
+                    "bin_hi": round(float(hi), 3),
+                    "pred_mean": None,
+                    "emp_freq": None,
+                    "n": 0,
+                }
+            )
+            continue
+        acc = float(y_true[mask].mean())
+        conf = float(y_prob[mask].mean())
+        ece += (cnt / n) * abs(acc - conf)
+        rows.append(
+            {
+                "bin_lo": round(float(lo), 3),
+                "bin_hi": round(float(hi), 3),
+                "pred_mean": round(conf, 4),
+                "emp_freq": round(acc, 4),
+                "n": cnt,
+            }
+        )
+    return rows, float(ece)
+
+
+def calibrate_walk_forward(
+    oos_scores: pd.DataFrame,
+    us_panel: pd.DataFrame,
+    cn_panel: pd.DataFrame,
+    method: Method = _DEFAULT_METHOD,
+    min_train_months: int = 12,
+    n_bins: int = 10,
+) -> dict[str, Any]:
+    """Per-region walk-forward calibration reliability (DISPLAY, leakage-safe).
+
+    For each realized OOS month T, refit the Platt/isotonic calibration on all
+    realized (score, realized_up) pairs STRICTLY before T, then predict T's
+    tickers' P(up). T's own realized outcome then scores that prediction
+    (a legitimate backward audit — T is realized). Produces a per-month OOS-ECE
+    series + a pooled OOS reliability diagram. ``walk_forward = True`` disclosed.
+
+    Anti-leakage contract (mirrors ``calibrate_latest_month`` — the load-bearing part):
+      - Month T's fit uses ONLY pairs with date < T. T is only predicted, never fit.
+      - Only the 2-param Platt sigmoid (or isotonic) DISPLAY MAP is refit; the
+        frozen LightGBM learner, its hyperparameters, and its features are NEVER
+        touched. A monotonic map cannot manufacture discrimination the score lacks.
+      - This module writes NO ledger / frozen surface / E3 outcome / research
+        estimator. It is the leakage-safe form of "use the latest data to
+        self-correct the calibration" — NOT a path to positive rank-IC (research
+        verdict ledger #49: combined rank-IC −0.0088, NULL).
+
+    Returns ``{method, walk_forward, min_train_months, regions: {region:
+    {n_months, series, pooled_ece, pooled_reliability}}}``. Regions with fewer
+    than ``min_train_months`` realized months (or <``_MIN_PAIRS`` training pairs)
+    are silently omitted.
+    """
+    oos = oos_scores.copy()
+    oos["date"] = pd.to_datetime(oos["date"])
+    out: dict[str, Any] = {
+        "method": method,
+        "walk_forward": True,
+        "min_train_months": min_train_months,
+        "regions": {},
+    }
+    for region, panel in (("us", us_panel), ("cn", cn_panel)):
+        region_oos = oos[oos["region"] == region]
+        if region_oos.empty:
+            continue
+        try:
+            pairs = build_pair_frame(oos, panel, region)
+        except ValueError:
+            continue  # empty panel / missing cols — skip region
+        realized = pairs.dropna(subset=["forward_return_h"]).sort_values("date").copy()
+        if realized.empty:
+            continue
+        realized["month"] = realized["date"].dt.to_period("M")
+        months = sorted(realized["month"].unique())
+        if len(months) <= min_train_months:
+            continue  # not enough realized history to walk forward
+        series: list[dict[str, Any]] = []
+        pooled_true: list[int] = []
+        pooled_prob: list[float] = []
+        for i in range(min_train_months, len(months)):
+            target = months[i]
+            train = realized[realized["month"] < target]
+            if len(train) < _MIN_PAIRS:
+                continue
+            tgt = realized[realized["month"] == target]
+            tgt = tgt[np.isfinite(tgt["score"])]
+            if len(tgt) < 10:  # need a real cross-section to score the month
+                continue
+            cr = fit_region(
+                train["score"].to_numpy(),
+                train["realized_up"].dropna().to_numpy(),
+                region,
+                method=method,
+            )
+            preds = cr.predict_proba(tgt["score"].to_numpy())
+            y_true = tgt["realized_up"].dropna().to_numpy().astype(int)
+            _, ece_t = _reliability_bins(y_true, preds, n_bins=n_bins)
+            series.append(
+                {
+                    "month": str(target),
+                    "n_train_pairs": int(len(train)),
+                    "n_pred": int(len(tgt)),
+                    "ece_oos": round(ece_t, 4),
+                    "base_rate": round(float(y_true.mean()), 4),
+                    "prob_min": round(float(preds.min()), 4),
+                    "prob_max": round(float(preds.max()), 4),
+                }
+            )
+            pooled_true.extend(y_true.tolist())
+            pooled_prob.extend(preds.tolist())
+        if not series:
+            continue
+        bins, pooled_ece = _reliability_bins(
+            np.asarray(pooled_true), np.asarray(pooled_prob), n_bins=n_bins
+        )
+        out["regions"][region] = {
+            "n_months": len(series),
+            "series": series,
+            "pooled_ece": round(pooled_ece, 4),
+            "pooled_reliability": bins,
         }
     return out
 

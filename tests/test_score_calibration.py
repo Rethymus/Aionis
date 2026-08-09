@@ -16,6 +16,7 @@ import pytest
 from aionis.eval.score_calibration import (
     build_pair_frame,
     calibrate_latest_month,
+    calibrate_walk_forward,
     fit_region,
     meta_to_jsonable,
 )
@@ -233,3 +234,91 @@ def test_meta_to_jsonable_round_trips_through_json() -> None:
     s = json.dumps(js)  # must not raise
     assert json.loads(s)["region"] == "us"
     assert set(js) >= {"region", "n_pairs", "base_rate", "ece", "brier", "prob_min", "prob_max"}
+
+
+# --- calibrate_walk_forward (display, leakage-safe) ---------------------------
+
+
+def test_calibrate_walk_forward_excludes_target_month_from_fit() -> None:
+    """Anti-leakage: month T's fit uses only months strictly before T."""
+    oos = _toy_oos(n_months=20, n_tickers=30, region="us")
+    panel = _toy_panel(oos, signal=0.5)
+    out = calibrate_walk_forward(oos, us_panel=panel, cn_panel=pd.DataFrame(), min_train_months=12)
+    series = out["regions"]["us"]["series"]
+    # First target = month index 12 → train = months 0..11 = 12 × 30 = 360 pairs.
+    assert series[0]["n_train_pairs"] == 12 * 30
+    # Each later target grows the training window by exactly one month (30 pairs).
+    assert series[1]["n_train_pairs"] == 13 * 30
+    assert series[-1]["n_train_pairs"] == (len(series) - 1 + 12) * 30
+
+
+def test_calibrate_walk_forward_disclosed_true() -> None:
+    oos = _toy_oos(n_months=20, n_tickers=30, region="us")
+    panel = _toy_panel(oos, signal=0.5)
+    out = calibrate_walk_forward(oos, us_panel=panel, cn_panel=pd.DataFrame(), min_train_months=12)
+    assert out["walk_forward"] is True
+
+
+def test_calibrate_walk_forward_strong_signal_reliability_monotone() -> None:
+    """Strong score→up signal: reliability endpoints rise (low bin < high bin)."""
+    oos = _toy_oos(n_months=24, n_tickers=60, region="us")
+    panel = _toy_panel(oos, signal=1.2)
+    out = calibrate_walk_forward(oos, us_panel=panel, cn_panel=pd.DataFrame(), min_train_months=12)
+    us = out["regions"]["us"]
+    bins = [b for b in us["pooled_reliability"] if b["n"] > 0]
+    assert bins[0]["emp_freq"] < bins[-1]["emp_freq"], "reliability rises across bins"
+    # Signal present ⇒ latest month's prob range spreads wide (not collapsed at 0.5).
+    last = us["series"][-1]
+    assert (last["prob_max"] - last["prob_min"]) > 0.10
+
+
+def test_calibrate_walk_forward_null_signal_keeps_prob_range_tight() -> None:
+    """Null signal: Platt collapses to a tight band around base rate (honest null)."""
+    oos = _toy_oos(n_months=24, n_tickers=60, region="us")
+    panel = _toy_panel(oos, signal=0.0)
+    out = calibrate_walk_forward(oos, us_panel=panel, cn_panel=pd.DataFrame(), min_train_months=12)
+    last = out["regions"]["us"]["series"][-1]
+    assert (last["prob_max"] - last["prob_min"]) < 0.15
+
+
+def test_calibrate_walk_forward_deterministic_across_calls() -> None:
+    """H6-style determinism: identical inputs ⇒ identical output dict."""
+    oos = _toy_oos(n_months=20, n_tickers=30, region="us")
+    panel = _toy_panel(oos, signal=0.5)
+    a = calibrate_walk_forward(oos, us_panel=panel, cn_panel=pd.DataFrame(), min_train_months=12)
+    b = calibrate_walk_forward(oos, us_panel=panel, cn_panel=pd.DataFrame(), min_train_months=12)
+    assert a == b
+
+
+def test_calibrate_walk_forward_skips_region_with_too_few_months() -> None:
+    """Fewer realized months than min_train_months → region silently omitted."""
+    oos = _toy_oos(n_months=5, n_tickers=30, region="us")
+    panel = _toy_panel(oos, signal=0.5)
+    out = calibrate_walk_forward(oos, us_panel=panel, cn_panel=pd.DataFrame(), min_train_months=12)
+    assert "us" not in out["regions"]
+
+
+def test_calibrate_walk_forward_handles_both_regions() -> None:
+    us_oos = _toy_oos(n_months=20, n_tickers=30, region="us")
+    cn_oos = _toy_oos(n_months=20, n_tickers=30, region="cn")
+    oos = pd.concat([us_oos, cn_oos], ignore_index=True)
+    us_panel = _toy_panel(us_oos, signal=0.8)
+    cn_panel = _toy_panel(cn_oos, signal=0.0)  # null in CN
+    out = calibrate_walk_forward(oos, us_panel=us_panel, cn_panel=cn_panel, min_train_months=12)
+    assert set(out["regions"]) == {"us", "cn"}
+    us_last = out["regions"]["us"]["series"][-1]
+    cn_last = out["regions"]["cn"]["series"][-1]
+    us_spread = us_last["prob_max"] - us_last["prob_min"]
+    cn_spread = cn_last["prob_max"] - cn_last["prob_min"]
+    assert us_spread > cn_spread, "US (signal=0.8) should spread more than CN (signal=0.0)"
+
+
+def test_calibrate_walk_forward_jsonable() -> None:
+    """The output must survive json.dumps (terminal export contract)."""
+    import json
+
+    oos = _toy_oos(n_months=20, n_tickers=30, region="us")
+    panel = _toy_panel(oos, signal=0.5)
+    out = calibrate_walk_forward(oos, us_panel=panel, cn_panel=pd.DataFrame(), min_train_months=12)
+    s = json.dumps(out, default=str)  # must not raise
+    assert "pooled_reliability" in json.loads(s)["regions"]["us"]
