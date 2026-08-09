@@ -24,6 +24,7 @@ export function RedditView() {
 
   return (
     <div className="space-y-6 p-4 md:p-6">
+      <p className="text-xs font-medium text-primary">{t("reddit.role")}</p>
       <header className="space-y-1">
         <h1 className="text-2xl font-bold tracking-tight">{t("reddit.title")}</h1>
         <p className="text-sm text-muted-foreground">{t("reddit.window")}</p>

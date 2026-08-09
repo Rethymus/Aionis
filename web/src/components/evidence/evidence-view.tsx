@@ -63,6 +63,7 @@ export function EvidenceView() {
 
   return (
     <div className="space-y-6 p-4 md:p-6">
+      <p className="text-xs font-medium text-primary">{t("evidence.role")}</p>
       <header className="space-y-2">
         <h1 className="text-2xl font-bold tracking-tight">{t("module.evidence.title")}</h1>
         <p className="max-w-2xl text-sm text-muted-foreground">{t("evidence.intro")}</p>
