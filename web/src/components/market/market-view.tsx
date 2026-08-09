@@ -29,6 +29,7 @@ const EVENT_TONE: Record<string, string> = {
   trade: "border-amber-400/50 text-amber-700 dark:text-amber-300",
   crisis: "border-rose-500/60 text-rose-700 dark:text-rose-300",
   monetary: "border-violet-400/50 text-violet-700 dark:text-violet-300",
+  inauguration: "border-emerald-500/70 text-emerald-700 dark:text-emerald-300",
 };
 
 const EVENT_TYPE_LABEL: Record<string, string> = {
@@ -36,6 +37,7 @@ const EVENT_TYPE_LABEL: Record<string, string> = {
   trade: "贸易",
   crisis: "危机",
   monetary: "货币",
+  inauguration: "就职",
 };
 
 function ChartTooltip({ active, payload, label }: {
