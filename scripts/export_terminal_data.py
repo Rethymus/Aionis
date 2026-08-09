@@ -1115,6 +1115,20 @@ def export_market_context() -> None:
         {"date": "2025-05-12", "label": "US-China Geneva truce", "type": "trade", "region": "us"},
     ]
 
+    # Market risk stats from the equal-weight monthly returns (display-only).
+    from aionis.eval.portfolio_risk import (
+        risk_summary_to_jsonable,
+    )
+    from aionis.eval.portfolio_risk import (
+        summarize as risk_summarize,
+    )
+    _ew_returns = [m["ret"] for m in market_series if isinstance(m.get("ret"), (int, float))]
+    risk_json = (
+        risk_summary_to_jsonable(risk_summarize(_ew_returns, periods_per_year=12))
+        if len(_ew_returns) >= 12
+        else None
+    )
+
     payload = {
         "methodology": (
             "Market context since 川普元年 (Trump Era, 2016). VIX = monthly mean "
@@ -1127,6 +1141,7 @@ def export_market_context() -> None:
         "start_label": "川普元年 (2016)",
         "vix_series": vix_series,
         "market_series": market_series,
+        "risk": risk_json,
         "events": events,
         "n_months": len(market_series),
         "date_range": [market_series[0]["month"], market_series[-1]["month"]] if market_series else [],

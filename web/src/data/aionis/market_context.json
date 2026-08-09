@@ -1138,6 +1138,17 @@
       "index": 374.68
     }
   ],
+  "risk": {
+    "n_periods": 125,
+    "annual_return": 0.1352,
+    "sharpe": 0.8552,
+    "sortino": 1.3495,
+    "max_drawdown": -0.2695,
+    "calmar": 0.5015,
+    "var_95": -0.0652,
+    "cvar_95": -0.0989,
+    "periods_per_year": 12
+  },
   "events": [
     {
       "date": "2016-11-08",

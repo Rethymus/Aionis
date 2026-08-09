@@ -158,6 +158,8 @@ export const dict = {
     "market.legend.vix": "VIX",
     "market.events.title": "关键事件",
     "market.events.desc": "公开可验证的市场里程碑事件。",
+    "market.risk.title": "市场风险（等权 S&P 500）",
+    "market.risk.hint": "2016→最新等权月收益的风险统计 · 展示用，非策略风险",
     "market.methodology_title": "方法论",
 
     "evidence.intro": "跨 14 条预注册配置，没有任何 treatment 臂相对 price-only 基线显示可靠的正向增量 rank-IC。所有置信区间都跨越零。",
@@ -403,6 +405,8 @@ export const dict = {
     "market.legend.vix": "VIX",
     "market.events.title": "Key events",
     "market.events.desc": "Publicly verifiable market milestones.",
+    "market.risk.title": "Market risk (equal-weight S&P 500)",
+    "market.risk.hint": "Risk stats from the equal-weight monthly returns, 2016→latest · display-only, not strategy risk",
     "market.methodology_title": "Methodology",
 
     "evidence.intro": "Across 14 pre-registered configurations, no treatment arm shows a reliable positive incremental rank-IC over the price-only baseline. All CIs bracket zero.",

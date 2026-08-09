@@ -40,6 +40,23 @@ const EVENT_TYPE_LABEL: Record<string, string> = {
   inauguration: "就职",
 };
 
+function RiskStat({ label, value, tone }: { label: string; value: string; tone?: "rose" | "emerald" }) {
+  return (
+    <div className="flex items-baseline justify-between gap-2">
+      <span className="text-xs text-muted-foreground">{label}</span>
+      <span
+        className={cn(
+          "font-mono text-sm font-semibold tabular-nums",
+          tone === "rose" && "text-rose-600 dark:text-rose-400",
+          tone === "emerald" && "text-emerald-600 dark:text-emerald-400",
+        )}
+      >
+        {value}
+      </span>
+    </div>
+  );
+}
+
 function ChartTooltip({ active, payload, label }: {
   active?: boolean;
   payload?: { name?: string; value?: number; color?: string }[];
@@ -185,6 +202,27 @@ export function MarketView() {
           </ResponsiveContainer>
         </CardContent>
       </Card>
+
+      {mc.risk ? (
+        <Card>
+          <CardHeader className="border-b">
+            <CardTitle className="text-base">{t("market.risk.title")}</CardTitle>
+            <CardDescription>{t("market.risk.hint")}</CardDescription>
+          </CardHeader>
+          <CardContent className="p-4">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2 md:grid-cols-4">
+              <RiskStat label="Sharpe" value={mc.risk.sharpe.toFixed(2)} />
+              <RiskStat label="Sortino" value={mc.risk.sortino.toFixed(2)} />
+              <RiskStat label="Max Drawdown" value={`${(mc.risk.max_drawdown * 100).toFixed(1)}%`} tone="rose" />
+              <RiskStat label="Calmar" value={mc.risk.calmar.toFixed(2)} />
+              <RiskStat label="VaR 95%" value={`${(mc.risk.var_95 * 100).toFixed(1)}%`} tone="rose" />
+              <RiskStat label="CVaR 95%" value={`${(mc.risk.cvar_95 * 100).toFixed(1)}%`} tone="rose" />
+              <RiskStat label="Annual return" value={`${(mc.risk.annual_return * 100).toFixed(1)}%`} tone="emerald" />
+              <RiskStat label="Months" value={String(mc.risk.n_periods)} />
+            </div>
+          </CardContent>
+        </Card>
+      ) : null}
 
       <Card className="overflow-hidden py-0">
         <CardHeader className="border-b">
