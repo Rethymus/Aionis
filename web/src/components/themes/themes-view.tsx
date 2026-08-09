@@ -32,6 +32,11 @@ const THEME_LABEL: Record<string, ThemeLabelKey> = {
   net_cost: "themes.net_cost",
   market_structure: "themes.market_structure",
 };
+const GROUP_LABEL: Record<string, ThemeLabelKey> = {
+  price: "themes.price",
+  fundamentals: "themes.fundamentals",
+  market_structure: "themes.market_structure",
+};
 
 type StatusKey =
   | "themes.status.live"
@@ -49,6 +54,23 @@ const STATUS_STYLE: Record<string, string> = {
   partial: "border-amber-500/40 bg-amber-500/10 text-amber-700 dark:text-amber-400",
   forward_only: "border-muted-foreground/30 bg-muted/40 text-muted-foreground",
   needs_work: "border-rose-500/40 bg-rose-500/10 text-rose-700 dark:text-rose-400",
+};
+
+type DirKey = "themes.direction.bullish" | "themes.direction.bearish" | "themes.direction.neutral";
+const DIR_KEY: Record<string, DirKey> = {
+  bullish: "themes.direction.bullish",
+  bearish: "themes.direction.bearish",
+  neutral: "themes.direction.neutral",
+};
+const DIR_STYLE: Record<string, string> = {
+  bullish: "border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400",
+  bearish: "border-rose-500/40 bg-rose-500/10 text-rose-700 dark:text-rose-400",
+  neutral: "border-muted-foreground/30 bg-muted/40 text-muted-foreground",
+};
+const DIR_BAR: Record<string, string> = {
+  bullish: "bg-emerald-500",
+  bearish: "bg-rose-500",
+  neutral: "bg-muted-foreground/40",
 };
 
 function Sparkline({ data, className }: { data: number[]; className?: string }) {
@@ -83,6 +105,10 @@ export function ThemesView() {
   const { t } = useI18n();
   const th = aionis.themes;
   const themes = th.themes ?? [];
+  const ts = aionis.themeSignals;
+  const sigs = ts.signals ?? {};
+  const sigEntries = Object.values(sigs);
+  const sigsByGroup = (g: string) => sigEntries.filter((s) => s.group === g);
 
   return (
     <div className="space-y-6 p-4 md:p-6">
@@ -93,6 +119,80 @@ export function ThemesView() {
           {th.as_of_date ? ` · ${t("themes.asof")} ${th.as_of_date}` : ""}
         </p>
       </header>
+
+      {/* Operationalized signals: direction × strength × favored (the actionable read) */}
+      {ts.status === "ok" && sigEntries.length > 0 ? (
+        <section className="space-y-3">
+          <div>
+            <h2 className="text-lg font-semibold tracking-tight">{t("themes.signals.title")}</h2>
+            <p className="text-xs text-muted-foreground">
+              {t("themes.signals.hint")}
+              {ts.as_of_date ? ` · ${ts.as_of_date}` : ""}
+            </p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-3">
+            {ts.groups.map((g) => {
+              const groupSigs = sigsByGroup(g);
+              if (groupSigs.length === 0) return null;
+              return (
+                <Card key={g} className="overflow-hidden py-0">
+                  <CardHeader className="border-b">
+                    <CardTitle className="text-sm">{t(GROUP_LABEL[g] ?? "themes.price")}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3 p-3">
+                    {groupSigs.map((s) => (
+                      <div key={s.signal} className="space-y-1.5">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="truncate font-mono text-xs">{s.signal}</span>
+                          <Badge
+                            variant="outline"
+                            className={cn("shrink-0 px-1.5 py-0 text-[10px]", DIR_STYLE[s.direction] ?? "")}
+                          >
+                            {t(DIR_KEY[s.direction] ?? "themes.direction.neutral")}
+                          </Badge>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="w-8 shrink-0 text-[10px] text-muted-foreground">
+                            {t("themes.strength")}
+                          </span>
+                          <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
+                            <div
+                              className={cn("h-full rounded-full", DIR_BAR[s.direction] ?? DIR_BAR.neutral)}
+                              style={{ width: `${Math.min((s.strength / 3) * 100, 100)}%` }}
+                            />
+                          </div>
+                          <span className="w-8 shrink-0 text-right text-[10px] tabular-nums text-muted-foreground">
+                            {s.strength.toFixed(2)}
+                          </span>
+                        </div>
+                        {s.favored.length > 0 ? (
+                          <div className="flex flex-wrap gap-1">
+                            <span className="text-[10px] text-muted-foreground">{t("themes.favored")}:</span>
+                            {s.favored.slice(0, 4).map((f) => (
+                              <span
+                                key={f.ticker}
+                                className="rounded bg-muted/60 px-1.5 py-0.5 font-mono text-[10px]"
+                                title={
+                                  f.name
+                                    ? `${f.name}${f.sector ? ` · ${f.sector}` : ""}`
+                                    : f.ticker
+                                }
+                              >
+                                {f.ticker}
+                              </span>
+                            ))}
+                          </div>
+                        ) : null}
+                      </div>
+                    ))}
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+          <p className="text-[10px] text-muted-foreground">{t("themes.favored.note")}</p>
+        </section>
+      ) : null}
 
       {th.status !== "ok" || themes.length === 0 ? (
         <Card className="border-amber-500/30 bg-amber-500/5">
@@ -165,8 +265,8 @@ export function ThemesView() {
             <ShieldCheckIcon className="size-4" /> {t("themes.methodology_title")}
           </CardTitle>
         </CardHeader>
-        <CardContent className="p-4">
-          <p className="text-xs text-muted-foreground">{th.methodology}</p>
+        <CardContent className="space-y-2 p-4">
+          <p className="text-xs text-muted-foreground">{ts.methodology ?? th.methodology}</p>
         </CardContent>
       </Card>
     </div>

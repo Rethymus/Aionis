@@ -18,6 +18,7 @@ import form4 from "./form4.json";
 import cot from "./cot.json";
 import modelHealth from "./model_health.json";
 import calibrationReliability from "./calibration_reliability.json";
+import themeSignals from "./theme_signals.json";
 import themes from "./themes.json";
 
 export type Pick = {
@@ -94,6 +95,27 @@ export type CalibrationReliability = {
   };
 };
 
+export type ThemeSignals = {
+  status: string;
+  as_of_date?: string;
+  groups: string[];
+  methodology?: string;
+  signals: {
+    [signal: string]: {
+      signal: string;
+      polarity: string;
+      direction: "bullish" | "bearish" | "neutral";
+      strength: number;
+      mean: number;
+      n: number;
+      group: string;
+      latest_mean?: number;
+      trailing_mean?: number;
+      favored: { ticker: string; value: number; name?: string; sector?: string }[];
+    };
+  };
+};
+
 export const aionis = {
   metrics: metrics as typeof metrics,
   picks: picks as Pick[],
@@ -115,5 +137,6 @@ export const aionis = {
   cot: cot as typeof cot,
   modelHealth: modelHealth as typeof modelHealth,
   calibrationReliability: calibrationReliability as CalibrationReliability,
+  themeSignals: themeSignals as ThemeSignals,
   themes: themes as typeof themes,
 };

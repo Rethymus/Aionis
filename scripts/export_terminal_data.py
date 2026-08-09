@@ -548,6 +548,101 @@ def export_themes() -> None:
     (WEB / "themes.json").write_text(json.dumps(payload, indent=2, default=str))
 
 
+def export_theme_signals() -> None:
+    """Operationalize the seven themes: per signal → direction × strength × favored.
+
+    Turns the abstract 'cross-sectional mean = 0.3' into an actionable read:
+    each theme signal becomes a direction (bullish/bearish/neutral, from a
+    documented polarity heuristic), a normalized strength, and the top-5 tickers
+    most exposed to it (joined with display name + sector). Reads the frozen
+    panel's latest cross-section — DISPLAY ONLY, does NOT recompute OOS scores or
+    touch the model. Not a research claim and not a buy recommendation (for
+    'bearish_high' signals, 'favored' = most-exposed, not a long).
+    """
+    from aionis.eval.theme_signals import (
+        SIGNAL_POLARITY,
+        summarize_theme,
+        theme_summary_to_jsonable,
+    )
+
+    panel_path = Path("data/cache/track_b_panel.parquet")
+    if not panel_path.exists():
+        payload = {
+            "status": "awaiting_fetch",
+            "methodology": (
+                "Theme-signal operationalization (display-only). Awaiting the shared "
+                "PIT panel. Not a research claim."
+            ),
+            "signals": {},
+            "groups": [],
+        }
+        (WEB / "theme_signals.json").write_text(json.dumps(payload, indent=2))
+        return
+    panel = pd.read_parquet(panel_path)
+    panel["date"] = pd.to_datetime(panel["date"])
+    latest = panel["date"].max()
+    latest_panel = panel[panel["date"] == latest].copy()
+    meta = _load_ticker_metadata()
+    latest_panel = _enrich_with_metadata(latest_panel, meta)
+
+    groups = {
+        "price": [
+            "momentum_21d", "momentum_42d", "volatility_21d", "volatility_63d",
+            "turnover_21d", "amihud_illiquidity_21d",
+        ],
+        "fundamentals": [
+            "roe", "profit_margin", "revenue_growth_12m", "leverage", "debt_to_equity",
+        ],
+        "market_structure": ["beta_252d"],
+    }
+    all_cols = [c for grp in groups.values() for c in grp if c in latest_panel.columns]
+    summaries = summarize_theme(latest_panel, all_cols, top_n=5)
+    # Direction is recomputed here from latest-vs-trailing-6mo trend (scale-
+    # independent), overriding the module's per-snapshot heuristic which uses
+    # absolute thresholds that are scale-dependent (e.g. daily volatility ~0.02
+    # wrongly reads "bullish"). Trend × polarity gives a meaningful market read.
+    monthly = panel.groupby(panel["date"].dt.to_period("M"))[all_cols].mean()
+    signals_json: dict[str, dict] = {}
+    for sig, s in summaries.items():
+        j = theme_summary_to_jsonable(s)
+        j["group"] = next((g for g, colls in groups.items() if sig in colls), "other")
+        if sig in monthly.columns and len(monthly) >= 2:
+            ser = monthly[sig].dropna()
+            latest_mean = float(ser.iloc[-1])
+            trail = ser.iloc[-7:-1].dropna()
+            trailing_mean = float(trail.mean()) if len(trail) else latest_mean
+            rel = (latest_mean - trailing_mean) / abs(trailing_mean) if trailing_mean else 0.0
+            polarity = SIGNAL_POLARITY.get(sig, "neutral")
+            if polarity == "neutral":
+                direction = "neutral"
+            elif rel > 0.03:
+                direction = "bullish" if polarity == "bullish_high" else "bearish"
+            elif rel < -0.03:
+                direction = "bearish" if polarity == "bullish_high" else "bullish"
+            else:
+                direction = "neutral"
+            j["direction"] = direction
+            j["latest_mean"] = round(latest_mean, 4)
+            j["trailing_mean"] = round(trailing_mean, 4)
+        signals_json[sig] = j
+    payload = {
+        "status": "ok",
+        "as_of_date": str(latest.date()),
+        "groups": list(groups.keys()),
+        "signals": signals_json,
+        "methodology": (
+            "Theme-signal operationalization (display-only, NOT a research claim). "
+            "Direction from a documented polarity heuristic (e.g. momentum/ROE high = "
+            "bullish; volatility/leverage high = bearish). Strength = |mean cross-"
+            "sectional z-score| clipped to [0,3]. Favored = top-5 tickers by the raw "
+            "signal at the latest realized month. For 'bearish_high' signals, favored "
+            "= most-exposed, NOT a buy recommendation. Reads only the frozen panel's "
+            "latest cross-section; the model and OOS scores are untouched."
+        ),
+    }
+    (WEB / "theme_signals.json").write_text(json.dumps(payload, indent=2, default=str))
+
+
 def export_model_health() -> None:
     """Model-drift + calibration health monitor (display-only, leakage-safe).
 
@@ -1054,6 +1149,7 @@ def main() -> None:
     export_taco()
     export_pick_conviction()
     export_themes()
+    export_theme_signals()
     export_model_health()
     export_calibration_reliability()
     export_cot()
