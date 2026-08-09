@@ -33,29 +33,40 @@ import {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { t } = useI18n();
 
-  const navInsights = [
+  // Decision funnel: each group answers one question, feeding the next.
+  // The role is carried by the group LABEL (i18n nav.group.*), so the nav itself
+  // reads as a reasoning chain (regime → themes → picks → confirmation → track → discipline).
+  const navHome = [
     { title: t("nav.overview"), url: "/dashboard", icon: <LayoutDashboardIcon /> },
-    { title: t("nav.picks"), url: "/picks", icon: <TrendingUpIcon /> },
-    { title: t("nav.sectors"), url: "/sectors", icon: <BlocksIcon /> },
+  ];
+  const navRegime = [
     { title: t("nav.market"), url: "/market", icon: <TrendingUpIcon /> },
-    { title: t("nav.evidence"), url: "/evidence", icon: <ScaleIcon /> },
-    { title: t("nav.conviction"), url: "/conviction", icon: <ActivityIcon /> },
+    { title: t("nav.positioning"), url: "/positioning", icon: <BarChartHorizontalIcon /> },
+    { title: t("nav.taco"), url: "/taco", icon: <FlameIcon /> },
+  ];
+  const navThemes = [
     { title: t("nav.themes"), url: "/themes", icon: <LayersIcon /> },
   ];
-  const navAlternative = [
-    { title: t("nav.positioning"), url: "/positioning", icon: <BarChartHorizontalIcon /> },
+  const navPicks = [
+    { title: t("nav.picks"), url: "/picks", icon: <TrendingUpIcon /> },
+    { title: t("nav.sectors"), url: "/sectors", icon: <BlocksIcon /> },
+    { title: t("nav.conviction"), url: "/conviction", icon: <ActivityIcon /> },
+  ];
+  const navConfirm = [
     { title: t("nav.smartmoney"), url: "/smart-money", icon: <BriefcaseIcon /> },
     { title: t("nav.insiders"), url: "/insiders", icon: <UsersIcon /> },
-    { title: t("nav.taco"), url: "/taco", icon: <FlameIcon /> },
     // Reddit activated via zero-credential Atom RSS (OAuth gated behind the 2026
     // Responsible Builder Policy; unauth .json 403). Live when a snapshot exists.
     { title: t("nav.reddit"), url: "/reddit", icon: <MessageCircleIcon /> },
   ];
-  const navMonitor = [
-    { title: t("nav.modelhealth"), url: "/model-health", icon: <HeartPulseIcon /> },
+  const navTrack = [
     { title: t("nav.calibration"), url: "/calibration", icon: <TargetIcon /> },
     { title: t("nav.powerfloor"), url: "/power-floor", icon: <GaugeIcon /> },
+    { title: t("nav.modelhealth"), url: "/model-health", icon: <HeartPulseIcon /> },
+  ];
+  const navDiscipline = [
     { title: t("nav.discipline"), url: "/discipline", icon: <ShieldCheckIcon /> },
+    { title: t("nav.evidence"), url: "/evidence", icon: <ScaleIcon /> },
   ];
   const navReference = [
     {
@@ -85,9 +96,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={navInsights} label={t("nav.group.insights")} />
-        <NavMain items={navAlternative} label={t("nav.group.alternative")} />
-        <NavMain items={navMonitor} label={t("nav.group.monitor")} />
+        <NavMain items={navHome} label={t("nav.group.overview")} />
+        <NavMain items={navRegime} label={t("nav.group.regime")} />
+        <NavMain items={navThemes} label={t("nav.group.themes")} />
+        <NavMain items={navPicks} label={t("nav.group.picks")} />
+        <NavMain items={navConfirm} label={t("nav.group.confirm")} />
+        <NavMain items={navTrack} label={t("nav.group.track")} />
+        <NavMain items={navDiscipline} label={t("nav.group.discipline")} />
         <NavMain items={navReference} label={t("nav.group.reference")} />
       </SidebarContent>
     </Sidebar>
