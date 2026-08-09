@@ -30,6 +30,7 @@ const EVENT_TONE: Record<string, string> = {
   crisis: "border-rose-500/60 text-rose-700 dark:text-rose-300",
   monetary: "border-violet-400/50 text-violet-700 dark:text-violet-300",
   inauguration: "border-emerald-500/70 text-emerald-700 dark:text-emerald-300",
+  fed_pressure: "border-orange-500/60 bg-orange-500/10 text-orange-700 dark:text-orange-400",
 };
 
 const EVENT_TYPE_LABEL: Record<string, string> = {
@@ -38,6 +39,7 @@ const EVENT_TYPE_LABEL: Record<string, string> = {
   crisis: "危机",
   monetary: "货币",
   inauguration: "就职",
+  fed_pressure: "美联储博弈",
 };
 
 function RiskStat({ label, value, tone }: { label: string; value: string; tone?: "rose" | "emerald" }) {

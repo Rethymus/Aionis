@@ -1097,22 +1097,26 @@ def export_market_context() -> None:
     ]
 
     # --- Curated market events (publicly verifiable, 2016-2026) ---
-    # Inaugurations are the pivotal regime-change nodes the terminal must mark:
-    # Trump's two terms (2017, 2025) bracket the major tariff/trade turning points.
+    # The core structural axis of the US market since 2016 is the President
+    # (tariffs/fiscal) ↔ Federal Reserve (rates/independence) tug-of-war — NOT
+    # personal milestones (inaugurations/elections). The Fed hike/cut cycle drives
+    # the dollar and all markets; presidential tariffs and interference with Fed
+    # independence (e.g. Miran's 2025 Fed Board appointment) are policy shocks.
+    # Event markers center on these three structural levers. All publicly verifiable.
     events = [
-        {"date": "2016-11-08", "label": "Trump elected (first term)", "type": "political", "region": "us"},
-        {"date": "2017-01-20", "label": "Trump inaugurated (1st term)", "type": "inauguration", "region": "us"},
         {"date": "2018-03-22", "label": "US-China tariff war begins", "type": "trade", "region": "us"},
         {"date": "2020-03-23", "label": "COVID market bottom", "type": "crisis", "region": "global"},
-        {"date": "2020-11-03", "label": "Biden elected", "type": "political", "region": "us"},
-        {"date": "2021-01-20", "label": "Biden inaugurated", "type": "inauguration", "region": "us"},
-        {"date": "2022-06-15", "label": "Fed emergency +75bp hike", "type": "monetary", "region": "us"},
-        {"date": "2024-11-05", "label": "Trump re-elected", "type": "political", "region": "us"},
-        {"date": "2025-01-20", "label": "Trump inaugurated (2nd term)", "type": "inauguration", "region": "us"},
+        {"date": "2022-03-16", "label": "Fed liftoff (hike cycle begins from zero)", "type": "monetary", "region": "us"},
+        {"date": "2023-07-26", "label": "Fed peak 5.25-5.50% (cycle top)", "type": "monetary", "region": "us"},
+        {"date": "2024-09-18", "label": "Fed first cut 50bp (pivot)", "type": "monetary", "region": "us"},
         {"date": "2025-02-01", "label": "Canada/Mexico/China tariff hike", "type": "trade", "region": "us"},
+        {"date": "2025-03-12", "label": "Miran confirmed CEA chair (Fed-rollback architect)", "type": "fed_pressure", "region": "us"},
         {"date": "2025-04-02", "label": "Reciprocal tariffs announced (Liberation Day)", "type": "trade", "region": "us"},
         {"date": "2025-04-09", "label": "Reciprocal tariffs suspended (TACO origin)", "type": "trade", "region": "us"},
         {"date": "2025-05-12", "label": "US-China Geneva truce", "type": "trade", "region": "us"},
+        {"date": "2025-08-07", "label": "Trump nominates Miran to Fed Board (replacing Kugler)", "type": "fed_pressure", "region": "us"},
+        {"date": "2025-09-16", "label": "Miran confirmed to Fed Board — independence concern", "type": "fed_pressure", "region": "us"},
+        {"date": "2025-09-17", "label": "Fed cut to 4.00-4.25%", "type": "monetary", "region": "us"},
     ]
 
     # Market risk stats from the equal-weight monthly returns (display-only).
@@ -1131,14 +1135,18 @@ def export_market_context() -> None:
 
     payload = {
         "methodology": (
-            "Market context since 川普元年 (Trump Era, 2016). VIX = monthly mean "
-            "of FRED VIXCLS (permissive, US-gov public domain). US market index = "
-            "equal-weight cross-sectional mean of monthly returns across the "
-            "Track B panel (~566 S&P 500 PIT constituents), rebased to 100 at "
-            "2016-02. Events are publicly verifiable market-moving milestones. "
-            "Display-only context layer — NOT a research claim."
+            "Market context since 2016. The structural axis is the President "
+            "(tariffs/fiscal) ↔ Federal Reserve (rates/independence) tug-of-war: "
+            "the Fed hike/cut cycle drives the dollar and all markets; presidential "
+            "tariffs and Fed-independence interference (e.g. Miran's 2025 Fed Board "
+            "appointment) are policy shocks. VIX = monthly mean of FRED VIXCLS "
+            "(permissive, US-gov public domain). US index = equal-weight cross-"
+            "sectional mean of monthly returns across the Track B panel (~566 S&P "
+            "500 PIT constituents), rebased to 100 at 2016-02. Events are publicly "
+            "verifiable milestones on the three structural levers (Fed cycle / "
+            "trade / Fed-independence), not personal ceremonies. Display-only."
         ),
-        "start_label": "川普元年 (2016)",
+        "start_label": "2016 → · President ↔ Fed",
         "vix_series": vix_series,
         "market_series": market_series,
         "risk": risk_json,
