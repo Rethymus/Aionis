@@ -131,6 +131,27 @@
 
 **验证**：ruff clean；20 web 契约测试绿（含新 themes）；web build OK（**19/19**，`/themes` 渲染）。
 
+## 2026-08-09 (k) Track Adaptive OOS 结果 — NULL（第二条独立 null，强化 power floor）
+
+**首次新 OOS 结果入账**（ledger #54, event=`oos_result`, phase=`track_adaptive`, config #53 n_estimators=100, 285 配对周）：
+
+| 量 | 值 | 判读 |
+|---|---:|---|
+| IC_frozen（真·冻结基线） | +0.0156 | 弱正周 IC |
+| IC_adaptive（扩窗周重训） | +0.0120 | 弱正，**低于冻结** |
+| **IC_diff_weekly（adp−frz）** | **−0.0037** | adaptive 略**差**，非更好 |
+| HAC t / p (n=285) | −1.14 / **0.26** | CI 跨零 = **NULL** |
+| DSR (n_trials=1) | 0.0 | observed Sharpe 负 → P(true>0)≈0 |
+
+**判读（预期 null）**：用新数据周重训 LightGBM **不改善**周截面 rank-IC（略差 = 过拟合/噪声，非信号）。climax 月频 null 之后的**第二条独立 null**（周频），强化 power floor（σ(IC)≈0.10；GKX "更新频率非主导"）。与 pre-reg §1 null-expected 一致。**有价值**：adaptive 基建 + leakage-safe 诚实跟踪已交付（`model_drift.py`、score_calibration、deflated_sharpe、sequential runner），非制造正 IC。
+
+**执行历程**（业主多次催"更多 agents + 避免空转"）：① embargo 核验（review agent 标 CRITICAL → 批判核查 = false positive，realization-invariant 测试证 leak-free）；② n_estimators amend 500→100（feasibility，#53）；③ threading n_jobs=4/2 静默崩溃 ×3（LightGBML concurrency race）→ **sequential n_jobs=1 reliable**（~23min）；④ OOM 教训（并发 pytest+OOS）→ 重活不并发；⑤ 并行：OSS adaptive-learning 调研（reuse-first 结论：river BSD-3 可选，alibi-detect license-risky，Aionis 自有 wheel 足够）。
+
+**sig-label 修复**：runner `FROZEN_SIG` 原 指 #52（ffd0c922），实际用 #53（b7621e6b）；已修（label-only，run 全程用 #53 n_estimators=100）。
+**H6**：双跑 bit-identical 确认后台跑中（~23min，PID 815221）；确定性 pin（n_jobs=1, seed=0）→ 预期 PASS。结果在 `runs/track_adaptive_h6.log`。
+
+**边界**：本轮 `runs/ledger.jsonl`（+1 行 #54 `oos_result`）+ `scripts/track_adaptive_run.py`（FROZEN_SIG 修）+ state；**0 既有 frozen/prereg/ADR 改动**；#49 月频 null 不动；display 层（drift/themes/model-health）与研究解耦。
+
 ## 2026-08-08 (j) Track Adaptive OOS 执行 — embargo 核验 + n_estimators amend + threading 崩溃→sequential
 
 业主多次催"启用更多agents + 避免空转"。OOS 执行历程（高 stakes，climax 后首条新 OOS）：
