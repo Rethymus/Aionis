@@ -191,14 +191,16 @@ def run_expanding_arm(
     features: list[str],
     edges: np.ndarray,
     embargo: int = EMBARGO,
-    n_jobs: int = 2,
+    n_jobs: int = 1,
 ) -> pd.DataFrame:
     """Each OOS week: refit on realized rows (date <= week_close − embargo), predict.
 
-    Parallelized via joblib ``threading`` (read-only shared panel; LightGBM
-    n_jobs=1 fits release the GIL). n_jobs=2 — not 4: 4 concurrent late-stage
-    fits on the full expanding window spike memory / race in LightGBM and crash
-    silently; 2 is the reliable ceiling on this 4-core / ~6GB box.
+    SEQUENTIAL (n_jobs=1) by default — reliable. n_jobs>1 (threading) crashed
+    repeatedly via a LightGBM concurrency race (silent segfault, no traceback),
+    independent of memory; the original sequential 500-tree run was stable for
+    15+ min. Per-week refits are independent + deterministic (H6 holds); the
+    ``Parallel`` wrapper is kept so n_jobs can be raised on a host where the
+    race does not trigger.
     """
     oos_dates = sorted(weekly.loc[weekly["date"] > pd.Timestamp(OOS_START), "date"].unique())
     sess_list = pd.DatetimeIndex(daily_sessions)
