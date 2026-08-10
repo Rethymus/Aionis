@@ -964,9 +964,12 @@ def export_smart_money() -> None:
     rows.sort(key=lambda r: r["date"], reverse=True)
     recent = rows[:60]
     from collections import Counter
-    # Exclude the daily-index sentinel filer from the activist ranking.
+    # Exclude the daily-index sentinel filer from the activist ranking. Compute
+    # over ALL real-filer rows (not just newest 300): the recent daily-13D rows
+    # have no filer, so newest-300 would be empty. The EFTS historical carries
+    # real activist names (2015-2024) — the ranking surfaces those.
     active = Counter(
-        r["filer"] for r in rows[:300] if r["filer"] and not r["filer"].startswith("(")
+        r["filer"] for r in rows if r["filer"] and not r["filer"].startswith("(")
     ).most_common(10)
     yearly = [
         {"year": int(y), "filings": sum(1 for r in rows if r["date"][:4] == y)}
