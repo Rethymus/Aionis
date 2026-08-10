@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
+import { ThemesFunnel } from "./themes-funnel";
 import { ShieldCheckIcon } from "lucide-react";
 
 // Literal-keyed maps so the strict `t(key)` union accepts them (template
@@ -87,6 +88,25 @@ const GROUP_LABEL: Record<string, ThemeLabelKey> = {
   market_structure: "themes.market_structure",
 };
 
+// Funnel-layer membership for the 7 themes (presentation grouping). The funnel
+// overview component renders the full 5-layer architecture; this groups the
+// cards under their in-panel layer so same-type data is shown together.
+type FunnelLayer = "context" | "signals" | "cost";
+const LAYER_KEYS: Record<FunnelLayer, string[]> = {
+  context: ["macro"],
+  signals: ["fundamentals", "price", "risk", "market_structure", "news_sentiment"],
+  cost: ["net_cost"],
+};
+const LAYER_SECTION: Record<
+  FunnelLayer,
+  "themes.funnel.section.context" | "themes.funnel.section.signals" | "themes.funnel.section.cost"
+> = {
+  context: "themes.funnel.section.context",
+  signals: "themes.funnel.section.signals",
+  cost: "themes.funnel.section.cost",
+};
+const LAYER_ORDER: FunnelLayer[] = ["context", "signals", "cost"];
+
 type StatusKey =
   | "themes.status.live"
   | "themes.status.partial"
@@ -150,6 +170,50 @@ function Sparkline({ data, className }: { data: number[]; className?: string }) 
   );
 }
 
+function ThemeCard({ theme }: { theme: { key: string; status: string; headline?: string; signals?: { name: string; value: number | null }[]; series?: { value: number }[] } }) {
+  const { t } = useI18n();
+  const seriesVals = (theme.series ?? [])
+    .map((s) => s.value)
+    .filter((v): v is number => typeof v === "number");
+  return (
+    <Card className="overflow-hidden py-0">
+      <CardHeader className="border-b">
+        <CardTitle className="flex items-center justify-between gap-2 text-base">
+          <span>{t(THEME_LABEL[theme.key] ?? "themes.risk")}</span>
+          <Badge
+            variant="outline"
+            className={cn(STATUS_STYLE[theme.status] ?? "", "shrink-0")}
+          >
+            {t(STATUS_KEY[theme.status] ?? "themes.status.needs_work")}
+          </Badge>
+        </CardTitle>
+        {theme.headline ? <CardDescription>{theme.headline}</CardDescription> : null}
+      </CardHeader>
+      <CardContent className="p-4">
+        {(theme.signals ?? []).length > 0 ? (
+          <div className="space-y-2">
+            {(theme.signals ?? []).map((s) => (
+              <div key={s.name} className="flex items-center justify-between text-sm">
+                <span className="truncate text-xs text-muted-foreground">
+                  {SIGNAL_LABEL[s.name] ? t(SIGNAL_LABEL[s.name]) : s.name}
+                </span>
+                <span className="ml-2 shrink-0 tabular-nums font-medium">
+                  {s.value === null || s.value === undefined ? "—" : s.value}
+                </span>
+              </div>
+            ))}
+            {seriesVals.length >= 2 ? (
+              <Sparkline className="text-emerald-600 dark:text-emerald-400" data={seriesVals} />
+            ) : null}
+          </div>
+        ) : (
+          <p className="text-xs italic text-muted-foreground">{t("themes.awaiting")}</p>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
 export function ThemesView() {
   const { t } = useI18n();
   const th = aionis.themes;
@@ -169,6 +233,8 @@ export function ThemesView() {
           {th.as_of_date ? ` · ${t("themes.asof")} ${th.as_of_date}` : ""}
         </p>
       </header>
+
+      <ThemesFunnel />
 
       {/* Operationalized signals: direction × strength × favored (the actionable read) */}
       {ts.status === "ok" && sigEntries.length > 0 ? (
@@ -251,59 +317,23 @@ export function ThemesView() {
           </CardContent>
         </Card>
       ) : (
-        <div className="grid gap-4 md:grid-cols-2">
-          {themes.map((theme) => {
-            const seriesVals = (theme.series ?? [])
-              .map((s) => s.value)
-              .filter((v): v is number => typeof v === "number");
+        <div className="space-y-6">
+          {LAYER_ORDER.map((layer) => {
+            const layerThemes = themes.filter((theme) =>
+              LAYER_KEYS[layer].includes(theme.key),
+            );
+            if (layerThemes.length === 0) return null;
             return (
-              <Card key={theme.key} className="overflow-hidden py-0">
-                <CardHeader className="border-b">
-                  <CardTitle className="flex items-center justify-between gap-2 text-base">
-                    <span>{t(THEME_LABEL[theme.key] ?? "themes.risk")}</span>
-                    <Badge
-                      variant="outline"
-                      className={cn(STATUS_STYLE[theme.status] ?? "", "shrink-0")}
-                    >
-                      {t(STATUS_KEY[theme.status] ?? "themes.status.needs_work")}
-                    </Badge>
-                  </CardTitle>
-                  {theme.headline ? (
-                    <CardDescription>{theme.headline}</CardDescription>
-                  ) : null}
-                </CardHeader>
-                <CardContent className="p-4">
-                  {(theme.signals ?? []).length > 0 ? (
-                    <div className="space-y-2">
-                      {(theme.signals ?? []).map((s) => (
-                        <div
-                          key={s.name}
-                          className="flex items-center justify-between text-sm"
-                        >
-                          <span className="truncate text-xs text-muted-foreground">
-                            {SIGNAL_LABEL[s.name] ? t(SIGNAL_LABEL[s.name]) : s.name}
-                          </span>
-                          <span className="ml-2 shrink-0 tabular-nums font-medium">
-                            {s.value === null || s.value === undefined
-                              ? "—"
-                              : s.value}
-                          </span>
-                        </div>
-                      ))}
-                      {seriesVals.length >= 2 ? (
-                        <Sparkline
-                          className="text-emerald-600 dark:text-emerald-400"
-                          data={seriesVals}
-                        />
-                      ) : null}
-                    </div>
-                  ) : (
-                    <p className="text-xs italic text-muted-foreground">
-                      {t("themes.awaiting")}
-                    </p>
-                  )}
-                </CardContent>
-              </Card>
+              <section key={layer} className="space-y-3">
+                <h3 className="text-sm font-semibold tracking-tight text-muted-foreground">
+                  {t(LAYER_SECTION[layer])}
+                </h3>
+                <div className="grid gap-4 md:grid-cols-2">
+                  {layerThemes.map((theme) => (
+                    <ThemeCard key={theme.key} theme={theme} />
+                  ))}
+                </div>
+              </section>
             );
           })}
         </div>
