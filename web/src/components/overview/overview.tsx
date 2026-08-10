@@ -214,7 +214,7 @@ function FunnelCards() {
     tone: "muted" | "amber" | "emerald";
   }[] = [
     {
-      href: "/market",
+      href: "/regime",
       icon: <GaugeIcon className="size-4" />,
       titleKey: "nav.group.regime",
       roleKey: "market.role",
@@ -238,7 +238,7 @@ function FunnelCards() {
       tone: "emerald",
     },
     {
-      href: "/smart-money",
+      href: "/confirmation",
       icon: <BarChart3Icon className="size-4" />,
       titleKey: "nav.group.confirm",
       roleKey: "smartmoney.role",
@@ -246,7 +246,7 @@ function FunnelCards() {
       tone: "muted",
     },
     {
-      href: "/calibration",
+      href: "/track",
       icon: <CheckCircle2Icon className="size-4" />,
       titleKey: "nav.group.track",
       roleKey: "calibration.role",
@@ -254,7 +254,7 @@ function FunnelCards() {
       tone: "amber",
     },
     {
-      href: "/evidence",
+      href: "/discipline",
       icon: <ScaleIcon className="size-4" />,
       titleKey: "nav.group.discipline",
       roleKey: "evidence.role",
