@@ -1202,6 +1202,18 @@ def _alfred_latest_series(path: Path) -> pd.DataFrame:
     return df[["date", "value"]].set_index("date").sort_index()
 
 
+def _monthly_points(s: pd.Series, ndigits: int = 2) -> list[dict]:
+    """Serialize a date-indexed monthly Series → ``[{month, value}]`` (NaN dropped).
+
+    Used by ``export_macro_drivers`` for every series so the dataKey="month"/"value"
+    shape is uniform across the macro sub-panel charts.
+    """
+    return [
+        {"month": d.strftime("%Y-%m"), "value": round(float(v), ndigits)}
+        for d, v in s.dropna().items()
+    ]
+
+
 def export_macro_drivers() -> None:
     """Macro-driver sub-panel: the objective functions of the President↔Fed game.
 
@@ -1213,39 +1225,65 @@ def export_macro_drivers() -> None:
     """
     cache = Path("data/cache")
     series: dict[str, list] = {}
+    # Retain monthly Series for the derived real_rate computation below.
+    cpi_yoy_s: pd.Series | None = None
+    dff_m_s: pd.Series | None = None
 
     cpi_path = cache / "alfred_CPIAUCSL.json"
     if cpi_path.exists():
         cpi = _alfred_latest_series(cpi_path)
         cpi = cpi[cpi.index >= "2016-01-01"]
         if len(cpi) > 12:
-            yoy = (cpi["value"] / cpi["value"].shift(12) - 1) * 100
-            series["cpi_yoy"] = [
-                {"month": d.strftime("%Y-%m"), "value": round(float(v), 2)}
-                for d, v in yoy.dropna().items()
-            ]
+            cpi_yoy_s = (cpi["value"] / cpi["value"].shift(12) - 1) * 100
+            series["cpi_yoy"] = _monthly_points(cpi_yoy_s)
 
     payems_path = cache / "alfred_PAYEMS.json"
     if payems_path.exists():
         pay = _alfred_latest_series(payems_path)
         pay = pay[pay.index >= "2016-01-01"]
         if len(pay) > 12:
-            yoy = (pay["value"] / pay["value"].shift(12) - 1) * 100
-            series["payems_yoy"] = [
-                {"month": d.strftime("%Y-%m"), "value": round(float(v), 2)}
-                for d, v in yoy.dropna().items()
-            ]
+            pay_yoy = (pay["value"] / pay["value"].shift(12) - 1) * 100
+            series["payems_yoy"] = _monthly_points(pay_yoy)
 
     dff_path = cache / "alfred_DFF.json"
     if dff_path.exists():
         dff = _alfred_latest_series(dff_path)  # daily
         dff = dff[dff.index >= "2016-01-01"]
         if not dff.empty:
-            dff_m = dff["value"].resample("MS").mean()  # monthly mean of the daily effective rate
-            series["fedfunds"] = [
-                {"month": d.strftime("%Y-%m"), "value": round(float(v), 2)}
-                for d, v in dff_m.dropna().items()
-            ]
+            dff_m_s = dff["value"].resample("MS").mean()  # monthly mean of the daily effective rate
+            series["fedfunds"] = _monthly_points(dff_m_s)
+
+    # --- Display-only additions (no research-pipeline owner; see macro_display) ---
+    # Trade-weighted dollar (policy → dollar → market transmission channel).
+    # Daily series → monthly mean.
+    dxy_path = cache / "alfred_DTWEXBGS.json"
+    if dxy_path.exists():
+        dxy = _alfred_latest_series(dxy_path)
+        dxy = dxy[dxy.index >= "2016-01-01"]
+        if not dxy.empty:
+            series["dxy"] = _monthly_points(dxy["value"].resample("MS").mean())
+
+    # 10Y−2Y Treasury spread (yield-curve recession watch). Daily → monthly mean.
+    t10y2y_path = cache / "alfred_T10Y2Y.json"
+    if t10y2y_path.exists():
+        spr = _alfred_latest_series(t10y2y_path)
+        spr = spr[spr.index >= "2016-01-01"]
+        if not spr.empty:
+            series["t10y2y"] = _monthly_points(spr["value"].resample("MS").mean())
+
+    # Unemployment rate (max-employment mandate STOCK, vs PAYEMS flow). Monthly.
+    unrate_path = cache / "alfred_UNRATE.json"
+    if unrate_path.exists():
+        un = _alfred_latest_series(unrate_path)
+        un = un[un.index >= "2016-01-01"]
+        if not un.empty:
+            series["unrate"] = _monthly_points(un["value"])
+
+    # Real policy rate = Fed funds − CPI YoY (the true stance). Both %, month-aligned.
+    if dff_m_s is not None and cpi_yoy_s is not None:
+        real = (dff_m_s - cpi_yoy_s).dropna()
+        if not real.empty:
+            series["real_rate"] = _monthly_points(real)
 
     payload = {
         "status": "ok" if series else "awaiting_fetch",
@@ -1254,10 +1292,13 @@ def export_macro_drivers() -> None:
             "Macro drivers (display-only context). Latest-vintage (fully revised) "
             "ALFRED series — the standard public revised values, NOT the PIT-as-of "
             "vintages used in the research pipeline. CPI YoY = headline inflation "
-            "(Fed price-stability mandate); PAYEMS YoY = nonfarm payrolls growth "
-            "(max-employment mandate); Fed funds = DFF monthly mean (the policy "
-            "lever). Visualizes the objective functions of the President↔Fed game. "
-            "NOT a research claim."
+            "(price-stability mandate); PAYEMS YoY = nonfarm payrolls growth "
+            "(max-employment mandate flow); Fed funds = DFF monthly mean (policy "
+            "lever); UNRATE = unemployment (max-employment mandate stock); DXY = "
+            "trade-weighted dollar index (policy→dollar→market channel); T10Y2Y = "
+            "10Y−2Y Treasury spread (yield-curve recession watch); real_rate = "
+            "Fed funds − CPI YoY (the true policy stance). Visualizes the objective "
+            "functions of the President↔Fed game. NOT a research claim."
         ),
     }
     (WEB / "macro_drivers.json").write_text(json.dumps(payload, indent=2))

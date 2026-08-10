@@ -72,6 +72,10 @@ jobs:
         run: uv run python scripts/reddit_fetch.py
         continue-on-error: true
 
+      - name: Fetch display-only macro series (ALFRED: dollar/yield-curve/unemployment)
+        run: uv run python scripts/fetch_macro_display.py --force
+        continue-on-error: true  # FRED outage keeps the prior cache
+
       - name: Rebuild ticker metadata (names + sectors)
         run: uv run python scripts/build_ticker_metadata.py --no-cache
         continue-on-error: true  # network may fail; old cache still works

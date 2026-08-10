@@ -25,6 +25,9 @@ import {
 import { TrendingUpIcon, ActivityIcon, CalendarIcon } from "lucide-react";
 import { MacroDriversCard } from "./macro-drivers-card";
 import { MacroStagflationRead } from "./macro-stagflation-read";
+import { MacroDollarCard } from "./macro-dollar-card";
+import { MacroYieldCurveCard } from "./macro-yield-curve-card";
+import { MacroMandateTensionCard } from "./macro-mandate-tension-card";
 
 const EVENT_TONE: Record<string, string> = {
   political: "border-blue-400/50 text-blue-700 dark:text-blue-300",
@@ -254,6 +257,13 @@ export function MarketView() {
 
       <MacroDriversCard />
       <MacroStagflationRead />
+
+      {/* Deeper President↔Fed dimensions: transmission + constraint + mandate tension */}
+      <div className="grid gap-4 md:grid-cols-2">
+        <MacroDollarCard />
+        <MacroYieldCurveCard />
+      </div>
+      <MacroMandateTensionCard />
 
       <Card>
         <CardContent className="p-4 text-xs text-muted-foreground">
