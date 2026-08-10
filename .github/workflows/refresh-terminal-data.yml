@@ -28,7 +28,10 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 45  # Form 4 + 13D pulls (10 issuers × full Trump-era, polite ≥2s) need room
+    timeout-minutes: 75  # cold Form 4 + 13D pulls need room to complete ONCE;
+    # once the data-cache action saves, subsequent runs are fast deltas. A
+    # cancelled/timed-out run saves no cache → every later run is a cold pull →
+    # perpetual timeout. 75min breaks that vicious cycle (was 45).
     steps:
       - uses: actions/checkout@v4
 
