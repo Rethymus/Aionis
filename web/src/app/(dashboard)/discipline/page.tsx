@@ -42,9 +42,7 @@ export default function DisciplinePage() {
     <div className="space-y-6 p-4 md:p-6">
       <header className="space-y-2">
         <h1 className="text-2xl font-bold">{t("nav.group.discipline")}</h1>
-        <p className="text-muted-foreground">
-          Stage ⑥: 反泄漏边界 · PIT 数据纪律、PurgedKFold+Embargo、H6 确定性
-        </p>
+        <p className="text-muted-foreground">{t("discipline_hub.intro")}</p>
       </header>
 
       <Tabs value={activeTab} onValueChange={handleTabChange}>

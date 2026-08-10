@@ -44,9 +44,7 @@ export default function TrackPage() {
     <div className="space-y-6 p-4 md:p-6">
       <header className="space-y-2">
         <h1 className="text-2xl font-bold">{t("nav.group.track")}</h1>
-        <p className="text-muted-foreground">
-          Stage ⑤: 诚实业绩问责 · 概率校准可靠性、IC 噪声功率地板、模型漂移监测
-        </p>
+        <p className="text-muted-foreground">{t("track_hub.intro")}</p>
       </header>
 
       <Tabs value={activeTab} onValueChange={handleTabChange}>

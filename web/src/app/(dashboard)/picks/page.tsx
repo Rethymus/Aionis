@@ -44,9 +44,7 @@ export default function PicksPage() {
     <div className="space-y-6 p-4 md:p-6">
       <header className="space-y-2">
         <h1 className="text-2xl font-bold">{t("nav.group.picks")}</h1>
-        <p className="text-muted-foreground">
-          Stage ③: 选股决策 · 模型选股、板块概率、确信度
-        </p>
+        <p className="text-muted-foreground">{t("picks_hub.intro")}</p>
       </header>
 
       <Tabs value={activeTab} onValueChange={handleTabChange}>

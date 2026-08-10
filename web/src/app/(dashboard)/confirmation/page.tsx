@@ -44,9 +44,7 @@ export default function ConfirmationPage() {
     <div className="space-y-6 p-4 md:p-6">
       <header className="space-y-2">
         <h1 className="text-2xl font-bold">{t("nav.group.confirm")}</h1>
-        <p className="text-muted-foreground">
-          Stage ④: 另类信号佐证 · 聪明钱 13D、内部人 Form 4、散户情绪交叉验证
-        </p>
+        <p className="text-muted-foreground">{t("confirmation_hub.intro")}</p>
       </header>
 
       <Tabs value={activeTab} onValueChange={handleTabChange}>

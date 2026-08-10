@@ -32,6 +32,45 @@ const THEME_LABEL: Record<string, ThemeLabelKey> = {
   net_cost: "themes.net_cost",
   market_structure: "themes.market_structure",
 };
+// Professional term + plain gloss for each signal name (owner directive:
+// terminology allowed, but every term carries a simple explanation).
+type SignalLabelKey =
+  | "themes.signal.momentum_21d"
+  | "themes.signal.volatility_63d"
+  | "themes.signal.beta_252d"
+  | "themes.signal.reversal_5d"
+  | "themes.signal.macro_regime"
+  | "themes.signal.roe"
+  | "themes.signal.profit_margin"
+  | "themes.signal.revenue_growth_12m"
+  | "themes.signal.leverage"
+  | "themes.signal.downside_beta"
+  | "themes.signal.idiosyncratic_volatility"
+  | "themes.signal.return_skewness"
+  | "themes.signal.worst_day_drawdown"
+  | "themes.signal.net_sharpe_bps5"
+  | "themes.signal.gross_sharpe"
+  | "themes.signal.avg_turnover"
+  | "themes.signal.amihud_illiquidity_21d";
+const SIGNAL_LABEL: Record<string, SignalLabelKey> = {
+  momentum_21d: "themes.signal.momentum_21d",
+  volatility_63d: "themes.signal.volatility_63d",
+  beta_252d: "themes.signal.beta_252d",
+  reversal_5d: "themes.signal.reversal_5d",
+  macro_regime: "themes.signal.macro_regime",
+  roe: "themes.signal.roe",
+  profit_margin: "themes.signal.profit_margin",
+  revenue_growth_12m: "themes.signal.revenue_growth_12m",
+  leverage: "themes.signal.leverage",
+  downside_beta: "themes.signal.downside_beta",
+  idiosyncratic_volatility: "themes.signal.idiosyncratic_volatility",
+  return_skewness: "themes.signal.return_skewness",
+  worst_day_drawdown: "themes.signal.worst_day_drawdown",
+  net_sharpe_bps5: "themes.signal.net_sharpe_bps5",
+  gross_sharpe: "themes.signal.gross_sharpe",
+  avg_turnover: "themes.signal.avg_turnover",
+  amihud_illiquidity_21d: "themes.signal.amihud_illiquidity_21d",
+};
 const GROUP_LABEL: Record<string, ThemeLabelKey> = {
   price: "themes.price",
   fundamentals: "themes.fundamentals",
@@ -231,8 +270,8 @@ export function ThemesView() {
                           key={s.name}
                           className="flex items-center justify-between text-sm"
                         >
-                          <span className="truncate font-mono text-xs text-muted-foreground">
-                            {s.name}
+                          <span className="truncate text-xs text-muted-foreground">
+                            {SIGNAL_LABEL[s.name] ? t(SIGNAL_LABEL[s.name]) : s.name}
                           </span>
                           <span className="ml-2 shrink-0 tabular-nums font-medium">
                             {s.value === null || s.value === undefined
