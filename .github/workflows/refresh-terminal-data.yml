@@ -81,6 +81,10 @@ jobs:
         run: uv run python scripts/form4_fetch.py
         continue-on-error: true
 
+      - name: Fetch recent SC 13D stakes (EDGAR daily index, unfreezes past EFTS cutoff)
+        run: uv run python scripts/stakes_13d_daily_fetch.py
+        continue-on-error: true  # EDGAR rate-limits; per-day resilient skip
+
       - name: Fetch fresh retail sentiment (Reddit zero-credential RSS)
         run: uv run python scripts/reddit_fetch.py
         continue-on-error: true

@@ -943,19 +943,43 @@ def export_smart_money() -> None:
                 })
         except (json.JSONDecodeError, KeyError):
             continue
+    # Merge recent SC 13D from the EDGAR daily crawler index — this unfreezes the
+    # panel past the 2024-12-17 EFTS cutoff (see aionis-edgar-efts-sc13d-frozen).
+    # The daily index names the TARGET (subject issuer) only; the reporting person
+    # is not in the index, so the filer is marked honestly (see the filing link).
+    daily_path = Path("data/cache/sc13d_daily_aggregate.json")
+    if daily_path.exists():
+        try:
+            for r in json.loads(daily_path.read_text()):
+                rows.append({
+                    "filer": "(申报人见原文)",
+                    "target": str(r.get("target", "")).strip(),
+                    "ticker": "",
+                    "date": r["date"],
+                    "form": r.get("form", "SC 13D"),
+                    "is_amendment": bool(r.get("is_amendment")),
+                })
+        except (json.JSONDecodeError, KeyError, TypeError):
+            pass
     rows.sort(key=lambda r: r["date"], reverse=True)
     recent = rows[:60]
     from collections import Counter
-    active = Counter(r["filer"] for r in rows[:300]).most_common(10)
+    # Exclude the daily-index sentinel filer from the activist ranking.
+    active = Counter(
+        r["filer"] for r in rows[:300] if r["filer"] and not r["filer"].startswith("(")
+    ).most_common(10)
     yearly = [
         {"year": int(y), "filings": sum(1 for r in rows if r["date"][:4] == y)}
         for y in sorted({r["date"][:4] for r in rows})
     ]
     payload = {
         "methodology": (
-            "Recent SC 13D institutional stake filings (SEC EDGAR EFTS full-text "
-            "search, filed-date point-in-time). Public domain, permissive. Real "
-            "data; descriptive display, not an Aionis research claim."
+            "Recent SC 13D institutional stake filings (SEC EDGAR, filed-date "
+            "point-in-time). Public domain, permissive. Two sources: EFTS full-"
+            "text search for 2015→2024-12 (filer + target + ticker), and the EDGAR "
+            "daily crawler index for 2024-12→today (target + date only — EFTS "
+            "stopped indexing SC 13D after 2024-12-17). Real data; descriptive "
+            "display, not an Aionis research claim."
         ),
         "recent_filings": recent,
         "active_filers": [{"filer": filer, "count": count} for filer, count in active],
