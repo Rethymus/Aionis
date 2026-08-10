@@ -60,6 +60,19 @@ jobs:
             echo "ALPACA_SECRET_KEY=${{ secrets.ALPACA_SECRET_KEY }}"
           } > .env
 
+      - name: Restore data/cache (fetch deltas, not a full re-pull every run)
+        uses: actions/cache@v4
+        with:
+          path: data/cache
+          key: data-cache-${{ github.run_id }}
+          restore-keys: |
+            data-cache-
+        # The fetchers (cot/form4/13d/macro) are idempotent — per-accession/per-series
+        # caches skip already-pulled items. Without this, every daily run re-pulled the
+        # full 2016→today Form 4 + 13D history (10 issuers × polite ≥2s) and the job
+        # timed out before reaching export. With it, run 1 is cold (full pull); run 2+
+        # fetch only new filings and finish in minutes.
+
       - name: Fetch fresh positioning data (CFTC COT, weekly)
         run: uv run python scripts/cot_fetch.py
         continue-on-error: true  # polite/bounded; failure keeps the old cache
