@@ -28,7 +28,7 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45  # Form 4 + 13D pulls (10 issuers × full Trump-era, polite ≥2s) need room
     steps:
       - uses: actions/checkout@v4
 
