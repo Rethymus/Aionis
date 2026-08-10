@@ -47,9 +47,9 @@ const EVENT_TYPE_LABEL: Record<string, string> = {
   fed_pressure: "美联储博弈",
 };
 
-function RiskStat({ label, value, tone }: { label: string; value: string; tone?: "rose" | "emerald" }) {
+function RiskStat({ label, value, tone, hint }: { label: string; value: string; tone?: "rose" | "emerald"; hint?: string }) {
   return (
-    <div className="flex items-baseline justify-between gap-2">
+    <div className="flex items-baseline justify-between gap-2" title={hint}>
       <span className="text-xs text-muted-foreground">{label}</span>
       <span
         className={cn(
@@ -219,14 +219,14 @@ export function MarketView() {
           </CardHeader>
           <CardContent className="p-4">
             <div className="grid grid-cols-2 gap-x-4 gap-y-2 md:grid-cols-4">
-              <RiskStat label="Sharpe" value={mc.risk.sharpe.toFixed(2)} />
-              <RiskStat label="Sortino" value={mc.risk.sortino.toFixed(2)} />
-              <RiskStat label="Max Drawdown" value={`${(mc.risk.max_drawdown * 100).toFixed(1)}%`} tone="rose" />
-              <RiskStat label="Calmar" value={mc.risk.calmar.toFixed(2)} />
-              <RiskStat label="VaR 95%" value={`${(mc.risk.var_95 * 100).toFixed(1)}%`} tone="rose" />
-              <RiskStat label="CVaR 95%" value={`${(mc.risk.cvar_95 * 100).toFixed(1)}%`} tone="rose" />
-              <RiskStat label="Annual return" value={`${(mc.risk.annual_return * 100).toFixed(1)}%`} tone="emerald" />
-              <RiskStat label="Months" value={String(mc.risk.n_periods)} />
+              <RiskStat label="Sharpe" value={mc.risk.sharpe.toFixed(2)} hint={t("market.risk.hint.sharpe")} />
+              <RiskStat label="Sortino" value={mc.risk.sortino.toFixed(2)} hint={t("market.risk.hint.sortino")} />
+              <RiskStat label="Max Drawdown" value={`${(mc.risk.max_drawdown * 100).toFixed(1)}%`} tone="rose" hint={t("market.risk.hint.maxdd")} />
+              <RiskStat label="Calmar" value={mc.risk.calmar.toFixed(2)} hint={t("market.risk.hint.calmar")} />
+              <RiskStat label="VaR 95%" value={`${(mc.risk.var_95 * 100).toFixed(1)}%`} tone="rose" hint={t("market.risk.hint.var")} />
+              <RiskStat label="CVaR 95%" value={`${(mc.risk.cvar_95 * 100).toFixed(1)}%`} tone="rose" hint={t("market.risk.hint.cvar")} />
+              <RiskStat label="Annual return" value={`${(mc.risk.annual_return * 100).toFixed(1)}%`} tone="emerald" hint={t("market.risk.hint.annual")} />
+              <RiskStat label="Months" value={String(mc.risk.n_periods)} hint={t("market.risk.hint.months")} />
             </div>
           </CardContent>
         </Card>
