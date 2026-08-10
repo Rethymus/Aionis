@@ -729,19 +729,13 @@ def export_cot() -> None:
 
     fp = Path("data/cache/cot_aggregate.parquet")
     if not fp.exists():
-        payload = {
-            "status": "awaiting_fetch",
-            "methodology": (
-                "CFTC Commitments of Traders (COT) net non-commercial positioning "
-                "+ 52-week crowding z-score. Free, no-API, US-gov public domain. "
-                "Bounded fetch pending — run scripts/cot_fetch.py."
-            ),
-            "markets": [],
-            "composite": {},
-            "composite_series": [],
-            "latest_date": None,
-        }
-        (WEB / "cot.json").write_text(json.dumps(payload, indent=2))
+        # CI fresh checkout / fetch failed: preserve the tracked JSON, don't
+        # overwrite real data with an empty awaiting payload.
+        print(
+            "[export-terminal] SKIP cot: data/cache/cot_aggregate.parquet not "
+            "present (tracked JSON retains last-committed value)",
+            flush=True,
+        )
         return
 
     df = pd.read_parquet(fp)
@@ -797,22 +791,13 @@ def export_form4() -> None:
 
     fp = Path("data/cache/form4_aggregate.parquet")
     if not fp.exists():
-        payload = {
-            "status": "awaiting_fetch",
-            "methodology": (
-                "Form 4 insider transactions (SEC EDGAR EFTS, filed-date PIT, public "
-                "domain). Non-derivative buy (A) / sell (D) only. Bounded large-cap "
-                "fetch pending — run scripts/form4_fetch.py."
-            ),
-            "recent": [],
-            "buys": 0,
-            "sells": 0,
-            "n_filers": 0,
-            "top_insiders": [],
-            "window": "pending",
-            "n_issuers": 0,
-        }
-        (WEB / "form4.json").write_text(json.dumps(payload, indent=2))
+        # CI fresh checkout / fetch failed: preserve the tracked JSON, don't
+        # overwrite real data with an empty awaiting payload.
+        print(
+            "[export-terminal] SKIP form4: data/cache/form4_aggregate.parquet not "
+            "present (tracked JSON retains last-committed value)",
+            flush=True,
+        )
         return
 
     df = pd.read_parquet(fp).sort_values("transaction_date", ascending=False)
@@ -922,8 +907,19 @@ def export_smart_money() -> None:
     import glob
     import re
 
+    cache_files = glob.glob("data/cache/efts_13d_*.json")
+    if not cache_files:
+        # CI fresh checkout: the full 13D cache is gitignored (local-only), and
+        # stakes_13d_fetch would produce only a 25-CIK SUBSET here that would
+        # regress the committed 3754-filing set. Preserve the tracked JSON.
+        print(
+            "[export-terminal] SKIP smart_money: no data/cache/efts_13d_*.json "
+            "(tracked JSON retains last-committed value)",
+            flush=True,
+        )
+        return
     rows: list[dict] = []
-    for f in glob.glob("data/cache/efts_13d_*.json"):
+    for f in cache_files:
         try:
             for item in json.loads(Path(f).read_text()):
                 names = item.get("display_names") or []
@@ -999,14 +995,14 @@ def export_reddit_meta() -> None:
     # build never breaks on a status transition.
     subreddits = ["wallstreetbets", "stocks", "investing"]
     if not pq.exists():
-        latest_snapshot_ts = None
-        n_snapshots = 0
-        picks: list[dict] = []
-        transport = None
-        score_available = False
-        reddit_status = "awaiting_fetch"
-        pressure = {"status": "awaiting", "by_ticker": {}, "n_snapshots": 0,
-                    "note": "GME-style retail pressure (velocity × crowding-z × sentiment). Needs ≥14 days of snapshots; the daily cron accumulates."}
+        # CI fresh checkout / fetch failed: preserve the tracked JSON (the last
+        # accumulated snapshot), don't overwrite with an empty awaiting payload.
+        print(
+            "[export-terminal] SKIP reddit_meta: reddit snapshot cache not present "
+            "(tracked JSON retains last-committed value)",
+            flush=True,
+        )
+        return
     else:
         df = pd.read_parquet(pq)
         side = json.loads(status_path.read_text()) if status_path.exists() else {}
