@@ -7,6 +7,16 @@ import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
 import { ClockIcon, ShieldCheckIcon } from "lucide-react";
 
+type PressureEntry = {
+  ticker: string;
+  latest_mentions: number;
+  velocity: number;
+  crowding_z: number;
+  bull_bear_lean: number;
+  grade: string;
+  n_days: number;
+};
+
 export function RedditView() {
   const { t } = useI18n();
   const r = aionis.reddit;
@@ -150,6 +160,46 @@ export function RedditView() {
               </CardContent>
             </Card>
           )}
+          {/* Retail pressure (GME-style velocity × crowding-z × sentiment) */}
+          {r.pressure && r.pressure.status !== "awaiting" ? (
+            <Card className={cn("overflow-hidden py-0", r.pressure.status === "accumulating" && "border-dashed")}>
+              <CardHeader className="border-b">
+                <CardTitle className="text-base">{t("reddit.pressure.title")}</CardTitle>
+                <CardDescription>{t("reddit.pressure.hint")}</CardDescription>
+              </CardHeader>
+              <CardContent className="p-0">
+                {r.pressure.status === "ok" &&
+                Object.keys(r.pressure.by_ticker as Record<string, unknown>).length > 0 ? (
+                  <div className="divide-y">
+                    {Object.entries(r.pressure.by_ticker as Record<string, PressureEntry>).map(([tk, pr]) => {
+                      const tone =
+                        pr.grade === "surge"
+                          ? "border-rose-500/40 bg-rose-500/10 text-rose-600 dark:text-rose-400"
+                          : pr.grade === "elevated"
+                          ? "border-amber-500/40 bg-amber-500/10 text-amber-600 dark:text-amber-400"
+                          : "border-muted-foreground/30 bg-muted/40 text-muted-foreground";
+                      return (
+                        <div key={tk} className="flex items-center gap-3 px-4 py-2.5 text-sm">
+                          <span className="font-mono">{tk}</span>
+                          <span className="ml-auto text-[10px] tabular-nums text-muted-foreground">
+                            {t("reddit.pressure.velocity")} {pr.velocity.toFixed(2)}
+                          </span>
+                          <span className="text-[10px] tabular-nums text-muted-foreground">
+                            {t("reddit.pressure.crowding")} {pr.crowding_z.toFixed(2)}
+                          </span>
+                          <Badge variant="outline" className={cn("shrink-0 px-1.5 py-0 text-[10px]", tone)}>
+                            {t("reddit.pressure.grade")}: {pr.grade}
+                          </Badge>
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className="p-4 text-xs text-muted-foreground">{t("reddit.pressure.accumulating")}</div>
+                )}
+              </CardContent>
+            </Card>
+          ) : null}
         </>
       )}
 

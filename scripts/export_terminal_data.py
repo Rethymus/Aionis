@@ -1013,6 +1013,8 @@ def export_reddit_meta() -> None:
         transport = None
         score_available = False
         reddit_status = "awaiting_fetch"
+        pressure = {"status": "awaiting", "by_ticker": {}, "n_snapshots": 0,
+                    "note": "GME-style retail pressure (velocity × crowding-z × sentiment). Needs ≥14 days of snapshots; the daily cron accumulates."}
     else:
         df = pd.read_parquet(pq)
         side = json.loads(status_path.read_text()) if status_path.exists() else {}
@@ -1033,6 +1035,28 @@ def export_reddit_meta() -> None:
         transport = side.get("transport")
         score_available = bool(side.get("score_available", False))
         reddit_status = "live"
+        # Retail pressure (GME-style velocity × crowding-z × sentiment) from the
+        # FULL snapshot history. Forward-only; needs ≥14 days to grade — the daily
+        # cron accumulates. Empty/accumulating until then (honest, not broken).
+        from aionis.eval.retail_pressure import compute_pressure, pressure_summary_to_jsonable
+        hist = pd.DataFrame({
+            "date": pd.to_datetime(df["snapshot_ts"]).dt.strftime("%Y-%m-%d"),
+            "ticker": df["ticker"],
+            "mentions": df["mentions"].astype(int),
+            "sentiment": df["sentiment_mean"].astype(float),
+        })
+        pressure_latest = str(pd.to_datetime(df["snapshot_ts"]).max().date())
+        try:
+            pres = compute_pressure(hist, pressure_latest, lookback_days=30)
+        except ValueError:
+            pres = {}
+        pressure = {
+            "status": "ok" if pres else ("accumulating" if n_snapshots > 0 else "awaiting"),
+            "by_ticker": {tk: pressure_summary_to_jsonable(p) for tk, p in pres.items()},
+            "n_snapshots": n_snapshots,
+            "latest_date": pressure_latest,
+            "note": "GME-style retail pressure (mention velocity × crowding-z × sentiment). Needs ≥14 days of snapshots to grade; the daily cron accumulates.",
+        }
     payload = {
         "status": reddit_status,
         "methodology": methodology,
@@ -1047,6 +1071,7 @@ def export_reddit_meta() -> None:
         "score_available": score_available,
         "score_note": None if score_available else "upvote score needs PRAW (OAuth); RSS path records 0",
         "picks": picks,
+        "pressure": pressure,
     }
     (WEB / "reddit.json").write_text(json.dumps(payload, indent=2, default=str))
 

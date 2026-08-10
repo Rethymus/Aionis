@@ -65,5 +65,12 @@
       "bull_ratio": 1.0,
       "score_sum": 0
     }
-  ]
+  ],
+  "pressure": {
+    "status": "accumulating",
+    "by_ticker": {},
+    "n_snapshots": 1,
+    "latest_date": "2026-08-08",
+    "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
+  }
 }
