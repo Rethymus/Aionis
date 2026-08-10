@@ -125,6 +125,23 @@ export type MacroDrivers = {
   methodology?: string;
 };
 
+export type SmartMoney = {
+  methodology?: string;
+  recent_filings: {
+    filer: string;
+    target: string;
+    ticker: string;
+    date: string;
+    form: string;
+    is_amendment: boolean;
+  }[];
+  active_filers: { filer: string; count: number }[];
+  total_filings: number;
+  n_filers: number;
+  latest_date: string | null;
+  yearly: { year: number; filings: number }[];
+};
+
 export const aionis = {
   metrics: metrics as typeof metrics,
   picks: picks as Pick[],
@@ -140,7 +157,7 @@ export const aionis = {
   bpsSweep: bpsSweep as { bps: number; net_sharpe: number; gross_sharpe: number; avg_turnover: number }[],
   taco: taco as typeof taco,
   reddit: reddit as typeof reddit,
-  smartMoney: smartMoney as typeof smartMoney,
+  smartMoney: smartMoney as SmartMoney,
   pickConviction: pickConviction as typeof pickConviction,
   form4: form4 as typeof form4,
   cot: cot as typeof cot,
