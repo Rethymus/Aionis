@@ -502,6 +502,13 @@ def export_themes() -> None:
 
     panel = pd.read_parquet(panel_path)
     panel["date"] = pd.to_datetime(panel["date"])
+    # Display-only close-only qlib factors (enrichment). Computed fresh in-memory;
+    # the frozen panel parquet on disk is never touched → no research-pipeline /
+    # leakage impact, no new phase. See docs/qlib-reuse-audit.md §1.
+    if "close" in panel.columns:
+        from aionis.features.qlib_close_factors import compute_qlib_close_factors
+
+        panel = compute_qlib_close_factors(panel)
     as_of = panel["date"].max()
     latest = panel[panel["date"] == as_of]
 
@@ -509,8 +516,11 @@ def export_themes() -> None:
     price = {
         "key": "price",
         "status": "live",
-        "headline": "21d momentum + 63d vol + 252d β (cross-sectional mean)",
-        "signals": _theme_mean_signals(latest, ["momentum_21d", "volatility_63d", "beta_252d", "reversal_5d"]),
+        "headline": "21d momentum + 63d vol + 252d β + 21d RSI(上行广度) + 63d timetohigh(距高点) (cross-sectional mean)",
+        "signals": _theme_mean_signals(
+            latest,
+            ["momentum_21d", "volatility_63d", "beta_252d", "reversal_5d", "rsi_21d", "timetohigh_63d"],
+        ),
         "series": _theme_monthly_series(panel, "momentum_21d", 12),
     }
     # ② Macro (Track-C macro-regime composite from regime_macro.parquet)

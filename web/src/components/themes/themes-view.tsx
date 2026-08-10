@@ -57,7 +57,9 @@ type SignalLabelKey =
   | "themes.signal.tone_mean"
   | "themes.signal.tone_min"
   | "themes.signal.volume_latest"
-  | "themes.signal.n_months";
+  | "themes.signal.n_months"
+  | "themes.signal.rsi_21d"
+  | "themes.signal.timetohigh_63d";
 const SIGNAL_LABEL: Record<string, SignalLabelKey> = {
   momentum_21d: "themes.signal.momentum_21d",
   volatility_63d: "themes.signal.volatility_63d",
@@ -81,6 +83,8 @@ const SIGNAL_LABEL: Record<string, SignalLabelKey> = {
   tone_min: "themes.signal.tone_min",
   volume_latest: "themes.signal.volume_latest",
   n_months: "themes.signal.n_months",
+  rsi_21d: "themes.signal.rsi_21d",
+  timetohigh_63d: "themes.signal.timetohigh_63d",
 };
 const GROUP_LABEL: Record<string, ThemeLabelKey> = {
   price: "themes.price",
