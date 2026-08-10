@@ -19,6 +19,7 @@ import cot from "./cot.json";
 import modelHealth from "./model_health.json";
 import calibrationReliability from "./calibration_reliability.json";
 import themeSignals from "./theme_signals.json";
+import macroDrivers from "./macro_drivers.json";
 import themes from "./themes.json";
 
 export type Pick = {
@@ -116,6 +117,14 @@ export type ThemeSignals = {
   };
 };
 
+export type MacroDrivers = {
+  status: string;
+  series: {
+    [key: string]: { month: string; value: number }[];
+  };
+  methodology?: string;
+};
+
 export const aionis = {
   metrics: metrics as typeof metrics,
   picks: picks as Pick[],
@@ -138,5 +147,6 @@ export const aionis = {
   modelHealth: modelHealth as typeof modelHealth,
   calibrationReliability: calibrationReliability as CalibrationReliability,
   themeSignals: themeSignals as ThemeSignals,
+  macroDrivers: macroDrivers as MacroDrivers,
   themes: themes as typeof themes,
 };

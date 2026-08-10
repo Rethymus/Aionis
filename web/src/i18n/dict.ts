@@ -174,6 +174,11 @@ export const dict = {
     "market.events.title": "关键事件",
     "market.events.desc": "公开可验证的市场里程碑事件。",
     "market.risk.title": "市场风险（等权 S&P 500）",
+    "macro.title": "宏观驱动力 · 总统↔美联储的目标函数",
+    "macro.hint": "美联储盯 CPI/就业，总统盯选民/滞涨；利率是杠杆。修订值（display，非 PIT）。",
+    "macro.cpi": "CPI 同比",
+    "macro.payrolls": "非农就业 同比",
+    "macro.fedfunds": "联邦基金利率",
     "market.risk.hint": "2016→最新等权月收益的风险统计 · 展示用，非策略风险",
     "market.methodology_title": "方法论",
 
@@ -436,6 +441,11 @@ export const dict = {
     "market.events.title": "Key events",
     "market.events.desc": "Publicly verifiable market milestones.",
     "market.risk.title": "Market risk (equal-weight S&P 500)",
+    "macro.title": "Macro drivers · the President↔Fed objective functions",
+    "macro.hint": "Fed watches CPI/employment; the President watches voters/stagflation; rates are the lever. Revised values (display, not PIT).",
+    "macro.cpi": "CPI YoY",
+    "macro.payrolls": "Payrolls YoY",
+    "macro.fedfunds": "Fed funds rate",
     "market.risk.hint": "Risk stats from the equal-weight monthly returns, 2016→latest · display-only, not strategy risk",
     "market.methodology_title": "Methodology",
 

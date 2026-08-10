@@ -1157,6 +1157,87 @@ def export_market_context() -> None:
     (WEB / "market_context.json").write_text(json.dumps(payload, indent=2, default=str))
 
 
+def _alfred_latest_series(path: Path) -> pd.DataFrame:
+    """Latest-vintage (fully revised) series from an ALFRED json → DataFrame[date, value].
+
+    For each observation date, keeps the row with the MAX ``realtime_start`` (the
+    most-recently-published revision = the current public value). Robust across
+    vintage styles: works whether ``realtime_end`` is ``'9999-12-31'`` (CPI/PAYEMS)
+    or a dated cutoff (DFF). DISPLAY ONLY — revised series, NOT PIT-as-of.
+    """
+    d = json.loads(path.read_text())
+    rows = [
+        {"date": pd.Timestamp(o["date"]), "rts": str(o.get("realtime_start", "")), "value": float(o["value"])}
+        for o in d.get("observations", [])
+        if o.get("value") not in (".", "", None)
+    ]
+    if not rows:
+        return pd.DataFrame(columns=["date", "value"]).set_index("date")
+    df = pd.DataFrame(rows).sort_values(["date", "rts"]).drop_duplicates("date", keep="last")
+    return df[["date", "value"]].set_index("date").sort_index()
+
+
+def export_macro_drivers() -> None:
+    """Macro-driver sub-panel: the objective functions of the President↔Fed game.
+
+    CPI YoY (price-stability mandate), nonfarm-payrolls YoY (max-employment
+    mandate), and the Fed funds rate (DFF monthly mean — the policy lever).
+    Source = ALFRED latest-vintage (fully revised) series. DISPLAY ONLY: the
+    revised public values for context, NOT the PIT-as-of vintages the research
+    pipeline uses — explicitly labeled so in the methodology.
+    """
+    cache = Path("data/cache")
+    series: dict[str, list] = {}
+
+    cpi_path = cache / "alfred_CPIAUCSL.json"
+    if cpi_path.exists():
+        cpi = _alfred_latest_series(cpi_path)
+        cpi = cpi[cpi.index >= "2016-01-01"]
+        if len(cpi) > 12:
+            yoy = (cpi["value"] / cpi["value"].shift(12) - 1) * 100
+            series["cpi_yoy"] = [
+                {"month": d.strftime("%Y-%m"), "value": round(float(v), 2)}
+                for d, v in yoy.dropna().items()
+            ]
+
+    payems_path = cache / "alfred_PAYEMS.json"
+    if payems_path.exists():
+        pay = _alfred_latest_series(payems_path)
+        pay = pay[pay.index >= "2016-01-01"]
+        if len(pay) > 12:
+            yoy = (pay["value"] / pay["value"].shift(12) - 1) * 100
+            series["payems_yoy"] = [
+                {"month": d.strftime("%Y-%m"), "value": round(float(v), 2)}
+                for d, v in yoy.dropna().items()
+            ]
+
+    dff_path = cache / "alfred_DFF.json"
+    if dff_path.exists():
+        dff = _alfred_latest_series(dff_path)  # daily
+        dff = dff[dff.index >= "2016-01-01"]
+        if not dff.empty:
+            dff_m = dff["value"].resample("MS").mean()  # monthly mean of the daily effective rate
+            series["fedfunds"] = [
+                {"month": d.strftime("%Y-%m"), "value": round(float(v), 2)}
+                for d, v in dff_m.dropna().items()
+            ]
+
+    payload = {
+        "status": "ok" if series else "awaiting_fetch",
+        "series": series,
+        "methodology": (
+            "Macro drivers (display-only context). Latest-vintage (fully revised) "
+            "ALFRED series — the standard public revised values, NOT the PIT-as-of "
+            "vintages used in the research pipeline. CPI YoY = headline inflation "
+            "(Fed price-stability mandate); PAYEMS YoY = nonfarm payrolls growth "
+            "(max-employment mandate); Fed funds = DFF monthly mean (the policy "
+            "lever). Visualizes the objective functions of the President↔Fed game. "
+            "NOT a research claim."
+        ),
+    }
+    (WEB / "macro_drivers.json").write_text(json.dumps(payload, indent=2))
+
+
 def main() -> None:
     # Shared payloads (reused from the Quarto exporter, redirected to web/).
     eq.export_sigma_survey()
@@ -1178,6 +1259,7 @@ def main() -> None:
     export_cot()
     export_form4()
     export_market_context()
+    export_macro_drivers()
     export_smart_money()
     export_reddit_meta()
     written = sorted(p.name for p in WEB.glob("*.json"))

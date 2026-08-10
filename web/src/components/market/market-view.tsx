@@ -23,6 +23,8 @@ import {
   YAxis,
 } from "recharts";
 import { TrendingUpIcon, ActivityIcon, CalendarIcon } from "lucide-react";
+import { MacroDriversCard } from "./macro-drivers-card";
+import { MacroStagflationRead } from "./macro-stagflation-read";
 
 const EVENT_TONE: Record<string, string> = {
   political: "border-blue-400/50 text-blue-700 dark:text-blue-300",
@@ -249,6 +251,9 @@ export function MarketView() {
           </div>
         </CardContent>
       </Card>
+
+      <MacroDriversCard />
+      <MacroStagflationRead />
 
       <Card>
         <CardContent className="p-4 text-xs text-muted-foreground">
