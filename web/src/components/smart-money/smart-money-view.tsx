@@ -98,7 +98,19 @@ export function SmartMoneyView() {
                   {t(r.is_amendment ? "smartmoney.amendment" : "smartmoney.new")}
                 </Badge>
                 <span className="w-32 shrink-0 truncate text-muted-foreground">{r.filer}</span>
-                <span className="truncate font-medium">→ {r.target}</span>
+                {r.url ? (
+                  <a
+                    href={r.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="truncate font-medium underline-offset-2 hover:underline"
+                    title={t("smartmoney.filing_link")}
+                  >
+                    → {r.target}
+                  </a>
+                ) : (
+                  <span className="truncate font-medium">→ {r.target}</span>
+                )}
                 {r.ticker ? (
                   <Badge variant="secondary" className="ml-auto shrink-0 font-mono text-[10px]">
                     {r.ticker}

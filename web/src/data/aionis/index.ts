@@ -134,6 +134,7 @@ export type SmartMoney = {
     date: string;
     form: string;
     is_amendment: boolean;
+    url?: string;
   }[];
   active_filers: { filer: string; count: number }[];
   total_filings: number;

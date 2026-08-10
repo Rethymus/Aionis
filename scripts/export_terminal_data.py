@@ -958,6 +958,7 @@ def export_smart_money() -> None:
                     "date": r["date"],
                     "form": r.get("form", "SC 13D"),
                     "is_amendment": bool(r.get("is_amendment")),
+                    "url": str(r.get("url", "")),
                 })
         except (json.JSONDecodeError, KeyError, TypeError):
             pass

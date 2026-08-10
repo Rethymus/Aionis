@@ -278,6 +278,7 @@ export const dict = {
     "smartmoney.recent": "近期申报流",
     "smartmoney.new": "新持仓",
     "smartmoney.amendment": "修正",
+    "smartmoney.filing_link": "查看 EDGAR 原文（含申报人）",
     "smartmoney.explain": "SC 13D = 持股超 5% 的机构建仓申报（SEC 强制）。filed-date PIT，公共域 permissive。展示近期聪明钱动向，非 Aionis 研究 claim。",
 
     "nav.conviction": "选股确信度",
@@ -592,6 +593,7 @@ export const dict = {
     "smartmoney.recent": "Recent filings feed",
     "smartmoney.new": "New stake",
     "smartmoney.amendment": "Amendment",
+    "smartmoney.filing_link": "View EDGAR filing (includes filer)",
     "smartmoney.explain": "SC 13D = mandatory SEC disclosure when an institution crosses 5% ownership. Filed-date PIT, public domain, permissive. Descriptive display of recent smart-money moves, not an Aionis research claim.",
 
     "nav.conviction": "Pick conviction",
