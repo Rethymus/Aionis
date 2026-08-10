@@ -445,15 +445,14 @@ def export_themes() -> None:
     """
     panel_path = Path("data/cache/track_b_panel.parquet")
     if not panel_path.exists():
-        payload = {
-            "status": "awaiting_fetch",
-            "methodology": (
-                "Seven-theme signal overview (display-only). Awaiting the shared "
-                "PIT panel — run the data fetchers. Not an Aionis research claim."
-            ),
-            "themes": [],
-        }
-        (WEB / "themes.json").write_text(json.dumps(payload, indent=2))
+        # CI fresh checkout: the shared PIT panel is absent. Do NOT overwrite the
+        # tracked themes.json with an empty payload — preserve the last committed
+        # value (refreshed locally when the panel rebuilds). Mirrors _safe_export.
+        print(
+            "[export-terminal] SKIP themes: data/cache/track_b_panel.parquet not "
+            "present (tracked JSON retains last-committed value)",
+            flush=True,
+        )
         return
 
     panel = pd.read_parquet(panel_path)
@@ -490,21 +489,32 @@ def export_themes() -> None:
         "signals": _theme_mean_signals(latest, ["roe", "profit_margin", "revenue_growth_12m", "leverage"]),
         "series": _theme_monthly_series(panel, "roe", 12),
     }
-    # ④ News sentiment — forward-only (no historical corpus; honest)
+    # ④ News sentiment — forward-only (no permissive historical corpus; honest)
     news = {
         "key": "news_sentiment",
         "status": "forward_only",
-        "headline": "LLM extraction pool ready; no permissive historical corpus",
+        "headline": "新闻情绪·建设中：LLM 抽取池就绪，无许可历史语料（仅前向采集）",
         "signals": [],
         "series": [],
     }
-    # ⑤ Risk — alphalens tearsheet adapter not built (honest)
+    # ⑤ Risk — cross-sectional risk factors (crash sensitivity + tail risk).
+    # Distinct from the price theme's vol/β: downside β (down-market covariance),
+    # idiosyncratic vol (stock-specific), return skew (left-tail), worst-day
+    # drawdown. Computed from the panel's daily close prices. Lazy import — the
+    # CI skip above returns before reaching here when the panel is absent.
+    from aionis.features.risk_factors import compute_risk_factors
+
+    risk_panel = compute_risk_factors(panel)
+    risk_latest = risk_panel[risk_panel["date"] == as_of]
     risk = {
         "key": "risk",
-        "status": "needs_work",
-        "headline": "alphalens tearsheet adapter pending (empyrical metrics available)",
-        "signals": [],
-        "series": [],
+        "status": "live",
+        "headline": "下行β + 特质波动 + 偏度 + 最大单日回撤（横截面均值）",
+        "signals": _theme_mean_signals(
+            risk_latest,
+            ["downside_beta", "idiosyncratic_volatility", "return_skewness", "worst_day_drawdown"],
+        ),
+        "series": _theme_monthly_series(risk_panel, "downside_beta", 12),
     }
     # ⑥ Net cost — partial; surface the bps sweep net Sharpe (already exported)
     net_cost = {"key": "net_cost", "status": "partial", "signals": [], "series": []}
@@ -567,16 +577,12 @@ def export_theme_signals() -> None:
 
     panel_path = Path("data/cache/track_b_panel.parquet")
     if not panel_path.exists():
-        payload = {
-            "status": "awaiting_fetch",
-            "methodology": (
-                "Theme-signal operationalization (display-only). Awaiting the shared "
-                "PIT panel. Not a research claim."
-            ),
-            "signals": {},
-            "groups": [],
-        }
-        (WEB / "theme_signals.json").write_text(json.dumps(payload, indent=2))
+        # CI fresh checkout: panel absent → preserve tracked JSON, don't overwrite.
+        print(
+            "[export-terminal] SKIP theme_signals: data/cache/track_b_panel.parquet "
+            "not present (tracked JSON retains last-committed value)",
+            flush=True,
+        )
         return
     panel = pd.read_parquet(panel_path)
     panel["date"] = pd.to_datetime(panel["date"])
