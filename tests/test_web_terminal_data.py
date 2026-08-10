@@ -233,7 +233,9 @@ def test_market_context_shape() -> None:
     assert len(mc["events"]) >= 5
     for e in mc["events"]:
         assert {"date", "label", "type", "region"} <= set(e)
-        assert e["type"] in {"political", "trade", "crisis", "monetary"}
+        assert e["type"] in {
+            "political", "trade", "crisis", "monetary", "inauguration", "fed_pressure",
+        }
 
 
 # --- Model-health / drift monitor (leakage-safe, display-only) ---------------
