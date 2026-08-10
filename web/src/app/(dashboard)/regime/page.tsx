@@ -42,9 +42,9 @@ export default function RegimePage() {
 
   return (
     <div className="space-y-6 p-4 md:p-6">
-      <header className="space-y-2">
-        <h1 className="text-2xl font-bold">{t("nav.group.regime")}</h1>
-        <p className="text-muted-foreground">{t("regime_hub.intro")}</p>
+      <header className="space-y-1">
+        <p className="text-xs font-medium text-primary">{t("nav.group.regime")}</p>
+        <p className="text-sm text-muted-foreground">{t("regime_hub.intro")}</p>
       </header>
 
       <Tabs value={activeTab} onValueChange={handleTabChange}>

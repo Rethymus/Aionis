@@ -40,9 +40,9 @@ export default function DisciplinePage() {
 
   return (
     <div className="space-y-6 p-4 md:p-6">
-      <header className="space-y-2">
-        <h1 className="text-2xl font-bold">{t("nav.group.discipline")}</h1>
-        <p className="text-muted-foreground">{t("discipline_hub.intro")}</p>
+      <header className="space-y-1">
+        <p className="text-xs font-medium text-primary">{t("nav.group.discipline")}</p>
+        <p className="text-sm text-muted-foreground">{t("discipline_hub.intro")}</p>
       </header>
 
       <Tabs value={activeTab} onValueChange={handleTabChange}>
