@@ -72,7 +72,7 @@ jobs:
         run: uv run python scripts/reddit_fetch.py
         continue-on-error: true
 
-      - name: Fetch display-only macro series (ALFRED: dollar/yield-curve/unemployment)
+      - name: Fetch display-only macro series (ALFRED dollar/yield-curve/unemployment)
         run: uv run python scripts/fetch_macro_display.py --force
         continue-on-error: true  # FRED outage keeps the prior cache
 

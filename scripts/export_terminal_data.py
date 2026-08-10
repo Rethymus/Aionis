@@ -655,17 +655,10 @@ def export_model_health() -> None:
     from aionis.eval.model_drift import drift_summary
 
     oos_path = Path("runs/track_c_confirmatory_oos_scores.parquet")
-    if not oos_path.exists():
-        payload = {
-            "status": "awaiting_fetch",
-            "methodology": (
-                "Leakage-safe model-drift monitor (display-only). Awaiting OOS "
-                "scores — run the confirmatory pipeline. NOT a research claim."
-            ),
-            "regions": {},
-        }
-        (WEB / "model_health.json").write_text(json.dumps(payload, indent=2))
-        return
+    # Absent on a fresh CI checkout → let pd.read_parquet raise FileNotFoundError;
+    # main()'s _safe_export guard then skips and preserves the tracked JSON
+    # (refreshed locally when the confirmatory pipeline reruns). Do NOT overwrite
+    # tracked real data with an empty awaiting payload on every CI run.
     oos = pd.read_parquet(oos_path)
     oos["date"] = pd.to_datetime(oos["date"])
     us_panel_path = Path("data/cache/track_b_panel.parquet")
@@ -691,17 +684,10 @@ def export_calibration_reliability() -> None:
     from aionis.eval.score_calibration import calibrate_walk_forward
 
     oos_path = Path("runs/track_c_confirmatory_oos_scores.parquet")
-    if not oos_path.exists():
-        payload = {
-            "status": "awaiting_fetch",
-            "methodology": (
-                "Walk-forward calibration reliability (display-only). Awaiting OOS "
-                "scores — run the confirmatory pipeline. NOT a research claim."
-            ),
-            "regions": {},
-        }
-        (WEB / "calibration_reliability.json").write_text(json.dumps(payload, indent=2))
-        return
+    # Absent on a fresh CI checkout → let pd.read_parquet raise FileNotFoundError;
+    # main()'s _safe_export guard then skips and preserves the tracked JSON
+    # (refreshed locally when the confirmatory pipeline reruns). Do NOT overwrite
+    # tracked real data with an empty awaiting payload on every CI run.
     oos = pd.read_parquet(oos_path)
     oos["date"] = pd.to_datetime(oos["date"])
     us_panel_path = Path("data/cache/track_b_panel.parquet")
@@ -1304,30 +1290,59 @@ def export_macro_drivers() -> None:
     (WEB / "macro_drivers.json").write_text(json.dumps(payload, indent=2))
 
 
+def _safe_export(name: str, fn, /, *args, **kwargs):
+    """Best-effort guard for the daily CI refresh.
+
+    ``refresh-terminal-data`` runs on a fresh checkout where the gitignored
+    research artifacts (``runs/*.parquet`` OOS scores + feature panels and
+    ``runs/*.json`` surveys) and some ``data/cache/*.parquet`` caches are absent
+    — they regenerate on research cadence, not daily. An exporter whose source is
+    missing skips with a log, leaving the tracked ``web/src/data/aionis/*.json``
+    at its last committed value. Only ``FileNotFoundError`` is swallowed, so
+    genuine bugs still surface. Returns the wrapped call's value, or ``None``.
+    """
+    try:
+        return fn(*args, **kwargs)
+    except FileNotFoundError as e:
+        print(
+            f"[export-terminal] SKIP {name}: {e.filename or e} not present "
+            f"(research/cache artifact absent on fresh CI checkout; tracked "
+            f"JSON retains last-committed value)",
+            flush=True,
+        )
+        return None
+
+
 def main() -> None:
+    # Daily CI refresh on a fresh checkout lacks the gitignored runs/ research
+    # artifacts (OOS scores, panels, surveys) and some data/cache caches. Guard
+    # every exporter so a missing source skips (tracked JSON keeps its value)
+    # instead of crashing the whole refresh. Only FileNotFoundError is swallowed.
     # Shared payloads (reused from the Quarto exporter, redirected to web/).
-    eq.export_sigma_survey()
-    eq.export_bps_sweep()
-    eq.export_power_floor()
-    eq.export_evidence()
-    eq.export_ic_monthly()
+    _safe_export("sigma_survey", eq.export_sigma_survey)
+    _safe_export("bps_sweep", eq.export_bps_sweep)
+    _safe_export("power_floor", eq.export_power_floor)
+    _safe_export("evidence", eq.export_evidence)
+    _safe_export("ic_monthly", eq.export_ic_monthly)
     # Terminal-specific.
-    latest, n_total = export_picks()
-    export_metrics(latest, n_total)
-    export_sector_breakdown()
-    export_picks_backtest()
-    export_taco()
-    export_pick_conviction()
-    export_themes()
-    export_theme_signals()
-    export_model_health()
-    export_calibration_reliability()
-    export_cot()
-    export_form4()
-    export_market_context()
-    export_macro_drivers()
-    export_smart_money()
-    export_reddit_meta()
+    picks = _safe_export("picks", export_picks)
+    if picks is not None:
+        latest, n_total = picks
+        _safe_export("metrics", export_metrics, latest, n_total)
+    _safe_export("sector_breakdown", export_sector_breakdown)
+    _safe_export("picks_backtest", export_picks_backtest)
+    _safe_export("taco", export_taco)
+    _safe_export("pick_conviction", export_pick_conviction)
+    _safe_export("themes", export_themes)
+    _safe_export("theme_signals", export_theme_signals)
+    _safe_export("model_health", export_model_health)
+    _safe_export("calibration_reliability", export_calibration_reliability)
+    _safe_export("cot", export_cot)
+    _safe_export("form4", export_form4)
+    _safe_export("market_context", export_market_context)
+    _safe_export("macro_drivers", export_macro_drivers)
+    _safe_export("smart_money", export_smart_money)
+    _safe_export("reddit_meta", export_reddit_meta)
     written = sorted(p.name for p in WEB.glob("*.json"))
     print(f"[export-terminal] wrote {len(written)} files to {WEB}/: {written}", flush=True)
 
