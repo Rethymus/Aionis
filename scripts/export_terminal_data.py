@@ -434,6 +434,51 @@ def _theme_monthly_series(panel: pd.DataFrame, col: str, n_months: int) -> list[
     return [{"month": m, "value": round(float(v), 4)} for m, v in series.items()]
 
 
+def _build_news_theme(cache_path: Path) -> dict:
+    """Build the ``news_sentiment`` theme dict from the GDELT cache.
+
+    Populates signals + a 24-month sparkline when the cache holds a real series;
+    falls back to the honest "建设中" state when the cache is absent/malformed so
+    ``_safe_export`` never degrades a tracked panel on a cold CI checkout. Pure
+    (path in → dict out) so the wiring is hermetic-testable without the panel.
+    """
+    honest: dict = {
+        "key": "news_sentiment",
+        "status": "forward_only",
+        "headline": "新闻情绪·建设中：LLM 抽取池就绪，无许可历史语料（仅前向采集）",
+        "signals": [],
+        "series": [],
+    }
+    if not cache_path.exists():
+        return honest
+    try:
+        gd = json.loads(cache_path.read_text())
+        gseries = gd.get("series", [])
+        tones = [r["tone"] for r in gseries if r.get("tone") is not None]
+        if not (gseries and tones):
+            return honest
+        return {
+            "key": "news_sentiment",
+            "status": "live",
+            "headline": (
+                f"GDELT 通用语调（US 市场新闻，{gseries[0]['month']}→"
+                f"{gseries[-1]['month']}）；通用词典非金融域——"
+                "压力/情绪代理，非选股信号（display-only, exploratory）"
+            ),
+            "signals": [
+                {"name": "tone_latest", "value": round(tones[-1], 3)},
+                {"name": "tone_mean", "value": round(sum(tones) / len(tones), 3)},
+                {"name": "tone_min", "value": round(min(tones), 3)},
+                {"name": "volume_latest", "value": int(gseries[-1].get("volume", 0))},
+                {"name": "n_months", "value": len(gseries)},
+            ],
+            # sparkline: last 24 months (full history is summarized in signals)
+            "series": [{"month": r["month"], "value": r["tone"]} for r in gseries[-24:]],
+        }
+    except (json.JSONDecodeError, KeyError, ValueError, TypeError):
+        return honest
+
+
 def export_themes() -> None:
     """Seven-theme signal overview — display-only, NOT a research claim.
 
@@ -489,14 +534,12 @@ def export_themes() -> None:
         "signals": _theme_mean_signals(latest, ["roe", "profit_margin", "revenue_growth_12m", "leverage"]),
         "series": _theme_monthly_series(panel, "roe", 12),
     }
-    # ④ News sentiment — forward-only (no permissive historical corpus; honest)
-    news = {
-        "key": "news_sentiment",
-        "status": "forward_only",
-        "headline": "新闻情绪·建设中：LLM 抽取池就绪，无许可历史语料（仅前向采集）",
-        "signals": [],
-        "series": [],
-    }
+    # ④ News sentiment — GDELT Doc 2.0 timelinetone (aggregate macro tone).
+    # Display-only, exploratory. Pre-computed general-purpose lexicon tone over
+    # US market news (theme:ECON_MKT). Coverage 2017-04→today (Doc 2.0 debut).
+    # General lexicon, NOT finance-domain → regime/stress proxy, not a stock
+    # pick. Pure builder → hermetic-testable without the panel.
+    news = _build_news_theme(Path("data/cache/gdelt_news_sentiment.json"))
     # ⑤ Risk — cross-sectional risk factors (crash sensitivity + tail risk).
     # Distinct from the price theme's vol/β: downside β (down-market covariance),
     # idiosyncratic vol (stock-specific), return skew (left-tail), worst-day

@@ -118,6 +118,11 @@ export const dict = {
     "themes.signal.gross_sharpe": "毛夏普（未扣成本风险调整收益）",
     "themes.signal.avg_turnover": "平均换手率（买卖频繁度）",
     "themes.signal.amihud_illiquidity_21d": "Amihud 非流动性（成交量冲击成本）",
+    "themes.signal.tone_latest": "最新月语调（市场新闻整体情绪，负=偏悲观）",
+    "themes.signal.tone_mean": "区间均语调（长期情绪中枢）",
+    "themes.signal.tone_min": "区间最低语调（最悲观月份，压力峰值）",
+    "themes.signal.volume_latest": "最新月文章量（新闻关注度）",
+    "themes.signal.n_months": "覆盖月数（历史深度）",
     "nav.method": "研究方法",
 
     "ticker.label": "模型评分实时榜",
@@ -441,6 +446,11 @@ export const dict = {
     "themes.signal.gross_sharpe": "Gross Sharpe (pre-cost risk-adjusted return)",
     "themes.signal.avg_turnover": "Avg turnover (trading frequency)",
     "themes.signal.amihud_illiquidity_21d": "Amihud illiquidity (volume impact cost)",
+    "themes.signal.tone_latest": "Latest-month tone (overall news mood, negative = downbeat)",
+    "themes.signal.tone_mean": "Window mean tone (long-run sentiment center)",
+    "themes.signal.tone_min": "Window min tone (most negative month, stress peak)",
+    "themes.signal.volume_latest": "Latest-month article volume (news attention)",
+    "themes.signal.n_months": "Months covered (history depth)",
     "nav.method": "Method",
 
     "ticker.label": "Model score live ticker",

@@ -9,6 +9,7 @@ and — critically — re-raise of any other exception so genuine bugs still sur
 """
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 
@@ -62,3 +63,80 @@ def test_safe_export_forwards_keyword_arguments() -> None:
 
     # Act + Assert
     assert etd._safe_export("kw", _fn, x=3, y=4) == 12
+
+
+# --- _build_news_theme wiring (GDELT cache → news_sentiment panel block) -----
+
+
+def _gdelt_cache(series: list[dict]) -> dict:
+    return {
+        "source": "GDELT Doc 2.0 timelinetone",
+        "series": series,
+        "n_months": len(series),
+    }
+
+
+def test_build_news_theme_live_when_cache_has_series(tmp_path) -> None:
+    cache = tmp_path / "gdelt_news_sentiment.json"
+    cache.write_text(
+        json.dumps(
+            _gdelt_cache(
+                [
+                    {"month": "2017-04", "tone": -4.0, "volume": 1000, "n": 3},
+                    {"month": "2017-05", "tone": -2.0, "volume": 1100, "n": 3},
+                    {"month": "2017-06", "tone": 1.5, "volume": 1200, "n": 3},
+                ]
+            )
+        )
+    )
+    news = etd._build_news_theme(cache)
+    assert news["status"] == "live"
+    assert news["key"] == "news_sentiment"
+    signals = {s["name"]: s["value"] for s in news["signals"]}
+    assert signals["tone_latest"] == 1.5
+    assert signals["tone_mean"] == round((-4.0 + -2.0 + 1.5) / 3, 3)
+    assert signals["tone_min"] == -4.0
+    assert signals["volume_latest"] == 1200
+    assert signals["n_months"] == 3
+    assert [p["month"] for p in news["series"]] == ["2017-04", "2017-05", "2017-06"]
+    assert "2017-04" in news["headline"] and "2017-06" in news["headline"]
+
+
+def test_build_news_theme_honest_when_cache_absent(tmp_path) -> None:
+    # Cold CI checkout: cache missing → honest "建设中" state, NOT an exception
+    # and NOT an empty live block. The tracked panel is preserved.
+    news = etd._build_news_theme(tmp_path / "does_not_exist.json")
+    assert news["status"] == "forward_only"
+    assert news["signals"] == [] and news["series"] == []
+    assert "建设中" in news["headline"]
+
+
+def test_build_news_theme_honest_on_malformed_cache(tmp_path) -> None:
+    cache = tmp_path / "gdelt_news_sentiment.json"
+    cache.write_text("{not valid json")
+    news = etd._build_news_theme(cache)
+    assert news["status"] == "forward_only"
+    assert news["signals"] == []
+
+
+def test_build_news_theme_honest_on_empty_series(tmp_path) -> None:
+    cache = tmp_path / "gdelt_news_sentiment.json"
+    cache.write_text(json.dumps(_gdelt_cache([])))
+    news = etd._build_news_theme(cache)
+    assert news["status"] == "forward_only"
+    assert news["signals"] == []
+
+
+def test_build_news_theme_sparkline_caps_at_24_months(tmp_path) -> None:
+    # 30 months of history → sparkline keeps only the last 24 (signals still
+    # summarize the full window).
+    series = [
+        {"month": f"20{17 + i // 12}-{(i % 12) + 1:02d}", "tone": -1.0, "volume": 100, "n": 1}
+        for i in range(30)
+    ]
+    cache = tmp_path / "gdelt_news_sentiment.json"
+    cache.write_text(json.dumps(_gdelt_cache(series)))
+    news = etd._build_news_theme(cache)
+    assert len(news["series"]) == 24
+    signals = {s["name"]: s["value"] for s in news["signals"]}
+    assert signals["n_months"] == 30  # full history in signals

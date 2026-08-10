@@ -51,7 +51,12 @@ type SignalLabelKey =
   | "themes.signal.net_sharpe_bps5"
   | "themes.signal.gross_sharpe"
   | "themes.signal.avg_turnover"
-  | "themes.signal.amihud_illiquidity_21d";
+  | "themes.signal.amihud_illiquidity_21d"
+  | "themes.signal.tone_latest"
+  | "themes.signal.tone_mean"
+  | "themes.signal.tone_min"
+  | "themes.signal.volume_latest"
+  | "themes.signal.n_months";
 const SIGNAL_LABEL: Record<string, SignalLabelKey> = {
   momentum_21d: "themes.signal.momentum_21d",
   volatility_63d: "themes.signal.volatility_63d",
@@ -70,6 +75,11 @@ const SIGNAL_LABEL: Record<string, SignalLabelKey> = {
   gross_sharpe: "themes.signal.gross_sharpe",
   avg_turnover: "themes.signal.avg_turnover",
   amihud_illiquidity_21d: "themes.signal.amihud_illiquidity_21d",
+  tone_latest: "themes.signal.tone_latest",
+  tone_mean: "themes.signal.tone_mean",
+  tone_min: "themes.signal.tone_min",
+  volume_latest: "themes.signal.volume_latest",
+  n_months: "themes.signal.n_months",
 };
 const GROUP_LABEL: Record<string, ThemeLabelKey> = {
   price: "themes.price",

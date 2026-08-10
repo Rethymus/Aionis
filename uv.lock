@@ -21,6 +21,7 @@ source = { editable = "." }
 dependencies = [
     { name = "arch" },
     { name = "beautifulsoup4" },
+    { name = "gdeltdoc" },
     { name = "lightgbm" },
     { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "numpy", version = "2.4.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.11.*'" },
@@ -84,6 +85,7 @@ requires-dist = [
     { name = "beautifulsoup4", specifier = ">=4.12" },
     { name = "cot-reports", marker = "extra == 'dashboard'", specifier = ">=0.1.3" },
     { name = "fredapi", marker = "extra == 'extraction'", specifier = ">=0.5" },
+    { name = "gdeltdoc", specifier = ">=1.12.0" },
     { name = "ipykernel", marker = "extra == 'quarto'", specifier = ">=6.0" },
     { name = "itables", marker = "extra == 'quarto'", specifier = ">=2.2" },
     { name = "jupyter-client", marker = "extra == 'quarto'", specifier = ">=8.0" },
@@ -1109,6 +1111,21 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/10/a1/ae4e3e5003468d6391d2c77b6fa1cd73bd5d13511d81c642d7b28ac90ed4/fsspec-2026.6.0.tar.gz", hash = "sha256:f5bac145310fe30e16e1471bd6840b2d990d609e872251d7e674241822abf01a", size = 313646, upload-time = "2026-06-16T01:57:28.105Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/e5/22/4222d7ddf3da30f363edaa98e329c2bce6c65497c9cb2810931c8b2c0fbc/fsspec-2026.6.0-py3-none-any.whl", hash = "sha256:02e0b71817df9b2169dc30a16832045764def1191b43dcff5bb85bdee212d2a1", size = 203949, upload-time = "2026-06-16T01:57:26.358Z" },
+]
+
+[[package]]
+name = "gdeltdoc"
+version = "1.12.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pandas", version = "2.3.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
+    { name = "pandas", version = "3.0.5", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "requests" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/1d/d6/33bea6847f8e8fb701464cdef7fadff18b7e38f7e31736e943f96f6c8723/gdeltdoc-1.12.0.tar.gz", hash = "sha256:f95f84011df577a3d6db11cea54ccca2aa7dc5ad7d184b5a0bba3908098813d2", size = 15121, upload-time = "2025-04-03T09:01:31.582Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/43/df/acb3cd71a9b8027d94d3b407312c4073423bccb1eed2a2cdcd00230a8c3d/gdeltdoc-1.12.0-py3-none-any.whl", hash = "sha256:2d87d572e14685fb1e01df75a8181102162d06faa25d0662695a08b943665545", size = 17689, upload-time = "2025-04-03T09:01:30.225Z" },
 ]
 
 [[package]]
