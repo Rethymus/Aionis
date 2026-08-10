@@ -2,20 +2,20 @@
 
 import { useEffect, useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { PicksView } from "@/components/picks/picks-view";
-import { SectorsView } from "@/components/sectors/sectors-view";
-import { ConvictionView } from "@/components/conviction/conviction-view";
+import { SmartMoneyView } from "@/components/smart-money/smart-money-view";
+import { InsidersView } from "@/components/insiders/insiders-view";
+import { RedditView } from "@/components/reddit/reddit-view";
 import { useI18n } from "@/i18n/provider";
 
 const hashToTabMap: Record<string, string> = {
-  "#picks": "picks",
-  "#sectors": "sectors",
-  "#conviction": "conviction",
+  "#smart-money": "smart-money",
+  "#insiders": "insiders",
+  "#reddit": "reddit",
 };
 
-const defaultTab = "picks";
+const defaultTab = "smart-money";
 
-export default function PicksPage() {
+export default function ConfirmationPage() {
   const { t } = useI18n();
   const [activeTab, setActiveTab] = useState<string>(() => {
     if (typeof window !== "undefined") {
@@ -43,27 +43,27 @@ export default function PicksPage() {
   return (
     <div className="space-y-6 p-4 md:p-6">
       <header className="space-y-2">
-        <h1 className="text-2xl font-bold">{t("nav.group.picks")}</h1>
+        <h1 className="text-2xl font-bold">{t("nav.group.confirm")}</h1>
         <p className="text-muted-foreground">
-          Stage ③: 选股决策 · 模型选股、板块概率、确信度
+          Stage ④: 另类信号佐证 · 聪明钱 13D、内部人 Form 4、散户情绪交叉验证
         </p>
       </header>
 
       <Tabs value={activeTab} onValueChange={handleTabChange}>
         <TabsList>
-          <TabsTrigger value="picks">{t("nav.picks")}</TabsTrigger>
-          <TabsTrigger value="sectors">{t("nav.sectors")}</TabsTrigger>
-          <TabsTrigger value="conviction">{t("nav.conviction")}</TabsTrigger>
+          <TabsTrigger value="smart-money">{t("nav.smartmoney")}</TabsTrigger>
+          <TabsTrigger value="insiders">{t("nav.insiders")}</TabsTrigger>
+          <TabsTrigger value="reddit">{t("nav.reddit")}</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="picks">
-          <PicksView />
+        <TabsContent value="smart-money">
+          <SmartMoneyView />
         </TabsContent>
-        <TabsContent value="sectors">
-          <SectorsView />
+        <TabsContent value="insiders">
+          <InsidersView />
         </TabsContent>
-        <TabsContent value="conviction">
-          <ConvictionView />
+        <TabsContent value="reddit">
+          <RedditView />
         </TabsContent>
       </Tabs>
     </div>

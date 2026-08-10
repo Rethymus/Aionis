@@ -2,20 +2,20 @@
 
 import { useEffect, useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { PicksView } from "@/components/picks/picks-view";
-import { SectorsView } from "@/components/sectors/sectors-view";
-import { ConvictionView } from "@/components/conviction/conviction-view";
+import { MarketView } from "@/components/market/market-view";
+import { PositioningView } from "@/components/positioning/positioning-view";
+import { TacoView } from "@/components/taco/taco-view";
 import { useI18n } from "@/i18n/provider";
 
 const hashToTabMap: Record<string, string> = {
-  "#picks": "picks",
-  "#sectors": "sectors",
-  "#conviction": "conviction",
+  "#market": "market",
+  "#positioning": "positioning",
+  "#taco": "taco",
 };
 
-const defaultTab = "picks";
+const defaultTab = "market";
 
-export default function PicksPage() {
+export default function RegimePage() {
   const { t } = useI18n();
   const [activeTab, setActiveTab] = useState<string>(() => {
     if (typeof window !== "undefined") {
@@ -43,27 +43,27 @@ export default function PicksPage() {
   return (
     <div className="space-y-6 p-4 md:p-6">
       <header className="space-y-2">
-        <h1 className="text-2xl font-bold">{t("nav.group.picks")}</h1>
+        <h1 className="text-2xl font-bold">{t("nav.group.regime")}</h1>
         <p className="text-muted-foreground">
-          Stage ③: 选股决策 · 模型选股、板块概率、确信度
+          Stage ①: 市场制度 · 总统↔美联储博弈、机构多空持仓、关税冲击压力
         </p>
       </header>
 
       <Tabs value={activeTab} onValueChange={handleTabChange}>
         <TabsList>
-          <TabsTrigger value="picks">{t("nav.picks")}</TabsTrigger>
-          <TabsTrigger value="sectors">{t("nav.sectors")}</TabsTrigger>
-          <TabsTrigger value="conviction">{t("nav.conviction")}</TabsTrigger>
+          <TabsTrigger value="market">{t("nav.market")}</TabsTrigger>
+          <TabsTrigger value="positioning">{t("nav.positioning")}</TabsTrigger>
+          <TabsTrigger value="taco">{t("nav.taco")}</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="picks">
-          <PicksView />
+        <TabsContent value="market">
+          <MarketView />
         </TabsContent>
-        <TabsContent value="sectors">
-          <SectorsView />
+        <TabsContent value="positioning">
+          <PositioningView />
         </TabsContent>
-        <TabsContent value="conviction">
-          <ConvictionView />
+        <TabsContent value="taco">
+          <TacoView />
         </TabsContent>
       </Tabs>
     </div>

@@ -14,18 +14,9 @@ import { useI18n } from "@/i18n/provider";
 import {
   LayoutDashboardIcon,
   TrendingUpIcon,
-  ScaleIcon,
-  ActivityIcon,
-  GaugeIcon,
   ShieldCheckIcon,
   FileTextIcon,
-  MessageCircleIcon,
-  FlameIcon,
   BriefcaseIcon,
-  UsersIcon,
-  BarChartHorizontalIcon,
-  BlocksIcon,
-  HeartPulseIcon,
   LayersIcon,
   TargetIcon,
 } from "lucide-react";
@@ -39,34 +30,26 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const navHome = [
     { title: t("nav.overview"), url: "/dashboard", icon: <LayoutDashboardIcon /> },
   ];
+  // Decision funnel: each stage is ONE hub page (Tabs composing the former
+  // standalone panels). Old routes still resolve by URL during the transition;
+  // the sidebar now shows the ①→⑥ chain as 6 entries (+ overview) instead of 16.
   const navRegime = [
-    { title: t("nav.market"), url: "/market", icon: <TrendingUpIcon /> },
-    { title: t("nav.positioning"), url: "/positioning", icon: <BarChartHorizontalIcon /> },
-    { title: t("nav.taco"), url: "/taco", icon: <FlameIcon /> },
+    { title: t("nav.group.regime"), url: "/regime", icon: <TrendingUpIcon /> },
   ];
   const navThemes = [
     { title: t("nav.themes"), url: "/themes", icon: <LayersIcon /> },
   ];
   const navPicks = [
-    { title: t("nav.picks"), url: "/picks", icon: <TrendingUpIcon /> },
-    { title: t("nav.sectors"), url: "/sectors", icon: <BlocksIcon /> },
-    { title: t("nav.conviction"), url: "/conviction", icon: <ActivityIcon /> },
+    { title: t("nav.group.picks"), url: "/picks", icon: <TrendingUpIcon /> },
   ];
   const navConfirm = [
-    { title: t("nav.smartmoney"), url: "/smart-money", icon: <BriefcaseIcon /> },
-    { title: t("nav.insiders"), url: "/insiders", icon: <UsersIcon /> },
-    // Reddit activated via zero-credential Atom RSS (OAuth gated behind the 2026
-    // Responsible Builder Policy; unauth .json 403). Live when a snapshot exists.
-    { title: t("nav.reddit"), url: "/reddit", icon: <MessageCircleIcon /> },
+    { title: t("nav.group.confirm"), url: "/confirmation", icon: <BriefcaseIcon /> },
   ];
   const navTrack = [
-    { title: t("nav.calibration"), url: "/calibration", icon: <TargetIcon /> },
-    { title: t("nav.powerfloor"), url: "/power-floor", icon: <GaugeIcon /> },
-    { title: t("nav.modelhealth"), url: "/model-health", icon: <HeartPulseIcon /> },
+    { title: t("nav.group.track"), url: "/track", icon: <TargetIcon /> },
   ];
   const navDiscipline = [
-    { title: t("nav.discipline"), url: "/discipline", icon: <ShieldCheckIcon /> },
-    { title: t("nav.evidence"), url: "/evidence", icon: <ScaleIcon /> },
+    { title: t("nav.group.discipline"), url: "/discipline", icon: <ShieldCheckIcon /> },
   ];
   const navReference = [
     {
