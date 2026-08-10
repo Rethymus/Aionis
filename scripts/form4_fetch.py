@@ -23,17 +23,16 @@ from aionis.ingest.form4_orchestrator import fetch_form4_transactions
 
 # Large-cap issuer CIKs (SEC EDGAR public). Small bounded set keeps the pull
 # polite + fast; expand cautiously (each issuer = EFTS + per-accession XML).
+# Large-cap issuer CIKs (SEC EDGAR public). Bounded to 5 — the daily cron's cold
+# pull (each issuer = EFTS + per-accession XML, polite ≥2s) must finish within the
+# refresh job's 45-min budget; 10 issuers timed out. The data-cache action makes
+# subsequent runs delta-only (fast). Expand cautiously + only after a timed cold run.
 ISSUERS: dict[int, str] = {
     320193: "AAPL",
     789019: "MSFT",
     1045810: "NVDA",
     1652044: "GOOGL",
     1018724: "AMZN",
-    1326801: "META",
-    1318605: "TSLA",
-    1067983: "BRK.B",
-    19617: "JPM",
-    59478: "LLY",
 }
 START = "2016-01-01"
 END = "2026-08-31"
