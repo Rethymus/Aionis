@@ -140,3 +140,56 @@ def test_build_news_theme_sparkline_caps_at_24_months(tmp_path) -> None:
     assert len(news["series"]) == 24
     signals = {s["name"]: s["value"] for s in news["signals"]}
     assert signals["n_months"] == 30  # full history in signals
+
+
+def test_refresh_news_sentiment_only_updates_news_preserves_others(tmp_path) -> None:
+    # Panel-absent path: refresh ONLY news_sentiment; panel-dependent themes
+    # (price/risk) keep their committed values verbatim. Locks the fix for the
+    # '新闻情绪数据没有体现' root cause (the panel gate froze news_sentiment at
+    # 'forward_only' even after the GDELT fetch succeeded).
+    themes = tmp_path / "themes.json"
+    payload = {
+        "status": "ok",
+        "as_of_date": "2026-07-31",
+        "methodology": "frozen",
+        "themes": [
+            {"key": "price", "status": "live", "signals": [{"name": "momentum", "value": 0.3}]},
+            {"key": "news_sentiment", "status": "forward_only", "signals": [], "series": []},
+            {"key": "risk", "status": "live", "signals": [{"name": "downside_beta", "value": 1.2}]},
+        ],
+    }
+    themes.write_text(json.dumps(payload))
+    gdelt = tmp_path / "gdelt_news_sentiment.json"
+    gdelt.write_text(
+        json.dumps(
+            _gdelt_cache(
+                [
+                    {"month": "2017-04", "tone": -4.0, "volume": 1000, "n": 3},
+                    {"month": "2017-05", "tone": -2.0, "volume": 1100, "n": 3},
+                    {"month": "2017-06", "tone": 1.5, "volume": 1200, "n": 3},
+                ]
+            )
+        )
+    )
+
+    status = etd._refresh_news_sentiment_only(themes, gdelt)
+
+    assert status == "live"
+    result = json.loads(themes.read_text())
+    news = next(t for t in result["themes"] if t["key"] == "news_sentiment")
+    assert news["status"] == "live"
+    assert len(news["signals"]) > 0  # tone populated from the GDELT cache
+    # Panel-dependent themes UNCHANGED (verbatim):
+    price = next(t for t in result["themes"] if t["key"] == "price")
+    assert price["signals"] == [{"name": "momentum", "value": 0.3}]
+    risk = next(t for t in result["themes"] if t["key"] == "risk")
+    assert risk["signals"] == [{"name": "downside_beta", "value": 1.2}]
+    # Top-level metadata preserved:
+    assert result["as_of_date"] == "2026-07-31"
+    assert result["methodology"] == "frozen"
+
+
+def test_refresh_news_sentiment_only_returns_empty_when_no_themes_file(tmp_path) -> None:
+    # No committed themes.json → nothing to partially refresh → '' (caller skips).
+    status = etd._refresh_news_sentiment_only(tmp_path / "absent.json", tmp_path / "gdelt.json")
+    assert status == ""

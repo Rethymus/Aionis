@@ -479,6 +479,27 @@ def _build_news_theme(cache_path: Path) -> dict:
         return honest
 
 
+def _refresh_news_sentiment_only(themes_path: Path, gdelt_cache_path: Path) -> str:
+    """Panel-absent fallback: refresh ONLY news_sentiment in committed themes.json.
+
+    news_sentiment is panel-independent (GDELT cache only), so it can update even
+    when the shared PIT panel is absent (CI fresh checkout). Returns the refreshed
+    news_sentiment status ('live' | 'forward_only'); returns '' if themes.json
+    itself is absent (nothing to partially refresh). Pure (paths in) → hermetic-
+    testable; never touches the panel-dependent themes.
+    """
+    if not themes_path.exists():
+        return ""
+    news = _build_news_theme(gdelt_cache_path)
+    payload = json.loads(themes_path.read_text())
+    payload["themes"] = [
+        news if t.get("key") == "news_sentiment" else t
+        for t in payload.get("themes", [])
+    ]
+    themes_path.write_text(json.dumps(payload, indent=2, default=str))
+    return news["status"]
+
+
 def export_themes() -> None:
     """Seven-theme signal overview — display-only, NOT a research claim.
 
@@ -490,14 +511,29 @@ def export_themes() -> None:
     """
     panel_path = Path("data/cache/track_b_panel.parquet")
     if not panel_path.exists():
-        # CI fresh checkout: the shared PIT panel is absent. Do NOT overwrite the
-        # tracked themes.json with an empty payload — preserve the last committed
-        # value (refreshed locally when the panel rebuilds). Mirrors _safe_export.
-        print(
-            "[export-terminal] SKIP themes: data/cache/track_b_panel.parquet not "
-            "present (tracked JSON retains last-committed value)",
-            flush=True,
+        # CI fresh checkout: the shared PIT panel is absent. The panel-dependent
+        # themes cannot rebuild — preserve their last-committed values. BUT
+        # news_sentiment is panel-INDEPENDENT (GDELT cache only), so refresh it
+        # in-place via the helper. Previously the early-return gated news_sentiment
+        # behind the panel too — freezing it at 'forward_only' even after the GDELT
+        # fetch succeeded (n=92/chunk). Root cause of '新闻情绪数据没有体现': the
+        # fetch worked but the export never reached _build_news_theme.
+        status = _refresh_news_sentiment_only(
+            WEB / "themes.json", Path("data/cache/gdelt_news_sentiment.json")
         )
+        if status:
+            print(
+                "[export-terminal] themes: panel absent — refreshed news_sentiment "
+                f"only (status={status}); panel-dependent themes retain "
+                "last-committed values",
+                flush=True,
+            )
+        else:
+            print(
+                "[export-terminal] SKIP themes: panel absent and no committed "
+                "themes.json to partially refresh",
+                flush=True,
+            )
         return
 
     panel = pd.read_parquet(panel_path)
@@ -546,9 +582,9 @@ def export_themes() -> None:
     }
     # ④ News sentiment — GDELT Doc 2.0 timelinetone (aggregate macro tone).
     # Display-only, exploratory. Pre-computed general-purpose lexicon tone over
-    # US market news (theme:ECON_MKT). Coverage 2017-04→today (Doc 2.0 debut).
-    # General lexicon, NOT finance-domain → regime/stress proxy, not a stock
-    # pick. Pure builder → hermetic-testable without the panel.
+    # US market news (theme:ECON_STOCKMARKET). Coverage 2017-04→today (Doc 2.0
+    # debut). General lexicon, NOT finance-domain → regime/stress proxy, not a
+    # stock pick. Pure builder → hermetic-testable without the panel.
     news = _build_news_theme(Path("data/cache/gdelt_news_sentiment.json"))
     # ⑤ Risk — cross-sectional risk factors (crash sensitivity + tail risk).
     # Distinct from the price theme's vol/β: downside β (down-market covariance),
