@@ -90,6 +90,9 @@ jobs:
 
       - name: Fetch recent SC 13D stakes (EDGAR daily index, unfreezes past EFTS cutoff)
         run: uv run python scripts/stakes_13d_daily_fetch.py
+        timeout-minutes: 15  # step cap: cold pull walks ~430 business days (≥2s each
+        # ≈ 14min) — same insurance as the Form 4 cap. Per-day idempotent cache means
+        # a timeout resumes on the next run without re-fetching cached days.
         continue-on-error: true  # EDGAR rate-limits; per-day resilient skip
 
       - name: Fetch fresh retail sentiment (Reddit zero-credential RSS)
