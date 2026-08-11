@@ -72,24 +72,22 @@ def _get_latest_filing_date_perissuer(aggregate_path: Path) -> dict[str, str]:
     }
 
 
-def _merge_incremental(
-    prev: pd.DataFrame | None,
-    new_data: pd.DataFrame,
-    latest_dates: dict[str, str],
+def _accumulate(
+    running: pd.DataFrame | None,
+    new: pd.DataFrame,
 ) -> pd.DataFrame:
-    """Merge new filings into the existing aggregate (pure, testable).
+    """Append ``new`` to the running aggregate with EXACT-ROW dedupe (pure).
 
-    - Incremental (``prev`` non-empty + ``latest_dates`` non-empty): concat +
-      EXACT-ROW dedupe. Full-row dedupe preserves multi-transaction accessions
-      (one accession reports up to ~30 transactions; deduping by accession alone
-      would collapse them and lose data — regression-tested).
-    - First run / schema migration (no prev, or no cursor): ``new_data`` defines
-      the aggregate. The no-cursor case covers the pre-``filing_date`` aggregate
-      (one-time migration to the new schema).
+    Used for per-issuer write-through in ``main``: each completed issuer is
+    accumulated + saved immediately, so a mid-run timeout preserves the issuers
+    already finished. Full-row dedupe preserves multi-transaction accessions
+    (one accession reports up to ~30 transactions; accession-only dedupe would
+    collapse them — regression-tested). Always accumulates — the cursor-aware
+    "seed vs replace" decision lives in ``main``'s seed line, NOT here.
     """
-    if prev is not None and not prev.empty and latest_dates:
-        return pd.concat([prev, new_data], ignore_index=True).drop_duplicates(keep="last")
-    return new_data
+    if running is None or running.empty:
+        return new.copy()
+    return pd.concat([running, new], ignore_index=True).drop_duplicates(keep="last")
 
 
 def main() -> None:
@@ -106,7 +104,16 @@ def main() -> None:
         )
         print(f"[form4-fetch] latest cached dates: {latest_dates}", flush=True)
 
-    frames: list[pd.DataFrame] = []
+    # Initialize running aggregate from OUT if it exists and has valid cursor.
+    # This enables per-issuer write-through: each completed issuer is immediately
+    # merged and saved, so a timeout mid-run preserves progress for completed issuers.
+    running_agg = pd.read_parquet(OUT) if (OUT.exists() and latest_dates) else None
+    if running_agg is not None and not running_agg.empty:
+        print(
+            f"[form4-fetch] seeded running aggregate with {len(running_agg)} txns",
+            flush=True,
+        )
+
     for cik, ticker in ISSUERS.items():
         # Determine fetch window: if issuer exists in cache, start from its latest
         # filing date + 1 day; otherwise start from the full-history START (2016-01-01).
@@ -124,41 +131,31 @@ def main() -> None:
             print("  -> 0 transactions (graceful skip)", flush=True)
             continue
         df["issuer_ticker"] = ticker
-        frames.append(df)
         buys = (df["buy_or_sell"] == "buy").sum()
         sells = (df["buy_or_sell"] == "sell").sum()
         print(f"  -> {len(df)} txns ({buys} buys / {sells} sells)", flush=True)
 
-    if not frames:
+        # Per-issuer write-through: accumulate this issuer into the running
+        # aggregate and save immediately. A timeout mid-run still preserves
+        # completed issuers. _accumulate ALWAYS concats (the cursor-aware seed
+        # decision already happened above); using a cursor-aware merge here would
+        # drop prior issuers on the first run (latest_dates empty).
+        running_agg = _accumulate(running_agg, df)
+        OUT.parent.mkdir(parents=True, exist_ok=True)
+        running_agg.to_parquet(OUT, index=False)
+        print(
+            f"[form4-fetch] checkpoint: {len(running_agg)} txns across "
+            f"{running_agg['issuer_ticker'].nunique()} issuers -> {OUT}",
+            flush=True,
+        )
+
+    if running_agg is None or running_agg.empty:
         print("[form4-fetch] no transactions across issuers; nothing written")
         return
 
-    # Merge all fetched frames (new filings across issuers)
-    new_data = pd.concat(frames, ignore_index=True)
-
-    # Merge new filings into the existing aggregate. See ``_merge_incremental``
-    # for the dedupe rationale (full-row, to preserve multi-tx accessions).
-    prev = pd.read_parquet(OUT) if (OUT.exists() and latest_dates) else None
-    merged = _merge_incremental(prev, new_data, latest_dates)
-    if prev is not None:
-        print(
-            f"[form4-fetch] merged: {len(new_data)} new + {len(prev)} existing "
-            f"-> {len(merged)} (exact-row dedupe, multi-tx accessions preserved)",
-            flush=True,
-        )
-    else:
-        tag = "migration (pre-filing_date aggregate)" if OUT.exists() else "first run"
-        print(
-            f"[form4-fetch] {tag}: {len(new_data)} txns across "
-            f"{new_data['issuer_ticker'].nunique()} issuers",
-            flush=True,
-        )
-
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    merged.to_parquet(OUT, index=False)
     print(
-        f"[form4-fetch] wrote {len(merged)} txns across "
-        f"{merged['issuer_ticker'].nunique()} issuers -> {OUT}",
+        f"[form4-fetch] final: {len(running_agg)} txns across "
+        f"{running_agg['issuer_ticker'].nunique()} issuers -> {OUT}",
         flush=True,
     )
 

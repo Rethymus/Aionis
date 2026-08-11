@@ -1,12 +1,14 @@
 """Hermetic tests for Form 4 incremental fetch (no network).
 
 Imports the REAL helpers from ``scripts/form4_fetch.py`` (not copies) and locks
-the two load-bearing invariants:
+the load-bearing invariants:
 
-1. The merge dedupes on the FULL row, so an accession reporting multiple
-   transactions is preserved (the real aggregate has up to 30 rows/accession —
-   accession-only dedupe would collapse them and lose 86% of the data).
-2. The per-issuer cursor tolerates a pre-``filing_date`` aggregate (schema
+1. ``_accumulate`` ALWAYS concats (per-issuer write-through) — a cursor-aware
+   merge here would drop prior issuers on the first run (regression-tested).
+2. Dedupe is on the FULL row, so an accession reporting multiple transactions
+   is preserved (the real aggregate has up to 30 rows/accession — accession-only
+   dedupe would collapse them and lose 86% of the data).
+3. The per-issuer cursor tolerates a pre-``filing_date`` aggregate (schema
    migration) and NaN filing dates without crashing.
 """
 from __future__ import annotations
@@ -73,7 +75,6 @@ def test_cursor_skips_nan_filing_date(tmp_path: Path) -> None:
     df.loc[:, "filing_date"] = pd.NaT  # corrupt the column
     p = tmp_path / "agg.parquet"
     df.to_parquet(p, index=False)
-    # All-NaN → issuer omitted → empty cursor → safe full-pull fallback.
     assert f4._get_latest_filing_date_perissuer(p) == {}
 
 
@@ -86,29 +87,39 @@ def test_cursor_per_issuer_latest(tmp_path: Path) -> None:
     assert cur == {"AAPL": "2024-01-01", "MSFT": "2024-03-01"}
 
 
-# --- merge: _merge_incremental -----------------------------------------------
+# --- accumulate: _accumulate (per-issuer write-through) ----------------------
 
 
-def test_merge_first_run_returns_new_data() -> None:
+def test_accumulate_first_call_returns_new_data() -> None:
     new = _txns("ACC1", 3)
-    out = f4._merge_incremental(prev=None, new_data=new, latest_dates={})
+    out = f4._accumulate(None, new)
     assert len(out) == 3
-    assert out.equals(new)
 
 
-def test_merge_preserves_multi_transaction_accession() -> None:
-    # THE REGRESSION: one accession with 5 transactions, fully re-fetched.
-    # Accession-only dedupe would collapse 5 → 1 (data loss). Full-row dedupe
-    # removes the 5 exact duplicates and keeps the 5 distinct transactions.
+def test_accumulate_first_run_multi_issuer_preserves_all() -> None:
+    # THE REGRESSION: main() accumulates per-issuer on the first run (no cursor).
+    # An earlier cursor-aware _merge_incremental dropped `running` when
+    # latest_dates was empty → only the LAST issuer survived. _accumulate always
+    # concats, so both issuers survive.
+    aapl = _txns("A1", 3, ticker="AAPL", filing_date="2024-01-01")
+    msft = _txns("M1", 2, ticker="MSFT", filing_date="2024-03-01")
+    running = f4._accumulate(None, aapl)
+    running = f4._accumulate(running, msft)
+    assert len(running) == 5
+    assert set(running["issuer_ticker"]) == {"AAPL", "MSFT"}
+
+
+def test_accumulate_preserves_multi_transaction_accession() -> None:
+    # One accession with 5 transactions, fully re-fetched. Accession-only dedupe
+    # would collapse 5 → 1 (data loss). Full-row dedupe keeps the 5 distinct rows.
     prev = _txns("ACC1", 5)
     new = _txns("ACC1", 5)  # same 5 rows, re-fetched
-    out = f4._merge_incremental(prev=prev, new_data=new, latest_dates={"AAPL": "2024-06-01"})
-    assert len(out) == 5  # not 1 — multi-tx accession preserved
+    out = f4._accumulate(prev, new)
+    assert len(out) == 5
     assert out["accession"].nunique() == 1
 
 
-def test_merge_dedupes_exact_repeats_keeps_distinct() -> None:
-    # prev has 3 distinct rows on ACC1; new has the same 3 (re-fetched) + 2 new.
+def test_accumulate_dedupes_exact_repeats_keeps_distinct() -> None:
     prev = _txns("ACC1", 3, filing_date="2024-06-01")
     new = pd.concat(
         [
@@ -117,15 +128,50 @@ def test_merge_dedupes_exact_repeats_keeps_distinct() -> None:
         ],
         ignore_index=True,
     )
-    out = f4._merge_incremental(prev=prev, new_data=new, latest_dates={"AAPL": "2024-06-01"})
+    out = f4._accumulate(prev, new)
     assert len(out) == 5  # 3 (ACC1) + 2 (ACC2); exact dupes removed
 
 
-def test_merge_migration_replaces_when_no_cursor() -> None:
-    # Old aggregate lacks filing_date → cursor empty → new full pull REPLACES
-    # (concat would create NaN/non-NaN dupes for the same transactions).
-    prev = _txns("ACC1", 3).drop(columns=["filing_date"])  # pre-schema
-    new = _txns("ACC1", 4)  # fresh full pull carries filing_date
-    out = f4._merge_incremental(prev=prev, new_data=new, latest_dates={})
-    assert len(out) == 4  # replaced, not 3+4=7
-    assert "filing_date" in out.columns
+# --- per-issuer checkpointing (write-through path) ---------------------------
+
+
+def test_checkpoint_after_first_issuer_saved_immediately(tmp_path: Path) -> None:
+    # main()'s per-issuer write-through: after issuer 1 of 2 completes, the
+    # aggregate exists on disk with only issuer 1's transactions.
+    out_path = tmp_path / "form4_aggregate.parquet"
+    aapl = _txns("A1", 3, ticker="AAPL", filing_date="2024-01-15")
+    running_agg = f4._accumulate(None, aapl)
+    running_agg.to_parquet(out_path, index=False)
+    assert out_path.exists()
+    checkpoint = pd.read_parquet(out_path)
+    assert len(checkpoint) == 3
+    assert set(checkpoint["issuer_ticker"]) == {"AAPL"}
+
+
+def test_checkpoint_resumed_run_preserves_prior_issuer_data(tmp_path: Path) -> None:
+    # A timed-out run saved issuer 1; the resumed run reads it back + adds issuer 2.
+    out_path = tmp_path / "form4_aggregate.parquet"
+    aapl = _txns("A1", 3, ticker="AAPL", filing_date="2024-01-15")
+    aapl.to_parquet(out_path, index=False)
+    # main() seeds running_agg from OUT when the cursor is valid, then accumulates.
+    running_agg = pd.read_parquet(out_path)
+    msft = _txns("M1", 2, ticker="MSFT", filing_date="2024-03-10")
+    running_agg = f4._accumulate(running_agg, msft)
+    running_agg.to_parquet(out_path, index=False)
+    final = pd.read_parquet(out_path)
+    assert len(final) == 5
+    assert set(final["issuer_ticker"]) == {"AAPL", "MSFT"}
+
+
+def test_checkpoint_multi_transaction_accession_survives_write_through(tmp_path: Path) -> None:
+    # Multi-transaction accession survives the per-issuer write-through path
+    # (a re-fetch of the same accession must not collapse to one row).
+    out_path = tmp_path / "form4_aggregate.parquet"
+    prev = _txns("ACC1", 5, ticker="AAPL", filing_date="2024-06-01")
+    prev.to_parquet(out_path, index=False)
+    running_agg = pd.read_parquet(out_path)
+    refetch = _txns("ACC1", 5, ticker="AAPL", filing_date="2024-06-01")
+    running_agg = f4._accumulate(running_agg, refetch)
+    running_agg.to_parquet(out_path, index=False)
+    final = pd.read_parquet(out_path)
+    assert len(final) == 5  # not 1 — multi-tx accession preserved through checkpoint
