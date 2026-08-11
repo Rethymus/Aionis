@@ -14,10 +14,8 @@ import { useI18n } from "@/i18n/provider";
 import {
   LayoutDashboardIcon,
   TrendingUpIcon,
-  ShieldCheckIcon,
   FileTextIcon,
   BriefcaseIcon,
-  LayersIcon,
   TargetIcon,
 } from "lucide-react";
 
@@ -30,14 +28,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const navHome = [
     { title: t("nav.overview"), url: "/dashboard", icon: <LayoutDashboardIcon /> },
   ];
-  // Decision funnel: each stage is ONE hub page (Tabs composing the former
-  // standalone panels). Old routes still resolve by URL during the transition;
-  // the sidebar now shows the ①→⑥ chain as 6 entries (+ overview) instead of 16.
+  // Four-hub research closed loop: each hub answers one question, feeding the
+  // next (regime → picks → confirmation → track). Old /themes + /discipline
+  // routes still resolve by URL but their content is folded into the loop
+  // (themes/funnel → overview; macro → regime; discipline+evidence → track);
+  // the sidebar now shows the ①→④ chain as 4 entries (+ overview) instead of 16.
   const navRegime = [
     { title: t("nav.group.regime"), url: "/regime", icon: <TrendingUpIcon /> },
-  ];
-  const navThemes = [
-    { title: t("nav.themes"), url: "/themes", icon: <LayersIcon /> },
   ];
   const navPicks = [
     { title: t("nav.group.picks"), url: "/picks", icon: <TrendingUpIcon /> },
@@ -47,9 +44,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   ];
   const navTrack = [
     { title: t("nav.group.track"), url: "/track", icon: <TargetIcon /> },
-  ];
-  const navDiscipline = [
-    { title: t("nav.group.discipline"), url: "/discipline", icon: <ShieldCheckIcon /> },
   ];
   const navReference = [
     {
@@ -81,11 +75,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <NavMain items={navHome} label={t("nav.group.overview")} />
         <NavMain items={navRegime} label={t("nav.group.regime")} />
-        <NavMain items={navThemes} label={t("nav.group.themes")} />
         <NavMain items={navPicks} label={t("nav.group.picks")} />
         <NavMain items={navConfirm} label={t("nav.group.confirm")} />
         <NavMain items={navTrack} label={t("nav.group.track")} />
-        <NavMain items={navDiscipline} label={t("nav.group.discipline")} />
         <NavMain items={navReference} label={t("nav.group.reference")} />
       </SidebarContent>
     </Sidebar>

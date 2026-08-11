@@ -5,12 +5,14 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { MarketView } from "@/components/market/market-view";
 import { PositioningView } from "@/components/positioning/positioning-view";
 import { TacoView } from "@/components/taco/taco-view";
+import { ThemeSlice } from "@/components/themes/theme-slice";
 import { useI18n } from "@/i18n/provider";
 
 const hashToTabMap: Record<string, string> = {
   "#market": "market",
   "#positioning": "positioning",
   "#taco": "taco",
+  "#macro": "macro",
 };
 
 const defaultTab = "market";
@@ -52,6 +54,7 @@ export default function RegimePage() {
           <TabsTrigger value="market">{t("nav.market")}</TabsTrigger>
           <TabsTrigger value="positioning">{t("nav.positioning")}</TabsTrigger>
           <TabsTrigger value="taco">{t("nav.taco")}</TabsTrigger>
+          <TabsTrigger value="macro">{t("nav.macro")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="market">
@@ -62,6 +65,9 @@ export default function RegimePage() {
         </TabsContent>
         <TabsContent value="taco">
           <TacoView />
+        </TabsContent>
+        <TabsContent value="macro">
+          <ThemeSlice keys={["macro"]} />
         </TabsContent>
       </Tabs>
     </div>

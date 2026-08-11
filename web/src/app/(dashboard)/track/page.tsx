@@ -5,6 +5,8 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { CalibrationView } from "@/components/calibration/calibration-view";
 import { PowerFloorView } from "@/components/powerfloor/power-floor-view";
 import { ModelHealthView } from "@/components/model-health/model-health-view";
+import { DisciplineView } from "@/components/discipline/discipline-view";
+import { EvidenceView } from "@/components/evidence/evidence-view";
 import { ThemeSlice } from "@/components/themes/theme-slice";
 import { useI18n } from "@/i18n/provider";
 
@@ -13,6 +15,8 @@ const hashToTabMap: Record<string, string> = {
   "#power-floor": "power-floor",
   "#model-health": "model-health",
   "#cost": "cost",
+  "#discipline": "discipline",
+  "#evidence": "evidence",
 };
 
 const defaultTab = "calibration";
@@ -55,6 +59,8 @@ export default function TrackPage() {
           <TabsTrigger value="power-floor">{t("nav.powerfloor")}</TabsTrigger>
           <TabsTrigger value="model-health">{t("nav.modelhealth")}</TabsTrigger>
           <TabsTrigger value="cost">{t("nav.cost")}</TabsTrigger>
+          <TabsTrigger value="discipline">{t("nav.discipline")}</TabsTrigger>
+          <TabsTrigger value="evidence">{t("nav.evidence")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="calibration">
@@ -68,6 +74,12 @@ export default function TrackPage() {
         </TabsContent>
         <TabsContent value="cost">
           <ThemeSlice keys={["net_cost"]} />
+        </TabsContent>
+        <TabsContent value="discipline">
+          <DisciplineView />
+        </TabsContent>
+        <TabsContent value="evidence">
+          <EvidenceView />
         </TabsContent>
       </Tabs>
     </div>
