@@ -7,14 +7,22 @@ polite pulls — verified 2026-08-06: AAPL EFTS returned 26 filings with no 429/
 Writes ``data/cache/form4_aggregate.parquet`` (gitignored, regenerable).
 ``scripts/export_terminal_data.py`` reads it into the tracked web payload.
 
+Incremental design:
+- First run (no ``data/cache/form4_aggregate.parquet``): full 2016→today cold pull.
+- Subsequent runs: read the aggregate's latest filing date per issuer and fetch
+  only filings SINCE that date, then append/merge into the aggregate (deduplicated
+  by accession). EFTS + per-accession XML caches stay idempotent (no re-fetch on hit).
+
 Usage::
 
     uv run python scripts/form4_fetch.py
 
 Re-run safely: EFTS + XML caches are idempotent (no re-fetch on cache hit).
+Incremental fetch makes warm runs fast (only new filings are fetched).
 """
 from __future__ import annotations
 
+from datetime import datetime, timedelta
 from pathlib import Path
 
 import pandas as pd
@@ -39,11 +47,79 @@ END = "2026-08-31"
 OUT = Path("data/cache/form4_aggregate.parquet")
 
 
+def _get_latest_filing_date_perissuer(aggregate_path: Path) -> dict[str, str]:
+    """Read aggregate and return the latest filing date per issuer ticker.
+
+    Returns empty dict if the file doesn't exist, is empty, or PREDATES the
+    ``filing_date`` column (schema migration → caller does a full pull, replacing
+    the old aggregate). Issuers whose ``filing_date`` is all-NaN are omitted
+    (they fall back to the full-history START, repopulating ``filing_date``).
+    Dates are YYYY-MM-DD strings (EDGAR filing_date, the PIT anchor).
+    """
+    if not aggregate_path.exists():
+        return {}
+    df = pd.read_parquet(aggregate_path)
+    if df.empty or "filing_date" not in df.columns:
+        return {}  # pre-filing_date aggregate → first-run fallback (full pull)
+    valid = df.dropna(subset=["filing_date"])
+    if valid.empty:
+        return {}
+    latest = valid.groupby("issuer_ticker")["filing_date"].max()
+    return {
+        ticker: pd.Timestamp(date).strftime("%Y-%m-%d")
+        for ticker, date in latest.items()
+        if pd.notna(date)
+    }
+
+
+def _merge_incremental(
+    prev: pd.DataFrame | None,
+    new_data: pd.DataFrame,
+    latest_dates: dict[str, str],
+) -> pd.DataFrame:
+    """Merge new filings into the existing aggregate (pure, testable).
+
+    - Incremental (``prev`` non-empty + ``latest_dates`` non-empty): concat +
+      EXACT-ROW dedupe. Full-row dedupe preserves multi-transaction accessions
+      (one accession reports up to ~30 transactions; deduping by accession alone
+      would collapse them and lose data — regression-tested).
+    - First run / schema migration (no prev, or no cursor): ``new_data`` defines
+      the aggregate. The no-cursor case covers the pre-``filing_date`` aggregate
+      (one-time migration to the new schema).
+    """
+    if prev is not None and not prev.empty and latest_dates:
+        return pd.concat([prev, new_data], ignore_index=True).drop_duplicates(keep="last")
+    return new_data
+
+
 def main() -> None:
+    # Incremental design: read existing aggregate to get per-issuer latest filing date
+    latest_dates = _get_latest_filing_date_perissuer(OUT)
+    first_run = not latest_dates
+
+    if first_run:
+        print("[form4-fetch] first run: cold pull from 2016-01-01", flush=True)
+    else:
+        print(
+            "[form4-fetch] incremental run: fetching since last cached date per issuer",
+            flush=True,
+        )
+        print(f"[form4-fetch] latest cached dates: {latest_dates}", flush=True)
+
     frames: list[pd.DataFrame] = []
     for cik, ticker in ISSUERS.items():
-        print(f"[form4-fetch] {ticker} (CIK {cik:010d}) {START}..{END}", flush=True)
-        df = fetch_form4_transactions(cik, start=START, end=END)
+        # Determine fetch window: if issuer exists in cache, start from its latest
+        # filing date + 1 day; otherwise start from the full-history START (2016-01-01).
+        # The +1 day avoids re-fetching filings we already have on the boundary.
+        if ticker in latest_dates:
+            # +1 day avoids re-fetching the last cached filing on the boundary.
+            start_dt = datetime.strptime(latest_dates[ticker], "%Y-%m-%d") + timedelta(days=1)
+            fetch_start = start_dt.strftime("%Y-%m-%d")
+        else:
+            fetch_start = START
+
+        print(f"[form4-fetch] {ticker} (CIK {cik:010d}) {fetch_start}..{END}", flush=True)
+        df = fetch_form4_transactions(cik, start=fetch_start, end=END)
         if df.empty:
             print("  -> 0 transactions (graceful skip)", flush=True)
             continue
@@ -52,28 +128,39 @@ def main() -> None:
         buys = (df["buy_or_sell"] == "buy").sum()
         sells = (df["buy_or_sell"] == "sell").sum()
         print(f"  -> {len(df)} txns ({buys} buys / {sells} sells)", flush=True)
-        # Merge-by-issuer: a full 2016→today pull is thousands of polite per-
-        # accession XML fetches (multi-hour). Checkpoint after each issuer, KEEPING
-        # existing issuers not (re)processed this run, so the fetch deepens each
-        # issuer as it completes without dropping the others (no live breadth
-        # regression). A full run re-processes all issuers; the per-accession XML
-        # cache is idempotent, so completed issuers are fast on re-run.
-        out = pd.concat(frames, ignore_index=True)
-        if OUT.exists():
-            prev = pd.read_parquet(OUT)
-            done = {f["issuer_ticker"].iloc[0] for f in frames if not f.empty}
-            keep_prev = prev[~prev["issuer_ticker"].isin(done)]
-            out = pd.concat([keep_prev, out], ignore_index=True)
-        OUT.parent.mkdir(parents=True, exist_ok=True)
-        out.to_parquet(OUT, index=False)
-        print(
-            f"[form4-fetch] checkpoint: {len(out)} txns across "
-            f"{out['issuer_ticker'].nunique()} issuers -> {OUT}",
-            flush=True,
-        )
 
     if not frames:
         print("[form4-fetch] no transactions across issuers; nothing written")
+        return
+
+    # Merge all fetched frames (new filings across issuers)
+    new_data = pd.concat(frames, ignore_index=True)
+
+    # Merge new filings into the existing aggregate. See ``_merge_incremental``
+    # for the dedupe rationale (full-row, to preserve multi-tx accessions).
+    prev = pd.read_parquet(OUT) if (OUT.exists() and latest_dates) else None
+    merged = _merge_incremental(prev, new_data, latest_dates)
+    if prev is not None:
+        print(
+            f"[form4-fetch] merged: {len(new_data)} new + {len(prev)} existing "
+            f"-> {len(merged)} (exact-row dedupe, multi-tx accessions preserved)",
+            flush=True,
+        )
+    else:
+        tag = "migration (pre-filing_date aggregate)" if OUT.exists() else "first run"
+        print(
+            f"[form4-fetch] {tag}: {len(new_data)} txns across "
+            f"{new_data['issuer_ticker'].nunique()} issuers",
+            flush=True,
+        )
+
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    merged.to_parquet(OUT, index=False)
+    print(
+        f"[form4-fetch] wrote {len(merged)} txns across "
+        f"{merged['issuer_ticker'].nunique()} issuers -> {OUT}",
+        flush=True,
+    )
 
 
 if __name__ == "__main__":

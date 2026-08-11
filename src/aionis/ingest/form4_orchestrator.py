@@ -142,6 +142,11 @@ def fetch_form4_transactions(
     EFTS metadata -> per-accession fetch+parse (polite spacing, idempotent) ->
     concatenated tidy DataFrame. Failures per accession are logged and skipped
     (one bad filing does not abort the batch).
+
+    Returns columns: ``[filer_cik, filer_name, ticker, transaction_date,
+    buy_or_sell, shares, price_per_share, accession, filing_date]`` where
+    ``filing_date`` is the SEC filing date from EFTS (PIT anchor) and
+    ``transaction_date`` is the trade date from the Form 4 XML.
     """
     meta = fetch_form4_filings(issuer_cik, start=start, end=end, cache_dir=cache_dir)
     if meta.empty:
@@ -149,12 +154,14 @@ def fetch_form4_transactions(
             columns=[
                 "filer_cik", "filer_name", "ticker", "transaction_date",
                 "buy_or_sell", "shares", "price_per_share", "accession",
+                "filing_date",
             ]
         )
 
     frames: list[pd.DataFrame] = []
     for _, row in meta.iterrows():
         accession = str(row["accession"])
+        filing_date = row["filing_date"]  # Preserve EFTS filing_date for incremental fetch
         try:
             df = parse_form4_filing(int(issuer_cik), accession, cache_dir=cache_dir)
         except Exception as exc:  # noqa: BLE001 — batch must survive one bad filing
@@ -162,9 +169,10 @@ def fetch_form4_transactions(
             continue
         if not df.empty:
             df["accession"] = accession
+            df["filing_date"] = filing_date  # Add filing_date from EFTS
             frames.append(df)
 
     if not frames:
         return pd.DataFrame()
     out = pd.concat(frames, ignore_index=True)
-    return out.sort_values("transaction_date").reset_index(drop=True)
+    return out.sort_values("filing_date").reset_index(drop=True)
