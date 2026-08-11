@@ -233,3 +233,123 @@ def save_snapshot(prices: pd.DataFrame, path: Path | str) -> Path:
 
 def load_snapshot(path: Path | str) -> pd.DataFrame:
     return pd.read_parquet(Path(path))
+
+
+def fetch_ohlcv_panel(
+    symbols: list[str],
+    start: str,
+    end: str,
+) -> dict[str, pd.DataFrame]:
+    """Fetch per-symbol OHLCV DataFrames from approved providers.
+
+    Returns a dictionary where each key is a symbol and each value is a
+    DataFrame with columns: open, high, low, close, volume. Uses the same
+    politeness policy as fetch_prices but extracts all 5 columns instead
+    of just close. This is a separate function for future phase wiring and
+    does NOT modify existing close-only behavior.
+
+    Args:
+        symbols: List of ticker symbols to fetch
+        start: Start date (YYYY-MM-DD format)
+        end: End date (YYYY-MM-DD format)
+
+    Returns:
+        dict[str, pd.DataFrame]: Per-symbol DataFrames with OHLCV columns
+
+    Raises:
+        RuntimeError: If any symbol cannot be fetched from configured providers
+    """
+    panels: dict[str, pd.DataFrame] = {}
+    providers: list[str] = []
+
+    # Try Tiingo first
+    if settings.tiingo_api_key:
+        providers.append("Tiingo")
+        headers = {"Authorization": f"Token {settings.tiingo_api_key}", "User-Agent": "aionis/0.1"}
+        for sym in symbols:
+            if sym in panels:
+                continue
+            try:
+                r = _policy_get(
+                    f"https://api.tiingo.com/tiingo/daily/{sym}/prices",
+                    total_attempts=3,
+                    backoff_base=4,
+                    backoff_mode="linear",
+                    headers=headers,
+                    params={"startDate": start, "endDate": end},
+                    timeout=30,
+                )
+                rows = r.json()
+                if rows:
+                    df = pd.DataFrame(rows)
+                    idx = pd.DatetimeIndex(pd.to_datetime(df["date"], utc=True)).tz_localize(
+                        None
+                    ).normalize()
+                    # Extract OHLCV columns (use adjClose as close)
+                    ohlcv = pd.DataFrame(
+                        {
+                            "open": df["open"].to_numpy(float),
+                            "high": df["high"].to_numpy(float),
+                            "low": df["low"].to_numpy(float),
+                            "close": df["adjClose"].to_numpy(float),  # Use adjusted close
+                            "volume": df["volume"].to_numpy(float),
+                        },
+                        index=idx,
+                    )
+                    panels[sym] = ohlcv
+            except Exception:
+                pass
+
+    # Fill missing symbols with Alpaca
+    missing = [s for s in symbols if s not in panels]
+    if missing and settings.alpaca_key_id and settings.alpaca_secret_key:
+        providers.append("Alpaca")
+        headers = {
+            "APCA-API-KEY-ID": settings.alpaca_key_id,
+            "APCA-API-SECRET-KEY": settings.alpaca_secret_key,
+            "User-Agent": "aionis/0.1",
+        }
+        for sym in missing:
+            try:
+                r = _policy_get(
+                    f"https://data.alpaca.markets/v2/stocks/{sym}/bars",
+                    total_attempts=3,
+                    backoff_base=4,
+                    backoff_mode="linear",
+                    headers=headers,
+                    params={
+                        "timeframe": "1Day",
+                        "start": start,
+                        "end": end,
+                        "adjustment": "all",
+                        "limit": 10000,
+                    },
+                    timeout=30,
+                )
+                bars = r.json().get("bars", [])
+                if bars:
+                    df = pd.DataFrame(bars)
+                    idx = pd.DatetimeIndex(pd.to_datetime(df["t"], utc=True)).tz_localize(
+                        None
+                    ).normalize()
+                    # Alpaca uses o, h, l, c, v column names
+                    ohlcv = pd.DataFrame(
+                        {
+                            "open": df["o"].to_numpy(float),
+                            "high": df["h"].to_numpy(float),
+                            "low": df["l"].to_numpy(float),
+                            "close": df["c"].to_numpy(float),
+                            "volume": df["v"].to_numpy(float),
+                        },
+                        index=idx,
+                    )
+                    panels[sym] = ohlcv
+            except Exception:
+                pass
+
+    # Verify all symbols were fetched
+    still_missing = [s for s in symbols if s not in panels or panels[s].empty]
+    if still_missing:
+        raise _missing_prices_error(still_missing, providers)
+
+    return panels

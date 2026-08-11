@@ -169,3 +169,88 @@ def test_phase_b_main_rebuilds_incomplete_existing_final_panel(
     rebuilt = pd.read_parquet(final_path)
     assert list(rebuilt.columns) == ["AAA", "BBB"]
     assert rebuilt.notna().any().all()
+
+
+def test_fetch_ohlcv_panel_returns_per_symbol_ohlcv_dataframes(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Test that fetch_ohlcv_panel returns dict of DataFrames with OHLCV columns."""
+    _set_credentials(monkeypatch, tiingo=True, alpaca=True)
+
+    # Mock Tiingo to return realistic OHLCV response
+    def mock_tiingo_get(url: str, *args: object, **kwargs: object) -> object:
+        class MockResponse:
+            def json(self) -> list[dict]:
+                return [
+                    {
+                        "date": "2024-01-02T00:00:00+00:00",
+                        "open": 100.0,
+                        "high": 105.0,
+                        "low": 99.0,
+                        "close": 104.0,
+                        "adjClose": 104.0,
+                        "volume": 1000000,
+                    }
+                ]
+
+        return MockResponse()
+
+    # Mock Alpaca to return realistic OHLCV response
+    def mock_alpaca_get(url: str, *args: object, **kwargs: object) -> object:
+        class MockResponse:
+            def json(self) -> dict:
+                return {
+                    "bars": [
+                        {
+                            "t": "2024-01-02T00:00:00+00:00",
+                            "o": 200.0,
+                            "h": 210.0,
+                            "l": 199.0,
+                            "c": 208.0,
+                            "v": 2000000,
+                        }
+                    ]
+                }
+
+        return MockResponse()
+
+    def route_get(*args: object, **kwargs: object) -> object:
+        if args and "tiingo" in str(args[0]):
+            return mock_tiingo_get(*args, **kwargs)
+        return mock_alpaca_get(*args, **kwargs)
+
+    monkeypatch.setattr(market, "_policy_get", route_get)
+
+    result = market.fetch_ohlcv_panel(["AAA", "BBB"], "2024-01-01", "2024-01-31")
+
+    # Verify structure: dict of DataFrames
+    assert isinstance(result, dict)
+    assert set(result.keys()) == {"AAA", "BBB"}
+
+    # Verify each DataFrame has OHLCV columns
+    for df in result.values():
+        assert isinstance(df, pd.DataFrame)
+        assert list(df.columns) == ["open", "high", "low", "close", "volume"]
+        assert len(df) == 1
+        assert df.index[0] == pd.Timestamp("2024-01-02")
+
+
+def test_fetch_ohlcv_panel_fails_closed_on_missing_symbols(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Test that fetch_ohlcv_panel raises error when symbols cannot be fetched."""
+    _set_credentials(monkeypatch, tiingo=True, alpaca=True)
+
+    # Mock both providers to return empty results
+    def mock_empty_response(*args: object, **kwargs: object) -> object:
+        class MockResponse:
+            def json(self) -> list[dict] | dict:
+                return [] if "tiingo" in kwargs.get("url", "") else {"bars": []}
+
+        return MockResponse()
+
+    monkeypatch.setattr(market, "_policy_get", mock_empty_response)
+
+    error = r"missing symbols: \[AAA, BBB\].*configured providers: Tiingo, Alpaca"
+    with pytest.raises(RuntimeError, match=error):
+        market.fetch_ohlcv_panel(["AAA", "BBB"], "2024-01-01", "2024-01-31")
