@@ -1,5 +1,14 @@
 # state/current.md — read first each session
 
+- **active (2026-08-12) 续⑥（终端 IA 优化至 plateau：Overview 论证面 + SegmentHeader 脊柱 + provenance 角标，5 commit 全部署验）:** 业主授权"创建最有价值内容直至不可再优化"。在范式 α 骨架（续⑤）之上做 display-layer 深优化，4 commit（tsc+build 双绿，已 push `5a40562`，deploy `31539937611` success 验）：
+  ① **Overview 重建为单一论证面**（`9688069`）：5 段拼贴（Hero/KPI/Ticker/Picks/Chain）→ **VerdictAnchor 锚定**（可证伪主张领头，IC/CI/p/n 为其背书，NULL 框定为预期结果非失败）+ ArgumentChain（语境→证据→效度→裁决 4 段，每段带代表 stat + 内嵌 mini picks/佐证）+ 佐证 ribbon（聪明钱/拥挤度，非第 5 列）+ GuardBand。12 新 overview.* i18n key（zh+en），hero 改论证链文案。
+  ② **SegmentHeader 复用组件**（`97c0409`）：5 hub 页（regime/picks/confirmation/track/discipline）重复 header → 1 组件，渲染**脊柱面包屑**（语境 › 证据 › 效度 › 裁决，当前段高亮 + 尾部守卫 chip）。每页都宣告自己在论证链的位置。
+  ③ **/themes 也加 SegmentHeader**（`00dce34`，verdict 段，它是全链概览页）。
+  ④ **provenance 脊柱**（`f42c261`）：ProvenanceBadge 复用组件（读 snapshot_ts/as_of_date/latest_date → "截至 YYYY-MM-DD" 角标；无值则不渲染=诚实缺席非装饰破折号）接入 SegmentHeader 的 asOf prop。regime 传 cot.latest_date、confirmation 传 smart_money.latest_date（部署 JSON 经 export 注 snapshot_ts 生产环境实显）；picks/track 无干净顶层日期故诚实省略。站巨人 QVeris evidence-first。
+  **审计**：metrics 字段全真值（combined_ic -0.0088/CI/p/n_months/verdict NULL/n_picks_total 25）；垃圾 latest_month 未触 UI；10 个 inner-view .role 全用 α 词（语境/证据/独立佐证/效度/守卫/裁决）与脊柱一致非矛盾；page-level SegmentHeader + in-tab 本地 title 两层架构自洽。**部署验**：deploy success sha 5a40562，bundle 实测 效度论证链×5/argument chain×7/可证伪主张×2/Guard spans×1/provenance×2。
+  **plateau 判定**：骨架(nav)+旗舰(Overview)+每页(SegmentHeader)+provenance 角标+inner-view 一致 = 无 collage 残面。剩余优化（provenance 扩 15 view / 退役 /themes）依赖 export 数据注入或业主门，非 display 层。
+  **边界**：纯 web/src/ 展示层；0 ledger/frozen/config/prereg/ADR/data/OOS 改动；未触 E3。
+
 - **active (2026-08-12) 续⑤（终端 IA 第三次重组 = 范式 α ECD 效度论证链，5 批全绿）:** 业主第三次要求打散"七主题"重组，**明确不再要一二三四编号**、要"科学排布+前沿经验+科技智慧+深度复用 github"。诊断前两次失败根因 = 我一直按**分析师工作流**组织终端，但 Aionis 是研究效度工具（CLAUDE.md: "NOT a cognitive system or trading bot"）。调研巨人（主会话，规避子代理 [1210]）→ 提 3 范式（α ECD 效度论证链 / β 研究生命周期 / γ 溯源可观测性）→ 业主**定帧 α**。
   **设计文档**：`reports/design/2026-08-12-terminal-ia-paradigm-shift.md`（诊断+3 范式+巨人调研）+ `2026-08-12-terminal-ia-paradigm-alpha-migration.md`（逐文件迁移 spec）。3 执行前确认业主全选推荐：证据段合并 1 组 / 守卫横条+独立组 / 12 独立路由移出主 nav。
   **5 批全交付（tsc + next build 双绿，0 ledger/frozen/config/data/OOS 接触）**：
