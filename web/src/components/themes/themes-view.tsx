@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
 import { ThemesFunnel } from "./themes-funnel";
+import { SegmentHeader } from "@/components/segment-header";
 import { ShieldCheckIcon } from "lucide-react";
 
 // Literal-keyed maps so the strict `t(key)` union accepts them (template
@@ -214,7 +215,7 @@ export function ThemesView() {
 
   return (
     <div className="space-y-6 p-4 md:p-6">
-      <p className="text-xs font-medium text-primary">{t("themes.role")}</p>
+      <SegmentHeader segment="verdict" introKey="themes.role" />
       <header className="space-y-1">
         <h1 className="text-2xl font-bold tracking-tight">{t("themes.title")}</h1>
         <p className="text-sm text-muted-foreground">
