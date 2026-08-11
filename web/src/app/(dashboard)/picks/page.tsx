@@ -5,12 +5,14 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { PicksView } from "@/components/picks/picks-view";
 import { SectorsView } from "@/components/sectors/sectors-view";
 import { ConvictionView } from "@/components/conviction/conviction-view";
+import { ThemeSlice } from "@/components/themes/theme-slice";
 import { useI18n } from "@/i18n/provider";
 
 const hashToTabMap: Record<string, string> = {
   "#picks": "picks",
   "#sectors": "sectors",
   "#conviction": "conviction",
+  "#factors": "factors",
 };
 
 const defaultTab = "picks";
@@ -52,6 +54,7 @@ export default function PicksPage() {
           <TabsTrigger value="picks">{t("nav.picks")}</TabsTrigger>
           <TabsTrigger value="sectors">{t("nav.sectors")}</TabsTrigger>
           <TabsTrigger value="conviction">{t("nav.conviction")}</TabsTrigger>
+          <TabsTrigger value="factors">{t("nav.factors")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="picks">
@@ -62,6 +65,9 @@ export default function PicksPage() {
         </TabsContent>
         <TabsContent value="conviction">
           <ConvictionView />
+        </TabsContent>
+        <TabsContent value="factors">
+          <ThemeSlice keys={["price", "fundamentals", "risk", "market_structure"]} />
         </TabsContent>
       </Tabs>
     </div>

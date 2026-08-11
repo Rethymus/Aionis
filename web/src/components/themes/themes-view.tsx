@@ -92,25 +92,6 @@ const GROUP_LABEL: Record<string, ThemeLabelKey> = {
   market_structure: "themes.market_structure",
 };
 
-// Funnel-layer membership for the 7 themes (presentation grouping). The funnel
-// overview component renders the full 5-layer architecture; this groups the
-// cards under their in-panel layer so same-type data is shown together.
-type FunnelLayer = "context" | "signals" | "cost";
-const LAYER_KEYS: Record<FunnelLayer, string[]> = {
-  context: ["macro"],
-  signals: ["fundamentals", "price", "risk", "market_structure", "news_sentiment"],
-  cost: ["net_cost"],
-};
-const LAYER_SECTION: Record<
-  FunnelLayer,
-  "themes.funnel.section.context" | "themes.funnel.section.signals" | "themes.funnel.section.cost"
-> = {
-  context: "themes.funnel.section.context",
-  signals: "themes.funnel.section.signals",
-  cost: "themes.funnel.section.cost",
-};
-const LAYER_ORDER: FunnelLayer[] = ["context", "signals", "cost"];
-
 type StatusKey =
   | "themes.status.live"
   | "themes.status.partial"
@@ -174,7 +155,7 @@ function Sparkline({ data, className }: { data: number[]; className?: string }) 
   );
 }
 
-function ThemeCard({ theme }: { theme: { key: string; status: string; headline?: string; signals?: { name: string; value: number | null }[]; series?: { value: number }[] } }) {
+export function ThemeCard({ theme }: { theme: { key: string; status: string; headline?: string; signals?: { name: string; value: number | null }[]; series?: { value: number }[] } }) {
   const { t } = useI18n();
   const seriesVals = (theme.series ?? [])
     .map((s) => s.value)
@@ -221,7 +202,6 @@ function ThemeCard({ theme }: { theme: { key: string; status: string; headline?:
 export function ThemesView() {
   const { t } = useI18n();
   const th = aionis.themes;
-  const themes = th.themes ?? [];
   const ts = aionis.themeSignals;
   const sigs = ts.signals ?? {};
   const sigEntries = Object.values(sigs);
@@ -313,35 +293,6 @@ export function ThemesView() {
           <p className="text-[10px] text-muted-foreground">{t("themes.favored.note")}</p>
         </section>
       ) : null}
-
-      {th.status !== "ok" || themes.length === 0 ? (
-        <Card className="border-amber-500/30 bg-amber-500/5">
-          <CardContent className="p-4 text-sm text-muted-foreground">
-            {t("themes.awaiting")}
-          </CardContent>
-        </Card>
-      ) : (
-        <div className="space-y-6">
-          {LAYER_ORDER.map((layer) => {
-            const layerThemes = themes.filter((theme) =>
-              LAYER_KEYS[layer].includes(theme.key),
-            );
-            if (layerThemes.length === 0) return null;
-            return (
-              <section key={layer} className="space-y-3">
-                <h3 className="text-sm font-semibold tracking-tight text-muted-foreground">
-                  {t(LAYER_SECTION[layer])}
-                </h3>
-                <div className="grid gap-4 md:grid-cols-2">
-                  {layerThemes.map((theme) => (
-                    <ThemeCard key={theme.key} theme={theme} />
-                  ))}
-                </div>
-              </section>
-            );
-          })}
-        </div>
-      )}
 
       <Card className="border-dashed">
         <CardHeader className="border-b">

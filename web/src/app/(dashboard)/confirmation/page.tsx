@@ -5,12 +5,14 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { SmartMoneyView } from "@/components/smart-money/smart-money-view";
 import { InsidersView } from "@/components/insiders/insiders-view";
 import { RedditView } from "@/components/reddit/reddit-view";
+import { ThemeSlice } from "@/components/themes/theme-slice";
 import { useI18n } from "@/i18n/provider";
 
 const hashToTabMap: Record<string, string> = {
   "#smart-money": "smart-money",
   "#insiders": "insiders",
   "#reddit": "reddit",
+  "#news": "news",
 };
 
 const defaultTab = "smart-money";
@@ -52,6 +54,7 @@ export default function ConfirmationPage() {
           <TabsTrigger value="smart-money">{t("nav.smartmoney")}</TabsTrigger>
           <TabsTrigger value="insiders">{t("nav.insiders")}</TabsTrigger>
           <TabsTrigger value="reddit">{t("nav.reddit")}</TabsTrigger>
+          <TabsTrigger value="news">{t("nav.news")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="smart-money">
@@ -62,6 +65,9 @@ export default function ConfirmationPage() {
         </TabsContent>
         <TabsContent value="reddit">
           <RedditView />
+        </TabsContent>
+        <TabsContent value="news">
+          <ThemeSlice keys={["news_sentiment"]} />
         </TabsContent>
       </Tabs>
     </div>
