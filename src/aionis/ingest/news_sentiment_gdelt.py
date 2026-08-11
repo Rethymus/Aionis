@@ -50,7 +50,6 @@ log = structlog.get_logger()
 
 # --- GDELT Doc 2.0 constants -------------------------------------------------
 _GDELT_DOC_URL = "https://api.gdeltproject.org/api/v2/doc/doc"
-_GDELT_MIN_INTERVAL = 5.0  # GDELT demands ≥5s (stricter than project 2s default)
 _USER_AGENT = (
     "Aionis-research/0.1 (point-in-time quant research; contact: aionis@example.com)"
 )
@@ -73,8 +72,6 @@ DEFAULT_COUNTRY = "US"
 # throttle. Incremental daily runs do only 1-4 chunks (recent quarters), so the
 # warm-path cost is minimal.
 _GDELT_MIN_INTERVAL = 15.0
-
-# Module-private policy: ≥15s spacing + bounded retry, GDELT-specific.
 _policy = HttpRequestPolicy(
     spacing=HostSpacingPolicy(min_interval=_GDELT_MIN_INTERVAL),
     retry=RetryPolicy(max_retries=2),
