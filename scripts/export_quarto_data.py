@@ -15,12 +15,19 @@ Usage::
 from __future__ import annotations
 
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 
 import pandas as pd
 
 OUT = Path("quarto-site/data")
 OUT.mkdir(parents=True, exist_ok=True)
+
+
+def _stamp(payload: dict) -> dict:
+    """Inject ISO-UTC snapshot timestamp (PIT honesty — every panel shows as-of)."""
+    payload["snapshot_ts"] = datetime.now(timezone.utc).isoformat()
+    return payload
 
 
 def _load_json(path: str) -> dict | list:
@@ -53,7 +60,7 @@ def export_sigma_survey() -> None:
             "n_series": len(rows),
         },
     }
-    (OUT / "sigma_survey.json").write_text(json.dumps(payload, indent=2, default=str))
+    (OUT / "sigma_survey.json").write_text(json.dumps(_stamp(payload), indent=2, default=str))
 
 
 def export_bps_sweep() -> None:
@@ -85,7 +92,7 @@ def export_power_floor() -> None:
         "verdict": ("power floor binds via ML noise excess (2.0-4.4x pure-noise bound), "
                     "not the pure 1/sqrt(N-1) bound"),
     }
-    (OUT / "power_floor.json").write_text(json.dumps(payload, indent=2))
+    (OUT / "power_floor.json").write_text(json.dumps(_stamp(payload), indent=2))
 
 
 def export_evidence() -> None:

@@ -17,6 +17,7 @@ from __future__ import annotations
 import json
 import os
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 import pandas as pd
@@ -28,6 +29,18 @@ WEB = Path("web/src/data/aionis")
 WEB.mkdir(parents=True, exist_ok=True)
 # Redirect the shared builders' output dir to the terminal data folder.
 eq.OUT = WEB
+
+
+def _stamp(payload: dict) -> dict:
+    """Inject an ISO-UTC snapshot timestamp (PIT honesty on the display layer).
+
+    Owner directive: every terminal panel must show 'as of when' so a visitor
+    can judge freshness. Mutates + returns the payload for chaining. Centralized
+    so all export_* writers carry a consistent ``snapshot_ts`` without per-function
+    drift.
+    """
+    payload["snapshot_ts"] = datetime.now(timezone.utc).isoformat()
+    return payload
 
 
 def _load_ticker_metadata() -> pd.DataFrame:
@@ -250,7 +263,7 @@ def export_sector_breakdown() -> None:
         "least_favored": grouped[-5:][::-1] if len(grouped) >= 5 else grouped[::-1],
         "all_sectors": grouped,
     }
-    (WEB / "sector_breakdown.json").write_text(json.dumps(payload, indent=2, default=str))
+    (WEB / "sector_breakdown.json").write_text(json.dumps(_stamp(payload), indent=2, default=str))
 
 
 def export_picks_backtest() -> None:
@@ -346,7 +359,7 @@ def export_picks_backtest() -> None:
             "avg_excess": round(avg_top - avg_base, 4),
         },
     }
-    (WEB / "picks_backtest.json").write_text(json.dumps(payload, indent=2, default=str))
+    (WEB / "picks_backtest.json").write_text(json.dumps(_stamp(payload), indent=2, default=str))
 
 
 def export_metrics(latest: str, n_total: int) -> None:
@@ -364,7 +377,7 @@ def export_metrics(latest: str, n_total: int) -> None:
         "latest_month": latest,
         "n_picks_total": n_total,
     }
-    (WEB / "metrics.json").write_text(json.dumps(payload, indent=2))
+    (WEB / "metrics.json").write_text(json.dumps(_stamp(payload), indent=2))
 
 
 def export_taco() -> None:
@@ -411,7 +424,7 @@ def export_taco() -> None:
         "latest_vix": vix_series[-1]["vix"] if vix_series else None,
         "latest_date": vix_series[-1]["month"] if vix_series else None,
     }
-    (WEB / "taco.json").write_text(json.dumps(payload, indent=2))
+    (WEB / "taco.json").write_text(json.dumps(_stamp(payload), indent=2))
 
 
 def _theme_mean_signals(df: pd.DataFrame, cols: list[str]) -> list[dict]:
@@ -498,7 +511,7 @@ def _refresh_news_sentiment_only(themes_path: Path, gdelt_cache_path: Path) -> s
         news if t.get("key") == "news_sentiment" else t
         for t in payload.get("themes", [])
     ]
-    themes_path.write_text(json.dumps(payload, indent=2, default=str))
+    themes_path.write_text(json.dumps(_stamp(payload), indent=2, default=str))
     return news["status"]
 
 
@@ -658,7 +671,7 @@ def export_themes() -> None:
         ),
         "themes": [price, macro, fundamentals, news, risk, net_cost, market_structure],
     }
-    (WEB / "themes.json").write_text(json.dumps(payload, indent=2, default=str))
+    (WEB / "themes.json").write_text(json.dumps(_stamp(payload), indent=2, default=str))
 
 
 def export_theme_signals() -> None:
@@ -749,7 +762,7 @@ def export_theme_signals() -> None:
             "latest cross-section; the model and OOS scores are untouched."
         ),
     }
-    (WEB / "theme_signals.json").write_text(json.dumps(payload, indent=2, default=str))
+    (WEB / "theme_signals.json").write_text(json.dumps(_stamp(payload), indent=2, default=str))
 
 
 def export_model_health() -> None:
@@ -880,7 +893,7 @@ def export_cot() -> None:
         "composite_series": composite_series,
         "latest_date": str(df["date"].max())[:10],
     }
-    (WEB / "cot.json").write_text(json.dumps(payload, indent=2, default=str))
+    (WEB / "cot.json").write_text(json.dumps(_stamp(payload), indent=2, default=str))
 
 
 def export_form4() -> None:
@@ -951,7 +964,7 @@ def export_form4() -> None:
         "n_issuers": n_issuers,
         "yearly": yearly,
     }
-    (WEB / "form4.json").write_text(json.dumps(payload, indent=2, default=str))
+    (WEB / "form4.json").write_text(json.dumps(_stamp(payload), indent=2, default=str))
 
 
 def export_pick_conviction() -> None:
@@ -997,7 +1010,7 @@ def export_pick_conviction() -> None:
         "conviction": conviction,
         "trailing_std_mean": round(trailing_mean, 4) if trailing_mean else None,
     }
-    (WEB / "pick_conviction.json").write_text(json.dumps(payload, indent=2))
+    (WEB / "pick_conviction.json").write_text(json.dumps(_stamp(payload), indent=2))
 
 
 def export_smart_money() -> None:
@@ -1095,7 +1108,7 @@ def export_smart_money() -> None:
         "latest_date": rows[0]["date"] if rows else None,
         "yearly": yearly,
     }
-    (WEB / "smart_money.json").write_text(json.dumps(payload, indent=2))
+    (WEB / "smart_money.json").write_text(json.dumps(_stamp(payload), indent=2))
 
 
 def export_reddit_meta() -> None:
@@ -1192,7 +1205,7 @@ def export_reddit_meta() -> None:
         "picks": picks,
         "pressure": pressure,
     }
-    (WEB / "reddit.json").write_text(json.dumps(payload, indent=2, default=str))
+    (WEB / "reddit.json").write_text(json.dumps(_stamp(payload), indent=2, default=str))
 
 
 def export_market_context() -> None:
@@ -1298,7 +1311,7 @@ def export_market_context() -> None:
         "n_months": len(market_series),
         "date_range": [market_series[0]["month"], market_series[-1]["month"]] if market_series else [],
     }
-    (WEB / "market_context.json").write_text(json.dumps(payload, indent=2, default=str))
+    (WEB / "market_context.json").write_text(json.dumps(_stamp(payload), indent=2, default=str))
 
 
 def _alfred_latest_series(path: Path) -> pd.DataFrame:
@@ -1420,7 +1433,7 @@ def export_macro_drivers() -> None:
             "functions of the President↔Fed game. NOT a research claim."
         ),
     }
-    (WEB / "macro_drivers.json").write_text(json.dumps(payload, indent=2))
+    (WEB / "macro_drivers.json").write_text(json.dumps(_stamp(payload), indent=2))
 
 
 def _safe_export(name: str, fn, /, *args, **kwargs):
