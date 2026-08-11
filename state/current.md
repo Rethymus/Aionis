@@ -1,5 +1,15 @@
 # state/current.md — read first each session
 
+- **active (2026-08-12) 续⑦（七主题 widget 视觉重设计 + 全视图视觉排查）：** 业主指"原七主题所有内容 UI 需重设计，当前位置已不适配；用视觉能力排查所有内容查类似问题"。**视觉排查（puppeteer 截图 + DOM 文本提取；zai/4_5v 视觉模型服务 401/auth 不可用，改用 DOM 精确文本——更可靠）+ 源码全审计**。
+  **根因（业主正确）**：`themes-funnel.tsx` 组件本身仍是 **funnel 范式**（LAYERS 顺流而下 L0→L4 + flowKey 下行箭头 + inPanel/hub 管道机制），与它新处的 α 论证链位置不适配。dict **值** 已 α 化（B1），但 **组件概念 + key 命名空间** 仍 funnel。
+  **重设计交付（`2045a32`，tsc+build 双绿，deploy `31541668986` success）**：
+  - 组件 `themes-funnel.tsx` → **`argument-chain-diagram.tsx`**（`ThemesFunnel` → `ArgumentChainDiagram`）；`LAYERS` → `SEGMENTS`（context/evidence/estimand/validity/verdict）。
+  - **ECD warrants 替代 data-flow**：管道式 `flowKey`（"证据喂入→..."）→ 逻辑担保 `warrantKey`（**∴** 语句，"∴ 因子作为可观测物被测度，测度结果即估计量"等 4 条 zh+en）——每段为何**蕴含**下一段而非"数据往下流"。箭头 ArrowDown→ArrowRight（逻辑蕴含而非管道）。
+  - dict key 命名空间 `themes.funnel.*` → `argument.chain.*`（l0..l4 → 语义段名）zh+en 全迁移；8 flow 值改 warrant 语句。
+  **全视图视觉排查结论（3 页 DOM + 源码全扫）**：`/themes` 5 段 + 4 ∴ warrant 实显；`/regime` 面包屑高亮 语境 + provenance 2026-08-04 实显；`/track` 内 view role = "效度 · 模型概率可信吗？"（α 词）。**源码全扫 funnel/七主题/闭环/analyst-workflow 残留 = 0 真命中**（唯一 "佐证/定调" 命中是 `独立佐证` 子串 + `三力定调` 动词，均正确）。**系统统一**：七主题 widget 已从 funnel 升为论证链，与 SegmentHeader/Overview 同构。
+  **边界**：纯 web/src/ 展示层；0 ledger/frozen/config/data/OOS 改动。**修**：根 `.next/` 加 .gitignore（stray 构建产物，防再 flag）。
+  **plateau**：骨架+旗舰+每页脊柱+widget 论证链化+provenance 角标 = 无不适配残面。
+
 - **active (2026-08-12) 续⑥（终端 IA 优化至 plateau：Overview 论证面 + SegmentHeader 脊柱 + provenance 角标，5 commit 全部署验）:** 业主授权"创建最有价值内容直至不可再优化"。在范式 α 骨架（续⑤）之上做 display-layer 深优化，4 commit（tsc+build 双绿，已 push `5a40562`，deploy `31539937611` success 验）：
   ① **Overview 重建为单一论证面**（`9688069`）：5 段拼贴（Hero/KPI/Ticker/Picks/Chain）→ **VerdictAnchor 锚定**（可证伪主张领头，IC/CI/p/n 为其背书，NULL 框定为预期结果非失败）+ ArgumentChain（语境→证据→效度→裁决 4 段，每段带代表 stat + 内嵌 mini picks/佐证）+ 佐证 ribbon（聪明钱/拥挤度，非第 5 列）+ GuardBand。12 新 overview.* i18n key（zh+en），hero 改论证链文案。
   ② **SegmentHeader 复用组件**（`97c0409`）：5 hub 页（regime/picks/confirmation/track/discipline）重复 header → 1 组件，渲染**脊柱面包屑**（语境 › 证据 › 效度 › 裁决，当前段高亮 + 尾部守卫 chip）。每页都宣告自己在论证链的位置。
