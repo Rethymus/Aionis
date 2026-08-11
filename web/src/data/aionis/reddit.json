@@ -10,7 +10,7 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-08-11T12:19:30+00:00",
+  "latest_snapshot_ts": "2026-08-11T13:45:34+00:00",
   "n_snapshots": 1,
   "transport": "rss",
   "score_available": false,
@@ -28,6 +28,13 @@
       "mentions": 1,
       "sentiment": 0.872,
       "bull_ratio": 1.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "META",
+      "mentions": 1,
+      "sentiment": -0.076,
+      "bull_ratio": null,
       "score_sum": 0
     }
   ],
