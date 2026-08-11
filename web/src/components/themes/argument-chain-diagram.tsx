@@ -119,7 +119,7 @@ export function ArgumentChainDiagram() {
                       </Badge>
                     ) : null}
                   </div>
-                  <p className="truncate text-[11px] opacity-80">
+                  <p className="line-clamp-2 text-[11px] opacity-80">
                     {t(seg.descKey)}
                   </p>
                 </div>

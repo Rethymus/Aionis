@@ -32,7 +32,7 @@ export default function DashboardLayout({
             <ThemeToggle />
           </div>
         </header>
-        <main className="flex flex-1 flex-col">{children}</main>
+        <main className="flex min-w-0 flex-1 flex-col overflow-hidden">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );

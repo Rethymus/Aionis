@@ -228,7 +228,7 @@ function ArgumentChain() {
         <ChainSegment
           href="/track#evidence"
           icon={<GavelIcon className="size-3.5" />}
-          titleKey="evidence.role"
+          titleKey="overview.chain.verdict.label"
           stat={m.verdict}
           statTone="amber"
           detail={<p className="text-[11px] leading-snug text-muted-foreground">{t("overview.chain.verdict.detail")}</p>}

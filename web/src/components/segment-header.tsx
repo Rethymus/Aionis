@@ -71,15 +71,19 @@ export function SegmentHeader({
         })}
         {/* Provenance chip — the page's own freshness, inline with the spine. */}
         {asOf ? <ProvenanceBadge ts={asOf} className="ml-1" /> : null}
-        {/* Guard spans the whole chain — shown as a trailing chip on every page. */}
-        {segment !== "guard" ? (
-          <Link
-            href="/discipline"
-            className="ml-auto inline-flex items-center gap-1 rounded border border-dashed border-muted-foreground/30 px-1.5 py-0.5 text-muted-foreground/60 hover:text-foreground"
-          >
-            {t("nav.group.guard")}
-          </Link>
-        ) : null}
+        {/* Guard spans the whole chain — shown as a trailing chip; highlighted
+            when the page IS the guard segment (so /discipline shows its place). */}
+        <Link
+          href="/discipline"
+          className={cn(
+            "ml-auto inline-flex items-center gap-1 rounded border px-1.5 py-0.5",
+            segment === "guard"
+              ? "border-primary/40 bg-primary/10 font-medium text-primary"
+              : "border-dashed border-muted-foreground/30 text-muted-foreground/60 hover:text-foreground",
+          )}
+        >
+          {t("nav.group.guard")}
+        </Link>
       </nav>
       <p className="max-w-3xl text-sm text-muted-foreground">{t(introKey)}</p>
     </header>
