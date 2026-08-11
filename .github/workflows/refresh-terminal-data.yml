@@ -127,7 +127,10 @@ jobs:
       - name: Commit refreshed data
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore(data): daily terminal refresh [skip ci]"
+          # NO [skip ci]: this push MUST trigger deploy-pages.yml so the fresh
+          # data reaches the deployed terminal. With [skip ci], the data landed
+          # in the repo but never deployed — root cause of "数据仍没有体现".
+          commit_message: "chore(data): daily terminal refresh"
           file_pattern: "web/src/data/aionis/*.json"
           commit_user_name: "aionis-bot"
           commit_user_email: "actions@github.com"
