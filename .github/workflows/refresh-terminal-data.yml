@@ -28,7 +28,7 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 150  # Form 4 cold pull (5 issuers, full history, polite ≥2s)
+    timeout-minutes: 90  # Form 4 is step-capped (below); the rest fits in ~15min
     # exceeded 75min after several cancelled runs left no data-cache. 150 lets
     # ONE cold pull complete → cache saves → subsequent runs are fast deltas.
     # The durable fix (form4 incremental: fetch only filings since last cached
@@ -83,6 +83,9 @@ jobs:
 
       - name: Fetch fresh insider Form 4 (SEC EDGAR, daily filings)
         run: uv run python scripts/form4_fetch.py
+        timeout-minutes: 20  # step cap: Form 4 must NOT block downstream steps
+        # (GDELT/reddit/export). With per-issuer checkpointing (05ab7b1), Form 4
+        # accumulates across runs; 20min/run → converges over ~5 daily runs.
         continue-on-error: true
 
       - name: Fetch recent SC 13D stakes (EDGAR daily index, unfreezes past EFTS cutoff)
