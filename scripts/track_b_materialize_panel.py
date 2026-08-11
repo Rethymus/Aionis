@@ -19,6 +19,7 @@ Output:
 from __future__ import annotations
 
 import json
+from pathlib import Path
 
 import pandas as pd
 import structlog
@@ -42,8 +43,23 @@ log = structlog.get_logger()
 # Horizon from pre-registration (sessions)
 _HORIZON = 21
 
-# Output path
-_OUTPUT_PATH = settings.data_dir / "cache" / "track_b_panel.parquet"
+# Output path — defaults to the FROZEN research panel. `--display` (set in main)
+# switches both input prices + output to the display-only panel, which is rebuilt
+# daily in CI with prices through TODAY and feeds terminal themes with fresh
+# as_of dates. The display panel NEVER enters aionis.eval / the research pipeline.
+_DISPLAY = False
+_PRICES_NAME = "phase_b_prices.parquet"
+_PANEL_NAME = "track_b_panel.parquet"
+
+
+def _prices_path() -> Path:
+    name = "phase_b_prices_display.parquet" if _DISPLAY else _PRICES_NAME
+    return settings.data_dir / "cache" / name
+
+
+def _output_path() -> Path:
+    name = "display_panel.parquet" if _DISPLAY else _PANEL_NAME
+    return settings.data_dir / "cache" / name
 
 
 def _load_prices() -> tuple[pd.DataFrame, list[str]]:
@@ -51,7 +67,7 @@ def _load_prices() -> tuple[pd.DataFrame, list[str]]:
 
     Wide format [dates x tickers] → long [date, ticker, close].
     """
-    path = settings.data_dir / "cache" / "phase_b_prices.parquet"
+    path = _prices_path()
     if not path.exists():
         raise FileNotFoundError(f"Prices cache not found: {path}")
 
@@ -260,7 +276,24 @@ def _compute_coverage(panel: pd.DataFrame) -> dict[str, float]:
 
 def main() -> None:
     """Main materialization pipeline."""
-    log.info("track_b_panel_materialization_start")
+    import argparse
+
+    global _DISPLAY
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--display",
+        action="store_true",
+        help=(
+            "Display-only mode: read phase_b_prices_display.parquet (prices through "
+            "TODAY) and write display_panel.parquet. Does NOT touch the frozen "
+            "research panel (track_b_panel.parquet). The display panel feeds "
+            "terminal themes with fresh as_of dates; it never enters aionis.eval."
+        ),
+    )
+    args = parser.parse_args()
+    _DISPLAY = args.display
+    mode_label = "DISPLAY" if _DISPLAY else "RESEARCH"
+    log.info("track_b_panel_materialization_start", mode=mode_label)
 
     # 1. Load prices
     prices_long, tickers = _load_prices()
@@ -314,7 +347,7 @@ def main() -> None:
 
     # 8. Compute price features
     # Convert prices to wide format for compute_price_features
-    prices_wide = pd.read_parquet(settings.data_dir / "cache" / "phase_b_prices.parquet")
+    prices_wide = pd.read_parquet(_prices_path())
 
     # Load volume and SPY benchmark if available
     volume_wide = _load_volume(tickers)
@@ -395,14 +428,15 @@ def main() -> None:
     panel_2016 = panel[panel["date"] >= pd.Timestamp("2016-01-01")].copy()
 
     # 11. Persist
-    panel_2016.to_parquet(_OUTPUT_PATH, index=False)
+    out_path = _output_path()
+    panel_2016.to_parquet(out_path, index=False)
 
     # 12. Report
     coverage = _compute_coverage(panel_2016)
 
     log.info(
         "track_b_panel_materialization_complete",
-        output=str(_OUTPUT_PATH),
+        output=str(out_path),
         shape=panel_2016.shape,
         date_min=str(panel_2016["date"].min()),
         date_max=str(panel_2016["date"].max()),
@@ -420,9 +454,9 @@ def main() -> None:
 
     # Console report
     print("\n" + "=" * 60)
-    print("Track B Panel Materialization Report")
+    print(f"Track B Panel Materialization Report [{mode_label}]")
     print("=" * 60)
-    print(f"\nOutput: {_OUTPUT_PATH}")
+    print(f"\nOutput: {out_path}")
     print(f"Shape: {panel_2016.shape[0]} rows × {panel_2016.shape[1]} columns")
     print(f"Date range: {panel_2016['date'].min()} to {panel_2016['date'].max()}")
     print(f"Unique tickers: {panel_2016['ticker'].nunique()}")

@@ -511,10 +511,16 @@ def export_themes() -> None:
     shared PIT panel (+ the Track-C macro-regime composite + the bps net-cost
     sweep). No new model fit, no ledger, no frozen-surface touch.
     """
-    panel_path = Path("data/cache/track_b_panel.parquet")
+    # Prefer the display panel (rebuilt daily in CI via track_b_materialize_panel
+    # --display, prices through TODAY → fresh as_of); fall back to the frozen
+    # research panel (track_b_panel.parquet) for local runs. Either is display-only
+    # here — export_themes never touches aionis.eval.
+    display_panel = Path("data/cache/display_panel.parquet")
+    frozen_panel = Path("data/cache/track_b_panel.parquet")
+    panel_path = display_panel if display_panel.exists() else frozen_panel
     if not panel_path.exists():
-        # CI fresh checkout: the shared PIT panel is absent. The panel-dependent
-        # themes cannot rebuild — preserve their last-committed values. BUT
+        # CI fresh checkout: BOTH panels absent. The panel-dependent themes
+        # cannot rebuild — preserve their last-committed values. BUT
         # news_sentiment is panel-INDEPENDENT (GDELT cache only), so refresh it
         # in-place via the helper. Previously the early-return gated news_sentiment
         # behind the panel too — freezing it at 'forward_only' even after the GDELT

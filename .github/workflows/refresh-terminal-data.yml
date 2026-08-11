@@ -114,6 +114,28 @@ jobs:
         # timeout resumes on the next run without re-fetching cached months.
         continue-on-error: true  # GDELT 429/outage keeps the prior cache
 
+      - name: Rebuild display panel (fresh as_of for terminal themes, option B1)
+        # Owner-approved option B1: rebuild a DISPLAY-ONLY panel daily so the
+        # terminal's panel-dependent themes (price/fundamentals/risk/market_structure/
+        # macro) refresh with real data + as_of timestamps — instead of freezing at
+        # the 2026-06-30 research cutoff. The display panel is SEPARATE from the
+        # frozen research panel (track_b_panel.parquet): track_b_materialize_panel
+        # --display writes display_panel.parquet, never touching the research
+        # surface. phase_b_fetch --display writes phase_b_prices_display.parquet
+        # (prices through TODAY) without touching the frozen prices. Display-only —
+        # neither enters aionis.eval / the research pipeline / ledger / OOS.
+        run: |
+          set +e
+          uv run python scripts/fetch_macro_display.py --force >/dev/null 2>&1 || true
+          # CPIAUCSL + PAYEMS are panel inputs (not in DISPLAY_SERIES) — fetch inline.
+          uv run python -c "from aionis.ingest.macro_display import fetch_display_series; from aionis.config import settings; from pathlib import Path; c=Path('data/cache'); [fetch_display_series(settings.fred_api_key, c, s, force=True) for s in ('CPIAUCSL','PAYEMS')]" 2>/dev/null || true
+          uv run python scripts/phase_b_fetch.py --display
+          uv run python scripts/track_b_materialize_panel.py --display
+        timeout-minutes: 30  # cold price pull = ~588 tickers × Tiingo/Alpaca polite;
+        # incremental cache (per-ticker) means warm runs are minutes. Same
+        # continue-on-error + step-cap insurance as Form 4/13D/GDELT.
+        continue-on-error: true  # Tiingo/Alpaca/SEC outage keeps the prior display panel
+
       - name: Rebuild ticker metadata (names + sectors)
         run: uv run python scripts/build_ticker_metadata.py --no-cache
         continue-on-error: true  # network may fail; old cache still works
