@@ -60,3 +60,6 @@ htmlcov/
 
 # --- OMC operational state (.omc/skills/** is the intentional committable exception) ---
 .omc/
+
+# Next.js build output (stray root builds)
+.next/

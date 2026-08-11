@@ -11,7 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
-import { ThemesFunnel } from "./themes-funnel";
+import { ArgumentChainDiagram } from "./argument-chain-diagram";
 import { SegmentHeader } from "@/components/segment-header";
 import { ShieldCheckIcon } from "lucide-react";
 
@@ -224,7 +224,7 @@ export function ThemesView() {
         </p>
       </header>
 
-      <ThemesFunnel />
+      <ArgumentChainDiagram />
 
       {/* Operationalized signals: direction × strength × favored (the actionable read) */}
       {ts.status === "ok" && sigEntries.length > 0 ? (
