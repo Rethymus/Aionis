@@ -445,7 +445,7 @@ def _build_news_theme(cache_path: Path) -> dict:
     honest: dict = {
         "key": "news_sentiment",
         "status": "forward_only",
-        "headline": "新闻情绪·建设中：LLM 抽取池就绪，无许可历史语料（仅前向采集）",
+        "headline": "新闻情绪·建设中：GDELT 市场新闻语调（ECON_STOCKMARKET，2017-04 起）回填进行中，本快照暂无数据",
         "signals": [],
         "series": [],
     }
