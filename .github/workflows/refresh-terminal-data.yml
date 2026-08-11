@@ -109,6 +109,9 @@ jobs:
 
       - name: Fetch GDELT news sentiment (news_sentiment theme, incremental)
         run: uv run python scripts/news_sentiment_gdelt_fetch.py
+        timeout-minutes: 20  # step cap: cold pull = ~38 quarterly chunks × ≥15s ≈
+        # 12-15min; same insurance as Form 4/13D caps. Incremental cache means a
+        # timeout resumes on the next run without re-fetching cached months.
         continue-on-error: true  # GDELT 429/outage keeps the prior cache
 
       - name: Rebuild ticker metadata (names + sectors)

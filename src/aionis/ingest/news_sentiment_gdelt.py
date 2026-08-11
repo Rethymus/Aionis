@@ -10,10 +10,9 @@ US English-language market/economy news into a **monthly** tone + volume series.
     the library's HTTP path — it fires bare ``requests.get`` with no host
     spacing, which violates GDELT's ≥5s rule.
   * HTTP is routed through the project's ``HttpRequestPolicy`` with
-    ``HostSpacingPolicy(min_interval=5.0)`` — GDELT demands ≥5s between requests
-    (stricter than the project's 2s default; the 2s floor is enforced in
-    ``HostSpacingPolicy``). Source: GDELT API responds with a politeness banner /
-    HTTP 429 under that threshold.
+    ``HostSpacingPolicy(min_interval=15.0)`` — GDELT's documented minimum is
+    ≥5s, but sustained cold pulls (dozens of quarterly chunks) at 5s triggered
+    HTTP 429 on the 2026-08-11 CI run; 15s clears the abuse throttle.
 
 **Honest scope (NOT a research claim):**
   * GDELT tone is a **general-purpose lexicon** score (not finance-domain); it
@@ -58,13 +57,24 @@ _USER_AGENT = (
 # GDELT Doc 2.0 API debuted 2017-04 — honest coverage start.
 DOC_API_EARLIEST = date(2017, 4, 1)
 
-# Default query: US English-language economic/market news. ``ECON_MKT`` is the
-# GDELT GKG "market" theme. If it ever yields empty (theme code retired/changed),
-# fix is a one-line change to this constant — no runtime fallback, per KISS.
-DEFAULT_THEME = "ECON_MKT"
+# Default query: US English-language stock-market news. ``ECON_STOCKMARKET`` is
+# the valid GDELT GKG theme code ("Any discussion of a stockmarket, NYSE, FTSE,
+# etc." — per the official GDELT GKG Category List). The earlier ``ECON_MKT``
+# was NOT a valid code → matched 0 articles → empty tone series (root cause of
+# the 2026-08-11 CI run returning n_months=0). If this theme ever yields empty
+# again (code retired/changed), fix is a one-line change here — no runtime
+# fallback, per KISS.
+DEFAULT_THEME = "ECON_STOCKMARKET"
 DEFAULT_COUNTRY = "US"
 
-# Module-private policy: ≥5s spacing + bounded retry, GDELT-specific.
+# Module-private policy: ≥15s spacing + bounded retry, GDELT-specific. GDELT's
+# documented minimum is ≥5s, but sustained cold pulls (38 quarterly chunks at
+# 5s) triggered HTTP 429 on the 2026-08-11 CI cold run — 15s clears the abuse
+# throttle. Incremental daily runs do only 1-4 chunks (recent quarters), so the
+# warm-path cost is minimal.
+_GDELT_MIN_INTERVAL = 15.0
+
+# Module-private policy: ≥15s spacing + bounded retry, GDELT-specific.
 _policy = HttpRequestPolicy(
     spacing=HostSpacingPolicy(min_interval=_GDELT_MIN_INTERVAL),
     retry=RetryPolicy(max_retries=2),
@@ -212,8 +222,8 @@ def fetch_tone_series(start: date, end: date) -> list[dict]:
 
     Resilient: per-chunk failures are logged + skipped (partial series > crash),
     mirroring the per-day-403 resilience in ``stakes_13d_daily_index``. One
-    query path (theme:ECON_MKT) — no runtime fallback; a broken theme code is a
-    one-line ``DEFAULT_THEME`` fix, not a backup layer.
+    query path (theme:ECON_STOCKMARKET) — no runtime fallback; a broken theme
+    code is a one-line ``DEFAULT_THEME`` fix, not a backup layer.
 
     Args:
         start/end: inclusive start, exclusive end (date window to cover).
@@ -316,7 +326,7 @@ def collect_news_sentiment(
     snapshot_ts = datetime.now(timezone.utc).isoformat()
 
     snapshot = {
-        "source": "GDELT Doc 2.0 timelinetone (theme:ECON_MKT, country:US)",
+        "source": "GDELT Doc 2.0 timelinetone (theme:ECON_STOCKMARKET, country:US)",
         "query": f"theme:{DEFAULT_THEME} country:{DEFAULT_COUNTRY}",
         "coverage_start": merged[0]["month"] if merged else None,
         "coverage_end": merged[-1]["month"] if merged else None,

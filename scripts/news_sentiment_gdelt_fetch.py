@@ -1,17 +1,18 @@
 """GDELT news-sentiment fetch for the ``news_sentiment`` theme (display-only).
 
 Incremental fetch of GDELT Doc 2.0 ``timelinetone`` → monthly aggregate tone +
-volume for US market news (theme:ECON_MKT). Writes ``data/cache/
+volume for US stock-market news (theme:ECON_STOCKMARKET). Writes ``data/cache/
 gdelt_news_sentiment.json``, which ``export_themes`` consumes to populate the
 ``news_sentiment`` theme.
 
-Cold start: backfills 2017-04 → today in quarterly chunks (one-time, ~36 queries
-× ≥5s ≈ 3 min). Subsequent runs: fetch only from the cached last month + 1
-(typically one chunk, ~5s) — daily-CI-cheap by design.
+Cold start: backfills 2017-04 → today in quarterly chunks (one-time, ~36
+queries × ≥15s ≈ 9 min). Subsequent runs: fetch only from the cached last
+month + 1 (typically one chunk, ~15s) — daily-CI-cheap by design.
 
 Display-only, exploratory. Does NOT enter the research pipeline (no lookahead
-leakage). Polite: GDELT's ≥5s host-spacing rule is enforced by
-``HostSpacingPolicy(min_interval=5.0)`` in the ingest module.
+leakage). Polite: 15s host spacing (GDELT's documented minimum is ≥5s, but
+sustained cold pulls at 5s triggered HTTP 429; 15s clears the throttle),
+enforced by ``HostSpacingPolicy(min_interval=15.0)`` in the ingest module.
 
 Usage::
 
@@ -41,7 +42,7 @@ def main() -> None:
     else:
         print(
             f"[news-gdelt] WARNING: empty series (GDELT returned no tone rows "
-            f"from {DOC_API_EARLIEST}); theme:ECON_MKT may need revisiting",
+            f"from {DOC_API_EARLIEST}); theme:ECON_STOCKMARKET may need revisiting",
             flush=True,
         )
     print("[news-gdelt] Complete.", flush=True)
