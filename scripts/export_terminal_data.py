@@ -446,6 +446,7 @@ def _build_news_theme(cache_path: Path) -> dict:
         "key": "news_sentiment",
         "status": "forward_only",
         "headline": "新闻情绪·建设中：GDELT 市场新闻语调（ECON_STOCKMARKET，2017-04 起）回填进行中，本快照暂无数据",
+        "as_of": None,
         "signals": [],
         "series": [],
     }
@@ -460,6 +461,7 @@ def _build_news_theme(cache_path: Path) -> dict:
         return {
             "key": "news_sentiment",
             "status": "live",
+            "as_of": gseries[-1]["month"],  # latest GDELT month — PIT honesty
             "headline": (
                 f"GDELT 通用语调（US 市场新闻，{gseries[0]['month']}→"
                 f"{gseries[-1]['month']}）；通用词典非金融域——"
@@ -547,11 +549,13 @@ def export_themes() -> None:
         panel = compute_qlib_close_factors(panel)
     as_of = panel["date"].max()
     latest = panel[panel["date"] == as_of]
+    panel_as_of = str(as_of.date())  # per-theme PIT timestamp (honesty: show "data as of")
 
     # ① Price/market
     price = {
         "key": "price",
         "status": "live",
+        "as_of": panel_as_of,
         "headline": "21d momentum + 63d vol + 252d β + 21d RSI(上行广度) + 63d timetohigh(距高点) (cross-sectional mean)",
         "signals": _theme_mean_signals(
             latest,
@@ -560,12 +564,13 @@ def export_themes() -> None:
         "series": _theme_monthly_series(panel, "momentum_21d", 12),
     }
     # ② Macro (Track-C macro-regime composite from regime_macro.parquet)
-    macro = {"key": "macro", "status": "live", "signals": [], "series": []}
+    macro = {"key": "macro", "status": "live", "as_of": None, "signals": [], "series": []}
     macro_path = Path("data/cache/regime_macro.parquet")
     if macro_path.exists():
         mr = pd.read_parquet(macro_path)
         mr["date"] = pd.to_datetime(mr["date"])
         if "macro_regime" in mr.columns and len(mr):
+            macro["as_of"] = str(mr["date"].max().date())
             macro["headline"] = "macro-regime composite z (VIX+credit+term+DFF surprise)"
             macro["signals"] = [{"name": "macro_regime", "value": round(float(mr["macro_regime"].iloc[-1]), 4)}]
             macro["series"] = [
@@ -576,6 +581,7 @@ def export_themes() -> None:
     fundamentals = {
         "key": "fundamentals",
         "status": "live",
+        "as_of": panel_as_of,
         "headline": "ROE / margin / revenue growth / leverage (cross-sectional mean)",
         "signals": _theme_mean_signals(latest, ["roe", "profit_margin", "revenue_growth_12m", "leverage"]),
         "series": _theme_monthly_series(panel, "roe", 12),
@@ -598,6 +604,7 @@ def export_themes() -> None:
     risk = {
         "key": "risk",
         "status": "live",
+        "as_of": panel_as_of,
         "headline": "下行β + 特质波动 + 偏度 + 最大单日回撤（横截面均值）",
         "signals": _theme_mean_signals(
             risk_latest,
@@ -606,7 +613,7 @@ def export_themes() -> None:
         "series": _theme_monthly_series(risk_panel, "downside_beta", 12),
     }
     # ⑥ Net cost — partial; surface the bps sweep net Sharpe (already exported)
-    net_cost = {"key": "net_cost", "status": "partial", "signals": [], "series": []}
+    net_cost = {"key": "net_cost", "status": "partial", "as_of": None, "signals": [], "series": []}
     bps_path = WEB / "bps_sweep.json"
     if bps_path.exists():
         try:
@@ -626,6 +633,7 @@ def export_themes() -> None:
     market_structure = {
         "key": "market_structure",
         "status": "live",
+        "as_of": panel_as_of,
         "headline": "Amihud illiquidity + 252d β (cross-sectional mean)",
         "signals": _theme_mean_signals(latest, ["amihud_illiquidity_21d", "beta_252d"]),
         "series": _theme_monthly_series(panel, "amihud_illiquidity_21d", 12),

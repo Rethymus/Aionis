@@ -155,7 +155,7 @@ function Sparkline({ data, className }: { data: number[]; className?: string }) 
   );
 }
 
-export function ThemeCard({ theme }: { theme: { key: string; status: string; headline?: string; signals?: { name: string; value: number | null }[]; series?: { value: number }[] } }) {
+export function ThemeCard({ theme }: { theme: { key: string; status: string; as_of?: string | null; headline?: string; signals?: { name: string; value: number | null }[]; series?: { value: number }[] } }) {
   const { t } = useI18n();
   const seriesVals = (theme.series ?? [])
     .map((s) => s.value)
@@ -173,6 +173,11 @@ export function ThemeCard({ theme }: { theme: { key: string; status: string; hea
           </Badge>
         </CardTitle>
         {theme.headline ? <CardDescription>{theme.headline}</CardDescription> : null}
+        {theme.as_of ? (
+          <p className="font-mono text-[10px] text-muted-foreground">
+            {t("themes.as_of")} {theme.as_of}
+          </p>
+        ) : null}
       </CardHeader>
       <CardContent className="p-4">
         {(theme.signals ?? []).length > 0 ? (
