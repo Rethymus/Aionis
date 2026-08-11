@@ -1,10 +1,12 @@
-# 纪律化自适应 A+B 合题：深度证据补强（Step 4 prep）
+# 纪律化自适应 A+B 合题：深度证据补强（retrospective + forward-looking）
 
-**状态**: PROPOSED / 研究（未冻结、未决策）。为业主 Step 4（自适应 vs 静态两尾预注册）决策准备的证据补强。
+**状态**: 研究（未冻结、非决策）。
 **日期**: 2026-08-11
 **方法**: 主会话 WebSearch（subagent web-tool 路径本日因 GLM [1210] 失败，改主会话执行）。引用真实可验证 URL；深度受限处标注。
 
-> 续 `docs/adaptive-design-research.md`（A+B 合题）+ `docs/qlib-reuse-audit.md`。本 doc 不重复既有内容，只补外部证据 + 明确 Step 4 决策门。
+> **重要订正（2026-08-11 写后核对 ledger 时发现）**: 撰写时我误以为 "Step 4（自适应预注册）仍是 owner-gated pending"。**实际不是**——Track Adaptive（自适应 vs 冻结基线两尾预注册）已 `config_committed` 三次（#51 monthly-A 作废 → #52 amend1 weekly① → b7621e6b amend2）并于 **2026-08-09 03:01 UTC 跑完首次 OOS**，verdict = **NULL**（IC_diff −0.0037，p=0.26，CI 跨零；adaptive 周扩窗重训略**差于**真·冻结基线；符合 power floor + GKX 更新频率非主导性预期；`state/current.md` 记为 "Track B #54"）。故本文的"Step 4 决策建议"应读作**事后回顾 + 前瞻**，非 pending 决策。
+
+> 续 `docs/adaptive-design-research.md`（A+B 合题）+ `docs/qlib-reuse-audit.md` + `docs/track-adaptive-preregistration.md`（FROZEN + 已出 null 结果）。本 doc 不重复既有内容，只补外部证据 + 复盘 null 的可信度 + 前瞻未来自适应变体。
 
 ---
 
@@ -70,18 +72,32 @@ WebSearch 检索 "Romano-Wolf step-down × adaptive design × rolling recalibrat
 
 ---
 
-## ⑤ Step 4 决策建议
+## ⑤ 复盘 Track Adaptive null + 前瞻
 
-**判决**: Step 4 自适应主张**证据上有支撑**（文献弱-中一致支持 rolling 优于静态），**但统计有效性有一未开垦门**（Romano-Wolf × adaptive 无 landmark paper，②）。
+### 5.1 null verdict 的可信度（不被 Romano-Wolf × adaptive 缺口削弱）
 
-**推荐**（待业主裁）:
-- **A（推荐）**: Step 4 可行，预注册采用 ②路径 A（保守，把重校点计入 multiplicity 家族）+ ④全部 6 条结构判据。预期仍是 null-favored（power 因家族膨胀下降 → 更难达 significance → 与 Aionis 的 null-发表定位一致）。贡献 = null + 纪律 + "自适应在反泄漏下也未必破 null"的本方法学负面证据。
-- **B**: 若业主愿承担方法学论证成本，走 ②路径 B（把 adaptive×RW 当贡献点）——更高 ceiling，更长论证链。
-- **C（不推荐）**: 不预声明 multiplicity 处理 → 模糊地带 → 退化为 rerun-to-significance 嫌疑。
+Track Adaptive 已出 **null**（IC_diff −0.0037，p=0.26，b7621e6b，2026-08-09）。关键统计直觉：
 
-**与业主既定 framing 的一致性**: 业主已定帧（memory `aionis-publication-framing-option-a`）= null + 纪律 + power-limit。Step 4 路径 A **完全契合**（null 预期 + 纪律强化 + power-limit 在家族膨胀下更凸显）。路径 B 是 framing(a) 的潜在升级，但非必须。
+- **多重检验校正保护的是"阳性"判定，不保护"阴性"**。一个 null 结果（CI 跨零）**不会**因为"少做了某一种校正"而变得不可信——校正只会让阳性更难通过（更严），从不让 null 变成假 null。
+- 因此：Track Adaptive 的 frozen config §8 只用 DSR/PBO（未显式加 Romano-Wolf step-down）这一"缺口"**不影响 null verdict 的有效性**。即使补上 Romano-Wolf，IC_diff −0.0037 + p=0.26 仍是 null（Romano-Wolf 只会把 p 推得更大，verdict 不变）。
+- **结论**: Track Adaptive 的 null **稳健**——与 ① 节文献共识（rolling 重校 OOS 不优于静态）一致，与 GKX 2020 "更新频率非主导" 一致，与 Aionis power floor 一致。这是**第三条独立 null**（Track C climax #49 + Track B #54/track-adaptive + 此处的文献对照），相互强化。
 
-**下一步业主门**: 业主裁 A/B/C。若 A，则起草 Step 4 预注册（②路径 A + ④6 条）→ 冻结 config sha256 → 才能跑任何真实数据。
+### 5.2 缺口的前瞻价值（仅当未来出现阳性）
+
+② 节的"Romano-Wolf × adaptive 未开垦"只在**未来某个自适应变体出现阳性 IC_diff** 时才成为风险——那时需回答"该阳性在多大 trial 家族下仍显著？" Track Adaptive 用 DSR(1) + PBO 做了第一层（b7621e6b result 含 `dsr_n1` 字段）；若未来 n_trials > 1 的自适应实验出现阳性，应在 analysis 时**追加 Romano-Wolf step-down**（家族 = 所有 trial 的 IC_diff 检验），而非事后改 frozen config。
+
+### 5.3 给未来自适应线的方法学备忘（非 pending 决策）
+
+若业主未来授权**新**的自适应研究线（如 online-GBM 变体、不同 cadence、不同 universe），pre-reg 应：
+- 显式声明 multiplicity 家族定义（每个 trial × 每个 cadence 变体 = 家族成员）+ 校正方法（建议 DSR **+** Romano-Wolf 双层，因缺口存在）。
+- 预冻结 `n_trials` 上限。
+- 两尾 + HAC + H6 不变。
+
+**这不是对 Track Adaptive 的事后修改**（它已 null，不可动），而是对未来同类线的 pre-reg 模板。
+
+### 5.4 与业主既定 framing 的一致性
+
+Track Adaptive null 完全契合 `aionis-publication-framing-option-a`（null + 纪律 + power-limit）。它额外贡献一条：**"更新机制本身也不破 null"**——强化（非削弱）power-floor 结论。业主无需做新决策；此处的 framing 是确认性的。
 
 ---
 
