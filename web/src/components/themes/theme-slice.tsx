@@ -6,13 +6,14 @@ import { ThemeCard } from "./themes-view";
 
 /**
  * Renders a filtered subset of the theme cards — the mechanism that dissolves
- * the old "seven themes" silo. Each hub surfaces only the theme data that
- * belongs to its role in the research funnel:
- *   定标 (picks)       → price / fundamentals / risk / market_structure (selection factors)
- *   佐证 (confirmation) → news_sentiment (alternative signal)
- *   问责 (track)       → net_cost (cost-adjusted reality)
- * The /themes page itself becomes the funnel overview; the data lives in the
- * hubs where it logically belongs.
+ * the old "seven themes" silo into the validity-argument chain (paradigm α).
+ * Each segment surfaces only the theme data that belongs to its place in the
+ * argument:
+ *   证据 (picks)        → price / fundamentals / risk / market_structure (selection features = evidence)
+ *   独立佐证 (confirm)   → news_sentiment (independent corroboration source)
+ *   效度 (track)        → net_cost (cost-adjusted verdict reality)
+ * The /themes page is the full argument-chain overview; the data lives in the
+ * segments where it logically belongs.
  */
 export function ThemeSlice({
   keys,

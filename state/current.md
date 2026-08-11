@@ -1,5 +1,16 @@
 # state/current.md — read first each session
 
+- **active (2026-08-12) 续⑤（终端 IA 第三次重组 = 范式 α ECD 效度论证链，5 批全绿）:** 业主第三次要求打散"七主题"重组，**明确不再要一二三四编号**、要"科学排布+前沿经验+科技智慧+深度复用 github"。诊断前两次失败根因 = 我一直按**分析师工作流**组织终端，但 Aionis 是研究效度工具（CLAUDE.md: "NOT a cognitive system or trading bot"）。调研巨人（主会话，规避子代理 [1210]）→ 提 3 范式（α ECD 效度论证链 / β 研究生命周期 / γ 溯源可观测性）→ 业主**定帧 α**。
+  **设计文档**：`reports/design/2026-08-12-terminal-ia-paradigm-shift.md`（诊断+3 范式+巨人调研）+ `2026-08-12-terminal-ia-paradigm-alpha-migration.md`（逐文件迁移 spec）。3 执行前确认业主全选推荐：证据段合并 1 组 / 守卫横条+独立组 / 12 独立路由移出主 nav。
+  **5 批全交付（tsc + next build 双绿，0 ledger/frozen/config/data/OOS 接触）**：
+  - **B1 dict.ts**：59 处编号/角色词（nav.group/hub.intro/loop/各.role/themes.funnel L0-L4，zh+en 对称）弃用定调/定标/佐证/问责/定向/边界 + ①-⑥/L0-L4，改用**语境/证据/效度/裁决/守卫**。0 残留（"独立佐证"含"佐证"是正确新词）。正文 science 不变。
+  - **B2 app-sidebar.tsx + 4 hub header**：nav 从 5 组 → α 链 4 组（Context / Evidence[含 corroboration 子项 picks+confirmation] / Validity / Guard）+ 总览 + 参考。4 hub page header 自动随 key 更新（无需改文件）。URL 全不变。
+  - **B3 overview.tsx**：FunnelCards 从四枢纽①-④ → **论证链横向可视化**（语境→证据→效度→裁决 4 卡 + ArrowRightIcon 连接，去编号）+ 底部**守卫横条**（PIT/embargo/H6/provenance 徽章横护全链，链接 /discipline）。复用 GavelIcon/GlobeIcon/FlaskConicalIcon/GaugeCircleIcon/ShieldCheckIcon。
+  - **B4 themes-funnel.tsx + theme-slice.tsx**：去 L0-L4 可视编号（`L{layer.n}` span 删，n 保留为内部 key id）；注释更新为 α 段归位。themes-view ThemeCard 信号逻辑不动（真实 signal 名无编号）。
+  - **B5**：12 独立路由（calibration/.../evidence）确认 `in sidebar: 0`（B2 结构性结果），URL 保留可达，靠 hub tab 到达。
+  **验证**：tsc exit 0（每批）+ `next build` exit 0（B1-B3 后 + 全完成两次，19 路由全 prerender）+ Python 扫 tsx/ts 圆圈数字 0 命中。**记忆** `aionis-terminal-ia-paradigm-ecd` 写入（范式 α 锁定 + 根因诊断，防第四次重蹈）。
+  **下一步业主门**：审部署效果（push 后 GitHub Pages 部署）→ 若 OK 可考虑退役旧 /themes 独立页 + 清理 dict.ts 里 nav.group.insights/monitor 等已无引用的孤儿 key（低优先，可回退安全）。**边界**：纯 web/src/ 展示层；0 Python/ledger/frozen panel/config/prereg/ADR/data/OOS 改动；未触 E3；未跑 research/forward。
+
 - **active (2026-08-11):** **选股策略 IA 大重构 + 纪律化自适应路线落地 + CI 可靠性持久修复（多 commit，已 push）** — 业主定帧"七主题解散进 hub 体系"+"绿 1-3"+"并行 agents 不空转"。交付链：
   ① **GDELT news_sentiment ingest**（`ee1b14f`，复用 gdeltdoc MIT Filters.query_string + 自有 5s 间距 policy，2017-04→今，display-only；增量 fetch；22 ingest 测试 + 5 接线测试）。
   ② **5 层选股漏斗 + 七主题解散**（`463136a` 漏斗组件 + `1b3fe8a` 解散：factors→定标 / news→佐证 / cost→问责，/themes 变纯漏斗总览；theme-slice 复用机制）。

@@ -13,37 +13,39 @@ import {
 import { useI18n } from "@/i18n/provider";
 import {
   LayoutDashboardIcon,
-  TrendingUpIcon,
+  GlobeIcon,
+  FlaskConicalIcon,
+  ShieldCheckIcon,
+  GaugeCircleIcon,
   FileTextIcon,
-  BriefcaseIcon,
-  TargetIcon,
+  UsersIcon,
 } from "lucide-react";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { t } = useI18n();
 
-  // Decision funnel: each group answers one question, feeding the next.
-  // The role is carried by the group LABEL (i18n nav.group.*), so the nav itself
-  // reads as a reasoning chain (regime → themes → picks → confirmation → track → discipline).
+  // Validity-argument chain (paradigm α, ECD): the nav IS the chain —
+  // Context → Evidence → Validity, with Guard spanning the whole chain.
+  // No numbers, no "定调/定标/佐证/问责" role labels: the structure emerges
+  // from the falsifiable-claim argument, not an analyst's workflow.
   const navHome = [
     { title: t("nav.overview"), url: "/dashboard", icon: <LayoutDashboardIcon /> },
   ];
-  // Four-hub research closed loop: each hub answers one question, feeding the
-  // next (regime → picks → confirmation → track). Old /themes + /discipline
-  // routes still resolve by URL but their content is folded into the loop
-  // (themes/funnel → overview; macro → regime; discipline+evidence → track);
-  // the sidebar now shows the ①→④ chain as 4 entries (+ overview) instead of 16.
-  const navRegime = [
-    { title: t("nav.group.regime"), url: "/regime", icon: <TrendingUpIcon /> },
+  const navContext = [
+    { title: t("nav.group.regime"), url: "/regime", icon: <GlobeIcon /> },
   ];
-  const navPicks = [
-    { title: t("nav.group.picks"), url: "/picks", icon: <TrendingUpIcon /> },
+  // Evidence segment: core evidence (model picks) + independent corroboration
+  // (smart money / insiders / retail) — both feed the same claim, kept as two
+  // routes (URLs unchanged) under one nav group.
+  const navEvidence = [
+    { title: t("nav.group.picks"), url: "/picks", icon: <FlaskConicalIcon /> },
+    { title: t("nav.group.confirm"), url: "/confirmation", icon: <UsersIcon /> },
   ];
-  const navConfirm = [
-    { title: t("nav.group.confirm"), url: "/confirmation", icon: <BriefcaseIcon /> },
+  const navValidity = [
+    { title: t("nav.group.track"), url: "/track", icon: <GaugeCircleIcon /> },
   ];
-  const navTrack = [
-    { title: t("nav.group.track"), url: "/track", icon: <TargetIcon /> },
+  const navGuard = [
+    { title: t("nav.group.discipline"), url: "/discipline", icon: <ShieldCheckIcon /> },
   ];
   const navReference = [
     {
@@ -74,10 +76,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={navHome} label={t("nav.group.overview")} />
-        <NavMain items={navRegime} label={t("nav.group.regime")} />
-        <NavMain items={navPicks} label={t("nav.group.picks")} />
-        <NavMain items={navConfirm} label={t("nav.group.confirm")} />
-        <NavMain items={navTrack} label={t("nav.group.track")} />
+        <NavMain items={navContext} label={t("nav.group.context")} />
+        <NavMain items={navEvidence} label={t("nav.group.evidence")} />
+        <NavMain items={navValidity} label={t("nav.group.validity")} />
+        <NavMain items={navGuard} label={t("nav.group.guard")} />
         <NavMain items={navReference} label={t("nav.group.reference")} />
       </SidebarContent>
     </Sidebar>

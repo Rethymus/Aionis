@@ -14,10 +14,10 @@ import {
   ArrowDownIcon,
 } from "lucide-react";
 
-// The stock-picking research funnel: 5 layers, data flowing top → bottom.
-// Makes the "organic whole" visible — how every parameter serves the final
-// net-realizable rank. Layers 2/3 live in the picks/track hubs; the funnel
-// links them so the panel is not an isolated collage.
+// The validity-argument chain (paradigm α): one falsifiable claim's argument,
+// read top → bottom. Layers 2/3 (estimand / validity) live in the picks/track
+// segments; the funnel links them so this panel is not an isolated collage.
+// Layer indices (0..4) are internal ids only — no layer numbers are shown.
 type LayerKey =
   | "themes.funnel.l0.title"
   | "themes.funnel.l1.title"
@@ -114,7 +114,6 @@ export function ThemesFunnel() {
               >
                 <div className="flex flex-col items-center gap-1">
                   <Icon className="size-4" />
-                  <span className="text-[9px] font-mono opacity-70">L{layer.n}</span>
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">

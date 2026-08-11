@@ -6,10 +6,11 @@ import {
   ArrowUpIcon,
   ArrowDownIcon,
   MinusIcon,
-  GaugeIcon,
-  BarChart3Icon,
-  TargetIcon,
-  CheckCircle2Icon,
+  GlobeIcon,
+  FlaskConicalIcon,
+  GaugeCircleIcon,
+  GavelIcon,
+  ShieldCheckIcon,
 } from "lucide-react";
 import {
   Card,
@@ -185,19 +186,21 @@ function PicksPreview() {
 function FunnelCards() {
   const { t } = useI18n();
 
-  // One representative stat per hub — the four-question closed loop.
+  // Paradigm α — the validity-argument chain. Each card is one segment of a
+  // single falsifiable claim's argument (Context → Evidence → Validity →
+  // Verdict), joined by arrows (not numbers). Guard (PIT / embargo / H6 /
+  // provenance) spans the whole chain as a bottom band, not a 5th peer card.
   const latestVix = aionis.marketContext.vix_series[aionis.marketContext.vix_series.length - 1]?.vix ?? 0;
 
   const topPick = aionis.picks[0];
   const topPickDisplay = topPick ? `${topPick.ticker} ${topPick.score > 0 ? "+" : ""}${topPick.score.toFixed(2)}` : "N/A";
 
-  const totalFilings = aionis.smartMoney.total_filings ?? 0;
-
   const usEce = aionis.calibrationReliability.regions?.us?.pooled_ece ?? 0;
   const cnEce = aionis.calibrationReliability.regions?.cn?.pooled_ece ?? 0;
 
+  const verdict = aionis.metrics.jt_look1;
+
   const cards: {
-    n: string;
     href: string;
     icon: React.ReactNode;
     titleKey: DictKey;
@@ -206,39 +209,35 @@ function FunnelCards() {
     tone: "muted" | "amber" | "emerald";
   }[] = [
     {
-      n: "①",
       href: "/regime",
-      icon: <GaugeIcon className="size-4" />,
-      titleKey: "nav.group.regime",
+      icon: <GlobeIcon className="size-4" />,
+      titleKey: "nav.group.context",
       introKey: "regime_hub.intro",
       stat: `VIX ${latestVix.toFixed(1)}`,
       tone: "muted",
     },
     {
-      n: "②",
       href: "/picks",
-      icon: <TargetIcon className="size-4" />,
-      titleKey: "nav.group.picks",
+      icon: <FlaskConicalIcon className="size-4" />,
+      titleKey: "nav.group.evidence",
       introKey: "picks_hub.intro",
       stat: topPickDisplay,
       tone: "emerald",
     },
     {
-      n: "③",
-      href: "/confirmation",
-      icon: <BarChart3Icon className="size-4" />,
-      titleKey: "nav.group.confirm",
-      introKey: "confirmation_hub.intro",
-      stat: `${totalFilings} filings`,
-      tone: "muted",
-    },
-    {
-      n: "④",
       href: "/track",
-      icon: <CheckCircle2Icon className="size-4" />,
-      titleKey: "nav.group.track",
+      icon: <GaugeCircleIcon className="size-4" />,
+      titleKey: "nav.group.validity",
       introKey: "track_hub.intro",
       stat: `ECE ${((usEce + cnEce) / 2).toFixed(3)}`,
+      tone: "amber",
+    },
+    {
+      href: "/track#evidence",
+      icon: <GavelIcon className="size-4" />,
+      titleKey: "evidence.role",
+      introKey: "overview.loop.feedback",
+      stat: verdict,
       tone: "amber",
     },
   ];
@@ -249,38 +248,56 @@ function FunnelCards() {
         <h2 className="text-base font-semibold tracking-tight">{t("overview.loop.title")}</h2>
         <p className="text-xs text-muted-foreground">{t("overview.loop.subtitle")}</p>
       </div>
-      <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
-        {cards.map((c) => (
-          <Link key={c.href} href={c.href} className="group">
-            <Card className="h-full transition-colors group-hover:border-foreground/20">
-              <CardHeader className="space-y-2">
-                <div className="flex items-center justify-between">
+      <div className="grid items-stretch gap-2 md:grid-cols-4">
+        {cards.map((c, i) => (
+          <div key={c.href} className="flex items-center gap-2">
+            <Link href={c.href} className="group flex-1">
+              <Card className="h-full transition-colors group-hover:border-foreground/20">
+                <CardHeader className="space-y-2">
                   <div className="flex size-8 items-center justify-center rounded-md bg-muted text-muted-foreground">
                     {c.icon}
                   </div>
-                  <span className="text-base font-semibold tabular-nums text-muted-foreground/70">
-                    {c.n}
-                  </span>
-                </div>
-                <CardTitle className="text-base">{t(c.titleKey)}</CardTitle>
-                <CardDescription className="line-clamp-3 text-xs">{t(c.introKey)}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p
-                  className={cn(
-                    "text-sm font-medium tabular-nums",
-                    c.tone === "emerald" && "text-emerald-600 dark:text-emerald-400",
-                    c.tone === "amber" && "text-amber-600 dark:text-amber-400",
-                  )}
-                >
-                  {c.stat}
-                </p>
-              </CardContent>
-            </Card>
-          </Link>
+                  <CardTitle className="text-base">{t(c.titleKey)}</CardTitle>
+                  <CardDescription className="line-clamp-3 text-xs">{t(c.introKey)}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p
+                    className={cn(
+                      "text-sm font-medium tabular-nums",
+                      c.tone === "emerald" && "text-emerald-600 dark:text-emerald-400",
+                      c.tone === "amber" && "text-amber-600 dark:text-amber-400",
+                    )}
+                  >
+                    {c.stat}
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
+            {i < cards.length - 1 ? (
+              <ArrowRightIcon className="hidden size-4 shrink-0 text-muted-foreground/50 md:block" />
+            ) : null}
+          </div>
         ))}
       </div>
-      <p className="text-center text-[11px] text-muted-foreground">{t("overview.loop.feedback")}</p>
+      {/* Guard band — spans the whole chain (PIT · embargo · H6 · provenance). */}
+      <Link href="/discipline" className="group block">
+        <Card className="border-dashed transition-colors group-hover:border-foreground/20">
+          <CardContent className="flex flex-wrap items-center gap-x-4 gap-y-2 p-3">
+            <div className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+              <ShieldCheckIcon className="size-3.5" />
+              {t("nav.group.guard")}
+            </div>
+            <div className="flex flex-wrap items-center gap-1.5">
+              {["PIT", "embargo", "H6", "provenance"].map((g) => (
+                <Badge key={g} variant="outline" className="px-1.5 py-0 text-[10px] font-normal text-muted-foreground">
+                  {g}
+                </Badge>
+              ))}
+            </div>
+            <span className="ml-auto text-[11px] text-muted-foreground">{t("discipline_hub.intro")}</span>
+          </CardContent>
+        </Card>
+      </Link>
     </section>
   );
 }
