@@ -101,7 +101,9 @@ export function InsidersView() {
       {f.yearly && f.yearly.length > 0 && (
         <Card>
           <CardHeader className="border-b">
-            <CardTitle className="text-base">{yearlyHeading}</CardTitle>
+            <CardTitle className="text-base" title={t("insiders.termInsiderHint")}>
+              {yearlyHeading}
+            </CardTitle>
           </CardHeader>
           <CardContent className="p-2">
             <div className="h-[180px] w-full">
@@ -120,8 +122,8 @@ export function InsidersView() {
                     contentStyle={{ fontSize: "12px" }}
                   />
                   <Legend />
-                  <Bar dataKey="buys" stackId="a" fill="#10b981" name="Buys" />
-                  <Bar dataKey="sells" stackId="a" fill="#f43f5e" name="Sells" />
+                  <Bar dataKey="buys" stackId="a" fill="#10b981" name={t("insiders.termBuys")} />
+                  <Bar dataKey="sells" stackId="a" fill="#f43f5e" name={t("insiders.termSells")} />
                 </BarChart>
               </ResponsiveContainer>
             </div>

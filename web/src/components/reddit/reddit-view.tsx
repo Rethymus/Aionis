@@ -139,7 +139,10 @@ export function RedditView() {
                         {sentimentLabel} {pick.sentiment.toFixed(2)}
                       </Badge>
                       {pick.bull_ratio !== null && (
-                        <span className="ml-2 text-[10px] text-muted-foreground">
+                        <span
+                          className="ml-2 text-[10px] text-muted-foreground"
+                          title={t("reddit.termBullRatioHint")}
+                        >
                           bull {pick.bull_ratio.toFixed(2)}
                         </span>
                       )}

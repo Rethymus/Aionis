@@ -125,7 +125,9 @@ export function SmartMoneyView() {
       {sm.yearly && sm.yearly.length > 0 && (
         <Card>
           <CardHeader className="border-b">
-            <CardTitle className="text-base">{yearlyHeading}</CardTitle>
+            <CardTitle className="text-base" title={t("smartmoney.term13DHint")}>
+              {yearlyHeading}
+            </CardTitle>
           </CardHeader>
           <CardContent className="p-2">
             <div className="h-[180px] w-full">
@@ -139,7 +141,7 @@ export function SmartMoneyView() {
                   />
                   <YAxis className="text-xs" />
                   <Tooltip
-                    formatter={(v) => [Number(v).toLocaleString(), "13D Filings"]}
+                    formatter={(v) => [Number(v).toLocaleString(), t("smartmoney.term13DFilings")]}
                     labelFormatter={(l) => `Year: ${l}`}
                     contentStyle={{ fontSize: "12px" }}
                   />
