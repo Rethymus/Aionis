@@ -39,7 +39,7 @@ export function PowerFloorView() {
     <div className="space-y-6 p-4 md:p-6">
       <p className="text-xs font-medium text-primary">{t("powerfloor.role")}</p>
       <header className="space-y-2">
-        <h1 className="text-2xl font-bold tracking-tight">{t("module.powerfloor.title")}</h1>
+        <h1 className="text-2xl font-bold tracking-tight" title={t("powerfloor.termHint")}>{t("module.powerfloor.title")}</h1>
         <p className="max-w-2xl text-sm text-muted-foreground">{t("powerfloor.intro")}</p>
       </header>
 
@@ -48,13 +48,13 @@ export function PowerFloorView() {
           <Card key={l.look}>
             <CardContent className="p-4">
               <p className="text-xs text-muted-foreground">
-                Look {l.look} · planned n={l.n}
+                <span title={t("powerfloor.lookHint")}>{t("powerfloor.look")} {l.look}</span> · <span title={t("powerfloor.plannedNHint")}>planned n={l.n}</span>
               </p>
               <p className={cn("mt-1 text-2xl font-bold tabular-nums", toneForLook(i))}>
-                {l.n_min_years.toFixed(1)}y
+                <span title={t("powerfloor.minYearsHint")}>{l.n_min_years.toFixed(1)}y</span>
               </p>
               <p className="mt-0.5 text-xs text-muted-foreground tabular-nums">
-                z={l.z} · RCI {l.rci_level_pct}%
+                <span title={t("powerfloor.zStatHint")}>z={l.z}</span> · <span title={t("powerfloor.rciHint")}>RCI {l.rci_level_pct}%</span>
               </p>
             </CardContent>
           </Card>
@@ -63,20 +63,20 @@ export function PowerFloorView() {
 
       <Card className="overflow-hidden py-0">
         <CardHeader className="border-b">
-          <CardTitle className="text-base">Minimum-n per look</CardTitle>
+          <CardTitle className="text-base" title={t("powerfloor.minNHint")}>Minimum-n per look</CardTitle>
           <CardDescription>{t("module.powerfloor.window")}</CardDescription>
         </CardHeader>
         <CardContent className="p-0">
           <div className="divide-y">
             {looks.map((l) => (
               <div key={l.look} className="flex items-center gap-4 px-4 py-2.5 text-sm">
-                <span className="w-12 font-medium">Look {l.look}</span>
-                <span className="w-24 text-muted-foreground tabular-nums">n={l.n}</span>
-                <span className="w-24 text-muted-foreground tabular-nums">z={l.z}</span>
-                <span className="ml-auto font-mono tabular-nums">
+                <span className="w-12 font-medium" title={t("powerfloor.lookHint")}>Look {l.look}</span>
+                <span className="w-24 text-muted-foreground tabular-nums" title={t("powerfloor.plannedNHint")}>n={l.n}</span>
+                <span className="w-24 text-muted-foreground tabular-nums" title={t("powerfloor.zStatHint")}>z={l.z}</span>
+                <span className="ml-auto font-mono tabular-nums" title={t("powerfloor.minMonthsHint")}>
                   {l.n_min_months} mo
                 </span>
-                <span className="w-20 text-right font-mono text-muted-foreground tabular-nums">
+                <span className="w-20 text-right font-mono text-muted-foreground tabular-nums" title={t("powerfloor.minYearsHint")}>
                   {l.n_min_years}y
                 </span>
               </div>
@@ -88,10 +88,11 @@ export function PowerFloorView() {
       <Card>
         <CardHeader className="border-b">
           <CardTitle className="text-base">
-            σ(IC) observed vs pure-noise bound 1/√(N−1)
+            <span title={t("powerfloor.sigmaHint")}>σ(IC)</span> observed vs <span title={t("powerfloor.pureNoiseHint")}>pure-noise bound 1/√(N−1)</span>
           </CardTitle>
           <CardDescription>
-            {aionis.sigmaSurvey.summary.n_series} IC series · median excess{" "}
+            {aionis.sigmaSurvey.summary.n_series} IC series · median{" "}
+            <span title={t("powerfloor.excessHint")}>excess</span>{" "}
             {aionis.sigmaSurvey.summary.excess_median.toFixed(1)}× · all above the y=x line
           </CardDescription>
         </CardHeader>

@@ -170,7 +170,7 @@ function RegionCard({ region, payload }: { region: string; payload: RegionPayloa
                 <YAxis domain={[0, "auto"]} tick={{ fontSize: 11 }} width={32} />
                 <Tooltip
                   contentStyle={{ fontSize: 12, borderRadius: 8 }}
-                  formatter={(value) => [Number(value).toFixed(4), "ECE"]}
+                  formatter={(value) => [Number(value).toFixed(4), t("calibration.eceTerm")]}
                 />
                 <ReferenceLine y={0.05} stroke="#10b981" strokeDasharray="3 3" />
                 <Line type="monotone" dataKey="ece" stroke="hsl(var(--primary))" strokeWidth={2} dot={false} />

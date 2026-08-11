@@ -30,9 +30,9 @@ const REGIME_LABEL: Record<string, RegimeLabelKey> = {
   significant: "modelhealth.regime.significant",
 };
 
-function Stat({ label, value }: { label: string; value: string }) {
+function Stat({ label, value, hint }: { label: string; value: string; hint?: string }) {
   return (
-    <div>
+    <div title={hint}>
       <p className="text-xs text-muted-foreground">{label}</p>
       <p className="mt-1 text-xl font-bold tabular-nums">{value}</p>
     </div>
@@ -48,7 +48,7 @@ export function ModelHealthView() {
     <div className="space-y-6 p-4 md:p-6">
       <p className="text-xs font-medium text-primary">{t("modelhealth.role")}</p>
       <header className="space-y-1">
-        <h1 className="text-2xl font-bold tracking-tight">{t("modelhealth.title")}</h1>
+        <h1 className="text-2xl font-bold tracking-tight" title={t("modelhealth.termHint")}>{t("modelhealth.title")}</h1>
         <p className="text-sm text-muted-foreground">{t("modelhealth.window")}</p>
       </header>
 
@@ -69,18 +69,17 @@ export function ModelHealthView() {
                 </Badge>
               </CardTitle>
               <CardDescription>
-                {t("modelhealth.regimehint")} · PSI = {r.psi.toFixed(3)} · n
-                <sub>recent</sub> {r.n_recent} / n
-                <sub>hist</sub> {r.n_history}
+                {t("modelhealth.regimehint")} · <span title={t("modelhealth.psiTermHint")}>PSI = {r.psi.toFixed(3)}</span> · <span title={t("modelhealth.nRecentHint")}>n<sub>recent</sub> {r.n_recent}</span> / <span title={t("modelhealth.nHistoryHint")}>n<sub>hist</sub> {r.n_history}</span>
               </CardDescription>
             </CardHeader>
             <CardContent className="grid grid-cols-2 gap-3 p-4 md:grid-cols-4">
-              <Stat label={t("modelhealth.psi")} value={r.psi.toFixed(3)} />
-              <Stat label={t("modelhealth.icrecent")} value={r.ic_recent.toFixed(3)} />
-              <Stat label={t("modelhealth.icfull")} value={r.ic_full.toFixed(3)} />
+              <Stat label={t("modelhealth.psi")} value={r.psi.toFixed(3)} hint={t("modelhealth.psiTermHint")} />
+              <Stat label={t("modelhealth.icrecent")} value={r.ic_recent.toFixed(3)} hint={t("modelhealth.icTermHint")} />
+              <Stat label={t("modelhealth.icfull")} value={r.ic_full.toFixed(3)} hint={t("modelhealth.icTermHint")} />
               <Stat
                 label={t("modelhealth.baserate")}
                 value={`${r.base_rate_full.toFixed(2)}→${r.base_rate_recent.toFixed(2)}`}
+                hint={t("modelhealth.baseRateTermHint")}
               />
             </CardContent>
           </Card>
