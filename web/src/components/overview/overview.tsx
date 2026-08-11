@@ -11,6 +11,7 @@ import {
   GaugeCircleIcon,
   GavelIcon,
   ShieldCheckIcon,
+  ScaleIcon,
 } from "lucide-react";
 import {
   Card,
@@ -25,91 +26,100 @@ import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
 import type { DictKey } from "@/i18n/dict";
 
-function Hero() {
-  const { t } = useI18n();
-  return (
-    <section className="space-y-4">
-      <Badge variant="secondary" className="rounded-full px-3 py-1 text-xs">
-        {t("hero.badge")}
-      </Badge>
-      <h1 className="text-4xl font-bold tracking-tight text-balance md:text-5xl">
-        {t("hero.title")}
-      </h1>
-      <p className="max-w-2xl text-pretty text-muted-foreground md:text-lg">
-        {t("hero.subtitle")}
-      </p>
-    </section>
-  );
-}
+// Paradigm α — the Overview IS the validity-argument chain, not a collage with
+// a chain buried at the bottom. The composition leads with the verdict (the
+// whole point of a falsifiable claim), then unfolds the chain that produced it.
+// Layout: Verdict anchor → 4-segment chain (context→evidence→validity→verdict)
+// → corroboration + evidence detail folded under the spine → guard band.
 
-function KpiCards() {
+function VerdictAnchor() {
   const { t } = useI18n();
-  const items: { label: DictKey; value: string; tone: "muted" | "emerald" | "amber" }[] = [
-    { label: "kpi.combined_ic", value: aionis.metrics.combined_ic.toFixed(4), tone: "muted" },
-    { label: "kpi.n_months", value: String(aionis.metrics.n_months), tone: "muted" },
-    { label: "kpi.p_value", value: aionis.metrics.p.toFixed(3), tone: "muted" },
-    { label: "kpi.verdict", value: aionis.metrics.jt_look1, tone: "amber" },
-    { label: "kpi.h6", value: aionis.metrics.h6, tone: "emerald" },
-  ];
+  const m = aionis.metrics;
+  const ci = m.ci_lo !== null && m.ci_hi !== null ? `[${m.ci_lo.toFixed(4)}, ${m.ci_hi.toFixed(4)}]` : "—";
+  // Null is the intended, publishable outcome — the anchor states it plainly
+  // rather than apologizing for it. IC≈0 + CI bracketing zero = honest null.
   return (
-    <div className="grid grid-cols-2 gap-3 md:grid-cols-5">
-      {items.map((it) => (
-        <Card key={it.label} className="overflow-hidden">
-          <CardContent className="p-4">
-            <p className="text-xs text-muted-foreground">{t(it.label)}</p>
-            <p
-              className={cn(
-                "mt-1 text-lg font-semibold tracking-tight tabular-nums md:text-xl",
-                it.tone === "emerald" && "text-emerald-600 dark:text-emerald-400",
-                it.tone === "amber" && "text-amber-600 dark:text-amber-400",
-              )}
-            >
-              {it.value}
-            </p>
-          </CardContent>
-        </Card>
-      ))}
-    </div>
-  );
-}
-
-function ScoreTicker() {
-  const { t } = useI18n();
-  const items = aionis.picks;
-  const row = (
-    <div className="flex items-center">
-      {items.map((p) => (
-        <span key={p.ticker} className="inline-flex items-center gap-1.5 px-4 text-xs">
-          <span className="font-medium">{p.ticker}</span>
-          <Badge
-            variant="outline"
-            className="px-1 py-0 text-[10px] font-normal text-muted-foreground"
-          >
-            {p.region.toUpperCase()}
-          </Badge>
-          <span className="tabular-nums text-muted-foreground">
-            {p.score > 0 ? "+" : ""}
-            {p.score.toFixed(2)}
-          </span>
-        </span>
-      ))}
-    </div>
-  );
-  return (
-    <Card className="overflow-hidden py-0">
-      <div className="flex items-center gap-2 border-b px-4 py-2">
-        <span className="size-1.5 animate-pulse rounded-full bg-emerald-500" />
-        <span className="text-xs font-medium text-muted-foreground">
-          {t("ticker.label")}
-        </span>
-      </div>
-      <div className="group relative h-9 w-full overflow-hidden">
-        <div className="animate-marquee group-hover:[animation-play-state:paused] absolute flex h-full items-center whitespace-nowrap">
-          {row}
-          <div aria-hidden>{row}</div>
+    <Card className="overflow-hidden border-foreground/15">
+      <CardContent className="grid gap-4 p-5 md:grid-cols-[auto_1fr_auto] md:items-center">
+        <div className="flex items-center gap-3">
+          <div className="flex size-11 items-center justify-center rounded-lg bg-muted">
+            <ScaleIcon className="size-5 text-muted-foreground" />
+          </div>
+          <div>
+            <p className="text-xs text-muted-foreground">{t("overview.verdict.claim")}</p>
+            <p className="text-sm font-medium leading-tight">{t("overview.verdict.question")}</p>
+          </div>
         </div>
-      </div>
+        <div className="flex flex-wrap items-baseline gap-x-6 gap-y-1">
+          <div>
+            <p className="text-[11px] text-muted-foreground">{t("kpi.combined_ic")}</p>
+            <p className="font-mono text-2xl font-semibold tabular-nums">
+              {m.combined_ic > 0 ? "+" : ""}{m.combined_ic.toFixed(4)}
+            </p>
+          </div>
+          <div>
+            <p className="text-[11px] text-muted-foreground">95% CI</p>
+            <p className="font-mono text-sm font-medium tabular-nums text-muted-foreground">{ci}</p>
+          </div>
+          <div>
+            <p className="text-[11px] text-muted-foreground">{t("kpi.p_value")}</p>
+            <p className="font-mono text-sm font-medium tabular-nums text-muted-foreground">{m.p.toFixed(3)}</p>
+          </div>
+          <div>
+            <p className="text-[11px] text-muted-foreground">{t("kpi.n_months")}</p>
+            <p className="font-mono text-sm font-medium tabular-nums text-muted-foreground">{m.n_months}</p>
+          </div>
+        </div>
+        <div className="flex flex-col items-start gap-1 md:items-end">
+          <Badge variant="secondary" className="bg-amber-500/15 text-amber-700 dark:text-amber-300">
+            {t("overview.verdict.null")}
+          </Badge>
+          <span className="text-[11px] text-muted-foreground">{t("overview.verdict.null.note")}</span>
+        </div>
+      </CardContent>
     </Card>
+  );
+}
+
+function ChainSegment({
+  href,
+  icon,
+  titleKey,
+  stat,
+  statTone,
+  detail,
+}: {
+  href: string;
+  icon: React.ReactNode;
+  titleKey: DictKey;
+  stat: string;
+  statTone: "muted" | "amber" | "emerald";
+  detail: React.ReactNode;
+}) {
+  const { t } = useI18n();
+  return (
+    <Link href={href} className="group block">
+      <Card className="h-full transition-colors group-hover:border-foreground/25">
+        <CardHeader className="space-y-2">
+          <div className="flex items-center gap-2">
+            <div className="flex size-7 items-center justify-center rounded-md bg-muted text-muted-foreground">
+              {icon}
+            </div>
+            <CardTitle className="text-sm">{t(titleKey)}</CardTitle>
+          </div>
+          <p
+            className={cn(
+              "font-mono text-lg font-semibold tabular-nums",
+              statTone === "emerald" && "text-emerald-600 dark:text-emerald-400",
+              statTone === "amber" && "text-amber-600 dark:text-amber-400",
+            )}
+          >
+            {stat}
+          </p>
+        </CardHeader>
+        <CardContent className="pt-0">{detail}</CardContent>
+      </Card>
+    </Link>
   );
 }
 
@@ -135,112 +145,54 @@ function RankChange({ change }: { change: number | null }) {
   );
 }
 
-function PicksPreview() {
+function MiniPicks() {
   const { t } = useI18n();
-  const top5 = aionis.picks.slice(0, 5);
+  const top4 = aionis.picks.slice(0, 4);
   return (
-    <Card>
-      <CardHeader className="flex flex-row items-start justify-between gap-2 space-y-0">
-        <div className="space-y-1">
-          <CardTitle className="flex items-center gap-2">
-            {t("module.picks.title")}
-          </CardTitle>
-          <CardDescription>{t("module.picks.window")}</CardDescription>
+    <div className="space-y-1">
+      {top4.map((p) => (
+        <div key={`${p.region}-${p.ticker}`} className="flex items-center gap-2 text-xs">
+          <span className="w-14 truncate font-medium">{p.name || p.ticker}</span>
+          <span className="font-mono text-[10px] text-muted-foreground">{p.ticker}</span>
+          <span className="ml-auto font-mono tabular-nums">
+            {p.score > 0 ? "+" : ""}{p.score.toFixed(2)}
+          </span>
+          <span className="w-6 text-right">
+            <RankChange change={p.rank_change} />
+          </span>
         </div>
-        <Link
-          href="/picks"
-          className="inline-flex shrink-0 items-center gap-1 text-xs font-medium text-muted-foreground hover:text-foreground"
-        >
-          {t("module.picks.cta")}
-        </Link>
-      </CardHeader>
-      <CardContent>
-        <div className="divide-y">
-          {top5.map((p) => (
-            <div key={`${p.region}-${p.ticker}`} className="flex items-center gap-3 py-2.5">
-              <span className="w-6 text-sm font-semibold tabular-nums text-muted-foreground">
-                {p.rank}
-              </span>
-              <div className="flex min-w-0 flex-col">
-                <span className="truncate text-sm font-medium">{p.name || p.ticker}</span>
-                <span className="font-mono text-[10px] text-muted-foreground">{p.ticker}</span>
-              </div>
-              <Badge variant="secondary" className="px-1.5 py-0 text-[10px]">
-                {t(p.region === "us" ? "picks.region.us" : "picks.region.cn")}
-              </Badge>
-              <span className="ml-auto font-mono text-sm tabular-nums">
-                {p.score > 0 ? "+" : ""}
-                {p.score.toFixed(2)}
-              </span>
-              <span className="w-10 text-right">
-                <RankChange change={p.rank_change} />
-              </span>
-            </div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
+      ))}
+      <p className="pt-1 text-[10px] text-muted-foreground">{t("overview.chain.evidence.detail")}</p>
+    </div>
   );
 }
 
-function FunnelCards() {
+function MiniCorroboration() {
   const { t } = useI18n();
+  const filings = aionis.smartMoney.total_filings ?? 0;
+  const latest = aionis.smartMoney.latest_date ?? "—";
+  const cotLatest = aionis.cot.latest_date ?? "—";
+  return (
+    <div className="space-y-1.5">
+      <div className="flex items-center justify-between text-xs">
+        <span className="text-muted-foreground">{t("nav.smartmoney")}</span>
+        <span className="font-mono tabular-nums">{filings} · {latest}</span>
+      </div>
+      <div className="flex items-center justify-between text-xs">
+        <span className="text-muted-foreground">{t("nav.positioning")}</span>
+        <span className="font-mono tabular-nums">{cotLatest}</span>
+      </div>
+      <p className="pt-0.5 text-[10px] text-muted-foreground">{t("overview.chain.corroboration.note")}</p>
+    </div>
+  );
+}
 
-  // Paradigm α — the validity-argument chain. Each card is one segment of a
-  // single falsifiable claim's argument (Context → Evidence → Validity →
-  // Verdict), joined by arrows (not numbers). Guard (PIT / embargo / H6 /
-  // provenance) spans the whole chain as a bottom band, not a 5th peer card.
+function ArgumentChain() {
+  const { t } = useI18n();
   const latestVix = aionis.marketContext.vix_series[aionis.marketContext.vix_series.length - 1]?.vix ?? 0;
-
-  const topPick = aionis.picks[0];
-  const topPickDisplay = topPick ? `${topPick.ticker} ${topPick.score > 0 ? "+" : ""}${topPick.score.toFixed(2)}` : "N/A";
-
   const usEce = aionis.calibrationReliability.regions?.us?.pooled_ece ?? 0;
   const cnEce = aionis.calibrationReliability.regions?.cn?.pooled_ece ?? 0;
-
-  const verdict = aionis.metrics.jt_look1;
-
-  const cards: {
-    href: string;
-    icon: React.ReactNode;
-    titleKey: DictKey;
-    introKey: DictKey;
-    stat: string;
-    tone: "muted" | "amber" | "emerald";
-  }[] = [
-    {
-      href: "/regime",
-      icon: <GlobeIcon className="size-4" />,
-      titleKey: "nav.group.context",
-      introKey: "regime_hub.intro",
-      stat: `VIX ${latestVix.toFixed(1)}`,
-      tone: "muted",
-    },
-    {
-      href: "/picks",
-      icon: <FlaskConicalIcon className="size-4" />,
-      titleKey: "nav.group.evidence",
-      introKey: "picks_hub.intro",
-      stat: topPickDisplay,
-      tone: "emerald",
-    },
-    {
-      href: "/track",
-      icon: <GaugeCircleIcon className="size-4" />,
-      titleKey: "nav.group.validity",
-      introKey: "track_hub.intro",
-      stat: `ECE ${((usEce + cnEce) / 2).toFixed(3)}`,
-      tone: "amber",
-    },
-    {
-      href: "/track#evidence",
-      icon: <GavelIcon className="size-4" />,
-      titleKey: "evidence.role",
-      introKey: "overview.loop.feedback",
-      stat: verdict,
-      tone: "amber",
-    },
-  ];
+  const m = aionis.metrics;
 
   return (
     <section className="space-y-3">
@@ -249,52 +201,47 @@ function FunnelCards() {
         <p className="text-xs text-muted-foreground">{t("overview.loop.subtitle")}</p>
       </div>
       <div className="grid items-stretch gap-2 md:grid-cols-4">
-        {cards.map((c, i) => (
-          <div key={c.href} className="flex items-center gap-2">
-            <Link href={c.href} className="group flex-1">
-              <Card className="h-full transition-colors group-hover:border-foreground/20">
-                <CardHeader className="space-y-2">
-                  <div className="flex size-8 items-center justify-center rounded-md bg-muted text-muted-foreground">
-                    {c.icon}
-                  </div>
-                  <CardTitle className="text-base">{t(c.titleKey)}</CardTitle>
-                  <CardDescription className="line-clamp-3 text-xs">{t(c.introKey)}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p
-                    className={cn(
-                      "text-sm font-medium tabular-nums",
-                      c.tone === "emerald" && "text-emerald-600 dark:text-emerald-400",
-                      c.tone === "amber" && "text-amber-600 dark:text-amber-400",
-                    )}
-                  >
-                    {c.stat}
-                  </p>
-                </CardContent>
-              </Card>
-            </Link>
-            {i < cards.length - 1 ? (
-              <ArrowRightIcon className="hidden size-4 shrink-0 text-muted-foreground/50 md:block" />
-            ) : null}
-          </div>
-        ))}
+        <ChainSegment
+          href="/regime"
+          icon={<GlobeIcon className="size-3.5" />}
+          titleKey="nav.group.context"
+          stat={`VIX ${latestVix.toFixed(1)}`}
+          statTone="muted"
+          detail={<p className="text-[11px] leading-snug text-muted-foreground">{t("overview.chain.context.detail")}</p>}
+        />
+        <ChainSegment
+          href="/picks"
+          icon={<FlaskConicalIcon className="size-3.5" />}
+          titleKey="nav.group.evidence"
+          stat={`${m.n_picks_total} picks`}
+          statTone="emerald"
+          detail={<MiniPicks />}
+        />
+        <ChainSegment
+          href="/track"
+          icon={<GaugeCircleIcon className="size-3.5" />}
+          titleKey="nav.group.validity"
+          stat={`ECE ${((usEce + cnEce) / 2).toFixed(3)}`}
+          statTone="amber"
+          detail={<p className="text-[11px] leading-snug text-muted-foreground">{t("overview.chain.validity.detail")}</p>}
+        />
+        <ChainSegment
+          href="/track#evidence"
+          icon={<GavelIcon className="size-3.5" />}
+          titleKey="evidence.role"
+          stat={m.verdict}
+          statTone="amber"
+          detail={<p className="text-[11px] leading-snug text-muted-foreground">{t("overview.chain.verdict.detail")}</p>}
+        />
       </div>
-      {/* Guard band — spans the whole chain (PIT · embargo · H6 · provenance). */}
-      <Link href="/discipline" className="group block">
+      {/* Corroboration ribbon — the second independent evidence source, folded
+          under the spine rather than a 5th peer column. */}
+      <Link href="/confirmation" className="group block">
         <Card className="border-dashed transition-colors group-hover:border-foreground/20">
-          <CardContent className="flex flex-wrap items-center gap-x-4 gap-y-2 p-3">
-            <div className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
-              <ShieldCheckIcon className="size-3.5" />
-              {t("nav.group.guard")}
+          <CardContent className="flex flex-wrap items-center gap-x-6 gap-y-2 p-3">
+            <div className="flex min-w-[180px] flex-1 flex-col">
+              <MiniCorroboration />
             </div>
-            <div className="flex flex-wrap items-center gap-1.5">
-              {["PIT", "embargo", "H6", "provenance"].map((g) => (
-                <Badge key={g} variant="outline" className="px-1.5 py-0 text-[10px] font-normal text-muted-foreground">
-                  {g}
-                </Badge>
-              ))}
-            </div>
-            <span className="ml-auto text-[11px] text-muted-foreground">{t("discipline_hub.intro")}</span>
           </CardContent>
         </Card>
       </Link>
@@ -302,14 +249,57 @@ function FunnelCards() {
   );
 }
 
+function GuardBand() {
+  const { t } = useI18n();
+  return (
+    <Link href="/discipline" className="group block">
+      <Card className="border-dashed transition-colors group-hover:border-foreground/20">
+        <CardContent className="flex flex-wrap items-center gap-x-4 gap-y-2 p-3">
+          <div className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+            <ShieldCheckIcon className="size-3.5" />
+            {t("nav.group.guard")}
+          </div>
+          <div className="flex flex-wrap items-center gap-1.5">
+            {["PIT", "embargo", "H6", "provenance"].map((g) => (
+              <Badge key={g} variant="outline" className="px-1.5 py-0 text-[10px] font-normal text-muted-foreground">
+                {g}
+              </Badge>
+            ))}
+          </div>
+          <span className="ml-auto hidden text-[11px] text-muted-foreground md:block">
+            {t("overview.guard.spans")}
+          </span>
+        </CardContent>
+      </Card>
+    </Link>
+  );
+}
+
+function Hero() {
+  const { t } = useI18n();
+  return (
+    <section className="space-y-3">
+      <Badge variant="secondary" className="rounded-full px-3 py-1 text-xs">
+        {t("hero.badge")}
+      </Badge>
+      <h1 className="text-3xl font-bold tracking-tight text-balance md:text-4xl">
+        {t("hero.title")}
+      </h1>
+      <p className="max-w-2xl text-pretty text-sm text-muted-foreground md:text-base">
+        {t("hero.subtitle")}
+      </p>
+    </section>
+  );
+}
+
 export function Overview() {
   return (
-    <div className="space-y-6 p-4 md:p-6">
+    <div className="space-y-5 p-4 md:p-6">
       <Hero />
-      <KpiCards />
-      <ScoreTicker />
-      <PicksPreview />
-      <FunnelCards />
+      {/* The verdict is the anchor — everything else is the argument for it. */}
+      <VerdictAnchor />
+      <ArgumentChain />
+      <GuardBand />
     </div>
   );
 }
