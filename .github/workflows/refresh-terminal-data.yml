@@ -28,10 +28,11 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 75  # cold Form 4 + 13D pulls need room to complete ONCE;
-    # once the data-cache action saves, subsequent runs are fast deltas. A
-    # cancelled/timed-out run saves no cache → every later run is a cold pull →
-    # perpetual timeout. 75min breaks that vicious cycle (was 45).
+    timeout-minutes: 150  # Form 4 cold pull (5 issuers, full history, polite ≥2s)
+    # exceeded 75min after several cancelled runs left no data-cache. 150 lets
+    # ONE cold pull complete → cache saves → subsequent runs are fast deltas.
+    # The durable fix (form4 incremental: fetch only filings since last cached
+    # date) lives in scripts/form4_fetch.py; this timeout is the safety net.
     steps:
       - uses: actions/checkout@v4
 
