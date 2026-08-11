@@ -6,6 +6,7 @@ import { SmartMoneyView } from "@/components/smart-money/smart-money-view";
 import { InsidersView } from "@/components/insiders/insiders-view";
 import { RedditView } from "@/components/reddit/reddit-view";
 import { ThemeSlice } from "@/components/themes/theme-slice";
+import { SegmentHeader } from "@/components/segment-header";
 import { useI18n } from "@/i18n/provider";
 
 const hashToTabMap: Record<string, string> = {
@@ -44,10 +45,7 @@ export default function ConfirmationPage() {
 
   return (
     <div className="space-y-6 p-4 md:p-6">
-      <header className="space-y-1">
-        <p className="text-xs font-medium text-primary">{t("nav.group.confirm")}</p>
-        <p className="text-sm text-muted-foreground">{t("confirmation_hub.intro")}</p>
-      </header>
+      <SegmentHeader segment="evidence" introKey="confirmation_hub.intro" />
 
       <Tabs value={activeTab} onValueChange={handleTabChange}>
         <TabsList>

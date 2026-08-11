@@ -8,6 +8,7 @@ import { ModelHealthView } from "@/components/model-health/model-health-view";
 import { DisciplineView } from "@/components/discipline/discipline-view";
 import { EvidenceView } from "@/components/evidence/evidence-view";
 import { ThemeSlice } from "@/components/themes/theme-slice";
+import { SegmentHeader } from "@/components/segment-header";
 import { useI18n } from "@/i18n/provider";
 
 const hashToTabMap: Record<string, string> = {
@@ -48,10 +49,7 @@ export default function TrackPage() {
 
   return (
     <div className="space-y-6 p-4 md:p-6">
-      <header className="space-y-1">
-        <p className="text-xs font-medium text-primary">{t("nav.group.track")}</p>
-        <p className="text-sm text-muted-foreground">{t("track_hub.intro")}</p>
-      </header>
+      <SegmentHeader segment="validity" introKey="track_hub.intro" />
 
       <Tabs value={activeTab} onValueChange={handleTabChange}>
         <TabsList>

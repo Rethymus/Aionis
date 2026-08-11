@@ -6,6 +6,7 @@ import { MarketView } from "@/components/market/market-view";
 import { PositioningView } from "@/components/positioning/positioning-view";
 import { TacoView } from "@/components/taco/taco-view";
 import { ThemeSlice } from "@/components/themes/theme-slice";
+import { SegmentHeader } from "@/components/segment-header";
 import { useI18n } from "@/i18n/provider";
 
 const hashToTabMap: Record<string, string> = {
@@ -44,10 +45,7 @@ export default function RegimePage() {
 
   return (
     <div className="space-y-6 p-4 md:p-6">
-      <header className="space-y-1">
-        <p className="text-xs font-medium text-primary">{t("nav.group.regime")}</p>
-        <p className="text-sm text-muted-foreground">{t("regime_hub.intro")}</p>
-      </header>
+      <SegmentHeader segment="context" introKey="regime_hub.intro" />
 
       <Tabs value={activeTab} onValueChange={handleTabChange}>
         <TabsList>
