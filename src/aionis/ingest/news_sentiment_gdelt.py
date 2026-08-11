@@ -37,6 +37,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+from collections.abc import Callable
 from datetime import date, datetime, timezone
 from pathlib import Path
 
@@ -214,7 +215,9 @@ def _gdelt_timeline_tone(query_string: str) -> dict:
     return resp.json()
 
 
-def fetch_tone_series(start: date, end: date) -> list[dict]:
+def fetch_tone_series(
+    start: date, end: date, on_chunk: Callable[[list[dict]], None] | None = None
+) -> list[dict]:
     """Fetch monthly tone+volume via GDELT ``timelinetone``, chunked quarterly.
 
     Resilient: per-chunk failures are logged + skipped (partial series > crash),
@@ -222,15 +225,23 @@ def fetch_tone_series(start: date, end: date) -> list[dict]:
     query path (theme:ECON_STOCKMARKET) — no runtime fallback; a broken theme
     code is a one-line ``DEFAULT_THEME`` fix, not a backup layer.
 
+    If ``on_chunk`` is given, it's called with each chunk's monthly rows right
+    after they're parsed+aggregated, so the caller can persist incrementally:
+    a CI timeout mid-backfill keeps the chunks already fetched (root-cause #3
+    — the cold pull exceeds the 20-min step-cap; without per-chunk writes the
+    cache stayed empty and news_sentiment never surfaced).
+
     Args:
         start/end: inclusive start, exclusive end (date window to cover).
-        ``start`` is clamped to ``DOC_API_EARLIEST`` (2017-04).
+            ``start`` is clamped to ``DOC_API_EARLIEST`` (2017-04).
+        on_chunk: optional callback ``(chunk_monthly_rows) -> None`` invoked
+            after each successfully fetched chunk.
 
     Returns:
         List of monthly ``{month, tone, volume, n}`` dicts, ascending.
     """
     chunks = _chunk_quarters(max(start, DOC_API_EARLIEST), end)
-    all_rows: list[dict] = []
+    all_monthly: list[dict] = []
     for cs, ce in chunks:
         qs = _build_query_string(cs, ce)
         try:
@@ -244,15 +255,20 @@ def fetch_tone_series(start: date, end: date) -> list[dict]:
                 error=str(exc)[:160],
             )
             continue
-        all_rows.extend(rows)
+        # Aggregate per-chunk (quarters are calendar-aligned → months never
+        # split across chunks, so per-chunk == full aggregation). Lets the
+        # caller checkpoint after each chunk for timeout-safe persistence.
+        chunk_monthly = aggregate_monthly(rows)
+        all_monthly.extend(chunk_monthly)
         log.info("gdelt_chunk_ok", start=cs.isoformat(), n=len(rows))
-    monthly = aggregate_monthly(all_rows)
+        if on_chunk is not None:
+            on_chunk(chunk_monthly)
     log.info(
         "gdelt_fetch_done",
-        n_months=len(monthly),
+        n_months=len(all_monthly),
         start=chunks[0][0].isoformat() if chunks else None,
     )
-    return monthly
+    return all_monthly
 
 
 # --- snapshot + archive ------------------------------------------------------
@@ -292,6 +308,28 @@ def _next_fetch_start(cached: list[dict], cold_start: date) -> date:
     return date(ny, nm, 1)
 
 
+def _write_cache_snapshot(
+    series: list[dict], cache_path: Path, archive: str = ""
+) -> None:
+    """Write (overwrite) the cache snapshot atomically-ish; pure side effect.
+
+    Centralizes the snapshot shape so both the per-chunk checkpoint writer and
+    the final write use the same schema. ``archive`` is only meaningful for the
+    final write (the raw-row sha256 archive of *new* rows).
+    """
+    snapshot = {
+        "source": "GDELT Doc 2.0 timelinetone (theme:ECON_STOCKMARKET, country:US)",
+        "query": f"theme:{DEFAULT_THEME} country:{DEFAULT_COUNTRY}",
+        "coverage_start": series[0]["month"] if series else None,
+        "coverage_end": series[-1]["month"] if series else None,
+        "snapshot_ts": datetime.now(timezone.utc).isoformat(),
+        "archive": archive,
+        "n_months": len(series),
+        "series": series,
+    }
+    cache_path.write_text(json.dumps(snapshot, indent=2))
+
+
 def collect_news_sentiment(
     start: date | None = None,
     end: date | None = None,
@@ -309,34 +347,49 @@ def collect_news_sentiment(
     end = end or date.today()
     cache_dir = cache_dir or Path("data/cache")
     cache_dir.mkdir(parents=True, exist_ok=True)
+    cache_path = cache_dir / _CACHE_NAME
 
     cached = load_cached_series(cache_dir)
     fetch_start = _next_fetch_start(cached, cold_start=max(start, DOC_API_EARLIEST))
+    new_rows: list[dict] = []
     if fetch_start >= end:
         log.info("gdelt_cache_fresh", cached_months=len(cached))
-        new_rows: list[dict] = []
+        merged = list(cached)
     else:
-        new_rows = fetch_tone_series(fetch_start, end)
+        # Per-chunk checkpoint: merge + write cache after EACH fetched chunk so a
+        # CI timeout mid-backfill keeps what's already fetched. Root-cause #3 of
+        # '新闻情绪数据没有体现': the cold pull (38 chunks × ≥15s + 429 backoff)
+        # exceeded the 20-min step-cap, collect_news_sentiment never finished,
+        # and the cache was never written — so the export saw an empty cache and
+        # news_sentiment stayed 'forward_only' even though chunks succeeded.
+        # Use a dict holder because Python closures can't rebind enclosing locals
+        # via `=`.
+        state: dict = {"merged": list(cached)}
 
+        def _on_chunk(chunk_rows: list[dict]) -> None:
+            state["merged"] = merge_series(state["merged"], chunk_rows)
+            _write_cache_snapshot(state["merged"], cache_path)
+            log.info(
+                "gdelt_chunk_checkpoint",
+                n_months=len(state["merged"]),
+                new_in_chunk=len(chunk_rows),
+            )
+
+        new_rows = fetch_tone_series(fetch_start, end, on_chunk=_on_chunk)
+
+    # Final merge uses fetch_tone_series's full return (the checkpoint callback
+    # is insurance — it fires per-chunk, but the authoritative new_rows here is
+    # the complete delta). This also covers the case where a test stubs
+    # fetch_tone_series without invoking on_chunk.
     merged = merge_series(cached, new_rows)
-    archive_name = _archive_raw(new_rows, cache_dir) if new_rows else ""
-    snapshot_ts = datetime.now(timezone.utc).isoformat()
 
-    snapshot = {
-        "source": "GDELT Doc 2.0 timelinetone (theme:ECON_STOCKMARKET, country:US)",
-        "query": f"theme:{DEFAULT_THEME} country:{DEFAULT_COUNTRY}",
-        "coverage_start": merged[0]["month"] if merged else None,
-        "coverage_end": merged[-1]["month"] if merged else None,
-        "snapshot_ts": snapshot_ts,
-        "archive": archive_name,
-        "n_months": len(merged),
-        "series": merged,
-    }
-    (cache_dir / _CACHE_NAME).write_text(json.dumps(snapshot, indent=2))
+    archive_name = _archive_raw(new_rows, cache_dir) if new_rows else ""
+    _write_cache_snapshot(merged, cache_path, archive=archive_name)
     log.info(
         "gdelt_snapshot_written",
         n_months=len(merged),
         new_rows=len(new_rows),
         archive=archive_name or None,
     )
+    snapshot = json.loads(cache_path.read_text())
     return snapshot

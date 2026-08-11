@@ -12,6 +12,8 @@ import json
 from datetime import date
 from pathlib import Path
 
+import pytest
+
 import aionis.ingest.news_sentiment_gdelt as nsg
 from aionis.ingest.news_sentiment_gdelt import (
     DOC_API_EARLIEST,
@@ -204,7 +206,7 @@ def test_collect_incremental_fetches_only_delta(tmp_path: Path, monkeypatch) -> 
         )
     )
     captured: dict = {}
-    def _fake_fetch(start, end):
+    def _fake_fetch(start, end, on_chunk=None):
         captured["start"] = start
         captured["end"] = end
         return [{"month": "2017-05", "tone": -1.0, "volume": 2, "n": 1}]
@@ -214,3 +216,58 @@ def test_collect_incremental_fetches_only_delta(tmp_path: Path, monkeypatch) -> 
     )
     assert captured["start"] == date(2017, 5, 1)  # delta only, not the cold start
     assert snap["n_months"] == 2  # cached April + fetched May
+
+
+def test_collect_per_chunk_checkpoint_survives_timeout(tmp_path: Path, monkeypatch) -> None:
+    # Root-cause #3 guard: if the cold backfill is killed mid-fetch (CI step
+    # timeout — the 20-min cap), chunks already fetched must persist in the
+    # cache. fetch_tone_series calls on_chunk after each chunk; collect's
+    # callback writes the cache immediately. Simulate a kill after chunk 1 → the
+    # cache must still hold chunk 1's month even though collect never finished.
+    cache_path = tmp_path / "gdelt_news_sentiment.json"
+
+    def _fake_fetch(start, end, on_chunk=None):
+        # First chunk fetched + checkpointed via the callback…
+        if on_chunk is not None:
+            on_chunk([{"month": "2019-04", "tone": -3.0, "volume": 100, "n": 2}])
+        # …then the CI step times out mid-backfill (process killed).
+        raise RuntimeError("simulated CI step timeout")
+
+    monkeypatch.setattr(nsg, "fetch_tone_series", _fake_fetch)
+    with pytest.raises(RuntimeError):
+        collect_news_sentiment(
+            start=DOC_API_EARLIEST, end=date(2019, 12, 1), cache_dir=tmp_path
+        )
+    # The checkpoint wrote the cache BEFORE the timeout — partial data persists,
+    # so a subsequent export reads real tone (not empty) and a later run resumes.
+    assert cache_path.exists()
+    on_disk = json.loads(cache_path.read_text())
+    assert on_disk["n_months"] == 1
+    assert on_disk["series"] == [
+        {"month": "2019-04", "tone": -3.0, "volume": 100, "n": 2}
+    ]
+
+
+def test_collect_per_chunk_checkpoint_merges_across_chunks(tmp_path: Path, monkeypatch) -> None:
+    # Normal multi-chunk backfill: on_chunk fires per chunk, cache accumulates.
+    all_rows = [
+        {"month": "2019-04", "tone": -3.0, "volume": 100, "n": 2},
+        {"month": "2019-07", "tone": -1.0, "volume": 200, "n": 2},
+    ]
+
+    def _fake_fetch(start, end, on_chunk=None):
+        # Real fetch_tone_series both invokes on_chunk AND returns the full list.
+        for r in all_rows:
+            if on_chunk is not None:
+                on_chunk([r])
+        return all_rows
+
+    monkeypatch.setattr(nsg, "fetch_tone_series", _fake_fetch)
+    snap = collect_news_sentiment(
+        start=DOC_API_EARLIEST, end=date(2019, 12, 1), cache_dir=tmp_path
+    )
+    assert snap["n_months"] == 2
+    cache_path = tmp_path / "gdelt_news_sentiment.json"
+    assert cache_path.exists()
+    on_disk = json.loads(cache_path.read_text())
+    assert on_disk["n_months"] == 2
