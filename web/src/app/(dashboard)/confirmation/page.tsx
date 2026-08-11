@@ -7,6 +7,7 @@ import { InsidersView } from "@/components/insiders/insiders-view";
 import { RedditView } from "@/components/reddit/reddit-view";
 import { ThemeSlice } from "@/components/themes/theme-slice";
 import { SegmentHeader } from "@/components/segment-header";
+import { aionis } from "@/data/aionis";
 import { useI18n } from "@/i18n/provider";
 
 const hashToTabMap: Record<string, string> = {
@@ -45,7 +46,7 @@ export default function ConfirmationPage() {
 
   return (
     <div className="space-y-6 p-4 md:p-6">
-      <SegmentHeader segment="evidence" introKey="confirmation_hub.intro" />
+      <SegmentHeader segment="evidence" introKey="confirmation_hub.intro" asOf={aionis.smartMoney.latest_date ?? undefined} />
 
       <Tabs value={activeTab} onValueChange={handleTabChange}>
         <TabsList>

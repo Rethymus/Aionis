@@ -7,6 +7,7 @@ import { PositioningView } from "@/components/positioning/positioning-view";
 import { TacoView } from "@/components/taco/taco-view";
 import { ThemeSlice } from "@/components/themes/theme-slice";
 import { SegmentHeader } from "@/components/segment-header";
+import { aionis } from "@/data/aionis";
 import { useI18n } from "@/i18n/provider";
 
 const hashToTabMap: Record<string, string> = {
@@ -45,7 +46,7 @@ export default function RegimePage() {
 
   return (
     <div className="space-y-6 p-4 md:p-6">
-      <SegmentHeader segment="context" introKey="regime_hub.intro" />
+      <SegmentHeader segment="context" introKey="regime_hub.intro" asOf={aionis.cot.latest_date ?? undefined} />
 
       <Tabs value={activeTab} onValueChange={handleTabChange}>
         <TabsList>

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowRightIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
+import { ProvenanceBadge } from "@/components/provenance-badge";
 import type { DictKey } from "@/i18n/dict";
 
 // The argument-spine segment a page belongs to (paradigm α). Every page declares
@@ -33,9 +34,11 @@ const CHAIN_ORDER: Segment[] = ["context", "evidence", "validity", "verdict"];
 export function SegmentHeader({
   segment,
   introKey,
+  asOf,
 }: {
   segment: Segment;
   introKey: DictKey;
+  asOf?: string | null;
 }) {
   const { t } = useI18n();
   return (
@@ -66,11 +69,13 @@ export function SegmentHeader({
             </span>
           );
         })}
+        {/* Provenance chip — the page's own freshness, inline with the spine. */}
+        {asOf ? <ProvenanceBadge ts={asOf} className="ml-1" /> : null}
         {/* Guard spans the whole chain — shown as a trailing chip on every page. */}
         {segment !== "guard" ? (
           <Link
             href="/discipline"
-            className="ml-1 inline-flex items-center gap-1 rounded border border-dashed border-muted-foreground/30 px-1.5 py-0.5 text-muted-foreground/60 hover:text-foreground"
+            className="ml-auto inline-flex items-center gap-1 rounded border border-dashed border-muted-foreground/30 px-1.5 py-0.5 text-muted-foreground/60 hover:text-foreground"
           >
             {t("nav.group.guard")}
           </Link>
