@@ -127,6 +127,15 @@ jobs:
           done
           echo "All JSON valid."
 
+      - name: Sync with latest main (handle concurrent pushes)
+        # If main advanced during this ~hour-long run (code/doc/agent commits
+        # pushed while data was fetching), rebase the runner onto the latest
+        # tip before committing. Without this, the data push is rejected as
+        # non-fast-forward and the ENTIRE run's fetch work is lost (happened
+        # on run 31457990487). --autostash preserves the uncommitted data JSONs.
+        # Safe because data JSONs never overlap with code/doc/workflow paths.
+        run: git pull --rebase --autostash origin main
+
       - name: Commit refreshed data
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
