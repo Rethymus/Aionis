@@ -10,7 +10,7 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-08-11T17:46:18+00:00",
+  "latest_snapshot_ts": "2026-08-11T23:08:39+00:00",
   "n_snapshots": 1,
   "transport": "rss",
   "score_available": false,
@@ -21,6 +21,13 @@
       "mentions": 2,
       "sentiment": 0.196,
       "bull_ratio": 1.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "GOOGL",
+      "mentions": 1,
+      "sentiment": -0.035,
+      "bull_ratio": null,
       "score_sum": 0
     },
     {
@@ -44,5 +51,6 @@
     "n_snapshots": 1,
     "latest_date": "2026-08-11",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
-  }
+  },
+  "snapshot_ts": "2026-08-11T23:59:34.578948+00:00"
 }
