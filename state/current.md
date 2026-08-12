@@ -1,5 +1,14 @@
 # state/current.md — read first each session
 
+- **active (2026-08-12) 续⑭（并行推进：部署验 + display fetch 容差修 + 测试 harness bug 修，themes 新信号；真新鲜度 runtime-blocked 诚实披露）：** 业主"启用更多 agents 同步 + 不空转等待"。**并行 3 路**：
+  ① **部署验**（deploy 31607274687 success）：puppeteer 实测 https://rethymus.github.io/Aionis/ — /overview 出生证明卡（冻结 #48 04:19 → 结果 #49 10:27 同 sha e14b9d44 + H6 PASS + J-T NOT_EQUIVALENT + 链 /discipline）实显；/evidence 卡 #15 `ledger #49 · frozen config → /discipline` 实显。续⑬部署上线确认。
+  ② **display fetch 容差修**（`5b2a131`）：根因 = `phase_b_fetch --display` 共享 frozen 路径的严格 complete-prices 门 → 2/588 缺失（BF-B/BRK-B share-class 变体，Tiingo/Alpaca 覆盖差异）abort 整个新鲜度刷新。修 = 新 `_require_display_prices`（<2% 缺失容差写 panel，>2% 仍拒防 provider 宕活产误导面）；frozen 路径 `_require_complete_prices` **不动**（反泄漏契约）。
+  ③ **预存测试 harness bug 修**（同 commit）：`phase_b_fetch.main()` 的 argparse 读 sys.argv → pytest CLI 参数（文件路径/-q/-k）致 3 个 `test_phase_b_main_*` 在 clean main 上 SystemExit(2) 前就死（pre-existing，非我引入）。修 = `_configure_phase_b` pin `sys.argv=["phase_b_fetch"]`。2 新 display 容差测试（小缺失通过 / 大缺失拒）。11/11 test_market 绿 + ruff 净。
+  **themes.json 重导出**：补 close-only qlib 因子（rsi_21d=0.5334 / timetohigh_63d=0.3994）+ as_of 字段（PIT 透明）—— 这些已在 export 代码（`fc91fe0`）但 committed themes.json 未刷新。
+  **诚实披露（runtime-blocked 非 code-blocked）**：真新鲜度（as_of 过 2026-06-30）= runtime-gated。Tiingo 本会话 batch refetch 返 0（限流/凭证），故 prices 不能过 frozen END。我一度试 date-gate 强制全量 refetch → 反而 unlink 了可用 panel + Tiingo 仍 0 = 比 stale 更糟 → **立即 revert date-gate**，从 586 cache 重建 panel 回到可用 stale 态。教训：date-gate 与 `_final_panel_is_complete` 交互会 unlink；且 runtime fail 时勿加倍下注（[[aionis-owner-process-correction]]）。
+  **本轮闭环**：续⑬部署验 + 真 display 容差修 + 预存 harness bug 修 + themes 新信号。纯 display/data-refresh lane；0 frozen/config/prereg/ADR/OOS 改动；未跑 research/forward；未外发（push 触发 Pages 部署）。
+  **下一步业主门**：真新鲜度需 Tiingo-healthy run（runtime，非我可控）；或 Track A 因子生成器（新冻结面 owner-GO）。display-layer 容差 + 科学诚实度三轴已尽其用。
+
 - **active (2026-08-12) 续⑬（headline 出生证明 = hero 数字 → 冻结 config 的可追溯链，修 2 真 bug，display-only，全本地验证）：** 续⑫交付"理论锚 + 审计时间线"后业主再授权"至不可再优化"。**判辨**：续⑫让时间线可见，但 **从未把 hero 数字 `IC −0.0088` 连到它自己的账本行**——缺最后一块：每个 headline 主张在出现处携带其冻结来源。**审计中发现 2 真 bug + 1 缺失连接**：
   ① **`metrics.json:11` latest_month 是 Python bound-method repr**（`<bound method Timestamp.date of Timestamp(...)>`）—— `export_picks:194` 返回 `str(...date)`，`.date` 是 bound method 非属性。修为 `.strftime("%Y-%m-%d")` → `'2026-08-03'`。hero 载荷泄漏修。
   ② **`export_ledger_audit` climax 行 #49 verdict/metric 空**——函数只处理 flat scalar `combined_ic`，但 #49 存 IC 为 nested `combined_ic.mean` dict → metric 留空 = headline 主张在自己的审计表里**哑**。修为处理 nested dict + `jt_gate.look1_verdict` + `H6_deterministic` 三 schema shape → #49 现 `combined_IC=-0.0088 (p=0.484) | NOT_EQUIVALENT | h6=True`。
