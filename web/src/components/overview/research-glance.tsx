@@ -19,10 +19,12 @@ import { cn } from "@/lib/utils";
 // (attribution) and WHAT-WAS-TESTED (coverage depth), each with a deep-dive link.
 // Deterministic, no external call, leakage-safe (reads only frozen numbers).
 
-// Compact coverage-depth tally (mirrors coverage-map.tsx FAMILIES, kept in sync
-// manually — a single source of truth would be better, but these are small,
-// auditable constants and duplicating avoids a cross-module import coupling).
-const COVERAGE_TALLY = { tested: 3, exploratory: 2, gaps: 5 } as const;
+// Compact coverage-depth tally. These are FAMILY-DEPTH counts (how many of the
+// 5 factor families have a frozen confirmatory result vs are exploratory), NOT
+// item counts — see coverage-map.tsx for the full tested/exploratory/gap item
+// lists. Kept here as a small auditable constant mirroring FAMILIES.depth.
+// If you add/reclassify a family in coverage-map.tsx, update this too.
+const COVERAGE_TALLY = { testedFamilies: 3, exploratoryFamilies: 2 } as const;
 
 export function ResearchGlance() {
   const { t } = useI18n();
@@ -51,7 +53,11 @@ export function ResearchGlance() {
               {t("glance.attribution.lead")}
             </p>
             <div className="flex flex-wrap gap-1.5 pt-1">
-              <Badge variant="outline" className="px-1.5 py-0 text-[10px] font-normal text-muted-foreground">
+              <Badge
+                variant="outline"
+                className="px-1.5 py-0 text-[10px] font-normal text-muted-foreground"
+                title={t("glance.attribution.ic_tooltip")}
+              >
                 IC {m.combined_ic.toFixed(4)}
               </Badge>
               {hasCI ? (
@@ -91,13 +97,13 @@ export function ResearchGlance() {
             </p>
             <div className="flex flex-wrap gap-1.5 pt-1">
               <Badge variant="outline" className="gap-1 px-1.5 py-0 text-[10px] font-normal text-emerald-600 dark:text-emerald-400">
-                {t("coverage.label.tested")} {COVERAGE_TALLY.tested}
+                {t("coverage.label.tested")} {COVERAGE_TALLY.testedFamilies}
               </Badge>
               <Badge variant="outline" className="gap-1 px-1.5 py-0 text-[10px] font-normal text-amber-600 dark:text-amber-400">
-                {t("coverage.label.exploratory")} {COVERAGE_TALLY.exploratory}
+                {t("coverage.label.exploratory")} {COVERAGE_TALLY.exploratoryFamilies}
               </Badge>
               <Badge variant="outline" className="gap-1 px-1.5 py-0 text-[10px] font-normal text-muted-foreground">
-                {t("coverage.label.gaps")} {COVERAGE_TALLY.gaps}
+                {t("glance.coverage.families")} 5
               </Badge>
             </div>
           </CardContent>
