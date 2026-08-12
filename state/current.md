@@ -1,5 +1,24 @@
 # state/current.md — read first each session
 
+- **active (2026-08-12) 续⑨（AI 贯彻两轨 + 覆盖地图，全部署验）：** 在续⑧综合方案之上交付 **Track B + Track C** 两个 display-only AI 面（`feea401`+`2ff29aa`，tsc+build 双绿，部署实测渲染正确）。并行 sonnet Explore agent（codebase-local，规避 [1210]）产出**因子覆盖清单**（tested/exploratory/gaps × 5 族 + frozen-surface 边界），驱动 Track C。
+  ① **AI 归因卡**（`attribution-card.tsx`，Track B）：读冻结 #49（IC/CI/p/power-floor），纯函数派生 4 条经济叙事（IC 量级、CI 跨零、power-floor 不可达、反泄漏纪律）。接 /track validity 段顶。部署实测 4 点全显（IC -0.0088 / CI[-0.034,0.016] / 半宽 0.034>>SESOI 0.01）。**display-only · 冻结结果** badge + 边界脚注（LLM 进 OOS=泄漏，禁）。确定性无外部调用。
+  ② **因子覆盖地图**（`coverage-map.tsx`，Track C）：5 经典族（价值/动量/风险/流动/情绪）× tested/exploratory/gaps，每个 tested 锚冻结 ledger 行（#28/#30/#34/#41），gaps 引经典未测异常（MAX/BAB/52wk-high/coskewness/analyst/short-interest）。接 /themes。部署实测 5 族+gaps 全显。**金融学×市场研究理论**桥：每单元系研究软件工件于资产定价异常。
+  **AI 三轨合规分层**（synthesis §3）：B 归因✅ / C 覆盖地图✅ / A 因子假设生成器（需新预注册+freeze，owner-GO 门，未启）。**禁轨**：LLM 特征直进 OOS（2024-26 lookahead-bias 文献群证为已知泄漏）。
+  **本轮全交付链**（9 commit，全部署验）：视觉全排查→D1 4 bug 修（含 SidebarInset min-w-0 根因）→前沿调研（Fan 2026 agentic + LLM-leakage 文献 + 资产定价锚）→综合方案→D2 归因→覆盖地图。**边界**：纯 web/src 展示层 + docs + memory；0 ledger/frozen/config/OOS；未跑 research/forward；未外发（D2 fixture 版无 LLM 调用，live 版待业主门）。
+
+- **active (2026-08-12) 续⑧（视觉全排查 + 前沿调研 + 科学系统综合方案 + D1 视觉 bug 全修）：** 业主要求"视觉整体排查 + 深入调研前沿 + 金融×市场理论联动 + AI 深度贯彻 + 高质量科学选股研究系统"。
+  **视觉全排查**（puppeteer DOM，6 页 + 源码扫）：4 真问题 + 0 残留。**D1 全修**（`c0aa335`+`ec11158`，tsc+build 双绿，部署实测验）：
+  ① **`/confirmation` 水平溢出**（1421px>1280px）→ 根因 = `SidebarInset` 无 `min-w-0`（flex 子不收缩到内容以下）→ 加 `min-w-0` 到 primitive（shadcn 正典修复）+ 布局 `<main>` overflow-hidden。部署实测 1421→1280px，hScroll=false。
+  ② **`/discipline` 无高亮守卫段** → SegmentHeader `segment==="guard"` 时高亮 guard chip（border-primary/bg-primary）。部署实测 highlighted=true。
+  ③ ArgumentChainDiagram desc `truncate` → `line-clamp-2`（移动端不截断长 warrant）。
+  ④ Overview verdict 卡 title=`evidence.role`（别扭）→ 新 `overview.chain.verdict.label`（裁决/Verdict）。
+  **前沿调研**（主会话，规避 [1210]）→ 记忆 `aionis-agentic-factor-investing-research` + 综合方案 `reports/design/2026-08-12-scientific-research-system-synthesis.md`：
+  - Fan 2026 arXiv agentic 闭环因子发现（constrained autonomy + IS/OOS 严格分离 + economic rationale ReAct + multi-obj gate + symbolic regression）**可复用方法学**，但 Sharpe 3.11 属 overfitting 警示（与 Aionis #49 NULL 尖锐对比）→ 复用框架不追 alpha。
+  - 2024-26 LLM lookahead-bias 文献群（ChronoBERT/Look-Ahead-Bench/DatedGPT）→ **LLM 特征进冻结 OOS = 已知泄漏通道，禁**。AI 贯彻须在 OOS 外。
+  - 资产定价锚（HLZ t>3.0、LdP DSR、GKX LightGBM=冻结 learner、KX survey）= Aionis null+power-floor 是标准诚实做法非缺陷。
+  **AI 三轨合规分层**：A 因子假设生成器(exploratory,需新预注册) / B 归因助手(display-only,读已冻结 null) / C 文献异常地图(display-only)。**禁轨**：LLM 特征直进 OOS panel。
+  **下一步业主门**：D2（AI 归因卡，display-only 但需 GLM API 外发）—— 业主授权前我用 fixture 版预建组件（不外发）。本轮先交付视觉全修 + 综合方案。**边界**：纯 web/src 展示层 + docs + memory；0 ledger/frozen/config/OOS 改动；未跑 research/forward；未外发。
+
 - **active (2026-08-12) 续⑦（七主题 widget 视觉重设计 + 全视图视觉排查）：** 业主指"原七主题所有内容 UI 需重设计，当前位置已不适配；用视觉能力排查所有内容查类似问题"。**视觉排查（puppeteer 截图 + DOM 文本提取；zai/4_5v 视觉模型服务 401/auth 不可用，改用 DOM 精确文本——更可靠）+ 源码全审计**。
   **根因（业主正确）**：`themes-funnel.tsx` 组件本身仍是 **funnel 范式**（LAYERS 顺流而下 L0→L4 + flowKey 下行箭头 + inPanel/hub 管道机制），与它新处的 α 论证链位置不适配。dict **值** 已 α 化（B1），但 **组件概念 + key 命名空间** 仍 funnel。
   **重设计交付（`2045a32`，tsc+build 双绿，deploy `31541668986` success）**：
