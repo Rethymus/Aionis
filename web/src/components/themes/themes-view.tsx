@@ -35,6 +35,23 @@ const THEME_LABEL: Record<string, ThemeLabelKey> = {
   net_cost: "themes.net_cost",
   market_structure: "themes.market_structure",
 };
+// α redesign: each theme (former "seven-theme") declares its argument role, so
+// the card reads as a segment of the validity-argument chain rather than a
+// legacy status card. Mirrors the segment vocabulary in argument-chain-diagram.
+type ThemeRoleKey =
+  | "theme.role.context"
+  | "theme.role.evidence"
+  | "theme.role.corroboration"
+  | "theme.role.verdict";
+const THEME_ROLE: Record<string, ThemeRoleKey> = {
+  price: "theme.role.evidence",
+  macro: "theme.role.context",
+  fundamentals: "theme.role.evidence",
+  news_sentiment: "theme.role.corroboration",
+  risk: "theme.role.evidence",
+  net_cost: "theme.role.verdict",
+  market_structure: "theme.role.evidence",
+};
 // Professional term + plain gloss for each signal name (owner directive:
 // terminology allowed, but every term carries a simple explanation).
 type SignalLabelKey =
@@ -94,24 +111,6 @@ const GROUP_LABEL: Record<string, ThemeLabelKey> = {
   market_structure: "themes.market_structure",
 };
 
-type StatusKey =
-  | "themes.status.live"
-  | "themes.status.partial"
-  | "themes.status.forward_only"
-  | "themes.status.needs_work";
-const STATUS_KEY: Record<string, StatusKey> = {
-  live: "themes.status.live",
-  partial: "themes.status.partial",
-  forward_only: "themes.status.forward_only",
-  needs_work: "themes.status.needs_work",
-};
-const STATUS_STYLE: Record<string, string> = {
-  live: "border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400",
-  partial: "border-amber-500/40 bg-amber-500/10 text-amber-700 dark:text-amber-400",
-  forward_only: "border-muted-foreground/30 bg-muted/40 text-muted-foreground",
-  needs_work: "border-rose-500/40 bg-rose-500/10 text-rose-700 dark:text-rose-400",
-};
-
 type DirKey = "themes.direction.bullish" | "themes.direction.bearish" | "themes.direction.neutral";
 const DIR_KEY: Record<string, DirKey> = {
   bullish: "themes.direction.bullish",
@@ -162,21 +161,23 @@ export function ThemeCard({ theme }: { theme: { key: string; status: string; as_
   const seriesVals = (theme.series ?? [])
     .map((s) => s.value)
     .filter((v): v is number => typeof v === "number");
+  // α redesign: a theme card is an evidence/context SEGMENT card, not a legacy
+  // "seven-theme" status card. The badge declares the argument role (evidence/
+  // context/corroboration/verdict) so the card reads as part of the chain, and
+  // provenance (as_of) replaces the generic live/partial status.
+  const roleKey = THEME_ROLE[theme.key] ?? "theme.role.evidence";
   return (
     <Card className="overflow-hidden py-0">
-      <CardHeader className="border-b">
-        <CardTitle className="flex items-center justify-between gap-2 text-base">
-          <span>{t(THEME_LABEL[theme.key] ?? "themes.risk")}</span>
-          <Badge
-            variant="outline"
-            className={cn(STATUS_STYLE[theme.status] ?? "", "shrink-0")}
-          >
-            {t(STATUS_KEY[theme.status] ?? "themes.status.needs_work")}
+      <CardHeader className="gap-1.5 border-b">
+        <div className="flex items-center justify-between gap-2">
+          <CardTitle className="text-sm">{t(THEME_LABEL[theme.key] ?? "themes.risk")}</CardTitle>
+          <Badge variant="outline" className="shrink-0 px-1.5 py-0 text-[10px] font-normal text-muted-foreground">
+            {t(roleKey)}
           </Badge>
-        </CardTitle>
-        {theme.headline ? <CardDescription>{theme.headline}</CardDescription> : null}
+        </div>
+        {theme.headline ? <CardDescription className="text-xs">{theme.headline}</CardDescription> : null}
         {theme.as_of ? (
-          <p className="font-mono text-[10px] text-muted-foreground">
+          <p className="font-mono text-[10px] text-muted-foreground/70">
             {t("themes.as_of")} {theme.as_of}
           </p>
         ) : null}
@@ -185,17 +186,17 @@ export function ThemeCard({ theme }: { theme: { key: string; status: string; as_
         {(theme.signals ?? []).length > 0 ? (
           <div className="space-y-2">
             {(theme.signals ?? []).map((s) => (
-              <div key={s.name} className="flex items-center justify-between text-sm">
+              <div key={s.name} className="flex items-center justify-between gap-2 text-sm">
                 <span className="truncate text-xs text-muted-foreground">
                   {SIGNAL_LABEL[s.name] ? t(SIGNAL_LABEL[s.name]) : s.name}
                 </span>
-                <span className="ml-2 shrink-0 tabular-nums font-medium">
+                <span className="ml-2 shrink-0 font-mono tabular-nums text-xs">
                   {s.value === null || s.value === undefined ? "—" : s.value}
                 </span>
               </div>
             ))}
             {seriesVals.length >= 2 ? (
-              <Sparkline className="text-emerald-600 dark:text-emerald-400" data={seriesVals} />
+              <Sparkline className="text-muted-foreground/60" data={seriesVals} />
             ) : null}
           </div>
         ) : (
