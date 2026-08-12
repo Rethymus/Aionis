@@ -45,6 +45,12 @@ def _configure_phase_b(
     monkeypatch.setattr(phase_b_fetch.settings, "tiingo_api_key", "tiingo-key")
     monkeypatch.setattr(phase_b_fetch.settings, "alpaca_key_id", None)
     monkeypatch.setattr(phase_b_fetch.settings, "alpaca_secret_key", None)
+    # phase_b_fetch.main() calls argparse.parse_args(), which reads sys.argv —
+    # under pytest that argv contains the pytest CLI (file paths, -q, -k), so
+    # parse_args rejects them and SystemExit(2) fires before the test body runs.
+    # Pin argv to a bare invocation (no --display => frozen path) so the fetch
+    # logic under test actually executes.
+    monkeypatch.setattr("sys.argv", ["phase_b_fetch"])
 
 
 def test_fetch_price_series_fails_closed_without_approved_credentials(
@@ -107,9 +113,40 @@ def test_phase_b_completeness_guard_runs_before_final_panel_persist(
     monkeypatch.setattr(phase_b_fetch.settings, "tiingo_api_key", "tiingo-key")
     monkeypatch.setattr(phase_b_fetch.settings, "alpaca_key_id", None)
     monkeypatch.setattr(phase_b_fetch.settings, "alpaca_secret_key", None)
+    # phase_b_fetch.main() calls argparse.parse_args(), which reads sys.argv —
+    # under pytest that argv contains the pytest CLI (file paths, -q, -k), so
+    # parse_args rejects them and SystemExit(2) fires before the test body runs.
+    # Pin argv to a bare invocation (no --display => frozen path) so the fetch
+    # logic under test actually executes.
+    monkeypatch.setattr("sys.argv", ["phase_b_fetch"])
 
     with pytest.raises(RuntimeError, match=r"missing symbols: \[BBB\].*Tiingo"):
         phase_b_fetch._require_complete_prices(["AAA", "BBB"], {"AAA": _series("AAA")})
+
+
+def test_display_path_tolerates_small_missing_fraction() -> None:
+    """The display path accepts a panel with <2% missing tickers.
+
+    The frozen research path must stay strict (anti-leakage: every ticker
+    required). The display path is an aggregate freshness surface, so 1-2
+    unresolved share-class variants (BF-B/BRK-B) must not block the whole
+    refresh — but a provider-wide outage (>2% missing) still refuses, since a
+    near-empty panel would be misleading.
+    """
+    phase_b_fetch = _load_phase_b_fetch()
+    tickers = [f"T{i:03d}" for i in range(100)]
+    series = {t: _series(t) for t in tickers[:98]}  # 2% missing
+    # Should not raise.
+    phase_b_fetch._require_display_prices(tickers, series)
+
+
+def test_display_path_refuses_large_missing_fraction() -> None:
+    """A provider-wide outage (>2% missing) still refuses on the display path."""
+    phase_b_fetch = _load_phase_b_fetch()
+    tickers = [f"T{i:03d}" for i in range(100)]
+    series = {t: _series(t) for t in tickers[:50]}  # 50% missing
+    with pytest.raises(RuntimeError, match=r"display panel missing 50/100"):
+        phase_b_fetch._require_display_prices(tickers, series)
 
 
 def test_phase_b_main_retains_partial_symbol_cache_but_does_not_write_final_panel(

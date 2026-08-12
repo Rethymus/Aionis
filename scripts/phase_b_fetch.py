@@ -31,6 +31,34 @@ def _require_complete_prices(tickers: list[str], series: dict[str, pd.Series]) -
         raise _missing_prices_error(missing, providers)
 
 
+# Display path only: tolerate a small share of missing tickers. The display
+# panel feeds terminal themes (aggregate freshness), NOT the research pipeline,
+# so a few unresolved share-class variants must not block the refresh. Hard
+# cap at 2% guards against a silent provider-wide outage masquerading as
+# "a couple of edge-case tickers" — if >2% are missing, something is wrong and
+# we still refuse (better a stale display than a misleading one).
+_DISPLAY_MISSING_FRACTION_CAP = 0.02
+
+
+def _require_display_prices(tickers: list[str], series: dict[str, pd.Series]) -> None:
+    if not tickers:
+        return
+    missing = [t for t in tickers if t not in series or series[t].empty]
+    frac = len(missing) / len(tickers)
+    if frac > _DISPLAY_MISSING_FRACTION_CAP:
+        providers = []
+        if settings.tiingo_api_key:
+            providers.append("Tiingo")
+        if settings.alpaca_key_id and settings.alpaca_secret_key:
+            providers.append("Alpaca")
+        raise RuntimeError(
+            f"display panel missing {len(missing)}/{len(tickers)} ({frac:.1%}) > "
+            f"{_DISPLAY_MISSING_FRACTION_CAP:.0%} cap — likely a provider outage, "
+            f"not edge-case coverage. Providers: {providers or 'none configured'}. "
+            f"Sample missing: {missing[:12]}"
+        )
+
+
 def _final_panel_is_complete(path: Path, tickers: list[str]) -> bool:
     try:
         panel = pd.read_parquet(path)
@@ -121,11 +149,26 @@ def main() -> None:
                   f"(+{len(got)}/{len(batch)} this batch; total {len(series)})",
                   flush=True)
         still_missing = [t for t in tickers if t not in series]
-        _require_complete_prices(tickers, series)
+        if args.display:
+            # Display path: tolerate a small share of missing tickers. The
+            # display panel is an aggregate freshness surface (themes shows
+            # cross-sectional means + sparklines through TODAY), NOT a
+            # backtestable research surface — so 1-2 unresolved share-class
+            # variants (e.g. BF-B/BRK-B, where Tiingo/Alpaca coverage differs)
+            # must not block the whole freshness refresh. The frozen research
+            # path below keeps the strict complete-prices gate (anti-leakage).
+            _require_display_prices(tickers, series)
+        else:
+            _require_complete_prices(tickers, series)
         px = pd.DataFrame(series)
         px.to_parquet(px_path)
+        missing_note = (
+            f"; dropped {len(still_missing)} unresolved: {still_missing[:8]}"
+            if args.display and still_missing
+            else ""
+        )
         print(f"[{label}] prices: {px.shape}  still-missing({len(still_missing)}): "
-              f"{still_missing[:12]} -> {px_path}", flush=True)
+              f"{still_missing[:12]} -> {px_path}{missing_note}", flush=True)
 
     print(f"[{label}] FETCH DONE", flush=True)
 

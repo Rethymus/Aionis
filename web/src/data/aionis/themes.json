@@ -6,7 +6,8 @@
     {
       "key": "price",
       "status": "live",
-      "headline": "21d momentum + 63d vol + 252d \u03b2 (cross-sectional mean)",
+      "as_of": "2026-06-30",
+      "headline": "21d momentum + 63d vol + 252d \u03b2 + 21d RSI(\u4e0a\u884c\u5e7f\u5ea6) + 63d timetohigh(\u8ddd\u9ad8\u70b9) (cross-sectional mean)",
       "signals": [
         {
           "name": "momentum_21d",
@@ -23,6 +24,14 @@
         {
           "name": "reversal_5d",
           "value": -0.0188
+        },
+        {
+          "name": "rsi_21d",
+          "value": 0.5334
+        },
+        {
+          "name": "timetohigh_63d",
+          "value": 0.3994
         }
       ],
       "series": [
@@ -79,6 +88,7 @@
     {
       "key": "macro",
       "status": "live",
+      "as_of": "2026-08-04",
       "signals": [
         {
           "name": "macro_regime",
@@ -332,6 +342,7 @@
     {
       "key": "fundamentals",
       "status": "live",
+      "as_of": "2026-06-30",
       "headline": "ROE / margin / revenue growth / leverage (cross-sectional mean)",
       "signals": [
         {
@@ -404,133 +415,16 @@
     },
     {
       "key": "news_sentiment",
-      "status": "live",
-      "as_of": "2026-06",
-      "headline": "GDELT \u901a\u7528\u8bed\u8c03\uff08US \u5e02\u573a\u65b0\u95fb\uff0c2017-04\u21922026-06\uff09\uff1b\u901a\u7528\u8bcd\u5178\u975e\u91d1\u878d\u57df\u2014\u2014\u538b\u529b/\u60c5\u7eea\u4ee3\u7406\uff0c\u975e\u9009\u80a1\u4fe1\u53f7\uff08display-only, exploratory\uff09",
-      "signals": [
-        {
-          "name": "tone_latest",
-          "value": 0.479
-        },
-        {
-          "name": "tone_mean",
-          "value": -0.167
-        },
-        {
-          "name": "tone_min",
-          "value": -1.895
-        },
-        {
-          "name": "volume_latest",
-          "value": 0
-        },
-        {
-          "name": "n_months",
-          "value": 66
-        }
-      ],
-      "series": [
-        {
-          "month": "2022-05",
-          "value": -0.4
-        },
-        {
-          "month": "2022-06",
-          "value": -0.513
-        },
-        {
-          "month": "2022-07",
-          "value": -0.8
-        },
-        {
-          "month": "2023-04",
-          "value": 0.341
-        },
-        {
-          "month": "2023-05",
-          "value": 0.185
-        },
-        {
-          "month": "2023-06",
-          "value": 0.457
-        },
-        {
-          "month": "2023-07",
-          "value": 1.267
-        },
-        {
-          "month": "2023-10",
-          "value": 0.346
-        },
-        {
-          "month": "2023-11",
-          "value": 0.322
-        },
-        {
-          "month": "2023-12",
-          "value": 0.375
-        },
-        {
-          "month": "2024-01",
-          "value": -0.069
-        },
-        {
-          "month": "2024-07",
-          "value": 0.81
-        },
-        {
-          "month": "2024-08",
-          "value": 0.605
-        },
-        {
-          "month": "2024-09",
-          "value": 0.707
-        },
-        {
-          "month": "2024-10",
-          "value": 0.068
-        },
-        {
-          "month": "2025-04",
-          "value": -0.373
-        },
-        {
-          "month": "2025-05",
-          "value": -0.174
-        },
-        {
-          "month": "2025-06",
-          "value": 0.152
-        },
-        {
-          "month": "2026-01",
-          "value": 0.609
-        },
-        {
-          "month": "2026-02",
-          "value": 0.649
-        },
-        {
-          "month": "2026-03",
-          "value": -0.013
-        },
-        {
-          "month": "2026-04",
-          "value": -0.024
-        },
-        {
-          "month": "2026-05",
-          "value": 0.372
-        },
-        {
-          "month": "2026-06",
-          "value": 0.479
-        }
-      ]
+      "status": "forward_only",
+      "headline": "\u65b0\u95fb\u60c5\u7eea\u00b7\u5efa\u8bbe\u4e2d\uff1aGDELT \u5e02\u573a\u65b0\u95fb\u8bed\u8c03\uff08ECON_STOCKMARKET\uff0c2017-04 \u8d77\uff09\u56de\u586b\u8fdb\u884c\u4e2d\uff0c\u672c\u5feb\u7167\u6682\u65e0\u6570\u636e",
+      "as_of": null,
+      "signals": [],
+      "series": []
     },
     {
       "key": "risk",
       "status": "live",
+      "as_of": "2026-06-30",
       "headline": "\u4e0b\u884c\u03b2 + \u7279\u8d28\u6ce2\u52a8 + \u504f\u5ea6 + \u6700\u5927\u5355\u65e5\u56de\u64a4\uff08\u6a2a\u622a\u9762\u5747\u503c\uff09",
       "signals": [
         {
@@ -604,6 +498,7 @@
     {
       "key": "net_cost",
       "status": "partial",
+      "as_of": null,
       "signals": [
         {
           "name": "net_sharpe_bps5",
@@ -624,6 +519,7 @@
     {
       "key": "market_structure",
       "status": "live",
+      "as_of": "2026-06-30",
       "headline": "Amihud illiquidity + 252d \u03b2 (cross-sectional mean)",
       "signals": [
         {
@@ -687,5 +583,5 @@
       ]
     }
   ],
-  "snapshot_ts": "2026-08-11T23:59:34.369008+00:00"
+  "snapshot_ts": "2026-08-12T14:48:38.700876+00:00"
 }
