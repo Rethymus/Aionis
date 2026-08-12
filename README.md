@@ -107,10 +107,22 @@ the honest path.
 
 ---
 
-## Dashboard
+## Dashboard / Terminal
 
-A near-final quant-evaluation interface (Streamlit + plotly), 10 tabs across the
-five analytical dimensions (fit / volatility / curve-evolution / event-study /
+**Research terminal (web, deployed)** — the public face of the project: a
+**validity-argument chain** organized as one falsifiable claim's argument
+(context → evidence → validity → verdict, with the anti-leakage guard spanning the
+whole chain). Every page declares its place on the chain, every number carries
+provenance, and AI contributes interpretation/coverage (never an out-of-sample
+signal — LLM features in the frozen OOS are a known leakage channel). Live at
+<https://rethymus.github.io/Aionis/>; documented in [`web/README.md`](web/README.md).
+
+```bash
+cd web && npm install && npm run dev      # http://localhost:3000
+```
+
+**Quant-evaluation dashboard (local, Streamlit + plotly)** — 10 tabs across the five
+analytical dimensions (fit / volatility / curve-evolution / event-study /
 uncertainty) + horizon-robustness + coverage + strategy-return + run-history:
 
 ```bash
