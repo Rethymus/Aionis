@@ -1,5 +1,10 @@
 # state/current.md — read first each session
 
+- **active (2026-08-12) 续⑩（ThemeCard α 重设计 + 全视觉排查闭环）：** 业主再指"原七主题所有内容 UI 需重设计，当前位置不适配；视觉能力排查所有内容"。**根因（业主正确）**：续⑦我重设计了 ThemesFunnel→ArgumentChainDiagram，但 **ThemeCard 本体**（经 ThemeSlice 渲染于 4 hub tab：regime/picks/confirmation/track）仍带「七主题」时代 legacy——实时/partial/forward_only/needs_work 状态 badge + "源自解散后的旧「七主题」"框定，与 α 论证链不适配。
+  **重设计交付**（`bd77331`，tsc+build 双绿，部署实测）：ThemeCard 从 legacy 状态卡 → **论证段卡**：role badge（语境段/证据段/独立佐证段/裁决段，镜像 argument-chain-diagram 词汇）替代 live/partial；as_of 成为唯一新鲜度信号；sparkline 去饱和（证据形状非正向信号）；删死代码 STATUS_KEY/STATUS_STYLE/StatusKey；`theme.slice.note` 重框定（"每张卡声明其在论证链中的角色"，去"源自解散后的旧"）。
+  **全视觉排查（puppeteer DOM + bundle 实测）**：`/picks#factors` 4 卡 role badge=证据段 实显，legacy "实时/Live" 消失，"源自解散后的旧" 清零；`/themes` 全页（ArgumentChainDiagram 5 段+4 ∴warrant / CoverageMap 5 族 / signals grid α 组标题"证据·行情/价格"）/ 零圆圈数字 / 零定调定标佐证问责角色标签 / 零漏斗·L0-L4·七主题框架串。**代码硬扫**：5 命中全误报（注释 1 + "独立佐证"子串 4，均正确）。**视觉模型 zai 持续 401 不可用**，改 puppeteer DOM 精确文本 + bundle grep（更可靠）。
+  **本轮全闭环**：七主题衍生 UI（widget + card + slice + signals grid）全部 α 化，无 legacy 残面。**边界**：纯 web/src 展示层；0 ledger/frozen/config/OOS 改动。
+
 - **active (2026-08-12) 续⑨（AI 贯彻两轨 + 覆盖地图，全部署验）：** 在续⑧综合方案之上交付 **Track B + Track C** 两个 display-only AI 面（`feea401`+`2ff29aa`，tsc+build 双绿，部署实测渲染正确）。并行 sonnet Explore agent（codebase-local，规避 [1210]）产出**因子覆盖清单**（tested/exploratory/gaps × 5 族 + frozen-surface 边界），驱动 Track C。
   ① **AI 归因卡**（`attribution-card.tsx`，Track B）：读冻结 #49（IC/CI/p/power-floor），纯函数派生 4 条经济叙事（IC 量级、CI 跨零、power-floor 不可达、反泄漏纪律）。接 /track validity 段顶。部署实测 4 点全显（IC -0.0088 / CI[-0.034,0.016] / 半宽 0.034>>SESOI 0.01）。**display-only · 冻结结果** badge + 边界脚注（LLM 进 OOS=泄漏，禁）。确定性无外部调用。
   ② **因子覆盖地图**（`coverage-map.tsx`，Track C）：5 经典族（价值/动量/风险/流动/情绪）× tested/exploratory/gaps，每个 tested 锚冻结 ledger 行（#28/#30/#34/#41），gaps 引经典未测异常（MAX/BAB/52wk-high/coskewness/analyst/short-interest）。接 /themes。部署实测 5 族+gaps 全显。**金融学×市场研究理论**桥：每单元系研究软件工件于资产定价异常。
