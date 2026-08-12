@@ -420,11 +420,129 @@
     },
     {
       "key": "news_sentiment",
-      "status": "forward_only",
-      "headline": "\u65b0\u95fb\u60c5\u7eea\u00b7\u5efa\u8bbe\u4e2d\uff1aGDELT \u5e02\u573a\u65b0\u95fb\u8bed\u8c03\uff08ECON_STOCKMARKET\uff0c2017-04 \u8d77\uff09\u56de\u586b\u8fdb\u884c\u4e2d\uff0c\u672c\u5feb\u7167\u6682\u65e0\u6570\u636e",
-      "as_of": null,
-      "signals": [],
-      "series": []
+      "status": "live",
+      "as_of": "2026-08",
+      "headline": "GDELT \u901a\u7528\u8bed\u8c03\uff08US \u5e02\u573a\u65b0\u95fb\uff0c2017-07\u21922026-08\uff09\uff1b\u901a\u7528\u8bcd\u5178\u975e\u91d1\u878d\u57df\u2014\u2014\u538b\u529b/\u60c5\u7eea\u4ee3\u7406\uff0c\u975e\u9009\u80a1\u4fe1\u53f7\uff08display-only, exploratory\uff09",
+      "signals": [
+        {
+          "name": "tone_latest",
+          "value": 0.586
+        },
+        {
+          "name": "tone_mean",
+          "value": -0.064
+        },
+        {
+          "name": "tone_min",
+          "value": -1.155
+        },
+        {
+          "name": "volume_latest",
+          "value": 0
+        },
+        {
+          "name": "n_months",
+          "value": 65
+        }
+      ],
+      "series": [
+        {
+          "month": "2023-02",
+          "value": -0.307
+        },
+        {
+          "month": "2023-03",
+          "value": -0.299
+        },
+        {
+          "month": "2023-04",
+          "value": 0.341
+        },
+        {
+          "month": "2023-05",
+          "value": 0.185
+        },
+        {
+          "month": "2023-06",
+          "value": 0.457
+        },
+        {
+          "month": "2023-07",
+          "value": 0.806
+        },
+        {
+          "month": "2023-08",
+          "value": 0.557
+        },
+        {
+          "month": "2023-09",
+          "value": 0.458
+        },
+        {
+          "month": "2023-10",
+          "value": 0.899
+        },
+        {
+          "month": "2024-04",
+          "value": 0.698
+        },
+        {
+          "month": "2024-05",
+          "value": 0.625
+        },
+        {
+          "month": "2024-06",
+          "value": 0.755
+        },
+        {
+          "month": "2024-07",
+          "value": 0.621
+        },
+        {
+          "month": "2024-10",
+          "value": 0.63
+        },
+        {
+          "month": "2024-11",
+          "value": 0.649
+        },
+        {
+          "month": "2024-12",
+          "value": 0.51
+        },
+        {
+          "month": "2025-01",
+          "value": 0.688
+        },
+        {
+          "month": "2025-02",
+          "value": 0.782
+        },
+        {
+          "month": "2025-03",
+          "value": 0.461
+        },
+        {
+          "month": "2025-04",
+          "value": -0.373
+        },
+        {
+          "month": "2025-05",
+          "value": -0.174
+        },
+        {
+          "month": "2025-06",
+          "value": 0.152
+        },
+        {
+          "month": "2026-07",
+          "value": 0.441
+        },
+        {
+          "month": "2026-08",
+          "value": 0.586
+        }
+      ]
     },
     {
       "key": "risk",
@@ -588,5 +706,5 @@
       ]
     }
   ],
-  "snapshot_ts": "2026-08-12T19:22:59.805971+00:00"
+  "snapshot_ts": "2026-08-12T23:59:06.887416+00:00"
 }
