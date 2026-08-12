@@ -1,5 +1,13 @@
 # state/current.md — read first each session
 
+- **active (2026-08-12) 续⑫（科学诚实度升级 = 理论锚定 + 冻结审计时间线，display-only，全部署验）：** 续⑪ plateau 后业主 4× 追问"高质量科学选股研究系统"。**判辨修正**：我续⑪ plateau 判定在**IA 结构轴**成立，但在**科学深度轴**不成立——业主四次问的不是"再重排 IA"，是"让终端的科学性配得上其反泄漏纪律"。授权后交付两项 display-only 科学诚实度升级（`f2f3798`，tsc+build 22/22 双绿 + ruff 净 + 78 export/ledger/terminal pytest 绿，部署 run 31605125486 success 验）。
+  **① 因子族理论锚定**（CoverageMap，/themes）：5 经典因子族（价值/动量/风险/流动/情绪）每族新增「理论锚定」行——价值→Fama-French 1993 + Novy-Marx 2013 + Sloan 1996；动量→Jegadeesh-Titman 1993 + De Bondt-Thaler 1985 + George-Hwang 2004；风险→Ang et al 2006/2009 + Bali-Cakici-Whitelaw 2011 + Frazzini-Pedersen 2014；流动→Amihud 2002 + Pastor-Stambaugh 2003 + Sadka 2006；情绪→Baker-Wurgler 2006 + Tetlock 2007 + Garcia 2013。CoverageMap 从"标签"升为"学术锚点"。部署实测 5 锚标题 + 5 经典引用全显，零 legacy。
+  **② 冻结审计时间线**（AuditTimeline，/discipline）：把 Aionis 身份 = `config_committed BEFORE result` 做成**可视化时间表**。新 `export_ledger_audit()`（READ-ONLY，ledger sha256 导出前后不变，实测验）从 54 行 ledger 抽 28 承载裁决行（config_committed/confirmatory:first/oos_result/exploratory/phase_b_freeze）→ `ledger_audit.json`（row/date/event/phase/sha/metric/verdict 最小字段）。每 freeze 行显示 sha256 短哈希先于其 result 行——**反泄漏契约的活体证据**。部署实测 #53 config_committed(b7621e6b, 08-08) → #54 OOS 结果(b7621e6b, 08-09) 同 sha 前后呈现 + verdict "NULL" 实显，28 行表无溢出。
+  **站巨人**：金融学（Fama-French/HLZ/Amihud 经典）× 市场研究理论（Cochrane factor zoo）× 科研软件可审计性（ERC examination + DataONE provenance + QVeris evidence-first）× Aionis 反泄漏身份——跨学科合成是前沿未探索原创领域（续⑪调研确认）。
+  **AI 合规三轨不变**：B 归因✅ / C 覆盖(+理论锚)✅ display-only 已部署；A 因子生成器⏳ owner-GO；禁轨 LLM-in-OOS。
+  **本轮全闭环**：科学深度轴升级到位。两项皆纯展示层，零 ledger/frozen/config/prereg/ADR/OOS 改动（ledger 导出 READ-ONLY sha256 实测验不变），未跑 research/forward，未外发，未触 E3。
+  **下一步业主门**：(a) /themes export 陈旧修（数据刷新 lane，非 web/src）+ (b) Track A 因子生成器（新冻结面）。display-layer 科学诚实度已尽其用。
+
 - **active (2026-08-12) 续⑪（全页视觉审计 + 前沿调研二轮 + display-layer plateau 判定）：** 业主第四次要求"视觉整体排查 + 前沿调研 + 金融×市场理论联动 + AI 深度贯彻 → 高质量科学选股研究系统"。按 `aionis-owner-process-correction`：不做第七轮"重设计"仪式，做诚实审计 + 定向前沿扫 + plateau 判定。
   **全页视觉审计（puppeteer live DOM，7 页）**：dashboard/regime/picks+`#factors`/confirmation/track/discipline/themes **全部无 H 溢出（1280=1280）+ 0 legacy 残留（定调/定标/问责/①-④/L0-L4/funnel/漏斗 全 0 命中）+ α 结构一致（SegmentHeader 脊柱 + provenance + AI 归因 4 点 + CoverageMap + 守卫高亮全部署验）**。续⑧ confirmation min-w-0 修复 + 续⑩ ThemeCard role-badge 重设计**部署正确无回归**。
   **唯一真实内容问题（非 IA bug）**：`/themes` `截至 2026-06-30` 比 regime 8-4 / confirmation 8-7 陈旧 6 周 = **display-panel export 层陈旧**（B1 `themes.json` 未从 `display_panel.parquet` 刷新），属数据刷新 lane 非 `web/src`。本轮 flag 不修（跨 lane）。
