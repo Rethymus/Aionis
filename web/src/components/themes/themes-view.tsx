@@ -221,8 +221,11 @@ export function ThemesView() {
       <header className="space-y-1">
         <h1 className="text-2xl font-bold tracking-tight">{t("themes.title")}</h1>
         <p className="text-sm text-muted-foreground">
-          {t("themes.window")}
-          {th.as_of_date ? ` · ${t("themes.asof")} ${th.as_of_date}` : ""}
+          {th.freshness?.mixed
+            ? `${t("themes.asof")} ${th.freshness.earliest} → ${th.freshness.latest} · ${t("themes.freshness.mixed")}`
+            : th.as_of_date
+              ? `${t("themes.asof")} ${th.as_of_date}`
+              : t("themes.window")}
         </p>
       </header>
 

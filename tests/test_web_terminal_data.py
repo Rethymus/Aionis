@@ -294,6 +294,17 @@ def test_themes_shape() -> None:
     # Methodology must disclose it is not the frozen Track-B research verdict.
     low = th["methodology"].lower()
     assert "not" in low and ("research" in low or "track-b" in low)
+    # Freshness summary: when themes draw from independent sources their as_of
+    # dates legitimately differ (frozen PIT panel vs GDELT/ALFRED). The summary
+    # must surface that range so a visitor doesn't read a single stale top-level
+    # date as "everything is this old" — the macro theme is genuinely fresher.
+    fr = th.get("freshness")
+    assert fr is not None, "themes.json missing freshness summary"
+    assert {"earliest", "latest", "mixed"} <= set(fr)
+    assert isinstance(fr["mixed"], bool)
+    if fr["mixed"]:
+        assert fr["earliest"] and fr["latest"], "mixed freshness must have both bounds"
+        assert fr["earliest"] <= fr["latest"], "earliest must precede latest"
 
 
 # --- TACO pressure index ------------------------------------------------------

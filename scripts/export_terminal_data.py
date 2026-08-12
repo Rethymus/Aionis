@@ -752,9 +752,25 @@ def export_themes() -> None:
         "series": _theme_monthly_series(panel, "amihud_illiquidity_21d", 12),
     }
 
+    # Build the theme list first so we can summarize mixed freshness honestly.
+    # The themes draw from independent sources (price/fundamentals from the
+    # frozen PIT panel, macro from GDELT/ALFRED, net_cost from the bps sweep),
+    # so their as_of dates legitimately differ. A single top-level as_of_date
+    # that mirrors only the frozen panel would mislead a visitor into reading
+    # the macro theme (genuinely fresher) as stale. Surface the full range.
+    theme_list = [price, macro, fundamentals, news, risk, net_cost, market_structure]
+    live_as_ofs = sorted(
+        {t["as_of"] for t in theme_list if t.get("as_of")},
+    )
+    if len(live_as_ofs) <= 1:
+        freshness = {"earliest": live_as_ofs[0] if live_as_ofs else None, "latest": live_as_ofs[0] if live_as_ofs else None, "mixed": False}
+    else:
+        freshness = {"earliest": live_as_ofs[0], "latest": live_as_ofs[-1], "mixed": True}
+
     payload = {
         "status": "ok",
         "as_of_date": str(as_of.date()),
+        "freshness": freshness,
         "methodology": (
             "Seven-theme signal overview (display-only, NOT a research claim). "
             "Aggregates are cross-sectional means over the S&P 500 PIT panel at "
@@ -763,7 +779,7 @@ def export_themes() -> None:
             "forward_only / needs_work / partial have no real historical signal "
             "yet — shown honestly, never mocked. Not the frozen Track-B verdict."
         ),
-        "themes": [price, macro, fundamentals, news, risk, net_cost, market_structure],
+        "themes": theme_list,
     }
     (WEB / "themes.json").write_text(json.dumps(_stamp(payload), indent=2, default=str))
 
