@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { aionis, type Evidence } from "@/data/aionis";
 import type { DictKey } from "@/i18n/dict";
+import Link from "next/link";
 
 function gradeStyle(grade: Evidence["grade"]): {
   labelKey: DictKey;
@@ -54,6 +55,12 @@ function Stat({ label, value, tone }: { label: string; value: number; tone: "mut
 export function EvidenceView() {
   const { t } = useI18n();
   const ev = aionis.evidence;
+  // The CONFIRMATORY climax card (#15, estimate -0.0088) IS ledger row #49 —
+  // the headline claim. Surface its ledger provenance so the card links to the
+  // same birth certificate the hero anchor shows.
+  const headline = aionis.headlineProvenance;
+  const headlineRow =
+    headline && headline.status === "ok" ? headline.ledger_row : undefined;
   const counts = {
     total: ev.length,
     confirmatory: ev.filter((e) => e.grade === "CONFIRMATORY").length,
@@ -80,6 +87,8 @@ export function EvidenceView() {
           const g = gradeStyle(e.grade);
           const hasCI = e.ci_lo !== null && e.ci_hi !== null;
           const bracketsZero = hasCI && e.ci_lo! < 0 && e.ci_hi! > 0;
+          // The confirmatory climax card carries the frozen provenance chip.
+          const isHeadline = e.grade === "CONFIRMATORY" && headlineRow !== undefined;
           return (
             <Card key={e.n} className="overflow-hidden">
               <CardHeader className="gap-2">
@@ -112,6 +121,14 @@ export function EvidenceView() {
                   {e.p !== null ? <span className="tabular-nums">p = {e.p.toFixed(3)}</span> : null}
                   <span className="tabular-nums">{e.n_months} mo</span>
                 </div>
+                {isHeadline ? (
+                  <Link
+                    href="/discipline"
+                    className="inline-flex items-center gap-1 pt-1 text-[10px] font-medium text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    ledger #{headlineRow} · frozen config → /discipline
+                  </Link>
+                ) : null}
               </CardContent>
             </Card>
           );

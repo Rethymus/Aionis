@@ -97,7 +97,15 @@ export function AuditTimeline() {
                     <td className="py-1.5 pr-2 font-mono text-muted-foreground">{e.phase || "—"}</td>
                     <td className="py-1.5 pr-2 font-mono text-[10px] text-muted-foreground/70">{e.config_sig_short || "—"}</td>
                     <td className="py-1.5 pr-2 font-mono text-[10px] text-foreground/70">{e.metric || "—"}</td>
-                    <td className="py-1.5 text-muted-foreground">{e.verdict ? <span className="line-clamp-2">{e.verdict}</span> : "—"}</td>
+                    <td className="py-1.5 pr-2 text-muted-foreground">
+                      {e.verdict ? (
+                        <span className="line-clamp-2">{e.verdict}</span>
+                      ) : e.h6 === true ? (
+                        <span className="font-mono text-[10px] text-emerald-600 dark:text-emerald-400">H6 PASS</span>
+                      ) : (
+                        "—"
+                      )}
+                    </td>
                   </tr>
                 );
               })}

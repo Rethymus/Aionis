@@ -331,3 +331,88 @@ def test_smart_money_yearly_when_present() -> None:
         for y in yearly:
             assert {"year", "filings"} <= set(y)
             assert isinstance(y["filings"], int) and y["filings"] >= 0
+
+
+# --- Headline provenance + audit-integrity (frozen-config birth certificate) --
+
+
+def test_metrics_latest_month_is_clean_iso_date() -> None:
+    """The hero payload's latest_month must be a clean YYYY-MM-DD string.
+
+    Regression: export_picks once returned ``str(...date)`` where ``.date`` is a
+    bound method on Timestamp, producing the Python repr
+    ``<bound method Timestamp.date of Timestamp(...)`` into the hero payload.
+    """
+    m = _load("metrics.json")
+    lm = m.get("latest_month", "")
+    assert isinstance(lm, str), "latest_month must be a string"
+    assert "bound method" not in lm, f"latest_month leaked a Python repr: {lm!r}"
+    assert "<" not in lm and ">" not in lm, f"latest_month contains angle brackets: {lm!r}"
+    # Must parse as an ISO date (YYYY-MM-DD).
+    parts = lm.split("-")
+    assert len(parts) == 3 and all(p.isdigit() for p in parts), f"not ISO YYYY-MM-DD: {lm!r}"
+
+
+def test_ledger_audit_climax_row_carries_verdict_and_metric() -> None:
+    """The confirmatory climax row must carry its real metric + verdict.
+
+    Regression: export_ledger_audit only handled a flat combined_ic scalar, but
+    the climax row stores IC as a nested combined_ic.mean dict, so its metric
+    rendered empty and the headline claim was mute in its own audit timeline.
+    """
+    audit = _load("ledger_audit.json")
+    entries = audit.get("entries", [])
+    confirmatory = [e for e in entries if e.get("event") == "confirmatory:first"]
+    assert confirmatory, "ledger audit has no confirmatory:first row"
+    climax = confirmatory[-1]
+    assert climax.get("metric"), "climax row metric is empty (nested-dict extraction regression)"
+    assert climax.get("verdict"), "climax row verdict is empty"
+    assert climax.get("h6") is True, "climax row must assert H6 determinism"
+    assert "combined_IC=" in climax["metric"], f"unexpected metric format: {climax['metric']}"
+
+
+def test_headline_provenance_freeze_before_result() -> None:
+    """The headline claim's birth certificate must prove freeze-before-result.
+
+    The hero number (combined rank-IC) is tied to its ledger row and to the
+    config_committed row sharing its sha256 that was written BEFORE the result.
+    This is the anti-leakage contract surfaced at the point of the claim.
+    """
+    p = _load("headline_provenance.json")
+    assert p["status"] == "ok", "headline provenance should be resolved"
+    h = p["headline"]
+    assert h["combined_ic"] is not None and isinstance(h["combined_ic"], float)
+    assert h["h6_deterministic"] is True
+    assert h["jt_look1"] == "NOT_EQUIVALENT"
+    freeze = p["freeze"]
+    assert freeze is not None, "freeze row must be present"
+    # Same sha256 prefix shared by freeze + result = the same frozen config.
+    assert p["config_sig_short"] == freeze["config_sig_short"], (
+        "freeze and result config sigs must match (same frozen config)"
+    )
+    # Freeze row precedes result row in the ledger.
+    assert freeze["ledger_row"] < p["ledger_row"], (
+        "freeze row must precede result row (config_committed BEFORE result)"
+    )
+    # The contract flag is the terminal-facing summary of the above checks.
+    assert p["contract"]["freeze_before_result"] is True
+
+
+def test_ledger_append_only_not_mutated_by_export() -> None:
+    """The ledger file must be unchanged by the READ-ONLY audit exports.
+
+    These exports project runs/ledger.jsonl into browser JSON; they must never
+    rewrite the append-only audit log. Guard the file's committed state.
+    """
+    import hashlib
+
+    ledger = Path("runs/ledger.jsonl")
+    if not ledger.exists():
+        return  # fresh CI checkout may lack the gitignored ledger
+    digest = hashlib.sha256(ledger.read_bytes()).hexdigest()
+    # Snapshot the known-good committed digest. If the ledger legitimately grows
+    # (a new research row is appended) this will fail — that is correct: a human
+    # must re-pin it after verifying the new row is append-only.
+    assert digest == "44157b5b0d47b4838bec53d3b1509ff2ed29a808683072a79b44693a636f70ee", (
+        f"ledger sha256 changed to {digest}; re-verify append-only then re-pin"
+    )

@@ -191,7 +191,10 @@ def export_picks() -> tuple[str, int]:
     }
     (WEB / "picks_meta.json").write_text(json.dumps(meta_payload, indent=2, default=str))
 
-    return str(pd.Timestamp(calibration["latest_date"]).date), len(picks) + len(shorts)
+    # Use .strftime (not .date) — `.date` is a bound method on Timestamp, so
+    # str(...date) would serialize the repr "<bound method Timestamp.date ...>"
+    # and leak a Python-internal string into the hero payload.
+    return pd.Timestamp(calibration["latest_date"]).strftime("%Y-%m-%d"), len(picks) + len(shorts)
 
 
 def export_sector_breakdown() -> None:
@@ -1474,8 +1477,14 @@ def export_ledger_audit() -> None:
         if event not in CLAIM_EVENTS:
             continue
         sig = row.get("config_sig") or ""
-        # Verdict/result extraction (two shapes: flat confirmatory row vs nested
-        # oos_result with a result dict; exploratory rows carry notes only).
+        # Verdict/result extraction across the three real ledger shapes:
+        #   (a) confirmatory:first — flat row with nested combined_ic.mean +
+        #       jt_gate.look1_verdict (e.g. the climax #49 headline claim).
+        #   (b) oos_result — a nested `result` dict with verdict + ic_diff_hac.
+        #   (c) exploratory — flat top-level mean_diff / no verdict (notes only).
+        # The prior version only handled (b) and a flat combined_ic scalar, which
+        # is why the climax row #49 rendered with an empty metric: its IC is a
+        # nested dict, not a scalar. Covering (a) makes the headline claim audible.
         verdict = ""
         metric = ""
         result = row.get("result")
@@ -1484,11 +1493,20 @@ def export_ledger_audit() -> None:
             diff = result.get("ic_diff_hac")
             if isinstance(diff, dict) and "mean" in diff:
                 metric = f"IC_diff={diff['mean']:.4f} (p={diff.get('p', '?')})"
-        elif row.get("combined_ic") is not None:
-            ic = row["combined_ic"]
-            metric = f"combined_IC={ic:.4f}" if isinstance(ic, (int, float)) else ""
-        elif isinstance(row.get("mean_diff"), (int, float)):
-            metric = f"mean_diff={row['mean_diff']:.4f}"
+        else:
+            cic = row.get("combined_ic")
+            if isinstance(cic, dict) and "mean" in cic:
+                p_hac = cic.get("p_hac")
+                p_str = f"{p_hac:.3f}" if isinstance(p_hac, (int, float)) else "?"
+                metric = f"combined_IC={cic['mean']:.4f} (p={p_str})"
+                jt = row.get("jt_gate") or {}
+                look1 = jt.get("look1_verdict")
+                verdict = look1 or verdict
+            elif isinstance(cic, (int, float)):
+                metric = f"combined_IC={cic:.4f}"
+            elif isinstance(row.get("mean_diff"), (int, float)):
+                metric = f"mean_diff={row['mean_diff']:.4f}"
+        h6 = row.get("H6_deterministic")
         entries.append(
             {
                 "row": i,
@@ -1498,6 +1516,7 @@ def export_ledger_audit() -> None:
                 "config_sig_short": sig[:8] if sig else "",
                 "verdict": verdict,
                 "metric": metric,
+                "h6": bool(h6) if isinstance(h6, bool) else None,
                 "frozen_before_result": event == "config_committed",
             }
         )
@@ -1512,6 +1531,107 @@ def export_ledger_audit() -> None:
         ),
     }
     (WEB / "ledger_audit.json").write_text(json.dumps(_stamp(payload), indent=2, default=str))
+
+
+def export_headline_provenance() -> None:
+    """Export the birth certificate of the headline claim (READ-ONLY).
+
+    The terminal's hero number is ``combined rank-IC = -0.0088`` (ledger #49).
+    Surfacing that number without its provenance leaves it un-anchored — a
+    visitor cannot tell *which* frozen config produced it, *whether* the config
+    was committed before the result, or *whether* H6 determinism holds. This
+    export ties the hero metric to its exact ledger row, its freezing row (the
+    config_committed that precedes it with the same sha256), and the empirical
+    ts ordering that proves ``config_committed BEFORE result``. It never mutates
+    the ledger; it only projects existing rows into a browser-renderable bundle.
+
+    Resilient: scans for the first ``confirmatory:first`` row (does not hardcode
+    a row number — those drift as the ledger grows), then pairs it with the last
+    ``config_committed`` row sharing its sha256. Absent any confirmatory row, it
+    emits a ``status: "awaiting_confirmatory"`` bundle so the hero degrades
+    honestly rather than rendering a stale/hardcoded certificate.
+    """
+    ledger_path = Path("runs/ledger.jsonl")
+    if not ledger_path.exists():
+        return
+    rows: list[tuple[int, dict]] = []
+    for i, line in enumerate(ledger_path.read_text().splitlines(), start=1):
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            rows.append((i, json.loads(line)))
+        except json.JSONDecodeError:
+            continue
+    if not rows:
+        return
+
+    def _find(sig: str, event: str, *, before_row: int | None = None) -> tuple[int, dict] | None:
+        candidates = [(r, d) for r, d in rows if d.get("event") == event]
+        if sig:
+            candidates = [(r, d) for r, d in candidates if (d.get("config_sig") or "").startswith(sig)]
+        if before_row is not None:
+            candidates = [(r, d) for r, d in candidates if r < before_row]
+        return candidates[-1] if candidates else None
+
+    result = _find("", "confirmatory:first")
+    if result is None:
+        # No confirmatory claim yet — degrade honestly.
+        (WEB / "headline_provenance.json").write_text(
+            json.dumps(_stamp({"status": "awaiting_confirmatory"}), indent=2, default=str)
+        )
+        return
+    result_row, result_d = result
+    sig_full = result_d.get("config_sig") or ""
+    freeze = _find(sig_full, "config_committed", before_row=result_row)
+    cic = result_d.get("combined_ic")
+    jt = result_d.get("jt_gate") or {}
+
+    def _num(v: object) -> float | None:
+        return float(v) if isinstance(v, (int, float)) else None
+
+    payload = {
+        "status": "ok",
+        "ledger_row": result_row,
+        "phase": result_d.get("phase", ""),
+        "config_sig_short": sig_full[:8] if sig_full else "",
+        "config_sig_source": result_d.get("config_sig_source", ""),
+        "result_ts": result_d.get("ts", ""),
+        "result_event": result_d.get("event", ""),
+        "freeze": None,
+        "headline": {
+            "combined_ic": _num(cic.get("mean")) if isinstance(cic, dict) else None,
+            "p_hac": _num(cic.get("p_hac")) if isinstance(cic, dict) else None,
+            "ci_lo": _num(cic.get("ci_95_half") and cic["mean"] - cic["ci_95_half"]) if isinstance(cic, dict) else None,
+            "ci_hi": _num(cic.get("ci_95_half") and cic["mean"] + cic["ci_95_half"]) if isinstance(cic, dict) else None,
+            "n_months": _num(result_d.get("n_months_ic") or (cic.get("n") if isinstance(cic, dict) else None)),
+            "jt_look1": jt.get("look1_verdict", ""),
+            "h6_deterministic": bool(result_d.get("H6_deterministic")),
+        },
+        # The contract in numbers: freeze ts precedes result ts. We surface the
+        # raw ts so the terminal can render the gap explicitly.
+        "contract": {"freeze_before_result": False, "note": ""},
+    }
+    if freeze is not None:
+        freeze_row, freeze_d = freeze
+        payload["freeze"] = {
+            "ledger_row": freeze_row,
+            "ts": freeze_d.get("ts", ""),
+            "event": freeze_d.get("event", ""),
+            "config_sig_short": (freeze_d.get("config_sig") or "")[:8],
+        }
+        # Same sha256 + earlier ts = the contract proven on THIS headline.
+        same_sig = bool(sig_full) and (freeze_d.get("config_sig") or "").startswith(sig_full[:8])
+        earlier = freeze_d.get("ts", "") <= result_d.get("ts", "")
+        payload["contract"] = {
+            "freeze_before_result": bool(same_sig and earlier),
+            "note": (
+                "freeze sha256 == result sha256, and freeze ts precedes result ts"
+                if same_sig and earlier
+                else "ordering could not be verified"
+            ),
+        }
+    (WEB / "headline_provenance.json").write_text(json.dumps(_stamp(payload), indent=2, default=str))
 
 
 def _safe_export(name: str, fn, /, *args, **kwargs):
@@ -1568,6 +1688,7 @@ def main() -> None:
     _safe_export("smart_money", export_smart_money)
     _safe_export("reddit_meta", export_reddit_meta)
     _safe_export("ledger_audit", export_ledger_audit)
+    _safe_export("headline_provenance", export_headline_provenance)
     written = sorted(p.name for p in WEB.glob("*.json"))
     print(f"[export-terminal] wrote {len(written)} files to {WEB}/: {written}", flush=True)
 

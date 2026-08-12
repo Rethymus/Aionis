@@ -22,6 +22,7 @@ import themeSignals from "./theme_signals.json";
 import macroDrivers from "./macro_drivers.json";
 import themes from "./themes.json";
 import ledgerAudit from "./ledger_audit.json";
+import headlineProvenance from "./headline_provenance.json";
 
 export type Pick = {
   rank: number;
@@ -151,6 +152,7 @@ export type LedgerAuditEntry = {
   config_sig_short: string;
   verdict: string;
   metric: string;
+  h6: boolean | null;
   frozen_before_result: boolean;
 };
 
@@ -159,6 +161,36 @@ export type LedgerAudit = {
   n_total_rows: number;
   n_claim_rows: number;
   identity_note: string;
+  snapshot_ts?: string;
+};
+
+export type HeadlineProvenance = {
+  status: string;
+  ledger_row?: number;
+  phase?: string;
+  config_sig_short?: string;
+  config_sig_source?: string;
+  result_ts?: string;
+  result_event?: string;
+  freeze?: {
+    ledger_row: number;
+    ts: string;
+    event: string;
+    config_sig_short: string;
+  } | null;
+  headline?: {
+    combined_ic: number | null;
+    p_hac: number | null;
+    ci_lo: number | null;
+    ci_hi: number | null;
+    n_months: number | null;
+    jt_look1: string;
+    h6_deterministic: boolean;
+  };
+  contract?: {
+    freeze_before_result: boolean;
+    note: string;
+  };
   snapshot_ts?: string;
 };
 
@@ -187,4 +219,5 @@ export const aionis = {
   macroDrivers: macroDrivers as MacroDrivers,
   themes: themes as typeof themes,
   ledgerAudit: ledgerAudit as LedgerAudit,
+  headlineProvenance: headlineProvenance as HeadlineProvenance,
 };

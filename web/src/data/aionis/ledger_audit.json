@@ -8,6 +8,7 @@
       "config_sig_short": "",
       "verdict": "",
       "metric": "",
+      "h6": null,
       "frozen_before_result": false
     },
     {
@@ -18,6 +19,7 @@
       "config_sig_short": "17245a75",
       "verdict": "",
       "metric": "",
+      "h6": null,
       "frozen_before_result": true
     },
     {
@@ -28,6 +30,7 @@
       "config_sig_short": "17245a75",
       "verdict": "",
       "metric": "",
+      "h6": true,
       "frozen_before_result": false
     },
     {
@@ -38,6 +41,7 @@
       "config_sig_short": "a7fdb48f",
       "verdict": "",
       "metric": "",
+      "h6": null,
       "frozen_before_result": true
     },
     {
@@ -48,6 +52,7 @@
       "config_sig_short": "a7fdb48f",
       "verdict": "",
       "metric": "",
+      "h6": true,
       "frozen_before_result": false
     },
     {
@@ -58,6 +63,7 @@
       "config_sig_short": "",
       "verdict": "",
       "metric": "",
+      "h6": null,
       "frozen_before_result": false
     },
     {
@@ -68,6 +74,7 @@
       "config_sig_short": "",
       "verdict": "",
       "metric": "",
+      "h6": null,
       "frozen_before_result": false
     },
     {
@@ -78,6 +85,7 @@
       "config_sig_short": "d3158063",
       "verdict": "",
       "metric": "",
+      "h6": null,
       "frozen_before_result": true
     },
     {
@@ -88,6 +96,7 @@
       "config_sig_short": "d3158063",
       "verdict": "",
       "metric": "",
+      "h6": true,
       "frozen_before_result": false
     },
     {
@@ -98,6 +107,7 @@
       "config_sig_short": "ef321e9e",
       "verdict": "",
       "metric": "",
+      "h6": null,
       "frozen_before_result": true
     },
     {
@@ -108,6 +118,7 @@
       "config_sig_short": "",
       "verdict": "",
       "metric": "",
+      "h6": null,
       "frozen_before_result": false
     },
     {
@@ -118,6 +129,7 @@
       "config_sig_short": "ef321e9e",
       "verdict": "",
       "metric": "",
+      "h6": true,
       "frozen_before_result": false
     },
     {
@@ -128,6 +140,7 @@
       "config_sig_short": "",
       "verdict": "",
       "metric": "",
+      "h6": null,
       "frozen_before_result": false
     },
     {
@@ -138,6 +151,7 @@
       "config_sig_short": "",
       "verdict": "",
       "metric": "",
+      "h6": null,
       "frozen_before_result": false
     },
     {
@@ -148,6 +162,7 @@
       "config_sig_short": "7a13579e",
       "verdict": "",
       "metric": "",
+      "h6": null,
       "frozen_before_result": true
     },
     {
@@ -158,6 +173,7 @@
       "config_sig_short": "bf620bdf",
       "verdict": "",
       "metric": "",
+      "h6": null,
       "frozen_before_result": true
     },
     {
@@ -168,6 +184,7 @@
       "config_sig_short": "9af9e8b6",
       "verdict": "",
       "metric": "",
+      "h6": null,
       "frozen_before_result": true
     },
     {
@@ -178,6 +195,7 @@
       "config_sig_short": "0b0b9934",
       "verdict": "",
       "metric": "",
+      "h6": null,
       "frozen_before_result": true
     },
     {
@@ -188,6 +206,7 @@
       "config_sig_short": "43ff0e15",
       "verdict": "",
       "metric": "",
+      "h6": null,
       "frozen_before_result": true
     },
     {
@@ -198,6 +217,7 @@
       "config_sig_short": "22817980",
       "verdict": "",
       "metric": "",
+      "h6": null,
       "frozen_before_result": true
     },
     {
@@ -208,6 +228,7 @@
       "config_sig_short": "758ca4d7",
       "verdict": "",
       "metric": "",
+      "h6": null,
       "frozen_before_result": true
     },
     {
@@ -218,6 +239,7 @@
       "config_sig_short": "252cf7df",
       "verdict": "",
       "metric": "",
+      "h6": null,
       "frozen_before_result": true
     },
     {
@@ -228,6 +250,7 @@
       "config_sig_short": "e14b9d44",
       "verdict": "",
       "metric": "",
+      "h6": null,
       "frozen_before_result": true
     },
     {
@@ -236,8 +259,9 @@
       "event": "confirmatory:first",
       "phase": "track_c",
       "config_sig_short": "e14b9d44",
-      "verdict": "",
-      "metric": "",
+      "verdict": "NOT_EQUIVALENT",
+      "metric": "combined_IC=-0.0088 (p=0.484)",
+      "h6": true,
       "frozen_before_result": false
     },
     {
@@ -248,6 +272,7 @@
       "config_sig_short": "892fb506",
       "verdict": "",
       "metric": "",
+      "h6": null,
       "frozen_before_result": true
     },
     {
@@ -258,6 +283,7 @@
       "config_sig_short": "ffd0c922",
       "verdict": "",
       "metric": "",
+      "h6": null,
       "frozen_before_result": true
     },
     {
@@ -268,6 +294,7 @@
       "config_sig_short": "b7621e6b",
       "verdict": "",
       "metric": "",
+      "h6": null,
       "frozen_before_result": true
     },
     {
@@ -278,11 +305,12 @@
       "config_sig_short": "b7621e6b",
       "verdict": "NULL (IC_diff -0.0037, p=0.26, CI crosses zero; adaptive weekly refit slightly WORSE than truly-frozen, not better; expected null per power floor + GKX update-f",
       "metric": "IC_diff=-0.0037 (p=0.2563)",
+      "h6": null,
       "frozen_before_result": false
     }
   ],
   "n_total_rows": 54,
   "n_claim_rows": 28,
   "identity_note": "config_committed rows always precede their matching result row in this timeline \u2014 that ordering is the anti-leakage contract: the frozen config's sha256 is logged before any OOS metric is observed.",
-  "snapshot_ts": "2026-08-12T09:34:13.526161+00:00"
+  "snapshot_ts": "2026-08-12T14:21:01.418920+00:00"
 }

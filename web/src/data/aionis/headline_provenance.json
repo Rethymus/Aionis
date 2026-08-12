@@ -1,0 +1,29 @@
+{
+  "status": "ok",
+  "ledger_row": 49,
+  "phase": "track_c",
+  "config_sig_short": "e14b9d44",
+  "config_sig_source": "track_c_amend2.build_amendment() (#46+#47+#48 cumulative)",
+  "result_ts": "2026-08-05T10:27:13.421731+00:00",
+  "result_event": "confirmatory:first",
+  "freeze": {
+    "ledger_row": 48,
+    "ts": "2026-08-05T04:19:50.785179+00:00",
+    "event": "config_committed",
+    "config_sig_short": "e14b9d44"
+  },
+  "headline": {
+    "combined_ic": -0.008840749458819833,
+    "p_hac": 0.48377253118952823,
+    "ci_lo": -0.03358563149479441,
+    "ci_hi": 0.015904132577154742,
+    "n_months": 71.0,
+    "jt_look1": "NOT_EQUIVALENT",
+    "h6_deterministic": true
+  },
+  "contract": {
+    "freeze_before_result": true,
+    "note": "freeze sha256 == result sha256, and freeze ts precedes result ts"
+  },
+  "snapshot_ts": "2026-08-12T14:22:16.228753+00:00"
+}

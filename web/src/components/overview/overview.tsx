@@ -26,6 +26,7 @@ import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
 import type { DictKey } from "@/i18n/dict";
 import { ResearchGlance } from "./research-glance";
+import { ProvenanceAnchor } from "./provenance-anchor";
 
 // Paradigm α — the Overview IS the validity-argument chain, not a collage with
 // a chain buried at the bottom. The composition leads with the verdict (the
@@ -299,6 +300,9 @@ export function Overview() {
       <Hero />
       {/* The verdict is the anchor — everything else is the argument for it. */}
       <VerdictAnchor />
+      {/* The verdict's birth certificate: which frozen config produced it, and
+          that the config was committed before the result was observed. */}
+      <ProvenanceAnchor />
       <ArgumentChain />
       {/* Why-null + what-was-tested, at a glance (deep-dives on /track, /themes). */}
       <ResearchGlance />
