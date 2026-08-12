@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
 import { ArgumentChainDiagram } from "./argument-chain-diagram";
+import { CoverageMap } from "@/components/ai/coverage-map";
 import { SegmentHeader } from "@/components/segment-header";
 import { ShieldCheckIcon } from "lucide-react";
 
@@ -225,6 +226,8 @@ export function ThemesView() {
       </header>
 
       <ArgumentChainDiagram />
+
+      <CoverageMap />
 
       {/* Operationalized signals: direction × strength × favored (the actionable read) */}
       {ts.status === "ok" && sigEntries.length > 0 ? (
