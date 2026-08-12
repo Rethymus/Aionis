@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle2Icon } from "lucide-react";
 import { useI18n } from "@/i18n/provider";
 import { cn } from "@/lib/utils";
+import { AuditTimeline } from "./audit-timeline";
 
 type Item = {
   title: string;
@@ -54,6 +55,8 @@ export function DisciplineView() {
           </Card>
         ))}
       </div>
+
+      <AuditTimeline />
     </div>
   );
 }

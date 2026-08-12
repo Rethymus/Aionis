@@ -1436,6 +1436,84 @@ def export_macro_drivers() -> None:
     (WEB / "macro_drivers.json").write_text(json.dumps(_stamp(payload), indent=2))
 
 
+def export_ledger_audit() -> None:
+    """Export a curated audit timeline of runs/ledger.jsonl (READ-ONLY).
+
+    This surfaces Aionis's defining identity — ``config_committed BEFORE
+    result`` — as a chronological, browser-renderable timeline on /discipline.
+    It extracts only the claim-bearing rows (config_committed, confirmatory:first,
+    oos_result, exploratory verdicts) and their minimal display fields; it never
+    mutates the ledger (the append-only audit log is sacred). Non-claim rows
+    (pre-run mocks, transient annotations) are skipped to keep the display honest
+    and focused.
+    """
+    ledger_path = Path("runs/ledger.jsonl")
+    if not ledger_path.exists():
+        return
+    # Events that carry a claim or a frozen-config commitment. Everything else
+    # (prereg_reframe, universe_crosscheck, data_ingest, mock trials) is
+    # scaffolding — omitting it keeps the timeline focused on what was frozen
+    # and what the verdict was, not the bookkeeping.
+    CLAIM_EVENTS = {
+        "config_committed",
+        "confirmatory:first",
+        "oos_result",
+        "exploratory",
+        "phase_b_freeze",
+    }
+    entries: list[dict] = []
+    for i, line in enumerate(ledger_path.read_text().splitlines(), start=1):
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            row = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        event = row.get("event", "")
+        if event not in CLAIM_EVENTS:
+            continue
+        sig = row.get("config_sig") or ""
+        # Verdict/result extraction (two shapes: flat confirmatory row vs nested
+        # oos_result with a result dict; exploratory rows carry notes only).
+        verdict = ""
+        metric = ""
+        result = row.get("result")
+        if isinstance(result, dict):
+            verdict = str(result.get("verdict", ""))[:160]
+            diff = result.get("ic_diff_hac")
+            if isinstance(diff, dict) and "mean" in diff:
+                metric = f"IC_diff={diff['mean']:.4f} (p={diff.get('p', '?')})"
+        elif row.get("combined_ic") is not None:
+            ic = row["combined_ic"]
+            metric = f"combined_IC={ic:.4f}" if isinstance(ic, (int, float)) else ""
+        elif isinstance(row.get("mean_diff"), (int, float)):
+            metric = f"mean_diff={row['mean_diff']:.4f}"
+        entries.append(
+            {
+                "row": i,
+                "ts": row.get("ts", "")[:10],
+                "event": event,
+                "phase": row.get("phase", ""),
+                "config_sig_short": sig[:8] if sig else "",
+                "verdict": verdict,
+                "metric": metric,
+                "frozen_before_result": event == "config_committed",
+            }
+        )
+    payload = {
+        "entries": entries,
+        "n_total_rows": i,
+        "n_claim_rows": len(entries),
+        "identity_note": (
+            "config_committed rows always precede their matching result row in "
+            "this timeline — that ordering is the anti-leakage contract: the "
+            "frozen config's sha256 is logged before any OOS metric is observed."
+        ),
+    }
+    (WEB / "ledger_audit.json").write_text(json.dumps(_stamp(payload), indent=2, default=str))
+
+
 def _safe_export(name: str, fn, /, *args, **kwargs):
     """Best-effort guard for the daily CI refresh.
 
@@ -1489,6 +1567,7 @@ def main() -> None:
     _safe_export("macro_drivers", export_macro_drivers)
     _safe_export("smart_money", export_smart_money)
     _safe_export("reddit_meta", export_reddit_meta)
+    _safe_export("ledger_audit", export_ledger_audit)
     written = sorted(p.name for p in WEB.glob("*.json"))
     print(f"[export-terminal] wrote {len(written)} files to {WEB}/: {written}", flush=True)
 

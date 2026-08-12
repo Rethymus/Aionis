@@ -21,6 +21,7 @@ import calibrationReliability from "./calibration_reliability.json";
 import themeSignals from "./theme_signals.json";
 import macroDrivers from "./macro_drivers.json";
 import themes from "./themes.json";
+import ledgerAudit from "./ledger_audit.json";
 
 export type Pick = {
   rank: number;
@@ -117,8 +118,7 @@ export type ThemeSignals = {
   };
 };
 
-export type MacroDrivers = {
-  status: string;
+export type MacroDrivers = {  status: string;
   series: {
     [key: string]: { month: string; value: number }[];
   };
@@ -141,6 +141,25 @@ export type SmartMoney = {
   n_filers: number;
   latest_date: string | null;
   yearly: { year: number; filings: number }[];
+};
+
+export type LedgerAuditEntry = {
+  row: number;
+  ts: string;
+  event: string;
+  phase: string;
+  config_sig_short: string;
+  verdict: string;
+  metric: string;
+  frozen_before_result: boolean;
+};
+
+export type LedgerAudit = {
+  entries: LedgerAuditEntry[];
+  n_total_rows: number;
+  n_claim_rows: number;
+  identity_note: string;
+  snapshot_ts?: string;
 };
 
 export const aionis = {
@@ -167,4 +186,5 @@ export const aionis = {
   themeSignals: themeSignals as ThemeSignals,
   macroDrivers: macroDrivers as MacroDrivers,
   themes: themes as typeof themes,
+  ledgerAudit: ledgerAudit as LedgerAudit,
 };

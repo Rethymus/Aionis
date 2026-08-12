@@ -36,6 +36,12 @@ type FamilyRow = {
   exploratory: string[]; // features exist, no confirmatory row
   gaps: string[]; // canonical anomalies absent (factor zoo)
   cite?: string; // ledger/config citation
+  anchorKey: // canonical finance-literature grounding for this family
+    | "coverage.anchor.value"
+    | "coverage.anchor.momentum"
+    | "coverage.anchor.risk"
+    | "coverage.anchor.liquidity"
+    | "coverage.anchor.sentiment";
 };
 
 const FAMILIES: FamilyRow[] = [
@@ -46,6 +52,7 @@ const FAMILIES: FamilyRow[] = [
     exploratory: ["asset_growth (Track B)", "investment_12m (Track B)"],
     gaps: ["gross profitability (Novy-Marx GP)", "net stock issues (Pontiff-Singh)", "accruals anomaly (Sloan, standalone)"],
     cite: "ledger #28 / Track B #41",
+    anchorKey: "coverage.anchor.value",
   },
   {
     familyKey: "coverage.family.momentum",
@@ -54,6 +61,7 @@ const FAMILIES: FamilyRow[] = [
     exploratory: [],
     gaps: ["J-T 12-1 momentum", "industry momentum (Moskowitz-Grinblatt)", "52-week high (George-Hwang)", "customer momentum (Cohen-Frazzini)"],
     cite: "Track B #41 / Phase D #34",
+    anchorKey: "coverage.anchor.momentum",
   },
   {
     familyKey: "coverage.family.risk",
@@ -62,6 +70,7 @@ const FAMILIES: FamilyRow[] = [
     exploratory: ["downside_beta", "idiosyncratic_vol", "return_skew", "worst_day_dd", "FF5 betas (mkt/smb/hml/rmw/cma)"],
     gaps: ["MAX (Bali-Cakici-Whitelaw)", "coskewness / cokurtosis", "BAB (Frazzini-Pedersen)", "Pastor-Stambaugh liquidity", "IV spread"],
     cite: "risk_factors.py (defined, unconfirmed)",
+    anchorKey: "coverage.anchor.risk",
   },
   {
     familyKey: "coverage.family.liquidity",
@@ -70,6 +79,7 @@ const FAMILIES: FamilyRow[] = [
     exploratory: [],
     gaps: ["PIN / VPIN", "order imbalance", "short interest (Rapach-Ringgenberg)", "Sadka transient/permanent"],
     cite: "Track B #41 / Phase D #34",
+    anchorKey: "coverage.anchor.liquidity",
   },
   {
     familyKey: "coverage.family.sentiment",
@@ -78,6 +88,7 @@ const FAMILIES: FamilyRow[] = [
     exploratory: ["news_sentiment (GDELT, ingest)", "reddit (RSS, ingest)", "Form 4 (ingest)", "LLM-tone (prereg, not run)"],
     gaps: ["analyst dispersion/revs", "short-interest sentiment", "news scored into model"],
     cite: "Phase C #30 / Track LLM prereg",
+    anchorKey: "coverage.anchor.sentiment",
   },
 ];
 
@@ -139,6 +150,12 @@ export function CoverageMap() {
               </div>
               {f.cite ? (
                 <p className="font-mono text-[10px] text-muted-foreground/60">{f.cite}</p>
+              ) : null}
+              {f.anchorKey ? (
+                <p className="border-t pt-1.5 text-[11px] leading-relaxed text-muted-foreground">
+                  <span className="font-medium text-foreground/70">{t("coverage.anchor.title")}：</span>
+                  {t(f.anchorKey)}
+                </p>
               ) : null}
             </div>
           );
