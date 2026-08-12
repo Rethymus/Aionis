@@ -154,12 +154,17 @@ function MiniPicks() {
     <div className="space-y-1">
       {top4.map((p) => (
         <div key={`${p.region}-${p.ticker}`} className="flex items-center gap-2 text-xs">
-          <span className="w-14 truncate font-medium">{p.name || p.ticker}</span>
-          <span className="font-mono text-[10px] text-muted-foreground">{p.ticker}</span>
-          <span className="ml-auto font-mono tabular-nums">
+          {/* Name grows to fill, truncates only if truly starved (was w-14/56px
+              which chopped "CENTERPOINT ENERGY INC" to "CENTERPOIN…"). The
+              ticker sibling stays fixed-width so the row stays scannable. */}
+          <span className="min-w-0 flex-1 truncate font-medium" title={p.name || p.ticker}>
+            {p.name || p.ticker}
+          </span>
+          <span className="shrink-0 font-mono text-[10px] text-muted-foreground">{p.ticker}</span>
+          <span className="ml-auto shrink-0 font-mono tabular-nums">
             {p.score > 0 ? "+" : ""}{p.score.toFixed(2)}
           </span>
-          <span className="w-6 text-right">
+          <span className="w-6 shrink-0 text-right">
             <RankChange change={p.rank_change} />
           </span>
         </div>
