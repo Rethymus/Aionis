@@ -353,6 +353,27 @@ def test_metrics_latest_month_is_clean_iso_date() -> None:
     assert len(parts) == 3 and all(p.isdigit() for p in parts), f"not ISO YYYY-MM-DD: {lm!r}"
 
 
+def test_metrics_carries_ledger_lineage() -> None:
+    """The hero payload must trace to its ledger row (single source of truth).
+
+    Regression: export_metrics hardcoded the IC/p/CI literals with NO ledger_row
+    or config_sig, so the two most prominent surfaces (VerdictAnchor +
+    ResearchGlance) read an un-traced float. Now the fields are emitted so every
+    surface can link the number to its frozen config, and they must agree with
+    headline_provenance.json (same climax row).
+    """
+    m = _load("metrics.json")
+    hp = _load("headline_provenance.json")
+    assert "ledger_row" in m, "metrics.json missing ledger_row (lineage regression)"
+    assert "config_sig_short" in m, "metrics.json missing config_sig_short"
+    assert m["ledger_row"] == hp["ledger_row"], (
+        "metrics + provenance disagree on climax row (single-source-of-truth break)"
+    )
+    assert m["config_sig_short"] == hp["config_sig_short"], (
+        "metrics + provenance disagree on config sig"
+    )
+
+
 def test_ledger_audit_climax_row_carries_verdict_and_metric() -> None:
     """The confirmatory climax row must carry its real metric + verdict.
 

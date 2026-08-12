@@ -1,5 +1,14 @@
 # state/current.md — read first each session
 
+- **active (2026-08-13) 续⑮（integrity audit agent 闭环：hero 数字的主显示源结构化可追溯 + σ 从 sigma_survey 派生；修 climax 行选择 bug；DRY 三导出共享 ledger 读）：** 业主"启用更多 agents 同步"。派 sonnet Explore agent（codebase-local，[1210]-safe）做全终端科学完整性审计 → 3 findings。**核心判辨**：续⑬交付了 ProvenanceAnchor（hero 数字**旁边**的出生证明），但 hero 数字**自身的显示源** metrics.json 仍 hardcode IC/p/CI literals 且无 ledger_row/config_sig → hero 的两处最显眼显示（VerdictAnchor + ResearchGlance）读的是**un-traced float**，provenance 系统离 desync 只差一次静默 metrics.json 编辑。agent 标 HIGH，正确。
+  ① **HIGH 修**：`export_metrics` 从 hardcode → **live ledger projection**。新 `_read_ledger_rows()` + `_find_climax_row()` 共享 helper（metrics + provenance + audit 三导出 DRY 共享同一 ledger 读 = 单一事实来源，一次 ledger 编辑原子传播所有面）。metrics.json 现带 `ledger_row: 49` + `config_sig_short: e14b9d44`，与 headline_provenance.json 完全一致（实测验：row/sig/IC 三者全等）。fresh CI 无 ledger 时诚实降级回 committed literals。
+  **climax 选择 bug 修**（agent 调研中我自抓）：首版 `_find_climax_row` 取第一个 `confirmatory:first` → 误取 Phase B 行 #28（非 Track C climax #49）。ledger 有 5 个 confirmatory:first（Phase B/C/D/E1 + Track C），但**只有 #49 同时有 nested `combined_ic.mean` dict + `jt_gate`**（gated 估计量签名，不可伪造）。修为要求两者 = 正确锁 #49。agent 原 spec 误导（"first confirmatory:first" 歧义），我核 ledger 真值订正。
+  ② **MEDIUM 修**：`attribution-card.tsx:42` hardcode `σ≈0.10` → 从 `sigma_survey.json` 的 track_c_confirmatory/combined 行派生（实值 σ=0.106，agent 指出 N=71 纯噪声界应为 0.1195 非 0.10；现用真值 survey 非手常数）。survey 缺失诚实降级回 0.10。
+  ③ **research-glance 浮点常量修**（续⑭已交 a18b80a）：COVERAGE_TALLY gaps:5 stale → testedFamilies/exploratoryFamilies 显式族级计数。
+  **验证**：ruff 净 + tsc exit 0 + 25 web terminal pytest 绿（含新 `test_metrics_carries_ledger_lineage` pin 住 metrics↔provenance 同源）+ ledger sha256 三导出后不变（READ-ONLY 实测验）。三导出 DRY 共享 `_read_ledger_rows`：metrics/provenance/audit 现**原子一致**（同 #49 / 同 e14b9d44 / 同 IC -0.0088）。
+  **本轮全闭环**：agent 审计 → 主线核验（不轻信 agent spec，自抓 climax 选择 bug）→ HIGH+MEDIUM 全修。纯展示层 + READ-ONLY ledger；0 frozen/config/prereg/ADR/OOS 改动；未跑 research/forward；未外发。
+  **站巨人**：QVeris evidence-first 的终极形态 = 主张的**显示源本身**可追溯（非装饰性 sibling anchor），单一事实来源（ledger scan）原子传播所有面。
+
 - **active (2026-08-12) 续⑭（并行推进：部署验 + display fetch 容差修 + 测试 harness bug 修，themes 新信号；真新鲜度 runtime-blocked 诚实披露）：** 业主"启用更多 agents 同步 + 不空转等待"。**并行 3 路**：
   ① **部署验**（deploy 31607274687 success）：puppeteer 实测 https://rethymus.github.io/Aionis/ — /overview 出生证明卡（冻结 #48 04:19 → 结果 #49 10:27 同 sha e14b9d44 + H6 PASS + J-T NOT_EQUIVALENT + 链 /discipline）实显；/evidence 卡 #15 `ledger #49 · frozen config → /discipline` 实显。续⑬部署上线确认。
   ② **display fetch 容差修**（`5b2a131`）：根因 = `phase_b_fetch --display` 共享 frozen 路径的严格 complete-prices 门 → 2/588 缺失（BF-B/BRK-B share-class 变体，Tiingo/Alpaca 覆盖差异）abort 整个新鲜度刷新。修 = 新 `_require_display_prices`（<2% 缺失容差写 panel，>2% 仍拒防 provider 宕活产误导面）；frozen 路径 `_require_complete_prices` **不动**（反泄漏契约）。

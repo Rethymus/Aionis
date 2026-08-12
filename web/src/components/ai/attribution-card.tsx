@@ -25,9 +25,14 @@ import { aionis } from "@/data/aionis";
 // (external, irreversible). Until then this card ships zero side-effects.
 
 // A concise, honest, economically-grounded reading of the null. Pure function of
-// the frozen metrics — no invented detail, no prediction, no advice.
-function buildAttribution(m: typeof aionis.metrics): {
+// the frozen metrics + the sigma-survey noise floor — no invented detail, no
+// prediction, no advice.
+function buildAttribution(
+  m: typeof aionis.metrics,
+  sigmaSurvey: typeof aionis.sigmaSurvey,
+): {
   ciBracketsZero: boolean;
+  sigmaFloor: number | null;
   points: { key: string; body: string }[];
 } {
   const hasCI = m.ci_lo !== null && m.ci_hi !== null;
@@ -36,10 +41,23 @@ function buildAttribution(m: typeof aionis.metrics): {
   const sesoi = m.sesoi ?? 0.01;
   const powerFloorAttainable = ciHalf !== null ? ciHalf <= sesoi : null;
 
+  // Derive the monthly noise-floor sigma from the sigma survey's confirmatory
+  // combined arm (the same Track C climax result the hero number comes from),
+  // rather than a hand-constant. Falls back to null if the survey is absent.
+  const sigmaFloor = (() => {
+    const rows = sigmaSurvey?.rows;
+    if (!Array.isArray(rows)) return null;
+    const combined = rows.find(
+      (r) => r.source === "track_c_confirmatory" && r.arm === "combined",
+    );
+    return typeof combined?.sigma_observed === "number" ? combined.sigma_observed : null;
+  })();
+  const sigmaStr = sigmaFloor !== null ? `σ≈${sigmaFloor.toFixed(2)}` : "σ≈0.10";
+
   const points: { key: string; body: string }[] = [
     {
       key: "ic",
-      body: `combined rank-IC = ${m.combined_ic.toFixed(4)}（${m.combined_ic >= 0 ? "微正" : "微负"}，量级远小于月频噪声地板 σ≈0.10）。点估计不构成可检测效应。`,
+      body: `combined rank-IC = ${m.combined_ic.toFixed(4)}（${m.combined_ic >= 0 ? "微正" : "微负"}，量级远小于月频噪声地板 ${sigmaStr}）。点估计不构成可检测效应。`,
     },
     {
       key: "ci",
@@ -62,13 +80,13 @@ function buildAttribution(m: typeof aionis.metrics): {
     },
   ];
 
-  return { ciBracketsZero, points };
+  return { ciBracketsZero, sigmaFloor, points };
 }
 
 export function AiAttributionCard() {
   const { t } = useI18n();
   const m = aionis.metrics;
-  const { points } = buildAttribution(m);
+  const { points } = buildAttribution(m, aionis.sigmaSurvey);
 
   return (
     <Card className="overflow-hidden border-primary/20">

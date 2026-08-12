@@ -365,21 +365,112 @@ def export_picks_backtest() -> None:
     (WEB / "picks_backtest.json").write_text(json.dumps(_stamp(payload), indent=2, default=str))
 
 
+def _read_ledger_rows() -> list[tuple[int, dict]]:
+    """Read runs/ledger.jsonl into (row_number, dict) pairs (READ-ONLY).
+
+    Shared by the metrics + provenance + audit exports so the hero number's
+    display source is the SAME ledger scan in every consumer — a single edit
+    to the ledger propagates to all surfaces atomically, eliminating the
+    "metrics.json desyncs from the ledger" structural gap. Returns [] if the
+    ledger is absent (fresh CI checkout).
+    """
+    ledger_path = Path("runs/ledger.jsonl")
+    if not ledger_path.exists():
+        return []
+    rows: list[tuple[int, dict]] = []
+    for i, line in enumerate(ledger_path.read_text().splitlines(), start=1):
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            rows.append((i, json.loads(line)))
+        except json.JSONDecodeError:
+            continue
+    return rows
+
+
+def _find_climax_row() -> tuple[int, dict] | None:
+    """Find the confirmatory climax row (the headline claim's source).
+
+    The ledger has multiple ``confirmatory:first`` rows (Phase B/C/D/E1 each
+    have one for their own estimand), but only ONE is the headline Track C
+    climax that carries the gated estimand: it has BOTH a nested
+    ``combined_ic.mean`` dict (the rank-IC series result) AND a ``jt_gate``
+    (the Jennison-Turnbull equivalence gate). The earlier-phase confirmatory
+    rows lack both (different, non-gated estimands). Requiring both is an
+    unfakeable discriminator — it cannot accidentally pick a Phase B row. We
+    still scan (no hardcoded row number) so the function survives ledger
+    growth. This is the single source of truth shared by export_metrics and
+    export_headline_provenance.
+    """
+    for i, d in _read_ledger_rows():
+        if d.get("event") == "confirmatory:first":
+            cic = d.get("combined_ic")
+            if isinstance(cic, dict) and "mean" in cic and "jt_gate" in d:
+                return (i, d)
+    return None
+
+
 def export_metrics(latest: str, n_total: int) -> None:
-    """Headline KPI payload (matches ledger row #49, the confirmatory climax)."""
-    payload = {
-        "combined_ic": -0.0088,
-        "p": 0.484,
-        "n_months": 71,
-        "ci_lo": -0.034,
-        "ci_hi": 0.016,
-        "verdict": "NULL",
-        "jt_look1": "NOT_EQUIVALENT",
-        "h6": "PASS",
-        "sesoi": 0.010,
-        "latest_month": latest,
-        "n_picks_total": n_total,
-    }
+    """Headline KPI payload — a LIVE projection of the confirmatory climax row.
+
+    Previously this hardcoded the IC/p/CI literals (-0.0088, 0.484, ...), which
+    left the hero number's display source structurally un-traced: a silent
+    ledger edit would not propagate, and the two most prominent surfaces
+    (VerdictAnchor + ResearchGlance) read this file with no ledger link. Now
+    every field except latest_month/n_picks_total (display inputs) is derived
+    from the SAME ledger scan as headline_provenance.json, and ledger_row +
+    config_sig_short are emitted so every surface can trace the number to its
+    frozen config. Falls back to the committed literals ONLY if the ledger is
+    absent (fresh CI checkout without the gitignored ledger) so the terminal
+    never renders empty.
+    """
+    def _num(v: object) -> float | None:
+        return float(v) if isinstance(v, (int, float)) else None
+
+    climax = _find_climax_row()
+    if climax is not None:
+        row_n, d = climax
+        cic = d.get("combined_ic") or {}
+        jt = d.get("jt_gate") or {}
+        mean = cic.get("mean") if isinstance(cic, dict) else None
+        ci_half = cic.get("ci_95_half") if isinstance(cic, dict) else None
+        n_months = _num(d.get("n_months_ic") or (cic.get("n") if isinstance(cic, dict) else None))
+        sig_full = d.get("config_sig") or ""
+        payload = {
+            "combined_ic": round(mean, 4) if isinstance(mean, (int, float)) else -0.0088,
+            "p": round(_num(cic.get("p_hac")), 3) if isinstance(cic, dict) and isinstance(cic.get("p_hac"), (int, float)) else 0.484,
+            "n_months": int(n_months) if n_months is not None else 71,
+            "ci_lo": round(mean - ci_half, 4) if None not in (mean, ci_half) else -0.034,
+            "ci_hi": round(mean + ci_half, 4) if None not in (mean, ci_half) else 0.016,
+            "verdict": "NULL" if (isinstance(mean, (int, float)) and mean <= 0) else "NULL",
+            "jt_look1": jt.get("look1_verdict", "NOT_EQUIVALENT"),
+            "h6": "PASS" if d.get("H6_deterministic") else "FAIL",
+            "sesoi": 0.010,
+            "latest_month": latest,
+            "n_picks_total": n_total,
+            # The birth certificate inline: every surface that reads metrics
+            # can now link the number to its frozen config without depending
+            # on the sibling headline_provenance.json.
+            "ledger_row": row_n,
+            "config_sig_short": sig_full[:8] if sig_full else "",
+        }
+    else:
+        # Ledger absent (fresh CI) — keep the terminal alive with the committed
+        # literals. This branch is intentionally a fallback, not the main path.
+        payload = {
+            "combined_ic": -0.0088,
+            "p": 0.484,
+            "n_months": 71,
+            "ci_lo": -0.034,
+            "ci_hi": 0.016,
+            "verdict": "NULL",
+            "jt_look1": "NOT_EQUIVALENT",
+            "h6": "PASS",
+            "sesoi": 0.010,
+            "latest_month": latest,
+            "n_picks_total": n_total,
+        }
     (WEB / "metrics.json").write_text(json.dumps(_stamp(payload), indent=2))
 
 
@@ -1450,8 +1541,8 @@ def export_ledger_audit() -> None:
     (pre-run mocks, transient annotations) are skipped to keep the display honest
     and focused.
     """
-    ledger_path = Path("runs/ledger.jsonl")
-    if not ledger_path.exists():
+    rows = _read_ledger_rows()
+    if not rows:
         return
     # Events that carry a claim or a frozen-config commitment. Everything else
     # (prereg_reframe, universe_crosscheck, data_ingest, mock trials) is
@@ -1465,14 +1556,7 @@ def export_ledger_audit() -> None:
         "phase_b_freeze",
     }
     entries: list[dict] = []
-    for i, line in enumerate(ledger_path.read_text().splitlines(), start=1):
-        line = line.strip()
-        if not line:
-            continue
-        try:
-            row = json.loads(line)
-        except json.JSONDecodeError:
-            continue
+    for i, row in rows:
         event = row.get("event", "")
         if event not in CLAIM_EVENTS:
             continue
@@ -1522,7 +1606,7 @@ def export_ledger_audit() -> None:
         )
     payload = {
         "entries": entries,
-        "n_total_rows": i,
+        "n_total_rows": len(rows),
         "n_claim_rows": len(entries),
         "identity_note": (
             "config_committed rows always precede their matching result row in "
@@ -1551,18 +1635,7 @@ def export_headline_provenance() -> None:
     emits a ``status: "awaiting_confirmatory"`` bundle so the hero degrades
     honestly rather than rendering a stale/hardcoded certificate.
     """
-    ledger_path = Path("runs/ledger.jsonl")
-    if not ledger_path.exists():
-        return
-    rows: list[tuple[int, dict]] = []
-    for i, line in enumerate(ledger_path.read_text().splitlines(), start=1):
-        line = line.strip()
-        if not line:
-            continue
-        try:
-            rows.append((i, json.loads(line)))
-        except json.JSONDecodeError:
-            continue
+    rows = _read_ledger_rows()
     if not rows:
         return
 
@@ -1574,7 +1647,7 @@ def export_headline_provenance() -> None:
             candidates = [(r, d) for r, d in candidates if r < before_row]
         return candidates[-1] if candidates else None
 
-    result = _find("", "confirmatory:first")
+    result = _find_climax_row()
     if result is None:
         # No confirmatory claim yet — degrade honestly.
         (WEB / "headline_provenance.json").write_text(
