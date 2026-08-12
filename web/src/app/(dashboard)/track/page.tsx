@@ -9,6 +9,7 @@ import { DisciplineView } from "@/components/discipline/discipline-view";
 import { EvidenceView } from "@/components/evidence/evidence-view";
 import { ThemeSlice } from "@/components/themes/theme-slice";
 import { SegmentHeader } from "@/components/segment-header";
+import { AiAttributionCard } from "@/components/ai/attribution-card";
 import { useI18n } from "@/i18n/provider";
 
 const hashToTabMap: Record<string, string> = {
@@ -50,6 +51,7 @@ export default function TrackPage() {
   return (
     <div className="space-y-6 p-4 md:p-6">
       <SegmentHeader segment="validity" introKey="track_hub.intro" />
+      <AiAttributionCard />
 
       <Tabs value={activeTab} onValueChange={handleTabChange}>
         <TabsList>
