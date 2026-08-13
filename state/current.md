@@ -1,5 +1,14 @@
 # state/current.md — read first each session
 
+- **active (2026-08-14) 续㉒（业主纠偏：实质尺寸重构 + 数据日更真因诊断，不再做表面改色）：** 业主明确不满——我之前改七主题卡片只改颜色（避重就轻），业主要的是**尺寸放大**；且部署站数据完全不更新。**诚实接受批评**。
+  **① ThemeCard 实质尺寸重构**（`d0ee67b`）：非改色。title `text-sm`→`text-base`(16px)；signal value `text-xs`→`text-sm`(14px) font-medium（原 muted）；sparkline `h-6`→`h-12` + strokeWidth 1.5→2（趋势一眼可读）；padding `p-4`→`p-5`；header gap-1.5→gap-2；badge px-1.5/py-0→px-2/py-0.5。tsc+build+33 pytest+ruff 全绿，部署 `d0ee67b` success，`text-base:16px` 实测上线。
+  **② market_context 数据源修**（同 commit）：equal-weight 市场指数读冻结 `track_b_panel`（停 06-30）→ 改读 `display_panel`（B1 日更），缺失时回退冻结面（与 export_themes 同模式，非 slop fallback）。现 VIX(2026-07) 与指数 lockstep；CI display-fetch 成功后指数自动新鲜。
+  **③ 数据日更真因诊断（关键发现，交业主）**：git log 证实 cron 在跑且 commit（cot/reddit/taco/themes/macro_drivers/power_floor/headline_provenance/ledger_audit 都更新）。但**两个真阻塞**：
+    - **picks/metrics/ic_monthly/evidence/calibration/conviction 结构上冻结**：读 `runs/*.parquet`（ledger #49 冻结 OOS 产物），日更 = rerun-to-significance（反泄漏禁）。这是设计，非 bug。
+    - **CI display-fetch 失败**：日志 `0 cached, 587 to fetch` + 每批 `+0/20`（Tiingo 返 0）→ 30min 超时 → display_panel 不重建 → themes/market_context 卡冻结。**根因**：`gh secret list` 只有 `FRED_API_KEY`+`TIINGO_API_KEY`，**无 `ALPACA_KEY_ID`/`ALPACA_SECRET_KEY`** → Tiingo CI 返 0 时无 Alpaca fallback。**业主一次性修**：加 Alpaca secrets（免费 tier）或查 Tiingo key 为何 CI 返 0。
+  **本轮闭环**：实质尺寸重构（业主直接诉求）+ market_context 数据源修 + 数据日更真因诊断（明确业主动作）。agent stale-panel-audit 在跑（交叉核验其他可修面板）。纯 display 层；0 frozen/ledger/config/OOS 改动。
+
+
 - **active (2026-08-13) 续⑳（contract-audit agent 闭环：修 2 真 display 缺陷 + 契约测试加固，全部署验）：** 续⑲ contract-audit agent 回报 9 面板分析，含 **3 结构发现**——主线核验后确认 2 个是**真 display 缺陷**非仅测试 gap（[[aionis-agent-dispatch-verification]]：agent 给发现，主线核真值）：
   ① **macro_drivers 静默退化（MEDIUM-HIGH，live /regime）**：3 个消费者（macro-drivers-card + macro-stagflation-read 读 `fedfunds`；macro-mandate-tension 读 `real_rate`）读的 key **不在 committed JSON 里**。export 逻辑确实构建两者（fedfunds=alfred_DFF 月均；real_rate=DFF−CPI YoY），但一次 stale partial export（cache 缺失）静默丢了 → 3 卡静默隐藏/空。根因 = `_safe_export` partial-skip 模式，非逻辑 bug。**修**：从现有 cache 重新导出（fedfunds 127 点 0.34→3.63%；real_rate 113 点 −1.86→−0.10%，范围 sane）+ 契约测试 pin 住 7 个消费者必需 key 防再发。
   ② **ic_monthly 重复月份（dead export 但真 data bug）**：5 个月各 2 行（US-only + CN-only 共享 %Y-%m key）→ 按 month 绘图的消费者会得双点/断裂 join。**修**：export 改 group-by-month + coalesce（71 行→66 unique 升序无重）+ 契约测试加 no-duplicate-months 守卫。
