@@ -1,5 +1,13 @@
 # state/current.md — read first each session
 
+- **active (2026-08-13) 续⑲（并行：contract-audit agent 派发 + 主线自写 8 面板契约测试，全部署绿）：** 业主"启用更多 agents 同步 + 不空转"。**判辨**：扫描发现 display-layer 9 个 export 面板**无契约测试**（evidence/power_floor/calibration_reliability/ic_monthly/bps_sweep/sigma_survey/theme_signals/macro_drivers/reddit_meta）→ 静默 shape 变更会让对应页崩溃或误导（如 evidence 丢 CONFIRMATORY climax 卡 = hero provenance 悬空引用；sigma_survey 丢 confirmatory/combined 行 = attribution-card σ 回退到手常数）。
+  **并行两路**（不空转）：① 派 sonnet Explore agent（codebase-local，[1210]-safe）做 9 面板 shape/消费者脆弱性分析；② 主线**不等 agent**，自读真实 JSON shape + 消费者组件，自写 8 契约测试。
+  **交付**（`6c5c800`）：8 契约测试，每条 assert 真实 JSON shape + 消费者依赖的不变式——evidence（14 行/合法 grade/CONFIRMATORY climax 存在/unique n）、power_floor（3 looks/observed σ > pure-noise 界=机制）、calibration_reliability（双 region/per-month series/reliability bins）、ic_monthly（≥24 月升序/无 NaN/combined 非全 null）、bps_sweep（bps 升序/turnover ~常/net≤gross Sharpe）、sigma_survey（confirmatory/combined 行存在=attribution 源）、theme_signals（合法方向/group 一致/display-only 披露）、macro_drivers（≥3 series/≥12 月/升序）。reddit_meta 故意排除（forward-collector 合法空）。
+  **验证**：33 web terminal pytest 绿（25 前 + 8 新）+ ruff 净 + 55 broader（web+export+market）绿。纯测试增量；0 production/frozen/ledger/OOS 改动。
+  **agent 角色**：contract-audit agent 做独立优先级/脆弱性交叉核验（防我漏 consumer 依赖）；主线不阻塞等待，自完成全部 8 测试（"不空转"纪律）。
+  **本轮闭环**：display-layer 契约测试覆盖从 ~58% → ~96%（24 面板中 23 有测试，唯 reddit_meta 合法待激活）。科学诚实度四轴 + 视觉 P0-P3 + 契约测试加固全闭环。
+
+
 - **active (2026-08-13) 续⑱（P2 NULL 视觉框架 + P3 移动端审计表，全部署验）：** 续⑰后业主再授权。续⑰的 P2/P3 优化。
   **P2（心理学框架效应，`85f7acf`）**：NULL verdict badge 用 amber（警告色）→ 与下方 null.note"非失败"语义冲突。扫视读色快于读字，amber 暗示"失败"直觉压过诚实框定。**判辨**：不"全改中性"——区分语义：NULL 本身（成功交付）→ slate（已落定色）；amber 保留给真警示（J-T 门/power-floor/ECE）。两处 NULL 表达（VerdictAnchor badge + verdict chain segment）改 slate；语义拆分非整体重涂。
   **P3（人体工学，`85f7acf`）**：移动端 7-col 审计表（632px）在 375px 卡里横滑才能到 verdict/metric 列（访客最想要的"结论"反被藏在滚动外）。**判辨**：不做卡片化大重构（/discipline 非高频页，KISS），改用最小影响 responsive 修复——phase + config-sig 两列移动端 `hidden md:table-cell` 隐藏，保留 5 关键列（#/日期/事件/估计量/裁决）首屏可见；隐藏的 sig 折进 event badge 的 title tooltip（零 provenance 丢失）。桌面 1440 仍全 7 列。
