@@ -541,11 +541,14 @@ def test_calibration_reliability_panel_contract() -> None:
 
 
 def test_ic_monthly_panel_contract() -> None:
-    """ic_monthly.json feeds the 71-month confirmatory IC time-series chart.
+    """ic_monthly.json feeds the confirmatory IC time-series chart.
 
     The view plots month/us/cn/combined as the IC arc. A shape break (NaN, wrong
-    sort, missing combined) crashes the chart or distorts the headline arc that
-    evidences the null over time.
+    sort, missing combined, DUPLICATE months) crashes the chart or distorts the
+    headline arc. Duplicate months were a real defect (US-only + CN-only rows
+    for the same month emitted as two rows with the same key — a consumer
+    plotting by `month` would get double points / broken joins); the export now
+    coalesces by month, and this test guards against recurrence.
     """
     ic = _load("ic_monthly.json")
     assert isinstance(ic, list) and len(ic) >= 24, "ic_monthly needs >=24 months"
@@ -559,6 +562,11 @@ def test_ic_monthly_panel_contract() -> None:
     # Months strictly ascending (time-series invariant the chart relies on).
     months = [r["month"] for r in ic]
     assert months == sorted(months), "ic_monthly months must be ascending"
+    # NO duplicate months — a consumer keyed/joined by `month` would break.
+    assert len(months) == len(set(months)), (
+        f"ic_monthly has duplicate months: "
+        f"{ {m for m in months if months.count(m)>1} }"
+    )
     # The combined column is the headline series — must not be entirely null.
     assert any(r["combined"] is not None for r in ic), "combined IC is entirely null"
 
@@ -644,8 +652,13 @@ def test_theme_signals_panel_contract() -> None:
 def test_macro_drivers_panel_contract() -> None:
     """macro_drivers.json feeds the macro-context cards on /regime.
 
-    The view plots per-series macro arcs (VIX, credit, term, DFF). A shape break
-    drops the market-context that frames the whole 'what regime are we in' read.
+    The view plots per-series macro arcs. A shape break drops the market-context
+    that frames the whole 'what regime are we in' read. CRITICALLY, three
+    consumers read specific keys that must be present: macro-drivers-card +
+    macro-stagflation-read read `fedfunds`, macro-mandate-tension reads
+    `real_rate`. A stale partial export (cache absent at run time) silently
+    dropped these once, hiding 3 cards — this test pins the consumer-required
+    key-set so that recurrence is caught at CI, not on the live page.
     """
     md = _load("macro_drivers.json")
     assert md["status"] in {"ok", "awaiting_fetch"}
@@ -661,5 +674,12 @@ def test_macro_drivers_panel_contract() -> None:
         # Months ascending within each series (time-series invariant).
         months = [pt["month"] for pt in pts]
         assert months == sorted(months), f"{name} months must be ascending"
+    # Consumer-required keys (guarded against the silent-skip recurrence).
+    required = {"cpi_yoy", "dxy", "payems_yoy", "t10y2y", "unrate", "fedfunds", "real_rate"}
+    missing = required - set(series)
+    assert not missing, (
+        f"macro_drivers missing consumer-required series keys {missing} "
+        f"(present: {sorted(series)}); 3 /regime cards would silently hide"
+    )
 
 

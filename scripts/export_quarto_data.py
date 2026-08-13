@@ -123,15 +123,29 @@ def export_ic_monthly() -> None:
 
     The 71-month IC series is the densest tracked series; rendering it gives the
     site a real "data" view beyond the 15-row evidence snapshot, and the JSON stays
-    tiny (71 rows × 4 cols).
+    tiny (66-71 rows × 4 cols).
     """
     df = pd.read_parquet("runs/track_c_confirmatory_ic_series.parquet")
     df.index = pd.to_datetime(df.index).strftime("%Y-%m")
-    rows = [{"month": str(idx),
-             "us": None if pd.isna(r.us) else float(r.us),
-             "cn": None if pd.isna(r.cn) else float(r.cn),
-             "combined": None if pd.isna(r.combined) else float(r.combined)}
-            for idx, r in df.iterrows()]
+    # Coalesce by month: the source can carry both a US-only and a CN-only row
+    # for the same calendar month (when only one region had a fold that month).
+    # Emitting both would produce duplicate month keys — a consumer plotting by
+    # `month` would get double points / broken joins. Group by month and take
+    # the first non-null value per region column, then re-sort ascending.
+    def _first_non_null(s: pd.Series) -> float | None:
+        s = s.dropna()
+        return float(s.iloc[0]) if not s.empty else None
+
+    grouped = df.groupby(level=0, sort=True)
+    rows = [
+        {
+            "month": str(idx),
+            "us": _first_non_null(g["us"]),
+            "cn": _first_non_null(g["cn"]),
+            "combined": _first_non_null(g["combined"]),
+        }
+        for idx, g in grouped
+    ]
     (OUT / "ic_monthly.json").write_text(json.dumps(rows, indent=2, allow_nan=False))
 
 
