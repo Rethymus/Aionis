@@ -65,8 +65,8 @@ export function AuditTimeline() {
                 <th className="py-1.5 pr-2 font-medium">{t("audit.col.row")}</th>
                 <th className="py-1.5 pr-2 font-medium">{t("audit.col.date")}</th>
                 <th className="py-1.5 pr-2 font-medium">{t("audit.col.event")}</th>
-                <th className="py-1.5 pr-2 font-medium">{t("audit.col.phase")}</th>
-                <th className="py-1.5 pr-2 font-mono font-medium">{t("audit.col.sig")}</th>
+                <th className="hidden py-1.5 pr-2 font-medium md:table-cell">{t("audit.col.phase")}</th>
+                <th className="hidden py-1.5 pr-2 font-mono font-medium md:table-cell">{t("audit.col.sig")}</th>
                 <th className="py-1.5 pr-2 font-medium">{t("audit.col.metric")}</th>
                 <th className="py-1.5 font-medium">{t("audit.col.verdict")}</th>
               </tr>
@@ -81,6 +81,7 @@ export function AuditTimeline() {
                     <td className="py-1.5 pr-2">
                       <Badge
                         variant="outline"
+                        title={e.config_sig_short ? `${e.phase} · ${e.config_sig_short}` : e.phase}
                         className={cn(
                           "gap-1 px-1.5 py-0 text-[10px] font-normal",
                           meta.isFreeze
@@ -94,8 +95,8 @@ export function AuditTimeline() {
                         {t(meta.labelKey)}
                       </Badge>
                     </td>
-                    <td className="py-1.5 pr-2 font-mono text-muted-foreground">{e.phase || "—"}</td>
-                    <td className="py-1.5 pr-2 font-mono text-[10px] text-muted-foreground/70">{e.config_sig_short || "—"}</td>
+                    <td className="hidden py-1.5 pr-2 font-mono text-muted-foreground md:table-cell">{e.phase || "—"}</td>
+                    <td className="hidden py-1.5 pr-2 font-mono text-[10px] text-muted-foreground/70 md:table-cell">{e.config_sig_short || "—"}</td>
                     <td className="py-1.5 pr-2 font-mono text-[10px] text-foreground/70">{e.metric || "—"}</td>
                     <td className="py-1.5 pr-2 text-muted-foreground">
                       {e.verdict ? (

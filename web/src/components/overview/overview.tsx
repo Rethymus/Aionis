@@ -74,7 +74,14 @@ function VerdictAnchor() {
           </div>
         </div>
         <div className="flex flex-col items-start gap-1 md:items-end">
-          <Badge variant="secondary" className="bg-amber-500/15 text-amber-700 dark:text-amber-300">
+          {/* NULL = the intended, publishable outcome (NOT a failure). The prior
+              amber tint signaled "warning/error" — a framing that fights the
+              null.note directly below ("not a failure"). A glance reads color
+              faster than text, so the amber short-circuited the honest framing.
+              Slate/blue reads as "settled/concluded" (the verdict landed), while
+              amber is reserved for genuine statistical cautions (J-T gate,
+              power-floor) elsewhere — a semantic split, not a blanket recolor. */}
+          <Badge variant="secondary" className="bg-slate-500/15 text-slate-600 dark:text-slate-300">
             {t("overview.verdict.null")}
           </Badge>
           <span className="text-[11px] text-muted-foreground">{t("overview.verdict.null.note")}</span>
@@ -238,7 +245,7 @@ function ArgumentChain() {
           icon={<GavelIcon className="size-3.5" />}
           titleKey="overview.chain.verdict.label"
           stat={m.verdict}
-          statTone="amber"
+          statTone="muted"
           detail={<p className="text-[11px] leading-snug text-muted-foreground">{t("overview.chain.verdict.detail")}</p>}
         />
       </div>
