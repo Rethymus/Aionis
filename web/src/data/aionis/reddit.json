@@ -10,7 +10,7 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-08-12T23:08:16+00:00",
+  "latest_snapshot_ts": "2026-08-13T17:20:57+00:00",
   "n_snapshots": 1,
   "transport": "rss",
   "score_available": false,
@@ -18,23 +18,9 @@
   "picks": [
     {
       "ticker": "CSCO",
-      "mentions": 3,
-      "sentiment": -0.244,
-      "bull_ratio": 0.0,
-      "score_sum": 0
-    },
-    {
-      "ticker": "META",
-      "mentions": 1,
-      "sentiment": -0.696,
-      "bull_ratio": 0.0,
-      "score_sum": 0
-    },
-    {
-      "ticker": "PLTR",
-      "mentions": 1,
-      "sentiment": 0.887,
-      "bull_ratio": 1.0,
+      "mentions": 2,
+      "sentiment": 0.08,
+      "bull_ratio": null,
       "score_sum": 0
     }
   ],
@@ -42,8 +28,8 @@
     "status": "accumulating",
     "by_ticker": {},
     "n_snapshots": 1,
-    "latest_date": "2026-08-12",
+    "latest_date": "2026-08-13",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-08-12T23:59:07.095576+00:00"
+  "snapshot_ts": "2026-08-13T18:11:45.211619+00:00"
 }
