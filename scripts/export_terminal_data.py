@@ -801,7 +801,15 @@ def export_theme_signals() -> None:
         theme_summary_to_jsonable,
     )
 
-    panel_path = Path("data/cache/track_b_panel.parquet")
+    # Prefer the DISPLAY panel (phase_b_fetch --display, prices through TODAY)
+    # so the theme-signal direction/strength/favored reads refresh daily — the
+    # frozen research panel (track_b_panel) stops at the 2026-06-30 cutoff and
+    # would freeze the signals grid. Fall back to the frozen panel only when the
+    # display panel is absent (fresh CI before the display-fetch step). The
+    # feature columns are identical (same feature pipeline in materialize),
+    # and this function computes display-only heuristics (no OOS scores).
+    display_panel = Path("data/cache/display_panel.parquet")
+    panel_path = display_panel if display_panel.exists() else Path("data/cache/track_b_panel.parquet")
     if not panel_path.exists():
         # CI fresh checkout: panel absent → preserve tracked JSON, don't overwrite.
         print(
