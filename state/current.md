@@ -1,5 +1,15 @@
 # state/current.md — read first each session
 
+- **active (2026-08-13) 续⑰（视觉全审计 + MiniPicks 截断修 + TrustRibbon 信任锚，全部署验）：** 业主"用视觉能力检查所有界面，结合金融/法学/心理学/人体工学/美学 + 竞品经验；先确保基础显示再优化"。
+  **视觉全审计**（puppeteer DOM 扫 6 页 × 桌面1440 + 移动375，查 NaN/undefined/溢出/截断/对比度）：基础显示**健康**——0 数据泄漏、0 水平溢出（含 7×28 审计表移动端走表内滚）、深色默认对比度 ~9.3:1（WCAG AA ✓）。**1 真缺陷**：/overview MiniPicks 股票名 `w-14`(56px) 截断不可读（`CENTERPOINT ENERGY INC`→`CENTERPOIN…`）。
+  **基础修**（`ef199e0`）：MiniPicks 名 span 从 fixed `w-14` → `flex-1 min-w-0` + `title` tooltip。名 slot 56→130-144px，4/4 全显或优雅降级（CENTERPOINT 仍截但带 tooltip）。tsc+build 双绿，puppeteer 实测移动375+桌面均无溢出。
+  **P1 优化**（TrustRibbon，`9edd879`）：跨学科判辨——法学+心理学：hero 有"非投资建议"免责（picks 页 `NullDisclaimer` 也已存在），但**缺肯定性信任基础**（"为何可信"非仅"别交易"）。反泄漏纪律（PIT/embargo/H6/frozen-config）是 Aionis vs 竞品（小隐寺/OpenBB）的**核心差异化**，却只在 /discipline + 页底 GuardBand 可见。新 `TrustRibbon` 接 Hero 正下方、VerdictAnchor 之上——把信任基础与裁决**同屏共置**（范式 α：主张与认知基础同见，非滚动隔开）。4 badge（PIT/embargo/H6/config）各带 title 全文 tooltip，整体链 /discipline。emerald 色调（肯定性 vs 免责的 amber）。8 zh+en i18n。页底 GuardBand 保留（横护整链）；ribbon 是一眼信任锚。
+  **判辨纠偏**：原 P1 计划含"picks 免责 footer"，但审计发现 `NullDisclaimer` **已存在**（每 prob_up 上方，含 ledger #49 引用）→ 不重复添加（避免认知负荷 + 冗余）。区分"已满足"vs"缺失"。
+  **验证**：tsc exit 0 + next build compiled + puppeteer 实测部署站（9edd879）— TrustRibbon 反泄漏纪律 + 4 badge + /discipline 链实显，MiniPicks 修复上线（0 legacy fixed 名），0 泄漏/溢出。
+  **本轮全闭环**：基础显示确认健康 + 1 缺陷修 + 1 跨学科优化（法学/心理学信任建构）。纯展示层；0 frozen/ledger/config/prereg/ADR/OOS 改动（concurrent CI `b5b3a9b` 仅 daily data refresh，ledger sha pinned 不变实测验）；未跑 research/forward。
+  **下一步**：P2（NULL verdict 视觉框架从 amber→中性完成色）+ P3（移动端审计表卡片化）。display-layer 信任 + 诚实度已尽基础 + 第一轮优化。
+
+
 - **active (2026-08-13) 续⑯（themes 新鲜度诚实化 = integrity audit 最后一个 finding 闭环，display-only，全部署验）：** 续⑮交付 HIGH+MEDIUM 后重审：agent 还标了 2 个 STALE-RISK（themes 日期不一致），我在续⑭以"runtime-blocked"搁置。**判辨修正**：那是对**runtime freshness**（Tiingo 返 0）的判断，但 agent 的具体 finding 是**labeling bug 非 freshness bug**——themes.json top-level `as_of_date`=06-30（冻结 panel）vs macro 主题 per-theme `as_of`=08-04（GDELT/ALFRED 独立源）= **真实数据自洽但标签误导**（header 单日期 vs 卡片不同日期）。我能修且应修。
   **交付**（`7603430`）：`export_themes` 新增 `freshness: {earliest, latest, mixed}` 摘要（从所有 live 主题的真实 as_of 计算）。mixed 时 themes-view header 显示范围 `截至 06-30 → 08-04 · 各主题独立来源，新鲜度不一`，非单一误导日期；每卡保留各自诚实 as_of。1 新 regression 测试 pin freshness 形状 + earliest≤latest 不变式。zh+en i18n。
   **验证**：ruff 净 + tsc exit 0 + next build compiled + 25 web terminal pytest 绿 + deploy 31640960301 success + puppeteer 实测部署站 header `截至 2026-06-30 → 2026-08-04 · 各主题独立来源，新鲜度不一` 实显，macro 卡 08-04 不再矛盾。
