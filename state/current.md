@@ -1,5 +1,14 @@
 # state/current.md — read first each session
 
+- **active (2026-08-13) 续⑳（contract-audit agent 闭环：修 2 真 display 缺陷 + 契约测试加固，全部署验）：** 续⑲ contract-audit agent 回报 9 面板分析，含 **3 结构发现**——主线核验后确认 2 个是**真 display 缺陷**非仅测试 gap（[[aionis-agent-dispatch-verification]]：agent 给发现，主线核真值）：
+  ① **macro_drivers 静默退化（MEDIUM-HIGH，live /regime）**：3 个消费者（macro-drivers-card + macro-stagflation-read 读 `fedfunds`；macro-mandate-tension 读 `real_rate`）读的 key **不在 committed JSON 里**。export 逻辑确实构建两者（fedfunds=alfred_DFF 月均；real_rate=DFF−CPI YoY），但一次 stale partial export（cache 缺失）静默丢了 → 3 卡静默隐藏/空。根因 = `_safe_export` partial-skip 模式，非逻辑 bug。**修**：从现有 cache 重新导出（fedfunds 127 点 0.34→3.63%；real_rate 113 点 −1.86→−0.10%，范围 sane）+ 契约测试 pin 住 7 个消费者必需 key 防再发。
+  ② **ic_monthly 重复月份（dead export 但真 data bug）**：5 个月各 2 行（US-only + CN-only 共享 %Y-%m key）→ 按 month 绘图的消费者会得双点/断裂 join。**修**：export 改 group-by-month + coalesce（71 行→66 unique 升序无重）+ 契约测试加 no-duplicate-months 守卫。
+  ③ reddit_meta→reddit.json 命名 trap：主线续⑲已正确排除（agent 确认）。
+  **验证**：ruff 净 + 33 web terminal pytest 绿（含新 dup-guard + required-keys guard）+ next build compiled + deploy `d321125` success + puppeteer 部署站实测——/regime 7 图渲染（破卡现显真值），fedfunds~3.7% + real_rate 负值实显，无 awaiting 态。
+  **本轮全闭环**：agent 审计 → 主线核验（不轻信，自读文件确认）→ 2 真缺陷修 + 守卫加。纯 display-data 层 + 测试；0 frozen/ledger/config/prereg/OOS 改动；未跑 research/forward。
+  **判辨教训**：续⑲我以为"9 面板无测试"是纯覆盖 gap，agent 深挖发现其中 2 个是**真 broken display**——测试覆盖审计意外暴露了生产 defect。display-layer 三层（科学诚实 + 视觉 + 数据完整性）现全闭环。
+
+
 - **active (2026-08-13) 续⑲（并行：contract-audit agent 派发 + 主线自写 8 面板契约测试，全部署绿）：** 业主"启用更多 agents 同步 + 不空转"。**判辨**：扫描发现 display-layer 9 个 export 面板**无契约测试**（evidence/power_floor/calibration_reliability/ic_monthly/bps_sweep/sigma_survey/theme_signals/macro_drivers/reddit_meta）→ 静默 shape 变更会让对应页崩溃或误导（如 evidence 丢 CONFIRMATORY climax 卡 = hero provenance 悬空引用；sigma_survey 丢 confirmatory/combined 行 = attribution-card σ 回退到手常数）。
   **并行两路**（不空转）：① 派 sonnet Explore agent（codebase-local，[1210]-safe）做 9 面板 shape/消费者脆弱性分析；② 主线**不等 agent**，自读真实 JSON shape + 消费者组件，自写 8 契约测试。
   **交付**（`6c5c800`）：8 契约测试，每条 assert 真实 JSON shape + 消费者依赖的不变式——evidence（14 行/合法 grade/CONFIRMATORY climax 存在/unique n）、power_floor（3 looks/observed σ > pure-noise 界=机制）、calibration_reliability（双 region/per-month series/reliability bins）、ic_monthly（≥24 月升序/无 NaN/combined 非全 null）、bps_sweep（bps 升序/turnover ~常/net≤gross Sharpe）、sigma_survey（confirmatory/combined 行存在=attribution 源）、theme_signals（合法方向/group 一致/display-only 披露）、macro_drivers（≥3 series/≥12 月/升序）。reddit_meta 故意排除（forward-collector 合法空）。
