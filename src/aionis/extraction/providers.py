@@ -32,7 +32,7 @@ class Provider:
 # Static catalog. Policy terms from each platform's free-tier docs (2026-07).
 _CATALOG: list[dict] = [
     {
-        "name": "glm", "base_url": "https://open.bigmodel.cn/api/paas/v4",
+        "name": "glm", "base_url": settings.llm_base_url or "https://open.bigmodel.cn/api/paas/v4",
         "api_key": settings.openai_api_key, "model": settings.llm_model or "glm-4-flash",
         "priority": 1, "rpm": 30, "note": "GLM-4-Flash, free, concurrency-limited",
     },
