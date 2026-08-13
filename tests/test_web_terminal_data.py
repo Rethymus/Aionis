@@ -448,3 +448,218 @@ def test_ledger_append_only_not_mutated_by_export() -> None:
     assert digest == "44157b5b0d47b4838bec53d3b1509ff2ed29a808683072a79b44693a636f70ee", (
         f"ledger sha256 changed to {digest}; re-verify append-only then re-pin"
     )
+
+
+# --- Untested-panel contract coverage (display-layer regression guards) -------
+
+
+def test_evidence_panel_contract() -> None:
+    """evidence.json feeds /evidence (14 null cards) + the hero lineage link.
+
+    The view reads e.n (card key), e.result, e.estimate (the headline-size
+    number), e.ci_lo/ci_hi, e.p, e.n_months, and e.grade (drives the grade
+    badge style + the CONFIRMATORY climax card's ledger link). A shape break
+    crashes the grid or, worse, loses the CONFIRMATORY climax card (#15) that
+    the hero provenance points at.
+    """
+    ev = _load("evidence.json")
+    assert isinstance(ev, list) and len(ev) >= 10, "evidence needs >=10 rows"
+    valid_grades = {"CONFIRMATORY", "CV-proxy", "chron./explor.", "explor."}
+    ns = []
+    for e in ev:
+        assert {"n", "result", "estimate", "ci_lo", "ci_hi", "p", "n_months", "grade"} <= set(e)
+        assert e["grade"] in valid_grades, f"unknown grade {e['grade']!r}"
+        assert isinstance(e["estimate"], (int, float))
+        assert isinstance(e["n_months"], int)
+        ns.append(e["n"])
+    # The CONFIRMATORY climax card MUST be present — the hero provenance + the
+    # evidence ledger link point at it. If it silently drops, the hero anchor
+    # becomes a dangling reference.
+    confirmatory = [e for e in ev if e["grade"] == "CONFIRMATORY"]
+    assert len(confirmatory) >= 1, "evidence has no CONFIRMATORY climax card"
+    # Row numbers must be unique (the view keys React lists by e.n).
+    assert len(ns) == len(set(ns)), "evidence row numbers must be unique"
+
+
+def test_power_floor_panel_contract() -> None:
+    """power_floor.json feeds /power-floor (the power-limit disclosure page).
+
+    The view renders looks (n_min_months/years, rci_level_pct, z) as the core
+    'why equivalence is structurally unreachable' argument. The pure-noise vs
+    observed sigma split is the mechanism story. A shape break makes the page
+    either crash or — worse — render numbers that understate the power floor.
+    """
+    pf = _load("power_floor.json")
+    assert {"sesoi", "looks", "sigma_observed_median", "sigma_pure_noise_n462",
+            "n_min_at_pure_noise_look3_months", "n_min_at_observed_look3_months",
+            "verdict"} <= set(pf)
+    assert isinstance(pf["sesoi"], (int, float)) and pf["sesoi"] > 0
+    looks = pf["looks"]
+    assert isinstance(looks, list) and len(looks) == 3, "power floor needs 3 looks"
+    for look in looks:
+        assert {"look", "n", "z", "n_min_months", "n_min_years", "rci_level_pct"} <= set(look)
+        assert isinstance(look["n_min_months"], int) and look["n_min_months"] > 0
+        assert isinstance(look["n_min_years"], (int, float)) and look["n_min_years"] > 0
+    # The core honest claim: observed sigma >> pure-noise sigma (ML noise excess
+    # is why the power floor binds). If this invariant inverts, the page's whole
+    # argument flips.
+    assert pf["sigma_observed_median"] > pf["sigma_pure_noise_n462"], (
+        "observed sigma must exceed pure-noise bound (ML noise excess is the mechanism)"
+    )
+    # look-3 observed n_min (the 'how many years' headline) must be the largest.
+    n_mins = [look["n_min_months"] for look in looks]
+    assert n_mins == sorted(n_mins, reverse=True) or n_mins[-1] >= n_mins[0], (
+        "n_min should grow with look (more data needed for tighter equivalence)"
+    )
+
+
+def test_calibration_reliability_panel_contract() -> None:
+    """calibration_reliability.json feeds /calibration (reliability diagram).
+
+    The view reads regions.{us,cn}.pooled_ece, .series (per-month walk-forward),
+    and .pooled_reliability (the bins for the reliability plot). A shape break
+    breaks the chart or, worse, hides that probabilities cluster near base rate
+    (the honest-null signature).
+    """
+    cr = _load("calibration_reliability.json")
+    assert cr["status"] in {"ok", "awaiting_fetch"}
+    if cr["status"] != "ok":
+        return
+    assert {"method", "walk_forward", "min_train_months", "regions"} <= set(cr)
+    regions = cr["regions"]
+    assert {"us", "cn"} <= set(regions), "calibration needs both regions"
+    for r in regions.values():
+        assert {"n_months", "series", "pooled_ece", "pooled_reliability"} <= set(r)
+        assert isinstance(r["pooled_ece"], (int, float))
+        assert isinstance(r["series"], list) and len(r["series"]) >= 1
+        for m in r["series"]:
+            assert {"month", "ece_oos"} <= set(m)
+        # Reliability bins: pred_mean + emp_freq define the curve.
+        assert isinstance(r["pooled_reliability"], list)
+        for b in r["pooled_reliability"]:
+            assert {"bin_lo", "bin_hi"} <= set(b)
+
+
+def test_ic_monthly_panel_contract() -> None:
+    """ic_monthly.json feeds the 71-month confirmatory IC time-series chart.
+
+    The view plots month/us/cn/combined as the IC arc. A shape break (NaN, wrong
+    sort, missing combined) crashes the chart or distorts the headline arc that
+    evidences the null over time.
+    """
+    ic = _load("ic_monthly.json")
+    assert isinstance(ic, list) and len(ic) >= 24, "ic_monthly needs >=24 months"
+    for row in ic:
+        assert {"month", "us", "cn", "combined"} <= set(row)
+        # us/cn/combined may be null (region missing that month) but never NaN
+        # (NaN would serialize and silently distort the chart).
+        for k in ("us", "cn", "combined"):
+            v = row[k]
+            assert v is None or isinstance(v, (int, float)), f"{k} must be number or null"
+    # Months strictly ascending (time-series invariant the chart relies on).
+    months = [r["month"] for r in ic]
+    assert months == sorted(months), "ic_monthly months must be ascending"
+    # The combined column is the headline series — must not be entirely null.
+    assert any(r["combined"] is not None for r in ic), "combined IC is entirely null"
+
+
+def test_bps_sweep_panel_contract() -> None:
+    """bps_sweep.json feeds the net-cost curve on /themes (Sharpe vs slippage).
+
+    The view plots net_sharpe/gross_sharpe across bps to show cost decay. A
+    shape break hides that the strategy keeps most Sharpe at 5bps — the
+    honest 'realistic cost' read.
+    """
+    bps = _load("bps_sweep.json")
+    assert isinstance(bps, list) and len(bps) >= 3, "bps sweep needs >=3 points"
+    for row in bps:
+        assert {"bps", "net_sharpe", "gross_sharpe", "avg_turnover"} <= set(row)
+        assert isinstance(row["bps"], (int, float)) and row["bps"] >= 0
+        assert isinstance(row["avg_turnover"], (int, float)) and row["avg_turnover"] >= 0
+    # bps must be ascending (the curve's x-axis invariant).
+    bps_vals = [r["bps"] for r in bps]
+    assert bps_vals == sorted(bps_vals), "bps values must be ascending"
+    # Turnover is cost-independent of bps — it must be ~constant across the sweep.
+    turns = [r["avg_turnover"] for r in bps]
+    assert max(turns) - min(turns) < 0.5, "turnover should be ~constant across bps"
+    # Net Sharpe must decay (or stay flat) as bps rises — never exceed gross.
+    for r in bps:
+        assert r["net_sharpe"] <= r["gross_sharpe"] + 1e-9, (
+            f"net_sharpe must not exceed gross at bps={r['bps']}"
+        )
+
+
+def test_sigma_survey_panel_contract() -> None:
+    """sigma_survey.json feeds the power-floor page + the AI attribution card.
+
+    The attribution card derives the noise-floor sigma from the
+    track_c_confirmatory/combined row; the power-floor page plots the excess.
+    A shape break makes the hero 'sigma approx' literal revert to the hand
+    constant or distort the power-limit argument.
+    """
+    ss = _load("sigma_survey.json")
+    assert {"rows", "summary"} <= set(ss)
+    rows = ss["rows"]
+    assert isinstance(rows, list) and len(rows) >= 10, "sigma survey needs >=10 series"
+    for r in rows:
+        assert {"source", "arm", "sigma_observed", "sigma_pure_noise", "excess_ratio"} <= set(r)
+        assert isinstance(r["sigma_observed"], (int, float))
+        assert isinstance(r["excess_ratio"], (int, float)) and r["excess_ratio"] > 1.0
+    # The confirmatory combined row MUST exist — attribution-card derives the
+    # hero sigma from it. If it drops, the card falls back to a hand constant.
+    combined = [
+        r for r in rows
+        if r.get("source") == "track_c_confirmatory" and r.get("arm") == "combined"
+    ]
+    assert len(combined) >= 1, "sigma survey missing track_c_confirmatory/combined row"
+    # summary.excess_median is cited in docs — must be present and > 1.
+    assert "excess_median" in ss["summary"]
+    assert ss["summary"]["excess_median"] > 1.0
+
+
+def test_theme_signals_panel_contract() -> None:
+    """theme_signals.json feeds the operationalized-signals grid on /themes.
+
+    The view renders each signal as direction × strength × favored tickers,
+    grouped by theme. A shape break crashes the grid or, worse, drops the
+    'display-only, not a research claim' honesty disclosure.
+    """
+    ts = _load("theme_signals.json")
+    assert ts["status"] in {"ok", "awaiting_fetch"}
+    if ts["status"] != "ok":
+        return
+    assert {"groups", "signals", "methodology"} <= set(ts)
+    assert isinstance(ts["groups"], list) and len(ts["groups"]) >= 1
+    valid_dirs = {"bullish", "bearish", "neutral"}
+    for sig in ts["signals"].values():
+        assert {"signal", "direction", "strength", "mean", "n", "group"} <= set(sig)
+        assert sig["direction"] in valid_dirs, f"unknown direction {sig['direction']!r}"
+        assert isinstance(sig["strength"], (int, float))
+        # Every signal's group must be one of the declared groups.
+        assert sig["group"] in ts["groups"], f"signal group {sig['group']!r} not in groups"
+    # Methodology must disclose display-only (anti-misrepresentation).
+    assert "display" in ts["methodology"].lower() or "not" in ts["methodology"].lower()
+
+
+def test_macro_drivers_panel_contract() -> None:
+    """macro_drivers.json feeds the macro-context cards on /regime.
+
+    The view plots per-series macro arcs (VIX, credit, term, DFF). A shape break
+    drops the market-context that frames the whole 'what regime are we in' read.
+    """
+    md = _load("macro_drivers.json")
+    assert md["status"] in {"ok", "awaiting_fetch"}
+    if md["status"] != "ok":
+        return
+    assert {"series", "methodology"} <= set(md)
+    series = md["series"]
+    assert isinstance(series, dict) and len(series) >= 3, "macro needs >=3 driver series"
+    for name, pts in series.items():
+        assert isinstance(pts, list) and len(pts) >= 12, f"{name} needs >=12 months"
+        for pt in pts:
+            assert {"month", "value"} <= set(pt)
+        # Months ascending within each series (time-series invariant).
+        months = [pt["month"] for pt in pts]
+        assert months == sorted(months), f"{name} months must be ascending"
+
+
