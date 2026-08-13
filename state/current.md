@@ -1,5 +1,13 @@
 # state/current.md — read first each session
 
+- **active (2026-08-13) 续⑱（P2 NULL 视觉框架 + P3 移动端审计表，全部署验）：** 续⑰后业主再授权。续⑰的 P2/P3 优化。
+  **P2（心理学框架效应，`85f7acf`）**：NULL verdict badge 用 amber（警告色）→ 与下方 null.note"非失败"语义冲突。扫视读色快于读字，amber 暗示"失败"直觉压过诚实框定。**判辨**：不"全改中性"——区分语义：NULL 本身（成功交付）→ slate（已落定色）；amber 保留给真警示（J-T 门/power-floor/ECE）。两处 NULL 表达（VerdictAnchor badge + verdict chain segment）改 slate；语义拆分非整体重涂。
+  **P3（人体工学，`85f7acf`）**：移动端 7-col 审计表（632px）在 375px 卡里横滑才能到 verdict/metric 列（访客最想要的"结论"反被藏在滚动外）。**判辨**：不做卡片化大重构（/discipline 非高频页，KISS），改用最小影响 responsive 修复——phase + config-sig 两列移动端 `hidden md:table-cell` 隐藏，保留 5 关键列（#/日期/事件/估计量/裁决）首屏可见；隐藏的 sig 折进 event badge 的 title tooltip（零 provenance 丢失）。桌面 1440 仍全 7 列。
+  **验证**：tsc exit 0 + next build compiled + deploy `85f7acf` success + puppeteer 部署站实测——P2 NULL badge slate 非 amber（`bg-slate-500/15`）；P3 桌面 7 列无滚动，移动 375 5 列首屏可见无页面级滚动，22 badge 带 sig tooltip。
+  **本轮全闭环**：P0（MiniPicks 截断）+ P1（TrustRibbon）+ P2（NULL 框架）+ P3（移动审计表）全交付。视觉审计的 4 项优化全部上线。纯展示层；0 frozen/ledger/config/prereg/ADR/OOS 改动；未跑 research/forward。
+  **视觉优化已尽基础+一轮**：基础显示确认健康（续⑰），4 跨学科优化（金融/法学信任 + 心理框架 + 人体工学移动端）上线。剩余打磨级（P4 键盘导航/hover interaction）边际收益递减，KISS 不做除非业主指定。
+
+
 - **active (2026-08-13) 续⑰（视觉全审计 + MiniPicks 截断修 + TrustRibbon 信任锚，全部署验）：** 业主"用视觉能力检查所有界面，结合金融/法学/心理学/人体工学/美学 + 竞品经验；先确保基础显示再优化"。
   **视觉全审计**（puppeteer DOM 扫 6 页 × 桌面1440 + 移动375，查 NaN/undefined/溢出/截断/对比度）：基础显示**健康**——0 数据泄漏、0 水平溢出（含 7×28 审计表移动端走表内滚）、深色默认对比度 ~9.3:1（WCAG AA ✓）。**1 真缺陷**：/overview MiniPicks 股票名 `w-14`(56px) 截断不可读（`CENTERPOINT ENERGY INC`→`CENTERPOIN…`）。
   **基础修**（`ef199e0`）：MiniPicks 名 span 从 fixed `w-14` → `flex-1 min-w-0` + `title` tooltip。名 slot 56→130-144px，4/4 全显或优雅降级（CENTERPOINT 仍截但带 tooltip）。tsc+build 双绿，puppeteer 实测移动375+桌面均无溢出。
