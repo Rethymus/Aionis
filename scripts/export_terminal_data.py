@@ -1345,7 +1345,14 @@ def export_market_context() -> None:
     ]
 
     # --- US equal-weight market index (from panel close prices, 2016+) ---
-    us = pd.read_parquet(Path("data/cache/track_b_panel.parquet"))
+    # Prefer the DISPLAY panel (phase_b_fetch --display, prices through TODAY)
+    # so this market-context series refreshes daily — the frozen research panel
+    # (track_b_panel) stops at the 2026-06-30 cutoff and would freeze the chart.
+    # Fall back to the frozen panel only if the display panel is absent (fresh
+    # CI before the display-fetch step populates it). Display-only either way.
+    display_panel = Path("data/cache/display_panel.parquet")
+    panel_path = display_panel if display_panel.exists() else Path("data/cache/track_b_panel.parquet")
+    us = pd.read_parquet(panel_path)
     us["date"] = pd.to_datetime(us["date"])
     us = us[["date", "ticker", "close"]].dropna()
     # Month-end close per ticker.

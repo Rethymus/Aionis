@@ -141,7 +141,10 @@ function Sparkline({ data, className }: { data: number[]; className?: string }) 
   return (
     <svg
       viewBox={`0 0 ${w} ${h}`}
-      className={cn("h-6 w-full", className)}
+      // Owner directive: the theme cards were given a large page but the
+      // sparkline was h-6 (tiny). Enlarge to h-12 so the trend reads at a
+      // glance, matching the new card footprint. w-full keeps it responsive.
+      className={cn("h-12 w-full", className)}
       preserveAspectRatio="none"
       aria-hidden
     >
@@ -149,7 +152,7 @@ function Sparkline({ data, className }: { data: number[]; className?: string }) 
         points={pts}
         fill="none"
         stroke="currentColor"
-        strokeWidth={1.5}
+        strokeWidth={2}
         vectorEffect="non-scaling-stroke"
       />
     </svg>
@@ -168,10 +171,10 @@ export function ThemeCard({ theme }: { theme: { key: string; status: string; as_
   const roleKey = THEME_ROLE[theme.key] ?? "theme.role.evidence";
   return (
     <Card className="overflow-hidden py-0">
-      <CardHeader className="gap-1.5 border-b">
+      <CardHeader className="gap-2 border-b p-5">
         <div className="flex items-center justify-between gap-2">
-          <CardTitle className="text-sm">{t(THEME_LABEL[theme.key] ?? "themes.risk")}</CardTitle>
-          <Badge variant="outline" className="shrink-0 px-1.5 py-0 text-[10px] font-normal text-muted-foreground">
+          <CardTitle className="text-base">{t(THEME_LABEL[theme.key] ?? "themes.risk")}</CardTitle>
+          <Badge variant="outline" className="shrink-0 px-2 py-0.5 text-[10px] font-normal text-muted-foreground">
             {t(roleKey)}
           </Badge>
         </div>
@@ -182,25 +185,27 @@ export function ThemeCard({ theme }: { theme: { key: string; status: string; as_
           </p>
         ) : null}
       </CardHeader>
-      <CardContent className="p-4">
+      <CardContent className="p-5">
         {(theme.signals ?? []).length > 0 ? (
-          <div className="space-y-2">
+          <div className="space-y-2.5">
             {(theme.signals ?? []).map((s) => (
-              <div key={s.name} className="flex items-center justify-between gap-2 text-sm">
-                <span className="truncate text-xs text-muted-foreground">
+              <div key={s.name} className="flex items-center justify-between gap-2">
+                <span className="min-w-0 flex-1 truncate text-sm text-muted-foreground">
                   {SIGNAL_LABEL[s.name] ? t(SIGNAL_LABEL[s.name]) : s.name}
                 </span>
-                <span className="ml-2 shrink-0 font-mono tabular-nums text-xs">
+                <span className="shrink-0 font-mono text-sm font-medium tabular-nums">
                   {s.value === null || s.value === undefined ? "—" : s.value}
                 </span>
               </div>
             ))}
             {seriesVals.length >= 2 ? (
-              <Sparkline className="text-muted-foreground/60" data={seriesVals} />
+              <div className="pt-1">
+                <Sparkline className="text-muted-foreground/60" data={seriesVals} />
+              </div>
             ) : null}
           </div>
         ) : (
-          <p className="text-xs italic text-muted-foreground">{t("themes.awaiting")}</p>
+          <p className="text-sm italic text-muted-foreground">{t("themes.awaiting")}</p>
         )}
       </CardContent>
     </Card>
