@@ -33,6 +33,7 @@ def _from_tiingo(
     """
     out: dict[str, pd.Series] = {}
     headers = {"Authorization": f"Token {api_key}", "User-Agent": "aionis/0.1"}
+    _diag_logged = False
     for sym in symbols:
         col: pd.Series | None = None
         try:
@@ -55,8 +56,24 @@ def _from_tiingo(
                     None
                 ).normalize()
                 col = pd.Series(df["adjClose"].to_numpy(float), index=idx, name=sym)
-        except Exception:
-            pass
+            elif not _diag_logged:
+                # Empty-but-200 (or non-list body): log once so CI shows WHY a
+                # whole batch returns nothing instead of a silent +0/N. The
+                # bare `except: pass` below masks real errors; this surfaces
+                # empty responses (e.g. IP-blocked providers return 200 + []).
+                log.warning(
+                    "tiingo_empty_response", symbol=sym,
+                    http_status=getattr(r, "status_code", "?"),
+                    body_preview=str(rows)[:120],
+                )
+                _diag_logged = True
+        except Exception as exc:
+            if not _diag_logged:
+                log.warning(
+                    "tiingo_fetch_failed", symbol=sym,
+                    error=f"{type(exc).__name__}: {exc}"[:160],
+                )
+                _diag_logged = True
         if col is not None and not col.empty:
             out[sym] = col
     return out
@@ -77,6 +94,7 @@ def _from_alpaca(
     out: dict[str, pd.Series] = {}
     headers = {"APCA-API-KEY-ID": key_id, "APCA-API-SECRET-KEY": secret_key,
                "User-Agent": "aionis/0.1"}
+    _diag_logged = False
     for sym in symbols:
         col: pd.Series | None = None
         try:
@@ -101,6 +119,22 @@ def _from_alpaca(
                 },
                 timeout=30,
             )
+            # Surface non-200 / error bodies once per batch so CI shows WHY a
+            # whole batch returns nothing (IP-block, 403 SIP, 429 throttle)
+            # instead of a silent +0/N. Don't change behavior — still returns
+            # whatever bars are available.
+            status = getattr(r, "status_code", "?")
+            if status != 200 and not _diag_logged:
+                body = ""
+                try:
+                    body = str(r.text)[:160]
+                except Exception:
+                    pass
+                log.warning(
+                    "alpaca_non_200", symbol=sym,
+                    http_status=status, body_preview=body,
+                )
+                _diag_logged = True
             bars = r.json().get("bars", [])
             if bars:
                 df = pd.DataFrame(bars)
@@ -108,8 +142,16 @@ def _from_alpaca(
                     None
                 ).normalize()
                 col = pd.Series(df["c"].to_numpy(float), index=idx, name=sym)
-        except Exception:
-            pass
+            elif status == 200 and not _diag_logged:
+                log.warning("alpaca_empty_200", symbol=sym, body_preview=str(r.text)[:120])
+                _diag_logged = True
+        except Exception as exc:
+            if not _diag_logged:
+                log.warning(
+                    "alpaca_fetch_failed", symbol=sym,
+                    error=f"{type(exc).__name__}: {exc}"[:160],
+                )
+                _diag_logged = True
         if col is not None and not col.empty:
             out[sym] = col
     return out
