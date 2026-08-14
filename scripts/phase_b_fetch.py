@@ -82,7 +82,15 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    end = "today" if args.display else END
+    # `--display` wants prices through TODAY. Resolve it HERE to an ISO date —
+    # the literal string "today" previously leaked into the Tiingo/Alpaca
+    # endDate param, which both reject with HTTP 400 ("End date format was not
+    # correct. Must be in YYYY-MM-DD format"). That single bug made every
+    # display price fetch fail in CI (587 tickers, +0/N batches) — the real
+    # root cause of the terminal's frozen display data, not IP blocking.
+    from datetime import date as _date
+
+    end = _date.today().isoformat() if args.display else END
     px_path = CACHE / ("phase_b_prices_display.parquet" if args.display
                        else "phase_b_prices.parquet")
     label = "DISPLAY" if args.display else "5b"
