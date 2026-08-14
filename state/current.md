@@ -1,5 +1,12 @@
 # state/current.md — read first each session
 
+- **active (2026-08-14) 续㉔（数据日更根因链全破：today 400 → 修复生效批批 +20/20；剩 30min cap 分次续拉收敛中）：** 续㉓诊断日志（`97191ee`）在 run `31775804769` 打出决定性证据——**Tiingo/Alpaca 全返 HTTP 400 非 IP 封**（IP 假设被推翻）。追到真根因：`phase_b_fetch.py:85` `end = "today"` **字面量字符串**直接传给 `endDate` 参数 → Tiingo 400 "End date format was not correct. Must be in YYYY-MM-DD"（决定性复现实验）。冻结路径正常因 END 是真日期常量；本地测试曾"通过"因手写真日期未复现代码实参。**修**（`00a8882`）：`date.today().isoformat()`。本地端到端验证 `_from_tiingo` 返 200 + AAPL 9 bars 到 08-13。
+  **CI 决定性验证**（run `31788130986`，HEAD 含修复）：`prices 2011-01-01..2026-08-14`（日志可见真日期）→ **批批 `+20/20`**（修前批批 +0）→ completed success + 数据 commit `d5199fe`。零星 429（Tiingo 限速 Alpaca 兜底）+ BF-B/BRK-B（share-class 变体，2% 容差内）均为次要。
+  **剩余收敛**：30min 步骤 cap 在 ~100/587 时掐断（587 冷拉 × 2s 间距 ≈ 45-50min > cap）。**per-ticker cache 持久**（actions/cache 保存 prices/*.parquet）→ 每 run 续拉 ~100 → 2-4 个 run 全拉完 → materialize → display_panel 重建 → themes/market_context/theme_signals as_of 过 06-30。续拉 run `31794374610` 已触发（10:59）。
+  **本轮判辨教训**：(1) 静默 `except: pass` 吞错让 3 轮诊断全猜错方向（secrets→IP→真相 400 字符串 bug）——诊断日志一次定位；(2) "本地测试通过"必须复现代码实参路径（我手写日期掩盖了 bug）；(3) export 的 SKIP 日志此刻反而精确诚实（runs/*.parquet 冻结研究面 CI 无，retain 旧值是设计）。
+  **glm-4.7-flash**：✅ 全通（新 key + base_url 修复 `c853f66` + 项目 json_object 路径验证，reasoning 模型默认 max_tokens 足够）。
+
+
 - **active (2026-08-14) 续㉓（数据日更真阻塞已修：Alpaca feed=iex；glm-v4 鉴权诊断）：** 业主加 Alpaca secrets + glm-v4 配置后请核查数据。
   **① 数据日更真阻塞已修**（`05a3b33`）：CI display-fetch 全失败（587 ticker `+0/20`）的根因**不是 secrets 缺**（业主已加 Alpaca），而是 **Alpaca 免费tier 查 SIP feed 返 403 "subscription does not permit querying recent SIP data"**，被 `except Exception: pass` 静默吞 → 每个 ticker 空。Tiingo 本地正常（AAPL 9 bars）但 CI IP 被限流返 0 → 两源都 0 → display_panel 永不重建。**修**：`_from_alpaca` + `_volume_from_alpaca` 加 `feed=iex`（免费tier IEX 数据）。实测 AAPL/MSFT 各 9 bars（修前 0），11 market 测试绿，ruff 净。display-only（非研究面）。
   **② glm-v4 base_url 修 + 鉴权诊断**（`c853f66`）：glm provider base_url 硬编码 → 改读 `settings.llm_base_url`（业主加的 LLM_BASE_URL secret 终于生效）。字段映射核验：`LLM_BASE_URL`→`llm_base_url`、`LLM_MODEL`→`llm_model`、`OPENAI_API_KEY`→`openai_api_key`、`PROVIDER`→`provider` 全部正确（pydantic-settings 自动大写映射）。业主 secret 命名无误。**鉴权诊断**：实连通测试 bearer + JWT 两种方式都 401（智谱 bigmodel.cn 端点）。业主 key 格式 `id.secret`（32.16 位）。需业主确认 key 是否智谱官方有效，或 base_url 是否应指向自建代理。
