@@ -10,17 +10,59 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-08-13T23:08:20+00:00",
+  "latest_snapshot_ts": "2026-08-14T04:40:30+00:00",
   "n_snapshots": 1,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
+      "ticker": "MSFT",
+      "mentions": 3,
+      "sentiment": 0.075,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "PLTR",
+      "mentions": 2,
+      "sentiment": -0.011,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "CSCO",
+      "mentions": 1,
+      "sentiment": -0.864,
+      "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "ADBE",
+      "mentions": 1,
+      "sentiment": -0.009,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
       "ticker": "GOOGL",
       "mentions": 1,
       "sentiment": -0.732,
       "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "AMZN",
+      "mentions": 1,
+      "sentiment": 0.019,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "NVDA",
+      "mentions": 1,
+      "sentiment": 0.265,
+      "bull_ratio": null,
       "score_sum": 0
     }
   ],
@@ -28,8 +70,8 @@
     "status": "accumulating",
     "by_ticker": {},
     "n_snapshots": 1,
-    "latest_date": "2026-08-13",
+    "latest_date": "2026-08-14",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-08-13T23:59:23.324259+00:00"
+  "snapshot_ts": "2026-08-14T05:31:35.720929+00:00"
 }
