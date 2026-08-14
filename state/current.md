@@ -1,5 +1,12 @@
 # state/current.md — read first each session
 
+- **active (2026-08-14) 续㉓（数据日更真阻塞已修：Alpaca feed=iex；glm-v4 鉴权诊断）：** 业主加 Alpaca secrets + glm-v4 配置后请核查数据。
+  **① 数据日更真阻塞已修**（`05a3b33`）：CI display-fetch 全失败（587 ticker `+0/20`）的根因**不是 secrets 缺**（业主已加 Alpaca），而是 **Alpaca 免费tier 查 SIP feed 返 403 "subscription does not permit querying recent SIP data"**，被 `except Exception: pass` 静默吞 → 每个 ticker 空。Tiingo 本地正常（AAPL 9 bars）但 CI IP 被限流返 0 → 两源都 0 → display_panel 永不重建。**修**：`_from_alpaca` + `_volume_from_alpaca` 加 `feed=iex`（免费tier IEX 数据）。实测 AAPL/MSFT 各 9 bars（修前 0），11 market 测试绿，ruff 净。display-only（非研究面）。
+  **② glm-v4 base_url 修 + 鉴权诊断**（`c853f66`）：glm provider base_url 硬编码 → 改读 `settings.llm_base_url`（业主加的 LLM_BASE_URL secret 终于生效）。字段映射核验：`LLM_BASE_URL`→`llm_base_url`、`LLM_MODEL`→`llm_model`、`OPENAI_API_KEY`→`openai_api_key`、`PROVIDER`→`provider` 全部正确（pydantic-settings 自动大写映射）。业主 secret 命名无误。**鉴权诊断**：实连通测试 bearer + JWT 两种方式都 401（智谱 bigmodel.cn 端点）。业主 key 格式 `id.secret`（32.16 位）。需业主确认 key 是否智谱官方有效，或 base_url 是否应指向自建代理。
+  **③ 端到端验证进行中**：触发 run `31768716742`（HEAD `05a3b33` 含 feed=iex），~30-90min 后查 themes/theme_signals/market_context 的 as_of 是否过 06-30。前次 run 22:31（`31750301639`）未含修复（HEAD `c47535a` 早于 `05a3b33`），故仍 06-30。
+  **本轮**：数据日更的真根因（Alpaca SIP 403）找到并修复，非 secrets 问题。glm 配置缺口修+鉴权待业主。纯 display 层；0 frozen/ledger/config/OOS 改动。
+
+
 - **active (2026-08-14) 续㉒（业主纠偏：实质尺寸重构 + 数据日更真因诊断，不再做表面改色）：** 业主明确不满——我之前改七主题卡片只改颜色（避重就轻），业主要的是**尺寸放大**；且部署站数据完全不更新。**诚实接受批评**。
   **① ThemeCard 实质尺寸重构**（`d0ee67b`）：非改色。title `text-sm`→`text-base`(16px)；signal value `text-xs`→`text-sm`(14px) font-medium（原 muted）；sparkline `h-6`→`h-12` + strokeWidth 1.5→2（趋势一眼可读）；padding `p-4`→`p-5`；header gap-1.5→gap-2；badge px-1.5/py-0→px-2/py-0.5。tsc+build+33 pytest+ruff 全绿，部署 `d0ee67b` success，`text-base:16px` 实测上线。
   **② market_context 数据源修**（同 commit）：equal-weight 市场指数读冻结 `track_b_panel`（停 06-30）→ 改读 `display_panel`（B1 日更），缺失时回退冻结面（与 export_themes 同模式，非 slop fallback）。现 VIX(2026-07) 与指数 lockstep；CI display-fetch 成功后指数自动新鲜。
