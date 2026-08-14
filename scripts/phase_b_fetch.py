@@ -80,6 +80,21 @@ def main() -> None:
             "aionis.eval / the research pipeline."
         ),
     )
+    parser.add_argument(
+        "--budget-minutes",
+        type=float,
+        default=None,
+        help=(
+            "Soft wall-clock budget for the price fetch loop. When the budget "
+            "is nearly exhausted, stop fetching further batches and exit "
+            "GRACEFULLY (status 0): per-ticker parquets already written stay in "
+            "data/cache/prices/ so the next run resumes from them, and the "
+            "normal exit means no orphan python processes are still writing "
+            "when the CI cache post-step tars data/cache (a hard step timeout "
+            "kill leaves orphans → 'tar: file changed as we read it' → cache "
+            "save fails → every run restarts from 0 cached)."
+        ),
+    )
     args = parser.parse_args()
 
     # `--display` wants prices through TODAY. Resolve it HERE to an ISO date —
@@ -125,21 +140,47 @@ def main() -> None:
         pdir = CACHE / "prices"
         pdir.mkdir(exist_ok=True)
         series: dict[str, pd.Series] = {}
+        # Display mode targets TODAY; a cached series only reaches ITS pull
+        # date. Reuse a cached series ONLY if it reaches near the target end —
+        # otherwise queue it for a fresh fetch (providers return the full
+        # START..end range, so this overwrite-extends the cache). Without this,
+        # a warm cache froze the display panel at the FIRST pull date forever
+        # (observed: 06-30-era cache kept the panel at 06-30 even after the
+        # today-400 fix landed). The frozen path (end=END) reuses freely
+        # because END never moves. The --budget-minutes cap bounds the re-fetch
+        # wave, so this converges across runs like the cold pull does.
+        end_ts = pd.Timestamp(end)
+        stale_grace = pd.Timedelta(days=5)  # weekends/holidays slack
         for t in tickers:
             fp = pdir / f"{t}.parquet"
             if fp.exists():
                 df = pd.read_parquet(fp)
                 if not df.empty:
-                    series[t] = pd.Series(
+                    s = pd.Series(
                         df["adjClose"].to_numpy(float),
                         index=pd.to_datetime(df["date"]).dt.normalize(), name=t,
                     )
+                    if not args.display or s.index.max() >= (end_ts - stale_grace):
+                        series[t] = s
         todo = [t for t in tickers if t not in series]
         print(f"[{label}] prices {START}..{end}: {len(series)} cached, {len(todo)} to fetch",
               flush=True)
         use_tiingo = bool(settings.tiingo_api_key)
         BATCH = 20
+        import time as _time
+        _t0 = _time.monotonic()
+        _budget_s = (args.budget_minutes * 60.0) if args.budget_minutes else None
+        # Reserve a safety margin so we exit BEFORE the CI step timeout kills us
+        # (a killed process keeps orphan writers → cache save fails).
+        _margin_s = 120.0 if _budget_s else 0.0
+        _budget_hit = False
         for i in range(0, len(todo), BATCH):
+            if _budget_s is not None and (_time.monotonic() - _t0) > (_budget_s - _margin_s):
+                _budget_hit = True
+                print(f"[{label}] budget reached ({args.budget_minutes}min): stopping "
+                      f"after {len(series)} tickers cached; next run resumes",
+                      flush=True)
+                break
             batch = todo[i:i + BATCH]
             got: dict[str, pd.Series] = {}
             if use_tiingo:
@@ -156,6 +197,26 @@ def main() -> None:
             print(f"[{label}]   {done}/{len(todo)} done "
                   f"(+{len(got)}/{len(batch)} this batch; total {len(series)})",
                   flush=True)
+        if _budget_hit:
+            # Graceful budget exit. Per-ticker parquets are already on disk, so
+            # the CI cache (saved on this NORMAL exit) carries them forward and
+            # the next run resumes. If what we have already clears the display
+            # coverage cap, write the panel now; otherwise exit 0 WITHOUT the
+            # panel (tracked JSON keeps its last value — honest, no partial
+            # panel as a misleading near-empty surface).
+            if args.display:
+                try:
+                    _require_display_prices(tickers, series)
+                except RuntimeError:
+                    print(f"[{label}] budget exit: coverage below display cap; "
+                          f"panel NOT written this run (cache kept for resume)",
+                          flush=True)
+                    return
+                px = pd.DataFrame(series)
+                px.to_parquet(px_path)
+                print(f"[{label}] budget exit with sufficient coverage: "
+                      f"{px.shape} -> {px_path}", flush=True)
+            return
         still_missing = [t for t in tickers if t not in series]
         if args.display:
             # Display path: tolerate a small share of missing tickers. The

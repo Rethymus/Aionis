@@ -129,11 +129,17 @@ jobs:
           uv run python scripts/fetch_macro_display.py --force >/dev/null 2>&1 || true
           # CPIAUCSL + PAYEMS are panel inputs (not in DISPLAY_SERIES) — fetch inline.
           uv run python -c "from aionis.ingest.macro_display import fetch_display_series; from aionis.config import settings; from pathlib import Path; c=Path('data/cache'); [fetch_display_series(settings.fred_api_key, c, s, force=True) for s in ('CPIAUCSL','PAYEMS')]" 2>/dev/null || true
-          uv run python scripts/phase_b_fetch.py --display
+          # --budget-minutes: exit GRACEFULLY inside the step window. A hard
+          # timeout kill leaves orphan python writers → the cache post-step's
+          # tar fails with "file changed as we read it" → cache save fails →
+          # every run restarts from 0 cached (observed on runs 31788130986 /
+          # 31794374610). With the budget, per-ticker parquets persist in the
+          # saved cache and each run resumes — converging over ~3-4 runs.
+          uv run python scripts/phase_b_fetch.py --display --budget-minutes 24
           uv run python scripts/track_b_materialize_panel.py --display
-        timeout-minutes: 30  # cold price pull = ~588 tickers × Tiingo/Alpaca polite;
-        # incremental cache (per-ticker) means warm runs are minutes. Same
-        # continue-on-error + step-cap insurance as Form 4/13D/GDELT.
+        timeout-minutes: 30
+        # Safety net only — the --budget-minutes graceful exit is the primary
+        # mechanism; warm runs (cache converging) finish in minutes.
         continue-on-error: true  # Tiingo/Alpaca/SEC outage keeps the prior display panel
 
       - name: Rebuild ticker metadata (names + sectors)
