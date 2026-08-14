@@ -92,6 +92,12 @@ def _from_alpaca(
                     "end": end,
                     "adjustment": "all",
                     "limit": 10000,
+                    # Free-tier Alpaca subscriptions cannot query the default SIP
+                    # feed (403 "subscription does not permit querying recent SIP
+                    # data"). IEX is the free-tier exchange feed; US display
+                    # prices are close-enough to SIP for a daily-refresh display
+                    # panel (not a research surface).
+                    "feed": "iex",
                 },
                 timeout=30,
             )
@@ -135,6 +141,12 @@ def _volume_from_alpaca(
                     "end": end,
                     "adjustment": "all",
                     "limit": 10000,
+                    # Free-tier Alpaca subscriptions cannot query the default SIP
+                    # feed (403 "subscription does not permit querying recent SIP
+                    # data"). IEX is the free-tier exchange feed; US display
+                    # prices are close-enough to SIP for a daily-refresh display
+                    # panel (not a research surface).
+                    "feed": "iex",
                 },
                 timeout=30,
             )
