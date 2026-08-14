@@ -124,23 +124,39 @@ jobs:
         # surface. phase_b_fetch --display writes phase_b_prices_display.parquet
         # (prices through TODAY) without touching the frozen prices. Display-only —
         # neither enters aionis.eval / the research pipeline / ledger / OOS.
+        #
+        # SPLIT INTO 3 STEPS (run 31818470736 postmortem): a single 30min step
+        # had fundamentals cold-pull (~20min, because the cache save kept failing)
+        # + prices + materialize in one window, so the price budget (24min from
+        # fetch start) never fired before the STEP cap killed everything —
+        # orphan writers then corrupted the cache tar ("file changed as we read
+        # it") so even the fundamentals parquet never persisted → every run cold
+        # again. Separate steps give each its own cap; fundamentals is cached
+        # after ONE clean save and turns instant; prices budget only has to fit
+        # ITS step.
         run: |
           set +e
           uv run python scripts/fetch_macro_display.py --force >/dev/null 2>&1 || true
           # CPIAUCSL + PAYEMS are panel inputs (not in DISPLAY_SERIES) — fetch inline.
           uv run python -c "from aionis.ingest.macro_display import fetch_display_series; from aionis.config import settings; from pathlib import Path; c=Path('data/cache'); [fetch_display_series(settings.fred_api_key, c, s, force=True) for s in ('CPIAUCSL','PAYEMS')]" 2>/dev/null || true
-          # --budget-minutes: exit GRACEFULLY inside the step window. A hard
-          # timeout kill leaves orphan python writers → the cache post-step's
-          # tar fails with "file changed as we read it" → cache save fails →
-          # every run restarts from 0 cached (observed on runs 31788130986 /
-          # 31794374610). With the budget, per-ticker parquets persist in the
-          # saved cache and each run resumes — converging over ~3-4 runs.
-          uv run python scripts/phase_b_fetch.py --display --budget-minutes 24
-          uv run python scripts/track_b_materialize_panel.py --display
-        timeout-minutes: 30
-        # Safety net only — the --budget-minutes graceful exit is the primary
-        # mechanism; warm runs (cache converging) finish in minutes.
-        continue-on-error: true  # Tiingo/Alpaca/SEC outage keeps the prior display panel
+          uv run python scripts/phase_b_fetch.py --display --fundamentals-only
+        timeout-minutes: 25
+        continue-on-error: true  # SEC outage keeps the prior cache
+
+      - name: Rebuild display panel prices (B1, budget exit)
+        # --budget-minutes: exit GRACEFULLY inside the step window. A hard
+        # timeout kill leaves orphan python writers → the cache post-step's
+        # tar fails with "file changed as we read it" → cache save fails →
+        # every run restarts from 0 cached (observed on runs 31788130986 /
+        # 31794374610). With the budget, per-ticker parquets persist in the
+        # saved cache and each run resumes — converging over ~3-4 runs.
+        run: uv run python scripts/phase_b_fetch.py --display --budget-minutes 24
+        timeout-minutes: 27
+        continue-on-error: true  # Tiingo/Alpaca outage keeps the prior cache
+
+      - name: Materialize display panel (B1)
+        run: uv run python scripts/track_b_materialize_panel.py --display
+        timeout-minutes: 15
 
       - name: Rebuild ticker metadata (names + sectors)
         run: uv run python scripts/build_ticker_metadata.py --no-cache

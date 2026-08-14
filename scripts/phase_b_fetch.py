@@ -95,6 +95,17 @@ def main() -> None:
             "save fails → every run restarts from 0 cached)."
         ),
     )
+    parser.add_argument(
+        "--fundamentals-only",
+        action="store_true",
+        help=(
+            "Fetch ONLY the fundamentals parquet (SEC company_facts, ~20min cold) "
+            "and exit 0 — no price fetching, no panel write. Lets CI warm the "
+            "fundamentals cache in its own step so the price step's budget "
+            "covers prices alone (one 30min step previously burned 20min on "
+            "fundamentals cold-pull before prices even started)."
+        ),
+    )
     args = parser.parse_args()
 
     # `--display` wants prices through TODAY. Resolve it HERE to an ISO date —
@@ -123,6 +134,10 @@ def main() -> None:
         fund.to_parquet(fund_path)
         print(f"[{label}] fundamentals: {len(fund)} rows, "
               f"{fund['ticker'].nunique()} tickers -> {fund_path}", flush=True)
+
+    if args.fundamentals_only:
+        print(f"[{label}] FUNDAMENTALS-ONLY DONE", flush=True)
+        return
 
     reuse_prices = px_path.exists() and _final_panel_is_complete(px_path, tickers)
     if reuse_prices:
