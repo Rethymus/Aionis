@@ -49,7 +49,8 @@ export function useLivePrices(
 
   useEffect(() => {
     if (!WORKER_URL) {
-      setStatus("disabled");
+      // useState already initializes to "disabled" when the worker is not
+      // configured — nothing to sync here.
       return;
     }
 

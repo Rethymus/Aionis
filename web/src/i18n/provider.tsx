@@ -17,8 +17,12 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
   const [lang, setLangState] = useState<Lang>("zh");
 
   useEffect(() => {
+    // SSR-safe localStorage hydration: the prerendered HTML must stay
+    // deterministic ("zh"), so the saved language can only be applied after
+    // mount — the setState-in-effect here is the intended pattern.
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved === "zh" || saved === "en") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLangState(saved);
     }
   }, []);
