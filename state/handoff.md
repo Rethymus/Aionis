@@ -8,6 +8,33 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-15 (p) 同题扫查二轮：死代码/依赖裁剪 + lint 清零 + 新鲜度审计 + 后续优化方案
+
+**交付（`6eab8a4`，-2118 行）**：
+- **死代码**：`globe-demo.tsx`、`ui/globe.tsx`（three/three-globe/@react-three 链）、`ui/chart.tsx`、`ui/calendar.tsx`（react-day-picker+date-fns 唯一用户）零引用（grep 全目录复核）删除；package.json 裁 9 依赖，`pnpm-lock.yaml` -798 行同步（manifest+lock 原子，CI `--frozen-lockfile` 兼容）。CI install 下载变少；逐页 payload 实测等量（运行时零变化）。
+- **lint 清零**：live-prices 冗余 setState 删；i18n provider SSR 安全水合模式带理由 disable。`eslint src --quiet` 0 error。
+- **验证**：tsc exit 0 + build 23/23 静态页 + 全量 pytest exit 0（Windows 迁移后首次全绿）+ ruff 净。
+
+**新鲜度审计（问题分级）**：
+| 面板 | 状态 | 归属 |
+|---|---|---|
+| theme_signals + themes price 族 | 06-30（46天）| CI display_panel 收敛中（另一 session 的 run 31878236600 验证范围，勿重叠） |
+| smart_money | 08-07 | 13D fetch 间歇，低危 |
+| picks_meta / pick_conviction | 08-03 | 读 gitignored 冻结 OOS parquet，设计如此 |
+| GDELT news | as_of 06 | 增量回填滞后 |
+| reddit | live 2 picks，1 null bull_ratio | RSS 无 score 结构限制；类型已防御 |
+
+**后续优化方案（可实施性已评估）**：
+1. **性能·tab 级 next/dynamic**（推荐，低风险）：4 个 hub 页（picks/regime/track/confirmation）非默认 tab 改 `next/dynamic` → recharts 376KB + 非首屏数据移入按需 chunk（picks 首屏 1890→~1500KB）。Turbopack 兼容、不换构建器、每页 4-6 行。UX 代价 = 首次点 tab 短暂 loading。
+2. **性能·BACKTEST_MONTHS 99→36**：picks_backtest.json 140→~55KB 且在共享 chunk（每页受益）。显示取舍（track record 只显 36 月）需业主点头。
+3. **性能·webpack manualChunks**（大工程）：换构建器 + 26 JSON 按面板拆 chunk（非图表页 -350KB）。涉 CI 构建行为，需 CI session 协调，仅当 1+2 不够时。
+4. **数据·A 股行业分类**：baostock `query_stock_industry`（证监会行业，免费无 key，需加依赖 ~pip baostock）或 zero-dep 直接 HTTP；扩展 `build_ticker_metadata.py` + cache + methodology 更新（tier→industry）。M 任务。
+5. **数据·Russell 2000 COT 2016**：ICE 变体代码已就位，等 cftc.gov 连通自动补（merge-protected）。
+6. **数据·reddit 富化**：业主 PRAW 凭证 → transport 自动升级（代码已就绪）→ score/bull_ratio 补全。
+7. **准确率**：研究面冻结，唯一合法路径 = Track A 因子生成器（业主已授权，新冻结面）与 E3 forward-live（AUD-06+业主 GO）—— 均预注册流程，非 display 层可擅自推进。
+
+**边界**：纯 web 展示层；0 ledger/frozen/config/prereg/OOS 改动；未跑 research/forward；未 push（本地领先 origin 4 commit，推送时机由 CI session 协调）。
+
 ## 2026-08-15 (o) web 数据层类型加固 + 性能探索定论 + Windows 测试修复（与 CI/CD session 并行）
 
 任务方向：数据/性能/准确率/web 显示优化（CI/CD 由另一 session 负责，本轮零重叠）。三项交付：

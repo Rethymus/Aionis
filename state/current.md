@@ -7,6 +7,14 @@
   **④ 数据面核查（state 旧记录订正）**：13D smart_money latest 已 **2026-08-07**（日更 lane 生效，旧"2024-12 滞后"过时）；A 股 picks 已是**板块级分类**（创业板/沪主板等，非 Unclassified）；行业级（申万/证监会）升级留后续——需新数据源（baostock 不在依赖）+ CI 协调。
   **边界**：纯 web 类型/展示层 + 1 测试断言修复；0 ledger/frozen/config/prereg/OOS 改动；未跑 research/forward；**未 push**（CI/CD session 并行验证中，推送由其协调）。
 
+- **active (2026-08-15) 续㉖（同题扫查二轮：死代码/依赖裁剪 + lint 清零 + 数据新鲜度审计）：**
+  **① 死代码清理（`6eab8a4`，-2118 行）**：模板遗留 4 组件（`globe-demo.tsx`+`ui/globe.tsx` three.js 全家链、`ui/chart.tsx`、`ui/calendar.tsx`）零引用删除 + package.json 裁 9 依赖（three/three-globe/@react-three/drei·fiber/@types/three/react-day-picker/date-fns/@dnd-kit/core·sortable），lockfile -798 行 → CI pnpm install 下载减少；运行时零变化（逐页 payload 实测等量：evidence 1222/picks 1890）。
+  **② lint 清零（同 commit）**：`live-prices.ts` 冗余 `setStatus("disabled")` 删（useState 初始化已覆盖）；`i18n/provider.tsx` localStorage 水合的 setState-in-effect = SSR 安全正当模式（预渲染 HTML 必须确定性 "zh"），带理由定向 disable。`eslint src` 首次全绿。
+  **③ 数据新鲜度审计（26 面板全扫）**：健康——多数 0-4 天（日更生效）。**例外**：(a) `theme_signals` + themes 的 price/fundamentals/risk/market_structure 卡 as_of **06-30（46 天）** = CI display_panel 未重建/价格收敛未完成 → 属 CI/CD session 正在端到端验证的链路（run 31878236600 含 DFF 补拉 + 契约闸门），通过后应自愈，不重叠处理；(b) smart_money 08-07（8 天，13D fetch 间歇）；(c) picks_meta/pick_conviction 08-03 = 读 gitignored 冻结 OOS parquet，设计如此（诚实陈旧）；(d) GDELT news as_of 06（增量回填滞后）；(e) reddit live 2 picks、1 条 bull_ratio null（RSS 无 score 结构限制，RedditPick 类型已防御）。
+  **④ 全量 pytest（Windows 迁移后首次）**：exit 0、0 FAILED（含 as_posix 修复后 test_reporting 全绿）。
+  **后续优化方案（已评估可行性，记录于 handoff (p)）**：tab 级 next/dynamic（Turbopack 兼容的每页 -376KB recharts 路径）/ BACKTEST_MONTHS 99→36（需业主显示取舍）/ webpack manualChunks（大工程涉 CI）/ A 股行业分类 baostock 源（M 任务）/ Russell COT 自愈等待 / reddit PRAW 凭证富化。研究面"提高准确率"唯一合法路径 = Track A 因子生成器（业主已授权）与 E3（AUD-06+GO），均预注册流程非擅自启动。
+  **边界**：纯 web 展示层清理；0 ledger/frozen/config/prereg/OOS 改动；未跑 research/forward；未 push。
+
 - **active (2026-08-15) 推送 + 部署验 + CI 闸门端到端验证中（业主授权 push，实时监控）：** 4 原子 commit（`c10993b` 发表线废除 / `3c5aaf8` RedditPick 类型 / `22ce0bb` CI DFF+闸门 / `c429435` state）+ 1 修复 commit（`ae83fe3`）。**rebase 冲突**：推送时远端已被日更 `fabe77a` 推进（其 macro_drivers 仍 5 序列残缺 = bug 复现的活证据）；`git pull --rebase` 冲突解决保留我方 7 序列版（ts 更新）。
   **部署两跳后绿**：首跳 8s 挂——`AGENTS.md` 在索引里仍是 **symlink 模式 120000** 携全文内容（Windows git add 沿用旧模式），Linux checkout "File name too long"（deploy `31878072392`）；`git rm --cached` + 重加显式 100644（同 blob）→ `ae83fe3` → deploy `31878129143` **success**（build 49s + deploy 8s，类型检查过 = RedditPick 修复在 CI 验证）。
   **部署站实测**（curl）：`/`、`/overview`、`/regime` "可发表/publishable" 0 命中；meta/hero = "intended outcome"；`/regime` 联邦基金利率卡 + 3.63（2026-07）+ real_rate −0.1 实显——两修复均已上线。
