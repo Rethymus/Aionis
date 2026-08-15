@@ -28,11 +28,12 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 90  # Form 4 is step-capped (below); the rest fits in ~15min
-    # exceeded 75min after several cancelled runs left no data-cache. 150 lets
-    # ONE cold pull complete → cache saves → subsequent runs are fast deltas.
-    # The durable fix (form4 incremental: fetch only filings since last cached
-    # date) lives in scripts/form4_fetch.py; this timeout is the safety net.
+    timeout-minutes: 150  # Run 31825889043 died at exactly 90min mid-display-fetch:
+    # the pre-display chain alone (Form4 20 + 13D 15 + GDELT 20 + misc ~20) eats
+    # ~75min, leaving no room for the B1 display steps (fundamentals cold ~20 +
+    # prices budget 24 + materialize ~5). 150 lets ONE full cold pass complete;
+    # once the fundamentals + prices caches land (first clean save), the job
+    # shrinks back to ~60-80min of warm deltas. Same lesson as the 75→90 bump.
     steps:
       - uses: actions/checkout@v4
 
