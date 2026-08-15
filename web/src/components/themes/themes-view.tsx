@@ -10,7 +10,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
-import { aionis } from "@/data/aionis";
+import { aionis, type Theme } from "@/data/aionis";
 import { ArgumentChainDiagram } from "./argument-chain-diagram";
 import { CoverageMap } from "@/components/ai/coverage-map";
 import { SegmentHeader } from "@/components/segment-header";
@@ -159,7 +159,7 @@ function Sparkline({ data, className }: { data: number[]; className?: string }) 
   );
 }
 
-export function ThemeCard({ theme }: { theme: { key: string; status: string; as_of?: string | null; headline?: string; signals?: { name: string; value: number | null }[]; series?: { value: number }[] } }) {
+export function ThemeCard({ theme }: { theme: Theme }) {
   const { t } = useI18n();
   const seriesVals = (theme.series ?? [])
     .map((s) => s.value)

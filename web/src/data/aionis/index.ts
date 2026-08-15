@@ -1,40 +1,41 @@
-import metrics from "./metrics.json";
-import picks from "./picks.json";
-import shorts from "./shorts.json";
-import picksMeta from "./picks_meta.json";
-import sectorBreakdown from "./sector_breakdown.json";
-import picksBacktest from "./picks_backtest.json";
-import marketContext from "./market_context.json";
-import evidence from "./evidence.json";
-import powerFloor from "./power_floor.json";
-import icMonthly from "./ic_monthly.json";
-import sigmaSurvey from "./sigma_survey.json";
-import bpsSweep from "./bps_sweep.json";
-import taco from "./taco.json";
-import reddit from "./reddit.json";
-import smartMoney from "./smart_money.json";
-import pickConviction from "./pick_conviction.json";
-import form4 from "./form4.json";
-import cot from "./cot.json";
-import modelHealth from "./model_health.json";
-import calibrationReliability from "./calibration_reliability.json";
-import themeSignals from "./theme_signals.json";
-import macroDrivers from "./macro_drivers.json";
-import themes from "./themes.json";
-import ledgerAudit from "./ledger_audit.json";
-import headlineProvenance from "./headline_provenance.json";
+// Explicit per-panel contracts — never `as typeof json`.
+// Why: a daily refresh whose data collapses a JSON literal (e.g. every pick
+// carrying bull_ratio: null) narrows the INFERRED type and breaks the Pages
+// build at arbitrary use-sites (deploy 31869082383). These types mirror the
+// export contracts in scripts/export_terminal_data.py, including its real
+// nullability (fields that branch to None on empty/edge data are `| null`).
+//
+// The panels stay in ONE merged `aionis` object (deliberately): Turbopack's
+// static export dedupes a single barrel module into one shared chunk, while
+// named re-exports get DUPLICATED across per-page chunks (measured: every page
+// +50-280KB with data copied into multiple chunks). Per-route data splitting
+// would need webpack manualChunks surgery — out of scope for this lane.
 
-export type RedditPick = {
-  // Explicit (not JSON-inferred): a daily refresh whose picks all carry
-  // bull_ratio: null collapses the inferred literal type to `null`, which
-  // narrows to `never` after a !== null guard and fails the Pages build
-  // (deploy 31869082383). The export contract is: number | null.
-  ticker: string;
-  mentions: number;
-  sentiment: number;
-  score_sum: number;
-  bull_ratio: number | null;
-};
+import metricsJson from "./metrics.json";
+import picksJson from "./picks.json";
+import shortsJson from "./shorts.json";
+import picksMetaJson from "./picks_meta.json";
+import sectorBreakdownJson from "./sector_breakdown.json";
+import picksBacktestJson from "./picks_backtest.json";
+import marketContextJson from "./market_context.json";
+import evidenceJson from "./evidence.json";
+import powerFloorJson from "./power_floor.json";
+import icMonthlyJson from "./ic_monthly.json";
+import sigmaSurveyJson from "./sigma_survey.json";
+import bpsSweepJson from "./bps_sweep.json";
+import tacoJson from "./taco.json";
+import redditJson from "./reddit.json";
+import smartMoneyJson from "./smart_money.json";
+import pickConvictionJson from "./pick_conviction.json";
+import form4Json from "./form4.json";
+import cotJson from "./cot.json";
+import modelHealthJson from "./model_health.json";
+import calibrationReliabilityJson from "./calibration_reliability.json";
+import themeSignalsJson from "./theme_signals.json";
+import macroDriversJson from "./macro_drivers.json";
+import themesJson from "./themes.json";
+import ledgerAuditJson from "./ledger_audit.json";
+import headlineProvenanceJson from "./headline_provenance.json";
 
 export type Pick = {
   rank: number;
@@ -46,6 +47,8 @@ export type Pick = {
   prob_up: number;
   rank_change: number | null;
 };
+
+export type Short = Omit<Pick, "rank_change">;
 
 export type CalibrationMeta = {
   region: string;
@@ -61,12 +64,253 @@ export type CalibrationMeta = {
   walk_forward: boolean;
 };
 
+export type Metrics = {
+  combined_ic: number;
+  p: number;
+  n_months: number;
+  ci_lo: number;
+  ci_hi: number;
+  verdict: string;
+  jt_look1: string;
+  h6: string;
+  sesoi: number;
+  latest_month: string;
+  n_picks_total: number;
+  // Present only on the live-ledger branch (absent on the committed-literals
+  // CI fallback) — export_metrics.
+  ledger_row?: number;
+  config_sig_short?: string;
+  snapshot_ts?: string;
+};
+
+export type PicksMeta = {
+  latest_date: string;
+  method: string;
+  walk_forward: boolean;
+  regions: { [region: string]: { latest_date: string; meta: CalibrationMeta } };
+  disclaimer: string;
+};
+
 export type SectorRow = {
   sector: string;
   n_stocks: number;
   mean_score: number;
   mean_prob_up: number;
   regions: ("us" | "cn")[];
+};
+
+export type SectorBreakdown = {
+  status: string;
+  methodology: string;
+  // ok branch
+  latest_dates?: { [region: string]: string };
+  n_sectors?: number;
+  top_favored?: SectorRow[];
+  least_favored?: SectorRow[];
+  all_sectors?: SectorRow[];
+  // awaiting_fetch branch writes `sectors: []` instead
+  sectors?: SectorRow[];
+  snapshot_ts?: string;
+};
+
+export type BacktestPick = {
+  ticker: string;
+  name: string;
+  score: number;
+  realized_return: number;
+  hit: boolean;
+};
+
+export type BacktestMonth = {
+  month: string;
+  region: "us" | "cn";
+  picks: BacktestPick[];
+  top_mean_return: number;
+  base_mean_return: number;
+  excess: number;
+};
+
+export type PicksBacktest = {
+  methodology: string;
+  months: BacktestMonth[];
+  summary: {
+    n_months: number;
+    n_picks: number;
+    hit_rate: number;
+    avg_top_return: number;
+    avg_base_return: number;
+    avg_excess: number;
+  };
+  snapshot_ts?: string;
+};
+
+export type MarketEvent = {
+  date: string;
+  label: string;
+  type: string;
+  region?: string;
+};
+
+export type MarketContext = {
+  methodology: string;
+  start_label: string;
+  vix_series: { month: string; vix: number }[];
+  market_series: { month: string; ret: number; index: number }[];
+  risk: {
+    n_periods: number;
+    annual_return: number;
+    sharpe: number;
+    sortino: number;
+    max_drawdown: number;
+    calmar: number;
+    var_95: number;
+    cvar_95: number;
+    periods_per_year: number;
+  };
+  events: MarketEvent[];
+  n_months: number;
+  date_range: string[];
+  snapshot_ts?: string;
+};
+
+export type PowerFloor = {
+  sesoi: number;
+  looks: {
+    look: number;
+    n: number;
+    z: number;
+    n_min_months: number;
+    n_min_years: number;
+    rci_level_pct: number;
+  }[];
+  sigma_observed_median: number;
+  sigma_pure_noise_n462: number;
+  n_min_at_pure_noise_look3_months: number;
+  n_min_at_observed_look3_months: number;
+  verdict: string;
+  snapshot_ts?: string;
+};
+
+export type SigmaSurvey = {
+  rows: {
+    source: string;
+    arm: string;
+    sigma_observed: number;
+    n_cross: number;
+    sigma_pure_noise: number;
+    excess_ratio: number;
+  }[];
+  summary: {
+    excess_min: number;
+    excess_median: number;
+    excess_max: number;
+    n_series: number;
+  };
+};
+
+export type Taco = {
+  methodology: string;
+  vix_series: { month: string; vix: number }[];
+  events: { date: string; label: string; type: string }[];
+  climbdowns_count: number;
+  escalations_count: number;
+  latest_vix: number | null;
+  latest_date: string | null;
+  snapshot_ts?: string;
+};
+
+export type RedditPick = {
+  ticker: string;
+  mentions: number;
+  sentiment: number;
+  score_sum: number;
+  bull_ratio: number | null;
+};
+
+export type SmartMoney = {
+  methodology?: string;
+  recent_filings: {
+    filer: string;
+    target: string;
+    ticker: string;
+    date: string;
+    form: string;
+    is_amendment: boolean;
+    url?: string;
+  }[];
+  active_filers: { filer: string; count: number }[];
+  total_filings: number;
+  n_filers: number;
+  latest_date: string | null;
+  yearly: { year: number; filings: number }[];
+};
+
+export type ConvictionPoint = {
+  date: string;
+  n: number;
+  std: number;
+  decile_spread: number;
+  top_q: number;
+  bot_q: number;
+};
+
+export type PickConviction = {
+  methodology: string;
+  series: ConvictionPoint[];
+  latest: ConvictionPoint | null;
+  conviction: string;
+  trailing_std_mean: number | null;
+};
+
+export type Form4 = {
+  status: string;
+  methodology: string;
+  recent: {
+    filer: string;
+    ticker: string;
+    date: string;
+    action: string;
+    shares: number | null;
+    price: number | null;
+  }[];
+  buys: number;
+  sells: number;
+  n_filers: number;
+  top_insiders: { filer: string; count: number }[];
+  window: string;
+  n_issuers: number;
+  yearly: { year: number; buys: number; sells: number }[];
+  snapshot_ts?: string;
+};
+
+export type Cot = {
+  status: string;
+  methodology: string;
+  markets: { name: string; net: number; z: number; long: number; short: number }[];
+  composite: { mean_z: number; crowding: number; n: number };
+  composite_series: { date: string; z: number }[];
+  latest_date: string;
+  snapshot_ts?: string;
+};
+
+export type ModelHealthRegion = {
+  region: string;
+  n_history: number;
+  n_recent: number;
+  recent_months: number;
+  psi: number;
+  ic_full: number;
+  ic_recent: number;
+  base_rate_full: number;
+  base_rate_recent: number;
+  regime: string;
+};
+
+export type ModelHealth = {
+  recent_months: number;
+  methodology: string;
+  regions: { [region: string]: ModelHealthRegion };
+  status: string;
 };
 
 export type Evidence = {
@@ -131,29 +375,30 @@ export type ThemeSignals = {
   };
 };
 
-export type MacroDrivers = {  status: string;
+export type MacroDrivers = {
+  status: string;
   series: {
     [key: string]: { month: string; value: number }[];
   };
   methodology?: string;
 };
 
-export type SmartMoney = {
+export type Theme = {
+  key: string;
+  status: string;
+  as_of: string | null;
+  headline: string;
+  signals: { name: string; value: number | null }[];
+  series: { month: string; value: number | null }[];
+};
+
+export type Themes = {
+  status: string;
+  as_of_date?: string;
+  freshness?: { earliest: string; latest: string; mixed: boolean };
   methodology?: string;
-  recent_filings: {
-    filer: string;
-    target: string;
-    ticker: string;
-    date: string;
-    form: string;
-    is_amendment: boolean;
-    url?: string;
-  }[];
-  active_filers: { filer: string; count: number }[];
-  total_filings: number;
-  n_filers: number;
-  latest_date: string | null;
-  yearly: { year: number; filings: number }[];
+  themes: Theme[];
+  snapshot_ts?: string;
 };
 
 export type LedgerAuditEntry = {
@@ -207,29 +452,39 @@ export type HeadlineProvenance = {
 };
 
 export const aionis = {
-  metrics: metrics as typeof metrics,
-  picks: picks as Pick[],
-  shorts: shorts as Pick[],
-  picksMeta: picksMeta as typeof picksMeta,
-  sectorBreakdown: sectorBreakdown as typeof sectorBreakdown,
-  picksBacktest: picksBacktest as typeof picksBacktest,
-  marketContext: marketContext as typeof marketContext,
-  evidence: evidence as Evidence[],
-  powerFloor: powerFloor as typeof powerFloor,
-  icMonthly: icMonthly as { month: string; us: number; cn: number; combined: number }[],
-  sigmaSurvey: sigmaSurvey as typeof sigmaSurvey,
-  bpsSweep: bpsSweep as { bps: number; net_sharpe: number; gross_sharpe: number; avg_turnover: number }[],
-  taco: taco as typeof taco,
-  reddit: { ...reddit, picks: reddit.picks as RedditPick[] },
-  smartMoney: smartMoney as SmartMoney,
-  pickConviction: pickConviction as typeof pickConviction,
-  form4: form4 as typeof form4,
-  cot: cot as typeof cot,
-  modelHealth: modelHealth as typeof modelHealth,
-  calibrationReliability: calibrationReliability as CalibrationReliability,
-  themeSignals: themeSignals as ThemeSignals,
-  macroDrivers: macroDrivers as MacroDrivers,
-  themes: themes as typeof themes,
-  ledgerAudit: ledgerAudit as LedgerAudit,
-  headlineProvenance: headlineProvenance as HeadlineProvenance,
+  metrics: metricsJson as Metrics,
+  picks: picksJson as Pick[],
+  shorts: shortsJson as Short[],
+  picksMeta: picksMetaJson as PicksMeta,
+  sectorBreakdown: sectorBreakdownJson as SectorBreakdown,
+  picksBacktest: picksBacktestJson as PicksBacktest,
+  marketContext: marketContextJson as MarketContext,
+  evidence: evidenceJson as Evidence[],
+  powerFloor: powerFloorJson as PowerFloor,
+  icMonthly: icMonthlyJson as {
+    month: string;
+    us: number;
+    cn: number;
+    combined: number;
+  }[],
+  sigmaSurvey: sigmaSurveyJson as SigmaSurvey,
+  bpsSweep: bpsSweepJson as {
+    bps: number;
+    net_sharpe: number;
+    gross_sharpe: number;
+    avg_turnover: number;
+  }[],
+  taco: tacoJson as Taco,
+  reddit: { ...redditJson, picks: redditJson.picks as RedditPick[] },
+  smartMoney: smartMoneyJson as SmartMoney,
+  pickConviction: pickConvictionJson as PickConviction,
+  form4: form4Json as Form4,
+  cot: cotJson as Cot,
+  modelHealth: modelHealthJson as ModelHealth,
+  calibrationReliability: calibrationReliabilityJson as CalibrationReliability,
+  themeSignals: themeSignalsJson as ThemeSignals,
+  macroDrivers: macroDriversJson as MacroDrivers,
+  themes: themesJson as Themes,
+  ledgerAudit: ledgerAuditJson as LedgerAudit,
+  headlineProvenance: headlineProvenanceJson as HeadlineProvenance,
 };
