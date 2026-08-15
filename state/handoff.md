@@ -8,6 +8,51 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-15 (o) web 数据层类型加固 + 性能探索定论 + Windows 测试修复（与 CI/CD session 并行）
+
+任务方向：数据/性能/准确率/web 显示优化（CI/CD 由另一 session 负责，本轮零重叠）。三项交付：
+
+**① 全部 26 面板显式契约类型（`web/src/data/aionis/index.ts`）** — 闭环 current.md 续①遗留的
+"凡 `as typeof` 面板同类风险" follow-up。nullability 逐一对照 `export_terminal_data.py` 导出契约：
+taco.latest_vix/latest_date、form4.shares/price、themes.signals[].value/series[].value/as_of、
+pick_conviction.latest/trailing_std_mean 可空（export 显式 `if ... else None` 分支）→ `| null`；
+metrics.ledger_row/config_sig_short 仅 live-ledger 分支存在 → optional；market_context.date_range
+实为 `string[]`（原臆写 string，tsc 即刻抓出）。日更数据形状漂移从此在 cast 单点红灯（对齐
+deploy 31869082383 reddit `bull_ratio: null` 类型塌缩先例的防御）。ThemeCard 内联结构 prop 类型
+→ 复用导出 `Theme`（其 seriesVals 运行时 `typeof v === "number"` 过滤本已存在，仅类型声明落后）。
+验证：`tsc --noEmit` exit 0 + `next build` 22 路由全静态预渲染 + 33 `test_web_terminal_data` 契约
+测试绿 + 全仓 ruff 净。`attribution-card` 的 `typeof aionis.metrics` 参数注解自动升级为显式类型。
+
+**② 性能探索（全部实测取证）**：
+- recharts 376KB chunk **已按路由正确分割**——7 个无图表页实测不引用它；无需 lazy 化。
+- **barrel 命名导出拆分实验 → 实测更差 → 回退**：Turbopack 静态导出对跨路由共享模块**不去重**
+  （数据指纹证据：market_context 内容出现在同一页加载的 2 个 chunk 里各一份拷贝），27 个消费文件
+  改命名导入后每页 +50-280KB（picks 1613→1890）。结论 = 保留单一合并对象（单模块 → 单共享 chunk，
+  零重复）；已在 index.ts 头部注释固化此结论。git checkout 回退了全部消费文件（它们曾被我改写，
+  最终 diff 不含）。**若未来要 per-route 数据拆分：需 webpack manualChunks（Turbopack 无此 API）= 换
+  构建器**，涉 CI/CD 领地，仅记录不擅动。
+- **"每页变大"真因 = 过期本地基线 + 日更数据增长**：纯 HEAD 重建与改动版逐页等量（evidence
+  1222KB/picks 1890KB/discipline 1284KB）；旧 out/ 来自更早 commit。近期 +50-280KB/页全部来自
+  数据新鲜（macro_drivers 5→7 序列、picks_backtest 增月等）——是改进非回归。
+- 每页 JS ~1.2-1.6MB 的构成：React/Next 运行时 ~500KB（不可免）+ 共享数据 chunk ~350KB + recharts
+  376KB（仅图表页）+ UI 库。数据 chunk 的减肥杠杆 = 缩短 picks_backtest（BACKTEST_MONTHS=99→36，
+  显示取舍，未擅动）。
+
+**③ Windows 迁移预存测试修复**：`test_run_dir_sanitizes_unsafe_sig` 用 `str(d).startswith("/tmp/..")`
+断言，WindowsPath 渲染反斜杠必挂（sanitise 逻辑本身正确，`eviletc` 未逃逸）→ 改 `d.as_posix()`。
+18/18 test_reporting 绿。这是 WSL→Windows 迁移后全套 pytest 在本机全绿的已知最后一个失败。
+
+**④ 数据面核查（订正旧记录）**：13D smart_money latest=2026-08-07（日更生效，旧"2024-12 滞后"
+记录过时）；A 股 picks 现为板块级分类（创业板/沪主板/科创板，methodology 已诚实披露"tier 非
+industry"）。行业级升级 = 后续项（需申万/证监会行业源 + license 审查 + CI 协调）。
+
+**边界**：`index.ts` + `themes-view.tsx`（2 行）+ `test_reporting.py`（1 断言）+ state；**0 ledger/
+frozen/prereg/ADR/config/OOS 改动**；未跑 research/forward；**未 push**（CI/CD session 并行验证
+refresh run 中，推送时机由其协调——本地 commit 已就绪）。
+
+**待业主/后续**：(a) push 时机（CI session 协调）；(b) A 股行业级分类数据源裁决；(c) 若在意每页
+payload，可选 webpack manualChunks 换构建器（涉 CI）或 BACKTEST_MONTHS 缩减（显示取舍）。
+
 ## 2026-08-09 (n) 部署站仪表盘诊断 + IA 重设计提案（已 push 上线）
 
 业主看**部署站**，批"数据缺失/taco 空图/reddit 只一快照/没标川普两任就职/七主题生硬/整体像拼凑杂烩不构成有机整体"。**系统化诊断（DOM + 审计 + dev server 实测）**：
