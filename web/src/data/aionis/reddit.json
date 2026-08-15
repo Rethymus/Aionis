@@ -10,12 +10,19 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-08-15T06:54:45+00:00",
-  "n_snapshots": 1,
+  "latest_snapshot_ts": "2026-08-15T11:14:19+00:00",
+  "n_snapshots": 2,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
+    {
+      "ticker": "AVGO",
+      "mentions": 1,
+      "sentiment": -0.788,
+      "bull_ratio": 0.0,
+      "score_sum": 0
+    },
     {
       "ticker": "NVDA",
       "mentions": 1,
@@ -27,9 +34,9 @@
   "pressure": {
     "status": "accumulating",
     "by_ticker": {},
-    "n_snapshots": 1,
+    "n_snapshots": 2,
     "latest_date": "2026-08-15",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-08-15T08:00:51.254400+00:00"
+  "snapshot_ts": "2026-08-15T11:42:23.460161+00:00"
 }
