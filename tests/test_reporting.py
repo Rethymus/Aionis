@@ -61,7 +61,9 @@ def test_run_dir_rejects_empty_sig() -> None:
 def test_run_dir_sanitizes_unsafe_sig() -> None:
     # a path-traversal-y sig must not escape the results root.
     d = R.run_dir("..evil/../etc", base="/tmp/aionis-y")
-    assert str(d).startswith("/tmp/aionis-y/results/")
+    # as_posix(): the assertion is about path STRUCTURE, not the OS separator
+    # (WindowsPath renders backslashes and broke the raw str comparison).
+    assert d.as_posix().startswith("/tmp/aionis-y/results/")
     assert ".." not in d.parts
 
 
