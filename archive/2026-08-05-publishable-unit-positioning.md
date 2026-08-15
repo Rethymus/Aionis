@@ -1,3 +1,4 @@
+> Superseded by owner decision (publication track retired) on 2026-08-15.
 # Aionis 可发表单元 — 期刊/会议定位 brief
 
 > 状态：**PROPOSED · 2026-08-05 · opus Orchestrator 起草（positioning agent [1210] 失败后 §8 fallback）· 业主审阅**。

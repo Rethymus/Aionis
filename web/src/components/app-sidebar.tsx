@@ -50,7 +50,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const navReference = [
     {
       title: t("nav.method"),
-      url: "https://github.com/Rethymus/Aionis/blob/main/docs/methods-and-results-draft.md",
+      url: "https://github.com/Rethymus/Aionis/blob/main/docs/RESULTS.md",
       icon: <FileTextIcon />,
     },
   ];

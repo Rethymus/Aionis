@@ -29,7 +29,7 @@ SESOI = 0.010
 
 # Track C 首条 confirmatory OOS climax（ledger #49, 2026-08-05）。诚实 framing：
 # null 点估计 + look-1 欠功率（power-floor 披露），NOT "等价已宣告"。
-# 数字源自 ledger #49（与 docs/methods-and-results-draft.md v1.0 §5 / docs/RESULTS.md §0 一致）。
+# 数字源自 ledger #49（与 archive/docs/methods-and-results-draft.md（已归档）§5 / docs/RESULTS.md §0 一致）。
 TRACK_C_CLIMAX = {
     "combined_ic": -0.0088,
     "p_hac": 0.484,
@@ -55,7 +55,7 @@ ANTI_LEAKAGE = [
     ("PIT 数据", "EDGAR filed-date / ALFRED vintage / constituents_on（非今日快照）"),
     ("chronological walk-forward", "expanding min_train=60 / embargo=21 / assert train<test（非 CV-proxy）"),
     ("H6 确定性", "n_jobs=1 / 全 seed=0 / version-pinned / bit-identical 重跑"),
-    ("两尾 · 预注册 · null-favored", "每条 claim 预注册；null-with-tight-CI 即可发表"),
+    ("两尾 · 预注册 · null-favored", "每条 claim 预注册；null-with-tight-CI 即达精度目标"),
 ]
 
 STATUS_STYLE = {"ok": ("已覆盖", "emerald"), "warn": ("延后", "amber"), "todo": ("待挂", "slate")}
@@ -240,7 +240,7 @@ def _trackc_section_html() -> str:
         </tbody>
       </table>
     </div>
-    <p class="text-sm text-slate-300">prospective power analysis：J-T 60/90/120 schedule 在 SESOI ±{SESOI} + 月频 rank-IC 噪声 σ≈0.10 下<strong class="text-amber-300">结构性欠功率</strong>（宣告等价需 ~36+ 年）。因此项目诚实、预注册的贡献 = <strong class="text-slate-100">null 点估计 + 反泄漏纪律 + power-limit 披露</strong>，<strong>非</strong>“等价已宣告”。详见 <a class="text-blue-400 hover:underline" href="https://github.com/Rethymus/Aionis/blob/main/docs/methods-and-results-draft.md">方法学与结果 draft v1.0</a>。</p>
+    <p class="text-sm text-slate-300">prospective power analysis：J-T 60/90/120 schedule 在 SESOI ±{SESOI} + 月频 rank-IC 噪声 σ≈0.10 下<strong class="text-amber-300">结构性欠功率</strong>（宣告等价需 ~36+ 年）。因此项目诚实、预注册的贡献 = <strong class="text-slate-100">null 点估计 + 反泄漏纪律 + power-limit 披露</strong>，<strong>非</strong>“等价已宣告”。详见 <a class="text-blue-400 hover:underline" href="https://github.com/Rethymus/Aionis/blob/main/docs/RESULTS.md">方法学与结果（RESULTS.md）</a>。</p>
   </section>"""
 
 
@@ -305,7 +305,7 @@ def build(site_dir: Path = SITE_DIR) -> Path:
 
 <!-- 探索性横幅 -->
 <div class="bg-amber-500/10 border-b border-amber-500/30 text-amber-300 text-center text-xs py-1.5">
-  ⚠️ 含探索性（Track B）+ 首条 confirmatory（Track C climax）· 非投资建议 · null 是预期可发表成果
+  ⚠️ 含探索性（Track B）+ 首条 confirmatory（Track C climax）· 非投资建议 · null 是预期成果
 </div>
 
 <main class="max-w-6xl mx-auto px-4 py-6">

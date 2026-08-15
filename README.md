@@ -2,8 +2,7 @@
 
 > A falsifiable, **anti-leakage** quantitative-finance research project. One
 > pre-registered, two-tailed claim per phase on cross-sectional monthly rank-IC of
-> S&P 500 point-in-time constituents. Null results with tight CIs are the intended,
-> publishable outcome.
+> S&P 500 point-in-time constituents. Null results with tight CIs are the intended outcome.
 
 Aionis is **not** a cognitive system or a trading bot. It is a disciplined
 experiment harness: each phase poses one falsifiable question ("does feature set X
@@ -54,7 +53,8 @@ schedule is **structurally underpowered** for SESOI ±0.010 at monthly rank-IC n
 σ≈0.10 (declaring equivalence would need ~36+ years). The honest, pre-registered
 contribution is therefore the **null point estimate + the end-to-end anti-leakage
 discipline + the power-limit disclosure** — not a declared equivalence. Full
-methods and the 15-row evidence table live in `docs/methods-and-results-draft.md` (v1.0).
+methods and the 15-row evidence table live in `archive/docs/methods-and-results-draft.md`
+(archived 2026-08-15 with the publication track retired); the living snapshot is `docs/RESULTS.md`.
 
 ---
 

@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://rethymus.github.io"),
   title: "Aionis — 反泄漏选股研究终端",
   description:
-    "Anti-leakage stock-pick research terminal: stock-pick ranking, evidence wall, and power-floor monitor. Null is the intended, publishable outcome.",
+    "Anti-leakage stock-pick research terminal: stock-pick ranking, evidence wall, and power-floor monitor. Null is the intended outcome.",
   openGraph: {
     title: "Aionis — 反泄漏选股研究终端",
     description:

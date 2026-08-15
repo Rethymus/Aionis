@@ -17,7 +17,7 @@ traceable to a ledger row and a frozen config sha256.
 **What it changes.** Whether a feature set adds *incremental* cross-sectional
 predictability over a fundamentals-only baseline. The treatment-vs-baseline
 rank-IC differential is the only falsifiable claim; null-with-tight-CI is the
-intended publishable outcome.
+intended outcome.
 
 **Explicit non-goals.**
 - No learned generative world model — infeasible at MVP scale and leakage-prone.

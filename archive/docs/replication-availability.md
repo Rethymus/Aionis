@@ -1,3 +1,4 @@
+> Superseded by owner decision (publication track retired) on 2026-08-15.
 # Reproducibility & Data-Availability Statement
 
 > 状态：**v0.1 · 2026-08-05 · PROPOSED · 业主审阅**。本文档诚实声明 Aionis 结果如何被独立方复现，

@@ -1,3 +1,4 @@
+> Superseded by owner decision (publication track retired) on 2026-08-15.
 # Power-floor 文献锚定 — 把 σ≈0.10 从"我们的观察"升级为"有文献支撑的方法学结果"
 
 > 状态：**PROPOSED · 2026-08-05 · opus Orchestrator §8 fallback（powerfloor sonnet agent [1210] 失败）· 业主审阅**。

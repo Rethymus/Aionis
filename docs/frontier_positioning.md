@@ -2,7 +2,7 @@
 
 > Synthesis of a 2026-07 frontier scan (3 parallel research passes) + the scaled
 > real-data run. Purpose: locate Aionis in the field and define the shortest path
-> from "complex system design" to genuinely publishable research.
+> from "complex system design" to disciplined, falsifiable research.
 
 ---
 

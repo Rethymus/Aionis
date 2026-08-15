@@ -76,7 +76,7 @@ function buildAttribution(
     },
     {
       key: "discipline",
-      body: "结论可信非因效应强，而因反泄漏纪律严：PIT 数据 + PurgedGroupKFold+embargo + H6 比特一致。null 是预期、可发表的结果。",
+      body: "结论可信非因效应强，而因反泄漏纪律严：PIT 数据 + PurgedGroupKFold+embargo + H6 比特一致。null 是预期的结果。",
     },
   ];
 

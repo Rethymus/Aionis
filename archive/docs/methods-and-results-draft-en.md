@@ -1,3 +1,4 @@
+> Superseded by owner decision (publication track retired) on 2026-08-15.
 # Aionis — Methods and Results Draft (v1.0, publication-ready; first confirmatory included)
 
 > Status: **v1.0-en-draft · 2026-08-05 · faithful English translation of v1.0 (Chinese finalized under owner option A 2026-08-05). Venue tailoring pending the positioning brief. All numbers cross-checked against ledger #49 and the Chinese v1.0.**

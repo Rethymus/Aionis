@@ -1,13 +1,14 @@
-"""Export aggregated research results to tracked JSON for the Quarto site.
+"""Shared payload builders for the tracked terminal JSON exports.
 
-Quarto renders on CI (GitHub Actions) where the gitignored runs/*.parquet and
-runs/*.json artifacts are NOT available. This script reads those local artifacts
-and writes small aggregated JSON files into quarto-site/data/ (TRACKED), so the
-Quarto Python cells can read tracked data at render time. Re-run whenever results
-change (the data/ files are committed).
+The Quarto research site was archived on 2026-08-15 (publication track retired);
+this module survives as the library that ``export_terminal_data.py`` imports for
+the shared payloads (evidence / power_floor / ic_monthly / sigma_survey /
+bps_sweep). ``export_terminal_data.py`` redirects ``OUT`` to
+``web/src/data/aionis/`` before calling the builders.
 
-Reuses pandas/json stdlib; no hand-rolled HTML. Writes ONLY to quarto-site/data/;
-never touches runs/ledger.jsonl or frozen surfaces.
+Standalone use still works: reads local gitignored runs/*.parquet and writes
+small aggregated JSON files into ``OUT`` (default ``archive/quarto-site/data/``,
+the archived location). Never touches runs/ledger.jsonl or frozen surfaces.
 
 Usage::
     uv run python scripts/export_quarto_data.py
@@ -20,7 +21,7 @@ from pathlib import Path
 
 import pandas as pd
 
-OUT = Path("quarto-site/data")
+OUT = Path("archive/quarto-site/data")
 OUT.mkdir(parents=True, exist_ok=True)
 
 

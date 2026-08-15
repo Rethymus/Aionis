@@ -73,10 +73,10 @@ class TestAntiLeakageFraming:
         """EXPLORATORY banner should be prominent."""
         assert "探索性" in generated_html
         assert "非投资建议" in generated_html
-        assert "null 是预期可发表成果" in generated_html
+        assert "null 是预期成果" in generated_html
 
     def test_sesoi_gate_present(self, generated_html):
-        """SESOI / publishability gate should be visible."""
+        """SESOI / precision gate should be visible."""
         assert "SESOI" in generated_html
         assert "0.010" in generated_html
         assert "不构成严格等价" in generated_html

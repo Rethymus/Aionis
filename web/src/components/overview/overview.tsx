@@ -39,7 +39,7 @@ function VerdictAnchor() {
   const { t } = useI18n();
   const m = aionis.metrics;
   const ci = m.ci_lo !== null && m.ci_hi !== null ? `[${m.ci_lo.toFixed(4)}, ${m.ci_hi.toFixed(4)}]` : "—";
-  // Null is the intended, publishable outcome — the anchor states it plainly
+  // Null is the intended outcome — the anchor states it plainly
   // rather than apologizing for it. IC≈0 + CI bracketing zero = honest null.
   return (
     <Card className="overflow-hidden border-foreground/15">
@@ -74,7 +74,7 @@ function VerdictAnchor() {
           </div>
         </div>
         <div className="flex flex-col items-start gap-1 md:items-end">
-          {/* NULL = the intended, publishable outcome (NOT a failure). The prior
+          {/* NULL = the intended outcome (NOT a failure). The prior
               amber tint signaled "warning/error" — a framing that fights the
               null.note directly below ("not a failure"). A glance reads color
               faster than text, so the amber short-circuited the honest framing.

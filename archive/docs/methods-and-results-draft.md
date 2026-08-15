@@ -1,3 +1,4 @@
+> Superseded by owner decision (publication track retired) on 2026-08-15.
 # Aionis — 方法学与结果 draft（v1.0，可发表稿；首条 confirmatory 已含）
 
 > 状态：**v1.0 · 2026-08-05 · 业主授权选项 A 定稿（中文）**。本稿把累积的反泄漏纪律 + 全部 null 证据 +

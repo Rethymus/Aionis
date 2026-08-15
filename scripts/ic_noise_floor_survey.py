@@ -1,7 +1,7 @@
 """EXPLORATORY IC noise-floor survey — empirical sigma(IC) across Aionis configurations.
 
 Sister to the power-floor literature-anchoring note
-(`reports/design/2026-08-05-power-floor-literature-anchoring.md`). That note anchors
+(`archive/2026-08-05-power-floor-literature-anchoring.md`, archived 2026-08-15). That note anchors
 sigma~0.10 in the published literature (Gu-Kelly-Xiu R^2 levels, Grinold-Kahn Fundamental
 Law); this script provides the DIRECT empirical complement: compute sigma(IC) across
 every persisted IC series on disk (Track C joint/asym35/asym41/confirmatory + Track B

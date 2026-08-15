@@ -13,7 +13,7 @@
 It is **not** a trading bot, a prediction engine, or an "AI stock picker". It is a
 **validity-argument chain**: one falsifiable claim's argument, made visible. Every
 page declares its place on the chain, every number carries provenance, and the
-headline verdict (currently **NULL**) is framed as the intended, publishable outcome.
+headline verdict (currently **NULL**) is framed as the intended outcome.
 
 The headline claim: *does adding alt/fundamental factors beat a price-only baseline
 on cross-sectional monthly rank-IC of S&P 500 PIT constituents?* The confirmatory

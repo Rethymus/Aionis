@@ -3,7 +3,11 @@
 Superseded documentation, decisions, and specs go here — they are **never
 silently deleted**.
 
-**Currently empty.**
+**Current contents (2026-08-15):** the retired publication track — `manuscript/`
+(arXiv preprint scaffold), `quarto-site/` (paper site), `docs/methods-and-results-draft(-en).md`
+(paper drafts), `docs/replication-availability.md`, `2026-08-05-publishable-unit-positioning.md`
+(venue brief), `2026-08-05-power-floor-literature-anchoring.md`. Owner decision 2026-08-15:
+the project has no publication plans; these are kept for history only.
 
 ## Rule: move-don't-delete
 

@@ -1,3 +1,4 @@
+> Superseded by owner decision (publication track retired) on 2026-08-15.
 # Aionis — arXiv Preprint Scaffold
 
 > **Status: v0.1-prep · 2026-08-05 · NOT submitted.** Owner approved framing (a)

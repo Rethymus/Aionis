@@ -7,7 +7,7 @@ fundamentals-only baseline on monthly cross-sectional rank-IC of S&P 500 PIT
 constituents (588 clean tickers, 2016+, n=125 months). The treatment-vs-baseline
 rank-IC **differential** is the falsifiable claim — never the standalone arm IC.
 
-**The intended outcome.** A precisely estimated null is useful and publishable,
+**The intended outcome.** A precisely estimated null is the useful,
 but a CI crossing zero is only a failure to detect a differential, not proof of
 equivalence. The historical `ci_half < 0.015` flag is a precision rule; no economic
 SESOI or TOST was pre-registered for B/C/D/E1.

@@ -12,8 +12,7 @@
 ## Project goal
 Aionis is a **falsifiable, anti-leakage** quantitative-finance research project. One
 pre-registered **two-tailed** claim per phase on the **cross-sectional monthly rank-IC** of
-S&P 500 **point-in-time** constituents. **Null results with tight CIs are the intended,
-publishable outcome** — not a failure. Aionis is a disciplined experiment harness, NOT a
+S&P 500 **point-in-time** constituents. **Null results with tight CIs are the intended outcome** — not a failure. Aionis is a disciplined experiment harness, NOT a
 cognitive system or a trading bot.
 
 ## Inviolable constraints (anti-leakage anchors — never violate)

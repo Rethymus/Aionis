@@ -16,7 +16,7 @@ confirmatory OOS：双区域（US S&P500 + CN CSI300）联合 walk-forward，41 
 combined rank-IC = **−0.0088**（null，p_hac=0.484，n=71 月）；J-T look-1（n=60，RCI 99.44%）
 = **NOT_EQUIVALENT**（RCI [−0.051,+0.027] 宽于 ±0.010 SESOI = look-1 OBF 欠功率，非效应信号；
 look-2/3 需 E3 forward-live）。H6 双跑 bit-identical PASS。详见
-[`docs/methods-and-results-draft.md`](methods-and-results-draft.md) §5（v1.0-draft）。
+[`archive/docs/methods-and-results-draft.md`](../archive/docs/methods-and-results-draft.md) §5（v1.0-draft；已随 2026-08-15 发表线废除归档）。
 
 在 2016+、125 个月、588 个可解析 ticker、冻结九列基线和固定 MSE LightGBM 下，四个
 treatment-minus-baseline 点估计均为负，没有观察到显著正增量。这个结论只适用于上述实现和样本：
