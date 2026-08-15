@@ -1,5 +1,13 @@
 # state/handoff.md — current-pass handoff
 
+> **2026-08-15 业主裁决：发表线整体废除。** 项目不再有发表计划（无 arXiv 上传、无 venue 选择、
+> 无投稿）。所有发表工件已按 move-don't-delete 归档至 `archive/`（manuscript/、quarto-site/、
+> docs/methods-and-results-draft(-en).md、replication-availability.md、frontier_positioning.md、
+> publishable-unit-positioning / power-floor-literature-anchoring 报告）。本文件下方**历史条目**中
+> 残留的发表字样仅为当时工作记录，一律不构成现存计划；所有"待业主：arXiv/venue"类待办已随本
+> 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
+> （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
+
 ## 2026-08-09 (n) 部署站仪表盘诊断 + IA 重设计提案（已 push 上线）
 
 业主看**部署站**，批"数据缺失/taco 空图/reddit 只一快照/没标川普两任就职/七主题生硬/整体像拼凑杂烩不构成有机整体"。**系统化诊断（DOM + 审计 + dev server 实测）**：
@@ -28,11 +36,11 @@
 
 **PROPOSED 预注册** `docs/track-llm-preregistration.md`（未冻结）：两尾 null-expected claim（`IC_{41+LLM} − IC_{41-frozen}` 配对 HAC）；EDGAR 10-K MD&A excerpt（filed-date PIT + embargo 21）→ GLM temp=0 → `clip(bullish−bearish,−1,+1)` scalar → forward-fill；复用 Track C #48 learner（仅 41→42 列）；n_trials=1（DSR 平凡）；H6 走 cache-pin；stacking(C) 条件触发（仅当 IC_diff CI 不跨零）；US-only v1；D1-D6 owner 裁断点。可行情报告 `reports/design/2026-08-09-track-llm-feasibility-pilot.md`。
 
-**诚实预期**：大概率 null-to-modest（power floor 封顶），但 null = 第三条独立 null（#49 月频 / #54 周频 / LLM），**强化** power-floor 发表 framing。
+**诚实预期**：大概率 null-to-modest（power floor 封顶），但 null = 第三条独立 null（#49 月频 / #54 周频 / LLM）。
 
 **边界**：本轮纯新建 1 script + 1 test + 2 docs（prereg PROPOSED + 可行情报告）+ state；**0 ledger / frozen / prereg-freeze / ADR / config / E3 / OOS** 改动；未跑任何 LLM 增强估计量；未做任何 GLM API 调用（G3/G4 待 owner 凭证）；Track C / Track Adaptive / Track B 冻结面完全未触。
 
-**待业主**：① 审 PROPOSED 预注册 + 可行情数字 ② 用凭证跑 `--measure-llm 8` 校准 G3/G4 ③ 裁 D1-D6（universe/filing-type/excerpt/scalar/model+temp/cost）→ 若 GO：`config_committed` 冻结 → 首次抽取 → OOS。④ 或：弃 D（接受 null-to-modest 预期，走发表/收尾）。
+**待业主**：① 审 PROPOSED 预注册 + 可行情数字 ② 用凭证跑 `--measure-llm 8` 校准 G3/G4 ③ 裁 D1-D6（universe/filing-type/excerpt/scalar/model+temp/cost）→ 若 GO：`config_committed` 冻结 → 首次抽取 → OOS。④ 或：弃 D（接受 null-to-modest 预期，收尾）。
 
 ## 2026-08-09 (l) Track A 切片 A1 — walk-forward 校准可靠性（display 层，已交付待提交）
 
@@ -58,7 +66,7 @@
 
 **Track A 现状（优化到位）**：A1（校准可靠性）全栈完成；A2（漂移）既有完成（model-health-view）；A3（诚实 track record）后向既有完成（picks-view），**前瞻累计半 = E3 owner-GO 门（cron 仍 disabled，不可擅自解冻）**。再加图（概率带随时间、US/CN 叠加）= 边际收益递减 / 过度工程，KISS 不做。
 
-**剩余业主杠杆（非我可自主）**：① E3 owner-GO → 启用前瞻命中累计（A3 前瞻半，display-only forward ledger）② venue/arXiv 发表决策（option A framing）③ 若要新研究线 → 路径乙（固定模型集 stacking）或路径丙（LLM 文本信号），均需新 prereg/frozen/ledger。
+**剩余业主杠杆（非我可自主）**：① E3 owner-GO → 启用前瞻命中累计（A3 前瞻半，display-only forward ledger）② 若要新研究线 → 路径乙（固定模型集 stacking）或路径丙（LLM 文本信号），均需新 prereg/frozen/ledger。
 
 ## 2026-08-08 (a) 历史数据推进至 2016 — COT 全量 + Form4 深化（display 层）
 
@@ -138,11 +146,11 @@
 
 **核心结论**：「用最新数据自校正」**合法 iff "更好" = 校准更准 + 漂移报警 + 诚实 forward 跟踪**（Track A，复用 `score_calibration` + E3，display-only，0 frozen/ledger/config）。**"更好" = IC 变正 则数据不可达**——power floor σ(IC)≈0.10（look-3 等价需 ~36 年）；Gu-Kelly-Xiu 2020 最佳月 OOS R² 仅 1.08–1.80%，且**主导因素是模型类不是更新频率**。自适应追 IC = rerun-to-significance + 多重检验膨胀（Bailey-López de Prado 2014："DSR/PBO especially useful when research is highly adaptive"；每轮 auto-tune = 一次 trial，必须 deflate）。
 
-**两轨**：**Track A（推荐，合规）** = A1 walk-forward 校准重训（expanding realized 窗，`walk_forward=True` display 变体）+ A2 漂移报警（滚动 OOS 分布/cond-IC vs 历史，纯显示）+ A3 诚实 forward 累加器（E3-lite 或 E3 本体 owner-GO；commit→reveal(+21d)→score→显示序列，**绝不喂回训练**）。**Track B（gated，大概率仍 null）** = 研究层在线学习追 IC：需新预注册 + 逐周期 `config_committed` + DSR/PBO 预算 + 硬隔离 Track C；且冲突发表 framing（memory 勿追新 alpha）→ **需业主显式 GO**。
+**两轨**：**Track A（推荐，合规）** = A1 walk-forward 校准重训（expanding realized 窗，`walk_forward=True` display 变体）+ A2 漂移报警（滚动 OOS 分布/cond-IC vs 历史，纯显示）+ A3 诚实 forward 累加器（E3-lite 或 E3 本体 owner-GO；commit→reveal(+21d)→score→显示序列，**绝不喂回训练**）。**Track B（gated，大概率仍 null）** = 研究层在线学习追 IC：需新预注册 + 逐周期 `config_committed` + DSR/PBO 预算 + 硬隔离 Track C；且与 null 定帧冲突（memory 勿追新 alpha）→ **需业主显式 GO**。
 
 **"可观"重定义**：校准可靠性（reliability 图近对角）+ 漂移诚实 + forward 命中率序列——**非 IC 变正**。这是数据允许且对 fintech 终端真正有用的胜条件。
 
-**边界**：本轮纯 docs（2 新 PROPOSED）+ state；**0 frozen / ledger / config / E3 / 代码**改动；未跑 research/forward。**待业主**：选 Track A（推荐）/ Track B（gated，需新预注册）/ 拓宽 framing（与 null 发表定帧冲突）。
+**边界**：本轮纯 docs（2 新 PROPOSED）+ state；**0 frozen / ledger / config / E3 / 代码**改动；未跑 research/forward。**待业主**：选 Track A（推荐）/ Track B（gated，需新预注册）/ 拓宽 framing（与 null 定帧冲突）。
 
 ## 2026-08-08 (e) Track A 落地 — 模型漂移监测模块（leakage-safe，display-only）
 
