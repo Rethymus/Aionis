@@ -24,6 +24,18 @@ import themes from "./themes.json";
 import ledgerAudit from "./ledger_audit.json";
 import headlineProvenance from "./headline_provenance.json";
 
+export type RedditPick = {
+  // Explicit (not JSON-inferred): a daily refresh whose picks all carry
+  // bull_ratio: null collapses the inferred literal type to `null`, which
+  // narrows to `never` after a !== null guard and fails the Pages build
+  // (deploy 31869082383). The export contract is: number | null.
+  ticker: string;
+  mentions: number;
+  sentiment: number;
+  score_sum: number;
+  bull_ratio: number | null;
+};
+
 export type Pick = {
   rank: number;
   ticker: string;
@@ -208,7 +220,7 @@ export const aionis = {
   sigmaSurvey: sigmaSurvey as typeof sigmaSurvey,
   bpsSweep: bpsSweep as { bps: number; net_sharpe: number; gross_sharpe: number; avg_turnover: number }[],
   taco: taco as typeof taco,
-  reddit: reddit as typeof reddit,
+  reddit: { ...reddit, picks: reddit.picks as RedditPick[] },
   smartMoney: smartMoney as SmartMoney,
   pickConviction: pickConviction as typeof pickConviction,
   form4: form4 as typeof form4,
