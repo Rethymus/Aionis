@@ -168,7 +168,14 @@ jobs:
           set +e
           uv run python scripts/fetch_macro_display.py --force >/dev/null 2>&1 || true
           # CPIAUCSL + PAYEMS are panel inputs (not in DISPLAY_SERIES) — fetch inline.
-          uv run python -c "from aionis.ingest.macro_display import fetch_display_series; from aionis.config import settings; from pathlib import Path; c=Path('data/cache'); [fetch_display_series(settings.fred_api_key, c, s, force=True) for s in ('CPIAUCSL','PAYEMS')]" 2>/dev/null || true
+          # DFF likewise: it feeds the fedfunds + real_rate cards, but is NOT in
+          # DISPLAY_SERIES because a naive realtime fetch hits FRED's 2000-vintage
+          # cap (daily series) — reuse macro_dff's year-sliced vintage fetcher,
+          # which writes the same shared alfred_DFF.json cache. Without this, the
+          # only DFF supply was the evictable data-cache: on eviction the export
+          # silently skipped fedfunds/real_rate and committed a partial "ok" panel
+          # (deployed /regime cards hid — regression caught 2026-08-15).
+          uv run python -c "from aionis.ingest.macro_display import fetch_display_series; from aionis.ingest.macro_dff import fetch_dff_vintages; from aionis.config import settings; from pathlib import Path; c=Path('data/cache'); [fetch_display_series(settings.fred_api_key, c, s, force=True) for s in ('CPIAUCSL','PAYEMS')]; fetch_dff_vintages(settings.fred_api_key, c)" 2>/dev/null || true
           uv run python scripts/phase_b_fetch.py --display --fundamentals-only
         timeout-minutes: 25
         continue-on-error: true  # SEC outage keeps the prior cache
@@ -208,6 +215,16 @@ jobs:
             python3 -c "import json,sys; json.load(open('$f'))" || { echo "INVALID: $f"; exit 1; }
           done
           echo "All JSON valid."
+
+      - name: Contract-test gate (block partial exports before commit)
+        # Validity != completeness: a partial export (missing series/panels) is
+        # still valid JSON. The macro_drivers regression (fedfunds/real_rate
+        # silently dropped, status "ok", deployed cards hidden) landed because
+        # this lane committed after a *validity* check only. Gate on the display
+        # contract suite instead: an incomplete export fails the run here, keeps
+        # the last complete panel committed, and surfaces red instead of silently
+        # degrading the deployed terminal.
+        run: uv run pytest -q tests/test_web_terminal_data.py
 
       - name: Sync with latest main (handle concurrent pushes)
         # If main advanced during this ~hour-long run (code/doc/agent commits
