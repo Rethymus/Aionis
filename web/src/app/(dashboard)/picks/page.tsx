@@ -1,13 +1,21 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { PicksView } from "@/components/picks/picks-view";
 import { SectorsView } from "@/components/sectors/sectors-view";
-import { ConvictionView } from "@/components/conviction/conviction-view";
 import { ThemeSlice } from "@/components/themes/theme-slice";
 import { SegmentHeader } from "@/components/segment-header";
 import { useI18n } from "@/i18n/provider";
+
+// The conviction tab is the only recharts consumer on this route (~376KB);
+// Radix keeps inactive tab content unmounted, so deferring it keeps the
+// chart library out of the initial payload — it loads on first tab click.
+const ConvictionView = dynamic(
+  () => import("@/components/conviction/conviction-view").then((m) => m.ConvictionView),
+  { ssr: false },
+);
 
 const hashToTabMap: Record<string, string> = {
   "#picks": "picks",
