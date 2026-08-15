@@ -20,6 +20,7 @@ on:
 
 permissions:
   contents: write  # needed for git-auto-commit
+  actions: write   # needed to workflow_dispatch deploy-pages after the data commit
 
 concurrency:
   group: refresh-terminal-data
@@ -241,15 +242,29 @@ jobs:
         run: git pull --rebase --autostash origin main
 
       - name: Commit refreshed data
+        id: datacommit
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          # NO [skip ci]: this push MUST trigger deploy-pages.yml so the fresh
-          # data reaches the deployed terminal. With [skip ci], the data landed
-          # in the repo but never deployed — root cause of "数据仍没有体现".
+          # NOTE: a GITHUB_TOKEN push NEVER fires on:push workflows (GitHub
+          # recursion guard) — removing [skip ci] alone did not make these data
+          # commits deploy. The explicit workflow_dispatch step below does.
           commit_message: "chore(data): daily terminal refresh"
           file_pattern: "web/src/data/aionis/*.json"
           commit_user_name: "aionis-bot"
           commit_user_email: "actions@github.com"
+
+      - name: Trigger Pages deploy for the fresh data
+        # GITHUB_TOKEN pushes do not fire on:push workflows, so historically
+        # the deployed terminal only refreshed on CODE pushes — daily data
+        # landed in the repo but stayed invisible until the next code commit
+        # (observed 2026-08-15: data commit 4b09cd8 produced no deploy run).
+        # workflow_dispatch is the documented GITHUB_TOKEN exception and DOES
+        # trigger; deploy-pages.yml builds from main HEAD including the data.
+        if: steps.datacommit.outputs.changes_detected == 'true'
+        run: gh workflow run deploy-pages.yml
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
 
       - name: Snapshot display-convergence artifacts (always, orphan-safe)
         # Mirror the converging artifacts into the dedicated snapshot dir that
