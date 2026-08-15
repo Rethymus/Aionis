@@ -10,8 +10,8 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-08-15T13:20:05+00:00",
-  "n_snapshots": 4,
+  "latest_snapshot_ts": "2026-08-15T15:48:26+00:00",
+  "n_snapshots": 5,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
@@ -29,14 +29,35 @@
       "sentiment": -0.011,
       "bull_ratio": null,
       "score_sum": 0
+    },
+    {
+      "ticker": "GOOG",
+      "mentions": 1,
+      "sentiment": 0.133,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "META",
+      "mentions": 1,
+      "sentiment": 0.133,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "CHWY",
+      "mentions": 1,
+      "sentiment": -0.931,
+      "bull_ratio": 0.0,
+      "score_sum": 0
     }
   ],
   "pressure": {
     "status": "accumulating",
     "by_ticker": {},
-    "n_snapshots": 4,
+    "n_snapshots": 5,
     "latest_date": "2026-08-15",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-08-15T13:45:00.637426+00:00"
+  "snapshot_ts": "2026-08-15T15:50:55.289426+00:00"
 }
