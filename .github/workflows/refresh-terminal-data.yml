@@ -65,6 +65,35 @@ jobs:
             echo "ALPACA_SECRET_KEY=${{ secrets.ALPACA_SECRET_KEY }}"
           } > .env
 
+      - name: Restore display-convergence snapshot (guaranteed-persist prices cache)
+        # The 4.1GB/12.8k-file data/cache tar races with late writers and its
+        # save has failed on effectively every run ("file changed as we read
+        # it"), so the display price convergence NEVER persisted across runs
+        # (fundamentals re-cold-pulled 20min every time; prices restarted).
+        # This small dedicated snapshot (~tens of MB, rsynced only after all
+        # fetch steps are done → zero concurrent writers → tar always clean)
+        # is the guaranteed-persistence lane for exactly what convergence
+        # needs: per-ticker prices + fundamentals parquet.
+        uses: actions/cache@v4
+        with:
+          path: data/display-snapshot
+          key: display-snapshot-${{ github.run_id }}
+          restore-keys: |
+            display-snapshot-
+
+      - name: Seed data/cache from snapshot
+        # Overlay the snapshot onto the (restored-or-empty) data/cache so the
+        # fetchers warm-start. Best-effort; a missing snapshot dir = cold start.
+        run: |
+          mkdir -p data/cache/prices
+          if [ -d data/display-snapshot/prices ]; then
+            cp -a data/display-snapshot/prices/. data/cache/prices/
+          fi
+          if [ -f data/display-snapshot/phase_b_fundamentals.parquet ]; then
+            cp -a data/display-snapshot/phase_b_fundamentals.parquet data/cache/
+          fi
+          echo "seeded: $(ls data/cache/prices | wc -l) price tickers, fundamentals=$(test -f data/cache/phase_b_fundamentals.parquet && echo yes || echo no)"
+
       - name: Restore data/cache (fetch deltas, not a full re-pull every run)
         uses: actions/cache@v4
         with:
@@ -199,3 +228,22 @@ jobs:
           file_pattern: "web/src/data/aionis/*.json"
           commit_user_name: "aionis-bot"
           commit_user_email: "actions@github.com"
+
+      - name: Snapshot display-convergence artifacts (always, orphan-safe)
+        # Mirror the converging artifacts into the dedicated snapshot dir that
+        # the small display-snapshot cache persists. Runs even on partial
+        # failures (always()) and KILLS orphans first — killed-with-timeout
+        # steps (form4/13d/GDELT caps) leave uv/python children that keep
+        # writing; a mid-write cp is harmless (per-file parquet atomicity is
+        # good enough at our sizes, and the NEXT run re-extends anything the
+        # freshness gate deems stale), but the snapshot DIR itself must be
+        # quiescent when its cache post-step tars it.
+        if: always()
+        run: |
+          pkill -f 'uv run' 2>/dev/null || true
+          pkill -f 'phase_b_fetch' 2>/dev/null || true
+          sleep 2
+          mkdir -p data/display-snapshot/prices
+          cp -a data/cache/prices/. data/display-snapshot/prices/ 2>/dev/null || true
+          cp -a data/cache/phase_b_fundamentals.parquet data/display-snapshot/ 2>/dev/null || true
+          echo "snapshot: $(ls data/display-snapshot/prices | wc -l) tickers, fundamentals=$(test -f data/display-snapshot/phase_b_fundamentals.parquet && echo yes || echo no)"
