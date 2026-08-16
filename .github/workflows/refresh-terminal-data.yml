@@ -205,6 +205,16 @@ jobs:
         run: uv run python scripts/build_ticker_metadata.py --no-cache
         continue-on-error: true  # network may fail; old cache still works
 
+      - name: Build regime macro composite (macro theme input)
+        # Feeds the themes' macro theme (data/cache/regime_macro.parquet). The
+        # fetchers are self-populating (BAA/AAA/DGS10/DGS1 via polite FRED;
+        # VIX + DFF from the shared caches this lane already fetches) — first
+        # run cold-fetches, the data-cache persists them. PHASE_C_NO_LEDGER=1
+        # (default) = artifacts-only, no ledger write.
+        run: uv run python scripts/build_regime_macro.py
+        timeout-minutes: 10
+        continue-on-error: true  # outage degrades the macro theme honestly; the gate enforces the rest
+
       - name: Re-export all terminal payloads
         run: uv run python scripts/export_terminal_data.py
         # BACKTEST_MONTHS defaults to 99 (full OOS history) in the script.

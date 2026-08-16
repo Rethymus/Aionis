@@ -690,6 +690,13 @@ def export_themes() -> None:
                 {"date": str(d.date()), "value": round(float(v), 3)}
                 for d, v in mr.tail(60)[["date", "macro_regime"]].values.tolist()
             ]
+    if not macro["signals"]:
+        # Honest-empty contract: a live theme MUST carry signals (the themes
+        # contract test enforces >=1). regime_macro.parquet absent (e.g. the
+        # build step failed or has not run yet) degrades the theme visibly
+        # instead of exporting a "live" card with no data.
+        macro["status"] = "needs_work"
+        macro["headline"] = "macro-regime composite (regime_macro.parquet absent — awaiting build)"
     # ③ Fundamentals
     fundamentals = {
         "key": "fundamentals",
