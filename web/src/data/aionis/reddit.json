@@ -10,8 +10,8 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-08-16T09:40:00+00:00",
-  "n_snapshots": 7,
+  "latest_snapshot_ts": "2026-08-16T10:38:37+00:00",
+  "n_snapshots": 8,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
@@ -41,9 +41,9 @@
   "pressure": {
     "status": "accumulating",
     "by_ticker": {},
-    "n_snapshots": 7,
+    "n_snapshots": 8,
     "latest_date": "2026-08-16",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-08-16T09:41:47.026904+00:00"
+  "snapshot_ts": "2026-08-16T10:40:12.532532+00:00"
 }
