@@ -1,5 +1,12 @@
 # state/current.md — read first each session
 
+- **active (2026-08-15) 续㉘（数据冻结根因双会话合流闭环 + 回归测试补位；业主授权"推进到满意"）：**
+  **① theme_signals 46 天冻结根因链完整诊断（本会话独立完成，与 CI session 殊途同归）**：gh 日志取证最新 run `31892678348` —— 价格 fetch 已收敛（555 cached + 32 fetch = 587/587，wide 文件 15:50 写出，止于 08-14）→ materialize 崩于 `FileNotFoundError: universe_hanshof.parquet`（workflow 从未构建该缓存）→ CI session 以 `8d89aaf` 修（`_load_universe` 自填充）+ `828a007`（regime_macro build step）+ **`cfb9240`（陈旧复用修复）**。`cfb9240` 与本会话同刻在写未提交的同款修复（`reuse_prices = not args.display and ...`，两版逐字一致，我的未提交 edit 落地零 diff）——**双会话独立命中同一根因的交叉验证**。
+  **② 数据已解冻（实测）**：themes price/macro/fundamentals 全 `as_of 2026-08-14`，theme_signals `2026-08-14`；auto-deploy 绿（CI session `67c1938` 验证）。
+  **③ 回归测试补位（`7cf5167`）**：`cfb9240` 无测试 → 补 2 守卫：display 重建"ticker 完整但日期陈旧"的 wide 文件（per-ticker 缓存 5 天宽限内免网络）；冻结路径完整文件照旧复用（END 不动，冗余 refetch 徒增 H6 确定性风险）。5/5 相关测试绿 + ruff 净。
+  **④ 并发协作机制记录**：双会话共享同一工作树，CI session 的 `pull --rebase --autostash` + push 把本会话 6 个 commit（类型加固/死代码/picks 延迟加载/Windows 测试修复 + state）一并推上 origin/main（`git log origin/main` 核验 6/6 在）。reflog 完整保留时序。
+  **⑤ 边界**：本轮纯诊断 + 测试（display 链）；0 ledger/frozen/config/prereg/OOS 改动；未跑 research/forward。
+
 - **active (2026-08-15) 续㉗（三轮扫查：picks 首屏 -22% + 集成/运行时验证 + 孤儿 key 量化）：**
   **① /picks conviction tab 延迟加载（`d3ffabb`）**：conviction 是该路由唯一 recharts 消费者（376KB）→ `next/dynamic` + Radix 非活动 tab 不挂载 = 图表库移出首屏。**picks 1890→1482KB（-22%）**，其他路由字节等量。**浏览器实测**（本地静态服务 + IAB）：点"选股确信度"tab → 异步 chunk 加载 → 分散度图完整渲染（时序轴/图例/KPI 齐）；默认 tab 数据不变。其他 hub 页默认 tab 本身有图表（regime=market/track=calibration/confirmation=smart-money），无同类收益，KISS 不改。
   **② 集成与运行时验证（全部健康）**：live-prices Worker 存活（curl 200，AAPL 305.93 实时价，display-only 边界符合）；构建 HTML 0 个 undefined/NaN/[object Object] 渲染痕迹；sidebar 6 直达项 + 外链 RESULTS.md 全有效（hub-tab 导航结构 = 设计）；发表线归档后 web/src 零死引用（prereg 的 frontier_positioning.md 链接目标仍在 docs/）；旧静态站测试 25/25 绿；pytest 全套零 skip。
