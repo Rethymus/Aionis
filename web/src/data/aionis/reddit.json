@@ -10,8 +10,8 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-08-15T15:48:26+00:00",
-  "n_snapshots": 5,
+  "latest_snapshot_ts": "2026-08-16T05:11:33+00:00",
+  "n_snapshots": 6,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
@@ -24,9 +24,9 @@
       "score_sum": 0
     },
     {
-      "ticker": "NVDA",
+      "ticker": "MSFT",
       "mentions": 1,
-      "sentiment": -0.011,
+      "sentiment": 0.059,
       "bull_ratio": null,
       "score_sum": 0
     },
@@ -43,21 +43,14 @@
       "sentiment": 0.133,
       "bull_ratio": null,
       "score_sum": 0
-    },
-    {
-      "ticker": "CHWY",
-      "mentions": 1,
-      "sentiment": -0.931,
-      "bull_ratio": 0.0,
-      "score_sum": 0
     }
   ],
   "pressure": {
     "status": "accumulating",
     "by_ticker": {},
-    "n_snapshots": 5,
-    "latest_date": "2026-08-15",
+    "n_snapshots": 6,
+    "latest_date": "2026-08-16",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-08-15T15:50:55.289426+00:00"
+  "snapshot_ts": "2026-08-16T05:13:19.869814+00:00"
 }
