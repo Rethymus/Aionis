@@ -241,7 +241,6 @@ class TestRefreshSmartMoneyRecentOnly:
         ], ensure_ascii=False))
 
     def test_refreshes_live_window_and_retains_history(self, tmp_path):
-        import json
         committed = tmp_path / "smart_money.json"
         daily = tmp_path / "sc13d_daily_aggregate.json"
         self._committed(committed)
@@ -262,7 +261,8 @@ class TestRefreshSmartMoneyRecentOnly:
         assert out["active_filers"] == [{"filer": "HIST FUND", "count": 12}]
         by_year = {e["year"]: e["filings"] for e in out["yearly"]}
         assert by_year[2023] == 10 and by_year[2024] == 20  # pre-cutoff retained
-        assert by_year[2025] == 1 and by_year[2026] == 3     # replaced from daily (overlap row counted once)
+        # replaced from daily (overlap row counted once)
+        assert by_year[2025] == 1 and by_year[2026] == 3
         assert out["total_filings"] == sum(by_year.values())
         assert "snapshot_ts" in out
 
@@ -275,7 +275,6 @@ class TestRefreshSmartMoneyRecentOnly:
         assert etd._refresh_smart_money_recent_only(tmp_path / "absent.json", daily) is None
 
     def test_returns_none_on_empty_daily(self, tmp_path):
-        import json
         committed = tmp_path / "smart_money.json"
         daily = tmp_path / "sc13d_daily_aggregate.json"
         self._committed(committed)
