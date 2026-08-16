@@ -8,6 +8,28 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-16 (q) 部署站视觉审计二轮（视觉模型 + DOM 实测）→ P0-P2 全落地
+
+**审计双通道**（部署站 live，1440 + 375 双视口）：
+- 视觉通道：逐屏截图 → `analyze_image` 盲审。**工具链要点**：`Read` 本地 PNG → CDN URL → 视觉模型；URL 必须**原样带反斜杠**传（改正斜杠破坏 UCloud 签名 → 1210 解析错误）。`emitImage` 在本环境不回流图像，此桥接是唯一视觉通路。
+- 数据通道：`getComputedStyle` 采 lab/oklab 原始色（Tailwind v4 非 rgb；canvas 归一化技巧会被 debug-evaluate 副作用检查拒）→ Node 纯数学换算 WCAG。
+- **视觉模型两条报告为幻觉**（"6 个 tab"、"regime 图无事件标注"——实际 4 tab、已有川普 ReferenceLine）：视觉结论必须 DOM 交叉核验。
+
+**硬发现（本轮新增，此前 4 轮视觉审计未抓到）**：
+1. **α 降透明 muted 文字 < WCAG AA**：行首列 3.29:1（α0.6）、表头 4.02:1（α0.7）、track 脚注 4.02:1。满透明 muted 6.9:1 达标 → 根因是 opacity 变体不是 token 本身。
+2. **10/11px 中文小字 89 处**（th/脚注/徽章）< CJK 12px 下限。
+3. **picks 9020px/16461px（10-20 屏）无任何导航锚**：全站唯一 sticky/fixed = 侧栏。
+
+**修复（纯展示层）**：
+- **P0**：α-muted→实色（10 文件）；`text-[10px]/[11px]`→`text-xs`（23 文件，保留 empty-state svg 装饰与 sparkline 去饱和）；9px 徽章→11px；审计表行 hover。
+- **P1 工效**：`StickyTabs`（4 hub 页）+ `BackToTop`（44px）。**sticky 陷阱**：`<main>` overflow-hidden 祖先使 sticky 失效——删除后 20 路由 × 双视口全测无 h-溢出（min-w-0 是真根因）。
+- **P1 认知**：hero 三卡→两卡（`ProvenanceAnchor embedded` 嵌入 VerdictAnchor）；discipline 同 sha 冻结/结果行 emerald 左竖条 + ↳；track 归因卡头部裁决速览条（同源 metrics，零新增数据面）。
+- **P2**：`ProvenanceBadge frozen` prop（锁/时钟语义二分，picks/track 页头接线，i18n zh+en）；recharts 刻度→11px + `fill=var(--muted-foreground)`（原 #666 ≈3:1）。
+
+**验证**：tsc 0 + build 23/23 + 33 契约测试 + ruff 净（顺手修 5ea6649 预存 3 lint 错）+ 本地 junction 静态服务四页视觉模型复验 + 对比度复测 3.3→6.9:1 + sticky/返回顶部交互实测 + 移动端无溢出。
+
+**遗留候选（未做，均有明确理由）**：regime 图 recession/hike 区间底纹（需事件数据管线，跨 lane）；佐证区两卡微对齐（P3 边际收益低）；picks 长表分页/虚拟化（sticky 已解主要痛点，KISS）。
+
 ## 2026-08-15 (p) 同题扫查二轮：死代码/依赖裁剪 + lint 清零 + 新鲜度审计 + 后续优化方案
 
 **交付（`6eab8a4`，-2118 行）**：
