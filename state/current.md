@@ -27,6 +27,9 @@
   **CI 新闸门端到端验证中**：手动触发 refresh run `31878236600`（含 DFF 补拉 + 契约测试闸门）——观察其 export 后 gate 是否绿 + macro_drivers 是否保持 7 序列。
   **教训（迁移后 Windows 首推）**：(1) symlink→文件替换必须核 `git ls-files -s` 模式位（Windows add 不改模式）；(2) 多文件 `git add` 带 bad pathspec 会整体失败而 commit 仍可能吃到旧暂存——add 后必须核对 status。
 
+- **active (2026-08-16) ② 陈旧面板复用修复推送 + 端到端验证（业主授权 push，实时监控）：** 业主本地未提交的 `phase_b_fetch.py` 改动（我审查非我编写）已代为验证推送（`cfb9240`）：display 路径不再复用"ticker 完整但日期陈旧"的宽价格文件（该 bug 曾把 as_of 永久钉在文件构建日 = theme_signals 卡 06-30 的根因之一）；冻结路径不变（END 固定，完整即终态，H6 复用保留）。**审查要点**：33 phase_b+market 测试绿 + ruff 净；新鲜度规则 = 每 ticker 缓存距目标末日 ≤5 日历日即复用 → 日常网络尾部近零，但价格面板 **as_of 约 5-7 天推进一次**（grace=5d 的设计取舍——若业主要求更紧跟收盘，可收紧 grace 至 2-3d，代价是每周 2 次全量补拉波 ~20min）。
+  **CI 验证（run `31938553596` 全绿 + 自动部署 `31939728127` 成功 + 部署站实测 08-14）**：`586 cached, 1 to fetch`（587 中仅 1 只过 grace）→ 宽表面 4 秒重建写出 → materialize → 闸门 → 提交 → 自动部署。陈旧复用类 bug 至此结构性关闭。
+
 - **active (2026-08-16) 部署站数据自动更新全链路闭环（业主指令"确保自动更新"，已达成）：** 接 08-15 的自动部署修复后，本日把最后三个卡点逐一破掉并全程监控验证。
   **① 价格收敛完成**：手动加跑 3 轮（417→556→**587/587**，`phase_b_prices_display.parquet` 写出，价格至 08-14 收盘）——若等 cron（仅工作日）要到下周二。快照缓存持久化生效。
   **② universe 自填充修复（`8d89aaf`）**：价格收敛后 materialize 仍崩——`_load_universe()` 的存在性前置守卫废掉了 `load_hanshof_membership()` 的自抓取能力（CI 无任何步骤生产 `universe_hanshof.parquet`）。删守卫，加载器自填充，data-cache 持久化。
