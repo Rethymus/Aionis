@@ -139,11 +139,27 @@ def main() -> None:
         print(f"[{label}] FUNDAMENTALS-ONLY DONE", flush=True)
         return
 
-    reuse_prices = px_path.exists() and _final_panel_is_complete(px_path, tickers)
+    # Frozen path: END is a fixed date, so a ticker-complete file IS final —
+    # reuse it (determinism; H6 bit-identical reruns). Display path: the target
+    # end is TODAY, which moves — a ticker-complete file can still be
+    # date-stale, and reusing it froze the panel at the file's build date
+    # forever (observed live: theme_signals as_of pinned to 2026-06-30 across
+    # multiple green daily runs because a complete-but-stale wide file kept
+    # short-circuiting the fetch). Display therefore always rebuilds the wide
+    # file from the per-ticker caches; their freshness rule (series must reach
+    # end-5d) keeps the network tail near zero on a daily cadence. The stale
+    # file is NOT unlinked first — a budget-exit run that cannot write a fresh
+    # panel leaves it in place as the (old) input for materialize, which is no
+    # worse than this run's starting state.
+    reuse_prices = (
+        not args.display
+        and px_path.exists()
+        and _final_panel_is_complete(px_path, tickers)
+    )
     if reuse_prices:
         print(f"[{label}] prices cached: {px_path}", flush=True)
     else:
-        if px_path.exists():
+        if px_path.exists() and not args.display:
             print(f"[{label}] cached price panel incomplete; rebuilding: {px_path}", flush=True)
             px_path.unlink()
 
