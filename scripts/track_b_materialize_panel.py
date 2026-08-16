@@ -174,11 +174,13 @@ def _load_macro(as_of_dates: pd.DatetimeIndex) -> pd.DataFrame | None:
 
 
 def _load_universe() -> pd.DataFrame:
-    """Load PIT universe from cache."""
-    path = settings.data_dir / "cache" / "universe_hanshof.parquet"
-    if not path.exists():
-        raise FileNotFoundError(f"Universe cache not found: {path}")
+    """Load PIT universe (self-populating).
 
+    load_hanshof_membership() fetches + caches on first call (idempotent,
+    polite); a pre-check on the cache file defeated that and crashed fresh CI
+    checkouts where no step had populated the universe yet (2026-08-15: prices
+    had converged but materialize still failed with FileNotFoundError).
+    """
     membership = load_hanshof_membership()
 
     log.info(
