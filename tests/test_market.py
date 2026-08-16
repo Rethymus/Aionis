@@ -208,6 +208,88 @@ def test_phase_b_main_rebuilds_incomplete_existing_final_panel(
     assert rebuilt.notna().any().all()
 
 
+def test_phase_b_main_display_rebuilds_date_stale_complete_panel(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    """Display mode must NOT reuse a ticker-complete but date-stale wide panel.
+
+    The reuse gate only checks ticker coverage (every column non-null) — a
+    complete display file built weeks ago passes it forever, short-circuits
+    the fetch, and pins themes/theme_signals as_of at the file's build date
+    (observed live: as_of frozen at 2026-06-30 across multiple green daily
+    runs). Display must rebuild from the per-ticker caches, whose freshness
+    rule requires each cached series to reach near TODAY.
+    """
+    phase_b_fetch = _load_phase_b_fetch()
+    cache = tmp_path / "cache"
+    _configure_phase_b(monkeypatch, phase_b_fetch, cache, ["AAA", "BBB"])
+    monkeypatch.setattr("sys.argv", ["phase_b_fetch", "--display"])
+
+    display_path = cache / "phase_b_prices_display.parquet"
+    # Ticker-COMPLETE (both columns non-null) but date-STALE: last dates in
+    # January 2024, far outside the 5-day display grace window.
+    stale = pd.DataFrame(
+        {"AAA": [100.0, 101.0], "BBB": [50.0, 51.0]},
+        index=pd.DatetimeIndex(["2024-01-02", "2024-01-03"]),
+    )
+    stale.to_parquet(display_path)
+
+    prices = cache / "prices"
+    prices.mkdir()
+    today = pd.Timestamp.today().normalize()
+    fresh_dates = pd.DatetimeIndex([today - pd.Timedelta(days=3), today - pd.Timedelta(days=2)])
+    for ticker in ("AAA", "BBB"):
+        s = pd.Series([10.0, 11.0], index=fresh_dates, name=ticker)
+        pd.DataFrame({"date": s.index, "adjClose": s.to_numpy()}).to_parquet(
+            prices / f"{ticker}.parquet"
+        )
+    monkeypatch.setattr(
+        phase_b_fetch,
+        "_from_tiingo",
+        lambda *_args: pytest.fail("fresh symbol caches must avoid provider calls"),
+    )
+
+    phase_b_fetch.main()
+
+    rebuilt = pd.read_parquet(display_path)
+    assert rebuilt.index.max() >= today - pd.Timedelta(days=5)
+    assert set(rebuilt.columns) == {"AAA", "BBB"}
+    assert rebuilt.notna().any().all()
+
+
+def test_phase_b_frozen_path_still_reuses_complete_panel(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    """The frozen path's reuse of a complete file is preserved (H6 determinism).
+
+    END is a fixed date for the frozen path, so a ticker-complete file is
+    final by definition — the display-mode rebuild rule must not leak into
+    the frozen lane and trigger redundant refetches.
+    """
+    phase_b_fetch = _load_phase_b_fetch()
+    cache = tmp_path / "cache"
+    _configure_phase_b(monkeypatch, phase_b_fetch, cache, ["AAA", "BBB"])
+
+    final_path = cache / "phase_b_prices.parquet"
+    complete = pd.DataFrame(
+        {"AAA": [100.0, 101.0], "BBB": [50.0, 51.0]},
+        index=pd.DatetimeIndex(["2024-01-02", "2024-01-03"]),
+    )
+    complete.to_parquet(final_path)
+    monkeypatch.setattr(
+        phase_b_fetch,
+        "_from_tiingo",
+        lambda *_args: pytest.fail("a complete frozen panel must be reused without providers"),
+    )
+
+    phase_b_fetch.main()
+
+    reused = pd.read_parquet(final_path)
+    assert reused.equals(complete)
+
+
 def test_fetch_ohlcv_panel_returns_per_symbol_ohlcv_dataframes(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
