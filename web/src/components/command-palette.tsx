@@ -1,9 +1,21 @@
-"use client"
+"use client";
 
-import { useEffect, useState, useCallback } from "react"
-import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useTheme } from "next-themes";
 import {
-  Command,
+  SearchIcon,
+  GlobeIcon,
+  FlaskConicalIcon,
+  GaugeCircleIcon,
+  ShieldCheckIcon,
+  LayoutDashboardIcon,
+  ArrowRightIcon,
+  SunMoonIcon,
+  LanguagesIcon,
+  FileTextIcon,
+} from "lucide-react";
+import {
   CommandDialog,
   CommandEmpty,
   CommandGroup,
@@ -11,147 +23,166 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from "@/components/ui/command"
-import {
-  LayoutDashboardIcon,
-  WalletIcon,
-  ArrowLeftRightIcon,
-  CreditCardIcon,
-  SendIcon,
-  TrendingUpIcon,
-  BitcoinIcon,
-  ChartAreaIcon,
-  TargetIcon,
-  SettingsIcon,
-  BellIcon,
-  LogInIcon,
-  UserPlusIcon,
-  LifeBuoyIcon,
-  SearchIcon,
-  MoonIcon,
-  SunIcon,
-  MonitorIcon,
-} from "lucide-react"
-import { useTheme } from "next-themes"
-import { contacts, recentTransactions, cryptoCoins } from "@/data/seed"
+} from "@/components/ui/command";
+import { Button } from "@/components/ui/button";
+import { useI18n } from "@/i18n/provider";
+import type { DictKey } from "@/i18n/dict";
+
+// Command palette (cmdk — the same wheel GitHub/Vercel/Linear roll on; already
+// a dependency via shadcn ui/command). The terminal has 20+ routes and deep
+// in-page tabs; this is the keyboard-first way to reach any of them, plus the
+// first-visit orientation the visual audit asked for: a numbered 60-second
+// reading order through the argument chain (overview → context → evidence →
+// validity → guard).
+//
+// The previous command-palette.tsx was unwired template cruft (wallet/crypto/
+// login menus reading template seed data) — deleted together with seed.ts.
+
+type PaletteItem = {
+  labelKey: DictKey;
+  icon: React.ReactNode;
+  href?: string; // internal route (may include #tab hash)
+  external?: string; // external URL
+  action?: "theme" | "lang";
+};
+
+const TOUR: PaletteItem[] = [
+  { labelKey: "command.tour1", icon: <LayoutDashboardIcon className="size-4" />, href: "/" },
+  { labelKey: "command.tour2", icon: <GlobeIcon className="size-4" />, href: "/regime" },
+  { labelKey: "command.tour3", icon: <FlaskConicalIcon className="size-4" />, href: "/picks" },
+  { labelKey: "command.tour4", icon: <GaugeCircleIcon className="size-4" />, href: "/track" },
+  { labelKey: "command.tour5", icon: <ShieldCheckIcon className="size-4" />, href: "/discipline" },
+];
+
+const PAGES: PaletteItem[] = [
+  { labelKey: "nav.group.regime", icon: <GlobeIcon className="size-4" />, href: "/regime" },
+  { labelKey: "nav.group.picks", icon: <FlaskConicalIcon className="size-4" />, href: "/picks" },
+  { labelKey: "nav.group.confirm", icon: <ShieldCheckIcon className="size-4" />, href: "/confirmation" },
+  { labelKey: "nav.group.track", icon: <GaugeCircleIcon className="size-4" />, href: "/track" },
+  { labelKey: "nav.group.discipline", icon: <ShieldCheckIcon className="size-4" />, href: "/discipline" },
+  { labelKey: "nav.group.themes", icon: <FileTextIcon className="size-4" />, href: "/themes" },
+  { labelKey: "nav.market", icon: <GlobeIcon className="size-4" />, href: "/market" },
+  { labelKey: "nav.positioning", icon: <GlobeIcon className="size-4" />, href: "/positioning" },
+  { labelKey: "nav.taco", icon: <GlobeIcon className="size-4" />, href: "/taco" },
+  { labelKey: "nav.sectors", icon: <GlobeIcon className="size-4" />, href: "/sectors" },
+  { labelKey: "nav.conviction", icon: <GlobeIcon className="size-4" />, href: "/conviction" },
+  { labelKey: "nav.smartmoney", icon: <GlobeIcon className="size-4" />, href: "/smart-money" },
+  { labelKey: "nav.insiders", icon: <GlobeIcon className="size-4" />, href: "/insiders" },
+  { labelKey: "nav.reddit", icon: <GlobeIcon className="size-4" />, href: "/reddit" },
+  { labelKey: "nav.calibration", icon: <GaugeCircleIcon className="size-4" />, href: "/calibration" },
+  { labelKey: "nav.modelhealth", icon: <GaugeCircleIcon className="size-4" />, href: "/model-health" },
+  { labelKey: "nav.powerfloor", icon: <GaugeCircleIcon className="size-4" />, href: "/power-floor" },
+  { labelKey: "nav.evidence", icon: <ShieldCheckIcon className="size-4" />, href: "/evidence" },
+];
+
+const VIEWS: PaletteItem[] = [
+  { labelKey: "nav.factors", icon: <ArrowRightIcon className="size-4" />, href: "/picks#factors" },
+  { labelKey: "nav.sectors", icon: <ArrowRightIcon className="size-4" />, href: "/picks#sectors" },
+  { labelKey: "nav.conviction", icon: <ArrowRightIcon className="size-4" />, href: "/picks#conviction" },
+  { labelKey: "nav.macro", icon: <ArrowRightIcon className="size-4" />, href: "/regime#macro" },
+  { labelKey: "nav.taco", icon: <ArrowRightIcon className="size-4" />, href: "/regime#taco" },
+  { labelKey: "nav.positioning", icon: <ArrowRightIcon className="size-4" />, href: "/regime#positioning" },
+  { labelKey: "nav.insiders", icon: <ArrowRightIcon className="size-4" />, href: "/confirmation#insiders" },
+  { labelKey: "nav.reddit", icon: <ArrowRightIcon className="size-4" />, href: "/confirmation#reddit" },
+  { labelKey: "nav.evidence", icon: <ArrowRightIcon className="size-4" />, href: "/track#evidence" },
+  { labelKey: "nav.modelhealth", icon: <ArrowRightIcon className="size-4" />, href: "/track#model-health" },
+];
 
 export function CommandPalette() {
-  const [open, setOpen] = useState(false)
-  const router = useRouter()
-  const { setTheme } = useTheme()
+  const { t, lang, setLang } = useI18n();
+  const { resolvedTheme, setTheme } = useTheme();
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault()
-        setOpen((o) => !o)
+        e.preventDefault();
+        setOpen((o) => !o);
       }
-    }
-    document.addEventListener("keydown", down)
-    return () => document.removeEventListener("keydown", down)
-  }, [])
+    };
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+  }, []);
 
-  const run = useCallback(
-    (fn: () => void) => {
-      setOpen(false)
-      fn()
-    },
-    []
-  )
+  const runItem = (item: PaletteItem) => {
+    setOpen(false);
+    if (item.action === "theme") {
+      setTheme(resolvedTheme === "dark" ? "light" : "dark");
+    } else if (item.action === "lang") {
+      setLang(lang === "zh" ? "en" : "zh");
+    } else if (item.external) {
+      window.open(item.external, "_blank", "noopener,noreferrer");
+    } else if (item.href) {
+      router.push(item.href);
+    }
+  };
+
+  const renderItems = (items: PaletteItem[]) =>
+    items.map((item) => (
+      <CommandItem key={`${item.labelKey}-${item.href ?? item.action ?? ""}`} onSelect={() => runItem(item)}>
+        {item.icon}
+        {t(item.labelKey)}
+      </CommandItem>
+    ));
 
   return (
-    <CommandDialog
-      open={open}
-      onOpenChange={setOpen}
-      title="Command Palette"
-      description="Search pages, transactions, contacts, and more"
-    >
-      <Command>
-        <CommandInput placeholder="Type a command or search..." />
+    <>
+      <Button
+        variant="ghost"
+        size="sm"
+        className="h-8 gap-1.5 rounded-full px-2.5 text-xs text-muted-foreground"
+        onClick={() => setOpen(true)}
+        aria-label={t("command.open")}
+        title={t("command.open")}
+      >
+        <SearchIcon className="size-3.5" />
+        <span className="hidden sm:inline">{t("command.open")}</span>
+        <kbd className="pointer-events-none hidden items-center gap-0.5 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium sm:inline-flex">
+          ⌘K
+        </kbd>
+      </Button>
+
+      <CommandDialog open={open} onOpenChange={setOpen}>
+        <CommandInput placeholder={t("command.placeholder")} />
         <CommandList>
-          <CommandEmpty>No results found.</CommandEmpty>
-
-          <CommandGroup heading="Pages">
-            {[
-              { label: "Dashboard", icon: LayoutDashboardIcon, href: "/dashboard" },
-              { label: "Accounts", icon: WalletIcon, href: "/accounts" },
-              { label: "Transactions", icon: ArrowLeftRightIcon, href: "/transactions" },
-              { label: "Transfers", icon: SendIcon, href: "/transfers" },
-              { label: "Cards", icon: CreditCardIcon, href: "/cards" },
-              { label: "Crypto", icon: BitcoinIcon, href: "/crypto" },
-              { label: "Analytics", icon: ChartAreaIcon, href: "/analytics" },
-              { label: "Investments", icon: TrendingUpIcon, href: "/investments" },
-              { label: "Budgets", icon: TargetIcon, href: "/budgets" },
-              { label: "Settings", icon: SettingsIcon, href: "/settings" },
-              { label: "Notifications", icon: BellIcon, href: "/notifications" },
-              { label: "Help & Support", icon: LifeBuoyIcon, href: "/support" },
-              { label: "Sign In", icon: LogInIcon, href: "/sign-in" },
-              { label: "Sign Up", icon: UserPlusIcon, href: "/sign-up" },
-            ].map((page) => (
-              <CommandItem key={page.href} onSelect={() => run(() => router.push(page.href))}>
-                <page.icon className="mr-2 size-4" />
-                {page.label}
-              </CommandItem>
-            ))}
+          <CommandEmpty>{t("command.empty")}</CommandEmpty>
+          <CommandGroup heading={t("command.group.start")}>
+            {renderItems(TOUR)}
           </CommandGroup>
-
           <CommandSeparator />
-
-          <CommandGroup heading="Recent Transactions">
-            {recentTransactions.slice(0, 5).map((tx) => (
-              <CommandItem key={tx.id} onSelect={() => run(() => router.push("/transactions"))}>
-                <SearchIcon className="mr-2 size-4" />
-                {tx.merchant}
-                <span className="ml-auto text-xs tabular-nums text-muted-foreground">
-                  {tx.amount > 0 ? "+" : ""}${Math.abs(tx.amount).toFixed(2)}
-                </span>
-              </CommandItem>
-            ))}
+          <CommandGroup heading={t("command.group.pages")}>
+            {renderItems(PAGES)}
           </CommandGroup>
-
           <CommandSeparator />
-
-          <CommandGroup heading="Quick Transfer">
-            {contacts.slice(0, 4).map((c) => (
-              <CommandItem key={c.id} onSelect={() => run(() => router.push("/transfers"))}>
-                <SendIcon className="mr-2 size-4" />
-                Send to {c.name}
-              </CommandItem>
-            ))}
+          <CommandGroup heading={t("command.group.views")}>
+            {renderItems(VIEWS)}
           </CommandGroup>
-
           <CommandSeparator />
-
-          <CommandGroup heading="Crypto">
-            {cryptoCoins.slice(0, 4).map((coin) => (
-              <CommandItem key={coin.id} onSelect={() => run(() => router.push("/crypto"))}>
-                <BitcoinIcon className="mr-2 size-4" />
-                {coin.name}
-                <span className="ml-auto text-xs tabular-nums text-muted-foreground">
-                  ${coin.price.toLocaleString()}
-                </span>
-              </CommandItem>
-            ))}
-          </CommandGroup>
-
-          <CommandSeparator />
-
-          <CommandGroup heading="Theme">
-            <CommandItem onSelect={() => run(() => setTheme("light"))}>
-              <SunIcon className="mr-2 size-4" />
-              Light Mode
+          <CommandGroup heading={t("command.group.settings")}>
+            <CommandItem onSelect={() => runItem({ labelKey: "command.theme", icon: null, action: "theme" })}>
+              <SunMoonIcon className="size-4" />
+              {t("command.theme")}
             </CommandItem>
-            <CommandItem onSelect={() => run(() => setTheme("dark"))}>
-              <MoonIcon className="mr-2 size-4" />
-              Dark Mode
+            <CommandItem onSelect={() => runItem({ labelKey: "command.lang", icon: null, action: "lang" })}>
+              <LanguagesIcon className="size-4" />
+              {t("command.lang")}
             </CommandItem>
-            <CommandItem onSelect={() => run(() => setTheme("system"))}>
-              <MonitorIcon className="mr-2 size-4" />
-              System Theme
+            <CommandItem
+              onSelect={() =>
+                runItem({
+                  labelKey: "command.results",
+                  icon: null,
+                  external: "https://github.com/Rethymus/Aionis/blob/main/docs/RESULTS.md",
+                })
+              }
+            >
+              <FileTextIcon className="size-4" />
+              {t("command.results")}
             </CommandItem>
           </CommandGroup>
         </CommandList>
-      </Command>
-    </CommandDialog>
-  )
+      </CommandDialog>
+    </>
+  );
 }

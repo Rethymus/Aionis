@@ -60,12 +60,15 @@
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
+  /* 0.556 (slate-500) measured ~4.4:1 on the gray page/card surfaces — one
+     notch under WCAG AA in light mode; 0.502 (slate-600) clears ~5.9:1. */
+  --muted-foreground: oklch(0.502 0 0);
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
+  /* 0.922 borders were near-invisible on white cards in light mode. */
+  --border: oklch(0.895 0 0);
+  --input: oklch(0.895 0 0);
   --ring: oklch(0.708 0 0);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);

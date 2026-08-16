@@ -1,5 +1,6 @@
 import { AppSidebar } from "@/components/app-sidebar";
 import { BackToTop } from "@/components/back-to-top";
+import { CommandPalette } from "@/components/command-palette";
 import { DynamicBreadcrumb } from "@/components/dynamic-breadcrumb";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LangToggle } from "@/components/lang-toggle";
@@ -29,6 +30,7 @@ export default function DashboardLayout({
             <DynamicBreadcrumb />
           </div>
           <div className="ml-auto flex items-center gap-1 pr-4">
+            <CommandPalette />
             <LangToggle />
             <ThemeToggle />
           </div>
