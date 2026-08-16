@@ -1138,6 +1138,86 @@ def export_pick_conviction() -> None:
     (WEB / "pick_conviction.json").write_text(json.dumps(_stamp(payload), indent=2))
 
 
+def _rows_from_daily_aggregate(daily_path: Path) -> list[dict]:
+    """SC 13D rows from the EDGAR daily-index aggregate (target + date only).
+
+    Shared by the full export and the retain-merge path so both produce
+    identical row shapes (filer honestly marked — the daily index does not
+    name the reporting person).
+    """
+    rows: list[dict] = []
+    try:
+        for r in json.loads(daily_path.read_text()):
+            rows.append({
+                "filer": "(申报人见原文)",
+                "target": str(r.get("target", "")).strip(),
+                "ticker": "",
+                "date": r["date"],
+                "form": r.get("form", "SC 13D"),
+                "is_amendment": bool(r.get("is_amendment")),
+                "url": str(r.get("url", "")),
+            })
+    except (json.JSONDecodeError, KeyError, TypeError):
+        pass
+    rows.sort(key=lambda r: r["date"], reverse=True)
+    return rows
+
+
+def _refresh_smart_money_recent_only(committed_path: Path, daily_path: Path) -> dict | None:
+    """Refresh smart_money's live window when only the daily index exists.
+
+    The EFTS historical (2015→2024-12) is FINITE and closed (EFTS stopped
+    indexing SC 13D; see aionis-edgar-efts-sc13d-frozen) and lives only in the
+    committed JSON — regenerating it in CI would regress the 3754-filing set
+    to a 25-CIK subset. Mirror :func:`_refresh_news_sentiment_only`: retain the
+    committed historical aggregates (active_filers, pre-2025 yearly) and
+    refresh only recent_filings, latest_date, and the post-cutoff (2025+)
+    yearly counts, which come solely from the daily index.
+    """
+    if not committed_path.exists() or not daily_path.exists():
+        return None
+    try:
+        prev = json.loads(committed_path.read_text())
+    except json.JSONDecodeError:
+        return None
+    daily_rows = _rows_from_daily_aggregate(daily_path)
+    if not daily_rows:
+        return None
+
+    recent = list(prev.get("recent_filings", []))
+    seen = {(r.get("date"), r.get("target")) for r in recent}
+    for r in daily_rows:
+        key = (r["date"], r["target"])
+        if key not in seen:
+            recent.append(r)
+            seen.add(key)
+    recent.sort(key=lambda r: r["date"], reverse=True)
+    prev["recent_filings"] = recent[:60]
+    prev["latest_date"] = max(
+        str(prev.get("latest_date") or ""), str(daily_rows[0]["date"])
+    )
+
+    daily_by_year: dict[str, int] = {}
+    for r in daily_rows:
+        daily_by_year[r["date"][:4]] = daily_by_year.get(r["date"][:4], 0) + 1
+    yearly = [
+        {**y, "filings": daily_by_year.get(str(y["year"]), y["filings"])}
+        if int(y["year"]) >= 2025
+        else y
+        for y in prev.get("yearly", [])
+    ]
+    for y in sorted(daily_by_year):
+        if not any(int(e["year"]) == int(y) for e in yearly):
+            yearly.append({"year": int(y), "filings": daily_by_year[y]})
+    yearly.sort(key=lambda e: e["year"])
+    prev["yearly"] = yearly
+    prev["total_filings"] = sum(e["filings"] for e in yearly)
+
+    prev = _stamp(prev)
+    committed_path.write_text(json.dumps(prev, indent=2, ensure_ascii=False))
+    return prev
+
+
 def export_smart_money() -> None:
     """Recent SC 13D institutional stake filings (SEC EDGAR EFTS, filed-date PIT).
 
@@ -1152,12 +1232,26 @@ def export_smart_money() -> None:
     if not cache_files:
         # CI fresh checkout: the full 13D cache is gitignored (local-only), and
         # stakes_13d_fetch would produce only a 25-CIK SUBSET here that would
-        # regress the committed 3754-filing set. Preserve the tracked JSON.
-        print(
-            "[export-terminal] SKIP smart_money: no data/cache/efts_13d_*.json "
-            "(tracked JSON retains last-committed value)",
-            flush=True,
-        )
+        # regress the committed 3754-filing set. Refresh ONLY the live window
+        # (recent_filings / latest_date / post-cutoff yearly) from the daily
+        # index and retain the committed historical aggregates — the EFTS
+        # historical is a finite closed set (EFTS stopped indexing SC 13D after
+        # 2024-12-17), so it never regrows and need not be re-pulled.
+        if _refresh_smart_money_recent_only(
+            WEB / "smart_money.json", Path("data/cache/sc13d_daily_aggregate.json")
+        ) is not None:
+            print(
+                "[export-terminal] smart_money: EFTS historical absent — refreshed "
+                "recent_filings/latest_date/post-2024 yearly from the daily index; "
+                "committed historical aggregates retained",
+                flush=True,
+            )
+        else:
+            print(
+                "[export-terminal] SKIP smart_money: no data/cache/efts_13d_*.json "
+                "(tracked JSON retains last-committed value)",
+                flush=True,
+            )
         return
     rows: list[dict] = []
     for f in cache_files:
@@ -1190,19 +1284,7 @@ def export_smart_money() -> None:
     # is not in the index, so the filer is marked honestly (see the filing link).
     daily_path = Path("data/cache/sc13d_daily_aggregate.json")
     if daily_path.exists():
-        try:
-            for r in json.loads(daily_path.read_text()):
-                rows.append({
-                    "filer": "(申报人见原文)",
-                    "target": str(r.get("target", "")).strip(),
-                    "ticker": "",
-                    "date": r["date"],
-                    "form": r.get("form", "SC 13D"),
-                    "is_amendment": bool(r.get("is_amendment")),
-                    "url": str(r.get("url", "")),
-                })
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+        rows.extend(_rows_from_daily_aggregate(daily_path))
     rows.sort(key=lambda r: r["date"], reverse=True)
     recent = rows[:60]
     from collections import Counter
