@@ -86,7 +86,7 @@ function NotificationDropdown({ icon, badge }: { icon: React.ReactNode; badge: n
         {icon}
         <span className="flex-1">Notifications</span>
         {badge > 0 && (
-          <span className="flex size-4.5 items-center justify-center rounded-full bg-primary text-[10px] font-semibold leading-none text-primary-foreground tabular-nums">
+          <span className="flex size-4.5 items-center justify-center rounded-full bg-primary text-xs font-semibold leading-none text-primary-foreground tabular-nums">
             {badge}
           </span>
         )}
@@ -95,7 +95,7 @@ function NotificationDropdown({ icon, badge }: { icon: React.ReactNode; badge: n
         <div className="flex items-center justify-between border-b px-4 py-3">
           <p className="text-sm font-semibold">Notifications</p>
           {badge > 0 && (
-            <span className="text-[10px] font-medium text-muted-foreground">
+            <span className="text-xs font-medium text-muted-foreground">
               {badge} unread
             </span>
           )}
@@ -115,7 +115,7 @@ function NotificationDropdown({ icon, badge }: { icon: React.ReactNode; badge: n
                 {n.actionable?.fromAvatar ? (
                   <Avatar className="mt-0.5 size-7 shrink-0">
                     <AvatarImage src={n.actionable.fromAvatar} />
-                    <AvatarFallback className="text-[9px]">
+                    <AvatarFallback className="text-[11px]">
                       {n.actionable.from?.split(" ").map((w) => w[0]).join("")}
                     </AvatarFallback>
                   </Avatar>
@@ -133,10 +133,10 @@ function NotificationDropdown({ icon, badge }: { icon: React.ReactNode; badge: n
                       <span className="mt-1 size-1.5 shrink-0 rounded-full bg-emerald-500" />
                     )}
                   </div>
-                  <p className="text-[11px] text-muted-foreground line-clamp-2">
+                  <p className="text-xs text-muted-foreground line-clamp-2">
                     {n.description}
                   </p>
-                  <p className="mt-0.5 text-[10px] text-muted-foreground/60">
+                  <p className="mt-0.5 text-xs text-muted-foreground">
                     {n.time}
                   </p>
 
@@ -147,7 +147,7 @@ function NotificationDropdown({ icon, badge }: { icon: React.ReactNode; badge: n
                         <div className="flex gap-2">
                           <Button
                             size="sm"
-                            className="h-7 gap-1 text-[11px]"
+                            className="h-7 gap-1 text-xs"
                             onClick={(e) => { e.stopPropagation(); handleAction(n.id, "accepted") }}
                           >
                             <CheckIcon className="size-3" />
@@ -156,7 +156,7 @@ function NotificationDropdown({ icon, badge }: { icon: React.ReactNode; badge: n
                           <Button
                             variant="outline"
                             size="sm"
-                            className="h-7 gap-1 text-[11px]"
+                            className="h-7 gap-1 text-xs"
                             onClick={(e) => { e.stopPropagation(); handleAction(n.id, "declined") }}
                           >
                             <XIcon className="size-3" />
@@ -165,19 +165,19 @@ function NotificationDropdown({ icon, badge }: { icon: React.ReactNode; badge: n
                         </div>
                       )}
                       {state === "loading" && (
-                        <div className="flex items-center gap-1.5 py-1 text-[11px] text-muted-foreground">
+                        <div className="flex items-center gap-1.5 py-1 text-xs text-muted-foreground">
                           <LoaderIcon className="size-3 animate-spin" />
                           Processing...
                         </div>
                       )}
                       {state === "accepted" && (
-                        <div className="flex items-center gap-1.5 py-1 text-[11px] font-medium text-emerald-600 dark:text-emerald-400">
+                        <div className="flex items-center gap-1.5 py-1 text-xs font-medium text-emerald-600 dark:text-emerald-400">
                           <CheckCircleIcon className="size-3" />
                           Accepted
                         </div>
                       )}
                       {state === "declined" && (
-                        <div className="flex items-center gap-1.5 py-1 text-[11px] font-medium text-muted-foreground">
+                        <div className="flex items-center gap-1.5 py-1 text-xs font-medium text-muted-foreground">
                           <XIcon className="size-3" />
                           Declined
                         </div>

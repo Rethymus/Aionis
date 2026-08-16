@@ -34,7 +34,7 @@ function Stat({ label, value, hint }: { label: string; value: string; hint?: str
     <div>
       <p className="text-xs text-muted-foreground">{label}</p>
       <p className="mt-1 text-xl font-bold tabular-nums">{value}</p>
-      {hint ? <p className="text-[10px] leading-tight text-muted-foreground/70">{hint}</p> : null}
+      {hint ? <p className="text-xs leading-tight text-muted-foreground">{hint}</p> : null}
     </div>
   );
 }
@@ -110,7 +110,7 @@ function RegionCard({ region, payload }: { region: string; payload: RegionPayloa
                   dataKey="x"
                   domain={[0, 1]}
                   tickCount={6}
-                  tick={{ fontSize: 11 }}
+                  tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
                   label={{
                     value: t("calibration.predP"),
                     position: "insideBottom",
@@ -123,7 +123,7 @@ function RegionCard({ region, payload }: { region: string; payload: RegionPayloa
                   dataKey="y"
                   domain={[0, 1]}
                   tickCount={6}
-                  tick={{ fontSize: 11 }}
+                  tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
                   label={{
                     value: t("calibration.empFreq"),
                     angle: -90,
@@ -162,12 +162,12 @@ function RegionCard({ region, payload }: { region: string; payload: RegionPayloa
                 <XAxis
                   dataKey="month"
                   interval={xInterval}
-                  tick={{ fontSize: 10 }}
+                  tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
                   angle={-30}
                   textAnchor="end"
                   height={36}
                 />
-                <YAxis domain={[0, "auto"]} tick={{ fontSize: 11 }} width={32} />
+                <YAxis domain={[0, "auto"]} tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} width={32} />
                 <Tooltip
                   contentStyle={{ fontSize: 12, borderRadius: 8 }}
                   formatter={(value) => [Number(value).toFixed(4), t("calibration.eceTerm")]}

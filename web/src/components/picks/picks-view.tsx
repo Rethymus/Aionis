@@ -34,7 +34,7 @@ function NullDisclaimer() {
         <p className="leading-relaxed text-amber-800/90 dark:text-amber-200/80">
           {t("picks.disclaimer.body")}
         </p>
-        <p className="font-mono text-[10px] text-amber-700/80 dark:text-amber-300/70">
+        <p className="font-mono text-xs text-amber-700/80 dark:text-amber-300/70">
           {aionis.picksMeta.disclaimer}
         </p>
       </div>
@@ -61,7 +61,7 @@ function ProbUpBar({ probUp, baseRate }: { probUp: number; baseRate: number }) {
             title={`P(up) = ${(probUp * 100).toFixed(1)}% · base_rate ${(baseRate * 100).toFixed(1)}%`}
           />
         </div>
-        <span className="text-[10px] font-mono tabular-nums text-muted-foreground">
+        <span className="text-xs font-mono tabular-nums text-muted-foreground">
           {widthPct}%
         </span>
       </div>
@@ -114,15 +114,15 @@ function PickRow({ p, baseRate, showChange, livePrice }: PickRowProps) {
         >
           {displayName}
         </span>
-        <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
+        <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
           <span className="font-mono">{p.ticker}</span>
-          <Badge variant="outline" className="px-1 py-0 text-[9px] font-normal">
+          <Badge variant="outline" className="px-1 py-0 text-[11px] font-normal">
             {regionLabel}
           </Badge>
           {p.sector ? (
             <span className="truncate">{p.sector}</span>
           ) : (
-            <span className="italic opacity-60">{t("picks.no_sector")}</span>
+            <span className="italic">{t("picks.no_sector")}</span>
           )}
         </div>
       </div>
@@ -176,7 +176,7 @@ function RegionGroup({ title, picks, baseRate, latestDate, showChange, prices }:
     <Card className="overflow-hidden py-0">
       <CardHeader className="border-b">
         <CardTitle className="text-base">{title}</CardTitle>
-        <CardDescription className="flex items-center gap-2 font-mono text-[10px]">
+        <CardDescription className="flex items-center gap-2 font-mono text-xs">
           <span>{latestDate}</span>
           <span className="opacity-60">·</span>
           <span>P(up) base {((baseRate ?? 0) * 100).toFixed(1)}%</span>
@@ -324,7 +324,7 @@ function TrackRecord() {
     <Card className="overflow-hidden py-0">
       <CardHeader className="border-b">
         <CardTitle className="text-base">{t("picks.track.title")}</CardTitle>
-        <CardDescription className="flex flex-wrap gap-x-4 text-[10px]">
+        <CardDescription className="flex flex-wrap gap-x-4 text-xs">
           <span>{t("picks.track.hit_rate")}: <span className="font-mono">{hitPct}%</span></span>
           <span>{t("picks.track.excess")}: <span className={cn("font-mono", excessTone)}>{excessPct}%</span></span>
           <span>{t("picks.track.n_picks")}: <span className="font-mono">{s.n_picks}</span></span>
@@ -342,7 +342,7 @@ function TrackRecord() {
                 : "text-muted-foreground";
           return (
             <div key={`${m.month}-${m.region}`} className="border-b px-4 py-2 last:border-b-0">
-              <div className="mb-1 flex items-center justify-between text-[10px]">
+              <div className="mb-1 flex items-center justify-between text-xs">
                 <span className="font-mono text-muted-foreground">
                   {m.month} · {regionLabel}
                 </span>
@@ -357,7 +357,7 @@ function TrackRecord() {
                     ? "text-emerald-600 dark:text-emerald-400"
                     : "text-rose-600 dark:text-rose-400";
                   return (
-                    <span key={p.ticker} className={cn("font-mono text-[10px]", tone)} title={`${p.name} · score ${p.score}`}>
+                    <span key={p.ticker} className={cn("font-mono text-xs", tone)} title={`${p.name} · score ${p.score}`}>
                       {p.name || p.ticker} {retPct}%
                     </span>
                   );
@@ -366,7 +366,7 @@ function TrackRecord() {
             </div>
           );
         })}
-        <div className="px-4 py-2 text-[10px] text-muted-foreground">
+        <div className="px-4 py-2 text-xs text-muted-foreground">
           {bt.methodology}
         </div>
       </CardContent>

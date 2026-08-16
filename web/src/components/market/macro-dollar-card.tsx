@@ -100,12 +100,12 @@ export function MacroDollarCard() {
               <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
               <XAxis
                 dataKey="month"
-                tick={{ fontSize: 9 }}
+                tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
                 interval={18}
                 tickFormatter={(m: string) => m.slice(0, 7)}
               />
               <YAxis
-                tick={{ fontSize: 10 }}
+                tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
                 tickFormatter={(v: number) => v.toFixed(0)}
               />
               <Tooltip content={<ChartTooltip />} />

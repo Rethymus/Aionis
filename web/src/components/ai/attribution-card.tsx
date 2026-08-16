@@ -87,6 +87,8 @@ export function AiAttributionCard() {
   const { t } = useI18n();
   const m = aionis.metrics;
   const { points } = buildAttribution(m, aionis.sigmaSurvey);
+  const hasCI = m.ci_lo !== null && m.ci_hi !== null;
+  const ci = hasCI ? `[${m.ci_lo!.toFixed(4)}, ${m.ci_hi!.toFixed(4)}]` : "—";
 
   return (
     <Card className="overflow-hidden border-primary/20">
@@ -96,12 +98,27 @@ export function AiAttributionCard() {
             <BrainCircuitIcon className="size-4 text-primary" />
             {t("ai.attribution.title")}
           </CardTitle>
-          <Badge variant="outline" className="gap-1 px-1.5 py-0 text-[10px] font-normal text-muted-foreground">
+          <Badge variant="outline" className="gap-1 px-1.5 py-0 text-xs font-normal text-muted-foreground">
             <LockIcon className="size-2.5" />
             {t("ai.attribution.mode")}
           </Badge>
         </div>
         <CardDescription>{t("ai.attribution.intro")}</CardDescription>
+        {/* Verdict at a glance — the validity page states its estimand's
+            verdict up front (same frozen #49 metrics as the overview anchor)
+            instead of burying it in the prose below. */}
+        <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 pt-1">
+          <span className="text-xs text-muted-foreground">{t("kpi.combined_ic")}</span>
+          <span className="font-mono text-xl font-semibold tabular-nums">
+            {m.combined_ic > 0 ? "+" : ""}{m.combined_ic.toFixed(4)}
+          </span>
+          <span className="font-mono text-xs tabular-nums text-muted-foreground">
+            95% CI {ci} · {t("kpi.p_value")} {m.p.toFixed(3)}
+          </span>
+          <Badge variant="secondary" className="bg-slate-500/15 text-slate-600 dark:text-slate-300">
+            {t("overview.verdict.null")}
+          </Badge>
+        </div>
       </CardHeader>
       <CardContent className="space-y-2.5">
         <ol className="space-y-2">
@@ -112,7 +129,7 @@ export function AiAttributionCard() {
             </li>
           ))}
         </ol>
-        <p className="border-t pt-2 text-[10px] text-muted-foreground/70">
+        <p className="border-t pt-2 text-xs text-muted-foreground">
           {t("ai.attribution.boundary")}
         </p>
       </CardContent>

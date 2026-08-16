@@ -38,7 +38,7 @@ export function DisciplineView() {
             <CardContent className="space-y-2 p-4">
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium">{it.title}</span>
-                <span className="rounded bg-emerald-500/10 px-1.5 py-0.5 font-mono text-[10px] text-emerald-600 dark:text-emerald-400">
+                <span className="rounded bg-emerald-500/10 px-1.5 py-0.5 font-mono text-xs text-emerald-600 dark:text-emerald-400">
                   {it.badge}
                 </span>
               </div>

@@ -117,7 +117,7 @@ export function CoverageMap() {
             <div key={f.familyKey} className="space-y-1.5 rounded-md border p-3">
               <div className="flex items-center justify-between gap-2">
                 <span className="text-sm font-medium">{t(f.familyKey)}</span>
-                <Badge variant="outline" className={cn("gap-1 px-1.5 py-0 text-[10px]", meta.cls)}>
+                <Badge variant="outline" className={cn("gap-1 px-1.5 py-0 text-xs", meta.cls)}>
                   <Icon className="size-2.5" />
                   {t(meta.key)}
                 </Badge>
@@ -125,34 +125,34 @@ export function CoverageMap() {
               <div className="space-y-1 text-xs">
                 {f.tested.length > 0 ? (
                   <div className="flex flex-wrap items-baseline gap-x-1.5">
-                    <span className="text-[10px] uppercase text-emerald-600/80 dark:text-emerald-400/80">{t("coverage.label.tested")}:</span>
+                    <span className="text-xs uppercase text-emerald-600/80 dark:text-emerald-400/80">{t("coverage.label.tested")}:</span>
                     {f.tested.map((x) => (
-                      <span key={x} className="font-mono text-[11px] text-foreground/80">{x}</span>
+                      <span key={x} className="font-mono text-xs text-foreground/80">{x}</span>
                     ))}
                   </div>
                 ) : null}
                 {f.exploratory.length > 0 ? (
                   <div className="flex flex-wrap items-baseline gap-x-1.5">
-                    <span className="text-[10px] uppercase text-amber-600/80 dark:text-amber-400/80">{t("coverage.label.exploratory")}:</span>
+                    <span className="text-xs uppercase text-amber-600/80 dark:text-amber-400/80">{t("coverage.label.exploratory")}:</span>
                     {f.exploratory.map((x) => (
-                      <span key={x} className="font-mono text-[11px] text-muted-foreground">{x}</span>
+                      <span key={x} className="font-mono text-xs text-muted-foreground">{x}</span>
                     ))}
                   </div>
                 ) : null}
                 {f.gaps.length > 0 ? (
                   <div className="flex flex-wrap items-baseline gap-x-1.5">
-                    <span className="text-[10px] uppercase text-muted-foreground/70">{t("coverage.label.gaps")}:</span>
+                    <span className="text-xs uppercase text-muted-foreground">{t("coverage.label.gaps")}:</span>
                     {f.gaps.map((x) => (
-                      <span key={x} className="font-mono text-[11px] text-muted-foreground/60">{x}</span>
+                      <span key={x} className="font-mono text-xs text-muted-foreground">{x}</span>
                     ))}
                   </div>
                 ) : null}
               </div>
               {f.cite ? (
-                <p className="font-mono text-[10px] text-muted-foreground/60">{f.cite}</p>
+                <p className="font-mono text-xs text-muted-foreground">{f.cite}</p>
               ) : null}
               {f.anchorKey ? (
-                <p className="border-t pt-1.5 text-[11px] leading-relaxed text-muted-foreground">
+                <p className="border-t pt-1.5 text-xs leading-relaxed text-muted-foreground">
                   <span className="font-medium text-foreground/70">{t("coverage.anchor.title")}：</span>
                   {t(f.anchorKey)}
                 </p>
@@ -160,7 +160,7 @@ export function CoverageMap() {
             </div>
           );
         })}
-        <p className="border-t pt-2 text-[10px] text-muted-foreground/70">
+        <p className="border-t pt-2 text-xs text-muted-foreground">
           {t("coverage.boundary")}
         </p>
       </CardContent>

@@ -11,7 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
-import { LockIcon, CheckCircle2Icon, FlaskConicalIcon } from "lucide-react";
+import { LockIcon, CheckCircle2Icon, FlaskConicalIcon, CornerDownRightIcon } from "lucide-react";
 
 // The frozen-config audit timeline (paradigm-α guard-band display layer). This
 // surfaces Aionis's defining identity — config_committed BEFORE result — as a
@@ -60,7 +60,7 @@ export function AuditTimeline() {
       <CardContent className="space-y-3">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="border-b text-[10px] uppercase text-muted-foreground/70">
+            <thead className="border-b text-xs uppercase text-muted-foreground">
               <tr>
                 <th className="py-1.5 pr-2 font-medium">{t("audit.col.row")}</th>
                 <th className="py-1.5 pr-2 font-medium">{t("audit.col.date")}</th>
@@ -72,18 +72,42 @@ export function AuditTimeline() {
               </tr>
             </thead>
             <tbody className="divide-y divide-border/50">
-              {audit.entries.map((e) => {
+              {audit.entries.map((e, i) => {
                 const meta = EVENT_META[e.event] ?? EVENT_META.exploratory;
+                // Freeze→result pairing: a result row whose sha matches the
+                // config_committed row directly above IS the contract — same
+                // frozen config, result observed after. The left accent rail +
+                // corner arrow make the pair readable at a glance instead of
+                // discovered by scanning two sha columns.
+                const prev = audit.entries[i - 1];
+                const pairedWithFreeze =
+                  meta.isResult &&
+                  prev?.event === "config_committed" &&
+                  !!e.config_sig_short &&
+                  e.config_sig_short === prev.config_sig_short;
                 return (
-                  <tr key={e.row} className="align-top">
-                    <td className="py-1.5 pr-2 font-mono text-muted-foreground/60">{e.row}</td>
+                  <tr key={e.row} className="align-top transition-colors hover:bg-muted/40">
+                    <td
+                      className={cn(
+                        "py-1.5 pr-2 font-mono text-muted-foreground",
+                        pairedWithFreeze && "border-l-2 border-l-emerald-500/50 pl-1.5",
+                      )}
+                    >
+                      {e.row}
+                    </td>
                     <td className="py-1.5 pr-2 font-mono whitespace-nowrap text-muted-foreground">{e.ts}</td>
                     <td className="py-1.5 pr-2">
+                      {pairedWithFreeze ? (
+                        <CornerDownRightIcon
+                          className="mb-0.5 inline size-3 text-emerald-600 dark:text-emerald-400"
+                          aria-hidden
+                        />
+                      ) : null}
                       <Badge
                         variant="outline"
                         title={e.config_sig_short ? `${e.phase} · ${e.config_sig_short}` : e.phase}
                         className={cn(
-                          "gap-1 px-1.5 py-0 text-[10px] font-normal",
+                          "gap-1 px-1.5 py-0 text-xs font-normal",
                           meta.isFreeze
                             ? "border-primary/30 bg-primary/10 text-primary"
                             : meta.isResult
@@ -96,13 +120,13 @@ export function AuditTimeline() {
                       </Badge>
                     </td>
                     <td className="hidden py-1.5 pr-2 font-mono text-muted-foreground md:table-cell">{e.phase || "—"}</td>
-                    <td className="hidden py-1.5 pr-2 font-mono text-[10px] text-muted-foreground/70 md:table-cell">{e.config_sig_short || "—"}</td>
-                    <td className="py-1.5 pr-2 font-mono text-[10px] text-foreground/70">{e.metric || "—"}</td>
+                    <td className="hidden py-1.5 pr-2 font-mono text-xs text-muted-foreground md:table-cell">{e.config_sig_short || "—"}</td>
+                    <td className="py-1.5 pr-2 font-mono text-xs text-foreground">{e.metric || "—"}</td>
                     <td className="py-1.5 pr-2 text-muted-foreground">
                       {e.verdict ? (
                         <span className="line-clamp-2">{e.verdict}</span>
                       ) : e.h6 === true ? (
-                        <span className="font-mono text-[10px] text-emerald-600 dark:text-emerald-400">H6 PASS</span>
+                        <span className="font-mono text-xs text-emerald-600 dark:text-emerald-400">H6 PASS</span>
                       ) : (
                         "—"
                       )}
@@ -113,7 +137,7 @@ export function AuditTimeline() {
             </tbody>
           </table>
         </div>
-        <p className="border-t pt-2 text-[10px] text-muted-foreground/70">
+        <p className="border-t pt-2 text-xs text-muted-foreground">
           {t("audit.footer")
             .replace("{n}", String(audit.n_total_rows))
             .replace("{claims}", String(audit.n_claim_rows))}

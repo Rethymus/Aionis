@@ -7,6 +7,7 @@ import { InsidersView } from "@/components/insiders/insiders-view";
 import { RedditView } from "@/components/reddit/reddit-view";
 import { ThemeSlice } from "@/components/themes/theme-slice";
 import { SegmentHeader } from "@/components/segment-header";
+import { StickyTabs } from "@/components/sticky-tabs";
 import { aionis } from "@/data/aionis";
 import { useI18n } from "@/i18n/provider";
 
@@ -49,12 +50,15 @@ export default function ConfirmationPage() {
       <SegmentHeader segment="evidence" introKey="confirmation_hub.intro" asOf={aionis.smartMoney.latest_date ?? undefined} />
 
       <Tabs value={activeTab} onValueChange={handleTabChange}>
+        <StickyTabs>
         <TabsList>
           <TabsTrigger value="smart-money">{t("nav.smartmoney")}</TabsTrigger>
           <TabsTrigger value="insiders">{t("nav.insiders")}</TabsTrigger>
           <TabsTrigger value="reddit">{t("nav.reddit")}</TabsTrigger>
           <TabsTrigger value="news">{t("nav.news")}</TabsTrigger>
         </TabsList>
+        </StickyTabs>
+
 
         <TabsContent value="smart-money">
           <SmartMoneyView />

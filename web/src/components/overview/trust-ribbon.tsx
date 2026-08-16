@@ -41,7 +41,7 @@ export function TrustRibbon() {
       className="group flex flex-wrap items-center gap-x-3 gap-y-1.5 rounded-lg border border-emerald-500/20 bg-emerald-500/[0.04] px-3 py-2 transition-colors hover:border-emerald-500/40 hover:bg-emerald-500/[0.07]"
       aria-label={t("trust.aria")}
     >
-      <span className="flex items-center gap-1.5 text-[11px] font-medium text-emerald-700 dark:text-emerald-400">
+      <span className="flex items-center gap-1.5 text-xs font-medium text-emerald-700 dark:text-emerald-400">
         <ShieldCheckIcon className="size-3.5" />
         {t("trust.label")}
       </span>
@@ -50,14 +50,14 @@ export function TrustRibbon() {
           <Badge
             key={g.key}
             variant="outline"
-            className="gap-1 border-emerald-500/25 bg-transparent px-1.5 py-0 text-[10px] font-normal text-emerald-700/90 dark:text-emerald-400/90"
+            className="gap-1 border-emerald-500/25 bg-transparent px-1.5 py-0 text-xs font-normal text-emerald-700/90 dark:text-emerald-400/90"
             title={t(g.key)}
           >
             {g.short}
           </Badge>
         ))}
       </span>
-      <span className="ml-auto flex items-center gap-1 text-[10px] text-muted-foreground transition-colors group-hover:text-foreground">
+      <span className="ml-auto flex items-center gap-1 text-xs text-muted-foreground transition-colors group-hover:text-foreground">
         {t("trust.detail")}
         <ArrowRightIcon className="size-3 transition-transform group-hover:translate-x-0.5" />
       </span>

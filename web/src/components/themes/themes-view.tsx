@@ -174,13 +174,13 @@ export function ThemeCard({ theme }: { theme: Theme }) {
       <CardHeader className="gap-2 border-b p-5">
         <div className="flex items-center justify-between gap-2">
           <CardTitle className="text-base">{t(THEME_LABEL[theme.key] ?? "themes.risk")}</CardTitle>
-          <Badge variant="outline" className="shrink-0 px-2 py-0.5 text-[10px] font-normal text-muted-foreground">
+          <Badge variant="outline" className="shrink-0 px-2 py-0.5 text-xs font-normal text-muted-foreground">
             {t(roleKey)}
           </Badge>
         </div>
         {theme.headline ? <CardDescription className="text-xs">{theme.headline}</CardDescription> : null}
         {theme.as_of ? (
-          <p className="font-mono text-[10px] text-muted-foreground/70">
+          <p className="font-mono text-xs text-muted-foreground">
             {t("themes.as_of")} {theme.as_of}
           </p>
         ) : null}
@@ -264,13 +264,13 @@ export function ThemesView() {
                           <span className="truncate font-mono text-xs">{s.signal}</span>
                           <Badge
                             variant="outline"
-                            className={cn("shrink-0 px-1.5 py-0 text-[10px]", DIR_STYLE[s.direction] ?? "")}
+                            className={cn("shrink-0 px-1.5 py-0 text-xs", DIR_STYLE[s.direction] ?? "")}
                           >
                             {t(DIR_KEY[s.direction] ?? "themes.direction.neutral")}
                           </Badge>
                         </div>
                         <div className="flex items-center gap-2">
-                          <span className="w-8 shrink-0 text-[10px] text-muted-foreground">
+                          <span className="w-8 shrink-0 text-xs text-muted-foreground">
                             {t("themes.strength")}
                           </span>
                           <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
@@ -279,17 +279,17 @@ export function ThemesView() {
                               style={{ width: `${Math.min((s.strength / 3) * 100, 100)}%` }}
                             />
                           </div>
-                          <span className="w-8 shrink-0 text-right text-[10px] tabular-nums text-muted-foreground">
+                          <span className="w-8 shrink-0 text-right text-xs tabular-nums text-muted-foreground">
                             {s.strength.toFixed(2)}
                           </span>
                         </div>
                         {s.favored.length > 0 ? (
                           <div className="flex flex-wrap gap-1">
-                            <span className="text-[10px] text-muted-foreground">{t("themes.favored")}:</span>
+                            <span className="text-xs text-muted-foreground">{t("themes.favored")}:</span>
                             {s.favored.slice(0, 4).map((f) => (
                               <span
                                 key={f.ticker}
-                                className="rounded bg-muted/60 px-1.5 py-0.5 font-mono text-[10px]"
+                                className="rounded bg-muted/60 px-1.5 py-0.5 font-mono text-xs"
                                 title={
                                   f.name
                                     ? `${f.name}${f.sector ? ` · ${f.sector}` : ""}`
@@ -308,7 +308,7 @@ export function ThemesView() {
               );
             })}
           </div>
-          <p className="text-[10px] text-muted-foreground">{t("themes.favored.note")}</p>
+          <p className="text-xs text-muted-foreground">{t("themes.favored.note")}</p>
         </section>
       ) : null}
 

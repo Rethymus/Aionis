@@ -94,7 +94,7 @@ export function EvidenceView() {
               <CardHeader className="gap-2">
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-xs text-muted-foreground">#{e.n}</span>
-                  <Badge variant="outline" className={cn("px-2 py-0 text-[10px]", g.className)}>
+                  <Badge variant="outline" className={cn("px-2 py-0 text-xs", g.className)}>
                     {t(g.labelKey)}
                   </Badge>
                 </div>
@@ -124,7 +124,7 @@ export function EvidenceView() {
                 {isHeadline ? (
                   <Link
                     href="/discipline"
-                    className="inline-flex items-center gap-1 pt-1 text-[10px] font-medium text-muted-foreground transition-colors hover:text-foreground"
+                    className="inline-flex items-center gap-1 pt-1 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
                   >
                     ledger #{headlineRow} · frozen config → /discipline
                   </Link>

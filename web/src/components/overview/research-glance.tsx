@@ -55,20 +55,20 @@ export function ResearchGlance() {
             <div className="flex flex-wrap gap-1.5 pt-1">
               <Badge
                 variant="outline"
-                className="px-1.5 py-0 text-[10px] font-normal text-muted-foreground"
+                className="px-1.5 py-0 text-xs font-normal text-muted-foreground"
                 title={t("glance.attribution.ic_tooltip")}
               >
                 IC {m.combined_ic.toFixed(4)}
               </Badge>
               {hasCI ? (
-                <Badge variant="outline" className="px-1.5 py-0 text-[10px] font-normal text-muted-foreground">
+                <Badge variant="outline" className="px-1.5 py-0 text-xs font-normal text-muted-foreground">
                   CI [{m.ci_lo!.toFixed(3)}, {m.ci_hi!.toFixed(3)}]
                 </Badge>
               ) : null}
               <Badge
                 variant="outline"
                 className={cn(
-                  "px-1.5 py-0 text-[10px] font-normal",
+                  "px-1.5 py-0 text-xs font-normal",
                   powerUnattainable ? "text-amber-600 dark:text-amber-400" : "text-muted-foreground",
                 )}
               >
@@ -96,13 +96,13 @@ export function ResearchGlance() {
               {t("glance.coverage.lead")}
             </p>
             <div className="flex flex-wrap gap-1.5 pt-1">
-              <Badge variant="outline" className="gap-1 px-1.5 py-0 text-[10px] font-normal text-emerald-600 dark:text-emerald-400">
+              <Badge variant="outline" className="gap-1 px-1.5 py-0 text-xs font-normal text-emerald-600 dark:text-emerald-400">
                 {t("coverage.label.tested")} {COVERAGE_TALLY.testedFamilies}
               </Badge>
-              <Badge variant="outline" className="gap-1 px-1.5 py-0 text-[10px] font-normal text-amber-600 dark:text-amber-400">
+              <Badge variant="outline" className="gap-1 px-1.5 py-0 text-xs font-normal text-amber-600 dark:text-amber-400">
                 {t("coverage.label.exploratory")} {COVERAGE_TALLY.exploratoryFamilies}
               </Badge>
-              <Badge variant="outline" className="gap-1 px-1.5 py-0 text-[10px] font-normal text-muted-foreground">
+              <Badge variant="outline" className="gap-1 px-1.5 py-0 text-xs font-normal text-muted-foreground">
                 {t("glance.coverage.families")} 5
               </Badge>
             </div>

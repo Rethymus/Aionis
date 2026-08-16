@@ -133,7 +133,7 @@ export function MarketView() {
         {kpis.map((k) => (
           <Card key={k.label}>
             <CardContent className="flex flex-col gap-1 p-3">
-              <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
+              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                 <k.icon className="size-3" />
                 {k.label}
               </div>
@@ -156,20 +156,20 @@ export function MarketView() {
               <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
               <XAxis
                 dataKey="month"
-                tick={{ fontSize: 10 }}
+                tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
                 interval={11}
                 tickFormatter={(m: string) => m.slice(0, 7)}
               />
               <YAxis
                 yAxisId="index"
                 orientation="left"
-                tick={{ fontSize: 10 }}
+                tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
                 domain={["dataMin - 20", "dataMax + 20"]}
               />
               <YAxis
                 yAxisId="vix"
                 orientation="right"
-                tick={{ fontSize: 10 }}
+                tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
                 domain={[0, "dataMax + 10"]}
               />
               <Tooltip content={<ChartTooltip />} />
@@ -244,7 +244,7 @@ export function MarketView() {
                 <span className="w-24 shrink-0 font-mono text-xs text-muted-foreground">{e.date}</span>
                 <Badge
                   variant="outline"
-                  className={cn("shrink-0 px-1.5 py-0 text-[9px] font-normal uppercase", EVENT_TONE[e.type] ?? "")}
+                  className={cn("shrink-0 px-1.5 py-0 text-[11px] font-normal uppercase", EVENT_TONE[e.type] ?? "")}
                 >
                   {EVENT_TYPE_LABEL[e.type] ?? e.type}
                 </Badge>

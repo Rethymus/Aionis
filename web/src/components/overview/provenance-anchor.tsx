@@ -28,12 +28,14 @@ function tsTime(ts?: string): string {
   return ts.slice(0, 16).replace("T", " ") + " UTC";
 }
 
-export function ProvenanceAnchor() {
+export function ProvenanceAnchor({ embedded = false }: { embedded?: boolean }) {
   const { t } = useI18n();
   const p = aionis.headlineProvenance;
   if (!p || p.status !== "ok" || !p.freeze || !p.headline) {
     // Honest degradation: if no confirmatory result has frozen provenance, show
-    // a muted note rather than fabricating a certificate.
+    // a muted note rather than fabricating a certificate (embedded mode: the
+    // verdict card already carries the claim; nothing to certify, omit).
+    if (embedded) return null;
     return (
       <Card className="border-dashed">
         <CardContent className="flex items-center gap-2 p-3 text-xs text-muted-foreground">
@@ -44,14 +46,13 @@ export function ProvenanceAnchor() {
     );
   }
   const proven = p.contract?.freeze_before_result === true;
-  return (
-    <Card className="overflow-hidden">
-      <CardContent className="space-y-2.5 p-4">
-        <div className="flex flex-wrap items-center gap-2">
+  const body = (
+    <>
+      <div className="flex flex-wrap items-center gap-2">
           <Badge
             variant="outline"
             className={cn(
-              "gap-1 px-1.5 py-0 text-[10px] font-normal",
+              "gap-1 px-1.5 py-0 text-xs font-normal",
               proven
                 ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
                 : "border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400",
@@ -60,9 +61,9 @@ export function ProvenanceAnchor() {
             {proven ? <CheckCircle2Icon className="size-2.5" /> : <LockIcon className="size-2.5" />}
             {t("overview.provenance.freeze_before")}
           </Badge>
-          <span className="text-[10px] text-muted-foreground">{t("overview.provenance.label")}</span>
+          <span className="text-xs text-muted-foreground">{t("overview.provenance.label")}</span>
         </div>
-        <div className="grid gap-x-6 gap-y-1.5 font-mono text-[11px] sm:grid-cols-2">
+        <div className="grid gap-x-6 gap-y-1.5 font-mono text-xs sm:grid-cols-2">
           <div className="flex items-center justify-between gap-2">
             <span className="text-muted-foreground">
               {t("overview.provenance.freeze_row")} · {t("overview.provenance.row")} #{p.freeze.ledger_row}
@@ -99,13 +100,24 @@ export function ProvenanceAnchor() {
         </div>
         <Link
           href="/discipline"
-          className="group inline-flex items-center gap-1 text-[11px] font-medium text-muted-foreground transition-colors hover:text-foreground"
+          className="group inline-flex items-center gap-1 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
         >
           <ShieldCheckIcon className="size-3" />
           {t("overview.provenance.view_timeline")}
           <ArrowRightIcon className="size-3 transition-transform group-hover:translate-x-0.5" />
         </Link>
-      </CardContent>
+    </>
+  );
+  // Embedded = the birth certificate lives INSIDE the verdict card it belongs
+  // to (a claim and how it was frozen are one object). The overview previously
+  // stacked three badge-heavy cards — trust ribbon → verdict → provenance —
+  // which read as clutter before the argument chain even began.
+  if (embedded) {
+    return <div className="mt-3 space-y-2.5 border-t pt-3">{body}</div>;
+  }
+  return (
+    <Card className="overflow-hidden">
+      <CardContent className="space-y-2.5 p-4">{body}</CardContent>
     </Card>
   );
 }

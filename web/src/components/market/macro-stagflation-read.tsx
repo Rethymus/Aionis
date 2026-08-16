@@ -139,7 +139,7 @@ export function MacroStagflationRead() {
         </p>
 
         {/* Disclaimer */}
-        <p className="text-[10px] text-muted-foreground/70 italic">
+        <p className="text-xs text-muted-foreground italic">
           {heuristicDisclaimer}
         </p>
       </CardContent>

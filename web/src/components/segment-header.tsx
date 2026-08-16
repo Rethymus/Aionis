@@ -35,16 +35,18 @@ export function SegmentHeader({
   segment,
   introKey,
   asOf,
+  frozen = false,
 }: {
   segment: Segment;
   introKey: DictKey;
   asOf?: string | null;
+  frozen?: boolean;
 }) {
   const { t } = useI18n();
   return (
     <header className="space-y-2">
       {/* Spine breadcrumb: every page shows where it sits on the argument. */}
-      <nav aria-label="argument chain" className="flex flex-wrap items-center gap-1 text-[11px] text-muted-foreground">
+      <nav aria-label="argument chain" className="flex flex-wrap items-center gap-1 text-xs text-muted-foreground">
         {CHAIN_ORDER.map((s, i) => {
           const meta = SEGMENT_META[s];
           const active = s === segment;
@@ -54,7 +56,7 @@ export function SegmentHeader({
                 "rounded px-1.5 py-0.5",
                 active
                   ? "bg-primary/10 font-medium text-primary"
-                  : "text-muted-foreground/70 hover:text-foreground",
+                  : "text-muted-foreground hover:text-foreground",
               )}
             >
               {t(meta.labelKey)}
@@ -70,7 +72,7 @@ export function SegmentHeader({
           );
         })}
         {/* Provenance chip — the page's own freshness, inline with the spine. */}
-        {asOf ? <ProvenanceBadge ts={asOf} className="ml-1" /> : null}
+        {asOf ? <ProvenanceBadge ts={asOf} frozen={frozen} className="ml-1" /> : null}
         {/* Guard spans the whole chain — shown as a trailing chip; highlighted
             when the page IS the guard segment (so /discipline shows its place). */}
         <Link
@@ -79,7 +81,7 @@ export function SegmentHeader({
             "ml-auto inline-flex items-center gap-1 rounded border px-1.5 py-0.5",
             segment === "guard"
               ? "border-primary/40 bg-primary/10 font-medium text-primary"
-              : "border-dashed border-muted-foreground/30 text-muted-foreground/60 hover:text-foreground",
+              : "border-dashed border-muted-foreground/30 text-muted-foreground hover:text-foreground",
           )}
         >
           {t("nav.group.guard")}

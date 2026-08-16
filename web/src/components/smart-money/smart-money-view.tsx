@@ -89,7 +89,7 @@ export function SmartMoneyView() {
                 <Badge
                   variant="outline"
                   className={cn(
-                    "shrink-0 px-1.5 py-0 text-[10px]",
+                    "shrink-0 px-1.5 py-0 text-xs",
                     r.is_amendment
                       ? "text-muted-foreground"
                       : "border-emerald-500/40 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
@@ -112,7 +112,7 @@ export function SmartMoneyView() {
                   <span className="truncate font-medium">→ {r.target}</span>
                 )}
                 {r.ticker ? (
-                  <Badge variant="secondary" className="ml-auto shrink-0 font-mono text-[10px]">
+                  <Badge variant="secondary" className="ml-auto shrink-0 font-mono text-xs">
                     {r.ticker}
                   </Badge>
                 ) : null}

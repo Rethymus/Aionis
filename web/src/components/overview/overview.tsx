@@ -55,21 +55,21 @@ function VerdictAnchor() {
         </div>
         <div className="flex flex-wrap items-baseline gap-x-6 gap-y-1">
           <div>
-            <p className="text-[11px] text-muted-foreground">{t("kpi.combined_ic")}</p>
+            <p className="text-xs text-muted-foreground">{t("kpi.combined_ic")}</p>
             <p className="font-mono text-2xl font-semibold tabular-nums">
               {m.combined_ic > 0 ? "+" : ""}{m.combined_ic.toFixed(4)}
             </p>
           </div>
           <div>
-            <p className="text-[11px] text-muted-foreground">95% CI</p>
+            <p className="text-xs text-muted-foreground">95% CI</p>
             <p className="font-mono text-sm font-medium tabular-nums text-muted-foreground">{ci}</p>
           </div>
           <div>
-            <p className="text-[11px] text-muted-foreground">{t("kpi.p_value")}</p>
+            <p className="text-xs text-muted-foreground">{t("kpi.p_value")}</p>
             <p className="font-mono text-sm font-medium tabular-nums text-muted-foreground">{m.p.toFixed(3)}</p>
           </div>
           <div>
-            <p className="text-[11px] text-muted-foreground">{t("kpi.n_months")}</p>
+            <p className="text-xs text-muted-foreground">{t("kpi.n_months")}</p>
             <p className="font-mono text-sm font-medium tabular-nums text-muted-foreground">{m.n_months}</p>
           </div>
         </div>
@@ -84,8 +84,14 @@ function VerdictAnchor() {
           <Badge variant="secondary" className="bg-slate-500/15 text-slate-600 dark:text-slate-300">
             {t("overview.verdict.null")}
           </Badge>
-          <span className="text-[11px] text-muted-foreground">{t("overview.verdict.null.note")}</span>
+          <span className="text-xs text-muted-foreground">{t("overview.verdict.null.note")}</span>
         </div>
+      </CardContent>
+      {/* The verdict's birth certificate — embedded in the same card (a claim
+          and how it was frozen are one object; three stacked badge cards read
+          as clutter before the argument chain even began). */}
+      <CardContent className="pt-0">
+        <ProvenanceAnchor embedded />
       </CardContent>
     </Card>
   );
@@ -168,7 +174,7 @@ function MiniPicks() {
           <span className="min-w-0 flex-1 truncate font-medium" title={p.name || p.ticker}>
             {p.name || p.ticker}
           </span>
-          <span className="shrink-0 font-mono text-[10px] text-muted-foreground">{p.ticker}</span>
+          <span className="shrink-0 font-mono text-xs text-muted-foreground">{p.ticker}</span>
           <span className="ml-auto shrink-0 font-mono tabular-nums">
             {p.score > 0 ? "+" : ""}{p.score.toFixed(2)}
           </span>
@@ -177,7 +183,7 @@ function MiniPicks() {
           </span>
         </div>
       ))}
-      <p className="pt-1 text-[10px] text-muted-foreground">{t("overview.chain.evidence.detail")}</p>
+      <p className="pt-1 text-xs text-muted-foreground">{t("overview.chain.evidence.detail")}</p>
     </div>
   );
 }
@@ -197,7 +203,7 @@ function MiniCorroboration() {
         <span className="text-muted-foreground">{t("nav.positioning")}</span>
         <span className="font-mono tabular-nums">{cotLatest}</span>
       </div>
-      <p className="pt-0.5 text-[10px] text-muted-foreground">{t("overview.chain.corroboration.note")}</p>
+      <p className="pt-0.5 text-xs text-muted-foreground">{t("overview.chain.corroboration.note")}</p>
     </div>
   );
 }
@@ -222,7 +228,7 @@ function ArgumentChain() {
           titleKey="nav.group.context"
           stat={`VIX ${latestVix.toFixed(1)}`}
           statTone="muted"
-          detail={<p className="text-[11px] leading-snug text-muted-foreground">{t("overview.chain.context.detail")}</p>}
+          detail={<p className="text-xs leading-snug text-muted-foreground">{t("overview.chain.context.detail")}</p>}
         />
         <ChainSegment
           href="/picks"
@@ -238,7 +244,7 @@ function ArgumentChain() {
           titleKey="nav.group.validity"
           stat={`ECE ${((usEce + cnEce) / 2).toFixed(3)}`}
           statTone="amber"
-          detail={<p className="text-[11px] leading-snug text-muted-foreground">{t("overview.chain.validity.detail")}</p>}
+          detail={<p className="text-xs leading-snug text-muted-foreground">{t("overview.chain.validity.detail")}</p>}
         />
         <ChainSegment
           href="/track#evidence"
@@ -246,7 +252,7 @@ function ArgumentChain() {
           titleKey="overview.chain.verdict.label"
           stat={m.verdict}
           statTone="muted"
-          detail={<p className="text-[11px] leading-snug text-muted-foreground">{t("overview.chain.verdict.detail")}</p>}
+          detail={<p className="text-xs leading-snug text-muted-foreground">{t("overview.chain.verdict.detail")}</p>}
         />
       </div>
       {/* Corroboration ribbon — the second independent evidence source, folded
@@ -276,12 +282,12 @@ function GuardBand() {
           </div>
           <div className="flex flex-wrap items-center gap-1.5">
             {["PIT", "embargo", "H6", "provenance"].map((g) => (
-              <Badge key={g} variant="outline" className="px-1.5 py-0 text-[10px] font-normal text-muted-foreground">
+              <Badge key={g} variant="outline" className="px-1.5 py-0 text-xs font-normal text-muted-foreground">
                 {g}
               </Badge>
             ))}
           </div>
-          <span className="ml-auto hidden text-[11px] text-muted-foreground md:block">
+          <span className="ml-auto hidden text-xs text-muted-foreground md:block">
             {t("overview.guard.spans")}
           </span>
         </CardContent>
@@ -314,11 +320,10 @@ export function Overview() {
       {/* Affirmative trust basis next to the verdict it underwrites — the
           complement to the hero's "non-investment advice" disclaimer. */}
       <TrustRibbon />
-      {/* The verdict is the anchor — everything else is the argument for it. */}
+      {/* The verdict is the anchor — everything else is the argument for it.
+          Its birth certificate (frozen-before-result provenance) is embedded
+          inside the verdict card, not stacked as a third badge card. */}
       <VerdictAnchor />
-      {/* The verdict's birth certificate: which frozen config produced it, and
-          that the config was committed before the result was observed. */}
-      <ProvenanceAnchor />
       <ArgumentChain />
       {/* Why-null + what-was-tested, at a glance (deep-dives on /track, /themes). */}
       <ResearchGlance />

@@ -132,7 +132,7 @@ export function RedditView() {
                       <Badge
                         variant="outline"
                         className={cn(
-                          "shrink-0 px-1.5 py-0 text-[10px]",
+                          "shrink-0 px-1.5 py-0 text-xs",
                           sentimentColor
                         )}
                       >
@@ -140,7 +140,7 @@ export function RedditView() {
                       </Badge>
                       {pick.bull_ratio !== null && (
                         <span
-                          className="ml-2 text-[10px] text-muted-foreground"
+                          className="ml-2 text-xs text-muted-foreground"
                           title={t("reddit.termBullRatioHint")}
                         >
                           bull {pick.bull_ratio.toFixed(2)}
@@ -184,13 +184,13 @@ export function RedditView() {
                       return (
                         <div key={tk} className="flex items-center gap-3 px-4 py-2.5 text-sm">
                           <span className="font-mono">{tk}</span>
-                          <span className="ml-auto text-[10px] tabular-nums text-muted-foreground">
+                          <span className="ml-auto text-xs tabular-nums text-muted-foreground">
                             {t("reddit.pressure.velocity")} {pr.velocity.toFixed(2)}
                           </span>
-                          <span className="text-[10px] tabular-nums text-muted-foreground">
+                          <span className="text-xs tabular-nums text-muted-foreground">
                             {t("reddit.pressure.crowding")} {pr.crowding_z.toFixed(2)}
                           </span>
-                          <Badge variant="outline" className={cn("shrink-0 px-1.5 py-0 text-[10px]", tone)}>
+                          <Badge variant="outline" className={cn("shrink-0 px-1.5 py-0 text-xs", tone)}>
                             {t("reddit.pressure.grade")}: {pr.grade}
                           </Badge>
                         </div>
@@ -233,7 +233,7 @@ export function RedditView() {
             <p className="text-sm font-medium text-muted-foreground">
               {t("reddit.status.awaiting")}
             </p>
-            <p className="text-xs text-muted-foreground/70">
+            <p className="text-xs text-muted-foreground">
               0 snapshots · {t("reddit.window")}
             </p>
           </CardContent>

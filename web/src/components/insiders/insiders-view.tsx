@@ -148,7 +148,7 @@ export function InsidersView() {
                   <Badge
                     variant="outline"
                     className={cn(
-                      "shrink-0 px-1.5 py-0 text-[10px]",
+                      "shrink-0 px-1.5 py-0 text-xs",
                       buy
                         ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
                         : "border-rose-500/40 bg-rose-500/10 text-rose-600 dark:text-rose-400",

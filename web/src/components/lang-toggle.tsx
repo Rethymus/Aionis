@@ -31,7 +31,7 @@ export function LangToggle() {
       aria-label="Toggle language"
     >
       <span className={isZh ? "text-foreground" : "text-muted-foreground"}>中</span>
-      <span className="mx-0.5 text-muted-foreground/60">/</span>
+      <span className="mx-0.5 text-muted-foreground">/</span>
       <span className={!isZh ? "text-foreground" : "text-muted-foreground"}>EN</span>
     </Button>
   );

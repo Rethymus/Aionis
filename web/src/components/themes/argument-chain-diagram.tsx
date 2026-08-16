@@ -114,12 +114,12 @@ export function ArgumentChainDiagram() {
                   <div className="flex items-center gap-2">
                     <span className="text-sm font-medium">{t(seg.titleKey)}</span>
                     {seg.external ? (
-                      <Badge variant="secondary" className="px-1.5 py-0 text-[9px]">
+                      <Badge variant="secondary" className="px-1.5 py-0 text-[11px]">
                         {t("argument.chain.here")}
                       </Badge>
                     ) : null}
                   </div>
-                  <p className="line-clamp-2 text-[11px] opacity-80">
+                  <p className="line-clamp-2 text-xs opacity-80">
                     {t(seg.descKey)}
                   </p>
                 </div>
@@ -137,7 +137,7 @@ export function ArgumentChainDiagram() {
                 {seg.warrantKey ? (
                   <div className="flex items-center gap-2 py-1 pl-6">
                     <ArrowRightIcon className="size-3 shrink-0 text-muted-foreground/70" />
-                    <span className="text-[10px] italic text-muted-foreground">
+                    <span className="text-xs italic text-muted-foreground">
                       {t(seg.warrantKey)}
                     </span>
                   </div>

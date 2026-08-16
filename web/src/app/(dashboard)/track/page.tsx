@@ -9,7 +9,9 @@ import { DisciplineView } from "@/components/discipline/discipline-view";
 import { EvidenceView } from "@/components/evidence/evidence-view";
 import { ThemeSlice } from "@/components/themes/theme-slice";
 import { SegmentHeader } from "@/components/segment-header";
+import { StickyTabs } from "@/components/sticky-tabs";
 import { AiAttributionCard } from "@/components/ai/attribution-card";
+import { aionis } from "@/data/aionis";
 import { useI18n } from "@/i18n/provider";
 
 const hashToTabMap: Record<string, string> = {
@@ -50,10 +52,11 @@ export default function TrackPage() {
 
   return (
     <div className="space-y-6 p-4 md:p-6">
-      <SegmentHeader segment="validity" introKey="track_hub.intro" />
+      <SegmentHeader segment="validity" introKey="track_hub.intro" asOf={aionis.metrics.latest_month} frozen />
       <AiAttributionCard />
 
       <Tabs value={activeTab} onValueChange={handleTabChange}>
+        <StickyTabs>
         <TabsList>
           <TabsTrigger value="calibration">{t("nav.calibration")}</TabsTrigger>
           <TabsTrigger value="power-floor">{t("nav.powerfloor")}</TabsTrigger>
@@ -62,6 +65,8 @@ export default function TrackPage() {
           <TabsTrigger value="discipline">{t("nav.discipline")}</TabsTrigger>
           <TabsTrigger value="evidence">{t("nav.evidence")}</TabsTrigger>
         </TabsList>
+        </StickyTabs>
+
 
         <TabsContent value="calibration">
           <CalibrationView />

@@ -1,4 +1,5 @@
 import { AppSidebar } from "@/components/app-sidebar";
+import { BackToTop } from "@/components/back-to-top";
 import { DynamicBreadcrumb } from "@/components/dynamic-breadcrumb";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LangToggle } from "@/components/lang-toggle";
@@ -32,7 +33,12 @@ export default function DashboardLayout({
             <ThemeToggle />
           </div>
         </header>
-        <main className="flex min-w-0 flex-1 flex-col overflow-hidden">{children}</main>
+        {/* overflow-hidden here would break position:sticky descendants (a
+            hidden-overflow ancestor becomes the sticky element's scroll
+            container and never scrolls) — h-overflow is prevented by
+            min-w-0 on SidebarInset instead. */}
+        <main className="flex min-w-0 flex-1 flex-col">{children}</main>
+        <BackToTop />
       </SidebarInset>
     </SidebarProvider>
   );

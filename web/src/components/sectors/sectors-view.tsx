@@ -81,14 +81,14 @@ function SectorCard({ row, minScore, maxScore, baseRate, rank }: SectorCardProps
           </span>
         </div>
         <FavorBar score={row.mean_score} minScore={minScore} maxScore={maxScore} />
-        <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
+        <div className="flex items-center gap-2 text-xs text-muted-foreground">
           <span className="font-mono">{row.mean_score > 0 ? "+" : ""}{row.mean_score.toFixed(2)}</span>
           <span className="opacity-60">·</span>
           <span>{row.n_stocks} stocks</span>
           <span className="opacity-60">·</span>
           <span className="flex gap-0.5">
             {row.regions.map((r) => (
-              <Badge key={r} variant="outline" className="px-1 py-0 text-[9px] font-normal uppercase">
+              <Badge key={r} variant="outline" className="px-1 py-0 text-[11px] font-normal uppercase">
                 {r}
               </Badge>
             ))}
