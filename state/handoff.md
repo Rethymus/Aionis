@@ -8,6 +8,24 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-16 (r) 用户旅程角色扮演 → cmdk 面板 + 模板死链清除 + 浅色一等化
+
+**旅程发现（首访视角 + 三学科）**：
+| 学科 | 发现 | 处置 |
+|---|---|---|
+| 设计学/心理学 | 首访"术语墙 + 无从下手"——无阅读序入口 | 面板"从这里开始"①-⑤ 编号导览 |
+| 人体工程学 | 20+ 路由无键盘快速跳转；Ctrl+K 死 | 真 cmdk 面板（36 项 4 组） |
+| 软件工程 | 模板死链 ~1310 行（palette/nav-secondary/seed/globe.json 互引但零活引用） | 全删（grep 复核零残留） |
+| 软件工程 | `ui/command.tsx` CommandDialog 缺 `<Command>` 根 → cmdk context 崩（零使用从未暴露） | 按上游 shadcn 修复 + sr-only title 入 DialogContent |
+| 设计学 | 浅色模式二等公民：muted 4.38:1（AA 不达标）、边框隐形 | token 0.556→0.502（5.5-6.0:1）、border 0.922→0.895 |
+| —— | 404 ✓ / 深链 ✓ / 图表 tooltip 8/10 ✓ / EN 切换 ✓（残留中文=数据值） | 无需修 |
+
+**轮子复用**：cmdk ^1.1.1 已在依赖（shadcn ui/command）——此前零使用且其 CommandDialog 是坏的；本轮修轮子+用轮子，未新增任何依赖。GitHub/Linear/Vercel 同款方案。
+
+**验证链**：dev 复现崩溃→取栈→修复→面板开/搜索/回车导航/Esc 全实测；build 23/23 + 33 契约 + ruff 净；部署 `31955414141` 绿后部署站复验（面板 4 组 36 项 EN 模式在位、浅色 token 实测 lab42.23）。
+
+**操作教训**：部署站验证时 localStorage 语言偏好（en）会改按钮 aria-label——按中文标签查询会误报缺失；Playwright click 偶发 webview 超时 → 读 rect 后 `cua.click` 坐标路径可靠。
+
 ## 2026-08-16 (q) 部署站视觉审计二轮（视觉模型 + DOM 实测）→ P0-P2 全落地
 
 **审计双通道**（部署站 live，1440 + 375 双视口）：

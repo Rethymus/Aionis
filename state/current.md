@@ -1,5 +1,14 @@
 # state/current.md — read first each session
 
+- **active (2026-08-16) ⑤ 用户旅程角色扮演（软件工程×人体工程学×设计学）→ cmdk 命令面板 + 模板死链清除 + 浅色修复（业主指令"扮演用户 + 学科反馈 + 复用轮子"；`1e7dd2f` 已部署）：**
+  **① 旅程实测（首访视角，部署站）**：着陆 10 秒第一印象（视觉模型扮演首访者）——核心反馈 = "术语墙 + 无从下手"，缺"这是什么/从哪读起"入口；浅色模式（此前从未审计）= 二等公民；**Ctrl+K 无反应**但代码库有 command-palette.tsx；404 ✓、深链 #factors→tab 激活 ✓、图表 tooltip/双轴/事件标注 8/10 ✓、EN 切换生效（残留中文均为数据值如股票名，非 bug）。
+  **② 软件工程发现——模板死链 ~1310 行**（续㉖ 清理漏网，因互相引用但无活引用者）：`command-palette.tsx`（未接线，含钱包/比特币/登录假菜单，读 seed 假数据）+ `nav-secondary.tsx`（假通知弹窗，app-sidebar 从未引用）+ `data/seed.ts`（973 行）+ `data/globe.json`（globe 删除后孤儿）。全删，grep 零活引用。
+  **③ 修坏轮子（关键 bug）**：`ui/command.tsx` 的 `CommandDialog` 缺 `<Command>` 根包装 → `CommandInput` 崩 `undefined.subscribe`（cmdk context 缺失；零使用所以从未暴露，dev 服务器复现取栈后修）。按上游 shadcn 正典补 Command 根 + sr-only title 移入 DialogContent（Radix a11y 契约）。
+  **④ 复用轮子（非造轮子）**：新 `CommandPalette` 全部建在**已有依赖** cmdk ^1.1.1（shadcn ui/command，GitHub/Vercel/Linear 同款）上：36 项 4 组——"从这里开始·60 秒导览"（①总览→②语境→③证据→④效度→⑤守卫 编号阅读序，直接回应首访反馈）+ 全部页面 + 深页 tab 视图（#factors 等 hash 直达）+ 设置（主题/语言/RESULTS.md 外链）。header 搜索按钮带 ⌘K 提示；Ctrl/⌘+K 监听为 cmdk 标准模式（IAB webview 宿主消费该快捷键，普通浏览器有效；按钮路径恒通）。i18n zh+en 14 键。
+  **⑤ 设计修复——浅色升一等**：light `--muted-foreground` oklch 0.556→0.502（实测 4.38→5.51-5.95:1，AA 达标）、`--border` 0.922→0.895（白卡可分辨）。
+  **⑥ 验证**：tsc 0 + build 23/23 + 33 契约测试 + ruff 净；dev 复现→修复→面板开/输"效度"回车→/track 导航/Esc 关全链路实测；本地静态包 + 部署站（deploy `31955414141` 绿）双验：按钮/4 组/36 项在位（EN 模式）、浅色 token lab42.23 实测上线；视觉模型复审面板（"达 GitHub/Linear 级"）与浅色（"接近一等公民"）通过。**教训**：部署站验证时 localStorage 语言偏好会改按钮 aria-label——按固定中文标签查会误报"按钮不存在"。
+  **⑦ 边界**：纯 web/src 展示层（8 文件 +206/-1522）；0 ledger/frozen/config/prereg/OOS；未跑 research/forward。
+
 - **active (2026-08-16) ④ 部署站视觉审计二轮（视觉模型+DOM 实测双通道）→ P0-P2 优化全落地（业主授权"推进到满意"）：**
   **① 审计方法**：IAB 打开部署站，桌面 1440 + 移动 375 双视口逐屏截图 → `analyze_image` 视觉模型盲审（Read→CDN 桥接；教训：CDN URL 必须原样传反斜杠路径，改正斜杠会破坏签名 → 1210）+ `getComputedStyle` 实测 lab/oklab 原始色值、Node 侧换算 WCAG 对比度（Tailwind v4 颜色非 rgb，正则匹配不到；canvas 归一化被副作用检查拒）。
   **② 硬发现（此前所有轮次未抓到）**：(a) **α 降透明 muted 文字低于 WCAG AA**——表格行首列 3.29:1（α0.6）、表头 4.02:1（α0.7）、track 脚注 4.02:1，满透明 muted 本身 6.9:1 达标，问题全在 opacity 变体；(b) **10-11px 中文小字**（th/脚注/徽章 89 处）低于 CJK 12px 可读下限；(c) **picks 页 9020px（桌面）/16461px（移动）≈10-20 屏**，全站唯一 sticky/fixed 元素是侧栏——无吸顶 tab、无返回顶部、无目录锚点；(d) 视觉模型对 6-tab/缺事件标注的两条报告为幻觉（实际 4 tab；市场图已有川普 ReferenceLine）——DOM 实测交叉核验再次证明必要。
