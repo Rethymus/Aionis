@@ -1,5 +1,12 @@
 # state/current.md — read first each session
 
+- **active (2026-08-16) ⑥ Apple HIG 设计语言重构（业主定帧"以 Apple 简约设计范式为纲，放开手脚"；`518fbdb` 已部署绿 `32041640646`）：**
+  **① 架构决策**：业主"抛弃现有设计约束"→ 落地为**设计系统层重构**（token + 共享原语，5 文件改动辐射 23 路由），而非逐页重绘——语义层（emerald=信任/slate=已定/amber=统计警示）保留，系统层全换 Apple。`next/font` Geist 网络字体移除 → 纯系统栈（SF/Segoe/PingFang/YaHei；Apple 签名 + 零字体网络成本）。
+  **② Apple 三支柱落地**：**Clarity**——SF 系统栈 + 浅色 antialiased/深色 subpixel 渲染 + 蓝 ::selection；**Deference**——毛玻璃吸顶导航栏（bg-background/70 + blur-xl + saturate-150）+ StickyTabs 同材质钉在其下（h-16），双层 chrome = iOS 材质堆栈，视觉模型审图"无接缝"；**Depth**——浅色发丝边 + 双层柔影，深色表面抬升（#1C1C1E 卡 on 近黑画布）代替描边，圆角 10→12px 基准（卡 ~17px）。
+  **③ 色彩**：浅色 #F5F5F7 画布/白卡/#1D1D1F 墨 + 单一 text-safe 蓝强调（oklch 0.545≈#0062CC，白上 4.9-5.1:1）；深色 iOS OLED 画布 + #1C1C1E 抬升卡 + #2C2C2E chrome + systemBlue #0A84FF（卡上 4.66:1）；图表五色 → systemBlue/Green/Orange/Red/Purple；侧栏选中 = Apple source-list 蓝染行（浅 14%/深 28% tint + 深蓝标签）。
+  **④ 验证**：tsc/build 23/23/33 契约/ruff 全绿；双主题 token 实测（浅 body #F5F5F7+SF 栈、深卡 #1C1C1E）+ Node 对比度核算（深 muted-on-card 6.54、浅 5.96、双蓝 ≥4.66 全 AA）+ 20 路由浅色零溢出 + 关键深色路由零溢出；视觉模型三图审（深总览"Apple 语言成立"/浅总览"一流 apple.com 质感"/picks 双层毛玻璃"无接缝，分段控件 iOS 风"）；**部署后 CSS 终验**：压缩器把 oklch 转 hex/lab（`--background:#f6f7f8`/`--primary:#006cd9`/图表 system 五色/radius .75rem/侧栏 #1478e824）——token 全量上线实锤。视觉模型遗留建议（图表绿线饱和度/密度留白）记录未做。
+  **⑤ 边界**：纯展示层 5 文件（globals.css/root layout/dashboard layout/sticky-tabs/card 原语）；0 ledger/frozen/config/prereg/OOS；未跑 research/forward。IAB webview 后期未就绪（"guest not attached"）→ 部署验证走 CSS 产物级（结论等效）。
+
 - **active (2026-08-16) ⑤ 用户旅程角色扮演（软件工程×人体工程学×设计学）→ cmdk 命令面板 + 模板死链清除 + 浅色修复（业主指令"扮演用户 + 学科反馈 + 复用轮子"；`1e7dd2f` 已部署）：**
   **① 旅程实测（首访视角，部署站）**：着陆 10 秒第一印象（视觉模型扮演首访者）——核心反馈 = "术语墙 + 无从下手"，缺"这是什么/从哪读起"入口；浅色模式（此前从未审计）= 二等公民；**Ctrl+K 无反应**但代码库有 command-palette.tsx；404 ✓、深链 #factors→tab 激活 ✓、图表 tooltip/双轴/事件标注 8/10 ✓、EN 切换生效（残留中文均为数据值如股票名，非 bug）。
   **② 软件工程发现——模板死链 ~1310 行**（续㉖ 清理漏网，因互相引用但无活引用者）：`command-palette.tsx`（未接线，含钱包/比特币/登录假菜单，读 seed 假数据）+ `nav-secondary.tsx`（假通知弹窗，app-sidebar 从未引用）+ `data/seed.ts`（973 行）+ `data/globe.json`（globe 删除后孤儿）。全删，grep 零活引用。

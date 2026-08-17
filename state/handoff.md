@@ -8,6 +8,20 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-16 (s) Apple HIG 设计语言重构（token 层，5 文件辐射全站）
+
+**范式**：Clarity（SF 系统栈/双模式抗锯齿/蓝选区）× Deference（毛玻璃吸顶导航 + 同材质 StickyTabs = iOS 材质堆栈）× Depth（浅发丝边+双层柔影 / 深表面抬升，圆角 12px 基准）。
+
+**改动**：globals.css（双主题 Apple token + 字体栈 + ::selection + 侧栏 source-list 蓝染）、app/layout.tsx（删 Geist 网络字体 → 系统栈）、(dashboard)/layout.tsx（header 毛玻璃吸顶 z-40）、sticky-tabs.tsx（top-16 同材质）、ui/card.tsx（ring → hairline border + 双层柔影，深色仅边框）。
+
+**对比度账**（Node 核算 + 浏览器实测）：浅 muted-on-card 5.96、深 6.54、浅蓝 #006cd9 白上 4.9-5.1、深蓝 #0A84FF 卡上 4.66——全 AA。首版浅蓝 oklch(0.584) 只 4.36 → 加深至 0.545（text-primary 场景保护）。
+
+**验证**：build 23/23 + 33 契约 + ruff；20 路由双主题零溢出；视觉模型三图审全过；部署 CSS 产物级终验（oklch 被压成 hex/lab，按 `--background:#f6f7f8` 等实锤）。
+
+**遗留候选**（视觉模型建议，未做）：图表线色饱和度降至 systemGreen 柔和度（逐图调色，涉 10+ 图）；同屏密度/留白（内容取舍需业主裁决）。
+
+**操作记录**：CSS 多闭括号 → Turbopack 报 `Unexpected }`（token 块替换时 old 串未含尾括号所致，1 分钟修）；IAB webview 后期 "guest not attached" → 部署验证降级为 CSS 产物 grep（等效结论）。
+
 ## 2026-08-16 (r) 用户旅程角色扮演 → cmdk 面板 + 模板死链清除 + 浅色一等化
 
 **旅程发现（首访视角 + 三学科）**：
