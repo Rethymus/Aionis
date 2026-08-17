@@ -20,7 +20,10 @@ export default function DashboardLayout({
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2">
+        {/* Frosted-glass nav bar (Apple material): translucent, blurred,
+            hairline-separated — chrome that defers to content scrolling
+            beneath it. */}
+        <header className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-2 border-b border-border/60 bg-background/70 backdrop-blur-xl backdrop-saturate-150">
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
             <Separator

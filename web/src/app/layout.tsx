@@ -1,19 +1,12 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { I18nProvider } from "@/i18n/provider";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// Typography is the native system stack (SF Pro on Apple, Segoe UI elsewhere,
+// PingFang/YaHei for CJK) defined in globals.css — the Apple signature, no
+// webfont approximation, zero network font cost.
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://rethymus.github.io"),
@@ -42,7 +35,7 @@ export default function RootLayout({
   return (
     <html
       lang="zh-CN"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased font-sans`}
+      className="h-full antialiased font-sans"
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
