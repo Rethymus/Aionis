@@ -10,26 +10,33 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-08-18T22:16:04+00:00",
-  "n_snapshots": 10,
+  "latest_snapshot_ts": "2026-08-19T22:17:41+00:00",
+  "n_snapshots": 11,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
-      "ticker": "MSFT",
+      "ticker": "HOOD",
       "mentions": 1,
-      "sentiment": -0.095,
+      "sentiment": -0.097,
       "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "COIN",
+      "mentions": 1,
+      "sentiment": -0.831,
+      "bull_ratio": 0.0,
       "score_sum": 0
     }
   ],
   "pressure": {
     "status": "accumulating",
     "by_ticker": {},
-    "n_snapshots": 10,
-    "latest_date": "2026-08-18",
+    "n_snapshots": 11,
+    "latest_date": "2026-08-19",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-08-18T22:17:44.024032+00:00"
+  "snapshot_ts": "2026-08-19T22:19:29.759696+00:00"
 }
