@@ -141,7 +141,13 @@ def export_picks() -> tuple[str, int]:
         prev_idx = region_dates.index(region_latest) - 1
         rp = {}
         if prev_idx >= 0:
-            prev_df = df[df["date"] == region_dates[prev_idx]].copy()
+            # Region-scoped prev frame: US and CN month-ends coincide ~70% of
+            # the time (2026-05-29 etc.), so an unscoped date filter would rank
+            # a mixed 1,400-row frame and shift rank_change by the other
+            # region's whole universe.
+            prev_df = df[
+                (df["region"] == region) & (df["date"] == region_dates[prev_idx])
+            ].copy()
             prev_df["r"] = prev_df["score"].rank(ascending=False, method="first").astype(int)
             rp = dict(zip(prev_df["ticker"], prev_df["r"], strict=True))
         # Top 10 long per region.
@@ -1827,6 +1833,329 @@ def export_headline_provenance() -> None:
     (WEB / "headline_provenance.json").write_text(json.dumps(_stamp(payload), indent=2, default=str))
 
 
+# --- data health (freshness/provenance map of every panel) --------------------
+#
+# Structural answer to "why doesn't panel X update": every committed panel is
+# classified into exactly one freshness class, and its as_of is read from the
+# panel's OWN timestamp fields at export time (never fabricated). Display-only.
+
+_DH_FROZEN = "frozen"  # derived from frozen OOS artifacts (ledger #49 lineage)
+_DH_DAILY = "daily"  # recomputed by the daily CI lane from live caches
+_DH_CADENCE = "cadence"  # advances on the source's publication rhythm
+
+# (key, json file, category) — as_of extracted per key by _dh_as_of below.
+_DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
+    ("metrics", "metrics.json", _DH_FROZEN),
+    ("picks", "picks.json", _DH_FROZEN),
+    ("shorts", "shorts.json", _DH_FROZEN),
+    ("picks_meta", "picks_meta.json", _DH_FROZEN),
+    ("sector_breakdown", "sector_breakdown.json", _DH_FROZEN),
+    ("picks_backtest", "picks_backtest.json", _DH_FROZEN),
+    ("ic_monthly", "ic_monthly.json", _DH_FROZEN),
+    ("pick_conviction", "pick_conviction.json", _DH_FROZEN),
+    ("model_health", "model_health.json", _DH_FROZEN),
+    ("calibration_reliability", "calibration_reliability.json", _DH_FROZEN),
+    ("power_floor", "power_floor.json", _DH_FROZEN),
+    ("sigma_survey", "sigma_survey.json", _DH_FROZEN),
+    ("bps_sweep", "bps_sweep.json", _DH_FROZEN),
+    ("evidence", "evidence.json", _DH_FROZEN),
+    ("stock_universe", "stock_universe.json", _DH_FROZEN),
+    ("themes", "themes.json", _DH_DAILY),
+    ("theme_signals", "theme_signals.json", _DH_DAILY),
+    ("market_context", "market_context.json", _DH_DAILY),
+    ("macro_drivers", "macro_drivers.json", _DH_DAILY),
+    ("taco", "taco.json", _DH_DAILY),
+    ("form4", "form4.json", _DH_DAILY),
+    ("reddit", "reddit.json", _DH_DAILY),
+    ("headline_provenance", "headline_provenance.json", _DH_DAILY),
+    ("ledger_audit", "ledger_audit.json", _DH_DAILY),
+    ("cot", "cot.json", _DH_CADENCE),
+    ("smart_money", "smart_money.json", _DH_CADENCE),
+]
+
+
+def _dh_read(fname: str):
+    """Load a committed panel JSON defensively (missing/malformed → None)."""
+    try:
+        return json.loads((WEB / fname).read_text())
+    except (FileNotFoundError, json.JSONDecodeError):
+        return None
+
+
+def _dh_last_month_of_series(panel: dict) -> str | None:
+    latest = None
+    for series in panel.get("series", {}).values():
+        for pt in series:
+            if pt.get("month") and (latest is None or pt["month"] > latest):
+                latest = pt["month"]
+    return latest
+
+
+def _dh_as_of(key: str, fname: str) -> str | None:
+    """Extract each panel's own observation date. null = no date carried."""
+    p = _dh_read(fname)
+    if p is None:
+        return None
+    if key == "metrics":
+        return p.get("latest_month")
+    if key in {"picks", "shorts"}:
+        pm = _dh_read("picks_meta.json")
+        return pm.get("latest_date") if isinstance(pm, dict) else None
+    if key == "picks_meta":
+        return p.get("latest_date")
+    if key == "sector_breakdown":
+        dates = [d for d in p.get("latest_dates", {}).values() if d]
+        return max(dates) if dates else None
+    if key == "picks_backtest":
+        months = [m.get("month") for m in p.get("months", []) if m.get("month")]
+        return months[-1] if months else None
+    if key == "ic_monthly":
+        rows = [r.get("month") for r in p if isinstance(r, dict) and r.get("month")]
+        return rows[-1] if rows else None
+    if key == "pick_conviction":
+        latest = p.get("latest")
+        return latest.get("date") if latest else None
+    if key == "stock_universe":
+        dates = [d for d in p.get("as_of", {}).values() if d]
+        return max(dates) if dates else None
+    if key == "themes":
+        freshness = p.get("freshness")
+        if freshness:
+            return freshness.get("latest")
+        return p.get("as_of_date")
+    if key == "theme_signals":
+        return p.get("as_of_date")
+    if key == "market_context":
+        dr = p.get("date_range", [])
+        return dr[-1] if dr else None
+    if key == "macro_drivers":
+        return _dh_last_month_of_series(p)
+    if key == "taco":
+        return p.get("latest_date")
+    if key == "form4":
+        recent = p.get("recent", [])
+        return recent[0].get("date") if recent else None
+    if key == "cot":
+        return p.get("latest_date")
+    if key == "smart_money":
+        return p.get("latest_date")
+    if key == "headline_provenance":
+        ts = p.get("result_ts")
+        return ts.split("T")[0] if ts else None
+    # model_health / calibration_reliability / power_floor / sigma_survey /
+    # bps_sweep / evidence / reddit / ledger_audit: no observation date field.
+    return None
+
+
+def export_data_health() -> None:
+    """Freshness + provenance map of every terminal panel (display-only).
+
+    Classifies each committed JSON into frozen / daily / cadence and reads its
+    as_of from the panel's own fields. This is the structural, always-current
+    answer to "why is this number not updating": frozen panels advancing would
+    BE the leakage (rerun-to-significance); the map makes that contract visible
+    instead of asking visitors to infer it from scattered as_of chips.
+    """
+    panels = []
+    for key, fname, category in _DATA_HEALTH_MANIFEST:
+        as_of = _dh_as_of(key, fname)
+        # snapshot_ts = when this panel's committed JSON was last written by the
+        # export lane (proxy for "refresh lane touched it"), distinct from the
+        # panel's own data as_of.
+        payload = _dh_read(fname)
+        snap = payload.get("snapshot_ts") if isinstance(payload, dict) else None
+        if isinstance(payload, list):
+            snap = None
+        panels.append({
+            "key": key,
+            "file": fname,
+            "category": category,
+            "as_of": as_of,
+            "exported_at": snap.split("T")[0] if snap else None,
+            "present": payload is not None,
+        })
+    summary = {
+        "n_panels": len(panels),
+        "n_frozen": sum(1 for p in panels if p["category"] == _DH_FROZEN),
+        "n_daily": sum(1 for p in panels if p["category"] == _DH_DAILY),
+        "n_cadence": sum(1 for p in panels if p["category"] == _DH_CADENCE),
+    }
+    payload = {
+        "status": "ok",
+        "panels": panels,
+        "summary": summary,
+        "methodology": (
+            "Freshness/provenance map of every terminal panel. frozen = derived "
+            "from frozen OOS artifacts (ledger #49 lineage): the daily lane "
+            "deliberately does NOT advance these — recomputing them from newer "
+            "data would be rerun-to-significance. daily = recomputed by each CI "
+            "refresh from live caches. cadence = advances on its source's "
+            "publication rhythm (CFTC weekly, price caches ~5-day grace, EDGAR "
+            "filing rhythm). as_of is read from each panel's own timestamp "
+            "fields; null = the panel carries no observation date (static "
+            "research artifact). The only legal way frozen numbers move "
+            "forward: E3 forward-live accumulation or a new pre-registered "
+            "phase."
+        ),
+    }
+    (WEB / "data_health.json").write_text(json.dumps(_stamp(payload), indent=2))
+
+
+# --- stock universe (per-stock view over the frozen OOS scores) ---------------
+
+
+def export_stock_universe() -> None:
+    """Per-stock aggregates over the frozen confirmatory OOS scores (display-only).
+
+    One row per ticker in each region's latest OOS month: latest score,
+    Platt-calibrated prob_up (same contract as export_picks), rank within the
+    region, rank change vs the previous month, trailing-12m score series
+    (aligned on a shared month grid with nulls for the other region's calendar),
+    and corroboration counts joined from the smart-money / insider / retail
+    panels. Powers /stock/[ticker] drill-down pages. Recomputing from newer
+    data is forbidden (rerun-to-significance): the panel is a frozen-readout
+    view, refreshed only when the underlying research surface legitimately
+    advances (new frozen phase or E3 forward-live).
+    """
+    from aionis.eval.score_calibration import calibrate_latest_month
+
+    df = pd.read_parquet("runs/track_c_confirmatory_oos_scores.parquet")
+    df["date"] = pd.to_datetime(df["date"])
+    meta = _load_ticker_metadata()
+
+    us_panel_path = Path("data/cache/track_b_panel.parquet")
+    cn_panel_path = Path("data/cache/cn_price_panel.parquet")
+    us_panel = pd.read_parquet(us_panel_path) if us_panel_path.exists() else pd.DataFrame()
+    cn_panel = pd.read_parquet(cn_panel_path) if cn_panel_path.exists() else pd.DataFrame()
+    calibration = calibrate_latest_month(df, us_panel, cn_panel)
+
+    prob_lookup: dict[tuple[str, str], float] = {}
+    region_latest: dict[str, pd.Timestamp] = {}
+    for r, payload in calibration["regions"].items():
+        if "latest" not in payload:
+            continue
+        region_latest[r] = pd.Timestamp(payload["latest_date"])
+        for _, row in payload["latest"].iterrows():
+            prob_lookup[(r, row["ticker"])] = float(row["prob_up"])
+
+    # Shared month grid: union of each region's trailing 12 OOS months.
+    month_grid: list[str] = []
+    region_months: dict[str, list[pd.Timestamp]] = {}
+    for r in region_latest:
+        rdates = sorted(d for d in df[df["region"] == r]["date"].unique())
+        region_months[r] = rdates[-12:]
+    for rdates in region_months.values():
+        for d in rdates:
+            label = pd.Timestamp(d).strftime("%Y-%m")
+            if label not in month_grid:
+                month_grid.append(label)
+    month_grid.sort()
+
+    # Corroboration joins (same committed panels /confirmation renders).
+    sm = _dh_read("smart_money.json") or {}
+    f4 = _dh_read("form4.json") or {}
+    rd = _dh_read("reddit.json") or {}
+    sm_by_ticker: dict[str, list[dict]] = {}
+    for f in sm.get("recent_filings", []):
+        t = f.get("ticker")
+        if t:
+            sm_by_ticker.setdefault(t, []).append(f)
+    f4_by_ticker: dict[str, list[dict]] = {}
+    for f in f4.get("recent", []):
+        t = f.get("ticker")
+        if t:
+            f4_by_ticker.setdefault(t, []).append(f)
+    rd_by_ticker: dict[str, dict] = {}
+    for rk in rd.get("picks", []):
+        rd_by_ticker[rk["ticker"]] = rk
+
+    meta_idx = {}
+    if not meta.empty:
+        meta_idx = {
+            str(row["ticker"]): (row["name"], row["sector"])
+            for _, row in meta.iterrows()
+        }
+
+    stocks: list[dict] = []
+    for r, latest in region_latest.items():
+        r_df = df[(df["region"] == r) & (df["date"] == latest)].copy()
+        if r_df.empty:
+            continue
+        r_df["rank"] = r_df["score"].rank(ascending=False, method="first").astype(int)
+        prev_idx = sorted(df[df["region"] == r]["date"].unique()).index(latest) - 1
+        prev_rank = {}
+        if prev_idx >= 0:
+            prev_date = sorted(df[df["region"] == r]["date"].unique())[prev_idx]
+            # Region-scoped: US/CN month-ends coincide often — an unscoped date
+            # filter ranks a mixed-region frame (bug found via TROW rank_change
+            # 829 > n_region 492).
+            prev_df = df[(df["region"] == r) & (df["date"] == prev_date)].copy()
+            prev_df["r"] = prev_df["score"].rank(ascending=False, method="first").astype(int)
+            prev_rank = dict(zip(prev_df["ticker"], prev_df["r"], strict=True))
+        # Trailing scores aligned to the shared month grid (null = month not in
+        # this region's calendar / ticker absent that month).
+        hist = df[(df["region"] == r) & (df["date"].isin(region_months[r]))]
+        hist_map = {
+            (t, pd.Timestamp(d).strftime("%Y-%m")): float(s)
+            for t, d, s in zip(hist["ticker"], hist["date"], hist["score"], strict=True)
+        }
+        n_region = len(r_df)
+        for _, row in r_df.iterrows():
+            t = str(row["ticker"])
+            name, sector = meta_idx.get(t, ("", ""))
+            sm_hits = sm_by_ticker.get(t, [])
+            f4_hits = f4_by_ticker.get(t, [])
+            rd_hit = rd_by_ticker.get(t)
+            prev = prev_rank.get(t)
+            stocks.append({
+                "ticker": t,
+                "region": r,
+                "name": name,
+                "sector": sector,
+                "score": round(float(row["score"]), 3),
+                "prob_up": round(prob_lookup.get((r, t), 0.5), 3),
+                "rank": int(row["rank"]),
+                "n_region": n_region,
+                "rank_change": (int(prev) - int(row["rank"])) if prev is not None else None,
+                "scores": [
+                    round(hist_map[(t, m)], 3) if (t, m) in hist_map else None
+                    for m in month_grid
+                ],
+                "smart_money_n": len(sm_hits) or None,
+                "smart_money_latest": sm_hits[0]["date"] if sm_hits else None,
+                "form4_n": len(f4_hits) or None,
+                "form4_latest": f4_hits[0]["date"] if f4_hits else None,
+                "reddit_mentions": int(rd_hit["mentions"]) if rd_hit else None,
+            })
+    stocks.sort(key=lambda s: (s["region"], -s["score"]))
+    payload = {
+        "status": "ok",
+        "as_of": {r: pd.Timestamp(d).strftime("%Y-%m-%d") for r, d in region_latest.items()},
+        "n_stocks": len(stocks),
+        "months": month_grid,
+        "stocks": stocks,
+        "methodology": (
+            "Per-stock view assembled from the frozen confirmatory OOS scores "
+            "(ledger #49 lineage) — display-only. score / prob_up / rank are the "
+            "frozen model readout for each region's latest OOS month (US and CN "
+            "PIT calendars differ; see as_of per region). prob_up = "
+            "Platt-calibrated P(forward month up) on realized OOS history — NOT "
+            "investment advice; the research verdict is NULL (combined rank-IC "
+            "−0.0088), so probabilities cluster near the base rate. The "
+            "trailing series is the model's own monthly cross-sectional score "
+            "for this ticker. Corroboration counts join the smart-money (13D), "
+            "insider (Form 4) and retail (Reddit) panels by ticker. This panel "
+            "must NOT be recomputed from newer data (rerun-to-significance): it "
+            "advances only with a new frozen phase or E3 forward-live."
+        ),
+    }
+    # Compact separators: 1,421 per-stock rows with trailing series would be
+    # ~1MB pretty-printed; compact keeps the dedicated stock-page chunk lean.
+    (WEB / "stock_universe.json").write_text(
+        json.dumps(_stamp(payload), separators=(",", ":"), allow_nan=False)
+    )
+
+
 def _safe_export(name: str, fn, /, *args, **kwargs):
     """Best-effort guard for the daily CI refresh.
 
@@ -1882,6 +2211,10 @@ def main() -> None:
     _safe_export("reddit_meta", export_reddit_meta)
     _safe_export("ledger_audit", export_ledger_audit)
     _safe_export("headline_provenance", export_headline_provenance)
+    # Per-stock view joins the corroboration JSONs above — keep after them.
+    _safe_export("stock_universe", export_stock_universe)
+    # Freshness map reads every panel's committed JSON — must run last.
+    _safe_export("data_health", export_data_health)
     written = sorted(p.name for p in WEB.glob("*.json"))
     print(f"[export-terminal] wrote {len(written)} files to {WEB}/: {written}", flush=True)
 

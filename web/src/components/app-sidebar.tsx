@@ -19,6 +19,7 @@ import {
   GaugeCircleIcon,
   FileTextIcon,
   UsersIcon,
+  ActivityIcon,
 } from "lucide-react";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -46,6 +47,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   ];
   const navGuard = [
     { title: t("nav.group.discipline"), url: "/discipline", icon: <ShieldCheckIcon /> },
+    { title: t("nav.datahealth"), url: "/data-health", icon: <ActivityIcon /> },
   ];
   const navReference = [
     {

@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { aionis, type Pick } from "@/data/aionis";
 import { useLivePrices, type PriceMap } from "@/lib/live-prices";
+import Link from "next/link";
 import {
   ArrowUpIcon,
   ArrowDownIcon,
@@ -107,14 +108,13 @@ function PickRow({ p, baseRate, showChange, livePrice }: PickRowProps) {
       <span className="w-6 shrink-0 text-sm font-semibold tabular-nums text-muted-foreground">
         {p.rank}
       </span>
-      <div className="flex min-w-0 flex-1 flex-col">
-        <span
-          className="truncate text-sm font-medium"
-          title={`${p.ticker} · ${p.sector || t("picks.no_sector")}`}
-        >
-          {displayName}
-        </span>
-        <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+      <Link
+        href={`/stock/${p.ticker}`}
+        className="flex min-w-0 flex-1 flex-col rounded-sm hover:underline"
+        title={`${p.ticker} · ${p.sector || t("picks.no_sector")}`}
+      >
+        <span className="truncate text-sm font-medium">{displayName}</span>
+        <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
           <span className="font-mono">{p.ticker}</span>
           <Badge variant="outline" className="px-1 py-0 text-[11px] font-normal">
             {regionLabel}
@@ -124,8 +124,8 @@ function PickRow({ p, baseRate, showChange, livePrice }: PickRowProps) {
           ) : (
             <span className="italic">{t("picks.no_sector")}</span>
           )}
-        </div>
-      </div>
+        </span>
+      </Link>
       <ProbUpBar probUp={p.prob_up} baseRate={baseRate} />
       {livePrice?.change_pct !== undefined && livePrice?.change_pct !== null ? (
         <span

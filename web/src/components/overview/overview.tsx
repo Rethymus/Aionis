@@ -167,7 +167,11 @@ function MiniPicks() {
   return (
     <div className="space-y-1">
       {top4.map((p) => (
-        <div key={`${p.region}-${p.ticker}`} className="flex items-center gap-2 text-xs">
+        <Link
+          key={`${p.region}-${p.ticker}`}
+          href={`/stock/${p.ticker}`}
+          className="flex items-center gap-2 rounded-sm text-xs hover:underline"
+        >
           {/* Name grows to fill, truncates only if truly starved (was w-14/56px
               which chopped "CENTERPOINT ENERGY INC" to "CENTERPOIN…"). The
               ticker sibling stays fixed-width so the row stays scannable. */}
@@ -181,7 +185,7 @@ function MiniPicks() {
           <span className="w-6 shrink-0 text-right">
             <RankChange change={p.rank_change} />
           </span>
-        </div>
+        </Link>
       ))}
       <p className="pt-1 text-xs text-muted-foreground">{t("overview.chain.evidence.detail")}</p>
     </div>

@@ -36,6 +36,7 @@ import macroDriversJson from "./macro_drivers.json";
 import themesJson from "./themes.json";
 import ledgerAuditJson from "./ledger_audit.json";
 import headlineProvenanceJson from "./headline_provenance.json";
+import dataHealthJson from "./data_health.json";
 
 export type Pick = {
   rank: number;
@@ -451,6 +452,28 @@ export type HeadlineProvenance = {
   snapshot_ts?: string;
 };
 
+export type DataHealthPanel = {
+  key: string;
+  file: string;
+  category: "daily" | "cadence" | "frozen";
+  as_of: string | null;
+  exported_at: string | null;
+  present: boolean;
+};
+
+export type DataHealth = {
+  status: string;
+  panels: DataHealthPanel[];
+  summary: {
+    n_panels: number;
+    n_frozen: number;
+    n_daily: number;
+    n_cadence: number;
+  };
+  methodology: string;
+  snapshot_ts?: string;
+};
+
 export const aionis = {
   metrics: metricsJson as Metrics,
   picks: picksJson as Pick[],
@@ -487,4 +510,5 @@ export const aionis = {
   themes: themesJson as Themes,
   ledgerAudit: ledgerAuditJson as LedgerAudit,
   headlineProvenance: headlineProvenanceJson as HeadlineProvenance,
+  dataHealth: dataHealthJson as DataHealth,
 };

@@ -683,3 +683,112 @@ def test_macro_drivers_panel_contract() -> None:
     )
 
 
+
+
+# --- data health (freshness/provenance map of every panel) --------------------
+
+
+def test_data_health_shape() -> None:
+    """The freshness map must cover the whole terminal with valid categories.
+
+    Structural answer to 'why doesn't panel X update': every panel is frozen /
+    daily / cadence with its OWN as_of (never fabricated). The summary counts
+    must reconcile with the panel list, and the #49-derived research readouts
+    must be classified frozen (advancing them would be rerun-to-significance).
+    """
+    dh = _load("data_health.json")
+    assert dh["status"] == "ok"
+    panels = dh["panels"]
+    assert len(panels) >= 20, "the freshness map must cover the whole terminal"
+    valid = {"daily", "cadence", "frozen"}
+    keys: set[str] = set()
+    for p in panels:
+        assert p["category"] in valid
+        assert isinstance(p["key"], str) and p["key"]
+        assert isinstance(p["file"], str) and p["file"].endswith(".json")
+        assert p["as_of"] is None or isinstance(p["as_of"], str)
+        assert p["exported_at"] is None or isinstance(p["exported_at"], str)
+        assert isinstance(p["present"], bool)
+        keys.add(p["key"])
+    assert len(keys) == len(panels), "panel keys must be unique"
+    s = dh["summary"]
+    assert s["n_panels"] == len(panels)
+    assert s["n_daily"] + s["n_cadence"] + s["n_frozen"] == len(panels)
+    by_key = {p["key"]: p for p in panels}
+    for k in ("picks", "metrics", "ic_monthly", "picks_backtest", "stock_universe"):
+        assert by_key[k]["category"] == "frozen", f"{k} derives from frozen OOS artifacts"
+    assert by_key["cot"]["category"] == "cadence"
+    assert "rerun-to-significance" in dh["methodology"]
+
+
+def test_data_health_as_of_matches_source_panels() -> None:
+    """as_of is extracted from each panel's own fields — spot-pin two."""
+    dh = _load("data_health.json")
+    by_key = {p["key"]: p for p in dh["panels"]}
+    metrics = _load("metrics.json")
+    assert by_key["metrics"]["as_of"] == metrics["latest_month"]
+    cot = _load("cot.json")
+    if cot.get("latest_date"):
+        assert by_key["cot"]["as_of"] == cot["latest_date"]
+
+
+# --- stock universe (per-stock frozen readout) --------------------------------
+
+
+def test_stock_universe_shape() -> None:
+    """Per-stock view over the frozen OOS scores: ranks reconcile per region.
+
+    The rank_change bound guards the cross-region contamination bug (US and CN
+    month-ends coincide ~70% of the time; an unscoped prev-month frame once
+    produced TROW rank_change 829 > n_region 492).
+    """
+    su = _load("stock_universe.json")
+    assert su["status"] == "ok"
+    months = su["months"]
+    assert months == sorted(months) and len(set(months)) == len(months)
+    assert len(months) >= 6, "trailing window must span ~12 OOS months"
+    stocks = su["stocks"]
+    assert len(stocks) >= 1000, "US (~490) + CN (~930) latest-month universe"
+    assert su["n_stocks"] == len(stocks)
+    tickers = [s["ticker"] for s in stocks]
+    assert len(set(tickers)) == len(tickers), "one row per ticker"
+    by_region: dict[str, list[dict]] = {}
+    for s in stocks:
+        assert s["region"] in {"us", "cn"}
+        assert isinstance(s["score"], (int, float))
+        assert 0.0 <= s["prob_up"] <= 1.0
+        assert isinstance(s["rank"], int) and s["rank"] >= 1
+        assert len(s["scores"]) == len(months), "scores aligned to the month grid"
+        for v in s["scores"]:
+            assert v is None or isinstance(v, (int, float))
+        by_region.setdefault(s["region"], []).append(s)
+    assert set(by_region) == {"us", "cn"}
+    for rows in by_region.values():
+        n = rows[0]["n_region"]
+        assert all(r["n_region"] == n for r in rows)
+        assert len(rows) == n, "n_region must equal the region's row count"
+        ranks = sorted(r["rank"] for r in rows)
+        assert ranks == list(range(1, n + 1)), "ranks form 1..n within a region"
+        for r in rows:
+            if r["rank_change"] is not None:
+                assert -(n - 1) <= r["rank_change"] <= n - 1
+    assert su["as_of"].get("us") and su["as_of"].get("cn")
+
+
+def test_stock_universe_covers_picks() -> None:
+    """Every committed pick/short must have a stock page (drill-down target)."""
+    su = _load("stock_universe.json")
+    have = {s["ticker"] for s in su["stocks"]}
+    for p in _load("picks.json"):
+        assert p["ticker"] in have, f"pick {p['ticker']} missing a stock page"
+    for s in _load("shorts.json"):
+        assert s["ticker"] in have, f"short {s['ticker']} missing a stock page"
+
+
+def test_stock_universe_disclosure() -> None:
+    """The panel must carry the honest-null + frozen disclosure."""
+    su = _load("stock_universe.json")
+    m = su["methodology"]
+    assert "display-only" in m
+    assert "rerun-to-significance" in m
+    assert "NULL" in m

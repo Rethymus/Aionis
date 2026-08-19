@@ -1,0 +1,221 @@
+{
+  "status": "ok",
+  "panels": [
+    {
+      "key": "metrics",
+      "file": "metrics.json",
+      "category": "frozen",
+      "as_of": "2026-08-03",
+      "exported_at": "2026-08-12",
+      "present": true
+    },
+    {
+      "key": "picks",
+      "file": "picks.json",
+      "category": "frozen",
+      "as_of": "2026-08-03",
+      "exported_at": null,
+      "present": true
+    },
+    {
+      "key": "shorts",
+      "file": "shorts.json",
+      "category": "frozen",
+      "as_of": "2026-08-03",
+      "exported_at": null,
+      "present": true
+    },
+    {
+      "key": "picks_meta",
+      "file": "picks_meta.json",
+      "category": "frozen",
+      "as_of": "2026-08-03",
+      "exported_at": null,
+      "present": true
+    },
+    {
+      "key": "sector_breakdown",
+      "file": "sector_breakdown.json",
+      "category": "frozen",
+      "as_of": "2026-08-03",
+      "exported_at": null,
+      "present": true
+    },
+    {
+      "key": "picks_backtest",
+      "file": "picks_backtest.json",
+      "category": "frozen",
+      "as_of": "2026-06-30",
+      "exported_at": null,
+      "present": true
+    },
+    {
+      "key": "ic_monthly",
+      "file": "ic_monthly.json",
+      "category": "frozen",
+      "as_of": "2026-06",
+      "exported_at": null,
+      "present": true
+    },
+    {
+      "key": "pick_conviction",
+      "file": "pick_conviction.json",
+      "category": "frozen",
+      "as_of": "2026-08-03",
+      "exported_at": null,
+      "present": true
+    },
+    {
+      "key": "model_health",
+      "file": "model_health.json",
+      "category": "frozen",
+      "as_of": null,
+      "exported_at": null,
+      "present": true
+    },
+    {
+      "key": "calibration_reliability",
+      "file": "calibration_reliability.json",
+      "category": "frozen",
+      "as_of": null,
+      "exported_at": null,
+      "present": true
+    },
+    {
+      "key": "power_floor",
+      "file": "power_floor.json",
+      "category": "frozen",
+      "as_of": null,
+      "exported_at": "2026-08-16",
+      "present": true
+    },
+    {
+      "key": "sigma_survey",
+      "file": "sigma_survey.json",
+      "category": "frozen",
+      "as_of": null,
+      "exported_at": null,
+      "present": true
+    },
+    {
+      "key": "bps_sweep",
+      "file": "bps_sweep.json",
+      "category": "frozen",
+      "as_of": null,
+      "exported_at": null,
+      "present": true
+    },
+    {
+      "key": "evidence",
+      "file": "evidence.json",
+      "category": "frozen",
+      "as_of": null,
+      "exported_at": null,
+      "present": true
+    },
+    {
+      "key": "stock_universe",
+      "file": "stock_universe.json",
+      "category": "frozen",
+      "as_of": "2026-08-03",
+      "exported_at": "2026-08-19",
+      "present": true
+    },
+    {
+      "key": "themes",
+      "file": "themes.json",
+      "category": "daily",
+      "as_of": "2026-08-14",
+      "exported_at": "2026-08-16",
+      "present": true
+    },
+    {
+      "key": "theme_signals",
+      "file": "theme_signals.json",
+      "category": "daily",
+      "as_of": "2026-08-14",
+      "exported_at": "2026-08-16",
+      "present": true
+    },
+    {
+      "key": "market_context",
+      "file": "market_context.json",
+      "category": "daily",
+      "as_of": "2026-08",
+      "exported_at": "2026-08-16",
+      "present": true
+    },
+    {
+      "key": "macro_drivers",
+      "file": "macro_drivers.json",
+      "category": "daily",
+      "as_of": "2026-08",
+      "exported_at": "2026-08-16",
+      "present": true
+    },
+    {
+      "key": "taco",
+      "file": "taco.json",
+      "category": "daily",
+      "as_of": "2026-08",
+      "exported_at": "2026-08-16",
+      "present": true
+    },
+    {
+      "key": "form4",
+      "file": "form4.json",
+      "category": "daily",
+      "as_of": "2026-08-11",
+      "exported_at": "2026-08-16",
+      "present": true
+    },
+    {
+      "key": "reddit",
+      "file": "reddit.json",
+      "category": "daily",
+      "as_of": null,
+      "exported_at": "2026-08-16",
+      "present": true
+    },
+    {
+      "key": "headline_provenance",
+      "file": "headline_provenance.json",
+      "category": "daily",
+      "as_of": "2026-08-05",
+      "exported_at": "2026-08-16",
+      "present": true
+    },
+    {
+      "key": "ledger_audit",
+      "file": "ledger_audit.json",
+      "category": "daily",
+      "as_of": null,
+      "exported_at": "2026-08-16",
+      "present": true
+    },
+    {
+      "key": "cot",
+      "file": "cot.json",
+      "category": "cadence",
+      "as_of": "2026-08-11",
+      "exported_at": "2026-08-16",
+      "present": true
+    },
+    {
+      "key": "smart_money",
+      "file": "smart_money.json",
+      "category": "cadence",
+      "as_of": "2026-08-14",
+      "exported_at": "2026-08-16",
+      "present": true
+    }
+  ],
+  "summary": {
+    "n_panels": 26,
+    "n_frozen": 15,
+    "n_daily": 9,
+    "n_cadence": 2
+  },
+  "methodology": "Freshness/provenance map of every terminal panel. frozen = derived from frozen OOS artifacts (ledger #49 lineage): the daily lane deliberately does NOT advance these \u2014 recomputing them from newer data would be rerun-to-significance. daily = recomputed by each CI refresh from live caches. cadence = advances on its source's publication rhythm (CFTC weekly, price caches ~5-day grace, EDGAR filing rhythm). as_of is read from each panel's own timestamp fields; null = the panel carries no observation date (static research artifact). The only legal way frozen numbers move forward: E3 forward-live accumulation or a new pre-registered phase.",
+  "snapshot_ts": "2026-08-19T15:15:24.103556+00:00"
+}
