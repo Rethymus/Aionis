@@ -16,3 +16,6 @@ out/
 
 # local static-serving junction (Aionis -> out)
 Aionis/
+
+# generated static data API (build-time mirror of src/data/aionis)
+public/api/

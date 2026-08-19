@@ -20,6 +20,7 @@ import {
   FileTextIcon,
   UsersIcon,
   ActivityIcon,
+  TerminalIcon,
 } from "lucide-react";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -50,6 +51,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     { title: t("nav.datahealth"), url: "/data-health", icon: <ActivityIcon /> },
   ];
   const navReference = [
+    { title: t("nav.apidocs"), url: "/api-docs", icon: <TerminalIcon /> },
     {
       title: t("nav.method"),
       url: "https://github.com/Rethymus/Aionis/blob/main/docs/RESULTS.md",

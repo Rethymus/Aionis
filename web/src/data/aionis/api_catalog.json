@@ -1,0 +1,308 @@
+{
+  "status": "ok",
+  "base_note": "Static JSON contract served straight from GitHub Pages \u2014 read-only, no auth, no server. Panel files are the payload verbatim; this catalog is the meta layer.",
+  "endpoints": [
+    {
+      "key": "metrics",
+      "file": "metrics.json",
+      "path": "/api/v1/panels/metrics.json",
+      "method": "GET",
+      "status": "available",
+      "freshness": "frozen",
+      "as_of": "2026-08-03",
+      "license": "Aionis research artifacts (repo MIT)",
+      "source": "frozen OOS scores, ledger #49 lineage"
+    },
+    {
+      "key": "picks",
+      "file": "picks.json",
+      "path": "/api/v1/panels/picks.json",
+      "method": "GET",
+      "status": "available",
+      "freshness": "frozen",
+      "as_of": "2026-08-03",
+      "license": "Aionis research artifacts (repo MIT)",
+      "source": "frozen OOS scores + Platt calibration"
+    },
+    {
+      "key": "shorts",
+      "file": "shorts.json",
+      "path": "/api/v1/panels/shorts.json",
+      "method": "GET",
+      "status": "available",
+      "freshness": "frozen",
+      "as_of": "2026-08-03",
+      "license": "Aionis research artifacts (repo MIT)",
+      "source": "frozen OOS scores + Platt calibration"
+    },
+    {
+      "key": "picks_meta",
+      "file": "picks_meta.json",
+      "path": "/api/v1/panels/picks_meta.json",
+      "method": "GET",
+      "status": "available",
+      "freshness": "frozen",
+      "as_of": "2026-08-03",
+      "license": "Aionis research artifacts (repo MIT)",
+      "source": "calibration meta on realized OOS pairs"
+    },
+    {
+      "key": "sector_breakdown",
+      "file": "sector_breakdown.json",
+      "path": "/api/v1/panels/sector_breakdown.json",
+      "method": "GET",
+      "status": "available",
+      "freshness": "frozen",
+      "as_of": "2026-08-03",
+      "license": "Aionis research artifacts (repo MIT)",
+      "source": "frozen OOS scores by sector"
+    },
+    {
+      "key": "picks_backtest",
+      "file": "picks_backtest.json",
+      "path": "/api/v1/panels/picks_backtest.json",
+      "method": "GET",
+      "status": "available",
+      "freshness": "frozen",
+      "as_of": "2026-06-30",
+      "license": "Aionis research artifacts (repo MIT)",
+      "source": "realized OOS picks vs base, 131 months"
+    },
+    {
+      "key": "ic_monthly",
+      "file": "ic_monthly.json",
+      "path": "/api/v1/panels/ic_monthly.json",
+      "method": "GET",
+      "status": "available",
+      "freshness": "frozen",
+      "as_of": "2026-06",
+      "license": "Aionis research artifacts (repo MIT)",
+      "source": "confirmatory monthly rank-IC series"
+    },
+    {
+      "key": "pick_conviction",
+      "file": "pick_conviction.json",
+      "path": "/api/v1/panels/pick_conviction.json",
+      "method": "GET",
+      "status": "available",
+      "freshness": "frozen",
+      "as_of": "2026-08-03",
+      "license": "Aionis research artifacts (repo MIT)",
+      "source": "cross-sectional score dispersion"
+    },
+    {
+      "key": "model_health",
+      "file": "model_health.json",
+      "path": "/api/v1/panels/model_health.json",
+      "method": "GET",
+      "status": "available",
+      "freshness": "frozen",
+      "as_of": null,
+      "license": "Aionis research artifacts (repo MIT)",
+      "source": "PSI + rolling IC on realized OOS"
+    },
+    {
+      "key": "calibration_reliability",
+      "file": "calibration_reliability.json",
+      "path": "/api/v1/panels/calibration_reliability.json",
+      "method": "GET",
+      "status": "available",
+      "freshness": "frozen",
+      "as_of": null,
+      "license": "Aionis research artifacts (repo MIT)",
+      "source": "walk-forward calibration audit"
+    },
+    {
+      "key": "power_floor",
+      "file": "power_floor.json",
+      "path": "/api/v1/panels/power_floor.json",
+      "method": "GET",
+      "status": "available",
+      "freshness": "frozen",
+      "as_of": null,
+      "license": "Aionis research artifacts (repo MIT)",
+      "source": "sigma survey / power analysis"
+    },
+    {
+      "key": "sigma_survey",
+      "file": "sigma_survey.json",
+      "path": "/api/v1/panels/sigma_survey.json",
+      "method": "GET",
+      "status": "available",
+      "freshness": "frozen",
+      "as_of": null,
+      "license": "Aionis research artifacts (repo MIT)",
+      "source": "observed vs pure-noise sigma"
+    },
+    {
+      "key": "bps_sweep",
+      "file": "bps_sweep.json",
+      "path": "/api/v1/panels/bps_sweep.json",
+      "method": "GET",
+      "status": "available",
+      "freshness": "frozen",
+      "as_of": null,
+      "license": "Aionis research artifacts (repo MIT)",
+      "source": "net-cost sensitivity sweep"
+    },
+    {
+      "key": "evidence",
+      "file": "evidence.json",
+      "path": "/api/v1/panels/evidence.json",
+      "method": "GET",
+      "status": "available",
+      "freshness": "frozen",
+      "as_of": null,
+      "license": "Aionis research artifacts (repo MIT)",
+      "source": "research ledger evidence table"
+    },
+    {
+      "key": "stock_universe",
+      "file": "stock_universe.json",
+      "path": "/api/v1/panels/stock_universe.json",
+      "method": "GET",
+      "status": "available",
+      "freshness": "frozen",
+      "as_of": "2026-08-03",
+      "license": "Aionis research artifacts (repo MIT)",
+      "source": "per-stock frozen readout over OOS scores"
+    },
+    {
+      "key": "themes",
+      "file": "themes.json",
+      "path": "/api/v1/panels/themes.json",
+      "method": "GET",
+      "status": "available",
+      "freshness": "daily",
+      "as_of": "2026-08-18",
+      "license": "Tiingo/Alpaca free tier (vendor ToS, display-only) + GDELT open data",
+      "source": "daily prices, fundamentals, GDELT news sentiment, ALFRED macro"
+    },
+    {
+      "key": "theme_signals",
+      "file": "theme_signals.json",
+      "path": "/api/v1/panels/theme_signals.json",
+      "method": "GET",
+      "status": "available",
+      "freshness": "daily",
+      "as_of": "2026-08-14",
+      "license": "Tiingo/Alpaca free tier (vendor ToS, display-only) + GDELT open data",
+      "source": "per-theme signal aggregates on the display panel"
+    },
+    {
+      "key": "market_context",
+      "file": "market_context.json",
+      "path": "/api/v1/panels/market_context.json",
+      "method": "GET",
+      "status": "available",
+      "freshness": "daily",
+      "as_of": "2026-08",
+      "license": "Tiingo/Alpaca free tier (vendor ToS, display-only) + FRED (public domain)",
+      "source": "equal-weight index monthly series + VIX + labeled events"
+    },
+    {
+      "key": "macro_drivers",
+      "file": "macro_drivers.json",
+      "path": "/api/v1/panels/macro_drivers.json",
+      "method": "GET",
+      "status": "available",
+      "freshness": "daily",
+      "as_of": "2026-08",
+      "license": "FRED/ALFRED \u2014 U.S. Government public domain",
+      "source": "CPI, payrolls, rates, DFF vintages"
+    },
+    {
+      "key": "taco",
+      "file": "taco.json",
+      "path": "/api/v1/panels/taco.json",
+      "method": "GET",
+      "status": "available",
+      "freshness": "daily",
+      "as_of": "2026-08",
+      "license": "FRED (public domain) + labeled public news events",
+      "source": "VIX monthly + Trump-policy event table"
+    },
+    {
+      "key": "form4",
+      "file": "form4.json",
+      "path": "/api/v1/panels/form4.json",
+      "method": "GET",
+      "status": "available",
+      "freshness": "daily",
+      "as_of": "2026-08-11",
+      "license": "U.S. SEC EDGAR \u2014 public domain",
+      "source": "Form 4 XML, filed-date PIT"
+    },
+    {
+      "key": "reddit",
+      "file": "reddit.json",
+      "path": "/api/v1/panels/reddit.json",
+      "method": "GET",
+      "status": "available",
+      "freshness": "daily",
+      "as_of": null,
+      "license": "Reddit public Atom RSS \u2014 Reddit ToS, display-only",
+      "source": "retail mention counts, forward-only"
+    },
+    {
+      "key": "headline_provenance",
+      "file": "headline_provenance.json",
+      "path": "/api/v1/panels/headline_provenance.json",
+      "method": "GET",
+      "status": "available",
+      "freshness": "daily",
+      "as_of": "2026-08-05",
+      "license": "Aionis append-only ledger (repo MIT)",
+      "source": "ledger.jsonl freeze\u2192result pairing"
+    },
+    {
+      "key": "ledger_audit",
+      "file": "ledger_audit.json",
+      "path": "/api/v1/panels/ledger_audit.json",
+      "method": "GET",
+      "status": "available",
+      "freshness": "daily",
+      "as_of": null,
+      "license": "Aionis append-only ledger (repo MIT)",
+      "source": "ledger.jsonl claim-row timeline"
+    },
+    {
+      "key": "cot",
+      "file": "cot.json",
+      "path": "/api/v1/panels/cot.json",
+      "method": "GET",
+      "status": "available",
+      "freshness": "cadence",
+      "as_of": "2026-08-11",
+      "license": "U.S. CFTC \u2014 public domain",
+      "source": "Commitments of Traders legacy futures, weekly"
+    },
+    {
+      "key": "smart_money",
+      "file": "smart_money.json",
+      "path": "/api/v1/panels/smart_money.json",
+      "method": "GET",
+      "status": "available",
+      "freshness": "cadence",
+      "as_of": "2026-08-17",
+      "license": "U.S. SEC EDGAR \u2014 public domain",
+      "source": "13D/G filings via EFTS, filed-date PIT"
+    }
+  ],
+  "live_prices": {
+    "note": "Live quotes are a separate display-only Cloudflare Worker; they must never feed the research pipeline.",
+    "paths": [
+      {
+        "method": "GET",
+        "path": "/api/prices/us?tickers=AAPL,MSFT"
+      },
+      {
+        "method": "GET",
+        "path": "/api/prices/cn?tickers=sh.688041"
+      }
+    ],
+    "server": "https://api.aionis-prices.workers.dev"
+  },
+  "methodology": "Public static data API over the terminal's committed panels (display-only). Every endpoint carries its 7-gate intake facts: license + primary source, plus the freshness class (daily / cadence / frozen). Frozen endpoints derive from frozen OOS artifacts (ledger #49 lineage) and deliberately do NOT advance \u2014 consuming them expecting daily updates misreads the contract. Research ingestion of any endpoint requires the full 7-gate rubric (docs/data-intake-rubric.md); the live-prices worker is display-only and must never enter the OOS pipeline.",
+  "snapshot_ts": "2026-08-19T15:46:01.867601+00:00"
+}

@@ -2001,6 +2001,116 @@ def export_data_health() -> None:
     (WEB / "data_health.json").write_text(json.dumps(_stamp(payload), indent=2))
 
 
+# --- API catalog (public static data API over the committed panels) ----------
+#
+# Imitation of the xiaoyinsi datahub discipline (learned from its /api-docs):
+# every data path carries provenance metadata — for Aionis that means the
+# 7-gate intake facts (license + primary source) plus the freshness class.
+# The panels stay verbatim JSON; this catalog is the machine-readable index.
+
+# key → (license, primary source). Mirrors docs/data-intake-*.md; keep in sync.
+_API_LICENSE: dict[str, tuple[str, str]] = {
+    "metrics": ("Aionis research artifacts (repo MIT)", "frozen OOS scores, ledger #49 lineage"),
+    "picks": ("Aionis research artifacts (repo MIT)", "frozen OOS scores + Platt calibration"),
+    "shorts": ("Aionis research artifacts (repo MIT)", "frozen OOS scores + Platt calibration"),
+    "picks_meta": ("Aionis research artifacts (repo MIT)", "calibration meta on realized OOS pairs"),
+    "sector_breakdown": ("Aionis research artifacts (repo MIT)", "frozen OOS scores by sector"),
+    "picks_backtest": ("Aionis research artifacts (repo MIT)", "realized OOS picks vs base, 131 months"),
+    "ic_monthly": ("Aionis research artifacts (repo MIT)", "confirmatory monthly rank-IC series"),
+    "pick_conviction": ("Aionis research artifacts (repo MIT)", "cross-sectional score dispersion"),
+    "model_health": ("Aionis research artifacts (repo MIT)", "PSI + rolling IC on realized OOS"),
+    "calibration_reliability": ("Aionis research artifacts (repo MIT)", "walk-forward calibration audit"),
+    "power_floor": ("Aionis research artifacts (repo MIT)", "sigma survey / power analysis"),
+    "sigma_survey": ("Aionis research artifacts (repo MIT)", "observed vs pure-noise sigma"),
+    "bps_sweep": ("Aionis research artifacts (repo MIT)", "net-cost sensitivity sweep"),
+    "evidence": ("Aionis research artifacts (repo MIT)", "research ledger evidence table"),
+    "stock_universe": ("Aionis research artifacts (repo MIT)", "per-stock frozen readout over OOS scores"),
+    "themes": (
+        "Tiingo/Alpaca free tier (vendor ToS, display-only) + GDELT open data",
+        "daily prices, fundamentals, GDELT news sentiment, ALFRED macro",
+    ),
+    "theme_signals": (
+        "Tiingo/Alpaca free tier (vendor ToS, display-only) + GDELT open data",
+        "per-theme signal aggregates on the display panel",
+    ),
+    "market_context": (
+        "Tiingo/Alpaca free tier (vendor ToS, display-only) + FRED (public domain)",
+        "equal-weight index monthly series + VIX + labeled events",
+    ),
+    "macro_drivers": ("FRED/ALFRED — U.S. Government public domain", "CPI, payrolls, rates, DFF vintages"),
+    "taco": ("FRED (public domain) + labeled public news events", "VIX monthly + Trump-policy event table"),
+    "form4": ("U.S. SEC EDGAR — public domain", "Form 4 XML, filed-date PIT"),
+    "reddit": ("Reddit public Atom RSS — Reddit ToS, display-only", "retail mention counts, forward-only"),
+    "headline_provenance": ("Aionis append-only ledger (repo MIT)", "ledger.jsonl freeze→result pairing"),
+    "ledger_audit": ("Aionis append-only ledger (repo MIT)", "ledger.jsonl claim-row timeline"),
+    "cot": ("U.S. CFTC — public domain", "Commitments of Traders legacy futures, weekly"),
+    "smart_money": ("U.S. SEC EDGAR — public domain", "13D/G filings via EFTS, filed-date PIT"),
+    "data_health": ("Aionis-generated (repo MIT)", "freshness/provenance map over all panels"),
+}
+
+
+def export_api_catalog() -> None:
+    """Machine-readable index of the public static data API (display-only).
+
+    Pairs each committed panel with its 7-gate intake facts (license, primary
+    source) and its freshness class + as_of (read from data_health.json, the
+    single source of truth). Consumers of the deployed JSON API get the same
+    provenance discipline the terminal renders: where a number comes from,
+    under what license, and whether it should be expected to advance.
+    """
+    dh = _dh_read("data_health.json")
+    if not isinstance(dh, dict) or "panels" not in dh:
+        raise FileNotFoundError("data_health.json (run export_data_health first)")
+    endpoints = []
+    for p in dh["panels"]:
+        license_, source = _API_LICENSE.get(
+            p["key"], ("unverified — do not ingest", "unknown")
+        )
+        endpoints.append({
+            "key": p["key"],
+            "file": p["file"],
+            "path": f"/api/v1/panels/{p['file']}",
+            "method": "GET",
+            "status": "available",
+            "freshness": p["category"],
+            "as_of": p["as_of"],
+            "license": license_,
+            "source": source,
+        })
+    payload = {
+        "status": "ok",
+        "base_note": (
+            "Static JSON contract served straight from GitHub Pages — read-only, "
+            "no auth, no server. Panel files are the payload verbatim; this "
+            "catalog is the meta layer."
+        ),
+        "endpoints": endpoints,
+        "live_prices": {
+            "note": (
+                "Live quotes are a separate display-only Cloudflare Worker; "
+                "they must never feed the research pipeline."
+            ),
+            "paths": [
+                {"method": "GET", "path": "/api/prices/us?tickers=AAPL,MSFT"},
+                {"method": "GET", "path": "/api/prices/cn?tickers=sh.688041"},
+            ],
+            "server": "https://api.aionis-prices.workers.dev",
+        },
+        "methodology": (
+            "Public static data API over the terminal's committed panels "
+            "(display-only). Every endpoint carries its 7-gate intake facts: "
+            "license + primary source, plus the freshness class (daily / "
+            "cadence / frozen). Frozen endpoints derive from frozen OOS "
+            "artifacts (ledger #49 lineage) and deliberately do NOT advance — "
+            "consuming them expecting daily updates misreads the contract. "
+            "Research ingestion of any endpoint requires the full 7-gate "
+            "rubric (docs/data-intake-rubric.md); the live-prices worker is "
+            "display-only and must never enter the OOS pipeline."
+        ),
+    }
+    (WEB / "api_catalog.json").write_text(json.dumps(_stamp(payload), indent=2))
+
+
 # --- stock universe (per-stock view over the frozen OOS scores) ---------------
 
 
@@ -2215,6 +2325,8 @@ def main() -> None:
     _safe_export("stock_universe", export_stock_universe)
     # Freshness map reads every panel's committed JSON — must run last.
     _safe_export("data_health", export_data_health)
+    # API catalog reads data_health — run after it.
+    _safe_export("api_catalog", export_api_catalog)
     written = sorted(p.name for p in WEB.glob("*.json"))
     print(f"[export-terminal] wrote {len(written)} files to {WEB}/: {written}", flush=True)
 

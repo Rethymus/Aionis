@@ -792,3 +792,45 @@ def test_stock_universe_disclosure() -> None:
     assert "display-only" in m
     assert "rerun-to-significance" in m
     assert "NULL" in m
+
+
+# --- API catalog (public static data API index) -------------------------------
+
+
+def test_api_catalog_shape() -> None:
+    """Every endpoint must carry its 7-gate intake facts + freshness class.
+
+    The catalog is the meta layer of the deployed static API (public/api/v1/):
+    license and primary source are non-negotiable (a missing license would
+    default to 'unverified — do not ingest'), and the freshness classes must
+    reconcile with the data-health map.
+    """
+    cat = _load("api_catalog.json")
+    assert cat["status"] == "ok"
+    eps = cat["endpoints"]
+    assert len(eps) >= 20
+    dh = _load("data_health.json")
+    dh_keys = {p["key"] for p in dh["panels"]}
+    valid = {"daily", "cadence", "frozen"}
+    for e in eps:
+        assert e["key"] in dh_keys, f"{e['key']} missing from data_health"
+        assert e["freshness"] in valid
+        assert e["method"] == "GET" and e["status"] == "available"
+        assert e["path"] == f"/api/v1/panels/{e['file']}"
+        assert isinstance(e["license"], str) and len(e["license"]) > 5
+        assert "unverified" not in e["license"], f"{e['key']} license unmapped"
+        assert isinstance(e["source"], str) and len(e["source"]) > 3
+    assert {e["key"] for e in eps} == dh_keys, "catalog must cover every health panel"
+    lp = cat["live_prices"]
+    assert lp["server"].startswith("https://")
+    assert len(lp["paths"]) == 2
+    assert "display-only" in lp["note"]
+
+
+def test_api_catalog_disclosure() -> None:
+    cat = _load("api_catalog.json")
+    m = cat["methodology"]
+    assert "display-only" in m
+    assert "7-gate" in m
+    assert "rerun-to-significance" in m or "frozen" in m
+    assert "GitHub Pages" in cat["base_note"]

@@ -37,6 +37,7 @@ import themesJson from "./themes.json";
 import ledgerAuditJson from "./ledger_audit.json";
 import headlineProvenanceJson from "./headline_provenance.json";
 import dataHealthJson from "./data_health.json";
+import apiCatalogJson from "./api_catalog.json";
 
 export type Pick = {
   rank: number;
@@ -474,6 +475,31 @@ export type DataHealth = {
   snapshot_ts?: string;
 };
 
+export type ApiCatalogEndpoint = {
+  key: string;
+  file: string;
+  path: string;
+  method: string;
+  status: string;
+  freshness: "daily" | "cadence" | "frozen";
+  as_of: string | null;
+  license: string;
+  source: string;
+};
+
+export type ApiCatalog = {
+  status: string;
+  base_note: string;
+  endpoints: ApiCatalogEndpoint[];
+  live_prices: {
+    note: string;
+    paths: { method: string; path: string }[];
+    server: string;
+  };
+  methodology: string;
+  snapshot_ts?: string;
+};
+
 export const aionis = {
   metrics: metricsJson as Metrics,
   picks: picksJson as Pick[],
@@ -511,4 +537,5 @@ export const aionis = {
   ledgerAudit: ledgerAuditJson as LedgerAudit,
   headlineProvenance: headlineProvenanceJson as HeadlineProvenance,
   dataHealth: dataHealthJson as DataHealth,
+  apiCatalog: apiCatalogJson as ApiCatalog,
 };

@@ -606,6 +606,28 @@ export const dict = {
     "stock.search.placeholder": "搜索代码或名称…",
     "stock.search.none": "无匹配标的",
     "stock.methodology": "方法学与边界",
+
+    // API docs (/api-docs — public static data API)
+    "nav.apidocs": "数据 API",
+    "apidocs.role": "参考 · 静态数据接口文档",
+    "apidocs.title": "数据 API",
+    "apidocs.intro":
+      "终端全部面板的只读 JSON 接口——GitHub Pages 直出、无鉴权、无服务端。每个端点携带 7-gate 摄入事实（license + 一手来源）与新鲜度类别：数据的出处与是否该推进，接口层即可判读。",
+    "apidocs.endpoints.title": "端点",
+    "apidocs.ep.catalog": "面板目录——每个端点的 license / 来源 / 新鲜度索引",
+    "apidocs.ep.health": "全部面板的新鲜度与来源地图（日更 / 源节奏 / 冻结）",
+    "apidocs.ep.openapi": "整个接口面的 OpenAPI 3.1 文档（含实时价 Worker）",
+    "apidocs.ep.panels": "面板载荷——与终端渲染所用的同一份 JSON，逐字直出",
+    "apidocs.ep.prices": "实时报价——独立的 display-only Cloudflare Worker，绝不进研究管线",
+    "apidocs.panels.title": "面板目录",
+    "apidocs.panels.note": "点击面板名打开线上 JSON。冻结端点有意不推进——期待它日更即是误读契约。",
+    "apidocs.col.panel": "面板",
+    "apidocs.col.freshness": "新鲜度",
+    "apidocs.col.license": "许可",
+    "apidocs.col.source": "一手来源",
+    "apidocs.usage.title": "使用示例",
+    "apidocs.usage.note": "静态文件即载荷；目录提供 meta 层。无需 API key。",
+    "apidocs.boundary.title": "边界（反泄漏）",
   },
   en: {
     "brand.name": "Aionis",
@@ -1212,6 +1234,28 @@ export const dict = {
     "stock.search.placeholder": "Search ticker or name…",
     "stock.search.none": "No matching ticker",
     "stock.methodology": "Methodology & boundaries",
+
+    // API docs (/api-docs — public static data API)
+    "nav.apidocs": "Data API",
+    "apidocs.role": "Reference · static data interface docs",
+    "apidocs.title": "Data API",
+    "apidocs.intro":
+      "Read-only JSON interface over every terminal panel — served straight from GitHub Pages, no auth, no server. Each endpoint carries its 7-gate intake facts (license + primary source) and freshness class: where a number comes from, and whether it should advance, is readable at the interface layer.",
+    "apidocs.endpoints.title": "Endpoints",
+    "apidocs.ep.catalog": "Panel catalog — license / source / freshness index for every endpoint",
+    "apidocs.ep.health": "Freshness/provenance map of all panels (daily / cadence / frozen)",
+    "apidocs.ep.openapi": "OpenAPI 3.1 document for the whole surface (incl. the live-prices worker)",
+    "apidocs.ep.panels": "Panel payload — the same JSON the terminal renders, verbatim",
+    "apidocs.ep.prices": "Live quotes — a separate display-only Cloudflare Worker; never feeds research",
+    "apidocs.panels.title": "Panel catalog",
+    "apidocs.panels.note": "Click a panel name to open the live JSON. Frozen endpoints deliberately do NOT advance — expecting daily updates misreads the contract.",
+    "apidocs.col.panel": "Panel",
+    "apidocs.col.freshness": "Freshness",
+    "apidocs.col.license": "License",
+    "apidocs.col.source": "Primary source",
+    "apidocs.usage.title": "Usage examples",
+    "apidocs.usage.note": "Static files are the payload; the catalog is the meta layer. No API key required.",
+    "apidocs.boundary.title": "Boundaries (anti-leakage)",
   },
 } as const;
 
