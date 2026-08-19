@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { aionis, type Pick } from "@/data/aionis";
+import { ProvenanceBadge } from "@/components/provenance-badge";
 import { useLivePrices, type PriceMap } from "@/lib/live-prices";
 import Link from "next/link";
 import {
@@ -199,6 +200,172 @@ function RegionGroup({ title, picks, baseRate, latestDate, showChange, prices }:
   );
 }
 
+// ---------------------------------------------------------------------------
+// Portfolio concentration (display-only). Equal-weight sector aggregation of a
+// region's longs + shorts: sector shares by name COUNT (frozen OOS picks carry
+// no market-cap dimension), HHI = Σ share², and a display-heuristic level
+// badge (<0.25 / 0.25–0.45 / >0.45). This is a readout lens, not a claim.
+// ---------------------------------------------------------------------------
+
+type SectorCount = { sector: string; n: number; share: number };
+
+/** Aggregate rows by sector. Empty-sector rows collapse into "" (rendered as
+ * "Uncategorized" downstream) and are counted honestly, never dropped. */
+function aggregateSectors(rows: { sector: string | "" }[]): SectorCount[] {
+  if (rows.length === 0) return [];
+  const counts = new Map<string, number>();
+  for (const r of rows) {
+    counts.set(r.sector, (counts.get(r.sector) ?? 0) + 1);
+  }
+  const total = rows.length;
+  return [...counts.entries()]
+    .map(([sector, n]) => ({ sector, n, share: n / total }))
+    .sort((a, b) => b.n - a.n || a.sector.localeCompare(b.sector));
+}
+
+const CONCENTRATION_LEVEL_KEY = {
+  low: "picks.concentration.level.low",
+  mid: "picks.concentration.level.mid",
+  high: "picks.concentration.level.high",
+} as const;
+
+type ConcentrationLevel = keyof typeof CONCENTRATION_LEVEL_KEY;
+
+/** Display heuristic only (see methodology footnote) — not a statistical claim. */
+function concentrationLevel(hhi: number): ConcentrationLevel {
+  if (hhi < 0.25) return "low";
+  if (hhi <= 0.45) return "mid";
+  return "high";
+}
+
+type RegionConcentrationProps = {
+  regionLabel: string;
+  longs: { sector: string | "" }[];
+  shorts: { sector: string | "" }[];
+  className?: string;
+};
+
+function RegionConcentration({ regionLabel, longs, shorts, className }: RegionConcentrationProps) {
+  const { t } = useI18n();
+  const agg = aggregateSectors([...longs, ...shorts]);
+  if (agg.length === 0) return null;
+  const total = longs.length + shorts.length;
+  const hhi = agg.reduce((acc, s) => acc + s.share * s.share, 0);
+  const level = concentrationLevel(hhi);
+  const top = agg[0];
+  const countsLine = `${t("picks.concentration.nStocks")} ${total} · ${t("picks.concentration.long")} ${longs.length} + ${t("picks.concentration.short")} ${shorts.length}`;
+  return (
+    <div className={cn("space-y-3 p-4", className)}>
+      <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+        <span className="text-sm font-medium">{regionLabel}</span>
+        <span className="font-mono text-xs tabular-nums text-muted-foreground">
+          {countsLine}
+        </span>
+      </div>
+      <div className="flex items-end justify-between gap-3">
+        <div className="flex flex-col gap-0.5">
+          <span className="text-2xl font-bold tabular-nums">{hhi.toFixed(3)}</span>
+          <span className="text-xs text-muted-foreground">
+            {t("picks.concentration.hhi")}
+          </span>
+        </div>
+        <Badge
+          variant="outline"
+          className="px-1.5 py-0 text-xs font-normal text-muted-foreground"
+          title={`${t("picks.concentration.hhi")} = ${hhi.toFixed(3)}`}
+        >
+          {t(CONCENTRATION_LEVEL_KEY[level])}
+        </Badge>
+      </div>
+      <p className="text-xs text-muted-foreground">
+        {t("picks.concentration.topSector")}:{" "}
+        <span className="font-medium text-foreground">
+          {top.sector || t("picks.concentration.uncategorized")}
+        </span>{" "}
+        · <span className="font-mono tabular-nums">{(top.share * 100).toFixed(1)}%</span>
+      </p>
+      <div className="space-y-1.5">
+        {agg.map((row) => {
+          const uncategorized = row.sector === "";
+          const isTop = row.n === top.n;
+          return (
+            <div key={row.sector || "uncategorized"} className="space-y-0.5">
+              <div className="flex items-baseline justify-between gap-2 text-xs">
+                <span className={cn("min-w-0 truncate", uncategorized && "italic")}>
+                  {row.sector || t("picks.concentration.uncategorized")}
+                </span>
+                <span className="shrink-0 font-mono tabular-nums text-muted-foreground">
+                  {row.n} · {(row.share * 100).toFixed(1)}%
+                </span>
+              </div>
+              {/* Bars scale to the region's top share (top = full width); the
+                  printed share stays the honest absolute number. Muted/primary
+                  only — deliberately NOT up/down directional colors. */}
+              <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted/50">
+                <div
+                  className={cn(
+                    "h-full rounded-full",
+                    isTop ? "bg-primary" : "bg-muted-foreground/35",
+                  )}
+                  style={{ width: `${(row.share / top.share) * 100}%` }}
+                />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+/** Portfolio concentration card: per-region sector concentration of the
+ * frozen longs + shorts (one card, two region panels side by side ≥md). */
+function ConcentrationCard({
+  usLongs,
+  usShorts,
+  cnLongs,
+  cnShorts,
+}: {
+  usLongs: { sector: string | "" }[];
+  usShorts: { sector: string | "" }[];
+  cnLongs: { sector: string | "" }[];
+  cnShorts: { sector: string | "" }[];
+}) {
+  const { t } = useI18n();
+  const usEmpty = usLongs.length + usShorts.length === 0;
+  const cnEmpty = cnLongs.length + cnShorts.length === 0;
+  if (usEmpty && cnEmpty) return null;
+  return (
+    <Card className="overflow-hidden py-0">
+      <CardHeader className="border-b">
+        <CardTitle className="text-base">{t("picks.concentration.title")}</CardTitle>
+        <CardDescription className="flex flex-wrap items-center gap-2 text-xs">
+          <span>{t("picks.concentration.intro")}</span>
+          <ProvenanceBadge ts={aionis.picksMeta.latest_date} frozen />
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="p-0">
+        <div className="grid md:grid-cols-2 md:divide-x">
+          <RegionConcentration
+            regionLabel={t("picks.region.us")}
+            longs={usLongs}
+            shorts={usShorts}
+            className="border-b md:border-b-0"
+          />
+          <RegionConcentration
+            regionLabel={t("picks.region.cn")}
+            longs={cnLongs}
+            shorts={cnShorts}
+          />
+        </div>
+        <div className="border-t px-4 py-2.5 text-xs leading-relaxed text-muted-foreground">
+          {t("picks.concentration.methodology")}
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
 export function PicksView() {
   const { t } = useI18n();
   const meta = aionis.picksMeta;
@@ -300,6 +467,13 @@ export function PicksView() {
           </div>
         </CardContent>
       </Card>
+
+      <ConcentrationCard
+        usLongs={usPicks}
+        usShorts={usShorts}
+        cnLongs={cnPicks}
+        cnShorts={cnShorts}
+      />
 
       <TrackRecord />
     </div>
