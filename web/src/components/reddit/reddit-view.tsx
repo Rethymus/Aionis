@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
+import Link from "next/link";
 import { ClockIcon, ShieldCheckIcon } from "lucide-react";
 
 type PressureEntry = {
@@ -105,9 +106,9 @@ export function RedditView() {
                   // Sentiment badge color
                   const sentimentColor =
                     pick.sentiment > 0.2
-                      ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
+                      ? "badge-up"
                       : pick.sentiment < -0.2
-                      ? "border-rose-500/40 bg-rose-500/10 text-rose-600 dark:text-rose-400"
+                      ? "badge-down"
                       : "text-muted-foreground";
 
                   const sentimentLabel =
@@ -122,7 +123,7 @@ export function RedditView() {
                       <span className="w-6 shrink-0 text-muted-foreground tabular-nums">
                         {i + 1}
                       </span>
-                      <span className="truncate font-mono">{pick.ticker}</span>
+                      <Link href={`/stock/${pick.ticker}`} className="truncate font-mono text-primary hover:underline">{pick.ticker}</Link>
                       <Badge
                         variant="secondary"
                         className="ml-auto shrink-0 tabular-nums"

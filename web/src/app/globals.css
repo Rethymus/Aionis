@@ -90,6 +90,20 @@
   --sidebar-accent-foreground: oklch(0.45 0.16 256);
   --sidebar-border: oklch(0.915 0.003 267);
   --sidebar-ring: oklch(0.584 0.19 256);
+
+  /* Up/down direction colors. Default = international (green up / rose down).
+     [data-colorconv="cn"] swaps to the A-share convention (red up / green
+     down) — set pre-paint by the inline script in the dashboard layout and
+     toggled via the header switch. Only numeric direction sites use
+     .text-up/.text-down/.bg-up/.bg-down; semantic colors (trust emerald,
+     risk rose) stay fixed. */
+  --up: oklch(0.596 0.145 163);
+  --down: oklch(0.586 0.223 16.4);
+}
+
+[data-colorconv="cn"] {
+  --up: oklch(0.577 0.245 27.325);
+  --down: oklch(0.627 0.17 149.8);
 }
 
 .dark {
@@ -126,6 +140,47 @@
   --sidebar-accent-foreground: oklch(0.78 0.13 257);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.634 0.169 257);
+  /* Dark up/down (brighter for contrast on elevated cards). */
+  --up: oklch(0.765 0.17 163);
+  --down: oklch(0.712 0.194 13.4);
+}
+
+.dark[data-colorconv="cn"] {
+  --up: oklch(0.704 0.191 22.2);
+  --down: oklch(0.79 0.17 150);
+}
+
+/* Direction utilities — the ONLY sanctioned way to color numeric up/down
+   (price changes, scores, rank moves, bull/bear). Swap-safe under the CN
+   convention; semantic emerald/rose (trust / risk) must NOT use these. */
+.text-up {
+  color: var(--up);
+}
+.text-down {
+  color: var(--down);
+}
+.bg-up {
+  background-color: var(--up);
+}
+.bg-down {
+  background-color: var(--down);
+}
+/* Soft fill + tinted badge variants for bars and direction chips. */
+.bg-up-soft {
+  background-color: color-mix(in oklab, var(--up) 70%, transparent);
+}
+.bg-down-soft {
+  background-color: color-mix(in oklab, var(--down) 70%, transparent);
+}
+.badge-up {
+  border-color: color-mix(in oklab, var(--up) 40%, transparent);
+  background-color: color-mix(in oklab, var(--up) 10%, transparent);
+  color: var(--up);
+}
+.badge-down {
+  border-color: color-mix(in oklab, var(--down) 40%, transparent);
+  background-color: color-mix(in oklab, var(--down) 10%, transparent);
+  color: var(--down);
 }
 
 @layer base {

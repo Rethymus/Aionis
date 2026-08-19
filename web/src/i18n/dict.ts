@@ -601,6 +601,8 @@ export const dict = {
     "stock.f4": "Form 4 内部人",
     "stock.reddit": "Reddit 提及",
     "stock.live.note": "实时价（仅显示，来自 display-only Worker，绝不进研究管线）",
+    "stock.live.updated.prefix": "",
+    "stock.live.updated.suffix": " 秒前 · ",
     "stock.search.label": "切换标的",
     "stock.search.hint": "标的覆盖冻结 OOS 最新月（US + CN）",
     "stock.search.placeholder": "搜索代码或名称…",
@@ -628,6 +630,12 @@ export const dict = {
     "apidocs.usage.title": "使用示例",
     "apidocs.usage.note": "静态文件即载荷；目录提供 meta 层。无需 API key。",
     "apidocs.boundary.title": "边界（反泄漏）",
+
+    // Up/down color convention toggle
+    "colorconv.red": "红涨",
+    "colorconv.green": "绿涨",
+    "colorconv.aria": "切换涨跌颜色约定（红涨绿跌 / 绿涨红跌）",
+    "colorconv.hint": "涨跌颜色约定：默认国际惯例（绿涨红跌），可切换 A 股惯例（红涨绿跌）。本终端同时覆盖美股与 A 股，统一使用同一约定以保证混排页面的可读性。",
   },
   en: {
     "brand.name": "Aionis",
@@ -1229,6 +1237,8 @@ export const dict = {
     "stock.f4": "Form 4 insiders",
     "stock.reddit": "Reddit mentions",
     "stock.live.note": "Live price (display only, from the display-only worker — never enters the research pipeline)",
+    "stock.live.updated.prefix": "updated ",
+    "stock.live.updated.suffix": "s ago · ",
     "stock.search.label": "Switch ticker",
     "stock.search.hint": "tickers cover the frozen OOS latest month (US + CN)",
     "stock.search.placeholder": "Search ticker or name…",
@@ -1256,6 +1266,12 @@ export const dict = {
     "apidocs.usage.title": "Usage examples",
     "apidocs.usage.note": "Static files are the payload; the catalog is the meta layer. No API key required.",
     "apidocs.boundary.title": "Boundaries (anti-leakage)",
+
+    // Up/down color convention toggle
+    "colorconv.red": "Red up",
+    "colorconv.green": "Green up",
+    "colorconv.aria": "Toggle the up/down color convention",
+    "colorconv.hint": "Up/down color convention: international (green up, red down) by default, switchable to the A-share convention (red up, green down). The terminal covers both US and CN markets under ONE convention so mixed-region pages stay readable.",
   },
 } as const;
 

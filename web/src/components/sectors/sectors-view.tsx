@@ -41,7 +41,7 @@ function FavorBar({ score, minScore, maxScore }: { score: number; minScore: numb
       <div
         className={cn(
           "h-full rounded-full",
-          positive ? "bg-emerald-500/70 dark:bg-emerald-400/70" : "bg-rose-500/70 dark:bg-rose-400/70",
+          positive ? "bg-up-soft" : "bg-down-soft",
         )}
         style={{ width: `${Math.max(4, Math.min(100, pct))}%` }}
       />
@@ -147,7 +147,7 @@ export function SectorsView() {
       <Card className="overflow-hidden py-0">
         <CardHeader className="border-b">
           <CardTitle className="flex items-center gap-2 text-base">
-            <ArrowUpIcon className="size-4 text-emerald-600 dark:text-emerald-400" />
+            <ArrowUpIcon className="size-4 text-up" />
             {t("sectors.top_favored")}
           </CardTitle>
           <CardDescription>{t("sectors.top_favored_desc")}</CardDescription>
@@ -171,7 +171,7 @@ export function SectorsView() {
       <Card className="overflow-hidden py-0">
         <CardHeader className="border-b">
           <CardTitle className="flex items-center gap-2 text-base">
-            <ArrowDownIcon className="size-4 text-rose-600 dark:text-rose-400" />
+            <ArrowDownIcon className="size-4 text-down" />
             {t("sectors.least_favored")}
           </CardTitle>
           <CardDescription>{t("sectors.least_favored_desc")}</CardDescription>

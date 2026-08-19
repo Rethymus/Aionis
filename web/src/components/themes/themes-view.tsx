@@ -118,13 +118,13 @@ const DIR_KEY: Record<string, DirKey> = {
   neutral: "themes.direction.neutral",
 };
 const DIR_STYLE: Record<string, string> = {
-  bullish: "border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400",
-  bearish: "border-rose-500/40 bg-rose-500/10 text-rose-700 dark:text-rose-400",
+  bullish: "badge-up",
+  bearish: "badge-down",
   neutral: "border-muted-foreground/30 bg-muted/40 text-muted-foreground",
 };
 const DIR_BAR: Record<string, string> = {
-  bullish: "bg-emerald-500",
-  bearish: "bg-rose-500",
+  bullish: "bg-up",
+  bearish: "bg-down",
   neutral: "bg-muted-foreground/40",
 };
 

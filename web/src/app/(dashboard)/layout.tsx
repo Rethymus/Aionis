@@ -1,5 +1,6 @@
 import { AppSidebar } from "@/components/app-sidebar";
 import { BackToTop } from "@/components/back-to-top";
+import { ColorConvToggle } from "@/components/colorconv-toggle";
 import { CommandPalette } from "@/components/command-palette";
 import { DynamicBreadcrumb } from "@/components/dynamic-breadcrumb";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -11,6 +12,11 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 
+// Pre-paint application of the saved up/down color convention (same pattern
+// next-themes uses for theme): ships inside the prerendered HTML and runs
+// before hydration, so a CN-convention user never sees a green-up flash.
+const colorConvScript = `try{if(localStorage.getItem("aionis-colorconv")==="cn"){document.documentElement.dataset.colorconv="cn"}}catch(e){}`;
+
 export default function DashboardLayout({
   children,
 }: {
@@ -18,6 +24,8 @@ export default function DashboardLayout({
 }) {
   return (
     <SidebarProvider>
+      {/* eslint-disable-next-line react/no-danger -- static pre-paint seed, no user input */}
+      <script dangerouslySetInnerHTML={{ __html: colorConvScript }} />
       <AppSidebar />
       <SidebarInset>
         {/* Frosted-glass nav bar (Apple material): translucent, blurred,
@@ -34,6 +42,7 @@ export default function DashboardLayout({
           </div>
           <div className="ml-auto flex items-center gap-1 pr-4">
             <CommandPalette />
+            <ColorConvToggle />
             <LangToggle />
             <ThemeToggle />
           </div>

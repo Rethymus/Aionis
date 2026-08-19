@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
+import Link from "next/link";
 import {
   Bar,
   BarChart,
@@ -112,9 +113,11 @@ export function SmartMoneyView() {
                   <span className="truncate font-medium">→ {r.target}</span>
                 )}
                 {r.ticker ? (
-                  <Badge variant="secondary" className="ml-auto shrink-0 font-mono text-xs">
-                    {r.ticker}
-                  </Badge>
+                  <Link href={`/stock/${r.ticker}`} className="ml-auto shrink-0">
+                    <Badge variant="secondary" className="font-mono text-xs">
+                      {r.ticker}
+                    </Badge>
+                  </Link>
                 ) : null}
               </div>
             ))}

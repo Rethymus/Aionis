@@ -22,8 +22,8 @@ import {
 } from "recharts";
 
 function zTone(z: number) {
-  if (z >= 1) return "text-emerald-600 dark:text-emerald-400";
-  if (z <= -1) return "text-rose-600 dark:text-rose-400";
+  if (z >= 1) return "text-up";
+  if (z <= -1) return "text-down";
   return "text-muted-foreground";
 }
 
@@ -69,8 +69,8 @@ export function PositioningView() {
               className={cn(
                 "mt-1 text-2xl font-bold tabular-nums",
                 biasPositive
-                  ? "text-emerald-600 dark:text-emerald-400"
-                  : "text-rose-600 dark:text-rose-400",
+                  ? "text-up"
+                  : "text-down",
               )}
             >
               {comp.mean_z > 0 ? "+" : ""}
@@ -143,7 +143,7 @@ export function PositioningView() {
                   <div
                     className={cn(
                       "absolute top-0 h-full rounded-sm",
-                      isLong ? "left-1/2 bg-emerald-500/70" : "right-1/2 bg-rose-500/70",
+                      isLong ? "left-1/2 bg-up-soft" : "right-1/2 bg-down-soft",
                     )}
                     style={{ width: `${pct}%` }}
                   />

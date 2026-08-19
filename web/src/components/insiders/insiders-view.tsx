@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
+import Link from "next/link";
 import {
   Bar,
   BarChart,
@@ -58,7 +59,7 @@ export function InsidersView() {
         <Card>
           <CardContent className="p-4">
             <p className="text-xs text-muted-foreground">{t("insiders.buys")}</p>
-            <p className="mt-1 text-2xl font-bold tabular-nums text-emerald-600 dark:text-emerald-400">
+            <p className="mt-1 text-2xl font-bold tabular-nums text-up">
               {f.buys}
             </p>
           </CardContent>
@@ -66,7 +67,7 @@ export function InsidersView() {
         <Card>
           <CardContent className="p-4">
             <p className="text-xs text-muted-foreground">{t("insiders.sells")}</p>
-            <p className="mt-1 text-2xl font-bold tabular-nums text-rose-600 dark:text-rose-400">
+            <p className="mt-1 text-2xl font-bold tabular-nums text-down">
               {f.sells}
             </p>
           </CardContent>
@@ -122,8 +123,8 @@ export function InsidersView() {
                     contentStyle={{ fontSize: "12px" }}
                   />
                   <Legend />
-                  <Bar dataKey="buys" stackId="a" fill="#10b981" name={t("insiders.termBuys")} />
-                  <Bar dataKey="sells" stackId="a" fill="#f43f5e" name={t("insiders.termSells")} />
+                  <Bar dataKey="buys" stackId="a" fill="var(--up)" name={t("insiders.termBuys")} />
+                  <Bar dataKey="sells" stackId="a" fill="var(--down)" name={t("insiders.termSells")} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -149,15 +150,13 @@ export function InsidersView() {
                     variant="outline"
                     className={cn(
                       "shrink-0 px-1.5 py-0 text-xs",
-                      buy
-                        ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
-                        : "border-rose-500/40 bg-rose-500/10 text-rose-600 dark:text-rose-400",
+                      buy ? "badge-up" : "badge-down",
                     )}
                   >
                     {t(buy ? "insiders.buy" : "insiders.sell")}
                   </Badge>
                   <span className="w-32 shrink-0 truncate text-muted-foreground">{r.filer}</span>
-                  <span className="truncate font-medium">{r.ticker}</span>
+                  <Link href={`/stock/${r.ticker}`} className="truncate font-medium text-primary hover:underline">{r.ticker}</Link>
                   {r.shares != null ? (
                     <span className="ml-auto shrink-0 font-mono text-xs tabular-nums text-muted-foreground">
                       {r.shares.toLocaleString()} @ ${r.price ?? "—"}

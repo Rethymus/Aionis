@@ -112,7 +112,7 @@ export function MarketView() {
   const peakIndex = Math.max(...mc.market_series.map((m) => m.index));
 
   const kpis = [
-    { label: t("market.kpi.total_return"), value: `+${totalReturn.toFixed(0)}%`, tone: "text-emerald-600 dark:text-emerald-400", icon: TrendingUpIcon },
+    { label: t("market.kpi.total_return"), value: `+${totalReturn.toFixed(0)}%`, tone: "text-up", icon: TrendingUpIcon },
     { label: t("market.kpi.peak_index"), value: peakIndex.toFixed(0), tone: "text-foreground", icon: TrendingUpIcon },
     { label: t("market.kpi.peak_vix"), value: peakVix.toFixed(1), tone: "text-rose-600 dark:text-rose-400", icon: ActivityIcon },
     { label: t("market.kpi.span"), value: `${mc.n_months} ${t("market.kpi.months")}`, tone: "text-foreground", icon: CalendarIcon },

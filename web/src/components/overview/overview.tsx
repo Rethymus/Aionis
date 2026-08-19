@@ -152,7 +152,7 @@ function RankChange({ change }: { change: number | null }) {
     <span
       className={cn(
         "inline-flex items-center gap-0.5 text-xs tabular-nums",
-        up ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400",
+        up ? "text-up" : "text-down",
       )}
     >
       {up ? <ArrowUpIcon className="size-3" /> : <ArrowDownIcon className="size-3" />}

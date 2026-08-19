@@ -49,8 +49,8 @@ function ProbUpBar({ probUp, baseRate }: { probUp: number; baseRate: number }) {
   // Green when prob_up > 0.5 (bullish edge), rose when < 0.5 (bearish)
   const barColor =
     probUp > 0.5
-      ? "bg-emerald-500 dark:bg-emerald-400"
-      : "bg-rose-500 dark:bg-rose-400";
+      ? "bg-up"
+      : "bg-down";
 
   return (
     <div className="flex w-20 shrink-0 flex-col gap-0.5">
@@ -80,8 +80,8 @@ function Change({ change }: { change: number | null }) {
       className={cn(
         "inline-flex items-center gap-0.5 text-xs font-medium tabular-nums",
         up
-          ? "text-emerald-600 dark:text-emerald-400"
-          : "text-rose-600 dark:text-rose-400",
+          ? "text-up"
+          : "text-down",
       )}
     >
       {up ? <ArrowUpIcon className="size-3.5" /> : <ArrowDownIcon className="size-3.5" />}
@@ -132,8 +132,8 @@ function PickRow({ p, baseRate, showChange, livePrice }: PickRowProps) {
           className={cn(
             "w-16 shrink-0 text-right font-mono text-xs tabular-nums",
             livePrice.change_pct >= 0
-              ? "text-emerald-600 dark:text-emerald-400"
-              : "text-rose-600 dark:text-rose-400",
+              ? "text-up"
+              : "text-down",
           )}
           title={livePrice.price ? `¥${livePrice.price.toFixed(2)} / $${livePrice.price.toFixed(2)}` : undefined}
         >
@@ -147,8 +147,8 @@ function PickRow({ p, baseRate, showChange, livePrice }: PickRowProps) {
         className={cn(
           "w-12 shrink-0 text-right font-mono text-sm tabular-nums",
           positive
-            ? "text-emerald-600 dark:text-emerald-400"
-            : "text-rose-600 dark:text-rose-400",
+            ? "text-up"
+            : "text-down",
         )}
       >
         {p.score > 0 ? "+" : ""}
@@ -336,9 +336,9 @@ function TrackRecord() {
           const excess = m.excess;
           const excessColor =
             excess > 0.005
-              ? "text-emerald-600 dark:text-emerald-400"
+              ? "text-up"
               : excess < -0.005
-                ? "text-rose-600 dark:text-rose-400"
+                ? "text-down"
                 : "text-muted-foreground";
           return (
             <div key={`${m.month}-${m.region}`} className="border-b px-4 py-2 last:border-b-0">
@@ -354,8 +354,8 @@ function TrackRecord() {
                 {m.picks.map((p) => {
                   const retPct = (p.realized_return * 100).toFixed(2);
                   const tone = p.realized_return > 0
-                    ? "text-emerald-600 dark:text-emerald-400"
-                    : "text-rose-600 dark:text-rose-400";
+                    ? "text-up"
+                    : "text-down";
                   return (
                     <span key={p.ticker} className={cn("font-mono text-xs", tone)} title={`${p.name} · score ${p.score}`}>
                       {p.name || p.ticker} {retPct}%

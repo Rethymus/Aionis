@@ -41,11 +41,14 @@ export type PriceMap = Record<string, LivePrice>;
  */
 export function useLivePrices(
   tickers: { ticker: string; region: string }[],
-): { prices: PriceMap; status: PriceStatus } {
+): { prices: PriceMap; status: PriceStatus; updatedAt: number | null } {
   const [prices, setPrices] = useState<PriceMap>({});
   const [status, setStatus] = useState<PriceStatus>(
     WORKER_URL ? "loading" : "disabled",
   );
+  // Epoch ms of the last SUCCESSFUL fetch — drives the "updated Xs ago"
+  // liveness indicator (relative time, no wall-clock parsing needed).
+  const [updatedAt, setUpdatedAt] = useState<number | null>(null);
 
   useEffect(() => {
     if (!WORKER_URL) {
@@ -82,6 +85,7 @@ export function useLivePrices(
         if (!cancelled) {
           setPrices(merged);
           setStatus("ok");
+          setUpdatedAt(Date.now());
         }
       } catch {
         if (!cancelled) setStatus("error");
@@ -98,5 +102,5 @@ export function useLivePrices(
     };
   }, [tickers]);
 
-  return { prices, status };
+  return { prices, status, updatedAt };
 }

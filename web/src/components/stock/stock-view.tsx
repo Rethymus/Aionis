@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Card,
   CardContent,
@@ -81,7 +81,7 @@ function Change({ change }: { change: number | null }) {
     <span
       className={cn(
         "inline-flex items-center gap-0.5 text-xs font-medium tabular-nums",
-        up ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400",
+        up ? "text-up" : "text-down",
       )}
       title={up ? `↑ ${change}` : `↓ ${Math.abs(change)}`}
     >
@@ -167,9 +167,16 @@ export function StockView({ ticker }: { ticker: string }) {
     () => stockUniverse.stocks.find((s) => s.ticker === ticker),
     [ticker],
   );
-  const { prices } = useLivePrices(
+  const { prices, updatedAt } = useLivePrices(
     stock ? [{ ticker: stock.ticker, region: stock.region }] : [],
   );
+  // 1s tick so the relative "updated Xs ago" indicator stays live.
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 1_000);
+    return () => clearInterval(id);
+  }, []);
+  const agoSec = updatedAt ? Math.max(0, Math.round((now - updatedAt) / 1000)) : null;
 
   if (!stock) {
     return (
@@ -227,15 +234,24 @@ export function StockView({ ticker }: { ticker: string }) {
             {stock.sector ? <span>{stock.sector}</span> : null}
             {live?.price !== undefined && live?.price !== null ? (
               <span className="font-mono tabular-nums" title={t("stock.live.note")}>
-                {live.as_of ? `${live.as_of} · ` : ""}
+                {agoSec !== null ? (
+                  <span
+                    className="mr-1 text-muted-foreground/70"
+                    title={live.as_of ?? undefined}
+                  >
+                    {t("stock.live.updated.prefix")}
+                    {agoSec}
+                    {t("stock.live.updated.suffix")}
+                  </span>
+                ) : null}
                 {live.price.toFixed(2)}
                 {live.change_pct !== null && live.change_pct !== undefined ? (
                   <span
                     className={cn(
                       "ml-1",
                       live.change_pct >= 0
-                        ? "text-emerald-600 dark:text-emerald-400"
-                        : "text-rose-600 dark:text-rose-400",
+                        ? "text-up"
+                        : "text-down",
                     )}
                   >
                     {live.change_pct >= 0 ? "+" : ""}
@@ -259,7 +275,7 @@ export function StockView({ ticker }: { ticker: string }) {
           </CardHeader>
           <CardContent className="grid grid-cols-2 gap-4 p-4">
             <Stat label={t("stock.score")} hint={t("stock.score.hint")}>
-              <span className={stock.score >= 0 ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"}>
+              <span className={stock.score >= 0 ? "text-up" : "text-down"}>
                 {stock.score > 0 ? "+" : ""}
                 {stock.score.toFixed(2)}
               </span>
@@ -290,8 +306,8 @@ export function StockView({ ticker }: { ticker: string }) {
                   className={cn(
                     "h-full rounded-full",
                     stock.prob_up > 0.5
-                      ? "bg-emerald-500 dark:bg-emerald-400"
-                      : "bg-rose-500 dark:bg-rose-400",
+                      ? "bg-up"
+                      : "bg-down",
                   )}
                   style={{ width: `${Math.round(stock.prob_up * 100)}%` }}
                 />
