@@ -1,5 +1,13 @@
 # state/current.md — read first each session
 
+- **active (2026-08-20) ① 终局形态定帧 + P0 三件套（业主定帧"小隐寺 = 最终目标形态，只增不删，删减后议"；来自小隐寺深挖分析的 P0 落地）：**
+  **① 方向定帧（业主原话）**：小隐寺就是 Aionis 追求的最终形态——目标 = 在其全形之上**叠加**项目特色（反泄漏/溯源/可证伪），删减是以后的事。此定帧取代此前"不建议模仿 SSE/快讯"的保守判断——full-parity 为方向，静态架构内的可达项都进候选。
+  **② 涨跌色约定系统**：双区域终端的跨文化符号冲突修复——globals.css 新增 `--up/--down` CSS 变量（明暗四组合）+ `[data-colorconv="cn"]` 红涨绿跌切换 + 六个方向工具类（text-up/down、bg-up/down、soft、badge-up/down）。**语义色（信任 emerald、风险 rose）明确不动**——只有数值方向站点迁移（10 文件：picks/stock/overview/sectors/positioning/themes/insiders/reddit/market + recharts fill=var(--up)）。头部新 ColorConvToggle（箭头实时预览当前约定的 up 色，localStorage 持久化 + layout 内联脚本预水合防闪烁，next-themes 同款模式）。
+  **③ 个股回路闭合**：insiders（5 链）/reddit 表 ticker → `/stock/[ticker]`；smart-money 徽章链接就位但 **smart_money.json 60 行 ticker 全空**（发现预存数据缺陷：`_refresh_smart_money_recent_only` 写入的行丢失 ticker/filer 解析，filer=占位符——日更 lane 缺陷，待修，非本轮范围）。
+  **④ 实时指示器**：live-prices 钩子返回 `updatedAt`；个股页 1s tick 相对时间（"0 秒前 · 259.74 -7.26%"实测），绝对时间戳退到 tooltip。
+  **⑤ 验证**：tsc 0 + eslint 净 + build 1,446 页绿 + 40 契约测试绿 + ruff 净（**注：`docs/code-review/` 为并发 session 未跟踪目录，7 个预存 E501 非我职责，验证以 --exclude 为准**）；浏览器实测：切换按钮点击后 `html[data-colorconv=cn]` 且 `.text-up` 实测 `lab(63.7 60.7 31.3)`=红，切回后 `lab(75 -58.1 18.9)`=绿；重载后相对时间指示器实显。
+  **⑥ 边界**：纯 display 层；0 ledger/frozen/config/prereg/OOS。
+
 - **active (2026-08-19) ② 公共静态数据 API（模仿小隐寺数据中台；业主指令"不抓数据、从模仿开始，注意其 API 使用说明"）：**
   **① 定帧**：业主明示不消费小隐寺数据/接口，从**模仿**其数据中台形态入手——它有统一 API + 每路径 x-status/x-license 标注 + 数据健康水位线，Aionis 建同构物：**把 26 个已提交面板正式化为有文档、有目录、带 license/新鲜度标注的静态数据 API**（GitHub Pages 直出，只读无鉴权无服务端）。Aionis 演绎：license 标注 = 7-gate 摄入事实，接口层即可判读数据出处与是否该推进。
   **② 交付四件**：(a) `export_api_catalog()` → `api_catalog.json`（26 端点 × license/一手来源/新鲜度/as_of，license 映射镜像 docs/data-intake-*；未知 key 诚实落 "unverified — do not ingest"）；(b) `web/scripts/build-api.mjs`（prebuild 钩子，`pnpm build` 自动触发）：镜像 src/data/aionis/*.json → `public/api/v1/panels/`（28 文件）+ catalog.json + health.json + **openapi.json**（OpenAPI 3.1，4 路径含实时价 Worker，面板参数级 x-aionis-freshness/license/source/as-of）+ README.md——gitignored 构建产物，部署 API 永不与面板漂移；(c) `/api-docs` 文档页（参考组侧栏入口"数据 API"）：端点表（GET badge + 可点开真实 JSON）+ 26 面板目录表（新鲜度 badge/license/来源/as_of，面板名直链线上 JSON）+ curl/fetch 示例 + 反泄漏边界卡（7-gate 摄入要求 + worker display-only）；(d) `package.json` prebuild + `.gitignore` public/api/。

@@ -8,6 +8,21 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-20 (a) 终局定帧 + P0 三件套：涨跌色约定 / 回路闭合 / 实时指示器
+
+**业主定帧（方向性）**：小隐寺 = Aionis 的最终目标形态；在其全形上**只做加法**（叠加反泄漏/溯源/可证伪特色），删减是以后的事。
+
+**交付（display-only）**：
+1. **涨跌色约定系统**：`--up/--down` 变量（浅/深 × intl/cn 四组合）+ `[data-colorconv="cn"]` + 工具类 text-up/down、bg-up/down、bg-up/down-soft（color-mix）、badge-up/down。10 个视图的**数值方向色**迁移（picks 概率条/评分/排名箭头/回测收益、stock 全套、overview RankChange、sectors 亲和条、positioning 净多空、themes 方向徽章+DIR_BAR、insiders 买卖+图表 fill=var(--up/down)、reddit 情绪徽章、market 总收益）。**语义色（信任 emerald/风险 rose）有意不迁**。头部 ColorConvToggle（实时预览箭头色）+ localStorage + 预水合内联脚本（防绿涨闪烁，next-themes 同款）。
+2. **回路闭合**：insiders/reddit 表 ticker→个股页；smart-money 徽章链接就位。
+3. **实时指示器**：live-prices `updatedAt` + 个股页 1s tick "X 秒前"（绝对时戳退 tooltip）。
+
+**发现（预存缺陷，非本轮引入，待修）**：`smart_money.json` recent 60 行 ticker 全空、filer="申报人见原文"——`_refresh_smart_money_recent_only`（5ea6649）从日更索引合并的行丢失 ticker/filer 解析 → 回路在该面板自动降级 + stock_universe 佐证 join 拿不到 13D 计数。修复属日更 lane：recent-only 路径需带 ticker 解析。
+
+**注意**：工作树出现并发 session 的未跟踪目录 `docs/code-review/`（7 个预存 E501）——不碰不提交，验证 ruff 以 `--exclude docs/code-review` 为准。
+
+**验证链**：tsc 0 / eslint 净 / build 1,446 页 / 40 契约测试 / ruff（排除并发目录）净 / 浏览器实测色彩切换（cn 下 .text-up=lab(63.7,60.7,31.3) 红；intl=绿）+ 持久化 + "0 秒前 · 259.74"实显 + confirmation 子页链接计数（insiders 5 / reddit 1）。
+
 ## 2026-08-19 (u) 公共静态数据 API — 模仿小隐寺数据中台（不消费其数据）
 
 **业主定帧**："不要直接抓取小隐寺数据，而是应该从模仿开始，以及小隐寺数据本身就有提供该项目 api 的使用说明"——即学其数据平台形态（统一 API + 每路径 x-status/x-license + 健康水位线），不碰其数据/接口。
