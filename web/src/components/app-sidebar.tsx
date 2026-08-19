@@ -20,6 +20,7 @@ import {
   FileTextIcon,
   UsersIcon,
   ActivityIcon,
+  LayoutGridIcon,
   TerminalIcon,
 } from "lucide-react";
 
@@ -41,6 +42,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   // routes (URLs unchanged) under one nav group.
   const navEvidence = [
     { title: t("nav.group.picks"), url: "/picks", icon: <FlaskConicalIcon /> },
+    { title: t("nav.heatmap"), url: "/heatmap", icon: <LayoutGridIcon /> },
     { title: t("nav.group.confirm"), url: "/confirmation", icon: <UsersIcon /> },
   ];
   const navValidity = [
