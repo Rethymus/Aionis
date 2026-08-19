@@ -1,5 +1,13 @@
 # state/current.md — read first each session
 
+- **active (2026-08-19) ① 小隐寺对照探索 + 个股八维度页 + 数据健康地图（业主授权"推进到满意"；源自 08-19 A 股暴跌日 × data.xiaoyinsi.com 全站对照分析）：**
+  **① 方向分析（浏览器实探小隐寺全站）**：八维度美股另类终端（Reddit/13F/政客/内部人/IPO/13D/8-K/高管）+ 统一数据中台 OpenAPI（x-status/x-license、Parquet 日分区、API key 商业化雏形）+ 数据健康水位线面板。结论：其数据 license 不透明（"第三方非公开数据库"）**不可抓取**，正确姿势 = 产品形态借鉴 + 一手公共源自建；其 NVDA 13F"共 0 家"覆盖缺口反证 Aionis 契约闸门价值。已交付优先级最高的两项 display 主线（E3 forward-live 涉及 append-only 前向账本，仍留业主显式 GO 门未擅启）。
+  **② `/stock/[ticker]` 个股下钻页（1,421 静态页）**：冻结 OOS 宇宙最新月全覆盖（US 492 + CN 929）。每页 = 模型读数（score/rank/percentile/rank_change + Platt prob_up 对 base rate）+ 近 12 月评分走势 sparkline（均值/σ/月数）+ 板块语境（区域板块表排名）+ 独立佐证计数（13D/Form4/Reddit join，缺席=诚实"—"）+ live 实时价（display-only Worker，CN 也通——海光信息实测 259.74 · **-7.26%**，恰为当日半导体暴跌活例）+ 标的切换器（全宇宙客户端搜索）+ NullDisclaimer + 冻结 provenance badge + 方法学全文。`stock_universe.json`（553KB compact）**独立模块不进共享 barrel**（index.ts 教训：单一合并对象=单一共享 chunk；独立模块=仅 stock 路由加载）。入口：picks 表 25 行 + overview MiniPicks 4 行 → Link。
+  **③ `/data-health` 数据健康地图**：26 面板三类新鲜度（**日更 9 / 源节奏 2 / 冻结 15**），as_of 从每面板自身字段提取（不伪造），exported_at = 导出 lane 最后写入日。冻结类说明 = "派生自 #49 血统，推进即 rerun-to-significance，唯一合法前进 = E3 或新预注册阶段"——08-16 业主"大量数据没有日更"之问的结构化永久答案。侧栏守卫组入口。
+  **④ 真 bug 修复（构建中发现）**：`export_picks` prev-month rank 帧**未按 region 过滤**——US/CN 月末 ~70% 月份重合（如 2026-05-29），rank_change 在混合 ~1,400 行帧上排名，US picks 变化最多偏 +929（TROW 类异常）。修：region-scoped 帧（两处：export_picks + 新 export_stock_universe），picks.json 已重生成（10 行 US rank_change 修正；CN 上月 07-31 非 US 日期未受污染）。
+  **⑤ 验证链**：38 web 契约测试绿（33+5 新：data-health 形状/as_of 抽取钉住/stock-universe 形状+区域 rank 调和含污染界/覆盖 picks/披露）；tsc 0 + next build 1,445 页（23+1,421+data-health，10.9s/11 workers）+ eslint 净 + 全仓 ruff 净 + 全套 pytest 0 失败；本地静态服务浏览器实测三页（data-health 三类卡片全渲染 / 海光个股页全要素 / 链接 25+4 就位）。headline_provenance as_of 时间戳截断为日期。
+  **⑥ 边界**：纯 display 层（2 新导出 + 2 新视图族 + 接线 + 5 测试）；**0 ledger/frozen/config/prereg/OOS** 改动；未跑 research/forward；E3/Track A 未触（业主门）。out/ 197MB 为 gitignored 构建产物。
+
 - **active (2026-08-16) ⑥ Apple HIG 设计语言重构（业主定帧"以 Apple 简约设计范式为纲，放开手脚"；`518fbdb` 已部署绿 `32041640646`）：**
   **① 架构决策**：业主"抛弃现有设计约束"→ 落地为**设计系统层重构**（token + 共享原语，5 文件改动辐射 23 路由），而非逐页重绘——语义层（emerald=信任/slate=已定/amber=统计警示）保留，系统层全换 Apple。`next/font` Geist 网络字体移除 → 纯系统栈（SF/Segoe/PingFang/YaHei；Apple 签名 + 零字体网络成本）。
   **② Apple 三支柱落地**：**Clarity**——SF 系统栈 + 浅色 antialiased/深色 subpixel 渲染 + 蓝 ::selection；**Deference**——毛玻璃吸顶导航栏（bg-background/70 + blur-xl + saturate-150）+ StickyTabs 同材质钉在其下（h-16），双层 chrome = iOS 材质堆栈，视觉模型审图"无接缝"；**Depth**——浅色发丝边 + 双层柔影，深色表面抬升（#1C1C1E 卡 on 近黑画布）代替描边，圆角 10→12px 基准（卡 ~17px）。

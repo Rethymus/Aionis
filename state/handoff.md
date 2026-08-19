@@ -8,6 +8,26 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-19 (t) 小隐寺对照 + 个股下钻页 + 数据健康地图 + rank_change 跨区污染修复
+
+**背景**：业主以 08-19 A 股暴跌（沪指 -2.40% 失守 3900、创业板 -6.26%、银行逆势、CPO/存储重挫、宇树 +460%）+ data.xiaoyinsi.com 全站为引，要求深度探索项目发展方向；随后授权"推进到满意为止，允许试错"。
+
+**方向分析结论（浏览器实探小隐寺：首页/个股页/API docs）**：
+- 八维度美股另类数据终端 + 统一数据中台（OpenAPI 3.1、X-API-Key、每路径 x-status/x-license、每日 Parquet 分区、/health 源水位线）——基建形态值得学（→ 本轮数据健康页），数据**不可用**（license 不透明，7-gate G1 挂）。
+- 弱点 = Aionis 差异化机会：无 PIT/审计链、覆盖缺口（NVDA 13F"共 0 家"）、评分卡无溯源。
+- E3 forward-live 价值被暴跌日放大（冻结 CN picks 主力=半导体，恰在风暴眼）但 **append-only 前向账本仍留业主显式 GO**，未擅启。
+
+**交付（全部 display-only）**：
+1. **`/stock/[ticker]`（1,421 页 SSG）**：US 492 + CN 929 冻结 OOS 最新月全覆盖。模型读数（score/rank X of N/percentile/rank_change/prob_up vs base_rate）+ 12 月评分 sparkline（均值/σ）+ 板块语境（区域板块表 standing）+ 佐证计数（smart_money/form4/reddit join）+ live 价（Worker display-only，CN 通）+ 切换器（客户端全宇宙搜索）+ NullDisclaimer + 冻结 badge + 方法学。`stock-universe.ts` 独立模块（553KB 不进共享 barrel——Turbopack 单 barrel=单共享 chunk 的既定教训）。入口：picks 表 + overview MiniPicks。
+2. **`/data-health`**：26 面板 → 日更 9 / 源节奏 2 / 冻结 15；as_of 读面板自身字段（缺=诚实 null）；exported_at=lane 写入日；冻结框定"推进即泄漏，E3/新阶段是唯一合法前进"。侧栏守卫组。`export_data_health()` 排 main() 最后（读全部已导出 JSON）。
+3. **rank_change 跨区污染修复**：`export_picks` prev 帧未过滤 region，US/CN 月末 61/87 重合 → 混合帧排名，US picks rank_change 最多偏 +929（症状：TROW 829 > n_region 492 的数学不可能值）。两处修（picks + stock_universe），picks.json 重生成（10 行修正，CN 当月未受染）。契约测试以 `|rank_change| ≤ n-1` 界钉死。
+
+**验证**：38 web 契约测试（+5 新）绿；tsc 0；next build 1,445 页绿（stock SSG 10.9s/11 workers）；eslint 净；全仓 ruff 净；全套 pytest 0 失败；本地静态服务 + IAB 浏览器实测（data-health 三卡全渲染、海光个股页实测 live -7.26%、25+4 入口链接在 built HTML 验证）。
+
+**边界**：0 ledger/frozen/config/prereg/OOS；未跑 research/forward；E3/Track A 未触。
+
+**遗留候选（未做，有理由）**：cmdk 面板未加个股入口（1,421 项不可枚举，picks 入口已够）；政客交易（STOCK Act，一手源公共域可过 7-gate，PDF 解析工程量大，候选）；13F 机构持仓模块（EDGAR 公共域，中大型工程，候选）；A 股行业级分类（baostock，handoff (p) 既有评估，需 CI 协调）。
+
 ## 2026-08-16 (s) Apple HIG 设计语言重构（token 层，5 文件辐射全站）
 
 **范式**：Clarity（SF 系统栈/双模式抗锯齿/蓝选区）× Deference（毛玻璃吸顶导航 + 同材质 StickyTabs = iOS 材质堆栈）× Depth（浅发丝边+双层柔影 / 深表面抬升，圆角 12px 基准）。
