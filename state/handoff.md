@@ -8,6 +8,22 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-19 (u) 公共静态数据 API — 模仿小隐寺数据中台（不消费其数据）
+
+**业主定帧**："不要直接抓取小隐寺数据，而是应该从模仿开始，以及小隐寺数据本身就有提供该项目 api 的使用说明"——即学其数据平台形态（统一 API + 每路径 x-status/x-license + 健康水位线），不碰其数据/接口。
+
+**交付**：
+1. **`api_catalog.json`**（`export_api_catalog()`，排 main() 最后、读 data_health）：26 端点 × {license, 一手来源, 新鲜度, as_of, path}。license 映射 `_API_LICENSE` 镜像 docs/data-intake-*（SEC/CFTC/FRED=公共域，Tiingo/Alpaca/Reddit=vendor ToS display-only，模型面板=repo MIT）；未映射 key 诚实 "unverified — do not ingest"（测试钉死不出现）。
+2. **`web/scripts/build-api.mjs`**（`prebuild`，CI `pnpm build` 自动跑）：镜像 28 个面板 JSON → `public/api/v1/panels/` + 根级 catalog.json / health.json / **openapi.json**（OpenAPI 3.1：4 路径，`/api/v1/panels/{panel}` 带 26 个参数级 x-aionis-freshness/license/source/as-of，实时价 Worker 单列 server）/ README.md。产物 gitignored（`public/api/`）→ 部署 API 与终端面板同源、永不漂移。
+3. **`/api-docs` 页**（参考组侧栏"数据 API"）：端点表（链接直开线上 JSON）+ 面板目录表（新鲜度 badge + license + 来源 + as_of，面板名→线上 JSON）+ curl/fetch 示例 + 反泄漏边界卡（研究摄入须过 7-gate；worker display-only 绝不进 OOS）。i18n zh+en。
+4. **测试**：+2 契约（catalog 形状/全 license 非空/与 data_health 键集调和/worker note；披露 7-gate+GitHub Pages）→ 40 web 契约绿。
+
+**踩坑（重要）**：`npx next build` **不触发** prebuild 生命周期（只 `pnpm build`/`npm run build` 触发）——本地验证先手动 `node scripts/build-api.mjs`；CI 无此问题。
+
+**验证链**：tsc 0 / build 1,446 页 / eslint 净 / ruff 净 / 全套 pytest 0 失败 / 本地 curl 六端点 200 / IAB 实测 /api-docs 全渲染。
+
+**边界**：0 ledger/frozen/config/prereg/OOS；未请求小隐寺任何端点；API 方法学自declares display-only + 7-gate 摄入门。
+
 ## 2026-08-19 (t) 小隐寺对照 + 个股下钻页 + 数据健康地图 + rank_change 跨区污染修复
 
 **背景**：业主以 08-19 A 股暴跌（沪指 -2.40% 失守 3900、创业板 -6.26%、银行逆势、CPO/存储重挫、宇树 +460%）+ data.xiaoyinsi.com 全站为引，要求深度探索项目发展方向；随后授权"推进到满意为止，允许试错"。

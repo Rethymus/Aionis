@@ -1,5 +1,12 @@
 # state/current.md — read first each session
 
+- **active (2026-08-19) ② 公共静态数据 API（模仿小隐寺数据中台；业主指令"不抓数据、从模仿开始，注意其 API 使用说明"）：**
+  **① 定帧**：业主明示不消费小隐寺数据/接口，从**模仿**其数据中台形态入手——它有统一 API + 每路径 x-status/x-license 标注 + 数据健康水位线，Aionis 建同构物：**把 26 个已提交面板正式化为有文档、有目录、带 license/新鲜度标注的静态数据 API**（GitHub Pages 直出，只读无鉴权无服务端）。Aionis 演绎：license 标注 = 7-gate 摄入事实，接口层即可判读数据出处与是否该推进。
+  **② 交付四件**：(a) `export_api_catalog()` → `api_catalog.json`（26 端点 × license/一手来源/新鲜度/as_of，license 映射镜像 docs/data-intake-*；未知 key 诚实落 "unverified — do not ingest"）；(b) `web/scripts/build-api.mjs`（prebuild 钩子，`pnpm build` 自动触发）：镜像 src/data/aionis/*.json → `public/api/v1/panels/`（28 文件）+ catalog.json + health.json + **openapi.json**（OpenAPI 3.1，4 路径含实时价 Worker，面板参数级 x-aionis-freshness/license/source/as-of）+ README.md——gitignored 构建产物，部署 API 永不与面板漂移；(c) `/api-docs` 文档页（参考组侧栏入口"数据 API"）：端点表（GET badge + 可点开真实 JSON）+ 26 面板目录表（新鲜度 badge/license/来源/as_of，面板名直链线上 JSON）+ curl/fetch 示例 + 反泄漏边界卡（7-gate 摄入要求 + worker display-only）；(d) `package.json` prebuild + `.gitignore` public/api/。
+  **③ 踩坑**：`npx next build` **不走** npm 生命周期钩子（prebuild 只在 `pnpm build`/`npm run build` 触发；CI 用 pnpm ✓，本地验证需先手动 `node scripts/build-api.mjs`）。
+  **④ 验证**：40 web 契约测试（+2：catalog 形状/license 非空且全覆盖/与 data_health 调和；披露 7-gate+display-only+GitHub Pages）绿；tsc 0 + build 1,446 页 + eslint 净 + 全仓 ruff 净 + 全套 pytest 0 失败；本地静态服务 curl 六端点 200（catalog/health/openapi/cot/stock_universe/api-docs）+ IAB 浏览器实测 /api-docs 全要素渲染（面板目录 26 行带 license 列实显）。
+  **⑤ 边界**：纯 display 层；**0 ledger/frozen/config/prereg/OOS**；不请求小隐寺任何接口/数据（license 门 + 业主指令）；API 披露"研究摄入须过 7-gate"。
+
 - **active (2026-08-19) ① 小隐寺对照探索 + 个股八维度页 + 数据健康地图（业主授权"推进到满意"；源自 08-19 A 股暴跌日 × data.xiaoyinsi.com 全站对照分析）：**
   **① 方向分析（浏览器实探小隐寺全站）**：八维度美股另类终端（Reddit/13F/政客/内部人/IPO/13D/8-K/高管）+ 统一数据中台 OpenAPI（x-status/x-license、Parquet 日分区、API key 商业化雏形）+ 数据健康水位线面板。结论：其数据 license 不透明（"第三方非公开数据库"）**不可抓取**，正确姿势 = 产品形态借鉴 + 一手公共源自建；其 NVDA 13F"共 0 家"覆盖缺口反证 Aionis 契约闸门价值。已交付优先级最高的两项 display 主线（E3 forward-live 涉及 append-only 前向账本，仍留业主显式 GO 门未擅启）。
   **② `/stock/[ticker]` 个股下钻页（1,421 静态页）**：冻结 OOS 宇宙最新月全覆盖（US 492 + CN 929）。每页 = 模型读数（score/rank/percentile/rank_change + Platt prob_up 对 base rate）+ 近 12 月评分走势 sparkline（均值/σ/月数）+ 板块语境（区域板块表排名）+ 独立佐证计数（13D/Form4/Reddit join，缺席=诚实"—"）+ live 实时价（display-only Worker，CN 也通——海光信息实测 259.74 · **-7.26%**，恰为当日半导体暴跌活例）+ 标的切换器（全宇宙客户端搜索）+ NullDisclaimer + 冻结 provenance badge + 方法学全文。`stock_universe.json`（553KB compact）**独立模块不进共享 barrel**（index.ts 教训：单一合并对象=单一共享 chunk；独立模块=仅 stock 路由加载）。入口：picks 表 25 行 + overview MiniPicks 4 行 → Link。
