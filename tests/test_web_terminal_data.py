@@ -803,7 +803,10 @@ def test_api_catalog_shape() -> None:
     The catalog is the meta layer of the deployed static API (public/api/v1/):
     license and primary source are non-negotiable (a missing license would
     default to 'unverified — do not ingest'), and the freshness classes must
-    reconcile with the data-health map.
+    reconcile with the data-health map. Planned endpoints (status='planned',
+    xiaoyinsi-style honest disclosure of not-yet-built panels) are exempt from
+    the freshness reconciliation — they describe NO existing health panel by
+    construction — but must still carry license + source + a reserved path.
     """
     cat = _load("api_catalog.json")
     assert cat["status"] == "ok"
@@ -813,14 +816,19 @@ def test_api_catalog_shape() -> None:
     dh_keys = {p["key"] for p in dh["panels"]}
     valid = {"daily", "cadence", "frozen"}
     for e in eps:
-        assert e["key"] in dh_keys, f"{e['key']} missing from data_health"
-        assert e["freshness"] in valid
-        assert e["method"] == "GET" and e["status"] == "available"
+        if e["status"] == "planned":
+            assert e["as_of"] is None, "a planned endpoint has no observation by construction"
+            assert e["freshness"] == "planned"
+        else:
+            assert e["freshness"] in valid
+            assert e["key"] in dh_keys, f"{e['key']} missing from data_health"
+            assert "unverified" not in e["license"], f"{e['key']} license unmapped"
+        assert e["method"] == "GET" and e["status"] in {"available", "planned"}
         assert e["path"] == f"/api/v1/panels/{e['file']}"
         assert isinstance(e["license"], str) and len(e["license"]) > 5
-        assert "unverified" not in e["license"], f"{e['key']} license unmapped"
         assert isinstance(e["source"], str) and len(e["source"]) > 3
-    assert {e["key"] for e in eps} == dh_keys, "catalog must cover every health panel"
+    available = [e for e in eps if e["status"] == "available"]
+    assert {e["key"] for e in available} == dh_keys, "catalog must cover every health panel"
     lp = cat["live_prices"]
     assert lp["server"].startswith("https://")
     assert len(lp["paths"]) == 2
@@ -834,3 +842,117 @@ def test_api_catalog_disclosure() -> None:
     assert "7-gate" in m
     assert "rerun-to-significance" in m or "frozen" in m
     assert "GitHub Pages" in cat["base_note"]
+
+
+# --- smart_money ticker/filer restoration (daily-index dedup round) ----------
+
+
+def test_smart_money_recent_ticker_and_filer_restored() -> None:
+    """recent_filings must carry parsed tickers + real filers where resolvable.
+
+    Regression: the EDGAR daily-index merge built rows with ticker='' and the
+    placeholder filer — the newest 60 were ALL empty (ticker→stock-page loop
+    dead, stock_universe 13D join empty). Fix: per-accession dedup (the daily
+    index lists a filing under subject AND filer entities — the raw aggregate
+    double-listed ~40% of rows); the listed company is the subject, co-indexed
+    names become the filer, tickers backfilled offline from the cached SEC
+    company_tickers snapshot (+ frozen EFTS name map).
+
+    Thresholds are MEASURED floors, not aspirations: recent 13D windows always
+    contain filings on unlisted targets (funds, LLCs, individuals — no ticker
+    exists) and both-listed groups with no offline subject discriminator, and
+    rows only the committed JSON covers (fresher cron cache elsewhere) arrive
+    as single-member accessions whose filer cannot be re-derived offline.
+    Measured on 2026-08-19: 73% ticker / 53% real filer (90% / 73% once the
+    local daily aggregate catches up to the committed newest filings).
+    """
+    sm = _load("smart_money.json")
+    recent = sm["recent_filings"]
+    assert len(recent) == 60, "the live window is exactly the newest 60"
+    n_ticker = sum(1 for r in recent if r.get("ticker"))
+    assert n_ticker / len(recent) >= 0.70, (
+        f"ticker coverage regressed: {n_ticker}/{len(recent)}"
+    )
+    for r in recent:
+        assert isinstance(r["filer"], str) and r["filer"], "filer must be a non-empty string"
+        assert isinstance(r["target"], str) and r["target"]
+        assert isinstance(r["date"], str) and len(r["date"]) == 10
+    n_real_filer = sum(1 for r in recent if not r["filer"].startswith("("))
+    assert n_real_filer / len(recent) >= 0.50, (
+        f"real-filer rate regressed: {n_real_filer}/{len(recent)}"
+    )
+    # A resolved ticker is an uppercase symbol (EFTS parens convention / SEC
+    # snapshot), never whitespace or lowercase noise.
+    for r in recent:
+        if r["ticker"]:
+            assert r["ticker"] == r["ticker"].strip().upper()
+
+
+def test_smart_money_source_health_counts_agree_with_panel() -> None:
+    """data_health.source_health must mirror the committed smart_money panel."""
+    dh = _load("data_health.json")
+    sh = dh["source_health"]["smart_money"]
+    sm = _load("smart_money.json")
+    recent = sm["recent_filings"]
+    assert isinstance(sh["n_recent"], int) and sh["n_recent"] == len(recent)
+    assert isinstance(sh["ticker_null"], int)
+    assert sh["ticker_null"] == sum(1 for r in recent if not r.get("ticker"))
+    assert sh["ticker_null"] <= sh["n_recent"]
+    assert isinstance(sh["days_since_latest"], int) and sh["days_since_latest"] >= 0
+
+
+def test_data_health_source_health_shape() -> None:
+    """source_health quantifies field-level quality per source, exact schema."""
+    dh = _load("data_health.json")
+    sh = dh["source_health"]
+    assert set(sh) == {"smart_money", "reddit", "cot"}
+    assert set(sh["smart_money"]) == {"ticker_null", "n_recent", "days_since_latest"}
+    assert set(sh["reddit"]) == {"bull_ratio_null", "n_picks"}
+    assert set(sh["cot"]) == {"weeks_since_latest"}
+    reddit = _load("reddit.json")
+    picks = reddit.get("picks", [])
+    assert isinstance(sh["reddit"]["n_picks"], int) and sh["reddit"]["n_picks"] == len(picks)
+    assert isinstance(sh["reddit"]["bull_ratio_null"], int)
+    assert sh["reddit"]["bull_ratio_null"] == sum(
+        1 for p in picks if p.get("bull_ratio") is None
+    )
+    assert isinstance(sh["cot"]["weeks_since_latest"], int)
+    assert sh["cot"]["weeks_since_latest"] >= 0
+    # The counts are computed on the committed panels — reconcile spot-check.
+    assert "source_health" in dh["methodology"]
+
+
+def test_planned_disclosure_present_and_consistent() -> None:
+    """Planned (not-built) panels disclosed in data_health + api_catalog alike.
+
+    Honesty pattern learned from the xiaoyinsi datahub (x-status: planned):
+    the panel count must never be mistaken for coverage. The three planned
+    keys are politician-trades (STOCK Act, public-domain primary sources),
+    13f-holdings (EDGAR 13F), cn-industry-classification (baostock) — and the
+    catalog endpoints must carry status='planned', as_of=null and a reserved
+    future path, with the key sets agreeing across both files.
+    """
+    dh = _load("data_health.json")
+    planned = dh["planned"]
+    assert {p["key"] for p in planned} == {
+        "politician-trades", "13f-holdings", "cn-industry-classification",
+    }
+    for p in planned:
+        assert isinstance(p["key"], str) and isinstance(p["note"], str) and p["note"]
+    planned_keys = {p["key"] for p in planned}
+    panel_keys = {p["key"] for p in dh["panels"]}
+    assert not (planned_keys & panel_keys), "a planned key must not shadow a live panel"
+
+    cat = _load("api_catalog.json")
+    cat_planned = [e for e in cat["endpoints"] if e["status"] == "planned"]
+    assert {e["key"] for e in cat_planned} == planned_keys, (
+        "api_catalog planned keys must match data_health planned keys"
+    )
+    for e in cat_planned:
+        assert e["as_of"] is None
+        assert e["path"] == f"/api/v1/panels/{e['file']}"
+        assert isinstance(e["license"], str) and "planned" in e["license"]
+        assert isinstance(e["source"], str) and e["source"]
+    available_keys = {e["key"] for e in cat["endpoints"] if e["status"] == "available"}
+    assert available_keys == panel_keys, "available endpoints stay 1:1 with live panels"
+    assert "planned" in cat["methodology"]

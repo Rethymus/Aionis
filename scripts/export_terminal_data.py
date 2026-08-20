@@ -1144,29 +1144,195 @@ def export_pick_conviction() -> None:
     (WEB / "pick_conviction.json").write_text(json.dumps(_stamp(payload), indent=2))
 
 
+_SM_FILER_PLACEHOLDER = "(申报人见原文)"  # daily index may not name the reporting person
+
+
+def _sm_norm_name(s: str) -> str:
+    """Uppercase + collapsed-whitespace company name (EFTS/daily name join key)."""
+    import re
+
+    return re.sub(r"\s+", " ", s.strip().upper())
+
+
+def _sm_ticker_maps() -> tuple[dict[int, str], dict[str, str]]:
+    """Offline CIK→ticker + normalized-name→ticker maps for 13D display rows.
+
+    Built from EXISTING local caches only (no network): (1) the SEC
+    ``company_tickers`` snapshot cached by ``aionis.ingest.cik_resolver``
+    (``data/cache/cik_resolver_raw.json``, falling back to the parsed
+    ``cik_resolver_tickers.json``); (2) the frozen EFTS 13D historical
+    (``data/cache/efts_13d_*.json`` display_names carry as-of-filing tickers).
+    A CIK with several tickers (share classes / preferreds) resolves to its
+    first plain ticker in snapshot order — deterministic, common-stock-first.
+
+    Display caveat (honest): the SEC snapshot is CURRENT, not as-of-filing —
+    fine for a display label + stock-page link, never a research input.
+    """
+    import glob
+    import re
+
+    cik2tk: dict[int, str] = {}
+    raw_fp = Path("data/cache/cik_resolver_raw.json")
+    if raw_fp.exists():
+        by_cik: dict[int, list[str]] = {}
+        try:
+            for v in json.loads(raw_fp.read_text()).values():
+                if isinstance(v, dict) and v.get("cik_str") and v.get("ticker"):
+                    by_cik.setdefault(int(v["cik_str"]), []).append(str(v["ticker"]))
+        except (json.JSONDecodeError, AttributeError):
+            by_cik = {}
+    else:
+        parsed_fp = Path("data/cache/cik_resolver_tickers.json")
+        by_cik = {}
+        if parsed_fp.exists():
+            try:
+                for tk, cik in json.loads(parsed_fp.read_text()).items():
+                    by_cik.setdefault(int(cik), []).append(str(tk))
+            except (json.JSONDecodeError, ValueError, AttributeError):
+                by_cik = {}
+    for cik, tks in by_cik.items():
+        plain = [t for t in tks if "-" not in t]
+        cik2tk[cik] = (plain or tks)[0]
+
+    name2tk: dict[str, str] = {}
+    for f in glob.glob("data/cache/efts_13d_*.json"):
+        try:
+            for item in json.loads(Path(f).read_text()):
+                names = item.get("display_names") or []
+                if len(names) >= 2 and item.get("file_date"):
+                    m = re.search(r"\(([A-Z]{1,6})\)", names[0])
+                    if m:
+                        clean = re.sub(r"\s*\(CIK.*$", "", names[0]).strip()
+                        name2tk.setdefault(_sm_norm_name(clean), m.group(1))
+        except (json.JSONDecodeError, KeyError, AttributeError):
+            continue
+    return cik2tk, name2tk
+
+
+def _sm_dedup_enrich(
+    members: list[dict], cik2tk: dict[int, str], name2tk: dict[str, str]
+) -> list[dict]:
+    """One display row per 13D filing (accession), subject/filer resolved.
+
+    The EDGAR daily crawler index lists a filing under EVERY covered company —
+    the subject AND the filer entities with CIKs (e.g. accession
+    0001213900-26-086686 appears under both ACRES Commercial Realty Corp.
+    (subject) and ACRES Share Holdings, LLC (filer); the raw aggregate
+    therefore double-lists ~40% of its rows and used to lose ticker + filer
+    entirely). Resolution per accession group:
+
+    - exactly ONE listed company (ticker resolvable) → it is the subject row
+      (ticker filled); the other indexed names are its filers (joined " / ").
+    - zero or multiple listed → keep EVERY member honestly (ticker where
+      resolvable, placeholder filer): filings on unlisted targets (funds,
+      LLCs, individuals) have no ticker at all, and a both-listed group
+      (e.g. Gilead filing on Arcus) has no offline subject discriminator.
+      Unresolved empties are counted in data_health ``source_health``.
+    """
+    def tk_of(m: dict) -> str:
+        cik = m.get("target_cik")
+        try:
+            return cik2tk.get(int(cik), "") or name2tk.get(
+                _sm_norm_name(str(m.get("target", ""))), ""
+            )
+        except (TypeError, ValueError):
+            return name2tk.get(_sm_norm_name(str(m.get("target", ""))), "")
+
+    def to_row(m: dict, ticker: str, filer: str) -> dict:
+        return {
+            "filer": filer,
+            "target": str(m.get("target", "")).strip(),
+            "ticker": ticker,
+            "date": m["date"],
+            "form": m.get("form", "SC 13D"),
+            "is_amendment": bool(m.get("is_amendment")),
+            "url": str(m.get("url", "")),
+        }
+
+    tk_members = [m for m in members if tk_of(m)]
+    distinct = {tk_of(m) for m in tk_members}
+    if len(distinct) == 1:
+        subj = tk_members[0]
+        others = [str(m.get("target", "")).strip() for m in members if m is not subj]
+        return [to_row(subj, tk_of(subj), " / ".join(others[:2]) or _SM_FILER_PLACEHOLDER)]
+    return [to_row(m, tk_of(m), _SM_FILER_PLACEHOLDER) for m in members]
+
+
 def _rows_from_daily_aggregate(daily_path: Path) -> list[dict]:
-    """SC 13D rows from the EDGAR daily-index aggregate (target + date only).
+    """Enriched, per-accession-deduped SC 13D rows from the daily aggregate.
 
     Shared by the full export and the retain-merge path so both produce
-    identical row shapes (filer honestly marked — the daily index does not
-    name the reporting person).
+    identical row shapes and the same ticker/filer resolution.
     """
-    rows: list[dict] = []
     try:
-        for r in json.loads(daily_path.read_text()):
-            rows.append({
-                "filer": "(申报人见原文)",
-                "target": str(r.get("target", "")).strip(),
-                "ticker": "",
-                "date": r["date"],
-                "form": r.get("form", "SC 13D"),
-                "is_amendment": bool(r.get("is_amendment")),
-                "url": str(r.get("url", "")),
-            })
-    except (json.JSONDecodeError, KeyError, TypeError):
-        pass
+        raw = json.loads(daily_path.read_text())
+    except (json.JSONDecodeError, OSError):
+        return []
+    if not isinstance(raw, list):
+        return []
+    cik2tk, name2tk = _sm_ticker_maps()
+    groups: dict[str, list[dict]] = {}
+    for r in raw:
+        acc = str(r.get("accession", "")).removesuffix("-index.htm")
+        if acc:
+            groups.setdefault(acc, []).append(r)
+    rows: list[dict] = []
+    for members in groups.values():
+        rows.extend(_sm_dedup_enrich(members, cik2tk, name2tk))
     rows.sort(key=lambda r: r["date"], reverse=True)
     return rows
+
+
+def _sm_committed_extra(
+    fresh_accessions: set[str],
+    cik2tk: dict[int, str],
+    name2tk: dict[str, str],
+) -> tuple[list[dict], list[dict]]:
+    """Committed recent rows the LOCAL daily aggregate does not cover.
+
+    The daily cron may run on a checkout with a fuller ``sc13d_daily_aggregate``
+    than the local ``data/cache`` (observed: committed JSON at 2026-08-17 while
+    the local aggregate topped at 2026-08-07). Those committed rows are real
+    filings — re-enrich them offline (CIK parsed from the row url's
+    ``/data/{cik}/`` path, ticker re-resolved, deduped per accession) so a
+    regen never regresses the panel's freshness or reverts to empty tickers.
+
+    Returns ``(extra, verbatim)``: url-bearing rows re-enriched per accession
+    vs url-less (EFTS-era) rows kept verbatim — the latter are only meaningful
+    when the EFTS cache itself is absent, else the full path re-derives them.
+    """
+    import re
+
+    try:
+        prev = json.loads((WEB / "smart_money.json").read_text())
+    except (json.JSONDecodeError, OSError):
+        return [], []
+    groups: dict[str, list[dict]] = {}
+    verbatim: list[dict] = []
+    for r in prev.get("recent_filings", []):
+        url = str(r.get("url", ""))
+        acc = url.rsplit("/", 1)[-1].removesuffix("-index.htm") if url else ""
+        m = re.search(r"/data/(\d+)/", url)
+        if not acc or m is None:
+            if not url:
+                verbatim.append(r)
+            continue
+        if acc in fresh_accessions:
+            continue
+        groups.setdefault(acc, []).append({
+            "target": r.get("target", ""),
+            "target_cik": int(m.group(1)),
+            "date": r["date"],
+            "form": r.get("form", "SC 13D"),
+            "is_amendment": bool(r.get("is_amendment")),
+            "accession": acc,
+            "url": url,
+        })
+    extra: list[dict] = []
+    for members in groups.values():
+        extra.extend(_sm_dedup_enrich(members, cik2tk, name2tk))
+    extra.sort(key=lambda r: r["date"], reverse=True)
+    return extra, verbatim
 
 
 def _refresh_smart_money_recent_only(committed_path: Path, daily_path: Path) -> dict | None:
@@ -1178,7 +1344,9 @@ def _refresh_smart_money_recent_only(committed_path: Path, daily_path: Path) -> 
     to a 25-CIK subset. Mirror :func:`_refresh_news_sentiment_only`: retain the
     committed historical aggregates (active_filers, pre-2025 yearly) and
     refresh only recent_filings, latest_date, and the post-cutoff (2025+)
-    yearly counts, which come solely from the daily index.
+    yearly counts, which come solely from the daily index (unioned with any
+    committed rows the local aggregate does not cover — see
+    :func:`_sm_committed_extra`).
     """
     if not committed_path.exists() or not daily_path.exists():
         return None
@@ -1189,32 +1357,35 @@ def _refresh_smart_money_recent_only(committed_path: Path, daily_path: Path) -> 
     daily_rows = _rows_from_daily_aggregate(daily_path)
     if not daily_rows:
         return None
+    try:
+        fresh_accs = {
+            str(r.get("accession", "")).removesuffix("-index.htm")
+            for r in json.loads(daily_path.read_text())
+        }
+    except (json.JSONDecodeError, OSError):
+        fresh_accs = set()
+    cik2tk, name2tk = _sm_ticker_maps()
+    extra, verbatim = _sm_committed_extra(fresh_accs, cik2tk, name2tk)
+    rows = daily_rows + extra + verbatim
+    rows.sort(key=lambda r: r["date"], reverse=True)
 
-    recent = list(prev.get("recent_filings", []))
-    seen = {(r.get("date"), r.get("target")) for r in recent}
-    for r in daily_rows:
-        key = (r["date"], r["target"])
-        if key not in seen:
-            recent.append(r)
-            seen.add(key)
-    recent.sort(key=lambda r: r["date"], reverse=True)
-    prev["recent_filings"] = recent[:60]
+    prev["recent_filings"] = rows[:60]
     prev["latest_date"] = max(
-        str(prev.get("latest_date") or ""), str(daily_rows[0]["date"])
+        str(prev.get("latest_date") or ""), str(rows[0]["date"])
     )
 
-    daily_by_year: dict[str, int] = {}
-    for r in daily_rows:
-        daily_by_year[r["date"][:4]] = daily_by_year.get(r["date"][:4], 0) + 1
+    by_year: dict[str, int] = {}
+    for r in rows:
+        by_year[r["date"][:4]] = by_year.get(r["date"][:4], 0) + 1
     yearly = [
-        {**y, "filings": daily_by_year.get(str(y["year"]), y["filings"])}
+        {**y, "filings": by_year.get(str(y["year"]), y["filings"])}
         if int(y["year"]) >= 2025
         else y
         for y in prev.get("yearly", [])
     ]
-    for y in sorted(daily_by_year):
+    for y in sorted(by_year):
         if not any(int(e["year"]) == int(y) for e in yearly):
-            yearly.append({"year": int(y), "filings": daily_by_year[y]})
+            yearly.append({"year": int(y), "filings": by_year[y]})
     yearly.sort(key=lambda e: e["year"])
     prev["yearly"] = yearly
     prev["total_filings"] = sum(e["filings"] for e in yearly)
@@ -1286,18 +1457,35 @@ def export_smart_money() -> None:
             continue
     # Merge recent SC 13D from the EDGAR daily crawler index — this unfreezes the
     # panel past the 2024-12-17 EFTS cutoff (see aionis-edgar-efts-sc13d-frozen).
-    # The daily index names the TARGET (subject issuer) only; the reporting person
-    # is not in the index, so the filer is marked honestly (see the filing link).
+    # The daily index lists a filing under EVERY covered company (subject AND
+    # filer entities), so _rows_from_daily_aggregate dedups per accession,
+    # resolves the subject (the listed company), backfills its ticker offline
+    # (SEC snapshot CIK map + EFTS name map) and surfaces the co-indexed names
+    # as the filer. Rows the LOCAL aggregate does not cover (a fresher cron
+    # cache elsewhere) are unioned in re-enriched, so a regen never regresses.
     daily_path = Path("data/cache/sc13d_daily_aggregate.json")
+    daily_rows: list[dict] = []
     if daily_path.exists():
-        rows.extend(_rows_from_daily_aggregate(daily_path))
+        daily_rows = _rows_from_daily_aggregate(daily_path)
+    if daily_rows:
+        try:
+            fresh_accs = {
+                str(r.get("accession", "")).removesuffix("-index.htm")
+                for r in json.loads(daily_path.read_text())
+            }
+        except (json.JSONDecodeError, OSError):
+            fresh_accs = set()
+        extra, _verbatim = _sm_committed_extra(
+            fresh_accs, *_sm_ticker_maps()
+        )
+        rows.extend(daily_rows)
+        rows.extend(extra)
     rows.sort(key=lambda r: r["date"], reverse=True)
     recent = rows[:60]
     from collections import Counter
-    # Exclude the daily-index sentinel filer from the activist ranking. Compute
-    # over ALL real-filer rows (not just newest 300): the recent daily-13D rows
-    # have no filer, so newest-300 would be empty. The EFTS historical carries
-    # real activist names (2015-2024) — the ranking surfaces those.
+    # Rank real filers: EFTS rows name the reporting person; daily-index rows
+    # surface the co-indexed filer entities for single-subject accessions. The
+    # sentinel placeholder (ambiguous / no offline discriminator) is excluded.
     active = Counter(
         r["filer"] for r in rows if r["filer"] and not r["filer"].startswith("(")
     ).most_common(10)
@@ -1310,9 +1498,17 @@ def export_smart_money() -> None:
             "Recent SC 13D institutional stake filings (SEC EDGAR, filed-date "
             "point-in-time). Public domain, permissive. Two sources: EFTS full-"
             "text search for 2015→2024-12 (filer + target + ticker), and the EDGAR "
-            "daily crawler index for 2024-12→today (target + date only — EFTS "
-            "stopped indexing SC 13D after 2024-12-17). Real data; descriptive "
-            "display, not an Aionis research claim."
+            "daily crawler index for 2024-12→today. The daily index lists a "
+            "filing under EVERY covered company (subject AND filer entities), "
+            "so rows are deduped per accession: the listed company is the "
+            "subject (ticker backfilled OFFLINE from the cached SEC "
+            "company_tickers snapshot — current-snapshot display label, not "
+            "as-of-filing — plus the frozen EFTS name map), and the co-indexed "
+            "names surface as the filer. Filings on unlisted targets (funds, "
+            "LLCs, individuals) or with several listed candidates honestly "
+            "keep an empty ticker / placeholder filer (counted in "
+            "data_health.source_health). Real data; descriptive display, not "
+            "an Aionis research claim."
         ),
         "recent_filings": recent,
         "active_filers": [{"filer": filer, "count": count} for filer, count in active],
@@ -1947,6 +2143,95 @@ def _dh_as_of(key: str, fname: str) -> str | None:
     return None
 
 
+# Planned-but-not-built panels (honest disclosure, mirrors the xiaoyinsi
+# x-status: planned pattern): nothing is fetched, parsed or served for these
+# keys today. Shared by data_health (key + note) and api_catalog (planned
+# endpoints) from ONE definition so the two can never drift apart.
+_PLANNED_PANELS: list[dict[str, str]] = [
+    {
+        "key": "politician-trades",
+        "file": "politician_trades.json",
+        "note": (
+            "STOCK Act congressional trading. Primary sources are U.S. public "
+            "domain (clerk.house.gov PTR search, efdsearch.senate.gov), but "
+            "both are PDF-first with heavy parsing effort — no fetcher built."
+        ),
+        "license": (
+            "U.S. House Clerk / Senate Office of Public Records — public "
+            "domain (planned, not built)"
+        ),
+        "source": (
+            "STOCK Act periodic transaction reports: clerk.house.gov + "
+            "efdsearch.senate.gov"
+        ),
+    },
+    {
+        "key": "13f-holdings",
+        "file": "13f_holdings.json",
+        "note": (
+            "SEC EDGAR 13F institutional holdings, quarterly XML — public "
+            "domain, but a medium-large build (per-manager pagination + "
+            "info-table parsing). No fetcher built."
+        ),
+        "license": "U.S. SEC EDGAR — public domain (planned, not built)",
+        "source": "EDGAR 13F quarterly institutional holdings filings",
+    },
+    {
+        "key": "cn-industry-classification",
+        "file": "cn_industry_classification.json",
+        "note": (
+            "A-share industry classification (e.g. SW sectors via baostock, a "
+            "free public API). License verification + CI coordination "
+            "pending; no fetcher built."
+        ),
+        "license": (
+            "baostock — free public API, license unverified until 7-gate "
+            "intake (planned, not built)"
+        ),
+        "source": "A-share industry (Shenwan-style) classification tables",
+    },
+]
+
+
+def _dh_days_since(datestr) -> int | None:
+    """Calendar days between today (UTC) and an ISO panel date; None if unknown."""
+    try:
+        d = datetime.strptime(str(datestr)[:10], "%Y-%m-%d").date()
+    except (TypeError, ValueError):
+        return None
+    return (datetime.now(timezone.utc).date() - d).days
+
+
+def _source_health() -> dict:
+    """Quantified source health for the daily/alt panels (display-only).
+
+    Measured on the committed panel JSONs at export time — the same artifacts
+    the terminal renders — so the numbers cannot disagree with the display.
+    """
+    sm = _dh_read("smart_money.json") or {}
+    recent = sm.get("recent_filings") or []
+    reddit = _dh_read("reddit.json") or {}
+    picks = reddit.get("picks") or []
+    cot = _dh_read("cot.json") or {}
+    return {
+        "smart_money": {
+            "ticker_null": sum(1 for r in recent if not r.get("ticker")),
+            "n_recent": len(recent),
+            "days_since_latest": _dh_days_since(sm.get("latest_date")),
+        },
+        "reddit": {
+            "bull_ratio_null": sum(1 for p in picks if p.get("bull_ratio") is None),
+            "n_picks": len(picks),
+        },
+        "cot": {
+            "weeks_since_latest": (
+                None if _dh_days_since(cot.get("latest_date")) is None
+                else _dh_days_since(cot.get("latest_date")) // 7
+            ),
+        },
+    }
+
+
 def export_data_health() -> None:
     """Freshness + provenance map of every terminal panel (display-only).
 
@@ -1984,6 +2269,10 @@ def export_data_health() -> None:
         "status": "ok",
         "panels": panels,
         "summary": summary,
+        "source_health": _source_health(),
+        "planned": [
+            {"key": p["key"], "note": p["note"]} for p in _PLANNED_PANELS
+        ],
         "methodology": (
             "Freshness/provenance map of every terminal panel. frozen = derived "
             "from frozen OOS artifacts (ledger #49 lineage): the daily lane "
@@ -1995,7 +2284,13 @@ def export_data_health() -> None:
             "fields; null = the panel carries no observation date (static "
             "research artifact). The only legal way frozen numbers move "
             "forward: E3 forward-live accumulation or a new pre-registered "
-            "phase."
+            "phase. source_health quantifies field-level quality on the "
+            "committed JSONs (smart_money ticker nulls = filings on unlisted "
+            "targets honestly left empty; reddit bull_ratio nulls = sentiment "
+            "not yet gradable in the accumulating window; cot staleness in "
+            "weeks vs the Friday publication rhythm). planned lists panels "
+            "that are NOT built — no fetcher, no data, no endpoint payload — "
+            "disclosed so the panel count is never mistaken for coverage."
         ),
     }
     (WEB / "data_health.json").write_text(json.dumps(_stamp(payload), indent=2))
@@ -2077,6 +2372,20 @@ def export_api_catalog() -> None:
             "license": license_,
             "source": source,
         })
+    # Planned-but-not-built endpoints (honest x-status: planned disclosure —
+    # same shape as available ones so consumers can branch on status alone).
+    # as_of=null: no observation exists by construction.
+    endpoints.extend({
+        "key": pl["key"],
+        "file": pl["file"],
+        "path": f"/api/v1/panels/{pl['file']}",
+        "method": "GET",
+        "status": "planned",
+        "freshness": "planned",
+        "as_of": None,
+        "license": pl["license"],
+        "source": pl["source"],
+    } for pl in _PLANNED_PANELS)
     payload = {
         "status": "ok",
         "base_note": (
@@ -2103,9 +2412,13 @@ def export_api_catalog() -> None:
             "cadence / frozen). Frozen endpoints derive from frozen OOS "
             "artifacts (ledger #49 lineage) and deliberately do NOT advance — "
             "consuming them expecting daily updates misreads the contract. "
-            "Research ingestion of any endpoint requires the full 7-gate "
-            "rubric (docs/data-intake-rubric.md); the live-prices worker is "
-            "display-only and must never enter the OOS pipeline."
+            "Endpoints with status=planned are NOT built: the path is a "
+            "reserved future location, no payload is served, as_of is null, "
+            "and the license/source describe the primary source the future "
+            "fetcher would use. Research ingestion of any endpoint requires "
+            "the full 7-gate rubric (docs/data-intake-rubric.md); the "
+            "live-prices worker is display-only and must never enter the OOS "
+            "pipeline."
         ),
     }
     (WEB / "api_catalog.json").write_text(json.dumps(_stamp(payload), indent=2))
