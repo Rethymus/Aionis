@@ -231,13 +231,19 @@ class TestRefreshSmartMoneyRecentOnly:
 
     def _daily(self, path) -> None:
         import json
+        # Rows carry `accession` (the dedup key since the 2026-08-20 rewrite:
+        # the daily index lists a filing under every covered company, so rows
+        # are grouped per accession). "u1" matches the committed row's url so
+        # the overlap collapses to one row.
         path.write_text(json.dumps([
-            # overlap with committed recent (same date+target) — must not duplicate
-            {"target": "Old Target", "date": "2026-08-07", "url": "u1", "form": "SC 13D"},
-            {"target": "3i, LP", "date": "2026-08-14", "url": "u3", "form": "SC 13D"},
-            {"target": "Fresh Co", "date": "2026-08-13", "url": "u4", "form": "SC 13D/A",
-             "is_amendment": True},
-            {"target": "2025 Co", "date": "2025-06-01", "url": "u5", "form": "SC 13D"},
+            {"target": "Old Target", "date": "2026-08-07", "url": "u1",
+             "accession": "u1", "form": "SC 13D"},
+            {"target": "3i, LP", "date": "2026-08-14", "url": "u3",
+             "accession": "u3", "form": "SC 13D"},
+            {"target": "Fresh Co", "date": "2026-08-13", "url": "u4",
+             "accession": "u4", "form": "SC 13D/A", "is_amendment": True},
+            {"target": "2025 Co", "date": "2025-06-01", "url": "u5",
+             "accession": "u5", "form": "SC 13D"},
         ], ensure_ascii=False))
 
     def test_refreshes_live_window_and_retains_history(self, tmp_path):

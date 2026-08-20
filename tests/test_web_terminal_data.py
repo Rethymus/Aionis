@@ -945,17 +945,14 @@ def test_planned_disclosure_present_and_consistent() -> None:
     """Planned (not-built) panels disclosed in data_health + api_catalog alike.
 
     Honesty pattern learned from the xiaoyinsi datahub (x-status: planned):
-    the panel count must never be mistaken for coverage. The three planned
-    keys are politician-trades (STOCK Act, public-domain primary sources),
-    13f-holdings (EDGAR 13F), cn-industry-classification (baostock) — and the
-    catalog endpoints must carry status='planned', as_of=null and a reserved
-    future path, with the key sets agreeing across both files.
+    the panel count must never be mistaken for coverage. 13f-holdings and
+    cn-industry-classification GRADUATED to live panels on 2026-08-20
+    (form13f + baostock CSRC industries) — only politician-trades remains
+    planned (STOCK Act, public-domain primary sources, PDF-first parsing).
     """
     dh = _load("data_health.json")
     planned = dh["planned"]
-    assert {p["key"] for p in planned} == {
-        "politician-trades", "13f-holdings", "cn-industry-classification",
-    }
+    assert {p["key"] for p in planned} == {"politician-trades"}
     for p in planned:
         assert isinstance(p["key"], str) and isinstance(p["note"], str) and p["note"]
     planned_keys = {p["key"] for p in planned}

@@ -10,7 +10,7 @@
 
 | 门 | 结论 | 关键证据 |
 |---|---|---|
-| **G1 许可协议** | **PASS** | PyPI `baostock==0.9.3` = MIT（已验）；在 ALLOWED 列 |
+| **G1 许可协议** | **PASS** | PyPI `baostock` = **BSD**（2026-08-20 复核：直接下载官方 sdist/wheel 验证 setup.py 与 METADATA 一致；早先引用的 GitHub `baidstock/bs_stock` 已 404 不存在，予以更正——见 docs/data-intake-baostock-industry.md §G1）；在 ALLOWED 列 |
 | **G2 PIT 时点** | **PASS** | 交易所固定收盘价 → 交易日期自然对齐；pandas-market-calendars XSHG/XSHE 交易日历 |
 | **G3 无回改契约** | **CONDITIONAL** | 原始价格交易所固定（低风险），但 `adjustflag` 复权因子可追溯修订 → 需冻结策略 |
 | **G4 快照+sha256** | **PASS** | 首次获取即落 `data/cache/` + sha256 pinning；复权因子快照隔离 |
@@ -29,7 +29,7 @@
 
 ### 证据
 - **PyPI 包**：`baostock==0.9.3`（2024-12 维护停止，但包仍可用）
-- **License 声明**：PyPI 元数据 `License: MIT License`；GitHub `baidstock/bs_stock` `LICENSE` 文件 = MIT
+- **License 声明**：PyPI 分发元数据 `License: BSD License`（sdist setup.py 与 wheel METADATA 双验）；早期记录的 GitHub `baidstock/bs_stock` MIT 引用有误（repo 不存在），2026-08-20 更正为 BSD
 - **ALLOWED 核对**：MIT 在 [`data-license-allowlist.md`](data-license-allowlist.md) §ACCEPTED 列
 
 ### Verdict

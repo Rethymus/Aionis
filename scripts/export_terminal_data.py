@@ -1292,6 +1292,7 @@ def _sm_committed_extra(
     fresh_accessions: set[str],
     cik2tk: dict[int, str],
     name2tk: dict[str, str],
+    committed_path: Path | None = None,
 ) -> tuple[list[dict], list[dict]]:
     """Committed recent rows the LOCAL daily aggregate does not cover.
 
@@ -1308,8 +1309,9 @@ def _sm_committed_extra(
     """
     import re
 
+    source = committed_path or (WEB / "smart_money.json")
     try:
-        prev = json.loads((WEB / "smart_money.json").read_text())
+        prev = json.loads(source.read_text())
     except (json.JSONDecodeError, OSError):
         return [], []
     groups: dict[str, list[dict]] = {}
@@ -1370,7 +1372,7 @@ def _refresh_smart_money_recent_only(committed_path: Path, daily_path: Path) -> 
     except (json.JSONDecodeError, OSError):
         fresh_accs = set()
     cik2tk, name2tk = _sm_ticker_maps()
-    extra, verbatim = _sm_committed_extra(fresh_accs, cik2tk, name2tk)
+    extra, verbatim = _sm_committed_extra(fresh_accs, cik2tk, name2tk, committed_path)
     rows = daily_rows + extra + verbatim
     rows.sort(key=lambda r: r["date"], reverse=True)
 
@@ -2082,6 +2084,7 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
     ("ledger_audit", "ledger_audit.json", _DH_DAILY),
     ("cot", "cot.json", _DH_CADENCE),
     ("smart_money", "smart_money.json", _DH_CADENCE),
+    ("form13f", "form13f.json", _DH_CADENCE),
 ]
 
 
@@ -2180,49 +2183,25 @@ _PLANNED_PANELS: list[dict[str, str]] = [
             "efdsearch.senate.gov"
         ),
     },
-    {
-        "key": "13f-holdings",
-        "file": "13f_holdings.json",
-        "note": (
-            "SEC EDGAR 13F institutional holdings, quarterly XML — public "
-            "domain, but a medium-large build (per-manager pagination + "
-            "info-table parsing). No fetcher built."
-        ),
-        "license": "U.S. SEC EDGAR — public domain (planned, not built)",
-        "source": "EDGAR 13F quarterly institutional holdings filings",
-    },
-    {
-        "key": "cn-industry-classification",
-        "file": "cn_industry_classification.json",
-        "note": (
-            "A-share industry classification (e.g. SW sectors via baostock, a "
-            "free public API). License verification + CI coordination "
-            "pending; no fetcher built."
-        ),
-        "license": (
-            "baostock — free public API, license unverified until 7-gate "
-            "intake (planned, not built)"
-        ),
-        "source": "A-share industry (Shenwan-style) classification tables",
-    },
+    # 13f-holdings SHIPPED 2026-08-20 (form13f panel, 12 star managers) and
+    # cn-industry-classification SHIPPED 2026-08-20 (baostock CSRC industries,
+    # 7-gate PASS) — both graduated out of planned into live panels.
 ]
 
 
-def _dh_days_since(datestr) -> int | None:
-    """Calendar days between today (UTC) and an ISO panel date; None if unknown."""
+def _dh_days_since(date_str: str | None) -> int | None:
+    """Whole days between today (UTC) and a YYYY-MM-DD[*] panel date."""
+    if not date_str:
+        return None
     try:
-        d = datetime.strptime(str(datestr)[:10], "%Y-%m-%d").date()
-    except (TypeError, ValueError):
+        d = datetime.strptime(str(date_str)[:10], "%Y-%m-%d").date()
+    except ValueError:
         return None
     return (datetime.now(timezone.utc).date() - d).days
 
 
 def _source_health() -> dict:
-    """Quantified source health for the daily/alt panels (display-only).
-
-    Measured on the committed panel JSONs at export time — the same artifacts
-    the terminal renders — so the numbers cannot disagree with the display.
-    """
+    """Field-level quality metrics for sources with known gaps (counted)."""
     sm = _dh_read("smart_money.json") or {}
     recent = sm.get("recent_filings") or []
     reddit = _dh_read("reddit.json") or {}
@@ -2355,6 +2334,7 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
     "ledger_audit": ("Aionis append-only ledger (repo MIT)", "ledger.jsonl claim-row timeline"),
     "cot": ("U.S. CFTC — public domain", "Commitments of Traders legacy futures, weekly"),
     "smart_money": ("U.S. SEC EDGAR — public domain", "13D/G filings via EFTS, filed-date PIT"),
+    "form13f": ("U.S. SEC EDGAR — public domain", "13F-HR quarterly holdings XML, filed-date PIT, whole-USD values"),
     "data_health": ("Aionis-generated (repo MIT)", "freshness/provenance map over all panels"),
 }
 
