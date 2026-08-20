@@ -295,7 +295,7 @@
       "method": "GET",
       "status": "available",
       "freshness": "cadence",
-      "as_of": null,
+      "as_of": "2026-06-30",
       "license": "U.S. SEC EDGAR \u2014 public domain",
       "source": "13F-HR quarterly holdings XML, filed-date PIT, whole-USD values"
     },
@@ -326,5 +326,5 @@
     "server": "https://api.aionis-prices.workers.dev"
   },
   "methodology": "Public static data API over the terminal's committed panels (display-only). Every endpoint carries its 7-gate intake facts: license + primary source, plus the freshness class (daily / cadence / frozen). Frozen endpoints derive from frozen OOS artifacts (ledger #49 lineage) and deliberately do NOT advance \u2014 consuming them expecting daily updates misreads the contract. Endpoints with status=planned are NOT built: the path is a reserved future location, no payload is served, as_of is null, and the license/source describe the primary source the future fetcher would use. Research ingestion of any endpoint requires the full 7-gate rubric (docs/data-intake-rubric.md); the live-prices worker is display-only and must never enter the OOS pipeline.",
-  "snapshot_ts": "2026-08-20T05:14:59.117228+00:00"
+  "snapshot_ts": "2026-08-20T08:59:47.930688+00:00"
 }

@@ -2153,6 +2153,8 @@ def _dh_as_of(key: str, fname: str) -> str | None:
         return p.get("latest_date")
     if key == "smart_money":
         return p.get("latest_date")
+    if key == "form13f":
+        return p.get("as_of")
     if key == "headline_provenance":
         ts = p.get("result_ts")
         return ts.split("T")[0] if ts else None

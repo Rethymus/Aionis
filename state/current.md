@@ -1,5 +1,12 @@
 # state/current.md — read first each session
 
+- **active (2026-08-20) ④ 三代理第二轮（快赢组/CN行业/13F）全部交付 + 集成上线：**
+  **① 三代理结局**：本轮全部成功（上轮全灭于配额后限额已重置）。D=cmdk 热门个股组+A股语境事件（08-19 暴跌/宇树/四中全会，type `ipo` 新增）；E=A股行业升级（**7-gate 全过**：客户端 BSD 实证于 PyPI sdist/wheel、数据侧按 vendor display-only 处置；零依赖改动走 lazy import+`--with baostock`；CN sector 4 tier→**52 证监会行业组**，`cn_tier` 列保留；5194/5207 覆盖、退市诚实回退）；F=**13F 明星持仓模块**（12 管理人 CIK 实查、11 位最新季 2026-06-30、60 请求 2m20s 礼貌拉取、**关键数据修正：EDGAR 13F XML value=整美元非千美元**（AAPL $253.79/股交叉验证）、帧差键=(cusip,option_type) 修正 title 漂移假清仓、CUSIP→ticker 诚实覆盖 68/118、`/institutions` 路由+26×2 i18n）。
+  **② 主线集成**：三分支 8 commits cherry-pick **零冲突**（边界纪律生效）；主线补线：form13f 注册进 data-health manifest（cadence）+API catalog、13f/cn-industry 从 planned 毕业（只剩 politician-trades）、`_sm_committed_extra` 改传 committed_path（修测试隔离缺陷）、**抓到并修复 A 重写遗留的旧测试回归**（`TestRefreshSmartMoneyRecentOnly` fixture 缺 accession——上轮只跑了 web 契约文件没跑全套，教训：agent 改共享函数后必须全套 pytest）、CI 日更 `--with baostock` 一行接线、旧文档 MIT→BSD 更正、form13f as_of 提取器。
+  **③ 验证**：全套 pytest **0 失败**（首次全绿含新模块）、tsc/eslint 净、build 含 /institutions+/heatmap、浏览器实测（13F 中文管理人名/调仓徽章/CN 行业 sector/A股事件徽章）、部署 `32335991748` 绿、线上 /institutions + form13f.json 200、catalog 27 live + 1 planned。
+  **④ ⚠️ 主线事故（已修复+教训入档）**：上轮 worktree 清理 `rm -rf` **穿透 junction 误删主仓 `data/cache` 大部与 `web/node_modules`**（runs/ 冻结产物无恙；committed JSON 不受影响——`_safe_export` 缺源跳过保留旧值；CI 有独立缓存）。node_modules 已清空重装修复（22s）；cache 属重建型，由 fetcher 渐进回填（E/F 已回填 ticker_metadata/cn_industry/form13f）。**铁律：junction 指向的主仓目录绝不可被 rm -rf 波及——worktree 清理必须先 `cmd /c rmdir <junction>` 摘链接再删目录。**
+  **⑤ 边界**：display + 数据 lane；0 ledger/frozen/config/prereg/OOS。
+
 - **active (2026-08-20) ② 三路子代理并行开发（业主指令"按优先级驱动子代理"）+ 阵亡接管 + 集成上线：**
   **① 编排**：三 worktree 隔离（junction 共享 data/cache 与 node_modules；**Turbopack 拒绝跨根 node_modules symlink，worktree 内 next build 不可用**——tsc/eslint 可用，build 归主线集成）。A=数据 lane（smart_money ticker 修复+源健康+planned）、B=treemap 热力图、C=集中度 HHI 卡。
   **② 子代理全部阵亡**（B 网络、A/C 提供商 5h 限额[1308]，05:38 重置）→ 按既定 fallback 主线接管：B 留完整双语 dict 键、组件由主线完成（手写 squarified treemap）；C 代码已完整（tsc/eslint 验过）主线代提交；A 完成度 ~95%，**主线修掉其遗留的重复函数定义**（A 死于删除旧版 `_refresh_smart_money_recent_only` 之前——Python 会静默绑定后定义的旧版，新实现全部失效；教训：验收 agent 遗留必须查重复定义）。

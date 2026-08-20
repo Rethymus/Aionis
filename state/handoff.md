@@ -8,6 +8,19 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-20 (c) 三代理第二轮全胜：quickwins + CN 行业 + 13F → 集成上线
+
+**三代理全部交付**（本轮无阵亡；边界纪律 + 增量提交指令生效）：
+1. **D quickwins**：cmdk「热门个股」第 5 组（top10 多头+top3 空头，text-up/down 遵守涨跌约定）+ market_context 3 条 region:"cn" 语境事件（08-19 暴跌/宇树 IPO+460%/四中全会，新 type `ipo`）+「A 股」徽章。
+2. **E cn-industry**：7-gate 全过（BSD 实证、vendor display-only 数据侧、G3 快照纪律）；baostock 走 lazy import + `uv run --with`（零 pyproject/lock 改动）；CN sector 4 tier→52 证监会行业组、`cn_tier` 列保留、退市诚实回退 tier；5194/5207 覆盖。**License 更正移交**：旧价格文档 MIT 引用有误（GitHub repo 404），权威=PyPI=BSD，已更正。
+3. **F form13f**：12 明星管理人（CIK 实查、淘汰停报实体）；11 位最新季 2026-06-30；60 请求 2m20s；**EDGAR 13F XML value=整美元（非千美元）——SEC 网页惯例是错的，AAPL $253.79/股交叉验证钉死**；帧差键=(cusip,option_type) 防 title 漂移假信号；`/institutions` + 26×2 i18n；CUSIP→ticker 诚实 68/118。
+
+**主线集成**：8 commits cherry-pick 零冲突；form13f 注册 cadence 面板 + as_of 提取器；13f/cn-industry 从 planned 毕业（剩 politician-trades）；`_sm_committed_extra` 传 committed_path（测试隔离）；**修复 A 遗留旧测试回归**（fixture 缺 accession——教训：**agent 改共享函数后必须跑全套 pytest，不能只跑其边界文件**）；CI `--with baostock` 接线；全套 pytest 首次 0 失败；部署 `32335991748` 绿。
+
+**⚠️ 主线事故档案**：上轮 `rm -rf` worktree 穿透 junction 误删主仓 data/cache 大部 + node_modules（runs/ 冻结产物无恙、committed JSON 无恙、CI 独立缓存无恙）。node_modules 重装修复；cache 由 fetcher 渐进回填。**铁律：清 worktree 先 `cmd /c rmdir` 摘 junction 再删目录。**
+
+**遗留候选**：政客交易 STOCK Act（唯一 planned，PDF/JSON 端点尽调待做）；CUSIP→ticker 覆盖 68/118 可提升；cmdk 页面组需补新路由（heatmap/institutions/data-health/api-docs）；i18n 孤儿 key；BACKTEST_MONTHS/HIG 密度（业主取舍）；研究线三门（E3/Track A/Track LLM）。
+
 ## 2026-08-20 (b) 三路子代理并行（业主指令）→ 全阵亡 → 主线接管 → 集成上线
 
 **编排**：git worktree ×3（wa/wb/wc，junction 共享 data/cache 与 node_modules）。踩坑：**Turbopack 拒绝跨文件系统根的 node_modules symlink**——worktree 内 `next build` 必败（"Symlink node_modules is invalid"），tsc/eslint 可用；build 归主线集成。另一坑：**worktree 的 runs/ledger.jsonl 被 git CRLF 重签出 → sha256 pin 测试假红**（内容同、字节异），用主仓原文件覆盖即绿。
