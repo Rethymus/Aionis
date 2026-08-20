@@ -10,33 +10,68 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-08-19T22:17:41+00:00",
-  "n_snapshots": 11,
+  "latest_snapshot_ts": "2026-08-08T03:45:06+00:00",
+  "n_snapshots": 1,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
-      "ticker": "HOOD",
+      "ticker": "PLTR",
       "mentions": 1,
-      "sentiment": -0.097,
+      "sentiment": 0.021,
       "bull_ratio": null,
       "score_sum": 0
     },
     {
-      "ticker": "COIN",
+      "ticker": "SMCI",
       "mentions": 1,
-      "sentiment": -0.831,
+      "sentiment": 0.851,
+      "bull_ratio": 1.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "TSLA",
+      "mentions": 1,
+      "sentiment": -0.559,
       "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "UBER",
+      "mentions": 1,
+      "sentiment": -0.03,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "TTWO",
+      "mentions": 1,
+      "sentiment": -0.091,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "EPAM",
+      "mentions": 1,
+      "sentiment": -0.962,
+      "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "SNDK",
+      "mentions": 1,
+      "sentiment": 0.629,
+      "bull_ratio": 1.0,
       "score_sum": 0
     }
   ],
   "pressure": {
     "status": "accumulating",
     "by_ticker": {},
-    "n_snapshots": 11,
-    "latest_date": "2026-08-19",
+    "n_snapshots": 1,
+    "latest_date": "2026-08-08",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-08-19T22:19:29.759696+00:00"
+  "snapshot_ts": "2026-08-20T03:15:06.551049+00:00"
 }

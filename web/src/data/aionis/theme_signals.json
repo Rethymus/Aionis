@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "as_of_date": "2026-08-14",
+  "as_of_date": "2026-06-30",
   "groups": [
     "price",
     "fundamentals",
@@ -11,390 +11,519 @@
       "signal": "momentum_21d",
       "polarity": "bullish_high",
       "direction": "bullish",
-      "strength": 0.7445,
-      "mean": 0.0408,
+      "strength": 0.7374,
+      "mean": 0.021,
       "n": 492,
       "favored": [
         {
-          "ticker": "SMCI",
-          "value": 0.5342,
-          "name": "Super Micro Computer, Inc.",
-          "sector": ""
+          "ticker": "AMAT",
+          "value": 0.5153,
+          "name": "APPLIED MATERIALS INC /DE",
+          "sector": "Semiconductors & Related Devices"
         },
         {
-          "ticker": "PAYC",
-          "value": 0.4027,
-          "name": "Paycom Software, Inc.",
-          "sector": ""
+          "ticker": "KLAC",
+          "value": 0.4968,
+          "name": "KLA CORP",
+          "sector": "Optical Instruments & Lenses"
         },
         {
-          "ticker": "ZBRA",
-          "value": 0.3842,
-          "name": "ZEBRA TECHNOLOGIES CORP",
-          "sector": ""
+          "ticker": "MRNA",
+          "value": 0.427,
+          "name": "Moderna, Inc.",
+          "sector": "Biological Products, (No Diagnostic Substances)"
         },
         {
-          "ticker": "MKTX",
-          "value": 0.3792,
-          "name": "MARKETAXESS HOLDINGS INC",
-          "sector": ""
+          "ticker": "GLW",
+          "value": 0.3971,
+          "name": "CORNING INC /NY",
+          "sector": "Drawing & Insulating of  Nonferrous Wire"
         },
         {
-          "ticker": "WDAY",
-          "value": 0.346,
-          "name": "Workday, Inc.",
-          "sector": ""
+          "ticker": "LRCX",
+          "value": 0.3456,
+          "name": "LAM RESEARCH CORP",
+          "sector": "Special Industry Machinery, NEC"
         }
       ],
       "group": "price",
-      "latest_mean": 0.0379,
-      "trailing_mean": 0.0144
+      "latest_mean": 0.0268,
+      "trailing_mean": 0.0153
     },
     "momentum_42d": {
       "signal": "momentum_42d",
       "polarity": "bullish_high",
       "direction": "bullish",
-      "strength": 0.7548,
-      "mean": 0.0641,
+      "strength": 0.6841,
+      "mean": 0.054,
       "n": 492,
       "favored": [
         {
-          "ticker": "PAYC",
-          "value": 0.5234,
-          "name": "Paycom Software, Inc.",
-          "sector": ""
+          "ticker": "MU",
+          "value": 0.915,
+          "name": "MICRON TECHNOLOGY INC",
+          "sector": "Semiconductors & Related Devices"
         },
         {
-          "ticker": "ZBRA",
-          "value": 0.4894,
-          "name": "ZEBRA TECHNOLOGIES CORP",
-          "sector": ""
+          "ticker": "DELL",
+          "value": 0.8368,
+          "name": "Dell Technologies Inc.",
+          "sector": "Electronic Computers"
         },
         {
-          "ticker": "WDAY",
-          "value": 0.4754,
-          "name": "Workday, Inc.",
-          "sector": ""
+          "ticker": "DDOG",
+          "value": 0.7342,
+          "name": "Datadog, Inc.",
+          "sector": "Services-Prepackaged Software"
         },
         {
-          "ticker": "CRL",
-          "value": 0.4145,
-          "name": "CHARLES RIVER LABORATORIES INTERNATIONAL, INC.",
-          "sector": ""
+          "ticker": "AMAT",
+          "value": 0.6893,
+          "name": "APPLIED MATERIALS INC /DE",
+          "sector": "Semiconductors & Related Devices"
         },
         {
-          "ticker": "PYPL",
-          "value": 0.3929,
-          "name": "PayPal Holdings, Inc.",
-          "sector": ""
+          "ticker": "PANW",
+          "value": 0.6578,
+          "name": "Palo Alto Networks Inc",
+          "sector": "Computer Peripheral Equipment, NEC"
         }
       ],
       "group": "price",
-      "latest_mean": 0.0664,
-      "trailing_mean": 0.0287
+      "latest_mean": 0.0473,
+      "trailing_mean": 0.0253
     },
     "volatility_21d": {
       "signal": "volatility_21d",
       "polarity": "bearish_high",
       "direction": "bearish",
-      "strength": 0.7235,
-      "mean": 0.0229,
+      "strength": 0.6984,
+      "mean": 0.0234,
       "n": 492,
       "favored": [
         {
-          "ticker": "PLTR",
-          "value": 0.0746,
-          "name": "Palantir Technologies Inc.",
-          "sector": ""
-        },
-        {
           "ticker": "SMCI",
-          "value": 0.0727,
+          "value": 0.0916,
           "name": "Super Micro Computer, Inc.",
-          "sector": ""
+          "sector": "Electronic Computers"
         },
         {
           "ticker": "MU",
-          "value": 0.0655,
+          "value": 0.0798,
           "name": "MICRON TECHNOLOGY INC",
-          "sector": ""
+          "sector": "Semiconductors & Related Devices"
+        },
+        {
+          "ticker": "ON",
+          "value": 0.0785,
+          "name": "ON SEMICONDUCTOR CORP",
+          "sector": "Semiconductors & Related Devices"
+        },
+        {
+          "ticker": "GLW",
+          "value": 0.0722,
+          "name": "CORNING INC /NY",
+          "sector": "Drawing & Insulating of  Nonferrous Wire"
         },
         {
           "ticker": "WDC",
-          "value": 0.0649,
+          "value": 0.0719,
           "name": "WESTERN DIGITAL CORP",
-          "sector": ""
-        },
-        {
-          "ticker": "MKTX",
-          "value": 0.0645,
-          "name": "MARKETAXESS HOLDINGS INC",
-          "sector": ""
+          "sector": "Computer Storage Devices"
         }
       ],
       "group": "price",
-      "latest_mean": 0.0236,
-      "trailing_mean": 0.0221
+      "latest_mean": 0.0227,
+      "trailing_mean": 0.0201
     },
     "volatility_63d": {
       "signal": "volatility_63d",
       "polarity": "bearish_high",
       "direction": "bearish",
-      "strength": 0.7147,
-      "mean": 0.0231,
+      "strength": 0.7411,
+      "mean": 0.0227,
       "n": 492,
       "favored": [
         {
           "ticker": "SMCI",
-          "value": 0.075,
+          "value": 0.0723,
           "name": "Super Micro Computer, Inc.",
-          "sector": ""
+          "sector": "Electronic Computers"
+        },
+        {
+          "ticker": "ENPH",
+          "value": 0.0637,
+          "name": "Enphase Energy, Inc.",
+          "sector": "Semiconductors & Related Devices"
         },
         {
           "ticker": "MU",
-          "value": 0.0698,
+          "value": 0.0633,
           "name": "MICRON TECHNOLOGY INC",
-          "sector": ""
+          "sector": "Semiconductors & Related Devices"
         },
         {
           "ticker": "DELL",
-          "value": 0.0649,
+          "value": 0.0601,
           "name": "Dell Technologies Inc.",
-          "sector": ""
+          "sector": "Electronic Computers"
         },
         {
-          "ticker": "WDC",
-          "value": 0.0637,
-          "name": "WESTERN DIGITAL CORP",
-          "sector": ""
-        },
-        {
-          "ticker": "GLW",
-          "value": 0.0622,
-          "name": "CORNING INC /NY",
-          "sector": ""
+          "ticker": "INTC",
+          "value": 0.06,
+          "name": "INTEL CORP",
+          "sector": "Semiconductors & Related Devices"
         }
       ],
       "group": "price",
-      "latest_mean": 0.0234,
-      "trailing_mean": 0.0217
+      "latest_mean": 0.0222,
+      "trailing_mean": 0.0202
+    },
+    "turnover_21d": {
+      "signal": "turnover_21d",
+      "polarity": "bullish_high",
+      "direction": "bullish",
+      "strength": 0.5049,
+      "mean": 7414846.8029,
+      "n": 492,
+      "favored": [
+        {
+          "ticker": "NVDA",
+          "value": 164004722.381,
+          "name": "NVIDIA CORP",
+          "sector": "Semiconductors & Related Devices"
+        },
+        {
+          "ticker": "INTC",
+          "value": 131454159.6667,
+          "name": "INTEL CORP",
+          "sector": "Semiconductors & Related Devices"
+        },
+        {
+          "ticker": "SMCI",
+          "value": 74797892.4762,
+          "name": "Super Micro Computer, Inc.",
+          "sector": "Electronic Computers"
+        },
+        {
+          "ticker": "AAPL",
+          "value": 66953060.6667,
+          "name": "Apple Inc.",
+          "sector": "Electronic Computers"
+        },
+        {
+          "ticker": "AMZN",
+          "value": 62647725.5714,
+          "name": "AMAZON COM INC",
+          "sector": "Retail-Catalog & Mail-Order Houses"
+        }
+      ],
+      "group": "price",
+      "latest_mean": 6952526.9218,
+      "trailing_mean": 6587559.4688
+    },
+    "amihud_illiquidity_21d": {
+      "signal": "amihud_illiquidity_21d",
+      "polarity": "bearish_high",
+      "direction": "bearish",
+      "strength": 0.6993,
+      "mean": 0.0,
+      "n": 492,
+      "favored": [
+        {
+          "ticker": "ERIE",
+          "value": 0.0,
+          "name": "ERIE INDEMNITY CO",
+          "sector": "Insurance Agents, Brokers & Service"
+        },
+        {
+          "ticker": "MHK",
+          "value": 0.0,
+          "name": "MOHAWK INDUSTRIES INC",
+          "sector": "Carpets & Rugs"
+        },
+        {
+          "ticker": "NWS",
+          "value": 0.0,
+          "name": "NEWS CORP",
+          "sector": "Newspapers: Publishing or  Publishing & Printing"
+        },
+        {
+          "ticker": "LW",
+          "value": 0.0,
+          "name": "Lamb Weston Holdings, Inc.",
+          "sector": "Canned, Frozen & Preservd Fruit, Veg & Food Specialties"
+        },
+        {
+          "ticker": "ARE",
+          "value": 0.0,
+          "name": "ALEXANDRIA REAL ESTATE EQUITIES, INC.",
+          "sector": "Real Estate Investment Trusts"
+        }
+      ],
+      "group": "price",
+      "latest_mean": 0.0,
+      "trailing_mean": 0.0
     },
     "roe": {
       "signal": "roe",
       "polarity": "bullish_high",
-      "direction": "bullish",
-      "strength": 0.1615,
-      "mean": 0.1622,
-      "n": 479,
+      "direction": "bearish",
+      "strength": 0.2774,
+      "mean": 0.044,
+      "n": 477,
       "favored": [
         {
-          "ticker": "GDDY",
-          "value": 35.8358,
-          "name": "GoDaddy Inc.",
-          "sector": ""
+          "ticker": "CL",
+          "value": 4.4552,
+          "name": "COLGATE PALMOLIVE CO",
+          "sector": "Perfumes, Cosmetics & Other Toilet Preparations"
         },
         {
-          "ticker": "MTD",
-          "value": 18.1626,
-          "name": "METTLER TOLEDO INTERNATIONAL INC/",
-          "sector": ""
+          "ticker": "IT",
+          "value": 3.5079,
+          "name": "GARTNER INC",
+          "sector": "Services-Management Services"
         },
         {
           "ticker": "LYV",
-          "value": 3.5764,
+          "value": 2.7912,
           "name": "Live Nation Entertainment, Inc.",
-          "sector": ""
+          "sector": "Services-Amusement & Recreation Services"
         },
         {
-          "ticker": "CL",
-          "value": 2.9364,
-          "name": "COLGATE PALMOLIVE CO",
-          "sector": ""
+          "ticker": "QCOM",
+          "value": 1.5013,
+          "name": "QUALCOMM INC/DE",
+          "sector": "Radio & Tv Broadcasting & Communications Equipment"
         },
         {
-          "ticker": "TPR",
-          "value": 2.2073,
-          "name": "TAPESTRY, INC.",
-          "sector": ""
+          "ticker": "NTAP",
+          "value": 0.9445,
+          "name": "NetApp, Inc.",
+          "sector": "Computer Storage Devices"
         }
       ],
       "group": "fundamentals",
-      "latest_mean": 0.1581,
-      "trailing_mean": 0.0683
+      "latest_mean": 0.0431,
+      "trailing_mean": 0.1021
     },
     "profit_margin": {
       "signal": "profit_margin",
       "polarity": "bullish_high",
       "direction": "bearish",
-      "strength": 0.3435,
-      "mean": 0.2749,
-      "n": 474,
+      "strength": 0.1975,
+      "mean": 0.3194,
+      "n": 472,
       "favored": [
         {
-          "ticker": "LRCX",
-          "value": 11.0255,
-          "name": "LAM RESEARCH CORP",
-          "sector": ""
-        },
-        {
           "ticker": "GEN",
-          "value": 7.963,
+          "value": 36.037,
           "name": "Gen Digital Inc.",
-          "sector": ""
-        },
-        {
-          "ticker": "MSFT",
-          "value": 6.7032,
-          "name": "MICROSOFT CORP",
-          "sector": ""
-        },
-        {
-          "ticker": "KLAC",
-          "value": 6.3038,
-          "name": "KLA CORP",
-          "sector": ""
+          "sector": "Services-Prepackaged Software"
         },
         {
           "ticker": "CPT",
-          "value": 6.0013,
+          "value": 19.8082,
           "name": "CAMDEN PROPERTY TRUST",
-          "sector": ""
+          "sector": "Real Estate Investment Trusts"
+        },
+        {
+          "ticker": "MU",
+          "value": 3.3463,
+          "name": "MICRON TECHNOLOGY INC",
+          "sector": "Semiconductors & Related Devices"
+        },
+        {
+          "ticker": "LRCX",
+          "value": 2.7702,
+          "name": "LAM RESEARCH CORP",
+          "sector": "Special Industry Machinery, NEC"
+        },
+        {
+          "ticker": "CME",
+          "value": 2.1659,
+          "name": "CME GROUP INC.",
+          "sector": "Security & Commodity Brokers, Dealers, Exchanges & Services"
         }
       ],
       "group": "fundamentals",
-      "latest_mean": 0.2855,
-      "trailing_mean": 0.3503
+      "latest_mean": 0.3164,
+      "trailing_mean": 0.3564
     },
     "revenue_growth_12m": {
       "signal": "revenue_growth_12m",
       "polarity": "bullish_high",
       "direction": "bearish",
-      "strength": 0.3987,
-      "mean": 0.0754,
-      "n": 478,
+      "strength": 0.1084,
+      "mean": 0.0052,
+      "n": 477,
       "favored": [
         {
-          "ticker": "NWS",
-          "value": 3.1318,
-          "name": "NEWS CORP",
-          "sector": ""
+          "ticker": "MDT",
+          "value": 3.0328,
+          "name": "Medtronic plc",
+          "sector": "Electromedical & Electrotherapeutic Apparatus"
         },
         {
-          "ticker": "NWSA",
-          "value": 3.1318,
-          "name": "NEWS CORP",
-          "sector": ""
+          "ticker": "AZO",
+          "value": 0.2249,
+          "name": "AUTOZONE INC",
+          "sector": "Retail-Auto & Home Supply Stores"
         },
         {
-          "ticker": "PG",
-          "value": 3.0985,
-          "name": "PROCTER & GAMBLE Co",
-          "sector": ""
+          "ticker": "MKC",
+          "value": 0.2062,
+          "name": "MCCORMICK & CO INC",
+          "sector": "Miscellaneous Food Preparations & Kindred Products"
         },
         {
-          "ticker": "CAH",
-          "value": 2.8741,
-          "name": "CARDINAL HEALTH INC",
-          "sector": ""
+          "ticker": "ORCL",
+          "value": 0.1735,
+          "name": "ORACLE CORP",
+          "sector": "Services-Prepackaged Software"
         },
         {
-          "ticker": "WDC",
-          "value": 2.8714,
-          "name": "WESTERN DIGITAL CORP",
-          "sector": ""
+          "ticker": "ACN",
+          "value": 0.1236,
+          "name": "Accenture plc",
+          "sector": "Services-Business Services, NEC"
         }
       ],
       "group": "fundamentals",
-      "latest_mean": 0.0612,
-      "trailing_mean": 0.1082
+      "latest_mean": 0.0062,
+      "trailing_mean": 0.1158
     },
     "leverage": {
       "signal": "leverage",
       "polarity": "bearish_high",
       "direction": "neutral",
-      "strength": 0.6354,
-      "mean": 0.2548,
-      "n": 449,
+      "strength": 0.6726,
+      "mean": 0.2529,
+      "n": 448,
       "favored": [
-        {
-          "ticker": "FICO",
-          "value": 2.74,
-          "name": "FAIR ISAAC CORP",
-          "sector": ""
-        },
         {
           "ticker": "INCY",
           "value": 2.6017,
           "name": "INCYTE CORP",
-          "sector": ""
+          "sector": "Services-Commercial Physical & Biological Research"
+        },
+        {
+          "ticker": "FICO",
+          "value": 1.7767,
+          "name": "FAIR ISAAC CORP",
+          "sector": "Services-Business Services, NEC"
         },
         {
           "ticker": "TDG",
-          "value": 1.2245,
+          "value": 1.2294,
           "name": "TransDigm Group INC",
-          "sector": ""
+          "sector": "Aircraft Parts & Auxiliary Equipment, NEC"
         },
         {
           "ticker": "MSCI",
-          "value": 1.1388,
+          "value": 1.1548,
           "name": "MSCI Inc.",
-          "sector": ""
+          "sector": "Services-Business Services, NEC"
         },
         {
-          "ticker": "CCI",
-          "value": 1.1313,
-          "name": "CROWN CASTLE INC.",
-          "sector": ""
+          "ticker": "SBAC",
+          "value": 1.1057,
+          "name": "SBA COMMUNICATIONS CORP",
+          "sector": "Real Estate Investment Trusts"
         }
       ],
       "group": "fundamentals",
-      "latest_mean": 0.2549,
-      "trailing_mean": 0.2537
+      "latest_mean": 0.2532,
+      "trailing_mean": 0.2551
     },
     "debt_to_equity": {
       "signal": "debt_to_equity",
       "polarity": "bearish_high",
-      "direction": "bearish",
-      "strength": 0.1361,
-      "mean": 1.6869,
-      "n": 441,
+      "direction": "bullish",
+      "strength": 0.2878,
+      "mean": 0.0683,
+      "n": 440,
       "favored": [
         {
-          "ticker": "GDDY",
-          "value": 561.1045,
-          "name": "GoDaddy Inc.",
-          "sector": ""
-        },
-        {
-          "ticker": "MTD",
-          "value": 159.4536,
-          "name": "METTLER TOLEDO INTERNATIONAL INC/",
-          "sector": ""
-        },
-        {
           "ticker": "CL",
-          "value": 33.2161,
+          "value": 54.0621,
           "name": "COLGATE PALMOLIVE CO",
-          "sector": ""
+          "sector": "Perfumes, Cosmetics & Other Toilet Preparations"
         },
         {
-          "ticker": "LYV",
-          "value": 20.8392,
-          "name": "Live Nation Entertainment, Inc.",
-          "sector": ""
+          "ticker": "IT",
+          "value": 25.6957,
+          "name": "GARTNER INC",
+          "sector": "Services-Management Services"
+        },
+        {
+          "ticker": "GDDY",
+          "value": 15.8555,
+          "name": "GoDaddy Inc.",
+          "sector": "Services-Computer Integrated Systems Design"
+        },
+        {
+          "ticker": "AMT",
+          "value": 11.0435,
+          "name": "AMERICAN TOWER CORP /MA/",
+          "sector": "Real Estate Investment Trusts"
         },
         {
           "ticker": "LVS",
-          "value": 16.3442,
+          "value": 7.9265,
           "name": "LAS VEGAS SANDS CORP",
-          "sector": ""
+          "sector": "Hotels & Motels"
         }
       ],
       "group": "fundamentals",
-      "latest_mean": 1.7094,
-      "trailing_mean": 0.2613
+      "latest_mean": 0.0764,
+      "trailing_mean": 0.2816
+    },
+    "beta_252d": {
+      "signal": "beta_252d",
+      "polarity": "neutral",
+      "direction": "neutral",
+      "strength": 0.7839,
+      "mean": 0.6822,
+      "n": 492,
+      "favored": [
+        {
+          "ticker": "SMCI",
+          "value": 3.4356,
+          "name": "Super Micro Computer, Inc.",
+          "sector": "Electronic Computers"
+        },
+        {
+          "ticker": "MU",
+          "value": 3.135,
+          "name": "MICRON TECHNOLOGY INC",
+          "sector": "Semiconductors & Related Devices"
+        },
+        {
+          "ticker": "COIN",
+          "value": 3.0806,
+          "name": "Coinbase Global, Inc.",
+          "sector": "Finance Services"
+        },
+        {
+          "ticker": "TER",
+          "value": 3.0661,
+          "name": "TERADYNE, INC",
+          "sector": "Instruments For Meas & Testing of  Electricity & Elec Signals"
+        },
+        {
+          "ticker": "LRCX",
+          "value": 2.9589,
+          "name": "LAM RESEARCH CORP",
+          "sector": "Special Industry Machinery, NEC"
+        }
+      ],
+      "group": "market_structure",
+      "latest_mean": 0.7239,
+      "trailing_mean": 0.8174
     }
   },
   "methodology": "Theme-signal operationalization (display-only, NOT a research claim). Direction from a documented polarity heuristic (e.g. momentum/ROE high = bullish; volatility/leverage high = bearish). Strength = |mean cross-sectional z-score| clipped to [0,3]. Favored = top-5 tickers by the raw signal at the latest realized month. For 'bearish_high' signals, favored = most-exposed, NOT a buy recommendation. Reads only the frozen panel's latest cross-section; the model and OOS scores are untouched.",
-  "snapshot_ts": "2026-08-19T22:19:27.196917+00:00"
+  "snapshot_ts": "2026-08-20T03:15:00.210685+00:00"
 }

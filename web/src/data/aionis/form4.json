@@ -3,14 +3,6 @@
   "methodology": "Form 4 insider transactions (SEC EDGAR EFTS, filed-date PIT, public domain). Non-derivative pure buy (A) / sell (D) only \u2014 exercises and options excluded. Window spans 2016\u2192today (Trump Era). Display-only, exploratory, not a research claim.",
   "recent": [
     {
-      "filer": "Newstead Jennifer",
-      "ticker": "AAPL",
-      "date": "2026-08-11",
-      "action": "sell",
-      "shares": 1439,
-      "price": 307.75
-    },
-    {
       "filer": "Althoff Judson",
       "ticker": "MSFT",
       "date": "2026-08-05",
@@ -103,16 +95,16 @@
       "ticker": "GOOGL",
       "date": "2026-07-21",
       "action": "sell",
-      "shares": 22700,
-      "price": 19.05
+      "shares": 200,
+      "price": 19.72
     },
     {
       "filer": "GV 2019 GP, L.L.C.",
       "ticker": "GOOGL",
       "date": "2026-07-21",
       "action": "sell",
-      "shares": 200,
-      "price": 19.72
+      "shares": 22700,
+      "price": 19.05
     },
     {
       "filer": "GV 2019 GP, L.L.C.",
@@ -143,16 +135,16 @@
       "ticker": "GOOGL",
       "date": "2026-07-15",
       "action": "sell",
-      "shares": 61992,
-      "price": 19.84
+      "shares": 12500,
+      "price": 18.79
     },
     {
       "filer": "GV 2019 GP, L.L.C.",
       "ticker": "GOOGL",
       "date": "2026-07-15",
       "action": "sell",
-      "shares": 12500,
-      "price": 18.79
+      "shares": 61992,
+      "price": 19.84
     },
     {
       "filer": "Herrington Douglas J",
@@ -175,8 +167,16 @@
       "ticker": "GOOGL",
       "date": "2026-06-29",
       "action": "sell",
-      "shares": 520,
-      "price": 347.25
+      "shares": 2358,
+      "price": 351.21
+    },
+    {
+      "filer": "WALKER JOHN KENT",
+      "ticker": "GOOGL",
+      "date": "2026-06-29",
+      "action": "sell",
+      "shares": 2400,
+      "price": 350.49
     },
     {
       "filer": "WALKER JOHN KENT",
@@ -199,6 +199,14 @@
       "ticker": "GOOGL",
       "date": "2026-06-29",
       "action": "sell",
+      "shares": 520,
+      "price": 347.25
+    },
+    {
+      "filer": "WALKER JOHN KENT",
+      "ticker": "GOOGL",
+      "date": "2026-06-29",
+      "action": "sell",
       "shares": 680,
       "price": 348.28
     },
@@ -209,22 +217,6 @@
       "action": "sell",
       "shares": 1280,
       "price": 349.42
-    },
-    {
-      "filer": "WALKER JOHN KENT",
-      "ticker": "GOOGL",
-      "date": "2026-06-29",
-      "action": "sell",
-      "shares": 2400,
-      "price": 350.49
-    },
-    {
-      "filer": "WALKER JOHN KENT",
-      "ticker": "GOOGL",
-      "date": "2026-06-29",
-      "action": "sell",
-      "shares": 2358,
-      "price": 351.21
     },
     {
       "filer": "WALKER JOHN KENT",
@@ -271,8 +263,24 @@
       "ticker": "GOOGL",
       "date": "2026-06-15",
       "action": "sell",
-      "shares": 35,
-      "price": 367.09
+      "shares": 177,
+      "price": 369.21
+    },
+    {
+      "filer": "Hennessy John L.",
+      "ticker": "GOOGL",
+      "date": "2026-06-15",
+      "action": "sell",
+      "shares": 158,
+      "price": 369.66
+    },
+    {
+      "filer": "Hennessy John L.",
+      "ticker": "GOOGL",
+      "date": "2026-06-15",
+      "action": "sell",
+      "shares": 130,
+      "price": 368.92
     },
     {
       "filer": "Hennessy John L.",
@@ -281,6 +289,54 @@
       "action": "sell",
       "shares": 44,
       "price": 367.27
+    },
+    {
+      "filer": "Hennessy John L.",
+      "ticker": "GOOGL",
+      "date": "2026-06-15",
+      "action": "sell",
+      "shares": 68,
+      "price": 366.34
+    },
+    {
+      "filer": "Hennessy John L.",
+      "ticker": "GOOGL",
+      "date": "2026-06-15",
+      "action": "sell",
+      "shares": 119,
+      "price": 369.69
+    },
+    {
+      "filer": "Hennessy John L.",
+      "ticker": "GOOGL",
+      "date": "2026-06-15",
+      "action": "sell",
+      "shares": 45,
+      "price": 369.89
+    },
+    {
+      "filer": "Hennessy John L.",
+      "ticker": "GOOGL",
+      "date": "2026-06-15",
+      "action": "sell",
+      "shares": 145,
+      "price": 369.04
+    },
+    {
+      "filer": "Hennessy John L.",
+      "ticker": "GOOGL",
+      "date": "2026-06-15",
+      "action": "sell",
+      "shares": 51,
+      "price": 366.01
+    },
+    {
+      "filer": "Hennessy John L.",
+      "ticker": "GOOGL",
+      "date": "2026-06-15",
+      "action": "sell",
+      "shares": 35,
+      "price": 367.09
     },
     {
       "filer": "Hennessy John L.",
@@ -297,70 +353,6 @@
       "action": "sell",
       "shares": 33,
       "price": 367.66
-    },
-    {
-      "filer": "Hennessy John L.",
-      "ticker": "GOOGL",
-      "date": "2026-06-15",
-      "action": "sell",
-      "shares": 177,
-      "price": 369.21
-    },
-    {
-      "filer": "Hennessy John L.",
-      "ticker": "GOOGL",
-      "date": "2026-06-15",
-      "action": "sell",
-      "shares": 45,
-      "price": 369.89
-    },
-    {
-      "filer": "Hennessy John L.",
-      "ticker": "GOOGL",
-      "date": "2026-06-15",
-      "action": "sell",
-      "shares": 51,
-      "price": 366.01
-    },
-    {
-      "filer": "Hennessy John L.",
-      "ticker": "GOOGL",
-      "date": "2026-06-15",
-      "action": "sell",
-      "shares": 158,
-      "price": 369.66
-    },
-    {
-      "filer": "Hennessy John L.",
-      "ticker": "GOOGL",
-      "date": "2026-06-15",
-      "action": "sell",
-      "shares": 145,
-      "price": 369.04
-    },
-    {
-      "filer": "Hennessy John L.",
-      "ticker": "GOOGL",
-      "date": "2026-06-15",
-      "action": "sell",
-      "shares": 119,
-      "price": 369.69
-    },
-    {
-      "filer": "Hennessy John L.",
-      "ticker": "GOOGL",
-      "date": "2026-06-15",
-      "action": "sell",
-      "shares": 130,
-      "price": 368.92
-    },
-    {
-      "filer": "Hennessy John L.",
-      "ticker": "GOOGL",
-      "date": "2026-06-15",
-      "action": "sell",
-      "shares": 68,
-      "price": 366.34
     },
     {
       "filer": "Numoto Takeshi",
@@ -401,11 +393,19 @@
       "action": "sell",
       "shares": 15500,
       "price": 215.73
+    },
+    {
+      "filer": "STEVENS MARK A",
+      "ticker": "NVDA",
+      "date": "2026-06-02",
+      "action": "sell",
+      "shares": 500000,
+      "price": 222.38
     }
   ],
   "buys": 169,
-  "sells": 16379,
-  "n_filers": 110,
+  "sells": 16395,
+  "n_filers": 109,
   "top_insiders": [
     {
       "filer": "Page Lawrence",
@@ -413,7 +413,7 @@
     },
     {
       "filer": "Brin Sergey",
-      "count": 2988
+      "count": 2990
     },
     {
       "filer": "BEZOS JEFFREY P",
@@ -448,7 +448,7 @@
       "count": 238
     }
   ],
-  "window": "2013-03..2026-08 (16548 txns, 5 issuers)",
+  "window": "2013-03..2026-08 (16564 txns, 5 issuers)",
   "n_issuers": 5,
   "yearly": [
     {
@@ -469,7 +469,7 @@
     {
       "year": 2016,
       "buys": 2,
-      "sells": 3023
+      "sells": 3024
     },
     {
       "year": 2017,
@@ -489,7 +489,7 @@
     {
       "year": 2020,
       "buys": 108,
-      "sells": 1308
+      "sells": 1309
     },
     {
       "year": 2021,
@@ -499,7 +499,7 @@
     {
       "year": 2022,
       "buys": 24,
-      "sells": 2732
+      "sells": 2745
     },
     {
       "year": 2023,
@@ -509,18 +509,18 @@
     {
       "year": 2024,
       "buys": 0,
-      "sells": 1052
+      "sells": 1053
     },
     {
       "year": 2025,
       "buys": 2,
-      "sells": 1040
+      "sells": 1041
     },
     {
       "year": 2026,
       "buys": 1,
-      "sells": 349
+      "sells": 348
     }
   ],
-  "snapshot_ts": "2026-08-19T22:19:27.271734+00:00"
+  "snapshot_ts": "2026-08-20T03:15:02.871193+00:00"
 }

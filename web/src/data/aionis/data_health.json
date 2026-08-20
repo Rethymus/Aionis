@@ -6,7 +6,7 @@
       "file": "metrics.json",
       "category": "frozen",
       "as_of": "2026-08-03",
-      "exported_at": "2026-08-12",
+      "exported_at": "2026-08-20",
       "present": true
     },
     {
@@ -38,7 +38,7 @@
       "file": "sector_breakdown.json",
       "category": "frozen",
       "as_of": "2026-08-03",
-      "exported_at": null,
+      "exported_at": "2026-08-20",
       "present": true
     },
     {
@@ -46,7 +46,7 @@
       "file": "picks_backtest.json",
       "category": "frozen",
       "as_of": "2026-06-30",
-      "exported_at": null,
+      "exported_at": "2026-08-20",
       "present": true
     },
     {
@@ -62,7 +62,7 @@
       "file": "pick_conviction.json",
       "category": "frozen",
       "as_of": "2026-08-03",
-      "exported_at": null,
+      "exported_at": "2026-08-20",
       "present": true
     },
     {
@@ -86,7 +86,7 @@
       "file": "power_floor.json",
       "category": "frozen",
       "as_of": null,
-      "exported_at": "2026-08-19",
+      "exported_at": "2026-08-20",
       "present": true
     },
     {
@@ -94,7 +94,7 @@
       "file": "sigma_survey.json",
       "category": "frozen",
       "as_of": null,
-      "exported_at": null,
+      "exported_at": "2026-08-20",
       "present": true
     },
     {
@@ -118,31 +118,31 @@
       "file": "stock_universe.json",
       "category": "frozen",
       "as_of": "2026-08-03",
-      "exported_at": "2026-08-19",
+      "exported_at": "2026-08-20",
       "present": true
     },
     {
       "key": "themes",
       "file": "themes.json",
       "category": "daily",
-      "as_of": "2026-08-19",
-      "exported_at": "2026-08-19",
+      "as_of": "2026-08-04",
+      "exported_at": "2026-08-20",
       "present": true
     },
     {
       "key": "theme_signals",
       "file": "theme_signals.json",
       "category": "daily",
-      "as_of": "2026-08-14",
-      "exported_at": "2026-08-19",
+      "as_of": "2026-06-30",
+      "exported_at": "2026-08-20",
       "present": true
     },
     {
       "key": "market_context",
       "file": "market_context.json",
       "category": "daily",
-      "as_of": "2026-08",
-      "exported_at": "2026-08-19",
+      "as_of": "2026-06",
+      "exported_at": "2026-08-20",
       "present": true
     },
     {
@@ -150,23 +150,23 @@
       "file": "macro_drivers.json",
       "category": "daily",
       "as_of": "2026-08",
-      "exported_at": "2026-08-19",
+      "exported_at": "2026-08-20",
       "present": true
     },
     {
       "key": "taco",
       "file": "taco.json",
       "category": "daily",
-      "as_of": "2026-08",
-      "exported_at": "2026-08-19",
+      "as_of": "2026-07",
+      "exported_at": "2026-08-20",
       "present": true
     },
     {
       "key": "form4",
       "file": "form4.json",
       "category": "daily",
-      "as_of": "2026-08-11",
-      "exported_at": "2026-08-19",
+      "as_of": "2026-08-05",
+      "exported_at": "2026-08-20",
       "present": true
     },
     {
@@ -174,7 +174,7 @@
       "file": "reddit.json",
       "category": "daily",
       "as_of": null,
-      "exported_at": "2026-08-19",
+      "exported_at": "2026-08-20",
       "present": true
     },
     {
@@ -182,7 +182,7 @@
       "file": "headline_provenance.json",
       "category": "daily",
       "as_of": "2026-08-05",
-      "exported_at": "2026-08-19",
+      "exported_at": "2026-08-20",
       "present": true
     },
     {
@@ -190,15 +190,15 @@
       "file": "ledger_audit.json",
       "category": "daily",
       "as_of": null,
-      "exported_at": "2026-08-19",
+      "exported_at": "2026-08-20",
       "present": true
     },
     {
       "key": "cot",
       "file": "cot.json",
       "category": "cadence",
-      "as_of": "2026-08-11",
-      "exported_at": "2026-08-19",
+      "as_of": "2026-08-04",
+      "exported_at": "2026-08-20",
       "present": true
     },
     {
@@ -206,7 +206,7 @@
       "file": "smart_money.json",
       "category": "cadence",
       "as_of": "2026-08-18",
-      "exported_at": "2026-08-19",
+      "exported_at": "2026-08-20",
       "present": true
     }
   ],
@@ -216,6 +216,34 @@
     "n_daily": 9,
     "n_cadence": 2
   },
-  "methodology": "Freshness/provenance map of every terminal panel. frozen = derived from frozen OOS artifacts (ledger #49 lineage): the daily lane deliberately does NOT advance these \u2014 recomputing them from newer data would be rerun-to-significance. daily = recomputed by each CI refresh from live caches. cadence = advances on its source's publication rhythm (CFTC weekly, price caches ~5-day grace, EDGAR filing rhythm). as_of is read from each panel's own timestamp fields; null = the panel carries no observation date (static research artifact). The only legal way frozen numbers move forward: E3 forward-live accumulation or a new pre-registered phase.",
-  "snapshot_ts": "2026-08-19T22:19:29.862162+00:00"
+  "source_health": {
+    "smart_money": {
+      "ticker_null": 16,
+      "n_recent": 60,
+      "days_since_latest": 2
+    },
+    "reddit": {
+      "bull_ratio_null": 3,
+      "n_picks": 7
+    },
+    "cot": {
+      "weeks_since_latest": 2
+    }
+  },
+  "planned": [
+    {
+      "key": "politician-trades",
+      "note": "STOCK Act congressional trading. Primary sources are U.S. public domain (clerk.house.gov PTR search, efdsearch.senate.gov), but both are PDF-first with heavy parsing effort \u2014 no fetcher built."
+    },
+    {
+      "key": "13f-holdings",
+      "note": "SEC EDGAR 13F institutional holdings, quarterly XML \u2014 public domain, but a medium-large build (per-manager pagination + info-table parsing). No fetcher built."
+    },
+    {
+      "key": "cn-industry-classification",
+      "note": "A-share industry classification (e.g. SW sectors via baostock, a free public API). License verification + CI coordination pending; no fetcher built."
+    }
+  ],
+  "methodology": "Freshness/provenance map of every terminal panel. frozen = derived from frozen OOS artifacts (ledger #49 lineage): the daily lane deliberately does NOT advance these \u2014 recomputing them from newer data would be rerun-to-significance. daily = recomputed by each CI refresh from live caches. cadence = advances on its source's publication rhythm (CFTC weekly, price caches ~5-day grace, EDGAR filing rhythm). as_of is read from each panel's own timestamp fields; null = the panel carries no observation date (static research artifact). The only legal way frozen numbers move forward: E3 forward-live accumulation or a new pre-registered phase. source_health quantifies field-level quality on the committed JSONs (smart_money ticker nulls = filings on unlisted targets honestly left empty; reddit bull_ratio nulls = sentiment not yet gradable in the accumulating window; cot staleness in weeks vs the Friday publication rhythm). planned lists panels that are NOT built \u2014 no fetcher, no data, no endpoint payload \u2014 disclosed so the panel count is never mistaken for coverage.",
+  "snapshot_ts": "2026-08-20T03:15:08.257492+00:00"
 }

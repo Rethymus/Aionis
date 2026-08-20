@@ -174,7 +174,7 @@
       "method": "GET",
       "status": "available",
       "freshness": "daily",
-      "as_of": "2026-08-19",
+      "as_of": "2026-08-04",
       "license": "Tiingo/Alpaca free tier (vendor ToS, display-only) + GDELT open data",
       "source": "daily prices, fundamentals, GDELT news sentiment, ALFRED macro"
     },
@@ -185,7 +185,7 @@
       "method": "GET",
       "status": "available",
       "freshness": "daily",
-      "as_of": "2026-08-14",
+      "as_of": "2026-06-30",
       "license": "Tiingo/Alpaca free tier (vendor ToS, display-only) + GDELT open data",
       "source": "per-theme signal aggregates on the display panel"
     },
@@ -196,7 +196,7 @@
       "method": "GET",
       "status": "available",
       "freshness": "daily",
-      "as_of": "2026-08",
+      "as_of": "2026-06",
       "license": "Tiingo/Alpaca free tier (vendor ToS, display-only) + FRED (public domain)",
       "source": "equal-weight index monthly series + VIX + labeled events"
     },
@@ -218,7 +218,7 @@
       "method": "GET",
       "status": "available",
       "freshness": "daily",
-      "as_of": "2026-08",
+      "as_of": "2026-07",
       "license": "FRED (public domain) + labeled public news events",
       "source": "VIX monthly + Trump-policy event table"
     },
@@ -229,7 +229,7 @@
       "method": "GET",
       "status": "available",
       "freshness": "daily",
-      "as_of": "2026-08-11",
+      "as_of": "2026-08-05",
       "license": "U.S. SEC EDGAR \u2014 public domain",
       "source": "Form 4 XML, filed-date PIT"
     },
@@ -273,7 +273,7 @@
       "method": "GET",
       "status": "available",
       "freshness": "cadence",
-      "as_of": "2026-08-11",
+      "as_of": "2026-08-04",
       "license": "U.S. CFTC \u2014 public domain",
       "source": "Commitments of Traders legacy futures, weekly"
     },
@@ -287,6 +287,39 @@
       "as_of": "2026-08-18",
       "license": "U.S. SEC EDGAR \u2014 public domain",
       "source": "13D/G filings via EFTS, filed-date PIT"
+    },
+    {
+      "key": "politician-trades",
+      "file": "politician_trades.json",
+      "path": "/api/v1/panels/politician_trades.json",
+      "method": "GET",
+      "status": "planned",
+      "freshness": "planned",
+      "as_of": null,
+      "license": "U.S. House Clerk / Senate Office of Public Records \u2014 public domain (planned, not built)",
+      "source": "STOCK Act periodic transaction reports: clerk.house.gov + efdsearch.senate.gov"
+    },
+    {
+      "key": "13f-holdings",
+      "file": "13f_holdings.json",
+      "path": "/api/v1/panels/13f_holdings.json",
+      "method": "GET",
+      "status": "planned",
+      "freshness": "planned",
+      "as_of": null,
+      "license": "U.S. SEC EDGAR \u2014 public domain (planned, not built)",
+      "source": "EDGAR 13F quarterly institutional holdings filings"
+    },
+    {
+      "key": "cn-industry-classification",
+      "file": "cn_industry_classification.json",
+      "path": "/api/v1/panels/cn_industry_classification.json",
+      "method": "GET",
+      "status": "planned",
+      "freshness": "planned",
+      "as_of": null,
+      "license": "baostock \u2014 free public API, license unverified until 7-gate intake (planned, not built)",
+      "source": "A-share industry (Shenwan-style) classification tables"
     }
   ],
   "live_prices": {
@@ -303,6 +336,6 @@
     ],
     "server": "https://api.aionis-prices.workers.dev"
   },
-  "methodology": "Public static data API over the terminal's committed panels (display-only). Every endpoint carries its 7-gate intake facts: license + primary source, plus the freshness class (daily / cadence / frozen). Frozen endpoints derive from frozen OOS artifacts (ledger #49 lineage) and deliberately do NOT advance \u2014 consuming them expecting daily updates misreads the contract. Research ingestion of any endpoint requires the full 7-gate rubric (docs/data-intake-rubric.md); the live-prices worker is display-only and must never enter the OOS pipeline.",
-  "snapshot_ts": "2026-08-19T22:19:29.862594+00:00"
+  "methodology": "Public static data API over the terminal's committed panels (display-only). Every endpoint carries its 7-gate intake facts: license + primary source, plus the freshness class (daily / cadence / frozen). Frozen endpoints derive from frozen OOS artifacts (ledger #49 lineage) and deliberately do NOT advance \u2014 consuming them expecting daily updates misreads the contract. Endpoints with status=planned are NOT built: the path is a reserved future location, no payload is served, as_of is null, and the license/source describe the primary source the future fetcher would use. Research ingestion of any endpoint requires the full 7-gate rubric (docs/data-intake-rubric.md); the live-prices worker is display-only and must never enter the OOS pipeline.",
+  "snapshot_ts": "2026-08-20T03:15:08.258519+00:00"
 }
