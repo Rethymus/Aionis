@@ -207,9 +207,11 @@ def export_sector_breakdown() -> None:
     """Aggregate latest-month OOS scores by sector — relative-favor ranking.
 
     Per sector: stock count, mean model score, mean calibrated P(up).
-    Sectors with fewer than 3 stocks are dropped (noisy). A-share rows have
-    empty sector (the listing file lacks industry) so they fall into the
-    "Unclassified" bucket — disclosed in the methodology string, not hidden.
+    Sectors with fewer than 3 stocks are dropped (noisy). A-share sectors
+    are CSRC industry classification (证监会, via baostock — anonymous free
+    API; 7-gate: docs/data-intake-baostock-industry.md), falling back to
+    exchange-board tier where industry is missing — disclosed in the
+    methodology string, not hidden.
     Output: ``sector_breakdown.json`` with top/bottom sectors + methodology.
     """
     from aionis.eval.score_calibration import calibrate_latest_month
@@ -263,9 +265,12 @@ def export_sector_breakdown() -> None:
             "Sector aggregation of latest-month OOS model scores + calibrated "
             "P(up), per region's own latest PIT-aligned date (US and CN panels "
             "may end on different months). US sectors from EDGAR SIC (public "
-            "domain, industry-level); A-share 'sectors' are exchange-board tiers "
-            "(科创板/创业板/主板/北交所 — a real tier classification, not industry). "
-            "Sectors with <3 stocks dropped. Display-only, NOT a research claim."
+            "domain, industry-level); A-share sectors are CSRC industry "
+            "classification (证监会行业分类, via baostock — free anonymous API, "
+            "BSD client; 7-gate: docs/data-intake-baostock-industry.md), "
+            "falling back to exchange-board tier (科创板/创业板/主板/北交所) "
+            "where industry is missing. Sectors with <3 stocks dropped. "
+            "Display-only, NOT a research claim."
         ),
         "n_sectors": len(grouped),
         "top_favored": grouped[:8],

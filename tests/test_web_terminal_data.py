@@ -184,11 +184,15 @@ def test_sector_breakdown_shape() -> None:
 
 def test_sector_breakdown_methodology_discloses_classification() -> None:
     """The methodology must disclose how sectors are classified (US SIC vs
-    A-share board tiers), honestly distinguishing industry from tier."""
+    A-share CSRC industry via baostock, with board-tier fallback), honestly
+    distinguishing industry from tier."""
     sb = _load("sector_breakdown.json")
     if sb["status"] != "ok":
         return
     assert "board" in sb["methodology"].lower() or "SIC" in sb["methodology"]
+    # CN classification source must be named (CSRC industry upgrade, not a
+    # silent tier relabel) — docs/data-intake-baostock-industry.md.
+    assert "CSRC" in sb["methodology"] or "证监会" in sb["methodology"]
 
 
 # --- Picks backtest (track record: prediction vs reality) --------------------
