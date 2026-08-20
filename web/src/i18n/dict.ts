@@ -543,6 +543,13 @@ export const dict = {
     "datahealth.col.asof": "面板自身数据的观察日期（as of）",
     "datahealth.col.exported": "导出 lane 最后写入该面板 JSON 的日期",
     "datahealth.notpresent": "面板 JSON 缺失",
+    "datahealth.sourcehealth.title": "源健康",
+    "datahealth.sourcehealth.note": "对已知存在字段级缺口的数据源做量化披露——缺口被计数而非隐藏。",
+    "datahealth.sourcehealth.sm": "ticker 空 {null}/{n} · 最新申报 {days} 天前",
+    "datahealth.sourcehealth.reddit": "bull_ratio 空 {null}/{n}",
+    "datahealth.sourcehealth.cot": "距最新周期 {weeks} 周",
+    "datahealth.planned.title": "已规划（未建设）",
+    "datahealth.planned.note": "方向性披露而非承诺：以下模块已有设计与合规一手源，尚未构建采集器。",
     "datahealth.cat.daily": "日更",
     "datahealth.cat.cadence": "源节奏",
     "datahealth.cat.frozen": "冻结",
@@ -642,6 +649,7 @@ export const dict = {
     "apidocs.usage.title": "使用示例",
     "apidocs.usage.note": "静态文件即载荷；目录提供 meta 层。无需 API key。",
     "apidocs.boundary.title": "边界（反泄漏）",
+    "apidocs.cat.planned": "已规划",
 
     // Up/down color convention toggle
     "colorconv.red": "红涨",
@@ -1211,6 +1219,13 @@ export const dict = {
     "datahealth.col.asof": "The panel's own observation date (as of)",
     "datahealth.col.exported": "When the export lane last wrote the panel JSON",
     "datahealth.notpresent": "panel JSON missing",
+    "datahealth.sourcehealth.title": "Source health",
+    "datahealth.sourcehealth.note": "Field-level quality metrics on sources with known gaps — counted, not hidden.",
+    "datahealth.sourcehealth.sm": "ticker empty {null}/{n} · latest filing {days}d ago",
+    "datahealth.sourcehealth.reddit": "bull_ratio null {null}/{n}",
+    "datahealth.sourcehealth.cot": "{weeks}w since latest release",
+    "datahealth.planned.title": "Planned (not built)",
+    "datahealth.planned.note": "A forward-direction disclosure, not a commitment: modules with a design and compliant primary sources, collectors not yet built.",
     "datahealth.cat.daily": "Daily",
     "datahealth.cat.cadence": "Source cadence",
     "datahealth.cat.frozen": "Frozen",
@@ -1310,6 +1325,7 @@ export const dict = {
     "apidocs.usage.title": "Usage examples",
     "apidocs.usage.note": "Static files are the payload; the catalog is the meta layer. No API key required.",
     "apidocs.boundary.title": "Boundaries (anti-leakage)",
+    "apidocs.cat.planned": "Planned",
 
     // Up/down color convention toggle
     "colorconv.red": "Red up",

@@ -151,6 +151,73 @@ export function DataHealthView() {
         <Kpi label={t("datahealth.cat.frozen")} value={dh.summary.n_frozen} />
       </div>
 
+      {dh.source_health ? (
+        <Card className="py-0">
+          <CardHeader className="border-b">
+            <CardTitle className="flex items-center gap-2 text-base">
+              <ActivityIcon className="size-4 text-muted-foreground" />
+              {t("datahealth.sourcehealth.title")}
+            </CardTitle>
+            <CardDescription>{t("datahealth.sourcehealth.note")}</CardDescription>
+          </CardHeader>
+          <CardContent className="p-0">
+            <div className="divide-y">
+              <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-2.5 text-sm">
+                <span>{t("datahealth.panel.smart_money")}</span>
+                <span className="font-mono text-xs tabular-nums text-muted-foreground">
+                  {t("datahealth.sourcehealth.sm")
+                    .replace("{null}", String(dh.source_health.smart_money.ticker_null))
+                    .replace("{n}", String(dh.source_health.smart_money.n_recent))
+                    .replace("{days}", String(dh.source_health.smart_money.days_since_latest))}
+                </span>
+              </div>
+              <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-2.5 text-sm">
+                <span>{t("datahealth.panel.reddit")}</span>
+                <span className="font-mono text-xs tabular-nums text-muted-foreground">
+                  {t("datahealth.sourcehealth.reddit")
+                    .replace("{null}", String(dh.source_health.reddit.bull_ratio_null))
+                    .replace("{n}", String(dh.source_health.reddit.n_picks))}
+                </span>
+              </div>
+              <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-2.5 text-sm">
+                <span>{t("datahealth.panel.cot")}</span>
+                <span className="font-mono text-xs tabular-nums text-muted-foreground">
+                  {t("datahealth.sourcehealth.cot").replace(
+                    "{weeks}",
+                    String(dh.source_health.cot.weeks_since_latest),
+                  )}
+                </span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      ) : null}
+
+      {dh.planned && dh.planned.length > 0 ? (
+        <Card className="py-0 border-dashed">
+          <CardHeader className="border-b">
+            <CardTitle className="flex items-center gap-2 text-base">
+              <CalendarClockIcon className="size-4 text-muted-foreground" />
+              {t("datahealth.planned.title")}
+              <Badge variant="outline" className="text-xs font-normal text-muted-foreground">
+                {dh.planned.length}
+              </Badge>
+            </CardTitle>
+            <CardDescription>{t("datahealth.planned.note")}</CardDescription>
+          </CardHeader>
+          <CardContent className="p-0">
+            <div className="divide-y">
+              {dh.planned.map((p) => (
+                <div key={p.key} className="grid grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-3 px-4 py-2.5">
+                  <span className="font-mono text-sm">{p.key}</span>
+                  <span className="text-xs leading-relaxed text-muted-foreground">{p.note}</span>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      ) : null}
+
       {CATEGORY_ORDER.map((cat) => {
         const rows = byCategory(cat);
         if (rows.length === 0) return null;

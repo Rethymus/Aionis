@@ -471,6 +471,15 @@ export type DataHealth = {
     n_daily: number;
     n_cadence: number;
   };
+  // Field-level quality metrics on panels whose source has known gaps.
+  source_health?: {
+    smart_money: { ticker_null: number; n_recent: number; days_since_latest: number };
+    reddit: { bull_ratio_null: number; n_picks: number };
+    cot: { weeks_since_latest: number };
+  };
+  // Designed-but-not-built panels (xiaoyinsi x-status:planned imitation) —
+  // an honest forward direction, not a commitment.
+  planned?: { key: string; note: string }[];
   methodology: string;
   snapshot_ts?: string;
 };
@@ -481,7 +490,7 @@ export type ApiCatalogEndpoint = {
   path: string;
   method: string;
   status: string;
-  freshness: "daily" | "cadence" | "frozen";
+  freshness: "daily" | "cadence" | "frozen" | "planned";
   as_of: string | null;
   license: string;
   source: string;

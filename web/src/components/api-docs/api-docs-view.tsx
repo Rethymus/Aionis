@@ -72,22 +72,25 @@ const PANEL_LABELS: Record<string, PanelLabelKey> = {
   smart_money: "datahealth.panel.smart_money",
 };
 
-type Freshness = "daily" | "cadence" | "frozen";
+type Freshness = "daily" | "cadence" | "frozen" | "planned";
 
 const FRESHNESS_STYLE: Record<Freshness, string> = {
   daily: "border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400",
   cadence: "border-amber-500/40 bg-amber-500/10 text-amber-700 dark:text-amber-400",
   frozen: "border-slate-500/40 bg-slate-500/10 text-slate-700 dark:text-slate-300",
+  planned: "border-dashed border-muted-foreground/40 text-muted-foreground",
 };
 
 type FreshnessKey =
   | "datahealth.cat.daily"
   | "datahealth.cat.cadence"
-  | "datahealth.cat.frozen";
+  | "datahealth.cat.frozen"
+  | "apidocs.cat.planned";
 const FRESHNESS_LABEL: Record<Freshness, FreshnessKey> = {
   daily: "datahealth.cat.daily",
   cadence: "datahealth.cat.cadence",
   frozen: "datahealth.cat.frozen",
+  planned: "apidocs.cat.planned",
 };
 
 function Code({ children }: { children: React.ReactNode }) {
@@ -169,20 +172,27 @@ export function ApiDocsView() {
           <div className="divide-y">
             {cat.endpoints.map((e: ApiCatalogEndpoint) => {
               const labelKey = PANEL_LABELS[e.key];
+              const planned = e.status !== "available" || e.freshness === "planned";
               return (
                 <div
                   key={e.key}
                   className="grid gap-x-3 gap-y-1 px-4 py-2.5 md:grid-cols-[minmax(0,1.2fr)_auto_minmax(0,1.6fr)_minmax(0,1.4fr)] md:items-center"
                 >
                   <div className="min-w-0">
-                    <a
-                      href={`/Aionis${e.path}`}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="truncate text-sm font-medium text-primary hover:underline"
-                    >
-                      {labelKey ? t(labelKey) : e.key}
-                    </a>
+                    {planned ? (
+                      <span className="truncate text-sm font-medium text-muted-foreground italic">
+                        {labelKey ? t(labelKey) : e.key}
+                      </span>
+                    ) : (
+                      <a
+                        href={`/Aionis${e.path}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="truncate text-sm font-medium text-primary hover:underline"
+                      >
+                        {labelKey ? t(labelKey) : e.key}
+                      </a>
+                    )}
                     <p className="truncate font-mono text-xs text-muted-foreground">{e.path}</p>
                   </div>
                   <span className="flex items-center gap-1.5">
