@@ -1,5 +1,14 @@
 # state/current.md — read first each session
 
+- **active (2026-08-20) ② 三路子代理并行开发（业主指令"按优先级驱动子代理"）+ 阵亡接管 + 集成上线：**
+  **① 编排**：三 worktree 隔离（junction 共享 data/cache 与 node_modules；**Turbopack 拒绝跨根 node_modules symlink，worktree 内 next build 不可用**——tsc/eslint 可用，build 归主线集成）。A=数据 lane（smart_money ticker 修复+源健康+planned）、B=treemap 热力图、C=集中度 HHI 卡。
+  **② 子代理全部阵亡**（B 网络、A/C 提供商 5h 限额[1308]，05:38 重置）→ 按既定 fallback 主线接管：B 留完整双语 dict 键、组件由主线完成（手写 squarified treemap）；C 代码已完整（tsc/eslint 验过）主线代提交；A 完成度 ~95%，**主线修掉其遗留的重复函数定义**（A 死于删除旧版 `_refresh_smart_money_recent_only` 之前——Python 会静默绑定后定义的旧版，新实现全部失效；教训：验收 agent 遗留必须查重复定义）。
+  **③ A 的数据修复（真根因）**：EDGAR 日更索引把每个 13D accession 列在**所有**涉及公司名下（主体+申报人实体）→ 旧行构建每 listing 一行（~40% 重复）且无解析。修：`_sm_ticker_maps()`（离线 CIK→ticker from 缓存 SEC 快照 + EFTS 名称映射，诚实披露"当前快照非申报时点"）+ `_sm_dedup_enrich()`（per-accession 去重，单一上市主体→填 ticker+并列申报人，零/多上市→诚实留空计数进 source_health）+ `_sm_committed_extra()`（本地聚合缺的更新已提交行离线再富集合并，防回退）。**实测 0/60→44/60 ticker、申报人占位 60→28**。
+  **④ 新面三件**：/heatmap（squarified treemap，面积=|score|、色=var(--up/down) 随涨跌约定切换、top150/区+诚实"其他"桶 342/779、300 可点单元格实测 215×419px）；picks 集中度卡（等权板块 HHI：US 0.089 分散 / CN 0.292 中等——CN 偏半导体直觉的量化印证）；data-health 源健康卡（sm 16/60 空+2天前 / reddit 3/7 / cot 2周）+ planned 三项卡（politician-trades/13f/cn-industry，x-status:planned 模仿）+ api-docs planned 端点虚线徽章不可点。
+  **⑤ 集成**：三分支 cherry-pick（dict.ts 自动合并无冲突）+ 主线视图片 → 推送遇日更 0f2792a → rebase JSON 全冲突 → **ours + 合并码统一重生成**（`_sm_committed_extra` 如设计保住日更侧更新行：latest 08-18，ticker 44/60 不回退）。回路：confirmation 股票链接 **0→36**。
+  **⑥ 验证**：tsc 0 / eslint 净 / build 1,447 路由 / 44 契约测试绿 / ruff 净（排除并发 docs/code-review）+ 浏览器实测 + 部署 `32327579931` success + 线上五页 200 实锤。
+  **⑦ 边界**：display 层 + 数据导出 lane；0 ledger/frozen/config/prereg/OOS。worktree/分支已清理。
+
 - **active (2026-08-20) ① 终局形态定帧 + P0 三件套（业主定帧"小隐寺 = 最终目标形态，只增不删，删减后议"；来自小隐寺深挖分析的 P0 落地）：**
   **① 方向定帧（业主原话）**：小隐寺就是 Aionis 追求的最终形态——目标 = 在其全形之上**叠加**项目特色（反泄漏/溯源/可证伪），删减是以后的事。此定帧取代此前"不建议模仿 SSE/快讯"的保守判断——full-parity 为方向，静态架构内的可达项都进候选。
   **② 涨跌色约定系统**：双区域终端的跨文化符号冲突修复——globals.css 新增 `--up/--down` CSS 变量（明暗四组合）+ `[data-colorconv="cn"]` 红涨绿跌切换 + 六个方向工具类（text-up/down、bg-up/down、soft、badge-up/down）。**语义色（信任 emerald、风险 rose）明确不动**——只有数值方向站点迁移（10 文件：picks/stock/overview/sectors/positioning/themes/insiders/reddit/market + recharts fill=var(--up)）。头部新 ColorConvToggle（箭头实时预览当前约定的 up 色，localStorage 持久化 + layout 内联脚本预水合防闪烁，next-themes 同款模式）。

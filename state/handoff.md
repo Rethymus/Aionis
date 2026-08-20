@@ -8,6 +8,26 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-20 (b) 三路子代理并行（业主指令）→ 全阵亡 → 主线接管 → 集成上线
+
+**编排**：git worktree ×3（wa/wb/wc，junction 共享 data/cache 与 node_modules）。踩坑：**Turbopack 拒绝跨文件系统根的 node_modules symlink**——worktree 内 `next build` 必败（"Symlink node_modules is invalid"），tsc/eslint 可用；build 归主线集成。另一坑：**worktree 的 runs/ledger.jsonl 被 git CRLF 重签出 → sha256 pin 测试假红**（内容同、字节异），用主仓原文件覆盖即绿。
+
+**子代理结局**：B 网络死（留完整 dict 键）；A/C 死于提供商 5h 限额[1308]（05:38 重置）。主线接管完成全部。
+
+**A 的数据修复要点（真根因）**：EDGAR 日更索引按**每 listing**列 13D（主体+申报人实体都在）→ 旧行 ~40% 重复且零解析。修复三件套全离线（`_sm_ticker_maps` / `_sm_dedup_enrich` / `_sm_committed_extra`），实测 ticker 0/60→44/60。**验收教训：A 死在删除旧版函数之前，文件里有两个 `_refresh_smart_money_recent_only`——Python 静默用后定义的旧版，新实现全失效；接管时必须查重复定义**（本次主线删除后 44 测试才真正测到新路径）。
+
+**交付四 commit（cherry-pick 后 865b4bd/cf04edf/20df473/2c8f48f + regen 07e9763）**：
+1. `/heatmap`（手写 squarify，300 可点格、其他桶 342/779 诚实聚合、色随涨跌约定）
+2. picks 集中度卡（等权板块 HHI + 档位徽章 + 分解条，US 0.089/CN 0.292）
+3. smart_money 修复 + data_health.source_health + planned 三项（politician-trades/13f-holdings/cn-industry）+ api_catalog planned 端点
+4. 视图接线：data-health 源健康卡+已规划卡；api-docs planned 虚线不可点
+
+**集成**：dict.ts 自动合并；推送撞日更 0f2792a → rebase JSON 全冲突 → ours+合并码全量重生成（`_sm_committed_extra` 保住日更侧新行：latest 08-18、44/60 不回退——该函数正是为这个场景设计的）。confirmation 股票链接 0→36。
+
+**验证链**：tsc 0 / eslint 净 / build 1,447 路由 / 44 契约 / ruff（排除并发 docs/code-review/）/ 浏览器实测（热力图 215×419px 格、HHI 实值、源健康+规划卡、回路 36 链）/ 部署 `32327579931` 绿 + 线上五页 200。
+
+**边界**：display + 数据导出 lane；0 ledger/frozen/config/prereg/OOS。worktree 与 agent 分支已清理。
+
 ## 2026-08-20 (a) 终局定帧 + P0 三件套：涨跌色约定 / 回路闭合 / 实时指示器
 
 **业主定帧（方向性）**：小隐寺 = Aionis 的最终目标形态；在其全形上**只做加法**（叠加反泄漏/溯源/可证伪特色），删减是以后的事。
