@@ -14,6 +14,8 @@ import {
   SunMoonIcon,
   LanguagesIcon,
   FileTextIcon,
+  TrendingUpIcon,
+  TrendingDownIcon,
 } from "lucide-react";
 import {
   CommandDialog,
@@ -25,8 +27,10 @@ import {
   CommandSeparator,
 } from "@/components/ui/command";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { useI18n } from "@/i18n/provider";
 import type { DictKey } from "@/i18n/dict";
+import { aionis } from "@/data/aionis";
 
 // Command palette (cmdk — the same wheel GitHub/Vercel/Linear roll on; already
 // a dependency via shadcn ui/command). The terminal has 20+ routes and deep
@@ -86,6 +90,15 @@ const VIEWS: PaletteItem[] = [
   { labelKey: "nav.reddit", icon: <ArrowRightIcon className="size-4" />, href: "/confirmation#reddit" },
   { labelKey: "nav.evidence", icon: <ArrowRightIcon className="size-4" />, href: "/track#evidence" },
   { labelKey: "nav.modelhealth", icon: <ArrowRightIcon className="size-4" />, href: "/track#model-health" },
+];
+
+// Hot stocks straight from the picks panel: top-10 longs + top-3 shorts, one
+// keystroke from /stock/<ticker>. Display-only navigation over the same frozen
+// picks data the picks page renders — no new data path.
+type StockNavItem = { ticker: string; name: string; short: boolean };
+const STOCKS: StockNavItem[] = [
+  ...aionis.picks.slice(0, 10).map((p) => ({ ticker: p.ticker, name: p.name, short: false })),
+  ...aionis.shorts.slice(0, 3).map((s) => ({ ticker: s.ticker, name: s.name, short: true })),
 ];
 
 export function CommandPalette() {
@@ -153,6 +166,31 @@ export function CommandPalette() {
           <CommandSeparator />
           <CommandGroup heading={t("command.group.pages")}>
             {renderItems(PAGES)}
+          </CommandGroup>
+          <CommandSeparator />
+          <CommandGroup heading={t("palette.stocks")}>
+            {STOCKS.map((s) => (
+              <CommandItem
+                key={`${s.short ? "short" : "long"}-${s.ticker}`}
+                value={s.name ? `${s.name} (${s.ticker})` : s.ticker}
+                keywords={[s.ticker, s.name]}
+                onSelect={() =>
+                  runItem({ labelKey: "palette.stocks", icon: null, href: `/stock/${s.ticker}` })
+                }
+              >
+                {s.short ? (
+                  <TrendingDownIcon className="size-4 text-down" />
+                ) : (
+                  <TrendingUpIcon className="size-4 text-up" />
+                )}
+                <span className="flex-1">{s.name ? `${s.name} (${s.ticker})` : s.ticker}</span>
+                {s.short && (
+                  <Badge variant="outline" className="badge-down ml-auto shrink-0 px-1.5 py-0 text-[11px] font-normal">
+                    {t("palette.stocks.short")}
+                  </Badge>
+                )}
+              </CommandItem>
+            ))}
           </CommandGroup>
           <CommandSeparator />
           <CommandGroup heading={t("command.group.views")}>
