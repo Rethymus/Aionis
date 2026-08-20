@@ -38,6 +38,7 @@ import ledgerAuditJson from "./ledger_audit.json";
 import headlineProvenanceJson from "./headline_provenance.json";
 import dataHealthJson from "./data_health.json";
 import apiCatalogJson from "./api_catalog.json";
+import form13fJson from "./form13f.json";
 
 export type Pick = {
   rank: number;
@@ -509,6 +510,51 @@ export type ApiCatalog = {
   snapshot_ts?: string;
 };
 
+export type Form13fHolding = {
+  issuer: string;
+  cusip: string;
+  title: string;
+  option: string;
+  value: number;
+  shares: number;
+  pct: number;
+  // Exact normalized-name match against the US stock universe; null when the
+  // CUSIP has no ticker mapping (issuer renders as plain text).
+  ticker: string | null;
+};
+
+export type Form13fChange = {
+  issuer: string;
+  cusip: string;
+  title: string;
+  option: string;
+  direction: "new" | "increased" | "reduced" | "exited";
+  // Share-count change in percent (+25.3 = +25.3% shares); null for new/exited.
+  delta_pct: number | null;
+  ticker: string | null;
+};
+
+export type Form13fManager = {
+  cik: string;
+  name: string;
+  zh_name: string | null;
+  quarter: string;
+  filed: string;
+  n_positions: number;
+  total_value: number;
+  top10: Form13fHolding[];
+  changes: Form13fChange[];
+};
+
+export type Form13f = {
+  status: string;
+  as_of: string | null;
+  managers: Form13fManager[];
+  ticker_coverage?: string;
+  methodology: string;
+  snapshot_ts?: string;
+};
+
 export const aionis = {
   metrics: metricsJson as Metrics,
   picks: picksJson as Pick[],
@@ -547,4 +593,5 @@ export const aionis = {
   headlineProvenance: headlineProvenanceJson as HeadlineProvenance,
   dataHealth: dataHealthJson as DataHealth,
   apiCatalog: apiCatalogJson as ApiCatalog,
+  form13f: form13fJson as Form13f,
 };
