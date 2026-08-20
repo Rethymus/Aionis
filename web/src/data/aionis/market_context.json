@@ -1,5 +1,5 @@
 {
-  "methodology": "Market context since 2016. The structural axis is the President (tariffs/fiscal) \u2194 Federal Reserve (rates/independence) tug-of-war: the Fed hike/cut cycle drives the dollar and all markets; presidential tariffs and Fed-independence interference (e.g. Miran's 2025 Fed Board appointment) are policy shocks. VIX = monthly mean of FRED VIXCLS (permissive, US-gov public domain). US index = equal-weight cross-sectional mean of monthly returns across the Track B panel (~566 S&P 500 PIT constituents), rebased to 100 at 2016-02. Events are publicly verifiable milestones on the three structural levers (Fed cycle / trade / Fed-independence), not personal ceremonies. Display-only.",
+  "methodology": "Market context since 2016. The structural axis is the President (tariffs/fiscal) \u2194 Federal Reserve (rates/independence) tug-of-war: the Fed hike/cut cycle drives the dollar and all markets; presidential tariffs and Fed-independence interference (e.g. Miran's 2025 Fed Board appointment) are policy shocks. VIX = monthly mean of FRED VIXCLS (permissive, US-gov public domain). US index = equal-weight cross-sectional mean of monthly returns across the Track B panel (~566 S&P 500 PIT constituents), rebased to 100 at 2016-02. Events are publicly verifiable milestones on the three structural levers (Fed cycle / trade / Fed-independence), not personal ceremonies. China-market milestones (region 'cn') enter the event table as global-context disclosure: they annotate the world around the US-only index chart, not the plotted series itself. Display-only.",
   "start_label": "2016 \u2192 \u00b7 President \u2194 Fed",
   "vix_series": [
     {
@@ -1227,6 +1227,24 @@
       "label": "Fed cut to 4.00-4.25%",
       "type": "monetary",
       "region": "us"
+    },
+    {
+      "date": "2025-10-23",
+      "label": "\u4e8c\u5341\u5c4a\u56db\u4e2d\u5168\u4f1a\u95ed\u5e55\uff1a\u300c\u5341\u4e94\u4e94\u300d\u89c4\u5212\u5efa\u8bae\u83b7\u901a\u8fc7",
+      "type": "political",
+      "region": "cn"
+    },
+    {
+      "date": "2026-08-19",
+      "label": "A\u80a1\u66b4\u8dcc\uff1a\u6caa\u6307 -2.4% \u5931\u5b88 3900\uff0c\u521b\u4e1a\u677f -6.26%",
+      "type": "crisis",
+      "region": "cn"
+    },
+    {
+      "date": "2026-08-19",
+      "label": "\u5b87\u6811\u79d1\u6280\u4e0a\u5e02\u9996\u65e5 +460%",
+      "type": "ipo",
+      "region": "cn"
     }
   ],
   "n_months": 125,
@@ -1234,5 +1252,5 @@
     "2016-02",
     "2026-06"
   ],
-  "snapshot_ts": "2026-08-20T03:15:03.691287+00:00"
+  "snapshot_ts": "2026-08-20T04:59:29.226498+00:00"
 }

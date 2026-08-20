@@ -10,6 +10,7 @@ no runs/cache dependency. They also lock the schema the React views depend on
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 DATA = Path("web/src/data/aionis")
@@ -234,8 +235,22 @@ def test_market_context_shape() -> None:
     for e in mc["events"]:
         assert {"date", "label", "type", "region"} <= set(e)
         assert e["type"] in {
-            "political", "trade", "crisis", "monetary", "inauguration", "fed_pressure",
+            "political", "trade", "crisis", "monetary", "inauguration", "fed_pressure", "ipo",
         }
+
+
+def test_market_context_cn_context_events() -> None:
+    """A-share milestones ride the event table as global-context disclosure.
+
+    The chart stays a US equal-weight index; region=='cn' rows are context
+    markers (A股 extreme sessions, China macro) rendered with an "A 股" badge.
+    """
+    mc = _load("market_context.json")
+    cn = [e for e in mc["events"] if e.get("region") == "cn"]
+    assert len(cn) >= 2, "need >=2 region=='cn' context events"
+    for e in cn:
+        assert e["label"].strip(), f"cn event label must be non-empty: {e}"
+        assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", e["date"]), f"bad date format: {e['date']}"
 
 
 # --- Model-health / drift monitor (leakage-safe, display-only) ---------------

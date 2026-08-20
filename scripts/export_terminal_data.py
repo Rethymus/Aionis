@@ -1676,6 +1676,9 @@ def export_market_context() -> None:
     # the dollar and all markets; presidential tariffs and interference with Fed
     # independence (e.g. Miran's 2025 Fed Board appointment) are policy shocks.
     # Event markers center on these three structural levers. All publicly verifiable.
+    # China-market milestones (region "cn") enter the same table as GLOBAL-CONTEXT
+    # disclosure: they annotate the world around the US-only index chart above,
+    # not the plotted series itself (e.g. the 2026-08-19 A-share session).
     events = [
         {"date": "2018-03-22", "label": "US-China tariff war begins", "type": "trade", "region": "us"},
         {"date": "2020-03-23", "label": "COVID market bottom", "type": "crisis", "region": "global"},
@@ -1690,6 +1693,10 @@ def export_market_context() -> None:
         {"date": "2025-08-07", "label": "Trump nominates Miran to Fed Board (replacing Kugler)", "type": "fed_pressure", "region": "us"},
         {"date": "2025-09-16", "label": "Miran confirmed to Fed Board — independence concern", "type": "fed_pressure", "region": "us"},
         {"date": "2025-09-17", "label": "Fed cut to 4.00-4.25%", "type": "monetary", "region": "us"},
+        # A股/中国宏观语境事件（region "cn"）——全球语境披露，非上图美国序列。
+        {"date": "2025-10-23", "label": "二十届四中全会闭幕：「十五五」规划建议获通过", "type": "political", "region": "cn"},
+        {"date": "2026-08-19", "label": "A股暴跌：沪指 -2.4% 失守 3900，创业板 -6.26%", "type": "crisis", "region": "cn"},
+        {"date": "2026-08-19", "label": "宇树科技上市首日 +460%", "type": "ipo", "region": "cn"},
     ]
 
     # Market risk stats from the equal-weight monthly returns (display-only).
@@ -1717,7 +1724,10 @@ def export_market_context() -> None:
             "sectional mean of monthly returns across the Track B panel (~566 S&P "
             "500 PIT constituents), rebased to 100 at 2016-02. Events are publicly "
             "verifiable milestones on the three structural levers (Fed cycle / "
-            "trade / Fed-independence), not personal ceremonies. Display-only."
+            "trade / Fed-independence), not personal ceremonies. China-market "
+            "milestones (region 'cn') enter the event table as global-context "
+            "disclosure: they annotate the world around the US-only index chart, "
+            "not the plotted series itself. Display-only."
         ),
         "start_label": "2016 → · President ↔ Fed",
         "vix_series": vix_series,

@@ -36,6 +36,7 @@ const EVENT_TONE: Record<string, string> = {
   monetary: "border-violet-400/50 text-violet-700 dark:text-violet-300",
   inauguration: "border-emerald-500/70 text-emerald-700 dark:text-emerald-300",
   fed_pressure: "border-orange-500/60 bg-orange-500/10 text-orange-700 dark:text-orange-400",
+  ipo: "border-sky-400/50 text-sky-700 dark:text-sky-300",
 };
 
 const EVENT_TYPE_LABEL: Record<string, string> = {
@@ -45,6 +46,7 @@ const EVENT_TYPE_LABEL: Record<string, string> = {
   monetary: "货币",
   inauguration: "就职",
   fed_pressure: "美联储博弈",
+  ipo: "新股",
 };
 
 function RiskStat({ label, value, tone, hint }: { label: string; value: string; tone?: "rose" | "emerald"; hint?: string }) {
@@ -248,6 +250,14 @@ export function MarketView() {
                 >
                   {EVENT_TYPE_LABEL[e.type] ?? e.type}
                 </Badge>
+                {e.region === "cn" && (
+                  <Badge
+                    variant="outline"
+                    className="shrink-0 border-primary/40 px-1.5 py-0 text-[11px] font-normal text-primary"
+                  >
+                    {t("market.events.cn")}
+                  </Badge>
+                )}
                 <span className="flex-1 text-sm">{e.label}</span>
               </div>
             ))}
