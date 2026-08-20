@@ -975,3 +975,73 @@ def test_planned_disclosure_present_and_consistent() -> None:
     available_keys = {e["key"] for e in cat["endpoints"] if e["status"] == "available"}
     assert available_keys == panel_keys, "available endpoints stay 1:1 with live panels"
     assert "planned" in cat["methodology"]
+
+
+# --- SEC 13F-HR star-manager holdings -----------------------------------------
+
+
+def test_form13f_status_and_shape() -> None:
+    f = _load("form13f.json")
+    assert f["status"] in {"ok", "awaiting_fetch"}
+    assert isinstance(f["managers"], list)
+    # License honesty is load-bearing on this panel (public-domain claim).
+    assert "public domain" in f["methodology"].lower()
+    assert "display-only" in f["methodology"].lower()
+    # Units disclosure: EDGAR 2014+ XML values are whole dollars (the
+    # "thousands" note is the legacy HTML rendering) — pinned so the panel
+    # can never silently revert to the thousands reading.
+    assert "whole USD" in f["methodology"]
+
+
+def test_form13f_managers_when_ok() -> None:
+    """Lock the manager schema: CIK, quarter frame, monotonic top10 pcts."""
+    f = _load("form13f.json")
+    if f["status"] != "ok":
+        return  # awaiting branch: guards above must not raise; nothing else to check
+    ms = f["managers"]
+    assert len(ms) >= 8, "13F panel needs >=8 star managers"
+    seen_ciks: set[str] = set()
+    for m in ms:
+        assert {"cik", "name", "quarter", "filed", "n_positions",
+                "total_value", "top10", "changes"} <= set(m)
+        assert len(m["cik"]) == 10 and m["cik"].isdigit()
+        assert m["cik"] not in seen_ciks, "one manager row per CIK"
+        seen_ciks.add(m["cik"])
+        assert m["total_value"] > 0
+        assert m["n_positions"] >= 1
+        # top10 = top holdings by value; short books honestly report <10.
+        assert len(m["top10"]) == min(10, m["n_positions"]), m["name"]
+        values = [h["value"] for h in m["top10"]]
+        assert values == sorted(values, reverse=True), f"top10 by value desc: {m['name']}"
+        pcts = [h["pct"] for h in m["top10"]]
+        assert pcts == sorted(pcts, reverse=True), f"pct monotonic: {m['name']}"
+        for h in m["top10"]:
+            assert {"issuer", "cusip", "value", "shares", "pct", "ticker"} <= set(h)
+            assert h["value"] >= 0 and h["shares"] >= 0
+            assert 0 <= h["pct"] <= 100
+            # ticker is a nullable display link (exact-name match), never "".
+            assert h["ticker"] is None or (
+                isinstance(h["ticker"], str) and h["ticker"].strip().upper() == h["ticker"]
+            )
+
+
+def test_form13f_changes_enum_when_ok() -> None:
+    """Frame-diff directions are exactly the four-way display enum."""
+    f = _load("form13f.json")
+    if f["status"] != "ok":
+        return
+    allowed = {"new", "increased", "reduced", "exited"}
+    for m in f["managers"]:
+        for c in m["changes"]:
+            assert c["direction"] in allowed, c["direction"]
+            assert {"issuer", "cusip", "direction", "delta_pct", "ticker"} <= set(c)
+            # delta_pct only meaningful on share-count moves (null for new/exited)
+            if c["direction"] in {"new", "exited"}:
+                assert c["delta_pct"] is None
+            else:
+                assert isinstance(c["delta_pct"], (int, float))
+                assert abs(c["delta_pct"]) < 1e6
+    as_of = f["as_of"]
+    assert isinstance(as_of, str) and len(as_of) == 10
+    for m in f["managers"]:
+        assert m["quarter"] <= as_of, "panel as_of is the max report quarter"

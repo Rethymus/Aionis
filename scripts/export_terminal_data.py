@@ -2594,6 +2594,164 @@ def export_stock_universe() -> None:
     )
 
 
+def export_form13f() -> None:
+    """SEC 13F-HR star-manager quarterly holdings (display-only, exploratory).
+
+    Reads ``data/cache/form13f_aggregate.parquet`` (gitignored; produced by
+    ``scripts/form13f_fetch.py`` — 12 verified celebrity managers × the 2 most
+    recent distinct report quarters). Public domain (17 U.S.C. §105);
+    filing-date PIT; quarterly cadence; ``value`` as filed in the EDGAR 2014+
+    XML (whole USD). Issuer→ticker links come from an exact normalized-name
+    match against the committed stock_universe panel — EDGAR infotables carry
+    CUSIPs, not tickers; unmatched issuers render as plain text (honest
+    partial coverage).
+    """
+    import re
+
+    from aionis.ingest.form13f import compute_changes
+
+    fp = Path("data/cache/form13f_aggregate.parquet")
+    if not fp.exists():
+        # CI fresh checkout / fetch failed: preserve the tracked JSON, don't
+        # overwrite real data with an empty awaiting payload.
+        print(
+            "[export-terminal] SKIP form13f: data/cache/form13f_aggregate.parquet "
+            "not present (tracked JSON retains last-committed value)",
+            flush=True,
+        )
+        return
+
+    df = pd.read_parquet(fp)
+
+    # CUSIP→ticker is not available from EDGAR; link by normalized issuer NAME
+    # against the committed US stock universe instead (deterministic: smallest
+    # ticker wins a collision, e.g. GOOG vs GOOGL — disclosed limitation).
+    su = _dh_read("stock_universe.json") or {}
+    name_to_ticker: dict[str, str] = {}
+
+    def _norm_name(s: str) -> str:
+        s = re.sub(r"[^A-Z0-9 ]+", " ", str(s).upper())
+        tokens = [t for t in s.split() if t]
+        while tokens and tokens[0] == "THE":
+            tokens = tokens[1:]
+        suffixes = {
+            "INC", "CORP", "CORPORATION", "LTD", "LIMITED", "LLC", "LP", "LPA",
+            "PLC", "CO", "COMPANY", "SA", "AG", "NV", "SE", "SPA", "TRUST",
+            "HOLDINGS", "HOLDING", "GROUP", "PARTNERS", "PARTNERSHIP", "FUND",
+        }
+        while len(tokens) > 1 and tokens[-1] in suffixes:
+            tokens = tokens[:-1]
+        return " ".join(tokens)
+
+    for s in su.get("stocks", []):
+        if s.get("region") != "us" or not s.get("name"):
+            continue
+        key = _norm_name(s["name"])
+        if not key:
+            continue
+        if key not in name_to_ticker or str(s["ticker"]) < name_to_ticker[key]:
+            name_to_ticker[key] = str(s["ticker"])
+
+    def _ticker_for(issuer: str) -> str | None:
+        return name_to_ticker.get(_norm_name(issuer))
+
+    manager_payloads: list[dict] = []
+    for cik, sub in df.groupby("cik"):
+        quarters = sorted(sub["quarter"].unique(), reverse=True)
+        cur_lines = sub[sub["quarter"] == quarters[0]]
+        # One issuer may span several as-filed lines (multiple otherManager
+        # tranches); merge same-(cusip, option) lines into one position so
+        # top10 / n_positions count POSITIONS, not tranche rows. Keyed on
+        # CUSIP+option (NOT title_class): the same CUSIP is the same security,
+        # and filers' class-label strings drift across quarters.
+        cur = (
+            cur_lines.groupby(["cusip", "option_type"], as_index=False)
+            .agg(
+                issuer=("issuer", "first"),
+                title_class=("title_class", "first"),
+                value_usd=("value_usd", "sum"),
+                shares=("shares", "sum"),
+            )
+        )
+        prev = sub[sub["quarter"] == quarters[1]] if len(quarters) > 1 else pd.DataFrame()
+        total_value = float(cur["value_usd"].sum())
+        top10 = []
+        for _, r in cur.nlargest(10, "value_usd").iterrows():
+            top10.append({
+                "issuer": str(r["issuer"]),
+                "cusip": str(r["cusip"]),
+                "title": str(r.get("title_class", "")),
+                "option": str(r.get("option_type", "")),
+                "value": round(float(r["value_usd"]), 0),
+                "shares": round(float(r["shares"]), 0),
+                "pct": round(float(r["value_usd"]) / total_value * 100.0, 2) if total_value else 0.0,
+                "ticker": _ticker_for(str(r["issuer"])),
+            })
+        changes = []
+        for ch in compute_changes(prev, cur)[:10]:
+            changes.append({
+                "issuer": ch["issuer"],
+                "cusip": ch["cusip"],
+                "title": ch["title"],
+                "option": ch["option"],
+                "direction": ch["direction"],
+                "delta_pct": ch["delta_pct"],
+                "ticker": _ticker_for(ch["issuer"]),
+            })
+        manager_payloads.append({
+            "cik": f"{int(cik):010d}",
+            "name": str(sub["manager_name"].iloc[0]),
+            "zh_name": str(sub["zh_name"].iloc[0]) if "zh_name" in sub else None,
+            "quarter": str(quarters[0]),
+            "filed": str(cur_lines["filing_date"].max()),
+            "n_positions": int(len(cur)),
+            "total_value": round(total_value, 0),
+            "top10": top10,
+            "changes": changes,
+        })
+
+    # Biggest portfolio first (display ordering; deterministic on ties).
+    manager_payloads.sort(key=lambda m: (-m["total_value"], m["cik"]))
+    n_linked = sum(
+        1
+        for m in manager_payloads
+        for h in m["top10"]
+        if h["ticker"]
+    )
+    n_top = sum(len(m["top10"]) for m in manager_payloads)
+    payload = {
+        "status": "ok",
+        "as_of": str(df["quarter"].max()),
+        "managers": manager_payloads,
+        "ticker_coverage": f"{n_linked}/{n_top}",
+        "methodology": (
+            "SEC Form 13F-HR quarterly institutional holdings — the legally "
+            "mandated public report (public domain, 17 U.S.C. §105) every "
+            "institutional manager with >=US$100M discretion must file within "
+            "45 days of quarter-end. Panel shows a bounded subset of ~12 star "
+            "managers (CIKs verified against EDGAR submissions JSON 2026-08-20), "
+            "latest quarter top-10 holdings plus quarter-over-quarter frame "
+            "diff (new/increased/reduced/exited on share counts). Values are "
+            "as filed in the EDGAR 2014+ information-table XML (whole USD — "
+            "the 'expressed in thousands' note is the legacy HTML rendering); "
+            "same-(CUSIP, class, option) tranches merged into one position; "
+            "shares as filed (SH lines; option lines flagged PUT/CALL). "
+            "Filing-date point-in-time; amendments supersede (latest filing "
+            "per report quarter wins). Issuer→ticker links are exact "
+            "normalized-name matches against the terminal's US stock universe "
+            "(EDGAR infotables carry CUSIPs, not tickers) — unmatched issuers "
+            "stay plain text. Display-only, not a research claim; NOT part of "
+            "any OOS pipeline."
+        ),
+    }
+    (WEB / "form13f.json").write_text(json.dumps(_stamp(payload), indent=2, default=str))
+    print(
+        f"[export-terminal] form13f: {len(manager_payloads)} managers, "
+        f"as_of {payload['as_of']}, ticker link coverage {payload['ticker_coverage']}",
+        flush=True,
+    )
+
+
 def _safe_export(name: str, fn, /, *args, **kwargs):
     """Best-effort guard for the daily CI refresh.
 
@@ -2643,6 +2801,7 @@ def main() -> None:
     _safe_export("calibration_reliability", export_calibration_reliability)
     _safe_export("cot", export_cot)
     _safe_export("form4", export_form4)
+    _safe_export("form13f", export_form13f)
     _safe_export("market_context", export_market_context)
     _safe_export("macro_drivers", export_macro_drivers)
     _safe_export("smart_money", export_smart_money)

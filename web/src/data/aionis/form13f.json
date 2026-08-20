@@ -1,0 +1,2398 @@
+{
+  "status": "ok",
+  "as_of": "2026-06-30",
+  "managers": [
+    {
+      "cik": "0001067983",
+      "name": "BERKSHIRE HATHAWAY INC",
+      "zh_name": "\u4f2f\u514b\u5e0c\u5c14\u00b7\u54c8\u6492\u97e6\uff08\u5df4\u83f2\u7279\uff09",
+      "quarter": "2026-06-30",
+      "filed": "2026-08-14",
+      "n_positions": 29,
+      "total_value": 299253556246.0,
+      "top10": [
+        {
+          "issuer": "APPLE INC",
+          "cusip": "037833100",
+          "title": "COM",
+          "option": "",
+          "value": 65950296923.0,
+          "shares": 227917808.0,
+          "pct": 22.04,
+          "ticker": "AAPL"
+        },
+        {
+          "issuer": "AMERICAN EXPRESS CO",
+          "cusip": "025816109",
+          "title": "COM",
+          "option": "",
+          "value": 51282319275.0,
+          "shares": 151610700.0,
+          "pct": 17.14,
+          "ticker": "AXP"
+        },
+        {
+          "issuer": "COCA COLA CO",
+          "cusip": "191216100",
+          "title": "COM",
+          "option": "",
+          "value": 32508000000.0,
+          "shares": 400000000.0,
+          "pct": 10.86,
+          "ticker": "KO"
+        },
+        {
+          "issuer": "ALPHABET INC",
+          "cusip": "02079K305",
+          "title": "CAP STK CL A",
+          "option": "",
+          "value": 28157599351.0,
+          "shares": 78791167.0,
+          "pct": 9.41,
+          "ticker": "GOOG"
+        },
+        {
+          "issuer": "BANK OF AMER CORP",
+          "cusip": "060505104",
+          "title": "COM",
+          "option": "",
+          "value": 27543790975.0,
+          "shares": 483394015.0,
+          "pct": 9.2,
+          "ticker": null
+        },
+        {
+          "issuer": "CHEVRON CORPORATION",
+          "cusip": "166764100",
+          "title": "COM",
+          "option": "",
+          "value": 13986141890.0,
+          "shares": 84375856.0,
+          "pct": 4.67,
+          "ticker": "CVX"
+        },
+        {
+          "issuer": "OCCIDENTAL PETE CORP",
+          "cusip": "674599105",
+          "title": "COM",
+          "option": "",
+          "value": 12868205304.0,
+          "shares": 264941431.0,
+          "pct": 4.3,
+          "ticker": null
+        },
+        {
+          "issuer": "CHUBB LIMITED",
+          "cusip": "H1467J104",
+          "title": "COM",
+          "option": "",
+          "value": 11670066615.0,
+          "shares": 34249183.0,
+          "pct": 3.9,
+          "ticker": "CB"
+        },
+        {
+          "issuer": "MOODYS CORP",
+          "cusip": "615369105",
+          "title": "COM",
+          "option": "",
+          "value": 11173435852.0,
+          "shares": 24669778.0,
+          "pct": 3.73,
+          "ticker": null
+        },
+        {
+          "issuer": "ALPHABET INC",
+          "cusip": "02079K107",
+          "title": "CAP STK CL C",
+          "option": "",
+          "value": 9606489032.0,
+          "shares": 27188433.0,
+          "pct": 3.21,
+          "ticker": "GOOG"
+        }
+      ],
+      "changes": [
+        {
+          "issuer": "ALPHABET INC",
+          "cusip": "02079K305",
+          "title": "CAP STK CL A",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 45.24,
+          "ticker": "GOOG"
+        },
+        {
+          "issuer": "BANK OF AMER CORP",
+          "cusip": "060505104",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -5.89,
+          "ticker": null
+        },
+        {
+          "issuer": "ALPHABET INC",
+          "cusip": "02079K107",
+          "title": "CAP STK CL C",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 658.35,
+          "ticker": "GOOG"
+        },
+        {
+          "issuer": "DAVITA INC",
+          "cusip": "23918K108",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -4.05,
+          "ticker": "DVA"
+        },
+        {
+          "issuer": "DELTA AIR LINES INC",
+          "cusip": "247361702",
+          "title": "COM NEW",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 43.99,
+          "ticker": "DAL"
+        },
+        {
+          "issuer": "KROGER CO",
+          "cusip": "501044101",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -22.0,
+          "ticker": "KR"
+        },
+        {
+          "issuer": "CAPITAL ONE FINL CORP",
+          "cusip": "14040H105",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -58.04,
+          "ticker": null
+        },
+        {
+          "issuer": "NEW YORK TIMES CO MTN BE",
+          "cusip": "650111107",
+          "title": "CL A",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 3.65,
+          "ticker": null
+        },
+        {
+          "issuer": "ALLY FINL INC",
+          "cusip": "02005N100",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -6.9,
+          "ticker": null
+        },
+        {
+          "issuer": "LENNAR CORP",
+          "cusip": "526057104",
+          "title": "CL A",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 29.82,
+          "ticker": null
+        }
+      ]
+    },
+    {
+      "cik": "0001037389",
+      "name": "RENAISSANCE TECHNOLOGIES LLC",
+      "zh_name": "\u6587\u827a\u590d\u5174\u79d1\u6280\uff08\u897f\u8499\u65af\uff09",
+      "quarter": "2026-06-30",
+      "filed": "2026-08-13",
+      "n_positions": 3139,
+      "total_value": 72617871974.0,
+      "top10": [
+        {
+          "issuer": "NVIDIA CORPORATION",
+          "cusip": "67066G104",
+          "title": "COM",
+          "option": "",
+          "value": 1418869170.0,
+          "shares": 7091256.0,
+          "pct": 1.95,
+          "ticker": "NVDA"
+        },
+        {
+          "issuer": "META PLATFORMS INC",
+          "cusip": "30303M102",
+          "title": "CL A",
+          "option": "",
+          "value": 1139611745.0,
+          "shares": 2023153.0,
+          "pct": 1.57,
+          "ticker": "META"
+        },
+        {
+          "issuer": "INTEL CORP",
+          "cusip": "458140100",
+          "title": "COM",
+          "option": "",
+          "value": 1022356867.0,
+          "shares": 7321928.0,
+          "pct": 1.41,
+          "ticker": "INTC"
+        },
+        {
+          "issuer": "UNITED THERAPEUTICS CORP DEL",
+          "cusip": "91307C102",
+          "title": "COM",
+          "option": "",
+          "value": 925846052.0,
+          "shares": 1708739.0,
+          "pct": 1.27,
+          "ticker": null
+        },
+        {
+          "issuer": "PALANTIR TECHNOLOGIES INC",
+          "cusip": "69608A108",
+          "title": "CL A",
+          "option": "",
+          "value": 883001728.0,
+          "shares": 7568370.0,
+          "pct": 1.22,
+          "ticker": "PLTR"
+        },
+        {
+          "issuer": "ALPHABET INC",
+          "cusip": "02079K305",
+          "title": "CAP STK CL A",
+          "option": "",
+          "value": 828174623.0,
+          "shares": 2317438.0,
+          "pct": 1.14,
+          "ticker": "GOOG"
+        },
+        {
+          "issuer": "EXELIXIS INC",
+          "cusip": "30161Q104",
+          "title": "COM",
+          "option": "",
+          "value": 730617099.0,
+          "shares": 13427993.0,
+          "pct": 1.01,
+          "ticker": null
+        },
+        {
+          "issuer": "VERISIGN INC",
+          "cusip": "92343E102",
+          "title": "COM",
+          "option": "",
+          "value": 616264393.0,
+          "shares": 2449771.0,
+          "pct": 0.85,
+          "ticker": null
+        },
+        {
+          "issuer": "KINROSS GOLD CORP",
+          "cusip": "496902404",
+          "title": "COM",
+          "option": "",
+          "value": 584529171.0,
+          "shares": 24747213.0,
+          "pct": 0.8,
+          "ticker": null
+        },
+        {
+          "issuer": "CROWDSTRIKE HLDGS INC",
+          "cusip": "22788C105",
+          "title": "CL A",
+          "option": "",
+          "value": 571561334.0,
+          "shares": 748960.0,
+          "pct": 0.79,
+          "ticker": null
+        }
+      ],
+      "changes": [
+        {
+          "issuer": "NVIDIA CORPORATION",
+          "cusip": "67066G104",
+          "title": "COM",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 180.63,
+          "ticker": "NVDA"
+        },
+        {
+          "issuer": "META PLATFORMS INC",
+          "cusip": "30303M102",
+          "title": "CL A",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 698.49,
+          "ticker": "META"
+        },
+        {
+          "issuer": "UNITED THERAPEUTICS CORP DEL",
+          "cusip": "91307C102",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -4.38,
+          "ticker": null
+        },
+        {
+          "issuer": "INTEL CORP",
+          "cusip": "458140100",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -1.05,
+          "ticker": "INTC"
+        },
+        {
+          "issuer": "PALANTIR TECHNOLOGIES INC",
+          "cusip": "69608A108",
+          "title": "CL A",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 8.34,
+          "ticker": "PLTR"
+        },
+        {
+          "issuer": "ALPHABET INC",
+          "cusip": "02079K305",
+          "title": "CAP STK CL A",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 327.2,
+          "ticker": "GOOG"
+        },
+        {
+          "issuer": "APPLE INC",
+          "cusip": "037833100",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -48.42,
+          "ticker": "AAPL"
+        },
+        {
+          "issuer": "KINROSS GOLD CORP",
+          "cusip": "496902404",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -3.13,
+          "ticker": null
+        },
+        {
+          "issuer": "MICRON TECHNOLOGY INC",
+          "cusip": "595112103",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -90.22,
+          "ticker": "MU"
+        },
+        {
+          "issuer": "EXELIXIS INC",
+          "cusip": "30161Q104",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -2.18,
+          "ticker": null
+        }
+      ]
+    },
+    {
+      "cik": "0001647251",
+      "name": "TCI Fund Management Ltd",
+      "zh_name": "TCI \u57fa\u91d1\uff08\u970d\u6069\uff09",
+      "quarter": "2026-06-30",
+      "filed": "2026-08-14",
+      "n_positions": 11,
+      "total_value": 52769884406.0,
+      "top10": [
+        {
+          "issuer": "GE AEROSPACE",
+          "cusip": "369604301",
+          "title": "COM NEW",
+          "option": "",
+          "value": 17725353519.0,
+          "shares": 47428233.0,
+          "pct": 33.59,
+          "ticker": null
+        },
+        {
+          "issuer": "VISA INC",
+          "cusip": "92826C839",
+          "title": "COM CL A",
+          "option": "",
+          "value": 10462232091.0,
+          "shares": 30494133.0,
+          "pct": 19.83,
+          "ticker": "V"
+        },
+        {
+          "issuer": "MOODYS CORP",
+          "cusip": "615369105",
+          "title": "COM",
+          "option": "",
+          "value": 6492167509.0,
+          "shares": 14334027.0,
+          "pct": 12.3,
+          "ticker": null
+        },
+        {
+          "issuer": "S&P GLOBAL INC",
+          "cusip": "78409V104",
+          "title": "COM",
+          "option": "",
+          "value": 5735017808.0,
+          "shares": 14081957.0,
+          "pct": 10.87,
+          "ticker": "SPGI"
+        },
+        {
+          "issuer": "CANADIAN PACIFIC KANSAS CITY",
+          "cusip": "13646K108",
+          "title": "COM",
+          "option": "",
+          "value": 3925911608.0,
+          "shares": 45325726.0,
+          "pct": 7.44,
+          "ticker": null
+        },
+        {
+          "issuer": "ALPHABET INC",
+          "cusip": "02079K107",
+          "title": "CAP STK CL C",
+          "option": "",
+          "value": 3511682917.0,
+          "shares": 9938819.0,
+          "pct": 6.65,
+          "ticker": "GOOG"
+        },
+        {
+          "issuer": "FERROVIAL NV",
+          "cusip": "N3168P101",
+          "title": "ORD SHS",
+          "option": "",
+          "value": 1434611939.0,
+          "shares": 20940441.0,
+          "pct": 2.72,
+          "ticker": null
+        },
+        {
+          "issuer": "CANADIAN NATL RY CO",
+          "cusip": "136375102",
+          "title": "COM",
+          "option": "",
+          "value": 1124534915.0,
+          "shares": 9433422.0,
+          "pct": 2.13,
+          "ticker": null
+        },
+        {
+          "issuer": "ALPHABET INC",
+          "cusip": "02079K305",
+          "title": "CAP STK CL A",
+          "option": "",
+          "value": 878058090.0,
+          "shares": 2457000.0,
+          "pct": 1.66,
+          "ticker": "GOOG"
+        },
+        {
+          "issuer": "MARTIN MARIETTA MATLS INC",
+          "cusip": "573284106",
+          "title": "COM",
+          "option": "",
+          "value": 758423360.0,
+          "shares": 1315109.0,
+          "pct": 1.44,
+          "ticker": null
+        }
+      ],
+      "changes": [
+        {
+          "issuer": "GE AEROSPACE",
+          "cusip": "369604301",
+          "title": "COM NEW",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -0.17,
+          "ticker": null
+        },
+        {
+          "issuer": "VISA INC",
+          "cusip": "92826C839",
+          "title": "COM CL A",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 0.09,
+          "ticker": "V"
+        },
+        {
+          "issuer": "S&P GLOBAL INC",
+          "cusip": "78409V104",
+          "title": "COM",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 0.33,
+          "ticker": "SPGI"
+        },
+        {
+          "issuer": "CANADIAN PACIFIC KANSAS CITY",
+          "cusip": "13646K108",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -2.57,
+          "ticker": null
+        },
+        {
+          "issuer": "ALPHABET INC",
+          "cusip": "02079K107",
+          "title": "CAP STK CL C",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 12.25,
+          "ticker": "GOOG"
+        },
+        {
+          "issuer": "FERROVIAL NV",
+          "cusip": "N3168P101",
+          "title": "ORD SHS",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 0.97,
+          "ticker": null
+        },
+        {
+          "issuer": "CANADIAN NATL RY CO",
+          "cusip": "136375102",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -4.23,
+          "ticker": null
+        },
+        {
+          "issuer": "MICROSOFT CORP",
+          "cusip": "594918104",
+          "title": "COM",
+          "option": "",
+          "direction": "exited",
+          "delta_pct": null,
+          "ticker": "MSFT"
+        },
+        {
+          "issuer": "MARTIN MARIETTA MATLS INC",
+          "cusip": "573284106",
+          "title": "COM",
+          "option": "",
+          "direction": "new",
+          "delta_pct": null,
+          "ticker": null
+        },
+        {
+          "issuer": "VULCAN MATLS CO",
+          "cusip": "929160109",
+          "title": "COM",
+          "option": "",
+          "direction": "new",
+          "delta_pct": null,
+          "ticker": null
+        }
+      ]
+    },
+    {
+      "cik": "0001135730",
+      "name": "COATUE MANAGEMENT LLC",
+      "zh_name": "\u853b\u56fe\u8d44\u672c",
+      "quarter": "2026-06-30",
+      "filed": "2026-08-14",
+      "n_positions": 66,
+      "total_value": 48629053706.0,
+      "top10": [
+        {
+          "issuer": "TAIWAN SEMICONDUCTOR MANUFAC",
+          "cusip": "874039100",
+          "title": "SPONSORED ADS",
+          "option": "",
+          "value": 4257534162.0,
+          "shares": 8914995.0,
+          "pct": 8.76,
+          "ticker": null
+        },
+        {
+          "issuer": "LAM RESEARCH CORP",
+          "cusip": "512807306",
+          "title": "COM NEW",
+          "option": "",
+          "value": 4091329827.0,
+          "shares": 9441603.0,
+          "pct": 8.41,
+          "ticker": "LRCX"
+        },
+        {
+          "issuer": "MICRON TECHNOLOGY INC",
+          "cusip": "595112103",
+          "title": "COM",
+          "option": "",
+          "value": 3627089685.0,
+          "shares": 3142269.0,
+          "pct": 7.46,
+          "ticker": "MU"
+        },
+        {
+          "issuer": "SPACE EXPLORATION TECHN CORP",
+          "cusip": "84615Q103",
+          "title": "CLASS A COM STK",
+          "option": "",
+          "value": 3171465731.0,
+          "shares": 18561780.0,
+          "pct": 6.52,
+          "ticker": null
+        },
+        {
+          "issuer": "APPLIED MATLS INC",
+          "cusip": "038222105",
+          "title": "COM",
+          "option": "",
+          "value": 3046348209.0,
+          "shares": 4213483.0,
+          "pct": 6.26,
+          "ticker": null
+        },
+        {
+          "issuer": "GE VERNOVA INC",
+          "cusip": "36828A101",
+          "title": "COM",
+          "option": "",
+          "value": 3005484557.0,
+          "shares": 2558164.0,
+          "pct": 6.18,
+          "ticker": "GEV"
+        },
+        {
+          "issuer": "AMAZON COM INC",
+          "cusip": "023135106",
+          "title": "COM",
+          "option": "",
+          "value": 2820705995.0,
+          "shares": 11834799.0,
+          "pct": 5.8,
+          "ticker": "AMZN"
+        },
+        {
+          "issuer": "BROADCOM INC",
+          "cusip": "11135F101",
+          "title": "COM",
+          "option": "",
+          "value": 2208640410.0,
+          "shares": 5846831.0,
+          "pct": 4.54,
+          "ticker": "AVGO"
+        },
+        {
+          "issuer": "EATON CORP PLC",
+          "cusip": "G29183103",
+          "title": "SHS",
+          "option": "",
+          "value": 2117140999.0,
+          "shares": 4968415.0,
+          "pct": 4.35,
+          "ticker": "ETN"
+        },
+        {
+          "issuer": "ALPHABET INC",
+          "cusip": "02079K305",
+          "title": "CAP STK CL A",
+          "option": "",
+          "value": 1735478421.0,
+          "shares": 4856251.0,
+          "pct": 3.57,
+          "ticker": "GOOG"
+        }
+      ],
+      "changes": [
+        {
+          "issuer": "TAIWAN SEMICONDUCTOR MANUFAC",
+          "cusip": "874039100",
+          "title": "SPONSORED ADS",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -3.97,
+          "ticker": null
+        },
+        {
+          "issuer": "LAM RESEARCH CORP",
+          "cusip": "512807306",
+          "title": "COM NEW",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -5.99,
+          "ticker": "LRCX"
+        },
+        {
+          "issuer": "MICRON TECHNOLOGY INC",
+          "cusip": "595112103",
+          "title": "COM",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 1793.72,
+          "ticker": "MU"
+        },
+        {
+          "issuer": "SPACE EXPLORATION TECHN CORP",
+          "cusip": "84615Q103",
+          "title": "CLASS A COM STK",
+          "option": "",
+          "direction": "new",
+          "delta_pct": null,
+          "ticker": null
+        },
+        {
+          "issuer": "APPLIED MATLS INC",
+          "cusip": "038222105",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -19.72,
+          "ticker": null
+        },
+        {
+          "issuer": "GE VERNOVA INC",
+          "cusip": "36828A101",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -0.55,
+          "ticker": "GEV"
+        },
+        {
+          "issuer": "AMAZON COM INC",
+          "cusip": "023135106",
+          "title": "COM",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 49.23,
+          "ticker": "AMZN"
+        },
+        {
+          "issuer": "BROADCOM INC",
+          "cusip": "11135F101",
+          "title": "COM",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 6.23,
+          "ticker": "AVGO"
+        },
+        {
+          "issuer": "EATON CORP PLC",
+          "cusip": "G29183103",
+          "title": "SHS",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 4.63,
+          "ticker": "ETN"
+        },
+        {
+          "issuer": "ALPHABET INC",
+          "cusip": "02079K305",
+          "title": "CAP STK CL A",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 12.58,
+          "ticker": "GOOG"
+        }
+      ]
+    },
+    {
+      "cik": "0001103804",
+      "name": "VIKING GLOBAL INVESTORS LP",
+      "zh_name": "Viking \u5168\u7403\u6295\u8d44",
+      "quarter": "2026-06-30",
+      "filed": "2026-08-14",
+      "n_positions": 90,
+      "total_value": 35079228595.0,
+      "top10": [
+        {
+          "issuer": "VISA INC",
+          "cusip": "92826C839",
+          "title": "COM CL A",
+          "option": "",
+          "value": 2193581596.0,
+          "shares": 6393604.0,
+          "pct": 6.25,
+          "ticker": "V"
+        },
+        {
+          "issuer": "TAIWAN SEMICONDUCTOR MANUFAC",
+          "cusip": "874039100",
+          "title": "SPONSORED ADS",
+          "option": "",
+          "value": 1512988084.0,
+          "shares": 3168097.0,
+          "pct": 4.31,
+          "ticker": null
+        },
+        {
+          "issuer": "AIR PRODUCTS AND CHEMICALS I",
+          "cusip": "009158106",
+          "title": "COM",
+          "option": "",
+          "value": 1389776106.0,
+          "shares": 4740351.0,
+          "pct": 3.96,
+          "ticker": null
+        },
+        {
+          "issuer": "SHERWIN WILLIAMS CO",
+          "cusip": "824348106",
+          "title": "COM",
+          "option": "",
+          "value": 1334542657.0,
+          "shares": 3875879.0,
+          "pct": 3.8,
+          "ticker": "SHW"
+        },
+        {
+          "issuer": "FORTIVE CORP",
+          "cusip": "34959J108",
+          "title": "COM",
+          "option": "",
+          "value": 1217814611.0,
+          "shares": 19934762.0,
+          "pct": 3.47,
+          "ticker": "FTV"
+        },
+        {
+          "issuer": "META PLATFORMS INC",
+          "cusip": "30303M102",
+          "title": "CL A",
+          "option": "",
+          "value": 1052011107.0,
+          "shares": 1867619.0,
+          "pct": 3.0,
+          "ticker": "META"
+        },
+        {
+          "issuer": "SCHWAB CHARLES CORP",
+          "cusip": "808513105",
+          "title": "COM",
+          "option": "",
+          "value": 981648443.0,
+          "shares": 10638869.0,
+          "pct": 2.8,
+          "ticker": "SCHW"
+        },
+        {
+          "issuer": "THERMO FISHER SCIENTIFIC INC",
+          "cusip": "883556102",
+          "title": "COM",
+          "option": "",
+          "value": 971342384.0,
+          "shares": 1937415.0,
+          "pct": 2.77,
+          "ticker": "TMO"
+        },
+        {
+          "issuer": "JPMORGAN CHASE & CO",
+          "cusip": "46625H100",
+          "title": "COM",
+          "option": "",
+          "value": 949056019.0,
+          "shares": 2899386.0,
+          "pct": 2.71,
+          "ticker": "JPM"
+        },
+        {
+          "issuer": "LENNOX INTL INC",
+          "cusip": "526107107",
+          "title": "COM",
+          "option": "",
+          "value": 911539959.0,
+          "shares": 1590959.0,
+          "pct": 2.6,
+          "ticker": null
+        }
+      ],
+      "changes": [
+        {
+          "issuer": "VISA INC",
+          "cusip": "92826C839",
+          "title": "COM CL A",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 1.03,
+          "ticker": "V"
+        },
+        {
+          "issuer": "TAIWAN SEMICONDUCTOR MANUFAC",
+          "cusip": "874039100",
+          "title": "SPONSORED ADS",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -29.05,
+          "ticker": null
+        },
+        {
+          "issuer": "AIR PRODUCTS AND CHEMICALS I",
+          "cusip": "009158106",
+          "title": "COM",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 15.5,
+          "ticker": null
+        },
+        {
+          "issuer": "SCHWAB CHARLES CORP",
+          "cusip": "808513105",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -27.45,
+          "ticker": "SCHW"
+        },
+        {
+          "issuer": "SHERWIN WILLIAMS CO",
+          "cusip": "824348106",
+          "title": "COM",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 24.52,
+          "ticker": "SHW"
+        },
+        {
+          "issuer": "DISNEY WALT CO",
+          "cusip": "254687106",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -46.17,
+          "ticker": null
+        },
+        {
+          "issuer": "FORTIVE CORP",
+          "cusip": "34959J108",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -11.32,
+          "ticker": "FTV"
+        },
+        {
+          "issuer": "MCDONALDS CORP",
+          "cusip": "580135101",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -21.95,
+          "ticker": "MCD"
+        },
+        {
+          "issuer": "META PLATFORMS INC",
+          "cusip": "30303M102",
+          "title": "CL A",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 75.76,
+          "ticker": "META"
+        },
+        {
+          "issuer": "THERMO FISHER SCIENTIFIC INC",
+          "cusip": "883556102",
+          "title": "COM",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 16.15,
+          "ticker": "TMO"
+        }
+      ]
+    },
+    {
+      "cik": "0001350694",
+      "name": "Bridgewater Associates, LP",
+      "zh_name": "\u6865\u6c34\u57fa\u91d1\uff08\u8fbe\u5229\u6b27\uff09",
+      "quarter": "2026-06-30",
+      "filed": "2026-08-14",
+      "n_positions": 997,
+      "total_value": 24376086530.0,
+      "top10": [
+        {
+          "issuer": "STATE STR SPDR S&P 500 ETF T",
+          "cusip": "78462F103",
+          "title": "TR UNIT",
+          "option": "",
+          "value": 3973046405.0,
+          "shares": 5320308.0,
+          "pct": 16.3,
+          "ticker": null
+        },
+        {
+          "issuer": "ISHARES TR",
+          "cusip": "464287200",
+          "title": "CORE S&P500 ETF",
+          "option": "",
+          "value": 2248381963.0,
+          "shares": 3002286.0,
+          "pct": 9.22,
+          "ticker": null
+        },
+        {
+          "issuer": "NVIDIA CORPORATION",
+          "cusip": "67066G104",
+          "title": "COM",
+          "option": "",
+          "value": 773586958.0,
+          "shares": 3866195.0,
+          "pct": 3.17,
+          "ticker": "NVDA"
+        },
+        {
+          "issuer": "BROADCOM INC",
+          "cusip": "11135F101",
+          "title": "COM",
+          "option": "",
+          "value": 497845413.0,
+          "shares": 1317923.0,
+          "pct": 2.04,
+          "ticker": "AVGO"
+        },
+        {
+          "issuer": "AMAZON COM INC",
+          "cusip": "023135106",
+          "title": "COM",
+          "option": "",
+          "value": 482753142.0,
+          "shares": 2025481.0,
+          "pct": 1.98,
+          "ticker": "AMZN"
+        },
+        {
+          "issuer": "ALPHABET INC",
+          "cusip": "02079K305",
+          "title": "CAP STK CL A",
+          "option": "",
+          "value": 472506037.0,
+          "shares": 1322176.0,
+          "pct": 1.94,
+          "ticker": "GOOG"
+        },
+        {
+          "issuer": "LAM RESEARCH CORP",
+          "cusip": "512807306",
+          "title": "COM NEW",
+          "option": "",
+          "value": 406560606.0,
+          "shares": 938224.0,
+          "pct": 1.67,
+          "ticker": "LRCX"
+        },
+        {
+          "issuer": "VANGUARD INDEX FDS",
+          "cusip": "922908363",
+          "title": "S&P 500 ETF SHS",
+          "option": "",
+          "value": 314820655.0,
+          "shares": 458381.0,
+          "pct": 1.29,
+          "ticker": null
+        },
+        {
+          "issuer": "ADVANCED MICRO DEVICES INC",
+          "cusip": "007903107",
+          "title": "COM",
+          "option": "",
+          "value": 312896715.0,
+          "shares": 538632.0,
+          "pct": 1.28,
+          "ticker": "AMD"
+        },
+        {
+          "issuer": "ISHARES INC",
+          "cusip": "464286772",
+          "title": "MSCI STH KOR ETF",
+          "option": "",
+          "value": 279585467.0,
+          "shares": 1384772.0,
+          "pct": 1.15,
+          "ticker": null
+        }
+      ],
+      "changes": [
+        {
+          "issuer": "STATE STR SPDR S&P 500 ETF T",
+          "cusip": "78462F103",
+          "title": "TR UNIT",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 21.89,
+          "ticker": null
+        },
+        {
+          "issuer": "ISHARES TR",
+          "cusip": "464287200",
+          "title": "CORE S&P500 ETF",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 12.06,
+          "ticker": null
+        },
+        {
+          "issuer": "AMAZON COM INC",
+          "cusip": "023135106",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -53.85,
+          "ticker": "AMZN"
+        },
+        {
+          "issuer": "NVIDIA CORPORATION",
+          "cusip": "67066G104",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -17.62,
+          "ticker": "NVDA"
+        },
+        {
+          "issuer": "ALPHABET INC",
+          "cusip": "02079K305",
+          "title": "CAP STK CL A",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -33.81,
+          "ticker": "GOOG"
+        },
+        {
+          "issuer": "BROADCOM INC",
+          "cusip": "11135F101",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -28.19,
+          "ticker": "AVGO"
+        },
+        {
+          "issuer": "MICRON TECHNOLOGY INC",
+          "cusip": "595112103",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -92.09,
+          "ticker": "MU"
+        },
+        {
+          "issuer": "LAM RESEARCH CORP",
+          "cusip": "512807306",
+          "title": "COM NEW",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -40.29,
+          "ticker": "LRCX"
+        },
+        {
+          "issuer": "MICROSOFT CORP",
+          "cusip": "594918104",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -34.39,
+          "ticker": "MSFT"
+        },
+        {
+          "issuer": "GE VERNOVA INC",
+          "cusip": "36828A101",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -71.77,
+          "ticker": "GEV"
+        }
+      ]
+    },
+    {
+      "cik": "0001167483",
+      "name": "TIGER GLOBAL MANAGEMENT LLC",
+      "zh_name": "\u8001\u864e\u73af\u7403",
+      "quarter": "2026-06-30",
+      "filed": "2026-08-14",
+      "n_positions": 46,
+      "total_value": 23981506027.0,
+      "top10": [
+        {
+          "issuer": "TAIWAN SEMICONDUCTOR MANUFAC",
+          "cusip": "874039100",
+          "title": "SPONSORED ADS",
+          "option": "",
+          "value": 2331022991.0,
+          "shares": 4881008.0,
+          "pct": 9.72,
+          "ticker": null
+        },
+        {
+          "issuer": "AMAZON COM INC",
+          "cusip": "023135106",
+          "title": "COM",
+          "option": "",
+          "value": 2307979214.0,
+          "shares": 9683558.0,
+          "pct": 9.62,
+          "ticker": "AMZN"
+        },
+        {
+          "issuer": "NVIDIA CORPORATION",
+          "cusip": "67066G104",
+          "title": "COM",
+          "option": "",
+          "value": 2240762490.0,
+          "shares": 11198773.0,
+          "pct": 9.34,
+          "ticker": "NVDA"
+        },
+        {
+          "issuer": "ALPHABET INC",
+          "cusip": "02079K305",
+          "title": "CAP STK CL A",
+          "option": "",
+          "value": 2074778363.0,
+          "shares": 5805687.0,
+          "pct": 8.65,
+          "ticker": "GOOG"
+        },
+        {
+          "issuer": "META PLATFORMS INC",
+          "cusip": "30303M102",
+          "title": "CL A",
+          "option": "",
+          "value": 1590269062.0,
+          "shares": 2823180.0,
+          "pct": 6.63,
+          "ticker": "META"
+        },
+        {
+          "issuer": "LAM RESEARCH CORP",
+          "cusip": "512807306",
+          "title": "COM NEW",
+          "option": "",
+          "value": 1370837288.0,
+          "shares": 3163495.0,
+          "pct": 5.72,
+          "ticker": "LRCX"
+        },
+        {
+          "issuer": "SEA LTD",
+          "cusip": "81141R100",
+          "title": "SPONSORD ADS",
+          "option": "",
+          "value": 1203543536.0,
+          "shares": 12559152.0,
+          "pct": 5.02,
+          "ticker": null
+        },
+        {
+          "issuer": "APPLIED MATLS INC",
+          "cusip": "038222105",
+          "title": "COM",
+          "option": "",
+          "value": 1180087830.0,
+          "shares": 1632210.0,
+          "pct": 4.92,
+          "ticker": null
+        },
+        {
+          "issuer": "GE VERNOVA INC",
+          "cusip": "36828A101",
+          "title": "COM",
+          "option": "",
+          "value": 936963773.0,
+          "shares": 797511.0,
+          "pct": 3.91,
+          "ticker": "GEV"
+        },
+        {
+          "issuer": "MICROSOFT CORP",
+          "cusip": "594918104",
+          "title": "COM",
+          "option": "",
+          "value": 845603887.0,
+          "shares": 2266913.0,
+          "pct": 3.53,
+          "ticker": "MSFT"
+        }
+      ],
+      "changes": [
+        {
+          "issuer": "ALPHABET INC",
+          "cusip": "02079K305",
+          "title": "CAP STK CL A",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -45.39,
+          "ticker": "GOOG"
+        },
+        {
+          "issuer": "TAIWAN SEMICONDUCTOR MANUFAC",
+          "cusip": "874039100",
+          "title": "SPONSORED ADS",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -12.29,
+          "ticker": null
+        },
+        {
+          "issuer": "AMAZON COM INC",
+          "cusip": "023135106",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -3.16,
+          "ticker": "AMZN"
+        },
+        {
+          "issuer": "NVIDIA CORPORATION",
+          "cusip": "67066G104",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -6.77,
+          "ticker": "NVDA"
+        },
+        {
+          "issuer": "META PLATFORMS INC",
+          "cusip": "30303M102",
+          "title": "CL A",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -8.54,
+          "ticker": "META"
+        },
+        {
+          "issuer": "LAM RESEARCH CORP",
+          "cusip": "512807306",
+          "title": "COM NEW",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -18.89,
+          "ticker": "LRCX"
+        },
+        {
+          "issuer": "SEA LTD",
+          "cusip": "81141R100",
+          "title": "SPONSORD ADS",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -18.53,
+          "ticker": null
+        },
+        {
+          "issuer": "APPLIED MATLS INC",
+          "cusip": "038222105",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -1.49,
+          "ticker": null
+        },
+        {
+          "issuer": "BROADCOM INC",
+          "cusip": "11135F101",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -51.07,
+          "ticker": "AVGO"
+        },
+        {
+          "issuer": "GE VERNOVA INC",
+          "cusip": "36828A101",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -18.04,
+          "ticker": "GEV"
+        }
+      ]
+    },
+    {
+      "cik": "0001759760",
+      "name": "H&H International Investment, LLC",
+      "zh_name": "H&H \u56fd\u9645\u6295\u8d44\uff08\u6bb5\u6c38\u5e73\uff09",
+      "quarter": "2026-06-30",
+      "filed": "2026-08-14",
+      "n_positions": 18,
+      "total_value": 19100584155.0,
+      "top10": [
+        {
+          "issuer": "APPLE INC",
+          "cusip": "037833100",
+          "title": "COM",
+          "option": "",
+          "value": 7841281858.0,
+          "shares": 27098707.0,
+          "pct": 41.05,
+          "ticker": "AAPL"
+        },
+        {
+          "issuer": "BERKSHIRE HATHAWAY INC DEL",
+          "cusip": "084670702",
+          "title": "CL B NEW",
+          "option": "",
+          "value": 4618447581.0,
+          "shares": 9229696.0,
+          "pct": 24.18,
+          "ticker": null
+        },
+        {
+          "issuer": "PDD HOLDINGS INC",
+          "cusip": "722304102",
+          "title": "SPONSORED ADS",
+          "option": "",
+          "value": 1908685330.0,
+          "shares": 25022094.0,
+          "pct": 9.99,
+          "ticker": null
+        },
+        {
+          "issuer": "TESLA INC",
+          "cusip": "88160R101",
+          "title": "COM",
+          "option": "",
+          "value": 1421796240.0,
+          "shares": 3380400.0,
+          "pct": 7.44,
+          "ticker": "TSLA"
+        },
+        {
+          "issuer": "NVIDIA CORPORATION",
+          "cusip": "67066G104",
+          "title": "COM",
+          "option": "",
+          "value": 1256700261.0,
+          "shares": 6280675.0,
+          "pct": 6.58,
+          "ticker": "NVDA"
+        },
+        {
+          "issuer": "ALPHABET INC",
+          "cusip": "02079K107",
+          "title": "CAP STK CL C",
+          "option": "",
+          "value": 695565438.0,
+          "shares": 1968600.0,
+          "pct": 3.64,
+          "ticker": "GOOG"
+        },
+        {
+          "issuer": "OCCIDENTAL PETE CORP",
+          "cusip": "674599105",
+          "title": "COM",
+          "option": "",
+          "value": 498401055.0,
+          "shares": 10261500.0,
+          "pct": 2.61,
+          "ticker": null
+        },
+        {
+          "issuer": "MICROSOFT CORP",
+          "cusip": "594918104",
+          "title": "COM",
+          "option": "",
+          "value": 281294382.0,
+          "shares": 754100.0,
+          "pct": 1.47,
+          "ticker": "MSFT"
+        },
+        {
+          "issuer": "CREDO TECHNOLOGY GROUP HOLDI",
+          "cusip": "G25457105",
+          "title": "ORDINARY SHARES",
+          "option": "",
+          "value": 190691340.0,
+          "shares": 701200.0,
+          "pct": 1.0,
+          "ticker": null
+        },
+        {
+          "issuer": "UNITEDHEALTH GROUP INC",
+          "cusip": "91324P102",
+          "title": "COM",
+          "option": "",
+          "value": 166085748.0,
+          "shares": 399600.0,
+          "pct": 0.87,
+          "ticker": "UNH"
+        }
+      ],
+      "changes": [
+        {
+          "issuer": "APPLE INC",
+          "cusip": "037833100",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -6.38,
+          "ticker": "AAPL"
+        },
+        {
+          "issuer": "BERKSHIRE HATHAWAY INC DEL",
+          "cusip": "084670702",
+          "title": "CL B NEW",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 0.9,
+          "ticker": null
+        },
+        {
+          "issuer": "NVIDIA CORPORATION",
+          "cusip": "67066G104",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -54.63,
+          "ticker": "NVDA"
+        },
+        {
+          "issuer": "PDD HOLDINGS INC",
+          "cusip": "722304102",
+          "title": "SPONSORED ADS",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 26.71,
+          "ticker": null
+        },
+        {
+          "issuer": "TESLA INC",
+          "cusip": "88160R101",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -0.84,
+          "ticker": "TSLA"
+        },
+        {
+          "issuer": "ALPHABET INC",
+          "cusip": "02079K107",
+          "title": "CAP STK CL C",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -46.88,
+          "ticker": "GOOG"
+        },
+        {
+          "issuer": "MICROSOFT CORP",
+          "cusip": "594918104",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -25.78,
+          "ticker": "MSFT"
+        },
+        {
+          "issuer": "CREDO TECHNOLOGY GROUP HOLDI",
+          "cusip": "G25457105",
+          "title": "ORDINARY SHARES",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -6.66,
+          "ticker": null
+        },
+        {
+          "issuer": "UNITEDHEALTH GROUP INC",
+          "cusip": "91324P102",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -33.56,
+          "ticker": "UNH"
+        },
+        {
+          "issuer": "DISNEY WALT CO",
+          "cusip": "254687106",
+          "title": "COM",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 12.89,
+          "ticker": null
+        }
+      ]
+    },
+    {
+      "cik": "0001697748",
+      "name": "ARK Investment Management LLC",
+      "zh_name": "ARK \u6295\u8d44\uff08\u4f0d\u5fb7\uff09",
+      "quarter": "2026-06-30",
+      "filed": "2026-08-14",
+      "n_positions": 191,
+      "total_value": 15402788184.0,
+      "top10": [
+        {
+          "issuer": "Tesla Inc",
+          "cusip": "88160R101",
+          "title": "Common Stock",
+          "option": "",
+          "value": 1160772073.0,
+          "shares": 2759800.0,
+          "pct": 7.54,
+          "ticker": "TSLA"
+        },
+        {
+          "issuer": "Advanced Micro Devices Inc",
+          "cusip": "007903107",
+          "title": "Common Stock",
+          "option": "",
+          "value": 822826048.0,
+          "shares": 1416443.0,
+          "pct": 5.34,
+          "ticker": "AMD"
+        },
+        {
+          "issuer": "Space Exploration Technologies Corp",
+          "cusip": "84615Q103",
+          "title": "Common Stock",
+          "option": "",
+          "value": 765113281.0,
+          "shares": 4478013.0,
+          "pct": 4.97,
+          "ticker": null
+        },
+        {
+          "issuer": "Tempus AI Inc",
+          "cusip": "88023B103",
+          "title": "Common Stock",
+          "option": "",
+          "value": 580611200.0,
+          "shares": 10022634.0,
+          "pct": 3.77,
+          "ticker": null
+        },
+        {
+          "issuer": "Robinhood Markets Inc",
+          "cusip": "770700102",
+          "title": "Common Stock",
+          "option": "",
+          "value": 525069168.0,
+          "shares": 5236031.0,
+          "pct": 3.41,
+          "ticker": null
+        },
+        {
+          "issuer": "CRISPR Therapeutics AG",
+          "cusip": "H17182108",
+          "title": "Common Stock",
+          "option": "",
+          "value": 515999631.0,
+          "shares": 9460939.0,
+          "pct": 3.35,
+          "ticker": null
+        },
+        {
+          "issuer": "Shopify Inc",
+          "cusip": "82509L107",
+          "title": "Common Stock",
+          "option": "",
+          "value": 474523465.0,
+          "shares": 4155925.0,
+          "pct": 3.08,
+          "ticker": null
+        },
+        {
+          "issuer": "Twist Bioscience Corp",
+          "cusip": "90184D100",
+          "title": "Common Stock",
+          "option": "",
+          "value": 468083756.0,
+          "shares": 4549803.0,
+          "pct": 3.04,
+          "ticker": null
+        },
+        {
+          "issuer": "10X Genomics Inc",
+          "cusip": "88025U109",
+          "title": "Common Stock",
+          "option": "",
+          "value": 383517223.0,
+          "shares": 10003057.0,
+          "pct": 2.49,
+          "ticker": null
+        },
+        {
+          "issuer": "Amazon.com Inc",
+          "cusip": "023135106",
+          "title": "Common Stock",
+          "option": "",
+          "value": 379241133.0,
+          "shares": 1591177.0,
+          "pct": 2.46,
+          "ticker": "AMZN"
+        }
+      ],
+      "changes": [
+        {
+          "issuer": "Tesla Inc",
+          "cusip": "88160R101",
+          "title": "Common Stock",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -2.53,
+          "ticker": "TSLA"
+        },
+        {
+          "issuer": "Advanced Micro Devices Inc",
+          "cusip": "007903107",
+          "title": "Common Stock",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -47.79,
+          "ticker": "AMD"
+        },
+        {
+          "issuer": "Space Exploration Technologies Corp",
+          "cusip": "84615Q103",
+          "title": "Common Stock",
+          "option": "",
+          "direction": "new",
+          "delta_pct": null,
+          "ticker": null
+        },
+        {
+          "issuer": "Tempus AI Inc",
+          "cusip": "88023B103",
+          "title": "Common Stock",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 4.32,
+          "ticker": null
+        },
+        {
+          "issuer": "CRISPR Therapeutics AG",
+          "cusip": "H17182108",
+          "title": "Common Stock",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -16.38,
+          "ticker": null
+        },
+        {
+          "issuer": "Robinhood Markets Inc",
+          "cusip": "770700102",
+          "title": "Common Stock",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -12.78,
+          "ticker": null
+        },
+        {
+          "issuer": "Shopify Inc",
+          "cusip": "82509L107",
+          "title": "Common Stock",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -0.52,
+          "ticker": null
+        },
+        {
+          "issuer": "Twist Bioscience Corp",
+          "cusip": "90184D100",
+          "title": "Common Stock",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -28.27,
+          "ticker": null
+        },
+        {
+          "issuer": "Palantir Technologies Inc",
+          "cusip": "69608A108",
+          "title": "Common Stock",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 3.29,
+          "ticker": "PLTR"
+        },
+        {
+          "issuer": "Circle Internet Group Inc",
+          "cusip": "172573107",
+          "title": "Common Stock",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 1.08,
+          "ticker": null
+        }
+      ]
+    },
+    {
+      "cik": "0001336528",
+      "name": "Pershing Square Capital Management, L.P.",
+      "zh_name": "\u6f58\u5174\u5e7f\u573a\uff08\u963f\u514b\u66fc\uff09",
+      "quarter": "2026-03-31",
+      "filed": "2026-05-15",
+      "n_positions": 11,
+      "total_value": 13714299861.0,
+      "top10": [
+        {
+          "issuer": "BROOKFIELD CORP",
+          "cusip": "11271J107",
+          "title": "CL A LTD VT SH",
+          "option": "",
+          "value": 2415946008.0,
+          "shares": 59697208.0,
+          "pct": 17.62,
+          "ticker": null
+        },
+        {
+          "issuer": "AMAZON COM INC",
+          "cusip": "023135106",
+          "title": "COM",
+          "option": "",
+          "value": 2385104083.0,
+          "shares": 11451981.0,
+          "pct": 17.39,
+          "ticker": "AMZN"
+        },
+        {
+          "issuer": "UBER TECHNOLOGIES INC",
+          "cusip": "90353T100",
+          "title": "COM",
+          "option": "",
+          "value": 2154934398.0,
+          "shares": 29958771.0,
+          "pct": 15.71,
+          "ticker": "UBER"
+        },
+        {
+          "issuer": "MICROSOFT CORP",
+          "cusip": "594918104",
+          "title": "COM",
+          "option": "",
+          "value": 2092970053.0,
+          "shares": 5654078.0,
+          "pct": 15.26,
+          "ticker": "MSFT"
+        },
+        {
+          "issuer": "RESTAURANT BRANDS INTL INC",
+          "cusip": "76131D103",
+          "title": "COM",
+          "option": "",
+          "value": 1673501194.0,
+          "shares": 22645483.0,
+          "pct": 12.2,
+          "ticker": null
+        },
+        {
+          "issuer": "META PLATFORMS INC",
+          "cusip": "30303M102",
+          "title": "CL A",
+          "option": "",
+          "value": 1522358404.0,
+          "shares": 2660861.0,
+          "pct": 11.1,
+          "ticker": "META"
+        },
+        {
+          "issuer": "HOWARD HUGHES HOLDINGS INC",
+          "cusip": "44267T102",
+          "title": "COM",
+          "option": "",
+          "value": 1192581569.0,
+          "shares": 18852064.0,
+          "pct": 8.7,
+          "ticker": null
+        },
+        {
+          "issuer": "SEAPORT ENTMT GROUP INC",
+          "cusip": "812215200",
+          "title": "COMMON STOCK",
+          "option": "",
+          "value": 107910794.0,
+          "shares": 5023780.0,
+          "pct": 0.79,
+          "ticker": null
+        },
+        {
+          "issuer": "ALPHABET INC",
+          "cusip": "02079K107",
+          "title": "CAP STK CL C",
+          "option": "",
+          "value": 89421720.0,
+          "shares": 311726.0,
+          "pct": 0.65,
+          "ticker": "GOOG"
+        },
+        {
+          "issuer": "HERTZ GLOBAL HLDGS INC",
+          "cusip": "42806J700",
+          "title": "COM NEW",
+          "option": "",
+          "value": 70261595.0,
+          "shares": 15241127.0,
+          "pct": 0.51,
+          "ticker": null
+        }
+      ],
+      "changes": [
+        {
+          "issuer": "BROOKFIELD CORP",
+          "cusip": "11271J107",
+          "title": "CL A LTD VT SH",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -2.78,
+          "ticker": null
+        },
+        {
+          "issuer": "UBER TECHNOLOGIES INC",
+          "cusip": "90353T100",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -0.82,
+          "ticker": "UBER"
+        },
+        {
+          "issuer": "AMAZON COM INC",
+          "cusip": "023135106",
+          "title": "COM",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 19.19,
+          "ticker": "AMZN"
+        },
+        {
+          "issuer": "MICROSOFT CORP",
+          "cusip": "594918104",
+          "title": "COM",
+          "option": "",
+          "direction": "new",
+          "delta_pct": null,
+          "ticker": "MSFT"
+        },
+        {
+          "issuer": "ALPHABET INC",
+          "cusip": "02079K107",
+          "title": "CAP STK CL C",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -94.94,
+          "ticker": "GOOG"
+        },
+        {
+          "issuer": "META PLATFORMS INC",
+          "cusip": "30303M102",
+          "title": "CL A",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -0.48,
+          "ticker": "META"
+        },
+        {
+          "issuer": "RESTAURANT BRANDS INTL INC",
+          "cusip": "76131D103",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -0.97,
+          "ticker": null
+        },
+        {
+          "issuer": "HILTON WORLDWIDE HLDGS INC",
+          "cusip": "43300A203",
+          "title": "COM",
+          "option": "",
+          "direction": "exited",
+          "delta_pct": null,
+          "ticker": null
+        },
+        {
+          "issuer": "ALPHABET INC",
+          "cusip": "02079K305",
+          "title": "CAP STK CL A",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -95.23,
+          "ticker": "GOOG"
+        }
+      ]
+    },
+    {
+      "cik": "0001656456",
+      "name": "Appaloosa LP",
+      "zh_name": "Appaloosa\uff08\u6cf0\u73c0\uff09",
+      "quarter": "2026-06-30",
+      "filed": "2026-08-14",
+      "n_positions": 27,
+      "total_value": 7725383349.0,
+      "top10": [
+        {
+          "issuer": "AMAZON COM INC",
+          "cusip": "023135106",
+          "title": "COM",
+          "option": "",
+          "value": 1191700000.0,
+          "shares": 5000000.0,
+          "pct": 15.43,
+          "ticker": "AMZN"
+        },
+        {
+          "issuer": "MICRON TECHNOLOGY INC",
+          "cusip": "595112103",
+          "title": "COM",
+          "option": "",
+          "value": 1125432750.0,
+          "shares": 975000.0,
+          "pct": 14.57,
+          "ticker": "MU"
+        },
+        {
+          "issuer": "TAIWAN SEMICONDUCTOR MANUFAC",
+          "cusip": "874039100",
+          "title": "SPONSORED ADS",
+          "option": "",
+          "value": 787990500.0,
+          "shares": 1650000.0,
+          "pct": 10.2,
+          "ticker": null
+        },
+        {
+          "issuer": "ALPHABET INC",
+          "cusip": "02079K107",
+          "title": "CAP STK CL C",
+          "option": "",
+          "value": 653660500.0,
+          "shares": 1850000.0,
+          "pct": 8.46,
+          "ticker": "GOOG"
+        },
+        {
+          "issuer": "UBER TECHNOLOGIES INC",
+          "cusip": "90353T100",
+          "title": "COM",
+          "option": "",
+          "value": 555204163.0,
+          "shares": 7694071.0,
+          "pct": 7.19,
+          "ticker": "UBER"
+        },
+        {
+          "issuer": "ISHARES INC",
+          "cusip": "464286772",
+          "title": "MSCI STH KOR ETF",
+          "option": "",
+          "value": 489607500.0,
+          "shares": 2425000.0,
+          "pct": 6.34,
+          "ticker": null
+        },
+        {
+          "issuer": "META PLATFORMS INC",
+          "cusip": "30303M102",
+          "title": "CL A",
+          "option": "",
+          "value": 380220750.0,
+          "shares": 675000.0,
+          "pct": 4.92,
+          "ticker": "META"
+        },
+        {
+          "issuer": "VISTRA CORP",
+          "cusip": "92840M102",
+          "title": "COM",
+          "option": "",
+          "value": 351408597.0,
+          "shares": 2215272.0,
+          "pct": 4.55,
+          "ticker": "VST"
+        },
+        {
+          "issuer": "NVIDIA CORPORATION",
+          "cusip": "67066G104",
+          "title": "COM",
+          "option": "",
+          "value": 305137250.0,
+          "shares": 1525000.0,
+          "pct": 3.95,
+          "ticker": "NVDA"
+        },
+        {
+          "issuer": "NRG ENERGY INC",
+          "cusip": "629377508",
+          "title": "COM NEW",
+          "option": "",
+          "value": 257065600.0,
+          "shares": 1760000.0,
+          "pct": 3.33,
+          "ticker": "NRG"
+        }
+      ],
+      "changes": [
+        {
+          "issuer": "AMAZON COM INC",
+          "cusip": "023135106",
+          "title": "COM",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 15.74,
+          "ticker": "AMZN"
+        },
+        {
+          "issuer": "MICRON TECHNOLOGY INC",
+          "cusip": "595112103",
+          "title": "COM",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -41.44,
+          "ticker": "MU"
+        },
+        {
+          "issuer": "TAIWAN SEMICONDUCTOR MANUFAC",
+          "cusip": "874039100",
+          "title": "SPONSORED ADS",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 24.29,
+          "ticker": null
+        },
+        {
+          "issuer": "ALPHABET INC",
+          "cusip": "02079K107",
+          "title": "CAP STK CL C",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 6.77,
+          "ticker": "GOOG"
+        },
+        {
+          "issuer": "UBER TECHNOLOGIES INC",
+          "cusip": "90353T100",
+          "title": "COM",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 21.5,
+          "ticker": "UBER"
+        },
+        {
+          "issuer": "ISHARES INC",
+          "cusip": "464286772",
+          "title": "MSCI STH KOR ETF",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 1.04,
+          "ticker": null
+        },
+        {
+          "issuer": "ALIBABA GROUP HLDG LTD",
+          "cusip": "01609W102",
+          "title": "SPONSORED ADS",
+          "option": "",
+          "direction": "reduced",
+          "delta_pct": -42.28,
+          "ticker": null
+        },
+        {
+          "issuer": "META PLATFORMS INC",
+          "cusip": "30303M102",
+          "title": "CL A",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 54.64,
+          "ticker": "META"
+        },
+        {
+          "issuer": "VISTRA CORP",
+          "cusip": "92840M102",
+          "title": "COM",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 9.54,
+          "ticker": "VST"
+        },
+        {
+          "issuer": "NVIDIA CORPORATION",
+          "cusip": "67066G104",
+          "title": "COM",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 3.64,
+          "ticker": "NVDA"
+        }
+      ]
+    },
+    {
+      "cik": "0001709323",
+      "name": "Himalaya Capital Management LLC",
+      "zh_name": "\u559c\u9a6c\u62c9\u96c5\u8d44\u672c\uff08\u674e\u5f55\uff09",
+      "quarter": "2026-06-30",
+      "filed": "2026-08-14",
+      "n_positions": 8,
+      "total_value": 3702921099.0,
+      "top10": [
+        {
+          "issuer": "ALPHABET INC",
+          "cusip": "02079K305",
+          "title": "CAP STK CL A",
+          "option": "",
+          "value": 908899121.0,
+          "shares": 2543300.0,
+          "pct": 24.55,
+          "ticker": "GOOG"
+        },
+        {
+          "issuer": "ALPHABET INC",
+          "cusip": "02079K107",
+          "title": "CAP STK CL C",
+          "option": "",
+          "value": 866117829.0,
+          "shares": 2451300.0,
+          "pct": 23.39,
+          "ticker": "GOOG"
+        },
+        {
+          "issuer": "PDD HOLDINGS INC",
+          "cusip": "722304102",
+          "title": "SPON ADS",
+          "option": "",
+          "value": 820858157.0,
+          "shares": 10761119.0,
+          "pct": 22.17,
+          "ticker": null
+        },
+        {
+          "issuer": "BERKSHIRE HATHAWAY INC DEL",
+          "cusip": "084670702",
+          "title": "CL B NEW",
+          "option": "",
+          "value": 554591244.0,
+          "shares": 1108318.0,
+          "pct": 14.98,
+          "ticker": null
+        },
+        {
+          "issuer": "EAST WEST BANCORP INC",
+          "cusip": "27579R104",
+          "title": "COM",
+          "option": "",
+          "value": 358399151.0,
+          "shares": 2776351.0,
+          "pct": 9.68,
+          "ticker": null
+        },
+        {
+          "issuer": "CROCS INC",
+          "cusip": "227046109",
+          "title": "COM",
+          "option": "",
+          "value": 107018900.0,
+          "shares": 887093.0,
+          "pct": 2.89,
+          "ticker": null
+        },
+        {
+          "issuer": "TENCENT MUSIC ENTERTAINM",
+          "cusip": "88034P109",
+          "title": "SPON ADS",
+          "option": "",
+          "value": 55033481.0,
+          "shares": 6590836.0,
+          "pct": 1.49,
+          "ticker": null
+        },
+        {
+          "issuer": "APPLE INC",
+          "cusip": "037833100",
+          "title": "COM",
+          "option": "",
+          "value": 32003216.0,
+          "shares": 110600.0,
+          "pct": 0.86,
+          "ticker": "AAPL"
+        }
+      ],
+      "changes": [
+        {
+          "issuer": "PDD HOLDINGS INC",
+          "cusip": "722304102",
+          "title": "SPON ADS",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 133.53,
+          "ticker": null
+        },
+        {
+          "issuer": "BERKSHIRE HATHAWAY INC DEL",
+          "cusip": "084670702",
+          "title": "CL B NEW",
+          "option": "",
+          "direction": "increased",
+          "delta_pct": 23.46,
+          "ticker": null
+        },
+        {
+          "issuer": "BK OF AMERICA CORP",
+          "cusip": "060505104",
+          "title": "COM",
+          "option": "",
+          "direction": "exited",
+          "delta_pct": null,
+          "ticker": null
+        },
+        {
+          "issuer": "OCCIDENTAL PETE CORP",
+          "cusip": "674599105",
+          "title": "COM",
+          "option": "",
+          "direction": "exited",
+          "delta_pct": null,
+          "ticker": null
+        },
+        {
+          "issuer": "S&P GLOBAL INC",
+          "cusip": "78409V104",
+          "title": "COM",
+          "option": "",
+          "direction": "exited",
+          "delta_pct": null,
+          "ticker": "SPGI"
+        },
+        {
+          "issuer": "BLOCK H & R INC",
+          "cusip": "093671105",
+          "title": "COM",
+          "option": "",
+          "direction": "exited",
+          "delta_pct": null,
+          "ticker": null
+        },
+        {
+          "issuer": "MOODYS CORP",
+          "cusip": "615369105",
+          "title": "COM",
+          "option": "",
+          "direction": "exited",
+          "delta_pct": null,
+          "ticker": null
+        },
+        {
+          "issuer": "MSCI INC",
+          "cusip": "55354G100",
+          "title": "COM",
+          "option": "",
+          "direction": "exited",
+          "delta_pct": null,
+          "ticker": "MSCI"
+        }
+      ]
+    }
+  ],
+  "ticker_coverage": "68/118",
+  "methodology": "SEC Form 13F-HR quarterly institutional holdings \u2014 the legally mandated public report (public domain, 17 U.S.C. \u00a7105) every institutional manager with >=US$100M discretion must file within 45 days of quarter-end. Panel shows a bounded subset of ~12 star managers (CIKs verified against EDGAR submissions JSON 2026-08-20), latest quarter top-10 holdings plus quarter-over-quarter frame diff (new/increased/reduced/exited on share counts). Values are as filed in the EDGAR 2014+ information-table XML (whole USD \u2014 the 'expressed in thousands' note is the legacy HTML rendering); same-(CUSIP, class, option) tranches merged into one position; shares as filed (SH lines; option lines flagged PUT/CALL). Filing-date point-in-time; amendments supersede (latest filing per report quarter wins). Issuer\u2192ticker links are exact normalized-name matches against the terminal's US stock universe (EDGAR infotables carry CUSIPs, not tickers) \u2014 unmatched issuers stay plain text. Display-only, not a research claim; NOT part of any OOS pipeline.",
+  "snapshot_ts": "2026-08-20T05:00:59.478063+00:00"
+}
