@@ -1,5 +1,13 @@
 # state/blockers.md — what is blocking and why
 
+- **【2026-08-21 新增·需业主动作】GitHub Actions 计费失败，全部 workflow 停摆。**
+  官方注解原文："The job was not started because recent account payments have failed or
+  your spending limit needs to be increased. Please check the 'Billing & plans' section
+  in your settings"。实证：08-20 09:00 后所有 run 5 秒内失败（deploy 32351688853、
+  scheduled refresh 32423519918、本轮 deploy 32504053179）——**日更数据刷新与 Pages
+  自动部署双双中断**。代码侧无恙（本轮 c83dd00 已推 origin/main，本地 pytest 0 失败 +
+  tsc/build 全绿）；业主在 GitHub Settings → Billing & plans 修复付款/额度后，手动
+  re-run `Deploy Static Site to GitHub Pages` 与 `Refresh terminal data` 即恢复。
 - **BLS CPI/NFP live transport remains BLOCKED by policy; C1 code is implemented but not yet accepted.**
   Cache miss now fails closed in the local diff, but independent Verifier/Reviewer are still required before
   commit. No BLS adapter is allowed. See `TASK-AUD-05C-C1-disable-bls-transport.md`.
