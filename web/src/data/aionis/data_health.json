@@ -170,6 +170,14 @@
       "present": true
     },
     {
+      "key": "form8k",
+      "file": "form8k.json",
+      "category": "daily",
+      "as_of": "2026-08-17",
+      "exported_at": "2026-08-21",
+      "present": true
+    },
+    {
       "key": "reddit",
       "file": "reddit.json",
       "category": "daily",
@@ -214,21 +222,21 @@
       "file": "form13f.json",
       "category": "cadence",
       "as_of": "2026-06-30",
-      "exported_at": "2026-08-20",
+      "exported_at": "2026-08-21",
       "present": true
     }
   ],
   "summary": {
-    "n_panels": 27,
+    "n_panels": 28,
     "n_frozen": 15,
-    "n_daily": 9,
+    "n_daily": 10,
     "n_cadence": 3
   },
   "source_health": {
     "smart_money": {
       "ticker_null": 16,
       "n_recent": 60,
-      "days_since_latest": 2
+      "days_since_latest": 3
     },
     "reddit": {
       "bull_ratio_null": 3,
@@ -245,5 +253,5 @@
     }
   ],
   "methodology": "Freshness/provenance map of every terminal panel. frozen = derived from frozen OOS artifacts (ledger #49 lineage): the daily lane deliberately does NOT advance these \u2014 recomputing them from newer data would be rerun-to-significance. daily = recomputed by each CI refresh from live caches. cadence = advances on its source's publication rhythm (CFTC weekly, price caches ~5-day grace, EDGAR filing rhythm). as_of is read from each panel's own timestamp fields; null = the panel carries no observation date (static research artifact). The only legal way frozen numbers move forward: E3 forward-live accumulation or a new pre-registered phase. source_health quantifies field-level quality on the committed JSONs (smart_money ticker nulls = filings on unlisted targets honestly left empty; reddit bull_ratio nulls = sentiment not yet gradable in the accumulating window; cot staleness in weeks vs the Friday publication rhythm). planned lists panels that are NOT built \u2014 no fetcher, no data, no endpoint payload \u2014 disclosed so the panel count is never mistaken for coverage.",
-  "snapshot_ts": "2026-08-20T08:59:47.929682+00:00"
+  "snapshot_ts": "2026-08-21T15:32:02.082632+00:00"
 }

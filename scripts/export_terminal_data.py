@@ -2079,6 +2079,7 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
     ("macro_drivers", "macro_drivers.json", _DH_DAILY),
     ("taco", "taco.json", _DH_DAILY),
     ("form4", "form4.json", _DH_DAILY),
+    ("form8k", "form8k.json", _DH_DAILY),
     ("reddit", "reddit.json", _DH_DAILY),
     ("headline_provenance", "headline_provenance.json", _DH_DAILY),
     ("ledger_audit", "ledger_audit.json", _DH_DAILY),
@@ -2149,6 +2150,8 @@ def _dh_as_of(key: str, fname: str) -> str | None:
     if key == "form4":
         recent = p.get("recent", [])
         return recent[0].get("date") if recent else None
+    if key == "form8k":
+        return p.get("as_of")
     if key == "cot":
         return p.get("latest_date")
     if key == "smart_money":
@@ -2331,6 +2334,7 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
     "macro_drivers": ("FRED/ALFRED — U.S. Government public domain", "CPI, payrolls, rates, DFF vintages"),
     "taco": ("FRED (public domain) + labeled public news events", "VIX monthly + Trump-policy event table"),
     "form4": ("U.S. SEC EDGAR — public domain", "Form 4 XML, filed-date PIT"),
+    "form8k": ("U.S. SEC EDGAR — public domain", "Form 8-K primary docs, filed-date PIT, item-classified"),
     "reddit": ("Reddit public Atom RSS — Reddit ToS, display-only", "retail mention counts, forward-only"),
     "headline_provenance": ("Aionis append-only ledger (repo MIT)", "ledger.jsonl freeze→result pairing"),
     "ledger_audit": ("Aionis append-only ledger (repo MIT)", "ledger.jsonl claim-row timeline"),
@@ -2748,6 +2752,72 @@ def export_form13f() -> None:
     )
 
 
+def export_form8k() -> None:
+    """SEC Form 8-K material-event stream (display-only, exploratory).
+
+    Reads ``data/cache/form8k_aggregate.parquet`` (gitignored; produced by
+    ``scripts/form8k_fetch.py`` — the same 5 large-cap issuers as form4, fixed
+    window from 2026-05-01). Events carry the legally mandated 8-K item list
+    (regex-extracted from the primary document, entity-spellings normalized)
+    and ONE category via a rare-material-first precedence table. Docs the
+    classifier cannot read are counted as ``unclassified`` — never guessed.
+    """
+    fp = Path("data/cache/form8k_aggregate.parquet")
+    if not fp.exists():
+        print(
+            "[export-terminal] SKIP form8k: data/cache/form8k_aggregate.parquet "
+            "not present (tracked JSON retains last-committed value)",
+            flush=True,
+        )
+        return
+
+    df = pd.read_parquet(fp)
+    by_cat: dict[str, int] = df["category"].value_counts().to_dict()
+    events = []
+    for _, r in df.head(150).iterrows():
+        events.append({
+            "ticker": str(r["ticker"]),
+            "company": str(r["company"]),
+            "filing_date": str(r["filing_date"]),
+            "form": str(r["form"]),
+            "items": [i for i in str(r["items"]).split(",") if i],
+            "category": str(r["category"]),
+            "doc_url": str(r["doc_url"]),
+        })
+    payload = {
+        "status": "ok",
+        "as_of": str(df["filing_date"].max()),
+        "window": {"start": str(df["filing_date"].min()), "end": str(df["filing_date"].max())},
+        "issuers": int(df["ticker"].nunique()),
+        "total": int(len(df)),
+        "unclassified": int(by_cat.get("unclassified", 0)),
+        "by_category": {k: int(v) for k, v in sorted(by_cat.items())},
+        "events": events,
+        "methodology": (
+            "SEC Form 8-K current reports — the legally mandated material-event "
+            "disclosure (public domain, 17 U.S.C. §105), due within 4 business "
+            "days of the event. Panel streams the same bounded 5 large-cap "
+            "issuer set as /insiders (AAPL/MSFT/NVDA/GOOGL/AMZN) since "
+            "2026-05-01; each row links the EDGAR primary document. Items are "
+            "regex-extracted from the primary doc (nbsp/thin-space entities "
+            "normalized) and mapped to ONE category by a rare-material-first "
+            "precedence (delisting > merger completion > control change > "
+            "non-reliance > officer changes > ... > exhibits); the full item "
+            "list is preserved per row. Documents whose items cannot be "
+            "extracted are counted as unclassified — never guessed. "
+            "Filing-date point-in-time; 8-K/A amendments are new accessions "
+            "(immutable). Display-only, not a research claim; NOT part of "
+            "any OOS pipeline."
+        ),
+    }
+    (WEB / "form8k.json").write_text(json.dumps(_stamp(payload), indent=2, default=str))
+    print(
+        f"[export-terminal] form8k: {payload['total']} events, "
+        f"as_of {payload['as_of']}, unclassified {payload['unclassified']}",
+        flush=True,
+    )
+
+
 def _safe_export(name: str, fn, /, *args, **kwargs):
     """Best-effort guard for the daily CI refresh.
 
@@ -2797,6 +2867,7 @@ def main() -> None:
     _safe_export("calibration_reliability", export_calibration_reliability)
     _safe_export("cot", export_cot)
     _safe_export("form4", export_form4)
+    _safe_export("form8k", export_form8k)
     _safe_export("form13f", export_form13f)
     _safe_export("market_context", export_market_context)
     _safe_export("macro_drivers", export_macro_drivers)

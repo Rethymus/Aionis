@@ -366,6 +366,38 @@ def test_smart_money_yearly_when_present() -> None:
 # --- Institutions (13F-HR star managers) ---------------------------------------
 
 
+def test_form8k_panel_contract() -> None:
+    """8-K panel schema: event shape, category counting honesty, date order.
+
+    Locks the contract the /events view renders against: items are the legally
+    mandated 8-K item numbers; ``unclassified`` and ``by_category`` must agree
+    with the event list (counted, never guessed); events sorted by filing_date
+    descending (the stream reads newest-first).
+    """
+    f = _load("form8k.json")
+    assert f["status"] in {"ok", "awaiting_fetch"}
+    assert {"as_of", "window", "issuers", "total", "unclassified", "by_category",
+            "events", "methodology"} <= set(f)
+    if f["status"] != "ok" or not f["events"]:
+        return  # awaiting-fetch placeholder keeps the shape loose
+    cats: dict[str, int] = {}
+    dates: list[str] = []
+    for e in f["events"]:
+        assert {"ticker", "company", "filing_date", "form", "items",
+                "category", "doc_url"} <= set(e)
+        for i in e["items"]:
+            assert re.fullmatch(r"\d{1,2}\.\d{2,3}", i), f"bad item number: {i!r}"
+        dates.append(e["filing_date"])
+        cats[e["category"]] = cats.get(e["category"], 0) + 1
+    assert dates == sorted(dates, reverse=True), "events must be newest-first"
+    assert f["unclassified"] == cats.get("unclassified", 0), (
+        "unclassified count must equal its event count (honest counting)"
+    )
+    for cat, n in f["by_category"].items():
+        assert cats.get(cat) == n, f"by_category[{cat}] disagrees with event list"
+    assert f["as_of"] == max(dates), "as_of must be the latest filing_date"
+
+
 def test_form13f_panel_contract() -> None:
     """13F panel schema: manager shape, top10/changes enums, coverage format.
 

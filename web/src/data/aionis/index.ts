@@ -39,6 +39,7 @@ import headlineProvenanceJson from "./headline_provenance.json";
 import dataHealthJson from "./data_health.json";
 import apiCatalogJson from "./api_catalog.json";
 import form13fJson from "./form13f.json";
+import form8kJson from "./form8k.json";
 
 export type Pick = {
   rank: number;
@@ -555,6 +556,33 @@ export type Form13f = {
   snapshot_ts?: string;
 };
 
+export type Form8kEvent = {
+  ticker: string;
+  company: string;
+  filing_date: string;
+  form: string;
+  // Legally mandated 8-K item numbers, e.g. ["2.01", "9.01"] — regex-extracted
+  // from the primary document, sorted unique.
+  items: string[];
+  // ONE category per filing (rare-material-first precedence); "unclassified"
+  // when items could not be extracted (counted, never guessed).
+  category: string;
+  doc_url: string;
+};
+
+export type Form8k = {
+  status: string;
+  as_of: string | null;
+  window: { start: string; end: string };
+  issuers: number;
+  total: number;
+  unclassified: number;
+  by_category: Record<string, number>;
+  events: Form8kEvent[];
+  methodology: string;
+  snapshot_ts?: string;
+};
+
 export const aionis = {
   metrics: metricsJson as Metrics,
   picks: picksJson as Pick[],
@@ -594,4 +622,5 @@ export const aionis = {
   dataHealth: dataHealthJson as DataHealth,
   apiCatalog: apiCatalogJson as ApiCatalog,
   form13f: form13fJson as Form13f,
+  form8k: form8kJson as Form8k,
 };
