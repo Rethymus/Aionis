@@ -8,6 +8,20 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-22 (b) 五代理军团轮：J/K/O 三模块集成上线，M/N 移交新 session
+
+**五路并行**（J=/ipo、K=/stars、M=/news、N=/quarterly+annual、O=/companies；M/N 各自创建了自己的 worktree 后被取消）。J/K/O 全胜：10 commits cherry-pick 到 main（5c99422..4e481d2 + d15bd9b 重生成），冲突 3 处全按既定解法（生成物 JSON ours+统一重生成、侧栏 import 双保留）。
+
+- **/ipo**：EFTS form 级（无 ciks）S-1 族+424B4 流；1,046 filings/484 issuers（12 请求）；status=filed|priced 由文件类型推导；诚实缺口：价格/募资/上市日不提取（省 ~1000 请求）、424B4 含已上市公司增发（申报流非精选名单）、计数为 filing 非公司。
+- **/stars 生态**：40 位管理人（剔除 Scion/Greenlight/Omega/Pabrai/Glenpoint——停报诚实记录）；七分类（人工策展披露）；/institutions 目录化 + /manager/[cik] 40 页 SSG（共享 manager-book 组件）；重生成覆盖 285/398（主仓 cik_resolver 快照层生效，K 报告 188 是其 worktree 无该缓存之故）。
+- **/companies**：冻结宇宙目录（三重过滤；CN 代码首位 6/0/3 诚实归 0-9 组）；评分/rank_change 用项目涨跌色约定（rank_change=prev-current 已向 export 求证）。
+- **重生成**：30 面板/30 端点/0 planned；form_ipo/form13f 聚合缓存已从 worktree 拷回主仓 data/cache。
+- **验证链**：全套 pytest exit 0 + ruff/tsc/eslint 净 + build 1,492 页（/ipo、/companies、/manager/[cik] 全预渲染）。
+
+**M/N 移交**：半成品在 worktree Aionis-m/Aionis-n（未提交：M 有 news_feed_fetch.py+7gate 文档+export 接线；N 有 export/侧栏/index 接线）——**新 session 接手协议写在 `tasks/active/TASK-P2-M-news-feed.md` 与 `TASK-P2-N-financial-stream.md`**（含"审查他人半成品"纪律、worktree 重建建议、验证命令、集成协议、junction 清理铁律）。**注意两 worktree 基 b1f991a，main 已在 d15bd9b——续作先 rebase 或重建**。
+
+**遗留**：GitHub Actions 计费阻断（blockers.md 首条，日更+部署停摆）；P3 势力阵营；业主门研究线。
+
 ## 2026-08-22 (a) 党派 join 上线 + 配额阻断下的代理调度策略
 
 **党派 join（`9aea9e0`，P1 第三件）**：house.gov/representatives 议员目录（公共域，1 请求缓存）双行序解析（姓名在前含全称选区 / 序数在前，At-Large→00，430 席 218R/211D/1I）→ **选区码+姓氏双重佐证 join**（仅按选区会把现任党派错配给候选人/前议员——姓氏不一致诚实 null）。实测 806/874 链接，未链接 68 = 前议员/补选过渡（McCormick GA06 等）。视图中性 mono 徽章（语义色不挪用）；契约钉 party 枚举 + party_coverage 记账。

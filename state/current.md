@@ -6,6 +6,16 @@
   **③ 教训**：`io.open("w")` **先截断后写**——写入前抛异常会留 0 字节文件（本轮 ingest 曾被截空，幸有增量提交从 git 恢复）；修复脚本一律走 Write 工具逐字传输，杜绝 shell 转义层级（本轮 NUL/退格符两次入文件均由此起）。
   **④ 待业主动作**：GitHub Actions 账单（blockers.md 详录）——08-20 09:00 起全部 workflow 停摆，修复后手动 re-run deploy + refresh。
 
+- **active (2026-08-22) ① 五代理军团轮（J/K/O 全胜 + M/N 取消移交新 session）+ 三模块集成上线：**
+  **① 编排**：业主"按优先级驱动更多子代理"。五路并行——J=/ipo、K=/stars 生态、M=/news、N=/quarterly+annual、O=/companies。J/K/O 全部交付并主线集成（10 commits cherry-pick，仅 3 处冲突：生成物 JSON×2 取 ours 统一重生成 + 侧栏图标 import 双保留）；M/N 被取消（半成品留 worktree，**任务规格已写自包含任务文件移交新 session**：tasks/active/TASK-P2-M-news-feed.md、TASK-P2-N-financial-stream.md）。
+  **② J=/ipo（5c99422+7a5c0d0+fb24e62）**：EFTS form 级全市场查询（S-1 族+424B4，12 请求）——1,046 份申报/484 发行人（filed 827/priced 219），状态由不可回改文件类型推导；发行价/募资额不提取（诚实降级）；STOCK_PAGE_TICKERS 守卫防静态导出死链。
+  **③ K=/stars 生态（4405724+09fe1d9+5445589+0c7703e）**：13F 明星管理人 12→**40 位**（CIK 逐一实查；诚实剔除 5 位停报实体：Scion/Greenlight/Omega/Pabrai/Glenpoint）；七分类策展标签（value9/growth8/activist6/quant6/macro5/china4/other2，披露为人工策展）；/institutions 分类目录 + **/manager/[cik] 40 页 SSG**（top10/QoQ 提取共享 manager-book 组件防两视图漂移）；per-manager checkpoint 防超时；重生成后 ticker 覆盖 **285/398**（主仓双层快照加持）。
+  **④ O=/companies（3f3b225+a235e52+4e481d2）**：冻结宇宙 1,421 只目录页（区域+首字母+搜索三重客户端过滤；CN ticker 按代码首位诚实归 0-9 组不伪造拼音；评分用涨跌色约定；首屏 50+加载更多）；cmdk 同步可达。
+  **⑤ 重生成（d15bd9b）**：data-health/api_catalog **30 面板 30 端点 0 planned**；缓存从 worktree 拷回主仓后统一重生成。
+  **⑥ 验证**：全套 pytest exit 0 + ruff 净 + tsc 0 + eslint 净 + build **1,492 页**（/ipo /companies ○、/manager/[cik] ●）。
+  **⑦ 边界**：display + 数据 lane；0 ledger/frozen/config/prereg/OOS。worktree j/k/o 已清（junction 先摘），m/n 留存（含半成品+任务文件）。
+  **⑧ 后续**：M/N 由新 session 按 tasks/active 两任务文件接手；P3=势力阵营血缘图谱；业主门=PTR PDF 交易级解析、E3/Track A/Track LLM；**GitHub Actions 计费阻断仍需业主修 Billing（日更+部署停摆中）**。
+
 - **active (2026-08-21) 小隐寺全形态路线图（第三轮深挖）+ 三代理一轮（H 成/G-I 阵亡接管）+ 双新模块上线：**
   **① 方向文件**：`reports/design/2026-08-21-xiaoyinsi-full-parity-roadmap.md` — sitemap 实探 17 顶级路由逐一裁决（对齐矩阵 + P0-P3 阶梯 + Aionis 增层五特色）。关键情报：小隐寺自己的 /companies、/annual 也是空壳、「势力阵营」未上线 → Aionis 用一手公共源填壳是超越机会；其数据"第三方非公开数据库"不可消费（G1），正确姿势 = 形态对齐 + 一手自建。
   **② 三代理**（业主指令"按优先级驱动子代理"）：H=快赢组**全胜**（cmdk 补 heatmap/institutions/data-health/api-docs 四路由复用既有 nav.* key；form13f issuer→ticker **68/118→94/118**，归一化精确匹配两层快照，+STOCK_PAGE_TICKERS 守卫修静态导出死链，9 hermetic 测试）；G/I **双双阵亡于提供商 5h 限额[1308]**（03:19 重置）→ 按既定 fallback 主线接管完成全部。
