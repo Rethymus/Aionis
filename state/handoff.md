@@ -8,6 +8,27 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-21 小隐寺全形态路线图 + 三代理（H 成 / G-I 阵亡→主线接管）→ /events + /congress 上线
+
+**方向文件**：`reports/design/2026-08-21-xiaoyinsi-full-parity-roadmap.md`（17 路由对齐矩阵、P0-P3 阶梯、Aionis 五特色增层；小隐寺自身空壳 /companies+/annual+势力阵营未上线 = 填壳机会）。本轮 P0 三件全部关闭。
+
+**三代理**：worktree ×3（junction 只挂 node_modules，**data/cache 不再共享**——上轮 rm -rf 穿透事故的预防）；H 全胜双 commit（`676b90d` cmdk 4 路由 + `5dc1c25` 68/118→94/118，归一化精确匹配 + 死链守卫）；G/I 阵亡于 [1308] 5h 限额 → 主线接管。
+
+**/congress（`0679b92`，planned 清零）**：
+- 尽调留证 `docs/data-intake-congress-stock-act.md`：House=CSRF-token POST→HTML 索引（无 JSON API）；Senate=Akamai 403；第三方 API G1 挂。v1=申报流级（member/office/type/year/PDF 链），**交易明细在 PDF 内不解析不编造**，as_of=null by design；Senate blocked 诚实卡。
+- 真实数据 875 PTR/144 人（2025:514+2026:361，4 请求 ~5s）。token+cookie 单 Session，POST 过同一 HttpRequestPolicy（≥2s）。
+- 毕业：_PLANNED_PANELS 空（列表保留共享定义）、`test_planned_disclosure_present_and_consistent` 改钉空集 + 毕业注释、CI 加 fetch 步。
+
+**/events（`a714fcb`，EFTS 第三代）**：
+- `form8k.py`：评分制主文档选择器——三次真拉失败模式（R1.htm XBRL 渲染件、a8-kex991q3.htm exhibit 名内含 8-k、q1fy27pr.htm press release 同分最短名）→ 0 分档=发行人-日期规范 `^[a-z][a-z0-9]*-\d{8}\.htm$` 或名含 8-k/8k（exhibit 检查 `ex\d` 任意位先行）。Item 正则清洗 nbsp+thin-space（`&#8201;` iXBRL 时代）。
+- 23 事件/5 发行人/0 未分类；稀有重大优先单一归类 + 全 Item 列表保留；7-gate `data-intake-edgar-form8k.md`（评分表留档）；日更 manifest + CI fetch 步。
+
+**验证链**：全套 pytest exit 0 + ruff 净（--exclude docs/code-review）+ tsc 0 + eslint 净 + build 26 路由（/events /congress ○ 预渲染）。
+
+**踩坑**：① Windows 下 `cmd /c mklink` 在 Git Bash 需 `cmd //c "mklink ..."`（正斜杠转换吞参数→junction 静默不建）；② worktree pytest 走 `PYTHONPATH=<wt>/src + 主仓 venv python`（editable 安装指向主仓，不设即测旧码）；③ ruff E501 对字符串字面量内的行同样报——HTML fixture 靠折行解决（regex `[^>]` 跨行匹配不受影响）。
+
+**遗留池**：roadmap P1（/ipo、/stars 目录+manager 详情页）→ P2（/news、/quarterly+/annual、/companies）→ P3（势力阵营=血缘图谱）；政客交易升级=House PTR PDF 解析（工程大，业主后议）；Senate 解封监控（Akamai）。
+
 ## 2026-08-20 (c) 三代理第二轮全胜：quickwins + CN 行业 + 13F → 集成上线
 
 **三代理全部交付**（本轮无阵亡；边界纪律 + 增量提交指令生效）：

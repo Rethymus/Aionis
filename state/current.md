@@ -1,5 +1,14 @@
 # state/current.md — read first each session
 
+- **active (2026-08-21) 小隐寺全形态路线图（第三轮深挖）+ 三代理一轮（H 成/G-I 阵亡接管）+ 双新模块上线：**
+  **① 方向文件**：`reports/design/2026-08-21-xiaoyinsi-full-parity-roadmap.md` — sitemap 实探 17 顶级路由逐一裁决（对齐矩阵 + P0-P3 阶梯 + Aionis 增层五特色）。关键情报：小隐寺自己的 /companies、/annual 也是空壳、「势力阵营」未上线 → Aionis 用一手公共源填壳是超越机会；其数据"第三方非公开数据库"不可消费（G1），正确姿势 = 形态对齐 + 一手自建。
+  **② 三代理**（业主指令"按优先级驱动子代理"）：H=快赢组**全胜**（cmdk 补 heatmap/institutions/data-health/api-docs 四路由复用既有 nav.* key；form13f issuer→ticker **68/118→94/118**，归一化精确匹配两层快照，+STOCK_PAGE_TICKERS 守卫修静态导出死链，9 hermetic 测试）；G/I **双双阵亡于提供商 5h 限额[1308]**（03:19 重置）→ 按既定 fallback 主线接管完成全部。
+  **③ 主线接管 G=政客交易 /congress**（唯一 planned 清零）：尽调实证 — House 无 JSON API（CSRF-token POST 返 HTML 索引）、Senate eFD **Akamai Access Denied**、第三方 API 全挂 G1；v1=**House PTR 申报流级**（议员/选区/类型/年/PDF 链），交易明细留 PDF 不编造、as_of=null by design（年粒度无观察日）；真实数据 875 份/144 人/2025-26（4 礼貌请求）；7-gate 文档 + planned 毕业（_PLANNED_PANELS 空、测试同步改）+ CI fetch 步。
+  **④ 主线接管 I=8-K 事件流 /events**：EFTS 第三代复用；**主文档评分选择器三次真拉迭代**（R1.htm XBRL 渲染件→ex991 exhibit 内含"8-k"→q1fy27pr press release 最短名陷阱→发行人-日期规范 0 分档制胜）+ Item 正则清洗 thin-space 实体（`&#8201;`）；23 事件/5 发行人/0 未分类；稀有重大优先分类（退市>并购>控制权>重述>高管…）。
+  **⑤ 验证**：全套 pytest **exit 0** + ruff 净（排除并发 docs/code-review）+ tsc 0 + eslint 净 + build 26 路由（/events、/congress 预渲染）+ 66 项边界测试绿。
+  **⑥ 边界**：display + 数据 lane；0 ledger/frozen/config/prereg/OOS。worktree 已按"先摘 junction 再删"铁律清理。
+  **⑦ 后续池**（roadmap P1-P2）：/ipo 新股日历、/stars 目录扩 12→40+ 位 + /manager/CIK 详情页、/news 独立页、/quarterly+/annual 财务流、/companies 目录、P3 势力阵营=Aionis 血缘图谱；政客交易升级路径=House PTR PDF 解析（后议）。
+
 - **active (2026-08-20) ④ 三代理第二轮（快赢组/CN行业/13F）全部交付 + 集成上线：**
   **① 三代理结局**：本轮全部成功（上轮全灭于配额后限额已重置）。D=cmdk 热门个股组+A股语境事件（08-19 暴跌/宇树/四中全会，type `ipo` 新增）；E=A股行业升级（**7-gate 全过**：客户端 BSD 实证于 PyPI sdist/wheel、数据侧按 vendor display-only 处置；零依赖改动走 lazy import+`--with baostock`；CN sector 4 tier→**52 证监会行业组**，`cn_tier` 列保留；5194/5207 覆盖、退市诚实回退）；F=**13F 明星持仓模块**（12 管理人 CIK 实查、11 位最新季 2026-06-30、60 请求 2m20s 礼貌拉取、**关键数据修正：EDGAR 13F XML value=整美元非千美元**（AAPL $253.79/股交叉验证）、帧差键=(cusip,option_type) 修正 title 漂移假清仓、CUSIP→ticker 诚实覆盖 68/118、`/institutions` 路由+26×2 i18n）。
   **② 主线集成**：三分支 8 commits cherry-pick **零冲突**（边界纪律生效）；主线补线：form13f 注册进 data-health manifest（cadence）+API catalog、13f/cn-industry 从 planned 毕业（只剩 politician-trades）、`_sm_committed_extra` 改传 committed_path（修测试隔离缺陷）、**抓到并修复 A 重写遗留的旧测试回归**（`TestRefreshSmartMoneyRecentOnly` fixture 缺 accession——上轮只跑了 web 契约文件没跑全套，教训：agent 改共享函数后必须全套 pytest）、CI 日更 `--with baostock` 一行接线、旧文档 MIT→BSD 更正、form13f as_of 提取器。
