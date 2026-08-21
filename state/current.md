@@ -1,5 +1,11 @@
 # state/current.md — read first each session
 
+- **active (2026-08-22) 本轮会话收束（与并发 session 会合后的处置记录）：**
+  **① 第三轮双代理结局**：H（导航完整性组）完整交付但**未集成**——并发 session 已在 main 落地等价且更强实现（CUSIP 94/118 vs 我方 82/118、cmdk 四路由、STOCK_PAGE_TICKERS 死链守卫），分支已删避免双重实现；G（政客交易）死于配额，未竟部分由本主线在 worktree 完成（**交易级实现**：PDF 逐笔解析 813 笔/42 议员/党派 join D610/R174/U29/迟报 26，49 测试+tsc+eslint 绿），但并发 session 已交付**申报流级 /congress**（`0679b92`→`c83dd00`，且正活跃深化中）——按并发纪律不抢 lane。
+  **② 备选实现保留**：`agent/politician` 分支（3 commits：a2f719b 尽调 + 0b7867a ingest 链 + 70f8ad2 完整模块）= **交易级粒度备选**（逐笔 ticker/金额区间/买卖方向/党派），若并发版深化未达交易级且业主要求逐笔粒度，经协调后可从该分支取解析器（行/目录解析修复含锚点尾斜杠放行——~200 议员曾被静默丢）。worktree 已清（junction 先摘后删，铁律执行）。
+  **③ 教训**：`io.open("w")` **先截断后写**——写入前抛异常会留 0 字节文件（本轮 ingest 曾被截空，幸有增量提交从 git 恢复）；修复脚本一律走 Write 工具逐字传输，杜绝 shell 转义层级（本轮 NUL/退格符两次入文件均由此起）。
+  **④ 待业主动作**：GitHub Actions 账单（blockers.md 详录）——08-20 09:00 起全部 workflow 停摆，修复后手动 re-run deploy + refresh。
+
 - **active (2026-08-21) 小隐寺全形态路线图（第三轮深挖）+ 三代理一轮（H 成/G-I 阵亡接管）+ 双新模块上线：**
   **① 方向文件**：`reports/design/2026-08-21-xiaoyinsi-full-parity-roadmap.md` — sitemap 实探 17 顶级路由逐一裁决（对齐矩阵 + P0-P3 阶梯 + Aionis 增层五特色）。关键情报：小隐寺自己的 /companies、/annual 也是空壳、「势力阵营」未上线 → Aionis 用一手公共源填壳是超越机会；其数据"第三方非公开数据库"不可消费（G1），正确姿势 = 形态对齐 + 一手自建。
   **② 三代理**（业主指令"按优先级驱动子代理"）：H=快赢组**全胜**（cmdk 补 heatmap/institutions/data-health/api-docs 四路由复用既有 nav.* key；form13f issuer→ticker **68/118→94/118**，归一化精确匹配两层快照，+STOCK_PAGE_TICKERS 守卫修静态导出死链，9 hermetic 测试）；G/I **双双阵亡于提供商 5h 限额[1308]**（03:19 重置）→ 按既定 fallback 主线接管完成全部。
