@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
+import { ArrowRightIcon } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -9,87 +11,30 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
-import { stockUniverse } from "@/data/aionis/stock-universe";
+import {
+  CATEGORY_LABEL,
+  CATEGORY_ORDER,
+  categoryLabelKey,
+  fmtUsd,
+  type Category,
+} from "@/components/institutions/manager-book";
 
-// The terminal is a STATIC export: /stock/[ticker] pages exist only for the
-// frozen OOS universe (generateStaticParams). A 13F issuer resolved to a
-// ticker OUTSIDE that universe (foreign ADRs, OTC preferreds, ETF trusts)
-// must not link — it would 404. We keep the resolved ticker as a plain-text
-// label (identity info) and link only when a page exists.
-const STOCK_PAGE_TICKERS: ReadonlySet<string> = new Set(
-  stockUniverse.stocks.map((s) => s.ticker),
-);
+// /institutions = the CATEGORY DIRECTORY over the star-manager 13F registry:
+// KPI row + filter chips (all + the 7 editorial categories) + one summary
+// card per manager (name / zh label / category / latest quarter / positions /
+// top holding / reported value), linking to the /manager/[cik] static detail
+// page where the full top-10 book + quarter-over-quarter changes live.
+// Everything is client-filtered — no extra data fetch, no server round-trip.
 
-function fmtUsd(v: number): string {
-  if (Math.abs(v) >= 1e12) return `$${(v / 1e12).toFixed(2)}T`;
-  if (Math.abs(v) >= 1e9) return `$${(v / 1e9).toFixed(1)}B`;
-  if (Math.abs(v) >= 1e6) return `$${(v / 1e6).toFixed(1)}M`;
-  if (Math.abs(v) >= 1e3) return `$${(v / 1e3).toFixed(0)}K`;
-  return `$${v.toFixed(0)}`;
-}
-
-function fmtShares(v: number): string {
-  if (Math.abs(v) >= 1e9) return `${(v / 1e9).toFixed(2)}B`;
-  if (Math.abs(v) >= 1e6) return `${(v / 1e6).toFixed(1)}M`;
-  if (Math.abs(v) >= 1e3) return `${(v / 1e3).toFixed(0)}K`;
-  return `${v.toFixed(0)}`;
-}
-
-// Quarter-over-quarter change chips. Direction color convention follows the
-// project's up/down utility classes (never hardcoded emerald/rose):
-// new = primary emphasis, increased = up, reduced = down, exited = muted.
-const DIRECTION_CLASS: Record<string, string> = {
-  new: "",
-  increased: "text-up",
-  reduced: "text-down",
-  exited: "text-muted-foreground",
-};
-
-// Map the JSON direction enum onto i18n keys (t() takes a strict DictKey —
-// no template-literal keys).
-const DIRECTION_LABEL: Record<string, "institutions.change_new" | "institutions.change_increased" | "institutions.change_reduced" | "institutions.change_exited"> = {
-  new: "institutions.change_new",
-  increased: "institutions.change_increased",
-  reduced: "institutions.change_reduced",
-  exited: "institutions.change_exited",
-};
-
-function IssuerLabel({
-  issuer,
-  ticker,
-}: {
-  issuer: string;
-  ticker: string | null;
-}) {
-  if (ticker && STOCK_PAGE_TICKERS.has(ticker)) {
-    return (
-      <Link
-        href={`/stock/${ticker}`}
-        className="font-medium text-primary hover:underline"
-      >
-        {issuer}
-      </Link>
-    );
-  }
-  // No stock page for this ticker (or none resolved — as-filed abbreviations,
-  // ETF units) — honest plain text, never a link that would 404.
-  return <span className="font-medium">{issuer}</span>;
-}
+type CategoryFilter = "all" | Category;
 
 export function InstitutionsView() {
   const { t } = useI18n();
   const f = aionis.form13f;
+  const [filter, setFilter] = useState<CategoryFilter>("all");
 
   if (f.status !== "ok" || f.managers.length === 0) {
     return (
@@ -113,6 +58,19 @@ export function InstitutionsView() {
   }
 
   const combinedValue = f.managers.reduce((acc, m) => acc + m.total_value, 0);
+  // Honest per-category counts drive both the chip labels and the filter —
+  // categories with zero managers simply render no chip.
+  const counts = new Map<string, number>();
+  for (const m of f.managers) {
+    counts.set(m.category, (counts.get(m.category) ?? 0) + 1);
+  }
+  const visible =
+    filter === "all"
+      ? f.managers
+      : f.managers.filter((m) => m.category === filter);
+
+  const chipBase =
+    "rounded-full border px-3 py-1 text-xs font-medium transition-colors";
 
   return (
     <div className="space-y-6 p-4 md:p-6">
@@ -143,142 +101,95 @@ export function InstitutionsView() {
         </Card>
       </div>
 
-      {f.managers.map((m) => (
-        <Card key={m.cik} className="overflow-hidden py-0">
-          <CardHeader className="border-b">
-            <div className="flex flex-wrap items-center gap-2">
-              <CardTitle className="text-base">{m.name}</CardTitle>
-              {m.zh_name ? (
-                <span className="text-sm text-muted-foreground">{m.zh_name}</span>
-              ) : null}
-              <Badge variant="secondary" className="tabular-nums">{m.quarter}</Badge>
-              <span className="ml-auto text-xs text-muted-foreground">
-                {t("institutions.filed")} {m.filed}
-              </span>
-            </div>
-            <CardDescription className="tabular-nums">
-              {t("institutions.n_positions")}: {m.n_positions} ·{" "}
-              {t("institutions.total_value")}: {fmtUsd(m.total_value)}
-            </CardDescription>
-          </CardHeader>
+      {/* Category filter chips: 全部 + the 7 editorial categories, with the
+          honest per-category manager count. Client-side filter only. */}
+      <div className="flex flex-wrap items-center gap-1.5">
+        <button
+          type="button"
+          onClick={() => setFilter("all")}
+          aria-pressed={filter === "all"}
+          className={cn(
+            chipBase,
+            filter === "all"
+              ? "border-primary bg-primary text-primary-foreground"
+              : "bg-background text-muted-foreground hover:text-foreground",
+          )}
+        >
+          {t("institutions.cat_all")} ({f.managers.length})
+        </button>
+        {CATEGORY_ORDER.filter((c) => counts.get(c)).map((c) => (
+          <button
+            key={c}
+            type="button"
+            onClick={() => setFilter(c)}
+            aria-pressed={filter === c}
+            className={cn(
+              chipBase,
+              filter === c
+                ? "border-primary bg-primary text-primary-foreground"
+                : "bg-background text-muted-foreground hover:text-foreground",
+            )}
+          >
+            {t(CATEGORY_LABEL[c])} ({counts.get(c)})
+          </button>
+        ))}
+      </div>
+      <p className="text-xs text-muted-foreground">{t("institutions.cat_note")}</p>
 
-          <CardContent className="p-0">
-            <p className="border-b px-4 py-2 text-xs font-medium text-muted-foreground">
-              {t("institutions.top10")}
-            </p>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-8">#</TableHead>
-                  <TableHead>{t("institutions.col_issuer")}</TableHead>
-                  <TableHead className="text-right">{t("institutions.col_value")}</TableHead>
-                  <TableHead className="text-right">{t("institutions.col_shares")}</TableHead>
-                  <TableHead className="text-right">{t("institutions.col_pct")}</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {m.top10.map((h, i) => (
-                  <TableRow key={`${h.cusip}-${h.option}-${i}`}>
-                    <TableCell className="text-muted-foreground tabular-nums">
-                      {i + 1}
-                    </TableCell>
-                    <TableCell>
-                      <IssuerLabel issuer={h.issuer} ticker={h.ticker} />
-                      {h.option === "CALL" || h.option === "PUT" ? (
-                        <Badge variant="outline" className="ml-2 px-1.5 py-0 text-[10px]">
-                          {h.option === "CALL"
-                            ? t("institutions.option_call")
-                            : t("institutions.option_put")}
-                        </Badge>
-                      ) : null}
-                    </TableCell>
-                    <TableCell className="text-right tabular-nums">
-                      {fmtUsd(h.value)}
-                    </TableCell>
-                    <TableCell className="text-right tabular-nums text-muted-foreground">
-                      {fmtShares(h.shares)}
-                    </TableCell>
-                    <TableCell className="text-right tabular-nums font-medium">
-                      {h.pct.toFixed(2)}%
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </CardContent>
-
-          <div className="border-t px-4 py-3">
-            <p className="mb-2 text-xs font-medium text-muted-foreground">
-              {t("institutions.changes")}
-            </p>
-            {m.changes.length === 0 ? (
-              <p className="text-xs text-muted-foreground">
-                {t("institutions.no_changes")}
-              </p>
-            ) : (
-              <div className="flex flex-wrap items-center gap-1.5">
-                {m.changes.map((c, i) => (
-                  <span
-                    key={`${c.cusip}-${c.direction}-${i}`}
-                    className="inline-flex items-center gap-1 text-sm"
-                  >
-                    {c.direction === "new" ? (
-                      <Badge className="px-1.5 text-[11px]">
-                        {t("institutions.change_new")}
-                      </Badge>
-                    ) : (
-                      <Badge
-                        variant="outline"
-                        className={cn(
-                          "px-1.5 text-[11px]",
-                          DIRECTION_CLASS[c.direction],
-                        )}
-                      >
-                        {t(DIRECTION_LABEL[c.direction])}
-                      </Badge>
-                    )}
-                    {c.ticker ? (
-                      STOCK_PAGE_TICKERS.has(c.ticker) ? (
-                        <Link
-                          href={`/stock/${c.ticker}`}
-                          className="text-primary hover:underline"
-                        >
-                          {c.ticker}
-                        </Link>
-                      ) : (
-                        // Resolved identity but no static stock page (ADR /
-                        // OTC / ETF) — plain-text ticker, never a 404 link.
-                        <span className="font-mono text-xs text-muted-foreground">
-                          {c.ticker}
-                        </span>
-                      )
-                    ) : null}
-                    <span className="text-muted-foreground">{c.issuer}</span>
-                    {c.option === "CALL" || c.option === "PUT" ? (
-                      <Badge variant="outline" className="px-1 py-0 text-[10px] text-muted-foreground">
-                        {c.option === "CALL"
-                          ? t("institutions.option_call")
-                          : t("institutions.option_put")}
-                      </Badge>
-                    ) : null}
-                    {c.delta_pct != null ? (
-                      <span
-                        className={cn(
-                          "font-mono text-xs tabular-nums",
-                          DIRECTION_CLASS[c.direction],
-                        )}
-                      >
-                        {c.delta_pct > 0 ? "+" : ""}
-                        {c.delta_pct.toFixed(1)}%
+      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+        {visible.map((m) => (
+          <Link key={m.cik} href={`/manager/${m.cik}`} className="group block">
+            <Card className="h-full py-0 transition-colors group-hover:border-primary/40">
+              <CardHeader className="border-b">
+                <div className="flex flex-wrap items-center gap-2">
+                  <CardTitle className="text-sm">{m.name}</CardTitle>
+                  {m.zh_name ? (
+                    <span className="text-xs text-muted-foreground">{m.zh_name}</span>
+                  ) : null}
+                </div>
+                <CardDescription className="flex flex-wrap items-center gap-1.5">
+                  <Badge variant="secondary" className="text-[11px]">
+                    {t(categoryLabelKey(m.category))}
+                  </Badge>
+                  <Badge variant="outline" className="tabular-nums text-[11px]">
+                    {m.quarter}
+                  </Badge>
+                  <span className="text-[11px]">
+                    {t("institutions.filed")} {m.filed}
+                  </span>
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="grid grid-cols-2 gap-x-3 gap-y-2 p-4 text-xs">
+                <div>
+                  <p className="text-muted-foreground">{t("institutions.n_positions")}</p>
+                  <p className="mt-0.5 font-medium tabular-nums">{m.n_positions}</p>
+                </div>
+                <div>
+                  <p className="text-muted-foreground">{t("institutions.total_value")}</p>
+                  <p className="mt-0.5 font-medium tabular-nums">
+                    {fmtUsd(m.total_value)}
+                  </p>
+                </div>
+                <div className="col-span-2">
+                  <p className="text-muted-foreground">{t("institutions.top_holding")}</p>
+                  <p className="mt-0.5 truncate font-medium">
+                    {m.top10[0] ? m.top10[0].issuer : "—"}
+                    {m.top10[0] ? (
+                      <span className="ml-1 font-normal text-muted-foreground tabular-nums">
+                        {m.top10[0].pct.toFixed(1)}%
                       </span>
                     ) : null}
-                  </span>
-                ))}
-              </div>
-            )}
-          </div>
-        </Card>
-      ))}
+                  </p>
+                </div>
+                <p className="col-span-2 mt-1 inline-flex items-center gap-1 text-primary">
+                  {t("institutions.view_detail")}
+                  <ArrowRightIcon className="size-3 transition-transform group-hover:translate-x-0.5" />
+                </p>
+              </CardContent>
+            </Card>
+          </Link>
+        ))}
+      </div>
 
       <p className="text-xs text-muted-foreground">{t("institutions.explain")}</p>
     </div>
