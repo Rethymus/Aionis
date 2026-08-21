@@ -511,8 +511,11 @@ def test_form13f_panel_contract() -> None:
     if f["status"] != "ok" or not f["managers"]:
         return  # awaiting-fetch placeholder keeps the shape loose
     for m in f["managers"]:
-        assert {"cik", "name", "quarter", "filed", "n_positions", "top10"} <= set(m)
+        assert {"cik", "name", "category", "quarter", "filed", "n_positions", "top10"} <= set(m)
         assert re.fullmatch(r"\d{10}", str(m["cik"])), f"CIK must be 10-digit: {m['cik']}"
+        assert m["category"] in FORM13F_CATEGORIES, (
+            f"category must be an editorial enum value: {m['category']!r}"
+        )
         for h in m["top10"]:
             assert {"issuer", "cusip", "value", "shares", "pct"} <= set(h)
             assert isinstance(h["ticker"], (str, type(None)))
@@ -1144,6 +1147,19 @@ def test_planned_disclosure_present_and_consistent() -> None:
 
 # --- SEC 13F-HR star-manager holdings -----------------------------------------
 
+#: Display-only editorial category enum (mirrors scripts/form13f_fetch.py
+#: CATEGORIES and web manager-book CATEGORY_ORDER). Human-curated tags — NOT
+#: a SEC data-source field.
+FORM13F_CATEGORIES = {
+    "value",
+    "growth",
+    "activist",
+    "macro",
+    "quant",
+    "china_background",
+    "other",
+}
+
 
 def test_form13f_status_and_shape() -> None:
     f = _load("form13f.json")
@@ -1164,14 +1180,17 @@ def test_form13f_managers_when_ok() -> None:
     if f["status"] != "ok":
         return  # awaiting branch: guards above must not raise; nothing else to check
     ms = f["managers"]
-    assert len(ms) >= 8, "13F panel needs >=8 star managers"
+    assert len(ms) >= 12, "13F panel needs >=12 star managers"
     seen_ciks: set[str] = set()
     for m in ms:
-        assert {"cik", "name", "quarter", "filed", "n_positions",
+        assert {"cik", "name", "category", "quarter", "filed", "n_positions",
                 "total_value", "top10", "changes"} <= set(m)
         assert len(m["cik"]) == 10 and m["cik"].isdigit()
         assert m["cik"] not in seen_ciks, "one manager row per CIK"
         seen_ciks.add(m["cik"])
+        # Editorial category enum (display-only tag; "other" share is allowed
+        # to be large — honest curation, not forced balance).
+        assert m["category"] in FORM13F_CATEGORIES, m["category"]
         assert m["total_value"] > 0
         assert m["n_positions"] >= 1
         # top10 = top holdings by value; short books honestly report <10.
@@ -1210,3 +1229,28 @@ def test_form13f_changes_enum_when_ok() -> None:
     assert isinstance(as_of, str) and len(as_of) == 10
     for m in f["managers"]:
         assert m["quarter"] <= as_of, "panel as_of is the max report quarter"
+
+
+def test_form13f_category_counts_honest() -> None:
+    """The exported category_counts must equal the managers list it summarizes.
+
+    Editorial categories are display-only curation, so the ONLY integrity that
+    matters is honest counting: every manager carries exactly one enum tag,
+    the aggregate ``category_counts`` (when present) matches a recount of the
+    managers array, and the total adds up to ``len(managers)``. No minimum per
+    category is enforced — a large "other" share is acceptable honesty.
+    """
+    f = _load("form13f.json")
+    if f["status"] != "ok" or not f["managers"]:
+        return
+    recount: dict[str, int] = {}
+    for m in f["managers"]:
+        assert m["category"] in FORM13F_CATEGORIES, m["category"]
+        recount[m["category"]] = recount.get(m["category"], 0) + 1
+    counts = f.get("category_counts")
+    if counts is not None:
+        assert set(counts) <= FORM13F_CATEGORIES, sorted(set(counts))
+        assert counts == recount, "category_counts must match a recount"
+        assert sum(counts.values()) == len(f["managers"])
+    # Methodology must disclose that the tags are curated, not sourced.
+    assert "curated" in f["methodology"].lower() or "curation" in f["methodology"].lower()
