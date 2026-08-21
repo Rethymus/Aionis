@@ -15,8 +15,8 @@
 **三代理**：worktree ×3（junction 只挂 node_modules，**data/cache 不再共享**——上轮 rm -rf 穿透事故的预防）；H 全胜双 commit（`676b90d` cmdk 4 路由 + `5dc1c25` 68/118→94/118，归一化精确匹配 + 死链守卫）；G/I 阵亡于 [1308] 5h 限额 → 主线接管。
 
 **/congress（`0679b92`，planned 清零）**：
-- 尽调留证 `docs/data-intake-congress-stock-act.md`：House=CSRF-token POST→HTML 索引（无 JSON API）；Senate=Akamai 403；第三方 API G1 挂。v1=申报流级（member/office/type/year/PDF 链），**交易明细在 PDF 内不解析不编造**，as_of=null by design；Senate blocked 诚实卡。
-- 真实数据 875 PTR/144 人（2025:514+2026:361，4 请求 ~5s）。token+cookie 单 Session，POST 过同一 HttpRequestPolicy（≥2s）。
+- 尽调留证 `docs/data-intake-congress-stock-act.md`：Senate=Akamai 403；第三方 API G1 挂；House **两路验证取优**——CSRF HTML 搜索（无日期）被 **批量 FD.zip→FD.xml** 取代（日更索引、FilingType=P、**真 FilingDate**；与并发 session agent/politician a2f719b 交叉验证一致，其 worktree 未动只读引用）。v1=申报流级（member/office/**filing_date**/year/PDF 链），**交易明细在 PDF 内不解析不编造**；Senate blocked 诚实卡。
+- 真实数据 874 PTR/144 人（2025:515+2026:359，2 请求 ~4s），as_of=2026-08-18。
 - 毕业：_PLANNED_PANELS 空（列表保留共享定义）、`test_planned_disclosure_present_and_consistent` 改钉空集 + 毕业注释、CI 加 fetch 步。
 
 **/events（`a714fcb`，EFTS 第三代）**：

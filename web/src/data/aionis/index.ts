@@ -588,6 +588,9 @@ export type PoliticianFiling = {
   member: string;
   office: string;
   filing_type: string;
+  // As-filed FilingDate from the bulk FD.xml index (YYYY-MM-DD); null only
+  // if the index row carried none.
+  filing_date: string | null;
   filing_year: number;
   doc_url: string;
 };
@@ -600,8 +603,8 @@ export type PoliticianTopMember = {
 
 export type PoliticianTrades = {
   status: string;
-  // null BY DESIGN: the House PTR index carries year granularity only — no
-  // observation date exists (honest, no fake precision).
+  // Latest as-filed FilingDate (bulk FD.xml carries real dates); null only
+  // if no row carried one.
   as_of: string | null;
   latest_filing_year: number;
   window_years: number[];

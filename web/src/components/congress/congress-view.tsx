@@ -108,6 +108,7 @@ export function CongressView() {
                 <TableHead>{t("congress.member")}</TableHead>
                 <TableHead>{t("congress.office")}</TableHead>
                 <TableHead>{t("congress.type")}</TableHead>
+                <TableHead>{t("congress.date")}</TableHead>
                 <TableHead className="text-right">{t("congress.source")}</TableHead>
               </TableRow>
             </TableHeader>
@@ -129,6 +130,9 @@ export function CongressView() {
                   </TableCell>
                   <TableCell>
                     <Badge variant="secondary">{p.filing_type}</Badge>
+                  </TableCell>
+                  <TableCell className="whitespace-nowrap tabular-nums text-muted-foreground">
+                    {p.filing_date ?? "—"}
                   </TableCell>
                   <TableCell className="text-right">
                     <a

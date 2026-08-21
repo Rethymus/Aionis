@@ -10,11 +10,13 @@
 
 | 源 | 探针结果 | 机器可读度 |
 |---|---|---|
-| **House Clerk** `disclosures-clerk.house.gov` | `ViewSearch` 为 ASP.NET 表单（`__RequestVerificationToken` + 会话 cookie）；POST `ViewMemberSearchResult` 返回 **HTML 表格**（Name+PDF 链 / Office 州选区 / Filing Year / Filing 类型） | **申报流级可解析**（本模块 v1）；交易明细（资产/金额/日期）仅存于 **PDF 内**，列表无申报日字段（仅年粒度） |
+| **House Clerk 批量索引（v1 数据路径）** `public_disc/financial-pdfs/{YYYY}FD.zip` | 日更重发的全年申报索引 ZIP（2026 实测 56KB），内含 `{YYYY}FD.xml`：Prefix/Last/First/Suffix/FilingType/StateDst/Year/**FilingDate**/DocID；`FilingType=P` 即 PTR（2026 年 359 件） | **申报流级 + 真实申报日**（1 请求/年） |
+| House 搜索 UI（备用，已验证不用） | CSRF-token POST 返 HTML 行（无申报日字段） | 逊于批量索引 |
+| （交叉验证）并发 session 尽调 `agent/politician` a2f719b 独立探得同批端点 + house.gov 议员目录（党派 join 一手源） | — | 两路独立探针结论一致 |
 | **Senate eFD** `efdsearch.senate.gov` | 普通 GET 即 **Akamai `Access Denied`（403）** | **blocked**——诚实披露，不引入第三方绕过 |
 | 第三方 API（FMP/EODHD/Parse.bot/capitoltrades 等） | 提供 JSON 化政客交易 | **G1 挂**（付费/闭源 license），禁用 |
 
-**结论**：v1 = House PTR 申报流（议员/选区/类型/年/PDF 原文链），**不解析 PDF、不编造金额/ticker/交易日期**；迟报天数（>45 天法定线）在列表级数据下不可计算，如实不展示。对照小隐寺 /congress 的交易级字段（金额区间/动作/迟报 ⚠），其数据来自"SEC 及其他第三方非公开数据库"——Aionis 以一手公共源诚实降级为申报流级，这是 license 纪律的代价，也是差异化。
+**结论**：v1 = House PTR 申报流（议员/选区/**申报日**/年/PDF 原文链，来自批量 FD.xml），**不解析 PDF、不编造金额/ticker/交易日期**；迟报天数（>45 天法定线）需交易日期，不可计算，如实不展示。对照小隐寺 /congress 的交易级字段（金额区间/动作/迟报 ⚠），其数据来自"SEC 及其他第三方非公开数据库"——Aionis 以一手公共源诚实降级为申报流级，这是 license 纪律的代价，也是差异化。
 
 ---
 
@@ -29,10 +31,9 @@
 
 ## G2 — PIT / as-of 时点（point-in-time）
 
-### 结论：⚠ **PASS（弱化披露）**
+### 结论：✓ **PASS**
 
-- 列表级仅有 **Filing Year** 粒度（无 filed-date 字段）——弱于本项目惯用的 filed-date PIT。
-- PDF 内有真实申报日，但 v1 不解析 PDF。methodology 与面板均明示"年粒度"。
+- 批量 FD.xml 携带 **FilingDate（as-filed 申报日）**——与 form4/13D/8-K 同一 filed-date 纪律。
 - 交易明细不可得 → 无任何 t 时刻可用的交易级信息被展示。
 
 ---
@@ -50,8 +51,8 @@
 
 ### 结论：✓ **PASS**
 
-- 每年 2 个礼貌请求（GET token → POST 结果），结果按年缓存 parquet，重跑零 HTTP。
-- HTML 行解析为纯函数（`parse_house_ptr_html`），hermetic fixture 锁定（含真实 2026-08-21 响应形状）。
+- 每年 **1 个礼貌请求**（FD.zip），按年缓存 parquet，重跑零 HTTP。
+- XML 解析为纯函数（`parse_fd_xml`），hermetic fixture 锁定（含真实 2026-08-21 响应形状：P/C/X/W/D/A/T/H 类型码实测分布）。
 
 ---
 
@@ -76,13 +77,14 @@
 
 ### 结论：✓ **PASS**
 
-- GET/POST 均过 `HttpRequestPolicy`（≥2s host spacing + 线性退避 transient-only 重试）。
-- 实测冷拉：4 请求（2 年 × GET+POST）约 5 秒。CSRF token 与 cookie 绑定单 `requests.Session`。
+- FD.zip 下载过 `HttpRequestPolicy`（≥2s host spacing + 线性退避 transient-only 重试）。
+- 实测冷拉：2 请求（2 年各 1）约 4 秒。
 
 ---
 
 ## 升级路径（后议，非本轮）
 
-1. **PDF 解析**：House PTR PDF 的文本层解析（资产/金额档/交易日期/迟报天数）——工程量大，且纯官方源；待业主裁决是否投入。
+1. **PDF 解析**：House PTR PDF 的文本层解析（资产/金额档/交易日期/迟报天数）——工程量大，且纯官方源；待业主裁决是否投入。（并发 session 尽调称 PDF 为 stdlib 可解文本层，未验证。）
+1b. **党派 join**：house.gov/representatives 目录（姓名/州选区/党派）——官方一手源，把 /congress 升级为带党派徽章。
 2. **Senate 解封**：Akamai 403 需不同网络出口或官方替代端点出现；持续监控，不绕过。
 3. 行政官员披露（第三源）未探针，留待需要时。

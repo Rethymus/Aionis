@@ -2154,8 +2154,7 @@ def _dh_as_of(key: str, fname: str) -> str | None:
     if key == "form8k":
         return p.get("as_of")
     if key == "politician_trades":
-        # List-level source carries YEAR granularity only — no observation
-        # date exists; null keeps data-health honest (no fake precision).
+        # as_of = latest as-filed FilingDate carried by the bulk FD.xml index.
         return p.get("as_of")
     if key == "cot":
         return p.get("latest_date")
@@ -2839,6 +2838,7 @@ def export_politician_trades() -> None:
             "member": str(r["member"]),
             "office": str(r["office"]),
             "filing_type": str(r["filing_type"]),
+            "filing_date": str(r["filing_date"]) if pd.notna(r["filing_date"]) else None,
             "filing_year": int(r["filing_year"]),
             "doc_url": str(r["doc_url"]),
         })
@@ -2852,7 +2852,9 @@ def export_politician_trades() -> None:
     by_year = {str(y): int(n) for y, n in df["filing_year"].value_counts().sort_index().items()}
     payload = {
         "status": "ok",
-        "as_of": None,  # list-level source has no observation date (year only)
+        # Real filed dates from the bulk FD.xml index (M/D/YYYY as filed,
+        # normalized); null only if the index carried none.
+        "as_of": str(df["filing_date"].dropna().max()) if df["filing_date"].notna().any() else None,
         "latest_filing_year": int(df["filing_year"].max()),
         "window_years": sorted(int(y) for y in df["filing_year"].unique()),
         "house": {
@@ -2869,18 +2871,19 @@ def export_politician_trades() -> None:
         "methodology": (
             "STOCK Act congressional trading, v1 = U.S. House Clerk PTR "
             "(Periodic Transaction Report) FILING-STREAM index — public "
-            "domain. The House publishes no JSON API: the search form "
-            "(CSRF-token POST) returns an HTML index of member, state-"
-            "district office, filing type (PTR Original/Amendment) and the "
-            "source PDF. Transaction detail (asset, amount band, trade and "
-            "filing dates — the basis of the 45-day late-filing rule) lives "
+            "domain. Source: the Clerk's daily bulk index "
+            "(financial-pdfs/{year}FD.zip -> FD.xml), one polite request per "
+            "year; FilingType 'P' rows are PTRs with the member, state-"
+            "district office, and the as-filed FilingDate; each row links the "
+            "source PDF by DocID. Transaction detail (asset, amount band, "
+            "trade dates — the basis of the 45-day late-filing rule) lives "
             "inside those PDFs and is NOT parsed; this panel therefore shows "
-            "WHO filed WHEN (year granularity), never what was traded — "
-            "no amounts or tickers are fabricated. The Senate eFD source is "
-            "Akamai-blocked (disclosed as blocked, not circumvented through "
-            "third-party APIs whose licenses fail the 7-gate). Window "
-            "2025-2026. Display-only, not a research claim; NOT part of "
-            "any OOS pipeline."
+            "WHO filed WHEN, never what was traded — no amounts or tickers "
+            "are fabricated. The Senate eFD source is Akamai-blocked "
+            "(disclosed as blocked, not circumvented through third-party "
+            "APIs whose licenses fail the 7-gate). Window 2025-2026. "
+            "Display-only, not a research claim; NOT part of any OOS "
+            "pipeline."
         ),
     }
     (WEB / "politician_trades.json").write_text(

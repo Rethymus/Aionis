@@ -251,7 +251,7 @@
       "method": "GET",
       "status": "available",
       "freshness": "daily",
-      "as_of": null,
+      "as_of": "2026-08-18",
       "license": "U.S. House Clerk \u2014 public domain",
       "source": "STOCK Act PTR filing index (House-only, filing-stream level; transactions remain in the source PDFs)"
     },
@@ -337,5 +337,5 @@
     "server": "https://api.aionis-prices.workers.dev"
   },
   "methodology": "Public static data API over the terminal's committed panels (display-only). Every endpoint carries its 7-gate intake facts: license + primary source, plus the freshness class (daily / cadence / frozen). Frozen endpoints derive from frozen OOS artifacts (ledger #49 lineage) and deliberately do NOT advance \u2014 consuming them expecting daily updates misreads the contract. Endpoints with status=planned are NOT built: the path is a reserved future location, no payload is served, as_of is null, and the license/source describe the primary source the future fetcher would use. Research ingestion of any endpoint requires the full 7-gate rubric (docs/data-intake-rubric.md); the live-prices worker is display-only and must never enter the OOS pipeline.",
-  "snapshot_ts": "2026-08-21T15:42:35.156983+00:00"
+  "snapshot_ts": "2026-08-21T16:31:43.107592+00:00"
 }

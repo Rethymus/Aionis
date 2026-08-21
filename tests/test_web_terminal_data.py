@@ -370,10 +370,10 @@ def test_politician_trades_panel_contract() -> None:
     """Politician-trades panel schema: filing-stream honesty invariants.
 
     The House PTR panel is filing-stream level BY DESIGN: members/offices/
-    filing types/PDF links and YEAR granularity — ``as_of`` is null because
-    the list-level source carries no observation date (never a fabricated
-    one). Senate block must be honestly disclosed, and the top-filer counts
-    must be filing counts (not trade values).
+    filing types/as-filed dates/PDF links from the bulk FD.xml index —
+    ``as_of`` is the latest FilingDate (real observation date). Senate block
+    must be honestly disclosed, and the top-filer counts must be filing
+    counts (not trade values).
     """
     f = _load("politician_trades.json")
     assert f["status"] in {"ok", "awaiting_fetch"}
@@ -381,14 +381,21 @@ def test_politician_trades_panel_contract() -> None:
             "methodology"} <= set(f)
     if f["status"] != "ok" or not f["house"]["filings"]:
         return  # awaiting-fetch placeholder keeps the shape loose
-    assert f["as_of"] is None, "list-level source has no observation date — null by design"
-    assert f["senate"]["status"] == "blocked", "Senate Akamai block must be disclosed"
+    dates: list[str] = []
     for p_ in f["house"]["filings"]:
-        assert {"member", "office", "filing_type", "filing_year", "doc_url"} <= set(p_)
+        assert {"member", "office", "filing_type", "filing_date", "filing_year",
+                "doc_url"} <= set(p_)
         assert p_["filing_type"].upper().startswith("PTR")
         assert p_["doc_url"].startswith("https://disclosures-clerk.house.gov/")
         assert p_["doc_url"].endswith(".pdf")
         assert int(p_["filing_year"]) in f["window_years"]
+        if p_["filing_date"] is not None:
+            assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", p_["filing_date"])
+            dates.append(p_["filing_date"])
+    assert dates == sorted(dates, reverse=True), "filings must be newest-first"
+    if dates:
+        assert f["as_of"] == max(dates), "as_of must be the latest filing_date"
+    assert f["senate"]["status"] == "blocked", "Senate Akamai block must be disclosed"
     for m in f["house"]["top_members"]:
         assert m["count"] >= 1 and m["office"]
     assert f["latest_filing_year"] == max(f["window_years"])

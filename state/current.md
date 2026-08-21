@@ -3,7 +3,7 @@
 - **active (2026-08-21) 小隐寺全形态路线图（第三轮深挖）+ 三代理一轮（H 成/G-I 阵亡接管）+ 双新模块上线：**
   **① 方向文件**：`reports/design/2026-08-21-xiaoyinsi-full-parity-roadmap.md` — sitemap 实探 17 顶级路由逐一裁决（对齐矩阵 + P0-P3 阶梯 + Aionis 增层五特色）。关键情报：小隐寺自己的 /companies、/annual 也是空壳、「势力阵营」未上线 → Aionis 用一手公共源填壳是超越机会；其数据"第三方非公开数据库"不可消费（G1），正确姿势 = 形态对齐 + 一手自建。
   **② 三代理**（业主指令"按优先级驱动子代理"）：H=快赢组**全胜**（cmdk 补 heatmap/institutions/data-health/api-docs 四路由复用既有 nav.* key；form13f issuer→ticker **68/118→94/118**，归一化精确匹配两层快照，+STOCK_PAGE_TICKERS 守卫修静态导出死链，9 hermetic 测试）；G/I **双双阵亡于提供商 5h 限额[1308]**（03:19 重置）→ 按既定 fallback 主线接管完成全部。
-  **③ 主线接管 G=政客交易 /congress**（唯一 planned 清零）：尽调实证 — House 无 JSON API（CSRF-token POST 返 HTML 索引）、Senate eFD **Akamai Access Denied**、第三方 API 全挂 G1；v1=**House PTR 申报流级**（议员/选区/类型/年/PDF 链），交易明细留 PDF 不编造、as_of=null by design（年粒度无观察日）；真实数据 875 份/144 人/2025-26（4 礼貌请求）；7-gate 文档 + planned 毕业（_PLANNED_PANELS 空、测试同步改）+ CI fetch 步。
+  **③ 主线接管 G=政客交易 /congress**（唯一 planned 清零）：尽调实证 — Senate eFD **Akamai Access Denied**、第三方 API 全挂 G1；House 两路验证后取**批量 FD.zip→FD.xml 索引**（日更、`FilingType=P`=PTR、**真 FilingDate 申报日**——HTML 搜索路径无日期故弃用；与并发 session agent/politician a2f719b 尽调交叉验证一致）。v1=**House PTR 申报流级**（议员/选区/申报日/年/PDF 链），交易明细留 PDF 不编造；真实数据 874 份/144 人/2025-26（2 礼貌请求/年）、as_of 2026-08-18；7-gate 文档 + planned 毕业（_PLANNED_PANELS 空、测试同步改）+ CI fetch 步。
   **④ 主线接管 I=8-K 事件流 /events**：EFTS 第三代复用；**主文档评分选择器三次真拉迭代**（R1.htm XBRL 渲染件→ex991 exhibit 内含"8-k"→q1fy27pr press release 最短名陷阱→发行人-日期规范 0 分档制胜）+ Item 正则清洗 thin-space 实体（`&#8201;`）；23 事件/5 发行人/0 未分类；稀有重大优先分类（退市>并购>控制权>重述>高管…）。
   **⑤ 验证**：全套 pytest **exit 0** + ruff 净（排除并发 docs/code-review）+ tsc 0 + eslint 净 + build 26 路由（/events、/congress 预渲染）+ 66 项边界测试绿。
   **⑥ 边界**：display + 数据 lane；0 ledger/frozen/config/prereg/OOS。worktree 已按"先摘 junction 再删"铁律清理。

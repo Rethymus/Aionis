@@ -1,10 +1,11 @@
 """Bounded House PTR filing-stream fetch (display-only, exploratory).
 
-STOCK Act congressional trading, v1 = House Clerk PTR index (filing-stream
-level — member/office/type/year/PDF link; transaction detail lives in the
-PDFs and is NOT parsed). Senate eFD is Akamai-blocked (documented honestly
-in the 7-gate doc). Two polite requests per year; per-year parquet caches
-are idempotent.
+STOCK Act congressional trading, v1 = House Clerk PTR bulk index
+(filing-stream level — member/office/filing-date/year/PDF link; transaction
+detail lives in the PDFs and is NOT parsed). Senate eFD is Akamai-blocked
+(documented honestly in the 7-gate doc). ONE polite request per year (the
+daily-reissued {year}FD.zip); per-year parquet caches are idempotent (and are
+the G3 freeze-snapshot of a source that re-emits daily).
 
 Writes ``data/cache/politician_trades_aggregate.parquet`` (gitignored,
 regenerable); ``scripts/export_terminal_data.py`` reads it into the tracked
@@ -42,7 +43,7 @@ def main() -> None:
     out = (
         pd.concat(frames, ignore_index=True)
         .drop_duplicates(subset=["doc_url"], keep="last")
-        .sort_values(["filing_year", "member"], ascending=[False, True])
+        .sort_values(["filing_date", "member"], ascending=[False, True])
         .reset_index(drop=True)
     )
     OUT.parent.mkdir(parents=True, exist_ok=True)
