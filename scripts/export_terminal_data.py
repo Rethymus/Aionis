@@ -2080,6 +2080,7 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
     ("taco", "taco.json", _DH_DAILY),
     ("form4", "form4.json", _DH_DAILY),
     ("form8k", "form8k.json", _DH_DAILY),
+    ("politician_trades", "politician_trades.json", _DH_DAILY),
     ("reddit", "reddit.json", _DH_DAILY),
     ("headline_provenance", "headline_provenance.json", _DH_DAILY),
     ("ledger_audit", "ledger_audit.json", _DH_DAILY),
@@ -2152,6 +2153,10 @@ def _dh_as_of(key: str, fname: str) -> str | None:
         return recent[0].get("date") if recent else None
     if key == "form8k":
         return p.get("as_of")
+    if key == "politician_trades":
+        # List-level source carries YEAR granularity only — no observation
+        # date exists; null keeps data-health honest (no fake precision).
+        return p.get("as_of")
     if key == "cot":
         return p.get("latest_date")
     if key == "smart_money":
@@ -2171,26 +2176,10 @@ def _dh_as_of(key: str, fname: str) -> str | None:
 # keys today. Shared by data_health (key + note) and api_catalog (planned
 # endpoints) from ONE definition so the two can never drift apart.
 _PLANNED_PANELS: list[dict[str, str]] = [
-    {
-        "key": "politician-trades",
-        "file": "politician_trades.json",
-        "note": (
-            "STOCK Act congressional trading. Primary sources are U.S. public "
-            "domain (clerk.house.gov PTR search, efdsearch.senate.gov), but "
-            "both are PDF-first with heavy parsing effort — no fetcher built."
-        ),
-        "license": (
-            "U.S. House Clerk / Senate Office of Public Records — public "
-            "domain (planned, not built)"
-        ),
-        "source": (
-            "STOCK Act periodic transaction reports: clerk.house.gov + "
-            "efdsearch.senate.gov"
-        ),
-    },
-    # 13f-holdings SHIPPED 2026-08-20 (form13f panel, 12 star managers) and
-    # cn-industry-classification SHIPPED 2026-08-20 (baostock CSRC industries,
-    # 7-gate PASS) — both graduated out of planned into live panels.
+    # politician-trades SHIPPED 2026-08-21 (politician_trades panel, House PTR
+    # filing-stream level — 7-gate PASS in docs/data-intake-congress-stock-act.md)
+    # — graduated out of planned into a live panel. List kept (empty) so the
+    # shared data_health/api_catalog definition stays the single source of truth.
 ]
 
 
@@ -2335,6 +2324,11 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
     "taco": ("FRED (public domain) + labeled public news events", "VIX monthly + Trump-policy event table"),
     "form4": ("U.S. SEC EDGAR — public domain", "Form 4 XML, filed-date PIT"),
     "form8k": ("U.S. SEC EDGAR — public domain", "Form 8-K primary docs, filed-date PIT, item-classified"),
+    "politician_trades": (
+        "U.S. House Clerk — public domain",
+        "STOCK Act PTR filing index (House-only, filing-stream level; "
+        "transactions remain in the source PDFs)",
+    ),
     "reddit": ("Reddit public Atom RSS — Reddit ToS, display-only", "retail mention counts, forward-only"),
     "headline_provenance": ("Aionis append-only ledger (repo MIT)", "ledger.jsonl freeze→result pairing"),
     "ledger_audit": ("Aionis append-only ledger (repo MIT)", "ledger.jsonl claim-row timeline"),
@@ -2818,6 +2812,88 @@ def export_form8k() -> None:
     )
 
 
+def export_politician_trades() -> None:
+    """STOCK Act congressional trading — House PTR filing stream (display-only).
+
+    Reads ``data/cache/politician_trades_aggregate.parquet`` (gitignored;
+    produced by ``scripts/politician_trades_fetch.py`` — House Clerk PTR
+    index, filing-stream level: member / office / filing type / year / PDF
+    link). Transaction detail (assets, amounts, dates) lives inside the
+    source PDFs and is NOT parsed; late-filing days cannot be computed at
+    list level. Senate eFD is Akamai-blocked and disclosed as such.
+    """
+    fp = Path("data/cache/politician_trades_aggregate.parquet")
+    if not fp.exists():
+        print(
+            "[export-terminal] SKIP politician_trades: data/cache/"
+            "politician_trades_aggregate.parquet not present (tracked JSON "
+            "retains last-committed value)",
+            flush=True,
+        )
+        return
+
+    df = pd.read_parquet(fp)
+    filings = []
+    for _, r in df.head(100).iterrows():
+        filings.append({
+            "member": str(r["member"]),
+            "office": str(r["office"]),
+            "filing_type": str(r["filing_type"]),
+            "filing_year": int(r["filing_year"]),
+            "doc_url": str(r["doc_url"]),
+        })
+    top_members = [
+        {"member": str(m), "office": str(o), "count": int(c)}
+        for (m, o), c in df.groupby(["member", "office"]).size()
+        .sort_values(ascending=False)
+        .head(12)
+        .items()
+    ]
+    by_year = {str(y): int(n) for y, n in df["filing_year"].value_counts().sort_index().items()}
+    payload = {
+        "status": "ok",
+        "as_of": None,  # list-level source has no observation date (year only)
+        "latest_filing_year": int(df["filing_year"].max()),
+        "window_years": sorted(int(y) for y in df["filing_year"].unique()),
+        "house": {
+            "total": int(len(df)),
+            "members": int(df["member"].nunique()),
+            "filings": filings,
+            "by_year": by_year,
+            "top_members": top_members,
+        },
+        "senate": {
+            "status": "blocked",
+            "note": "efdsearch.senate.gov serves Akamai 'Access Denied' to plain GET — no first-party access; disclosed rather than routed through third parties.",
+        },
+        "methodology": (
+            "STOCK Act congressional trading, v1 = U.S. House Clerk PTR "
+            "(Periodic Transaction Report) FILING-STREAM index — public "
+            "domain. The House publishes no JSON API: the search form "
+            "(CSRF-token POST) returns an HTML index of member, state-"
+            "district office, filing type (PTR Original/Amendment) and the "
+            "source PDF. Transaction detail (asset, amount band, trade and "
+            "filing dates — the basis of the 45-day late-filing rule) lives "
+            "inside those PDFs and is NOT parsed; this panel therefore shows "
+            "WHO filed WHEN (year granularity), never what was traded — "
+            "no amounts or tickers are fabricated. The Senate eFD source is "
+            "Akamai-blocked (disclosed as blocked, not circumvented through "
+            "third-party APIs whose licenses fail the 7-gate). Window "
+            "2025-2026. Display-only, not a research claim; NOT part of "
+            "any OOS pipeline."
+        ),
+    }
+    (WEB / "politician_trades.json").write_text(
+        json.dumps(_stamp(payload), indent=2, default=str)
+    )
+    print(
+        f"[export-terminal] politician_trades: {payload['house']['total']} filings, "
+        f"{payload['house']['members']} members, "
+        f"years {payload['window_years']}",
+        flush=True,
+    )
+
+
 def _safe_export(name: str, fn, /, *args, **kwargs):
     """Best-effort guard for the daily CI refresh.
 
@@ -2868,6 +2944,7 @@ def main() -> None:
     _safe_export("cot", export_cot)
     _safe_export("form4", export_form4)
     _safe_export("form8k", export_form8k)
+    _safe_export("politician_trades", export_politician_trades)
     _safe_export("form13f", export_form13f)
     _safe_export("market_context", export_market_context)
     _safe_export("macro_drivers", export_macro_drivers)

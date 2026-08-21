@@ -126,6 +126,18 @@ jobs:
         # a timeout resumes on the next run without re-fetching cached days.
         continue-on-error: true  # EDGAR rate-limits; per-day resilient skip
 
+      - name: Fetch recent 8-K material events (EDGAR EFTS, 5 issuers)
+        run: uv run python scripts/form8k_fetch.py
+        timeout-minutes: 10  # EFTS + per-accession caches are idempotent; daily runs
+        # fetch only new filings (cold pull ≈ 3min for 23 docs on 2026-08-21)
+        continue-on-error: true
+
+      - name: Fetch House PTR politician trades (STOCK Act filing stream)
+        run: uv run python scripts/politician_trades_fetch.py
+        timeout-minutes: 10  # 2 polite requests per year (GET token → POST index);
+        # per-year parquet caches are idempotent
+        continue-on-error: true
+
       - name: Fetch fresh retail sentiment (Reddit zero-credential RSS)
         run: uv run python scripts/reddit_fetch.py
         continue-on-error: true

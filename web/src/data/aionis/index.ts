@@ -40,6 +40,7 @@ import dataHealthJson from "./data_health.json";
 import apiCatalogJson from "./api_catalog.json";
 import form13fJson from "./form13f.json";
 import form8kJson from "./form8k.json";
+import politicianTradesJson from "./politician_trades.json";
 
 export type Pick = {
   rank: number;
@@ -583,6 +584,39 @@ export type Form8k = {
   snapshot_ts?: string;
 };
 
+export type PoliticianFiling = {
+  member: string;
+  office: string;
+  filing_type: string;
+  filing_year: number;
+  doc_url: string;
+};
+
+export type PoliticianTopMember = {
+  member: string;
+  office: string;
+  count: number;
+};
+
+export type PoliticianTrades = {
+  status: string;
+  // null BY DESIGN: the House PTR index carries year granularity only — no
+  // observation date exists (honest, no fake precision).
+  as_of: string | null;
+  latest_filing_year: number;
+  window_years: number[];
+  house: {
+    total: number;
+    members: number;
+    filings: PoliticianFiling[];
+    by_year: Record<string, number>;
+    top_members: PoliticianTopMember[];
+  };
+  senate: { status: string; note: string };
+  methodology: string;
+  snapshot_ts?: string;
+};
+
 export const aionis = {
   metrics: metricsJson as Metrics,
   picks: picksJson as Pick[],
@@ -623,4 +657,5 @@ export const aionis = {
   apiCatalog: apiCatalogJson as ApiCatalog,
   form13f: form13fJson as Form13f,
   form8k: form8kJson as Form8k,
+  politicianTrades: politicianTradesJson as PoliticianTrades,
 };

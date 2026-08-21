@@ -366,6 +366,36 @@ def test_smart_money_yearly_when_present() -> None:
 # --- Institutions (13F-HR star managers) ---------------------------------------
 
 
+def test_politician_trades_panel_contract() -> None:
+    """Politician-trades panel schema: filing-stream honesty invariants.
+
+    The House PTR panel is filing-stream level BY DESIGN: members/offices/
+    filing types/PDF links and YEAR granularity — ``as_of`` is null because
+    the list-level source carries no observation date (never a fabricated
+    one). Senate block must be honestly disclosed, and the top-filer counts
+    must be filing counts (not trade values).
+    """
+    f = _load("politician_trades.json")
+    assert f["status"] in {"ok", "awaiting_fetch"}
+    assert {"as_of", "latest_filing_year", "window_years", "house", "senate",
+            "methodology"} <= set(f)
+    if f["status"] != "ok" or not f["house"]["filings"]:
+        return  # awaiting-fetch placeholder keeps the shape loose
+    assert f["as_of"] is None, "list-level source has no observation date — null by design"
+    assert f["senate"]["status"] == "blocked", "Senate Akamai block must be disclosed"
+    for p_ in f["house"]["filings"]:
+        assert {"member", "office", "filing_type", "filing_year", "doc_url"} <= set(p_)
+        assert p_["filing_type"].upper().startswith("PTR")
+        assert p_["doc_url"].startswith("https://disclosures-clerk.house.gov/")
+        assert p_["doc_url"].endswith(".pdf")
+        assert int(p_["filing_year"]) in f["window_years"]
+    for m in f["house"]["top_members"]:
+        assert m["count"] >= 1 and m["office"]
+    assert f["latest_filing_year"] == max(f["window_years"])
+    # by_year counts must sum to the panel total (honest counting).
+    assert sum(f["house"]["by_year"].values()) == f["house"]["total"]
+
+
 def test_form8k_panel_contract() -> None:
     """8-K panel schema: event shape, category counting honesty, date order.
 
@@ -1013,14 +1043,15 @@ def test_planned_disclosure_present_and_consistent() -> None:
     """Planned (not-built) panels disclosed in data_health + api_catalog alike.
 
     Honesty pattern learned from the xiaoyinsi datahub (x-status: planned):
-    the panel count must never be mistaken for coverage. 13f-holdings and
-    cn-industry-classification GRADUATED to live panels on 2026-08-20
-    (form13f + baostock CSRC industries) — only politician-trades remains
-    planned (STOCK Act, public-domain primary sources, PDF-first parsing).
+    the panel count must never be mistaken for coverage. 13f-holdings,
+    cn-industry-classification (2026-08-20) and politician-trades (2026-08-21,
+    House PTR filing-stream level) ALL GRADUATED to live panels — the planned
+    list is now empty; the mechanism stays pinned so any future planned key
+    is disclosed in BOTH data_health and api_catalog (they can never drift).
     """
     dh = _load("data_health.json")
     planned = dh["planned"]
-    assert {p["key"] for p in planned} == {"politician-trades"}
+    assert {p["key"] for p in planned} == set()
     for p in planned:
         assert isinstance(p["key"], str) and isinstance(p["note"], str) and p["note"]
     planned_keys = {p["key"] for p in planned}
