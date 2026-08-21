@@ -38,6 +38,7 @@ dicts / DataFrames; the fetchers are thin network shells around them.
 from __future__ import annotations
 
 import json
+import re
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from pathlib import Path
@@ -334,6 +335,88 @@ def _pct(prev_shares: float, cur_shares: float) -> float:
     if prev_shares <= 0:
         return 0.0
     return round((cur_shares - prev_shares) / prev_shares * 100.0, 2)
+
+
+# --- issuer-name → ticker exact linking (display label only) -----------------
+#
+# EDGAR 13F information tables carry CUSIPs, never tickers. The institutions
+# panel still wants a link into the terminal's stock page, so issuers are
+# linked by EXACT match of normalized names against a (name, ticker) source
+# (the SEC ``company_tickers.json`` snapshot cached by
+# ``aionis.ingest.cik_resolver`` plus the terminal's own US stock universe).
+# EXACT means exact: normalization only collapses rendering noise (case,
+# punctuation, apostrophes, EDGAR ``/DE/``-style location qualifiers, trailing
+# legal suffixes). As-filed ABBREVIATIONS ("BANK OF AMER CORP", "APPLIED
+# MATLS INC", 20-char-legacy truncations) do NOT match and stay null — no
+# fuzzy/prefix guessing, ever. Display-only label, NOT a research input.
+
+#: Trailing tokens dropped from BOTH sides of a name comparison. Legal-form +
+#: EDGAR re-incorporation markers only — never words that disambiguate issuers
+#: beyond their legal form (e.g. "INTERNATIONAL" is a legal-form word here in
+#: the same spirit as "COMPANY"; both sides strip it identically).
+_ISSUER_NAME_SUFFIXES = frozenset({
+    "INC", "INCORPORATED", "CORP", "CORPORATION", "LTD", "LIMITED", "LLC", "LP",
+    "LPA", "PLC", "CO", "COMPANY", "SA", "AG", "NV", "SE", "SPA", "TRUST",
+    "HOLDINGS", "HOLDING", "HLDGS", "GROUP", "PARTNERS", "PARTNERSHIP", "FUND",
+    "INTERNATIONAL", "DEL",
+})
+
+
+def normalize_issuer_name(name: str) -> str:
+    """Normalize an issuer/company name for EXACT-match joining (pure).
+
+    Case-fold; delete apostrophes (``MOODY'S`` → ``MOODYS`` — 13F filers omit
+    them); strip EDGAR location qualifiers (``BANK OF AMERICA CORP /DE/``,
+    ``VERISIGN INC/CA``); collapse remaining non-alphanumerics to spaces; drop
+    a leading ``THE``; iteratively drop trailing legal-form suffixes and the
+    single-letter fragments of foreign legal forms (``Ferrovial N.V.`` →
+    ``FERROVIAL``). A name that normalizes to nothing stays ``""`` (never
+    linked).
+    """
+    s = str(name).upper().replace("'", "")
+    s = re.sub(r"/[A-Z]{2}/?\s*$", " ", s)  # trailing /DE/ /CA /CN
+    s = re.sub(r"\s*/[A-Z]{2}/", " ", s)  # mid-string /DE/
+    s = re.sub(r"[^A-Z0-9]+", " ", s)
+    tokens = [t for t in s.split() if t]
+    while tokens and tokens[0] == "THE":
+        tokens = tokens[1:]
+    while len(tokens) > 1 and (tokens[-1] in _ISSUER_NAME_SUFFIXES or len(tokens[-1]) == 1):
+        tokens = tokens[:-1]
+    return " ".join(tokens)
+
+
+def build_issuer_ticker_map(
+    entities: list[tuple[str, int | str, str]],
+) -> dict[str, str]:
+    """Build normalized-name → ticker from (title, entity_id, ticker) triples.
+
+    ``entities`` is consumed in SOURCE order (e.g. SEC ``company_tickers.json``
+    order = market-cap descending, so a company's main listing precedes its OTC
+    preferreds). Conflict policy, deliberately conservative:
+
+    - a normalized name owned by exactly ONE ``entity_id`` (CIK) links to that
+      entity's first hyphen-free ticker in source order (fallback: first);
+    - a name claimed by 2+ distinct entity ids (e.g. bare "iShares" trust
+      shells) is AMBIGUOUS → dropped entirely (null on lookup, no guessing).
+
+    Pure function on its argument — hermetic; the caller owns sourcing.
+    """
+    key_entities: dict[str, set] = {}
+    key_tickers: dict[str, list[str]] = {}
+    for title, entity_id, ticker in entities:
+        key = normalize_issuer_name(title)
+        if not key:
+            continue
+        key_entities.setdefault(key, set()).add(entity_id)
+        key_tickers.setdefault(key, []).append(str(ticker))
+    out: dict[str, str] = {}
+    for key, owners in key_entities.items():
+        if len(owners) != 1:
+            continue
+        tickers = key_tickers[key]
+        plain = [t for t in tickers if "-" not in t]
+        out[key] = (plain or tickers)[0]
+    return out
 
 
 # --- thin network shells (idempotent disk cache + _policy_get) ---------------

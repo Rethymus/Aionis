@@ -363,6 +363,42 @@ def test_smart_money_yearly_when_present() -> None:
             assert isinstance(y["filings"], int) and y["filings"] >= 0
 
 
+# --- Institutions (13F-HR star managers) ---------------------------------------
+
+
+def test_form13f_panel_contract() -> None:
+    """13F panel schema: manager shape, top10/changes enums, coverage format.
+
+    Locks the contract the /institutions view renders against (direction enum
+    mirrored in DIRECTION_LABEL, ticker nullable for honest unresolved
+    issuers) and the ``ticker_coverage`` accounting string computed at export
+    time (resolved-ticker identities over latest-quarter top-10 rows).
+    """
+    f = _load("form13f.json")
+    assert f["status"] in {"ok", "awaiting_fetch"}
+    assert {"managers", "as_of", "methodology", "ticker_coverage"} <= set(f)
+    if f["status"] != "ok" or not f["managers"]:
+        return  # awaiting-fetch placeholder keeps the shape loose
+    for m in f["managers"]:
+        assert {"cik", "name", "quarter", "filed", "n_positions", "top10"} <= set(m)
+        assert re.fullmatch(r"\d{10}", str(m["cik"])), f"CIK must be 10-digit: {m['cik']}"
+        for h in m["top10"]:
+            assert {"issuer", "cusip", "value", "shares", "pct"} <= set(h)
+            assert isinstance(h["ticker"], (str, type(None)))
+            assert h["value"] > 0 and h["shares"] >= 0
+        for c in m.get("changes", []):
+            assert c["direction"] in {"new", "increased", "reduced", "exited"}
+            assert isinstance(c["ticker"], (str, type(None)))
+    # Coverage is "linked/total" over top10 rows; total must equal the count.
+    linked, _, total = f["ticker_coverage"].partition("/")
+    assert linked.isdigit() and total.isdigit(), f"bad coverage format: {f['ticker_coverage']!r}"
+    n_top = sum(len(m["top10"]) for m in f["managers"])
+    assert int(total) == n_top, "coverage denominator must equal top10 row count"
+    n_linked = sum(1 for m in f["managers"] for h in m["top10"] if h["ticker"])
+    assert int(linked) == n_linked, "coverage numerator must equal resolved top10 tickers"
+    assert n_linked >= 1, "at least some issuers must resolve (name-join layer works)"
+
+
 # --- Headline provenance + audit-integrity (frozen-config birth certificate) --
 
 

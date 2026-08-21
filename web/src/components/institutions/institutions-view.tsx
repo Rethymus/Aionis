@@ -20,6 +20,16 @@ import {
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
+import { stockUniverse } from "@/data/aionis/stock-universe";
+
+// The terminal is a STATIC export: /stock/[ticker] pages exist only for the
+// frozen OOS universe (generateStaticParams). A 13F issuer resolved to a
+// ticker OUTSIDE that universe (foreign ADRs, OTC preferreds, ETF trusts)
+// must not link — it would 404. We keep the resolved ticker as a plain-text
+// label (identity info) and link only when a page exists.
+const STOCK_PAGE_TICKERS: ReadonlySet<string> = new Set(
+  stockUniverse.stocks.map((s) => s.ticker),
+);
 
 function fmtUsd(v: number): string {
   if (Math.abs(v) >= 1e12) return `$${(v / 1e12).toFixed(2)}T`;
@@ -62,7 +72,7 @@ function IssuerLabel({
   issuer: string;
   ticker: string | null;
 }) {
-  if (ticker) {
+  if (ticker && STOCK_PAGE_TICKERS.has(ticker)) {
     return (
       <Link
         href={`/stock/${ticker}`}
@@ -72,7 +82,8 @@ function IssuerLabel({
       </Link>
     );
   }
-  // No ticker link (CUSIP→ticker map has no entry) — honest plain text.
+  // No stock page for this ticker (or none resolved — as-filed abbreviations,
+  // ETF units) — honest plain text, never a link that would 404.
   return <span className="font-medium">{issuer}</span>;
 }
 
@@ -227,12 +238,20 @@ export function InstitutionsView() {
                       </Badge>
                     )}
                     {c.ticker ? (
-                      <Link
-                        href={`/stock/${c.ticker}`}
-                        className="text-primary hover:underline"
-                      >
-                        {c.ticker}
-                      </Link>
+                      STOCK_PAGE_TICKERS.has(c.ticker) ? (
+                        <Link
+                          href={`/stock/${c.ticker}`}
+                          className="text-primary hover:underline"
+                        >
+                          {c.ticker}
+                        </Link>
+                      ) : (
+                        // Resolved identity but no static stock page (ADR /
+                        // OTC / ETF) — plain-text ticker, never a 404 link.
+                        <span className="font-mono text-xs text-muted-foreground">
+                          {c.ticker}
+                        </span>
+                      )
                     ) : null}
                     <span className="text-muted-foreground">{c.issuer}</span>
                     {c.option === "CALL" || c.option === "PUT" ? (

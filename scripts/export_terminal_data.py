@@ -2583,14 +2583,20 @@ def export_form13f() -> None:
     ``scripts/form13f_fetch.py`` — 12 verified celebrity managers × the 2 most
     recent distinct report quarters). Public domain (17 U.S.C. §105);
     filing-date PIT; quarterly cadence; ``value`` as filed in the EDGAR 2014+
-    XML (whole USD). Issuer→ticker links come from an exact normalized-name
-    match against the committed stock_universe panel — EDGAR infotables carry
-    CUSIPs, not tickers; unmatched issuers render as plain text (honest
-    partial coverage).
+    XML (whole USD). Issuer→ticker links are EXACT normalized-name matches
+    (case/punctuation/apostrophes/legal suffixes — see
+    ``aionis.ingest.form13f.normalize_issuer_name``) against two offline
+    sources: the terminal's committed US stock universe, then the SEC
+    ``company_tickers.json`` snapshot cached by ``aionis.ingest.cik_resolver``
+    (multi-CIK ambiguous names dropped — no fuzzy guessing). As-filed
+    abbreviations ("BANK OF AMER CORP") and truncated 20-char legacy names
+    stay unmatched and render as plain text (honest partial coverage).
     """
-    import re
-
-    from aionis.ingest.form13f import compute_changes
+    from aionis.ingest.form13f import (
+        build_issuer_ticker_map,
+        compute_changes,
+        normalize_issuer_name,
+    )
 
     fp = Path("data/cache/form13f_aggregate.parquet")
     if not fp.exists():
@@ -2606,36 +2612,41 @@ def export_form13f() -> None:
     df = pd.read_parquet(fp)
 
     # CUSIP→ticker is not available from EDGAR; link by normalized issuer NAME
-    # against the committed US stock universe instead (deterministic: smallest
-    # ticker wins a collision, e.g. GOOG vs GOOGL — disclosed limitation).
+    # instead. Layer 1 — the committed US stock universe (smallest ticker wins
+    # a share-class collision, e.g. GOOG vs GOOGL — disclosed limitation).
     su = _dh_read("stock_universe.json") or {}
     name_to_ticker: dict[str, str] = {}
-
-    def _norm_name(s: str) -> str:
-        s = re.sub(r"[^A-Z0-9 ]+", " ", str(s).upper())
-        tokens = [t for t in s.split() if t]
-        while tokens and tokens[0] == "THE":
-            tokens = tokens[1:]
-        suffixes = {
-            "INC", "CORP", "CORPORATION", "LTD", "LIMITED", "LLC", "LP", "LPA",
-            "PLC", "CO", "COMPANY", "SA", "AG", "NV", "SE", "SPA", "TRUST",
-            "HOLDINGS", "HOLDING", "GROUP", "PARTNERS", "PARTNERSHIP", "FUND",
-        }
-        while len(tokens) > 1 and tokens[-1] in suffixes:
-            tokens = tokens[:-1]
-        return " ".join(tokens)
-
     for s in su.get("stocks", []):
         if s.get("region") != "us" or not s.get("name"):
             continue
-        key = _norm_name(s["name"])
+        key = normalize_issuer_name(s["name"])
         if not key:
             continue
         if key not in name_to_ticker or str(s["ticker"]) < name_to_ticker[key]:
             name_to_ticker[key] = str(s["ticker"])
 
+    # Layer 2 — the SEC company_tickers snapshot (current, NOT as-of-filing;
+    # a display label + stock-page link only, never a research input). Names
+    # claimed by 2+ CIKs are dropped as ambiguous by build_issuer_ticker_map.
+    raw_fp = Path("data/cache/cik_resolver_raw.json")
+    if raw_fp.exists():
+        try:
+            snap = json.loads(raw_fp.read_text())
+            edgar_map = build_issuer_ticker_map(
+                [
+                    (str(v["title"]), int(v["cik_str"]), str(v["ticker"]))
+                    for v in snap.values()
+                    if isinstance(v, dict) and v.get("ticker") and v.get("title")
+                ]
+            )
+        except (json.JSONDecodeError, AttributeError, ValueError):
+            edgar_map = {}
+    else:
+        edgar_map = {}
+
     def _ticker_for(issuer: str) -> str | None:
-        return name_to_ticker.get(_norm_name(issuer))
+        key = normalize_issuer_name(issuer)
+        return name_to_ticker.get(key) or edgar_map.get(key)
 
     manager_payloads: list[dict] = []
     for cik, sub in df.groupby("cik"):
@@ -2720,9 +2731,12 @@ def export_form13f() -> None:
             "shares as filed (SH lines; option lines flagged PUT/CALL). "
             "Filing-date point-in-time; amendments supersede (latest filing "
             "per report quarter wins). Issuer→ticker links are exact "
-            "normalized-name matches against the terminal's US stock universe "
-            "(EDGAR infotables carry CUSIPs, not tickers) — unmatched issuers "
-            "stay plain text. Display-only, not a research claim; NOT part of "
+            "normalized-name matches (case/punctuation/apostrophes/legal "
+            "suffixes) against the terminal's US stock universe and the SEC "
+            "company_tickers snapshot (current, not as-of-filing; ambiguous "
+            "multi-entity names dropped) — EDGAR infotables carry CUSIPs, not "
+            "tickers, and as-filed abbreviations stay unmatched plain text. "
+            "Display-only, not a research claim; NOT part of "
             "any OOS pipeline."
         ),
     }
