@@ -132,6 +132,12 @@ jobs:
         # fetch only new filings (cold pull ≈ 3min for 23 docs on 2026-08-21)
         continue-on-error: true
 
+      - name: Fetch IPO registration/pricing stream (EDGAR EFTS form-level)
+        run: uv run python scripts/form_ipo_fetch.py
+        timeout-minutes: 10  # metadata-only: ~12 EFTS pages for ~1,000 filings
+        # (no per-doc fetches); per root-form caches are idempotent
+        continue-on-error: true
+
       - name: Fetch House PTR politician trades (STOCK Act filing stream)
         run: uv run python scripts/politician_trades_fetch.py
         timeout-minutes: 10  # 2 polite requests per year (GET token → POST index);

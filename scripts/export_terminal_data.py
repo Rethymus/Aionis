@@ -2080,6 +2080,7 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
     ("taco", "taco.json", _DH_DAILY),
     ("form4", "form4.json", _DH_DAILY),
     ("form8k", "form8k.json", _DH_DAILY),
+    ("ipo", "ipo.json", _DH_DAILY),
     ("politician_trades", "politician_trades.json", _DH_DAILY),
     ("reddit", "reddit.json", _DH_DAILY),
     ("headline_provenance", "headline_provenance.json", _DH_DAILY),
@@ -2152,6 +2153,8 @@ def _dh_as_of(key: str, fname: str) -> str | None:
         recent = p.get("recent", [])
         return recent[0].get("date") if recent else None
     if key == "form8k":
+        return p.get("as_of")
+    if key == "ipo":
         return p.get("as_of")
     if key == "politician_trades":
         # as_of = latest as-filed FilingDate carried by the bulk FD.xml index.
@@ -2323,6 +2326,11 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
     "taco": ("FRED (public domain) + labeled public news events", "VIX monthly + Trump-policy event table"),
     "form4": ("U.S. SEC EDGAR — public domain", "Form 4 XML, filed-date PIT"),
     "form8k": ("U.S. SEC EDGAR — public domain", "Form 8-K primary docs, filed-date PIT, item-classified"),
+    "ipo": (
+        "U.S. SEC EDGAR — public domain",
+        "IPO registration/pricing stream (S-1/S-1/A + 424B4) via EFTS "
+        "form-level queries, filed-date PIT; offer terms not extracted",
+    ),
     "politician_trades": (
         "U.S. House Clerk — public domain",
         "STOCK Act PTR filing index (House-only, filing-stream level; "
@@ -2811,6 +2819,84 @@ def export_form8k() -> None:
     )
 
 
+def export_form_ipo() -> None:
+    """US IPO registration/pricing stream — EDGAR S-1 family + 424B4 (display-only).
+
+    Reads ``data/cache/form_ipo_aggregate.parquet`` (gitignored; produced by
+    ``scripts/form_ipo_fetch.py`` — whole-market EFTS form-level queries over a
+    fixed ~120-day window). Status is derived from the immutable form type:
+    S-1/S-1/A = ``filed`` (registration on file), 424B4 = ``priced`` (statutory
+    final prospectus = pricing complete). Offer price / proceeds / listing date
+    live inside the prospectus documents and are NOT parsed (honest v1 limit,
+    disclosed in the methodology — never fabricated).
+    """
+    fp = Path("data/cache/form_ipo_aggregate.parquet")
+    if not fp.exists():
+        print(
+            "[export-terminal] SKIP form_ipo: data/cache/form_ipo_aggregate.parquet "
+            "not present (tracked JSON retains last-committed value)",
+            flush=True,
+        )
+        return
+
+    df = pd.read_parquet(fp)
+    by_status = {
+        k: int(v) for k, v in df["status"].value_counts().sort_index().items()
+    }
+    by_form = {k: int(v) for k, v in df["form"].value_counts().sort_index().items()}
+    filings = []
+    for _, r in df.head(150).iterrows():
+        filings.append({
+            "company": str(r["company"]),
+            "ticker": str(r["ticker"]),
+            "filed_date": str(r["filed_date"]),
+            "form": str(r["form"]),
+            "status": str(r["status"]),
+            "doc_url": str(r["doc_url"]),
+        })
+    payload = {
+        "status": "ok",
+        "as_of": str(df["filed_date"].max()),
+        "window": {"start": str(df["filed_date"].min()), "end": str(df["filed_date"].max())},
+        "issuers": int(df["issuer_cik"].nunique()),
+        "total": int(len(df)),
+        "by_status": by_status,
+        "by_form": by_form,
+        "filings": filings,
+        "methodology": (
+            "US IPO registration/pricing stream — SEC EDGAR EFTS whole-market "
+            "form-level queries (public domain, 17 U.S.C. §105), fixed ~120-day "
+            "window, filed-date point-in-time, one row per accession (an S-1/A "
+            "amendment is a new filing, never a silent overwrite). Status is "
+            "derived from the immutable form type: S-1 / S-1/A = filed "
+            "(registration statement on file); 424B4 = priced (the statutory "
+            "final prospectus under Securities Act Rule 424(b)(4) is filed "
+            "after pricing — its appearance marks a priced offering). Honest "
+            "v1 limits, disclosed not papered over: (1) the offer price, share "
+            "count, proceeds, and expected listing date live INSIDE the "
+            "prospectus documents and are not extracted here — each row links "
+            "the filing's EDGAR index page, which lists every document; (2) the "
+            "424B4 form-level catch includes priced follow-on offerings by "
+            "already-listed issuers (e.g. S-3 shelf takedowns), not only "
+            "first-day IPOs — this panel is the registration/pricing STREAM, "
+            "not a curated IPO list; (3) a 424B4 whose issuer also filed an S-1 "
+            "family document in the window is the classic register-then-price "
+            "path, but no company-level state machine is applied (rows are "
+            "filing-level). Ticker is parsed from the EDGAR display name where "
+            "present; pre-symbol S-1 filers carry none (empty, never guessed). "
+            "Counts are FILING counts, not company counts. Display-only, "
+            "exploratory, not a research claim; NOT part of any OOS pipeline."
+        ),
+    }
+    (WEB / "ipo.json").write_text(json.dumps(_stamp(payload), indent=2, default=str))
+    print(
+        f"[export-terminal] form_ipo: {payload['total']} filings "
+        f"({payload['by_status']}), {payload['issuers']} issuers, "
+        f"as_of {payload['as_of']}",
+        flush=True,
+    )
+
+
 def export_politician_trades() -> None:
     """STOCK Act congressional trading — House PTR filing stream (display-only).
 
@@ -2965,6 +3051,7 @@ def main() -> None:
     _safe_export("cot", export_cot)
     _safe_export("form4", export_form4)
     _safe_export("form8k", export_form8k)
+    _safe_export("form_ipo", export_form_ipo)
     _safe_export("politician_trades", export_politician_trades)
     _safe_export("form13f", export_form13f)
     _safe_export("market_context", export_market_context)

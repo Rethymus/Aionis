@@ -440,6 +440,63 @@ def test_form8k_panel_contract() -> None:
     assert f["as_of"] == max(dates), "as_of must be the latest filing_date"
 
 
+def test_form_ipo_panel_contract() -> None:
+    """IPO panel schema: filing shape, status enum, honest counting, date order.
+
+    Locks the contract the /ipo view renders against: status is derived from
+    the immutable form type (S-1 family -> filed, 424B4 -> priced — the only
+    two legal values); by_status counts must be FILING counts consistent with
+    the panel total (the list is capped at 150, so counts are checked against
+    total, not the visible list); filings sorted by filed_date descending; the
+    ticker is empty for pre-symbol filers (honest, never guessed); each row
+    links the EDGAR filing-index page (offer terms live inside the
+    prospectus documents — v1 does not parse them).
+    """
+    f = _load("ipo.json")
+    assert f["status"] in {"ok", "awaiting_fetch"}
+    assert {"as_of", "window", "issuers", "total", "by_status", "by_form",
+            "filings", "methodology"} <= set(f)
+    if f["status"] != "ok" or not f["filings"]:
+        return  # awaiting-fetch placeholder keeps the shape loose
+    dates: list[str] = []
+    for r in f["filings"]:
+        assert {"company", "ticker", "filed_date", "form", "status",
+                "doc_url"} <= set(r)
+        assert r["status"] in {"filed", "priced"}, f"bad status: {r['status']!r}"
+        # Status must agree with the immutable form type it is derived from.
+        if r["form"] in ("S-1", "S-1/A"):
+            assert r["status"] == "filed"
+        else:
+            assert r["form"] == "424B4" and r["status"] == "priced"
+        assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", r["filed_date"])
+        assert r["doc_url"].startswith("https://www.sec.gov/Archives/edgar/data/")
+        assert r["doc_url"].endswith("-index.htm")
+        dates.append(r["filed_date"])
+    assert dates == sorted(dates, reverse=True), "filings must be newest-first"
+    assert f["as_of"] == max(dates), "as_of must be the latest filed_date"
+    assert sum(f["by_status"].values()) == f["total"], (
+        "by_status must count FILINGS (sum == total), not companies"
+    )
+    assert set(f["by_status"]) <= {"filed", "priced"}
+    # The visible list is capped at 150; its per-status counts must never
+    # exceed the panel's own by_status totals (consistency of both counters).
+    visible: dict[str, int] = {}
+    for r in f["filings"]:
+        visible[r["status"]] = visible.get(r["status"], 0) + 1
+    for status, n in visible.items():
+        assert n <= f["by_status"][status], (
+            f"visible {status} rows ({n}) exceed by_status ({f['by_status'][status]})"
+        )
+        # Uncapped statuses must match exactly (fewer visible rows than the
+        # cap can only mean the panel itself has exactly that many).
+        if len(f["filings"]) < 150:
+            assert n == f["by_status"][status]
+    assert sum(f["by_form"].values()) == f["total"], "by_form must sum to total"
+    for form, status in (("S-1", "filed"), ("S-1/A", "filed"), ("424B4", "priced")):
+        if form in f["by_form"]:
+            assert f["by_form"][form] <= f["by_status"][status]
+
+
 def test_form13f_panel_contract() -> None:
     """13F panel schema: manager shape, top10/changes enums, coverage format.
 
