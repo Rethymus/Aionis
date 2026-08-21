@@ -21,7 +21,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from aionis.ingest.politician_trades import fetch_house_ptr_year
+from aionis.ingest.politician_trades import fetch_house_directory, fetch_house_ptr_year
 
 # Recent window: current + previous year (the panel is a recent stream, not a
 # 2008-2027 archive; expand by appending years here).
@@ -30,6 +30,14 @@ OUT = Path("data/cache/politician_trades_aggregate.parquet")
 
 
 def main() -> None:
+    # Party-join source (ONE polite cached request; current-member directory).
+    directory = fetch_house_directory()
+    print(
+        f"[politician-trades-fetch] directory: {len(directory)} members "
+        f"({directory['office'].nunique()} offices)",
+        flush=True,
+    )
+
     frames: list[pd.DataFrame] = []
     for year in YEARS:
         df = fetch_house_ptr_year(year)

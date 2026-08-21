@@ -88,3 +88,14 @@
 1b. **党派 join**：house.gov/representatives 目录（姓名/州选区/党派）——官方一手源，把 /congress 升级为带党派徽章。
 2. **Senate 解封**：Akamai 403 需不同网络出口或官方替代端点出现；持续监控，不绕过。
 3. 行政官员披露（第三源）未探针，留待需要时。
+
+
+---
+
+## 附 2：党派 join 源（house.gov 议员目录，2026-08-22 增补）
+
+- **源**：`https://www.house.gov/representatives`（全体现任议员 HTML 目录，公共域，1 请求缓存为 `data/cache/house_directory.parquet`）。
+- **解析**：页面存在**两种行序**（姓名在前含全称选区 "Alabama 4th" / 序数在前 "4th"），双正则并集按 (office, name) 去重；州名取表 caption，序数取选区末 token，At-Large → `00`。
+- **join 键 = 选区码 + 姓氏双重佐证**：FD 索引含候选人/前议员申报人，仅按选区 join 会把现任党派错配给他们——姓氏不一致即诚实 null。精确字符串匹配（casefold），无模糊。
+- **实测**（2026-08-22）：目录 430 席（218 R / 211 D / 1 I）→ 874 份申报 join 上 806 份；未链接 68 = 前议员/补选过渡（如 McCormick GA06、Menefee TX18）——按设计诚实留空。
+- **7-gate 快评**：G1 公共域 ✓；G2 快照语义（当前目录 vs 历史申报，姓氏双键消除错配）✓；G7 单请求 ✓。

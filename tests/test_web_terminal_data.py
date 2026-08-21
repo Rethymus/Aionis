@@ -384,7 +384,8 @@ def test_politician_trades_panel_contract() -> None:
     dates: list[str] = []
     for p_ in f["house"]["filings"]:
         assert {"member", "office", "filing_type", "filing_date", "filing_year",
-                "doc_url"} <= set(p_)
+                "party", "doc_url"} <= set(p_)
+        assert p_["party"] in {"R", "D", "I", None}
         assert p_["filing_type"].upper().startswith("PTR")
         assert p_["doc_url"].startswith("https://disclosures-clerk.house.gov/")
         assert p_["doc_url"].endswith(".pdf")
@@ -401,6 +402,10 @@ def test_politician_trades_panel_contract() -> None:
     assert f["latest_filing_year"] == max(f["window_years"])
     # by_year counts must sum to the panel total (honest counting).
     assert sum(f["house"]["by_year"].values()) == f["house"]["total"]
+    # party_coverage is "linked/total" over ALL filings (not just the top-100
+    # shown) — the format pins the honest-counting contract.
+    linked, _, total = f["house"]["party_coverage"].partition("/")
+    assert linked.isdigit() and int(total) == f["house"]["total"]
 
 
 def test_form8k_panel_contract() -> None:

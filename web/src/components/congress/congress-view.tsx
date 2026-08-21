@@ -124,6 +124,11 @@ export function CongressView() {
                     >
                       {p.member}
                     </a>
+                    {p.party ? (
+                      <Badge variant="outline" className="ml-2 px-1.5 py-0 font-mono text-[11px]">
+                        {p.party}
+                      </Badge>
+                    ) : null}
                   </TableCell>
                   <TableCell className="font-mono text-xs text-muted-foreground">
                     {p.office}

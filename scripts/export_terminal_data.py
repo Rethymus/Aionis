@@ -2832,6 +2832,19 @@ def export_politician_trades() -> None:
         return
 
     df = pd.read_parquet(fp)
+
+    # Party join (house.gov current-member directory): office match + LAST-NAME
+    # corroboration — candidates/former members whose StateDst names a district
+    # they do not hold stay null (never attributed the incumbent's party).
+    from aionis.ingest.politician_trades import join_party
+
+    directory_fp = Path("data/cache/house_directory.parquet")
+    parties: list[str | None] = [None] * len(df)
+    if directory_fp.exists():
+        parties = join_party(df, pd.read_parquet(directory_fp))
+    df["party"] = parties
+    n_party = int(df["party"].notna().sum())
+
     filings = []
     for _, r in df.head(100).iterrows():
         filings.append({
@@ -2840,6 +2853,7 @@ def export_politician_trades() -> None:
             "filing_type": str(r["filing_type"]),
             "filing_date": str(r["filing_date"]) if pd.notna(r["filing_date"]) else None,
             "filing_year": int(r["filing_year"]),
+            "party": r["party"] if pd.notna(r["party"]) else None,
             "doc_url": str(r["doc_url"]),
         })
     top_members = [
@@ -2863,6 +2877,7 @@ def export_politician_trades() -> None:
             "filings": filings,
             "by_year": by_year,
             "top_members": top_members,
+            "party_coverage": f"{n_party}/{len(df)}",
         },
         "senate": {
             "status": "blocked",
@@ -2881,9 +2896,12 @@ def export_politician_trades() -> None:
             "WHO filed WHEN, never what was traded — no amounts or tickers "
             "are fabricated. The Senate eFD source is Akamai-blocked "
             "(disclosed as blocked, not circumvented through third-party "
-            "APIs whose licenses fail the 7-gate). Window 2025-2026. "
-            "Display-only, not a research claim; NOT part of any OOS "
-            "pipeline."
+            "APIs whose licenses fail the 7-gate). Party labels come from the "
+            "house.gov current-member directory joined on district + last "
+            "name (office-only, no name corroboration → null; candidates and "
+            "former members never inherit the incumbent's party). Window "
+            "2025-2026. Display-only, not a research claim; NOT part of "
+            "any OOS pipeline."
         ),
     }
     (WEB / "politician_trades.json").write_text(

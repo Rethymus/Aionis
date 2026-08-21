@@ -592,6 +592,10 @@ export type PoliticianFiling = {
   // if the index row carried none.
   filing_date: string | null;
   filing_year: number;
+  // From the house.gov current-member directory joined on district + last
+  // name; null when the filer is a candidate/former member (office-only
+  // match would misattribute the incumbent's party).
+  party: string | null;
   doc_url: string;
 };
 

@@ -11,7 +11,13 @@ from __future__ import annotations
 
 import pandas as pd
 
-from aionis.ingest.politician_trades import _full_name, _norm_date, parse_fd_xml
+from aionis.ingest.politician_trades import (
+    _full_name,
+    _norm_date,
+    join_party,
+    parse_fd_xml,
+    parse_house_directory_html,
+)
 
 # --- Fixture: hand-written mirror of the verified 2026 FD.xml shape ----------
 
@@ -116,3 +122,53 @@ def test_full_name_composition() -> None:
     assert _full_name("", "Morrison", "Kelly Louise", "") == "Morrison, Kelly Louise"
     assert _full_name("", "Smith", "Bob", "Jr.") == "Smith, Bob, Jr."
     assert _full_name("", "", "", "") == ""
+
+
+# --- Directory + party join (house.gov, verified 2026-08-22 shape) -----------
+
+_DIR_HTML_FIXTURE = """
+<table class="table" id="x1">
+    <caption id="state-alabama">Alabama</caption>
+    <tr>
+      <td headers="v2" class="views-field views-field-value-2">4th</td>
+      <td headers="v4"><a href="https://aderholt.house.gov/">Aderholt, Robert</a>
+      </td>
+      <td headers="v6" class="views-field views-field-value-6">R</td>
+      <td headers="v9" class="views-field views-field-value-9">(202) 225-4876</td>
+    </tr>
+</table>
+<table class="table" id="x2">
+    <caption id="state-alaska">Alaska</caption>
+    <tr>
+      <td headers="v4"><a href="https://begich.house.gov">Begich, Nicholas</a>
+      </td>
+      <td headers="v5" class="views-field views-field-value-5">Alaska At Large        </td>
+      <td headers="v6" class="views-field views-field-value-6">R        </td>
+    </tr>
+</table>
+"""
+
+
+def test_directory_parses_both_row_variants() -> None:
+    d = parse_house_directory_html(_DIR_HTML_FIXTURE)
+    assert len(d) == 2
+    by_office = {r["office"]: r for _, r in d.iterrows()}
+    al = by_office["AL04"]
+    assert (al["name"], al["office"], al["party"]) == ("Aderholt, Robert", "AL04", "R")
+    assert by_office["AK00"]["name"] == "Begich, Nicholas"  # at-large -> 00
+
+
+def test_directory_garbage_html_is_empty() -> None:
+    d = parse_house_directory_html("<html>nothing here</html>")
+    assert d.empty
+
+
+def test_join_party_requires_office_and_lastname() -> None:
+    directory = parse_house_directory_html(_DIR_HTML_FIXTURE)
+    filings = pd.DataFrame([
+        {"member": "Aderholt, Hon. Robert", "office": "AL04"},   # both match -> R
+        {"member": "Someone, Hon. Else", "office": "AL04"},      # office yes, name no -> None
+        {"member": "Begich, Hon. Nicholas", "office": "AK00"},  # at-large match -> R
+        {"member": "Ghost, Hon. Nobody", "office": "ZZ99"},      # no office -> None
+    ])
+    assert join_party(filings, directory) == ["R", None, "R", None]
