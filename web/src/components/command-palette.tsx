@@ -16,6 +16,10 @@ import {
   FileTextIcon,
   TrendingUpIcon,
   TrendingDownIcon,
+  LayoutGridIcon,
+  LandmarkIcon,
+  ActivityIcon,
+  TerminalIcon,
 } from "lucide-react";
 import {
   CommandDialog,
@@ -61,9 +65,12 @@ const TOUR: PaletteItem[] = [
 const PAGES: PaletteItem[] = [
   { labelKey: "nav.group.regime", icon: <GlobeIcon className="size-4" />, href: "/regime" },
   { labelKey: "nav.group.picks", icon: <FlaskConicalIcon className="size-4" />, href: "/picks" },
+  { labelKey: "nav.heatmap", icon: <LayoutGridIcon className="size-4" />, href: "/heatmap" },
   { labelKey: "nav.group.confirm", icon: <ShieldCheckIcon className="size-4" />, href: "/confirmation" },
+  { labelKey: "nav.institutions", icon: <LandmarkIcon className="size-4" />, href: "/institutions" },
   { labelKey: "nav.group.track", icon: <GaugeCircleIcon className="size-4" />, href: "/track" },
   { labelKey: "nav.group.discipline", icon: <ShieldCheckIcon className="size-4" />, href: "/discipline" },
+  { labelKey: "nav.datahealth", icon: <ActivityIcon className="size-4" />, href: "/data-health" },
   { labelKey: "nav.group.themes", icon: <FileTextIcon className="size-4" />, href: "/themes" },
   { labelKey: "nav.market", icon: <GlobeIcon className="size-4" />, href: "/market" },
   { labelKey: "nav.positioning", icon: <GlobeIcon className="size-4" />, href: "/positioning" },
@@ -77,6 +84,7 @@ const PAGES: PaletteItem[] = [
   { labelKey: "nav.modelhealth", icon: <GaugeCircleIcon className="size-4" />, href: "/model-health" },
   { labelKey: "nav.powerfloor", icon: <GaugeCircleIcon className="size-4" />, href: "/power-floor" },
   { labelKey: "nav.evidence", icon: <ShieldCheckIcon className="size-4" />, href: "/evidence" },
+  { labelKey: "nav.apidocs", icon: <TerminalIcon className="size-4" />, href: "/api-docs" },
 ];
 
 const VIEWS: PaletteItem[] = [
