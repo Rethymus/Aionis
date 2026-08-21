@@ -8,6 +8,14 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-22 (a) 党派 join 上线 + 配额阻断下的代理调度策略
+
+**党派 join（`9aea9e0`，P1 第三件）**：house.gov/representatives 议员目录（公共域，1 请求缓存）双行序解析（姓名在前含全称选区 / 序数在前，At-Large→00，430 席 218R/211D/1I）→ **选区码+姓氏双重佐证 join**（仅按选区会把现任党派错配给候选人/前议员——姓氏不一致诚实 null）。实测 806/874 链接，未链接 68 = 前议员/补选过渡（McCormick GA06 等）。视图中性 mono 徽章（语义色不挪用）；契约钉 party 枚举 + party_coverage 记账。
+
+**代理调度现状**：三 worktree（j=/ipo、k=/stars、l=党派）已建；l 任务被主线接管完成并清理；**j/k 代理派发双双阵亡于 [1308] 5h 限额（04:18:38 重置）** → 已建定时调度在配额恢复后自动派发 j/k 两代理并按门集成（见 workspace automation）。**剩余优先级**：P1=J /ipo + K /stars 目录扩展+manager 详情页（本轮调度）；P2=/news、/quarterly+/annual、/companies；P3=势力阵营（血缘图谱）；业主门=PTR PDF 交易级解析、E3/Track A/Track LLM。
+
+**注意**：GitHub Actions 计费阻断未解（blockers.md 首条）——日更与部署停摆中，代码推送正常。
+
 ## 2026-08-21 小隐寺全形态路线图 + 三代理（H 成 / G-I 阵亡→主线接管）→ /events + /congress 上线
 
 **方向文件**：`reports/design/2026-08-21-xiaoyinsi-full-parity-roadmap.md`（17 路由对齐矩阵、P0-P3 阶梯、Aionis 五特色增层；小隐寺自身空壳 /companies+/annual+势力阵营未上线 = 填壳机会）。本轮 P0 三件全部关闭。
