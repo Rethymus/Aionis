@@ -40,6 +40,7 @@ import dataHealthJson from "./data_health.json";
 import apiCatalogJson from "./api_catalog.json";
 import form13fJson from "./form13f.json";
 import form8kJson from "./form8k.json";
+import ipoJson from "./ipo.json";
 import politicianTradesJson from "./politician_trades.json";
 
 export type Pick = {
@@ -584,6 +585,32 @@ export type Form8k = {
   snapshot_ts?: string;
 };
 
+export type FormIpoFiling = {
+  company: string;
+  // Parsed from the EDGAR display name where the filer carries a symbol;
+  // "" for pre-symbol S-1 filers (honest empty, never guessed).
+  ticker: string;
+  filed_date: string;
+  // S-1 | S-1/A | 424B4 (immutable form type — the status is derived from it).
+  form: string;
+  // filed (registration on file) | priced (statutory 424B4 final prospectus).
+  status: "filed" | "priced";
+  doc_url: string;
+};
+
+export type FormIpo = {
+  status: string;
+  as_of: string | null;
+  window: { start: string; end: string };
+  issuers: number;
+  total: number;
+  by_status: Record<string, number>;
+  by_form: Record<string, number>;
+  filings: FormIpoFiling[];
+  methodology: string;
+  snapshot_ts?: string;
+};
+
 export type PoliticianFiling = {
   member: string;
   office: string;
@@ -664,5 +691,6 @@ export const aionis = {
   apiCatalog: apiCatalogJson as ApiCatalog,
   form13f: form13fJson as Form13f,
   form8k: form8kJson as Form8k,
+  ipo: ipoJson as FormIpo,
   politicianTrades: politicianTradesJson as PoliticianTrades,
 };
