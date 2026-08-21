@@ -541,6 +541,10 @@ export type Form13fManager = {
   cik: string;
   name: string;
   zh_name: string | null;
+  // Human-curated editorial tag from the fetch registry (value / growth /
+  // activist / macro / quant / china_background / other) — display-only,
+  // NOT a SEC data-source field (disclosed in the panel methodology).
+  category: string;
   quarter: string;
   filed: string;
   n_positions: number;
@@ -554,6 +558,9 @@ export type Form13f = {
   as_of: string | null;
   managers: Form13fManager[];
   ticker_coverage?: string;
+  // Managers per category (honest counting at export time; "other" share is
+  // allowed to be large — the tag is editorial, not a data-source field).
+  category_counts?: Record<string, number>;
   methodology: string;
   snapshot_ts?: string;
 };

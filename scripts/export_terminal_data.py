@@ -2585,7 +2585,7 @@ def export_form13f() -> None:
     """SEC 13F-HR star-manager quarterly holdings (display-only, exploratory).
 
     Reads ``data/cache/form13f_aggregate.parquet`` (gitignored; produced by
-    ``scripts/form13f_fetch.py`` — 12 verified celebrity managers × the 2 most
+    ``scripts/form13f_fetch.py`` — 40 verified celebrity managers × the 2 most
     recent distinct report quarters). Public domain (17 U.S.C. §105);
     filing-date PIT; quarterly cadence; ``value`` as filed in the EDGAR 2014+
     XML (whole USD). Issuer→ticker links are EXACT normalized-name matches
@@ -2596,6 +2596,9 @@ def export_form13f() -> None:
     (multi-CIK ambiguous names dropped — no fuzzy guessing). As-filed
     abbreviations ("BANK OF AMER CORP") and truncated 20-char legacy names
     stay unmatched and render as plain text (honest partial coverage).
+    ``category`` (value/growth/activist/macro/quant/china_background/other) is
+    editorial curation written in the fetch registry — NOT a SEC data-source
+    field (disclosed in the methodology string).
     """
     from aionis.ingest.form13f import (
         build_issuer_ticker_map,
@@ -2699,7 +2702,12 @@ def export_form13f() -> None:
         manager_payloads.append({
             "cik": f"{int(cik):010d}",
             "name": str(sub["manager_name"].iloc[0]),
-            "zh_name": str(sub["zh_name"].iloc[0]) if "zh_name" in sub else None,
+            "zh_name": (
+                zh if (zh := sub["zh_name"].iloc[0]) is not None and str(zh) != "nan" else None
+            ) if "zh_name" in sub else None,
+            "category": (
+                str(cat) if pd.notna(cat := sub["category"].iloc[0]) else "other"
+            ) if "category" in sub else "other",
             "quarter": str(quarters[0]),
             "filed": str(cur_lines["filing_date"].max()),
             "n_positions": int(len(cur)),
@@ -2717,32 +2725,42 @@ def export_form13f() -> None:
         if h["ticker"]
     )
     n_top = sum(len(m["top10"]) for m in manager_payloads)
+    cat_counts: dict[str, int] = {}
+    for m in manager_payloads:
+        cat_counts[m["category"]] = cat_counts.get(m["category"], 0) + 1
     payload = {
         "status": "ok",
         "as_of": str(df["quarter"].max()),
         "managers": manager_payloads,
         "ticker_coverage": f"{n_linked}/{n_top}",
+        "category_counts": cat_counts,
         "methodology": (
             "SEC Form 13F-HR quarterly institutional holdings — the legally "
             "mandated public report (public domain, 17 U.S.C. §105) every "
             "institutional manager with >=US$100M discretion must file within "
-            "45 days of quarter-end. Panel shows a bounded subset of ~12 star "
-            "managers (CIKs verified against EDGAR submissions JSON 2026-08-20), "
-            "latest quarter top-10 holdings plus quarter-over-quarter frame "
-            "diff (new/increased/reduced/exited on share counts). Values are "
-            "as filed in the EDGAR 2014+ information-table XML (whole USD — "
-            "the 'expressed in thousands' note is the legacy HTML rendering); "
-            "same-(CUSIP, class, option) tranches merged into one position; "
-            "shares as filed (SH lines; option lines flagged PUT/CALL). "
-            "Filing-date point-in-time; amendments supersede (latest filing "
-            "per report quarter wins). Issuer→ticker links are exact "
-            "normalized-name matches (case/punctuation/apostrophes/legal "
-            "suffixes) against the terminal's US stock universe and the SEC "
-            "company_tickers snapshot (current, not as-of-filing; ambiguous "
-            "multi-entity names dropped) — EDGAR infotables carry CUSIPs, not "
-            "tickers, and as-filed abbreviations stay unmatched plain text. "
-            "Display-only, not a research claim; NOT part of "
-            "any OOS pipeline."
+            "45 days of quarter-end. Panel shows a bounded subset of ~40 star "
+            "managers (CIKs verified against EDGAR submissions JSON "
+            "2026-08-22; candidates not verifiable as actively filing — e.g. "
+            "Scion, Greenlight, Omega Advisors, Pabrai — were honestly "
+            "dropped), latest quarter top-10 holdings plus "
+            "quarter-over-quarter frame diff (new/increased/reduced/exited on "
+            "share counts). Values are as filed in the EDGAR 2014+ "
+            "information-table XML (whole USD — the 'expressed in thousands' "
+            "note is the legacy HTML rendering); same-(CUSIP, class, option) "
+            "tranches merged into one position; shares as filed (SH lines; "
+            "option lines flagged PUT/CALL). Filing-date point-in-time; "
+            "amendments supersede (latest filing per report quarter wins). "
+            "Issuer→ticker links are exact normalized-name matches "
+            "(case/punctuation/apostrophes/legal suffixes) against the "
+            "terminal's US stock universe and the SEC company_tickers "
+            "snapshot (current, not as-of-filing; ambiguous multi-entity "
+            "names dropped) — EDGAR infotables carry CUSIPs, not tickers, "
+            "and as-filed abbreviations stay unmatched plain text. The "
+            "value/growth/activist/macro/quant/china_background/other "
+            "category tags are HUMAN-CURATED editorial metadata written in "
+            "the fetch registry — they do NOT exist in any SEC data source. "
+            "Display-only, not a research claim; NOT part of any OOS "
+            "pipeline."
         ),
     }
     (WEB / "form13f.json").write_text(json.dumps(_stamp(payload), indent=2, default=str))
