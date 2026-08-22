@@ -1,8 +1,9 @@
 """Bounded Form 8-K material-event fetch (display-only, exploratory).
 
-25 large-cap issuers (v2 breadth expansion, 2026-08-22: the form4 5-issuer seed
-plus 20 mega/large caps — browser-verified gap vs the competitor's full-market
-8-K stream; a BOUNDED v1 step, not full market). Fixed window anchored at
+50 large-cap issuers (v3 breadth expansion, 2026-08-22: the form4 5-issuer seed
++ 20 v2 mega/large caps + 25 v3 mega/large caps — browser-verified gap vs the
+competitor's full-market 8-K stream; a BOUNDED step, still not full market).
+Fixed window anchored at
 2026-05-01 (the panel is a RECENT-event stream, not a 2016 history — the window
 only grows). Polite (>=2s host spacing via ``_policy_get``), idempotent (EFTS +
 per-accession caches), aggregate deduplicated by accession so reruns never
@@ -24,7 +25,7 @@ import pandas as pd
 
 from aionis.ingest.form8k import fetch_form8k_events
 
-# v2 bounded universe: 25 tickers / 26 CIK entries. CIKs resolved from the SEC
+# v3 bounded universe: 50 tickers / 51 CIK entries. CIKs resolved from the SEC
 # ``company_tickers.json`` snapshot via the repo's cik_resolver cache (entity
 # titles cross-checked — see docs/data-intake-edgar-form8k.md G6). XOM carries
 # TWO CIKs: Exxon Mobil Corp (34088) filed through the 2026-07-01 holding-
@@ -66,6 +67,39 @@ ISSUERS: dict[int, str] = {
     858877: "CSCO",
     1326801: "META",
     1318605: "TSLA",
+    # v3 breadth: tech / semis / software (2026-08-22, CIKs resolved from the
+    # SEC company_tickers.json snapshot, entity titles cross-checked)
+    1341439: "ORCL",    # Oracle Corp
+    1108524: "CRM",     # Salesforce, Inc.
+    1065280: "NFLX",    # Netflix Inc
+    2488: "AMD",        # Advanced Micro Devices Inc
+    50863: "INTC",      # Intel Corp
+    804328: "QCOM",     # Qualcomm Inc/DE
+    97476: "TXN",       # Texas Instruments Inc
+    723125: "MU",       # Micron Technology Inc
+    796343: "ADBE",     # Adobe Inc.
+    51143: "IBM",       # International Business Machines Corp
+    # v3 breadth: consumer staples / discretionary
+    77476: "PEP",       # PepsiCo Inc
+    63908: "MCD",       # McDonalds Corp
+    320187: "NKE",      # Nike, Inc.
+    909832: "COST",     # Costco Wholesale Corp /NEW
+    # v3 breadth: industrials / defense / materials (DD = DuPont de Nemours —
+    # the current listed entity; the DDGS mid-spin ticker is gone from the
+    # snapshot, DD is the resolvable continuation)
+    40545: "GE",        # General Electric Co (GE Aerospace filer)
+    18230: "CAT",       # Caterpillar Inc
+    315189: "DE",       # Deere & Co
+    1666700: "DD",      # DuPont de Nemours, Inc.
+    773840: "HON",      # Honeywell International Inc
+    100885: "UNP",      # Union Pacific Corp
+    936468: "LMT",      # Lockheed Martin Corp
+    40533: "GD",        # General Dynamics Corp
+    101829: "RTX",      # RTX Corp
+    # v3 breadth: financials (bounded — v2 already carries JPM/BRK-B; the
+    # suggested pool's trailing MS/SCHW were the two dropped to stay at 25)
+    4962: "AXP",        # American Express Co
+    886982: "GS",       # Goldman Sachs Group Inc
 }
 START = "2026-05-01"
 END = date.today().isoformat()
