@@ -8,6 +8,26 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-22 (f) 四代理军团轮（业主指令"按优先级驱动子代理"）：J/K/M 全交付 + L 死而复生 + 主线集成上线
+
+**编排**：P0 提交为干净基线（`8357c28`）后，四 worktree 并行（兄弟目录 Aionis-wj/wk/wl/wm，junction 只挂 node_modules）。优先级 = J 导出扩容 > K executives > L events 广度 > M 13G。
+
+**四代理结局**：
+- **J（导出扩容）全胜**（`d927bec`）：congress 100→**874 全量**（+240KB）、ipo 150→**1046 全量**（+257KB）、form4/smart_money 上限 200/120（**JSON 未再生成——主仓无 form4_aggregate/efts_13d cache**，下次 fetch 后自动生效，测试用范围钉兼容）；**insiders doc_url 数据可得性通过**（parquet schema 实查含 accession+filer_cik，代码+类型+UI 已就绪，同因缺 cache 待再生效）；顺手修 `export_macro_drivers` 缺 cache 时静默覆写 live 面板的隐性回退 bug（retain-on-absent 守卫）。
+- **K（executives）全胜**（`7661fd5`+`d413d7f`）：8-K Item 5.02 officer_changes 派生面板 + /executives 路由 + 公司筛选 pills + 侧栏入口 + zh/en i18n + 契约测试；诚实边界 = 申报流级（person-level extraction DEFERRED 写进 methodology）。
+- **L（events 广度）死于配额但代码幸存**：17:09 [1308] 阵亡、报告丢失，但 16:25 已提交 `f4de1da`（5→25 发行人 + XOM 双 CIK 特例处置 + 导出上限 300 + 一致性测试）——**分支对象在共享 .git 幸存，主线 cherry-pick 后接管剩余**：7-gate 文档补 v2 礼貌账、真跑 25 发行人有界 fetch（**103 份申报/25 发行人/0 跳过**，~30min），executives 联动增长至 **20 条/15 发行人**。
+- **M（13G 流）全胜但有一处误诊**（4 commits）：**关键发现 = EFTS 对 SC 13 家族冻结于 2024-12-17**（13G 同 13D 的墙），改走 EDGAR daily crawler index（`stakes_13g.py` + 7-gate 文档三处披露）；真拉取 120 天窗口 **15,982 份**（13G 7,419 + 13G/A 8,563）、ticker 解析 134/150、真实 filer 128/150；smart-money 加 13G 被动流卡（FilterPills+分页）；状态机（持股比例/清仓）deferred。**误诊**：M 把自己 worktree 的 ledger CRLF 检出假阳性误诊为"stale pin"并错误重钉（`082b8f1`）——主线用 `git cat-file blob` 字节级裁决（HEAD blob = `44157b5b…` = 现行 pin，2e2ab30 是 08-09 历史提交），**该 commit 剔除未集成**。
+
+**主线集成**：J→K→M×3→L 六 commit cherry-pick（api_catalog/data_health 两处生成物冲突取侧后统一重导出）→ 统一 export → **降级审计揪出 7 个受害面板**（stock_universe 1421→0、calibration/model_health/picks_meta regions→0、sector_breakdown 111→53、picks 20→0、shorts 5→0——本地缺研究侧 cache 且这些导出器**无 retain-on-absent 守卫**，J 只补过 macro_drivers 一个）→ 全部从 HEAD 还原 + 只重跑 data_health/api_catalog 两个汇总器（32 面板/32 端点一致）→ **守卫缺口记为跟进片**（stock_universe/calibration/model_health/picks_meta/sector_breakdown/picks/shorts 七处补 J 的同款守卫）。
+
+**验证链（全绿）**：pytest exit 0 + ruff 净（--exclude docs/code-review）+ tsc 0 + eslint 净 + build **1,492 页**（+/executives）+ IAB 抽检三页（executives 20/KPI/pills、events 103+JPM+META+全部103 pills、smart-money 13G 卡 15,982 + 13G·A pills）。本地服务已停；四 worktree 按"先摘 junction 再删目录"铁律清理、四分支删除（M 的错误重钉随分支消亡）。
+
+**未提交状态**：`108ff22` 已 commit（集成数据 + 7-gate 文档）；**未 push**（部署仍停摆中——GitHub Actions 计费阻断未解，blockers.md 首条）。
+
+**遗留池**：(a) 七导出器 retain 守卫跟进片；(b) form4_fetch 重跑（doc_url + 200 行生效）+ 13D cache 重建（smart_money 120 行生效）；(c) M/N 在途（news/quarterly/annual）不碰；(d) P2：13G 状态机、events 更广宇宙、congress 交易级（D4 门）。
+
+
+
 ## 2026-08-22 (e) 小隐寺对齐 P0 实施交付（业主 GO + 硬条件"必须真的读懂"）——先复核订正再动手
 
 **浏览器复核（业主要求的前提）**：IAB 实测 18 页中的存疑页 + 截图→视觉模型 + getComputedStyle DOM 实测。**订正两处误判**（此前 WebFetch 抓的是 SSR 首帧，"数据暂不可用"是客户端取数前占位）：① **/events 实为全市场 8-K 实时流**（波音/诺格/微盘股全谱、分钟级时间戳、公司+类型+时间三处 EDGAR 直链、12+ 中文类目多标签 `·` 连接）——非空壳，"Aionis 领先"表述作废，改为"追赶广度"；② **/annual 有 102 份 10-K 流**。真空白 = /quarterly /companies /势力阵营 /stock 机构持有者 四处。视觉实测：暗色 OLED 黑底（body rgb(0,0,0)）、GeistSans/GeistMono、党派徽章 = 美式浅底填充（D 蓝字 `rgb(71,168,255)`/蓝底、R 红字 `rgb(255,86,95)`/红底、10px/600/4px）、方向徽章绿买红卖、吸顶表头、行高 ~40px。两份方向文件（realtime-deployment §6/§8 + granularity-alignment §4/§10）与 state 旧条目已同步订正留档。

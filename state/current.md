@@ -1,5 +1,11 @@
 # state/current.md — read first each session
 
+- **active (2026-08-22) ⑤ 四代理军团轮集成上线（业主指令"按优先级驱动子代理"）：**
+  **① 结局**：J 导出扩容全胜（congress 874 全量/ipo 1046 全量/insiders doc_url 代码就绪待 cache）、K executives 面板全胜（派生自 8-K 5.02，20 条/15 发行人）、L 死于配额但代码幸存（`f4de1da` 25 发行人宇宙 + XOM 双 CIK；主线接管跑完 fetch：**103 份/25 发行人/0 跳过**）、M 13G 流全胜（**EFTS 对 SC 13 家族冻结于 2024-12-17 的关键发现**→改走 daily index；120 天真拉取 **15,982 份** + smart-money 13G 卡）。
+  **② 集成纪律**：M 的 ledger 错误重钉（`082b8f1`，CRLF 假阳性误诊）经 `git cat-file blob` 字节级裁决剔除；六 commit cherry-pick + 统一重导出 + **降级审计揪出 7 个无守卫导出器受害面板并全部还原**（stock_universe 等——跟进片：补 J 的 retain-on-absent 守卫到七处）。
+  **③ 验证**：pytest 0 失败 + ruff 净 + tsc 0 + eslint 净 + build **1,492 页** + IAB 抽检三页全绿（executives/events 广度/13G 卡）。worktree 四清（junction 先摘铁律）、分支四删、本地服务已停。
+  **④ 状态**：`108ff22` 已 commit；**未 push**（Actions 计费阻断未解）。遗留池与 M/N 在途边界详见 handoff (f)。
+
 - **active (2026-08-22) ④ 小隐寺对齐 P0 已实施交付（业主 GO + 硬条件"必须真的读懂"）：**
   **① 先复核后动手（IAB 浏览器 + 视觉模型 + getComputedStyle 三通道）**：订正两处 WebFetch 误判——**/events 实为全市场 8-K 实时流**（分钟级、三处 EDGAR 直链、12+ 中文类目；"我们领先"作废，改"追赶广度"）、/annual 有 102 份；真空白仅 /quarterly /companies /势力阵营 /stock 机构持有者；视觉实测 = 暗色 OLED、Geist 字体、党派蓝/红浅底徽章 10px/600/4px、绿买红卖。两份方向文件 + state 旧条目已同步订正。
   **② P0 全落地（纯 display，0 ledger/frozen/OOS）**：`lib/format.ts` 统一格式层（新）+ `stream/stream-kit.tsx` 交互三件套（新：FilterPills/LoadMoreFooter/usePaged）+ 五面板接线（congress 党派筛选+浅底徽章+分页、insiders 买/卖、ipo 状态、events 类别、smart-money 新/修正）+ SegmentHeader countHint 页头计数窗（congress/events/ipo）+ **/stock 机构持有者反查模块**（AAPL 实测 8 家：伯克希尔 $66.0B/81.8% 居首→段永平→AQR/Two Sigma/索罗斯；小隐寺同位空壳"共 0 家"=反超点落地）+ insiders 文案债修复 + i18n zh/en 各+27 键。
