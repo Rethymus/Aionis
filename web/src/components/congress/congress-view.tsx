@@ -21,6 +21,7 @@ import {
 import { cn } from "@/lib/utils";
 import { fmtDateShort } from "@/lib/format";
 import { FilterPills, LoadMoreFooter, usePaged } from "@/components/stream/stream-kit";
+import { AvatarInitials } from "@/components/stream/avatar-initials";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
 
@@ -134,100 +135,120 @@ export function CongressView() {
         </Card>
       </div>
 
-      <Card>
-        <CardHeader className="pb-3">
-          <CardTitle>{t("congress.top_filers")}</CardTitle>
-          <CardDescription>{t("congress.top_filers_note")}</CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-wrap gap-2">
-          {f.house.top_members.map((m) => (
-            <Badge key={`${m.member}-${m.office}`} variant="secondary" className="gap-1">
-              {m.member}
-              <span className="text-muted-foreground">{m.office}</span>
-              <span className="tabular-nums text-muted-foreground">×{m.count}</span>
-            </Badge>
-          ))}
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader className="pb-3">
-          <CardTitle>{t("congress.stream_title")}</CardTitle>
-          <CardDescription>{t("congress.stream_note")}</CardDescription>
-          <div className="pt-1">
-            <FilterPills<PartyFilter>
-              label={t("congress.party.label")}
-              value={party}
-              onChange={applyParty}
-              options={[
-                { key: "all", label: t("congress.party.all"), count: filings.length },
-                { key: "R", label: t("congress.party.R"), count: partyCounts.R },
-                { key: "D", label: t("congress.party.D"), count: partyCounts.D },
-                { key: "I", label: t("congress.party.I"), count: partyCounts.I },
-              ]}
-            />
-          </div>
-        </CardHeader>
-        <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>{t("congress.member")}</TableHead>
-                <TableHead>{t("congress.office")}</TableHead>
-                <TableHead>{t("congress.type")}</TableHead>
-                <TableHead>{t("congress.date")}</TableHead>
-                <TableHead className="text-right">{t("congress.source")}</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {visible.map((p) => (
-                <TableRow key={p.doc_url}>
-                  <TableCell>
-                    <a
-                      href={p.doc_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-medium text-primary hover:underline"
-                    >
-                      {p.member}
-                    </a>
-                    <PartyBadge party={p.party} />
-                  </TableCell>
-                  <TableCell className="font-mono text-xs text-muted-foreground">
-                    {p.office}
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant="secondary">{p.filing_type}</Badge>
-                  </TableCell>
-                  <TableCell
-                    className="whitespace-nowrap tabular-nums text-muted-foreground"
-                    title={p.filing_date ?? undefined}
-                  >
-                    {fmtDateShort(p.filing_date)}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <a
-                      href={p.doc_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-primary hover:underline"
-                    >
-                      PDF
-                      <ExternalLinkIcon className="size-3" />
-                    </a>
-                  </TableCell>
+      <div className="grid items-start gap-6 lg:grid-cols-[1fr_320px]">
+        <Card className="min-w-0">
+          <CardHeader className="pb-3">
+            <CardTitle>{t("congress.stream_title")}</CardTitle>
+            <CardDescription>{t("congress.stream_note")}</CardDescription>
+            <div className="pt-1">
+              <FilterPills<PartyFilter>
+                label={t("congress.party.label")}
+                value={party}
+                onChange={applyParty}
+                options={[
+                  { key: "all", label: t("congress.party.all"), count: filings.length },
+                  { key: "R", label: t("congress.party.R"), count: partyCounts.R },
+                  { key: "D", label: t("congress.party.D"), count: partyCounts.D },
+                  { key: "I", label: t("congress.party.I"), count: partyCounts.I },
+                ]}
+              />
+            </div>
+          </CardHeader>
+          <CardContent className="p-0">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>{t("congress.member")}</TableHead>
+                  <TableHead>{t("congress.office")}</TableHead>
+                  <TableHead>{t("congress.type")}</TableHead>
+                  <TableHead>{t("congress.date")}</TableHead>
+                  <TableHead className="text-right">{t("congress.source")}</TableHead>
                 </TableRow>
+              </TableHeader>
+              <TableBody>
+                {visible.map((p) => (
+                  <TableRow key={p.doc_url}>
+                    <TableCell>
+                      <a
+                        href={p.doc_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-medium text-primary hover:underline"
+                      >
+                        {p.member}
+                      </a>
+                      <PartyBadge party={p.party} />
+                    </TableCell>
+                    <TableCell className="font-mono text-xs text-muted-foreground">
+                      {p.office}
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant="secondary">{p.filing_type}</Badge>
+                    </TableCell>
+                    <TableCell
+                      className="whitespace-nowrap tabular-nums text-muted-foreground"
+                      title={p.filing_date ?? undefined}
+                    >
+                      {fmtDateShort(p.filing_date)}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <a
+                        href={p.doc_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-primary hover:underline"
+                      >
+                        PDF
+                        <ExternalLinkIcon className="size-3" />
+                      </a>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+            <LoadMoreFooter
+              shown={visible.length}
+              total={filtered.length}
+              onLoadMore={loadMore}
+              pageSize={PAGE_SIZE}
+            />
+          </CardContent>
+        </Card>
+
+        {/* "Most active filers" sidebar (xiaoyinsi-style person list): avatar
+            initials + member + district + filing count. top_members carries NO
+            party field (member/office/count only) — party chips stay on the
+            stream rows where the join is per-filing, never fabricated here. */}
+        <Card className="overflow-hidden py-0">
+          <CardHeader className="border-b">
+            <CardTitle className="text-base">{t("congress.top_filers")}</CardTitle>
+            <CardDescription>{t("congress.top_filers_note")}</CardDescription>
+          </CardHeader>
+          <CardContent className="p-0">
+            <div className="divide-y">
+              {f.house.top_members.map((m) => (
+                <div
+                  key={`${m.member}-${m.office}`}
+                  className="flex items-center gap-2.5 px-4 py-2"
+                >
+                  <AvatarInitials name={m.member} />
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm font-medium" title={m.member}>
+                      {m.member}
+                    </p>
+                    <p className="font-mono text-[11px] text-muted-foreground">
+                      {m.office}
+                    </p>
+                  </div>
+                  <span className="ml-auto shrink-0 font-mono text-xs tabular-nums text-muted-foreground">
+                    ×{m.count}
+                  </span>
+                </div>
               ))}
-            </TableBody>
-          </Table>
-          <LoadMoreFooter
-            shown={visible.length}
-            total={filtered.length}
-            onLoadMore={loadMore}
-            pageSize={PAGE_SIZE}
-          />
-        </CardContent>
-      </Card>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
 
       <Card className="border-amber-500/30 bg-amber-500/5">
         <CardHeader className="pb-3">
