@@ -286,3 +286,169 @@ class TestRefreshSmartMoneyRecentOnly:
         self._committed(committed)
         daily.write_text("[]")
         assert etd._refresh_smart_money_recent_only(committed, daily) is None
+
+
+# --- degenerate-output retain guards (2026-08-22; the 7-panel incident) ------
+# A local run without the gitignored price-panel caches made the calibration
+# degenerate and five exporters wrote empty shells over live committed panels
+# (picks 20→0, stock_universe 1421→0, ...). The guards SKIP-and-retain instead.
+# These tests lock each guard with monkeypatched degenerate inputs.
+
+
+def _fake_oos_df():
+    import pandas as pd
+
+    return pd.DataFrame(
+        {
+            "date": ["2026-08-03", "2026-06-30"],
+            "ticker": ["X", "Y"],
+            "region": ["cn", "us"],
+            "score": [1.0, -1.0],
+        }
+    )
+
+
+def _degenerate_calibration():
+    return {
+        "regions": {},
+        "latest_date": "2026-08-03",
+        "method": "platt",
+        "walk_forward": False,
+    }
+
+
+def test_picks_retains_committed_when_calibration_degenerate(
+    tmp_path, monkeypatch, capsys
+):
+    import pandas as pd
+
+    from aionis.eval import score_calibration
+
+    web = tmp_path / "web"
+    web.mkdir()
+    (web / "picks.json").write_text(json.dumps([{"ticker": "KEPT"}]))
+    monkeypatch.setattr(etd, "WEB", web)
+    monkeypatch.setattr(pd, "read_parquet", lambda *_a, **_k: _fake_oos_df())
+    monkeypatch.setattr(
+        etd, "_load_ticker_metadata", lambda: pd.DataFrame()
+    )
+    monkeypatch.setattr(
+        score_calibration,
+        "calibrate_latest_month",
+        lambda *_a, **_k: _degenerate_calibration(),
+    )
+
+    result = etd.export_picks()
+
+    assert result is None  # main() then skips export_metrics too
+    assert json.loads((web / "picks.json").read_text()) == [{"ticker": "KEPT"}]
+    assert not (web / "shorts.json").exists()
+    assert "SKIP picks" in capsys.readouterr().out
+
+
+def test_model_health_retains_committed_when_degenerate(
+    tmp_path, monkeypatch, capsys
+):
+    import pandas as pd
+
+    from aionis.eval import model_drift
+
+    web = tmp_path / "web"
+    web.mkdir()
+    (web / "model_health.json").write_text(
+        json.dumps({"status": "ok", "regions": {"us": {"psi": 0.1}}})
+    )
+    monkeypatch.setattr(etd, "WEB", web)
+    monkeypatch.setattr(pd, "read_parquet", lambda *_a, **_k: _fake_oos_df())
+    monkeypatch.setattr(
+        model_drift, "drift_summary", lambda *_a, **_k: {"psi": {}}
+    )
+
+    etd.export_model_health()
+
+    assert json.loads((web / "model_health.json").read_text())["regions"]
+    assert "SKIP model_health" in capsys.readouterr().out
+
+
+def test_calibration_reliability_retains_committed_when_degenerate(
+    tmp_path, monkeypatch, capsys
+):
+    import pandas as pd
+
+    from aionis.eval import score_calibration
+
+    web = tmp_path / "web"
+    web.mkdir()
+    (web / "calibration_reliability.json").write_text(
+        json.dumps({"status": "ok", "regions": {"us": {"ece": 0.03}}})
+    )
+    monkeypatch.setattr(etd, "WEB", web)
+    monkeypatch.setattr(pd, "read_parquet", lambda *_a, **_k: _fake_oos_df())
+    monkeypatch.setattr(
+        score_calibration,
+        "calibrate_walk_forward",
+        lambda *_a, **_k: {"per_month": []},
+    )
+
+    etd.export_calibration_reliability()
+
+    assert json.loads((web / "calibration_reliability.json").read_text())[
+        "regions"
+    ]
+    assert "SKIP calibration_reliability" in capsys.readouterr().out
+
+
+def test_stock_universe_retains_committed_when_degenerate(
+    tmp_path, monkeypatch, capsys
+):
+    import pandas as pd
+
+    from aionis.eval import score_calibration
+
+    web = tmp_path / "web"
+    web.mkdir()
+    (web / "stock_universe.json").write_text(
+        json.dumps({"status": "ok", "stocks": [{"ticker": "KEPT"}]})
+    )
+    monkeypatch.setattr(etd, "WEB", web)
+    monkeypatch.setattr(pd, "read_parquet", lambda *_a, **_k: _fake_oos_df())
+    monkeypatch.setattr(
+        etd, "_load_ticker_metadata", lambda: pd.DataFrame()
+    )
+    monkeypatch.setattr(
+        score_calibration,
+        "calibrate_latest_month",
+        lambda *_a, **_k: _degenerate_calibration(),
+    )
+
+    etd.export_stock_universe()
+
+    assert json.loads((web / "stock_universe.json").read_text())["stocks"] == [
+        {"ticker": "KEPT"}
+    ]
+    assert "SKIP stock_universe" in capsys.readouterr().out
+
+
+def test_sector_breakdown_retains_committed_when_meta_absent(
+    tmp_path, monkeypatch, capsys
+):
+    import pandas as pd
+
+    web = tmp_path / "web"
+    web.mkdir()
+    (web / "sector_breakdown.json").write_text(
+        json.dumps(
+            {"status": "ok", "all_sectors": [{"sector": "S1"}], "n_sectors": 1}
+        )
+    )
+    monkeypatch.setattr(etd, "WEB", web)
+    monkeypatch.setattr(pd, "read_parquet", lambda *_a, **_k: _fake_oos_df())
+    monkeypatch.setattr(
+        etd, "_load_ticker_metadata", lambda: pd.DataFrame()
+    )
+
+    etd.export_sector_breakdown()
+
+    committed = json.loads((web / "sector_breakdown.json").read_text())
+    assert committed["status"] == "ok"  # not clobbered to awaiting_fetch
+    assert "SKIP sector_breakdown" in capsys.readouterr().out

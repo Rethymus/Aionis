@@ -91,7 +91,29 @@ def _calibration_disclaimer(calibration: dict) -> str:
     )
 
 
-def export_picks() -> tuple[str, int]:
+def _committed_json(name: str):
+    """Parsed committed panel JSON (``web/src/data/aionis/<name>``), or None
+    when absent/malformed — the retain-guard's view of the tracked value."""
+    try:
+        return json.loads((WEB / name).read_text(encoding="utf-8"))
+    except Exception:
+        return None
+
+
+def _skip_retain(panel: str, reason: str) -> None:
+    """Degenerate-output retain guard (macro_drivers precedent, generalized
+    2026-08-22): a local run without the gitignored research caches (price
+    panels, ticker metadata) must never clobber a live committed panel with an
+    empty/partial shell — SKIP and keep the tracked JSON instead. Mirrors the
+    cot/form4/ipo 'retain last-committed value' convention."""
+    print(
+        f"[export-terminal] SKIP {panel}: {reason} "
+        "(tracked JSON retains last-committed value)",
+        flush=True,
+    )
+
+
+def export_picks() -> tuple[str, int] | None:
     """Stock-pick ranking, top long + bottom short PER REGION (each region's own latest).
 
     Each region's panels are PIT-aligned on their own calendar (US ends
@@ -178,6 +200,15 @@ def export_picks() -> tuple[str, int]:
                 "score": round(float(r["score"]), 3),
                 "prob_up": round(prob_lookup.get((r["region"], r["ticker"]), 0.5), 3),
             })
+    committed_picks = _committed_json("picks.json")
+    if not picks and isinstance(committed_picks, list) and committed_picks:
+        # Degenerate calibration (price-panel caches absent locally) — retain
+        # the committed picks/shorts/meta trio. Returning None also makes
+        # main() skip export_metrics(latest, n_total), keeping metrics.json
+        # consistent with the retained picks instead of writing a degraded
+        # hero payload built from an empty selection.
+        _skip_retain("picks", "calibration produced no picks (price panels absent)")
+        return None
     (WEB / "picks.json").write_text(json.dumps(picks, indent=2))
     (WEB / "shorts.json").write_text(json.dumps(shorts, indent=2))
 
@@ -219,6 +250,14 @@ def export_sector_breakdown() -> None:
     oos = pd.read_parquet("runs/track_c_confirmatory_oos_scores.parquet")
     meta = _load_ticker_metadata()
     if meta.empty:
+        committed_sector = _committed_json("sector_breakdown.json")
+        if committed_sector and committed_sector.get("status") == "ok":
+            # Never clobber a live committed panel with the awaiting placeholder
+            # (macro_drivers anti-pattern) — retain instead.
+            _skip_retain(
+                "sector_breakdown", "ticker metadata cache absent locally"
+            )
+            return
         (WEB / "sector_breakdown.json").write_text(json.dumps({
             "status": "awaiting_fetch",
             "methodology": "Run scripts/build_ticker_metadata.py first.",
@@ -258,6 +297,17 @@ def export_sector_breakdown() -> None:
             "regions": sorted(sub["region"].unique().tolist()),
         })
     grouped.sort(key=lambda s: s["mean_score"], reverse=True)
+    committed_sector = _committed_json("sector_breakdown.json")
+    committed_n = len(committed_sector.get("all_sectors", [])) if committed_sector else 0
+    if committed_n and len(grouped) < committed_n // 2:
+        # Partial metadata backfill (e.g. cn_industry cache half-rebuilt after
+        # the 08-20 accident) collapses coverage — retain until the cache is
+        # whole again rather than shipping a half-empty ranking.
+        _skip_retain(
+            "sector_breakdown",
+            f"sector coverage collapsed ({len(grouped)} < 50% of committed {committed_n})",
+        )
+        return
     payload = {
         "status": "ok",
         "latest_dates": {r: str(pd.Timestamp(d).date()) for r, d in latest_dates.items()},
@@ -924,6 +974,13 @@ def export_model_health() -> None:
     us_panel = pd.read_parquet(us_panel_path) if us_panel_path.exists() else pd.DataFrame()
     cn_panel = pd.read_parquet(cn_panel_path) if cn_panel_path.exists() else pd.DataFrame()
     summary = drift_summary(oos, us_panel, cn_panel)
+    if not summary.get("regions"):
+        committed_mh = _committed_json("model_health.json")
+        if committed_mh and committed_mh.get("regions"):
+            # Degenerate drift summary (price-panel caches absent locally) —
+            # retain the committed per-region monitor.
+            _skip_retain("model_health", "drift summary degenerate (price panels absent)")
+            return
     summary["status"] = "ok"
     (WEB / "model_health.json").write_text(json.dumps(summary, indent=2, default=str))
 
@@ -953,6 +1010,13 @@ def export_calibration_reliability() -> None:
     us_panel = pd.read_parquet(us_panel_path) if us_panel_path.exists() else pd.DataFrame()
     cn_panel = pd.read_parquet(cn_panel_path) if cn_panel_path.exists() else pd.DataFrame()
     reliability = calibrate_walk_forward(oos, us_panel, cn_panel)
+    if not reliability.get("regions"):
+        committed_cr = _committed_json("calibration_reliability.json")
+        if committed_cr and committed_cr.get("regions"):
+            # Degenerate walk-forward (price-panel caches absent locally) —
+            # retain the committed reliability series.
+            _skip_retain("calibration_reliability", "walk-forward degenerate (price panels absent)")
+            return
     reliability["status"] = "ok"
     reliability["methodology"] = (
         "Walk-forward calibration reliability (display-only, leakage-safe). For "
@@ -2736,6 +2800,15 @@ def export_stock_universe() -> None:
                 "reddit_mentions": int(rd_hit["mentions"]) if rd_hit else None,
             })
     stocks.sort(key=lambda s: (s["region"], -s["score"]))
+    if not stocks:
+        committed_su = _committed_json("stock_universe.json")
+        if committed_su and committed_su.get("stocks"):
+            # Degenerate calibration (price-panel caches absent locally) wrote
+            # n_stocks=0 on 2026-08-22 and cost a restore — retain the frozen
+            # universe instead (it only legitimately advances with a new
+            # frozen phase / E3, never from cache availability).
+            _skip_retain("stock_universe", "empty universe (calibration degenerate)")
+            return
     payload = {
         "status": "ok",
         "as_of": {r: pd.Timestamp(d).strftime("%Y-%m-%d") for r, d in region_latest.items()},
