@@ -8,6 +8,20 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-22 (g) 守卫加固 + P/Q 代理第二轮：events 50 发行人 + 展示快赢四件 + CRLF 根治
+
+**主线守卫片（`60ee8b0`）**：五导出器退化守卫（picks 三件套/sector 两级[model-empty 不再写 awaiting 覆盖 + 覆盖坍缩 <50% 保留]/model_health/calibration_reliability/stock_universe）+ 共享 `_committed_json`/`_skip_retain` + 5 hermetic 回归测试。**实战验证**：同一缺 cache 条件重跑导出，08-22 曾清空的 7 面板全部保住（20/1421/111/2/2/2）。export_picks 守卫返回 None 连带 main 跳过 export_metrics（防止降级 hero）。
+
+**代理 P（展示快赢，4 commits 全成）**：① insiders/top_insiders 头像缩写（新共享件 `stream/avatar-initials.tsx`，姓名首字母 ≤3，项目 token 无硬编码色）② ipo 侧栏诚实替代 widget（by_form 徽章 + 最近定价 Top5 + "v1 不解析募资额"注记；lg 断点防 5 列表被挤）③ congress top_members 侧栏卡（头像缩写+office+×count；**party 字段数据里没有——诚实不加**）④ manager 调仓 Δ市值：`compute_changes` 帧差本就保留两侧 value——补 `delta_value` 输出+导出+类型（暂可选字段，重导出后可收紧）+ ChangesBlock fmtUsd 芯片 + 契约测试（只在可证处断言；价格漂移可反号不硬钉）。
+
+**代理 Q（events v3，3 commits 全成）**：25→**50 发行人/51 CIK**（新 25 家全经 cik_resolver 快照实解+实体名核对；DD=DuPont de Nemours、GE=GE Aerospace 披露）；真拉取 **203 份申报/0 跳过/0 错误**（v2 缓存 0 请求重放 + 新增 225 礼貌请求 ~13min）；executives 联动 **44 份/29 发行人**；AXP 5 份 unclassified 诚实入账。7-gate v3 账。
+
+**主线集成**：7 commit 零冲突 cherry-pick；补 Q 遗留（form8k methodology "25"→"50" + 注释）；Q 的 form8k cache 拷回主仓重导出（203/50 + delta_value **395/395** 全量生效）；**`.gitattributes` 钉 `runs/*.jsonl eol=lf`**——根治两个代理都撞上的 worktree CRLF→ledger pin 假阳性（M 误诊同源）。
+
+**验证（全绿）**：pytest 0 失败 + ruff 净 + tsc 0 + eslint 净 + build 1,492 页 + IAB 抽检 5/5（头像缩写渲染 `generic "AJ"`、ipo 侧栏、congress 侧栏、events 203+ORCL/COST、manager +$ 芯片）。worktree wp/wq 清理（junction 先摘）、分支删、服务停。
+
+**遗留池更新**：form4_fetch 重跑（doc_url+200 行）与 13D cache 重建仍待（等 Actions 或长跑）；13G 状态机/events 更广/executives 人级/congress 交易级（D4 门）；M/N 在途不碰。**未 push**（计费阻断）。
+
 ## 2026-08-22 (f) 四代理军团轮（业主指令"按优先级驱动子代理"）：J/K/M 全交付 + L 死而复生 + 主线集成上线
 
 **编排**：P0 提交为干净基线（`8357c28`）后，四 worktree 并行（兄弟目录 Aionis-wj/wk/wl/wm，junction 只挂 node_modules）。优先级 = J 导出扩容 > K executives > L events 广度 > M 13G。

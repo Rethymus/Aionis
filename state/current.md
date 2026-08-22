@@ -1,5 +1,11 @@
 # state/current.md — read first each session
 
+- **active (2026-08-22) ⑥ 守卫加固 + P/Q 第二轮（display lane 持续推进）：**
+  **① 主线**：五导出器退化守卫 + 5 回归测试（实战验证：曾清空的 7 面板全保住）；`.gitattributes` 钉 ledger LF（根治 CRLF 假阳性）。
+  **② 代理 P 全胜**：insiders 头像缩写 / ipo 侧栏 widget / congress top_members 侧栏 / manager Δ市值（delta_value 395/395 生效）。
+  **③ 代理 Q 全胜**：events **50 发行人/203 份申报**（225 礼貌请求，0 错误）；executives 联动 **44/29**。
+  **④ 验证全绿**：pytest 0 + ruff 净 + tsc 0 + eslint 净 + build 1,492 页 + IAB 5/5。详见 handoff (g)。**未 push**（计费阻断，业主指示后面解决）。
+
 - **active (2026-08-22) ⑤ 四代理军团轮集成上线（业主指令"按优先级驱动子代理"）：**
   **① 结局**：J 导出扩容全胜（congress 874 全量/ipo 1046 全量/insiders doc_url 代码就绪待 cache）、K executives 面板全胜（派生自 8-K 5.02，20 条/15 发行人）、L 死于配额但代码幸存（`f4de1da` 25 发行人宇宙 + XOM 双 CIK；主线接管跑完 fetch：**103 份/25 发行人/0 跳过**）、M 13G 流全胜（**EFTS 对 SC 13 家族冻结于 2024-12-17 的关键发现**→改走 daily index；120 天真拉取 **15,982 份** + smart-money 13G 卡）。
   **② 集成纪律**：M 的 ledger 错误重钉（`082b8f1`，CRLF 假阳性误诊）经 `git cat-file blob` 字节级裁决剔除；六 commit cherry-pick + 统一重导出 + **降级审计揪出 7 个无守卫导出器受害面板并全部还原**（stock_universe 等——跟进片：补 J 的 retain-on-absent 守卫到七处）。
