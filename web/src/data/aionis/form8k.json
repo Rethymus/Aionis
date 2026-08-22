@@ -5,21 +5,26 @@
     "start": "2026-05-01",
     "end": "2026-08-21"
   },
-  "issuers": 25,
-  "total": 103,
-  "unclassified": 0,
+  "issuers": 50,
+  "total": 203,
+  "unclassified": 5,
   "by_category": {
-    "charter_amendment": 4,
+    "agreement_termination": 1,
+    "charter_amendment": 7,
     "delisting": 1,
+    "exhibits": 4,
     "exit_costs": 1,
-    "financial_obligation": 2,
+    "financial_obligation": 4,
     "major_agreement": 3,
-    "officer_changes": 20,
-    "other_events": 19,
-    "reg_fd": 10,
-    "results": 31,
-    "security_terms": 1,
-    "vote_results": 11
+    "merger_completion": 1,
+    "officer_changes": 44,
+    "other": 1,
+    "other_events": 29,
+    "reg_fd": 14,
+    "results": 60,
+    "security_terms": 4,
+    "unclassified": 5,
+    "vote_results": 24
   },
   "events": [
     {
@@ -57,6 +62,44 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/104169/000010416926000145/wmt-20260820.htm"
     },
     {
+      "ticker": "DE",
+      "company": "DEERE & CO",
+      "filing_date": "2026-08-20",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "7.01",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/315189/000110465926098904/de-20260820x8k.htm"
+    },
+    {
+      "ticker": "AMD",
+      "company": "ADVANCED MICRO DEVICES INC",
+      "filing_date": "2026-08-19",
+      "form": "8-K",
+      "items": [
+        "5.02",
+        "9.01"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000163/amd-20260817.htm"
+    },
+    {
+      "ticker": "HON",
+      "company": "HONEYWELL INTERNATIONAL INC",
+      "filing_date": "2026-08-19",
+      "form": "8-K",
+      "items": [
+        "5.02",
+        "7.01",
+        "9.01"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000130/hon-20260819.htm"
+    },
+    {
       "ticker": "HD",
       "company": "HOME DEPOT, INC.",
       "filing_date": "2026-08-18",
@@ -81,6 +124,39 @@
       ],
       "category": "financial_obligation",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/nvda-20260817.htm"
+    },
+    {
+      "ticker": "AMD",
+      "company": "ADVANCED MICRO DEVICES INC",
+      "filing_date": "2026-08-17",
+      "form": "8-K",
+      "items": [
+        "1.01",
+        "2.03",
+        "9.01"
+      ],
+      "category": "financial_obligation",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2488/000119312526354029/d142696d8k.htm"
+    },
+    {
+      "ticker": "AXP",
+      "company": "AMERICAN EXPRESS CO",
+      "filing_date": "2026-08-17",
+      "form": "8-K",
+      "items": [],
+      "category": "unclassified",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000345/axp-20260817.htm"
+    },
+    {
+      "ticker": "IBM",
+      "company": "INTERNATIONAL BUSINESS MACHINES CORP",
+      "filing_date": "2026-08-14",
+      "form": "8-K",
+      "items": [
+        "9.01"
+      ],
+      "category": "exhibits",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/51143/000110465926097089/tm2623193d1_8k.htm"
     },
     {
       "ticker": "HD",
@@ -108,6 +184,33 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000106/csco-20260812.htm"
     },
     {
+      "ticker": "INTC",
+      "company": "INTEL CORP",
+      "filing_date": "2026-08-12",
+      "form": "8-K",
+      "items": [
+        "7.01",
+        "8.01",
+        "9.01"
+      ],
+      "category": "reg_fd",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/50863/000119312526346806/d117670d8k.htm"
+    },
+    {
+      "ticker": "AXP",
+      "company": "AMERICAN EXPRESS CO",
+      "filing_date": "2026-08-12",
+      "form": "8-K",
+      "items": [
+        "3.03",
+        "5.03",
+        "8.01",
+        "9.01"
+      ],
+      "category": "security_terms",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000338/axp-20260812.htm"
+    },
+    {
       "ticker": "BRK-B",
       "company": "BERKSHIRE HATHAWAY INC",
       "filing_date": "2026-08-11",
@@ -118,6 +221,18 @@
       ],
       "category": "results",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526344495/d159922d8k.htm"
+    },
+    {
+      "ticker": "GS",
+      "company": "GOLDMAN SACHS GROUP INC",
+      "filing_date": "2026-08-11",
+      "form": "8-K",
+      "items": [
+        "5.03",
+        "9.01"
+      ],
+      "category": "charter_amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/886982/000119312526344912/d179572d8k.htm"
     },
     {
       "ticker": "GOOGL",
@@ -132,6 +247,29 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1652044/000119312526342390/d171253d8k.htm"
     },
     {
+      "ticker": "NKE",
+      "company": "NIKE, Inc.",
+      "filing_date": "2026-08-10",
+      "form": "8-K",
+      "items": [
+        "5.02"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000112/nke-20260804.htm"
+    },
+    {
+      "ticker": "GD",
+      "company": "GENERAL DYNAMICS CORP",
+      "filing_date": "2026-08-07",
+      "form": "8-K",
+      "items": [
+        "5.02",
+        "9.01"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/40533/000119312526340490/d129075d8k.htm"
+    },
+    {
       "ticker": "LLY",
       "company": "ELI LILLY & Co",
       "filing_date": "2026-08-05",
@@ -142,6 +280,28 @@
       ],
       "category": "results",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000077/lly-20260805.htm"
+    },
+    {
+      "ticker": "CRM",
+      "company": "Salesforce, Inc.",
+      "filing_date": "2026-08-05",
+      "form": "8-K",
+      "items": [
+        "5.02"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000160/crm-20260805.htm"
+    },
+    {
+      "ticker": "AXP",
+      "company": "AMERICAN EXPRESS CO",
+      "filing_date": "2026-08-05",
+      "form": "8-K",
+      "items": [
+        "8.01"
+      ],
+      "category": "other_events",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000327/axp-20260805.htm"
     },
     {
       "ticker": "JNJ",
@@ -180,6 +340,81 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/310158/000110465926090045/tm2621496d1_8k.htm"
     },
     {
+      "ticker": "AMD",
+      "company": "ADVANCED MICRO DEVICES INC",
+      "filing_date": "2026-08-04",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "7.01",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000121/amd-20260804.htm"
+    },
+    {
+      "ticker": "MCD",
+      "company": "MCDONALDS CORP",
+      "filing_date": "2026-08-04",
+      "form": "8-K",
+      "items": [
+        "5.02",
+        "7.01",
+        "9.01"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000069/mcd-20260803.htm"
+    },
+    {
+      "ticker": "MCD",
+      "company": "MCDONALDS CORP",
+      "filing_date": "2026-08-04",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000067/mcd-20260804.htm"
+    },
+    {
+      "ticker": "CAT",
+      "company": "CATERPILLAR INC",
+      "filing_date": "2026-08-04",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "7.01",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000040/cat-20260804.htm"
+    },
+    {
+      "ticker": "DD",
+      "company": "DuPont de Nemours, Inc.",
+      "filing_date": "2026-08-04",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1666700/000166670026000049/dd-20260804.htm"
+    },
+    {
+      "ticker": "GD",
+      "company": "GENERAL DYNAMICS CORP",
+      "filing_date": "2026-08-04",
+      "form": "8-K",
+      "items": [
+        "8.01",
+        "9.01"
+      ],
+      "category": "other_events",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/40533/000119312526332899/d122083d8k.htm"
+    },
+    {
       "ticker": "CVX",
       "company": "CHEVRON CORP",
       "filing_date": "2026-07-31",
@@ -202,6 +437,18 @@
       ],
       "category": "results",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2115436/000211543626000006/xom-20260731.htm"
+    },
+    {
+      "ticker": "QCOM",
+      "company": "QUALCOMM INC/DE",
+      "filing_date": "2026-07-31",
+      "form": "8-K",
+      "items": [
+        "8.01",
+        "9.01"
+      ],
+      "category": "other_events",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/804328/000110465926089234/tm2621612d2_8k.htm"
     },
     {
       "ticker": "AAPL",
@@ -238,6 +485,17 @@
       ],
       "category": "results",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1141391/000114139126000081/ma-20260730.htm"
+    },
+    {
+      "ticker": "NFLX",
+      "company": "NETFLIX INC",
+      "filing_date": "2026-07-30",
+      "form": "8-K",
+      "items": [
+        "5.02"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1065280/000106528026000214/nflx-20260726.htm"
     },
     {
       "ticker": "MSFT",
@@ -313,6 +571,30 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026050596/meta-20260729.htm"
     },
     {
+      "ticker": "QCOM",
+      "company": "QUALCOMM INC/DE",
+      "filing_date": "2026-07-29",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/804328/000080432826000085/qcom-20260729.htm"
+    },
+    {
+      "ticker": "GD",
+      "company": "GENERAL DYNAMICS CORP",
+      "filing_date": "2026-07-29",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/40533/000004053326000029/gd-20260729.htm"
+    },
+    {
       "ticker": "V",
       "company": "VISA INC.",
       "filing_date": "2026-07-28",
@@ -362,6 +644,32 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/12927/000162828026049929/ba-20260728.htm"
     },
     {
+      "ticker": "GS",
+      "company": "GOLDMAN SACHS GROUP INC",
+      "filing_date": "2026-07-27",
+      "form": "8-K",
+      "items": [
+        "3.03",
+        "5.03",
+        "9.01"
+      ],
+      "category": "security_terms",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/886982/000119312526318147/d113214d8k.htm"
+    },
+    {
+      "ticker": "AXP",
+      "company": "AMERICAN EXPRESS CO",
+      "filing_date": "2026-07-24",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "7.01",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000318/axp-20260724.htm"
+    },
+    {
       "ticker": "JPM",
       "company": "JPMORGAN CHASE & CO",
       "filing_date": "2026-07-23",
@@ -384,6 +692,66 @@
       ],
       "category": "charter_amendment",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961726000288/jpm-20260721.htm"
+    },
+    {
+      "ticker": "INTC",
+      "company": "INTEL CORP",
+      "filing_date": "2026-07-23",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000155/intc-20260723.htm"
+    },
+    {
+      "ticker": "HON",
+      "company": "HONEYWELL INTERNATIONAL INC",
+      "filing_date": "2026-07-23",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000120/hon-20260723.htm"
+    },
+    {
+      "ticker": "UNP",
+      "company": "UNION PACIFIC CORP",
+      "filing_date": "2026-07-23",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/100885/000010088526000249/unp-20260723.htm"
+    },
+    {
+      "ticker": "LMT",
+      "company": "LOCKHEED MARTIN CORP",
+      "filing_date": "2026-07-23",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/936468/000162828026049277/lmt-20260723.htm"
+    },
+    {
+      "ticker": "RTX",
+      "company": "RTX Corp",
+      "filing_date": "2026-07-23",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/101829/000010182926000025/rtx-20260723.htm"
     },
     {
       "ticker": "GOOGL",
@@ -410,6 +778,75 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026049213/tsla-20260722.htm"
     },
     {
+      "ticker": "NFLX",
+      "company": "NETFLIX INC",
+      "filing_date": "2026-07-22",
+      "form": "8-K",
+      "items": [
+        "8.01",
+        "9.01"
+      ],
+      "category": "other_events",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1065280/000119312526312575/d171951d8k.htm"
+    },
+    {
+      "ticker": "TXN",
+      "company": "TEXAS INSTRUMENTS INC",
+      "filing_date": "2026-07-22",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/97476/000009747626000148/txn-20260722.htm"
+    },
+    {
+      "ticker": "IBM",
+      "company": "INTERNATIONAL BUSINESS MACHINES CORP",
+      "filing_date": "2026-07-22",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000077/ibm-20260722.htm"
+    },
+    {
+      "ticker": "GS",
+      "company": "GOLDMAN SACHS GROUP INC",
+      "filing_date": "2026-07-21",
+      "form": "8-K",
+      "items": [
+        "9.01"
+      ],
+      "category": "exhibits",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/886982/000119312526310408/d102046d8k.htm"
+    },
+    {
+      "ticker": "GS",
+      "company": "GOLDMAN SACHS GROUP INC",
+      "filing_date": "2026-07-20",
+      "form": "8-K",
+      "items": [
+        "8.01"
+      ],
+      "category": "other_events",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/886982/000119312526308384/d279459d8k.htm"
+    },
+    {
+      "ticker": "ADBE",
+      "company": "ADOBE INC.",
+      "filing_date": "2026-07-17",
+      "form": "8-K",
+      "items": [
+        "5.02"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000120/adbe-20260714.htm"
+    },
+    {
       "ticker": "UNH",
       "company": "UNITEDHEALTH GROUP INC",
       "filing_date": "2026-07-16",
@@ -431,6 +868,30 @@
       ],
       "category": "other_events",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/21344/000162828026048466/ko-20260716.htm"
+    },
+    {
+      "ticker": "NFLX",
+      "company": "NETFLIX INC",
+      "filing_date": "2026-07-16",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1065280/000106528026000211/nflx-20260716.htm"
+    },
+    {
+      "ticker": "GE",
+      "company": "GENERAL ELECTRIC CO",
+      "filing_date": "2026-07-16",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/40545/000004054526000047/ge-20260716.htm"
     },
     {
       "ticker": "V",
@@ -455,6 +916,27 @@
       ],
       "category": "results",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/200406/000020040626000146/jnj-20260715.htm"
+    },
+    {
+      "ticker": "DE",
+      "company": "DEERE & CO",
+      "filing_date": "2026-07-15",
+      "form": "8-K",
+      "items": [
+        "8.01",
+        "9.01"
+      ],
+      "category": "other_events",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/315189/000110465926083910/de-20260710x8k.htm"
+    },
+    {
+      "ticker": "AXP",
+      "company": "AMERICAN EXPRESS CO",
+      "filing_date": "2026-07-15",
+      "form": "8-K",
+      "items": [],
+      "category": "unclassified",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000302/axp-20260715.htm"
     },
     {
       "ticker": "JPM",
@@ -493,6 +975,32 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/80424/000008042426000082/pg-20260714.htm"
     },
     {
+      "ticker": "IBM",
+      "company": "INTERNATIONAL BUSINESS MACHINES CORP",
+      "filing_date": "2026-07-14",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "7.01",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000070/ibm-20260714.htm"
+    },
+    {
+      "ticker": "GS",
+      "company": "GOLDMAN SACHS GROUP INC",
+      "filing_date": "2026-07-14",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "7.01",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/886982/000088698226000294/gs-20260714.htm"
+    },
+    {
       "ticker": "AMZN",
       "company": "AMAZON COM INC",
       "filing_date": "2026-07-09",
@@ -503,6 +1011,30 @@
       ],
       "category": "other_events",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1018724/000110465926082293/tm2619352d4_8k.htm"
+    },
+    {
+      "ticker": "PEP",
+      "company": "PEPSICO INC",
+      "filing_date": "2026-07-09",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000037/pep-20260709.htm"
+    },
+    {
+      "ticker": "COST",
+      "company": "COSTCO WHOLESALE CORP /NEW",
+      "filing_date": "2026-07-08",
+      "form": "8-K",
+      "items": [
+        "8.01",
+        "9.01"
+      ],
+      "category": "other_events",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/909832/000090983226000060/cost-20260707.htm"
     },
     {
       "ticker": "XOM",
@@ -567,6 +1099,17 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/34088/000119312526291986/d70995d8k.htm"
     },
     {
+      "ticker": "AMD",
+      "company": "ADVANCED MICRO DEVICES INC",
+      "filing_date": "2026-07-01",
+      "form": "8-K",
+      "items": [
+        "5.02"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000115/amd-20260626.htm"
+    },
+    {
       "ticker": "NVDA",
       "company": "NVIDIA CORP",
       "filing_date": "2026-06-30",
@@ -576,6 +1119,36 @@
       ],
       "category": "vote_results",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000056/nvda-20260624.htm"
+    },
+    {
+      "ticker": "NKE",
+      "company": "NIKE, Inc.",
+      "filing_date": "2026-06-30",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000076/nke-20260630.htm"
+    },
+    {
+      "ticker": "HON",
+      "company": "HONEYWELL INTERNATIONAL INC",
+      "filing_date": "2026-06-29",
+      "form": "8-K",
+      "items": [
+        "1.01",
+        "2.01",
+        "2.02",
+        "3.03",
+        "5.02",
+        "5.03",
+        "7.01",
+        "9.01"
+      ],
+      "category": "merger_completion",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000084/hon-20260625.htm"
     },
     {
       "ticker": "V",
@@ -613,6 +1186,27 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/21344/000155278126000366/e26287_ko-8k.htm"
     },
     {
+      "ticker": "GE",
+      "company": "GENERAL ELECTRIC CO",
+      "filing_date": "2026-06-25",
+      "form": "8-K",
+      "items": [
+        "5.03",
+        "9.01"
+      ],
+      "category": "charter_amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/40545/000004054526000042/ge-20260625.htm"
+    },
+    {
+      "ticker": "AXP",
+      "company": "AMERICAN EXPRESS CO",
+      "filing_date": "2026-06-25",
+      "form": "8-K",
+      "items": [],
+      "category": "unclassified",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000281/axp-20260625.htm"
+    },
+    {
       "ticker": "JPM",
       "company": "JPMORGAN CHASE & CO",
       "filing_date": "2026-06-24",
@@ -635,6 +1229,81 @@
       ],
       "category": "other_events",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026045167/jpm-20260624.htm"
+    },
+    {
+      "ticker": "QCOM",
+      "company": "QUALCOMM INC/DE",
+      "filing_date": "2026-06-24",
+      "form": "8-K",
+      "items": [
+        "3.02"
+      ],
+      "category": "other",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/804328/000110465926077071/tm2618522d1_8k.htm"
+    },
+    {
+      "ticker": "MU",
+      "company": "MICRON TECHNOLOGY INC",
+      "filing_date": "2026-06-24",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000013/mu-20260624.htm"
+    },
+    {
+      "ticker": "DD",
+      "company": "DuPont de Nemours, Inc.",
+      "filing_date": "2026-06-24",
+      "form": "8-K",
+      "items": [
+        "3.03",
+        "5.03",
+        "9.01"
+      ],
+      "category": "security_terms",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1666700/000166670026000046/dd-20260623.htm"
+    },
+    {
+      "ticker": "GS",
+      "company": "GOLDMAN SACHS GROUP INC",
+      "filing_date": "2026-06-24",
+      "form": "8-K",
+      "items": [
+        "8.01",
+        "9.01"
+      ],
+      "category": "other_events",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/886982/000119312526281123/d103941d8k.htm"
+    },
+    {
+      "ticker": "IBM",
+      "company": "INTERNATIONAL BUSINESS MACHINES CORP",
+      "filing_date": "2026-06-23",
+      "form": "8-K",
+      "items": [
+        "1.01",
+        "2.03",
+        "9.01"
+      ],
+      "category": "financial_obligation",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000061/ibm-20260622.htm"
+    },
+    {
+      "ticker": "NKE",
+      "company": "NIKE, Inc.",
+      "filing_date": "2026-06-23",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "5.02",
+        "7.01",
+        "9.01"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000070/nke-20260616.htm"
     },
     {
       "ticker": "NVDA",
@@ -685,6 +1354,19 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1730168/000119312526275077/d149683d8k.htm"
     },
     {
+      "ticker": "NKE",
+      "company": "NIKE, Inc.",
+      "filing_date": "2026-06-18",
+      "form": "8-K",
+      "items": [
+        "5.02",
+        "7.01",
+        "9.01"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000068/nke-20260615.htm"
+    },
+    {
       "ticker": "MA",
       "company": "Mastercard Inc",
       "filing_date": "2026-06-17",
@@ -694,6 +1376,40 @@
       ],
       "category": "vote_results",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1141391/000114139126000041/ma-20260616.htm"
+    },
+    {
+      "ticker": "AXP",
+      "company": "AMERICAN EXPRESS CO",
+      "filing_date": "2026-06-17",
+      "form": "8-K",
+      "items": [
+        "9.01"
+      ],
+      "category": "exhibits",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000270/axp-20260617.htm"
+    },
+    {
+      "ticker": "HON",
+      "company": "HONEYWELL INTERNATIONAL INC",
+      "filing_date": "2026-06-15",
+      "form": "8-K",
+      "items": [
+        "5.02",
+        "7.01",
+        "8.01",
+        "9.01"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000080/hon-20260615.htm"
+    },
+    {
+      "ticker": "AXP",
+      "company": "AMERICAN EXPRESS CO",
+      "filing_date": "2026-06-15",
+      "form": "8-K",
+      "items": [],
+      "category": "unclassified",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000263/axp-20260615.htm"
     },
     {
       "ticker": "AMZN",
@@ -733,6 +1449,44 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1730168/000119312526266777/d152717d8k.htm"
     },
     {
+      "ticker": "ADBE",
+      "company": "ADOBE INC.",
+      "filing_date": "2026-06-11",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "5.02",
+        "9.01"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000109/adbe-20260608.htm"
+    },
+    {
+      "ticker": "GE",
+      "company": "GENERAL ELECTRIC CO",
+      "filing_date": "2026-06-11",
+      "form": "8-K",
+      "items": [
+        "5.02",
+        "9.01"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/40545/000004054526000039/ge-20260608.htm"
+    },
+    {
+      "ticker": "CAT",
+      "company": "CATERPILLAR INC",
+      "filing_date": "2026-06-11",
+      "form": "8-K",
+      "items": [
+        "5.07",
+        "7.01",
+        "9.01"
+      ],
+      "category": "vote_results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/18230/000110465926072929/tm2617177d1_8k.htm"
+    },
+    {
       "ticker": "AMZN",
       "company": "AMAZON COM INC",
       "filing_date": "2026-06-10",
@@ -744,6 +1498,31 @@
       ],
       "category": "financial_obligation",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1018724/000110465926072140/tm2613616d4_8k.htm"
+    },
+    {
+      "ticker": "ORCL",
+      "company": "ORACLE CORP",
+      "filing_date": "2026-06-10",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "8.01",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526265848/orcl-20260610.htm"
+    },
+    {
+      "ticker": "MU",
+      "company": "MICRON TECHNOLOGY INC",
+      "filing_date": "2026-06-09",
+      "form": "8-K",
+      "items": [
+        "5.02",
+        "9.01"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/723125/000110465926071845/tm2617112d1_8k.htm"
     },
     {
       "ticker": "MA",
@@ -818,6 +1597,31 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/104169/000010416926000111/wmt-20260604.htm"
     },
     {
+      "ticker": "NFLX",
+      "company": "NETFLIX INC",
+      "filing_date": "2026-06-05",
+      "form": "8-K",
+      "items": [
+        "5.07",
+        "8.01"
+      ],
+      "category": "vote_results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1065280/000106528026000189/nflx-20260604.htm"
+    },
+    {
+      "ticker": "HON",
+      "company": "HONEYWELL INTERNATIONAL INC",
+      "filing_date": "2026-06-05",
+      "form": "8-K",
+      "items": [
+        "7.01",
+        "8.01",
+        "9.01"
+      ],
+      "category": "reg_fd",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000072/hon-20260605.htm"
+    },
+    {
       "ticker": "GOOGL",
       "company": "Alphabet Inc.",
       "filing_date": "2026-06-04",
@@ -845,6 +1649,17 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000051/avgo-20260603.htm"
     },
     {
+      "ticker": "GS",
+      "company": "GOLDMAN SACHS GROUP INC",
+      "filing_date": "2026-06-03",
+      "form": "8-K",
+      "items": [
+        "9.01"
+      ],
+      "category": "exhibits",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/886982/000119312526255626/d107600d8k.htm"
+    },
+    {
       "ticker": "JPM",
       "company": "JPMORGAN CHASE & CO",
       "filing_date": "2026-06-02",
@@ -867,6 +1682,65 @@
       ],
       "category": "officer_changes",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1141391/000114139126000037/ma-20260529.htm"
+    },
+    {
+      "ticker": "CRM",
+      "company": "Salesforce, Inc.",
+      "filing_date": "2026-06-02",
+      "form": "8-K",
+      "items": [
+        "5.02"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000138/crm-20260527.htm"
+    },
+    {
+      "ticker": "TXN",
+      "company": "TEXAS INSTRUMENTS INC",
+      "filing_date": "2026-06-02",
+      "form": "8-K",
+      "items": [
+        "5.02"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/97476/000095010326008325/dp247795_8k.htm"
+    },
+    {
+      "ticker": "HON",
+      "company": "HONEYWELL INTERNATIONAL INC",
+      "filing_date": "2026-06-02",
+      "form": "8-K",
+      "items": [
+        "5.02",
+        "7.01",
+        "9.01"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000068/hon-20260601.htm"
+    },
+    {
+      "ticker": "CRM",
+      "company": "Salesforce, Inc.",
+      "filing_date": "2026-06-01",
+      "form": "8-K",
+      "items": [
+        "5.02",
+        "5.07",
+        "9.01"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000131/crm-20260528.htm"
+    },
+    {
+      "ticker": "DE",
+      "company": "DEERE & CO",
+      "filing_date": "2026-06-01",
+      "form": "8-K",
+      "items": [
+        "5.02"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/315189/000110465926068930/de-20260526x8k.htm"
     },
     {
       "ticker": "CVX",
@@ -924,6 +1798,29 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/310158/000110465926067509/tm2615833d1_8k.htm"
     },
     {
+      "ticker": "IBM",
+      "company": "INTERNATIONAL BUSINESS MACHINES CORP",
+      "filing_date": "2026-05-28",
+      "form": "8-K",
+      "items": [
+        "7.01"
+      ],
+      "category": "reg_fd",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000047/ibm-20260528.htm"
+    },
+    {
+      "ticker": "COST",
+      "company": "COSTCO WHOLESALE CORP /NEW",
+      "filing_date": "2026-05-28",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/909832/000090983226000046/cost-20260528.htm"
+    },
+    {
       "ticker": "JPM",
       "company": "JPMORGAN CHASE & CO",
       "filing_date": "2026-05-27",
@@ -934,6 +1831,29 @@
       ],
       "category": "other_events",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/19617/000119312526242018/d51433d8k.htm"
+    },
+    {
+      "ticker": "CRM",
+      "company": "Salesforce, Inc.",
+      "filing_date": "2026-05-27",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000125/crm-20260527.htm"
+    },
+    {
+      "ticker": "HON",
+      "company": "HONEYWELL INTERNATIONAL INC",
+      "filing_date": "2026-05-27",
+      "form": "8-K",
+      "items": [
+        "5.07"
+      ],
+      "category": "vote_results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/773840/000119312526242011/d35048d8k.htm"
     },
     {
       "ticker": "HD",
@@ -947,6 +1867,19 @@
       ],
       "category": "charter_amendment",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/354950/000035495026000105/hd-20260521.htm"
+    },
+    {
+      "ticker": "DD",
+      "company": "DuPont de Nemours, Inc.",
+      "filing_date": "2026-05-26",
+      "form": "8-K",
+      "items": [
+        "5.07",
+        "7.01",
+        "9.01"
+      ],
+      "category": "vote_results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1666700/000166670026000034/dd-20260521.htm"
     },
     {
       "ticker": "AMZN",
@@ -970,6 +1903,29 @@
       ],
       "category": "other_events",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/310158/000162828026037738/mrk-20260522.htm"
+    },
+    {
+      "ticker": "PEP",
+      "company": "PEPSICO INC",
+      "filing_date": "2026-05-22",
+      "form": "8-K",
+      "items": [
+        "8.01",
+        "9.01"
+      ],
+      "category": "other_events",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/77476/000110465926065758/tm2615167d1_8k.htm"
+    },
+    {
+      "ticker": "MCD",
+      "company": "MCDONALDS CORP",
+      "filing_date": "2026-05-22",
+      "form": "8-K",
+      "items": [
+        "5.07"
+      ],
+      "category": "vote_results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000055/mcd-20260520.htm"
     },
     {
       "ticker": "GOOGL",
@@ -1008,6 +1964,19 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/104169/000010416926000095/wmt-20260521.htm"
     },
     {
+      "ticker": "DE",
+      "company": "DEERE & CO",
+      "filing_date": "2026-05-21",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "7.01",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/315189/000110465926064747/de-20260521x8k.htm"
+    },
+    {
       "ticker": "NVDA",
       "company": "NVIDIA CORP",
       "filing_date": "2026-05-20",
@@ -1044,6 +2013,53 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/354950/000035495026000101/hd-20260519.htm"
     },
     {
+      "ticker": "UNP",
+      "company": "UNION PACIFIC CORP",
+      "filing_date": "2026-05-18",
+      "form": "8-K",
+      "items": [
+        "5.07"
+      ],
+      "category": "vote_results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/100885/000010088526000174/unp-20260514.htm"
+    },
+    {
+      "ticker": "AMD",
+      "company": "ADVANCED MICRO DEVICES INC",
+      "filing_date": "2026-05-15",
+      "form": "8-K",
+      "items": [
+        "1.01",
+        "1.02",
+        "2.03",
+        "5.02",
+        "5.07",
+        "9.01"
+      ],
+      "category": "agreement_termination",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2488/000119312526226746/d118163d8k.htm"
+    },
+    {
+      "ticker": "INTC",
+      "company": "INTEL CORP",
+      "filing_date": "2026-05-15",
+      "form": "8-K",
+      "items": [
+        "5.07"
+      ],
+      "category": "vote_results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000118/intc-20260513.htm"
+    },
+    {
+      "ticker": "AXP",
+      "company": "AMERICAN EXPRESS CO",
+      "filing_date": "2026-05-15",
+      "form": "8-K",
+      "items": [],
+      "category": "unclassified",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000249/axp-20260515.htm"
+    },
+    {
       "ticker": "MSFT",
       "company": "MICROSOFT CORP",
       "filing_date": "2026-05-14",
@@ -1069,6 +2085,17 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000075/csco-20260513.htm"
     },
     {
+      "ticker": "LMT",
+      "company": "LOCKHEED MARTIN CORP",
+      "filing_date": "2026-05-13",
+      "form": "8-K",
+      "items": [
+        "5.07"
+      ],
+      "category": "vote_results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/936468/000093646826000011/lmt-20260512.htm"
+    },
+    {
       "ticker": "V",
       "company": "VISA INC.",
       "filing_date": "2026-05-12",
@@ -1080,6 +2107,31 @@
       ],
       "category": "major_agreement",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1403161/000119312526219432/d64238d8k.htm"
+    },
+    {
+      "ticker": "ORCL",
+      "company": "ORACLE CORP",
+      "filing_date": "2026-05-12",
+      "form": "8-K",
+      "items": [
+        "5.02",
+        "7.01",
+        "9.01"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526219708/d76569d8k.htm"
+    },
+    {
+      "ticker": "GS",
+      "company": "GOLDMAN SACHS GROUP INC",
+      "filing_date": "2026-05-12",
+      "form": "8-K",
+      "items": [
+        "5.03",
+        "9.01"
+      ],
+      "category": "charter_amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/886982/000119312526219511/d142159d8k.htm"
     },
     {
       "ticker": "GOOGL",
@@ -1117,6 +2169,17 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/731766/000073176626000129/unh-20260511.htm"
     },
     {
+      "ticker": "GD",
+      "company": "GENERAL DYNAMICS CORP",
+      "filing_date": "2026-05-11",
+      "form": "8-K",
+      "items": [
+        "5.07"
+      ],
+      "category": "vote_results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/40533/000004053326000014/gd-20260511.htm"
+    },
+    {
       "ticker": "NVDA",
       "company": "NVIDIA CORP",
       "filing_date": "2026-05-08",
@@ -1126,6 +2189,17 @@
       ],
       "category": "officer_changes",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000028/nvda-20260507.htm"
+    },
+    {
+      "ticker": "PEP",
+      "company": "PEPSICO INC",
+      "filing_date": "2026-05-08",
+      "form": "8-K",
+      "items": [
+        "5.07"
+      ],
+      "category": "vote_results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000024/pep-20260506.htm"
     },
     {
       "ticker": "JPM",
@@ -1180,6 +2254,41 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000048/lly-20260504.htm"
     },
     {
+      "ticker": "MCD",
+      "company": "MCDONALDS CORP",
+      "filing_date": "2026-05-07",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000048/mcd-20260507.htm"
+    },
+    {
+      "ticker": "GE",
+      "company": "GENERAL ELECTRIC CO",
+      "filing_date": "2026-05-07",
+      "form": "8-K",
+      "items": [
+        "5.02",
+        "5.07"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/40545/000004054526000032/ge-20260505.htm"
+    },
+    {
+      "ticker": "AXP",
+      "company": "AMERICAN EXPRESS CO",
+      "filing_date": "2026-05-07",
+      "form": "8-K",
+      "items": [
+        "5.07"
+      ],
+      "category": "vote_results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000231/axp-20260505.htm"
+    },
+    {
       "ticker": "PFE",
       "company": "PFIZER INC",
       "filing_date": "2026-05-05",
@@ -1190,6 +2299,31 @@
       ],
       "category": "results",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000053/pfe-20260505.htm"
+    },
+    {
+      "ticker": "AMD",
+      "company": "ADVANCED MICRO DEVICES INC",
+      "filing_date": "2026-05-05",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "7.01",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000072/amd-20260505.htm"
+    },
+    {
+      "ticker": "DD",
+      "company": "DuPont de Nemours, Inc.",
+      "filing_date": "2026-05-05",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1666700/000166670026000029/dd-20260505.htm"
     },
     {
       "ticker": "XOM",
@@ -1213,6 +2347,40 @@
       ],
       "category": "other_events",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1326801/000119312526204128/d134616d8k.htm"
+    },
+    {
+      "ticker": "RTX",
+      "company": "RTX Corp",
+      "filing_date": "2026-05-04",
+      "form": "8-K",
+      "items": [
+        "5.07"
+      ],
+      "category": "vote_results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/101829/000114036126018932/ef20072402_8k.htm"
+    },
+    {
+      "ticker": "AXP",
+      "company": "AMERICAN EXPRESS CO",
+      "filing_date": "2026-05-04",
+      "form": "8-K",
+      "items": [
+        "8.01",
+        "9.01"
+      ],
+      "category": "other_events",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000207/axp-20260504.htm"
+    },
+    {
+      "ticker": "AXP",
+      "company": "AMERICAN EXPRESS CO",
+      "filing_date": "2026-05-04",
+      "form": "8-K",
+      "items": [
+        "7.01"
+      ],
+      "category": "reg_fd",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000203/axp-20260504.htm"
     },
     {
       "ticker": "KO",
@@ -1259,8 +2427,46 @@
       ],
       "category": "officer_changes",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000057/csco-20260427.htm"
+    },
+    {
+      "ticker": "IBM",
+      "company": "INTERNATIONAL BUSINESS MACHINES CORP",
+      "filing_date": "2026-05-01",
+      "form": "8-K",
+      "items": [
+        "5.02",
+        "5.03",
+        "5.07",
+        "9.01"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000043/ibm-20260428.htm"
+    },
+    {
+      "ticker": "DE",
+      "company": "DEERE & CO",
+      "filing_date": "2026-05-01",
+      "form": "8-K",
+      "items": [
+        "5.02",
+        "7.01",
+        "9.01"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/315189/000110465926053322/de-20260428x8k.htm"
+    },
+    {
+      "ticker": "GS",
+      "company": "GOLDMAN SACHS GROUP INC",
+      "filing_date": "2026-05-01",
+      "form": "8-K",
+      "items": [
+        "5.07"
+      ],
+      "category": "vote_results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/886982/000119312526199988/gs-20260429.htm"
     }
   ],
   "methodology": "SEC Form 8-K current reports \u2014 the legally mandated material-event disclosure (public domain, 17 U.S.C. \u00a7105), due within 4 business days of the event. Panel streams a bounded 25 large-cap issuer set (AAPL/MSFT/NVDA/GOOGL/AMZN plus 20 mega/large caps across financials, payments, healthcare, staples, energy, tech \u2014 v2 breadth expansion, 2026-08-22; XOM carries both its pre-succession CIK and the 2026-07-01 8-K12B successor entity) since 2026-05-01; each row links the EDGAR primary document. Items are regex-extracted from the primary doc (nbsp/thin-space entities normalized) and mapped to ONE category by a rare-material-first precedence (delisting > merger completion > control change > non-reliance > officer changes > ... > exhibits); the full item list is preserved per row. Documents whose items cannot be extracted are counted as unclassified \u2014 never guessed. Filing-date point-in-time; 8-K/A amendments are new accessions (immutable). Display-only, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-08-22T13:32:21.068650+00:00"
+  "snapshot_ts": "2026-08-22T14:22:44.555375+00:00"
 }
