@@ -1,6 +1,6 @@
 # 数据接入 7 门 — EDGAR Form 8-K（重大事件申报）
 
-> **状态**：**v0.1 · 2026-08-21** · exploratory-only display module。
+> **状态**：**v0.3 · 2026-08-22** · exploratory-only display module。
 > **范围**：EDGAR Form 8-K 重大事件数据通过 7 门强制清单，所有第三方数据集进 Aionis 前 **必须** 全部过关。
 > **引用**：主 rubric 见 `docs/data-intake-rubric.md`。本文档为 Form 8-K 专用准入评估。
 
@@ -64,6 +64,7 @@
 
 - v1 宇宙 = 与 form4 相同的 5 大盘发行人（AAPL/MSFT/NVDA/GOOGL/AMZN），面板 methodology 与 data-health 明示。
 - **v2 广度扩展（2026-08-22，浏览器实探驱动）**：5 → 25 家高流动性大盘（新 20：JPM/BRK-B/V/MA/UNH/JNJ/PFE/MRK/LLY/WMT/HD/KO/PG/CVX/BA/AVGO/CSCO/META/TSLA/XOM）。**仍是有界宇宙非全市场**——与竞品 /events 的全市场流的差距如实保留在 methodology。XOM 双 CIK 特例：Exxon Mobil Corp (34088) 至 2026-07-01 持股公司继承，之后由 ExxonMobil Holdings Corp (2115436，经 8-K12B 注册) 续报——两条都保留（accession 全局唯一，去重不碰撞），已对 submissions 实查验证。CIK 来自 SEC company_tickers.json 快照（cik_resolver 机制）。
+- **v3 广度扩展（2026-08-22，50 家有界宇宙）**：25 → 50 家（新 25：ORCL/CRM/NFLX/AMD/INTC/QCOM/TXN/MU/ADBE/IBM/PEP/MCD/NKE/COST/GE/CAT/DE/DD/HON/UNP/LMT/GD/RTX/AXP/GS）。全部 CIK 从仓内 cik_resolver 的 SEC company_tickers.json 快照实解并逐一对实体名交叉核对（ORCL→1341439 "ORACLE CORP"、GS→886982 "GOLDMAN SACHS GROUP INC" 等 25 条全过）。**仍有界非全市场**。v3 抉择披露：(a) DD 取 "DuPont de Nemours, Inc." (1666700)——快照已无 DDGS（分拆期旧 ticker），DD 是可确证的续存上市实体；(b) GE→40545 快照名仍作 "GENERAL ELECTRIC CO"（现为 GE Aerospace 申报主体，CIK 稳定）；(c) 建议池末尾的 MS/SCHW 为凑满恰 25 家而弃（金融板块 v2 已有 JPM/BRK-B、v3 增 AXP/GS，避免过密）。
 - 分类覆盖诚实计数：`unclassified`（无法抽取 Item 的文档）与 `other`（Item 存在但未映射）显式计数，不隐藏不猜测。
 
 ---
@@ -75,6 +76,7 @@
 - 复用 `_policy_get`（≥2s host spacing + 指数退避，transient-only 重试）。
 - 实测首轮冷拉：23 份 filing ≈ 51 请求（5 EFTS + 23 index + 23 doc），约 2 分钟。
 - **v2 礼貌账**：26 CIK 条目 × 1 EFTS 查询 + 每新 filing 2 请求（index.json + 主文档）。冷拉全量估算 ≈ 26 EFTS + 2×N filings（N ≈ 数百）× ≥2s 间距 ≈ 15-30 分钟；per-accession 缓存令重跑近零请求。断点续存（逐发行人 checkpoint 落盘）。
+- **v3 礼貌账（实测，2026-08-22）**：50 家 / 51 CIK 条目。v2 的 26 条全部缓存命中（0 请求重放，103 filings 原样保留）；新增 25 CIK = 25 EFTS 查询 + 100 份新 filing × 2 请求（index.json + 主文档）= **225 次礼貌请求**，≥2s 间距，实际 ≈ 13 分钟，25/25 发行人全部完成（0 graceful skip、0 error）。缓存增量：efts 31→56、doc 103→203 对、index 0→100（worktree 本地）。per-accession 缓存令后续重跑近零请求；断点续存逐发行人落盘。
 - 主文档选择器为评分制（exhibit/XBRL 渲染件排除），曾抓错 R1.htm/ex991/q1fy27pr.htm 的三次迭代均有缓存作废重拉验证。
 
 ---
