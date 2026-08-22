@@ -1386,6 +1386,23 @@ def test_form13f_changes_enum_when_ok() -> None:
             else:
                 assert isinstance(c["delta_pct"], (int, float))
                 assert abs(c["delta_pct"]) < 1e6
+            # delta_value (whole-USD cur − prev) ships with the next mainline
+            # re-export — validate when present, never require the key (the
+            # committed JSON predates it).
+            if "delta_value" in c:
+                dv = c["delta_value"]
+                assert dv is None or isinstance(dv, (int, float))
+                if isinstance(dv, (int, float)):
+                    assert abs(dv) < 1e15, "whole-USD magnitude guard"
+                    # Only where the frame-diff semantics are provable:
+                    # new = full position value added (>0); exited = full
+                    # value removed (<0). On increased/reduced the VALUE sign
+                    # may oppose the share move (price drift) — deliberately
+                    # NOT asserted.
+                    if c["direction"] == "new":
+                        assert dv > 0, "new position: delta_value = full value"
+                    elif c["direction"] == "exited":
+                        assert dv < 0, "exited position: delta_value = -full value"
     as_of = f["as_of"]
     assert isinstance(as_of, str) and len(as_of) == 10
     for m in f["managers"]:

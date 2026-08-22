@@ -2953,6 +2953,11 @@ def export_form13f() -> None:
                 "option": ch["option"],
                 "direction": ch["direction"],
                 "delta_pct": ch["delta_pct"],
+                # Whole-USD value delta (cur − prev, both sides kept by the
+                # frame diff): full position value for new/exited, plain
+                # difference for increased/reduced (sign may oppose delta_pct
+                # on price drift).
+                "delta_value": round(float(ch["delta_value"]), 0),
                 "ticker": _ticker_for(ch["issuer"]),
             })
         manager_payloads.append({
@@ -3000,7 +3005,10 @@ def export_form13f() -> None:
             "Scion, Greenlight, Omega Advisors, Pabrai — were honestly "
             "dropped), latest quarter top-10 holdings plus "
             "quarter-over-quarter frame diff (new/increased/reduced/exited on "
-            "share counts). Values are as filed in the EDGAR 2014+ "
+            "share counts, with a whole-USD value delta = current − prior "
+            "quarter as-filed value; full position value on new/exited, and "
+            "on increased/reduced the value sign may oppose the share move — "
+            "price drift). Values are as filed in the EDGAR 2014+ "
             "information-table XML (whole USD — the 'expressed in thousands' "
             "note is the legacy HTML rendering); same-(CUSIP, class, option) "
             "tranches merged into one position; shares as filed (SH lines; "

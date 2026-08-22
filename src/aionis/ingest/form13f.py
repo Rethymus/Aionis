@@ -269,9 +269,14 @@ def compute_changes(prev: pd.DataFrame, cur: pd.DataFrame) -> list[dict]:
     each quarter (filers split one issuer across several tranches).
     Directions: ``new`` (absent → present), ``exited`` (present → absent),
     ``increased``/``reduced`` (shares up/down). ``delta_pct`` is the SHARE
-    change in percent (+25.3 = +25.3% shares); ``None`` for new/exited. Rows
-    are sorted by position size involved (max(cur, prev) value) descending —
-    the "top changes" surface.
+    change in percent (+25.3 = +25.3% shares); ``None`` for new/exited.
+    ``delta_value`` is the whole-USD VALUE change (current − prior quarter,
+    both sides kept by the merge): for ``new``/``exited`` it equals the full
+    position value added/removed; for ``increased``/``reduced`` it is a plain
+    difference whose sign may OPPOSE the share move (price drift between
+    quarters) — display layers must not assume sign consistency with
+    ``delta_pct``. Rows are sorted by position size involved (max(cur, prev)
+    value) descending — the "top changes" surface.
     """
     key = ["cusip", "option_type"]
 
@@ -320,6 +325,9 @@ def compute_changes(prev: pd.DataFrame, cur: pd.DataFrame) -> list[dict]:
                 "option": str(r["option_type"]),
                 "direction": direction,
                 "delta_pct": delta_pct,
+                # Whole-USD value delta (cur − prev; both sides kept by the
+                # outer merge): +full position for new, −full for exited.
+                "delta_value": round(v_cur - v_prev, 0),
                 "value_usd": v_cur if v_cur > 0 else v_prev,
                 "_sort": max(v_cur, v_prev),
             }

@@ -13,8 +13,11 @@ ambiguous multi-entity names) that must stay null — never fuzzy-guessed.
 """
 from __future__ import annotations
 
+import pandas as pd
+
 from aionis.ingest.form13f import (
     build_issuer_ticker_map,
+    compute_changes,
     normalize_issuer_name,
     parse_infotable_xml,
 )
@@ -148,3 +151,68 @@ def test_infotable_issuer_links_against_snapshot_fixture() -> None:
     assert [h.issuer for h in holdings] == ["MOODYS CORP", "NO SUCH ISSUER ABBREV"]
     linked = [m.get(normalize_issuer_name(h.issuer)) for h in holdings]
     assert linked == ["MCO", None]  # exact hit + honest miss, in filing order
+
+
+# --- compute_changes (quarter-over-quarter frame diff, pure) ------------------
+
+_COLS = ["cusip", "option_type", "issuer", "title_class", "value_usd", "shares"]
+
+
+def _frame(rows: list[tuple[str, str, str, str, float, float]]) -> pd.DataFrame:
+    """Hand-written EDGAR-aggregate-shaped frame (as export_form13f feeds it)."""
+    return pd.DataFrame(rows, columns=_COLS)
+
+
+def _by_cusip(rows: list[dict]) -> dict[str, dict]:
+    return {r["cusip"]: r for r in rows}
+
+
+def test_compute_changes_new_and_exited_carry_full_position_delta() -> None:
+    prev = _frame([("111111111", "", "EXITED CORP", "COM", 2_000_000.0, 4_000.0)])
+    cur = _frame([("222222222", "", "NEW CORP", "COM", 1_500_000.0, 1_000.0)])
+    got = _by_cusip(compute_changes(prev, cur))
+    new = got["222222222"]
+    assert new["direction"] == "new" and new["delta_pct"] is None
+    # new: delta_value = full position value added (whole USD)
+    assert new["delta_value"] == 1_500_000.0
+    exited = got["111111111"]
+    assert exited["direction"] == "exited" and exited["delta_pct"] is None
+    # exited: delta_value = full position value removed (negative)
+    assert exited["delta_value"] == -2_000_000.0
+
+
+def test_compute_changes_increased_reduced_delta_value_and_price_drift() -> None:
+    # Same CUSIP both quarters: shares UP, value UP -> increased, both deltas positive.
+    prev = _frame([("333333333", "", "HELD CORP", "COM", 1_000_000.0, 10_000.0)])
+    cur = _frame([("333333333", "", "HELD CORP", "COM", 1_600_000.0, 12_500.0)])
+    (row,) = compute_changes(prev, cur)
+    assert row["direction"] == "increased"
+    assert row["delta_pct"] == 25.0
+    assert row["delta_value"] == 600_000.0
+
+    # Shares DOWN but value UP (price drift): delta_pct negative while
+    # delta_value positive — the sign MAY oppose; display layers must not
+    # assume consistency (this is the case the web contract test
+    # deliberately does not assert).
+    cur_drift = _frame([("333333333", "", "HELD CORP", "COM", 1_200_000.0, 9_000.0)])
+    (row2,) = compute_changes(prev, cur_drift)
+    assert row2["direction"] == "reduced"
+    assert row2["delta_pct"] == -10.0
+    assert row2["delta_value"] == 200_000.0
+
+
+def test_compute_changes_merges_tranches_before_diffing() -> None:
+    # A filer splitting one issuer across two tranches in the current quarter:
+    # the diff must see the SUMMED position (shares AND value), keyed on
+    # (cusip, option_type) — not tranche rows.
+    prev = _frame([("444444444", "", "SPLIT CORP", "COM", 500_000.0, 5_000.0)])
+    cur = _frame(
+        [
+            ("444444444", "", "SPLIT CORP", "COM", 400_000.0, 4_000.0),
+            ("444444444", "", "SPLIT CORP", "COM", 350_000.0, 3_500.0),
+        ]
+    )
+    (row,) = compute_changes(prev, cur)
+    assert row["direction"] == "increased"
+    assert row["delta_pct"] == 50.0  # 8_500 vs 5_000 shares
+    assert row["delta_value"] == 250_000.0  # 750_000 vs 500_000 value

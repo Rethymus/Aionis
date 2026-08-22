@@ -223,6 +223,23 @@ export function ChangesBlock({ manager }: { manager: Form13fManager }) {
               {c.delta_pct.toFixed(1)}%
             </span>
           ) : null}
+          {/* Whole-USD value delta beside the share %; absent until the next
+              mainline re-export (old JSON rows predate the key — honest "—").
+              Sign may OPPOSE delta_pct on increased/reduced (price drift). */}
+          {(() => {
+            const dv = c.delta_value ?? null;
+            return dv != null ? (
+              <span
+                className={cn(
+                  "font-mono text-xs tabular-nums",
+                  DIRECTION_CLASS[c.direction],
+                )}
+              >
+                {dv > 0 ? "+" : ""}
+                {fmtUsd(dv)}
+              </span>
+            ) : null;
+          })()}
         </span>
       ))}
     </div>

@@ -571,6 +571,13 @@ export type Form13fChange = {
   direction: "new" | "increased" | "reduced" | "exited";
   // Share-count change in percent (+25.3 = +25.3% shares); null for new/exited.
   delta_pct: number | null;
+  // Whole-USD value delta (cur − prev quarter, both sides kept by the frame
+  // diff): full position value on new/exited; on increased/reduced the sign
+  // may OPPOSE delta_pct (price drift). OPTIONAL only for the transition:
+  // the committed JSON predates the key — it becomes always-present after
+  // the next mainline re-export; consumers tolerate absence (`?? null`,
+  // renders "—").
+  delta_value?: number | null;
   ticker: string | null;
 };
 
