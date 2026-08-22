@@ -470,6 +470,12 @@ def test_form8k_panel_contract() -> None:
     for cat, n in f["by_category"].items():
         assert cats.get(cat) == n, f"by_category[{cat}] disagrees with event list"
     assert f["as_of"] == max(dates), "as_of must be the latest filing_date"
+    # The event list is the bounded-universe stream (cap = growth guard, not a
+    # display slice): every counted event must be visible, else the KPI cards
+    # (total/issuers/unclassified) and the "all" filter pill desync.
+    assert len(f["events"]) == f["total"], (
+        f"event list truncated: {len(f['events'])} visible vs total {f['total']}"
+    )
 
 
 def test_executives_panel_contract() -> None:

@@ -2958,8 +2958,8 @@ def export_form8k() -> None:
     """SEC Form 8-K material-event stream (display-only, exploratory).
 
     Reads ``data/cache/form8k_aggregate.parquet`` (gitignored; produced by
-    ``scripts/form8k_fetch.py`` — the same 5 large-cap issuers as form4, fixed
-    window from 2026-05-01). Events carry the legally mandated 8-K item list
+    ``scripts/form8k_fetch.py`` — 25 large-cap issuers, fixed window from
+    2026-05-01). Events carry the legally mandated 8-K item list
     (regex-extracted from the primary document, entity-spellings normalized)
     and ONE category via a rare-material-first precedence table. Docs the
     classifier cannot read are counted as ``unclassified`` — never guessed.
@@ -2976,7 +2976,12 @@ def export_form8k() -> None:
     df = pd.read_parquet(fp)
     by_cat: dict[str, int] = df["category"].value_counts().to_dict()
     events = []
-    for _, r in df.head(150).iterrows():
+    # Bounded 25-issuer universe (~1.3k events/yr worst case); the cap is a
+    # long-term growth guard, NOT a display slice — by_category/unclassified
+    # count the full frame, so a cap hit would desync counts vs the visible
+    # list and the contract test (len(events) == total) fails LOUDLY rather
+    # than silently truncating.
+    for _, r in df.head(300).iterrows():
         events.append({
             "ticker": str(r["ticker"]),
             "company": str(r["company"]),
@@ -2998,8 +3003,12 @@ def export_form8k() -> None:
         "methodology": (
             "SEC Form 8-K current reports — the legally mandated material-event "
             "disclosure (public domain, 17 U.S.C. §105), due within 4 business "
-            "days of the event. Panel streams the same bounded 5 large-cap "
-            "issuer set as /insiders (AAPL/MSFT/NVDA/GOOGL/AMZN) since "
+            "days of the event. Panel streams a bounded 25 large-cap issuer "
+            "set (AAPL/MSFT/NVDA/GOOGL/AMZN plus 20 mega/large caps across "
+            "financials, payments, healthcare, staples, energy, tech — v2 "
+            "breadth expansion, 2026-08-22; XOM carries both its "
+            "pre-succession CIK and the 2026-07-01 8-K12B successor entity) "
+            "since "
             "2026-05-01; each row links the EDGAR primary document. Items are "
             "regex-extracted from the primary doc (nbsp/thin-space entities "
             "normalized) and mapped to ONE category by a rare-material-first "
