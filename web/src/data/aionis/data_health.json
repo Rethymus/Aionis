@@ -86,7 +86,7 @@
       "file": "power_floor.json",
       "category": "frozen",
       "as_of": null,
-      "exported_at": "2026-08-20",
+      "exported_at": "2026-08-22",
       "present": true
     },
     {
@@ -126,7 +126,7 @@
       "file": "themes.json",
       "category": "daily",
       "as_of": "2026-08-04",
-      "exported_at": "2026-08-20",
+      "exported_at": "2026-08-22",
       "present": true
     },
     {
@@ -182,7 +182,7 @@
       "file": "ipo.json",
       "category": "daily",
       "as_of": "2026-08-20",
-      "exported_at": "2026-08-21",
+      "exported_at": "2026-08-22",
       "present": true
     },
     {
@@ -190,7 +190,7 @@
       "file": "politician_trades.json",
       "category": "daily",
       "as_of": "2026-08-18",
-      "exported_at": "2026-08-21",
+      "exported_at": "2026-08-22",
       "present": true
     },
     {
@@ -206,7 +206,7 @@
       "file": "headline_provenance.json",
       "category": "daily",
       "as_of": "2026-08-05",
-      "exported_at": "2026-08-20",
+      "exported_at": "2026-08-22",
       "present": true
     },
     {
@@ -214,7 +214,7 @@
       "file": "ledger_audit.json",
       "category": "daily",
       "as_of": null,
-      "exported_at": "2026-08-20",
+      "exported_at": "2026-08-22",
       "present": true
     },
     {
@@ -252,7 +252,7 @@
     "smart_money": {
       "ticker_null": 16,
       "n_recent": 60,
-      "days_since_latest": 3
+      "days_since_latest": 4
     },
     "reddit": {
       "bull_ratio_null": 3,
@@ -264,5 +264,5 @@
   },
   "planned": [],
   "methodology": "Freshness/provenance map of every terminal panel. frozen = derived from frozen OOS artifacts (ledger #49 lineage): the daily lane deliberately does NOT advance these \u2014 recomputing them from newer data would be rerun-to-significance. daily = recomputed by each CI refresh from live caches. cadence = advances on its source's publication rhythm (CFTC weekly, price caches ~5-day grace, EDGAR filing rhythm). as_of is read from each panel's own timestamp fields; null = the panel carries no observation date (static research artifact). The only legal way frozen numbers move forward: E3 forward-live accumulation or a new pre-registered phase. source_health quantifies field-level quality on the committed JSONs (smart_money ticker nulls = filings on unlisted targets honestly left empty; reddit bull_ratio nulls = sentiment not yet gradable in the accumulating window; cot staleness in weeks vs the Friday publication rhythm). planned lists panels that are NOT built \u2014 no fetcher, no data, no endpoint payload \u2014 disclosed so the panel count is never mistaken for coverage.",
-  "snapshot_ts": "2026-08-21T18:32:37.404007+00:00"
+  "snapshot_ts": "2026-08-22T08:28:43.569172+00:00"
 }

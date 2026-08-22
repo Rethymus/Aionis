@@ -15,6 +15,7 @@ import { FilterPills, LoadMoreFooter, usePaged } from "@/components/stream/strea
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
 import Link from "next/link";
+import { ExternalLinkIcon } from "lucide-react";
 import {
   Bar,
   BarChart,
@@ -198,6 +199,20 @@ export function InsidersView() {
                   </Badge>
                   <span className="w-32 shrink-0 truncate text-muted-foreground">{r.filer}</span>
                   <Link href={`/stock/${r.ticker}`} className="truncate font-medium text-primary hover:underline">{r.ticker}</Link>
+                  {r.doc_url ? (
+                    <a
+                      href={r.doc_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title="EDGAR"
+                      aria-label={`EDGAR filing for ${r.ticker}`}
+                      className="shrink-0 text-primary hover:underline"
+                    >
+                      <ExternalLinkIcon className="size-3" />
+                    </a>
+                  ) : (
+                    <span className="shrink-0 text-muted-foreground">—</span>
+                  )}
                   {r.shares != null ? (
                     <span className="ml-auto shrink-0 font-mono text-xs tabular-nums text-muted-foreground">
                       {r.shares.toLocaleString()} @ ${r.price ?? "—"}

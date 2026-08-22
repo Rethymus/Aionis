@@ -278,6 +278,9 @@ export type Form4 = {
     action: string;
     shares: number | null;
     price: number | null;
+    /** EDGAR filing-index link (accession + reporting-owner CIK); "" / absent
+     *  on pre-accession aggregates — rendered as "—", never a guessed URL. */
+    doc_url?: string | null;
   }[];
   buys: number;
   sells: number;

@@ -68,6 +68,31 @@ def test_form4_status_and_shape() -> None:
     assert f["status"] in {"ok", "awaiting_fetch"}
     assert isinstance(f["recent"], list)
     assert isinstance(f["top_insiders"], list)
+    if f["status"] != "ok":
+        return
+    # Export cap raised 50 → 200 (visible window; full-window counters live in
+    # buys/sells/yearly). The recent list must never exceed the export cap.
+    assert len(f["recent"]) <= 200, "recent exceeds the 200-row export cap"
+
+
+def test_form4_recent_doc_url_when_present() -> None:
+    """Recent rows carry an EDGAR filing-index link when the aggregate has it.
+
+    doc_url is built from the row's accession + reporting-owner CIK (mirrors
+    the ipo/form8k pattern). Rows from pre-accession aggregates — and stale
+    committed JSON before re-export — carry "" / no field at all, which is the
+    honest render (—), never a guessed URL. When present, the pattern is
+    pinned so a malformed link surfaces here, not as a dead /insiders link.
+    """
+    f = _load("form4.json")
+    if f["status"] != "ok":
+        return
+    for r in f["recent"]:
+        url = r.get("doc_url")
+        if not url:
+            continue
+        assert url.startswith("https://www.sec.gov/Archives/edgar/data/"), url
+        assert url.endswith("-index.htm"), url
 
 
 def test_form4_action_enum_when_ok() -> None:
@@ -78,7 +103,8 @@ def test_form4_action_enum_when_ok() -> None:
         return
     for r in f["recent"]:
         assert r["action"] in {"buy", "sell"}, f"action must be buy/sell, got {r['action']}"
-    # buys/sells are full-window counters (recent is top-50); just sanity-check types.
+    # buys/sells are full-window counters (recent is the top-200 visible
+    # window); just sanity-check types.
     assert isinstance(f["buys"], int) and isinstance(f["sells"], int)
     assert f["buys"] >= 0 and f["sells"] >= 0
 
@@ -402,8 +428,14 @@ def test_politician_trades_panel_contract() -> None:
     assert f["latest_filing_year"] == max(f["window_years"])
     # by_year counts must sum to the panel total (honest counting).
     assert sum(f["house"]["by_year"].values()) == f["house"]["total"]
-    # party_coverage is "linked/total" over ALL filings (not just the top-100
-    # shown) — the format pins the honest-counting contract.
+    # Full-stream export (2026-08-22, cap raised 100 → 1000): the visible list
+    # is the WHOLE filing stream, not a preview — visible == total.
+    assert len(f["house"]["filings"]) == f["house"]["total"], (
+        f"visible filings ({len(f['house']['filings'])}) != total "
+        f"({f['house']['total']}) — export must be full-stream (cap 1000)"
+    )
+    # party_coverage is "linked/total" over ALL filings — the format pins the
+    # honest-counting contract.
     linked, _, total = f["house"]["party_coverage"].partition("/")
     assert linked.isdigit() and int(total) == f["house"]["total"]
 
@@ -446,8 +478,9 @@ def test_form_ipo_panel_contract() -> None:
     Locks the contract the /ipo view renders against: status is derived from
     the immutable form type (S-1 family -> filed, 424B4 -> priced — the only
     two legal values); by_status counts must be FILING counts consistent with
-    the panel total (the list is capped at 150, so counts are checked against
-    total, not the visible list); filings sorted by filed_date descending; the
+    the panel total; the export is FULL-stream (cap raised 150 → 1200 on
+    2026-08-22, every filing visible), so the visible list's per-status counts
+    equal by_status exactly; filings sorted by filed_date descending; the
     ticker is empty for pre-symbol filers (honest, never guessed); each row
     links the EDGAR filing-index page (offer terms live inside the
     prospectus documents — v1 does not parse them).
@@ -478,19 +511,19 @@ def test_form_ipo_panel_contract() -> None:
         "by_status must count FILINGS (sum == total), not companies"
     )
     assert set(f["by_status"]) <= {"filed", "priced"}
-    # The visible list is capped at 150; its per-status counts must never
-    # exceed the panel's own by_status totals (consistency of both counters).
+    # Full export (safety cap 1200): every filing is visible, so the visible
+    # list length equals the panel total and each status count equals by_status
+    # exactly — the old 150-row truncation made these subset checks.
+    assert len(f["filings"]) == f["total"], (
+        f"visible filings ({len(f['filings'])}) != total ({f['total']}) — "
+        "export must be full-stream (safety cap 1200)"
+    )
     visible: dict[str, int] = {}
     for r in f["filings"]:
         visible[r["status"]] = visible.get(r["status"], 0) + 1
-    for status, n in visible.items():
-        assert n <= f["by_status"][status], (
-            f"visible {status} rows ({n}) exceed by_status ({f['by_status'][status]})"
-        )
-        # Uncapped statuses must match exactly (fewer visible rows than the
-        # cap can only mean the panel itself has exactly that many).
-        if len(f["filings"]) < 150:
-            assert n == f["by_status"][status]
+    assert visible == f["by_status"], (
+        f"visible per-status counts {visible} != by_status {f['by_status']}"
+    )
     assert sum(f["by_form"].values()) == f["total"], "by_form must sum to total"
     for form, status in (("S-1", "filed"), ("S-1/A", "filed"), ("424B4", "priced")):
         if form in f["by_form"]:
@@ -1057,7 +1090,12 @@ def test_smart_money_recent_ticker_and_filer_restored() -> None:
     """
     sm = _load("smart_money.json")
     recent = sm["recent_filings"]
-    assert len(recent) == 60, "the live window is exactly the newest 60"
+    # Live window raised 60 → 120 at export (2026-08-22). Range-pinned so BOTH
+    # the committed JSON (regenerated wherever the EFTS/daily caches live) and
+    # a fresh 120-row export pass: >= the old 60 floor, <= the new cap.
+    assert 60 <= len(recent) <= 120, (
+        f"live window must be 60..120 rows (export cap 120), got {len(recent)}"
+    )
     n_ticker = sum(1 for r in recent if r.get("ticker"))
     assert n_ticker / len(recent) >= 0.70, (
         f"ticker coverage regressed: {n_ticker}/{len(recent)}"

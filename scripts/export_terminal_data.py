@@ -1053,6 +1053,25 @@ def export_form4() -> None:
         return
 
     df = pd.read_parquet(fp).sort_values("transaction_date", ascending=False)
+
+    def _f4_doc_url(r: pd.Series) -> str:
+        """EDGAR filing-index link per recent row (v1 disclosure pattern).
+
+        Mirrors form_ipo's ``_filing_index_url``: ``/Archives/edgar/data/
+        {cik}/{accession-nodash}/{accession}-index.htm`` — one stable link per
+        filing, zero extra requests. The CIK used is the row's ``filer_cik``
+        (the reporting owner — always an associated filer on their own Form 4,
+        so the archive path resolves; cf. form8k which serves agent-prefixed
+        accessions under the issuer CIK). Empty (never fabricated) when the
+        aggregate predates the ``accession``/``filer_cik`` columns.
+        """
+        acc = r.get("accession")
+        cik = r.get("filer_cik")
+        if not isinstance(acc, str) or not acc or pd.isna(cik):
+            return ""
+        no_dash = acc.replace("-", "")
+        return f"https://www.sec.gov/Archives/edgar/data/{int(cik)}/{no_dash}/{acc}-index.htm"
+
     rows = [
         {
             "filer": str(r.get("filer_name", "")),
@@ -1065,8 +1084,9 @@ def export_form4() -> None:
                 if pd.notna(r.get("price_per_share"))
                 else None
             ),
+            "doc_url": _f4_doc_url(r),
         }
-        for _, r in df.head(50).iterrows()
+        for _, r in df.head(200).iterrows()
     ]
     buys = int((df["buy_or_sell"] == "buy").sum())
     sells = int((df["buy_or_sell"] == "sell").sum())
@@ -1088,8 +1108,10 @@ def export_form4() -> None:
         "methodology": (
             "Form 4 insider transactions (SEC EDGAR EFTS, filed-date PIT, public "
             "domain). Non-derivative pure buy (A) / sell (D) only — exercises and "
-            "options excluded. Window spans 2016→today (Trump Era). Display-only, "
-            "exploratory, not a research claim."
+            "options excluded. Window spans 2016→today (Trump Era). Recent rows "
+            "link the EDGAR filing-index page (built from the row's accession + "
+            "reporting-owner CIK — empty, never guessed, on pre-accession "
+            "aggregates). Display-only, exploratory, not a research claim."
         ),
         "recent": rows,
         "buys": buys,
@@ -1376,7 +1398,7 @@ def _refresh_smart_money_recent_only(committed_path: Path, daily_path: Path) -> 
     rows = daily_rows + extra + verbatim
     rows.sort(key=lambda r: r["date"], reverse=True)
 
-    prev["recent_filings"] = rows[:60]
+    prev["recent_filings"] = rows[:120]
     prev["latest_date"] = max(
         str(prev.get("latest_date") or ""), str(rows[0]["date"])
     )
@@ -1488,7 +1510,7 @@ def export_smart_money() -> None:
         rows.extend(daily_rows)
         rows.extend(extra)
     rows.sort(key=lambda r: r["date"], reverse=True)
-    recent = rows[:60]
+    recent = rows[:120]
     from collections import Counter
     # Rank real filers: EFTS rows name the reporting person; daily-index rows
     # surface the co-indexed filer entities for single-subject accessions. The
@@ -1849,6 +1871,19 @@ def export_macro_drivers() -> None:
         real = (dff_m_s - cpi_yoy_s).dropna()
         if not real.empty:
             series["real_rate"] = _monthly_points(real)
+
+    if not series:
+        # All ALFRED caches absent (fresh CI checkout / worktree without the
+        # gitignored caches): preserve the tracked JSON — mirroring the
+        # cot/form4/ipo 'retain last-committed value' convention. Writing the
+        # awaiting_fetch placeholder here would clobber the committed live
+        # panel (7 series) and silently hide the /regime cards.
+        print(
+            "[export-terminal] SKIP macro_drivers: no data/cache/alfred_*.json "
+            "present (tracked JSON retains last-committed value)",
+            flush=True,
+        )
+        return
 
     payload = {
         "status": "ok" if series else "awaiting_fetch",
@@ -2863,7 +2898,9 @@ def export_form_ipo() -> None:
     }
     by_form = {k: int(v) for k, v in df["form"].value_counts().sort_index().items()}
     filings = []
-    for _, r in df.head(150).iterrows():
+    # Full window export (every filing visible — the /ipo stream reads newest-
+    # first with client-side paging); 1200 is a payload-size safety cap only.
+    for _, r in df.head(1200).iterrows():
         filings.append({
             "company": str(r["company"]),
             "ticker": str(r["ticker"]),
@@ -2950,7 +2987,10 @@ def export_politician_trades() -> None:
     n_party = int(df["party"].notna().sum())
 
     filings = []
-    for _, r in df.head(100).iterrows():
+    # Full filing-stream export (visible == total; 874 filings in the current
+    # window) — the /congress view pages client-side. 1000 is a payload-size
+    # safety cap, not a display truncation.
+    for _, r in df.head(1000).iterrows():
         filings.append({
             "member": str(r["member"]),
             "office": str(r["office"]),
