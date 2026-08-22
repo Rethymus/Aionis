@@ -59,6 +59,18 @@ export function IpoView() {
   );
   const visible = filtered.slice(0, visibleCount);
 
+  // Sidebar "recently priced" list: newest 424B4 filings, defensively sorted
+  // by filed_date desc (source order is already descending, but the slice
+  // must not depend on that).
+  const recentPriced = useMemo(
+    () =>
+      [...filings]
+        .filter((r) => r.status === "priced")
+        .sort((a, b) => (a.filed_date < b.filed_date ? 1 : -1))
+        .slice(0, 5),
+    [filings],
+  );
+
   const applyStatus = (k: StatusFilter) => {
     setStatus(k);
     reset();
@@ -118,102 +130,178 @@ export function IpoView() {
         </Card>
       </div>
 
-      <Card>
-        <CardHeader className="pb-3">
-          <CardTitle>{t("ipo.stream_title")}</CardTitle>
-          <CardDescription>{t("ipo.stream_note")}</CardDescription>
-          <div className="pt-1">
-            <FilterPills<StatusFilter>
-              label={t("ipo.filter.label")}
-              value={status}
-              onChange={applyStatus}
-              options={[
-                { key: "all", label: t("ipo.filter.all"), count: filings.length },
-                { key: "filed", label: t("ipo.status_filed"), count: filings.filter((r) => r.status === "filed").length },
-                { key: "priced", label: t("ipo.status_priced"), count: filings.filter((r) => r.status === "priced").length },
-              ]}
-            />
-          </div>
-        </CardHeader>
-        <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>{t("ipo.date")}</TableHead>
-                <TableHead>{t("ipo.company")}</TableHead>
-                <TableHead>{t("ipo.status")}</TableHead>
-                <TableHead className="hidden md:table-cell">
-                  {t("ipo.form")}
-                </TableHead>
-                <TableHead className="text-right">{t("ipo.source")}</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {visible.map((r) => (
-                <TableRow key={r.doc_url || `${r.company}-${r.filed_date}-${r.form}`}>
-                  <TableCell
-                    className="whitespace-nowrap tabular-nums text-muted-foreground"
-                    title={r.filed_date}
-                  >
-                    {fmtDateShort(r.filed_date)}
-                  </TableCell>
-                  <TableCell>
-                    <span className="font-medium">{r.company}</span>
-                    {r.ticker ? (
-                      STOCK_PAGE_TICKERS.has(r.ticker) ? (
-                        <Link
-                          href={`/stock/${r.ticker}`}
-                          className="ml-2 font-mono text-xs text-primary hover:underline"
-                        >
-                          {r.ticker}
-                        </Link>
-                      ) : (
-                        // Resolved identity but no static stock page (a
-                        // pre-IPO filer has no frozen OOS history) — plain
-                        // text, never a 404 link.
-                        <span className="ml-2 font-mono text-xs text-muted-foreground">
-                          {r.ticker}
-                        </span>
-                      )
-                    ) : null}
-                  </TableCell>
-                  <TableCell>
-                    {/* Neutral secondary badge: filed vs priced is a stage
-                        marker, not a good/bad signal. */}
-                    <Badge variant="secondary">
-                      {t((STATUS_LABEL[r.status] ?? "ipo.status_filed") as DictKey)}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="hidden font-mono text-xs text-muted-foreground md:table-cell">
-                    {r.form}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    {r.doc_url ? (
-                      <a
-                        href={r.doc_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-primary hover:underline"
-                      >
-                        EDGAR
-                        <ExternalLinkIcon className="size-3" />
-                      </a>
-                    ) : (
-                      <span className="text-muted-foreground">—</span>
-                    )}
-                  </TableCell>
+      <div className="grid items-start gap-6 lg:grid-cols-[1fr_320px]">
+        <Card className="min-w-0">
+          <CardHeader className="pb-3">
+            <CardTitle>{t("ipo.stream_title")}</CardTitle>
+            <CardDescription>{t("ipo.stream_note")}</CardDescription>
+            <div className="pt-1">
+              <FilterPills<StatusFilter>
+                label={t("ipo.filter.label")}
+                value={status}
+                onChange={applyStatus}
+                options={[
+                  { key: "all", label: t("ipo.filter.all"), count: filings.length },
+                  { key: "filed", label: t("ipo.status_filed"), count: filings.filter((r) => r.status === "filed").length },
+                  { key: "priced", label: t("ipo.status_priced"), count: filings.filter((r) => r.status === "priced").length },
+                ]}
+              />
+            </div>
+          </CardHeader>
+          <CardContent className="p-0">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>{t("ipo.date")}</TableHead>
+                  <TableHead>{t("ipo.company")}</TableHead>
+                  <TableHead>{t("ipo.status")}</TableHead>
+                  <TableHead className="hidden md:table-cell">
+                    {t("ipo.form")}
+                  </TableHead>
+                  <TableHead className="text-right">{t("ipo.source")}</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          <LoadMoreFooter
-            shown={visible.length}
-            total={filtered.length}
-            onLoadMore={loadMore}
-            pageSize={PAGE_SIZE}
-          />
-        </CardContent>
-      </Card>
+              </TableHeader>
+              <TableBody>
+                {visible.map((r) => (
+                  <TableRow key={r.doc_url || `${r.company}-${r.filed_date}-${r.form}`}>
+                    <TableCell
+                      className="whitespace-nowrap tabular-nums text-muted-foreground"
+                      title={r.filed_date}
+                    >
+                      {fmtDateShort(r.filed_date)}
+                    </TableCell>
+                    <TableCell>
+                      <span className="font-medium">{r.company}</span>
+                      {r.ticker ? (
+                        STOCK_PAGE_TICKERS.has(r.ticker) ? (
+                          <Link
+                            href={`/stock/${r.ticker}`}
+                            className="ml-2 font-mono text-xs text-primary hover:underline"
+                          >
+                            {r.ticker}
+                          </Link>
+                        ) : (
+                          // Resolved identity but no static stock page (a
+                          // pre-IPO filer has no frozen OOS history) — plain
+                          // text, never a 404 link.
+                          <span className="ml-2 font-mono text-xs text-muted-foreground">
+                            {r.ticker}
+                          </span>
+                        )
+                      ) : null}
+                    </TableCell>
+                    <TableCell>
+                      {/* Neutral secondary badge: filed vs priced is a stage
+                          marker, not a good/bad signal. */}
+                      <Badge variant="secondary">
+                        {t((STATUS_LABEL[r.status] ?? "ipo.status_filed") as DictKey)}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="hidden font-mono text-xs text-muted-foreground md:table-cell">
+                      {r.form}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {r.doc_url ? (
+                        <a
+                          href={r.doc_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-primary hover:underline"
+                        >
+                          EDGAR
+                          <ExternalLinkIcon className="size-3" />
+                        </a>
+                      ) : (
+                        <span className="text-muted-foreground">—</span>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+            <LoadMoreFooter
+              shown={visible.length}
+              total={filtered.length}
+              onLoadMore={loadMore}
+              pageSize={PAGE_SIZE}
+            />
+          </CardContent>
+        </Card>
+
+        {/* Sidebar at-a-glance card — the HONEST stand-in for a "top raises"
+            widget: proceeds/offer prices live inside the prospectus documents
+            and v1 does not parse them, so this surface shows only what the
+            form-level data honestly carries (form-type counts + newest
+            statutory 424B4 pricings), each linking EDGAR. */}
+        <Card className="overflow-hidden py-0">
+          <CardHeader className="border-b">
+            <CardTitle className="text-base">{t("ipo.widget.title")}</CardTitle>
+            <CardDescription className="tabular-nums">
+              {f.window.start} → {f.window.end}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4 p-4">
+            <div className="space-y-2">
+              <p className="text-xs font-medium text-muted-foreground">
+                {t("ipo.widget.by_form")}
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {Object.entries(f.by_form)
+                  .sort((a, b) => b[1] - a[1] || (a[0] < b[0] ? -1 : 1))
+                  .map(([form, n]) => (
+                    <Badge key={form} variant="secondary" className="gap-1.5">
+                      <span className="font-mono text-[11px]">{form}</span>
+                      <span className="tabular-nums text-muted-foreground">
+                        {n.toLocaleString("en-US")}
+                      </span>
+                    </Badge>
+                  ))}
+              </div>
+            </div>
+            <div className="space-y-2">
+              <p className="text-xs font-medium text-muted-foreground">
+                {t("ipo.widget.recent_priced")}
+              </p>
+              <div className="divide-y">
+                {recentPriced.length === 0 ? (
+                  <p className="py-1 text-xs text-muted-foreground">—</p>
+                ) : (
+                  recentPriced.map((r) => (
+                    <div key={r.doc_url || `${r.company}-${r.filed_date}`} className="flex items-center gap-2 py-1.5 text-sm">
+                      <span
+                        className="shrink-0 font-mono text-xs tabular-nums text-muted-foreground"
+                        title={r.filed_date}
+                      >
+                        {fmtDateShort(r.filed_date)}
+                      </span>
+                      <span className="min-w-0 flex-1 truncate" title={r.company}>
+                        {r.company}
+                      </span>
+                      {r.doc_url ? (
+                        <a
+                          href={r.doc_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          title="EDGAR"
+                          aria-label={`EDGAR filing for ${r.company}`}
+                          className="shrink-0 text-primary hover:underline"
+                        >
+                          <ExternalLinkIcon className="size-3" />
+                        </a>
+                      ) : (
+                        <span className="shrink-0 text-muted-foreground">—</span>
+                      )}
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+            <p className="text-[11px] leading-relaxed text-muted-foreground">
+              {t("ipo.widget.note")}
+            </p>
+          </CardContent>
+        </Card>
+      </div>
 
       <Card>
         <CardHeader className="pb-3">
