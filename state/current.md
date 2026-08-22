@@ -1,5 +1,21 @@
 # state/current.md — read first each session
 
+- **active (2026-08-22) ④ 小隐寺对齐 P0 已实施交付（业主 GO + 硬条件"必须真的读懂"）：**
+  **① 先复核后动手（IAB 浏览器 + 视觉模型 + getComputedStyle 三通道）**：订正两处 WebFetch 误判——**/events 实为全市场 8-K 实时流**（分钟级、三处 EDGAR 直链、12+ 中文类目；"我们领先"作废，改"追赶广度"）、/annual 有 102 份；真空白仅 /quarterly /companies /势力阵营 /stock 机构持有者；视觉实测 = 暗色 OLED、Geist 字体、党派蓝/红浅底徽章 10px/600/4px、绿买红卖。两份方向文件 + state 旧条目已同步订正。
+  **② P0 全落地（纯 display，0 ledger/frozen/OOS）**：`lib/format.ts` 统一格式层（新）+ `stream/stream-kit.tsx` 交互三件套（新：FilterPills/LoadMoreFooter/usePaged）+ 五面板接线（congress 党派筛选+浅底徽章+分页、insiders 买/卖、ipo 状态、events 类别、smart-money 新/修正）+ SegmentHeader countHint 页头计数窗（congress/events/ipo）+ **/stock 机构持有者反查模块**（AAPL 实测 8 家：伯克希尔 $66.0B/81.8% 居首→段永平→AQR/Two Sigma/索罗斯；小隐寺同位空壳"共 0 家"=反超点落地）+ insiders 文案债修复 + i18n zh/en 各+27 键。
+  **③ 验证全绿**：tsc 0 / eslint 净 / build 1,491 HTML（Next 16 扁平 route.html 布局）/ pytest exit 0 / IAB 实测交互（党派点击→"50/56"实时计数、AAPL 持有者卡、insiders 诚实计数 全部50/买0/卖50）。本地服务已停。
+  **④ 未做**：P0-5 insiders 行级 EDGAR 链（form4.recent 无 accession 字段，需导出端补 doc_url——跟进片）；P1 导出扩容与契约测试同步；P2 抓取端。**未 commit 未 push**（并发 session 的 docs/code-review 不碰）。详见 handoff (e)。
+
+- **active (2026-08-22) ③ 小隐寺颗粒度对齐（display lane 主线回归；业主定帧"学会该网站的数据呈现与 UI 设计"，基建线搁置）：**
+  **① 交付**：`reports/design/2026-08-22-xiaoyinsi-granularity-alignment.md` — 十模式提炼（页头计数窗/KPI 前置/侧栏聚合/URL 筛选/分页+计数器/格式三统一/徽章分类学/行级深度交互/空态列头先渲染/方法学脚注）+ 12 模块对齐矩阵 + 实施阶梯 P0（格式层+三件套移植+页头计数窗+stock 机构持有者 join【小隐寺空壳位反超】+insiders EDGAR 链）/P1（导出扩容+契约测试同步）/P2（13G、广度、executives、交易级=D4 门）。设计定帧 = **小隐寺的骨架 × Aionis 的皮肤与溯源**（学信息设计，保 token/双语/溯源体系；不学双视图冗余与口径不一致等瑕疵）。详见 handoff (d)。
+  **② 关键差距**：六流式面板零筛选零分页（可见行=导出 head() 上限）；/companies 交互三件套已验证待移植；insiders 文案债（"近 2.5 年" vs 实际 2013 起）。
+  **③ 待业主**：GO P0 五片；设计定帧确认。
+
+- **active (2026-08-22) 实时化部署架构方向文件（基建 lane，PROPOSED 待业主 GO；业主命题"优化/替代 GitHub Pages 部署 + 小隐寺终局形态深探"）：**
+  **① 交付**：`reports/design/2026-08-22-realtime-deployment-architecture.md` — 根因五层（核心 = R2"数据被烧进构建产物"，非静态宿主本身）+ 选型（**推荐 B：CF Pages shell + data-gateway Worker/R2/Cron 双平面**，$0 免费档；否决 Vercel SSR / VPS）+ 迁移阶梯 P0-P5（P1-P2 即解实时性；P3 摆脱 Actions 计费单点；P5 根除日更 JSON rebase 冲突）+ 17 路由差距复核（⚠️ 08-22 浏览器复核订正：原判"小隐寺四空壳"中 /events 实为全市场实时流、/annual 有 102 份——**真空白仅 /quarterly /companies /势力阵营 /stock 机构持有者**；优先序已按 M/N 半成品 worktree 校准，executives + /stock join 是仅剩零依赖快赢）+ 业主决策 D1-D6。详见 handoff 2026-08-22 (c)。
+  **② 同日后续**：按业主指令停用 deploy+refresh 两 workflow（`disabled_manually`；E3 触发器保留；恢复命令在 blockers.md 首条）；文档新增 **§10 免费方案全景矩阵 + §10.7 Vercel 专论**（定价页直抓核实）——关键修正 = **账单封锁是账户级的、连公开仓库也挡，"转 Public 免修账单"不成立（D0 = 修 Billing 是前置）**；CF 静态资产请求免费无限 + 私有仓库全兼容 → 通用栈 = 本地 wrangler 直部 + data-gateway + 四可换免费 runner（本地/self-hosted/Oracle ARM/公开 Actions），**对仓库可见性、CI 平台、GitHub 账单三重免疫**；**Vercel 裁决 = 能用**（Hobby 唯一根本约束是禁商用，当前合规；cron 2×每日精度→抓取留 CF；4 CPU 小时/月 SSR 天花板），三阶段 V0 静态直部→V1 gateway→V2 渐进 ISR/RSC 复刻小隐寺形态，"先 Vercel 后决"非单向门——D2 修订为三选（GH Pages 公开 / CF 免疫优先 / Vercel 形态优先）。**④ §11 极简 $0 三阶梯**（业主定帧"只求部署+自动爬取，日更可接受"）：阶梯 1 = 本地计划任务跑 fetch→export→build→部署，**主路 Pages 切 "Deploy from a branch"（gh-pages 直推，0 Actions 分钟，绕开计费锁）**，兜底 `wrangler pages deploy out`——半天工作量、零新账户、与 D0-D2 全解耦；阶梯 2 = CF Cron 分钟级抓 EDGAR 族；阶梯 3（可选）= Oracle 免费 VM。爬取实时性上限 = 源节奏（COT 周更/13F 季更不可变）。**⑤ §12 去 PC 依赖十方案矩阵**（官方直抓核实）：正选 **Oracle ARM VM**（2C/12GB，零改造；闲置回收判据已拿到原文，驻留 2.5GB 内存服务或同机跑分钟级 cron 即免疫）；次选 **GCP Cloud Run Jobs**（$0.00 有余量，需卡+slim 镜像+R2 缓存）；**Codespaces 免费配额不受账单锁影响**（120 核时/月 vs 需求 33）= 即刻过渡位；CF Containers 收费排除。D3 实质作废；新增 **D7 runner 三选**（设置件由我出）；runner 可插槽，管线零改动。
+  **③ 边界**：纯方向文件 + state；0 代码 / 0 ledger / 0 frozen / 0 OOS；未实施任何迁移（每阶段需业主 GO）。未 push；工作树四 JSON 未提交修改属并发 session，未触碰。
+
 - **active (2026-08-22) 本轮会话收束（与并发 session 会合后的处置记录）：**
   **① 第三轮双代理结局**：H（导航完整性组）完整交付但**未集成**——并发 session 已在 main 落地等价且更强实现（CUSIP 94/118 vs 我方 82/118、cmdk 四路由、STOCK_PAGE_TICKERS 死链守卫），分支已删避免双重实现；G（政客交易）死于配额，未竟部分由本主线在 worktree 完成（**交易级实现**：PDF 逐笔解析 813 笔/42 议员/党派 join D610/R174/U29/迟报 26，49 测试+tsc+eslint 绿），但并发 session 已交付**申报流级 /congress**（`0679b92`→`c83dd00`，且正活跃深化中）——按并发纪律不抢 lane。
   **② 备选实现保留**：`agent/politician` 分支（3 commits：a2f719b 尽调 + 0b7867a ingest 链 + 70f8ad2 完整模块）= **交易级粒度备选**（逐笔 ticker/金额区间/买卖方向/党派），若并发版深化未达交易级且业主要求逐笔粒度，经协调后可从该分支取解析器（行/目录解析修复含锚点尾斜杠放行——~200 议员曾被静默丢）。worktree 已清（junction 先摘后删，铁律执行）。

@@ -1,5 +1,14 @@
 # state/blockers.md — what is blocking and why
 
+- **【2026-08-22 处置·业主指令"先暂停相关的 GitHub Action，再重新研究"】已手动停用两个 workflow：**
+  `Deploy Static Site to GitHub Pages`（deploy-pages.yml）+ `Refresh terminal data`
+  （refresh-terminal-data.yml）→ 状态 `disabled_manually`（`gh workflow list --all` 实验证）。
+  动机：计费停摆期间每次 push 触发 3-4s 失败 run（纯噪音）；暂停 = push 照常、Pages 冻结在
+  08-20 早间最后一次成功部署（属预期，非新故障）。`E3 Forward Commit Trigger`（e3-forward.yml）
+  **保留 active**——0 runs、业主门控研究线、不产生失败噪音。恢复路径（二选一，勿双轨）：
+  ① 计费修复后按下方 08-21 条目 re-run；② 按 `reports/design/2026-08-22-realtime-deployment-architecture.md`
+  重新研究后迁移（P3 部署迁 CF Pages 后 deploy workflow 可永久退役）。恢复命令：
+  `gh workflow enable "Deploy Static Site to GitHub Pages" --repo Rethymus/Aionis`（refresh 同理）。
 - **【2026-08-21 新增·需业主动作】GitHub Actions 计费失败，全部 workflow 停摆。**
   官方注解原文："The job was not started because recent account payments have failed or
   your spending limit needs to be increased. Please check the 'Billing & plans' section

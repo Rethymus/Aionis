@@ -8,6 +8,59 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-22 (e) 小隐寺对齐 P0 实施交付（业主 GO + 硬条件"必须真的读懂"）——先复核订正再动手
+
+**浏览器复核（业主要求的前提）**：IAB 实测 18 页中的存疑页 + 截图→视觉模型 + getComputedStyle DOM 实测。**订正两处误判**（此前 WebFetch 抓的是 SSR 首帧，"数据暂不可用"是客户端取数前占位）：① **/events 实为全市场 8-K 实时流**（波音/诺格/微盘股全谱、分钟级时间戳、公司+类型+时间三处 EDGAR 直链、12+ 中文类目多标签 `·` 连接）——非空壳，"Aionis 领先"表述作废，改为"追赶广度"；② **/annual 有 102 份 10-K 流**。真空白 = /quarterly /companies /势力阵营 /stock 机构持有者 四处。视觉实测：暗色 OLED 黑底（body rgb(0,0,0)）、GeistSans/GeistMono、党派徽章 = 美式浅底填充（D 蓝字 `rgb(71,168,255)`/蓝底、R 红字 `rgb(255,86,95)`/红底、10px/600/4px）、方向徽章绿买红卖、吸顶表头、行高 ~40px。两份方向文件（realtime-deployment §6/§8 + granularity-alignment §4/§10）与 state 旧条目已同步订正留档。
+
+**P0 交付（全部 display 层，0 ledger/frozen/OOS）**：
+1. **`web/src/lib/format.ts`（新）**：fmtUsd/fmtShares/fmtInt/fmtDateShort/fmtEmpty 统一格式层（$T/B/M/K、MM/DD 短日期、空值 —）；manager-book 改 import+re-export（单一事实来源）。
+2. **`web/src/components/stream/stream-kit.tsx`（新）**：FilterPills（枚举筛选+诚实计数）+ LoadMoreFooter（"shown / total" 计数行）+ usePaged（筛选变更自动重置分页）——/companies 交互模式泛化为共享件。
+3. **五面板接线**：congress（党派筛选 全部100/共和56/民主39 + 浅底党派徽章 PartyBadge 蓝/红 tint + 50/页分页）、insiders（买/卖筛选+分页+计数头 "16,564 · 2013-03..2026-08"）、ipo（状态筛选+分页）、events（类别筛选按 by_category 排序）、smart-money（新持仓/修正筛选+分页）；流式行日期全部 MM/DD 化（title 悬停保留 ISO）。
+4. **SegmentHeader `countHint` 槽**（xiaoyinsi P1 页头计数+窗口惯例）：congress/events/ipo page.tsx 接真实面板数据组合串。
+5. **/stock 机构持有者模块（反超点落地）**：form13f 40 管理人 top10 按 ticker 反查 →AAPL 实测 8 家（伯克希尔 $66.0B/227.9M 股/81.8% 居首 → 段永平 $7.8B → AQR/Two Sigma/Caxton/索罗斯），Link /manager/{cik}，pct 按本页合计口径+脚注，空态诚实（"不在任何策展管理人前十大"）；**小隐寺同位是空壳"共 0 家"**。
+6. **文案债修复**：insiders.window 去掉硬编码"近 2.5 年"（实际 2013 起），窗口改由计数头动态呈现。
+7. i18n：zh/en 各 +27 键（stream.*/congress.party.*/insiders.filter.*/ipo.filter.*/events.filter.*/smartmoney.filter.*/stock.holders.*）。
+
+**P0-5（insiders 行级 EDGAR 外链）降级为跟进项**：form4.recent 行无 accession/doc_url 字段（实测 JSON），需导出端从 orchestrator 缓存补 doc_url + 契约测试字段集更新 + 本地重导出——单独小片，未混入本轮。
+
+**验证链（全绿）**：tsc exit 0 + eslint 0 error + `pnpm build` 1,491 HTML 全导出（Next 16 扁平 `<route>.html` 布局，非 `<route>/index.html`——本地静态服务要用 .html URL）+ 全套 pytest exit 0 + IAB 浏览器实测三页（党派点击 → "50 / 56" 计数实时变化、AAPL 持有者卡全渲染、insiders 全部50/买0/卖50 诚实计数）。本地 http.server 已停（端口 8765 双进程均已 kill）。
+
+**边界与未提交**：纯 web/src display 层 + state + .gitignore（runs/xys-design/ 截图证据目录）；0 ledger/frozen/config/prereg/OOS；0 导出端改动（纯前端+既有 JSON）；**未 push 未 commit**（工作树另有并发 session 的 docs/code-review/ 不碰；提交时机由业主/并发 session 协调）。M/N 在途模块未触碰。
+
+**遗留（对齐阶梯后续）**：P1 导出扩容（congress 100→874 全量、ipo 150→1046、insiders 50→200、smart-money 60→120 + 契约测试同步：`==60` 精确钉改范围钉）；P1 党派浅底徽章已随本轮落地；P2 抓取端（/events 广度追赶、13G、executives、交易级 D4 门）；insiders doc_url 跟进片。
+
+## 2026-08-22 (d) 小隐寺颗粒度对齐方向文件（display lane 主线回归；基建线按业主指令搁置）
+
+**业主定帧**："先暂时不要管这些（基建），先去跟小隐寺对齐颗粒度，学会该网站的数据呈现与 UI 设计。"
+
+**交付**：`reports/design/2026-08-22-xiaoyinsi-granularity-alignment.md`（双代理深研合成：小隐寺 18 页设计级逐页解剖 × Aionis 视图/JSON/契约测试代码级盘点）。
+1. **小隐寺十模式提炼**（P1-P10）：页头副标题内嵌计数+时间窗、KPI 前置、侧栏聚合 widget、筛选全 URL 化、40-50 行分页+区间计数器、数字/日期/空值三统一（$T/B/M/K + 三粒度日期 + 空值 —）、徽章分类学（三套方向体系 + ⚠ 迟报>45天 + 状态机）、行级深度交互（整卡 EDGAR 链/折叠块/头像缩写）、空态列头先渲染、方法学脚注。
+2. **Aionis 硬差距实锤**：六个流式面板全部无筛选/无搜索/无分页（可见行 = 导出上限：congress 100/874、ipo 150/1046、insiders 50/16,564、smart-money 60、events 23、reddit 7；上限源头 export head()）；仅 /companies 有完整交互三件套（模式已验证，缺移植）；无统一格式层；insiders 行级无 EDGAR 链；/stock 缺机构持有者 join（form13f 数据已就位，小隐寺同位空壳=**反超点**）。
+3. **设计定帧**：**小隐寺的骨架 × Aionis 的皮肤与溯源**——学信息设计（P1-P10），保 Apple HIG token/WCAG/--up-down 约定/双语/ProvenanceBadge/NullDisclaimer；不学其已知瑕疵（双视图 DOM 冗余、KPI 与列表窗口口径不一致、徽章中英混用、空承诺、零溯源零暗色）。
+4. **实施阶梯**：P0 五片（格式层 lib/format.ts + 三件套移植五面板 + 页头计数窗 + stock 机构持有者 join + insiders EDGAR 链）→ P1（导出扩容 congress 874/ipo 1046/insiders 200 + 契约测试同步【smart_money ==60 精确钉改范围钉】+ 徽章深化）→ P2 抓取端（13G+状态机、广度、executives、reddit 深度、congress 交易级=D4 门）。M/N 在途模块不碰。
+5. **文案债顺手修**：insiders dict「近 2.5 年」vs JSON window 2013-03..2026-08 不一致（P0-1 片内）。
+
+**待业主**：GO P0（建议两批代理或主线直做）；设计定帧确认（若要连皮肤也同构=独立 token 重构，需明示）。
+
+**边界**：纯方向文件 + state；0 代码改动；display lane。
+
+## 2026-08-22 (c) 实时化部署架构方向文件（基建 lane，PROPOSED）— 未实施，待业主 D1-D6
+
+**业主命题**：重新设计方案优化/替代 GitHub Pages（实时数据更新不可达）+ 以 data.xiaoyinsi.com 为终局形态深探发展方向。与 feature lane（08-21 roadmap、(a)(b) 两轮模块）互补：本文件管"数据如何不再被构建冻结"。
+
+**交付**：`reports/design/2026-08-22-realtime-deployment-architecture.md`。核心结论：
+1. **根因不是静态宿主，是数据-构建耦合**——30 面板 JSON `import` 进 bundle，部署即固化；日更面改运行时拉取后，留 GH Pages 也能实时。五层根因（R2 核心 + R4 Actions 计费单点 + R5 日更 JSON rebase 冲突）一并被方案吸收。
+2. **推荐架构 = 双平面**：CF Pages 托管静态 shell（git 集成自有 CI，与 GH Actions 计费解耦）+ 新 `workers/data-gateway`（R2 存 panels/streams + Cron 分钟级抓取 EDGAR/Reddit/house.gov + `PUT /admin/panels` 供 Python 管线上传，Bearer token）。前端唯一实质改动 = `usePanel()` hook（60s 轮询 + 内嵌快照兜底，Worker 挂 = 降级到现状永不更差）。**冻结 15 面板故意留 bundle**（不可变语义物理化）；prices Worker 原样不动。否决 Vercel SSR 重构（Hobby 禁商用 + 1,421 SSG 特化损失）与自托管 VPS。
+3. **迁移阶梯 P0-P5**：P0 修计费/本地 runner → P1 gateway 双写 → P2 逐面板切 hook → P3 宿主切 CF Pages（验收 = 暂停全部 GH workflows 后 push 仍上线）→ P4 分钟级流（/events /insider /stakes /ipo）→ P5 停日更 JSON git 提交（rebase 冲突根除）。**最小改动 = 只做 P1-P2 即解实时性**。
+4. **17 路由复核**（22 页实探；⚠️ 08-22 晚 IAB 浏览器复核订正：/events 实为全市场 8-K 实时流、/annual 有 102 份——WebFetch 抓的是 SSR 首帧，"数据暂不可用"是客户端取数前占位；**真空白仅 /quarterly /companies /势力阵营 /stock 机构持有者四处**）；填壳优先序已按 M/N 半成品（Aionis-m/Aionis-n worktree）校准——executives（form8k 加 Item 5.02 分支，无人做可新起）与 /stock 页 join 是仅剩的两个零依赖快赢；/events 转为"追赶广度"（对方全市场 vs 我方 5 发行人）；/congress 交易级 = 解封 `agent/politician` salvage（813 笔解析器）；**不追**：卫星 TACO / 付费行情 / 8.7K 全量目录。
+5. **战略**：小隐寺卖数据速度（Vercel/RSC/SSE/采购源），Aionis 护城河 = 每个数字带出生证明 + US/CN 双区 + 可证伪；速度可追平、认识论完整性它结构上追不了；**E3 forward-live 战略权重上升**（唯一"模型读数实时且不可回改"的差异化，仍守 GO 门）。
+
+**业主决策 D1-D6**（文档 §9，§10.4 修订）：D0 修账单辨根因（新增前置）｜D1 GO P1-P2？D2 迁 CF Pages？D3 可见性与成本解耦（重述）｜D4 解封 politician salvage？D5 E3 GO？D6 自定义域名？
+
+**同日进展（暂停 + 免费方案全景 + Vercel 专论）**：① 业主指令"先暂停相关的 GitHub Action"→ 已停用 `Deploy Static Site to GitHub Pages` + `Refresh terminal data`（`disabled_manually` 实证；`E3 Forward Commit Trigger` 0 runs 保留 active；处置与恢复命令记 blockers.md 首条）；② 文档 §10 新增免费方案全景矩阵（官方+社区双源核实，2026-08-22）——**关键修正：账单封锁是账户级的，连公开仓库也挡（社区多帖实证），"转 Public 免修账单"不成立，修 Billing 是一切方案的前置（D0）**；CF 静态资产请求免费无限 + CF Pages/Netlify/Deno 私有仓库全兼容 → **通用推荐栈 = 本地 `next build` + `wrangler deploy`（CF Worker+静态资产）+ data-gateway（R2/Cron）+ 四个可互换免费 runner（本地任务/self-hosted/Oracle Always Free ARM 2C12G/公开仓库 Actions）**，对仓库可见性、CI 平台、GitHub 账单状态三重免疫；self-hosted runner 有 2026-03 平台费官宣（延期中）政策风险，不作唯一依赖。③ 业主问"参考小隐寺用 Vercel"→ §10.7 专论（vercel.com/pricing 直抓核实）：**能用**——Hobby 禁商用是唯一根本约束（Aionis 当前个人研究合规）；Hobby cron 仅 2×每日精度（分钟级抓取不可能，留 CF）；4 CPU 小时/月是 SSR 天花板；硬上限不可加购（无意外账单）。**三阶段路径 V0 静态直部（零改动半天）→ V1 gateway 实时（宿主无关）→ V2 去 export 渐进 ISR/RSC 复刻形态（Vercel 独有优势，CF 需 OpenNext）**；数据层仍外置 CF R2；"先 Vercel 后决"非单向门（V0/V1 平台无关）。D2 修订为三选：GH Pages（公开）/ CF（免疫优先）/ Vercel（形态优先，商用分岔后置）。④ 业主再定帧"只求部署 + 数据自动爬取更新，$0，日更可接受"→ **§11 极简三阶梯**：阶梯 1 = 本地 Windows 计划任务（StartWhenAvailable 错过补跑）跑 `update_and_deploy.sh`（refresh YAML 的本地转写：fetch→export→build→部署），部署主路 = **Pages 切 "Deploy from a branch" 模式（gh-pages 直推，0 Actions 分钟，绕开计费锁）**、兜底 = `wrangler pages deploy out`（与 GitHub 无关）——半天工作量、零新账户、与 D0-D2 全解耦；阶梯 2 = CF Worker Cron 分钟级抓 EDGAR 族+Reddit 写 R2（$0，只动 5-6 个流面板）；阶梯 3（可选）= Oracle 免费 VM 去 PC 依赖。**爬取实时性上限 = 源节奏**（COT 周更/13F 季更/宏观日更，基建无法改变）。⑤ 业主指令"去掉对 PC 开机的依赖，深度调研"→ **§12 十方案矩阵**（官方文档直抓核实）：⭐正选 **Oracle Always Free ARM VM**（2C/12GB/200GB，零管线改造；**闲置回收判据已取得原文** = 7 天窗口 p95 CPU<20% 且 网络<20% 且 内存<20%，任一不满足即安全——驻留 ~2.5GB 内存服务或把分钟级 EDGAR cron 放同机即免疫）；⭐次选 **GCP Cloud Run Jobs**（免费档 240k vCPU-s + 450k GiB-s/月 vs 需求 162k/81k = $0.00 有余量；需绑卡+预算告警；镜像须 slim 防 Artifact Registry 超 0.5GB 免费档；缓存外置 R2）；**Codespaces 免费配额不受账单锁影响**（官方：仅配额耗尽后才需有效付款方式；120 核时/月 vs 需求 33）= 即刻可用的过渡位。CF Containers 需 Workers Paid $5/月（公告记忆，官方页抓取被内容过滤拦，复核前按排除处理）；Serv00 等 BSD 免费主机因无 pandas wheel 排除。**D3 实质作废**（去 PC 依赖不靠修 GitHub 账单）；新增 **D7 runner 选型**（Oracle/Cloud Run/Codespaces 三选，设置件由我出）。runner 是可插槽：`update_and_deploy.sh` 三处同一份 bash，切换零管线改动。
+
+**边界**：纯方向文件 + state；0 代码 / 0 ledger / 0 frozen / 0 OOS；未实施任何迁移（每阶段均需业主 GO）。工作树四 JSON（api_catalog/data_health/form13f/ipo）未提交修改属并发 session，未触碰；未 push。
+
 ## 2026-08-22 (b) 五代理军团轮：J/K/O 三模块集成上线，M/N 移交新 session
 
 **五路并行**（J=/ipo、K=/stars、M=/news、N=/quarterly+annual、O=/companies；M/N 各自创建了自己的 worktree 后被取消）。J/K/O 全胜：10 commits cherry-pick 到 main（5c99422..4e481d2 + d15bd9b 重生成），冲突 3 处全按既定解法（生成物 JSON ours+统一重生成、侧栏 import 双保留）。
