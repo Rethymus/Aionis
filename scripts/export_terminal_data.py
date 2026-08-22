@@ -1549,6 +1549,127 @@ def export_smart_money() -> None:
     (WEB / "smart_money.json").write_text(json.dumps(_stamp(payload), indent=2))
 
 
+def export_stakes13g() -> None:
+    """SC 13G passive-stake filing stream — EDGAR daily index (display-only).
+
+    Reads ``data/cache/sc13g_daily_aggregate.json`` (gitignored; produced by
+    ``scripts/stakes13g_fetch.py`` over a trailing ~120-day window). EFTS froze
+    on the Schedule 13 family after 2024-12-17 (live-verified 2026-08-22), so
+    the daily crawler index is the source — it lists a filing under EVERY
+    covered company, so rows are grouped per accession and resolved with the
+    same offline heuristic as the 13D daily path (``_sm_dedup_enrich``): the
+    one listed company is the subject, the co-indexed names surface as the
+    filer; ambiguous groups keep every member honestly (placeholder filer).
+    The % ownership / passive-state machine needs per-document parsing and is
+    DEFERRED (disclosed, never fabricated) — each row is one immutable filing.
+    """
+    fp = Path("data/cache/sc13g_daily_aggregate.json")
+    if not fp.exists():
+        print(
+            "[export-terminal] SKIP stakes_13g: data/cache/sc13g_daily_aggregate.json "
+            "not present (tracked JSON retains last-committed value)",
+            flush=True,
+        )
+        return
+    try:
+        raw = json.loads(fp.read_text())
+    except (json.JSONDecodeError, OSError):
+        print(
+            "[export-terminal] SKIP stakes_13g: malformed sc13g_daily_aggregate.json "
+            "(tracked JSON retains last-committed value)",
+            flush=True,
+        )
+        return
+    if not isinstance(raw, list):
+        print(
+            "[export-terminal] SKIP stakes_13g: unexpected aggregate shape "
+            "(tracked JSON retains last-committed value)",
+            flush=True,
+        )
+        return
+
+    # Group per accession (the index lists subject AND filer entities), then
+    # resolve subject/filer + offline ticker with the 13D daily-path heuristic.
+    cik2tk, name2tk = _sm_ticker_maps()
+    groups: dict[str, list[dict]] = {}
+    for r in raw:
+        acc = str(r.get("accession", ""))
+        if acc:
+            groups.setdefault(acc, []).append(r)
+    rows: list[dict] = []
+    for members in groups.values():
+        rows.extend(_sm_dedup_enrich(members, cik2tk, name2tk))
+    rows.sort(key=lambda r: r["date"], reverse=True)
+    if not rows:
+        print(
+            "[export-terminal] SKIP stakes_13g: 0 filings in aggregate "
+            "(tracked JSON retains last-committed value)",
+            flush=True,
+        )
+        return
+
+    by_form = {k: 0 for k in ("SC 13G", "SC 13G/A")}
+    for r in rows:
+        by_form[r["form"]] = by_form.get(r["form"], 0) + 1
+    filings = []
+    for r in rows[:150]:
+        # Normalize the daily index's http:// links to https:// (EDGAR serves
+        # both; https is the terminal's link convention).
+        url = str(r["url"])
+        if url.startswith("http://www.sec.gov/"):
+            url = "https://www.sec.gov/" + url[len("http://www.sec.gov/"):]
+        filings.append({
+            "filer": str(r["filer"]),
+            "target": str(r["target"]),
+            "ticker": str(r["ticker"]) or None,  # unresolved → honest null
+            "date": str(r["date"]),
+            "form": str(r["form"]),
+            "doc_url": url,
+        })
+    dates = [r["date"] for r in rows]
+    payload = {
+        "status": "ok",
+        "as_of": max(dates),
+        "window": {"start": min(dates), "end": max(dates)},
+        "total": int(len(rows)),
+        "by_form": {k: int(v) for k, v in by_form.items() if v},
+        "filings": filings,
+        "methodology": (
+            "SC 13G passive-stake filing stream — SEC EDGAR daily crawler "
+            "index (public domain, 17 U.S.C. §105), trailing ~120-day window, "
+            "filed-date point-in-time; a SC 13G/A amendment is a new filing, "
+            "never a silent overwrite. EFTS full-text search froze on the "
+            "Schedule 13 family after 2024-12-17 (live-verified: forms=SC 13G "
+            "returns 0 hits for 2025+ windows), so the daily index is the "
+            "source. It lists a filing under EVERY covered company, so rows "
+            "are DEDUPED per accession: the one listed company is the SUBJECT "
+            "(ticker backfilled OFFLINE from the cached SEC company_tickers "
+            "snapshot — a current-snapshot display label, not as-of-filing) "
+            "and the co-indexed names surface as the FILER; ambiguous or "
+            "unlisted groups honestly keep every member (placeholder filer / "
+            "null ticker, counted in data_health.source_health), so the row "
+            "count can slightly exceed the distinct-accession count. Honest "
+            "v1 limits, disclosed not papered over: the % ownership, share "
+            "count, event date, and the passive/active/exited state machine "
+            "live INSIDE the filing documents and are NOT parsed here "
+            "(per-accession index.json fetches would cost thousands of "
+            "requests — deferred); each row links the filing's EDGAR index "
+            "page, which lists every document and names the reporting "
+            "person. Counts are FILING counts, not holder counts. "
+            "Display-only, exploratory, not a research claim; NOT part of "
+            "any OOS pipeline."
+        ),
+    }
+    (WEB / "stakes_13g.json").write_text(json.dumps(_stamp(payload), indent=2))
+    n_tk = sum(1 for f in filings if f["ticker"])
+    print(
+        f"[export-terminal] stakes_13g: {payload['total']} filings "
+        f"{payload['by_form']}, as_of {payload['as_of']}, "
+        f"ticker {n_tk}/{len(filings)} on top-{len(filings)}",
+        flush=True,
+    )
+
+
 def export_reddit_meta() -> None:
     """Reddit retail-sentiment — live if a forward snapshot exists, else honest 'awaiting_fetch'.
 
@@ -2123,6 +2244,7 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
     ("ledger_audit", "ledger_audit.json", _DH_DAILY),
     ("cot", "cot.json", _DH_CADENCE),
     ("smart_money", "smart_money.json", _DH_CADENCE),
+    ("stakes_13g", "stakes_13g.json", _DH_DAILY),
     ("form13f", "form13f.json", _DH_CADENCE),
 ]
 
@@ -2201,6 +2323,8 @@ def _dh_as_of(key: str, fname: str) -> str | None:
         return p.get("latest_date")
     if key == "smart_money":
         return p.get("latest_date")
+    if key == "stakes_13g":
+        return p.get("as_of")
     if key == "form13f":
         return p.get("as_of")
     if key == "headline_provenance":
@@ -2238,6 +2362,8 @@ def _source_health() -> dict:
     """Field-level quality metrics for sources with known gaps (counted)."""
     sm = _dh_read("smart_money.json") or {}
     recent = sm.get("recent_filings") or []
+    sg = _dh_read("stakes_13g.json") or {}
+    sg_filings = sg.get("filings") or []
     reddit = _dh_read("reddit.json") or {}
     picks = reddit.get("picks") or []
     cot = _dh_read("cot.json") or {}
@@ -2246,6 +2372,14 @@ def _source_health() -> dict:
             "ticker_null": sum(1 for r in recent if not r.get("ticker")),
             "n_recent": len(recent),
             "days_since_latest": _dh_days_since(sm.get("latest_date")),
+        },
+        "stakes_13g": {
+            "ticker_null": sum(1 for r in sg_filings if not r.get("ticker")),
+            "filer_unresolved": sum(
+                1 for r in sg_filings if str(r.get("filer", "")).startswith("(")
+            ),
+            "n_filings": len(sg_filings),
+            "days_since_latest": _dh_days_since(sg.get("as_of")),
         },
         "reddit": {
             "bull_ratio_null": sum(1 for p in picks if p.get("bull_ratio") is None),
@@ -2384,6 +2518,12 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
     "ledger_audit": ("Aionis append-only ledger (repo MIT)", "ledger.jsonl claim-row timeline"),
     "cot": ("U.S. CFTC — public domain", "Commitments of Traders legacy futures, weekly"),
     "smart_money": ("U.S. SEC EDGAR — public domain", "13D/G filings via EFTS, filed-date PIT"),
+    "stakes_13g": (
+        "U.S. SEC EDGAR — public domain",
+        "SC 13G/G-A passive-stake stream via the daily crawler index "
+        "(EFTS froze on Schedule 13 after 2024-12-17), filed-date PIT; "
+        "ownership % / state machine not parsed",
+    ),
     "form13f": ("U.S. SEC EDGAR — public domain", "13F-HR quarterly holdings XML, filed-date PIT, whole-USD values"),
     "data_health": ("Aionis-generated (repo MIT)", "freshness/provenance map over all panels"),
 }
@@ -3194,6 +3334,7 @@ def main() -> None:
     _safe_export("market_context", export_market_context)
     _safe_export("macro_drivers", export_macro_drivers)
     _safe_export("smart_money", export_smart_money)
+    _safe_export("stakes_13g", export_stakes13g)
     _safe_export("reddit_meta", export_reddit_meta)
     _safe_export("ledger_audit", export_ledger_audit)
     _safe_export("headline_provenance", export_headline_provenance)

@@ -1177,12 +1177,80 @@ def test_smart_money_source_health_counts_agree_with_panel() -> None:
     assert isinstance(sh["days_since_latest"], int) and sh["days_since_latest"] >= 0
 
 
+def test_stakes_13g_panel_contract() -> None:
+    """13G panel schema: field set, form enum, date order, EDGAR URLs, sums.
+
+    Locks the contract the /smart-money "13G passive stream" card renders
+    against: rows are per-ACCESSION filing events (form enum SC 13G / SC 13G/A
+    only — the passive family); filings sorted by date descending; doc_url is
+    an EDGAR archive link; by_form counts are FILING counts summing to total;
+    the unresolved ticker stays an honest null; the methodology discloses the
+    public-domain source, the EFTS Schedule-13 freeze, the DEFERRED
+    ownership/state-machine parsing, and the display-only boundary.
+    """
+    f = _load("stakes_13g.json")
+    assert f["status"] in {"ok", "awaiting_fetch"}
+    assert {"as_of", "window", "total", "by_form", "filings",
+            "methodology"} <= set(f)
+    assert {"start", "end"} <= set(f["window"])
+    if f["status"] != "ok" or not f["filings"]:
+        return  # awaiting-fetch placeholder keeps the shape loose
+    dates: list[str] = []
+    for r in f["filings"]:
+        assert {"filer", "target", "ticker", "date", "form", "doc_url"} <= set(r)
+        assert r["form"] in ("SC 13G", "SC 13G/A"), f"bad form: {r['form']!r}"
+        assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", r["date"])
+        assert isinstance(r["filer"], str) and r["filer"]
+        assert isinstance(r["target"], str) and r["target"]
+        # Unresolved ticker is an honest null, never a guess and never "" noise.
+        assert r["ticker"] is None or (
+            isinstance(r["ticker"], str) and r["ticker"].strip().upper() == r["ticker"]
+        )
+        assert r["doc_url"].startswith("https://www.sec.gov/Archives/edgar/data/")
+        dates.append(r["date"])
+    assert dates == sorted(dates, reverse=True), "filings must be newest-first"
+    # filings are the NEWEST 150 rows, so the newest row is always visible.
+    assert f["as_of"] == dates[0], "as_of must be the newest visible filed date"
+    assert f["window"]["end"] == f["as_of"], "window end must be as_of"
+    assert sum(f["by_form"].values()) == f["total"], (
+        "by_form must count FILINGS (sum == total), not index rows or holders"
+    )
+    assert set(f["by_form"]) <= {"SC 13G", "SC 13G/A"}
+    m = f["methodology"]
+    assert "public domain" in m, "methodology must disclose the license"
+    assert "display-only" in m.lower() and "not a research claim" in m, (
+        "methodology must disclose the display-only boundary"
+    )
+    assert "2024-12-17" in m, "must disclose the EFTS Schedule-13 freeze"
+    assert "NOT parsed" in m or "not parsed" in m, (
+        "must disclose the deferred ownership/state-machine parsing"
+    )
+
+
+def test_stakes_13g_source_health_counts_agree_with_panel() -> None:
+    """data_health.source_health must mirror the committed stakes_13g panel."""
+    dh = _load("data_health.json")
+    sh = dh["source_health"]["stakes_13g"]
+    sg = _load("stakes_13g.json")
+    filings = sg["filings"]
+    assert isinstance(sh["n_filings"], int) and sh["n_filings"] == len(filings)
+    assert sh["ticker_null"] == sum(1 for r in filings if not r.get("ticker"))
+    assert sh["filer_unresolved"] == sum(
+        1 for r in filings if str(r.get("filer", "")).startswith("(")
+    )
+    assert sh["ticker_null"] <= sh["n_filings"]
+    assert isinstance(sh["days_since_latest"], int) and sh["days_since_latest"] >= 0
+
+
 def test_data_health_source_health_shape() -> None:
     """source_health quantifies field-level quality per source, exact schema."""
     dh = _load("data_health.json")
     sh = dh["source_health"]
-    assert set(sh) == {"smart_money", "reddit", "cot"}
+    assert set(sh) == {"smart_money", "stakes_13g", "reddit", "cot"}
     assert set(sh["smart_money"]) == {"ticker_null", "n_recent", "days_since_latest"}
+    assert set(sh["stakes_13g"]) == {
+        "ticker_null", "filer_unresolved", "n_filings", "days_since_latest",
+    }
     assert set(sh["reddit"]) == {"bull_ratio_null", "n_picks"}
     assert set(sh["cot"]) == {"weeks_since_latest"}
     reddit = _load("reddit.json")

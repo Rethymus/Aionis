@@ -77,7 +77,7 @@
   2. **标的/申报人解析为离线启发式**：一 accession 组内恰有一个可解析 ticker 的上市公司 → 它是标的，其余入索引名为申报人；零个或多个 → 全部成员诚实保留（占位申报人 / null ticker，计入 `data_health.source_health`）。
   3. **ticker 自缓存 SEC company_tickers 快照离线回填**（当前快照 display label，非 as-of-filing——仅供展示与股票页跳转，绝不作研究输入）；解析不了如实 null。
   4. 计数为 **filing 计数**非持有人计数（被动机构常一标的多份 13G/A）。
-  5. daily index 将 13G 列于每个关联公司名下——原始行数为 (accession × 公司) 计数，面板 `total` 为 **accession 去重后** 计数。
+  5. daily index 将 13G 列于每个关联公司名下——原始行数为 (accession × 公司) 计数；面板按 accession 分组去重，**双方上市公司/无法判别的组按成员诚实保留**（行数可略超 distinct-accession 数，methodology 明示）。
 
 ---
 
