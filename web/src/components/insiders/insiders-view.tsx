@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { fmtDateShort } from "@/lib/format";
 import { FilterPills, LoadMoreFooter, usePaged } from "@/components/stream/stream-kit";
+import { AvatarInitials } from "@/components/stream/avatar-initials";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
 import Link from "next/link";
@@ -116,6 +117,7 @@ export function InsidersView() {
             {f.top_insiders.map((ins, i) => (
               <div key={ins.filer + i} className="flex items-center gap-3 px-4 py-2.5 text-sm">
                 <span className="w-6 shrink-0 text-muted-foreground tabular-nums">{i + 1}</span>
+                <AvatarInitials name={ins.filer} />
                 <span className="truncate">{ins.filer}</span>
                 <Badge variant="secondary" className="ml-auto shrink-0 tabular-nums">
                   {ins.count}
@@ -197,6 +199,7 @@ export function InsidersView() {
                   >
                     {t(buy ? "insiders.buy" : "insiders.sell")}
                   </Badge>
+                  <AvatarInitials name={r.filer} />
                   <span className="w-32 shrink-0 truncate text-muted-foreground">{r.filer}</span>
                   <Link href={`/stock/${r.ticker}`} className="truncate font-medium text-primary hover:underline">{r.ticker}</Link>
                   {r.doc_url ? (
