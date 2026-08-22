@@ -26,6 +26,7 @@ import {
   ZapIcon,
   RocketIcon,
   BuildingIcon,
+  UserRoundIcon,
 } from "lucide-react";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -50,6 +51,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     { title: t("nav.group.confirm"), url: "/confirmation", icon: <UsersIcon /> },
     { title: t("nav.institutions"), url: "/institutions", icon: <LandmarkIcon /> },
     { title: t("nav.events"), url: "/events", icon: <ZapIcon /> },
+    { title: t("nav.executives"), url: "/executives", icon: <UserRoundIcon /> },
     { title: t("nav.ipo"), url: "/ipo", icon: <RocketIcon /> },
     { title: t("nav.congress"), url: "/congress", icon: <LandmarkIcon /> },
   ];

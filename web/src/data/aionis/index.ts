@@ -42,6 +42,7 @@ import form13fJson from "./form13f.json";
 import form8kJson from "./form8k.json";
 import ipoJson from "./ipo.json";
 import politicianTradesJson from "./politician_trades.json";
+import executivesJson from "./executives.json";
 
 export type Pick = {
   rank: number;
@@ -661,6 +662,31 @@ export type PoliticianTrades = {
   snapshot_ts?: string;
 };
 
+export type ExecutivesEvent = {
+  company: string;
+  ticker: string;
+  filing_date: string;
+  // Full legally mandated 8-K item list (["5.02", "9.01"]) — the row's
+  // Item 5.02 membership comes from the form8k officer_changes category.
+  items: string[];
+  doc_url: string;
+};
+
+export type Executives = {
+  status: string;
+  // Latest officer_changes filing date in the subset; null on an honest
+  // empty window (no Item 5.02 filings yet).
+  as_of: string | null;
+  total: number;
+  issuers: number;
+  window: { start: string | null; end: string | null };
+  events: ExecutivesEvent[];
+  // company name -> filing count (honest counting; sums to total).
+  by_company: Record<string, number>;
+  methodology: string;
+  snapshot_ts?: string;
+};
+
 export const aionis = {
   metrics: metricsJson as Metrics,
   picks: picksJson as Pick[],
@@ -703,4 +729,5 @@ export const aionis = {
   form8k: form8kJson as Form8k,
   ipo: ipoJson as FormIpo,
   politicianTrades: politicianTradesJson as PoliticianTrades,
+  executives: executivesJson as Executives,
 };
