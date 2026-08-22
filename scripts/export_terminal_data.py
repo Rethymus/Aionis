@@ -3057,7 +3057,7 @@ def export_form8k() -> None:
     df = pd.read_parquet(fp)
     by_cat: dict[str, int] = df["category"].value_counts().to_dict()
     events = []
-    # Bounded 25-issuer universe (~1.3k events/yr worst case); the cap is a
+    # Bounded 50-issuer universe (~2.6k events/yr worst case); the cap is a
     # long-term growth guard, NOT a display slice — by_category/unclassified
     # count the full frame, so a cap hit would desync counts vs the visible
     # list and the contract test (len(events) == total) fails LOUDLY rather
@@ -3084,11 +3084,12 @@ def export_form8k() -> None:
         "methodology": (
             "SEC Form 8-K current reports — the legally mandated material-event "
             "disclosure (public domain, 17 U.S.C. §105), due within 4 business "
-            "days of the event. Panel streams a bounded 25 large-cap issuer "
-            "set (AAPL/MSFT/NVDA/GOOGL/AMZN plus 20 mega/large caps across "
-            "financials, payments, healthcare, staples, energy, tech — v2 "
-            "breadth expansion, 2026-08-22; XOM carries both its "
-            "pre-succession CIK and the 2026-07-01 8-K12B successor entity) "
+            "days of the event. Panel streams a bounded 50 large-cap issuer "
+            "set (5 mega-cap seed + v2 20 + v3 25 across financials, payments, "
+            "healthcare, staples, energy, industrials, tech/comm — breadth "
+            "expansions 2026-08-22; still bounded, NOT full market; XOM "
+            "carries both its pre-succession CIK and the 2026-07-01 8-K12B "
+            "successor entity) "
             "since "
             "2026-05-01; each row links the EDGAR primary document. Items are "
             "regex-extracted from the primary doc (nbsp/thin-space entities "
