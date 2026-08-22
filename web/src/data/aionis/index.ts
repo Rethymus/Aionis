@@ -26,6 +26,7 @@ import bpsSweepJson from "./bps_sweep.json";
 import tacoJson from "./taco.json";
 import redditJson from "./reddit.json";
 import smartMoneyJson from "./smart_money.json";
+import stakes13gJson from "./stakes_13g.json";
 import pickConvictionJson from "./pick_conviction.json";
 import form4Json from "./form4.json";
 import cotJson from "./cot.json";
@@ -250,6 +251,30 @@ export type SmartMoney = {
   n_filers: number;
   latest_date: string | null;
   yearly: { year: number; filings: number }[];
+};
+
+export type Stakes13GFiling = {
+  filer: string;
+  target: string;
+  // Offline backfill from the cached SEC company_tickers snapshot (a
+  // CURRENT-snapshot display label, not as-of-filing); null = unresolved
+  // (unlisted target / ambiguous accession group) — honest, never guessed.
+  ticker: string | null;
+  date: string;
+  // SC 13G | SC 13G/A (immutable form type — one row per accession filing).
+  form: string;
+  doc_url: string;
+};
+
+export type Stakes13G = {
+  status: string;
+  as_of: string | null;
+  window: { start: string; end: string };
+  total: number;
+  by_form: Record<string, number>;
+  filings: Stakes13GFiling[];
+  methodology: string;
+  snapshot_ts?: string;
 };
 
 export type ConvictionPoint = {
@@ -482,6 +507,14 @@ export type DataHealth = {
   // Field-level quality metrics on panels whose source has known gaps.
   source_health?: {
     smart_money: { ticker_null: number; n_recent: number; days_since_latest: number };
+    // 13G passive stream: ticker/filer resolution is offline-heuristic; nulls
+    // and placeholder filers are counted, never guessed.
+    stakes_13g: {
+      ticker_null: number;
+      filer_unresolved: number;
+      n_filings: number;
+      days_since_latest: number;
+    };
     reddit: { bull_ratio_null: number; n_picks: number };
     cot: { weeks_since_latest: number };
   };
@@ -713,6 +746,7 @@ export const aionis = {
   taco: tacoJson as Taco,
   reddit: { ...redditJson, picks: redditJson.picks as RedditPick[] },
   smartMoney: smartMoneyJson as SmartMoney,
+  stakes13g: stakes13gJson as Stakes13G,
   pickConviction: pickConvictionJson as PickConviction,
   form4: form4Json as Form4,
   cot: cotJson as Cot,

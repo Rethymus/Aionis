@@ -28,13 +28,17 @@ import {
 const PAGE_SIZE = 30;
 
 type KindFilter = "all" | "new" | "amendment";
+type GFormFilter = "all" | "SC 13G" | "SC 13G/A";
 
 export function SmartMoneyView() {
   const { t } = useI18n();
   const sm = aionis.smartMoney;
+  const sg = aionis.stakes13g;
   const yearlyHeading = "年度 13D 申报趋势 / Yearly 13D filings";
   const [kind, setKind] = useState<KindFilter>("all");
   const { visibleCount, reset, loadMore } = usePaged(PAGE_SIZE);
+  const [gform, setGform] = useState<GFormFilter>("all");
+  const gPaged = usePaged(PAGE_SIZE);
 
   const recent = sm.recent_filings ?? [];
   const filtered = useMemo(
@@ -46,9 +50,20 @@ export function SmartMoneyView() {
   );
   const visible = filtered.slice(0, visibleCount);
 
+  const gRecent = sg.filings ?? [];
+  const gFiltered = useMemo(
+    () => (gform === "all" ? gRecent : gRecent.filter((r) => r.form === gform)),
+    [gRecent, gform],
+  );
+  const gVisible = gFiltered.slice(0, gPaged.visibleCount);
+
   const applyKind = (k: KindFilter) => {
     setKind(k);
     reset();
+  };
+  const applyGForm = (k: GFormFilter) => {
+    setGform(k);
+    gPaged.reset();
   };
 
   return (
@@ -204,7 +219,100 @@ export function SmartMoneyView() {
         </Card>
       )}
 
+      <Card className="overflow-hidden py-0">
+        <CardHeader className="border-b">
+          <CardTitle className="text-base" title={t("stakes13g.term13GHint")}>
+            {t("stakes13g.title")}
+          </CardTitle>
+          <CardDescription>{t("stakes13g.window")}</CardDescription>
+          <p className="font-mono text-xs tabular-nums text-muted-foreground/80">
+            {sg.total.toLocaleString("en-US")} · {sg.window.start} → {sg.window.end}
+            {sg.by_form["SC 13G"] ? ` · 13G ${sg.by_form["SC 13G"].toLocaleString("en-US")}` : ""}
+            {sg.by_form["SC 13G/A"] ? ` · 13G/A ${sg.by_form["SC 13G/A"].toLocaleString("en-US")}` : ""}
+          </p>
+          <div className="pt-1">
+            <FilterPills<GFormFilter>
+              label={t("stakes13g.filter.label")}
+              value={gform}
+              onChange={applyGForm}
+              options={[
+                { key: "all", label: t("stakes13g.filter.all"), count: gRecent.length },
+                {
+                  key: "SC 13G",
+                  label: t("stakes13g.form13g"),
+                  count: gRecent.filter((r) => r.form === "SC 13G").length,
+                },
+                {
+                  key: "SC 13G/A",
+                  label: t("stakes13g.form13ga"),
+                  count: gRecent.filter((r) => r.form === "SC 13G/A").length,
+                },
+              ]}
+            />
+          </div>
+        </CardHeader>
+        <CardContent className="p-0">
+          {gVisible.length === 0 ? (
+            <div className="p-4 text-sm text-muted-foreground">{t("stakes13g.empty")}</div>
+          ) : (
+            <>
+              <div className="divide-y">
+                {gVisible.map((r, i) => (
+                  <div key={i} className="flex items-center gap-3 px-4 py-2.5 text-sm">
+                    <span
+                      className="w-14 shrink-0 font-mono text-xs text-muted-foreground"
+                      title={r.date}
+                    >
+                      {fmtDateShort(r.date)}
+                    </span>
+                    <Badge
+                      variant="outline"
+                      className={cn(
+                        "shrink-0 px-1.5 py-0 text-xs",
+                        r.form === "SC 13G/A"
+                          ? "text-muted-foreground"
+                          : "border-sky-500/40 bg-sky-500/10 text-sky-600 dark:text-sky-400",
+                      )}
+                    >
+                      {t(r.form === "SC 13G/A" ? "stakes13g.form13ga" : "stakes13g.form13g")}
+                    </Badge>
+                    <span className="w-32 shrink-0 truncate text-muted-foreground">{r.filer}</span>
+                    {r.doc_url ? (
+                      <a
+                        href={r.doc_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="truncate font-medium underline-offset-2 hover:underline"
+                        title={t("stakes13g.filing_link")}
+                      >
+                        → {r.target}
+                      </a>
+                    ) : (
+                      <span className="truncate font-medium">→ {r.target}</span>
+                    )}
+                    {r.ticker ? (
+                      <Link href={`/stock/${r.ticker}`} className="ml-auto shrink-0">
+                        <Badge variant="secondary" className="font-mono text-xs">
+                          {r.ticker}
+                        </Badge>
+                      </Link>
+                    ) : null}
+                  </div>
+                ))}
+              </div>
+              <LoadMoreFooter
+                shown={gVisible.length}
+                total={gFiltered.length}
+                onLoadMore={gPaged.loadMore}
+                pageSize={PAGE_SIZE}
+              />
+            </>
+          )}
+        </CardContent>
+      </Card>
+
       <p className="text-xs text-muted-foreground">{t("smartmoney.explain")}</p>
+      <p className="text-xs text-muted-foreground">{t("stakes13g.explain")}</p>
     </div>
   );
 }
