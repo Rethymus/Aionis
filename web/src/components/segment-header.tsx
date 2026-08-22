@@ -36,11 +36,16 @@ export function SegmentHeader({
   introKey,
   asOf,
   frozen = false,
+  countHint,
 }: {
   segment: Segment;
   introKey: DictKey;
   asOf?: string | null;
   frozen?: boolean;
+  /** Data scale + window, xiaoyinsi P1 style: "874 份 · 2025–2026". Rendered
+   *  under the intro so the first screen anchors count AND freshness. The
+   *  caller composes it from real panel data (never a hardcoded literal). */
+  countHint?: string;
 }) {
   const { t } = useI18n();
   return (
@@ -88,6 +93,11 @@ export function SegmentHeader({
         </Link>
       </nav>
       <p className="max-w-3xl text-sm text-muted-foreground">{t(introKey)}</p>
+      {countHint ? (
+        <p className="font-mono text-xs tabular-nums text-muted-foreground/80">
+          {countHint}
+        </p>
+      ) : null}
     </header>
   );
 }

@@ -63,20 +63,11 @@ export function categoryLabelKey(cat: string): DictKey {
     : CATEGORY_LABEL.other;
 }
 
-export function fmtUsd(v: number): string {
-  if (Math.abs(v) >= 1e12) return `$${(v / 1e12).toFixed(2)}T`;
-  if (Math.abs(v) >= 1e9) return `$${(v / 1e9).toFixed(1)}B`;
-  if (Math.abs(v) >= 1e6) return `$${(v / 1e6).toFixed(1)}M`;
-  if (Math.abs(v) >= 1e3) return `$${(v / 1e3).toFixed(0)}K`;
-  return `$${v.toFixed(0)}`;
-}
-
-export function fmtShares(v: number): string {
-  if (Math.abs(v) >= 1e9) return `${(v / 1e9).toFixed(2)}B`;
-  if (Math.abs(v) >= 1e6) return `${(v / 1e6).toFixed(1)}M`;
-  if (Math.abs(v) >= 1e3) return `${(v / 1e3).toFixed(0)}K`;
-  return `${v.toFixed(0)}`;
-}
+// Canonical money/share formatting now lives in the shared format layer
+// (xiaoyinsi P0-1); imported for local use and re-exported so existing
+// manager-book consumers keep their imports unchanged.
+import { fmtShares, fmtUsd } from "@/lib/format";
+export { fmtShares, fmtUsd };
 
 // Quarter-over-quarter change chips. Direction color convention follows the
 // project's up/down utility classes (never hardcoded emerald/rose):

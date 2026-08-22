@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useMemo, useState } from "react";
 import { ExternalLinkIcon } from "lucide-react";
 import {
   Card,
@@ -18,6 +19,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { fmtDateShort } from "@/lib/format";
+import { FilterPills, LoadMoreFooter, usePaged } from "@/components/stream/stream-kit";
 import { useI18n } from "@/i18n/provider";
 import type { DictKey } from "@/i18n/dict";
 import { aionis } from "@/data/aionis";
@@ -39,9 +42,27 @@ const STATUS_LABEL: Record<string, "ipo.status_filed" | "ipo.status_priced"> = {
   priced: "ipo.status_priced",
 };
 
+const PAGE_SIZE = 50;
+
+type StatusFilter = "all" | "filed" | "priced";
+
 export function IpoView() {
   const { t } = useI18n();
   const f = aionis.ipo;
+  const [status, setStatus] = useState<StatusFilter>("all");
+  const { visibleCount, reset, loadMore } = usePaged(PAGE_SIZE);
+
+  const filings = f.status === "ok" ? f.filings : [];
+  const filtered = useMemo(
+    () => (status === "all" ? filings : filings.filter((r) => r.status === status)),
+    [filings, status],
+  );
+  const visible = filtered.slice(0, visibleCount);
+
+  const applyStatus = (k: StatusFilter) => {
+    setStatus(k);
+    reset();
+  };
 
   if (f.status !== "ok" || f.filings.length === 0) {
     return (
@@ -101,8 +122,20 @@ export function IpoView() {
         <CardHeader className="pb-3">
           <CardTitle>{t("ipo.stream_title")}</CardTitle>
           <CardDescription>{t("ipo.stream_note")}</CardDescription>
+          <div className="pt-1">
+            <FilterPills<StatusFilter>
+              label={t("ipo.filter.label")}
+              value={status}
+              onChange={applyStatus}
+              options={[
+                { key: "all", label: t("ipo.filter.all"), count: filings.length },
+                { key: "filed", label: t("ipo.status_filed"), count: filings.filter((r) => r.status === "filed").length },
+                { key: "priced", label: t("ipo.status_priced"), count: filings.filter((r) => r.status === "priced").length },
+              ]}
+            />
+          </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0">
           <Table>
             <TableHeader>
               <TableRow>
@@ -116,10 +149,13 @@ export function IpoView() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {f.filings.map((r) => (
+              {visible.map((r) => (
                 <TableRow key={r.doc_url || `${r.company}-${r.filed_date}-${r.form}`}>
-                  <TableCell className="whitespace-nowrap tabular-nums text-muted-foreground">
-                    {r.filed_date}
+                  <TableCell
+                    className="whitespace-nowrap tabular-nums text-muted-foreground"
+                    title={r.filed_date}
+                  >
+                    {fmtDateShort(r.filed_date)}
                   </TableCell>
                   <TableCell>
                     <span className="font-medium">{r.company}</span>
@@ -170,6 +206,12 @@ export function IpoView() {
               ))}
             </TableBody>
           </Table>
+          <LoadMoreFooter
+            shown={visible.length}
+            total={filtered.length}
+            onLoadMore={loadMore}
+            pageSize={PAGE_SIZE}
+          />
         </CardContent>
       </Card>
 

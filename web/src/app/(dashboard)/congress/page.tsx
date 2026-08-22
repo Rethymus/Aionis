@@ -11,6 +11,11 @@ export default function CongressPage() {
         segment="evidence"
         introKey="congress.intro"
         asOf={aionis.politicianTrades.as_of ?? undefined}
+        countHint={
+          aionis.politicianTrades.status === "ok"
+            ? `${aionis.politicianTrades.house.total} · ${aionis.politicianTrades.window_years.join("–")} · ${aionis.politicianTrades.house.members} members`
+            : undefined
+        }
       />
       <CongressView />
     </div>

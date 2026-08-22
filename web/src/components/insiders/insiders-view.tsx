@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import {
   Card,
   CardContent,
@@ -9,6 +10,8 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { fmtDateShort } from "@/lib/format";
+import { FilterPills, LoadMoreFooter, usePaged } from "@/components/stream/stream-kit";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
 import Link from "next/link";
@@ -23,10 +26,28 @@ import {
   Legend,
 } from "recharts";
 
+const PAGE_SIZE = 50;
+
+type SideFilter = "all" | "buy" | "sell";
+
 export function InsidersView() {
   const { t } = useI18n();
   const f = aionis.form4;
   const yearlyHeading = "年度内部人买卖 / Yearly insider buys vs sells";
+  const [side, setSide] = useState<SideFilter>("all");
+  const { visibleCount, reset, loadMore } = usePaged(PAGE_SIZE);
+
+  const recent = f.status === "ok" ? f.recent : [];
+  const filtered = useMemo(
+    () => (side === "all" ? recent : recent.filter((r) => r.action === side)),
+    [recent, side],
+  );
+  const visible = filtered.slice(0, visibleCount);
+
+  const applySide = (k: SideFilter) => {
+    setSide(k);
+    reset();
+  };
 
   if (f.status === "awaiting_fetch") {
     return (
@@ -53,6 +74,11 @@ export function InsidersView() {
       <header className="space-y-1">
         <h1 className="text-2xl font-bold tracking-tight">{t("insiders.title")}</h1>
         <p className="text-sm text-muted-foreground">{t("insiders.window")}</p>
+        {f.status === "ok" ? (
+          <p className="font-mono text-xs tabular-nums text-muted-foreground/80">
+            {(f.buys + f.sells).toLocaleString("en-US")} · {f.window}
+          </p>
+        ) : null}
       </header>
 
       <div className="grid grid-cols-3 gap-3">
@@ -136,15 +162,30 @@ export function InsidersView() {
         <CardHeader className="border-b">
           <CardTitle className="text-base">{t("insiders.recent")}</CardTitle>
           <CardDescription>{t("insiders.window")}</CardDescription>
+          <div className="pt-1">
+            <FilterPills<SideFilter>
+              label={t("insiders.filter.label")}
+              value={side}
+              onChange={applySide}
+              options={[
+                { key: "all", label: t("insiders.filter.all"), count: recent.length },
+                { key: "buy", label: t("insiders.buy"), count: recent.filter((r) => r.action === "buy").length },
+                { key: "sell", label: t("insiders.sell"), count: recent.filter((r) => r.action === "sell").length },
+              ]}
+            />
+          </div>
         </CardHeader>
         <CardContent className="p-0">
           <div className="divide-y">
-            {f.recent.map((r, i) => {
+            {visible.map((r, i) => {
               const buy = r.action === "buy";
               return (
                 <div key={i} className="flex items-center gap-3 px-4 py-2.5 text-sm">
-                  <span className="w-24 shrink-0 font-mono text-xs text-muted-foreground">
-                    {r.date}
+                  <span
+                    className="w-14 shrink-0 font-mono text-xs text-muted-foreground"
+                    title={r.date}
+                  >
+                    {fmtDateShort(r.date)}
                   </span>
                   <Badge
                     variant="outline"
@@ -166,6 +207,12 @@ export function InsidersView() {
               );
             })}
           </div>
+          <LoadMoreFooter
+            shown={visible.length}
+            total={filtered.length}
+            onLoadMore={loadMore}
+            pageSize={PAGE_SIZE}
+          />
         </CardContent>
       </Card>
 

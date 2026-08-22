@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useMemo, useState } from "react";
 import { ExternalLinkIcon } from "lucide-react";
 import {
   Card,
@@ -18,6 +19,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { fmtDateShort } from "@/lib/format";
+import { FilterPills, LoadMoreFooter, usePaged } from "@/components/stream/stream-kit";
 import { useI18n } from "@/i18n/provider";
 import type { DictKey } from "@/i18n/dict";
 import { aionis } from "@/data/aionis";
@@ -47,6 +50,21 @@ const CATEGORY_LABEL: Record<string, string> = {
 export function EventsView() {
   const { t } = useI18n();
   const f = aionis.form8k;
+  const PAGE_SIZE = 50;
+  const [cat, setCat] = useState<string>("all");
+  const { visibleCount, reset, loadMore } = usePaged(PAGE_SIZE);
+
+  const events = f.status === "ok" ? f.events : [];
+  const filtered = useMemo(
+    () => (cat === "all" ? events : events.filter((e) => e.category === cat)),
+    [events, cat],
+  );
+  const visible = filtered.slice(0, visibleCount);
+
+  const applyCat = (k: string) => {
+    setCat(k);
+    reset();
+  };
 
   if (f.status !== "ok" || f.events.length === 0) {
     return (
@@ -113,8 +131,25 @@ export function EventsView() {
         <CardHeader className="pb-3">
           <CardTitle>{t("events.stream_title")}</CardTitle>
           <CardDescription>{t("events.stream_note")}</CardDescription>
+          <div className="pt-1">
+            <FilterPills<string>
+              label={t("events.filter.label")}
+              value={cat}
+              onChange={applyCat}
+              options={[
+                { key: "all", label: t("events.filter.all"), count: events.length },
+                ...Object.entries(f.by_category)
+                  .sort((a, b) => b[1] - a[1])
+                  .map(([c, n]) => ({
+                    key: c,
+                    label: t((CATEGORY_LABEL[c] ?? "events.cat.other") as DictKey),
+                    count: n,
+                  })),
+              ]}
+            />
+          </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0">
           <Table>
             <TableHeader>
               <TableRow>
@@ -128,10 +163,13 @@ export function EventsView() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {f.events.map((e) => (
+              {visible.map((e) => (
                 <TableRow key={e.doc_url || `${e.ticker}-${e.filing_date}-${e.form}`}>
-                  <TableCell className="whitespace-nowrap tabular-nums text-muted-foreground">
-                    {e.filing_date}
+                  <TableCell
+                    className="whitespace-nowrap tabular-nums text-muted-foreground"
+                    title={e.filing_date}
+                  >
+                    {fmtDateShort(e.filing_date)}
                   </TableCell>
                   <TableCell>
                     <Link
@@ -171,6 +209,12 @@ export function EventsView() {
               ))}
             </TableBody>
           </Table>
+          <LoadMoreFooter
+            shown={visible.length}
+            total={filtered.length}
+            onLoadMore={loadMore}
+            pageSize={PAGE_SIZE}
+          />
         </CardContent>
       </Card>
 

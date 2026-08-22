@@ -11,6 +11,11 @@ export default function IpoPage() {
         segment="evidence"
         introKey="ipo.intro"
         asOf={aionis.ipo.as_of ?? undefined}
+        countHint={
+          aionis.ipo.status === "ok"
+            ? `${aionis.ipo.total} · ${aionis.ipo.window.start} → ${aionis.ipo.window.end} · ${aionis.ipo.issuers} issuers`
+            : undefined
+        }
       />
       <IpoView />
     </div>

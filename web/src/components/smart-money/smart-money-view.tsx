@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import {
   Card,
   CardContent,
@@ -9,6 +10,8 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { fmtDateShort } from "@/lib/format";
+import { FilterPills, LoadMoreFooter, usePaged } from "@/components/stream/stream-kit";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
 import Link from "next/link";
@@ -22,10 +25,31 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+const PAGE_SIZE = 30;
+
+type KindFilter = "all" | "new" | "amendment";
+
 export function SmartMoneyView() {
   const { t } = useI18n();
   const sm = aionis.smartMoney;
   const yearlyHeading = "年度 13D 申报趋势 / Yearly 13D filings";
+  const [kind, setKind] = useState<KindFilter>("all");
+  const { visibleCount, reset, loadMore } = usePaged(PAGE_SIZE);
+
+  const recent = sm.recent_filings ?? [];
+  const filtered = useMemo(
+    () =>
+      kind === "all"
+        ? recent
+        : recent.filter((r) => (kind === "amendment") === r.is_amendment),
+    [recent, kind],
+  );
+  const visible = filtered.slice(0, visibleCount);
+
+  const applyKind = (k: KindFilter) => {
+    setKind(k);
+    reset();
+  };
 
   return (
     <div className="space-y-6 p-4 md:p-6">
@@ -33,6 +57,9 @@ export function SmartMoneyView() {
       <header className="space-y-1">
         <h1 className="text-2xl font-bold tracking-tight">{t("smartmoney.title")}</h1>
         <p className="text-sm text-muted-foreground">{t("smartmoney.window")}</p>
+        <p className="font-mono text-xs tabular-nums text-muted-foreground/80">
+          {sm.total_filings.toLocaleString("en-US")} · latest {sm.latest_date ?? "—"}
+        </p>
       </header>
 
       <div className="grid grid-cols-3 gap-3">
@@ -79,13 +106,28 @@ export function SmartMoneyView() {
         <CardHeader className="border-b">
           <CardTitle className="text-base">{t("smartmoney.recent")}</CardTitle>
           <CardDescription>{t("smartmoney.window")}</CardDescription>
+          <div className="pt-1">
+            <FilterPills<KindFilter>
+              label={t("smartmoney.filter.label")}
+              value={kind}
+              onChange={applyKind}
+              options={[
+                { key: "all", label: t("smartmoney.filter.all"), count: recent.length },
+                { key: "new", label: t("smartmoney.new"), count: recent.filter((r) => !r.is_amendment).length },
+                { key: "amendment", label: t("smartmoney.amendment"), count: recent.filter((r) => r.is_amendment).length },
+              ]}
+            />
+          </div>
         </CardHeader>
         <CardContent className="p-0">
           <div className="divide-y">
-            {sm.recent_filings.map((r, i) => (
+            {visible.map((r, i) => (
               <div key={i} className="flex items-center gap-3 px-4 py-2.5 text-sm">
-                <span className="w-24 shrink-0 font-mono text-xs text-muted-foreground">
-                  {r.date}
+                <span
+                  className="w-14 shrink-0 font-mono text-xs text-muted-foreground"
+                  title={r.date}
+                >
+                  {fmtDateShort(r.date)}
                 </span>
                 <Badge
                   variant="outline"
@@ -122,6 +164,12 @@ export function SmartMoneyView() {
               </div>
             ))}
           </div>
+          <LoadMoreFooter
+            shown={visible.length}
+            total={filtered.length}
+            onLoadMore={loadMore}
+            pageSize={PAGE_SIZE}
+          />
         </CardContent>
       </Card>
 

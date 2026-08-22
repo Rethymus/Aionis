@@ -11,6 +11,11 @@ export default function EventsPage() {
         segment="evidence"
         introKey="events.intro"
         asOf={aionis.form8k.as_of ?? undefined}
+        countHint={
+          aionis.form8k.status === "ok"
+            ? `${aionis.form8k.total} · ${aionis.form8k.window.start} → ${aionis.form8k.window.end} · ${aionis.form8k.issuers} issuers`
+            : undefined
+        }
       />
       <EventsView />
     </div>

@@ -16,6 +16,7 @@ import { aionis } from "@/data/aionis";
 import { stockUniverse, type StockRow } from "@/data/aionis/stock-universe";
 import { ProvenanceBadge } from "@/components/provenance-badge";
 import { useLivePrices } from "@/lib/live-prices";
+import { fmtShares, fmtUsd } from "@/lib/format";
 import {
   ArrowUpIcon,
   ArrowDownIcon,
@@ -97,6 +98,86 @@ function Stat({ label, children, hint }: { label: string; children: React.ReactN
       <p className="text-xs text-muted-foreground">{label}</p>
       <div className="text-lg font-bold tabular-nums">{children}</div>
     </div>
+  );
+}
+
+/** 机构持有者（策展 13F 管理人反查，xiaoyinsi /stock 同位模块——其同位页当前
+ *  空壳"共 0 家"，Aionis 用一手 13F 填上）。窗口 = 各管理人最新季前十大持仓；
+ *  pct 口径按本页所列持有人的市值合计（脚注披露），与其"占前十"同型。 */
+function InstitutionalHolders({ ticker }: { ticker: string }) {
+  const { t } = useI18n();
+  const f = aionis.form13f;
+  const holders = useMemo(() => {
+    if (f.status !== "ok") return [];
+    const rows: { cik: string; name: string; value: number; shares: number; quarter: string }[] = [];
+    for (const m of f.managers) {
+      for (const h of m.top10) {
+        if (h.ticker === ticker) {
+          rows.push({
+            cik: m.cik,
+            name: m.zh_name || m.name,
+            value: h.value,
+            shares: h.shares,
+            quarter: m.quarter,
+          });
+        }
+      }
+    }
+    rows.sort((a, b) => b.value - a.value);
+    return rows.slice(0, 10);
+  }, [f, ticker]);
+
+  const total = holders.reduce((s, h) => s + h.value, 0);
+
+  return (
+    <Card className="py-0 md:col-span-2">
+      <CardHeader className="border-b">
+        <CardTitle className="flex flex-wrap items-center gap-2 text-base">
+          {t("stock.holders")}
+          <span className="font-mono text-xs font-normal text-muted-foreground">
+            {holders.length > 0 ? `${holders.length} · ${holders[0].quarter}` : ""}
+          </span>
+        </CardTitle>
+        <CardDescription>
+          {t("stock.holders.note")}
+          {holders.length > 0 ? (
+            <span className="ml-1 font-mono text-[11px] text-muted-foreground/70">
+              {t("stock.holders.footnote")}
+            </span>
+          ) : null}
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="p-0">
+        {holders.length === 0 ? (
+          <p className="p-4 text-sm italic text-muted-foreground">
+            {t("stock.holders.empty")}
+          </p>
+        ) : (
+          <div className="divide-y">
+            {holders.map((h, i) => (
+              <div key={h.cik} className="flex items-center gap-3 px-4 py-2.5 text-sm">
+                <span className="w-6 shrink-0 tabular-nums text-muted-foreground">{i + 1}</span>
+                <Link
+                  href={`/manager/${h.cik}`}
+                  className="truncate font-medium text-primary hover:underline"
+                >
+                  {h.name}
+                </Link>
+                <span className="ml-auto shrink-0 font-mono text-xs tabular-nums text-muted-foreground">
+                  {fmtUsd(h.value)}
+                </span>
+                <span className="w-20 shrink-0 text-right font-mono text-xs tabular-nums text-muted-foreground">
+                  {fmtShares(h.shares)}
+                </span>
+                <span className="w-16 shrink-0 text-right font-mono text-xs font-semibold tabular-nums">
+                  {total > 0 ? `${((h.value / total) * 100).toFixed(1)}%` : "—"}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 }
 
@@ -398,6 +479,8 @@ export function StockView({ ticker }: { ticker: string }) {
             </Link>
           </CardContent>
         </Card>
+
+        <InstitutionalHolders ticker={stock.ticker} />
       </div>
 
       <TickerSwitcher current={stock.ticker} />

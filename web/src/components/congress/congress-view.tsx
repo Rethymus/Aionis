@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import { ExternalLinkIcon, ShieldAlertIcon } from "lucide-react";
 import {
   Card,
@@ -17,14 +18,67 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { cn } from "@/lib/utils";
+import { fmtDateShort } from "@/lib/format";
+import { FilterPills, LoadMoreFooter, usePaged } from "@/components/stream/stream-kit";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
+
+const PAGE_SIZE = 50;
+
+type PartyFilter = "all" | "R" | "D" | "I";
+
+/** Party chip, xiaoyinsi-alignment style: US-convention tinted fill (blue for
+ *  D, red for R — identity colors, not semantic colors, so the project's
+ *  emerald/rose/amber semantics stay untouched). Small square-ish radius,
+ *  mono, 11px — matches the measured 10px/600/4px reference. */
+function PartyBadge({ party }: { party: string | null }) {
+  if (!party) return null;
+  const cls =
+    party === "D"
+      ? "bg-primary/10 text-primary"
+      : party === "R"
+        ? "bg-rose-500/10 text-rose-600 dark:text-rose-400"
+        : "bg-muted text-muted-foreground";
+  return (
+    <span
+      className={cn(
+        "ml-2 inline-block rounded-[4px] px-1.5 py-px font-mono text-[11px] font-semibold leading-4",
+        cls,
+      )}
+    >
+      {party}
+    </span>
+  );
+}
 
 export function CongressView() {
   const { t } = useI18n();
   const f = aionis.politicianTrades;
+  const [party, setParty] = useState<PartyFilter>("all");
+  const { visibleCount, reset, loadMore } = usePaged(PAGE_SIZE);
 
-  if (f.status !== "ok" || f.house.filings.length === 0) {
+  const filings = f.status === "ok" ? f.house.filings : [];
+  const partyCounts = useMemo(() => {
+    const c: Record<string, number> = { R: 0, D: 0, I: 0 };
+    for (const p of filings) {
+      if (p.party && p.party in c) c[p.party] += 1;
+    }
+    return c;
+  }, [filings]);
+
+  const filtered = useMemo(
+    () => (party === "all" ? filings : filings.filter((p) => p.party === party)),
+    [filings, party],
+  );
+  const visible = filtered.slice(0, visibleCount);
+
+  const applyParty = (k: PartyFilter) => {
+    setParty(k);
+    reset();
+  };
+
+  if (f.status !== "ok" || filings.length === 0) {
     return (
       <div className="space-y-6 p-4 md:p-6">
         <header className="space-y-1">
@@ -100,8 +154,21 @@ export function CongressView() {
         <CardHeader className="pb-3">
           <CardTitle>{t("congress.stream_title")}</CardTitle>
           <CardDescription>{t("congress.stream_note")}</CardDescription>
+          <div className="pt-1">
+            <FilterPills<PartyFilter>
+              label={t("congress.party.label")}
+              value={party}
+              onChange={applyParty}
+              options={[
+                { key: "all", label: t("congress.party.all"), count: filings.length },
+                { key: "R", label: t("congress.party.R"), count: partyCounts.R },
+                { key: "D", label: t("congress.party.D"), count: partyCounts.D },
+                { key: "I", label: t("congress.party.I"), count: partyCounts.I },
+              ]}
+            />
+          </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0">
           <Table>
             <TableHeader>
               <TableRow>
@@ -113,7 +180,7 @@ export function CongressView() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {f.house.filings.map((p) => (
+              {visible.map((p) => (
                 <TableRow key={p.doc_url}>
                   <TableCell>
                     <a
@@ -124,11 +191,7 @@ export function CongressView() {
                     >
                       {p.member}
                     </a>
-                    {p.party ? (
-                      <Badge variant="outline" className="ml-2 px-1.5 py-0 font-mono text-[11px]">
-                        {p.party}
-                      </Badge>
-                    ) : null}
+                    <PartyBadge party={p.party} />
                   </TableCell>
                   <TableCell className="font-mono text-xs text-muted-foreground">
                     {p.office}
@@ -136,8 +199,11 @@ export function CongressView() {
                   <TableCell>
                     <Badge variant="secondary">{p.filing_type}</Badge>
                   </TableCell>
-                  <TableCell className="whitespace-nowrap tabular-nums text-muted-foreground">
-                    {p.filing_date ?? "—"}
+                  <TableCell
+                    className="whitespace-nowrap tabular-nums text-muted-foreground"
+                    title={p.filing_date ?? undefined}
+                  >
+                    {fmtDateShort(p.filing_date)}
                   </TableCell>
                   <TableCell className="text-right">
                     <a
@@ -154,6 +220,12 @@ export function CongressView() {
               ))}
             </TableBody>
           </Table>
+          <LoadMoreFooter
+            shown={visible.length}
+            total={filtered.length}
+            onLoadMore={loadMore}
+            pageSize={PAGE_SIZE}
+          />
         </CardContent>
       </Card>
 
