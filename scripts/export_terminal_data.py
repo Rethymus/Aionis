@@ -2115,6 +2115,7 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
     ("taco", "taco.json", _DH_DAILY),
     ("form4", "form4.json", _DH_DAILY),
     ("form8k", "form8k.json", _DH_DAILY),
+    ("executives", "executives.json", _DH_DAILY),
     ("ipo", "ipo.json", _DH_DAILY),
     ("politician_trades", "politician_trades.json", _DH_DAILY),
     ("reddit", "reddit.json", _DH_DAILY),
@@ -2188,6 +2189,8 @@ def _dh_as_of(key: str, fname: str) -> str | None:
         recent = p.get("recent", [])
         return recent[0].get("date") if recent else None
     if key == "form8k":
+        return p.get("as_of")
+    if key == "executives":
         return p.get("as_of")
     if key == "ipo":
         return p.get("as_of")
@@ -2361,6 +2364,11 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
     "taco": ("FRED (public domain) + labeled public news events", "VIX monthly + Trump-policy event table"),
     "form4": ("U.S. SEC EDGAR — public domain", "Form 4 XML, filed-date PIT"),
     "form8k": ("U.S. SEC EDGAR — public domain", "Form 8-K primary docs, filed-date PIT, item-classified"),
+    "executives": (
+        "U.S. SEC EDGAR — public domain",
+        "Form 8-K Item 5.02 officer-changes stream (derived from form8k, "
+        "filed-date PIT; person-level extraction deferred)",
+    ),
     "ipo": (
         "U.S. SEC EDGAR — public domain",
         "IPO registration/pricing stream (S-1/S-1/A + 424B4) via EFTS "
@@ -3059,6 +3067,77 @@ def export_politician_trades() -> None:
     )
 
 
+def export_executives() -> None:
+    """Officer/director-change filings — 8-K Item 5.02 stream (display-only).
+
+    DERIVED panel: reads the ``form8k.json`` payload written by
+    ``export_form8k`` (never the gitignored cache parquet) and filters the
+    ``officer_changes`` category — 8-K Item 5.02 (officer departures/
+    appointments, director elections). Filing-stream level BY DESIGN: one row
+    per accession with company / filing date / full item list / EDGAR primary-
+    doc link. Person-level extraction (names, roles, appointed-vs-departed
+    direction) from 8-K free text is unreliable and is DEFERRED — an honest
+    omission beats a guessed name (same v1 boundary as /congress PTR).
+    """
+    f8 = _dh_read("form8k.json")
+    if not isinstance(f8, dict) or f8.get("status") != "ok":
+        print(
+            "[export-terminal] SKIP executives: form8k.json not present or not "
+            "ok (tracked JSON retains last-committed value)",
+            flush=True,
+        )
+        return
+
+    events = [
+        {
+            "company": str(e["company"]),
+            "ticker": str(e["ticker"]),
+            "filing_date": str(e["filing_date"]),
+            "items": [i for i in e.get("items", [])],
+            "doc_url": str(e["doc_url"]),
+        }
+        for e in f8.get("events", [])
+        if e.get("category") == "officer_changes"
+    ]
+    by_company: dict[str, int] = {}
+    for e in events:
+        by_company[e["company"]] = by_company.get(e["company"], 0) + 1
+    # Count-desc then name — deterministic pill order for the view.
+    by_company = dict(sorted(by_company.items(), key=lambda kv: (-kv[1], kv[0])))
+    dates = [e["filing_date"] for e in events]
+    payload = {
+        "status": "ok",
+        "as_of": max(dates) if dates else None,
+        "total": len(events),
+        "issuers": len({e["ticker"] for e in events}),
+        "window": {
+            "start": min(dates) if dates else None,
+            "end": max(dates) if dates else None,
+        },
+        "events": events,
+        "by_company": by_company,
+        "methodology": (
+            "SEC Form 8-K Item 5.02 officer/director-change filings — DERIVED "
+            "from the committed form8k panel (category 'officer_changes'; "
+            "public domain, 17 U.S.C. §105, filed-date PIT). v1 is "
+            "FILING-STREAM level: one row per 8-K accession with the company, "
+            "filing date, full item list and EDGAR primary-document link. "
+            "Person-level extraction (who, which role, appointed vs departed) "
+            "is DEFERRED: parsing names from 8-K free text is unreliable and "
+            "an honest omission beats a guessed name — the same v1 boundary "
+            "as the /congress PTR panel. Inherits the /events panel's "
+            "bounded 5-issuer universe and 2026-05 window. Display-only, "
+            "exploratory, not a research claim; NOT part of any OOS pipeline."
+        ),
+    }
+    (WEB / "executives.json").write_text(json.dumps(_stamp(payload), indent=2))
+    print(
+        f"[export-terminal] executives: {payload['total']} Item 5.02 filings, "
+        f"{payload['issuers']} issuers, as_of {payload['as_of']}",
+        flush=True,
+    )
+
+
 def _safe_export(name: str, fn, /, *args, **kwargs):
     """Best-effort guard for the daily CI refresh.
 
@@ -3120,6 +3199,9 @@ def main() -> None:
     _safe_export("headline_provenance", export_headline_provenance)
     # Per-stock view joins the corroboration JSONs above — keep after them.
     _safe_export("stock_universe", export_stock_universe)
+    # Executives derives from the committed form8k.json written above — after
+    # form8k, before the freshness map / catalog that index it.
+    _safe_export("executives", export_executives)
     # Freshness map reads every panel's committed JSON — must run last.
     _safe_export("data_health", export_data_health)
     # API catalog reads data_health — run after it.

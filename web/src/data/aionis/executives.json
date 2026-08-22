@@ -1,0 +1,76 @@
+{
+  "status": "ok",
+  "as_of": "2026-07-02",
+  "total": 6,
+  "issuers": 3,
+  "window": {
+    "start": "2026-05-08",
+    "end": "2026-07-02"
+  },
+  "events": [
+    {
+      "company": "NVIDIA CORP",
+      "ticker": "NVDA",
+      "filing_date": "2026-07-02",
+      "items": [
+        "5.02"
+      ],
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000060/nvda-20260628.htm"
+    },
+    {
+      "company": "Alphabet Inc.",
+      "ticker": "GOOGL",
+      "filing_date": "2026-06-11",
+      "items": [
+        "5.02",
+        "5.07",
+        "9.01"
+      ],
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1652044/000119312526267578/d57679d8k.htm"
+    },
+    {
+      "company": "MICROSOFT CORP",
+      "ticker": "MSFT",
+      "filing_date": "2026-06-05",
+      "items": [
+        "5.02"
+      ],
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526258667/d26760d8k.htm"
+    },
+    {
+      "company": "Alphabet Inc.",
+      "ticker": "GOOGL",
+      "filing_date": "2026-06-05",
+      "items": [
+        "5.02"
+      ],
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000059/goog-20260602.htm"
+    },
+    {
+      "company": "MICROSOFT CORP",
+      "ticker": "MSFT",
+      "filing_date": "2026-05-14",
+      "items": [
+        "5.02",
+        "9.01"
+      ],
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526224155/d125909d8k.htm"
+    },
+    {
+      "company": "NVIDIA CORP",
+      "ticker": "NVDA",
+      "filing_date": "2026-05-08",
+      "items": [
+        "5.02"
+      ],
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000028/nvda-20260507.htm"
+    }
+  ],
+  "by_company": {
+    "Alphabet Inc.": 2,
+    "MICROSOFT CORP": 2,
+    "NVIDIA CORP": 2
+  },
+  "methodology": "SEC Form 8-K Item 5.02 officer/director-change filings \u2014 DERIVED from the committed form8k panel (category 'officer_changes'; public domain, 17 U.S.C. \u00a7105, filed-date PIT). v1 is FILING-STREAM level: one row per 8-K accession with the company, filing date, full item list and EDGAR primary-document link. Person-level extraction (who, which role, appointed vs departed) is DEFERRED: parsing names from 8-K free text is unreliable and an honest omission beats a guessed name \u2014 the same v1 boundary as the /congress PTR panel. Inherits the /events panel's bounded 5-issuer universe and 2026-05 window. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
+  "snapshot_ts": "2026-08-22T08:22:06.343759+00:00"
+}

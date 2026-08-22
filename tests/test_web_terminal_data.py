@@ -472,6 +472,55 @@ def test_form8k_panel_contract() -> None:
     assert f["as_of"] == max(dates), "as_of must be the latest filing_date"
 
 
+def test_executives_panel_contract() -> None:
+    """Executives panel: the form8k officer_changes subset, row for row.
+
+    The panel is DERIVED from the committed form8k stream (category
+    'officer_changes' = 8-K Item 5.02) — the contract pins the derivation:
+    same rows in the same newest-first order, honest counting (by_company
+    sums to total, issuers = distinct tickers), EDGAR primary-doc links,
+    as_of = the subset's own latest filing date, and the methodology must
+    disclose that person-level extraction is DEFERRED (never guessed).
+    """
+    x = _load("executives.json")
+    f8 = _load("form8k.json")
+    assert x["status"] in {"ok", "awaiting_fetch"}
+    assert {"as_of", "total", "issuers", "window", "events", "by_company",
+            "methodology", "snapshot_ts"} <= set(x)
+    if x["status"] != "ok":
+        return  # awaiting branch keeps the shape loose
+    subset = [e for e in f8.get("events", []) if e.get("category") == "officer_changes"]
+    assert x["total"] == len(subset), (
+        "total must equal the form8k officer_changes subset (same derivation)"
+    )
+    dates: list[str] = []
+    for got, want in zip(x["events"], subset, strict=True):
+        assert {"company", "ticker", "filing_date", "items", "doc_url"} <= set(got)
+        assert got["company"] == want["company"]
+        assert got["ticker"] == want["ticker"]
+        assert got["filing_date"] == want["filing_date"]
+        assert got["items"] == want["items"], "full item list preserved per row"
+        assert got["doc_url"] == want["doc_url"]
+        assert got["doc_url"].startswith("https://www.sec.gov/Archives/edgar/data/")
+        assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", got["filing_date"])
+        dates.append(got["filing_date"])
+    if not dates:
+        return  # honest empty: no officer_changes filings in the window yet
+    assert dates == sorted(dates, reverse=True), "events must be newest-first"
+    assert sum(x["by_company"].values()) == x["total"], (
+        "by_company must sum to total (honest counting)"
+    )
+    assert set(x["by_company"]) == {e["company"] for e in x["events"]}
+    assert x["issuers"] == len({e["ticker"] for e in subset}), (
+        "issuers = distinct tickers in the subset"
+    )
+    assert x["window"]["start"] == min(dates)
+    assert x["window"]["end"] == max(dates)
+    assert x["as_of"] == max(dates), "as_of must be the subset's latest filing_date"
+    # v1 honesty boundary: person-level extraction deferred, disclosed.
+    assert "deferred" in x["methodology"].lower()
+
+
 def test_form_ipo_panel_contract() -> None:
     """IPO panel schema: filing shape, status enum, honest counting, date order.
 
