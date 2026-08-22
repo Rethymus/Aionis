@@ -63,6 +63,7 @@
 ### 结论：✓ **PASS（披露限制）**
 
 - v1 宇宙 = 与 form4 相同的 5 大盘发行人（AAPL/MSFT/NVDA/GOOGL/AMZN），面板 methodology 与 data-health 明示。
+- **v2 广度扩展（2026-08-22，浏览器实探驱动）**：5 → 25 家高流动性大盘（新 20：JPM/BRK-B/V/MA/UNH/JNJ/PFE/MRK/LLY/WMT/HD/KO/PG/CVX/BA/AVGO/CSCO/META/TSLA/XOM）。**仍是有界宇宙非全市场**——与竞品 /events 的全市场流的差距如实保留在 methodology。XOM 双 CIK 特例：Exxon Mobil Corp (34088) 至 2026-07-01 持股公司继承，之后由 ExxonMobil Holdings Corp (2115436，经 8-K12B 注册) 续报——两条都保留（accession 全局唯一，去重不碰撞），已对 submissions 实查验证。CIK 来自 SEC company_tickers.json 快照（cik_resolver 机制）。
 - 分类覆盖诚实计数：`unclassified`（无法抽取 Item 的文档）与 `other`（Item 存在但未映射）显式计数，不隐藏不猜测。
 
 ---
@@ -73,6 +74,7 @@
 
 - 复用 `_policy_get`（≥2s host spacing + 指数退避，transient-only 重试）。
 - 实测首轮冷拉：23 份 filing ≈ 51 请求（5 EFTS + 23 index + 23 doc），约 2 分钟。
+- **v2 礼貌账**：26 CIK 条目 × 1 EFTS 查询 + 每新 filing 2 请求（index.json + 主文档）。冷拉全量估算 ≈ 26 EFTS + 2×N filings（N ≈ 数百）× ≥2s 间距 ≈ 15-30 分钟；per-accession 缓存令重跑近零请求。断点续存（逐发行人 checkpoint 落盘）。
 - 主文档选择器为评分制（exhibit/XBRL 渲染件排除），曾抓错 R1.htm/ex991/q1fy27pr.htm 的三次迭代均有缓存作废重拉验证。
 
 ---
