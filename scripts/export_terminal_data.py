@@ -2468,6 +2468,9 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
     ("theme_etfs", "theme_etfs.json", _DH_DAILY),
     ("form13f", "form13f.json", _DH_CADENCE),
     ("filers13f", "filers13f.json", _DH_CADENCE),
+    # Method library over repo docs — advances on the repo's own documentation
+    # cadence (a doc commit), never on market data.
+    ("knowledge_shelf", "knowledge_shelf.json", _DH_CADENCE),
 ]
 
 
@@ -2569,6 +2572,9 @@ def _dh_as_of(key: str, fname: str) -> str | None:
     if key == "form13f":
         return p.get("as_of")
     if key == "filers13f":
+        return p.get("as_of")
+    if key == "knowledge_shelf":
+        # as_of = newest last-commit date among the cataloged docs.
         return p.get("as_of")
     if key == "headline_provenance":
         ts = p.get("result_ts")
@@ -2824,6 +2830,12 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
         "resonance; skips disclosed)",
     ),
     "data_health": ("Aionis-generated (repo MIT)", "freshness/provenance map over all panels"),
+    "knowledge_shelf": (
+        "Aionis repo docs (repo MIT) + editorial link-out bookmarks",
+        "docs/ + decisions/ method catalog with GitHub link-outs and a fixed "
+        "curated public research-source list; teasers are safe slices of our "
+        "own MIT docs, third-party content never copied",
+    ),
 }
 
 
@@ -4791,6 +4803,300 @@ def export_executives() -> None:
     )
 
 
+# --- knowledge shelf (browsable library over the repo's own method docs) ------
+#
+# The xiaoyinsi "bookshelf" equivalent, done WITHOUT content appropriation:
+# layer 1 is Aionis's OWN method library (docs/ + decisions/ — repo MIT, zero
+# third-party copyright surface): a catalog of metadata + a first-paragraph
+# teaser extracted at EXPORT time into the tracked JSON (the web build
+# environment has no repo files, so the panel must carry its own catalog),
+# with the full text staying on GitHub (link-out). Layer 2 is a FIXED
+# editorially-curated bookmark list of first-hand public research sources —
+# link-out + one static sentence, no fetching, no scraping, no summary APIs.
+
+# Category whitelist — the shelf's five fixed rails (contract-tested).
+_KS_CATEGORIES = ("preregistration", "adr", "results", "rubric", "theory")
+_KS_CATEGORY_ORDER = {c: i for i, c in enumerate(_KS_CATEGORIES)}
+
+# Curated outbound bookmarks (editorial selection, frozen in the exporter —
+# no network at export time, ever). Copyright stays with the authors; we only
+# catalog. Bilingual one-liners are static strings, not scraped summaries.
+_KS_RESEARCH_SOURCES: list[dict[str, str]] = [
+    {
+        "name": "BIS Working Papers",
+        "org": "Bank for International Settlements",
+        "url": "https://www.bis.org/list/wppubls/index.htm",
+        "desc_en": (
+            "Monetary and financial-stability research; the series page "
+            "(RSS available) is the first-hand release point."
+        ),
+        "desc_zh": "货币与金融稳定方向的工作论文系列页（提供 RSS）——一手发布处。",
+    },
+    {
+        "name": "FEDS Papers",
+        "org": "Federal Reserve Board",
+        "url": "https://www.federalreserve.gov/econres/feds/index.htm",
+        "desc_en": (
+            "Finance and Economics Discussion Papers — the Board's own "
+            "in-house research series."
+        ),
+        "desc_zh": "美联储理事会的金融与经济学讨论论文（FEDS）——机构自有研究系列。",
+    },
+    {
+        "name": "IMF Working Papers",
+        "org": "International Monetary Fund",
+        "url": "https://www.imf.org/en/Publications/WP",
+        "desc_en": (
+            "IMF staff research on macro-finance topics, published as the "
+            "official WP series."
+        ),
+        "desc_zh": "国际货币基金组织（IMF）工作人员的宏观金融研究——官方工作论文系列。",
+    },
+    {
+        "name": "NBER Working Papers",
+        "org": "National Bureau of Economic Research",
+        "url": "https://www.nber.org/papers",
+        "desc_en": (
+            "The classic economics working-paper series; abstract pages are "
+            "first-hand author submissions."
+        ),
+        "desc_zh": "经典的经济学工作论文系列；摘要页为作者一手提交。",
+    },
+    {
+        "name": "arXiv q-fin",
+        "org": "arXiv (Cornell University)",
+        "url": "https://arxiv.org/archive/q-fin",
+        "desc_en": (
+            "Quantitative finance preprints — open author manuscripts "
+            "before journal versions."
+        ),
+        "desc_zh": "数量金融预印本专区——期刊版本之前的开放作者手稿。",
+    },
+    {
+        "name": "FRASER",
+        "org": "Federal Reserve Bank of St. Louis",
+        "url": "https://fraser.stlouisfed.org",
+        "desc_en": (
+            "Public-domain digital archive of U.S. economic history: Fed "
+            "publications, banking documents, statistical releases."
+        ),
+        "desc_zh": "美国经济史公共领域数字档案：联储出版物、银行文献与统计发布。",
+    },
+    {
+        "name": "FRED / ALFRED",
+        "org": "Federal Reserve Bank of St. Louis",
+        "url": "https://fred.stlouisfed.org",
+        "desc_en": (
+            "U.S. government public-domain macro data + as-of vintages "
+            "(ALFRED) — Aionis's own macro backbone."
+        ),
+        "desc_zh": "美国政府公共领域宏观数据库与 ALFRED 时点版本库——Aionis 宏观数据的主源。",
+    },
+    {
+        "name": "RePEc / IDEAS",
+        "org": "RePEc (Research Papers in Economics)",
+        "url": "https://ideas.repec.org",
+        "desc_en": (
+            "Community-run economics research index — bibliographic catalog "
+            "that links out to primary sources."
+        ),
+        "desc_zh": "社区运维的经济学研究索引——书目目录，链出到各一手来源。",
+    },
+]
+
+# ADR-style front-matter list rows ("- **date:** 2026-07-27") are registry
+# metadata, not prose — skipped when mining the teaser.
+_KS_META_SKIP = re.compile(
+    r"^(date|status|supersedes|superseded\s+by|deciders|tags?)\s*:", re.IGNORECASE
+)
+
+
+def _ks_clean_line(line: str) -> str:
+    """Strip markdown decoration from one line to plain prose."""
+    s = line.strip()
+    if s.startswith(">"):  # blockquote: the project's own status-line convention
+        s = s.lstrip(">").strip()
+    s = re.sub(r"<!--.*?-->", "", s)  # html comments
+    s = re.sub(r"^#{1,6}\s*", "", s)  # heading markers
+    s = re.sub(r"^[-*+]\s+", "", s)  # list markers
+    s = re.sub(r"`([^`]*)`", r"\1", s)  # inline code
+    s = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", s)  # links -> text
+    s = s.replace("**", "").replace("*", "")
+    return s.strip()
+
+
+def _ks_title(text: str, rel: str) -> str:
+    """First '# ' heading as the shelf title; filename stem when absent."""
+    for line in text.splitlines():
+        if line.startswith("# "):
+            t = _ks_clean_line(line[2:])
+            if t:
+                return t
+    return Path(rel).stem  # honest fallback: doc without a # heading
+
+
+def _ks_summary(text: str, max_sentences: int = 3, max_chars: int = 240) -> str:
+    """First 2-3 sentences of body prose as a safe teaser slice.
+
+    Skips the title line, code fences, tables, headings and html comments;
+    keeps blockquote status lines (the repo's own summary convention) and
+    list prose. Hard-capped at ``max_chars`` so the payload stays a catalog,
+    never a content copy.
+    """
+    prose: list[str] = []
+    in_fence = False
+    seen_title = False
+    for line in text.splitlines():
+        if line.strip().startswith("```"):
+            in_fence = not in_fence
+            continue
+        if in_fence:
+            continue
+        if not seen_title:
+            if line.startswith("# "):
+                seen_title = True
+            continue
+        s = line.strip()
+        if not s or s.startswith(("<!--", "|", "#")):
+            continue
+        c = _ks_clean_line(line)
+        if not c or _KS_META_SKIP.match(c):
+            continue
+        prose.append(c)
+    joined = " ".join(prose)
+    # Sentence boundaries: CJK terminators always; ASCII '.' only when the
+    # next char is whitespace/EOL (keeps "v0.1", "e.g" from splitting).
+    sentences: list[str] = []
+    buf = ""
+    for i, ch in enumerate(joined):
+        buf += ch
+        if ch in "。！？!?" or (
+            ch == "." and (i + 1 == len(joined) or joined[i + 1] in " \t")
+        ):
+            sentences.append(buf.strip())
+            buf = ""
+    if buf.strip():
+        sentences.append(buf.strip())
+    picked: list[str] = []
+    total = 0
+    for s in sentences:
+        if len(picked) >= max_sentences or total + len(s) > max_chars:
+            break
+        picked.append(s)
+        total += len(s) + 1
+    teaser = " ".join(picked)
+    if not teaser and sentences:  # single over-long first sentence
+        teaser = sentences[0]
+    if len(teaser) > max_chars:
+        teaser = teaser[:max_chars].rstrip() + "…"
+    return teaser
+
+
+def _ks_classify(rel: str) -> str:
+    """Shelf category for a repo .md path (the 5-rail whitelist)."""
+    parts = rel.split("/")
+    stem = Path(rel).stem.lower()
+    if "preregistration" in stem:
+        return "preregistration"
+    if stem == "results" or stem.endswith("-results"):
+        return "results"
+    if parts[0] == "decisions":  # ADR-*.md + the index registry
+        return "adr"
+    if "rubric" in stem or stem == "data-license-allowlist":
+        return "rubric"
+    return "theory"
+
+
+def _ks_git_date(rel: str) -> str | None:
+    """Last commit date (YYYY-MM-DD) that touched the file — LOCAL git only."""
+    import subprocess  # local-repo query; no network, no fetch
+
+    try:
+        out = subprocess.run(  # noqa: S603 — fixed argv, no user input
+            ["git", "log", "-1", "--format=%cI", "--", rel],
+            capture_output=True,
+            text=True,
+            timeout=10,
+            check=True,
+        ).stdout.strip()
+    except Exception:
+        return None  # honest null: outside a repo / git unavailable
+    return out[:10] if len(out) >= 10 else None
+
+
+def export_knowledge_shelf() -> None:
+    """Method shelf catalog over docs/ + decisions/ (display-only, zero network).
+
+    Writes the browsable JSON the /shelf page renders: per-doc metadata (title
+    / path / category / last-commit date / char count / first-2-3-sentence
+    teaser) with link-outs to the GitHub source, category counters (KPI), and
+    the fixed curated research-source bookmarks. The web build environment has
+    no repo files — the panel MUST carry its own catalog (build-time static
+    read, never a runtime fs access). Zero network: git dates come from the
+    local repository; the curated layer is frozen literals in the exporter.
+    """
+    if not Path("docs").is_dir():
+        raise FileNotFoundError("docs/ (repo method library)")
+    if not Path("decisions").is_dir():
+        raise FileNotFoundError("decisions/ (ADR registry)")
+    files = sorted(
+        str(p).replace("\\", "/")
+        for p in (*Path("docs").glob("*.md"), *Path("decisions").glob("*.md"))
+    )
+    docs = []
+    for rel in files:
+        text = Path(rel).read_text(encoding="utf-8")
+        docs.append({
+            "title": _ks_title(text, rel),
+            "path": rel,
+            "category": _ks_classify(rel),
+            "date": _ks_git_date(rel),
+            "n_chars": len(re.sub(r"\s", "", text)),
+            "summary": _ks_summary(text),
+            "url": f"https://github.com/Rethymus/Aionis/blob/main/{rel}",
+        })
+    # Deterministic order: category rail order, then path.
+    docs.sort(key=lambda d: (_KS_CATEGORY_ORDER[d["category"]], d["path"]))
+    categories = {c: sum(1 for d in docs if d["category"] == c) for c in _KS_CATEGORIES}
+    dates = [d["date"] for d in docs if d["date"]]
+    payload = {
+        "status": "ok",
+        # Shelf freshness = the newest last-commit date among the cataloged
+        # docs (the panel advances on the repo's own documentation cadence).
+        "as_of": max(dates) if dates else None,
+        "n_docs": len(docs),
+        "n_categories": sum(1 for c in categories.values() if c),
+        "categories": categories,
+        "docs": docs,
+        "research_sources": _KS_RESEARCH_SOURCES,
+        "methodology": (
+            "Layer 1 — Aionis's OWN method library: catalog of docs/ + "
+            "decisions/ markdown (repo MIT; zero third-party copyright "
+            "surface). Each entry carries metadata plus a safe teaser slice "
+            "(first 2-3 sentences, <=240 chars) extracted at export time; "
+            "the full text stays on GitHub (link-out). Dates are last-commit "
+            "dates read from the LOCAL git repository (no network). Layer 2 "
+            "— a FIXED editorially-curated bookmark list of first-hand "
+            "public research sources (BIS / Fed FEDS / IMF / NBER / arXiv "
+            "q-fin / FRASER / FRED-ALFRED / RePEc): link-out + one static "
+            "sentence each, no fetching, no scraping, no summary APIs — "
+            "copyright stays with the authors, we only catalog. Categories "
+            "are a fixed 5-rail whitelist (preregistration / adr / results / "
+            "rubric / theory); n_docs reconciles to the sum of the rails. "
+            "Display-only reference lane — never part of any research or OOS "
+            "pipeline."
+        ),
+    }
+    (WEB / "knowledge_shelf.json").write_text(json.dumps(_stamp(payload), indent=2))
+    print(
+        f"[export-terminal] knowledge_shelf: {len(docs)} docs across "
+        f"{payload['n_categories']} categories "
+        f"({', '.join(f'{c}={n}' for c, n in categories.items())}), "
+        f"as_of {payload['as_of']}",
+        flush=True,
+    )
+
+
 def _safe_export(name: str, fn, /, *args, **kwargs):
     """Best-effort guard for the daily CI refresh.
 
@@ -4871,6 +5177,9 @@ def main() -> None:
     # Executives derives from the committed form8k.json written above — after
     # form8k, before the freshness map / catalog that index it.
     _safe_export("executives", export_executives)
+    # Knowledge shelf reads repo files directly (no panel deps) — anywhere
+    # before the freshness map / catalog that index it.
+    _safe_export("knowledge_shelf", export_knowledge_shelf)
     # Freshness map reads every panel's committed JSON — must run last.
     _safe_export("data_health", export_data_health)
     # API catalog reads data_health — run after it.

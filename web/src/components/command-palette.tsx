@@ -25,6 +25,7 @@ import {
   CalendarDaysIcon,
   FileClockIcon,
   NewspaperIcon,
+  BookOpenIcon,
 } from "lucide-react";
 import {
   CommandDialog,
@@ -72,6 +73,7 @@ const PAGES: PaletteItem[] = [
   { labelKey: "nav.group.picks", icon: <FlaskConicalIcon className="size-4" />, href: "/picks" },
   { labelKey: "nav.heatmap", icon: <LayoutGridIcon className="size-4" />, href: "/heatmap" },
   { labelKey: "nav.companies", icon: <BuildingIcon className="size-4" />, href: "/companies" },
+  { labelKey: "nav.shelf", icon: <BookOpenIcon className="size-4" />, href: "/shelf" },
   { labelKey: "nav.group.confirm", icon: <ShieldCheckIcon className="size-4" />, href: "/confirmation" },
   { labelKey: "nav.institutions", icon: <LandmarkIcon className="size-4" />, href: "/institutions" },
   { labelKey: "nav.filers", icon: <ListIcon className="size-4" />, href: "/filers" },

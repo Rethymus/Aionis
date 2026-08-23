@@ -52,6 +52,7 @@ import def14aJson from "./def14a.json";
 import filingStreamJson from "./filing_stream.json";
 import executivesJson from "./executives.json";
 import newsFeedJson from "./news_feed.json";
+import knowledgeShelfJson from "./knowledge_shelf.json";
 
 export type Pick = {
   rank: number;
@@ -1017,6 +1018,56 @@ export type NewsFeed = {
   snapshot_ts?: string;
 };
 
+// Knowledge shelf (/shelf — browsable library over the repo's own method docs
+// + curated outbound research bookmarks).
+export type KnowledgeShelfCategory =
+  | "preregistration"
+  | "adr"
+  | "results"
+  | "rubric"
+  | "theory";
+
+export type KnowledgeShelfDoc = {
+  title: string;
+  // Repo-relative path ("docs/…" | "decisions/…").
+  path: string;
+  category: KnowledgeShelfCategory;
+  // Last-commit date of the file (YYYY-MM-DD) read from LOCAL git at export
+  // time; null only outside a repository (honest null, never fabricated).
+  date: string | null;
+  // Non-whitespace character count of the source file.
+  n_chars: number;
+  // Safe teaser slice: first 2-3 sentences (<=240 chars) of OUR OWN MIT doc —
+  // the body stays on GitHub, this is a catalog, not a copy.
+  summary: string;
+  // Link-out to the full text on GitHub — the only way to read the body.
+  url: string;
+};
+
+export type KnowledgeShelfSource = {
+  name: string;
+  org: string;
+  url: string;
+  desc_en: string;
+  desc_zh: string;
+};
+
+export type KnowledgeShelf = {
+  status: string;
+  // Newest last-commit date among the cataloged docs (repo documentation
+  // cadence — the shelf advances on doc commits, never on market data).
+  as_of: string | null;
+  n_docs: number;
+  n_categories: number;
+  categories: Record<KnowledgeShelfCategory, number>;
+  docs: KnowledgeShelfDoc[];
+  // FIXED editorially-curated bookmarks (frozen literals in the exporter —
+  // link-out + one static sentence, no fetching/scraping/summary APIs).
+  research_sources: KnowledgeShelfSource[];
+  methodology: string;
+  snapshot_ts?: string;
+};
+
 export const aionis = {
   metrics: metricsJson as Metrics,
   picks: picksJson as Pick[],
@@ -1069,4 +1120,5 @@ export const aionis = {
   filingStream: filingStreamJson as FilingStream,
   executives: executivesJson as Executives,
   newsFeed: newsFeedJson as NewsFeed,
+  knowledgeShelf: knowledgeShelfJson as KnowledgeShelf,
 };

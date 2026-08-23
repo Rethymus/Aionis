@@ -31,6 +31,7 @@ import {
   CalendarDaysIcon,
   FileClockIcon,
   NewspaperIcon,
+  BookOpenIcon,
 } from "lucide-react";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -77,6 +78,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   ];
   const navReference = [
     { title: t("nav.companies"), url: "/companies", icon: <BuildingIcon /> },
+    // Method shelf — the repo's own method docs as a browsable library plus
+    // curated outbound research bookmarks (reference lane, link-out only).
+    { title: t("nav.shelf"), url: "/shelf", icon: <BookOpenIcon /> },
     { title: t("nav.apidocs"), url: "/api-docs", icon: <TerminalIcon /> },
     {
       title: t("nav.method"),
