@@ -6,22 +6,19 @@
 
 ## 一、已实测验证的源（本日浏览器直测，非转述）
 
-### V1. ApeWisdom — Reddit 热议股票榜 ✅ LIVE
-- **端点**：`https://apewisdom.io/api/v1.0/filter/all-posts`（另有 `/filter/stocks`、`/filter/crypto`、`/tickers/{ticker}`）
-- **域名陷阱**：是 **apewisdom.io**（.com 连接失败 — 之前 403/超时的原因）。免费、无鉴权、JSON。
-- **实测**（2026-08-23 17:0x，IAB）：返回 `{"count":0,"pages":0,"current_page":1,"results":[]}`
-  —— 结构正确；count=0 是周末诚实表现（周日无新提及窗口），非故障。**下次工作日复测应见数据。**
-- **映射**：小隐寺 /reddit 的 938-ticker 榜（其 API 文档自述来源即 ApeWisdom）。
-- **礼貌性**：无鉴权公共 API；沿用模型-API 例外条款不适用 → 数据站点：≥2s 间隔 + 指数退避。
+### V1. ApeWisdom — Reddit 热议股票榜 ✅ LIVE → **管道已建（同日 P1 落地）**
+- **端点**：`https://apewisdom.io/api/v1.0/filter/stocks`（免鉴权 JSON；`filter/all-posts` 与 `filter/crypto` 返回诚实零信封——空是口径不是故障）
+- **域名陷阱**：是 **apewisdom.io**（.com 连接失败 — 之前 403/超时的原因）。
+- **实测**（2026-08-23）：`filter/stocks` 实时返回 NVDA 居首的榜单（envelope 声明 count:290/pages:3）。**分页已死**：`?page=N` 与路径 `/N` 均回 `current_page:1`（浏览器逐一验证）→ ingest 信封 `current_page` 回显检测 + `served_pages`/`pagination_ok` 字段，面板披露"可见=声明 290 的前 100"。
+- **已交付**：`ingest/ape_wisdom.py` + `scripts/ape_wisdom_fetch.py` + `reddit_trending.json` + /reddit 热议榜板块（rank/提及/24hΔ，与自有 Atom 采集面板共存）+ 契约测试。
+- **礼貌性**：数据站点条款：≥2s 间隔 + 指数退避。
 
-### V2. ARK Invest — 8 只基金每日持仓 CSV ✅ LIVE
-- **URL 模式（新，官方页面直链）**：
+### V2. ARK Invest — 8 只基金每日持仓 CSV ✅ LIVE → **管道已建（同日 P1 落地）**
+- **URL 模式（官方页面直链，浏览器逐页提取 live DOM 钉入代码）**：
   `https://assets.ark-funds.com/fund-documents/funds-etf-csv/{FUND_LONG_NAME}_{TICKER}_HOLDINGS.csv`
-  例：`ARK_INNOVATION_ETF_ARKK_HOLDINGS.csv`（ARKK 基金页 "Full Holdings CSV" 按钮原始 href，IAB locator 提取）。
-- **旧模式已迁移**：`ark-funds.com/wp-content/uploads/...` 会 301 到 `www.` 且直接导航无 body（触发下载）；
-  抓取脚本应直接用 assets. 子域 + 长文件名。8 基金：ARKK/ARKQ/ARKW/ARKG/ARKF/ARKX/PRNT/IZRL。
-- **映射**：小隐寺 /institutions 的 ARK 专簇（8 基金日度持仓 + 变动流）。
-- **注意**：CSV 每日盘后更新；历史不保留 → 我们落盘累积即成时间序列（display-lane 数据湖模式）。
+  （基金页为 JS 壳——raw HTML 无 href；长名含 `TECH._&_` 类不可猜标点 + ARKF/ARKX 两处 2025 更名）。
+- **已交付**：`ingest/ark_holdings.py` + fetcher + `ark.json` + /institutions ARK 家族板块（8 基金卡权重条 + 家族共振表：AMD/PLTR/AMZN/NVDA 各 5 基金同持）+ 契约测试。8/8 基金 331 仓位 @ 2026-08-21。
+- **注意**：CSV 每日盘后更新；历史不保留 → 本地日快照累积即时间序列（display-lane 数据湖模式）。
 
 ## 二、既有免费源可直接覆盖的维度（无需新源）
 
@@ -42,10 +39,10 @@
 
 ## 四、建设优先级（display-lane，display-only 约束不变）
 
-1. **P0 — 政党对立指数/两党跟单组合**：纯计算模块（export + panel + 测试），零新抓取。
-2. **P1 — ARK 8 基金面板**：fetcher（assets.ark-funds.com CSV，礼貌间隔）+ /institutions 内 ARK 簇。
-3. **P1 — Reddit 热议榜（ApeWisdom.io）**：fetcher + 面板（工作日首测真实数据后再上线）。
-4. **P2 — Form D 一级市场管道**（EDGAR）。
+1. **P0 — 政党对立指数/两党跟单组合** ✅ 已上线（party_index，纯计算）。
+2. **P1 — ARK 8 基金面板** ✅ 已上线（ark.json + /institutions ARK 家族板块）。
+3. **P1 — Reddit 热议榜（ApeWisdom.io）** ✅ 已上线（reddit_trending.json + /reddit 板块；分页失效如实披露）。
+4. **P2 — Form D 一级市场管道**（EDGAR）— 下一个。
 5. **P2 — 统一申报流 + 13F filer 目录**（EDGAR，量大，可切片）。
 6. **P3 — DEF14A 高管/董事会**（解析成本高，放最后）。
 

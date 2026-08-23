@@ -8,6 +8,14 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-23 (n) P1 ApeWisdom Reddit 热议榜上线（复测修正两处误判 + 分页失效如实披露）
+
+**复测修正（业主指令"工作日复测后开建"——同日即完成）**：① 上一轮"周日 count=0 属诚实空窗"的推断**半错**：`filter/all-posts`/`filter/crypto` 空是**口径**（今日仍 0），而 **`filter/stocks` 实时有数据**（NVDA 居首，envelope 声明 count:290/pages:3）——正确端点一旦命中即为真实榜单，无需等工作日；② 首版 fetcher 跑出 300 行/200 重复 rank 的"漂移"诊断也**错**——真相是**免费 API 分页已死**：`?page=N` 与路径 `/N` 全部回 `current_page:1`（浏览器逐一验证），300=3×第 1 页。
+
+**诚实架构**：ingest 信封 `current_page` 回显检测（请求页≠回显页 ⇒ 翻页失效即停）+ `(rank,ticker)` 跨页去重 + `served_pages`/`pagination_ok` 字段 → 面板头"100/290" + 尾注披露"声明 290 仅服务第 1 页，如实呈现不补全"。**交付**：`ingest/ape_wisdom.py` + `scripts/ape_wisdom_fetch.py`（≥2s）+ `reddit_trending.json`（第一方字段 verbatim：rank/ticker/name/mentions/upvotes/24h 双滞后可 null）+ /reddit TrendingSection（rank/提及/24hΔ 上色，**与自有 Atom 采集面板独立共存**——不依赖其 live 状态）+ i18n zh/en + 契约测试（rank 严格升序/无重复 (rank,ticker)/pagination_ok=False ⇒ n_rows<count_declared 且方法学含 "page 1"/display-only+never-PIT 边界）。
+
+**验证**：ruff 净 + tsc 0 + eslint 净 + build 1,493 页 + IAB 抽查（标题/NVDA+NVIDIA/IONQ/100/290 计数/采集状态卡共存）+ 数据测试全绿。差距地图 V1/V2 已更新为"管道已建"，P2 下一项 = Form D。
+
 ## 2026-08-23 (m) P1 ARK 家族面板上线（官方 CSV ingest + /institutions 板块）
 
 **端点考古（关键）**：ark-funds.com 基金页是 **JS 壳**——requests 拿到的原始 HTML 无 CSV href（全 "--" 占位）→ 8 只 ETF 的官方直链经**真浏览器逐页提取 live DOM** 后钉入 `src/aionis/ingest/ark_holdings.py::FUND_CSV_URLS`（链接结构=API 配置读一次固定；**数据永远来自 ARK 自己的 CSV 端点**）。名字含不可猜标点（`TECH._&_ROBOTICS`）+ 两处 2025 更名（ARKF→Blockchain & Fintech、ARKX→Space & Defense）——若再改名将以 per-fund FAIL 如实暴露。旧 `wp-content/uploads` 模式已 301 废弃。

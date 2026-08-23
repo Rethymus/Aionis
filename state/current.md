@@ -1,5 +1,7 @@
 # state/current.md — read first each session
 
+- **active (2026-08-23) ⑦ 复刻推进：源验证（差距地图）+ 政党对立指数 + ARK 家族面板 + ApeWisdom 热议榜 + form4 30 发行人收官（display lane）：**
+  **⑥ P1 ApeWisdom 上线（同日复测修正）**：周日空窗推断半错——`filter/all-posts`/`crypto` 空是**口径**，**`filter/stocks` 实时有数据**（NVDA 居首）；且免费 API **分页已死**（声明 3 页/290 只，`?page=N`/路径 `/N` 全回 `current_page:1`，浏览器逐一验证）→ ingest 信封回显检测 + `pagination_ok` 字段，面板诚实披露"可见=前 100/声明 290"。管道全套落地：ingest+fetcher（≥2s）+ `reddit_trending.json` + /reddit 热议榜板块（与自有 Atom 采集面板独立共存）+ 契约测试。详见 handoff (n)。**P2 下一项 = Form D 一级市场（EDGAR）**；U 20:10 cron 重派中。
 - **active (2026-08-23) ⑦ 复刻推进：源验证（差距地图）+ 政党对立指数 + ARK 家族面板 + form4 30 发行人收官（display lane）：**
   **⑤ P1 ARK 上线（同日晚）**：ark-funds.com 基金页为 JS 壳 → 8 ETF 官方 CSV 直链经**真浏览器逐页提取**钉入 `ingest/ark_holdings.py`（含 `TECH._&_` 类不可猜标点与两处 2025 更名；旧 wp-content 模式已 301）；fetcher ≥2s 礼貌拉取落日快照（**官方无历史，本地快照=时间序列**）；export_ark top10+家族共振（AMD/PLTR/AMZN/NVDA 各 5 基金同持）；/institutions ArkSection（8 基金卡权重条+共振表）。诚实跳行计数（免责 footer/无 ticker warrant/CASHX）。8/8 基金 331 仓位 @ 2026-08-21。详见 handoff (m)。
 - **active (2026-08-23) ⑦ 复刻推进：源验证（差距地图）+ 政党对立指数 + form4 30 发行人收官（display lane）：**
