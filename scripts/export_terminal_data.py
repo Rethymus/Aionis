@@ -2361,6 +2361,7 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
     ("politician_trades_tx", "politician_trades_tx.json", _DH_DAILY),
     ("party_index", "party_index.json", _DH_DAILY),
     ("reddit", "reddit.json", _DH_DAILY),
+    ("reddit_trending", "reddit_trending.json", _DH_DAILY),
     ("headline_provenance", "headline_provenance.json", _DH_DAILY),
     ("ledger_audit", "ledger_audit.json", _DH_DAILY),
     ("cot", "cot.json", _DH_CADENCE),
@@ -2649,6 +2650,11 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
         "count-weighted follow portfolios (signal lists, no returns)",
     ),
     "reddit": ("Reddit public Atom RSS — Reddit ToS, display-only", "retail mention counts, forward-only"),
+    "reddit_trending": (
+        "ApeWisdom free public API (apewisdom.io) — vendor ToS, display-only",
+        "Reddit trending-stocks board: rank/mentions/upvotes + 24h lags, "
+        "verbatim first-party fields, today-snapshot only",
+    ),
     "headline_provenance": ("Aionis append-only ledger (repo MIT)", "ledger.jsonl freeze→result pairing"),
     "ledger_audit": ("Aionis append-only ledger (repo MIT)", "ledger.jsonl claim-row timeline"),
     "cot": ("U.S. CFTC — public domain", "Commitments of Traders legacy futures, weekly"),
@@ -3801,6 +3807,107 @@ def export_ark() -> None:
     )
 
 
+def export_reddit_trending() -> None:
+    """ApeWisdom Reddit trending-stocks board (free public API; display-only).
+
+    Reads ``data/cache/ape_wisdom_stocks.json`` (gitignored; written by
+    ``scripts/ape_wisdom_fetch.py`` via ``aionis.ingest.ape_wisdom`` — the
+    domain is apewisdom.io, no key, verified live 2026-08-23). First-party
+    ranking fields stored verbatim (rank/ticker/name/mentions/upvotes/
+    rank_24h_ago/mentions_24h_ago). The free API's pagination is DEAD as of
+    verification day: the envelope declares 3 pages/290 tickers but serves
+    page 1 only (100 rows) for every pagination form — the ingest trusts the
+    envelope's own ``current_page`` echo, records served_pages/pagination_ok,
+    and the panel discloses "visible = first 100 of a declared 290" rather
+    than padding. A TODAY snapshot by definition (ApeWisdom keeps no
+    history); the display lane's own Reddit collector panel is untouched.
+    """
+    fp = Path("data/cache/ape_wisdom_stocks.json")
+    if not fp.exists():
+        print(
+            "[export-terminal] SKIP reddit_trending: data/cache/"
+            "ape_wisdom_stocks.json not present (tracked JSON retains "
+            "last-committed value)",
+            flush=True,
+        )
+        return
+    cache = json.loads(fp.read_text(encoding="utf-8"))
+    rows = cache.get("rows") or []
+    if not rows:
+        print(
+            "[export-terminal] SKIP reddit_trending: empty cache (tracked "
+            "JSON retains last-committed value)",
+            flush=True,
+        )
+        return
+
+    tickers = [
+        {
+            "rank": int(r["rank"]),
+            "ticker": str(r["ticker"]),
+            "name": str(r.get("name") or ""),
+            "mentions": int(r.get("mentions") or 0),
+            "upvotes": int(r.get("upvotes") or 0),
+            # First-party nullable 24h lags (null = unranked/unmentioned).
+            "rank_24h_ago": int(r["rank_24h_ago"]) if r.get("rank_24h_ago") is not None else None,
+            "mentions_24h_ago": (
+                int(r["mentions_24h_ago"]) if r.get("mentions_24h_ago") is not None else None
+            ),
+        }
+        for r in rows
+        if r.get("ticker")
+    ]
+    # The ingest already dedupes exact (rank, ticker) pairs across pages; a
+    # final stable sort by rank presents the coherent board.
+    tickers.sort(key=lambda r: r["rank"])
+
+    payload = {
+        "status": "ok",
+        "as_of": cache.get("fetched_at"),
+        "source": "ApeWisdom (apewisdom.io) free public API — filter/stocks",
+        "count_declared": int(cache.get("count") or 0),
+        "n_rows": len(tickers),
+        "served_pages": int(cache.get("served_pages") or 1),
+        "pagination_ok": bool(cache.get("pagination_ok", True)),
+        # Sibling filters' honest empty envelopes (coverage disclosure, not a
+        # swap): all_posts/crypto returned count=0 on 2026-08-23.
+        "sibling_filters": cache.get("probe") or {},
+        "tickers": tickers,
+        "methodology": (
+            "Reddit trending-stocks board from ApeWisdom's free public JSON "
+            "API (apewisdom.io — the .com domain does not connect; verified "
+            "live via browser 2026-08-23, no key, no auth). ApeWisdom "
+            "aggregates ticker mentions across subreddits (wallstreetbets & "
+            "friends) and is the source xiaoyinsi's own /reddit board "
+            "discloses. Fields are first-party and stored verbatim: rank, "
+            "ticker, name, mentions, upvotes, and the 24h-ago rank/mentions "
+            "lags (null = unranked then). Only the filter/stocks endpoint "
+            "carried data on verification day — all-posts and crypto "
+            "returned honest zero envelopes, recorded in sibling_filters. "
+            "The free API's pagination is dead as of 2026-08-23: the "
+            "envelope declares 3 pages/290 tickers but serves page 1 only "
+            "(100 rows) for every pagination form (?page=N and path /N — "
+            "browser-verified); the ingest trusts the envelope's own "
+            "current_page echo and the board shows the honest first 100 of "
+            "a declared 290, never padded. TODAY "
+            "snapshot only: ApeWisdom keeps no history, so this panel is "
+            "never PIT and never a research signal. Politeness: >=2s "
+            "between page GETs. Display-only, NOT part of any research or "
+            "OOS pipeline."
+        ),
+    }
+    (WEB / "reddit_trending.json").write_text(
+        json.dumps(_stamp(payload), indent=2, default=str)
+    )
+    top = tickers[0]
+    print(
+        f"[export-terminal] reddit_trending: {payload['n_rows']} tickers "
+        f"(declared {payload['count_declared']}), top {top['ticker']} "
+        f"{top['mentions']} mentions, as_of {payload['as_of']}",
+        flush=True,
+    )
+
+
 def export_executives() -> None:
     """Officer/director-change filings — 8-K Item 5.02 stream (display-only).
 
@@ -3935,6 +4042,7 @@ def main() -> None:
     _safe_export("stakes_13g", export_stakes13g)
     _safe_export("ark", export_ark)
     _safe_export("reddit_meta", export_reddit_meta)
+    _safe_export("reddit_trending", export_reddit_trending)
     _safe_export("ledger_audit", export_ledger_audit)
     _safe_export("headline_provenance", export_headline_provenance)
     # Per-stock view joins the corroboration JSONs above — keep after them.

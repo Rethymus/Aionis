@@ -45,6 +45,7 @@ import politicianTradesJson from "./politician_trades.json";
 import politicianTradesTxJson from "./politician_trades_tx.json";
 import partyIndexJson from "./party_index.json";
 import arkJson from "./ark.json";
+import redditTrendingJson from "./reddit_trending.json";
 import executivesJson from "./executives.json";
 
 export type Pick = {
@@ -793,6 +794,33 @@ export type Ark = {
   snapshot_ts?: string;
 };
 
+export type RedditTrendingRow = {
+  rank: number;
+  ticker: string;
+  name: string;
+  mentions: number;
+  upvotes: number;
+  // First-party nullable 24h lags (null = unranked/unmentioned then).
+  rank_24h_ago: number | null;
+  mentions_24h_ago: number | null;
+};
+
+export type RedditTrending = {
+  status: string;
+  as_of: string | null;
+  source: string;
+  count_declared: number;
+  n_rows: number;
+  // Free API pagination was dead on 2026-08-23: 3 pages declared, page 1
+  // only served (current_page echo) — visible board = first 100, disclosed.
+  served_pages: number;
+  pagination_ok: boolean;
+  sibling_filters: Record<string, number>;
+  tickers: RedditTrendingRow[];
+  methodology: string;
+  snapshot_ts?: string;
+};
+
 export type ExecutivesEvent = {
   company: string;
   ticker: string;
@@ -863,5 +891,6 @@ export const aionis = {
   politicianTradesTx: politicianTradesTxJson as PoliticianTradesTx,
   partyIndex: partyIndexJson as PartyIndex,
   ark: arkJson as Ark,
+  redditTrending: redditTrendingJson as RedditTrending,
   executives: executivesJson as Executives,
 };

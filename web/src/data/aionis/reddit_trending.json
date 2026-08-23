@@ -1,0 +1,917 @@
+{
+  "status": "ok",
+  "as_of": "2026-08-23T10:34:20+00:00",
+  "source": "ApeWisdom (apewisdom.io) free public API \u2014 filter/stocks",
+  "count_declared": 290,
+  "n_rows": 100,
+  "served_pages": 1,
+  "pagination_ok": false,
+  "sibling_filters": {
+    "all_posts": 0,
+    "crypto": 0
+  },
+  "tickers": [
+    {
+      "rank": 1,
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "mentions": 10,
+      "upvotes": 318,
+      "rank_24h_ago": 7,
+      "mentions_24h_ago": 4
+    },
+    {
+      "rank": 2,
+      "ticker": "EU",
+      "name": "enCore Energy",
+      "mentions": 9,
+      "upvotes": -20,
+      "rank_24h_ago": 305,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 3,
+      "ticker": "IONQ",
+      "name": "IonQ",
+      "mentions": 7,
+      "upvotes": 25,
+      "rank_24h_ago": 15,
+      "mentions_24h_ago": 2
+    },
+    {
+      "rank": 4,
+      "ticker": "MAGA",
+      "name": "ETF Series Solutions Trust - Point Bridge GOP Stock Tracker ETF",
+      "mentions": 7,
+      "upvotes": 14,
+      "rank_24h_ago": 196,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 5,
+      "ticker": "IBM",
+      "name": "IBM",
+      "mentions": 6,
+      "upvotes": 9,
+      "rank_24h_ago": 37,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 6,
+      "ticker": "SNDK",
+      "name": "Sandisk",
+      "mentions": 5,
+      "upvotes": 5,
+      "rank_24h_ago": 328,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 7,
+      "ticker": "NBIS",
+      "name": "Nebius Group",
+      "mentions": 5,
+      "upvotes": 11,
+      "rank_24h_ago": 320,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 8,
+      "ticker": "QBTS",
+      "name": "D-Wave Quantum",
+      "mentions": 5,
+      "upvotes": 21,
+      "rank_24h_ago": 0,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 9,
+      "ticker": "TDS",
+      "name": "Telephone and Data Systems",
+      "mentions": 5,
+      "upvotes": 5,
+      "rank_24h_ago": 145,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 10,
+      "ticker": "MU",
+      "name": "Micron Technology",
+      "mentions": 5,
+      "upvotes": 11,
+      "rank_24h_ago": 66,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 11,
+      "ticker": "INFQ",
+      "name": "Infleqtion",
+      "mentions": 4,
+      "upvotes": 17,
+      "rank_24h_ago": 0,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 12,
+      "ticker": "BE",
+      "name": "Bloom Energy",
+      "mentions": 4,
+      "upvotes": 7,
+      "rank_24h_ago": 172,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 13,
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "mentions": 4,
+      "upvotes": 22,
+      "rank_24h_ago": 17,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 14,
+      "ticker": "RGTI",
+      "name": "Rigetti Computing",
+      "mentions": 3,
+      "upvotes": 20,
+      "rank_24h_ago": 0,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 15,
+      "ticker": "QTUM",
+      "name": "ETF Series Solutions Trust - Defiance Quantum ETF",
+      "mentions": 3,
+      "upvotes": 9,
+      "rank_24h_ago": 0,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 16,
+      "ticker": "ALL",
+      "name": "Allstate",
+      "mentions": 3,
+      "upvotes": 6,
+      "rank_24h_ago": 43,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 17,
+      "ticker": "CRWV",
+      "name": "CoreWeave",
+      "mentions": 2,
+      "upvotes": 8,
+      "rank_24h_ago": 322,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 18,
+      "ticker": "RNA",
+      "name": "Avidity Biosciences",
+      "mentions": 2,
+      "upvotes": 7,
+      "rank_24h_ago": 262,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 19,
+      "ticker": "AGI",
+      "name": "Alamos Gold",
+      "mentions": 2,
+      "upvotes": 5,
+      "rank_24h_ago": 179,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 20,
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "mentions": 2,
+      "upvotes": 21,
+      "rank_24h_ago": 4,
+      "mentions_24h_ago": 5
+    },
+    {
+      "rank": 21,
+      "ticker": "HONA",
+      "name": "Honeywell Aerospace",
+      "mentions": 1,
+      "upvotes": 2,
+      "rank_24h_ago": 332,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 22,
+      "ticker": "KEEL",
+      "name": "Keel Infrastructure",
+      "mentions": 1,
+      "upvotes": 1,
+      "rank_24h_ago": 331,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 23,
+      "ticker": "CBRS",
+      "name": "Cerebras Systems",
+      "mentions": 1,
+      "upvotes": 3,
+      "rank_24h_ago": 330,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 24,
+      "ticker": "ALOT",
+      "name": "AstroNova, Inc.",
+      "mentions": 1,
+      "upvotes": 9,
+      "rank_24h_ago": 311,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 25,
+      "ticker": "SMA",
+      "name": "SmartStop Self Storage REIT",
+      "mentions": 1,
+      "upvotes": 2,
+      "rank_24h_ago": 329,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 26,
+      "ticker": "CBC",
+      "name": "Central Bancompany",
+      "mentions": 1,
+      "upvotes": 11,
+      "rank_24h_ago": 0,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 27,
+      "ticker": "BETA",
+      "name": "BETA Technologies",
+      "mentions": 1,
+      "upvotes": 5,
+      "rank_24h_ago": 327,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 28,
+      "ticker": "BMNR",
+      "name": "Bitmine Immersion Technologies",
+      "mentions": 1,
+      "upvotes": 1,
+      "rank_24h_ago": 326,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 29,
+      "ticker": "KLAR",
+      "name": "Klarna",
+      "mentions": 1,
+      "upvotes": 1,
+      "rank_24h_ago": 325,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 30,
+      "ticker": "HTFL",
+      "name": "HeartFlow",
+      "mentions": 1,
+      "upvotes": 14,
+      "rank_24h_ago": 324,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 31,
+      "ticker": "FIG",
+      "name": "Figma",
+      "mentions": 1,
+      "upvotes": 33,
+      "rank_24h_ago": 323,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 32,
+      "ticker": "ASIC",
+      "name": "Ategrity Specialty Insurance Company",
+      "mentions": 1,
+      "upvotes": 6,
+      "rank_24h_ago": 0,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 33,
+      "ticker": "XYZ",
+      "name": "Block",
+      "mentions": 1,
+      "upvotes": 3,
+      "rank_24h_ago": 321,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 34,
+      "ticker": "GRAL",
+      "name": "GRAIL",
+      "mentions": 1,
+      "upvotes": 3,
+      "rank_24h_ago": 319,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 35,
+      "ticker": "OS",
+      "name": "OneStream",
+      "mentions": 1,
+      "upvotes": 4,
+      "rank_24h_ago": 318,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 36,
+      "ticker": "TEM",
+      "name": "Tempus AI",
+      "mentions": 1,
+      "upvotes": 14,
+      "rank_24h_ago": 317,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 37,
+      "ticker": "WAY",
+      "name": "Waystar",
+      "mentions": 1,
+      "upvotes": 4,
+      "rank_24h_ago": 316,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 38,
+      "ticker": "SOC",
+      "name": "Sable Offshore",
+      "mentions": 1,
+      "upvotes": 20,
+      "rank_24h_ago": 315,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 39,
+      "ticker": "EQ",
+      "name": "Equillium",
+      "mentions": 1,
+      "upvotes": 1,
+      "rank_24h_ago": 314,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 40,
+      "ticker": "AAOI",
+      "name": "Applied Optoelectronics",
+      "mentions": 1,
+      "upvotes": 1,
+      "rank_24h_ago": 313,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 41,
+      "ticker": "OKLO",
+      "name": "Oklo",
+      "mentions": 1,
+      "upvotes": 2,
+      "rank_24h_ago": 8,
+      "mentions_24h_ago": 4
+    },
+    {
+      "rank": 42,
+      "ticker": "DJT",
+      "name": "Trump Media &amp; Technology Group",
+      "mentions": 1,
+      "upvotes": 254,
+      "rank_24h_ago": 312,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 43,
+      "ticker": "LOT",
+      "name": "Lotus Technology",
+      "mentions": 1,
+      "upvotes": 1,
+      "rank_24h_ago": 311,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 44,
+      "ticker": "RDDT",
+      "name": "Reddit",
+      "mentions": 1,
+      "upvotes": 1,
+      "rank_24h_ago": 310,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 45,
+      "ticker": "DAY",
+      "name": "Dayforce",
+      "mentions": 1,
+      "upvotes": 119,
+      "rank_24h_ago": 309,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 46,
+      "ticker": "RR",
+      "name": "Richtech Robotics",
+      "mentions": 1,
+      "upvotes": 3,
+      "rank_24h_ago": 308,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 47,
+      "ticker": "LINK",
+      "name": "Interlink Electronics",
+      "mentions": 1,
+      "upvotes": 1,
+      "rank_24h_ago": 307,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 48,
+      "ticker": "ONDS",
+      "name": "Ondas Holdings",
+      "mentions": 1,
+      "upvotes": 3,
+      "rank_24h_ago": 9,
+      "mentions_24h_ago": 3
+    },
+    {
+      "rank": 49,
+      "ticker": "POET",
+      "name": "POET Technologies",
+      "mentions": 1,
+      "upvotes": 3,
+      "rank_24h_ago": 16,
+      "mentions_24h_ago": 2
+    },
+    {
+      "rank": 50,
+      "ticker": "QUBT",
+      "name": "Quantum Computing",
+      "mentions": 1,
+      "upvotes": 1,
+      "rank_24h_ago": 0,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 51,
+      "ticker": "TOP",
+      "name": "TOP Financial Group Limited",
+      "mentions": 1,
+      "upvotes": 2,
+      "rank_24h_ago": 0,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 52,
+      "ticker": "CTO",
+      "name": "CTO Realty Growth",
+      "mentions": 1,
+      "upvotes": 1,
+      "rank_24h_ago": 304,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 53,
+      "ticker": "BY",
+      "name": "Byline Bancorp",
+      "mentions": 1,
+      "upvotes": -5,
+      "rank_24h_ago": 303,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 54,
+      "ticker": "PSNL",
+      "name": "Personalis",
+      "mentions": 1,
+      "upvotes": 3,
+      "rank_24h_ago": 302,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 55,
+      "ticker": "ASPI",
+      "name": "ASP Isotopes",
+      "mentions": 1,
+      "upvotes": 7,
+      "rank_24h_ago": 301,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 56,
+      "ticker": "DC",
+      "name": "Dakota Gold",
+      "mentions": 1,
+      "upvotes": 2,
+      "rank_24h_ago": 300,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 57,
+      "ticker": "PR",
+      "name": "Permian Resources",
+      "mentions": 1,
+      "upvotes": 3,
+      "rank_24h_ago": 299,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 58,
+      "ticker": "API",
+      "name": "Agora.io",
+      "mentions": 1,
+      "upvotes": 1,
+      "rank_24h_ago": 297,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 59,
+      "ticker": "GOOGL",
+      "name": "Alphabet (Google)",
+      "mentions": 1,
+      "upvotes": 7,
+      "rank_24h_ago": 296,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 60,
+      "ticker": "DRTS",
+      "name": "Alpha Tau Medical",
+      "mentions": 1,
+      "upvotes": 1,
+      "rank_24h_ago": 295,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 61,
+      "ticker": "NRC",
+      "name": "NRC Health",
+      "mentions": 1,
+      "upvotes": 1,
+      "rank_24h_ago": 0,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 62,
+      "ticker": "CIFR",
+      "name": "Cipher Mining",
+      "mentions": 1,
+      "upvotes": 2,
+      "rank_24h_ago": 293,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 63,
+      "ticker": "NA",
+      "name": "Nano Labs",
+      "mentions": 1,
+      "upvotes": 4,
+      "rank_24h_ago": 292,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 64,
+      "ticker": "GLP",
+      "name": "Global Partners LP",
+      "mentions": 1,
+      "upvotes": 1,
+      "rank_24h_ago": 291,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 65,
+      "ticker": "META",
+      "name": "Meta Platforms (Facebook)",
+      "mentions": 1,
+      "upvotes": 13,
+      "rank_24h_ago": 290,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 66,
+      "ticker": "NEXT",
+      "name": "NextDecade Corp",
+      "mentions": 1,
+      "upvotes": 2,
+      "rank_24h_ago": 289,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 67,
+      "ticker": "APLD",
+      "name": "Applied Blockchain",
+      "mentions": 1,
+      "upvotes": 0,
+      "rank_24h_ago": 288,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 68,
+      "ticker": "FF",
+      "name": "FutureFuel",
+      "mentions": 1,
+      "upvotes": 3,
+      "rank_24h_ago": 287,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 69,
+      "ticker": "SOPH",
+      "name": "SOPHiA GENETICS",
+      "mentions": 1,
+      "upvotes": 14,
+      "rank_24h_ago": 283,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 70,
+      "ticker": "ARR",
+      "name": "ARMOUR Residential REIT",
+      "mentions": 1,
+      "upvotes": 2,
+      "rank_24h_ago": 280,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 71,
+      "ticker": "INTA",
+      "name": "Intapp",
+      "mentions": 1,
+      "upvotes": 14,
+      "rank_24h_ago": 279,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 72,
+      "ticker": "FA",
+      "name": "First Advantage",
+      "mentions": 1,
+      "upvotes": 3,
+      "rank_24h_ago": 277,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 73,
+      "ticker": "TIL",
+      "name": "Instil Bio",
+      "mentions": 1,
+      "upvotes": 5,
+      "rank_24h_ago": 276,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 74,
+      "ticker": "CD",
+      "name": "Chindata",
+      "mentions": 1,
+      "upvotes": 1,
+      "rank_24h_ago": 275,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 75,
+      "ticker": "VTOL",
+      "name": "Bristow Group",
+      "mentions": 1,
+      "upvotes": 1,
+      "rank_24h_ago": 274,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 76,
+      "ticker": "EVTL",
+      "name": "Vertical Aerospace",
+      "mentions": 1,
+      "upvotes": 1,
+      "rank_24h_ago": 273,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 77,
+      "ticker": "CISO",
+      "name": "Cerberus Cyber Sentinel",
+      "mentions": 1,
+      "upvotes": 1,
+      "rank_24h_ago": 0,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 78,
+      "ticker": "KIND",
+      "name": "Nextdoor",
+      "mentions": 1,
+      "upvotes": 2,
+      "rank_24h_ago": 272,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 79,
+      "ticker": "BFLY",
+      "name": "Butterfly Network",
+      "mentions": 1,
+      "upvotes": 2,
+      "rank_24h_ago": 0,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 80,
+      "ticker": "IREN",
+      "name": "Iris Energy",
+      "mentions": 1,
+      "upvotes": 3,
+      "rank_24h_ago": 270,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 81,
+      "ticker": "HTZ",
+      "name": "Hertz",
+      "mentions": 1,
+      "upvotes": 1,
+      "rank_24h_ago": 269,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 82,
+      "ticker": "OG",
+      "name": "Onion Global",
+      "mentions": 1,
+      "upvotes": 0,
+      "rank_24h_ago": 268,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 83,
+      "ticker": "ACHR",
+      "name": "Archer Aviation",
+      "mentions": 1,
+      "upvotes": 1,
+      "rank_24h_ago": 267,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 84,
+      "ticker": "RKLB",
+      "name": "Rocket Lab USA",
+      "mentions": 1,
+      "upvotes": 3,
+      "rank_24h_ago": 14,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 85,
+      "ticker": "DNA",
+      "name": "Ginkgo Bioworks",
+      "mentions": 1,
+      "upvotes": 3,
+      "rank_24h_ago": 266,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 86,
+      "ticker": "APP",
+      "name": "AppLovin",
+      "mentions": 1,
+      "upvotes": 1,
+      "rank_24h_ago": 265,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 87,
+      "ticker": "ANY",
+      "name": "Sphere 3D",
+      "mentions": 1,
+      "upvotes": 1,
+      "rank_24h_ago": 264,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 88,
+      "ticker": "DHT",
+      "name": "DHT Holdings",
+      "mentions": 1,
+      "upvotes": 1,
+      "rank_24h_ago": 263,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 89,
+      "ticker": "JOBY",
+      "name": "Joby Aviation",
+      "mentions": 1,
+      "upvotes": 5,
+      "rank_24h_ago": 261,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 90,
+      "ticker": "OUST",
+      "name": "Ouster",
+      "mentions": 1,
+      "upvotes": 3,
+      "rank_24h_ago": 260,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 91,
+      "ticker": "UP",
+      "name": "Wheels Up",
+      "mentions": 1,
+      "upvotes": 35,
+      "rank_24h_ago": 258,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 92,
+      "ticker": "OUT",
+      "name": "Outfront Media",
+      "mentions": 1,
+      "upvotes": 2,
+      "rank_24h_ago": 257,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 93,
+      "ticker": "FOR",
+      "name": "Forestar Group",
+      "mentions": 1,
+      "upvotes": 2,
+      "rank_24h_ago": 256,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 94,
+      "ticker": "MRVI",
+      "name": "Maravai LifeSciences",
+      "mentions": 1,
+      "upvotes": 1,
+      "rank_24h_ago": 255,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 95,
+      "ticker": "CAN",
+      "name": "Canaan",
+      "mentions": 1,
+      "upvotes": -8,
+      "rank_24h_ago": 254,
+      "mentions_24h_ago": 1
+    },
+    {
+      "rank": 96,
+      "ticker": "ASTS",
+      "name": "AST SpaceMobile",
+      "mentions": 1,
+      "upvotes": 1,
+      "rank_24h_ago": 1,
+      "mentions_24h_ago": 12
+    },
+    {
+      "rank": 97,
+      "ticker": "SOFI",
+      "name": "SoFi",
+      "mentions": 1,
+      "upvotes": 1,
+      "rank_24h_ago": 250,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 98,
+      "ticker": "YOU",
+      "name": "CLEAR Secure",
+      "mentions": 1,
+      "upvotes": -1,
+      "rank_24h_ago": 13,
+      "mentions_24h_ago": 2
+    },
+    {
+      "rank": 99,
+      "ticker": "ROOT",
+      "name": "Root Insurance",
+      "mentions": 1,
+      "upvotes": 1,
+      "rank_24h_ago": 248,
+      "mentions_24h_ago": null
+    },
+    {
+      "rank": 100,
+      "ticker": "HOOD",
+      "name": "Robinhood",
+      "mentions": 1,
+      "upvotes": 1,
+      "rank_24h_ago": 247,
+      "mentions_24h_ago": 1
+    }
+  ],
+  "methodology": "Reddit trending-stocks board from ApeWisdom's free public JSON API (apewisdom.io \u2014 the .com domain does not connect; verified live via browser 2026-08-23, no key, no auth). ApeWisdom aggregates ticker mentions across subreddits (wallstreetbets & friends) and is the source xiaoyinsi's own /reddit board discloses. Fields are first-party and stored verbatim: rank, ticker, name, mentions, upvotes, and the 24h-ago rank/mentions lags (null = unranked then). Only the filter/stocks endpoint carried data on verification day \u2014 all-posts and crypto returned honest zero envelopes, recorded in sibling_filters. The free API's pagination is dead as of 2026-08-23: the envelope declares 3 pages/290 tickers but serves page 1 only (100 rows) for every pagination form (?page=N and path /N \u2014 browser-verified); the ingest trusts the envelope's own current_page echo and the board shows the honest first 100 of a declared 290, never padded. TODAY snapshot only: ApeWisdom keeps no history, so this panel is never PIT and never a research signal. Politeness: >=2s between page GETs. Display-only, NOT part of any research or OOS pipeline.",
+  "snapshot_ts": "2026-08-23T10:34:21.648502+00:00"
+}
