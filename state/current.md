@@ -1,5 +1,11 @@
 # state/current.md — read first each session
 
+- **active (2026-08-23) ⑦ 复刻推进：源验证（差距地图）+ 政党对立指数 + form4 30 发行人收官（display lane）：**
+  **① 源验证（IAB 浏览器一手实测——WebFetch/webReader/WebSearch 三工具当日配额尽时的替代验证路）**：ApeWisdom 免费 API 实为 **apewisdom.io**（`.com` 连不通 = 此前 403/超时根因；`/api/v1.0/filter/all-posts` 返回合法 JSON，周日 count=0 属诚实空窗，工作日复测见数）；ARK 官方持仓 CSV 已迁 **assets.ark-funds.com/fund-documents/funds-etf-csv/{FUND}_{TICKER}_HOLDINGS.csv**（ARKK 页 "Full Holdings CSV" 直链提取）。**差距地图** `reports/design/2026-08-23-replication-gap-map.md`：新 API 维度→免费一方源→优先级（P0 政党指数✅ → P1 ARK/ApeWisdom → P2 Form D/统一申报流/13F 目录 → P3 DEF14A；不追 TACO/韩杠杆/书架）。
+  **② 政党对立指数 + 两党跟单组合（小隐寺 API 分类学新维度；纯计算 0 新抓取）**：派生面板 `party_index.json` ← `politician_trades_tx.json`（executives 同款 derived 模式，_dh_read 源面板）——月度两党净方向（买−卖，**计数加权**：PTR 只有法定金额区间，美元加权=编造精度）对立占比（双方均有净方向的共同标的内，无则 null）+ 近 90 天两党净买 top10 **信号清单**（无价格无收益无业绩主张）；/congress 新 PartyIndexSection（近 12 月表+对立条形+最新对立/共识标的 chips+两党组合双卡，置于申报流之上）。实测：26 个月序列、2026-06 峰值 0.67、组合 D=MSFT/AMAT vs R=EQT/ESAB/SPCX。
+  **③ R form4 收官**：后台 fetch 完整跑满 **30 发行人 / 1,464 笔 2026 交易**（此前 1,230），导出 200 recent（23+ ticker）+ 14 年 yearly 逐字保留（16,636 总笔）；披露文案修复：宇宙未变时改说 "unchanged at 30"（不再 "widened from 30 to 30"）。
+  **④ 验证**：pytest 全绿（含新 party_index 契约测试=**全量重算**钉死派生：月度计数/对立分式/top10 逐 ticker 对账）+ ruff 净 + tsc 0 + eslint 0 错（6 警告皆存量他人段）+ build **1,493 页** + SSR/客户端结构验证（两卡并排/0.67/条宽 25–50% 与月值吻合/PANW chips）。**未 push**（计费阻断，业主指示后面解决）。U stakes-status 由 20:10 cron 自动重派（监督即可）。
+
 - **active (2026-08-22) ⑥ 守卫加固 + P/Q 第二轮（display lane 持续推进）：**
   **① 主线**：五导出器退化守卫 + 5 回归测试（实战验证：曾清空的 7 面板全保住）；`.gitattributes` 钉 ledger LF（根治 CRLF 假阳性）。
   **② 代理 P 全胜**：insiders 头像缩写 / ipo 侧栏 widget / congress top_members 侧栏 / manager Δ市值（delta_value 395/395 生效）。

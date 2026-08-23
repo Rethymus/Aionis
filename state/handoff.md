@@ -8,6 +8,18 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-23 (l) 复刻差距地图 + 政党对立指数上线 + R form4 收官
+
+**源验证（IAB 一手实测，三网页工具当日配额尽的替代路）**：ApeWisdom 免费无鉴权 JSON API = **apewisdom.io**（`.com` 域名连不通是此前 403/超时根因；`/api/v1.0/filter/all-posts` 周日实测 count=0 属诚实空窗，**工作日首测真实数据后才建管道**）；ARK 8 基金日度持仓 CSV 官方直链 = **assets.ark-funds.com/fund-documents/funds-etf-csv/{FUND}_{TICKER}_HOLDINGS.csv**（自 ARK 页 "Full Holdings CSV" href 提取；旧 wp-content 模式已 301）。差距地图 `reports/design/2026-08-23-replication-gap-map.md` 定优先级：P1 = ARK 面板 + ApeWisdom Reddit 榜（源已验证待建）、P2 = Form D / 统一申报流 / 13F filer 目录（EDGAR）、P3 = DEF14A 人级档案；不追 TACO/韩杠杆/书架（已记决策）。
+
+**政党对立指数 + 两党跟单组合（P0，纯派生 0 新抓取）**：`party_index.json` ← politician_trades_tx.json（executives 同款 _dh_read derived 模式）。月度序列 26 个月：每 ticker 双方净方向（买−卖计数）反号占比（分母=双方均有净方向的共同标的，无则 null；**计数加权**——PTR 仅法定金额区间，美元加权=编造精度）；headline 月取最新非 null 月（稀疏当月诚实 null 不删行）。近 90 天两党净买 top10 = 信号清单（ticker/asset/n_buy/n_sell/net_buy/n_members，**无价格无收益**，方法学明示 display lane）。视图 `/congress` PartyIndexSection：近 12 月表（D/R 买占比+对立条形+分数值）+ 最新对立/共识 chips（D/R 净向带党色）+ 两党组合双卡（PartyBadge+KPI+top10 行）——置于申报流之上（分析层在原始层之上）。契约测试 = **全量重算对账**（月度计数/分式上下界与重算值 5e-4/opposed 反号/consensus 同号/top10 逐 ticker 与 (net_buy↓, n_buy↓, ticker↑) 排序键一致/窗口 90 天锚定 max transaction_date）。
+
+**R form4 收官**：后台 fetch 跑满 **30 发行人 1,464 笔 2026 交易**（intc 收尾），export：recent 200（23 ticker 全带 doc_url）+ 14 年 yearly 逐字保留（合计 16,636 笔）+ window 2013..2026；**披露修复**：宇宙同宽时输出 "unchanged at 30 issuers"（原逻辑无脑拼 "widened from X to Y" 产出 "30 to 30" 谬文）。data_health/api_catalog 同步再生（party_index 入册 _DH_DAILY + _API_LICENSE）。
+
+**验证**：pytest 全绿 + ruff 净 + tsc 0 + eslint 0 错（6 警告全为存量 TxSection/CongressView 段，非本轮引入）+ build **1,493 页** + SSR grep（两卡标题/条宽 25–50% 与月值吻合）+ IAB 客户端元素计数（两卡×1/2026-06 行/0.67/PANW×2）。截图子系统本轮超时不可用（结构性验证替代，已如实记录）。**未 push**（Actions 计费阻断，业主指示后面解决）。
+
+**待办**：U 20:10 cron 自动重派（单代理，监督即可）；P1 ARK/ApeWisdom 管道（工作日首测）；M/N 并发 lane 未动。
+
 ## 2026-08-23 (k) S 收官：并发实现合流裁决 + 交易级面板上线 main（a9071cb）
 
 **并发合流**：并发 session 于 15:14 在 ws 分支提交右锚定 PTR 实现（`4e4eb11`：salvage 移植 + 右锚定行解析重写 + fetcher/export 全接线/前端视图为共享工作树 WIP）。20 份样本对垒：**并发 218 笔/97.8% vs 主线左锚定 45 笔/60%**（并发版还修复自报行丢失）→ 主线撤回重复实现（`79902e7`），并发版胜出（08-22 H 先例纪律）。**注意**：主线 6a448d2 "style" 提交曾用 `git add -u` 把并发方的 WIP（views+export 接线）误扫入 commit——内容真实、标签错位，已在 state 记档不改史。
