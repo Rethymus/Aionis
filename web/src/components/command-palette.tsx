@@ -24,6 +24,7 @@ import {
   BuildingIcon,
   CalendarDaysIcon,
   FileClockIcon,
+  NewspaperIcon,
 } from "lucide-react";
 import {
   CommandDialog,
@@ -81,6 +82,7 @@ const PAGES: PaletteItem[] = [
   { labelKey: "nav.datahealth", icon: <ActivityIcon className="size-4" />, href: "/data-health" },
   { labelKey: "nav.group.themes", icon: <FileTextIcon className="size-4" />, href: "/themes" },
   { labelKey: "nav.market", icon: <GlobeIcon className="size-4" />, href: "/market" },
+  { labelKey: "nav.newsfeed", icon: <NewspaperIcon className="size-4" />, href: "/news" },
   { labelKey: "nav.positioning", icon: <GlobeIcon className="size-4" />, href: "/positioning" },
   { labelKey: "nav.taco", icon: <GlobeIcon className="size-4" />, href: "/taco" },
   { labelKey: "nav.sectors", icon: <GlobeIcon className="size-4" />, href: "/sectors" },

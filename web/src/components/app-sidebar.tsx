@@ -30,6 +30,7 @@ import {
   ListIcon,
   CalendarDaysIcon,
   FileClockIcon,
+  NewspaperIcon,
 } from "lucide-react";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -44,6 +45,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   ];
   const navContext = [
     { title: t("nav.group.regime"), url: "/regime", icon: <GlobeIcon /> },
+    // GDELT headline stream — market CONTEXT (the news the regime sits in),
+    // not evidence: link-out metadata only, display lane.
+    { title: t("nav.newsfeed"), url: "/news", icon: <NewspaperIcon /> },
   ];
   // Evidence segment: core evidence (model picks) + independent corroboration
   // (smart money / insiders / retail) — both feed the same claim, kept as two

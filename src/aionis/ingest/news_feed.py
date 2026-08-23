@@ -82,7 +82,10 @@ def normalize_seendate(raw: object) -> str:
     (a display row with an unknown time sorts last and shows honestly empty).
     """
     s = str(raw or "").strip()
-    if len(s) == 15 and s[8] == "T" and s.endswith("Z") and s[:8].isdigit():
+    # ``YYYYMMDDTHHMMSSZ`` is 16 chars (8 date + T + 6 time + Z); the salvaged
+    # lane checked 15, which emptied EVERY real stamp (merge_feed then drops
+    # all rows — the feed could never fill). Caught by test_normalize_valid_stamp.
+    if len(s) == 16 and s[8] == "T" and s.endswith("Z") and s[:8].isdigit():
         return f"{s[0:4]}-{s[4:6]}-{s[6:8]}T{s[9:11]}:{s[11:13]}:{s[13:15]}Z"
     return ""
 

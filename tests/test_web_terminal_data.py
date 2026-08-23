@@ -881,6 +881,61 @@ def test_filing_stream_deep_cuts_contract() -> None:
     assert "cap 400" in ml, "the deep-cut caps are disclosed"
 
 
+def test_news_feed_panel_contract() -> None:
+    """GDELT news-feed panel: metadata-only headline stream, link-out only.
+
+    The panel rides ONE bounded GDELT Doc 2.0 artlist request per refresh
+    (fixed quoted-phrase query, sourcelang:eng, sort=datedesc machine order).
+    The contract pins: newest-first machine order with as_of = the newest
+    first-seen stamp; the visible items list is a capped (<=150) newest prefix
+    of the retained window while by_day/total count the FULL window
+    (sum(by_day) == total); every row links out to the publisher (http-prefixed
+    url) carrying METADATA only (the identity contract: seendate/title/url/
+    domain/language/sourcecountry, honest empties); and the methodology must
+    disclose the GDELT source, the link-out/no-article-text boundary and the
+    display-only lane.
+    """
+    x = _load("news_feed.json")
+    assert x["status"] in {"ok", "awaiting_fetch"}
+    assert {"as_of", "window", "query", "total", "n_sources", "by_day",
+            "items", "methodology", "snapshot_ts"} <= set(x)
+    if x["status"] != "ok" or not x["items"]:
+        return
+    stamps: list[str] = []
+    for r in x["items"]:
+        assert {"seendate", "title", "url", "domain", "language",
+                "sourcecountry"} <= set(r)
+        assert r["url"].startswith("http"), "every row links out to the publisher"
+        assert re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z", r["seendate"]), (
+            "seendate normalized to ISO-UTC or honest empty — never guessed"
+        )
+        stamps.append(r["seendate"])
+    assert stamps == sorted(stamps, reverse=True), "machine order newest-first"
+    # as_of = the newest stamp in the FULL retained window; the capped prefix
+    # is newest-first, so it must start there.
+    assert x["as_of"] == stamps[0]
+    # Visible list is a capped prefix: window totals live in by_day/total.
+    assert 0 < len(x["items"]) <= 150
+    assert x["total"] >= len(x["items"])
+    assert sum(d["count"] for d in x["by_day"]) == x["total"], (
+        "by_day counts the full retained window"
+    )
+    day_dates = [d["date"] for d in x["by_day"]]
+    assert day_dates == sorted(day_dates), "by_day ascending"
+    assert x["window"]["start"] == day_dates[0] and x["window"]["end"] == day_dates[-1]
+    assert x["window"]["start"] <= x["window"]["end"]
+    assert x["n_sources"] >= 1
+    assert "sourcelang:eng" in x["query"], "the fixed query is shown verbatim"
+    ml = x["methodology"].lower()
+    assert "gdelt" in ml and "display-only" in ml, (
+        "must disclose the source and the display-lane boundary"
+    )
+    assert "outbound link" in ml and "no article text" in ml, (
+        "must disclose the link-out / no-article-text boundary"
+    )
+
+
+
 def test_filers13f_panel_contract() -> None:
     """13F filer directory: exhaustive annual universe, directory facts only.
 

@@ -50,6 +50,7 @@ import formDJson from "./form_d.json";
 import def14aJson from "./def14a.json";
 import filingStreamJson from "./filing_stream.json";
 import executivesJson from "./executives.json";
+import newsFeedJson from "./news_feed.json";
 
 export type Pick = {
   rank: number;
@@ -946,6 +947,36 @@ export type Executives = {
   snapshot_ts?: string;
 };
 
+export type NewsFeedItem = {
+  // GDELT first-seen UTC stamp, "YYYY-MM-DDTHH:MM:SSZ" (15-min resolution) —
+  // empty string when the source stamp failed to normalize (honest empty).
+  seendate: string;
+  title: string;
+  // Outbound link to the publisher's article — the ONLY way to read it; the
+  // panel stores metadata, never article text.
+  url: string;
+  domain: string;
+  language: string;
+  sourcecountry: string;
+};
+
+export type NewsFeed = {
+  status: string;
+  // Newest GDELT first-seen stamp in the retained window (= items[0].seendate).
+  as_of: string;
+  window: { start: string; end: string };
+  // The FIXED quoted-phrase query (displayed verbatim — fixed query, no
+  // editorial tuning possible after the fact).
+  query: string;
+  // Full retained-window count; items is a capped (<=150) newest prefix.
+  total: number;
+  n_sources: number;
+  by_day: { date: string; count: number }[];
+  items: NewsFeedItem[];
+  methodology: string;
+  snapshot_ts?: string;
+};
+
 export const aionis = {
   metrics: metricsJson as Metrics,
   picks: picksJson as Pick[],
@@ -996,4 +1027,5 @@ export const aionis = {
   def14a: def14aJson as Def14a,
   filingStream: filingStreamJson as FilingStream,
   executives: executivesJson as Executives,
+  newsFeed: newsFeedJson as NewsFeed,
 };
