@@ -8,6 +8,16 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-23 (h) 第三轮四代理配额团灭 → 主线接管 R + S/T/U 定时重派
+
+**四代理齐死 [1308]**（15:21 派发即灭，重置 19:55:48）：R insiders 广度 / S PTR 交易级 / T manager 对齐 / U 状态机。worktree wr/ws/wt/wu 已建（junction 已挂）。
+
+**主线接管 R（已提交 `6fa0e95`）**：form4_fetch ISSUERS 5→30（CIK 全部复用 form8k v2/v3 已核实条目）+ `--start YYYY-MM-DD` 有界窗参数；export_form4 **retain-merge**（smart_money 先例：已提交 2013-2025 yearly 逐字保留、2026 由新 parquet 重算、宇宙差异 methodology 披露 "universe widened from 5 to 30"、buys/sells 与合并 yearly 自洽）；2 回归测试（14 年保留断言 + 无 committed 时全新写）；7-gate form4 文档 v2 账。**fetch 后台运行中**（runs/form4_fetch_v2.log，2026-01-01 窗口、逐发行人 checkpoint；完成后主线被任务通知唤醒做导出验证收尾——form4.json 将得到 recent 200 行 + doc_url 全生效 + window 2013-03..2026-08）。
+
+**S/T/U 定时重派**：规格文件 `tasks/active/TASK-{S-ptr-transactions,T-manager-align,U-stakes-status}.md`（自包含，含铁律 #0 绝不爬小隐站）；CronCreate automation-3684bc83 定时 2026-08-23 20:10 自动重派三代理并集成。**S 是最高优先**（PTR 交易级 = 竞品王牌，salvage 分支 agent/politician 解析器复活）。
+
+**注意**：13D cache 重建（TASK-U 任务1）未做——若主线在 fetch 完成后有空档可串行跑（与 form4 fetch 同 host 需串行礼貌）。R 的 fetch 预计数小时（Form 4 每份 XML ≥2s）。
+
 ## 2026-08-22 (g) 守卫加固 + P/Q 代理第二轮：events 50 发行人 + 展示快赢四件 + CRLF 根治
 
 **主线守卫片（`60ee8b0`）**：五导出器退化守卫（picks 三件套/sector 两级[model-empty 不再写 awaiting 覆盖 + 覆盖坍缩 <50% 保留]/model_health/calibration_reliability/stock_universe）+ 共享 `_committed_json`/`_skip_retain` + 5 hermetic 回归测试。**实战验证**：同一缺 cache 条件重跑导出，08-22 曾清空的 7 面板全部保住（20/1421/111/2/2/2）。export_picks 守卫返回 None 连带 main 跳过 export_metrics（防止降级 hero）。
