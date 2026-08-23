@@ -1199,6 +1199,12 @@ def export_form4() -> None:
                     f"pre-{fresh_min_year} yearly aggregates retained verbatim "
                     "from the narrower universe)."
                 )
+            elif n_issuers < c_issuers:
+                methodology_note = (
+                    f" Universe narrowed from {c_issuers} to {n_issuers} issuers "
+                    f"from {fresh_min_year} (pre-{fresh_min_year} yearly "
+                    "aggregates retained verbatim from the wider universe)."
+                )
             else:
                 methodology_note = (
                     f" Universe unchanged at {n_issuers} issuers from "

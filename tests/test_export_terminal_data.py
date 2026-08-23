@@ -511,7 +511,12 @@ def test_form4_retain_merge_keeps_pre_window_years(tmp_path, monkeypatch):
     # counts consistent with merged yearly; window spans committed start
     assert out["buys"] + out["sells"] == sum(y["buys"] + y["sells"] for y in out["yearly"])
     assert out["window"].startswith("2013-03..")
-    assert "widened from 5" in out["methodology"]
+    # The fixture's fresh parquet covers a SMALLER universe than the committed
+    # panel (5 -> 2): the merge disclosure must say NARROWED — the direction
+    # word is compared, never asserted blindly (a widened/unchanged universe
+    # gets its own phrasing in the exporter).
+    assert "narrowed from 5 to 2 issuers" in out["methodology"]
+    assert "widened" not in out["methodology"]
     # recent rows now carry doc_url (accession present in the fresh parquet)
     assert all(r["doc_url"].startswith("https://www.sec.gov/Archives/") for r in out["recent"])
 
