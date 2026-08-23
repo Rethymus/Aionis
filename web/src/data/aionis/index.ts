@@ -47,6 +47,7 @@ import partyIndexJson from "./party_index.json";
 import arkJson from "./ark.json";
 import redditTrendingJson from "./reddit_trending.json";
 import formDJson from "./form_d.json";
+import filingStreamJson from "./filing_stream.json";
 import executivesJson from "./executives.json";
 
 export type Pick = {
@@ -847,6 +848,29 @@ export type FormD = {
   snapshot_ts?: string;
 };
 
+export type FilingStreamRow = {
+  // Source form type: 4 / 8-K(/A) / S-1(/A) / 424B4 / D(/A) / SC 13D(/A) / SC 13G(/A).
+  form: string;
+  // Company, or "FILER → TARGET" on stake filings.
+  who: string;
+  ticker: string;
+  filed_date: string;
+  doc_url: string;
+};
+
+export type FilingStream = {
+  status: string;
+  as_of: string;
+  window: { start: string; end: string };
+  // Full merged set vs the 800-newest visible cap (source caps inherited).
+  total_merged: number;
+  n_visible: number;
+  by_form: Record<string, number>;
+  filings: FilingStreamRow[];
+  methodology: string;
+  snapshot_ts?: string;
+};
+
 export type ExecutivesEvent = {
   company: string;
   ticker: string;
@@ -919,5 +943,6 @@ export const aionis = {
   ark: arkJson as Ark,
   redditTrending: redditTrendingJson as RedditTrending,
   formD: formDJson as FormD,
+  filingStream: filingStreamJson as FilingStream,
   executives: executivesJson as Executives,
 };

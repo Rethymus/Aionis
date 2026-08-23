@@ -47,6 +47,114 @@ const CATEGORY_LABEL: Record<string, string> = {
   unclassified: "events.cat.unclassified",
 };
 
+/** 全市场申报流 — the unified cross-form feed DERIVED from the terminal's
+ *  own committed panels (4 / 8-K / S-1 family / 424B4 / D / SC 13D / SC 13G).
+ *  Zero new fetches: each row keeps its source panel's EDGAR link; by_form
+ *  counts the merged visible stream (source caps inherited, disclosed). */
+function StreamSection() {
+  const { t } = useI18n();
+  const f = aionis.filingStream;
+  const [form, setForm] = useState<string>("all");
+  const { visibleCount, reset, loadMore } = usePaged(50);
+
+  const rows = useMemo(
+    () => (f.status === "ok" ? f.filings : []),
+    [f.status, f.filings],
+  );
+  const filtered = useMemo(
+    () => (form === "all" ? rows : rows.filter((r) => r.form === form)),
+    [rows, form],
+  );
+  if (f.status !== "ok" || rows.length === 0) return null;
+  const visible = filtered.slice(0, visibleCount);
+  const apply = (k: string) => {
+    setForm(k);
+    reset();
+  };
+
+  return (
+    <Card className="min-w-0 overflow-hidden py-0">
+      <CardHeader className="border-b">
+        <CardTitle className="flex flex-wrap items-baseline gap-x-2 text-base">
+          {t("events.stream_all.title")}
+          <span className="font-mono text-xs font-normal text-muted-foreground tabular-nums">
+            {f.n_visible.toLocaleString("en-US")} · {f.window.start} → {f.window.end}
+          </span>
+        </CardTitle>
+        <CardDescription>{t("events.stream_all.note")}</CardDescription>
+        <div className="pt-1">
+          <FilterPills<string>
+            label={t("events.stream_all.form")}
+            value={form}
+            onChange={apply}
+            options={[
+              { key: "all", label: t("events.stream_all.all"), count: rows.length },
+              ...Object.entries(f.by_form).map(([k, n]) => ({
+                key: k,
+                label: k,
+                count: n,
+              })),
+            ]}
+          />
+        </div>
+      </CardHeader>
+      <CardContent className="p-0">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>{t("events.stream_all.form")}</TableHead>
+              <TableHead>{t("events.stream_all.who")}</TableHead>
+              <TableHead className="text-right">{t("events.stream_all.filed")}</TableHead>
+              <TableHead className="text-right">EDGAR</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {visible.map((r) => (
+              <TableRow key={r.doc_url}>
+                <TableCell>
+                  <Badge variant="secondary" className="font-mono text-[11px]">
+                    {r.form}
+                  </Badge>
+                </TableCell>
+                <TableCell className="max-w-[340px]">
+                  <span className="block truncate font-medium" title={r.who}>
+                    {r.who}
+                  </span>
+                  {r.ticker ? (
+                    <span className="font-mono text-[11px] text-muted-foreground">
+                      {r.ticker}
+                    </span>
+                  ) : null}
+                </TableCell>
+                <TableCell className="whitespace-nowrap text-right font-mono text-xs text-muted-foreground tabular-nums">
+                  {fmtDateShort(r.filed_date)}
+                </TableCell>
+                <TableCell className="text-right">
+                  <a
+                    href={r.doc_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-primary hover:underline"
+                  >
+                    EDGAR
+                    <ExternalLinkIcon className="size-3" />
+                  </a>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <LoadMoreFooter
+          shown={visible.length}
+          total={filtered.length}
+          onLoadMore={loadMore}
+          pageSize={50}
+        />
+      </CardContent>
+    </Card>
+  );
+}
+
 export function EventsView() {
   const { t } = useI18n();
   const f = aionis.form8k;
@@ -117,6 +225,10 @@ export function EventsView() {
           </CardHeader>
         </Card>
       </div>
+
+      {/* 全市场申报流 — the unified cross-form feed above the 8-K stream:
+          all forms first, then the 8-K deep cut below. */}
+      <StreamSection />
 
       <div className="flex flex-wrap gap-2">
         {Object.entries(f.by_category).map(([cat, n]) => (

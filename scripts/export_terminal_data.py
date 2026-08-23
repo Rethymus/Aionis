@@ -2358,6 +2358,7 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
     ("executives", "executives.json", _DH_DAILY),
     ("ipo", "ipo.json", _DH_DAILY),
     ("form_d", "form_d.json", _DH_DAILY),
+    ("filing_stream", "filing_stream.json", _DH_DAILY),
     ("politician_trades", "politician_trades.json", _DH_DAILY),
     ("politician_trades_tx", "politician_trades_tx.json", _DH_DAILY),
     ("party_index", "party_index.json", _DH_DAILY),
@@ -2441,6 +2442,8 @@ def _dh_as_of(key: str, fname: str) -> str | None:
     if key == "ipo":
         return p.get("as_of")
     if key == "form_d":
+        return p.get("as_of")
+    if key == "filing_stream":
         return p.get("as_of")
     if key == "ark":
         return p.get("as_of")
@@ -2646,6 +2649,11 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
         "U.S. SEC EDGAR — public domain",
         "Form D exempt-offering notices (D + D/A) via EFTS form-level "
         "queries, filed-date PIT; offering amounts not extracted",
+    ),
+    "filing_stream": (
+        "Aionis-derived from U.S. SEC EDGAR public-domain panels",
+        "unified cross-form feed (4 / 8-K / S-1 family / 424B4 / D / SC 13D / "
+        "SC 13G) merged from the terminal's own committed panels",
     ),
     "politician_trades": (
         "U.S. House Clerk — public domain",
@@ -3372,6 +3380,131 @@ def export_form_d() -> None:
     print(
         f"[export-terminal] form_d: {payload['total']} filings "
         f"({payload['by_form']}), {payload['issuers']} issuers, "
+        f"as_of {payload['as_of']}",
+        flush=True,
+    )
+
+
+def export_filing_stream() -> None:
+    """Unified cross-form SEC filing stream (display-only, DERIVED).
+
+    Merges the committed per-form panels — insider 4, event 8-K, IPO S-1
+    family + 424B4, exempt D/D/A, activist SC 13D (smart_money), passive
+    SC 13G (stakes_13g) — into ONE newest-first feed (the unified-stream
+    cluster xiaoyinsi serves). Zero new fetches: every row keeps its source
+    panel's own provenance and EDGAR link; per-source visible caps inherit
+    (form4 200 / form_d 600 / …) and are disclosed per form in by_form,
+    which counts the merged stream, not the EDGAR universe. 13F-HR is
+    excluded v1 (quarterly manager filings, not company events — the
+    /institutions registry already carries it).
+    """
+    rows: list[dict] = []
+
+    def add(form: str, who: str, ticker: str, d: str, url: str) -> None:
+        # A stream row needs a subject; rows without any who are dropped at
+        # the source (never a "—" placeholder row in the feed). smart_money
+        # predates https on its links — normalize to the canonical scheme.
+        if url.startswith("http://www.sec.gov"):
+            url = "https" + url[len("http"):]
+        if d and url and who and who != "—":
+            rows.append({
+                "form": form,
+                "who": who,
+                # None-coalesce: source panels carry JSON nulls for unknown
+                # tickers (never str(None) leaks).
+                "ticker": ticker if isinstance(ticker, str) and ticker not in ("", "None") else "",
+                "filed_date": d,
+                "doc_url": url,
+            })
+
+    f4 = _dh_read("form4.json")
+    if isinstance(f4, dict) and f4.get("status") == "ok":
+        for r in f4.get("recent", []):
+            add("4", str(r.get("filer", "")), str(r.get("ticker", "")),
+                str(r.get("date", "")), str(r.get("doc_url", "")))
+    f8 = _dh_read("form8k.json")
+    if isinstance(f8, dict) and f8.get("status") == "ok":
+        for r in f8.get("events", []):
+            add(str(r.get("form", "8-K")), str(r.get("company", "")),
+                str(r.get("ticker", "")), str(r.get("filing_date", "")),
+                str(r.get("doc_url", "")))
+    ipo = _dh_read("ipo.json")
+    if isinstance(ipo, dict) and ipo.get("status") == "ok":
+        for r in ipo.get("filings", []):
+            add(str(r.get("form", "")), str(r.get("company", "")),
+                str(r.get("ticker", "")), str(r.get("filed_date", "")),
+                str(r.get("doc_url", "")))
+    fd = _dh_read("form_d.json")
+    if isinstance(fd, dict) and fd.get("status") == "ok":
+        for r in fd.get("filings", []):
+            add(str(r.get("form", "")), str(r.get("company", "")),
+                str(r.get("ticker", "")), str(r.get("filed_date", "")),
+                str(r.get("doc_url", "")))
+    def stake_who(filer: object, target: object) -> str:
+        """'FILER → TARGET'; a placeholder filer degrades to TARGET alone."""
+        f = str(filer or "").strip()
+        t = str(target or "").strip()
+        if not f or "申报人见原文" in f or f == "None":
+            return t or "—"
+        return f"{f} → {t}" if t else f
+
+    g13 = _dh_read("stakes_13g.json")
+    if isinstance(g13, dict) and g13.get("status") == "ok":
+        for r in g13.get("filings", []):
+            add(str(r.get("form", "")), stake_who(r.get("filer"), r.get("target")),
+                str(r.get("ticker") or ""), str(r.get("date", "")),
+                str(r.get("doc_url", "")))
+    sm = _dh_read("smart_money.json")
+    if isinstance(sm, dict) and sm.get("recent_filings"):
+        for r in sm.get("recent_filings", []):
+            add(str(r.get("form", "SC 13D")), stake_who(r.get("filer"), r.get("target")),
+                str(r.get("ticker") or ""), str(r.get("date", "")),
+                str(r.get("url", "")))
+
+    if not rows:
+        print(
+            "[export-terminal] SKIP filing_stream: no source panels ok "
+            "(tracked JSON retains last-committed value)",
+            flush=True,
+        )
+        return
+    rows.sort(key=lambda r: (r["filed_date"], r["form"]), reverse=True)
+    visible = rows[:800]
+    by_form: dict[str, int] = {}
+    for r in visible:
+        by_form[r["form"]] = by_form.get(r["form"], 0) + 1
+    payload = {
+        "status": "ok",
+        "as_of": visible[0]["filed_date"],
+        "window": {
+            "start": min(r["filed_date"] for r in visible),
+            "end": max(r["filed_date"] for r in visible),
+        },
+        "total_merged": len(rows),
+        "n_visible": len(visible),
+        "by_form": dict(sorted(by_form.items(), key=lambda kv: -kv[1])),
+        "filings": visible,
+        "methodology": (
+            "Unified cross-form SEC filing stream — DERIVED by merging the "
+            "terminal's own committed per-form panels (insider Form 4, event "
+            "8-K/A, IPO S-1 family + 424B4, exempt D/D/A, activist SC 13D/A, "
+            "passive SC 13G), newest-first. Zero new fetches: every row keeps "
+            "its source panel's provenance and EDGAR link. Honest limits: "
+            "(1) each source panel's own visible cap is inherited (e.g. Form 4 "
+            "200 recent, Form D 600 newest) — by_form counts the MERGED "
+            "VISIBLE stream, not the EDGAR universe; (2) 13F-HR is excluded "
+            "in v1 (quarterly manager holdings, not company events — carried "
+            "by the /institutions registry); (3) source panels refresh "
+            "independently, so form mix shifts as panels advance. Display-"
+            "only, exploratory, NOT a research claim."
+        ),
+    }
+    (WEB / "filing_stream.json").write_text(
+        json.dumps(_stamp(payload), indent=2, default=str)
+    )
+    print(
+        f"[export-terminal] filing_stream: {len(visible)} visible of "
+        f"{len(rows)} merged across {len(by_form)} forms, "
         f"as_of {payload['as_of']}",
         flush=True,
     )
@@ -4132,6 +4265,9 @@ def main() -> None:
     _safe_export("form8k", export_form8k)
     _safe_export("form_ipo", export_form_ipo)
     _safe_export("form_d", export_form_d)
+    # filing_stream merges the committed panels written above — after them,
+    # before the freshness map / catalog that index it.
+    _safe_export("filing_stream", export_filing_stream)
     _safe_export("politician_trades", export_politician_trades)
     _safe_export("politician_trades_tx", export_politician_trades_tx)
     # party_index derives from the committed politician_trades_tx.json written
