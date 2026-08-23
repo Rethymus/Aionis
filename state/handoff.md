@@ -8,6 +8,12 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-23 (i) 主线接管 T 完成（配额未重置期的第二块主线工作）
+
+**T（manager 页对齐，`f0fbc9c`）**：① **数据可得性通过**——form13f_aggregate.parquet 实为全持仓（131,020 行；BRK 单管理人 179 行跨季），非只有 top10；② 导出 `top10`→**`positions` ≤50**（可见持仓簿）+ changes ≤20，coverage **285/398 → 1,181/1,580**；③ **form13f 移出共享 barrel**（form13f.json 100KB→653KB，照 stock-universe 先例独立模块 `web/src/data/aionis/form13f.ts`，五消费方改导入——+550KB 不再摊到每个页面）；④ manager-view 双 tab（当前持仓=PositionsTable+**前 6 大集中度条形 widget**（按可见持仓合计口径+脚注）/ 调仓=四态 KPI 计数+Δ市值芯片）；⑤ institutions 管理人搜索（name/中文别名/CIK 子串，诚实空态）。验证：pytest 全套 0 失败 + ruff 净 + tsc 0 + eslint 净（build 留待与 R 收尾同批跑）。wt worktree 清、分支删。
+
+**进行中**：R 的 form4 fetch 后台运行（763 笔 @ MRK≈第 15/30 家）；S/U 由 20:10 cron 重派（已更新为只派 S+U）。
+
 ## 2026-08-23 (h) 第三轮四代理配额团灭 → 主线接管 R + S/T/U 定时重派
 
 **四代理齐死 [1308]**（15:21 派发即灭，重置 19:55:48）：R insiders 广度 / S PTR 交易级 / T manager 对齐 / U 状态机。worktree wr/ws/wt/wu 已建（junction 已挂）。
