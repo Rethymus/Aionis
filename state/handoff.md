@@ -8,7 +8,7 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
-## 2026-08-24 (y) KRX 终审：四路线全封锁实证 + 续接指南归档
+## 2026-08-24 (y) KRX 终审：六路线（终审补 FRED 无此序列 + BOK ECOS TLS 地域封锁两路线，共 26 探测）全封锁实证 + 续接指南归档
 
 **追加三探**（08-24 深夜，接 verifier 判定）：① pykrx 源码路径 GitHub 全 404（仓库迁移，放弃依赖）；② **OTP 下载流**（老门户第二端点族，此前未试）：`GenerateOTP` 成功发出 320 字符 token，但 `download.cmd` http 变体引至公告页、**https 变体返回 `서비스 에러`（服务端内部错误）**——token 与浏览器 JS 建立的会话状态绑定，非参数问题；③ 公告页文本解析确认为通用错误页非海外提示。**四条自动化路线（getJsonData LOGOUT/400、download http、download https、真浏览器渲染挂起）全部实证封锁，共 24 次探测**。归档补全 `archive/krx-probes/README.md`：证据表 + 续接指南（openapi.krx.co.kr 注册 key = 唯一业主步骤；已验证 screen ID MDCSTAT01501/menuId MDC0201020101 与查询参数；EUC-KR 编码注意）。**韩国杠杆面板 = 全项目唯一待业主输入项**。
 
