@@ -325,7 +325,8 @@ def parse_ptr_rows(text: str) -> list[PtrTransaction]:
             continue
         tk = re.search(r"\(([A-Z.]{1,6})\)", asset)
         ticker = tk.group(1).replace(".", "-") if tk else ""
-        name = re.sub(r"\s+", " ", asset.replace(f"({tk.group(1)})", "") if tk else asset).strip(" -–")
+        clean_asset = asset.replace(f"({tk.group(1)})", "") if tk else asset
+        name = re.sub(r"\s+", " ", clean_asset).strip(" -–")
         rows.append(PtrTransaction(
             owner=owner,
             asset=name,
