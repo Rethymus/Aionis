@@ -1,5 +1,7 @@
 # state/current.md — read first each session
 
+- **active (2026-08-23) ⑦ 复刻推进：源验证（差距地图）+ 政党对立指数 + ARK 家族面板 + form4 30 发行人收官（display lane）：**
+  **⑤ P1 ARK 上线（同日晚）**：ark-funds.com 基金页为 JS 壳 → 8 ETF 官方 CSV 直链经**真浏览器逐页提取**钉入 `ingest/ark_holdings.py`（含 `TECH._&_` 类不可猜标点与两处 2025 更名；旧 wp-content 模式已 301）；fetcher ≥2s 礼貌拉取落日快照（**官方无历史，本地快照=时间序列**）；export_ark top10+家族共振（AMD/PLTR/AMZN/NVDA 各 5 基金同持）；/institutions ArkSection（8 基金卡权重条+共振表）。诚实跳行计数（免责 footer/无 ticker warrant/CASHX）。8/8 基金 331 仓位 @ 2026-08-21。详见 handoff (m)。
 - **active (2026-08-23) ⑦ 复刻推进：源验证（差距地图）+ 政党对立指数 + form4 30 发行人收官（display lane）：**
   **① 源验证（IAB 浏览器一手实测——WebFetch/webReader/WebSearch 三工具当日配额尽时的替代验证路）**：ApeWisdom 免费 API 实为 **apewisdom.io**（`.com` 连不通 = 此前 403/超时根因；`/api/v1.0/filter/all-posts` 返回合法 JSON，周日 count=0 属诚实空窗，工作日复测见数）；ARK 官方持仓 CSV 已迁 **assets.ark-funds.com/fund-documents/funds-etf-csv/{FUND}_{TICKER}_HOLDINGS.csv**（ARKK 页 "Full Holdings CSV" 直链提取）。**差距地图** `reports/design/2026-08-23-replication-gap-map.md`：新 API 维度→免费一方源→优先级（P0 政党指数✅ → P1 ARK/ApeWisdom → P2 Form D/统一申报流/13F 目录 → P3 DEF14A；不追 TACO/韩杠杆/书架）。
   **② 政党对立指数 + 两党跟单组合（小隐寺 API 分类学新维度；纯计算 0 新抓取）**：派生面板 `party_index.json` ← `politician_trades_tx.json`（executives 同款 derived 模式，_dh_read 源面板）——月度两党净方向（买−卖，**计数加权**：PTR 只有法定金额区间，美元加权=编造精度）对立占比（双方均有净方向的共同标的内，无则 null）+ 近 90 天两党净买 top10 **信号清单**（无价格无收益无业绩主张）；/congress 新 PartyIndexSection（近 12 月表+对立条形+最新对立/共识标的 chips+两党组合双卡，置于申报流之上）。实测：26 个月序列、2026-06 峰值 0.67、组合 D=MSFT/AMAT vs R=EQT/ESAB/SPCX。

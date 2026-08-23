@@ -8,6 +8,16 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-23 (m) P1 ARK 家族面板上线（官方 CSV ingest + /institutions 板块）
+
+**端点考古（关键）**：ark-funds.com 基金页是 **JS 壳**——requests 拿到的原始 HTML 无 CSV href（全 "--" 占位）→ 8 只 ETF 的官方直链经**真浏览器逐页提取 live DOM** 后钉入 `src/aionis/ingest/ark_holdings.py::FUND_CSV_URLS`（链接结构=API 配置读一次固定；**数据永远来自 ARK 自己的 CSV 端点**）。名字含不可猜标点（`TECH._&_ROBOTICS`）+ 两处 2025 更名（ARKF→Blockchain & Fintech、ARKX→Space & Defense）——若再改名将以 per-fund FAIL 如实暴露。旧 `wp-content/uploads` 模式已 301 废弃。
+
+**管道**：`ingest/ark_holdings.py`（parse_csv + fetch_all，进程级 HttpRequestPolicy ≥2s）→ `scripts/ark_holdings_fetch.py`（薄 runner；快照落 `data/cache/ark_holdings/<TICK>_<YYYYMMDD>.csv`——**ARK 官方不留历史，本地日快照=时间序列**）→ `export_ark()`（最新快照/基金；top10 权重 + family overlap ≥2 基金同持）。**诚实跳过已计数**：尾部免责声明 footer 行（整段落进 date 字段——首版 fetcher 全 8 基金 ValueError 的根因，改 `_DATE_RE.fullmatch` 守卫）、无 ticker 的 warrant/unit 行、CASHX 现金行。
+
+**实测（2026-08-21 盘后快照）**：8/8 基金 331 仓位（ARKK 44/IZRL 65…）；家族共振 top：AMD/PLTR/AMZN/NVDA 各 5 基金同持，TSLA 单基金最高权重 10.05%（ARKK 9.24% 居其 top1）。视图 `/institutions` ArkSection：8 基金卡（top5+权重条）+ 共振表；ticker 仅在 STOCK_PAGE_TICKERS 内链接（该守卫自 manager-book 导出共享）。
+
+**验证**：ruff 净 + pytest 契约绿（权重降序/overlap≥2 基金且基金集=导出集/跳行披露）+ tsc 0 + eslint 净 + build 1,493 页 + IAB 结构抽查（标题/共振卡/8 卡/9.24%/AMD ×3/伯克希尔卡共存）。
+
 ## 2026-08-23 (l) 复刻差距地图 + 政党对立指数上线 + R form4 收官
 
 **源验证（IAB 一手实测，三网页工具当日配额尽的替代路）**：ApeWisdom 免费无鉴权 JSON API = **apewisdom.io**（`.com` 域名连不通是此前 403/超时根因；`/api/v1.0/filter/all-posts` 周日实测 count=0 属诚实空窗，**工作日首测真实数据后才建管道**）；ARK 8 基金日度持仓 CSV 官方直链 = **assets.ark-funds.com/fund-documents/funds-etf-csv/{FUND}_{TICKER}_HOLDINGS.csv**（自 ARK 页 "Full Holdings CSV" href 提取；旧 wp-content 模式已 301）。差距地图 `reports/design/2026-08-23-replication-gap-map.md` 定优先级：P1 = ARK 面板 + ApeWisdom Reddit 榜（源已验证待建）、P2 = Form D / 统一申报流 / 13F filer 目录（EDGAR）、P3 = DEF14A 人级档案；不追 TACO/韩杠杆/书架（已记决策）。
