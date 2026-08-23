@@ -778,6 +778,35 @@ def test_filing_stream_panel_contract() -> None:
     assert "derived" in ml and "13f" in ml and "display-only" in ml
 
 
+def test_filers13f_panel_contract() -> None:
+    """13F filer directory: exhaustive annual universe, directory facts only.
+
+    The panel is the FULL filer directory (not the star registry). The
+    contract pins: unique zero-padded CIKs; per-filer counts >= 1 with the
+    full list summing to total_filings; latest_filed inside the declared
+    window; rows sorted latest-first as exported; and the methodology must
+    disclose the EFTS machinery, the 13F-NT exclusion and the
+    directory-not-holdings boundary.
+    """
+    x = _load("filers13f.json")
+    assert x["status"] in {"ok", "awaiting_fetch"}
+    assert {"as_of", "window", "n_filers", "n_with_amendments",
+            "total_filings", "filers", "methodology", "snapshot_ts"} <= set(x)
+    if x["status"] != "ok" or not x["filers"]:
+        return
+    ciks = [r["cik"] for r in x["filers"]]
+    assert len(ciks) == x["n_filers"] == len(set(ciks)), "unique CIK per row"
+    assert all(re.fullmatch(r"\d{10}", c) for c in ciks), "zero-padded 10-digit CIKs"
+    latest = [r["latest_filed"] for r in x["filers"]]
+    assert latest == sorted(latest, reverse=True), "exported latest-first"
+    assert sum(r["n_filings"] + r["n_amendments"] for r in x["filers"]) == x["total_filings"]
+    assert all(r["n_filings"] >= 1 and r["n_amendments"] >= 0 for r in x["filers"])
+    assert x["window"]["start"] <= min(latest) and max(latest) <= x["window"]["end"]
+    assert x["as_of"] == max(latest)
+    ml = x["methodology"].lower()
+    assert "efts" in ml and "13f-nt" in ml and "holdings" in ml
+
+
 def test_form_ipo_panel_contract() -> None:
     """IPO panel schema: filing shape, status enum, honest counting, date order.
 
