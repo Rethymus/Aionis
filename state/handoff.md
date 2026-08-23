@@ -8,7 +8,9 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
-## 2026-08-23 (v) 终态后增补轮：Z1 主题 ETF + Z2 统一流表单补全（业主持续指令）
+## 2026-08-23 (v) 终态后增补轮：Z1 主题 ETF + Z2 统一流表单补全（业主持续指令）——**双集成收官，API 分类学维度全清**
+
+**Z1 已集成（1dae5b9→main）**：主题 ETF 面板 = 小隐寺 API 分类学**最后一个数据维度**。10/10 基金发行商官方 CSV（iShares 4：SOXX/ICLN/ARTY/BAI + Global X 6：AIQ/CLOU/BKCH/LIT/BOTZ/BUG——日期入文件名者每次从基金页 HTML 提取当日 href），523 持仓/97 跳行披露，跨基金共振（NVDA×5 基金，MU/AMD/AVGO/SNOW×4）；**诚实剔除 9 只**（BLOK JS 渲染无直链/PHO/TAN SPA 改版/SMH TLS 拒连/CIBR/FIW/SKYY 不可达/SPDR 仅 XLS/QTUM 无端点——量子/水/元宇宙为诚实缺口，全部记档 7-gate G6）。稳态 16 GET/run。验证：68 数据测试 + 全套 **1,985 passed** + tsc 0 + build 1,497 页 + IAB（主题 ETF 板块与 ARK 家族共存）。wz1 已清。
 
 **Z2 已集成（6586f87→main）**：DEF 14A 80 + DEFA14A 166 + 424B4 21 并入（total_merged 16,597→**16,864**，19 表单族窗表）；幂等缓存使存量 16 表单零请求、仅 4 页新请求。**契约诚实性**：by_form 只计可见 newest-800（sum==n_visible 固定契约）——424B4 的 21 行全在截止外，计入 total_merged 不入 by_form，agent 保留契约不为凑键扭曲（正确裁决）。验证：67 数据测试 + tsc + build 1,497 页；wz2 已清。Z1 主题 ETF 运行中（源考古为长杆）。
 
