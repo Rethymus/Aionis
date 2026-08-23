@@ -849,9 +849,10 @@ export type FormD = {
 };
 
 export type FilingStreamRow = {
-  // Source form type: 4 / 8-K(/A) / S-1(/A) / 424B4 / D(/A) / SC 13D(/A) / SC 13G(/A).
+  // Source form type: 8-K(/A) / 10-K(/A) / 10-Q(/A) / S-1(/A) / 4(/A) /
+  // D(/A) / SC 13D(/A) / SC 13G(/A).
   form: string;
-  // Company, or "FILER → TARGET" on stake filings.
+  // Company, the reporting person on Form 4, or "FILER → TARGET" on stakes.
   who: string;
   ticker: string;
   filed_date: string;
@@ -862,7 +863,7 @@ export type FilingStream = {
   status: string;
   as_of: string;
   window: { start: string; end: string };
-  // Full merged set vs the 800-newest visible cap (source caps inherited).
+  // Full direct-query window vs the 800-newest visible cap.
   total_merged: number;
   n_visible: number;
   by_form: Record<string, number>;

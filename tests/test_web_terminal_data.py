@@ -741,14 +741,17 @@ def test_form_d_panel_contract() -> None:
 
 
 def test_filing_stream_panel_contract() -> None:
-    """Unified filing stream: honest merge of the per-form panels.
+    """Unified filing stream v2: DIRECT whole-market per-form queries.
 
-    DERIVED panel — the contract pins the merge discipline: newest-first
-    order; by_form counts the VISIBLE stream and sums to n_visible; every
-    row carries an EDGAR link and a real form label; ticker "None"-strings
-    and placeholder filers from the stake panels must NOT leak; the
-    methodology must disclose the inherited source caps and that 13F is
-    excluded.
+    The panel IS the source query (v1 derived it from the per-form panels,
+    inheriting their visible caps and missing 10-K/10-Q entirely — the v1→v2
+    migration is disclosed in the methodology). The contract pins: the v2
+    form family (EFTS root forms + /A amendments; Schedule 13 via the daily
+    index lanes); newest-first order; by_form counts the VISIBLE stream and
+    sums to n_visible; every row carries an EDGAR link and a real form
+    label; ticker "None"-strings and placeholder filers must NOT leak; the
+    methodology must disclose the direct EFTS machinery, the 10-K/10-Q
+    coverage, and that 13F is excluded.
     """
     x = _load("filing_stream.json")
     assert x["status"] in {"ok", "awaiting_fetch"}
@@ -757,12 +760,16 @@ def test_filing_stream_panel_contract() -> None:
     if x["status"] != "ok" or not x["filings"]:
         return
     dates: list[str] = []
-    allowed_forms = set(x["by_form"])
+    allowed_forms = {
+        "8-K", "8-K/A", "10-K", "10-K/A", "10-Q", "10-Q/A",
+        "S-1", "S-1/A", "4", "4/A", "D", "D/A",
+        "SC 13D", "SC 13D/A", "SC 13G", "SC 13G/A",
+    }
     for r in x["filings"]:
         assert {"form", "who", "ticker", "filed_date", "doc_url"} <= set(r)
-        assert r["form"] in allowed_forms
+        assert r["form"] in allowed_forms, f"unexpected form {r['form']}"
         assert r["who"] and r["who"] != "—"
-        assert r["ticker"] != "None", "no str(None) leaks from source panels"
+        assert r["ticker"] != "None", "no str(None) leaks from source rows"
         assert "申报人见原文" not in r["who"], "no placeholder-filer leaks"
         assert r["doc_url"].startswith("https://www.sec.gov/Archives/edgar/data/")
         assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", r["filed_date"])
@@ -771,11 +778,16 @@ def test_filing_stream_panel_contract() -> None:
     assert x["n_visible"] == len(x["filings"]) <= 800
     assert x["total_merged"] >= x["n_visible"]
     assert sum(x["by_form"].values()) == x["n_visible"], (
-        "by_form counts the merged visible stream"
+        "by_form counts the visible stream"
     )
+    assert set(x["by_form"]) <= allowed_forms
     assert x["as_of"] == max(dates)
     ml = x["methodology"].lower()
-    assert "derived" in ml and "13f" in ml and "display-only" in ml
+    assert "direct" in ml and "efts" in ml and "13f" in ml, (
+        "must disclose the direct EFTS machinery and the 13F exclusion"
+    )
+    assert "10-k" in ml and "10-q" in ml, "the v2 10-K/10-Q coverage is disclosed"
+    assert "display-only" in ml
 
 
 def test_filers13f_panel_contract() -> None:

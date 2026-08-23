@@ -47,10 +47,10 @@ const CATEGORY_LABEL: Record<string, string> = {
   unclassified: "events.cat.unclassified",
 };
 
-/** 全市场申报流 — the unified cross-form feed DERIVED from the terminal's
- *  own committed panels (4 / 8-K / S-1 family / 424B4 / D / SC 13D / SC 13G).
- *  Zero new fetches: each row keeps its source panel's EDGAR link; by_form
- *  counts the merged visible stream (source caps inherited, disclosed). */
+/** 全市场申报流 v2 — the unified cross-form feed queried DIRECTLY from SEC
+ *  EDGAR (8-K / 10-K / 10-Q / S-1 family / 4 / D, /A amendments included;
+ *  SC 13D / SC 13G via the daily index lanes). by_form pills are derived
+ *  from the payload, so the v2 form family expands automatically. */
 function StreamSection() {
   const { t } = useI18n();
   const f = aionis.filingStream;

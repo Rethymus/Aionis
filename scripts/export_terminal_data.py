@@ -2654,9 +2654,10 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
         "queries, filed-date PIT; offering amounts not extracted",
     ),
     "filing_stream": (
-        "Aionis-derived from U.S. SEC EDGAR public-domain panels",
-        "unified cross-form feed (4 / 8-K / S-1 family / 424B4 / D / SC 13D / "
-        "SC 13G) merged from the terminal's own committed panels",
+        "U.S. SEC EDGAR — public domain",
+        "unified cross-form feed (8-K / 10-K / 10-Q / S-1 family / 4 / D via "
+        "direct EFTS root-form queries; SC 13D / SC 13G via the daily index "
+        "lanes — EFTS froze on Schedule 13), filed-date PIT",
     ),
     "politician_trades": (
         "U.S. House Clerk — public domain",
@@ -3394,84 +3395,68 @@ def export_form_d() -> None:
 
 
 def export_filing_stream() -> None:
-    """Unified cross-form SEC filing stream (display-only, DERIVED).
+    """Unified cross-form SEC filing stream v2 (display-only, DIRECT).
 
-    Merges the committed per-form panels — insider 4, event 8-K, IPO S-1
-    family + 424B4, exempt D/D/A, activist SC 13D (smart_money), passive
-    SC 13G (stakes_13g) — into ONE newest-first feed (the unified-stream
-    cluster xiaoyinsi serves). Zero new fetches: every row keeps its source
-    panel's own provenance and EDGAR link; per-source visible caps inherit
-    (form4 200 / form_d 600 / …) and are disclosed per form in by_form,
-    which counts the merged stream, not the EDGAR universe. 13F-HR is
-    excluded v1 (quarterly manager filings, not company events — the
-    /institutions registry already carries it).
+    Reads ``data/cache/filing_stream_aggregate.parquet`` (gitignored; produced
+    by ``scripts/filing_stream_fetch.py`` via ``aionis.ingest.filing_stream``
+    — DIRECT whole-market EFTS queries, one root form at a time: 8-K / 10-K /
+    10-Q / S-1 family / 4 / D, each expanding to its /A amendments; SC 13D /
+    SC 13G via the daily crawler index lanes because EFTS froze on Schedule
+    13 after 2024-12-17). v1 (2026-08-23) DERIVED this feed by merging the
+    terminal's six committed panels — coverage was bounded by each panel's
+    visible cap and 10-K/10-Q were absent; v2 is the source query itself, so
+    the by_form counts are the EDGAR window, not inherited panel caps.
+    13F-HR stays excluded (quarterly manager filings, not company events —
+    the /filers registry carries them); DEF 14A rides its own panel lane.
+    Visible cap 800 newest, unchanged from v1.
     """
-    rows: list[dict] = []
+    fp = Path("data/cache/filing_stream_aggregate.parquet")
+    if not fp.exists():
+        print(
+            "[export-terminal] SKIP filing_stream: data/cache/"
+            "filing_stream_aggregate.parquet not present (tracked JSON "
+            "retains last-committed value)",
+            flush=True,
+        )
+        return
+    df = pd.read_parquet(fp)
+    if df.empty:
+        print(
+            "[export-terminal] SKIP filing_stream: empty parquet (tracked "
+            "JSON retains last-committed value)",
+            flush=True,
+        )
+        return
+    stats: dict = {}
+    stats_fp = Path("data/cache/filing_stream_stats.json")
+    if stats_fp.exists():
+        try:
+            stats = json.loads(stats_fp.read_text())
+        except json.JSONDecodeError:
+            stats = {}
 
-    def add(form: str, who: str, ticker: str, d: str, url: str) -> None:
-        # A stream row needs a subject; rows without any who are dropped at
-        # the source (never a "—" placeholder row in the feed). smart_money
-        # predates https on its links — normalize to the canonical scheme.
+    rows: list[dict] = []
+    for _, r in df.iterrows():
+        who = str(r.get("who", "")).strip()
+        url = str(r.get("doc_url", ""))
+        d = str(r.get("filed_date", ""))
         if url.startswith("http://www.sec.gov"):
             url = "https" + url[len("http"):]
-        if d and url and who and who != "—":
-            rows.append({
-                "form": form,
-                "who": who,
-                # None-coalesce: source panels carry JSON nulls for unknown
-                # tickers (never str(None) leaks).
-                "ticker": ticker if isinstance(ticker, str) and ticker not in ("", "None") else "",
-                "filed_date": d,
-                "doc_url": url,
-            })
-
-    f4 = _dh_read("form4.json")
-    if isinstance(f4, dict) and f4.get("status") == "ok":
-        for r in f4.get("recent", []):
-            add("4", str(r.get("filer", "")), str(r.get("ticker", "")),
-                str(r.get("date", "")), str(r.get("doc_url", "")))
-    f8 = _dh_read("form8k.json")
-    if isinstance(f8, dict) and f8.get("status") == "ok":
-        for r in f8.get("events", []):
-            add(str(r.get("form", "8-K")), str(r.get("company", "")),
-                str(r.get("ticker", "")), str(r.get("filing_date", "")),
-                str(r.get("doc_url", "")))
-    ipo = _dh_read("ipo.json")
-    if isinstance(ipo, dict) and ipo.get("status") == "ok":
-        for r in ipo.get("filings", []):
-            add(str(r.get("form", "")), str(r.get("company", "")),
-                str(r.get("ticker", "")), str(r.get("filed_date", "")),
-                str(r.get("doc_url", "")))
-    fd = _dh_read("form_d.json")
-    if isinstance(fd, dict) and fd.get("status") == "ok":
-        for r in fd.get("filings", []):
-            add(str(r.get("form", "")), str(r.get("company", "")),
-                str(r.get("ticker", "")), str(r.get("filed_date", "")),
-                str(r.get("doc_url", "")))
-    def stake_who(filer: object, target: object) -> str:
-        """'FILER → TARGET'; a placeholder filer degrades to TARGET alone."""
-        f = str(filer or "").strip()
-        t = str(target or "").strip()
-        if not f or "申报人见原文" in f or f == "None":
-            return t or "—"
-        return f"{f} → {t}" if t else f
-
-    g13 = _dh_read("stakes_13g.json")
-    if isinstance(g13, dict) and g13.get("status") == "ok":
-        for r in g13.get("filings", []):
-            add(str(r.get("form", "")), stake_who(r.get("filer"), r.get("target")),
-                str(r.get("ticker") or ""), str(r.get("date", "")),
-                str(r.get("doc_url", "")))
-    sm = _dh_read("smart_money.json")
-    if isinstance(sm, dict) and sm.get("recent_filings"):
-        for r in sm.get("recent_filings", []):
-            add(str(r.get("form", "SC 13D")), stake_who(r.get("filer"), r.get("target")),
-                str(r.get("ticker") or ""), str(r.get("date", "")),
-                str(r.get("url", "")))
-
+        ticker = str(r.get("ticker", ""))
+        # v1 add() hygiene, re-applied defense-in-depth: a row needs a
+        # subject, a date and an EDGAR link; tickers never leak str(None).
+        if not (d and url.startswith("https://www.sec.gov/") and who and who != "—"):
+            continue
+        rows.append({
+            "form": str(r.get("form", "")),
+            "who": who,
+            "ticker": ticker if ticker not in ("", "None", "nan") else "",
+            "filed_date": d,
+            "doc_url": url,
+        })
     if not rows:
         print(
-            "[export-terminal] SKIP filing_stream: no source panels ok "
+            "[export-terminal] SKIP filing_stream: 0 usable rows in parquet "
             "(tracked JSON retains last-committed value)",
             flush=True,
         )
@@ -3481,30 +3466,80 @@ def export_filing_stream() -> None:
     by_form: dict[str, int] = {}
     for r in visible:
         by_form[r["form"]] = by_form.get(r["form"], 0) + 1
+
+    # Per-form request accounting from the fetcher's stats sidecar (the
+    # honest ledger: declared window totals + page requests per root form).
+    forms_stats = stats.get("forms", {}) if isinstance(stats, dict) else {}
+    daily_lane = (
+        stats.get("schedule13_daily_lane_rows")
+        if isinstance(stats, dict)
+        else None
+    )
+    accounting: list[str] = []
+    for root, fs in forms_stats.items():
+        reqs = sum(w.get("requests", 0) for w in fs.get("windows", []))
+        tot = sum(w.get("total", 0) for w in fs.get("windows", []))
+        note = ""
+        if fs.get("split"):
+            note = " (split into 2 half-windows at the 7-day midpoint)"
+        elif fs.get("capped_kept"):
+            note = " (capped at floor — newest-first 10k kept, disclosed)"
+        if root == "SC 13D" and daily_lane is not None:
+            note += (
+                f"; EFTS frozen on Schedule 13 — shared SC 13D+13G daily-index "
+                f"lane {daily_lane:,} rows"
+            )
+        elif root == "SC 13G":
+            note += "; EFTS frozen (probed 0, same shared daily lane)"
+        accounting.append(f"{root}: {tot:,} declared / {reqs} page requests{note}")
+    accounting_txt = "; ".join(accounting) if accounting else "n/a (stats sidecar absent)"
+    total_requests = sum(
+        w.get("requests", 0) for fs in forms_stats.values() for w in fs.get("windows", [])
+    )
+
     payload = {
         "status": "ok",
         "as_of": visible[0]["filed_date"],
+        # The FULL aggregate's span (the trailing ~14-day query window) —
+        # the 800 newest visible rows may all sit on the last dissemination
+        # day, which would misrepresent the window as one day.
         "window": {
-            "start": min(r["filed_date"] for r in visible),
-            "end": max(r["filed_date"] for r in visible),
+            "start": min(r["filed_date"] for r in rows),
+            "end": max(r["filed_date"] for r in rows),
         },
         "total_merged": len(rows),
         "n_visible": len(visible),
         "by_form": dict(sorted(by_form.items(), key=lambda kv: -kv[1])),
         "filings": visible,
         "methodology": (
-            "Unified cross-form SEC filing stream — DERIVED by merging the "
-            "terminal's own committed per-form panels (insider Form 4, event "
-            "8-K/A, IPO S-1 family + 424B4, exempt D/D/A, activist SC 13D/A, "
-            "passive SC 13G), newest-first. Zero new fetches: every row keeps "
-            "its source panel's provenance and EDGAR link. Honest limits: "
-            "(1) each source panel's own visible cap is inherited (e.g. Form 4 "
-            "200 recent, Form D 600 newest) — by_form counts the MERGED "
-            "VISIBLE stream, not the EDGAR universe; (2) 13F-HR is excluded "
-            "in v1 (quarterly manager holdings, not company events — carried "
-            "by the /institutions registry); (3) source panels refresh "
-            "independently, so form mix shifts as panels advance. Display-"
-            "only, exploratory, NOT a research claim."
+            "Unified cross-form SEC filing stream v2 — DIRECT EDGAR queries "
+            "(public domain, 17 U.S.C. §105; filed-date PIT), one root form "
+            "per EFTS query (never a comma list — efts mis-parses root+/A "
+            "families): 8-K / 10-K / 10-Q / S-1 family / 4 / D, each "
+            "expanding to its /A amendments. v1→v2 migration: v1 (2026-08-23) "
+            "derived this feed by merging six committed panels — coverage was "
+            "bounded by each panel's visible cap (its window spanned only the "
+            "panels' newest days) and 10-K/10-Q were absent; v2 IS the source "
+            "query over a trailing 14-day window, so by_form counts the "
+            "EDGAR window. Request accounting (declared totals / EFTS pages, "
+            f"{total_requests} pages total): {accounting_txt}. Form 4 is "
+            "split into two ~7-day half-windows unconditionally (busiest "
+            "family — 10-15k/14d in filing season would exceed EFTS's "
+            "10,000-hit cap); every other form splits adaptively when a "
+            "declared window total reaches 9,500. SC 13D / SC 13G: EFTS froze "
+            "on the Schedule 13 family after 2024-12-17 (machine-verified "
+            "zero on each run), so those rows come from the EDGAR daily "
+            "crawler index lanes (the same dissemination feed as the "
+            "smart_money / stakes_13g panels), subject resolved offline by "
+            "ticker. Honest limits: (1) 13F-HR is excluded (quarterly "
+            "manager holdings, not company events — carried by the /filers "
+            "registry); (2) DEF 14A rides its own dedicated panel lane; "
+            "(3) Form 4 'who' is the reporting person (the first "
+            "display_names entry), with the issuer carried as the ticker "
+            "label from the CURRENT SEC company_tickers snapshot — a "
+            "display label, never a research input; (4) the 800-newest "
+            "visible cap is a payload-size cap (total_merged counts the full "
+            "window). Display-only, exploratory, NOT a research claim."
         ),
     }
     (WEB / "filing_stream.json").write_text(
@@ -3512,7 +3547,7 @@ def export_filing_stream() -> None:
     )
     print(
         f"[export-terminal] filing_stream: {len(visible)} visible of "
-        f"{len(rows)} merged across {len(by_form)} forms, "
+        f"{len(rows)} direct-query rows across {len(by_form)} forms, "
         f"as_of {payload['as_of']}",
         flush=True,
     )
@@ -4354,8 +4389,9 @@ def main() -> None:
     _safe_export("form8k", export_form8k)
     _safe_export("form_ipo", export_form_ipo)
     _safe_export("form_d", export_form_d)
-    # filing_stream merges the committed panels written above — after them,
-    # before the freshness map / catalog that index it.
+    # filing_stream (v2) reads its own direct-query parquet — order no longer
+    # depends on the per-form panels, but keep it here (before the freshness
+    # map / catalog that index it).
     _safe_export("filing_stream", export_filing_stream)
     _safe_export("politician_trades", export_politician_trades)
     _safe_export("politician_trades_tx", export_politician_trades_tx)
