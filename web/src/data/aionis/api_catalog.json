@@ -223,6 +223,17 @@
       "source": "VIX monthly + Trump-policy event table"
     },
     {
+      "key": "freight_taco",
+      "file": "freight_taco.json",
+      "path": "/api/v1/panels/freight_taco.json",
+      "method": "GET",
+      "status": "available",
+      "freshness": "cadence",
+      "as_of": "2026-06",
+      "license": "U.S. Bureau of Transportation Statistics \u2014 public domain",
+      "source": "Freight TSI monthly index (data.bts.gov Socrata) + BLS CES truck employment via FRED; disclosed satellite-TACO degradation proxy"
+    },
+    {
       "key": "form4",
       "file": "form4.json",
       "path": "/api/v1/panels/form4.json",
@@ -298,6 +309,17 @@
       "as_of": "2026-08-21",
       "license": "U.S. SEC EDGAR \u2014 public domain",
       "source": "DEF 14A proxy statements via EFTS form-level queries, filed-date PIT; director/executive names, compensation, ownership not parsed (person-level extraction deferred)"
+    },
+    {
+      "key": "def14a_persons",
+      "file": "def14a_persons.json",
+      "path": "/api/v1/panels/def14a_persons.json",
+      "method": "GET",
+      "status": "available",
+      "freshness": "daily",
+      "as_of": "2026-08-21",
+      "license": "U.S. SEC EDGAR \u2014 public domain",
+      "source": "DEF 14A primary documents (newest ~150 filings), conservative tiered director/officer name+role parsing, filed-date PIT; unparsed documents yield honest nulls (never guessed)"
     },
     {
       "key": "filing_stream",
@@ -491,5 +513,5 @@
     "server": "https://api.aionis-prices.workers.dev"
   },
   "methodology": "Public static data API over the terminal's committed panels (display-only). Every endpoint carries its 7-gate intake facts: license + primary source, plus the freshness class (daily / cadence / frozen). Frozen endpoints derive from frozen OOS artifacts (ledger #49 lineage) and deliberately do NOT advance \u2014 consuming them expecting daily updates misreads the contract. Endpoints with status=planned are NOT built: the path is a reserved future location, no payload is served, as_of is null, and the license/source describe the primary source the future fetcher would use. Research ingestion of any endpoint requires the full 7-gate rubric (docs/data-intake-rubric.md); the live-prices worker is display-only and must never enter the OOS pipeline.",
-  "snapshot_ts": "2026-08-23T15:08:06.542740+00:00"
+  "snapshot_ts": "2026-08-23T16:02:54.511348+00:00"
 }
