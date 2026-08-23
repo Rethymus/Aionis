@@ -657,6 +657,48 @@ def test_ark_panel_contract() -> None:
     assert "ark" in ml and ("no prices" in ml or "no returns" in ml)
 
 
+def test_theme_etfs_panel_contract() -> None:
+    """Theme-ETF panel: issuer-official CSVs, honest skips, resonance.
+
+    The panel rides the issuers' own daily holdings files (iShares
+    latest-holdings.csv + Global X dated full-holdings CSVs; display-only).
+    The contract pins: per-fund top lists sorted by official weight desc and
+    capped at 10 with a disclosed issuer; the cross-fund resonance rows
+    genuinely held by 2+ funds drawn from the exported funds; skipped rows
+    disclosed per fund; the honest count (funds whose source was dropped are
+    NOT silently padded — n_funds stays within the pinned expected set);
+    and the methodology must disclose official-source provenance and that no
+    prices/returns are claimed.
+    """
+    x = _load("theme_etfs.json")
+    assert x["status"] in {"ok", "awaiting_fetch"}
+    assert {"as_of", "n_funds", "n_funds_expected", "funds",
+            "cross_fund_overlap", "methodology", "snapshot_ts"} <= set(x)
+    if x["status"] != "ok" or not x["funds"]:
+        return
+    assert 0 < x["n_funds"] <= x["n_funds_expected"] == 10
+    fund_ticks = set()
+    for f in x["funds"]:
+        assert {"ticker", "issuer", "fund", "as_of", "n_positions",
+                "skipped_rows", "top"} <= set(f)
+        assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", f["as_of"])
+        assert f["issuer"] and f["n_positions"] > 0 and f["skipped_rows"] >= 0
+        assert 1 <= len(f["top"]) <= 10
+        ws = [p["weight_pct"] for p in f["top"]]
+        assert ws == sorted(ws, reverse=True), "top sorted by weight desc"
+        assert all(p["weight_pct"] > 0 and p["ticker"] for p in f["top"])
+        fund_ticks.add(f["ticker"])
+    assert x["as_of"] == max(f["as_of"] for f in x["funds"])
+    for o in x["cross_fund_overlap"]:
+        assert len(o["funds"]) >= 2, "resonance rows held by 2+ funds"
+        assert set(o["funds"]) <= fund_ticks, "resonance funds = exported funds"
+        assert o["max_weight_pct"] > 0
+    nf = [len(o["funds"]) for o in x["cross_fund_overlap"]]
+    assert nf == sorted(nf, reverse=True), "resonance sorted by fund count desc"
+    ml = x["methodology"].lower()
+    assert "official" in ml and ("no prices" in ml or "no returns" in ml)
+
+
 def test_reddit_trending_panel_contract() -> None:
     """ApeWisdom trending board: first-party fields, honest pagination facts.
 

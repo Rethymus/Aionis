@@ -45,6 +45,7 @@ import politicianTradesJson from "./politician_trades.json";
 import politicianTradesTxJson from "./politician_trades_tx.json";
 import partyIndexJson from "./party_index.json";
 import arkJson from "./ark.json";
+import themeEtfsJson from "./theme_etfs.json";
 import redditTrendingJson from "./reddit_trending.json";
 import formDJson from "./form_d.json";
 import def14aJson from "./def14a.json";
@@ -809,6 +810,45 @@ export type Ark = {
   snapshot_ts?: string;
 };
 
+export type ThemeEtfPosition = {
+  // Official ticker as published (may be a foreign listing, e.g. "6861 JP").
+  ticker: string;
+  company: string;
+  // Official published weight (%), e.g. 9.05 = 9.05%.
+  weight_pct: number;
+  market_value: number;
+};
+
+export type ThemeEtfFund = {
+  ticker: string;
+  // Issuer of the official file (iShares/BlackRock, Global X/Mirae Asset).
+  issuer: string;
+  fund: string;
+  as_of: string;
+  n_positions: number;
+  // iShares non-equity legs / Global X no-ticker cash-FX rows — counted.
+  skipped_rows: number;
+  top: ThemeEtfPosition[];
+};
+
+export type ThemeEtfOverlap = {
+  ticker: string;
+  company: string;
+  funds: string[];
+  max_weight_pct: number;
+};
+
+export type ThemeEtfs = {
+  status: string;
+  as_of: string;
+  n_funds: number;
+  n_funds_expected: number;
+  funds: ThemeEtfFund[];
+  cross_fund_overlap: ThemeEtfOverlap[];
+  methodology: string;
+  snapshot_ts?: string;
+};
+
 export type RedditTrendingRow = {
   rank: number;
   ticker: string;
@@ -1022,6 +1062,7 @@ export const aionis = {
   politicianTradesTx: politicianTradesTxJson as PoliticianTradesTx,
   partyIndex: partyIndexJson as PartyIndex,
   ark: arkJson as Ark,
+  themeEtfs: themeEtfsJson as ThemeEtfs,
   redditTrending: redditTrendingJson as RedditTrending,
   formD: formDJson as FormD,
   def14a: def14aJson as Def14a,

@@ -144,6 +144,129 @@ function ArkSection() {
   );
 }
 
+/** 主题 ETF — 10 thematic funds' daily holdings from the ISSUERS' own
+ *  official CSVs (iShares/BlackRock + Global X; the theme dimensions the
+ *  ARK panel does not carry: semiconductor / clean energy / broad+active AI
+ *  / cloud / blockchain / lithium-battery / robotics / cybersecurity).
+ *  Same shape as ArkSection: top-5 by official weight with weight bars +
+ *  the cross-fund resonance table (tickers held by 2+ theme ETFs ACROSS
+ *  issuers — e.g. NVDA across 5 funds). Issuer badge discloses whose
+ *  official file each book comes from. */
+function ThemeEtfsSection() {
+  const { t } = useI18n();
+  const etfs = aionis.themeEtfs;
+  if (etfs.status !== "ok" || etfs.funds.length === 0) return null;
+
+  const maxTop = Math.max(
+    ...etfs.funds.flatMap((f) => f.top.map((p) => p.weight_pct)),
+    0.01,
+  );
+  const nIssuers = new Set(etfs.funds.map((f) => f.issuer)).size;
+
+  const tickerCell = (ticker: string) =>
+    STOCK_PAGE_TICKERS.has(ticker) ? (
+      <Link
+        href={`/stock/${ticker}`}
+        className="font-mono text-xs font-semibold text-primary hover:underline"
+      >
+        {ticker}
+      </Link>
+    ) : (
+      <span className="font-mono text-xs font-semibold">{ticker}</span>
+    );
+
+  return (
+    <div className="space-y-3">
+      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+        <h2 className="text-lg font-semibold tracking-tight">
+          {t("institutions.etf.title")}
+        </h2>
+        <span className="font-mono text-xs text-muted-foreground tabular-nums">
+          {etfs.as_of} · {etfs.n_funds}/{etfs.n_funds_expected} ·{" "}
+          {etfs.funds.reduce((a, f) => a + f.n_positions, 0)}{" "}
+          {t("institutions.etf.positions")} · {nIssuers}{" "}
+          {t("institutions.etf.issuers")}
+        </span>
+      </div>
+      <p className="text-xs text-muted-foreground">{t("institutions.etf.note")}</p>
+
+      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+        {etfs.funds.map((f) => (
+          <Card key={f.ticker} className="py-0">
+            <CardHeader className="border-b">
+              <div className="flex items-baseline justify-between gap-2">
+                <CardTitle className="font-mono text-sm">{f.ticker}</CardTitle>
+                <span className="font-mono text-[11px] text-muted-foreground tabular-nums">
+                  {f.n_positions} · {f.as_of.slice(5)}
+                </span>
+              </div>
+              <CardDescription className="space-y-0.5">
+                <span
+                  className="block truncate text-[11px] text-muted-foreground"
+                  title={f.issuer}
+                >
+                  {f.issuer}
+                </span>
+                <span className="block truncate" title={f.fund}>
+                  {f.fund || "—"}
+                </span>
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-1.5 p-3">
+              {f.top.slice(0, 5).map((p) => (
+                <div key={p.ticker} className="flex items-center gap-2">
+                  <span className="w-14 shrink-0">{tickerCell(p.ticker)}</span>
+                  <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
+                    <span
+                      className="block h-full rounded-full bg-primary/50"
+                      style={{ width: `${Math.max(2, Math.round((p.weight_pct / maxTop) * 100))}%` }}
+                    />
+                  </span>
+                  <span className="w-10 shrink-0 text-right font-mono text-[11px] tabular-nums">
+                    {p.weight_pct.toFixed(2)}%
+                  </span>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      <Card className="min-w-0 py-0">
+        <CardHeader className="border-b">
+          <CardTitle className="text-base">{t("institutions.etf.resonance_title")}</CardTitle>
+          <CardDescription>{t("institutions.etf.resonance_note")}</CardDescription>
+        </CardHeader>
+        <CardContent className="p-0">
+          <div className="divide-y">
+            {etfs.cross_fund_overlap.slice(0, 10).map((o) => (
+              <div key={o.ticker} className="flex items-center gap-3 px-4 py-2">
+                <span className="w-14 shrink-0">{tickerCell(o.ticker)}</span>
+                <span className="min-w-0 flex-1 truncate text-xs text-muted-foreground" title={o.company}>
+                  {o.company || "—"}
+                </span>
+                <span className="flex shrink-0 gap-1">
+                  {o.funds.map((fd) => (
+                    <span
+                      key={fd}
+                      className="rounded-[4px] bg-muted px-1.5 py-px font-mono text-[10px] font-medium text-muted-foreground"
+                    >
+                      {fd}
+                    </span>
+                  ))}
+                </span>
+                <span className="w-14 shrink-0 text-right font-mono text-[11px] tabular-nums">
+                  {o.max_weight_pct.toFixed(2)}%
+                </span>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
 export function InstitutionsView() {
   const { t } = useI18n();
   const f = form13f;
@@ -335,6 +458,10 @@ export function InstitutionsView() {
       {/* ARK 家族 (daily official CSVs) — the institutions cluster's
           non-13F member: daily books instead of quarterly filings. */}
       <ArkSection />
+
+      {/* 主题 ETF (issuer-official CSVs) — the other theme-ETF dimension:
+          non-ARK thematic families, daily books from their own issuers. */}
+      <ThemeEtfsSection />
 
       <p className="text-xs text-muted-foreground">{t("institutions.explain")}</p>
     </div>

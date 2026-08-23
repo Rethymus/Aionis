@@ -2465,6 +2465,7 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
     ("smart_money", "smart_money.json", _DH_CADENCE),
     ("stakes_13g", "stakes_13g.json", _DH_DAILY),
     ("ark", "ark.json", _DH_DAILY),
+    ("theme_etfs", "theme_etfs.json", _DH_DAILY),
     ("form13f", "form13f.json", _DH_CADENCE),
     ("filers13f", "filers13f.json", _DH_CADENCE),
 ]
@@ -2547,6 +2548,8 @@ def _dh_as_of(key: str, fname: str) -> str | None:
     if key == "filing_stream":
         return p.get("as_of")
     if key == "ark":
+        return p.get("as_of")
+    if key == "theme_etfs":
         return p.get("as_of")
     if key == "reddit_trending":
         ts = p.get("as_of")
@@ -2812,6 +2815,13 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
         "ARK Invest official fund CSVs — publicly published daily",
         "8-ETF Full Holdings CSVs from assets.ark-funds.com (browser-verified "
         "endpoint URLs; top-10 by weight + family overlap; skips disclosed)",
+    ),
+    "theme_etfs": (
+        "iShares/BlackRock + Global X official fund CSVs — publicly published "
+        "daily",
+        "10 theme-ETF holdings CSVs (iShares latest-holdings.csv endpoints + "
+        "Global X dated full-holdings files; top-10 by weight + cross-fund "
+        "resonance; skips disclosed)",
     ),
     "data_health": ("Aionis-generated (repo MIT)", "freshness/provenance map over all panels"),
 }
@@ -4489,6 +4499,126 @@ def export_ark() -> None:
     )
 
 
+def export_theme_etfs() -> None:
+    """Theme-ETF daily holdings — 10 issuer-official CSVs (display-only).
+
+    Reads the LATEST cached snapshot per fund from
+    ``data/cache/theme_etfs/`` (gitignored; written by
+    ``scripts/theme_etfs_fetch.py`` via ``aionis.ingest.theme_etfs`` —
+    the exporter reuses those parsers so cache and JSON can never disagree
+    on row semantics). Ten thematic funds across two issuers (iShares /
+    BlackRock and Global X / Mirae Asset — the theme dimensions the ARK
+    panel does not carry: semiconductor, clean energy, broad AI, active AI,
+    cloud, blockchain, lithium-battery, robotics, cybersecurity). Top-10
+    per fund by official weight + a cross-fund resonance view (tickers held
+    by 2+ of these theme ETFs, across issuers). Neither issuer keeps a CSV
+    history: the dated cache snapshots ARE the time series; no prices, no
+    returns, no performance claim. Display lane only.
+    """
+    cache = Path("data/cache/theme_etfs")
+    csvs = sorted(cache.glob("*_*.csv")) if cache.exists() else []
+    if not csvs:
+        print(
+            "[export-terminal] SKIP theme_etfs: data/cache/theme_etfs/ has no "
+            "snapshots (tracked JSON retains last-committed value)",
+            flush=True,
+        )
+        return
+
+    from aionis.ingest.theme_etfs import FUND_DEFS, parse_any
+
+    latest: dict[str, tuple[str, Path]] = {}
+    for fp in csvs:
+        m = re.fullmatch(r"([A-Z]+)_(\d{8})\.csv", fp.name)
+        if not m:
+            continue
+        tick, ymd = m.group(1), m.group(2)
+        if tick not in FUND_DEFS or tick not in latest or ymd > latest[tick][0]:
+            latest[tick] = (ymd, fp)
+
+    funds: list[dict] = []
+    overlap: dict[str, dict] = {}
+    for tick, spec in FUND_DEFS.items():
+        if tick not in latest:
+            continue  # a fund's fetch failed once — omitted, never guessed
+        ymd, fp = latest[tick]
+        as_of, rows, skipped = parse_any(tick, fp.read_text(encoding="utf-8"))
+        rows = sorted(rows, key=lambda r: (-r["weight_pct"], r["ticker"]))
+        funds.append({
+            "ticker": tick,
+            "issuer": spec["issuer"],
+            "fund": spec["fund"],
+            "as_of": as_of,
+            "n_positions": len(rows),
+            "skipped_rows": skipped,
+            "top": [
+                {
+                    "ticker": r["ticker"],
+                    "company": r["company"],
+                    "weight_pct": r["weight_pct"],
+                    "market_value": r["market_value"],
+                }
+                for r in rows[:10]
+            ],
+        })
+        for r in rows:
+            o = overlap.setdefault(r["ticker"], {"ticker": r["ticker"], "company": r["company"], "funds": [], "max_weight_pct": 0.0})
+            o["funds"].append(tick)
+            o["max_weight_pct"] = max(o["max_weight_pct"], r["weight_pct"])
+
+    if not funds:
+        print(
+            "[export-terminal] SKIP theme_etfs: no parseable snapshots (tracked "
+            "JSON retains last-committed value)",
+            flush=True,
+        )
+        return
+    shared = sorted(
+        (o for o in overlap.values() if len(o["funds"]) >= 2),
+        key=lambda o: (-len(o["funds"]), -o["max_weight_pct"], o["ticker"]),
+    )[:20]
+
+    payload = {
+        "status": "ok",
+        "as_of": max(f["as_of"] for f in funds),
+        "n_funds": len(funds),
+        "n_funds_expected": len(FUND_DEFS),
+        "funds": funds,
+        "cross_fund_overlap": shared,
+        "methodology": (
+            "Thematic ETF daily holdings from the issuers' own official "
+            "files — iShares/BlackRock latest-holdings.csv endpoints and "
+            "Global X (Mirae Asset) dated full-holdings CSVs linked from "
+            "each fund page (free, public, published every business day; "
+            "all endpoint URLs verified live 2026-08-23 by downloading each "
+            "file — Global X's date-in-filename links are re-extracted from "
+            "the fund page's own HTML on every fetch, so a rename surfaces "
+            "as an honest per-fund failure, never a silent gap). Rows: "
+            "official weight/market value as published; iShares rows are "
+            "kept for the Equity asset class only (futures/cash/FX legs "
+            "skipped and counted), Global X rows with no ticker (cash/FX "
+            "bookkeeping) are skipped and counted. Top-10 per fund by "
+            "weight; the resonance table lists tickers held by 2+ of these "
+            "theme ETFs across issuers. Candidates without a reachable "
+            "free official file were honestly dropped (Amplify BLOK, "
+            "Invesco, VanEck, First Trust, SPDR-XLS; see "
+            "docs/data-intake-etf-holdings.md). Neither issuer keeps a CSV "
+            "history — the dated local snapshots are the only time series. "
+            "Display-only, exploratory; no prices, no returns, no "
+            "performance claim; NOT part of any research or OOS pipeline."
+        ),
+    }
+    (WEB / "theme_etfs.json").write_text(
+        json.dumps(_stamp(payload), indent=2, default=str)
+    )
+    print(
+        f"[export-terminal] theme_etfs: {payload['n_funds']}/{payload['n_funds_expected']} "
+        f"funds, {sum(f['n_positions'] for f in funds)} positions, "
+        f"{len(shared)} cross-fund overlap tickers, as_of {payload['as_of']}",
+        flush=True,
+    )
+
+
 def export_reddit_trending() -> None:
     """ApeWisdom Reddit trending-stocks board (free public API; display-only).
 
@@ -4731,6 +4861,7 @@ def main() -> None:
     _safe_export("smart_money", export_smart_money)
     _safe_export("stakes_13g", export_stakes13g)
     _safe_export("ark", export_ark)
+    _safe_export("theme_etfs", export_theme_etfs)
     _safe_export("reddit_meta", export_reddit_meta)
     _safe_export("reddit_trending", export_reddit_trending)
     _safe_export("ledger_audit", export_ledger_audit)
