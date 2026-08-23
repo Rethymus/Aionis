@@ -1,5 +1,7 @@
 # 复刻差距地图 — 小隐寺 API 分类学 × 免费一方源（2026-08-23）
 
+> **终态审计（2026-08-23 深夜，17/17 路由全部上线）**：news✓(GDELT 200 篇/106 源) · reddit✓(自有采集+ApeWisdom 榜) · taco✓ · institutions✓(明星 40+ARK 家族) · managers✓(/manager SSG×40 + /filers 9,385 家) · stars✓(七分类) · ipo✓(S-1/424B4+Form D) · insider✓(form4 30 发行人 1,464 笔) · events✓(8-K+统一流 v2 16 表单 16,597 行) · stakes✓(13D/13G+持股比例 119/120+150/150) · executives✓(8-K 5.02+DEF14A 1,387) · quarterly✓(10-Q 深切 400/2,115) · annual✓(10-K 76/76) · companies✓ · stock✓(SSG+机构持有者反查+政客交易卡) · congress✓(申报流+交易级 2,812+政党指数) · API 平台✓(/api-docs+api_catalog)。合体验证：**pytest 1,984 passed / build 1,497 页 / IAB 抽查全过**。**业主裁决待定三豁免**：TACO 卫星（商业付费数据，无许可不可用）、韩国散户杠杆指数（未定位到免费一方源）、书架/知识图谱（竞品自有内容产品，非数据 API）。若业主维持豁免，本地图即为复刻终态。
+
 > 背景：目标 = 完整复刻 data.xiaoyinsi.com（实时/部署暂缓）。数据**不爬小隐寺**，
 > 只学习其 API 配置（/api-docs Scalar 文档，~50 GET 端点，2026-08-23 IAB 浏览器提取），
 > 再对每个维度做网络深度调研定位**免费一方源**。本文 = 维度 → 源 → 验证状态 → 优先级。

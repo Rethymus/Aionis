@@ -8,6 +8,14 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-23 (u) X/Y 收尾集成 + 17 路由终态（1,984 passed / 1,497 页）
+
+**Y（/quarterly+/annual）**：aca668b→`71f2df2`。深切必要性被数据证实——800-newest 可见流中 10-K/10-Q 行数 **0**（财报季挤压）→ 导出深切 annual 76/76、quarterly 400/2,115（cap 披露+全量计数 KPI）；共享 fin-deadline-view（variant 参数）+ 两路由 + sidebar/palette + i18n 23×2。cherry-pick 零冲突；IAB 实测 /quarterly（KPI 2,115/筛选/50 EDGAR 链）。**N 后端不引入**（W v2 覆盖）。
+
+**X（/news）**：ab55f39→`17c4c10`。**抓出并修复 M 回收代码的阻塞级 bug**：normalize_seendate 长度检查 15 应为 16（GDELT `YYYYMMDDTHHMMSSZ`）——不修则 feed 永远为空（已提交测试抓到，X 修复后 8/8 绿）。fetch：GDELT IP 节流 429×2（6 请求退避）→ 冷却 5 分钟后单请求成功 = **200 篇/106 源/2 天窗**。前端：4 KPI+流表（标题仅链出原文，版权在出版方）+150 截断披露；i18n 键名偏离规格 nav.newsfeed（nav.news 已被新闻情绪 tab 占用——tsc TS1117 暴露，合理）。集成 3 冲突（图标×2 并存 + 双测试函数并存，其中一处 ======= 残留经语法检查修复后 amend）。
+
+**终态**：17/17 路由在构建产物实证（含 /manager /stock SSG 目录）；news_feed.parquet 缓存拷主仓；data_health/api_catalog 统一再生。**三豁免维度业主裁决待定**（TACO 卫星/韩杠杆/书架）。worktree wx/wy 已清；M/N worktree 原样保留（并发领地）。
+
 ## 2026-08-23 (t) 并发 lane M/N 裁决 + 17 路由收尾轮（X/Y 代理）
 
 **裁决依据**：M/N worktree 均为 08-22 02:2x 的两天前死亡 WIP（并发 session 早已离场）——并发纪律让位于 U 先例的回收裁决。**两者都有 `M runs/ledger.jsonl`**（旧基点 CRLF 假差异，基点早于 .gitattributes 修复）——回收时 `git checkout --` 还原，**绝不集成**。
