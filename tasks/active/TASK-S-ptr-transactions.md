@@ -1,7 +1,15 @@
 # TASK-S: PTR 交易级解析（D4 已开：业主"彻底对齐颗粒度"指令）
 
-> 优先级：高（竞品王牌特性）。worktree：`F:\ZCodeData\Aionis-ws`（分支 feat/ptr-transactions，已建，node_modules junction 已挂）。基于 main ca3074f+。
-> 派发背景：2026-08-23 四代理齐死于配额[1308]；本文件 = 代理 S 的完整规格，供配额重置后重派或新 session 接手。
+> **2026-08-23 16:45 主线进展（重要——接手前必读）**：风险最高的部分已由主线完成——
+> salvage PDF 栈已提取为独立模块 **`src/aionis/ingest/ptr_pdf.py`**（commit 02ceb10，ws worktree，
+> ruff 净）+ runner **`scripts/ptr_transactions_fetch.py`**（年份分批/幂等/三分类计数）。
+> **20 份真 PDF 抽样验证：12 ok（45 行）/ 6 no_rows（2 字节 CID 部分 cmap 缺映射，NUL 损失，不可救，诚实计数）/ 2 no_text（扫描件）**。
+> 2026 全量批（359 份）fetch 已由主线后台启动（runs_ptr_tx_2026.log → data/cache/ptr_transactions.parquet）。
+> **接手者（20:10 代理或主线）剩余工作 = 任务 4-7**（导出面 politician_trades_tx.json + _API_LICENSE + 前端 /congress 交易区 + /stock join + 契约测试 + 7-gate 增补）——
+> 导出形状建议：{status, as_of, total, n_members, by_party, late_filings(>45天), coverage:{ok,no_rows,no_text}, transactions:[...]}；methodology 必须披露三分类覆盖。
+> 原 1-3 步（读 salvage/移植/抽样）**已完成勿重做**。
+
+> 优先级：高（竞品王牌特性）。worktree：`F:\ZCodeData\Aionis-ws`（分支 feat/ptr-transactions）。基于 main ca3074f+。
 
 ## 铁律 #0（业主明令）
 **绝不请求/爬取 data.xiaoyinsi.com 或任何竞品站**。数据一律一手公共源（= 众议院书记官 PTR PDF，公共域）。
