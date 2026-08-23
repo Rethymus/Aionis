@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 import { fmtDateShort } from "@/lib/format";
 import { FilterPills, LoadMoreFooter, usePaged } from "@/components/stream/stream-kit";
 import { useI18n } from "@/i18n/provider";
-import { aionis } from "@/data/aionis";
+import { aionis, type StakesPct } from "@/data/aionis";
 import Link from "next/link";
 import {
   Bar,
@@ -29,6 +29,68 @@ const PAGE_SIZE = 30;
 
 type KindFilter = "all" | "new" | "amendment";
 type GFormFilter = "all" | "SC 13G" | "SC 13G/A";
+
+// The /stakes-style active/passive axis — derived from the immutable form
+// type only (SC 13D* = active, SC 13G* = passive): zero parsing dependency.
+function StakesTypeBadge({ form }: { form: string }) {
+  const { t } = useI18n();
+  const active = form.startsWith("SC 13D");
+  return (
+    <Badge
+      variant="outline"
+      className={cn(
+        "shrink-0 px-1.5 py-0 text-xs",
+        active
+          ? "border-violet-500/40 bg-violet-500/10 text-violet-600 dark:text-violet-400"
+          : "border-slate-500/40 bg-slate-500/10 text-slate-600 dark:text-slate-400",
+      )}
+    >
+      {t(active ? "stakes.type.active" : "stakes.type.passive")}
+    </Badge>
+  );
+}
+
+// Holding-percentage badge + previous value + derived status. Honest-null
+// rendering throughout: no parsed pct_now → NO pct badge (no "—" placeholder);
+// pct_prev renders only when parsed (amendments); the exited/below_5 badge
+// exists only when pct_status carries a PARSED-derived value — null status
+// renders nothing.
+function StakesPctBadges({ row }: { row: StakesPct }) {
+  const { t } = useI18n();
+  const now = row.pct_now ?? null;
+  const prev = row.pct_prev ?? null;
+  const status = row.pct_status ?? null;
+  return (
+    <span className="flex shrink-0 items-center gap-1" title={t("stakes.pct.hint")}>
+      {now !== null && (
+        <Badge variant="secondary" className="px-1.5 py-0 text-xs tabular-nums">
+          {now}%
+          {prev !== null && (
+            <span className="ml-1 font-normal text-muted-foreground">
+              {t("stakes.pct.prevOpen")} {prev}%{t("stakes.pct.prevClose")}
+            </span>
+          )}
+        </Badge>
+      )}
+      {status === "exited" && (
+        <Badge
+          variant="outline"
+          className="shrink-0 border-rose-500/40 bg-rose-500/10 px-1.5 py-0 text-xs text-rose-600 dark:text-rose-400"
+        >
+          {t("stakes.status.exited")}
+        </Badge>
+      )}
+      {status === "below_5" && (
+        <Badge
+          variant="outline"
+          className="shrink-0 border-amber-500/40 bg-amber-500/10 px-1.5 py-0 text-xs text-amber-600 dark:text-amber-400"
+        >
+          {t("stakes.status.below_5")}
+        </Badge>
+      )}
+    </span>
+  );
+}
 
 export function SmartMoneyView() {
   const { t } = useI18n();
@@ -155,6 +217,7 @@ export function SmartMoneyView() {
                 >
                   {t(r.is_amendment ? "smartmoney.amendment" : "smartmoney.new")}
                 </Badge>
+                <StakesTypeBadge form={r.form} />
                 <span className="w-32 shrink-0 truncate text-muted-foreground">{r.filer}</span>
                 {r.url ? (
                   <a
@@ -169,6 +232,7 @@ export function SmartMoneyView() {
                 ) : (
                   <span className="truncate font-medium">→ {r.target}</span>
                 )}
+                <StakesPctBadges row={r} />
                 {r.ticker ? (
                   <Link href={`/stock/${r.ticker}`} className="ml-auto shrink-0">
                     <Badge variant="secondary" className="font-mono text-xs">
@@ -276,6 +340,7 @@ export function SmartMoneyView() {
                     >
                       {t(r.form === "SC 13G/A" ? "stakes13g.form13ga" : "stakes13g.form13g")}
                     </Badge>
+                    <StakesTypeBadge form={r.form} />
                     <span className="w-32 shrink-0 truncate text-muted-foreground">{r.filer}</span>
                     {r.doc_url ? (
                       <a
@@ -290,6 +355,7 @@ export function SmartMoneyView() {
                     ) : (
                       <span className="truncate font-medium">→ {r.target}</span>
                     )}
+                    <StakesPctBadges row={r} />
                     {r.ticker ? (
                       <Link href={`/stock/${r.ticker}`} className="ml-auto shrink-0">
                         <Badge variant="secondary" className="font-mono text-xs">

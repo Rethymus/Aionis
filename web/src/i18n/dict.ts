@@ -461,7 +461,15 @@ export const dict = {
     "stakes13g.filing_link": "查看 EDGAR 原文（含申报人与持股比例）",
     "stakes13g.empty": "暂无 13G 数据（等待拉取；面板保留上次导出值，绝不以占位数据充数）",
     "stakes13g.term13GHint": "13G 申报：持股超 5% 且声明被动意图（无控制计划）时的 SEC 披露——指数基金/安静机构的被动持仓信号",
-    "stakes13g.explain": "SC 13G = 被动意图的超 5% 持仓申报（13D 的被动对偶，量级约 7 倍）。EFTS 对 Schedule 13 家族冻结于 2024-12-17，本流走 EDGAR daily crawler index（filed-date PIT，公共域）。持股比例与被动/清仓状态机需逐文档解析，v1 明确 deferred——每行链至原文。展示用途，非 Aionis 研究 claim。",
+    "stakes13g.explain": "SC 13G = 被动意图的超 5% 持仓申报（13D 的被动对偶，量级约 7 倍）。EFTS 对 Schedule 13 家族冻结于 2024-12-17，本流走 EDGAR daily crawler index（filed-date PIT，公共域）。持股比例与清仓/降至5%下状态对可见行有界解析（每行 ≤2 请求；未解析诚实留空），可见窗口之外不解析——每行链至原文。展示用途，非 Aionis 研究 claim。",
+
+    "stakes.type.active": "主动",
+    "stakes.type.passive": "被动",
+    "stakes.pct.prevOpen": "（前",
+    "stakes.pct.prevClose": "）",
+    "stakes.pct.hint": "持股比例自申报原文解析（封面 percent-of-class 标签或正文语句；修正件的前次值仅来自 previous X% 类句式）；未能解析的行诚实留空，绝不显示占位",
+    "stakes.status.exited": "清仓",
+    "stakes.status.below_5": "降至5%下",
 
     "nav.conviction": "选股确信度",
     "conviction.title": "选股确信度指数",
@@ -1441,7 +1449,15 @@ export const dict = {
     "stakes13g.filing_link": "View EDGAR filing (includes filer and ownership %)",
     "stakes13g.empty": "No 13G data yet (awaiting fetch; the panel keeps its last exported value — never placeholder numbers)",
     "stakes13g.term13GHint": "Schedule 13G filing: SEC disclosure for >5% holders attesting PASSIVE intent (no control plan) — the index-fund/quiet-institution passive signal",
-    "stakes13g.explain": "SC 13G = the >5% passive-intent disclosure (13D's passive twin, ~7x the volume). EFTS froze on the Schedule 13 family after 2024-12-17, so this stream rides the EDGAR daily crawler index (filed-date PIT, public domain). Ownership % and the passive/active/exited state machine need per-document parsing and are explicitly deferred in v1 — every row links the source filing. Display-only, not an Aionis research claim.",
+    "stakes13g.explain": "SC 13G = the >5% passive-intent disclosure (13D's passive twin, ~7x the volume). EFTS froze on the Schedule 13 family after 2024-12-17, so this stream rides the EDGAR daily crawler index (filed-date PIT, public domain). Ownership % and the exited/below-5% status are bounded-parsed for the VISIBLE rows only (≤2 polite requests per row; misses stay honest blanks) — rows beyond the visible window are not parsed, and every row links the source filing. Display-only, not an Aionis research claim.",
+
+    "stakes.type.active": "active",
+    "stakes.type.passive": "passive",
+    "stakes.pct.prevOpen": "(prev",
+    "stakes.pct.prevClose": ")",
+    "stakes.pct.hint": "Ownership % parsed from the filing's primary document (cover percent-of-class tag or narrative sentence; the previous value only from 'previous X%'-style amendment sentences); unparsed rows are honestly left blank — never a placeholder",
+    "stakes.status.exited": "exited",
+    "stakes.status.below_5": "below 5%",
 
     "nav.conviction": "Pick conviction",
     "conviction.title": "Pick-conviction index",
