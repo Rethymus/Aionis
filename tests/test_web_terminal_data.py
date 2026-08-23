@@ -703,6 +703,43 @@ def test_reddit_trending_panel_contract() -> None:
     )
 
 
+def test_form_d_panel_contract() -> None:
+    """Form D panel: exempt-offering stream, status from immutable form types.
+
+    The panel rides the same EDGAR EFTS form-level machinery as /ipo, with
+    forms=D expanding to D + D/A. The contract pins: status enum derived from
+    the form (D -> new, D/A -> amendment) with row-form agreement; newest-
+    first order; visible rows a capped prefix of the window (by_form counts
+    the FULL window, so by_form sums may exceed the visible list — both
+    disclosed); doc links to the EDGAR filing index; and the methodology
+    must disclose the not-parsed offering amounts (v1 honesty boundary).
+    """
+    x = _load("form_d.json")
+    assert x["status"] in {"ok", "awaiting_fetch"}
+    assert {"as_of", "window", "issuers", "total", "by_form", "filings",
+            "methodology", "snapshot_ts"} <= set(x)
+    if x["status"] != "ok" or not x["filings"]:
+        return
+    dates: list[str] = []
+    for r in x["filings"]:
+        assert {"company", "ticker", "filed_date", "form", "status", "doc_url"} <= set(r)
+        assert r["form"] in {"D", "D/A"}, f"unexpected form {r['form']}"
+        assert r["status"] == ("new" if r["form"] == "D" else "amendment"), (
+            "status derived from the immutable form type"
+        )
+        assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", r["filed_date"])
+        assert r["doc_url"].startswith("https://www.sec.gov/Archives/edgar/data/")
+        dates.append(r["filed_date"])
+    assert dates == sorted(dates, reverse=True), "filings newest-first"
+    assert x["as_of"] == max(dates)
+    # Visible list is a capped prefix: window totals live in by_form/total.
+    assert x["total"] >= len(x["filings"])
+    assert sum(x["by_form"].values()) == x["total"], "by_form counts the full window"
+    assert set(x["by_form"]) <= {"D", "D/A"}
+    ml = x["methodology"].lower()
+    assert "form d" in ml and "not extracted" in ml and "display-only" in ml
+
+
 def test_form_ipo_panel_contract() -> None:
     """IPO panel schema: filing shape, status enum, honest counting, date order.
 
