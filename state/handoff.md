@@ -8,6 +8,16 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-23 (q) P2 收官：13F 申报人目录 /filers 上线（9,385 家 = 竞品同量级）
+
+**路径考古**：browse-edgar **无法**无 CIK 按表单枚举（实测 `getcompany&type=13F-HR` 空 atom feed；裸 UA 403）→ 目录走 EFTS 季度窗（`forms=13F-HR` 扩展 +A，Q2-2026 单季 9,625 逼近 10k 上限）→ **自适应切分**（声明 total ≥ 9,500 即对半拆至 ~3 周地板；Form D 教训直接复用；本次四窗实际均未触发）。爬取 ~33 分钟（4 窗 × ~86 页 × ≥2.1s，幂等缓存）。
+
+**数据**：**9,385 申报人 / 37,348 份申报 / 692 带修正 / latest 2026-08-21**（小隐寺 ~9k 同量级）。导出全量目录（1.6MB JSON）走**专用模块** `filers13f.ts`（form13f.ts 先例——绝不进共享 barrel，仅 /filers 页加载）。
+
+**页面**：`/filers` 新路由（sidebar evidence 组 + 命令面板）——KPI（9,385/37,348/窗口）+ 名称/CIK 搜索 + 排序 pills（最新/申报数/名称）+ newest-first 表 + LoadMore；**明星 CIK 深链 /manager 详情页**（BERKSHIRE HATHAWAY 0001067983 双侧验证命中），其余链 EDGAR 13F 历史（browse-edgar 带 CIK 可用——无 CIK 枚举才不行）。13F-NT 排除披露（无持仓报告不算持仓申报人行）。契约测试：CIK 唯一/零填充 10 位/计数求和=total/窗口界内/newest-first。
+
+**验证**：ruff 净 + pytest 数据契约绿 + tsc 0 + build **1,494 页（+1 = /filers）** + SSR grep（9,385×2/标题×3）+ IAB 结构（KPI/排序 pills/首行 Ashford/50 EDGAR 链/搜索框）。**IAB 输入桥本会话失效**（三种 type 签名均未触发 React 状态——同款搜索组件已在 /institutions 先前会话 IAB 验证过；数据与逻辑侧已静态证实，如实记录）。**差距地图 P2 全关；剩 P3 DEF14A + 并发 lane 三页**。
+
 ## 2026-08-23 (p) P2 统一申报流上线（六面板纯派生合并，零新抓取）
 
 **交付**：`export_filing_stream()` 合并已提交六面板（4 / 8-K/A / S-1 族 / 424B4 / D/A / SC 13D/A / SC 13G）→ `filing_stream.json`（800 可见 / 2,259 合并 / 11 表单，newest-first）+ /events 页 StreamSection（表单 FilterPills + 分页，位于 8-K 深度流之上）。**合并卫生**：str(None) ticker、"申报人见原文"占位申报人、smart_money 的 http:// 链接——三者在 add() 源头归一化（占位申报人降级为目标公司；无主体行丢弃不留 "—" 占位行）；契约测试钉死三者不泄漏。13F-HR v1 排除（季度管理人持仓非公司事件，/institutions 已载）+ 源面板上限继承披露。**验证**：ruff 净 + tsc 0 + eslint 净 + build 1,493 页 + IAB（板块/表单 chips/下方 8-K 流共存/100 EDGAR 链）。

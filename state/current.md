@@ -1,5 +1,7 @@
 # state/current.md — read first each session
 
+- **active (2026-08-23) ⑦ 复刻推进：源验证（差距地图）+ 政党对立指数 + ARK 家族 + ApeWisdom 热议榜 + Form D + 统一申报流 + 13F 申报人目录 + form4 收官（display lane）：**
+  **⑨ P2 全关——13F 申报人目录 /filers 上线（同日深夜段）**：browse-edgar 无 CIK 不可枚举（实测）→ EFTS 季度窗 + **自适应 10k 上限切分**（Form D 教训复用）；**9,385 申报人 / 37,348 份**（竞品同量级），1.6MB 专用模块（filers13f.ts，不进 barrel）；/filers 新路由（搜索/排序/LoadMore，明星 CIK 深链 /manager）；build 1,494 页。**剩：P3 DEF14A + 并发 lane /news /quarterly /annual**。U 20:10 cron 重派中（监督集成）。详见 handoff (q)。
 - **active (2026-08-23) ⑦ 复刻推进：源验证（差距地图）+ 政党对立指数 + ARK 家族面板 + ApeWisdom 热议榜 + Form D 一级市场 + 统一申报流 + form4 收官（display lane）：**
   **⑧ P2 统一申报流上线（同日晚）**：六面板纯派生合并（零新抓取）——800 可见/2,259 合并/11 表单 newest-first + 表单筛选，/events 页 8-K 流之上；合并卫生三连（str(None)/占位申报人/http 链接）源头归一并被契约测试钉死。详见 handoff (p)。**差距地图 P2 剩：13F filer 目录；P3 DEF14A**；U 20:10 cron 重派中。
 - **active (2026-08-23) ⑦ 复刻推进：源验证（差距地图）+ 政党对立指数 + ARK 家族面板 + ApeWisdom 热议榜 + Form D 一级市场 + form4 30 发行人收官（display lane）：**
