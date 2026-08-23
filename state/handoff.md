@@ -8,6 +8,16 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-23 (t) 并发 lane M/N 裁决 + 17 路由收尾轮（X/Y 代理）
+
+**裁决依据**：M/N worktree 均为 08-22 02:2x 的两天前死亡 WIP（并发 session 早已离场）——并发纪律让位于 U 先例的回收裁决。**两者都有 `M runs/ledger.jsonl`**（旧基点 CRLF 假差异，基点早于 .gitattributes 修复）——回收时 `git checkout --` 还原，**绝不集成**。
+
+**M（/news）**：WIP = GDELT artlist 文章流后端（news_feed.py 232 行——**复用而非重复** main 已有的 news_sentiment_gdelt.py：import 其端点/UA 常量，15s host 间隔）+ fetcher + export_news_feed + 17 测试 + 7-gate 文档；无前端。回收：ledger/workflow 还原后 salvage-commit `893fa6b`；cherry-pick 因函数体与 main 40+ 提交交错（6 冲突区含两个函数体交错）**不可行** → 改**外科手术**：函数体从 worktree 摘出 + 四处注册手工插入 = `09ee00a`。前端交代理 X（wx worktree，feat/news-frontend）。
+
+**N（/quarterly+/annual）**：WIP 的后端（form_filing_stream.py 直查 10-K/10-Q）**已被 W 的 v2 统一流覆盖**（同机制同数据），路由壳 page.tsx 概念可借鉴（其 FilingStreamView 未实现）——**后端不引入**（避免双实现），改由代理 Y 在 main v2 面板上做导出深切（annual_filings/quarterly_filings cap 400）+ 两路由（wy worktree，feat/quarterly-annual）。N worktree 原样保留（并发 session 领地，仅读不改）。
+
+**目标**：X+Y 集成后 17 条路由全部在线（news/quarterly/annual 补齐）→ 业主确认 TACO/韩杠杆/书架三豁免维度 → 差距地图即终态。
+
 ## 2026-08-23 (s) 三代理并行轮集成收官：U/V/W 全上 main（1974 passed / 1,494 页）
 
 **U（举牌状态机，竞品王牌）**：死亡代理 WIP 裁决回收（c949061）+ 续作 ccdb8ed。**续作关键发现**：回收 JSON 里 pct 字段全 null——上轮解析跑在导出之后从未合并 → 离线重导出后 **13D 119/120、13G 150/150 真实比例**（12 清仓+17 降至线下 13D / 9+31 13G）。前端三类徽章（比例/主动被动/清仓降线，null 不渲染无占位）+ i18n 7×2 键 + 7-gate v0.2（请求账：13D 重建 82 + pct 解析 ~494，全 ≥2s）。集成：两 cherry-pick（8 JSON 冲突按惯例 theirs/ours 分治）+ **`git add -A` 误扫并发方 docs/code-review 一次，amend 剔除（6a448d2 教训再现，文件磁盘完好）** + 缓存拷主仓统一重导出（pct 在 main 复现一致）。
