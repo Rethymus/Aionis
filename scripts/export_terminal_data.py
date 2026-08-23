@@ -2448,6 +2448,7 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
     ("taco", "taco.json", _DH_DAILY),
     ("form4", "form4.json", _DH_DAILY),
     ("form8k", "form8k.json", _DH_DAILY),
+    ("news_feed", "news_feed.json", _DH_DAILY),
     ("executives", "executives.json", _DH_DAILY),
     ("ipo", "ipo.json", _DH_DAILY),
     ("form_d", "form_d.json", _DH_DAILY),
@@ -2531,6 +2532,9 @@ def _dh_as_of(key: str, fname: str) -> str | None:
         recent = p.get("recent", [])
         return recent[0].get("date") if recent else None
     if key == "form8k":
+        return p.get("as_of")
+    if key == "news_feed":
+        # as_of = latest GDELT first-seen stamp (ISO Z); [:10] downstream.
         return p.get("as_of")
     if key == "executives":
         return p.get("as_of")
@@ -2783,6 +2787,10 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
         "ApeWisdom free public API (apewisdom.io) — vendor ToS, display-only",
         "Reddit trending-stocks board: rank/mentions/upvotes + 24h lags, "
         "verbatim first-party fields, today-snapshot only",
+    ),
+    "news_feed": (
+        "GDELT open data (facts; article copyright stays with publishers)",
+        "GDELT Doc 2.0 artlist market headlines, seendate PIT, link-out only",
     ),
     "headline_provenance": ("Aionis append-only ledger (repo MIT)", "ledger.jsonl freeze→result pairing"),
     "ledger_audit": ("Aionis append-only ledger (repo MIT)", "ledger.jsonl claim-row timeline"),
@@ -3938,6 +3946,86 @@ def export_politician_trades() -> None:
     )
 
 
+def export_news_feed() -> None:
+    """GDELT market news-feed stream (display-only, exploratory).
+
+    Reads ``data/cache/news_feed.parquet`` (gitignored; produced by
+    ``scripts/news_feed_fetch.py`` — one bounded GDELT Doc 2.0 artlist request
+    per run, dedup key=exact URL, trailing 30-day window). Rows carry article
+    METADATA only (title / url / domain / seendate / language / sourcecountry);
+    the article itself stays at the publisher — every row links out, nothing is
+    summarized or fabricated. Payload caps the item list at 150 newest while
+    ``by_day`` / ``total`` cover the full retained window (honest counting).
+    """
+    from aionis.ingest.news_feed import DEFAULT_QUERY, count_by_day
+
+    fp = Path("data/cache/news_feed.parquet")
+    if not fp.exists():
+        print(
+            "[export-terminal] SKIP news_feed: data/cache/news_feed.parquet "
+            "not present (tracked JSON retains last-committed value)",
+            flush=True,
+        )
+        return
+
+    df = pd.read_parquet(fp)
+    if df.empty:
+        return  # fetch-side warning already logged; keep last-committed JSON
+
+    rows = df.to_dict("records")
+    by_day = count_by_day(rows)
+    dates = sorted(r["seendate"][:10] for r in rows if r.get("seendate"))
+    items = [
+        {
+            "seendate": str(r["seendate"]),
+            "title": str(r["title"]),
+            "url": str(r["url"]),
+            "domain": str(r["domain"]),
+            "language": str(r["language"]),
+            "sourcecountry": str(r["sourcecountry"]),
+        }
+        for r in rows[:150]
+    ]
+    payload = {
+        "status": "ok",
+        # as_of = latest GDELT first-seen stamp in the retained window.
+        "as_of": max(r["seendate"] for r in rows if r.get("seendate")),
+        "window": {"start": dates[0], "end": dates[-1]},
+        "query": DEFAULT_QUERY,
+        "total": int(len(rows)),
+        "n_sources": int(df["domain"].nunique()),
+        "by_day": by_day,
+        "items": items,
+        "methodology": (
+            "GDELT Doc 2.0 artlist — a machine index of worldwide news. One "
+            "bounded request per refresh (<=200 records, >=15s host spacing; "
+            "GDELT open data: URL/title/date/domain are facts, article "
+            "copyright stays with the publishers) for the FIXED quoted-phrase "
+            "query shown above, sourcelang:eng, sort=datedesc (machine "
+            "ordering, not editorial). seendate is GDELT's first-seen UTC "
+            "stamp (15-min resolution) — the display freshness anchor. Rows "
+            "are metadata + outbound links only: no article text is stored, "
+            "summarized or fabricated; missing source fields are shown "
+            "empty, never guessed. Dedup key = exact URL; syndicated copies "
+            "of the same story on different domains are NOT collapsed and "
+            "count separately (honest counting). Coverage = whatever "
+            "GDELT's crawl saw (English-biased); gaps are gaps. The payload "
+            "caps the item list at 150 newest while by_day/total cover the "
+            "full trailing 30-day cache window. Display-only, not a research "
+            "claim; NOT part of any OOS pipeline."
+        ),
+    }
+    (WEB / "news_feed.json").write_text(
+        json.dumps(_stamp(payload), indent=2, default=str)
+    )
+    print(
+        f"[export-terminal] news_feed: {payload['total']} articles, "
+        f"as_of {payload['as_of']}, {len(by_day)} days, "
+        f"{payload['n_sources']} sources",
+        flush=True,
+    )
+
+
 def export_politician_trades_tx() -> None:
     """STOCK Act — House PTR TRANSACTION-level panel (display-only).
 
@@ -4584,6 +4672,7 @@ def main() -> None:
     _safe_export("cot", export_cot)
     _safe_export("form4", export_form4)
     _safe_export("form8k", export_form8k)
+    _safe_export("news_feed", export_news_feed)
     _safe_export("form_ipo", export_form_ipo)
     _safe_export("form_d", export_form_d)
     _safe_export("form_def14a", export_form_def14a)
