@@ -583,6 +583,114 @@ def export_taco() -> None:
     (WEB / "taco.json").write_text(json.dumps(_stamp(payload), indent=2))
 
 
+def export_freight_taco() -> None:
+    """Freight TACO equivalent — BTS TSI public-domain proxy (display-only).
+
+    xiaoyinsi's TACO block cites Trucking Activity Co. SATELLITE truck-count
+    data (commercial, no license — the revoked exemption). This panel is the
+    honest degraded replacement: the BTS Freight Transportation Services
+    Index (first-party data.bts.gov Socrata, public domain, monthly SA index)
+    + a BLS-CES truck-employment auxiliary via FRED. The methodology field
+    must say it is NOT satellite data and name the granularity lost; the
+    degradation block is machine-readable for the /taco view's caliber card.
+
+    Reads ``data/cache/bts_tsi_freight.json`` (written by
+    ``scripts/bts_tsi_fetch.py`` via ``aionis.ingest.bts_tsi`` — the exporter
+    reuses that parser so cache and JSON can never disagree). Missing cache →
+    SKIP (tracked JSON retains its value). FRED auxiliary cache missing →
+    ``truck_employment: null`` (honest gap, panel still exports). Display
+    lane only: no prices, no returns, no research claim.
+    """
+    cache = Path("data/cache/bts_tsi_freight.json")
+    if not cache.exists():
+        print(
+            "[export-terminal] SKIP freight_taco: data/cache/bts_tsi_freight.json "
+            "absent (tracked JSON retains last-committed value)",
+            flush=True,
+        )
+        return
+
+    from aionis.ingest.bts_tsi import fetch_tsi_freight, fetch_truck_employment
+
+    tsi, _meta = fetch_tsi_freight()  # cache hit — no HTTP
+    if len(tsi) < 25:  # 24-month window + the month before it (MoM anchor)
+        print(
+            f"[export-terminal] SKIP freight_taco: only {len(tsi)} months cached "
+            "(need >=25 for a 24-month MoM chain; tracked JSON retains value)",
+            flush=True,
+        )
+        return
+
+    tail = tsi[-24:]
+    series_24m = [
+        {
+            "month": m["month"],
+            "tsi": m["tsi"],
+            # MoM computed from index levels (never from BTS's separately
+            # rounded tsi_freight_c) so KPI, chart and contract test reconcile.
+            "mom_pct": round((m["tsi"] / tsi[-25 + i]["tsi"] - 1) * 100, 2),
+        }
+        for i, m in enumerate(tail)
+    ]
+    latest = {
+        "month": tsi[-1]["month"],
+        "tsi": tsi[-1]["tsi"],
+        "mom_pct": series_24m[-1]["mom_pct"],
+        "yoy_pct": round((tsi[-1]["tsi"] / tsi[-13]["tsi"] - 1) * 100, 2),
+    }
+
+    truck_employment: dict | None = None
+    try:
+        emp = fetch_truck_employment()  # cache hit — no HTTP
+        if len(emp) >= 13:
+            truck_employment = {
+                "series_id": "CES4348400001",
+                "title": "All Employees, Truck Transportation (BLS CES via FRED)",
+                "latest_month": emp[-1]["month"],
+                "latest_k": round(emp[-1]["value"], 1),
+                "yoy_pct": round((emp[-1]["value"] / emp[-13]["value"] - 1) * 100, 2),
+                "series_24m": [{"month": e["month"], "k": e["value"]} for e in emp[-24:]],
+            }
+    except Exception as e:  # noqa: BLE001 — auxiliary is optional, gap disclosed
+        print(f"[export-terminal] freight_taco truck-employment gap: {e}", flush=True)
+
+    payload = {
+        "status": "ok",
+        "as_of": latest["month"],
+        "source": "U.S. Bureau of Transportation Statistics — data.bts.gov Socrata (bw6n-ddqk)",
+        "source_url": (
+            "https://data.bts.gov/Research-and-Statistics/"
+            "Transportation-Services-Index-and-Seasonally-Adjus/bw6n-ddqk"
+        ),
+        "license": "U.S. Bureau of Transportation Statistics — public domain",
+        "methodology": (
+            "NOT satellite data; a public-domain freight-activity proxy (BTS TSI), "
+            "degrading TACO's truck-count granularity to a monthly index. The "
+            "Freight Transportation Services Index (seasonally adjusted, monthly) "
+            "combines for-hire trucking, rail, water, pipeline and air freight. "
+            "Unlike VIXCLS, the TSI IS revised (seasonal-adjustment + annual "
+            "benchmark revisions) — this panel shows the current published "
+            "vintage. Auxiliary: BLS CES truck-transportation employment via "
+            "FRED (public domain). Display-only; not an Aionis research claim."
+        ),
+        "degradation": {
+            "proxy": "BTS Freight TSI (monthly index) replacing TACO's satellite truck counts",
+            "granularity_lost": (
+                "satellite truck-count frequency/fleet detail -> monthly composite "
+                "index; trucking is one of five freight modes inside the index"
+            ),
+            "commercial_original": (
+                "Trucking Activity Co. satellite counts — no license path (revoked exemption)"
+            ),
+        },
+        "latest": latest,
+        "history": {"n_months_total": len(tsi), "first_month": tsi[0]["month"]},
+        "series_24m": series_24m,
+        "truck_employment": truck_employment,
+    }
+    (WEB / "freight_taco.json").write_text(json.dumps(_stamp(payload), indent=2))
+
+
 def _theme_mean_signals(df: pd.DataFrame, cols: list[str]) -> list[dict]:
     """Cross-sectional mean of each column at the latest date → [{name, value}]."""
     out = []
@@ -2446,6 +2554,7 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
     ("market_context", "market_context.json", _DH_DAILY),
     ("macro_drivers", "macro_drivers.json", _DH_DAILY),
     ("taco", "taco.json", _DH_DAILY),
+    ("freight_taco", "freight_taco.json", _DH_CADENCE),
     ("form4", "form4.json", _DH_DAILY),
     ("form8k", "form8k.json", _DH_DAILY),
     ("news_feed", "news_feed.json", _DH_DAILY),
@@ -2532,6 +2641,10 @@ def _dh_as_of(key: str, fname: str) -> str | None:
         return _dh_last_month_of_series(p)
     if key == "taco":
         return p.get("latest_date")
+    if key == "freight_taco":
+        # as_of = latest Freight TSI reference month (BTS publishes ~mid-month
+        # for the month prior — advances on the source's monthly rhythm).
+        return p.get("as_of")
     if key == "form4":
         recent = p.get("recent", [])
         return recent[0].get("date") if recent else None
@@ -2747,6 +2860,11 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
     ),
     "macro_drivers": ("FRED/ALFRED — U.S. Government public domain", "CPI, payrolls, rates, DFF vintages"),
     "taco": ("FRED (public domain) + labeled public news events", "VIX monthly + Trump-policy event table"),
+    "freight_taco": (
+        "U.S. Bureau of Transportation Statistics — public domain",
+        "Freight TSI monthly index (data.bts.gov Socrata) + BLS CES truck "
+        "employment via FRED; disclosed satellite-TACO degradation proxy",
+    ),
     "form4": ("U.S. SEC EDGAR — public domain", "Form 4 XML, filed-date PIT"),
     "form8k": ("U.S. SEC EDGAR — public domain", "Form 8-K primary docs, filed-date PIT, item-classified"),
     "executives": (
@@ -5139,6 +5257,7 @@ def main() -> None:
     _safe_export("sector_breakdown", export_sector_breakdown)
     _safe_export("picks_backtest", export_picks_backtest)
     _safe_export("taco", export_taco)
+    _safe_export("freight_taco", export_freight_taco)
     _safe_export("pick_conviction", export_pick_conviction)
     _safe_export("themes", export_themes)
     _safe_export("theme_signals", export_theme_signals)

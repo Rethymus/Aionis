@@ -24,6 +24,7 @@ import icMonthlyJson from "./ic_monthly.json";
 import sigmaSurveyJson from "./sigma_survey.json";
 import bpsSweepJson from "./bps_sweep.json";
 import tacoJson from "./taco.json";
+import freightTacoJson from "./freight_taco.json";
 import redditJson from "./reddit.json";
 import smartMoneyJson from "./smart_money.json";
 import stakes13gJson from "./stakes_13g.json";
@@ -233,6 +234,40 @@ export type Taco = {
   escalations_count: number;
   latest_vix: number | null;
   latest_date: string | null;
+  snapshot_ts?: string;
+};
+
+// Freight TACO equivalent — a DISCLOSED degraded proxy (BTS TSI public-domain
+// monthly index replacing commercial satellite truck counts; see the amber
+// caliber card on /taco). truck_employment = BLS CES via FRED, null = honest gap.
+export type FreightTaco = {
+  status: string;
+  as_of: string;
+  source: string;
+  source_url: string;
+  license: string;
+  methodology: string;
+  degradation: {
+    proxy: string;
+    granularity_lost: string;
+    commercial_original: string;
+  };
+  latest: {
+    month: string;
+    tsi: number;
+    mom_pct: number;
+    yoy_pct: number;
+  };
+  history: { n_months_total: number; first_month: string };
+  series_24m: { month: string; tsi: number; mom_pct: number }[];
+  truck_employment: {
+    series_id: string;
+    title: string;
+    latest_month: string;
+    latest_k: number;
+    yoy_pct: number;
+    series_24m: { month: string; k: number }[];
+  } | null;
   snapshot_ts?: string;
 };
 
@@ -1092,6 +1127,7 @@ export const aionis = {
     avg_turnover: number;
   }[],
   taco: tacoJson as Taco,
+  freightTaco: freightTacoJson as FreightTaco,
   reddit: { ...redditJson, picks: redditJson.picks as RedditPick[] },
   smartMoney: smartMoneyJson as SmartMoney,
   stakes13g: stakes13gJson as Stakes13G,

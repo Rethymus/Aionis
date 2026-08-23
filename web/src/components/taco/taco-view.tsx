@@ -21,6 +21,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { FreightProxySection } from "./freight-proxy-section";
 
 export function TacoView() {
   const { t } = useI18n();
@@ -124,6 +125,8 @@ export function TacoView() {
           </div>
         </CardContent>
       </Card>
+
+      <FreightProxySection />
 
       <Card className="border-amber-500/30 bg-amber-500/5">
         <CardContent className="space-y-1 p-4">

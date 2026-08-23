@@ -371,6 +371,95 @@ def test_taco_vix_monthly_from_2016() -> None:
     assert taco["escalations_count"] + taco["climbdowns_count"] == len(taco["events"])
 
 
+# --- Freight TACO equivalent (BTS TSI public-domain proxy) --------------------
+
+
+def test_freight_taco_panel_contract() -> None:
+    """freight_taco.json: the DISCLOSED degraded TACO replacement invariants.
+
+    The panel is a public-domain freight-activity proxy (BTS Freight TSI) —
+    it must say it is NOT satellite data, carry the BTS public-domain
+    license, disclose the degradation in machine-readable form, and keep its
+    KPIs internally consistent with the 24-month series (MoM chain + YoY are
+    recomputed from the index levels — no hand-edited numbers).
+    """
+    p = _load("freight_taco.json")
+    assert p["status"] == "ok"
+    assert {
+        "as_of", "source", "license", "methodology", "degradation",
+        "latest", "history", "series_24m", "truck_employment",
+    } <= set(p)
+
+    # G1: BTS public-domain license, primary source named.
+    low = p["license"].lower()
+    assert "bureau of transportation statistics" in low and "public domain" in low
+    assert "data.bts.gov" in p["source"] or "bts.gov" in p["source"]
+
+    # Caliber honesty: NOT satellite + the granularity loss is named.
+    m = p["methodology"].lower()
+    assert "not satellite" in m and "bts" in m and "revision" in m
+    d = p["degradation"]
+    assert {"proxy", "granularity_lost", "commercial_original"} <= set(d)
+    assert "satellite" in d["granularity_lost"].lower()
+
+    # 24-month series: ascending YYYY-MM, every point carries the MoM chain.
+    s = p["series_24m"]
+    assert len(s) == 24
+    months = [pt["month"] for pt in s]
+    assert months == sorted(months)
+    assert all(len(m_) == 7 for m_ in months)
+    for prev, cur in zip(s, s[1:]):
+        assert {"month", "tsi", "mom_pct"} <= set(cur)
+        recomputed = (cur["tsi"] / prev["tsi"] - 1) * 100
+        assert abs(cur["mom_pct"] - recomputed) < 0.05, (cur["month"], cur["mom_pct"])
+
+    # Latest KPIs reconcile with the series tail (panel can't drift from chart).
+    assert p["latest"]["month"] == months[-1]
+    assert p["latest"]["tsi"] == s[-1]["tsi"]
+    assert abs(p["latest"]["mom_pct"] - s[-1]["mom_pct"]) < 1e-9
+    yoy = (s[-1]["tsi"] / s[-13]["tsi"] - 1) * 100  # 12 months before latest
+    assert abs(p["latest"]["yoy_pct"] - yoy) < 0.05
+    assert p["as_of"] == months[-1]
+    # Full history honesty: the panel is a 24-month window over a longer series.
+    assert p["history"]["n_months_total"] >= 24
+    assert p["history"]["first_month"] < months[0]
+
+    # Auxiliary truck employment (BLS CES via FRED) — shape when present,
+    # null = honest gap (never fabricated).
+    te = p["truck_employment"]
+    if te is not None:
+        assert te["series_id"] == "CES4348400001"
+        assert {"latest_month", "latest_k", "yoy_pct", "series_24m"} <= set(te)
+        assert len(te["series_24m"]) == 24
+        emp = {e["month"]: e["k"] for e in te["series_24m"]}
+        # 12 months before the AUXILIARY's own latest month (the CES release
+        # calendar may be offset from the TSI one — reconcile on its own axis).
+        y, mth = te["latest_month"].split("-")
+        y_prev = int(y) - 1
+        month_prev = f"{y_prev}-{mth}"
+        assert month_prev in emp, "auxiliary window must cover its own YoY anchor"
+        recomputed = (emp[te["latest_month"]] / emp[month_prev] - 1) * 100
+        assert abs(te["yoy_pct"] - recomputed) < 0.05
+    else:
+        assert te is None  # explicit honest absence, not a stub object
+
+
+def test_freight_taco_registered_in_catalog() -> None:
+    """freight_taco is registered in data_health + api_catalog with the BTS
+    public-domain license (the intake facts travel with the endpoint)."""
+    cat = _load("api_catalog.json")
+    entry = next((e for e in cat["endpoints"] if e["key"] == "freight_taco"), None)
+    assert entry is not None, "freight_taco missing from api_catalog"
+    assert "public domain" in entry["license"].lower()
+    assert "transportation statistics" in entry["license"].lower()
+    assert entry["as_of"], "freight_taco must carry an as_of month"
+
+    dh = _load("data_health.json")
+    panel = next((x for x in dh["panels"] if x["key"] == "freight_taco"), None)
+    assert panel is not None, "freight_taco missing from data_health panels"
+    assert panel["category"] == "cadence", "TSI advances on BTS's monthly rhythm"
+
+
 # --- Smart money (13D) --------------------------------------------------------
 
 
