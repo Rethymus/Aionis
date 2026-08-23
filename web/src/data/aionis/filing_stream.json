@@ -5623,6 +5623,3344 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1801884/000000885826000073/0000008858-26-000073-index.htm"
     }
   ],
-  "methodology": "Unified cross-form SEC filing stream v2 \u2014 DIRECT EDGAR queries (public domain, 17 U.S.C. \u00a7105; filed-date PIT), one root form per EFTS query (never a comma list \u2014 efts mis-parses root+/A families): 8-K / 10-K / 10-Q / S-1 family / 4 / D, each expanding to its /A amendments. v1\u2192v2 migration: v1 (2026-08-23) derived this feed by merging six committed panels \u2014 coverage was bounded by each panel's visible cap (its window spanned only the panels' newest days) and 10-K/10-Q were absent; v2 IS the source query over a trailing 14-day window, so by_form counts the EDGAR window. Request accounting (declared totals / EFTS pages, 140 pages total): 8-K: 2,632 declared / 27 page requests; 10-K: 76 declared / 1 page requests; 10-Q: 2,115 declared / 22 page requests; S-1: 69 declared / 1 page requests; 4: 6,196 declared / 63 page requests (split into 2 half-windows at the 7-day midpoint); D: 2,327 declared / 24 page requests; SC 13D: 0 declared / 1 page requests; EFTS frozen on Schedule 13 \u2014 shared SC 13D+13G daily-index lane 3,615 rows; SC 13G: 0 declared / 1 page requests; EFTS frozen (probed 0, same shared daily lane). Form 4 is split into two ~7-day half-windows unconditionally (busiest family \u2014 10-15k/14d in filing season would exceed EFTS's 10,000-hit cap); every other form splits adaptively when a declared window total reaches 9,500. SC 13D / SC 13G: EFTS froze on the Schedule 13 family after 2024-12-17 (machine-verified zero on each run), so those rows come from the EDGAR daily crawler index lanes (the same dissemination feed as the smart_money / stakes_13g panels), subject resolved offline by ticker. Honest limits: (1) 13F-HR is excluded (quarterly manager holdings, not company events \u2014 carried by the /filers registry); (2) DEF 14A rides its own dedicated panel lane; (3) Form 4 'who' is the reporting person (the first display_names entry), with the issuer carried as the ticker label from the CURRENT SEC company_tickers snapshot \u2014 a display label, never a research input; (4) the 800-newest visible cap is a payload-size cap (total_merged counts the full window). Display-only, exploratory, NOT a research claim.",
-  "snapshot_ts": "2026-08-23T12:28:14.143818+00:00"
+  "annual_filings": [
+    {
+      "form": "10-K/A",
+      "who": "NAPC Defense, Inc.",
+      "ticker": "BLIS",
+      "filed_date": "2026-08-21",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1703625/000119983526000302/0001199835-26-000302-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "Integrated Wellness Acquisition Corp",
+      "ticker": "",
+      "filed_date": "2026-08-21",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1877557/000110465926099329/0001104659-26-099329-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "Kearny Financial Corp.",
+      "ticker": "KRNY",
+      "filed_date": "2026-08-21",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1617242/000161724226000020/0001617242-26-000020-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "OSI SYSTEMS INC",
+      "ticker": "OSIS",
+      "filed_date": "2026-08-21",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1039065/000110465926099752/0001104659-26-099752-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "Parker-Hannifin Corp",
+      "ticker": "PH",
+      "filed_date": "2026-08-21",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/76334/000007633426000105/0000076334-26-000105-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "SYSCO CORP",
+      "ticker": "SYY",
+      "filed_date": "2026-08-21",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/96021/000009602126000033/0000096021-26-000033-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "Ubiquiti Inc.",
+      "ticker": "UI",
+      "filed_date": "2026-08-21",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1511737/000151173726000056/0001511737-26-000056-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "Axos Financial, Inc.",
+      "ticker": "AX",
+      "filed_date": "2026-08-20",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1299709/000129970926000060/0001299709-26-000060-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "BILL Holdings, Inc.",
+      "ticker": "BILL",
+      "filed_date": "2026-08-20",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1786352/000162828026058238/0001628280-26-058238-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "COTY INC.",
+      "ticker": "COTY",
+      "filed_date": "2026-08-20",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1024305/000102430526000048/0001024305-26-000048-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "Flux Power Holdings, Inc.",
+      "ticker": "FLUX",
+      "filed_date": "2026-08-20",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1083743/000149315226039471/0001493152-26-039471-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "PROSPECT CAPITAL CORP",
+      "ticker": "PSEC",
+      "filed_date": "2026-08-20",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1287032/000128703226000269/0001287032-26-000269-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "SCANSOURCE, INC.",
+      "ticker": "SCSC",
+      "filed_date": "2026-08-20",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/918965/000091896526000044/0000918965-26-000044-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "WOLFSPEED, INC.",
+      "ticker": "WOLF",
+      "filed_date": "2026-08-20",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/895419/000089541926000054/0000895419-26-000054-index.htm"
+    },
+    {
+      "form": "10-K/A",
+      "who": "AMERICAN REALTY INVESTORS INC",
+      "ticker": "ARL",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1102238/000162828026057878/0001628280-26-057878-index.htm"
+    },
+    {
+      "form": "10-K/A",
+      "who": "BKV Corp",
+      "ticker": "BKV",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1838406/000110465926098821/0001104659-26-098821-index.htm"
+    },
+    {
+      "form": "10-K/A",
+      "who": "CREDITRISKMONITOR COM INC",
+      "ticker": "CRMZ",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/315958/000114036126033719/0001140361-26-033719-index.htm"
+    },
+    {
+      "form": "10-K/A",
+      "who": "Global Arena Holding, Inc.",
+      "ticker": "",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1138724/000149315226039205/0001493152-26-039205-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "BRINKER INTERNATIONAL, INC",
+      "ticker": "EAT",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/703351/000070335126000029/0000703351-26-000029-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "ChronoScale Holdings Corp",
+      "ticker": "CHRN",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1549084/000162828026058018/0001628280-26-058018-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "ESTEE LAUDER COMPANIES INC",
+      "ticker": "EL",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1001250/000100125026000041/0001001250-26-000041-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "FLEXSTEEL INDUSTRIES INC",
+      "ticker": "FLXS",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/37472/000119312526357097/0001193125-26-357097-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "INTELLIGENT BIO SOLUTIONS INC.",
+      "ticker": "INBS",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1725430/000149315226039136/0001493152-26-039136-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "Kimball Electronics, Inc.",
+      "ticker": "KE",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1606757/000160675726000032/0001606757-26-000032-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "Ocean Power Technologies, Inc.",
+      "ticker": "OPTT",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1378140/000149315226039261/0001493152-26-039261-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "SANFILIPPO JOHN B & SON INC",
+      "ticker": "JBSS",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/880117/000119312526356919/0001193125-26-356919-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "Axil Brands, Inc.",
+      "ticker": "AXIL",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1718500/000152013826000360/0001520138-26-000360-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "Fabrinet",
+      "ticker": "FN",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/0001408710-26-000028-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "MERCURY SYSTEMS INC",
+      "ticker": "MRCY",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1049521/000104952126000045/0001049521-26-000045-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "TAYLOR DEVICES, INC.",
+      "ticker": "TAYD",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/96536/000137647426000567/0001376474-26-000567-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "BALTIC INTERNATIONAL USA INC",
+      "ticker": "",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/918545/000091854526000004/0000918545-26-000004-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "Calor Del Sol Inc.",
+      "ticker": "",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2008027/000147793226005127/0001477932-26-005127-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "EXTREME NETWORKS INC",
+      "ticker": "EXTR",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1078271/000119312526352872/0001193125-26-352872-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "GULF RESOURCES, INC.",
+      "ticker": "GURE",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/885462/000119380526001105/0001193805-26-001105-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "Lumentum Holdings Inc.",
+      "ticker": "LITE",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026057358/0001628280-26-057358-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "Sandisk Corp",
+      "ticker": "SNDK",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026057406/0001628280-26-057406-index.htm"
+    },
+    {
+      "form": "10-K/A",
+      "who": "Atlas Lithium Corp",
+      "ticker": "ATLX",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1540684/000149315226038339/0001493152-26-038339-index.htm"
+    },
+    {
+      "form": "10-K/A",
+      "who": "Greenland Mines Ltd",
+      "ticker": "GRML",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1907223/000121390026090213/0001213900-26-090213-index.htm"
+    },
+    {
+      "form": "10-K/A",
+      "who": "LEGEND SPICES, INC.",
+      "ticker": "",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1970129/000168316826006387/0001683168-26-006387-index.htm"
+    },
+    {
+      "form": "10-K/A",
+      "who": "OLB GROUP, INC.",
+      "ticker": "OLB",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1314196/000118518526003551/0001185185-26-003551-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "AVNET INC",
+      "ticker": "AVT",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/8858/000110465926096346/0001104659-26-096346-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "Amcor plc",
+      "ticker": "AMCR",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1748790/000174879026000022/0001748790-26-000022-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "Atlassian Corp",
+      "ticker": "TEAM",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1650372/000165037226000036/0001650372-26-000036-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "COHERENT CORP.",
+      "ticker": "COHR",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/820318/000082031826000020/0000820318-26-000020-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "H&R BLOCK INC",
+      "ticker": "HRB",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/12659/000001265926000026/0000012659-26-000026-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "Intapp, Inc.",
+      "ticker": "INTA",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1565687/000156568726000073/0001565687-26-000073-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "Protagenic Therapeutics, Inc.\\new",
+      "ticker": "PTIX",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1022899/000149315226038255/0001493152-26-038255-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "STANDEX INTERNATIONAL CORP/DE/",
+      "ticker": "SXI",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/310354/000143774926027789/0001437749-26-027789-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "STARGUIDE GROUP, INC.",
+      "ticker": "STRG",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1803096/000164033426001377/0001640334-26-001377-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "WESTERN DIGITAL CORP",
+      "ticker": "WDC",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/106040/000162828026057139/0001628280-26-057139-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "ALEXANDER TECH CORP",
+      "ticker": "",
+      "filed_date": "2026-08-13",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1347491/000134749126000017/0001347491-26-000017-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "APPLIED INDUSTRIAL TECHNOLOGIES INC",
+      "ticker": "AIT",
+      "filed_date": "2026-08-13",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/109563/000010956326000033/0000109563-26-000033-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "BIOVIE INC.",
+      "ticker": "BIVI",
+      "filed_date": "2026-08-13",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1580149/000152013826000332/0001520138-26-000332-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "Global-Smart.Tech Inc.",
+      "ticker": "GSMT",
+      "filed_date": "2026-08-13",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1940243/000194024326000019/0001940243-26-000019-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "GraniteShares Gold Trust",
+      "ticker": "BAR",
+      "filed_date": "2026-08-13",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1690437/000149315226037707/0001493152-26-037707-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "GraniteShares Platinum Trust",
+      "ticker": "PLTM",
+      "filed_date": "2026-08-13",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1690842/000149315226037704/0001493152-26-037704-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "Madison Square Garden Sports Corp.",
+      "ticker": "MSGS",
+      "filed_date": "2026-08-13",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1636519/000162828026056812/0001628280-26-056812-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "NAPC Defense, Inc.",
+      "ticker": "BLIS",
+      "filed_date": "2026-08-13",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1703625/000119983526000287/0001199835-26-000287-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "PILLARSTONE CAPITAL REIT",
+      "ticker": "",
+      "filed_date": "2026-08-13",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/928953/000143774926027474/0001437749-26-027474-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "RESMED INC",
+      "ticker": "RMD",
+      "filed_date": "2026-08-13",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/943819/000094381926000047/0000943819-26-000047-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "SPARTA COMMERCIAL SERVICES, INC.",
+      "ticker": "SRCO",
+      "filed_date": "2026-08-13",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/318299/000149315226037876/0001493152-26-037876-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "TAPESTRY, INC.",
+      "ticker": "TPR",
+      "filed_date": "2026-08-13",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1116132/000111613226000018/0001116132-26-000018-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "VIAVI SOLUTIONS INC.",
+      "ticker": "VIAV",
+      "filed_date": "2026-08-13",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/912093/000162828026056765/0001628280-26-056765-index.htm"
+    },
+    {
+      "form": "10-K/A",
+      "who": "BayFirst Financial Corp.",
+      "ticker": "BAFN",
+      "filed_date": "2026-08-12",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1649739/000164973926000049/0001649739-26-000049-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "CARPENTER TECHNOLOGY CORP",
+      "ticker": "CRS",
+      "filed_date": "2026-08-12",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/17843/000001784326000034/0000017843-26-000034-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "KENNAMETAL INC",
+      "ticker": "KMT",
+      "filed_date": "2026-08-12",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/55242/000162828026056143/0001628280-26-056143-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "LEGEND SPICES, INC.",
+      "ticker": "",
+      "filed_date": "2026-08-12",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1970129/000168316826006219/0001683168-26-006219-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "Madison Square Garden Entertainment Corp.",
+      "ticker": "MSGE",
+      "filed_date": "2026-08-12",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1952073/000162828026056286/0001628280-26-056286-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "Performance Food Group Co",
+      "ticker": "PFGC",
+      "filed_date": "2026-08-12",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1618673/000119312526346886/0001193125-26-346886-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "CARDINAL HEALTH INC",
+      "ticker": "CAH",
+      "filed_date": "2026-08-11",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/721371/000072137126000038/0000721371-26-000038-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "GPO Plus, Inc.",
+      "ticker": "GPOX",
+      "filed_date": "2026-08-11",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1673475/000164033426001304/0001640334-26-001304-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "Global Arena Holding, Inc.",
+      "ticker": "",
+      "filed_date": "2026-08-11",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1138724/000149315226037140/0001493152-26-037140-index.htm"
+    },
+    {
+      "form": "10-K/A",
+      "who": "Chaince Digital Holdings Inc.",
+      "ticker": "CD",
+      "filed_date": "2026-08-10",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1527762/000149315226036717/0001493152-26-036717-index.htm"
+    },
+    {
+      "form": "10-K/A",
+      "who": "N-able, Inc.",
+      "ticker": "NABL",
+      "filed_date": "2026-08-10",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1834488/000183448826000046/0001834488-26-000046-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "SYNAPTICS Inc",
+      "ticker": "SYNA",
+      "filed_date": "2026-08-10",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/817720/000081772026000055/0000817720-26-000055-index.htm"
+    },
+    {
+      "form": "10-K",
+      "who": "Zhanling International Ltd",
+      "ticker": "ZLME",
+      "filed_date": "2026-08-10",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1489300/000149315226036752/0001493152-26-036752-index.htm"
+    }
+  ],
+  "quarterly_filings": [
+    {
+      "form": "10-Q/A",
+      "who": "Invech Holdings, Inc.",
+      "ticker": "IVHI",
+      "filed_date": "2026-08-21",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1009919/000168316826006661/0001683168-26-006661-index.htm"
+    },
+    {
+      "form": "10-Q/A",
+      "who": "ModuLink Inc.",
+      "ticker": "MDLK",
+      "filed_date": "2026-08-21",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1611046/000168316826006644/0001683168-26-006644-index.htm"
+    },
+    {
+      "form": "10-Q/A",
+      "who": "Virtuix Holdings Inc.",
+      "ticker": "VTIX",
+      "filed_date": "2026-08-21",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1606242/000121390026092213/0001213900-26-092213-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "BOXABL Inc.",
+      "ticker": "BXBL",
+      "filed_date": "2026-08-21",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1906364/000149315226039614/0001493152-26-039614-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Bubblr Inc.",
+      "ticker": "BBLR",
+      "filed_date": "2026-08-21",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1873722/000149315226039643/0001493152-26-039643-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Freedom Metals Acquisition Corp.",
+      "ticker": "FDMM",
+      "filed_date": "2026-08-21",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2129659/000121390026092608/0001213900-26-092608-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Game Your Game Inc.",
+      "ticker": "GYGY",
+      "filed_date": "2026-08-21",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2111846/000121390026092694/0001213900-26-092694-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "GridAI Technologies Corp.",
+      "ticker": "GRDX",
+      "filed_date": "2026-08-21",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1604191/000110465926099751/0001104659-26-099751-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "La Rosa Holdings Corp.",
+      "ticker": "LRHC",
+      "filed_date": "2026-08-21",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1879403/000143774926028725/0001437749-26-028725-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "SunPower Inc.",
+      "ticker": "SPWR",
+      "filed_date": "2026-08-21",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1838987/000121390026092710/0001213900-26-092710-index.htm"
+    },
+    {
+      "form": "10-Q/A",
+      "who": "ARTELO BIOSCIENCES, INC.",
+      "ticker": "ARTL",
+      "filed_date": "2026-08-20",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1621221/000164033426001400/0001640334-26-001400-index.htm"
+    },
+    {
+      "form": "10-Q/A",
+      "who": "Exyn Technologies, Inc.",
+      "ticker": "EXYN",
+      "filed_date": "2026-08-20",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1960355/000110465926098902/0001104659-26-098902-index.htm"
+    },
+    {
+      "form": "10-Q/A",
+      "who": "SEAFARER EXPLORATION CORP",
+      "ticker": "SFRX",
+      "filed_date": "2026-08-20",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1106213/000119983526000298/0001199835-26-000298-index.htm"
+    },
+    {
+      "form": "10-Q/A",
+      "who": "iQSTEL Inc",
+      "ticker": "IQST",
+      "filed_date": "2026-08-20",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1527702/000166357726000258/0001663577-26-000258-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "ADVANCE AUTO PARTS INC",
+      "ticker": "AAP",
+      "filed_date": "2026-08-20",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1158449/000119312526359176/0001193125-26-359176-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "APPLIED MATERIALS INC /DE",
+      "ticker": "AMAT",
+      "filed_date": "2026-08-20",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/6951/000162828026058235/0001628280-26-058235-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Apogee Acquisition Corp",
+      "ticker": "AACP",
+      "filed_date": "2026-08-20",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2102123/000121390026092179/0001213900-26-092179-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Arterior Solutions Corp",
+      "ticker": "",
+      "filed_date": "2026-08-20",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2133770/000147793226005185/0001477932-26-005185-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "BioKey",
+      "ticker": "",
+      "filed_date": "2026-08-20",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2108359/000121390026091864/0001213900-26-091864-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "FARMHOUSE, INC. /NV",
+      "ticker": "FMHS",
+      "filed_date": "2026-08-20",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1811999/000109690626001266/0001096906-26-001266-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "FLOWERS FOODS INC",
+      "ticker": "FLO",
+      "filed_date": "2026-08-20",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1128928/000119312526359192/0001193125-26-359192-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "GBT Technologies Inc.",
+      "ticker": "GTCH",
+      "filed_date": "2026-08-20",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1471781/000173112226001105/0001731122-26-001105-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Jones Ventures INTL Acquisition1 Corp",
+      "ticker": "JONE",
+      "filed_date": "2026-08-20",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2129056/000121390026092201/0001213900-26-092201-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Livento Group, Inc.",
+      "ticker": "LIVG",
+      "filed_date": "2026-08-20",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1593549/000149315226039334/0001493152-26-039334-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "NORDSON CORP",
+      "ticker": "NDSN",
+      "filed_date": "2026-08-20",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/72331/000007233126000054/0000072331-26-000054-index.htm"
+    },
+    {
+      "form": "10-Q/A",
+      "who": "CREDITRISKMONITOR COM INC",
+      "ticker": "CRMZ",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/315958/000114036126033730/0001140361-26-033730-index.htm"
+    },
+    {
+      "form": "10-Q/A",
+      "who": "CREDITRISKMONITOR COM INC",
+      "ticker": "CRMZ",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/315958/000114036126033714/0001140361-26-033714-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "ADM TRONICS UNLIMITED, INC.",
+      "ticker": "ADMT",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/849401/000143774926028556/0001437749-26-028556-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "AETERNUM HEALTH, INC.",
+      "ticker": "AETN",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/764630/000149315226039164/0001493152-26-039164-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "AIBOTICS, INC.",
+      "ticker": "AIBT",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1763329/000109690626001264/0001096906-26-001264-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "ANALOG DEVICES INC",
+      "ticker": "ADI",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/6281/000000628126000073/0000006281-26-000073-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Appsoft Technologies, Inc.",
+      "ticker": "ASFT",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1651992/000147793226005162/0001477932-26-005162-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Avalanche Treasury Corp",
+      "ticker": "AVAT",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2092446/000110465926098819/0001104659-26-098819-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "BIOADAPTIVES, INC.",
+      "ticker": "BDPT",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1575142/000164033426001393/0001640334-26-001393-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "BIOTRICITY INC.",
+      "ticker": "BTCY",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1630113/000149315226039209/0001493152-26-039209-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "BTCS Inc.",
+      "ticker": "BTCS",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1436229/000149315226039249/0001493152-26-039249-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Beam Global",
+      "ticker": "BEEM",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1398805/000143774926028530/0001437749-26-028530-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "BestGofer Inc.",
+      "ticker": "BGFR",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1722556/000172255626000034/0001722556-26-000034-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "BiomX Inc.",
+      "ticker": "PHGE",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1739174/000121390026091780/0001213900-26-091780-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Bravo Multinational Inc.",
+      "ticker": "BRVO",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1444839/000109181826000132/0001091818-26-000132-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "CIRCLE8 GROUP INC",
+      "ticker": "CIRC",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1605888/000160588826000044/0001605888-26-000044-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "CQENS Technologies Inc.",
+      "ticker": "",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1479915/000149315226039172/0001493152-26-039172-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "CREDITRISKMONITOR COM INC",
+      "ticker": "CRMZ",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/315958/000114036126033735/0001140361-26-033735-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "CYBERLOQ TECHNOLOGIES, INC.",
+      "ticker": "CLOQ",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1437517/000149315226039220/0001493152-26-039220-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "CapForce Inc.",
+      "ticker": "CFOR",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1293818/000182912626009079/0001829126-26-009079-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Clean Energy Technologies, Inc.",
+      "ticker": "CETY",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1329606/000149315226039170/0001493152-26-039170-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Columbus Circle Capital Corp II",
+      "ticker": "CMII",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2088805/000121390026091771/0001213900-26-091771-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Crypto Co",
+      "ticker": "CRCW",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1688126/000149315226039262/0001493152-26-039262-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "DNA X, Inc.",
+      "ticker": "SONM",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1178697/000149315226039226/0001493152-26-039226-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "DUOS TECHNOLOGIES GROUP, INC.",
+      "ticker": "DUOT",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1396536/000107997326001151/0001079973-26-001151-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "DarkPulse, Inc.",
+      "ticker": "DPLS",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/866439/000168316826006603/0001683168-26-006603-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Datavault AI Inc.",
+      "ticker": "DVLT",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1682149/000162828026058013/0001628280-26-058013-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Digital Brands Group, Inc.",
+      "ticker": "DBGI",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1668010/000149315226039208/0001493152-26-039208-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Dogecoin Cash, Inc.",
+      "ticker": "DOGP",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1360442/000109690626001256/0001096906-26-001256-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Elauwit Connection, Inc.",
+      "ticker": "ELWT",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2063863/000110465926098786/0001104659-26-098786-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Elite Health Systems Inc.",
+      "ticker": "EHSI",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1089815/000143774926028491/0001437749-26-028491-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Exyn Technologies, Inc.",
+      "ticker": "EXYN",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1960355/000110465926098834/0001104659-26-098834-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Firy Inc.",
+      "ticker": "FIRY",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1801661/000180166126000097/0001801661-26-000097-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Global Asset Management Group, Inc.",
+      "ticker": "GAMG",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/55234/000147793226005182/0001477932-26-005182-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Hall Chadwick Acquisition Corp",
+      "ticker": "HCAC",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2079013/000182912626009082/0001829126-26-009082-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Healthier Choices Management Corp.",
+      "ticker": "HCMC",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/844856/000149315226039201/0001493152-26-039201-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Hyperscale Data, Inc.",
+      "ticker": "GPUS",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/896493/000121465926010549/0001214659-26-010549-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "I-ON Digital Corp.",
+      "ticker": "IONI",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1580490/000149315226039217/0001493152-26-039217-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Inflection Point Acquisition Corp. VI",
+      "ticker": "IPFX",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2102041/000121390026091724/0001213900-26-091724-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Jaguar Health, Inc.",
+      "ticker": "JAGX",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1585608/000119312526356570/0001193125-26-356570-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "KALA BIO, Inc.",
+      "ticker": "KALA",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1479419/000110465926098783/0001104659-26-098783-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "KiNRG, Inc.",
+      "ticker": "",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/95572/000121390026091673/0001213900-26-091673-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Kinetic Seas Inc.",
+      "ticker": "KSEZ",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1945619/000168316826006589/0001683168-26-006589-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "KonaTel, Inc.",
+      "ticker": "KTEL",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/845819/000149315226039185/0001493152-26-039185-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "LQR House Inc.",
+      "ticker": "YHC",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1843165/000121390026091661/0001213900-26-091661-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "LSEB Creative Corp.",
+      "ticker": "LSEB",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1888740/000168316826006578/0001683168-26-006578-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "LogicMark, Inc.",
+      "ticker": "LGMK",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1566826/000121390026091543/0001213900-26-091543-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "MDWerks, Inc.",
+      "ticker": "MDWK",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1295514/000149315226039150/0001493152-26-039150-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "MEDICAL EXERCISE INC.",
+      "ticker": "",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2001249/000121390026091600/0001213900-26-091600-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Madison Technologies Inc.",
+      "ticker": "MDEX",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1318268/000175392626001558/0001753926-26-001558-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Matternet, Inc.",
+      "ticker": "",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2075109/000121390026091658/0001213900-26-091658-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "ModuLink Inc.",
+      "ticker": "MDLK",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1611046/000168316826006593/0001683168-26-006593-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "NUTRA PHARMA CORP",
+      "ticker": "NPHC",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1119643/000149315226039166/0001493152-26-039166-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "OLENOX INDUSTRIES INC.",
+      "ticker": "OLOX",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1023994/000121390026091621/0001213900-26-091621-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "OZOP ENERGY SOLUTIONS, INC.",
+      "ticker": "OZSC",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1679817/000149315226039212/0001493152-26-039212-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Omnitek Engineering Corp",
+      "ticker": "OMTK",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1404804/000109690626001258/0001096906-26-001258-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Onfolio Holdings, Inc",
+      "ticker": "ONFO",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1825452/000165495426007754/0001654954-26-007754-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Picard Medical, Inc.",
+      "ticker": "PMI",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2030617/000143774926028565/0001437749-26-028565-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "ProPhase Labs, Inc.",
+      "ticker": "PRPH",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/868278/000149315226039224/0001493152-26-039224-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Profusa, Inc.",
+      "ticker": "PFSA",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1859807/000121390026091696/0001213900-26-091696-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Protagenic Therapeutics, Inc.\\new",
+      "ticker": "PTIX",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1022899/000149315226039221/0001493152-26-039221-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "RICHTECH ROBOTICS INC.",
+      "ticker": "RR",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1963685/000121390026091798/0001213900-26-091798-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Ranger Gold Corp.",
+      "ticker": "RNGC",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1434740/000147793226005172/0001477932-26-005172-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Regenerative Medical Technology Group Inc.",
+      "ticker": "RMTG",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1760026/000121390026091797/0001213900-26-091797-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Research Alliance Corp IV",
+      "ticker": "RACD",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2137777/000119312526356882/0001193125-26-356882-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "SOLESENCE, INC.",
+      "ticker": "SLSN",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/883107/000199937126018231/0001999371-26-018231-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "SPECIFICITY, INC.",
+      "ticker": "SPTY",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1840102/000152013826000366/0001520138-26-000366-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "SPINDLETOP OIL & GAS CO",
+      "ticker": "SPND",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/867038/000101738626000123/0001017386-26-000123-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "SPLASH BEVERAGE GROUP, INC.",
+      "ticker": "SBEV",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1553788/000173112226001102/0001731122-26-001102-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "SUNRISE REAL ESTATE GROUP INC",
+      "ticker": "SRRE",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1083490/000110465926098654/0001104659-26-098654-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Securetech Innovations, Inc.",
+      "ticker": "SCTH",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1703157/000101738626000126/0001017386-26-000126-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Smartbird, Inc.",
+      "ticker": "BIRD",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1653909/000143774926028446/0001437749-26-028446-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Sow Good Inc.",
+      "ticker": "SOWG",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1490161/000121390026091752/0001213900-26-091752-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "SpringBig Holdings, Inc.",
+      "ticker": "SBIG",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1801602/000121390026091690/0001213900-26-091690-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Starfighters Space, Inc.",
+      "ticker": "FJET",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1947016/000106299326004518/0001062993-26-004518-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "SurgePays, Inc.",
+      "ticker": "SURG",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1392694/000149315226039250/0001493152-26-039250-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Totaligent, Inc.",
+      "ticker": "TGNT",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/846377/000147793226005158/0001477932-26-005158-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Tradewinds Universal",
+      "ticker": "TRWD",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1916558/000107997326001147/0001079973-26-001147-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Transportation & Logistics Systems, Inc.",
+      "ticker": "TLSS",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1463208/000149315226039210/0001493152-26-039210-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Trutankless, Inc.",
+      "ticker": "TKLS",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1429393/000147793226005170/0001477932-26-005170-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Two Hands Corp",
+      "ticker": "TWOH",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1494413/000149441326000039/0001494413-26-000039-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Virtuix Holdings Inc.",
+      "ticker": "VTIX",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1606242/000121390026091795/0001213900-26-091795-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "VisionWave Holdings, Inc.",
+      "ticker": "VWAV",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2038439/000173112226001099/0001731122-26-001099-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Vivakor, Inc.",
+      "ticker": "VIVK",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1450704/000182912626009067/0001829126-26-009067-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "ZHEN DING RESOURCES INC.",
+      "ticker": "RBTK",
+      "filed_date": "2026-08-19",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1594204/000121465926010602/0001214659-26-010602-index.htm"
+    },
+    {
+      "form": "10-Q/A",
+      "who": "Boost Run Inc.",
+      "ticker": "BRUN",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2090646/000149315226039029/0001493152-26-039029-index.htm"
+    },
+    {
+      "form": "10-Q/A",
+      "who": "ConnectOne Bancorp, Inc.",
+      "ticker": "CNOB",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/712771/000143774926028359/0001437749-26-028359-index.htm"
+    },
+    {
+      "form": "10-Q/A",
+      "who": "HEALTHY CHOICE WELLNESS CORP.",
+      "ticker": "HCWC",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1948864/000149315226038884/0001493152-26-038884-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "AZIO AI HOLDINGS, INC.",
+      "ticker": "AZIO",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1563568/000143774926028254/0001437749-26-028254-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Aeon Acquisition I Corp.",
+      "ticker": "AESP",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2082526/000149315226038809/0001493152-26-038809-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Boost Run Inc.",
+      "ticker": "BRUN",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2090646/000149315226039031/0001493152-26-039031-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "CANNAPHARMARX, INC.",
+      "ticker": "CPMD",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1081938/000168316826006570/0001683168-26-006570-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "CIRTRAN CORP",
+      "ticker": "CIRX",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/813716/000149315226039026/0001493152-26-039026-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "CLOUDASTRUCTURE, INC.",
+      "ticker": "CSAI",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1709628/000168316826006543/0001683168-26-006543-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Columbus Circle Capital Corp III",
+      "ticker": "CCCT",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2123471/000118518526003605/0001185185-26-003605-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Cornerstone Building Brands, Inc.",
+      "ticker": "",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/883902/000088390226000026/0000883902-26-000026-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Cosmos Health Inc.",
+      "ticker": "COSM",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1474167/000147793226005146/0001477932-26-005146-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Crown PropTech Acquisitions",
+      "ticker": "CPTKW",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1827899/000121390026090946/0001213900-26-090946-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "DYNARESOURCE, INC.",
+      "ticker": "DYNR",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1111741/000119312526354329/0001193125-26-354329-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Greenwave Technology Solutions, Inc.",
+      "ticker": "GWAV",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1589149/000149315226038992/0001493152-26-038992-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "INNO HOLDINGS INC.",
+      "ticker": "INHD",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1961847/000149315226039013/0001493152-26-039013-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "IRIDEX CORP",
+      "ticker": "IRIX",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1006045/000119312526355641/0001193125-26-355641-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "IRONSTONE PROPERTIES, INC.",
+      "ticker": "",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/723269/000143774926028352/0001437749-26-028352-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Infleqtion, Inc.",
+      "ticker": "INFQ",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2007825/000162828026057508/0001628280-26-057508-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "LA-Z-BOY INC",
+      "ticker": "LZB",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/57131/000005713126000035/0000057131-26-000035-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "MOBIX LABS, INC",
+      "ticker": "MOBX",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1855467/000149315226038848/0001493152-26-038848-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Midera Food Processing, Inc.",
+      "ticker": "MFP",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2088281/000119312526354735/0001193125-26-354735-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "OMNIQ Corp.",
+      "ticker": "OMQS",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/278165/000149315226038990/0001493152-26-038990-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Outlook Therapeutics, Inc.",
+      "ticker": "OTLK",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1649989/000110465926098415/0001104659-26-098415-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Polar Power, Inc.",
+      "ticker": "POLA",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1622345/000149315226039040/0001493152-26-039040-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "SYPRIS SOLUTIONS INC",
+      "ticker": "SYPR",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/864240/000143774926028271/0001437749-26-028271-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "T3 Defense Inc.",
+      "ticker": "DFNS",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1787518/000118518526003604/0001185185-26-003604-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "iQSTEL Inc",
+      "ticker": "IQST",
+      "filed_date": "2026-08-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1527702/000166357726000254/0001663577-26-000254-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "AI Financial Corp",
+      "ticker": "AIFC",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/862861/000149315226038732/0001493152-26-038732-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "BALTIC INTERNATIONAL USA INC",
+      "ticker": "",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/918545/000091854526000006/0000918545-26-000006-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "BALTIC INTERNATIONAL USA INC",
+      "ticker": "",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/918545/000091854526000005/0000918545-26-000005-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "BALTIC INTERNATIONAL USA INC",
+      "ticker": "",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/918545/000091854526000003/0000918545-26-000003-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "BT Brands, Inc.",
+      "ticker": "BTBD",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1718224/000147793226005132/0001477932-26-005132-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Cal Redwood Acquisition Corp.",
+      "ticker": "CRAQ",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2058359/000205835926000008/0002058359-26-000008-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Certiplex Corp",
+      "ticker": "CPLX",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1755347/000107997326001134/0001079973-26-001134-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Charlie's Holdings, Inc.",
+      "ticker": "CHUC",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1134765/000143774926028182/0001437749-26-028182-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Clearthink 1 Acquisition Corp.",
+      "ticker": "CTAA",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2094073/000149315226038801/0001493152-26-038801-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Constellation Acquisition Corp I",
+      "ticker": "CSTAF",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1834032/000121390026090804/0001213900-26-090804-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Copley Acquisition Corp",
+      "ticker": "COPL",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2045473/000182912626008964/0001829126-26-008964-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "DataMeds AI, Inc.",
+      "ticker": "MEDS",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2030763/000149315226038581/0001493152-26-038581-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "DocGo Inc.",
+      "ticker": "DCGO",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1822359/000162828026057394/0001628280-26-057394-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "ENvue Medical, Inc.",
+      "ticker": "FEED",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1326706/000149315226038778/0001493152-26-038778-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Evolution Metals & Technologies Corp.",
+      "ticker": "EMAT",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1866226/000121390026090427/0001213900-26-090427-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "FDCTECH, INC.",
+      "ticker": "FDCTD",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1722731/000149315226038590/0001493152-26-038590-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "GENERATION INCOME PROPERTIES, INC.",
+      "ticker": "GIPR",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1651721/000119312526352781/0001193125-26-352781-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Greenland Mines Ltd",
+      "ticker": "GRML",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1907223/000121390026090821/0001213900-26-090821-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "HARMONIC INC.",
+      "ticker": "HLIT",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/851310/000119312526353891/0001193125-26-353891-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Libity",
+      "ticker": "",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1852889/000182912626008912/0001829126-26-008912-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Mitesco, Inc.",
+      "ticker": "MITI",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/802257/000118518526003575/0001185185-26-003575-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "NEXGEL, INC.",
+      "ticker": "NXGL",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1468929/000149315226038555/0001493152-26-038555-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "NexMetals Mining Corp.",
+      "ticker": "NEXM",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/795800/000149315226038782/0001493152-26-038782-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Partners Group Lending Fund, LLC",
+      "ticker": "",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1938649/000139834426014697/0001398344-26-014697-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Regen BioPharma Inc",
+      "ticker": "RGBP",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1589150/000149315226038576/0001493152-26-038576-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "TOP Financial Group Ltd",
+      "ticker": "TOP",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1848275/000121390026090479/0001213900-26-090479-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Twelve Seas Investment Co III/Cayman",
+      "ticker": "TWLV",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2052243/000121390026090792/0001213900-26-090792-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "VANJIA CORP",
+      "ticker": "VNJA",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1532383/000101738626000112/0001017386-26-000112-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "XCF Global, Inc.",
+      "ticker": "SAFX",
+      "filed_date": "2026-08-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2019793/000149315226038610/0001493152-26-038610-index.htm"
+    },
+    {
+      "form": "10-Q/A",
+      "who": "Cyngn Inc.",
+      "ticker": "CYN",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1874097/000121390026089408/0001213900-26-089408-index.htm"
+    },
+    {
+      "form": "10-Q/A",
+      "who": "Greenland Mines Ltd",
+      "ticker": "GRML",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1907223/000121390026090289/0001213900-26-090289-index.htm"
+    },
+    {
+      "form": "10-Q/A",
+      "who": "HCW Biologics Inc.",
+      "ticker": "HCWB",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1828673/000149315226038246/0001493152-26-038246-index.htm"
+    },
+    {
+      "form": "10-Q/A",
+      "who": "New ERA Energy & Digital, Inc.",
+      "ticker": "NUAI",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2028336/000121390026090122/0001213900-26-090122-index.htm"
+    },
+    {
+      "form": "10-Q/A",
+      "who": "TSS, Inc.",
+      "ticker": "TSSI",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1320760/000165495426007668/0001654954-26-007668-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "1606 CORP.",
+      "ticker": "CBDW",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1877461/000147793226005063/0001477932-26-005063-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "1847 Holdings LLC",
+      "ticker": "LBRA",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1599407/000121390026089464/0001213900-26-089464-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "20/20 Biolabs, Inc.",
+      "ticker": "AIDX",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1139685/000121390026090042/0001213900-26-090042-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "21Shares Ethereum ETF",
+      "ticker": "TETH",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1992508/000121390026089297/0001213900-26-089297-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "21Shares Polkadot ETF",
+      "ticker": "",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2054247/000121390026090040/0001213900-26-090040-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "22nd Century Group, Inc.",
+      "ticker": "XXII",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1347858/000110465926097172/0001104659-26-097172-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "374Water Inc.",
+      "ticker": "SCWO",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/933972/000165495426007650/0001654954-26-007650-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "60 DEGREES PHARMACEUTICALS, INC.",
+      "ticker": "SXTP",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1946563/000155485526001860/0001554855-26-001860-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "AB Commercial Real Estate Private Debt Fund, LLC",
+      "ticker": "",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1876255/000119312526351855/0001193125-26-351855-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "AB Private Credit Investors Corp",
+      "ticker": "",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1634452/000119312526352137/0001193125-26-352137-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "AB Private Lending Fund",
+      "ticker": "",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1982701/000119312526352136/0001193125-26-352136-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "ACRO BIOMEDICAL CO., LTD.",
+      "ticker": "ACBM",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1622996/000164033426001345/0001640334-26-001345-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "ACTUATE THERAPEUTICS, INC.",
+      "ticker": "ACTU",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1652935/000168316826006472/0001683168-26-006472-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "ADAMS STREET CREDIT SOLUTIONS FUND",
+      "ticker": "",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1772918/000119312526352459/0001193125-26-352459-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "ADDENTAX GROUP CORP.",
+      "ticker": "ATXG",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1650101/000149315226038442/0001493152-26-038442-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "ADIAL PHARMACEUTICALS, INC.",
+      "ticker": "ADIL",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1513525/000121390026090051/0001213900-26-090051-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "ADM ENDEAVORS, INC.",
+      "ticker": "ADMQ",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1588014/000149315226038230/0001493152-26-038230-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "AEI INCOME & GROWTH FUND 25 LLC",
+      "ticker": "",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1185198/000118519826000008/0001185198-26-000008-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "AEI INCOME & GROWTH FUND XXI LTD PARTNERSHIP",
+      "ticker": "",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/931755/000093175526000009/0000931755-26-000009-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "AEI INCOME & GROWTH FUND XXII LTD PARTNERSHIP",
+      "ticker": "XAEIU",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1023458/000102345826000008/0001023458-26-000008-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "AI Infrastructure Acquisition Corp.",
+      "ticker": "AIIA",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2073553/000149315226038325/0001493152-26-038325-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "AIAI Holdings Corp",
+      "ticker": "AIAI",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2096362/000119312526352653/0001193125-26-352653-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "AIR T INC",
+      "ticker": "AIRT",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/353184/000035318426000077/0000353184-26-000077-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "ALPHA MODUS HOLDINGS, INC.",
+      "ticker": "AMOD",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1862463/000149315226038220/0001493152-26-038220-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "AMASS BRANDS",
+      "ticker": "AMSS",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1851491/000157587226000579/0001575872-26-000579-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "AMAZE HOLDINGS, INC.",
+      "ticker": "AMZE",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1880343/000149315226038506/0001493152-26-038506-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "AMC Robotics Corp",
+      "ticker": "AMCI",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1937891/000149315226038443/0001493152-26-038443-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "AMERISERV FINANCIAL INC /PA/",
+      "ticker": "ASRV",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/707605/000110465926096940/0001104659-26-096940-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "ASP Isotopes Inc.",
+      "ticker": "ASPI",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1921865/000119312526352603/0001193125-26-352603-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "ATLANTICA INC",
+      "ticker": "ALDA",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1062506/000106250626000018/0001062506-26-000018-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "AUDDIA INC.",
+      "ticker": "AUUD",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1554818/000168316826006478/0001683168-26-006478-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Abpro Holdings, Inc.",
+      "ticker": "ABPO",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1893219/000121390026090028/0001213900-26-090028-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Accustem Sciences Inc.",
+      "ticker": "ACUT",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1850767/000149315226038323/0001493152-26-038323-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "AgEagle Aerial Systems Inc.",
+      "ticker": "UAVS",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/8504/000143774926028026/0001437749-26-028026-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Agape ATP Corp",
+      "ticker": "ATPC",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1713210/000149315226037992/0001493152-26-037992-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Agassi Sports Entertainment Corp.",
+      "ticker": "AASP",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/930245/000149315226038396/0001493152-26-038396-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Agriculture & Natural Solutions Acquisition Corp",
+      "ticker": "ANSC",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1854149/000119312526352196/0001193125-26-352196-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "AirJoule Technologies Corp.",
+      "ticker": "AIRJW",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1855474/000119312526350442/0001193125-26-350442-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Alaunos Therapeutics, Inc.",
+      "ticker": "TCRT",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1107421/000119312526352421/0001193125-26-352421-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Aldabra 4 Liquidity Opportunity Vehicle, Inc.",
+      "ticker": "ALOV",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2083989/000110465926096074/0001104659-26-096074-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "AleeanPeace Group Holdings Ltd",
+      "ticker": "SEAV",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1763660/000149315226037950/0001493152-26-037950-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Algorhythm Holdings, Inc.",
+      "ticker": "RIME",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/923601/000149315226038024/0001493152-26-038024-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "All In FutureTech Alliance, Inc.",
+      "ticker": "AIFA",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1708341/000121390026090237/0001213900-26-090237-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Allarity Therapeutics, Inc.",
+      "ticker": "ALLR",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1860657/000143774926027830/0001437749-26-027830-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Alset Inc.",
+      "ticker": "AEI",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1750106/000149315226038402/0001493152-26-038402-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Alternus Clean Energy, Inc.",
+      "ticker": "ALCE",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1883984/000143774926027982/0001437749-26-027982-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Ambow Education Holding Ltd.",
+      "ticker": "AMBO",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1494558/000121390026090008/0001213900-26-090008-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "American Clean Resources Group, Inc.",
+      "ticker": "ACRG",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/773717/000121390026089597/0001213900-26-089597-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "American Drive Acquisition Co",
+      "ticker": "ADAC",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2083002/000110465926097135/0001104659-26-097135-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "American Picture House Corp",
+      "ticker": "APHP",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1771995/000149315226037895/0001493152-26-037895-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Andalusian Credit Company, LLC",
+      "ticker": "",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1979306/000110465926097303/0001104659-26-097303-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Annovis Bio, Inc.",
+      "ticker": "ANVS",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1477845/000110465926097228/0001104659-26-097228-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Antiaging Quantum Living Inc.",
+      "ticker": "AAQL",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1672571/000149315226038392/0001493152-26-038392-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Apimeds Pharmaceuticals US, Inc.",
+      "ticker": "APUS",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1894525/000121390026090120/0001213900-26-090120-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Apollo Asset Backed Credit Co LLC",
+      "ticker": "",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2000597/000119312526349993/0001193125-26-349993-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Apollo Infrastructure Co LLC",
+      "ticker": "",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1971381/000119312526349987/0001193125-26-349987-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "AppTech Payments Corp.",
+      "ticker": "APCX",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1070050/000168316826006441/0001683168-26-006441-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Aptevo Therapeutics Inc.",
+      "ticker": "APVO",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1671584/000119312526350559/0001193125-26-350559-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Ares Sports, Media & Entertainment Opportunities LP",
+      "ticker": "",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2046946/000162828026057135/0001628280-26-057135-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Aspira Women's Health Inc.",
+      "ticker": "AWHL",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/926617/000092661726000054/0000926617-26-000054-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Aterian, Inc.",
+      "ticker": "ATER",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1757715/000143774926028004/0001437749-26-028004-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Atlas Lithium Corp",
+      "ticker": "ATLX",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1540684/000149315226038358/0001493152-26-038358-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Audax Private Credit Fund, LLC",
+      "ticker": "",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2033362/000119312526351877/0001193125-26-351877-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Axe Compute Inc.",
+      "ticker": "AGPU",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1446159/000117184326005556/0001171843-26-005556-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "BARFRESH FOOD GROUP INC.",
+      "ticker": "BRFH",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1487197/000149315226038426/0001493152-26-038426-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "BEASLEY BROADCAST GROUP INC",
+      "ticker": "BBGI",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1099160/000119312526352119/0001193125-26-352119-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "BHAV Acquisition Corp",
+      "ticker": "BHAV",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2097288/000121390026089495/0001213900-26-089495-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "BILI Social International, Inc.",
+      "ticker": "AGGI",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1109262/000168316826006455/0001683168-26-006455-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "BIOLARGO, INC.",
+      "ticker": "BLGO",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/880242/000143774926028023/0001437749-26-028023-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "BIOXYTRAN, INC",
+      "ticker": "BIXT",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1445815/000149315226038327/0001493152-26-038327-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "BLUE DOLPHIN ENERGY CO",
+      "ticker": "BDCO",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/793306/000143774926028020/0001437749-26-028020-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "BLUSKY AI INC.",
+      "ticker": "BSAI",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1416090/000149315226038234/0001493152-26-038234-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "BM Acquisition Corp.",
+      "ticker": "BMOK",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2071607/000149315226037879/0001493152-26-037879-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "BMP AI Technologies, Inc.",
+      "ticker": "BMPA",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1130781/000147793226005024/0001477932-26-005024-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "BONK, INC.",
+      "ticker": "BNKK",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1760903/000149315226038241/0001493152-26-038241-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "BRAINSTORM CELL THERAPEUTICS INC.",
+      "ticker": "BCLI",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1137883/000110465926097275/0001104659-26-097275-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "BUDA JUICE, INC.",
+      "ticker": "BUDA",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2079720/000149315226038347/0001493152-26-038347-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Bain Capital Private Credit",
+      "ticker": "",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1899017/000119312526349812/0001193125-26-349812-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Balance Labs, Inc.",
+      "ticker": "BLNC",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1632121/000149315226038265/0001493152-26-038265-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Ballston Spa Bancorp, Inc.",
+      "ticker": "BSPA",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2094107/000110465926097039/0001104659-26-097039-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Bally's Chicago, Inc.",
+      "ticker": "",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1935799/000193579926000019/0001935799-26-000019-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Bally's Corp",
+      "ticker": "BALY",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1747079/000174707926000084/0001747079-26-000084-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Banzai International, Inc.",
+      "ticker": "PARA",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1826011/000119312526352362/0001193125-26-352362-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Barrel Energy Inc.",
+      "ticker": "BRLL",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1631463/000147793226005034/0001477932-26-005034-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "BayFirst Financial Corp.",
+      "ticker": "BAFN",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1649739/000164973926000061/0001649739-26-000061-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Beeline Holdings, Inc.",
+      "ticker": "BLNE",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1534708/000149315226038338/0001493152-26-038338-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Beneficient",
+      "ticker": "BENF",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1775734/000177573426000030/0001775734-26-000030-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Berto Acquisition Corp.",
+      "ticker": "TACO",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2033122/000182912626008902/0001829126-26-008902-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Berto Acquisition Corp. II",
+      "ticker": "GUAC",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2081515/000182912626008903/0001829126-26-008903-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "BeyondSpring Inc.",
+      "ticker": "BYSI",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1677940/000117184326005558/0001171843-26-005558-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Big Digital Energy, Inc.",
+      "ticker": "BGDE",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1218683/000121390026089986/0001213900-26-089986-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Bimergen Energy Corp",
+      "ticker": "BESS",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1066764/000149315226038439/0001493152-26-038439-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Bio Essence Corp",
+      "ticker": "BIOE",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1723059/000121390026090174/0001213900-26-090174-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Bio Green Med Solution, Inc.",
+      "ticker": "BGMS",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1130166/000149315226038393/0001493152-26-038393-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "BioCorRx Inc.",
+      "ticker": "BICX",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1443863/000147793226005041/0001477932-26-005041-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "BioNexus Gene Lab Corp",
+      "ticker": "BGLC",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1737523/000147793226005093/0001477932-26-005093-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Bleichroeder Acquisition Corp. III",
+      "ticker": "BCCQ",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2128045/000121390026090096/0001213900-26-090096-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Blue Water Acquisition Corp. IV",
+      "ticker": "BWIV",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2082847/000149315226038326/0001493152-26-038326-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Bodhi Tree Biotechnology Inc",
+      "ticker": "BDTB",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2041531/000182912626008876/0001829126-26-008876-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Bold Eagle Acquisition Corp.",
+      "ticker": "BEAG",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1852207/000121390026090143/0001213900-26-090143-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Bone Biologics Corp",
+      "ticker": "BBLG",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1419554/000149315226038482/0001493152-26-038482-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Boxlight Corp",
+      "ticker": "BOXL",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1624512/000162828026057056/0001628280-26-057056-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Brand Engagement Network Inc.",
+      "ticker": "BNAI",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1838163/000149315226038527/0001493152-26-038527-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Bryn Inc.",
+      "ticker": "BRRN",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1397795/000121390026090039/0001213900-26-090039-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "BullFrog AI Holdings, Inc.",
+      "ticker": "BFRG",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1829247/000162828026057121/0001628280-26-057121-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Burtech Acquisition Corp II",
+      "ticker": "BRKH",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2098707/000121390026089318/0001213900-26-089318-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "CALLAN JMB INC.",
+      "ticker": "CJMB",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2032545/000149315226038329/0001493152-26-038329-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "CAPRICOR THERAPEUTICS, INC.",
+      "ticker": "CAPR",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1133869/000110465926097294/0001104659-26-097294-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "CCS IX Portfolio Holdings, LLC",
+      "ticker": "",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2017636/000119312526352198/0001193125-26-352198-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "CEL SCI CORP",
+      "ticker": "CVM",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/725363/000165495426007657/0001654954-26-007657-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "CEMTREX INC",
+      "ticker": "CETX",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1435064/000149315226038337/0001493152-26-038337-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "CERENOME, INC.",
+      "ticker": "PSTV",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1095981/000119312526352444/0001193125-26-352444-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "CERO THERAPEUTICS HOLDINGS, INC.",
+      "ticker": "CERO",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1870404/000121390026090030/0001213900-26-090030-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "CH4 Natural Solutions Corp",
+      "ticker": "MTNE",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2044817/000119312526352458/0001193125-26-352458-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "CHINA PHARMA HOLDINGS, INC.",
+      "ticker": "CPHI",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1106644/000121390026090173/0001213900-26-090173-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "CIFC Direct Lending Evergreen Fund",
+      "ticker": "",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2056516/000119312526350908/0001193125-26-350908-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "CIM GROUP, INC.",
+      "ticker": "CMRF",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1498547/000149854726000047/0001498547-26-000047-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "CIM Opportunity Zone Fund, L.P.",
+      "ticker": "",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1765107/000176510726000019/0001765107-26-000019-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "CISO Global, Inc.",
+      "ticker": "CISO",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1777319/000149315226038417/0001493152-26-038417-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "CITIUS ONCOLOGY, INC.",
+      "ticker": "CTOR",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1851484/000121390026090184/0001213900-26-090184-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "CLEARONE INC",
+      "ticker": "CLRO",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/840715/000175392626001521/0001753926-26-001521-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "CN Healthy Food Tech Group Corp.",
+      "ticker": "UCFI",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1901203/000121390026089578/0001213900-26-089578-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "COMMUNITY BANCORP /VT",
+      "ticker": "CMTV",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/718413/000165495426007611/0001654954-26-007611-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "COMSCORE, INC.",
+      "ticker": "SCOR",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1158172/000115817226000069/0001158172-26-000069-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "CREATIVE REALITIES, INC.",
+      "ticker": "CREX",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1356093/000143774926027825/0001437749-26-027825-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "CSP INC /MA/",
+      "ticker": "CSPI",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/356037/000035603726000045/0000356037-26-000045-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "CUMULUS MEDIA INC",
+      "ticker": "CMLS",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1058623/000105862326000042/0001058623-26-000042-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "CURIS INC",
+      "ticker": "CRIS",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1108205/000110820526000118/0001108205-26-000118-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "CXApp Inc.",
+      "ticker": "CXAIW",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1820875/000182912626008907/0001829126-26-008907-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "CaliberCos Inc.",
+      "ticker": "CWD",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1627282/000162728226000058/0001627282-26-000058-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Canton Strategic Holdings, Inc.",
+      "ticker": "CNTN",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1861657/000149315226038044/0001493152-26-038044-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Cantor Equity Partners I, Inc.",
+      "ticker": "CEPO",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2027708/000121390026090031/0001213900-26-090031-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Cantor Equity Partners IV, Inc.",
+      "ticker": "CEPF",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2034267/000121390026090026/0001213900-26-090026-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Cantor Equity Partners V, Inc.",
+      "ticker": "CEPV",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2034266/000121390026090025/0001213900-26-090025-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Cantor Equity Partners VI, Inc.",
+      "ticker": "CEPS",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2089536/000121390026090041/0001213900-26-090041-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Cantor Equity Partners VII, Inc.",
+      "ticker": "CAES",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2087965/000121390026090029/0001213900-26-090029-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Caro Holdings Inc.",
+      "ticker": "CAHO",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1678105/000164033426001355/0001640334-26-001355-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Cartesian Growth Corp II",
+      "ticker": "RENEF",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1889112/000110465926096192/0001104659-26-096192-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Catalyst Bancorp, Inc.",
+      "ticker": "CLST",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1849867/000110465926096825/0001104659-26-096825-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Catheter Precision, Inc.",
+      "ticker": "VTAK",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1716621/000143774926028024/0001437749-26-028024-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Cenntro Inc.",
+      "ticker": "CENN",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1707919/000114036126033166/0001140361-26-033166-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Central Bancompany, Inc.",
+      "ticker": "CBC",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2065601/000162828026057081/0001628280-26-057081-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Centurion Acquisition Corp.",
+      "ticker": "ALFUU",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2010930/000121390026090144/0001213900-26-090144-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Chain Bridge I",
+      "ticker": "CBRRF",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1845149/000121390026090109/0001213900-26-090109-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Chaince Digital Holdings Inc.",
+      "ticker": "CD",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1527762/000149315226038400/0001493152-26-038400-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Change Agents Corporation.",
+      "ticker": "CHGA",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1630212/000121390026090229/0001213900-26-090229-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Chilean Cobalt Corp.",
+      "ticker": "COBA",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1727255/000168316826006448/0001683168-26-006448-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "China Foods Holdings Ltd.",
+      "ticker": "CFOO",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1310630/000149315226038081/0001493152-26-038081-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Citius Pharmaceuticals, Inc.",
+      "ticker": "CTXR",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1506251/000121390026090185/0001213900-26-090185-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "ClearSign Technologies Corp",
+      "ticker": "CLIR",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1434524/000110465926096539/0001104659-26-096539-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Clene Inc.",
+      "ticker": "CLNN",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1822791/000143774926027828/0001437749-26-027828-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Cluster Group Holdings Ltd Co",
+      "ticker": "CLUS",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1346287/000168316826006418/0001683168-26-006418-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Copper Property CTL Pass Through Trust",
+      "ticker": "CPPTL",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1837671/000183767126000063/0001837671-26-000063-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Corvex, Inc.",
+      "ticker": "MOVE",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1734750/000121390026090091/0001213900-26-090091-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Cottonwood Communities, Inc.",
+      "ticker": "",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1692951/000169295126000141/0001692951-26-000141-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Creative Media & Community Trust Corp",
+      "ticker": "CMCT",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/908311/000090831126000098/0000908311-26-000098-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Crescent Private Credit Income Corp",
+      "ticker": "",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1954360/000119312526352548/0001193125-26-352548-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Cue Biopharma, Inc.",
+      "ticker": "CUE",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1645460/000119312526352128/0001193125-26-352128-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Curanex Pharmaceuticals Inc",
+      "ticker": "CURX",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2025942/000149315226038145/0001493152-26-038145-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Cyber Enviro-Tech, Inc.",
+      "ticker": "CETI",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1935092/000107997326001095/0001079973-26-001095-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Cycurion, Inc.",
+      "ticker": "CYCU",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1868419/000162828026057092/0001628280-26-057092-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "D. Boral ARC Acquisition I Corp.",
+      "ticker": "BCAR",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2065779/000182912626008863/0001829126-26-008863-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "D. Boral Acquisition I Corp.",
+      "ticker": "DBCA",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2095161/000121390026089366/0001213900-26-089366-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "DATA I/O CORP",
+      "ticker": "DAIO",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/351998/000165495426007670/0001654954-26-007670-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "DAWSON GEOPHYSICAL CO",
+      "ticker": "DWSN",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/799165/000110465926097202/0001104659-26-097202-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "DISCIPLINED GROWTH ACQUISITION Corp",
+      "ticker": "DGAC",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2111038/000118518526003514/0001185185-26-003514-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "DSS, INC.",
+      "ticker": "DSS",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/771999/000149315226038447/0001493152-26-038447-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "DSwiss Inc",
+      "ticker": "DQWS",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1652561/000149315226037904/0001493152-26-037904-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Data Storage Corp",
+      "ticker": "DTST",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1419951/000173112226001066/0001731122-26-001066-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Data443 Risk Mitigation, Inc.",
+      "ticker": "ATDS",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1068689/000149315226038395/0001493152-26-038395-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Digi Power X Inc.",
+      "ticker": "DGXX",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1854368/000121390026089940/0001213900-26-089940-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Digimarc Corp",
+      "ticker": "DMRC",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2119322/000143774926028000/0001437749-26-028000-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Direct Digital Holdings, Inc.",
+      "ticker": "DRCT",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1880613/000188061326000098/0001880613-26-000098-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Dogwood Therapeutics, Inc.",
+      "ticker": "DWTX",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1818844/000110465926096719/0001104659-26-096719-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Domtar CORP",
+      "ticker": "",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1381531/000119312526350599/0001193125-26-350599-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Dragonfly Energy Holdings Corp.",
+      "ticker": "DFLI",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1847986/000149315226037994/0001493152-26-037994-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Drugs Made In America Acquisition Corp.",
+      "ticker": "DMAA",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2028614/000121390026090035/0001213900-26-090035-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Drugs Made In America Acquisition II Corp.",
+      "ticker": "DMII",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2040475/000121390026090017/0001213900-26-090017-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "EDAP TMS SA",
+      "ticker": "FOCL",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1041934/000110465926097063/0001104659-26-097063-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "ELUTIA INC.",
+      "ticker": "ELUT",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1708527/000110465926097292/0001104659-26-097292-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "EMERSON RADIO CORP",
+      "ticker": "MSN",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/32621/000143774926027990/0001437749-26-027990-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "EMPIRE PETROLEUM CORP",
+      "ticker": "EP",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/887396/000110465926097162/0001104659-26-097162-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "ENB Financial Corp",
+      "ticker": "ENBP",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1437479/000117494726000805/0001174947-26-000805-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "ENDRA Life Sciences Inc.",
+      "ticker": "NDRA",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1681682/000121390026090027/0001213900-26-090027-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "EQT Infrastructure Co LLC",
+      "ticker": "",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2032019/000119312526351941/0001193125-26-351941-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "EQT Private Equity Co LLC",
+      "ticker": "",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2032020/000119312526351936/0001193125-26-351936-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "EQUUS TOTAL RETURN, INC.",
+      "ticker": "EQS",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/878932/000171254326000047/0001712543-26-000047-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "EQV Ventures Acquisition Corp. II",
+      "ticker": "EVAC",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2042902/000121390026090006/0001213900-26-090006-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "ESG Inc.",
+      "ticker": "ESGH",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1883835/000152013826000340/0001520138-26-000340-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "EXICURE, INC.",
+      "ticker": "XCUR",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1698530/000119312526352011/0001193125-26-352011-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Eagle Point Trinity Senior Secured Lending Co",
+      "ticker": "",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2027033/000202703326000011/0002027033-26-000011-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Edgemode, Inc.",
+      "ticker": "EDGM",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1652958/000168316826006473/0001683168-26-006473-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Edible Garden AG Inc",
+      "ticker": "EDBL",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1809750/000147793226005081/0001477932-26-005081-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Eline Entertainment Group, Inc.",
+      "ticker": "EEGI",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1043150/000168316826006435/0001683168-26-006435-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Elvictor Group, Inc.",
+      "ticker": "ELVG",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1741489/000121390026089850/0001213900-26-089850-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Emmaus Life Sciences, Inc.",
+      "ticker": "EMMA",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/822370/000119312526351833/0001193125-26-351833-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Enhanced Group Inc.",
+      "ticker": "ENHA",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1956439/000162828026056910/0001628280-26-056910-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Enveric Biosciences, Inc.",
+      "ticker": "ENVB",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/890821/000149315226038418/0001493152-26-038418-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Evofem Biosciences, Inc.",
+      "ticker": "EVFM",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1618835/000149315226038328/0001493152-26-038328-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "FAMILY OFFICE OF AMERICA, INC.",
+      "ticker": "FOFA",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1871181/000149315226038094/0001493152-26-038094-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "FEMASYS INC",
+      "ticker": "FEMY",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1339005/000114036126033157/0001140361-26-033157-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "FGI Industries Ltd.",
+      "ticker": "FGI",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1864943/000162828026057126/0001628280-26-057126-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "FLEXIBLE SOLUTIONS INTERNATIONAL INC",
+      "ticker": "FSI",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1069394/000149315226038290/0001493152-26-038290-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "FLYWHEEL ADVANCED TECHNOLOGY, INC.",
+      "ticker": "FWFW",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1492617/000149315226038140/0001493152-26-038140-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "FOCUS UNIVERSAL INC.",
+      "ticker": "FCUV",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1590418/000168316826006446/0001683168-26-006446-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "FORUM MARKETS Inc",
+      "ticker": "FRMM",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1690080/000121390026090100/0001213900-26-090100-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "FOXO TECHNOLOGIES INC.",
+      "ticker": "FOXO",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1812360/000149315226038401/0001493152-26-038401-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "FS Credit Real Estate Income Trust, Inc.",
+      "ticker": "",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1690536/000162828026057041/0001628280-26-057041-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Fabric.AI, Inc.",
+      "ticker": "FABC",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1086745/000149315226038445/0001493152-26-038445-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Fermi Inc.",
+      "ticker": "FRMI",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2071778/000207177826000051/0002071778-26-000051-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "FiEE, Inc.",
+      "ticker": "FIEE",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1467761/000182912626008898/0001829126-26-008898-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Figure Certificate Co",
+      "ticker": "",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1974395/000197439526000011/0001974395-26-000011-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Figure Technology Solutions, Inc.",
+      "ticker": "FIGR",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2064124/000162828026057061/0001628280-26-057061-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "First Carolina Financial Services, Inc.",
+      "ticker": "FCBM",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1531193/000162828026056931/0001628280-26-056931-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "First Guaranty Bancshares, Inc.",
+      "ticker": "FGBIP",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1408534/000140853426000072/0001408534-26-000072-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Firsthand Technology Value Fund, Inc.",
+      "ticker": "SVVC",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1495584/000143774926028070/0001437749-26-028070-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Flag Ship Acquisition Corp",
+      "ticker": "FSHP",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1850059/000182912626008880/0001829126-26-008880-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Franklin Crypto Trust",
+      "ticker": "EZPZ",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2033807/000114036126033200/0001140361-26-033200-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Franklin Ethereum Trust",
+      "ticker": "EZET",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2011535/000114036126033204/0001140361-26-033204-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Franklin Solana Trust",
+      "ticker": "SOEZ",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2057388/000114036126033217/0001140361-26-033217-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Franklin Templeton Digital Holdings Trust",
+      "ticker": "EZBC",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1992870/000114036126033208/0001140361-26-033208-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Franklin Templeton Holdings Trust",
+      "ticker": "FGDL",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1858258/000114036126033199/0001140361-26-033199-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Franklin XRP Trust",
+      "ticker": "XRPZ",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2059438/000114036126033198/0001140361-26-033198-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Functional Brands Inc.",
+      "ticker": "MEHA",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1837254/000121390026089996/0001213900-26-089996-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "Future FinTech Group Inc.",
+      "ticker": "FTFT",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1066923/000121390026090012/0001213900-26-090012-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "FutureCrest Acquisition Corp.",
+      "ticker": "FCRS",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2074697/000121390026090141/0001213900-26-090141-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "GALECTIN THERAPEUTICS INC",
+      "ticker": "GALT",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1133416/000114036126032945/0001140361-26-032945-index.htm"
+    },
+    {
+      "form": "10-Q",
+      "who": "GD Culture Group Ltd",
+      "ticker": "GDC",
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1641398/000121390026090150/0001213900-26-090150-index.htm"
+    }
+  ],
+  "annual_total": 76,
+  "quarterly_total": 2115,
+  "methodology": "Unified cross-form SEC filing stream v2 \u2014 DIRECT EDGAR queries (public domain, 17 U.S.C. \u00a7105; filed-date PIT), one root form per EFTS query (never a comma list \u2014 efts mis-parses root+/A families): 8-K / 10-K / 10-Q / S-1 family / 4 / D, each expanding to its /A amendments. v1\u2192v2 migration: v1 (2026-08-23) derived this feed by merging six committed panels \u2014 coverage was bounded by each panel's visible cap (its window spanned only the panels' newest days) and 10-K/10-Q were absent; v2 IS the source query over a trailing 14-day window, so by_form counts the EDGAR window. Request accounting (declared totals / EFTS pages, 140 pages total): 8-K: 2,632 declared / 27 page requests; 10-K: 76 declared / 1 page requests; 10-Q: 2,115 declared / 22 page requests; S-1: 69 declared / 1 page requests; 4: 6,196 declared / 63 page requests (split into 2 half-windows at the 7-day midpoint); D: 2,327 declared / 24 page requests; SC 13D: 0 declared / 1 page requests; EFTS frozen on Schedule 13 \u2014 shared SC 13D+13G daily-index lane 3,615 rows; SC 13G: 0 declared / 1 page requests; EFTS frozen (probed 0, same shared daily lane). Form 4 is split into two ~7-day half-windows unconditionally (busiest family \u2014 10-15k/14d in filing season would exceed EFTS's 10,000-hit cap); every other form splits adaptively when a declared window total reaches 9,500. SC 13D / SC 13G: EFTS froze on the Schedule 13 family after 2024-12-17 (machine-verified zero on each run), so those rows come from the EDGAR daily crawler index lanes (the same dissemination feed as the smart_money / stakes_13g panels), subject resolved offline by ticker. Honest limits: (1) 13F-HR is excluded (quarterly manager holdings, not company events \u2014 carried by the /filers registry); (2) DEF 14A rides its own dedicated panel lane; (3) Form 4 'who' is the reporting person (the first display_names entry), with the issuer carried as the ticker label from the CURRENT SEC company_tickers snapshot \u2014 a display label, never a research input; (4) the 800-newest visible cap is a payload-size cap (total_merged counts the full window); (5) the 10-K and 10-Q families each carry an OWN deep-cut list (annual_filings / quarterly_filings, newest-first, cap 400 each) sliced from the same parquet, with full-window counts in annual_total / quarterly_total. Display-only, exploratory, NOT a research claim.",
+  "snapshot_ts": "2026-08-23T12:55:03.358191+00:00"
 }

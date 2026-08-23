@@ -907,6 +907,16 @@ export type FilingStream = {
   n_visible: number;
   by_form: Record<string, number>;
   filings: FilingStreamRow[];
+  // 10-K(/A) deep cut for /annual — the 800-newest cap squeezes periodic
+  // reports out of the visible stream in filing season, so the family rides
+  // its OWN newest-first slice (cap 400) from the same parquet.
+  annual_filings: FilingStreamRow[];
+  // 10-Q(/A) deep cut for /quarterly — same contract as annual_filings.
+  quarterly_filings: FilingStreamRow[];
+  // Full-window counts for the two deep-cut families (NOT the capped visible
+  // length — the KPI shows the window, not the payload cap).
+  annual_total: number;
+  quarterly_total: number;
   methodology: string;
   snapshot_ts?: string;
 };

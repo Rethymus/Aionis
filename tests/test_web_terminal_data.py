@@ -832,6 +832,55 @@ def test_filing_stream_panel_contract() -> None:
     assert "display-only" in ml
 
 
+def test_filing_stream_deep_cuts_contract() -> None:
+    """10-K/10-Q deep-cut slices for /annual + /quarterly.
+
+    The 800-newest visible cap squeezes periodic reports out of the visible
+    stream entirely in filing season (the committed v2 snapshot carries ZERO
+    visible 10-K/10-Q rows while the window counts 76 / 2,115), so the panel
+    carries two form-family deep cuts sliced from the SAME direct-query
+    parquet, each newest-first with its own cap 400 and a FULL-window total.
+    The contract pins: strict form whitelists per slice; newest-first order;
+    the 400 cap; *_total counts the full window (>= the visible slice, and
+    the two totals cannot exceed total_merged); row hygiene identical to the
+    main stream; the methodology discloses the deep cuts and their caps.
+    """
+    x = _load("filing_stream.json")
+    assert x["status"] in {"ok", "awaiting_fetch"}
+    assert {"annual_filings", "quarterly_filings", "annual_total",
+            "quarterly_total"} <= set(x), (
+        "the /annual + /quarterly routes read these deep-cut fields"
+    )
+    if x["status"] != "ok" or not x["filings"]:
+        return
+    for key, total_key, forms in (
+        ("annual_filings", "annual_total", {"10-K", "10-K/A"}),
+        ("quarterly_filings", "quarterly_total", {"10-Q", "10-Q/A"}),
+    ):
+        rows = x[key]
+        assert len(rows) <= 400, f"{key} respects the deep-cut cap 400"
+        dates: list[str] = []
+        for r in rows:
+            assert r["form"] in forms, f"unexpected form {r['form']} in {key}"
+            assert {"form", "who", "ticker", "filed_date", "doc_url"} <= set(r)
+            assert r["who"] and r["who"] != "—"
+            assert r["ticker"] != "None", "no str(None) leaks from source rows"
+            assert r["doc_url"].startswith("https://www.sec.gov/Archives/edgar/data/")
+            assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", r["filed_date"])
+            dates.append(r["filed_date"])
+        assert dates == sorted(dates, reverse=True), f"{key} newest-first"
+        assert x[total_key] >= len(rows), (
+            f"{total_key} counts the FULL window, not the capped slice"
+        )
+    # Deep-cut window totals are subsets of the whole direct-query window.
+    assert x["annual_total"] + x["quarterly_total"] <= x["total_merged"]
+    ml = x["methodology"].lower()
+    assert "annual_filings" in ml and "quarterly_filings" in ml, (
+        "must disclose the deep-cut fields"
+    )
+    assert "cap 400" in ml, "the deep-cut caps are disclosed"
+
+
 def test_filers13f_panel_contract() -> None:
     """13F filer directory: exhaustive annual universe, directory facts only.
 

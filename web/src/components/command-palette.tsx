@@ -22,6 +22,8 @@ import {
   ActivityIcon,
   TerminalIcon,
   BuildingIcon,
+  CalendarDaysIcon,
+  FileClockIcon,
 } from "lucide-react";
 import {
   CommandDialog,
@@ -72,6 +74,8 @@ const PAGES: PaletteItem[] = [
   { labelKey: "nav.group.confirm", icon: <ShieldCheckIcon className="size-4" />, href: "/confirmation" },
   { labelKey: "nav.institutions", icon: <LandmarkIcon className="size-4" />, href: "/institutions" },
   { labelKey: "nav.filers", icon: <ListIcon className="size-4" />, href: "/filers" },
+  { labelKey: "nav.quarterly", icon: <CalendarDaysIcon className="size-4" />, href: "/quarterly" },
+  { labelKey: "nav.annual", icon: <FileClockIcon className="size-4" />, href: "/annual" },
   { labelKey: "nav.group.track", icon: <GaugeCircleIcon className="size-4" />, href: "/track" },
   { labelKey: "nav.group.discipline", icon: <ShieldCheckIcon className="size-4" />, href: "/discipline" },
   { labelKey: "nav.datahealth", icon: <ActivityIcon className="size-4" />, href: "/data-health" },

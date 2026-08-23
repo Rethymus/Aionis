@@ -28,6 +28,8 @@ import {
   BuildingIcon,
   UserRoundIcon,
   ListIcon,
+  CalendarDaysIcon,
+  FileClockIcon,
 } from "lucide-react";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -53,6 +55,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     { title: t("nav.institutions"), url: "/institutions", icon: <LandmarkIcon /> },
     { title: t("nav.filers"), url: "/filers", icon: <ListIcon /> },
     { title: t("nav.events"), url: "/events", icon: <ZapIcon /> },
+    // Periodic-report deep cuts over the same filing-stream v2 panel (the
+    // 10-K/10-Q families get their own routes because the 800-newest visible
+    // cap squeezes them out of the unified stream in filing season).
+    { title: t("nav.quarterly"), url: "/quarterly", icon: <CalendarDaysIcon /> },
+    { title: t("nav.annual"), url: "/annual", icon: <FileClockIcon /> },
     { title: t("nav.executives"), url: "/executives", icon: <UserRoundIcon /> },
     { title: t("nav.ipo"), url: "/ipo", icon: <RocketIcon /> },
     { title: t("nav.congress"), url: "/congress", icon: <LandmarkIcon /> },

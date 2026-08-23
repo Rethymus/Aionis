@@ -3613,7 +3613,9 @@ def export_filing_stream() -> None:
     the by_form counts are the EDGAR window, not inherited panel caps.
     13F-HR stays excluded (quarterly manager filings, not company events —
     the /filers registry carries them); DEF 14A rides its own panel lane.
-    Visible cap 800 newest, unchanged from v1.
+    Visible cap 800 newest, unchanged from v1; the 10-K/10-Q families
+    additionally ride dedicated deep-cut lists (cap 400 each) because the
+    800-newest cap squeezes periodic-report depth in filing season.
     """
     fp = Path("data/cache/filing_stream_aggregate.parquet")
     if not fp.exists():
@@ -3672,6 +3674,20 @@ def export_filing_stream() -> None:
     for r in visible:
         by_form[r["form"]] = by_form.get(r["form"], 0) + 1
 
+    # Form-family deep cuts (the /annual + /quarterly routes): the 800-newest
+    # visible cap squeezes 10-K/10-Q depth — filing season packs thousands of
+    # 10-Qs beyond the newest days, so the visible stream can carry ZERO
+    # periodic-report rows while total_merged counts them. Each family gets its
+    # own newest-first slice from the SAME direct-query parquet (rows, not
+    # visible), its own cap 400, and a FULL-window count (*_total) so the KPI
+    # shows the window, not the payload cap.
+    annual_forms = ("10-K", "10-K/A")
+    quarterly_forms = ("10-Q", "10-Q/A")
+    annual_filings = [r for r in rows if r["form"] in annual_forms][:400]
+    quarterly_filings = [r for r in rows if r["form"] in quarterly_forms][:400]
+    annual_total = sum(1 for r in rows if r["form"] in annual_forms)
+    quarterly_total = sum(1 for r in rows if r["form"] in quarterly_forms)
+
     # Per-form request accounting from the fetcher's stats sidecar (the
     # honest ledger: declared window totals + page requests per root form).
     forms_stats = stats.get("forms", {}) if isinstance(stats, dict) else {}
@@ -3716,6 +3732,10 @@ def export_filing_stream() -> None:
         "n_visible": len(visible),
         "by_form": dict(sorted(by_form.items(), key=lambda kv: -kv[1])),
         "filings": visible,
+        "annual_filings": annual_filings,
+        "quarterly_filings": quarterly_filings,
+        "annual_total": annual_total,
+        "quarterly_total": quarterly_total,
         "methodology": (
             "Unified cross-form SEC filing stream v2 — DIRECT EDGAR queries "
             "(public domain, 17 U.S.C. §105; filed-date PIT), one root form "
@@ -3744,7 +3764,11 @@ def export_filing_stream() -> None:
             "label from the CURRENT SEC company_tickers snapshot — a "
             "display label, never a research input; (4) the 800-newest "
             "visible cap is a payload-size cap (total_merged counts the full "
-            "window). Display-only, exploratory, NOT a research claim."
+            "window); (5) the 10-K and 10-Q families each carry an OWN "
+            "deep-cut list (annual_filings / quarterly_filings, newest-first, "
+            "cap 400 each) sliced from the same parquet, with full-window "
+            "counts in annual_total / quarterly_total. Display-only, "
+            "exploratory, NOT a research claim."
         ),
     }
     (WEB / "filing_stream.json").write_text(
@@ -3753,7 +3777,8 @@ def export_filing_stream() -> None:
     print(
         f"[export-terminal] filing_stream: {len(visible)} visible of "
         f"{len(rows)} direct-query rows across {len(by_form)} forms, "
-        f"as_of {payload['as_of']}",
+        f"as_of {payload['as_of']}; deep cuts 10-K {len(annual_filings)}/"
+        f"{annual_total}, 10-Q {len(quarterly_filings)}/{quarterly_total}",
         flush=True,
     )
 
