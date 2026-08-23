@@ -31,9 +31,13 @@ v1 = **House PTR 申报流级**：议员、选区、申报日、年度、PDF 原
 """
 from __future__ import annotations
 
+import bisect
+import hashlib
 import io
 import re
 import zipfile
+from dataclasses import dataclass
+from datetime import date, datetime
 from pathlib import Path
 from xml.etree import ElementTree
 
@@ -289,3 +293,519 @@ def fetch_house_ptr_year(year: int, cache_dir: Path | None = None) -> pd.DataFra
     df.to_parquet(fp, index=False)
     log.info("house_ptr_fetched", year=year, filings=len(df))
     return df
+
+
+# =============================================================================
+# v2 — TRANSACTION-LEVEL PTR PDF parsing (ported from salvage agent/politician
+# 0b7867a/70f8ad2, never merged; revived 2026-08-23 by owner D4 granularity
+# gate). The filing-stream section above stays untouched — this section adds
+# per-transaction extraction from the PTR PDFs the filing stream links to.
+#
+# Verified live by the salvage branch (813 trades / 42 members, 2026-08-22):
+# e-filed PTR PDFs are digitally native, encrypted with the PDF Standard
+# Security Handler (/V 2 /R 3 — RC4, EMPTY user password), and recoverable
+# with the Python standard library ONLY (MD5 key derivation per ISO 32000
+# Algorithms 3.2/3.4 + a tiny RC4 + zlib + the embedded ToUnicode CMaps).
+# No new dependency.
+#
+# Honesty invariants (this panel's contract):
+# * ``extract_ptr_text`` returns "" for scanned/image PDFs — the caller
+#   counts them as unparsed, never fabricates rows.
+# * ``parse_ptr_transactions`` counts every date-pair+$ anchor as a row
+#   CANDIDATE; candidates - parsed rows = parse failures (never silently
+#   dropped).
+# =============================================================================
+
+# Owner codes printed ahead of the asset when the filer is not the member
+# themselves (salvage, verified live: SP = spouse). Self rows carry no code —
+# the owner group is OPTIONAL here (the salvage row regex made it mandatory,
+# which would silently drop self-filed rows).
+_OWNER_CODES = ("SP", "JT", "DC")
+
+# Deterministic row CORE, right-anchored: the e-filed table emits the asset
+# class tag, the transaction type letter (P/S/E/…, with an optional
+# "(partial)"/"(full)" qualifier), the transacted date, the notification date,
+# and the statutory $ band — each on its own line/cell, in THIS order
+# (verified live 2026-08-23 on three filings: 20033705/20033762/20033830).
+# The band may split across two lines ("$15,001 -\n$50,000") or be
+# open-ended ("$50,000,001+").
+_PTR_ROW_CORE_RE = re.compile(
+    r"\[\s?([A-Z]{1,4})\s?\]\s+"      # asset-class tag cell ([ST]/[CS]/[GS]…)
+    r"([A-Z])"                          # transaction type letter
+    r"(?:\s*\((partial|full)\))?\s+"  # optional qualifier
+    r"(\d{2}/\d{2}/\d{4})\s+"         # date of transaction
+    r"(\d{2}/\d{2}/\d{4})\s+"         # notification date (in PDF)
+    r"\$\s?([\d,]+)"                    # band min
+    r"(?:\s*-\s*\$\s?([\d,]+)|\s*\+)?",  # band max | open-ended "+"
+    re.S,
+)
+
+# Candidate anchor (superset of cores): type + two dates + $ amount WITHOUT
+# requiring the asset-class tag — page-split rows lose their tag and land
+# here as HONEST parse failures. ``candidates - rows - excluded`` is the
+# disclosed parse-failure count; nothing is silently dropped.
+_PTR_ROW_CANDIDATE_RE = re.compile(
+    r"\b([A-Z])(?:\s*\((partial|full)\))?\s+"
+    r"(\d{2}/\d{2}/\d{4})\s+(\d{2}/\d{2}/\d{4})\s+\$",
+    re.S,
+)
+
+# Kept transaction-type letters. E = exchange (verified live, e.g. "Mandatory
+# Exchange" rows) — NOT a buy/sell, excluded from rows and counted separately.
+_PTR_TYPES_KEPT = {"P", "S"}
+
+# Line/cell classifiers for the backward walk above a row core. The e-filed
+# footer between rows renders as marker cells ("F…S :", "New", "S…O :",
+# "D :") each on its own line with their values below; page breaks re-emit
+# the table header block ("ID/Owner/Asset/…/$200?"). All of these STOP the
+# asset-name walk — they are never swallowed into an asset name.
+_FOOTER_MARKER_RES = (
+    re.compile(r"^F\s+S\s*:?\s*$"),
+    re.compile(r"^S\s+O\s*:?\s*$"),
+    re.compile(r"^D\s*:?\s*$"),
+    re.compile(r"^New$"),
+)
+# Value-bearing footer markers: the cell line directly BELOW one of these is
+# its VALUE (e.g. the brokerage-account annotation under "S O :") — never an
+# asset-name line (verified live; the asset name follows the value, or the
+# footer ends). "F S :"'s value is the "New" cell itself.
+_VALUE_BEARING_MARKER_RES = (
+    re.compile(r"^S\s+O\s*:?\s*$"),
+    re.compile(r"^D\s*:?\s*$"),
+)
+_PAGE_HEADER_LINES = {
+    "ID", "Owner", "Asset", "Transaction", "Type", "Date", "Notification",
+    "Amount", "Cap.", "Gains >", "$200?",
+}
+_AMOUNT_LINE_RE = re.compile(r"^\$\s?[\d,]+\s*[-+]?\s*$")
+_DATE_LINE_RE = re.compile(r"^\d{2}/\d{2}/\d{4}$")
+_TICKER_LINE_RE = re.compile(r"^\(\s*([A-Z.]{1,8})\s*\)$")
+_ASSET_MAX_LINES = 2  # wrapped asset names span at most 2 lines (verified)
+
+
+def _rc4(key: bytes, data: bytes) -> bytes:
+    """RC4 — the only cipher the clerk's PDFs use (/V 2, no AES marker)."""
+    S = list(range(256))
+    j = 0
+    for i in range(256):
+        j = (j + S[i] + key[i % len(key)]) % 256
+        S[i], S[j] = S[j], S[i]
+    out = bytearray()
+    i = j = 0
+    for b in data:
+        i = (i + 1) % 256
+        j = (j + S[i]) % 256
+        S[i], S[j] = S[j], S[i]
+        out.append(b ^ S[(S[i] + S[j]) % 256])
+    return bytes(out)
+
+
+# ISO 32000 Table 23 padding string (empty user password -> just the pad).
+_PW_PAD = bytes.fromhex("28BF4E5E4E758A4164004E56FFFA01082E2E00B6D0683E802F0CA9FE6453697A")
+
+
+def _file_key_r3(o: bytes, p: int, file_id: bytes, length_bits: int) -> bytes:
+    """Standard security handler file key, R>=3 (ISO 32000 Algorithm 3.2)."""
+    h = hashlib.md5(
+        _PW_PAD + o + p.to_bytes(4, "little", signed=True) + file_id
+    )
+    d = h.digest()
+    for _ in range(50):
+        d = hashlib.md5(d[: length_bits // 8]).digest()
+    return d[: length_bits // 8]
+
+
+def _object_key(fkey: bytes, num: int, gen: int, length_bits: int) -> bytes:
+    """Per-object RC4 key (Algorithm 3.1)."""
+    h = hashlib.md5(
+        fkey + num.to_bytes(3, "little") + gen.to_bytes(2, "little")
+    )
+    return h.digest()[: min(length_bits // 8 + 5, 16)]
+
+
+def _parse_cmap(text: str) -> dict[int, str]:
+    """ToUnicode bfchar/bfrange -> {cid: unicode string}."""
+    m: dict[int, str] = {}
+    for block in re.findall(r"beginbfchar(.*?)endbfchar", text, re.S):
+        for src, dst in re.findall(r"<([0-9A-Fa-f]+)>\s*<([0-9A-Fa-f]+)>", block):
+            m[int(src, 16)] = "".join(
+                chr(int(dst[i : i + 4], 16))
+                for i in range(0, len(dst) - len(dst) % 4, 4)
+            )
+    for block in re.findall(r"beginbfrange(.*?)endbfrange", text, re.S):
+        for lo, hi, base in re.findall(
+            r"<([0-9A-Fa-f]+)>\s*<([0-9A-Fa-f]+)>\s*<([0-9A-Fa-f]+)>", block
+        ):
+            b = int(base, 16)
+            for c in range(int(lo, 16), int(hi, 16) + 1):
+                m[c] = chr(b + c - int(lo, 16))
+    return m
+
+
+def extract_ptr_text(pdf_bytes: bytes) -> str:
+    """Linearize the text of one (encrypted or plain) e-filed PTR PDF.
+
+    Steps: locate the /Encrypt dict (Standard, R3, RC4 — empty user password;
+    unencrypted files skip decryption), RC4+zlib-recover every stream, build
+    per-font ToUnicode maps, then walk page content (including Form XObjects,
+    where the transaction table lives) emitting decoded show-string runs.
+    Returns "" when the PDF has no text layer (scanned image) — the caller
+    counts it as unparsed, never fabricates.
+    """
+    raw = pdf_bytes
+
+    # object table: last occurrence wins (incremental-update semantics).
+    obj_start: dict[int, tuple[int, int]] = {}
+    for m in re.finditer(rb"(?:^|\r?\n)(\d+)\s+(\d+)\s+obj\b", raw):
+        obj_start[int(m.group(1))] = (int(m.group(2)), m.end())
+
+    def body_of(num: int) -> bytes:
+        hit = obj_start.get(num)
+        if hit is None:
+            return b""
+        end = raw.find(b"endobj", hit[1])
+        return raw[hit[1] : end if end != -1 else len(raw)]
+
+    fkey: bytes | None = None
+    nbits = 128
+    enc = re.search(
+        rb"/Filter\s*/Standard[^>]*?/R\s*(\d+)[^>]*?/Length\s*(\d+)[^>]*?/P\s*(-?\d+)[^>]*?/O\s*<([0-9A-Fa-f]+)>",
+        raw,
+    )
+    if enc and int(enc.group(1)) >= 3:
+        nbits = int(enc.group(2))
+        p = int(enc.group(3))
+        o = bytes.fromhex(enc.group(4).decode())
+        idm = re.search(rb"/ID\s*\[\s*<([0-9A-Fa-f]+)>", raw)
+        file_id = bytes.fromhex(idm.group(1).decode()) if idm else b""
+        fkey = _file_key_r3(o, p, file_id, nbits)
+
+    def stream_of(num: int) -> bytes:
+        body = body_of(num)
+        sm = re.search(rb">>\s*stream\r?\n", body)
+        if not sm:
+            return b""
+        data = body[sm.end() :]
+        cut = data.rfind(b"endstream")
+        data = data[:cut].rstrip(b"\r\n") if cut != -1 else data.rstrip(b"\r\n")
+        if fkey is not None:
+            gen = obj_start.get(num, (0, 0))[0]
+            data = _rc4(_object_key(fkey, num, gen, nbits), data)
+        try:
+            import zlib
+
+            data = zlib.decompress(data)
+        except zlib.error:
+            pass  # not flate-compressed (rare; keep raw)
+        return data
+
+    # font object -> cmap
+    cmaps: dict[int, dict[int, str]] = {}
+    for num in obj_start:
+        body = body_of(num)
+        if b"/ToUnicode" not in body:
+            continue
+        tu = re.search(rb"/ToUnicode\s+(\d+)\s+\d+\s+R", body)
+        if tu:
+            cm = _parse_cmap(stream_of(int(tu.group(1))).decode("latin-1", "ignore"))
+            if cm:
+                cmaps[num] = cm
+    if not cmaps:
+        return ""  # no text fonts -> scanned/image PDF
+
+    def decode_hex(hx: str, cmap: dict[int, str]) -> str:
+        step = 4 if len(hx) % 4 == 0 else 2  # Identity-H uses 2-byte CIDs
+        return "".join(
+            cmap.get(int(hx[i : i + step], 16), "") for i in range(0, len(hx), step)
+        )
+
+    chunks: list[str] = []
+
+    def walk_content(content: str, fonts: dict[str, dict[int, str]]) -> None:
+        cur: dict[int, str] = {}
+        token_re = re.compile(
+            r"/(\w+)\s+[\d.]+\s+Tf"                 # font select
+            r"|<([0-9A-Fa-f]+)>\s*Tj"               # hex show
+            r"|\[((?:[^\\\[\]]|\\.)*)\]\s*TJ"        # array show
+            r"|\(((?:[^()\\]|\\.)*)\)\s*Tj"          # literal show
+            r"|\bT\*|\bET"                          # line breaks
+        )
+        for tok in token_re.finditer(content):
+            g = tok.groups()
+            if g[0] is not None:
+                cur = fonts.get(g[0], {})
+            elif g[1] is not None:
+                chunks.append(decode_hex(g[1], cur))
+            elif g[2] is not None:
+                for hx in re.findall(r"<([0-9A-Fa-f]+)>", g[2]):
+                    chunks.append(decode_hex(hx, cur))
+                for lit in re.findall(r"\(((?:[^()\\]|\\.)*)\)", g[2]):
+                    chunks.append(lit)
+            elif g[3] is not None:
+                chunks.append(g[3])
+            else:
+                chunks.append("\n")
+
+    def fonts_from(body: bytes) -> dict[str, dict[int, str]]:
+        fonts: dict[str, dict[int, str]] = {}
+        fm = re.search(rb"/Font\s*<<(.*?)>>", body, re.S)
+        if fm:
+            for name, ref in re.findall(rb"/(\w+)\s+(\d+)\s+\d+\s+R", fm.group(1)):
+                cmap = cmaps.get(int(ref))
+                if cmap:
+                    fonts[name.decode("latin-1")] = cmap
+        return fonts
+
+    # pages in document order
+    page_nums = [
+        int(m.group(1))
+        for m in re.finditer(rb"/Kids\s*\[(.*?)\]", raw, re.S)
+        for m2 in re.finditer(rb"(\d+)\s+\d+\s+R", m.group(1))
+        for m in [m2]
+    ]
+    if not page_nums:  # no /Kids found — fall back to /Type /Page scan
+        page_nums = [
+            num
+            for num in obj_start
+            if re.sub(rb"\s+", b" ", body_of(num))[:120].startswith(b"<< /Type /Page ")
+        ]
+    for num in page_nums:
+        body = body_of(num)
+        if not body:
+            continue
+        fonts = fonts_from(body)
+        contents = []
+        cm = re.search(rb"/Contents\s+(\d+)\s+\d+\s+R", body)
+        if cm:
+            contents.append(stream_of(int(cm.group(1))).decode("latin-1", "ignore"))
+        # Form XObjects carry the transaction table on page 1 of e-filed PTRs.
+        for name, ref in re.findall(rb"/(\w+)\s+(\d+)\s+\d+\s+R", body):
+            fobj = int(ref)
+            fbody = body_of(fobj)
+            if b"/Subtype /Form" not in fbody:
+                continue
+            ffont = re.search(rb"/Font\s*<<(.*?)>>", fbody, re.S)
+            for fname, fref in (
+                re.findall(rb"/(\w+)\s+(\d+)\s+\d+\s+R", ffont.group(1))
+                if ffont
+                else []
+            ):
+                if int(fref) in cmaps:
+                    fonts.setdefault(fname.decode("latin-1"), cmaps[int(fref)])
+            contents.append(stream_of(fobj).decode("latin-1", "ignore"))
+        for content in contents:
+            walk_content(content, fonts)
+
+    return "".join(chunks)
+
+
+@dataclass(frozen=True)
+class PtrTransaction:
+    """One transaction row of a PTR, as parsed from the PDF text layer."""
+
+    owner: str | None          # SP/JT/DC when the filer is not the member; None = self
+    asset: str                 # asset description (ticker stripped)
+    ticker: str                # uppercase ticker or "" when the PDF carries none
+    asset_class: str           # raw bracket tag ("S"); never guessed into a label here
+    direction: str             # "buy" | "sell_partial" | "sell_full"
+    raw_type: str              # as printed ("P", "S", "S (partial)")
+    date_transacted: date      # from the PDF row
+    date_notified: date        # notification date printed in the PDF row
+    range_min: float | None    # statutory band min (USD)
+    range_max: float | None    # band max; None = open-ended "$X+"
+    amount_range: str          # raw band text ("$15,001 - $50,000")
+
+
+@dataclass(frozen=True)
+class PtrParseResult:
+    """Rows + the honest reconciliation counters behind them.
+
+    ``n_candidates`` counts type+date+date+$ anchors (every table row ends in
+    one, including page-split rows); ``n_excluded`` counts parsed cores whose
+    transaction type is not P/S (e.g. E = exchange — disclosed, not silently
+    dropped). Parse failures = ``n_candidates - len(rows) - n_excluded``.
+    """
+
+    rows: list[PtrTransaction]
+    n_candidates: int
+    n_excluded: int = 0
+
+
+def _direction(tx_code: str, qualifier: str | None) -> str:
+    """P -> buy; S -> sell_full / sell_partial (per the printed qualifier)."""
+    if tx_code == "P":
+        return "buy"
+    return "sell_partial" if qualifier == "partial" else "sell_full"
+
+
+def _raw_type(tx_code: str, qualifier: str | None) -> str:
+    return f"{tx_code} ({qualifier})" if qualifier else tx_code
+
+
+def _line_kind(line: str) -> str:
+    """Classify one extracted cell-line for the backward asset walk."""
+    s = line.strip()
+    if not s:
+        return "empty"
+    if any(r.fullmatch(s) for r in _FOOTER_MARKER_RES):
+        return "footer"
+    if s in _PAGE_HEADER_LINES:
+        return "header"
+    if _AMOUNT_LINE_RE.fullmatch(s):
+        return "amount"
+    if _DATE_LINE_RE.fullmatch(s):
+        return "date"
+    if s in _OWNER_CODES:
+        return "owner"
+    return "text"
+
+
+def parse_ptr_transactions(text: str) -> PtrParseResult:
+    """Parse PTR transaction rows from extracted PDF text (line-per-cell).
+
+    Right-anchored algorithm (calibrated 2026-08-23 on live 2026 filings):
+    the deterministic row core ``[tag] type date date $band`` is matched
+    first; the asset name / ticker / owner cells are then recovered by
+    walking the line-per-cell text BACKWARD from the tag, stopping at footer
+    markers ("F…S :", "New", "S…O :", "D :"), re-emitted page headers,
+    amounts, dates, or an owner code. A left-anchored single regex (the
+    salvage approach) swallows inter-row footer/page-header text into asset
+    names whenever the Owner column is empty (self-filed rows — the 2026
+    norm).
+
+    Honest counting: ``n_candidates`` counts type+dates+$ anchors (every
+    table row ends in one, including page-split rows that lost their tag);
+    rows whose type is not P/S (e.g. E = exchange) are excluded and counted
+    in ``n_excluded``; ``candidates - rows - excluded`` is the parse-failure
+    count the panel discloses. Nothing is silently dropped.
+    """
+    clean = text.replace("\x00", " ")
+    lines = clean.split("\n")
+    # char-offset -> line-index map for the backward walk
+    starts: list[int] = []
+    pos = 0
+    for ln in lines:
+        starts.append(pos)
+        pos += len(ln) + 1
+
+    def line_at(char_idx: int) -> int:
+        return bisect.bisect_right(starts, char_idx) - 1
+
+    n_candidates = len(_PTR_ROW_CANDIDATE_RE.findall(clean))
+    rows: list[PtrTransaction] = []
+    n_excluded = 0
+    for m in _PTR_ROW_CORE_RE.finditer(clean):
+        (aclass, tcode, qual, d_tran, d_notif, lo, hi) = m.groups()
+        try:
+            dt = datetime.strptime(d_tran, "%m/%d/%Y").date()
+            dn = datetime.strptime(d_notif, "%m/%d/%Y").date()
+        except ValueError:
+            continue
+        # Sanity: a trade cannot be notified before it happened (noise match).
+        if dt > dn:
+            continue
+        if tcode not in _PTR_TYPES_KEPT:
+            n_excluded += 1
+            continue
+
+        # Backward walk over the cells above the tag: (TICKER)? name{1,2}
+        # (OWNER)? — stop at footer/header/amount/date/empty cells; a text
+        # cell directly below a value-bearing footer marker ("S O :"/"D :")
+        # is the footer's VALUE, never an asset-name line.
+        i = line_at(m.start()) - 1
+        ticker = ""
+        owner: str | None = None
+        name_lines: list[str] = []
+        while i >= 0 and len(name_lines) < _ASSET_MAX_LINES + 1:
+            kind = _line_kind(lines[i])
+            if kind == "empty":
+                i -= 1
+                continue
+            if kind == "owner":
+                owner = lines[i].strip()
+                break
+            if kind == "text":
+                tk = _TICKER_LINE_RE.fullmatch(lines[i].strip())
+                if tk and not name_lines:
+                    ticker = tk.group(1)
+                    i -= 1
+                    continue
+                if i > 0 and any(
+                    r.fullmatch(lines[i - 1].strip()) for r in _VALUE_BEARING_MARKER_RES
+                ):
+                    break  # this text cell is the footer value, not the name
+                name_lines.append(lines[i].strip())
+                i -= 1
+                continue
+            break  # footer / header / amount / date cell ends the walk
+        name_lines = name_lines[:_ASSET_MAX_LINES]
+        name = re.sub(r"\s+", " ", " ".join(reversed(name_lines))).strip(" -–,")
+        if not name or not any(c.isalpha() for c in name):
+            continue  # no asset name recovered — falls through to failures
+
+        # Wrapped names usually put the ticker on its own cell line (captured
+        # above); single-line names carry it inline — extract it there too,
+        # GATED on the stock asset-class + a security-type keyword so phrases
+        # like "Annuity (RILA)" are never lifted as tickers.
+        if not ticker and aclass == "ST":
+            tk_inline = re.search(r"\(([A-Z][A-Z.]{0,7})\)\s*$", name)
+            if tk_inline and any(
+                k in name.lower() for k in (
+                    "stock", "share", "ordinary", "common", "class", "corp",
+                    "inc", "ltd", "plc", "adr", "ads",
+                )
+            ):
+                ticker = tk_inline.group(1)
+                name = name[: tk_inline.start()].strip(" -–,")
+
+        lo_v = float(lo.replace(",", ""))
+        hi_v = float(hi.replace(",", "")) if hi else None
+        amount_range = (
+            f"${int(lo_v):,}+" if hi_v is None else f"${int(lo_v):,} - ${int(hi_v):,}"
+        )
+        rows.append(PtrTransaction(
+            owner=owner,
+            asset=name,
+            ticker=ticker,
+            asset_class=aclass,
+            direction=_direction(tcode, qual),
+            raw_type=_raw_type(tcode, qual),
+            date_transacted=dt,
+            date_notified=dn,
+            range_min=lo_v,
+            range_max=hi_v,
+            amount_range=amount_range,
+        ))
+    return PtrParseResult(
+        rows=rows, n_candidates=n_candidates, n_excluded=n_excluded,
+    )
+
+
+def _doc_id_from_url(doc_url: str) -> tuple[str, str]:
+    """``.../ptr-pdfs/{year}/{DocID}.pdf`` -> ``(year, DocID)``."""
+    m = re.search(r"/ptr-pdfs/(\d{4})/([^/]+)\.pdf$", doc_url)
+    if not m:
+        raise ValueError(f"not a House PTR pdf url: {doc_url}")
+    return m.group(1), m.group(2)
+
+
+def fetch_ptr_pdf(doc_url: str, cache_dir: Path | None = None) -> bytes:
+    """One PTR PDF by its clerk permalink (idempotent; cached per DocID).
+
+    Politeness: one ``_policy_get`` per uncached file (>=2s host spacing +
+    bounded linear backoff; 4xx is permanent — counted, never retried past).
+    """
+    year, doc_id = _doc_id_from_url(doc_url)
+    fp = _cache_dir(cache_dir) / f"house_ptr_pdf_{year}_{doc_id}.pdf"
+    if fp.exists():
+        return fp.read_bytes()
+    resp = _policy_get(
+        doc_url,
+        total_attempts=4,
+        backoff_base=4,
+        backoff_mode="linear",
+        headers={"User-Agent": _UA},
+        timeout=60,
+    )
+    fp.write_bytes(resp.content)
+    return resp.content
