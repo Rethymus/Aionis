@@ -1191,11 +1191,19 @@ def export_form4() -> None:
             sells = int(sum(y["sells"] for y in yearly))
             c_window_start = str(committed.get("window", "")).split("..")[0]
             c_issuers = int(committed.get("n_issuers") or 0)
-            methodology_note = (
-                f" Universe widened from {c_issuers} to {n_issuers} issuers "
-                f"from {fresh_min_year} (bounded-breadth fetch; pre-{fresh_min_year} "
-                "yearly aggregates retained verbatim from the narrower universe)."
-            )
+            if n_issuers > c_issuers:
+                methodology_note = (
+                    f" Universe widened from {c_issuers} to {n_issuers} issuers "
+                    f"from {fresh_min_year} (bounded-breadth fetch; "
+                    f"pre-{fresh_min_year} yearly aggregates retained verbatim "
+                    "from the narrower universe)."
+                )
+            else:
+                methodology_note = (
+                    f" Universe unchanged at {n_issuers} issuers from "
+                    f"{fresh_min_year} (pre-{fresh_min_year} yearly aggregates "
+                    "retained verbatim)."
+                )
 
     total_txns = buys + sells
     if c_window_start:
@@ -2344,6 +2352,7 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
     ("ipo", "ipo.json", _DH_DAILY),
     ("politician_trades", "politician_trades.json", _DH_DAILY),
     ("politician_trades_tx", "politician_trades_tx.json", _DH_DAILY),
+    ("party_index", "party_index.json", _DH_DAILY),
     ("reddit", "reddit.json", _DH_DAILY),
     ("headline_provenance", "headline_provenance.json", _DH_DAILY),
     ("ledger_audit", "ledger_audit.json", _DH_DAILY),
@@ -2625,6 +2634,11 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
         "U.S. House Clerk — public domain",
         "STOCK Act PTR transactions parsed from the source PDFs (House-only; "
         "statutory amount bands; parse failures disclosed)",
+    ),
+    "party_index": (
+        "Aionis-derived from U.S. House Clerk public-domain PTR parses",
+        "monthly D-vs-R net-direction opposition share + trailing-90d "
+        "count-weighted follow portfolios (signal lists, no returns)",
     ),
     "reddit": ("Reddit public Atom RSS — Reddit ToS, display-only", "retail mention counts, forward-only"),
     "headline_provenance": ("Aionis append-only ledger (repo MIT)", "ledger.jsonl freeze→result pairing"),
@@ -3487,6 +3501,183 @@ def export_politician_trades_tx() -> None:
     )
 
 
+def export_party_index() -> None:
+    """Party opposition index + party follow portfolios (display-only).
+
+    DERIVED panel: reads the committed ``politician_trades_tx.json`` payload
+    written by ``export_politician_trades_tx`` (never the gitignored cache
+    parquet) and aggregates it — zero new fetches. Per calendar month, for
+    every ticker BOTH House parties traded, net direction (buys − sells) per
+    party; the OPPOSITION share = fraction of both-directional common tickers
+    signed opposite (D net-buy while R net-sell, or vice versa). The follow
+    portfolios are the trailing 90-day top net-buy books per party — count-
+    weighted SIGNAL lists only (the PTR carries statutory $ bands, not exact
+    amounts, so dollar-weighting would be a lie): no prices, no returns, no
+    performance claim. Display lane, never a research signal.
+    """
+    src = _dh_read("politician_trades_tx.json")
+    if not isinstance(src, dict) or src.get("status") != "ok":
+        print(
+            "[export-terminal] SKIP party_index: politician_trades_tx.json "
+            "not present or not ok (tracked JSON retains last-committed value)",
+            flush=True,
+        )
+        return
+    tx = [
+        r
+        for r in src.get("transactions", [])
+        if r.get("ticker") and r.get("party") in ("D", "R")
+    ]
+    if not tx:
+        print(
+            "[export-terminal] SKIP party_index: no tickered D/R transactions "
+            "in the source panel (tracked JSON retains last-committed value)",
+            flush=True,
+        )
+        return
+
+    # ---- Monthly opposition series -------------------------------------
+    months: dict[str, dict[str, dict]] = {}
+    for r in tx:
+        b = months.setdefault(r["transaction_date"][:7], {"D": {}, "R": {}})
+        t = b[r["party"]].setdefault(r["ticker"], {"buy": 0, "sell": 0})
+        t["buy" if r["direction"] == "buy" else "sell"] += 1
+
+    month_rows: list[dict] = []
+    detail: dict[str, list] = {}
+    for m in sorted(months):
+        dmap, rmap = months[m]["D"], months[m]["R"]
+        common = sorted(set(dmap) & set(rmap))
+        directional: list[dict] = []
+        for tkr in common:
+            d_net = dmap[tkr]["buy"] - dmap[tkr]["sell"]
+            r_net = rmap[tkr]["buy"] - rmap[tkr]["sell"]
+            if d_net == 0 or r_net == 0:
+                continue
+            row = {
+                "ticker": tkr,
+                "d_net": d_net,
+                "r_net": r_net,
+                "n_d": dmap[tkr]["buy"] + dmap[tkr]["sell"],
+                "n_r": rmap[tkr]["buy"] + rmap[tkr]["sell"],
+            }
+            directional.append(row)
+        opposed = [d for d in directional if (d["d_net"] > 0) != (d["r_net"] > 0)]
+        month_rows.append({
+            "month": m,
+            "d_tx": sum(v["buy"] + v["sell"] for v in dmap.values()),
+            "r_tx": sum(v["buy"] + v["sell"] for v in rmap.values()),
+            "d_buy": sum(v["buy"] for v in dmap.values()),
+            "r_buy": sum(v["buy"] for v in rmap.values()),
+            "n_common": len(common),
+            "n_directional": len(directional),
+            "n_opposed": len(opposed),
+            "opposition": round(len(opposed) / len(directional), 4) if directional else None,
+        })
+        detail[m] = sorted(
+            directional, key=lambda d: (-(d["n_d"] + d["n_r"]), d["ticker"])
+        )
+
+    # Headline month = latest WITH both-directional common tickers (a sparse
+    # current month honestly yields no opposition; the series still shows it
+    # as null rather than dropping it).
+    latest_month = next(
+        (r for r in reversed(month_rows) if r["opposition"] is not None),
+        month_rows[-1],
+    )
+    latest_detail = detail[latest_month["month"]]
+    opposed_rows = [
+        d for d in latest_detail if (d["d_net"] > 0) != (d["r_net"] > 0)
+    ][:10]
+    consensus_rows = [d for d in latest_detail if d["d_net"] > 0 and d["r_net"] > 0][:10]
+
+    # ---- Trailing-90d follow portfolios --------------------------------
+    from datetime import date, timedelta
+
+    max_tx = max(r["transaction_date"] for r in tx)
+    cutoff = (date.fromisoformat(max_tx) - timedelta(days=90)).isoformat()
+    window = [r for r in tx if r["transaction_date"] >= cutoff]
+
+    portfolios: dict[str, dict] = {}
+    for p in ("D", "R"):
+        rows = [r for r in window if r["party"] == p]
+        agg: dict[str, dict] = {}
+        for r in rows:
+            a = agg.setdefault(
+                r["ticker"], {"buy": 0, "sell": 0, "members": set(), "assets": {}}
+            )
+            a["buy" if r["direction"] == "buy" else "sell"] += 1
+            a["members"].add(r["member"])
+            if r.get("asset"):
+                a["assets"][r["asset"]] = a["assets"].get(r["asset"], 0) + 1
+        holdings = sorted(
+            (
+                {
+                    "ticker": tkr,
+                    "asset": max(a["assets"], key=a["assets"].get) if a["assets"] else "",
+                    "n_buy": a["buy"],
+                    "n_sell": a["sell"],
+                    "net_buy": a["buy"] - a["sell"],
+                    "n_members": len(a["members"]),
+                }
+                for tkr, a in agg.items()
+            ),
+            key=lambda h: (-h["net_buy"], -h["n_buy"], h["ticker"]),
+        )[:10]
+        portfolios[p] = {
+            "n_tx": len(rows),
+            "n_members": len({r["member"] for r in rows}),
+            "holdings": holdings,
+        }
+
+    payload = {
+        "status": "ok",
+        "as_of": src.get("as_of"),
+        "source_panel": "politician_trades_tx",
+        # Latest transaction_date feeding the panel (window anchor).
+        "window_anchor": max_tx,
+        "window_days": 90,
+        "n_source_tx": len(tx),
+        "months": month_rows,
+        "latest": {
+            "month": latest_month["month"],
+            "opposition": latest_month["opposition"],
+            "opposed": opposed_rows,
+            "consensus": consensus_rows,
+        },
+        "portfolios": portfolios,
+        "methodology": (
+            "Party opposition index + follow portfolios, DERIVED from the "
+            "committed politician_trades_tx panel (House-only 2026 PTR PDF "
+            "parses; zero new fetches). Opposition: per calendar month, for "
+            "every ticker BOTH parties traded, net direction = buys − sells "
+            "(count-weighted; the PTR discloses statutory $ bands, not exact "
+            "amounts, so dollar-weighting would be fabricated precision); "
+            "the index = share of both-directional common tickers signed "
+            "opposite (D net-buy vs R net-sell or vice versa); null when no "
+            "ticker carries both parties' net direction that month. Follow "
+            "portfolios: trailing 90 days from the latest transaction date, "
+            "top-10 tickers per party by net buy count — SIGNAL LISTS ONLY, "
+            "no prices, no returns, no performance claim (display lane; live "
+            "prices are display-only and never enter any pipeline). "
+            "Unknown-party and un-tickered rows are excluded from the math "
+            "and remain visible in the source panel."
+        ),
+    }
+    (WEB / "party_index.json").write_text(
+        json.dumps(_stamp(payload), indent=2, default=str)
+    )
+    print(
+        f"[export-terminal] party_index: {len(month_rows)} months, latest "
+        f"{latest_month['month']} opposition "
+        f"{latest_month['opposition'] if latest_month['opposition'] is not None else 'n/a'} "
+        f"({latest_month['n_opposed']}/{latest_month['n_directional']} directional), "
+        f"portfolios D {portfolios['D']['n_tx']}tx / R {portfolios['R']['n_tx']}tx "
+        f"since {cutoff}",
+        flush=True,
+    )
+
+
 def export_executives() -> None:
     """Officer/director-change filings — 8-K Item 5.02 stream (display-only).
 
@@ -3611,6 +3802,9 @@ def main() -> None:
     _safe_export("form_ipo", export_form_ipo)
     _safe_export("politician_trades", export_politician_trades)
     _safe_export("politician_trades_tx", export_politician_trades_tx)
+    # party_index derives from the committed politician_trades_tx.json written
+    # just above — keep directly after it, before the freshness map.
+    _safe_export("party_index", export_party_index)
     _safe_export("form13f", export_form13f)
     _safe_export("market_context", export_market_context)
     _safe_export("macro_drivers", export_macro_drivers)

@@ -266,6 +266,206 @@ function TxSection() {
   );
 }
 
+/** 政党对立指数 + 两党跟单组合 — derived panel over the transaction set
+ *  (zero new fetches): monthly D-vs-R net-direction opposition share and the
+ *  trailing-90d top net-buy books per party. Count-weighted SIGNAL lists
+ *  only — no prices, no returns, no performance claim (display lane). */
+function PartyIndexSection() {
+  const { t } = useI18n();
+  const f = aionis.partyIndex;
+  if (f.status !== "ok" || f.months.length === 0) return null;
+
+  const months = f.months.slice(-12).reverse();
+  const pct = (n: number, d: number) => (d > 0 ? `${Math.round((n / d) * 100)}%` : "—");
+
+  const netChip = (party: "D" | "R", net: number) => (
+    <span
+      className={cn(
+        "font-mono text-[11px] font-semibold tabular-nums",
+        party === "D" ? "text-primary" : "text-rose-600 dark:text-rose-400",
+      )}
+    >
+      {party}
+      {net > 0 ? " +" : " "}
+      {net}
+    </span>
+  );
+
+  const tickerRow = (
+    r: { ticker: string; d_net: number; r_net: number },
+    i: number,
+  ) => (
+    <span
+      key={`${r.ticker}-${i}`}
+      className="inline-flex items-center gap-1.5 rounded-[4px] bg-muted/60 px-2 py-1"
+    >
+      <Link
+        href={`/stock/${r.ticker}`}
+        className="font-mono text-xs font-semibold text-primary hover:underline"
+      >
+        {r.ticker}
+      </Link>
+      {netChip("D", r.d_net)}
+      {netChip("R", r.r_net)}
+    </span>
+  );
+
+  return (
+    <div className="grid items-start gap-6 lg:grid-cols-2">
+      <Card className="min-w-0">
+        <CardHeader className="pb-3">
+          <CardTitle>{t("congress.pi.title")}</CardTitle>
+          <CardDescription>{t("congress.pi.note")}</CardDescription>
+        </CardHeader>
+        <CardContent className="p-0">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>{t("congress.pi.month")}</TableHead>
+                <TableHead className="text-right">
+                  {t("congress.pi.d_buy_share")}
+                </TableHead>
+                <TableHead className="text-right">
+                  {t("congress.pi.r_buy_share")}
+                </TableHead>
+                <TableHead className="text-right">
+                  {t("congress.pi.opposition")}
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {months.map((m) => (
+                <TableRow key={m.month}>
+                  <TableCell className="font-mono text-xs tabular-nums text-muted-foreground">
+                    {m.month}
+                  </TableCell>
+                  <TableCell className="text-right font-mono text-xs tabular-nums">
+                    {pct(m.d_buy, m.d_tx)}
+                  </TableCell>
+                  <TableCell className="text-right font-mono text-xs tabular-nums">
+                    {pct(m.r_buy, m.r_tx)}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    {m.opposition === null ? (
+                      <span className="font-mono text-xs text-muted-foreground">—</span>
+                    ) : (
+                      <span className="inline-flex items-center justify-end gap-1.5">
+                        <span className="h-1.5 w-10 overflow-hidden rounded-full bg-muted">
+                          <span
+                            className="block h-full rounded-full bg-primary/50"
+                            style={{ width: `${Math.round(m.opposition * 100)}%` }}
+                          />
+                        </span>
+                        <span className="font-mono text-xs font-semibold tabular-nums">
+                          {m.opposition.toFixed(2)}
+                        </span>
+                        <span className="font-mono text-[11px] text-muted-foreground tabular-nums">
+                          ({m.n_opposed}/{m.n_directional})
+                        </span>
+                      </span>
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+          {f.latest.opposed.length > 0 || f.latest.consensus.length > 0 ? (
+            <div className="space-y-2 border-t px-4 py-3">
+              <p className="text-xs text-muted-foreground">
+                {t("congress.pi.opposed")} · {f.latest.month}
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {f.latest.opposed.length > 0 ? (
+                  f.latest.opposed.map(tickerRow)
+                ) : (
+                  <span className="text-xs text-muted-foreground">
+                    {t("congress.pi.empty")}
+                  </span>
+                )}
+              </div>
+              {f.latest.consensus.length > 0 ? (
+                <>
+                  <p className="pt-1 text-xs text-muted-foreground">
+                    {t("congress.pi.consensus")}
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {f.latest.consensus.map(tickerRow)}
+                  </div>
+                </>
+              ) : null}
+            </div>
+          ) : null}
+        </CardContent>
+      </Card>
+
+      <Card className="min-w-0">
+        <CardHeader className="pb-3">
+          <CardTitle>{t("congress.pi.portfolio_title")}</CardTitle>
+          <CardDescription>
+            {t("congress.pi.portfolio_note").replace("{days}", String(f.window_days))}
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="grid grid-cols-1 gap-0 p-0 sm:grid-cols-2">
+          {(["D", "R"] as const).map((p) => {
+            const book = f.portfolios[p];
+            return (
+              <div key={p} className="min-w-0 border-t sm:border-l">
+                <div className="flex items-center gap-1.5 px-4 py-2.5">
+                  <PartyBadge party={p} />
+                  <span className="ml-auto font-mono text-[11px] text-muted-foreground tabular-nums">
+                    {t("congress.pi.n_tx")} {book.n_tx} · {t("congress.pi.n_members")}{" "}
+                    {book.n_members}
+                  </span>
+                </div>
+                <div className="divide-y border-t">
+                  {book.holdings.map((h, i) => (
+                    <div
+                      key={h.ticker}
+                      className="flex items-center gap-2 px-4 py-1.5"
+                    >
+                      <span className="w-4 shrink-0 font-mono text-[11px] text-muted-foreground tabular-nums">
+                        {i + 1}
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <Link
+                          href={`/stock/${h.ticker}`}
+                          className="font-mono text-xs font-semibold text-primary hover:underline"
+                        >
+                          {h.ticker}
+                        </Link>
+                        <p
+                          className="truncate text-[11px] text-muted-foreground"
+                          title={h.asset}
+                        >
+                          {h.asset || "—"}
+                        </p>
+                      </div>
+                      <div className="shrink-0 text-right">
+                        <Badge
+                          variant="secondary"
+                          className={cn(
+                            "font-mono text-[11px] leading-4",
+                            h.net_buy > 0 ? "badge-up" : "badge-down",
+                          )}
+                        >
+                          +{h.net_buy}
+                        </Badge>
+                        <p className="mt-0.5 font-mono text-[11px] text-muted-foreground tabular-nums">
+                          {h.n_buy}/{h.n_sell} · ×{h.n_members}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
 export function CongressView() {
   const { t } = useI18n();
   const f = aionis.politicianTrades;
@@ -347,6 +547,10 @@ export function CongressView() {
           </CardHeader>
         </Card>
       </div>
+
+      {/* 政党对立指数 + 两党跟单组合 (derived, zero new data): the analytical
+          layer ABOVE the raw streams — index first, then filings/rows. */}
+      <PartyIndexSection />
 
       <div className="grid items-start gap-6 lg:grid-cols-[1fr_320px]">
         <Card className="min-w-0">

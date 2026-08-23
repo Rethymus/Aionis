@@ -43,6 +43,7 @@ import form8kJson from "./form8k.json";
 import ipoJson from "./ipo.json";
 import politicianTradesJson from "./politician_trades.json";
 import politicianTradesTxJson from "./politician_trades_tx.json";
+import partyIndexJson from "./party_index.json";
 import executivesJson from "./executives.json";
 
 export type Pick = {
@@ -700,6 +701,61 @@ export type PoliticianTradesTx = {
   snapshot_ts?: string;
 };
 
+export type PartyIndexMonth = {
+  month: string;
+  d_tx: number;
+  r_tx: number;
+  d_buy: number;
+  r_buy: number;
+  // Tickers traded by BOTH parties that month.
+  n_common: number;
+  // Of those, tickers where BOTH parties have a nonzero net direction.
+  n_directional: number;
+  n_opposed: number;
+  // n_opposed / n_directional ∈ [0,1]; null when no directional overlap.
+  opposition: number | null;
+};
+
+export type PartyIndexTicker = {
+  ticker: string;
+  // net = buys − sells per party that month (count-weighted).
+  d_net: number;
+  r_net: number;
+  n_d: number;
+  n_r: number;
+};
+
+export type PartyIndexHolding = {
+  ticker: string;
+  asset: string;
+  n_buy: number;
+  n_sell: number;
+  net_buy: number;
+  n_members: number;
+};
+
+export type PartyIndex = {
+  status: string;
+  as_of: string | null;
+  source_panel: string;
+  window_anchor: string;
+  window_days: number;
+  n_source_tx: number;
+  months: PartyIndexMonth[];
+  latest: {
+    month: string;
+    opposition: number | null;
+    opposed: PartyIndexTicker[];
+    consensus: PartyIndexTicker[];
+  };
+  portfolios: Record<
+    "D" | "R",
+    { n_tx: number; n_members: number; holdings: PartyIndexHolding[] }
+  >;
+  methodology: string;
+  snapshot_ts?: string;
+};
+
 export type ExecutivesEvent = {
   company: string;
   ticker: string;
@@ -768,5 +824,6 @@ export const aionis = {
   ipo: ipoJson as FormIpo,
   politicianTrades: politicianTradesJson as PoliticianTrades,
   politicianTradesTx: politicianTradesTxJson as PoliticianTradesTx,
+  partyIndex: partyIndexJson as PartyIndex,
   executives: executivesJson as Executives,
 };
