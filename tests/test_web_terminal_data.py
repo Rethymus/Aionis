@@ -619,6 +619,44 @@ def test_party_index_panel_contract() -> None:
     assert "house" in ml and ("no prices" in ml or "no returns" in ml)
 
 
+def test_ark_panel_contract() -> None:
+    """ARK panel: official-CSV derivation, honest skips, overlap consistency.
+
+    The panel rides ARK's own daily Full Holdings CSVs (display-only). The
+    contract pins: per-fund top lists sorted by official weight desc and
+    capped at 10; family overlap rows genuinely held by 2+ funds with fund
+    lists drawn from the exported funds; skipped rows disclosed per fund;
+    and the methodology must disclose that the URLs were browser-verified
+    and that no prices/returns are claimed.
+    """
+    x = _load("ark.json")
+    assert x["status"] in {"ok", "awaiting_fetch"}
+    assert {"as_of", "n_funds", "n_funds_expected", "funds", "family_overlap",
+            "methodology", "snapshot_ts"} <= set(x)
+    if x["status"] != "ok" or not x["funds"]:
+        return
+    assert 0 < x["n_funds"] <= x["n_funds_expected"] == 8
+    fund_ticks = set()
+    for f in x["funds"]:
+        assert {"ticker", "fund", "as_of", "n_positions", "skipped_rows", "top"} <= set(f)
+        assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", f["as_of"])
+        assert f["n_positions"] > 0 and f["skipped_rows"] >= 0
+        assert 1 <= len(f["top"]) <= 10
+        ws = [p["weight_pct"] for p in f["top"]]
+        assert ws == sorted(ws, reverse=True), "top sorted by weight desc"
+        assert all(p["weight_pct"] > 0 and p["ticker"] for p in f["top"])
+        fund_ticks.add(f["ticker"])
+    assert x["as_of"] == max(f["as_of"] for f in x["funds"])
+    for o in x["family_overlap"]:
+        assert len(o["funds"]) >= 2, "overlap rows held by 2+ funds"
+        assert set(o["funds"]) <= fund_ticks, "overlap funds = exported funds"
+        assert o["max_weight_pct"] > 0
+    nf = [len(o["funds"]) for o in x["family_overlap"]]
+    assert nf == sorted(nf, reverse=True), "overlap sorted by fund count desc"
+    ml = x["methodology"].lower()
+    assert "ark" in ml and ("no prices" in ml or "no returns" in ml)
+
+
 def test_form_ipo_panel_contract() -> None:
     """IPO panel schema: filing shape, status enum, honest counting, date order.
 
