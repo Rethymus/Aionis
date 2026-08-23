@@ -200,7 +200,7 @@ def extract_ptr_text(pdf_bytes: bytes) -> str:
         fonts: dict[str, dict[int, str]] = {}
         fm = re.search(rb"/Font\s*<<(.*?)>>", body, re.S)
         if fm:
-            for name, ref in re.findall(rb"/(\w+)\s+(\d+)\s+\d+\s+R", fm.group(1)):
+            for _name, ref in re.findall(rb"/(\w+)\s+(\d+)\s+\d+\s+R", fm.group(1)):
                 cmap = cmaps.get(int(ref))
                 if cmap:
                     fonts[name.decode("latin-1")] = cmap
