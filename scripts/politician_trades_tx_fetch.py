@@ -38,8 +38,8 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from aionis.ingest.politician_trades import (  # noqa: E402
-    _doc_id_from_url,
     _cache_dir,
+    _doc_id_from_url,
     extract_ptr_text,
     fetch_house_directory,
     fetch_house_ptr_year,
@@ -189,7 +189,8 @@ def main() -> None:
     print(
         f"[ptr-tx-fetch] DONE{' (COMPLETE)' if stats['complete'] else ' (PARTIAL)'}: "
         f"{len(df)} transactions / {n_members} members; "
-        f"processed {stats['filings_processed']}/{stats['filings_processed'] + len(stats['fetch_errors'])} "
+        f"processed {stats['filings_processed']}/"
+        f"{stats['filings_processed'] + len(stats['fetch_errors'])} "
         f"of {stats['filings_total']} filings; no-text {len(stats['no_text_pdfs'])}; "
         f"excluded(exchange) {stats['rows_excluded']}; "
         f"parse failures {stats['parse_failures']} "
