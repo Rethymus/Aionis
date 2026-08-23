@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { ArrowRightIcon } from "lucide-react";
+import { ArrowRightIcon, SearchIcon } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -13,7 +13,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
-import { aionis } from "@/data/aionis";
+import { form13f } from "@/data/aionis/form13f";
 import {
   CATEGORY_LABEL,
   CATEGORY_ORDER,
@@ -33,8 +33,9 @@ type CategoryFilter = "all" | Category;
 
 export function InstitutionsView() {
   const { t } = useI18n();
-  const f = aionis.form13f;
+  const f = form13f;
   const [filter, setFilter] = useState<CategoryFilter>("all");
+  const [query, setQuery] = useState("");
 
   if (f.status !== "ok" || f.managers.length === 0) {
     return (
@@ -68,6 +69,16 @@ export function InstitutionsView() {
     filter === "all"
       ? f.managers
       : f.managers.filter((m) => m.category === filter);
+  // Substring search over name / zh label / CIK (client-side, zero fetch).
+  const needle = query.trim().toLowerCase();
+  const searched = needle
+    ? visible.filter(
+        (m) =>
+          m.name.toLowerCase().includes(needle) ||
+          (m.zh_name ? m.zh_name.toLowerCase().includes(needle) : false) ||
+          m.cik.includes(needle),
+      )
+    : visible;
 
   const chipBase =
     "rounded-full border px-3 py-1 text-xs font-medium transition-colors";
@@ -136,8 +147,20 @@ export function InstitutionsView() {
       </div>
       <p className="text-xs text-muted-foreground">{t("institutions.cat_note")}</p>
 
+      {/* Manager search: name / 中文别名 / CIK substring, client-side. */}
+      <div className="relative max-w-sm">
+        <SearchIcon className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+        <input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder={t("institutions.search.placeholder")}
+          aria-label={t("institutions.search.label")}
+          className="h-9 w-full rounded-md border bg-transparent pl-9 pr-3 text-sm outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring"
+        />
+      </div>
+
       <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-        {visible.map((m) => (
+        {searched.map((m) => (
           <Link key={m.cik} href={`/manager/${m.cik}`} className="group block">
             <Card className="h-full py-0 transition-colors group-hover:border-primary/40">
               <CardHeader className="border-b">
@@ -173,10 +196,10 @@ export function InstitutionsView() {
                 <div className="col-span-2">
                   <p className="text-muted-foreground">{t("institutions.top_holding")}</p>
                   <p className="mt-0.5 truncate font-medium">
-                    {m.top10[0] ? m.top10[0].issuer : "—"}
-                    {m.top10[0] ? (
+                    {m.positions[0] ? m.positions[0].issuer : "—"}
+                    {m.positions[0] ? (
                       <span className="ml-1 font-normal text-muted-foreground tabular-nums">
-                        {m.top10[0].pct.toFixed(1)}%
+                        {m.positions[0].pct.toFixed(1)}%
                       </span>
                     ) : null}
                   </p>
@@ -190,6 +213,11 @@ export function InstitutionsView() {
           </Link>
         ))}
       </div>
+      {searched.length === 0 ? (
+        <p className="text-sm italic text-muted-foreground">
+          {t("institutions.search.empty")}
+        </p>
+      ) : null}
 
       <p className="text-xs text-muted-foreground">{t("institutions.explain")}</p>
     </div>

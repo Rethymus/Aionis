@@ -586,12 +586,12 @@ def test_form_ipo_panel_contract() -> None:
 
 
 def test_form13f_panel_contract() -> None:
-    """13F panel schema: manager shape, top10/changes enums, coverage format.
+    """13F panel schema: manager shape, positions/changes enums, coverage format.
 
     Locks the contract the /institutions view renders against (direction enum
     mirrored in DIRECTION_LABEL, ticker nullable for honest unresolved
     issuers) and the ``ticker_coverage`` accounting string computed at export
-    time (resolved-ticker identities over latest-quarter top-10 rows).
+    time (resolved-ticker identities over latest-quarter visible-book rows).
     """
     f = _load("form13f.json")
     assert f["status"] in {"ok", "awaiting_fetch"}
@@ -599,25 +599,25 @@ def test_form13f_panel_contract() -> None:
     if f["status"] != "ok" or not f["managers"]:
         return  # awaiting-fetch placeholder keeps the shape loose
     for m in f["managers"]:
-        assert {"cik", "name", "category", "quarter", "filed", "n_positions", "top10"} <= set(m)
+        assert {"cik", "name", "category", "quarter", "filed", "n_positions", "positions"} <= set(m)
         assert re.fullmatch(r"\d{10}", str(m["cik"])), f"CIK must be 10-digit: {m['cik']}"
         assert m["category"] in FORM13F_CATEGORIES, (
             f"category must be an editorial enum value: {m['category']!r}"
         )
-        for h in m["top10"]:
+        for h in m["positions"]:
             assert {"issuer", "cusip", "value", "shares", "pct"} <= set(h)
             assert isinstance(h["ticker"], (str, type(None)))
             assert h["value"] > 0 and h["shares"] >= 0
         for c in m.get("changes", []):
             assert c["direction"] in {"new", "increased", "reduced", "exited"}
             assert isinstance(c["ticker"], (str, type(None)))
-    # Coverage is "linked/total" over top10 rows; total must equal the count.
+    # Coverage is "linked/total" over visible-book rows; total must equal the count.
     linked, _, total = f["ticker_coverage"].partition("/")
     assert linked.isdigit() and total.isdigit(), f"bad coverage format: {f['ticker_coverage']!r}"
-    n_top = sum(len(m["top10"]) for m in f["managers"])
-    assert int(total) == n_top, "coverage denominator must equal top10 row count"
-    n_linked = sum(1 for m in f["managers"] for h in m["top10"] if h["ticker"])
-    assert int(linked) == n_linked, "coverage numerator must equal resolved top10 tickers"
+    n_top = sum(len(m["positions"]) for m in f["managers"])
+    assert int(total) == n_top, "coverage denominator must equal visible-book row count"
+    n_linked = sum(1 for m in f["managers"] for h in m["positions"] if h["ticker"])
+    assert int(linked) == n_linked, "coverage numerator must equal resolved visible-book tickers"
     assert n_linked >= 1, "at least some issuers must resolve (name-join layer works)"
 
 
@@ -1336,7 +1336,7 @@ def test_form13f_status_and_shape() -> None:
 
 
 def test_form13f_managers_when_ok() -> None:
-    """Lock the manager schema: CIK, quarter frame, monotonic top10 pcts."""
+    """Lock the manager schema: CIK, quarter frame, monotonic positions pcts."""
     f = _load("form13f.json")
     if f["status"] != "ok":
         return  # awaiting branch: guards above must not raise; nothing else to check
@@ -1345,7 +1345,7 @@ def test_form13f_managers_when_ok() -> None:
     seen_ciks: set[str] = set()
     for m in ms:
         assert {"cik", "name", "category", "quarter", "filed", "n_positions",
-                "total_value", "top10", "changes"} <= set(m)
+                "total_value", "positions", "changes"} <= set(m)
         assert len(m["cik"]) == 10 and m["cik"].isdigit()
         assert m["cik"] not in seen_ciks, "one manager row per CIK"
         seen_ciks.add(m["cik"])
@@ -1354,13 +1354,13 @@ def test_form13f_managers_when_ok() -> None:
         assert m["category"] in FORM13F_CATEGORIES, m["category"]
         assert m["total_value"] > 0
         assert m["n_positions"] >= 1
-        # top10 = top holdings by value; short books honestly report <10.
-        assert len(m["top10"]) == min(10, m["n_positions"]), m["name"]
-        values = [h["value"] for h in m["top10"]]
-        assert values == sorted(values, reverse=True), f"top10 by value desc: {m['name']}"
-        pcts = [h["pct"] for h in m["top10"]]
+        # positions = top holdings by value (up to 50); short books report fewer.
+        assert len(m["positions"]) == min(50, m["n_positions"]), m["name"]
+        values = [h["value"] for h in m["positions"]]
+        assert values == sorted(values, reverse=True), f"positions by value desc: {m['name']}"
+        pcts = [h["pct"] for h in m["positions"]]
         assert pcts == sorted(pcts, reverse=True), f"pct monotonic: {m['name']}"
-        for h in m["top10"]:
+        for h in m["positions"]:
             assert {"issuer", "cusip", "value", "shares", "pct", "ticker"} <= set(h)
             assert h["value"] >= 0 and h["shares"] >= 0
             assert 0 <= h["pct"] <= 100

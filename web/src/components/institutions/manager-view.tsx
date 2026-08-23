@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import { ArrowLeftIcon, ExternalLinkIcon } from "lucide-react";
 import {
   Card,
@@ -10,26 +11,32 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 import { ProvenanceBadge } from "@/components/provenance-badge";
 import { useI18n } from "@/i18n/provider";
-import { aionis } from "@/data/aionis";
+import { form13f } from "@/data/aionis/form13f";
 import {
   categoryLabelKey,
   ChangesBlock,
+  ConcentrationBlock,
   fmtUsd,
-  Top10Table,
+  PositionsTable,
 } from "@/components/institutions/manager-book";
 
 // /manager/[cik] — static per-manager detail page over the same committed
 // form13f.json the /institutions directory reads (generateStaticParams covers
 // every manager CIK; the data barrel is inlined at build time, so the page
-// renders with zero client fetches). Top-10 book + quarter-over-quarter
-// changes reuse the shared manager-book components — the two surfaces cannot
-// drift. EDGAR link goes to the filer's public 13F-HR history (provenance).
+// renders with zero client fetches). Visible book (up to 50 positions) +
+// concentration widget and the quarter-over-quarter changes tab reuse the
+// shared manager-book components — the two surfaces cannot drift. EDGAR link
+// goes to the filer's public 13F-HR history (provenance).
+type BookTab = "holdings" | "changes";
+
 export function ManagerView({ cik }: { cik: string }) {
   const { t } = useI18n();
-  const f = aionis.form13f;
+  const f = form13f;
   const m = f.managers.find((x) => x.cik === cik);
+  const [tab, setTab] = useState<BookTab>("holdings");
 
   if (!m) {
     // Unreachable via generateStaticParams, but honest if a stale link or a
@@ -114,23 +121,65 @@ export function ManagerView({ cik }: { cik: string }) {
       <Card className="overflow-hidden py-0">
         <CardHeader className="border-b">
           <div className="flex flex-wrap items-center gap-2">
-            <CardTitle className="text-base">{t("institutions.top10")}</CardTitle>
+            <CardTitle className="text-base">{t("institutions.book")}</CardTitle>
             <Badge variant="secondary" className="tabular-nums">{m.quarter}</Badge>
+            {/* Book tabs: visible holdings vs quarter-over-quarter changes
+                (xiaoyinsi-style two-tab manager page; client state only —
+                static-export safe). */}
+            <span className="ml-auto flex items-center gap-1">
+              {(["holdings", "changes"] as BookTab[]).map((k) => (
+                <button
+                  key={k}
+                  type="button"
+                  onClick={() => setTab(k)}
+                  aria-pressed={tab === k}
+                  className={cn(
+                    "rounded-full border px-3 py-1 text-xs font-medium transition-colors",
+                    tab === k
+                      ? "border-primary bg-primary text-primary-foreground"
+                      : "border-border text-muted-foreground hover:bg-muted",
+                  )}
+                >
+                  {t(k === "holdings" ? "manager.tab_holdings" : "manager.tab_changes")}
+                  <span className="ml-1.5 font-mono text-[11px] tabular-nums opacity-80">
+                    {k === "holdings" ? m.positions.length : m.changes.length}
+                  </span>
+                </button>
+              ))}
+            </span>
           </div>
           <CardDescription className="tabular-nums">
             {t("institutions.n_positions")}: {m.n_positions} ·{" "}
             {t("institutions.total_value")}: {fmtUsd(m.total_value)}
           </CardDescription>
         </CardHeader>
-        <CardContent className="p-0">
-          <Top10Table manager={m} />
-        </CardContent>
-        <div className="border-t px-4 py-3">
-          <p className="mb-2 text-xs font-medium text-muted-foreground">
-            {t("institutions.changes")}
-          </p>
-          <ChangesBlock manager={m} />
-        </div>
+        {tab === "holdings" ? (
+          <>
+            <CardContent className="p-0">
+              <PositionsTable manager={m} />
+            </CardContent>
+            <div className="border-t">
+              <ConcentrationBlock manager={m} />
+            </div>
+          </>
+        ) : (
+          <CardContent className="space-y-3 p-4">
+            {/* Four-state KPI counts (xiaoyinsi's 调仓 header), honest zeros. */}
+            <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
+              {(["new", "increased", "reduced", "exited"] as const).map((d) => (
+                <div key={d} className="rounded-md border p-3">
+                  <p className="text-xs text-muted-foreground">
+                    {t(`institutions.change_${d}` as const)}
+                  </p>
+                  <p className="mt-1 text-xl font-bold tabular-nums">
+                    {m.changes.filter((c) => c.direction === d).length}
+                  </p>
+                </div>
+              ))}
+            </div>
+            <ChangesBlock manager={m} />
+          </CardContent>
+        )}
       </Card>
 
       <Card>

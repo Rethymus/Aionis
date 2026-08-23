@@ -13,7 +13,7 @@ import {
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import type { DictKey } from "@/i18n/dict";
-import type { Form13fManager } from "@/data/aionis";
+import type { Form13fManager } from "@/data/aionis/form13f";
 import { stockUniverse } from "@/data/aionis/stock-universe";
 
 // Shared rendering for one 13F manager's book (top-10 table + quarter-over-
@@ -110,8 +110,8 @@ function IssuerLabel({
   return <span className="font-medium">{issuer}</span>;
 }
 
-/** Latest-quarter top-10 holdings table for one manager. */
-export function Top10Table({ manager }: { manager: Form13fManager }) {
+/** Latest-quarter visible book (up to 50 positions) for one manager. */
+export function PositionsTable({ manager }: { manager: Form13fManager }) {
   const { t } = useI18n();
   return (
     <Table>
@@ -125,7 +125,7 @@ export function Top10Table({ manager }: { manager: Form13fManager }) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {manager.top10.map((h, i) => (
+        {manager.positions.map((h, i) => (
           <TableRow key={`${h.cusip}-${h.option}-${i}`}>
             <TableCell className="text-muted-foreground tabular-nums">
               {i + 1}
@@ -153,6 +153,63 @@ export function Top10Table({ manager }: { manager: Form13fManager }) {
         ))}
       </TableBody>
     </Table>
+  );
+}
+
+/** Top-6 concentration bars over the visible book (xiaoyinsi-style widget).
+ *  Shares are renormalized over the page's visible positions total — the
+ *  same 口径 footnote the reference site uses ("按本页前 N 大持仓市值合计")
+ *  — NOT over the as-filed total, so a >50-position book stays honest. */
+export function ConcentrationBlock({ manager }: { manager: Form13fManager }) {
+  const { t } = useI18n();
+  const positions = manager.positions;
+  if (positions.length === 0) return null;
+  const visibleTotal = positions.reduce((s, h) => s + h.value, 0);
+  if (visibleTotal <= 0) return null;
+  const top6 = positions.slice(0, 6);
+  const top6Share = top6.reduce((s, h) => s + h.value, 0) / visibleTotal;
+  const otherShare = Math.max(0, 1 - top6Share);
+  const barCls = "h-2 rounded-full bg-primary/70";
+  const otherCls = "h-2 rounded-full bg-muted";
+  return (
+    <div className="space-y-2 p-4">
+      <p className="text-xs font-medium text-muted-foreground">
+        {t("institutions.concentration.title")} ·{" "}
+        <span className="tabular-nums font-semibold text-foreground">
+          {(top6Share * 100).toFixed(0)}%
+        </span>
+      </p>
+      {top6.map((h, i) => (
+        <div key={`${h.cusip}-${h.option}-${i}`} className="flex items-center gap-2 text-xs">
+          <span className="w-40 shrink-0 truncate text-muted-foreground" title={h.issuer}>
+            {h.issuer}
+          </span>
+          <div className="h-2 flex-1 overflow-hidden rounded-full bg-muted/40">
+            <div
+              className={barCls}
+              style={{ width: `${(h.value / visibleTotal) * 100}%` }}
+            />
+          </div>
+          <span className="w-12 shrink-0 text-right font-mono tabular-nums">
+            {((h.value / visibleTotal) * 100).toFixed(1)}%
+          </span>
+        </div>
+      ))}
+      <div className="flex items-center gap-2 text-xs">
+        <span className="w-40 shrink-0 text-muted-foreground">
+          {t("institutions.concentration.other")}
+        </span>
+        <div className="h-2 flex-1 overflow-hidden rounded-full bg-muted/40">
+          <div className={otherCls} style={{ width: `${otherShare * 100}%` }} />
+        </div>
+        <span className="w-12 shrink-0 text-right font-mono tabular-nums text-muted-foreground">
+          {(otherShare * 100).toFixed(1)}%
+        </span>
+      </div>
+      <p className="text-[11px] text-muted-foreground">
+        {t("institutions.concentration.footnote")}
+      </p>
+    </div>
   );
 }
 

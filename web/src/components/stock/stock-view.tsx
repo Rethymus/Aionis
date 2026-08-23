@@ -13,6 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
+import { form13f } from "@/data/aionis/form13f";
 import { stockUniverse, type StockRow } from "@/data/aionis/stock-universe";
 import { ProvenanceBadge } from "@/components/provenance-badge";
 import { useLivePrices } from "@/lib/live-prices";
@@ -106,12 +107,12 @@ function Stat({ label, children, hint }: { label: string; children: React.ReactN
  *  pct 口径按本页所列持有人的市值合计（脚注披露），与其"占前十"同型。 */
 function InstitutionalHolders({ ticker }: { ticker: string }) {
   const { t } = useI18n();
-  const f = aionis.form13f;
+  const f = form13f;
   const holders = useMemo(() => {
     if (f.status !== "ok") return [];
     const rows: { cik: string; name: string; value: number; shares: number; quarter: string }[] = [];
     for (const m of f.managers) {
-      for (const h of m.top10) {
+      for (const h of m.positions) {
         if (h.ticker === ticker) {
           rows.push({
             cik: m.cik,

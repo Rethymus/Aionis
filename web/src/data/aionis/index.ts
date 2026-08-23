@@ -39,7 +39,6 @@ import ledgerAuditJson from "./ledger_audit.json";
 import headlineProvenanceJson from "./headline_provenance.json";
 import dataHealthJson from "./data_health.json";
 import apiCatalogJson from "./api_catalog.json";
-import form13fJson from "./form13f.json";
 import form8kJson from "./form8k.json";
 import ipoJson from "./ipo.json";
 import politicianTradesJson from "./politician_trades.json";
@@ -550,64 +549,9 @@ export type ApiCatalog = {
   snapshot_ts?: string;
 };
 
-export type Form13fHolding = {
-  issuer: string;
-  cusip: string;
-  title: string;
-  option: string;
-  value: number;
-  shares: number;
-  pct: number;
-  // Exact normalized-name match against the US stock universe; null when the
-  // CUSIP has no ticker mapping (issuer renders as plain text).
-  ticker: string | null;
-};
 
-export type Form13fChange = {
-  issuer: string;
-  cusip: string;
-  title: string;
-  option: string;
-  direction: "new" | "increased" | "reduced" | "exited";
-  // Share-count change in percent (+25.3 = +25.3% shares); null for new/exited.
-  delta_pct: number | null;
-  // Whole-USD value delta (cur − prev quarter, both sides kept by the frame
-  // diff): full position value on new/exited; on increased/reduced the sign
-  // may OPPOSE delta_pct (price drift). OPTIONAL only for the transition:
-  // the committed JSON predates the key — it becomes always-present after
-  // the next mainline re-export; consumers tolerate absence (`?? null`,
-  // renders "—").
-  delta_value?: number | null;
-  ticker: string | null;
-};
 
-export type Form13fManager = {
-  cik: string;
-  name: string;
-  zh_name: string | null;
-  // Human-curated editorial tag from the fetch registry (value / growth /
-  // activist / macro / quant / china_background / other) — display-only,
-  // NOT a SEC data-source field (disclosed in the panel methodology).
-  category: string;
-  quarter: string;
-  filed: string;
-  n_positions: number;
-  total_value: number;
-  top10: Form13fHolding[];
-  changes: Form13fChange[];
-};
 
-export type Form13f = {
-  status: string;
-  as_of: string | null;
-  managers: Form13fManager[];
-  ticker_coverage?: string;
-  // Managers per category (honest counting at export time; "other" share is
-  // allowed to be large — the tag is editorial, not a data-source field).
-  category_counts?: Record<string, number>;
-  methodology: string;
-  snapshot_ts?: string;
-};
 
 export type Form8kEvent = {
   ticker: string;
@@ -766,7 +710,6 @@ export const aionis = {
   headlineProvenance: headlineProvenanceJson as HeadlineProvenance,
   dataHealth: dataHealthJson as DataHealth,
   apiCatalog: apiCatalogJson as ApiCatalog,
-  form13f: form13fJson as Form13f,
   form8k: form8kJson as Form8k,
   ipo: ipoJson as FormIpo,
   politicianTrades: politicianTradesJson as PoliticianTrades,

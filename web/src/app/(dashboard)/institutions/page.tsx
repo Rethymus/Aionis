@@ -2,7 +2,7 @@
 
 import { SegmentHeader } from "@/components/segment-header";
 import { InstitutionsView } from "@/components/institutions/institutions-view";
-import { aionis } from "@/data/aionis";
+import { form13f } from "@/data/aionis/form13f";
 
 export default function InstitutionsPage() {
   return (
@@ -10,7 +10,7 @@ export default function InstitutionsPage() {
       <SegmentHeader
         segment="evidence"
         introKey="institutions.intro"
-        asOf={aionis.form13f.as_of ?? undefined}
+        asOf={form13f.as_of ?? undefined}
       />
       <InstitutionsView />
     </div>

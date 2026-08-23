@@ -2972,9 +2972,12 @@ def export_form13f() -> None:
         )
         prev = sub[sub["quarter"] == quarters[1]] if len(quarters) > 1 else pd.DataFrame()
         total_value = float(cur["value_usd"].sum())
-        top10 = []
-        for _, r in cur.nlargest(10, "value_usd").iterrows():
-            top10.append({
+        # Up to 50 positions (the whole book for most 13F filers) — the
+        # xiaoyinsi-alignment visible-book granularity; concentration math and
+        # the /stock holders reverse-lookup both consume the same list.
+        positions = []
+        for _, r in cur.nlargest(50, "value_usd").iterrows():
+            positions.append({
                 "issuer": str(r["issuer"]),
                 "cusip": str(r["cusip"]),
                 "title": str(r.get("title_class", "")),
@@ -2985,7 +2988,7 @@ def export_form13f() -> None:
                 "ticker": _ticker_for(str(r["issuer"])),
             })
         changes = []
-        for ch in compute_changes(prev, cur)[:10]:
+        for ch in compute_changes(prev, cur)[:20]:
             changes.append({
                 "issuer": ch["issuer"],
                 "cusip": ch["cusip"],
@@ -3013,7 +3016,7 @@ def export_form13f() -> None:
             "filed": str(cur_lines["filing_date"].max()),
             "n_positions": int(len(cur)),
             "total_value": round(total_value, 0),
-            "top10": top10,
+            "positions": positions,
             "changes": changes,
         })
 
@@ -3022,10 +3025,10 @@ def export_form13f() -> None:
     n_linked = sum(
         1
         for m in manager_payloads
-        for h in m["top10"]
+        for h in m["positions"]
         if h["ticker"]
     )
-    n_top = sum(len(m["top10"]) for m in manager_payloads)
+    n_top = sum(len(m["positions"]) for m in manager_payloads)
     cat_counts: dict[str, int] = {}
     for m in manager_payloads:
         cat_counts[m["category"]] = cat_counts.get(m["category"], 0) + 1
