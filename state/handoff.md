@@ -8,6 +8,17 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-23 (x) 边界废除轮收官：四 lane 三成一阻（2,015 passed / 1,498 页）
+
+**四代理 23:23 齐灭于配额 [1308]（重置 08-24 02:38）→ 主线回收接管（第五次 WIP 裁决回收，零浪费）**：
+
+- **A1 人级档案（3f723c4→e2d5db3）**：死亡前抓取已完整跑完（150/150、293 请求）但导出跑在抓取前（U 先例同款缺口）→ 主线重导出修复：**104/150 份出名单（69.3% 覆盖率披露）、660 去重人物、104 董事会卡**；解析方法分级诚实计数（section+age 79 / name+role 25 / unparsed 43 / no-doc 3）。/executives PersonsSection。
+- **A3 货运 TACO 等价物（5501616→caef736）**：BTS TSI 公共域月频（2026-06 = 134.9，MoM -0.3/YoY -1.75%）+24 月序列；**降级口径面板内明示**（"非卫星数据"）。/taco FreightProxySection。冲突教训：api_catalog/data_health 不可取 side——统一再生。
+- **A4 方法书架（2ff6cac→b534faf）**：零网络双层——自有文档架（prereg/ADR/理论/rubric 导出时索引+GitHub 外链）+ 公共域研究策展链出（BIS/FEDS/IMF/NBER editorial 标注）。/shelf 新路由。
+- **A2 韩国杠杆 = 诚实 BLOCKED**：21 探针证据链（getJsonData.cmd 对复刻浏览器序列回 LOGOUT/400；真浏览器数据区永不完成渲染快照超时；openapi.krx.co.kr 需韩国注册 key）。探针归档 archive/krx-probes/（含 screen ID MDCSTAT01501/menuId MDC0201020101），**业主提供 KRX Open API key 即可续接**。
+
+**合体验证**：pytest **2,015 passed**/9 skip + ruff 净 + tsc 0 + build **1,498 页（+/shelf）** + IAB 三面实测。worktree 四清。**覆盖终态：全部 17 路由 + API 分类学全部可自动化维度；唯一阻断 = KRX（需业主 key）**；部署暂缓。
+
 ## 2026-08-23 (v) 终态后增补轮：Z1 主题 ETF + Z2 统一流表单补全（业主持续指令）——**双集成收官，API 分类学维度全清**
 
 **Z1 已集成（1dae5b9→main）**：主题 ETF 面板 = 小隐寺 API 分类学**最后一个数据维度**。10/10 基金发行商官方 CSV（iShares 4：SOXX/ICLN/ARTY/BAI + Global X 6：AIQ/CLOU/BKCH/LIT/BOTZ/BUG——日期入文件名者每次从基金页 HTML 提取当日 href），523 持仓/97 跳行披露，跨基金共振（NVDA×5 基金，MU/AMD/AVGO/SNOW×4）；**诚实剔除 9 只**（BLOK JS 渲染无直链/PHO/TAN SPA 改版/SMH TLS 拒连/CIBR/FIW/SKYY 不可达/SPDR 仅 XLS/QTUM 无端点——量子/水/元宇宙为诚实缺口，全部记档 7-gate G6）。稳态 16 GET/run。验证：68 数据测试 + 全套 **1,985 passed** + tsc 0 + build 1,497 页 + IAB（主题 ETF 板块与 ARK 家族共存）。wz1 已清。
