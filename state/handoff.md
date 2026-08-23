@@ -8,6 +8,10 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-23 (p) P2 统一申报流上线（六面板纯派生合并，零新抓取）
+
+**交付**：`export_filing_stream()` 合并已提交六面板（4 / 8-K/A / S-1 族 / 424B4 / D/A / SC 13D/A / SC 13G）→ `filing_stream.json`（800 可见 / 2,259 合并 / 11 表单，newest-first）+ /events 页 StreamSection（表单 FilterPills + 分页，位于 8-K 深度流之上）。**合并卫生**：str(None) ticker、"申报人见原文"占位申报人、smart_money 的 http:// 链接——三者在 add() 源头归一化（占位申报人降级为目标公司；无主体行丢弃不留 "—" 占位行）；契约测试钉死三者不泄漏。13F-HR v1 排除（季度管理人持仓非公司事件，/institutions 已载）+ 源面板上限继承披露。**验证**：ruff 净 + tsc 0 + eslint 净 + build 1,493 页 + IAB（板块/表单 chips/下方 8-K 流共存/100 EDGAR 链）。
+
 ## 2026-08-23 (o) P2 Form D 一级市场流上线（EFTS 10k 上限发现 + 滚动窗累积模式）
 
 **EFTS 上限考古（关键）**：首次 90 天探测（2026-05-25..08-23）请求到的命中被 EFTS **硬上限 10,000 截断**——恰好 10,000 份 = 仅最新 41 天（~244 份/天；`forms=D` 扩展 D 6,533 + D/A 3,467，9,400 发行人），旧约一月被截（非静默：日志与载荷双双披露）。修正架构：**滚动 30 天查询**（~7,300 < 上限留余量）+ parquet 聚合**跨运行累积**（accession 去重，stakes13g recent-stream 先例）；今日 capped 探测的 10k 行天然成为聚合的种子历史。

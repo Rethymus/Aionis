@@ -1,5 +1,7 @@
 # state/current.md — read first each session
 
+- **active (2026-08-23) ⑦ 复刻推进：源验证（差距地图）+ 政党对立指数 + ARK 家族面板 + ApeWisdom 热议榜 + Form D 一级市场 + 统一申报流 + form4 收官（display lane）：**
+  **⑧ P2 统一申报流上线（同日晚）**：六面板纯派生合并（零新抓取）——800 可见/2,259 合并/11 表单 newest-first + 表单筛选，/events 页 8-K 流之上；合并卫生三连（str(None)/占位申报人/http 链接）源头归一并被契约测试钉死。详见 handoff (p)。**差距地图 P2 剩：13F filer 目录；P3 DEF14A**；U 20:10 cron 重派中。
 - **active (2026-08-23) ⑦ 复刻推进：源验证（差距地图）+ 政党对立指数 + ARK 家族面板 + ApeWisdom 热议榜 + Form D 一级市场 + form4 30 发行人收官（display lane）：**
   **⑦ P2 Form D 上线（同日晚）**：`forms=D` 扩展 D+D/A；首探 90 天被 **EFTS 10k 硬上限截断**（恰 10,000 = 最新 41 天，~244/天）→ 改**滚动 30 天查询 + 聚合累积**（stakes13g 先例）+ 四号披露。/ipo 页新 FormDSection（新申报|修正筛选 + 600 可见/10k 全量计数），募资金额不解析（v1 边界）。详见 handoff (o)。**差距地图 P2 剩：统一申报流、13F filer 目录；P3 DEF14A**；U 20:10 cron 重派中。
 - **active (2026-08-23) ⑦ 复刻推进：源验证（差距地图）+ 政党对立指数 + ARK 家族面板 + ApeWisdom 热议榜 + form4 30 发行人收官（display lane）：**
