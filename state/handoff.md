@@ -8,6 +8,12 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-23 (r) 20:10 cron U 重派执行：死亡代理 WIP 裁决回收 + 三代理并行轮
+
+**U 重派（cron automation-3684bc83 触发）**：前置核实——form4 已由主线收官（30 发行人 1,464 笔）；**13D cache 未重建**（主仓仅余旧 forward 文件）→ U 任务 1 有效。wu worktree 发现上一轮配额死亡 U 的**未提交真实 WIP**：`sc13d_daily_aggregate.json` 已重建 + `stakes_pct_parsed.json`（有界持股比例解析）+ `stakes_pct.py/runner/17 测试全绿` + 导出接线（pct_now/pct_prev/stake_status，19 处）+ barrel 类型——**任务 1-3 实为已完成**。裁决：WIP 整体提交 `c949061`（分支 feat/stakes-status），续作代理只做任务 4-5（smart-money-view 徽章三类 + i18n stakes.pct/status.* + 7-gate 文档）。
+
+**并行布局**：V（DEF14A 流，wv/feat/def14a，规格 TASK-V）+ W（统一流 v2 直查 EFTS，ww/feat/filing-stream-v2，规格 TASK-W）已于 20:0x 派发。**三方冲突面**（export_terminal_data.py / test_web_terminal_data.py / dict.ts）已划界，集成顺序：U → V → W（主线逐个 cherry-pick 解冲突 + 全套验证）。规格两文件已提交 main（48bfa7b 后续）。
+
 ## 2026-08-23 (q) P2 收官：13F 申报人目录 /filers 上线（9,385 家 = 竞品同量级）
 
 **路径考古**：browse-edgar **无法**无 CIK 按表单枚举（实测 `getcompany&type=13F-HR` 空 atom feed；裸 UA 403）→ 目录走 EFTS 季度窗（`forms=13F-HR` 扩展 +A，Q2-2026 单季 9,625 逼近 10k 上限）→ **自适应切分**（声明 total ≥ 9,500 即对半拆至 ~3 周地板；Form D 教训直接复用；本次四窗实际均未触发）。爬取 ~33 分钟（4 窗 × ~86 页 × ≥2.1s，幂等缓存）。
