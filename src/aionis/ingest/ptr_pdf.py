@@ -229,7 +229,7 @@ def extract_ptr_text(pdf_bytes: bytes) -> str:
         if cm:
             contents.append(stream_of(int(cm.group(1))).decode("latin-1", "ignore"))
         # Form XObjects carry the transaction table on page 1 of e-filed PTRs.
-        for name, ref in re.findall(rb"/(\w+)\s+(\d+)\s+\d+\s+R", body):
+        for _name, ref in re.findall(rb"/(\w+)\s+(\d+)\s+\d+\s+R", body):
             fobj = int(ref)
             fbody = body_of(fobj)
             if b"/Subtype /Form" not in fbody:
