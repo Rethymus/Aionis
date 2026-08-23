@@ -278,6 +278,17 @@
       "source": "Form D exempt-offering notices (D + D/A) via EFTS form-level queries, filed-date PIT; offering amounts not extracted"
     },
     {
+      "key": "form_def14a",
+      "file": "def14a.json",
+      "path": "/api/v1/panels/def14a.json",
+      "method": "GET",
+      "status": "available",
+      "freshness": "daily",
+      "as_of": "2026-08-21",
+      "license": "U.S. SEC EDGAR \u2014 public domain",
+      "source": "DEF 14A proxy statements via EFTS form-level queries, filed-date PIT; director/executive names, compensation, ownership not parsed (person-level extraction deferred)"
+    },
+    {
       "key": "filing_stream",
       "file": "filing_stream.json",
       "path": "/api/v1/panels/filing_stream.json",
@@ -447,5 +458,5 @@
     "server": "https://api.aionis-prices.workers.dev"
   },
   "methodology": "Public static data API over the terminal's committed panels (display-only). Every endpoint carries its 7-gate intake facts: license + primary source, plus the freshness class (daily / cadence / frozen). Frozen endpoints derive from frozen OOS artifacts (ledger #49 lineage) and deliberately do NOT advance \u2014 consuming them expecting daily updates misreads the contract. Endpoints with status=planned are NOT built: the path is a reserved future location, no payload is served, as_of is null, and the license/source describe the primary source the future fetcher would use. Research ingestion of any endpoint requires the full 7-gate rubric (docs/data-intake-rubric.md); the live-prices worker is display-only and must never enter the OOS pipeline.",
-  "snapshot_ts": "2026-08-23T11:45:44.627675+00:00"
+  "snapshot_ts": "2026-08-23T12:09:23.962337+00:00"
 }

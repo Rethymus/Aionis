@@ -202,6 +202,14 @@
       "present": true
     },
     {
+      "key": "form_def14a",
+      "file": "def14a.json",
+      "category": "daily",
+      "as_of": "2026-08-21",
+      "exported_at": "2026-08-23",
+      "present": true
+    },
+    {
       "key": "filing_stream",
       "file": "filing_stream.json",
       "category": "daily",
@@ -315,9 +323,9 @@
     }
   ],
   "summary": {
-    "n_panels": 39,
+    "n_panels": 40,
     "n_frozen": 15,
-    "n_daily": 20,
+    "n_daily": 21,
     "n_cadence": 4
   },
   "source_health": {
@@ -342,5 +350,5 @@
   },
   "planned": [],
   "methodology": "Freshness/provenance map of every terminal panel. frozen = derived from frozen OOS artifacts (ledger #49 lineage): the daily lane deliberately does NOT advance these \u2014 recomputing them from newer data would be rerun-to-significance. daily = recomputed by each CI refresh from live caches. cadence = advances on its source's publication rhythm (CFTC weekly, price caches ~5-day grace, EDGAR filing rhythm). as_of is read from each panel's own timestamp fields; null = the panel carries no observation date (static research artifact). The only legal way frozen numbers move forward: E3 forward-live accumulation or a new pre-registered phase. source_health quantifies field-level quality on the committed JSONs (smart_money ticker nulls = filings on unlisted targets honestly left empty; reddit bull_ratio nulls = sentiment not yet gradable in the accumulating window; cot staleness in weeks vs the Friday publication rhythm). planned lists panels that are NOT built \u2014 no fetcher, no data, no endpoint payload \u2014 disclosed so the panel count is never mistaken for coverage.",
-  "snapshot_ts": "2026-08-23T11:45:44.626625+00:00"
+  "snapshot_ts": "2026-08-23T12:09:23.961335+00:00"
 }

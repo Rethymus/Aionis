@@ -47,6 +47,7 @@ import partyIndexJson from "./party_index.json";
 import arkJson from "./ark.json";
 import redditTrendingJson from "./reddit_trending.json";
 import formDJson from "./form_d.json";
+import def14aJson from "./def14a.json";
 import filingStreamJson from "./filing_stream.json";
 import executivesJson from "./executives.json";
 
@@ -848,6 +849,33 @@ export type FormD = {
   snapshot_ts?: string;
 };
 
+export type Def14aFiling = {
+  company: string;
+  // Empty for ~25% of filers (no symbol in the EDGAR display name) —
+  // honest, never guessed.
+  ticker: string;
+  filed_date: string;
+  // "DEF 14A" (new definitive proxy). The "DEF 14A/A" amendment arm exists
+  // in the exporter as defense-in-depth; no such row today (amendments are
+  // filed as DEFA14A, out of scope).
+  form: string;
+  // "new" | "amendment" — derived from the immutable form type.
+  status: string;
+  doc_url: string;
+};
+
+export type Def14a = {
+  status: string;
+  as_of: string;
+  window: { start: string; end: string };
+  issuers: number;
+  total: number;
+  by_form: Record<string, number>;
+  filings: Def14aFiling[];
+  methodology: string;
+  snapshot_ts?: string;
+};
+
 export type FilingStreamRow = {
   // Source form type: 8-K(/A) / 10-K(/A) / 10-Q(/A) / S-1(/A) / 4(/A) /
   // D(/A) / SC 13D(/A) / SC 13G(/A).
@@ -944,6 +972,7 @@ export const aionis = {
   ark: arkJson as Ark,
   redditTrending: redditTrendingJson as RedditTrending,
   formD: formDJson as FormD,
+  def14a: def14aJson as Def14a,
   filingStream: filingStreamJson as FilingStream,
   executives: executivesJson as Executives,
 };

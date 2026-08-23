@@ -2358,6 +2358,7 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
     ("executives", "executives.json", _DH_DAILY),
     ("ipo", "ipo.json", _DH_DAILY),
     ("form_d", "form_d.json", _DH_DAILY),
+    ("form_def14a", "def14a.json", _DH_DAILY),
     ("filing_stream", "filing_stream.json", _DH_DAILY),
     ("politician_trades", "politician_trades.json", _DH_DAILY),
     ("politician_trades_tx", "politician_trades_tx.json", _DH_DAILY),
@@ -2443,6 +2444,8 @@ def _dh_as_of(key: str, fname: str) -> str | None:
     if key == "ipo":
         return p.get("as_of")
     if key == "form_d":
+        return p.get("as_of")
+    if key == "form_def14a":
         return p.get("as_of")
     if key == "filing_stream":
         return p.get("as_of")
@@ -2652,6 +2655,12 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
         "U.S. SEC EDGAR — public domain",
         "Form D exempt-offering notices (D + D/A) via EFTS form-level "
         "queries, filed-date PIT; offering amounts not extracted",
+    ),
+    "form_def14a": (
+        "U.S. SEC EDGAR — public domain",
+        "DEF 14A proxy statements via EFTS form-level queries, filed-date "
+        "PIT; director/executive names, compensation, ownership not parsed "
+        "(person-level extraction deferred)",
     ),
     "filing_stream": (
         "U.S. SEC EDGAR — public domain",
@@ -3388,6 +3397,99 @@ def export_form_d() -> None:
     (WEB / "form_d.json").write_text(json.dumps(_stamp(payload), indent=2, default=str))
     print(
         f"[export-terminal] form_d: {payload['total']} filings "
+        f"({payload['by_form']}), {payload['issuers']} issuers, "
+        f"as_of {payload['as_of']}",
+        flush=True,
+    )
+
+
+def export_form_def14a() -> None:
+    """US DEF 14A proxy-statement stream — the governance panel on /executives.
+
+    Reads ``data/cache/form_def14a_aggregate.parquet`` (gitignored; produced
+    by ``scripts/def14a_fetch.py`` — whole-market EFTS form-level query,
+    ``forms=DEF%2014A``; live probe 2026-08-23: 1,387 filings / 120-day
+    window, all carrying form ``DEF 14A`` — proxy amendments are filed as
+    DEFA14A, a separate root form out of v1 scope). Status from the immutable
+    form type: DEF 14A = ``new``; DEF 14A/A = ``amendment`` (defense-in-depth
+    arm — no such row exists today). The directors/executives, compensation,
+    and ownership tables live INSIDE the proxy statement's primary HTML and
+    are NOT parsed (honest v1 limit, disclosed — person-level parsing is
+    deferred; resolving one primary document per filing would cost ~1,400
+    extra requests for the window). Filers are public companies: ~75% of
+    rows carry a ticker parsed from the EDGAR display name (honest, never
+    guessed when absent)."""
+    fp = Path("data/cache/form_def14a_aggregate.parquet")
+    if not fp.exists():
+        print(
+            "[export-terminal] SKIP form_def14a: data/cache/form_def14a_aggregate.parquet "
+            "not present (tracked JSON retains last-committed value)",
+            flush=True,
+        )
+        return
+
+    df = pd.read_parquet(fp)
+    if df.empty:
+        print(
+            "[export-terminal] SKIP form_def14a: empty parquet (tracked JSON "
+            "retains last-committed value)",
+            flush=True,
+        )
+        return
+    by_form = {k: int(v) for k, v in df["form"].value_counts().sort_index().items()}
+    # ~12 filings/day off-season; visible rows capped for payload size (the
+    # stream reads newest-first with client-side paging).
+    filings = []
+    for _, r in df.head(600).iterrows():
+        filings.append({
+            "company": str(r["company"]),
+            "ticker": str(r["ticker"]),
+            "filed_date": str(r["filed_date"]),
+            "form": str(r["form"]),
+            "status": str(r["status"]),
+            "doc_url": str(r["doc_url"]),
+        })
+    payload = {
+        "status": "ok",
+        "as_of": str(df["filed_date"].max()),
+        "window": {"start": str(df["filed_date"].min()), "end": str(df["filed_date"].max())},
+        "issuers": int(df["issuer_cik"].nunique()),
+        "total": int(len(df)),
+        "by_form": by_form,
+        "filings": filings,
+        "methodology": (
+            "US DEF 14A definitive proxy statements (代理委托书 — the "
+            "board/executive governance stream) — SEC EDGAR EFTS whole-market "
+            "form-level queries (public domain, 17 U.S.C. §105), fixed ~120-day "
+            "window, filed-date point-in-time, one row per accession (an "
+            "amendment would be a new filing, never a silent overwrite). "
+            "forms=DEF%2014A (live-probed 2026-08-23: 1,387 filings, every "
+            "row form DEF 14A; proxy amendments are in practice filed as "
+            "DEFA14A additional materials — a separate root form outside this "
+            "panel's scope, and the DEF 14A/A -> amendment arm is kept as "
+            "defense-in-depth). Status from the immutable form type: "
+            "DEF 14A = new definitive proxy statement. Honest v1 limits, "
+            "disclosed not papered over: (1) director/executive names, "
+            "compensation, and beneficial ownership live INSIDE the proxy "
+            "statement's primary HTML document and are not parsed — person-"
+            "level extraction is deferred (each filing is thousands of lines "
+            "of HTML; resolving + parsing one per filing would cost ~1,400 "
+            "extra requests for the window); the amounts are not extracted "
+            "either — each row links the filing's EDGAR index page, which "
+            "lists every document; (2) the ticker is parsed from the EDGAR "
+            "display name and is empty for ~25% of filers (honest, never "
+            "guessed); (3) DEF 14A volume is strongly seasonal (Jan-Apr "
+            "proxy season), so the growing fixed-anchor window will "
+            "eventually approach EFTS's 10,000-hit cap — the fetch splits "
+            "adaptively near it (not triggered at the 2026-08-23 probe). "
+            "Visible rows capped at 600 newest for payload size (total/by_form "
+            "count the full aggregate). Display-only, exploratory, NOT a "
+            "research claim."
+        ),
+    }
+    (WEB / "def14a.json").write_text(json.dumps(_stamp(payload), indent=2, default=str))
+    print(
+        f"[export-terminal] form_def14a: {payload['total']} filings "
         f"({payload['by_form']}), {payload['issuers']} issuers, "
         f"as_of {payload['as_of']}",
         flush=True,
@@ -4389,6 +4491,7 @@ def main() -> None:
     _safe_export("form8k", export_form8k)
     _safe_export("form_ipo", export_form_ipo)
     _safe_export("form_d", export_form_d)
+    _safe_export("form_def14a", export_form_def14a)
     # filing_stream (v2) reads its own direct-query parquet — order no longer
     # depends on the per-form panels, but keep it here (before the freshness
     # map / catalog that index it).

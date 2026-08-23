@@ -740,6 +740,48 @@ def test_form_d_panel_contract() -> None:
     assert "form d" in ml and "not extracted" in ml and "display-only" in ml
 
 
+def test_form_def14a_panel_contract() -> None:
+    """DEF 14A panel: governance proxy-statement stream, honest v1 boundary.
+
+    The panel rides the same EDGAR EFTS form-level machinery as /ipo, with
+    forms=DEF%2014A (live-probed 2026-08-23: 1,387 filings over the ~120-day
+    window, every row carrying form "DEF 14A" — proxy amendments are filed
+    as DEFA14A, a separate root form out of scope, so the DEF 14A/A ->
+    amendment arm is defense-in-depth only). The contract pins: status enum
+    derived from the form with row-form agreement; newest-first order;
+    visible rows a capped prefix of the window (by_form counts the FULL
+    window); doc links to the EDGAR filing index; and the methodology must
+    disclose the not-parsed person-level content (v1 honesty boundary).
+    """
+    x = _load("def14a.json")
+    assert x["status"] in {"ok", "awaiting_fetch"}
+    assert {"as_of", "window", "issuers", "total", "by_form", "filings",
+            "methodology", "snapshot_ts"} <= set(x)
+    if x["status"] != "ok" or not x["filings"]:
+        return
+    dates: list[str] = []
+    for r in x["filings"]:
+        assert {"company", "ticker", "filed_date", "form", "status", "doc_url"} <= set(r)
+        assert r["form"] in {"DEF 14A", "DEF 14A/A"}, f"unexpected form {r['form']}"
+        assert r["status"] == ("new" if r["form"] == "DEF 14A" else "amendment"), (
+            "status derived from the immutable form type"
+        )
+        assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", r["filed_date"])
+        assert r["doc_url"].startswith("https://www.sec.gov/Archives/edgar/data/")
+        dates.append(r["filed_date"])
+    assert dates == sorted(dates, reverse=True), "filings newest-first"
+    assert x["as_of"] == max(dates)
+    # Visible list is a capped prefix: window totals live in by_form/total.
+    assert x["total"] >= len(x["filings"])
+    assert sum(x["by_form"].values()) == x["total"], "by_form counts the full window"
+    assert set(x["by_form"]) <= {"DEF 14A", "DEF 14A/A"}
+    ml = x["methodology"].lower()
+    assert "def 14a" in ml and "not parsed" in ml and "not extracted" in ml, (
+        "must disclose the DEFERRED person-level extraction"
+    )
+    assert "display-only" in ml
+
+
 def test_filing_stream_panel_contract() -> None:
     """Unified filing stream v2: DIRECT whole-market per-form queries.
 
