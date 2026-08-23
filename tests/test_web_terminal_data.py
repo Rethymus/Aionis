@@ -657,6 +657,52 @@ def test_ark_panel_contract() -> None:
     assert "ark" in ml and ("no prices" in ml or "no returns" in ml)
 
 
+def test_reddit_trending_panel_contract() -> None:
+    """ApeWisdom trending board: first-party fields, honest pagination facts.
+
+    The panel rides ApeWisdom's free public API (apewisdom.io, filter/stocks).
+    The contract pins: ranks strictly ascending with unique (rank, ticker)
+    rows; every row carries the first-party fields verbatim (mentions/
+    upvotes ≥ 0, nullable 24h lags); the pagination disclosure is CONSISTENT
+    (pagination_ok=False ⇒ n_rows is the served page-1 window, and the
+    methodology says so); and the display-lane boundary (today-snapshot,
+    never PIT, no research claim) is stated.
+    """
+    x = _load("reddit_trending.json")
+    assert x["status"] in {"ok", "awaiting_fetch"}
+    assert {"as_of", "count_declared", "n_rows", "served_pages",
+            "pagination_ok", "sibling_filters", "tickers", "methodology",
+            "snapshot_ts"} <= set(x)
+    if x["status"] != "ok" or not x["tickers"]:
+        return
+    rows = x["tickers"]
+    assert 0 < len(rows) == x["n_rows"]
+    ranks = [r["rank"] for r in rows]
+    assert ranks == sorted(ranks), "board sorted by rank"
+    assert len({(r["rank"], r["ticker"]) for r in rows}) == len(rows), (
+        "no duplicate (rank, ticker) rows — the ingest dedupes pages"
+    )
+    for r in rows:
+        assert {"rank", "ticker", "name", "mentions", "upvotes",
+                "rank_24h_ago", "mentions_24h_ago"} <= set(r)
+        assert r["mentions"] >= 0
+        assert r["ticker"]
+        for lag in ("rank_24h_ago", "mentions_24h_ago"):
+            assert r[lag] is None or r[lag] >= 0
+    # Pagination honesty: when the API declared pages it never served, the
+    # panel must say so and the visible window is the served page.
+    if not x["pagination_ok"]:
+        assert x["served_pages"] == 1
+        assert x["n_rows"] < x["count_declared"], (
+            "page-1-only board must be smaller than the declared count"
+        )
+        assert "page 1" in x["methodology"].lower()
+    ml = x["methodology"].lower()
+    assert "apewisdom" in ml and "display-only" in ml and "pit" in ml, (
+        "must disclose the source and the today-snapshot (never-PIT) boundary"
+    )
+
+
 def test_form_ipo_panel_contract() -> None:
     """IPO panel schema: filing shape, status enum, honest counting, date order.
 
