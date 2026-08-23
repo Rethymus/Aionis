@@ -2371,6 +2371,7 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
     ("stakes_13g", "stakes_13g.json", _DH_DAILY),
     ("ark", "ark.json", _DH_DAILY),
     ("form13f", "form13f.json", _DH_CADENCE),
+    ("filers13f", "filers13f.json", _DH_CADENCE),
 ]
 
 
@@ -2463,6 +2464,8 @@ def _dh_as_of(key: str, fname: str) -> str | None:
     if key == "stakes_13g":
         return p.get("as_of")
     if key == "form13f":
+        return p.get("as_of")
+    if key == "filers13f":
         return p.get("as_of")
     if key == "headline_provenance":
         ts = p.get("result_ts")
@@ -2687,6 +2690,11 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
         "ownership % / state machine not parsed",
     ),
     "form13f": ("U.S. SEC EDGAR — public domain", "13F-HR quarterly holdings XML, filed-date PIT, whole-USD values"),
+    "filers13f": (
+        "U.S. SEC EDGAR — public domain",
+        "13F filer directory: every CIK filing 13F-HR(/A) over the trailing "
+        "year via EFTS quarter windows (cap-split), directory facts only",
+    ),
     "ark": (
         "ARK Invest official fund CSVs — publicly published daily",
         "8-ETF Full Holdings CSVs from assets.ark-funds.com (browser-verified "
@@ -3510,6 +3518,87 @@ def export_filing_stream() -> None:
     )
 
 
+def export_form13f_dir() -> None:
+    """13F filer DIRECTORY — every CIK that filed 13F-HR(/A) in ~a year.
+
+    Reads ``data/cache/form13f_dir.parquet`` (gitignored; produced by
+    ``scripts/form13f_dir_fetch.py`` via ``aionis.ingest.form13f_dir`` —
+    EFTS form-level queries over trailing calendar quarters, adaptively
+    split when a window nears the 10,000-hit cap; ``browse-edgar`` cannot
+    enumerate a form type without a company, verified 2026-08-23). Directory
+    FACTS only (name / CIK / filing+amendment counts / latest filed) — the
+    holdings books stay in form13f; each row links the filer's EDGAR 13F
+    history. Full list exported (the payload rides a DEDICATED web module,
+    the form13f.ts precedent — never the shared barrel).
+    """
+    fp = Path("data/cache/form13f_dir.parquet")
+    if not fp.exists():
+        print(
+            "[export-terminal] SKIP form13f_dir: data/cache/form13f_dir.parquet "
+            "not present (tracked JSON retains last-committed value)",
+            flush=True,
+        )
+        return
+    df = pd.read_parquet(fp)
+    if df.empty:
+        print(
+            "[export-terminal] SKIP form13f_dir: empty parquet (tracked "
+            "JSON retains last-committed value)",
+            flush=True,
+        )
+        return
+    filers = [
+        {
+            "cik": str(int(r["cik"])).zfill(10),
+            "name": str(r["name"]),
+            "n_filings": int(r["n_filings"]),
+            "n_amendments": int(r["n_amendments"]),
+            "latest_filed": str(r["latest_filed"]),
+        }
+        for _, r in df.iterrows()
+    ]
+    payload = {
+        "status": "ok",
+        "as_of": str(df["latest_filed"].max()),
+        "window": {
+            "start": str(df["latest_filed"].min()),
+            "end": str(df["latest_filed"].max()),
+        },
+        "n_filers": int(len(df)),
+        "n_with_amendments": int((df["n_amendments"] > 0).sum()),
+        "total_filings": int(df["n_filings"].sum() + df["n_amendments"].sum()),
+        "filers": filers,
+        "methodology": (
+            "13F filer directory — every CIK that filed a 13F-HR or 13F-HR/A "
+            "over the trailing annual cycle of calendar quarters (2025-09 "
+            "through today), aggregated from EDGAR EFTS form-level queries "
+            "(public domain, 17 U.S.C. §105; filed-date PIT). browse-edgar "
+            "cannot enumerate a form type without a company (verified "
+            "2026-08-23), so the directory rides the same EFTS machinery as "
+            "the IPO/Form D streams, with quarter windows ADAPTIVELY SPLIT "
+            "when a declared total nears EFTS's 10,000-hit cap (Q2-2026 "
+            "observed at 9,625). Per-CIK facts only: name, filing and "
+            "amendment counts (deduplicated by accession), latest filed "
+            "date, and a link to the filer's EDGAR 13F history — holdings "
+            "books stay in the form13f panel. 13F-NT notices are not "
+            "queried (a no-holdings report is not a holdings filer row; "
+            "13F-NT filers that also filed an HR appear via their HR). "
+            "Sorted latest-filed first. Display-only, exploratory, NOT a "
+            "research claim."
+        ),
+    }
+    (WEB / "filers13f.json").write_text(
+        json.dumps(_stamp(payload), indent=2, default=str)
+    )
+    print(
+        f"[export-terminal] form13f_dir: {payload['n_filers']} filers, "
+        f"{payload['total_filings']} filings, "
+        f"{payload['n_with_amendments']} with amendments, "
+        f"as_of {payload['as_of']}",
+        flush=True,
+    )
+
+
 def export_politician_trades() -> None:
     """STOCK Act congressional trading — House PTR filing stream (display-only).
 
@@ -4274,6 +4363,7 @@ def main() -> None:
     # just above — keep directly after it, before the freshness map.
     _safe_export("party_index", export_party_index)
     _safe_export("form13f", export_form13f)
+    _safe_export("filers13f", export_form13f_dir)
     _safe_export("market_context", export_market_context)
     _safe_export("macro_drivers", export_macro_drivers)
     _safe_export("smart_money", export_smart_money)
