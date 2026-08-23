@@ -8,6 +8,14 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-23 (o) P2 Form D 一级市场流上线（EFTS 10k 上限发现 + 滚动窗累积模式）
+
+**EFTS 上限考古（关键）**：首次 90 天探测（2026-05-25..08-23）请求到的命中被 EFTS **硬上限 10,000 截断**——恰好 10,000 份 = 仅最新 41 天（~244 份/天；`forms=D` 扩展 D 6,533 + D/A 3,467，9,400 发行人），旧约一月被截（非静默：日志与载荷双双披露）。修正架构：**滚动 30 天查询**（~7,300 < 上限留余量）+ parquet 聚合**跨运行累积**（accession 去重，stakes13g recent-stream 先例）；今日 capped 探测的 10k 行天然成为聚合的种子历史。
+
+**交付**：`ingest/form_d.py`（复用 form_ipo 的 `_get_json`/`_parse_company`/`parse_ticker`/`_filing_index_url`；form→status：D=新申报/D/A=修正，不可变表单类型推导）+ `scripts/form_d_fetch.py`（滚动 30 天）+ `export_form_d()`（可见 600 最新 + by_form 计全量 + 方法学含 10k-cap 四号披露）+ /ipo 页 FormDSection（公司/表单徽章/申报日/EDGAR 链 + 新申报|修正 FilterPills + 分页；发行人多为私营 → ticker 空为常态）+ 契约测试（status-form 一致/newest-first/by_form 求和=total/methodology 含 not-extracted+display-only）。**v1 诚实边界**：募资金额/行业/关联人在主 XML 内不解析（~4,300 额外请求 deferred，每行链接 EDGAR 文件页）。
+
+**验证**：ruff 净 + tsc 0 + eslint 0 错（2 警告皆 IPO 存量段）+ build 1,493 页 + IAB 抽查（板块/10,000·9,400 计数/筛选 pills/ImpactMatrix 首行/原 IPO 流 424B4 共存）。
+
 ## 2026-08-23 (n) P1 ApeWisdom Reddit 热议榜上线（复测修正两处误判 + 分页失效如实披露）
 
 **复测修正（业主指令"工作日复测后开建"——同日即完成）**：① 上一轮"周日 count=0 属诚实空窗"的推断**半错**：`filter/all-posts`/`filter/crypto` 空是**口径**（今日仍 0），而 **`filter/stocks` 实时有数据**（NVDA 居首，envelope 声明 count:290/pages:3）——正确端点一旦命中即为真实榜单，无需等工作日；② 首版 fetcher 跑出 300 行/200 重复 rank 的"漂移"诊断也**错**——真相是**免费 API 分页已死**：`?page=N` 与路径 `/N` 全部回 `current_page:1`（浏览器逐一验证），300=3×第 1 页。

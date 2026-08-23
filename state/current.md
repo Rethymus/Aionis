@@ -1,5 +1,7 @@
 # state/current.md — read first each session
 
+- **active (2026-08-23) ⑦ 复刻推进：源验证（差距地图）+ 政党对立指数 + ARK 家族面板 + ApeWisdom 热议榜 + Form D 一级市场 + form4 30 发行人收官（display lane）：**
+  **⑦ P2 Form D 上线（同日晚）**：`forms=D` 扩展 D+D/A；首探 90 天被 **EFTS 10k 硬上限截断**（恰 10,000 = 最新 41 天，~244/天）→ 改**滚动 30 天查询 + 聚合累积**（stakes13g 先例）+ 四号披露。/ipo 页新 FormDSection（新申报|修正筛选 + 600 可见/10k 全量计数），募资金额不解析（v1 边界）。详见 handoff (o)。**差距地图 P2 剩：统一申报流、13F filer 目录；P3 DEF14A**；U 20:10 cron 重派中。
 - **active (2026-08-23) ⑦ 复刻推进：源验证（差距地图）+ 政党对立指数 + ARK 家族面板 + ApeWisdom 热议榜 + form4 30 发行人收官（display lane）：**
   **⑥ P1 ApeWisdom 上线（同日复测修正）**：周日空窗推断半错——`filter/all-posts`/`crypto` 空是**口径**，**`filter/stocks` 实时有数据**（NVDA 居首）；且免费 API **分页已死**（声明 3 页/290 只，`?page=N`/路径 `/N` 全回 `current_page:1`，浏览器逐一验证）→ ingest 信封回显检测 + `pagination_ok` 字段，面板诚实披露"可见=前 100/声明 290"。管道全套落地：ingest+fetcher（≥2s）+ `reddit_trending.json` + /reddit 热议榜板块（与自有 Atom 采集面板独立共存）+ 契约测试。详见 handoff (n)。**P2 下一项 = Form D 一级市场（EDGAR）**；U 20:10 cron 重派中。
 - **active (2026-08-23) ⑦ 复刻推进：源验证（差距地图）+ 政党对立指数 + ARK 家族面板 + form4 30 发行人收官（display lane）：**
