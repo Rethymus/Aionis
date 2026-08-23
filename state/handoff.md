@@ -8,6 +8,10 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-23 (v) 终态后增补轮：Z1 主题 ETF + Z2 统一流表单补全（业主持续指令）
+
+**范围裁决**：终态审计后业主再推"多 agents 同步推进"——剩余真实可并行维度两枚：Z1 = 主题 ETF 面板（小隐寺"12 主题 ETF"维度；发行商官方公开持仓文件，照 ARK 已验证模式；源考古须浏览器逐基金验证直链，宁缺毋滥 6-12 只）；Z2 = 统一流 v2 补 DEF 14A/DEFA14A/424B4 三表单（当时划界排除项，现并入；增量缓存幂等只发新表单请求）。**DEF14A 人级解析维持 DEFERRED 并升格为红线记录**：代理书 HTML 人名正则抽取的编造风险与"不猜测不编造"质量红线冲突——除非找到结构化一方源（如 EDGAR XBRL 化的委托书数据未来可用），否则不做。worktree wz1/wz2 已建。
+
 ## 2026-08-23 (u) X/Y 收尾集成 + 17 路由终态（1,984 passed / 1,497 页）
 
 **Y（/quarterly+/annual）**：aca668b→`71f2df2`。深切必要性被数据证实——800-newest 可见流中 10-K/10-Q 行数 **0**（财报季挤压）→ 导出深切 annual 76/76、quarterly 400/2,115（cap 披露+全量计数 KPI）；共享 fin-deadline-view（variant 参数）+ 两路由 + sidebar/palette + i18n 23×2。cherry-pick 零冲突；IAB 实测 /quarterly（KPI 2,115/筛选/50 EDGAR 链）。**N 后端不引入**（W v2 覆盖）。
