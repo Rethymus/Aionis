@@ -16,7 +16,7 @@ import { aionis } from "@/data/aionis";
 import { stockUniverse, type StockRow } from "@/data/aionis/stock-universe";
 import { ProvenanceBadge } from "@/components/provenance-badge";
 import { useLivePrices } from "@/lib/live-prices";
-import { fmtShares, fmtUsd } from "@/lib/format";
+import { fmtDateShort, fmtShares, fmtUsd } from "@/lib/format";
 import {
   ArrowUpIcon,
   ArrowDownIcon,
@@ -171,6 +171,104 @@ function InstitutionalHolders({ ticker }: { ticker: string }) {
                 </span>
                 <span className="w-16 shrink-0 text-right font-mono text-xs font-semibold tabular-nums">
                   {total > 0 ? `${((h.value / total) * 100).toFixed(1)}%` : "—"}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
+/** 国会议员交易（STOCK Act PTR 反查，与机构持有者卡同型——小隐寺 /stock 同位
+ *  模块的政客侧）。2026 众议院 PTR PDF 逐笔解析面板按 ticker 反查，近 8 笔 +
+ *  "全部 → /congress" 出口；金额为法定披露区间（非精确值）；⚠ = 迟报超 45 天。 */
+function PoliticianTradesCard({ ticker }: { ticker: string }) {
+  const { t } = useI18n();
+  const f = aionis.politicianTradesTx;
+  const rows = useMemo(() => {
+    if (f.status !== "ok") return [];
+    return f.transactions.filter((r) => r.ticker === ticker).slice(0, 8);
+  }, [f, ticker]);
+  const total = useMemo(
+    () =>
+      f.status === "ok"
+        ? f.transactions.reduce((n, r) => n + (r.ticker === ticker ? 1 : 0), 0)
+        : 0,
+    [f, ticker],
+  );
+  if (f.status !== "ok") return null;
+
+  return (
+    <Card className="py-0 md:col-span-2">
+      <CardHeader className="border-b">
+        <CardTitle className="flex flex-wrap items-center gap-2 text-base">
+          {t("stock.politician")}
+          <span className="font-mono text-xs font-normal text-muted-foreground tabular-nums">
+            {total > 0 ? `${total} · ${f.year}` : ""}
+          </span>
+        </CardTitle>
+        <CardDescription>
+          {t("stock.politician.note")}
+          {rows.length > 0 ? (
+            <Link
+              href="/congress"
+              className="ml-1 text-primary hover:underline"
+            >
+              {t("stock.politician.all")}
+            </Link>
+          ) : null}
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="p-0">
+        {total === 0 ? (
+          <p className="p-4 text-sm italic text-muted-foreground">
+            {t("stock.politician.empty")}
+          </p>
+        ) : (
+          <div className="divide-y">
+            {rows.map((r, i) => (
+              <div
+                key={`${r.doc_url}-${r.transaction_date}-${i}`}
+                className="flex items-center gap-3 px-4 py-2.5 text-sm"
+              >
+                <span className="w-6 shrink-0 tabular-nums text-muted-foreground">
+                  {i + 1}
+                </span>
+                <span className="min-w-0 flex-1 truncate font-medium" title={r.member}>
+                  {r.member}
+                  {r.party ? (
+                    <span className="ml-1.5 font-mono text-[11px] font-semibold text-muted-foreground">
+                      [{r.party}]
+                    </span>
+                  ) : null}
+                </span>
+                <span
+                  className={cn(
+                    "shrink-0 rounded-[4px] px-1.5 py-px font-mono text-[11px] font-semibold leading-4",
+                    r.direction === "buy" ? "badge-up" : "badge-down",
+                  )}
+                >
+                  {t(`congress.tx.direction.${r.direction}`)}
+                </span>
+                <span className="shrink-0 font-mono text-xs tabular-nums text-muted-foreground">
+                  {r.amount_range}
+                </span>
+                <span className="w-20 shrink-0 text-right font-mono text-xs tabular-nums text-muted-foreground">
+                  {fmtDateShort(r.transaction_date)}
+                </span>
+                <span className="w-12 shrink-0 text-right font-mono text-xs tabular-nums">
+                  {r.days_late !== null && r.days_late > 45 ? (
+                    <span
+                      className="font-semibold text-amber-600 dark:text-amber-400"
+                      title={t("congress.tx.late.hint")}
+                    >
+                      ⚠{r.days_late}d
+                    </span>
+                  ) : (
+                    <span className="text-muted-foreground/60">{r.days_late}d</span>
+                  )}
                 </span>
               </div>
             ))}
@@ -481,6 +579,8 @@ export function StockView({ ticker }: { ticker: string }) {
         </Card>
 
         <InstitutionalHolders ticker={stock.ticker} />
+
+        <PoliticianTradesCard ticker={stock.ticker} />
       </div>
 
       <TickerSwitcher current={stock.ticker} />

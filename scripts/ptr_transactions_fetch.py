@@ -55,7 +55,10 @@ def main() -> None:
     running = pd.read_parquet(OUT) if OUT.exists() else None
     if running is not None and not running.empty:
         done_docs = set(running["doc_id"].astype(str))
-        print(f"[ptr-tx] seeded aggregate: {len(running)} rows, {len(done_docs)} docs done", flush=True)
+        print(
+            f"[ptr-tx] seeded aggregate: {len(running)} rows, {len(done_docs)} docs done",
+            flush=True,
+        )
     else:
         done_docs = set()
 

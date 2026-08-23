@@ -43,6 +43,7 @@ import form13fJson from "./form13f.json";
 import form8kJson from "./form8k.json";
 import ipoJson from "./ipo.json";
 import politicianTradesJson from "./politician_trades.json";
+import politicianTradesTxJson from "./politician_trades_tx.json";
 import executivesJson from "./executives.json";
 
 export type Pick = {
@@ -702,6 +703,59 @@ export type PoliticianTrades = {
   snapshot_ts?: string;
 };
 
+export type PoliticianTx = {
+  member: string;
+  // house.gov directory join (district + last name); null for
+  // candidates/former members.
+  party: string | null;
+  office: string;
+  // Ticker as filed in the PDF; "" when the PDF carries none (bonds etc.).
+  ticker: string;
+  asset: string;
+  // PTR asset-class code as bracketed in the PDF ("ST" = stock).
+  type: string;
+  direction: "buy" | "sell_partial" | "sell_full";
+  // Statutory disclosure band text ("$15,001 - $50,000" / "$50,000,001+").
+  amount_range: string;
+  transaction_date: string;
+  filing_date: string | null;
+  // filing - transacted, whole days (STOCK Act clock; >45 = late).
+  days_late: number | null;
+  doc_url: string;
+};
+
+export type PoliticianTradesTx = {
+  status: string;
+  as_of: string | null;
+  year: number;
+  total: number;
+  n_members: number;
+  n_tickered: number;
+  by_party: Record<string, {
+    n_trades: number;
+    n_buy: number;
+    n_sell_partial: number;
+    n_sell_full: number;
+  }>;
+  late_filings: number;
+  party_coverage: string;
+  transactions: PoliticianTx[];
+  parse: {
+    filings_total: number;
+    filings_processed: number;
+    fetch_errors: number;
+    no_text_pdfs: number;
+    row_candidates: number;
+    rows_parsed: number;
+    rows_exchanged: number;
+    parse_failures: number;
+    complete: boolean;
+  };
+  senate: { status: string; note: string };
+  methodology: string;
+  snapshot_ts?: string;
+};
+
 export type ExecutivesEvent = {
   company: string;
   ticker: string;
@@ -770,5 +824,6 @@ export const aionis = {
   form8k: form8kJson as Form8k,
   ipo: ipoJson as FormIpo,
   politicianTrades: politicianTradesJson as PoliticianTrades,
+  politicianTradesTx: politicianTradesTxJson as PoliticianTradesTx,
   executives: executivesJson as Executives,
 };

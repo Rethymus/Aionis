@@ -1,7 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { ExternalLinkIcon, ShieldAlertIcon } from "lucide-react";
+import Link from "next/link";
+import { ExternalLinkIcon, ShieldAlertIcon, TriangleAlertIcon } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -24,10 +25,15 @@ import { FilterPills, LoadMoreFooter, usePaged } from "@/components/stream/strea
 import { AvatarInitials } from "@/components/stream/avatar-initials";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
+import type { PoliticianTx } from "@/data/aionis";
 
 const PAGE_SIZE = 50;
+const TX_PAGE_SIZE = 50;
 
 type PartyFilter = "all" | "R" | "D" | "I";
+type TxParty = "all" | "R" | "D" | "unknown";
+type TxDirecton = "all" | "buy" | "sell_partial" | "sell_full";
+type TxLate = "all" | "late";
 
 /** Party chip, xiaoyinsi-alignment style: US-convention tinted fill (blue for
  *  D, red for R — identity colors, not semantic colors, so the project's
@@ -50,6 +56,213 @@ function PartyBadge({ party }: { party: string | null }) {
     >
       {party}
     </span>
+  );
+}
+
+/** Direction badge: convention-aware up/down fill (buy = up, sells = down),
+ *  partial/full distinguished by label. Same taxonomy as the insiders view. */
+function DirectionBadge({ d }: { d: PoliticianTx["direction"] }) {
+  const { t } = useI18n();
+  const buy = d === "buy";
+  return (
+    <Badge
+      variant="secondary"
+      className={cn(
+        "shrink-0 font-mono text-[11px] leading-4",
+        buy ? "badge-up" : "badge-down",
+      )}
+    >
+      {t(`congress.tx.direction.${d}`)}
+    </Badge>
+  );
+}
+
+/** Statutory amount band — a RANGE, never an exact value (mono badge). */
+function AmountBadge({ range }: { range: string }) {
+  return (
+    <span className="whitespace-nowrap rounded-[4px] bg-muted px-1.5 py-px font-mono text-[11px] leading-4 text-muted-foreground tabular-nums">
+      {range}
+    </span>
+  );
+}
+
+/** 交易明细 — transaction-level section (2026 PTR PDFs parsed; the filing
+ *  stream above stays the index-level view). Filters: party / direction /
+ *  late-only; amount bands as badges; ⚠ marks the 45-day STOCK Act breach. */
+function TxSection() {
+  const { t } = useI18n();
+  const f = aionis.politicianTradesTx;
+  const [party, setParty] = useState<TxParty>("all");
+  const [dir, setDir] = useState<TxDirecton>("all");
+  const [late, setLate] = useState<TxLate>("all");
+  const { visibleCount, reset, loadMore } = usePaged(TX_PAGE_SIZE);
+
+  const tx = f.status === "ok" ? f.transactions : [];
+  const partyCounts = useMemo(() => {
+    const c: Record<string, number> = { R: 0, D: 0, unknown: 0 };
+    for (const r of tx) {
+      const k = r.party ?? "unknown";
+      if (k in c) c[k] += 1;
+    }
+    return c;
+  }, [tx]);
+  const dirCounts = useMemo(() => {
+    const c: Record<string, number> = { buy: 0, sell_partial: 0, sell_full: 0 };
+    for (const r of tx) if (r.direction in c) c[r.direction] += 1;
+    return c;
+  }, [tx]);
+  const nLate = useMemo(
+    () => tx.filter((r) => r.days_late !== null && r.days_late > 45).length,
+    [tx],
+  );
+
+  const filtered = useMemo(() => {
+    return tx.filter(
+      (r) =>
+        (party === "all" || (r.party ?? "unknown") === party) &&
+        (dir === "all" || r.direction === dir) &&
+        (late !== "late" || (r.days_late !== null && r.days_late > 45)),
+    );
+  }, [tx, party, dir, late]);
+  const visible = filtered.slice(0, visibleCount);
+
+  const apply = <K,>(setter: (k: K) => void) => (k: K) => {
+    setter(k);
+    reset();
+  };
+
+  if (f.status !== "ok" || tx.length === 0) return null;
+
+  return (
+    <Card className="min-w-0">
+      <CardHeader className="pb-3">
+        <CardTitle>
+          {t("congress.tx.title")}{" "}
+          <span className="ml-1 font-mono text-sm font-normal text-muted-foreground tabular-nums">
+            {f.total.toLocaleString("en-US")} · {f.n_members} · {f.year}
+          </span>
+        </CardTitle>
+        <CardDescription>{t("congress.tx.note")}</CardDescription>
+        <div className="space-y-1 pt-1">
+          <FilterPills<TxParty>
+            label={t("congress.party.label")}
+            value={party}
+            onChange={apply(setParty)}
+            options={[
+              { key: "all", label: t("congress.party.all"), count: tx.length },
+              { key: "R", label: t("congress.party.R"), count: partyCounts.R },
+              { key: "D", label: t("congress.party.D"), count: partyCounts.D },
+              { key: "unknown", label: t("congress.tx.party.unknown"), count: partyCounts.unknown },
+            ]}
+          />
+          <div className="flex flex-wrap items-center gap-2">
+            <FilterPills<TxDirecton>
+              label={t("congress.tx.direction.label")}
+              value={dir}
+              onChange={apply(setDir)}
+              options={[
+                { key: "all", label: t("congress.tx.direction.all"), count: tx.length },
+                { key: "buy", label: t("congress.tx.direction.buy"), count: dirCounts.buy },
+                { key: "sell_partial", label: t("congress.tx.direction.sell_partial"), count: dirCounts.sell_partial },
+                { key: "sell_full", label: t("congress.tx.direction.sell_full"), count: dirCounts.sell_full },
+              ]}
+            />
+            <FilterPills<TxLate>
+              label={t("congress.tx.late.label")}
+              value={late}
+              onChange={apply(setLate)}
+              options={[
+                { key: "all", label: t("congress.tx.late.all") },
+                { key: "late", label: "⚠ >45d", count: nLate },
+              ]}
+            />
+          </div>
+        </div>
+      </CardHeader>
+      <CardContent className="p-0">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>{t("congress.member")}</TableHead>
+              <TableHead>{t("congress.tx.asset")}</TableHead>
+              <TableHead>{t("congress.tx.direction.label")}</TableHead>
+              <TableHead>{t("congress.tx.amount")}</TableHead>
+              <TableHead>{t("congress.tx.tx_date")}</TableHead>
+              <TableHead className="text-right">{t("congress.tx.days_late")}</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {visible.map((r) => (
+              <TableRow key={`${r.doc_url}-${r.transaction_date}-${r.asset}-${r.direction}`}>
+                <TableCell>
+                  <a
+                    href={r.doc_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-primary hover:underline"
+                    title={r.doc_url}
+                  >
+                    {r.member}
+                  </a>
+                  <PartyBadge party={r.party} />
+                </TableCell>
+                <TableCell className="max-w-[280px]">
+                  <div className="flex items-center gap-1.5">
+                    {r.ticker ? (
+                      <Link
+                        href={`/stock/${r.ticker}`}
+                        className="shrink-0 font-mono text-xs font-semibold text-primary hover:underline"
+                      >
+                        {r.ticker}
+                      </Link>
+                    ) : null}
+                    <span className="truncate text-muted-foreground" title={r.asset}>
+                      {r.asset}
+                    </span>
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <DirectionBadge d={r.direction} />
+                </TableCell>
+                <TableCell>
+                  <AmountBadge range={r.amount_range} />
+                </TableCell>
+                <TableCell className="whitespace-nowrap tabular-nums text-muted-foreground">
+                  {fmtDateShort(r.transaction_date)}
+                </TableCell>
+                <TableCell className="whitespace-nowrap text-right font-mono text-xs tabular-nums">
+                  {(r.days_late ?? 0) > 45 ? (
+                    <span
+                      className="inline-flex items-center gap-0.5 font-semibold text-amber-600 dark:text-amber-400"
+                      title={t("congress.tx.late.hint")}
+                    >
+                      <TriangleAlertIcon className="size-3" />
+                      {r.days_late}d
+                    </span>
+                  ) : (
+                    <span className="text-muted-foreground">{r.days_late}d</span>
+                  )}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <LoadMoreFooter
+          shown={visible.length}
+          total={filtered.length}
+          onLoadMore={loadMore}
+          pageSize={TX_PAGE_SIZE}
+        />
+        <div className="border-t px-4 py-2 font-mono text-[11px] leading-relaxed text-muted-foreground/80">
+          {t("congress.tx.parse_note")
+            .replace("{parsed}", f.parse.rows_parsed.toLocaleString("en-US"))
+            .replace("{excluded}", f.parse.rows_exchanged.toLocaleString("en-US"))
+            .replace("{failed}", f.parse.parse_failures.toLocaleString("en-US"))
+            .replace("{notext}", f.parse.no_text_pdfs.toLocaleString("en-US"))
+            .replace("{filings}", f.parse.filings_processed.toLocaleString("en-US"))}
+        </div>
+      </CardContent>
+    </Card>
   );
 }
 
@@ -249,6 +462,11 @@ export function CongressView() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Transaction detail (D4 granularity): per-row PTR PDF parse of the
+          2026 filings. Sits BELOW the filing stream — the index view above
+          keeps its own contract untouched. */}
+      <TxSection />
 
       <Card className="border-amber-500/30 bg-amber-500/5">
         <CardHeader className="pb-3">
