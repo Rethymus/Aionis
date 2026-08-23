@@ -3605,14 +3605,19 @@ def export_filing_stream() -> None:
     Reads ``data/cache/filing_stream_aggregate.parquet`` (gitignored; produced
     by ``scripts/filing_stream_fetch.py`` via ``aionis.ingest.filing_stream``
     — DIRECT whole-market EFTS queries, one root form at a time: 8-K / 10-K /
-    10-Q / S-1 family / 4 / D, each expanding to its /A amendments; SC 13D /
+    10-Q / S-1 family / 4 / D / DEF 14A / DEFA14A / 424B4, each expanding to
+    its /A amendments; SC 13D /
     SC 13G via the daily crawler index lanes because EFTS froze on Schedule
     13 after 2024-12-17). v1 (2026-08-23) DERIVED this feed by merging the
     terminal's six committed panels — coverage was bounded by each panel's
     visible cap and 10-K/10-Q were absent; v2 is the source query itself, so
     the by_form counts are the EDGAR window, not inherited panel caps.
     13F-HR stays excluded (quarterly manager filings, not company events —
-    the /filers registry carries them); DEF 14A rides its own panel lane.
+    the /filers registry carries them). Form-family completion (2026-08-23):
+    DEF 14A + DEFA14A (additional proxy soliciting material, a SEPARATE root
+    form — proxy amendments in practice, not DEF 14A/A) and 424B4 (IPO
+    pricing prospectus) joined the stream; the /executives panel keeps its
+    own DEF 14A deep-dive lane.
     Visible cap 800 newest, unchanged from v1; the 10-K/10-Q families
     additionally ride dedicated deep-cut lists (cap 400 each) because the
     800-newest cap squeezes periodic-report depth in filing season.
@@ -3740,13 +3745,20 @@ def export_filing_stream() -> None:
             "Unified cross-form SEC filing stream v2 — DIRECT EDGAR queries "
             "(public domain, 17 U.S.C. §105; filed-date PIT), one root form "
             "per EFTS query (never a comma list — efts mis-parses root+/A "
-            "families): 8-K / 10-K / 10-Q / S-1 family / 4 / D, each "
-            "expanding to its /A amendments. v1→v2 migration: v1 (2026-08-23) "
+            "families): 8-K / 10-K / 10-Q / S-1 family / 4 / D / DEF 14A / "
+            "DEFA14A / 424B4, each expanding to its /A amendments. v1→v2 "
+            "migration: v1 (2026-08-23) "
             "derived this feed by merging six committed panels — coverage was "
             "bounded by each panel's visible cap (its window spanned only the "
             "panels' newest days) and 10-K/10-Q were absent; v2 IS the source "
             "query over a trailing 14-day window, so by_form counts the "
-            "EDGAR window. Request accounting (declared totals / EFTS pages, "
+            "EDGAR window. Form-family completion (2026-08-23): DEF 14A "
+            "(definitive proxy, space %20-encoded in the EFTS query) and "
+            "DEFA14A (additional proxy soliciting material — a SEPARATE root "
+            "form, the proxy-amendment vehicle in practice) joined the "
+            "stream alongside 424B4 (the IPO pricing prospectus); measured "
+            "window volumes 80 / 166 / 21, all far under the split threshold. "
+            "Request accounting (declared totals / EFTS pages, "
             f"{total_requests} pages total): {accounting_txt}. Form 4 is "
             "split into two ~7-day half-windows unconditionally (busiest "
             "family — 10-15k/14d in filing season would exceed EFTS's "
@@ -3758,7 +3770,9 @@ def export_filing_stream() -> None:
             "smart_money / stakes_13g panels), subject resolved offline by "
             "ticker. Honest limits: (1) 13F-HR is excluded (quarterly "
             "manager holdings, not company events — carried by the /filers "
-            "registry); (2) DEF 14A rides its own dedicated panel lane; "
+            "registry); (2) DEF 14A / DEFA14A ride the stream as index-page "
+            "rows — the /executives panel keeps its own DEF 14A deep-dive "
+            "lane (person-level proxy parsing stays DEFERRED there); "
             "(3) Form 4 'who' is the reporting person (the first "
             "display_names entry), with the issuer carried as the ticker "
             "label from the CURRENT SEC company_tickers snapshot — a "

@@ -6,10 +6,15 @@ per-form panels — coverage was bounded by each panel's visible cap and the 10-
 at a time, so the stream IS the source (no panel caps inherited):
 
   * EFTS root-form queries (whole market, no ``ciks=``): ``8-K`` / ``10-K`` /
-    ``10-Q`` / ``S-1`` / ``4`` / ``D`` — each expands to its amendment family
-    (``8-K/A``, ``10-K/A``, ``S-1/A``, ``4/A``, ``D/A`` …). ONE form parameter
-    per query, NEVER a comma list — efts mis-parses root+amendment lists
-    (verified for SC 13D in :mod:`aionis.ingest.stakes_13d_efts`; same engine).
+    ``10-Q`` / ``S-1`` / ``4`` / ``D`` / ``DEF 14A`` / ``DEFA14A`` / ``424B4``
+    — each expands to its amendment family (``8-K/A``, ``10-K/A``, ``S-1/A``,
+    ``4/A``, ``D/A`` …). ONE form parameter per query, NEVER a comma list —
+    efts mis-parses root+amendment lists (verified for SC 13D in
+    :mod:`aionis.ingest.stakes_13d_efts`; same engine). ``DEF 14A``'s space is
+    URL-encoded ``%20`` (:mod:`aionis.ingest.form_def14a` verified query);
+    ``DEFA14A`` is a SEPARATE root form (proxy amendments are additional
+    soliciting material, not ``DEF 14A/A`` — verified live, 0 hits for the
+    direct ``DEF 14A/A`` query); ``424B4`` is the IPO pricing prospectus.
   * ``SC 13D`` / ``SC 13G``: EFTS **froze on the whole Schedule 13 family after
     2024-12-17** (:mod:`aionis.ingest.stakes_13d_daily_index`; re-verified live
     2026-08-23 — a recent-window probe returns 0 hits, the probe is cached and
@@ -43,7 +48,13 @@ snapshot, fine for a display label, never a research input (the established
 13D-panel caveat). ``doc_url`` = the filing index page
 (:func:`aionis.ingest.form_ipo._filing_index_url`) — zero extra requests.
 
-EXCLUDED: ``DEF 14A`` (proxy season is TASK-V's dedicated panel lane) and
+FORM-FAMILY COMPLETION (2026-08-23, the v2 demarcation closed): ``DEF 14A``
+and ``DEFA14A`` joined the stream (the /executives panel keeps its own
+deep-dive lane — the stream row links the index page, the panel is where the
+governance narrative lives); ``424B4`` (IPO pricing prospectus) returned from
+v1 scope. Volumes are quiet off-season (measured form_def14a: DEF 14A ≈
+1,387 and DEFA14A ≈ 2,278 per 120 days → ~170 / ~270 per 14-day window) and
+the adaptive 9,500 split (below) is armed for proxy season. Still EXCLUDED:
 ``13F-HR`` (quarterly manager filings, not company events — the /filers
 registry carries them).
 
@@ -80,7 +91,14 @@ _PAGE_SIZE = 100  # efts default + max per request; paginate via from=
 
 # One root form per EFTS query (NEVER a comma list — efts mis-parses
 # root+amendment families; verified for SC 13D, same engine for all).
-ROOT_EFTS_FORMS = ("8-K", "10-K", "10-Q", "S-1", "4", "D")
+# Form-family completion (2026-08-23): DEF 14A (space → %20 per
+# form_def14a), DEFA14A (additional proxy soliciting material — a
+# SEPARATE root form, not DEF 14A/A; verified live in form_def14a) and
+# 424B4 (IPO pricing prospectus, no space) joined the stream.
+ROOT_EFTS_FORMS = (
+    "8-K", "10-K", "10-Q", "S-1", "4", "D",
+    "DEF 14A", "DEFA14A", "424B4",
+)
 # EFTS froze on Schedule 13 after 2024-12-17 — probed each run (cached,
 # machine-verified zero), rows recovered from the daily crawler index.
 SCHEDULE13_ROOT_FORMS = ("SC 13D", "SC 13G")

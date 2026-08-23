@@ -1,12 +1,13 @@
 """Bounded fetch of the v2 unified filing stream (direct multi-form, display-only).
 
 Trailing 14-day window of the whole-market stream — direct EFTS root-form
-queries (8-K / 10-K / 10-Q / S-1 / 4 / D; one form parameter per query) plus
-the daily crawler index lanes for SC 13D / SC 13G (EFTS froze on Schedule 13
-after 2024-12-17 — the frozen roots are still probed, one cached page each,
-as the machine-verified zero). Measured request volume (2026-08-23): ~140
-pages at >=2.1s spacing (~6 min cold; idempotent per-form caches make re-runs
-free). Writes ``data/cache/filing_stream_aggregate.parquet`` (gitignored,
+queries (8-K / 10-K / 10-Q / S-1 / 4 / D / DEF 14A / DEFA14A / 424B4; one
+form parameter per query) plus the daily crawler index lanes for SC 13D /
+SC 13G (EFTS froze on Schedule 13 after 2024-12-17 — the frozen roots are
+still probed, one cached page each, as the machine-verified zero). Measured
+request volume (2026-08-23): ~140 pages at >=2.1s spacing (~6 min cold;
+idempotent per-form caches make re-runs free). Writes
+``data/cache/filing_stream_aggregate.parquet`` (gitignored,
 regenerable) + ``filing_stream_stats.json`` (the per-form request accounting
 the export discloses); ``scripts/export_terminal_data.py`` builds the tracked
 JSON. Ticker resolution prefers as-of-filing display_names tickers and falls

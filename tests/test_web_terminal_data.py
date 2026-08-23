@@ -789,11 +789,12 @@ def test_filing_stream_panel_contract() -> None:
     inheriting their visible caps and missing 10-K/10-Q entirely — the v1→v2
     migration is disclosed in the methodology). The contract pins: the v2
     form family (EFTS root forms + /A amendments; Schedule 13 via the daily
-    index lanes); newest-first order; by_form counts the VISIBLE stream and
+    index lanes; the form-family completion added DEF 14A / DEFA14A / 424B4);
+    newest-first order; by_form counts the VISIBLE stream and
     sums to n_visible; every row carries an EDGAR link and a real form
     label; ticker "None"-strings and placeholder filers must NOT leak; the
     methodology must disclose the direct EFTS machinery, the 10-K/10-Q
-    coverage, and that 13F is excluded.
+    coverage, the DEF 14A completion, and that 13F is excluded.
     """
     x = _load("filing_stream.json")
     assert x["status"] in {"ok", "awaiting_fetch"}
@@ -806,6 +807,11 @@ def test_filing_stream_panel_contract() -> None:
         "8-K", "8-K/A", "10-K", "10-K/A", "10-Q", "10-Q/A",
         "S-1", "S-1/A", "4", "4/A", "D", "D/A",
         "SC 13D", "SC 13D/A", "SC 13G", "SC 13G/A",
+        # Form-family completion (2026-08-23): DEF 14A (space → %20 per
+        # form_def14a), DEFA14A (separate root — the proxy-amendment vehicle
+        # in practice; a future DEF 14A/A stays whitelisted
+        # defense-in-depth), 424B4 (IPO pricing prospectus).
+        "DEF 14A", "DEF 14A/A", "DEFA14A", "424B4",
     }
     for r in x["filings"]:
         assert {"form", "who", "ticker", "filed_date", "doc_url"} <= set(r)
@@ -829,6 +835,9 @@ def test_filing_stream_panel_contract() -> None:
         "must disclose the direct EFTS machinery and the 13F exclusion"
     )
     assert "10-k" in ml and "10-q" in ml, "the v2 10-K/10-Q coverage is disclosed"
+    assert "def 14a" in ml and "424b4" in ml, (
+        "the form-family completion (DEF 14A / DEFA14A / 424B4) is disclosed"
+    )
     assert "display-only" in ml
 
 
