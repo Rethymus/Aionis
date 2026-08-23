@@ -50,6 +50,7 @@ import themeEtfsJson from "./theme_etfs.json";
 import redditTrendingJson from "./reddit_trending.json";
 import formDJson from "./form_d.json";
 import def14aJson from "./def14a.json";
+import def14aPersonsJson from "./def14a_persons.json";
 import filingStreamJson from "./filing_stream.json";
 import executivesJson from "./executives.json";
 import newsFeedJson from "./news_feed.json";
@@ -964,6 +965,61 @@ export type Def14a = {
   snapshot_ts?: string;
 };
 
+// One parsed DEF 14A filing = one board card (company + director/officer
+// sets). n_directors/n_officers are INDEPENDENT sets: a CEO who sits on the
+// board counts in both (sum may exceed n_persons — disclosed).
+export type Def14aPersonsBoard = {
+  company: string;
+  // Empty when the EDGAR display name carries no symbol (honest).
+  ticker: string;
+  issuer_cik: string;
+  n_persons: number;
+  n_directors: number;
+  n_officers: number;
+  filed_date: string;
+  // EDGAR primary proxy document (the parse source, full link-out).
+  doc_url: string;
+};
+
+// Cross-company person aggregate: the "board-seat intersection" cut. Identity
+// keys on the normalized full name — same-name merges may join namesakes and
+// some name shapes (initials-first, apostrophes) are conservatively missed.
+export type Def14aPersonsTop = {
+  name: string;
+  // Canonical role words witnessed near the person's rows/bios (may include
+  // past or external-company titles — text-witnessed hints, not employment
+  // records).
+  roles: string[];
+  n_companies: number;
+  n_director_seats: number;
+  companies: string[];
+};
+
+export type Def14aPersons = {
+  status: string;
+  as_of: string | null;
+  n_filings_target: number;
+  n_filings_processed: number;
+  n_with_persons: number;
+  coverage_pct: number;
+  n_persons_distinct: number;
+  by_role: Record<string, number>;
+  // Parse-confidence distribution: section_age_rows (HIGH, age-anchored
+  // roster rows) / section_name_roles (MEDIUM) / unparsed_no_persons (honest
+  // nulls) / fetch_or_doc_errors.
+  confidence: Record<string, number>;
+  boards: Def14aPersonsBoard[];
+  top_persons: Def14aPersonsTop[];
+  request_accounting: {
+    n_http_requests_last_fetch: number;
+    budget_seconds: number;
+    budget_hit: boolean;
+    fetched_at: string;
+  };
+  methodology: string;
+  snapshot_ts?: string;
+};
+
 export type FilingStreamRow = {
   // Source form type: 8-K(/A) / 10-K(/A) / 10-Q(/A) / S-1(/A) / 4(/A) /
   // D(/A) / SC 13D(/A) / SC 13G(/A).
@@ -1153,6 +1209,7 @@ export const aionis = {
   redditTrending: redditTrendingJson as RedditTrending,
   formD: formDJson as FormD,
   def14a: def14aJson as Def14a,
+  def14aPersons: def14aPersonsJson as Def14aPersons,
   filingStream: filingStreamJson as FilingStream,
   executives: executivesJson as Executives,
   newsFeed: newsFeedJson as NewsFeed,

@@ -169,6 +169,214 @@ function Def14aSection() {
 // methodology card carries the disclosure.
 const PAGE_SIZE = 50;
 
+/** 人级档案 · DEF 14A persons — directors / executive officers parsed from
+ *  the newest ~150 proxy statements of the Def14aSection stream (conservative
+ *  tiered confidence: only age-anchored roster rows or middle-initial names
+ *  with a WITNESSED role word ship; anything else is an honest null, 宁可
+ *  null 不猜测). Coverage KPIs + cross-company board-seat intersection +
+ *  board-composition cards, each linking the parsed primary document. */
+function PersonsSection() {
+  const { t } = useI18n();
+  const p = aionis.def14aPersons;
+  const { visibleCount, loadMore } = usePaged(25);
+
+  // Hooks stay unconditional (the early return below must not skip them).
+  const topVisible = useMemo(
+    () => p.top_persons.slice(0, visibleCount),
+    [p.top_persons, visibleCount],
+  );
+  const boards = useMemo(() => p.boards.slice(0, 12), [p.boards]);
+
+  if (p.status !== "ok" || p.n_filings_processed === 0) return null;
+  const conf = p.confidence ?? {};
+  const nUnparsed = (conf.unparsed_no_persons ?? 0) + (conf.fetch_or_doc_errors ?? 0);
+
+  return (
+    <Card className="min-w-0 overflow-hidden py-0">
+      <CardHeader className="border-b">
+        <CardTitle className="flex flex-wrap items-baseline gap-x-2 text-base">
+          {t("executives.persons.title")}
+          <span className="font-mono text-xs font-normal text-muted-foreground tabular-nums">
+            {p.n_with_persons.toLocaleString("en-US")}/
+            {p.n_filings_processed.toLocaleString("en-US")} ·{" "}
+            {p.coverage_pct.toLocaleString("en-US")}% ·{" "}
+            {p.n_persons_distinct.toLocaleString("en-US")}
+          </span>
+        </CardTitle>
+        <CardDescription>{t("executives.persons.note")}</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4 p-4">
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+          <div className="rounded-lg border p-3">
+            <p className="text-[11px] text-muted-foreground">
+              {t("executives.persons.coverage")}
+            </p>
+            <p className="font-mono text-lg font-semibold tabular-nums">
+              {p.n_with_persons}/{p.n_filings_processed}
+            </p>
+            <p className="text-[11px] text-muted-foreground tabular-nums">
+              {p.coverage_pct.toLocaleString("en-US")}%
+            </p>
+          </div>
+          <div className="rounded-lg border p-3">
+            <p className="text-[11px] text-muted-foreground">
+              {t("executives.persons.tiers")}
+            </p>
+            <p className="mt-1 space-y-0.5 font-mono text-[11px] tabular-nums">
+              <span className="block">
+                age-rows {(conf.section_age_rows ?? 0).toLocaleString("en-US")}
+              </span>
+              <span className="block">
+                name-roles {(conf.section_name_roles ?? 0).toLocaleString("en-US")}
+              </span>
+              <span className="block">
+                null {nUnparsed.toLocaleString("en-US")}
+              </span>
+            </p>
+          </div>
+          <div className="rounded-lg border p-3">
+            <p className="text-[11px] text-muted-foreground">
+              {t("executives.persons.distinct")}
+            </p>
+            <p className="font-mono text-lg font-semibold tabular-nums">
+              {p.n_persons_distinct.toLocaleString("en-US")}
+            </p>
+            <p className="text-[11px] text-muted-foreground">
+              {t("executives.persons.distinct_note")}
+            </p>
+          </div>
+          <div className="rounded-lg border p-3">
+            <p className="text-[11px] text-muted-foreground">
+              {t("executives.persons.roles_kpi")}
+            </p>
+            <p className="mt-1 space-y-0.5 font-mono text-[11px] tabular-nums">
+              {Object.entries(p.by_role)
+                .slice(0, 4)
+                .map(([role, n]) => (
+                  <span key={role} className="block">
+                    {role} {n.toLocaleString("en-US")}
+                  </span>
+                ))}
+            </p>
+          </div>
+        </div>
+
+        {p.top_persons.length > 0 ? (
+          <div>
+            <p className="mb-1 text-xs font-medium text-muted-foreground">
+              {t("executives.persons.top_title")}
+            </p>
+            <div className="overflow-hidden rounded-lg border">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>{t("executives.persons.person_name")}</TableHead>
+                    <TableHead>{t("executives.persons.roles_col")}</TableHead>
+                    <TableHead className="text-right">
+                      {t("executives.persons.seats")}
+                    </TableHead>
+                    <TableHead className="text-right">
+                      {t("executives.persons.director_seats")}
+                    </TableHead>
+                    <TableHead className="hidden md:table-cell">
+                      {t("executives.persons.companies")}
+                    </TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {topVisible.map((person) => (
+                    <TableRow key={person.name}>
+                      <TableCell className="font-medium">{person.name}</TableCell>
+                      <TableCell>
+                        <span className="font-mono text-[11px] text-muted-foreground">
+                          {person.roles.join(", ")}
+                        </span>
+                      </TableCell>
+                      <TableCell className="text-right font-mono text-xs tabular-nums">
+                        {person.n_companies}
+                      </TableCell>
+                      <TableCell className="text-right font-mono text-xs tabular-nums">
+                        {person.n_director_seats}
+                      </TableCell>
+                      <TableCell className="hidden max-w-[320px] md:table-cell">
+                        <span className="block truncate text-xs text-muted-foreground" title={person.companies.join(" · ")}>
+                          {person.companies.join(" · ")}
+                        </span>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+              <LoadMoreFooter
+                shown={topVisible.length}
+                total={p.top_persons.length}
+                onLoadMore={loadMore}
+                pageSize={25}
+              />
+            </div>
+          </div>
+        ) : null}
+
+        {boards.length > 0 ? (
+          <div>
+            <p className="mb-1 text-xs font-medium text-muted-foreground">
+              {t("executives.persons.boards_title")}
+            </p>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {boards.map((b) => (
+                <a
+                  key={`${b.issuer_cik}-${b.filed_date}`}
+                  href={b.doc_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block rounded-lg border p-3 transition-colors hover:border-primary/40"
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <span className="line-clamp-2 text-sm font-medium" title={b.company}>
+                      {b.company || "—"}
+                    </span>
+                    <ExternalLinkIcon className="mt-0.5 size-3 shrink-0 text-muted-foreground" />
+                  </div>
+                  {b.ticker && STOCK_PAGE_TICKERS.has(b.ticker) ? (
+                    <Link
+                      href={`/stock/${b.ticker}`}
+                      className="font-mono text-[11px] text-primary hover:underline"
+                    >
+                      {b.ticker}
+                    </Link>
+                  ) : null}
+                  <div className="mt-2 flex items-baseline gap-3 font-mono text-xs tabular-nums">
+                    <span>
+                      {t("executives.persons.directors")}{" "}
+                      <span className="font-semibold">{b.n_directors}</span>
+                    </span>
+                    <span>
+                      {t("executives.persons.officers")}{" "}
+                      <span className="font-semibold">{b.n_officers}</span>
+                    </span>
+                    <span className="ml-auto text-muted-foreground">
+                      {fmtDateShort(b.filed_date)}
+                    </span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        ) : null}
+
+        <p className="text-[11px] leading-relaxed text-muted-foreground">
+          {t("executives.persons.limit_note")
+            .replace("{processed}", p.n_filings_processed.toLocaleString("en-US"))
+            .replace("{target}", p.n_filings_target.toLocaleString("en-US"))
+            .replace("{with}", p.n_with_persons.toLocaleString("en-US"))
+            .replace("{requests}", p.request_accounting.n_http_requests_last_fetch.toLocaleString("en-US"))}
+        </p>
+      </CardContent>
+    </Card>
+  );
+}
+
+
 export function ExecutivesView() {
   const { t } = useI18n();
   const f = aionis.executives;
@@ -322,6 +530,10 @@ export function ExecutivesView() {
       {/* DEF 14A 代理委托书流 — the governance companion under the same
           route: proxy statements stream below the 8-K officer-change feed. */}
       <Def14aSection />
+
+      {/* 人级档案 — persons parsed from the newest DEF 14A documents:
+          coverage KPIs, cross-company board seats, board-composition cards. */}
+      <PersonsSection />
 
       <Card>
         <CardHeader className="pb-3">

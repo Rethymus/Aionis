@@ -913,6 +913,64 @@ def test_form_def14a_panel_contract() -> None:
     assert "display-only" in ml
 
 
+def test_def14a_persons_panel_contract() -> None:
+    """DEF 14A persons panel: honest person-level coverage discipline.
+
+    The panel parses ONLY the newest ~150 filings with conservative tiered
+    confidence (age-anchored roster rows / middle-initial names with a
+    witnessed role word — 宁可 null 不猜测: unreadable documents ship
+    persons=[] and parsed=false, never a guessed name). The contract pins:
+    coverage self-consistency (n_with_persons <= n_filings_processed <=
+    target; confidence tiers count every processed filing exactly once);
+    every shipped person carries >= 1 witnessed role word (by_role bounded by
+    distinct persons x the role vocabulary); board rows carry director/
+    officer counts consistent with independent sets plus EDGAR primary-doc
+    links; top-person seat counts are bounded by the processed prefix; the
+    methodology must disclose parsed/coverage/null semantics and display-only.
+    """
+    x = _load("def14a_persons.json")
+    assert x["status"] in {"ok", "awaiting_fetch"}
+    assert {"as_of", "n_filings_target", "n_filings_processed", "n_with_persons",
+            "coverage_pct", "n_persons_distinct", "by_role", "confidence",
+            "boards", "top_persons", "methodology", "snapshot_ts"} <= set(x)
+    if x["status"] != "ok" or not x["n_filings_processed"]:
+        return
+    n_proc = x["n_filings_processed"]
+    assert 0 <= x["n_with_persons"] <= n_proc <= x["n_filings_target"]
+    assert abs(x["coverage_pct"] - round(100.0 * x["n_with_persons"] / n_proc, 1)) < 0.11
+    conf = x["confidence"]
+    assert sum(conf.values()) == n_proc, "tiers count every processed filing exactly once"
+    assert (
+        conf.get("section_age_rows", 0) + conf.get("section_name_roles", 0)
+        == x["n_with_persons"]
+    ), "with-persons filings split exactly into the two parse tiers"
+    # Every shipped person carries >= 1 witnessed role word; by_role counts
+    # distinct persons per canonical role (multi-role persons count in each
+    # role — bounded by persons x the 11-role vocabulary).
+    assert sum(x["by_role"].values()) <= x["n_persons_distinct"] * 11
+    for b in x["boards"]:
+        assert {"company", "ticker", "issuer_cik", "n_persons", "n_directors",
+                "n_officers", "filed_date", "doc_url"} <= set(b)
+        assert b["n_persons"] >= 1
+        assert b["n_directors"] + b["n_officers"] >= 1, (
+            "a parsed board always has a director/officer (roles are required)"
+        )
+        assert b["n_directors"] <= b["n_persons"] and b["n_officers"] <= b["n_persons"]
+        assert b["doc_url"].startswith("https://www.sec.gov/Archives/edgar/data/")
+        assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", b["filed_date"])
+    for tp in x["top_persons"]:
+        assert {"name", "roles", "n_companies", "n_director_seats", "companies"} <= set(tp)
+        assert len(tp["roles"]) >= 1, "a shipped person always has a witnessed role word"
+        assert 1 <= tp["n_companies"] <= n_proc
+        assert 0 <= tp["n_director_seats"] <= tp["n_companies"]
+        assert len(tp["companies"]) == min(tp["n_companies"], 10)
+    seats = [tp["n_companies"] for tp in x["top_persons"]]
+    assert seats == sorted(seats, reverse=True), "top persons ordered by company count desc"
+    ml = x["methodology"].lower()
+    assert "parsed" in ml and "coverage" in ml and "display-only" in ml
+    assert "null" in ml, "must disclose the honest-null semantics"
+
+
 def test_filing_stream_panel_contract() -> None:
     """Unified filing stream v2: DIRECT whole-market per-form queries.
 

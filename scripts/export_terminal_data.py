@@ -2562,6 +2562,7 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
     ("ipo", "ipo.json", _DH_DAILY),
     ("form_d", "form_d.json", _DH_DAILY),
     ("form_def14a", "def14a.json", _DH_DAILY),
+    ("def14a_persons", "def14a_persons.json", _DH_DAILY),
     ("filing_stream", "filing_stream.json", _DH_DAILY),
     ("politician_trades", "politician_trades.json", _DH_DAILY),
     ("politician_trades_tx", "politician_trades_tx.json", _DH_DAILY),
@@ -2660,6 +2661,8 @@ def _dh_as_of(key: str, fname: str) -> str | None:
     if key == "form_d":
         return p.get("as_of")
     if key == "form_def14a":
+        return p.get("as_of")
+    if key == "def14a_persons":
         return p.get("as_of")
     if key == "filing_stream":
         return p.get("as_of")
@@ -2887,6 +2890,12 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
         "DEF 14A proxy statements via EFTS form-level queries, filed-date "
         "PIT; director/executive names, compensation, ownership not parsed "
         "(person-level extraction deferred)",
+    ),
+    "def14a_persons": (
+        "U.S. SEC EDGAR — public domain",
+        "DEF 14A primary documents (newest ~150 filings), conservative "
+        "tiered director/officer name+role parsing, filed-date PIT; unparsed "
+        "documents yield honest nulls (never guessed)",
     ),
     "filing_stream": (
         "U.S. SEC EDGAR — public domain",
@@ -3735,6 +3744,168 @@ def export_form_def14a() -> None:
         f"[export-terminal] form_def14a: {payload['total']} filings "
         f"({payload['by_form']}), {payload['issuers']} issuers, "
         f"as_of {payload['as_of']}",
+        flush=True,
+    )
+
+
+def export_def14a_persons() -> None:
+    """DEF 14A person-level panel — directors / executive officers.
+
+    Reads ``data/cache/def14a_persons_parsed.json`` (gitignored; produced by
+    ``scripts/def14a_persons_fetch.py`` via ``aionis.ingest.def14a_persons``
+    — the BOUNDED v2 lane over the newest ~150 panel filings: one
+    filing-index GET + one primary-doc GET per filing, idempotent per-
+    accession caches, hard 45-minute wall-clock budget). Names/roles come
+    from conservative tiered parsing ONLY (age-anchored roster rows or
+    middle-initial names with a witnessed role word); a document the parser
+    cannot read yields persons=[] and parsed=false — an honest null, never a
+    guessed name (宁可 null 不猜测). Coverage is reported as-counted over the
+    processed prefix; the top-persons "board-seat intersection" keys on
+    normalized full names (same-name merges may join namesakes — disclosed,
+    display-only)."""
+    from aionis.ingest.def14a_persons import ROLE_ORDER, _norm_name
+
+    fp = Path("data/cache/def14a_persons_parsed.json")
+    if not fp.exists():
+        print(
+            "[export-terminal] SKIP def14a_persons: data/cache/def14a_persons_parsed.json "
+            "not present (tracked JSON retains last-committed value)",
+            flush=True,
+        )
+        return
+    parsed = json.loads(fp.read_text(encoding="utf-8"))
+    results: dict = parsed.get("results", {})
+    if not results:
+        print(
+            "[export-terminal] SKIP def14a_persons: empty parse cache "
+            "(tracked JSON retains last-committed value)",
+            flush=True,
+        )
+        return
+
+    n_processed = len(results)
+    n_with = sum(1 for r in results.values() if r.get("parsed"))
+    boards: list[dict] = []
+    # name-key -> {roles union, seats: [(company, roles-at-that-company)]}
+    persons: dict[str, dict] = {}
+    for _accession, rec in results.items():
+        ps = rec.get("persons") or []
+        if not (rec.get("parsed") and ps):
+            continue
+        n_directors = sum(1 for p in ps if p["roles"] and set(p["roles"]) & {"director", "chairman"})
+        n_officers = sum(1 for p in ps if p["roles"] and set(p["roles"]) - {"director", "chairman"})
+        boards.append({
+            "company": str(rec.get("company", "")),
+            "ticker": str(rec.get("ticker", "")),
+            "issuer_cik": str(rec.get("issuer_cik", "")),
+            "n_persons": len(ps),
+            "n_directors": n_directors,
+            "n_officers": n_officers,
+            "filed_date": str(rec.get("filed_date", "")),
+            "doc_url": str(rec.get("doc_url", "")),
+        })
+        company = str(rec.get("company", ""))
+        for p in ps:
+            key = _norm_name(p["name"])
+            entry = persons.setdefault(
+                key, {"name": p["name"], "roles": [], "seats": []},
+            )
+            entry["roles"] = [r for r in ROLE_ORDER if r in set(entry["roles"]) | set(p["roles"])]
+            entry["seats"].append({"company": company, "roles": list(p["roles"])})
+
+    # n_companies/n_director_seats are seat-count facts (per-company role
+    # lists kept so a directorship is distinguishable from an officership).
+    top_persons = sorted(
+        persons.values(), key=lambda e: (-len(e["seats"]), e["name"]),
+    )[:50]
+    top_out = [{
+        "name": e["name"],
+        "roles": e["roles"],
+        "n_companies": len(e["seats"]),
+        "n_director_seats": sum(
+            1 for s in e["seats"] if set(s["roles"]) & {"director", "chairman"}
+        ),
+        "companies": [s["company"] for s in e["seats"]][:10],
+    } for e in top_persons]
+
+    by_role = {
+        role: sum(1 for e in persons.values() if role in e["roles"])
+        for role in ROLE_ORDER
+    }
+    by_role = {k: v for k, v in by_role.items() if v}
+    confidence = {
+        "section_age_rows": sum(
+            1 for r in results.values() if r.get("method") == "section_age_rows"
+        ),
+        "section_name_roles": sum(
+            1 for r in results.values() if r.get("method") == "section_name_roles"
+        ),
+        "unparsed_no_persons": sum(
+            1 for r in results.values()
+            if not r.get("parsed") and not r.get("error")
+        ),
+        "fetch_or_doc_errors": sum(1 for r in results.values() if r.get("error")),
+    }
+    # Persons desc, then newest filed_date first (two stable passes).
+    boards.sort(key=lambda b: b["filed_date"], reverse=True)
+    boards.sort(key=lambda b: -b["n_persons"])
+    filed_dates = [str(r.get("filed_date", "")) for r in results.values() if r.get("filed_date")]
+    payload = {
+        "status": "ok",
+        "as_of": max(filed_dates) if filed_dates else None,
+        "n_filings_target": int(parsed.get("n_target", 0)),
+        "n_filings_processed": n_processed,
+        "n_with_persons": n_with,
+        "coverage_pct": round(100.0 * n_with / n_processed, 1) if n_processed else 0.0,
+        "n_persons_distinct": len(persons),
+        "by_role": by_role,
+        "confidence": confidence,
+        "boards": boards,
+        "top_persons": top_out,
+        "request_accounting": {
+            "n_http_requests_last_fetch": int(parsed.get("n_requests", 0)),
+            "budget_seconds": int(parsed.get("budget_seconds", 0)),
+            "budget_hit": bool(parsed.get("budget_hit", False)),
+            "fetched_at": parsed.get("fetched_at", ""),
+        },
+        "methodology": (
+            "DEF 14A person-level panel (董事/高管人级档案) over the NEWEST "
+            f"{int(parsed.get('n_target', 0))} proxy filings of the /executives "
+            "DEF 14A stream — a bounded lane: each filing's primary document "
+            "resolved from its EDGAR filing index (<= 2 GETs per filing, "
+            "idempotent per-accession caches, >= 2.1s spacing, hard 45-minute "
+            "wall-clock budget; the last fetch spent "
+            f"{int(parsed.get('n_requests', 0))} HTTP requests and "
+            f"{'HIT' if parsed.get('budget_hit') else 'did not hit'} the "
+            "budget). Parsing is CONSERVATIVE and TIERED: (1) section_age_rows "
+            "(HIGH) — the classic 'Name (Age) Title Since' roster row in any "
+            "spelling, a 2-4 token capitalized name with a standalone age "
+            "bounded 30-99 and a role word witnessed on the same row, also "
+            "reconstructed from word-fragmented inline-XBRL layouts by "
+            "anchor-delimiting the joined stream; (2) section_name_roles "
+            "(MEDIUM) — 'First M. Last' (middle-initial) + a role word inside "
+            "a located directors/executives section. Everything else yields "
+            "persons=[] and parsed=false — an honest NULL, never a guessed "
+            "name (宁可 null 不猜测); coverage below counts only what was "
+            f"processed ({n_with}/{n_processed} filings with persons = "
+            f"{round(100.0 * n_with / n_processed, 1) if n_processed else 0.0}%"
+            "), never an extrapolation. Roles are canonical role WORDS "
+            "witnessed near the person's row or bio — they may include past "
+            "or external-company titles (e.g. a director who is CEO of "
+            "another firm), displayed as text-witnessed hints not employment "
+            "records; boards-card director/officer counts are independent "
+            "sets (a CEO-director counts in both). Distinct-person identity "
+            "keys on the normalized full name across filings — same-name "
+            "merges may join namesakes and hyphenated/apostrophe/initials-"
+            "first names (JW Roth) are conservatively MISSED, both disclosed. "
+            "Display-only, exploratory, NOT a research claim."
+        ),
+    }
+    (WEB / "def14a_persons.json").write_text(json.dumps(_stamp(payload), indent=2, default=str))
+    print(
+        f"[export-terminal] def14a_persons: {n_with}/{n_processed} filings with "
+        f"persons ({payload['coverage_pct']}%), {len(persons)} distinct persons, "
+        f"{len(boards)} boards, as_of {payload['as_of']}",
         flush=True,
     )
 
@@ -5270,6 +5441,9 @@ def main() -> None:
     _safe_export("form_ipo", export_form_ipo)
     _safe_export("form_d", export_form_d)
     _safe_export("form_def14a", export_form_def14a)
+    # def14a_persons reads its own parse cache written by the persons fetch —
+    # directly after the stream panel it profiles.
+    _safe_export("def14a_persons", export_def14a_persons)
     # filing_stream (v2) reads its own direct-query parquet — order no longer
     # depends on the per-form panels, but keep it here (before the freshness
     # map / catalog that index it).

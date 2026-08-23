@@ -35,10 +35,13 @@ new accession, the same immutable-amendment discipline as D/A and 8-K/A).
 
 HONEST v1 LIMITS (disclosed, never papered over): director/executive NAMES,
 compensation, and ownership live INSIDE the proxy statement's primary HTML
-document (thousands of lines per filing); v1 does not fetch or parse them
-(person-level parsing is DEFERRED — resolving + parsing one primary document
-per filing would cost ~1,400 extra requests for the window). Each row links
-the filing's EDGAR index page instead.
+document (thousands of lines per filing); v1 does not fetch or parse them at
+full-window scale (resolving + parsing one primary document per filing would
+cost ~1,400 extra requests for the window). Each row links the filing's EDGAR
+index page instead. v0.2 (2026-08-23) ships the BOUNDED person-level lane for
+the panel's newest ~150 filings via :mod:`aionis.ingest.def14a_persons`
+(conservative tiered parsing, honest nulls; the full-window deferral above
+still holds for the stream panel).
 
 7-gate: SEC EDGAR public domain (17 U.S.C. §105) — G1✓; PIT via
 ``file_date`` — G2✓; immutable (amendments are NEW accessions) — G3✓;

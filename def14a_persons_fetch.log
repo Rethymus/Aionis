@@ -1,0 +1,5 @@
+[def14a-persons] target=150 newest filings (2026-07-28..2026-08-21), budget=2700s
+2026-08-23 23:30:09 [warning  ] def14a_persons_no_doc_in_index accession=0001140361-26-031413 issuer_cik=1889539
+2026-08-23 23:31:44 [warning  ] def14a_persons_no_doc_in_index accession=0001628280-26-051903 issuer_cik=2002473
+2026-08-23 23:32:12 [warning  ] def14a_persons_no_doc_in_index accession=0001213900-26-084710 issuer_cik=1937993
+[def14a-persons] processed 150/150 (budget_hit=False, requests=293): 104 filings with persons, 686 person-rows, methods {'section_age_rows': 79, 'unparsed': 43, 'section_name_roles': 25, 'no_primary_doc_in_index': 3} -> data\cache\def14a_persons_parsed.json
