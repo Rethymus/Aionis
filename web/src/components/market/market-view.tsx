@@ -87,6 +87,78 @@ function ChartTooltip({ active, payload, label }: {
   );
 }
 
+
+/** 韩国风险偏好代理 — USD/KRW (FRED DEXKOUS), the option-C degraded
+ *  equivalent for the Korean retail-leverage dimension. NOT margin
+ *  financing: every first-party margin route is blocked (evidence chain in
+ *  archive/krx-probes) — the degradation is stated on the card itself. */
+function KoreaProxyCard() {
+  const { t } = useI18n();
+  const k = aionis.koreaProxy;
+  if (k.status !== "ok" || !k.series_104w?.length) return null;
+  const lo = Math.min(...k.series_104w.map((p) => p.rate));
+  const hi = Math.max(...k.series_104w.map((p) => p.rate));
+  return (
+    <Card className="py-0">
+      <CardHeader className="border-b">
+        <CardTitle className="text-base">
+          {t("market.korea.title")}
+          <span className="ml-2 font-mono text-xs font-normal text-muted-foreground tabular-nums">
+            {k.latest_rate.toFixed(2)} · {k.as_of}
+          </span>
+        </CardTitle>
+        <CardDescription>{t("market.korea.note")}</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-2 p-4">
+        <div className="grid grid-cols-3 gap-2 text-xs">
+          <div>
+            <p className="text-muted-foreground">{t("market.korea.rate")}</p>
+            <p className="mt-0.5 font-mono font-semibold tabular-nums">
+              {k.latest_rate.toFixed(2)}
+            </p>
+          </div>
+          <div>
+            <p className="text-muted-foreground">{t("market.korea.chg4w")}</p>
+            <p
+              className={cn(
+                "mt-0.5 font-mono font-semibold tabular-nums",
+                k.chg_4w_pct > 0
+                  ? "text-rose-600 dark:text-rose-400"
+                  : "text-emerald-600 dark:text-emerald-400",
+              )}
+            >
+              {k.chg_4w_pct > 0 ? "+" : ""}
+              {k.chg_4w_pct.toFixed(2)}%
+            </p>
+          </div>
+          <div>
+            <p className="text-muted-foreground">{t("market.korea.stress")}</p>
+            <p className="mt-0.5 font-mono font-semibold tabular-nums">
+              {k.stress_pct_52w.toFixed(0)}%
+            </p>
+          </div>
+        </div>
+        <div className="flex h-12 items-end gap-px">
+          {k.series_104w.map((p) => {
+            const h = 8 + ((p.rate - lo) / (hi - lo || 1)) * 40;
+            return (
+              <span
+                key={p.date}
+                className="flex-1 rounded-[1px] bg-primary/40"
+                style={{ height: `${h}px` }}
+                title={`${p.date} ${p.rate.toFixed(2)}`}
+              />
+            );
+          })}
+        </div>
+        <p className="text-[11px] leading-relaxed text-muted-foreground">
+          {t("market.korea.degrade_note")}
+        </p>
+      </CardContent>
+    </Card>
+  );
+}
+
 export function MarketView() {
   const { t } = useI18n();
   const mc = aionis.marketContext;
@@ -233,6 +305,8 @@ export function MarketView() {
           </CardContent>
         </Card>
       ) : null}
+
+      <KoreaProxyCard />
 
       <Card className="overflow-hidden py-0">
         <CardHeader className="border-b">

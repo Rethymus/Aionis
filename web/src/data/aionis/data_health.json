@@ -170,6 +170,14 @@
       "present": true
     },
     {
+      "key": "korea_proxy",
+      "file": "korea_proxy.json",
+      "category": "cadence",
+      "as_of": "2026-08-14",
+      "exported_at": "2026-08-23",
+      "present": true
+    },
+    {
       "key": "form4",
       "file": "form4.json",
       "category": "daily",
@@ -363,10 +371,10 @@
     }
   ],
   "summary": {
-    "n_panels": 45,
+    "n_panels": 46,
     "n_frozen": 15,
     "n_daily": 24,
-    "n_cadence": 6
+    "n_cadence": 7
   },
   "source_health": {
     "smart_money": {
@@ -392,5 +400,5 @@
   },
   "planned": [],
   "methodology": "Freshness/provenance map of every terminal panel. frozen = derived from frozen OOS artifacts (ledger #49 lineage): the daily lane deliberately does NOT advance these \u2014 recomputing them from newer data would be rerun-to-significance. daily = recomputed by each CI refresh from live caches. cadence = advances on its source's publication rhythm (CFTC weekly, price caches ~5-day grace, EDGAR filing rhythm). as_of is read from each panel's own timestamp fields; null = the panel carries no observation date (static research artifact). The only legal way frozen numbers move forward: E3 forward-live accumulation or a new pre-registered phase. source_health quantifies field-level quality on the committed JSONs (smart_money ticker nulls = filings on unlisted targets honestly left empty; reddit bull_ratio nulls = sentiment not yet gradable in the accumulating window; cot staleness in weeks vs the Friday publication rhythm). planned lists panels that are NOT built \u2014 no fetcher, no data, no endpoint payload \u2014 disclosed so the panel count is never mistaken for coverage.",
-  "snapshot_ts": "2026-08-23T16:02:54.509042+00:00"
+  "snapshot_ts": "2026-08-23T16:30:34.452356+00:00"
 }

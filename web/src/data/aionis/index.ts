@@ -35,6 +35,7 @@ import modelHealthJson from "./model_health.json";
 import calibrationReliabilityJson from "./calibration_reliability.json";
 import themeSignalsJson from "./theme_signals.json";
 import macroDriversJson from "./macro_drivers.json";
+import koreaProxyJson from "./korea_proxy.json";
 import themesJson from "./themes.json";
 import ledgerAuditJson from "./ledger_audit.json";
 import headlineProvenanceJson from "./headline_provenance.json";
@@ -464,6 +465,22 @@ export type ThemeSignals = {
       favored: { ticker: string; value: number; name?: string; sector?: string }[];
     };
   };
+};
+
+export type KoreaProxy = {
+  status: string;
+  as_of: string | null;
+  series_id: string;
+  title: string;
+  latest_rate: number;
+  chg_4w_pct: number;
+  high_52w: number;
+  low_52w: number;
+  // 0 = at the 52w low (calm) … 100 = at the 52w high (stress).
+  stress_pct_52w: number;
+  series_104w: { date: string; rate: number }[];
+  methodology: string;
+  snapshot_ts?: string;
 };
 
 export type MacroDrivers = {
@@ -1194,6 +1211,7 @@ export const aionis = {
   calibrationReliability: calibrationReliabilityJson as CalibrationReliability,
   themeSignals: themeSignalsJson as ThemeSignals,
   macroDrivers: macroDriversJson as MacroDrivers,
+  koreaProxy: koreaProxyJson as KoreaProxy,
   themes: themesJson as Themes,
   ledgerAudit: ledgerAuditJson as LedgerAudit,
   headlineProvenance: headlineProvenanceJson as HeadlineProvenance,

@@ -408,7 +408,7 @@ def test_freight_taco_panel_contract() -> None:
     months = [pt["month"] for pt in s]
     assert months == sorted(months)
     assert all(len(m_) == 7 for m_ in months)
-    for prev, cur in zip(s, s[1:]):
+    for prev, cur in zip(s, s[1:], strict=False):
         assert {"month", "tsi", "mom_pct"} <= set(cur)
         recomputed = (cur["tsi"] / prev["tsi"] - 1) * 100
         assert abs(cur["mom_pct"] - recomputed) < 0.05, (cur["month"], cur["mom_pct"])
@@ -1132,6 +1132,32 @@ def test_news_feed_panel_contract() -> None:
         "must disclose the link-out / no-article-text boundary"
     )
 
+
+
+def test_korea_proxy_panel_contract() -> None:
+    """Korea proxy panel: honest degradation contract for the option-C card.
+
+    The panel is a DEGRADED equivalent (USD/KRW), NOT margin financing —
+    the contract pins: rate positivity with 52w band consistency (low <=
+    latest <= high, stress position in [0,100] and consistent with the
+    band), 104-week series ascending by date, and the methodology must
+    disclose BOTH the not-margin-financing boundary and the archive/
+    krx-probes evidence pointer.
+    """
+    x = _load("korea_proxy.json")
+    assert x["status"] in {"ok", "awaiting_fetch"}
+    assert {"as_of", "latest_rate", "chg_4w_pct", "high_52w", "low_52w",
+            "stress_pct_52w", "series_104w", "methodology", "snapshot_ts"} <= set(x)
+    if x["status"] != "ok" or not x["series_104w"]:
+        return
+    assert x["latest_rate"] > 0
+    assert x["low_52w"] <= x["latest_rate"] <= x["high_52w"]
+    assert 0.0 <= x["stress_pct_52w"] <= 100.0
+    dates = [p["date"] for p in x["series_104w"]]
+    assert dates == sorted(dates), "weekly series ascending"
+    assert all(p["rate"] > 0 for p in x["series_104w"])
+    ml = x["methodology"].lower()
+    assert "not margin financing" in ml and "krx-probes" in ml and "display-only" in ml
 
 
 def test_filers13f_panel_contract() -> None:

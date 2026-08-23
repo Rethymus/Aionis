@@ -610,7 +610,7 @@ def export_freight_taco() -> None:
         )
         return
 
-    from aionis.ingest.bts_tsi import fetch_tsi_freight, fetch_truck_employment
+    from aionis.ingest.bts_tsi import fetch_truck_employment, fetch_tsi_freight
 
     tsi, _meta = fetch_tsi_freight()  # cache hit — no HTTP
     if len(tsi) < 25:  # 24-month window + the month before it (MoM anchor)
@@ -2555,6 +2555,7 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
     ("macro_drivers", "macro_drivers.json", _DH_DAILY),
     ("taco", "taco.json", _DH_DAILY),
     ("freight_taco", "freight_taco.json", _DH_CADENCE),
+    ("korea_proxy", "korea_proxy.json", _DH_CADENCE),
     ("form4", "form4.json", _DH_DAILY),
     ("form8k", "form8k.json", _DH_DAILY),
     ("news_feed", "news_feed.json", _DH_DAILY),
@@ -2645,6 +2646,8 @@ def _dh_as_of(key: str, fname: str) -> str | None:
     if key == "freight_taco":
         # as_of = latest Freight TSI reference month (BTS publishes ~mid-month
         # for the month prior — advances on the source's monthly rhythm).
+        return p.get("as_of")
+    if key == "korea_proxy":
         return p.get("as_of")
     if key == "form4":
         recent = p.get("recent", [])
@@ -2867,6 +2870,12 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
         "U.S. Bureau of Transportation Statistics — public domain",
         "Freight TSI monthly index (data.bts.gov Socrata) + BLS CES truck "
         "employment via FRED; disclosed satellite-TACO degradation proxy",
+    ),
+    "korea_proxy": (
+        "U.S. Federal Reserve (FRED DEXKOUS) — public domain",
+        "Korea risk-appetite proxy: USD/KRW weekly + 52w stress position "
+        "(NOT margin financing — the option-C degraded equivalent; evidence "
+        "chain in archive/krx-probes)",
     ),
     "form4": ("U.S. SEC EDGAR — public domain", "Form 4 XML, filed-date PIT"),
     "form8k": ("U.S. SEC EDGAR — public domain", "Form 8-K primary docs, filed-date PIT, item-classified"),
@@ -4189,6 +4198,82 @@ def export_form13f_dir() -> None:
     )
 
 
+def export_korea_proxy() -> None:
+    """Korea risk-appetite proxy — USD/KRW (FRED DEXKOUS), display-only.
+
+    The DEGRADED option-C equivalent for the Korean retail-leverage
+    dimension: every free first-party margin route is hard-blocked and
+    KRX's only official channel is a paid marketplace (six-route evidence
+    chain in archive/krx-probes/README.md). The won's dollar rate is a
+    Korean risk-appetite/stress proxy (sharp won weakness tracks
+    capital-flight and forced-margin-unwind episodes) — the panel states
+    IN PLAIN WORDS that this is NOT margin financing; real 신용융자 data
+    awaits owner option A (purchase) or B (Korean network exit).
+    """
+    fp = Path("data/cache/korea_proxy_usdkrw.json")
+    if not fp.exists():
+        print(
+            "[export-terminal] SKIP korea_proxy: data/cache/"
+            "korea_proxy_usdkrw.json not present (tracked JSON retains "
+            "last-committed value)",
+            flush=True,
+        )
+        return
+    obs = json.loads(fp.read_text(encoding="utf-8"))["observations"]
+    if not obs:
+        print(
+            "[export-terminal] SKIP korea_proxy: empty cache (tracked JSON "
+            "retains last-committed value)",
+            flush=True,
+        )
+        return
+    latest_date, latest = obs[-1]["date"], obs[-1]["value"]
+    window_52 = obs[-52:]
+    hi = max(o["value"] for o in window_52)
+    lo = min(o["value"] for o in window_52)
+    w4 = obs[-5]["value"] if len(obs) >= 5 else latest
+    series = [{"date": o["date"], "rate": o["value"]} for o in obs[-104:]]
+    payload = {
+        "status": "ok",
+        "as_of": latest_date,
+        "series_id": "DEXKOUS",
+        "title": "Korean Won to U.S. Dollar Exchange Rate (USD/KRW)",
+        "latest_rate": latest,
+        "chg_4w_pct": round((latest / w4 - 1) * 100, 2),
+        "high_52w": hi,
+        "low_52w": lo,
+        # 0 = at the 52w low (calm), 100 = at the 52w high (stress).
+        "stress_pct_52w": round((latest - lo) / (hi - lo) * 100, 1) if hi > lo else 50.0,
+        "series_104w": series,
+        "methodology": (
+            "Korea risk-appetite PROXY — the won's dollar rate (FRED "
+            "DEXKOUS, weekly, Board of Governors, public domain). This is "
+            "the owner-approved option-C degraded equivalent for the Korean "
+            "retail-leverage dimension: it is NOT margin financing "
+            "(신용융자). Every free first-party margin route was verified "
+            "blocked (KRX old portal session-enforcement x4, FRED carries no "
+            "such series, BOK ECOS TLS-blocked) and KRX's only official "
+            "channel is a PAID marketplace — the six-route evidence chain "
+            "and resume guide live in archive/krx-probes/README.md. Reading: "
+            "a sharp won WEAKNESS (rate up) tracks capital-flight and "
+            "forced-margin-unwind episodes, so the 52-week stress position "
+            "is a coarse risk-appetite gauge. Real 신용융자 balances will "
+            "replace this panel when the owner exercises option A (data "
+            "purchase) or B (Korean network exit). Display-only, "
+            "exploratory, NOT a research claim."
+        ),
+    }
+    (WEB / "korea_proxy.json").write_text(
+        json.dumps(_stamp(payload), indent=2, default=str)
+    )
+    print(
+        f"[export-terminal] korea_proxy: USD/KRW {latest} @ {latest_date} "
+        f"(4w {payload['chg_4w_pct']:+.2f}%, 52w stress position "
+        f"{payload['stress_pct_52w']}%)",
+        flush=True,
+    )
+
+
 def export_politician_trades() -> None:
     """STOCK Act congressional trading — House PTR filing stream (display-only).
 
@@ -5429,6 +5514,7 @@ def main() -> None:
     _safe_export("picks_backtest", export_picks_backtest)
     _safe_export("taco", export_taco)
     _safe_export("freight_taco", export_freight_taco)
+    _safe_export("korea_proxy", export_korea_proxy)
     _safe_export("pick_conviction", export_pick_conviction)
     _safe_export("themes", export_themes)
     _safe_export("theme_signals", export_theme_signals)
