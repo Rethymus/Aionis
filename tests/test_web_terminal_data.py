@@ -740,6 +740,44 @@ def test_form_d_panel_contract() -> None:
     assert "form d" in ml and "not extracted" in ml and "display-only" in ml
 
 
+def test_filing_stream_panel_contract() -> None:
+    """Unified filing stream: honest merge of the per-form panels.
+
+    DERIVED panel — the contract pins the merge discipline: newest-first
+    order; by_form counts the VISIBLE stream and sums to n_visible; every
+    row carries an EDGAR link and a real form label; ticker "None"-strings
+    and placeholder filers from the stake panels must NOT leak; the
+    methodology must disclose the inherited source caps and that 13F is
+    excluded.
+    """
+    x = _load("filing_stream.json")
+    assert x["status"] in {"ok", "awaiting_fetch"}
+    assert {"as_of", "window", "total_merged", "n_visible", "by_form",
+            "filings", "methodology", "snapshot_ts"} <= set(x)
+    if x["status"] != "ok" or not x["filings"]:
+        return
+    dates: list[str] = []
+    allowed_forms = set(x["by_form"])
+    for r in x["filings"]:
+        assert {"form", "who", "ticker", "filed_date", "doc_url"} <= set(r)
+        assert r["form"] in allowed_forms
+        assert r["who"] and r["who"] != "—"
+        assert r["ticker"] != "None", "no str(None) leaks from source panels"
+        assert "申报人见原文" not in r["who"], "no placeholder-filer leaks"
+        assert r["doc_url"].startswith("https://www.sec.gov/Archives/edgar/data/")
+        assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", r["filed_date"])
+        dates.append(r["filed_date"])
+    assert dates == sorted(dates, reverse=True), "newest-first"
+    assert x["n_visible"] == len(x["filings"]) <= 800
+    assert x["total_merged"] >= x["n_visible"]
+    assert sum(x["by_form"].values()) == x["n_visible"], (
+        "by_form counts the merged visible stream"
+    )
+    assert x["as_of"] == max(dates)
+    ml = x["methodology"].lower()
+    assert "derived" in ml and "13f" in ml and "display-only" in ml
+
+
 def test_form_ipo_panel_contract() -> None:
     """IPO panel schema: filing shape, status enum, honest counting, date order.
 
