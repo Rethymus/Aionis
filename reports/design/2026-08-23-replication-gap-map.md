@@ -24,9 +24,9 @@
 
 | 小隐寺维度 | 一方源 | 状态 |
 |---|---|---|
-| 一级市场（Form D 融资） | SEC EDGAR Form D（公有领域，full-text + submissions API） | 源已知，未建管道 |
-| 13F 申报人目录（~9k filers） | EDGAR `browse-edgar` 13F 类目分页 | 源已知，未建目录 |
-| 统一 SEC 申报流（8-K/10-K/10-Q/13F/13D/S-1/3/4/5/DEF14A） | EDGAR daily index（我们已在用：13D/13G/4 均走此路） | 部分已建（form4/stakes13g） |
+| 一级市场（Form D 融资） | SEC EDGAR Form D（公有领域，full-text + submissions API） | ✅ 已上线（/ipo FormDSection；EFTS 10k 上限→滚动 30 天+聚合累积） |
+| 13F 申报人目录（~9k filers） | EDGAR `browse-edgar` 13F 类目分页 | ✅ 已上线（/filers，9,385 家；browse-edgar 无 CIK 不可枚举→EFTS 季度窗+自适应切分） |
+| 统一 SEC 申报流（8-K/10-K/10-Q/13F/13D/S-1/3/4/5/DEF14A） | EDGAR daily index（我们已在用：13D/13G/4 均走此路） | ✅ 已上线（/events 全市场申报流，六面板派生合并 800/2,259/11 表单；10-K/10-Q/DEF14A 表单待后续并入） |
 | 高管人级档案 + 董事会分析 | DEF14A 委托书（EDGAR） | 未建 |
 | 政党对立指数 + 两党跟单组合 | **我们自己的 `politician_trades_tx.json`（2,812 笔，94 议员）— 纯计算，零新数据** | 数据已就绪 ✅ |
 
@@ -42,9 +42,9 @@
 1. **P0 — 政党对立指数/两党跟单组合** ✅ 已上线（party_index，纯计算）。
 2. **P1 — ARK 8 基金面板** ✅ 已上线（ark.json + /institutions ARK 家族板块）。
 3. **P1 — Reddit 热议榜（ApeWisdom.io）** ✅ 已上线（reddit_trending.json + /reddit 板块；分页失效如实披露）。
-4. **P2 — Form D 一级市场管道**（EDGAR）— 下一个。
-5. **P2 — 统一申报流 + 13F filer 目录**（EDGAR，量大，可切片）。
-6. **P3 — DEF14A 高管/董事会**（解析成本高，放最后）。
+4. **P2 — Form D 一级市场管道** ✅ 已上线（/ipo，2026-08-23）。
+5. **P2 — 统一申报流 + 13F filer 目录** ✅ 已上线（/events + /filers，2026-08-23）。
+6. **P3 — DEF14A 高管/董事会**（解析成本高，放最后）——差距地图仅剩此项。
 
 ## 五、验证记录（可复算）
 
