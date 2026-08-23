@@ -1,13 +1,7 @@
 # TASK-S: PTR 交易级解析（D4 已开：业主"彻底对齐颗粒度"指令）
 
-> **2026-08-23 16:45 主线进展（重要——接手前必读）**：风险最高的部分已由主线完成——
-> salvage PDF 栈已提取为独立模块 **`src/aionis/ingest/ptr_pdf.py`**（commit 02ceb10，ws worktree，
-> ruff 净）+ runner **`scripts/ptr_transactions_fetch.py`**（年份分批/幂等/三分类计数）。
-> **20 份真 PDF 抽样验证：12 ok（45 行）/ 6 no_rows（2 字节 CID 部分 cmap 缺映射，NUL 损失，不可救，诚实计数）/ 2 no_text（扫描件）**。
-> 2026 全量批（359 份）fetch 已由主线后台启动（runs_ptr_tx_2026.log → data/cache/ptr_transactions.parquet）。
-> **接手者（20:10 代理或主线）剩余工作 = 任务 4-7**（导出面 politician_trades_tx.json + _API_LICENSE + 前端 /congress 交易区 + /stock join + 契约测试 + 7-gate 增补）——
-> 导出形状建议：{status, as_of, total, n_members, by_party, late_filings(>45天), coverage:{ok,no_rows,no_text}, transactions:[...]}；methodology 必须披露三分类覆盖。
-> 原 1-3 步（读 salvage/移植/抽样）**已完成勿重做**。
+> **2026-08-23 16:50 二次更新（并发合流裁决，接手前必读）**：并发 session 已在本分支提交**更强的右锚定实现**（`4e4eb11`：salvage 移植进 `politician_trades.py` + 右锚定行解析重写 + `scripts/politician_trades_tx_fetch.py` + export 全接线[manifest/as_of/license/函数] + barrel 导入）——20 份样本 **218 笔/97.8%**（主线左锚定版仅 45 笔/60% 且丢自报行）。主线已**撤回**自己的重复实现（`79902e7` withdraw），并发方的 **2026 全量 fetch 正在后台跑**（runs_ptr_tx_concurrent.log，55min 预算，cache 幂等）。
+> **接手者剩余工作只剩**：① fetch 完成后跑 export（`politician_trades_tx.json` 再生）；② 前端（/congress 交易区 + /stock ticker join——消费 `aionis.politicianTradesTx` 或对应 barrel 字段，先查 index.ts 里并发方的导入形态）；③ 契约测试；④ 7-gate 文档增补（docs/data-intake-congress-stock-act.md 交易级段）。**不要重写解析器/导出**——那是并发方的 lane，已交付。
 
 > 优先级：高（竞品王牌特性）。worktree：`F:\ZCodeData\Aionis-ws`（分支 feat/ptr-transactions）。基于 main ca3074f+。
 
