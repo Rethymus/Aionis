@@ -8,6 +8,16 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-23 (s) 三代理并行轮集成收官：U/V/W 全上 main（1974 passed / 1,494 页）
+
+**U（举牌状态机，竞品王牌）**：死亡代理 WIP 裁决回收（c949061）+ 续作 ccdb8ed。**续作关键发现**：回收 JSON 里 pct 字段全 null——上轮解析跑在导出之后从未合并 → 离线重导出后 **13D 119/120、13G 150/150 真实比例**（12 清仓+17 降至线下 13D / 9+31 13G）。前端三类徽章（比例/主动被动/清仓降线，null 不渲染无占位）+ i18n 7×2 键 + 7-gate v0.2（请求账：13D 重建 82 + pct 解析 ~494，全 ≥2s）。集成：两 cherry-pick（8 JSON 冲突按惯例 theirs/ours 分治）+ **`git add -A` 误扫并发方 docs/code-review 一次，amend 剔除（6a448d2 教训再现，文件磁盘完好）** + 缓存拷主仓统一重导出（pct 在 main 复现一致）。
+
+**V（DEF 14A 申报流，差距地图最后一项）**：b24b088。1,387 份/1,351 发行人/120 天（18 页 EFTS）；**修正实务发现**：DEF 14A/A 不存在（0 条），修正走 DEFA14A 独立 root form（2,278 条，v1 范围外披露）；75% 行解析出 ticker；600 可见/174KB；/executives Def14aSection + 契约测试 + 7-gate 文档；人级解析 DEFERRED（v1 边界）。集成零代码冲突（调用序一行合并）。
+
+**W（统一申报流 v2）**：105f8ac。v1 派生合并 2,259 行/11 表单/4 天 → **v2 直查 EFTS 16,597 行/16 表单/12 天**（+10-K/10-Q 族）；表单 4 切分实录（2,769+3,427=6,196 去重验证）；**Schedule 13 冻结兜底**（EFTS 0 hits 复证 → 13D/13G 走每日索引线 3,182 行，探针保留测自愈）；140 页请求账；幂等复跑零请求。集成零冲突。
+
+**三轮合体验证**：pytest **1974 passed**/9 skip + ruff 净 + tsc 0 + eslint 0 错 + build **1,494 页** + IAB：/smart-money 徽章实测（主动 30/被动 33/清仓 12/降至线下 7/(前值) 1/比例元素 101）、/executives DEF 14A 区（52 徽章）、/events v2 pills（10-Q/4/A）。**差距地图：P0/P1/P2/P3 全部维度已上线**；仅剩并发 lane /news /quarterly /annual（他 session 领地）。worktree 三清+任务文件归档随后。
+
 ## 2026-08-23 (r) 20:10 cron U 重派执行：死亡代理 WIP 裁决回收 + 三代理并行轮
 
 **U 重派（cron automation-3684bc83 触发）**：前置核实——form4 已由主线收官（30 发行人 1,464 笔）；**13D cache 未重建**（主仓仅余旧 forward 文件）→ U 任务 1 有效。wu worktree 发现上一轮配额死亡 U 的**未提交真实 WIP**：`sc13d_daily_aggregate.json` 已重建 + `stakes_pct_parsed.json`（有界持股比例解析）+ `stakes_pct.py/runner/17 测试全绿` + 导出接线（pct_now/pct_prev/stake_status，19 处）+ barrel 类型——**任务 1-3 实为已完成**。裁决：WIP 整体提交 `c949061`（分支 feat/stakes-status），续作代理只做任务 4-5（smart-money-view 徽章三类 + i18n stakes.pct/status.* + 7-gate 文档）。

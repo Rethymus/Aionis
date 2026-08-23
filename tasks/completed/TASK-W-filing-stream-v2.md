@@ -1,5 +1,7 @@
 # TASK-W: 统一申报流 v2 —— 直查 EFTS 多表单族（全市场近期申报流）
 
+> **状态：已完成并集成上 main（2026-08-23，handoff (s)）。**
+
 > 优先级：P2 尾巴（统一流的表单覆盖扩展）。worktree：`F:\ZCodeData\Aionis-ww`（分支 feat/filing-stream-v2）。
 > 派发：2026-08-23 主线（业主指令"多 agents 同步推进"）。基于 main f759c3f+。
 

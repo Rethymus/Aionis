@@ -1,5 +1,7 @@
 # TASK-U: 举牌状态机（持股比例）+ 13D cache 重建
 
+> **状态：已完成并集成上 main（2026-08-23，handoff (s)）。**
+
 > 优先级：中。worktree：`F:\ZCodeData\Aionis-wu`（分支 feat/stakes-status，已建，junction 已挂）。基于 main ca3074f+。
 > 派发背景：同 TASK-S（2026-08-23 配额团灭，本文件 = 代理 U 完整规格）。
 > 注意：若主线已完成 13D 重建（查 state/handoff 最新条目），跳过任务 1。

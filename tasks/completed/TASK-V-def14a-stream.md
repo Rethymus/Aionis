@@ -1,5 +1,7 @@
 # TASK-V: DEF 14A 代理委托书申报流（高管/董事会治理维度，filing-stream v1）
 
+> **状态：已完成并集成上 main（2026-08-23，handoff (s)）。**
+
 > 优先级：P3（差距地图最后一项）。worktree：`F:\ZCodeData\Aionis-wv`（分支 feat/def14a）。
 > 派发：2026-08-23 主线（业主指令"多 agents 同步推进"）。基于 main f759c3f+。
 
