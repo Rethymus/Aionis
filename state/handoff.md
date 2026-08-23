@@ -8,6 +8,16 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-23 (k) S 收官：并发实现合流裁决 + 交易级面板上线 main（a9071cb）
+
+**并发合流**：并发 session 于 15:14 在 ws 分支提交右锚定 PTR 实现（`4e4eb11`：salvage 移植 + 右锚定行解析重写 + fetcher/export 全接线/前端视图为共享工作树 WIP）。20 份样本对垒：**并发 218 笔/97.8% vs 主线左锚定 45 笔/60%**（并发版还修复自报行丢失）→ 主线撤回重复实现（`79902e7`），并发版胜出（08-22 H 先例纪律）。**注意**：主线 6a448d2 "style" 提交曾用 `git add -u` 把并发方的 WIP（views+export 接线）误扫入 commit——内容真实、标签错位，已在 state 记档不改史。
+
+**主线推进的共享状态**：跑并发 fetcher 2026 全量（**361 PDF = 299 可解析 → 2,812 笔/94 议员/379 迟报>45 天** + 43 no-text + 33 exchange + 54 失败，全诚实计数；361 PDF 全部复用主线批跑下载的缓存——主线网络工作未白费）→ export 再生 → i18n 缺键补齐（congress.tx.* 16 键 + stock.politician.* 4 键，zh/en）→ 契约测试（方向枚举/days_late 一致性/by_party 求和）→ 7-gate 交易级段 → **merge 进 main 零冲突**（P 侧栏与 S 交易区共存）。
+
+**验证（全绿）**：pytest 全套 0 失败 + ruff 净 + tsc 0 + eslint 净 + build 1,492 页 + IAB 抽检 7/7（/congress 交易区 2,812 计数/方向 pills/⚠ 迟报/侧栏共存；/stock/T 政客卡+交易行+全部出口）。本地服务已停。
+
+**进行中/待办**：R form4 fetch @ ~21/30（XOM，1,230 笔）——完成通知唤醒后收尾导出；U 由 20:10 cron 重派（已改为仅 U）；TASK-S 已标记完成存档。
+
 ## 2026-08-23 (j) S 主线预跑：salvage PDF 栈复活 + 20 份真 PDF 验证 + 2026 全量批启动
 
 **S 的最高风险部分已由主线完成**（ws worktree，feat/ptr-transactions 分支）：salvage `agent/politician` 的 PDF 栈提取为独立模块 `src/aionis/ingest/ptr_pdf.py`（纯 stdlib：ISO 32000 RC4 密钥派生 + ToUnicode CMap 文本恢复 + 流式行正则）+ runner `scripts/ptr_transactions_fetch.py`（年份分批、幂等 DocID cache、三分类计数）。**20 份真 PDF 抽样：12 ok（45 交易行，PFE/OGN/ABT/GOOGM 等真 ticker）**；6 no_rows = 2 字节 CID 字体部分 cmap 缺映射（NUL 损失，`$200?` 残迹——NUL 剥离验证不可救，诚实计数不猜）；2 no_text = 扫描件。**2026 全量批（359 份）后台 fetch 中**（house.gov，与 sec.gov 的 form4 fetch 不同 host 并行礼貌安全）。修复插曲：一次批量改名误伤 fonts_from 循环变量导致提取退化（45→5 行），从首个 commit 重置后行号级外科修（E501+B007），ruff 净 + 抽样复验 20/20@45。TASK-S 文件已更新（接手者只剩任务 4-7：导出面/前端/测试/7-gate）。

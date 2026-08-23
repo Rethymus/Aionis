@@ -1,3 +1,9 @@
+# TASK-S: PTR 交易级解析 —— ✅ 已完成（2026-08-23 合入 main a9071cb）
+
+> 交付：politician_trades_tx.json（2,812 笔/94 议员/379 迟报）+ /congress 交易区 + /stock join + 契约测试 + 7-gate。
+> 实现 = 并发 session 右锚定解析器（4e4eb11）+ 主线调和（撤重复/i18n 补缺/测试/文档）。
+> 本文件仅存档；无剩余工作。
+
 # TASK-S: PTR 交易级解析（D4 已开：业主"彻底对齐颗粒度"指令）
 
 > **2026-08-23 16:50 二次更新（并发合流裁决，接手前必读）**：并发 session 已在本分支提交**更强的右锚定实现**（`4e4eb11`：salvage 移植进 `politician_trades.py` + 右锚定行解析重写 + `scripts/politician_trades_tx_fetch.py` + export 全接线[manifest/as_of/license/函数] + barrel 导入）——20 份样本 **218 笔/97.8%**（主线左锚定版仅 45 笔/60% 且丢自报行）。主线已**撤回**自己的重复实现（`79902e7` withdraw），并发方的 **2026 全量 fetch 正在后台跑**（runs_ptr_tx_concurrent.log，55min 预算，cache 幂等）。
