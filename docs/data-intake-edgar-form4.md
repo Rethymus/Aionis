@@ -108,6 +108,12 @@
 - **实现**：
   - 本模块输出 `DataFrame` 供 dashboard display（e.g. `streamlit` plot）。
   - 不建议将其用于任何 confirmatory 特征工程。
+- **v2 宇宙扩展（2026-08-23，业主"彻底对齐颗粒度"指令）**：发行人 5→30（原 5 大盘种子 + 25 家
+  mega/large caps，CIK 与 form8k v2/v3 宇宙同源、cik_resolver 快照实解+实体名核对）。**广度受
+  有界窗口约束**：`--start 2026-01-01`（2026 YTD）；已提交面板的 2013-2025 聚合（5 发行人宇宙）
+  由 `export_form4` 的 retain-merge **逐字保留**，宇宙差异在面板 methodology 披露（"universe
+  widened from 5 to 30 in 2026"）——逐年宇宙混合如实可见，不静默改史。全历史深拉（30 发行人 ×
+  2016→today）留给后续分次长跑。
 
 ---
 
@@ -121,6 +127,9 @@
   - 本模块复用 `ingest.http_policy.HostSpacingPolicy`（min_interval=2.0s）。
   - User-Agent 为 `"Aionis research form4-efts contact@example.com"`（descriptive）。
 - **通过**：≥2s spacing + descriptive UA + exp-backoff on 429/5xx ✓（mirroring `fundamentals.py` 纪律）。
+- **v2 请求账**：30 发行人 = 30 EFTS 查询 + 每 filing 1 次 XML（礼貌 ≥2s 间距）。2026 YTD 有界窗
+  冷拉估算数百至 ~2k 请求 ≈ 0.5-2 小时；逐发行人 checkpoint 落盘（超时保留已完成发行人，可续）；
+  EFTS + XML cache 幂等（重跑近零请求）。
 - **实现**：
   - `form4_efts.py` 使用 `_policy_get()`（来自 `universe.py`），该函数注入 `http_policy._HTTP_POLICY`。
   - `http_policy.py:HostSpacingPolicy.wait()` 强制 ≥2s 间隔。

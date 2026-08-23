@@ -452,3 +452,80 @@ def test_sector_breakdown_retains_committed_when_meta_absent(
     committed = json.loads((web / "sector_breakdown.json").read_text())
     assert committed["status"] == "ok"  # not clobbered to awaiting_fetch
     assert "SKIP sector_breakdown" in capsys.readouterr().out
+
+
+# --- form4 retain-merge (bounded-breadth fetch, 2026-08-23) -------------------
+# A --start-bounded fetch over a WIDER issuer universe must retain the committed
+# pre-window yearly history verbatim and disclose the universe widening.
+
+
+def _fake_form4_parquet(path, year=2026):
+    import pandas as pd
+
+    df = pd.DataFrame({
+        "filer_name": ["Althoff Judson", "Huang Jensen"],
+        "issuer_ticker": ["MSFT", "NVDA"],
+        "transaction_date": pd.to_datetime([f"{year}-08-05", f"{year}-07-21"]),
+        "buy_or_sell": ["sell", "sell"],
+        "shares": [10000, 240000],
+        "price_per_share": [487.89, 170.0],
+        "accession": ["0000000000-26-000001", "0000000000-26-000002"],
+        "filer_cik": [789019, 1045810],
+    })
+    path.parent.mkdir(parents=True, exist_ok=True)
+    df.to_parquet(path)
+
+
+def _committed_form4(web):
+    return {
+        "status": "ok",
+        "n_issuers": 5,
+        "window": "2013-03..2026-08 (16564 txns, 5 issuers)",
+        "yearly": [
+            {"year": y, "buys": 10, "sells": 1000 + y}
+            for y in range(2013, 2027)
+        ],
+        "methodology": "committed",
+    }
+
+
+def test_form4_retain_merge_keeps_pre_window_years(tmp_path, monkeypatch):
+    web = tmp_path / "web" / "src" / "data" / "aionis"
+    web.mkdir(parents=True)
+    (web / "form4.json").write_text(json.dumps(_committed_form4(web)))
+    _fake_form4_parquet(tmp_path / "data" / "cache" / "form4_aggregate.parquet")
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(etd, "WEB", web)
+
+    etd.export_form4()
+
+    out = json.loads((web / "form4.json").read_text())
+    years = [y["year"] for y in out["yearly"]]
+    assert years == list(range(2013, 2027))  # 14-year history survives
+    # pre-2026 rows retained VERBATIM from the committed panel
+    pre = [y for y in out["yearly"] if y["year"] < 2026]
+    assert pre == [y for y in _committed_form4(web)["yearly"] if y["year"] < 2026]
+    # 2026 recomputed from the fresh parquet (2 sells)
+    y26 = next(y for y in out["yearly"] if y["year"] == 2026)
+    assert y26 == {"year": 2026, "buys": 0, "sells": 2}
+    # counts consistent with merged yearly; window spans committed start
+    assert out["buys"] + out["sells"] == sum(y["buys"] + y["sells"] for y in out["yearly"])
+    assert out["window"].startswith("2013-03..")
+    assert "widened from 5" in out["methodology"]
+    # recent rows now carry doc_url (accession present in the fresh parquet)
+    assert all(r["doc_url"].startswith("https://www.sec.gov/Archives/") for r in out["recent"])
+
+
+def test_form4_fresh_write_without_committed(tmp_path, monkeypatch):
+    web = tmp_path / "web" / "src" / "data" / "aionis"
+    web.mkdir(parents=True)
+    _fake_form4_parquet(tmp_path / "data" / "cache" / "form4_aggregate.parquet")
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(etd, "WEB", web)
+
+    etd.export_form4()
+
+    out = json.loads((web / "form4.json").read_text())
+    assert out["status"] == "ok"
+    assert [y["year"] for y in out["yearly"]] == [2026]
+    assert "widened" not in out["methodology"]  # no merge disclosure needed

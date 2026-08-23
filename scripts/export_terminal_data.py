@@ -1167,6 +1167,45 @@ def export_form4() -> None:
             "sells": int((sub["buy_or_sell"] == "sell").sum()),
         })
     yearly.sort(key=lambda x: x["year"])
+
+    # Retain-merge (bounded-breadth pattern, smart_money precedent): a
+    # ``--start``-bounded fetch covers only the recent window over a WIDER
+    # issuer universe; the committed panel's pre-window history is retained
+    # VERBATIM (monotonic — never dropped), and the universe widening is
+    # disclosed in the methodology instead of silently changing history.
+    methodology_note = ""
+    committed = _committed_json("form4.json")
+    c_window_start = None
+    if (
+        committed
+        and committed.get("status") == "ok"
+        and isinstance(committed.get("yearly"), list)
+        and committed["yearly"]
+        and yearly
+    ):
+        fresh_min_year = yearly[0]["year"]
+        c_years = [y for y in committed["yearly"] if int(y["year"]) < fresh_min_year]
+        if c_years:
+            yearly = c_years + yearly
+            buys = int(sum(y["buys"] for y in yearly))
+            sells = int(sum(y["sells"] for y in yearly))
+            c_window_start = str(committed.get("window", "")).split("..")[0]
+            c_issuers = int(committed.get("n_issuers") or 0)
+            methodology_note = (
+                f" Universe widened from {c_issuers} to {n_issuers} issuers "
+                f"from {fresh_min_year} (bounded-breadth fetch; pre-{fresh_min_year} "
+                "yearly aggregates retained verbatim from the narrower universe)."
+            )
+
+    total_txns = buys + sells
+    if c_window_start:
+        window = (
+            f"{c_window_start}..{w_end.strftime('%Y-%m')} "
+            f"({total_txns} txns; {n_issuers} issuers current)"
+        )
+    else:
+        window = f"{w_start.strftime('%Y-%m')}..{w_end.strftime('%Y-%m')} ({total_txns} txns, {n_issuers} issuers)"
+
     payload = {
         "status": "ok",
         "methodology": (
@@ -1176,13 +1215,14 @@ def export_form4() -> None:
             "link the EDGAR filing-index page (built from the row's accession + "
             "reporting-owner CIK — empty, never guessed, on pre-accession "
             "aggregates). Display-only, exploratory, not a research claim."
+            + methodology_note
         ),
         "recent": rows,
         "buys": buys,
         "sells": sells,
         "n_filers": int(df["filer_name"].nunique()),
         "top_insiders": [{"filer": filer, "count": count} for filer, count in filer_counts],
-        "window": f"{w_start.strftime('%Y-%m')}..{w_end.strftime('%Y-%m')} ({len(df)} txns, {n_issuers} issuers)",
+        "window": window,
         "n_issuers": n_issuers,
         "yearly": yearly,
     }

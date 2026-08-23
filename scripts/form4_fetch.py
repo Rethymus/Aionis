@@ -29,18 +29,51 @@ import pandas as pd
 
 from aionis.ingest.form4_orchestrator import fetch_form4_transactions
 
-# Large-cap issuer CIKs (SEC EDGAR public). Small bounded set keeps the pull
-# polite + fast; expand cautiously (each issuer = EFTS + per-accession XML).
-# Large-cap issuer CIKs (SEC EDGAR public). Bounded to 5 — the daily cron's cold
-# pull (each issuer = EFTS + per-accession XML, polite ≥2s) must finish within the
-# refresh job's 45-min budget; 10 issuers timed out. The data-cache action makes
-# subsequent runs delta-only (fast). Expand cautiously + only after a timed cold run.
+# Large-cap issuer CIKs (SEC EDGAR public). Bounded universe — each issuer =
+# 1 EFTS query + per-accession XML, polite ≥2s. The 5-issuer seed kept the
+# daily cron's cold pull inside its budget; v2 breadth (2026-08-23) adds 25
+# mega/large caps (CIKs resolved from the SEC company_tickers.json snapshot
+# via cik_resolver and cross-checked — the same entries the form8k v2/v3
+# universes verified live). A cold 2016→today pull at 30 issuers is hours of
+# polite spacing, so the bounded breadth run uses ``--start 2026-01-01`` and
+# export_form4's retain-merge keeps the committed 2013-2025 history.
 ISSUERS: dict[int, str] = {
+    # form4 seed (v1, full 2016+ history in the committed panel)
     320193: "AAPL",
     789019: "MSFT",
     1045810: "NVDA",
     1652044: "GOOGL",
     1018724: "AMZN",
+    # v2 breadth (2026 window): financials / payments
+    19617: "JPM",
+    1067983: "BRK-B",
+    1403161: "V",
+    1141391: "MA",
+    # healthcare / staples
+    731766: "UNH",
+    200406: "JNJ",
+    78003: "PFE",
+    310158: "MRK",
+    59478: "LLY",
+    104169: "WMT",
+    354950: "HD",
+    21344: "KO",
+    80424: "PG",
+    # energy / industrials
+    93410: "CVX",
+    34088: "XOM",
+    12927: "BA",
+    # tech / comm / consumer discretionary
+    1730168: "AVGO",
+    858877: "CSCO",
+    1326801: "META",
+    1318605: "TSLA",
+    # v2 additions from the form8k v3 set
+    1341439: "ORCL",
+    1108524: "CRM",
+    1065280: "NFLX",
+    2488: "AMD",
+    50863: "INTC",
 }
 START = "2016-01-01"
 END = "2026-08-31"
@@ -91,9 +124,28 @@ def _accumulate(
 
 
 def main() -> None:
+    import sys
+
+    # ``--start YYYY-MM-DD`` bounds a breadth run (e.g. 30 issuers × 2026 YTD)
+    # without touching the incremental per-issuer cursor for cached issuers.
+    cli_start = None
+    if "--start" in sys.argv:
+        i = sys.argv.index("--start")
+        if i + 1 >= len(sys.argv):
+            raise SystemExit("form4_fetch: --start requires a YYYY-MM-DD value")
+        cli_start = sys.argv[i + 1]
+
     # Incremental design: read existing aggregate to get per-issuer latest filing date
     latest_dates = _get_latest_filing_date_perissuer(OUT)
     first_run = not latest_dates
+    bounded = cli_start is not None
+    if bounded:
+        print(
+            f"[form4-fetch] bounded breadth run: cold window from {cli_start} "
+            "(committed pre-window history is preserved by export_form4's "
+            "retain-merge)",
+            flush=True,
+        )
 
     if first_run:
         print("[form4-fetch] first run: cold pull from 2016-01-01", flush=True)
@@ -123,7 +175,7 @@ def main() -> None:
             start_dt = datetime.strptime(latest_dates[ticker], "%Y-%m-%d") + timedelta(days=1)
             fetch_start = start_dt.strftime("%Y-%m-%d")
         else:
-            fetch_start = START
+            fetch_start = cli_start if bounded else START
 
         print(f"[form4-fetch] {ticker} (CIK {cik:010d}) {fetch_start}..{END}", flush=True)
         df = fetch_form4_transactions(cik, start=fetch_start, end=END)
