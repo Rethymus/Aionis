@@ -44,6 +44,7 @@ import ipoJson from "./ipo.json";
 import politicianTradesJson from "./politician_trades.json";
 import politicianTradesTxJson from "./politician_trades_tx.json";
 import partyIndexJson from "./party_index.json";
+import arkJson from "./ark.json";
 import executivesJson from "./executives.json";
 
 export type Pick = {
@@ -756,6 +757,42 @@ export type PartyIndex = {
   snapshot_ts?: string;
 };
 
+export type ArkPosition = {
+  ticker: string;
+  company: string;
+  // Official published weight (%), e.g. 9.24 = 9.24%.
+  weight_pct: number;
+  market_value: number;
+};
+
+export type ArkFund = {
+  ticker: string;
+  fund: string;
+  as_of: string;
+  n_positions: number;
+  // Disclaimer footer / no-ticker / CASHX rows — counted, never silent.
+  skipped_rows: number;
+  top: ArkPosition[];
+};
+
+export type ArkOverlap = {
+  ticker: string;
+  company: string;
+  funds: string[];
+  max_weight_pct: number;
+};
+
+export type Ark = {
+  status: string;
+  as_of: string;
+  n_funds: number;
+  n_funds_expected: number;
+  funds: ArkFund[];
+  family_overlap: ArkOverlap[];
+  methodology: string;
+  snapshot_ts?: string;
+};
+
 export type ExecutivesEvent = {
   company: string;
   ticker: string;
@@ -825,5 +862,6 @@ export const aionis = {
   politicianTrades: politicianTradesJson as PoliticianTrades,
   politicianTradesTx: politicianTradesTxJson as PoliticianTradesTx,
   partyIndex: partyIndexJson as PartyIndex,
+  ark: arkJson as Ark,
   executives: executivesJson as Executives,
 };

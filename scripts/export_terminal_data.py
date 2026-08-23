@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -2359,6 +2360,7 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
     ("cot", "cot.json", _DH_CADENCE),
     ("smart_money", "smart_money.json", _DH_CADENCE),
     ("stakes_13g", "stakes_13g.json", _DH_DAILY),
+    ("ark", "ark.json", _DH_DAILY),
     ("form13f", "form13f.json", _DH_CADENCE),
 ]
 
@@ -2652,6 +2654,11 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
         "ownership % / state machine not parsed",
     ),
     "form13f": ("U.S. SEC EDGAR — public domain", "13F-HR quarterly holdings XML, filed-date PIT, whole-USD values"),
+    "ark": (
+        "ARK Invest official fund CSVs — publicly published daily",
+        "8-ETF Full Holdings CSVs from assets.ark-funds.com (browser-verified "
+        "endpoint URLs; top-10 by weight + family overlap; skips disclosed)",
+    ),
     "data_health": ("Aionis-generated (repo MIT)", "freshness/provenance map over all panels"),
 }
 
@@ -3678,6 +3685,116 @@ def export_party_index() -> None:
     )
 
 
+def export_ark() -> None:
+    """ARK Invest 8-ETF daily holdings — official CSVs (display-only).
+
+    Reads the LATEST cached snapshot per fund from
+    ``data/cache/ark_holdings/`` (gitignored; written by
+    ``scripts/ark_holdings_fetch.py`` via ``aionis.ingest.ark_holdings`` —
+    the exporter reuses that parser so cache and JSON can never disagree on
+    row semantics). Top-10 per fund by weight + a family-overlap view
+    (tickers held by ≥2 ARK funds — the "what does the whole family like"
+    cut xiaoyinsi's institutions cluster carries). ARK keeps no CSV history:
+    the dated cache snapshots ARE the time series; no prices, no returns,
+    no performance claim. Display lane only.
+    """
+    cache = Path("data/cache/ark_holdings")
+    csvs = sorted(cache.glob("*_*.csv")) if cache.exists() else []
+    if not csvs:
+        print(
+            "[export-terminal] SKIP ark: data/cache/ark_holdings/ has no "
+            "snapshots (tracked JSON retains last-committed value)",
+            flush=True,
+        )
+        return
+
+    from aionis.ingest.ark_holdings import FUND_CSV_URLS, parse_csv
+
+    latest: dict[str, tuple[str, Path]] = {}
+    for fp in csvs:
+        m = re.fullmatch(r"([A-Z]+)_(\d{8})\.csv", fp.name)
+        if not m:
+            continue
+        tick, ymd = m.group(1), m.group(2)
+        if tick not in FUND_CSV_URLS or tick not in latest or ymd > latest[tick][0]:
+            latest[tick] = (ymd, fp)
+
+    funds: list[dict] = []
+    overlap: dict[str, dict] = {}
+    for tick in FUND_CSV_URLS:
+        if tick not in latest:
+            continue  # a fund's fetch failed once — omitted, never guessed
+        ymd, fp = latest[tick]
+        as_of, rows, skipped = parse_csv(fp.read_text(encoding="utf-8"))
+        rows = sorted(rows, key=lambda r: (-r["weight_pct"], r["ticker"]))
+        funds.append({
+            "ticker": tick,
+            "fund": rows[0]["fund"] if rows else "",
+            "as_of": as_of,
+            "n_positions": len(rows),
+            "skipped_rows": skipped,
+            "top": [
+                {
+                    "ticker": r["ticker"],
+                    "company": r["company"],
+                    "weight_pct": r["weight_pct"],
+                    "market_value": r["market_value"],
+                }
+                for r in rows[:10]
+            ],
+        })
+        for r in rows:
+            o = overlap.setdefault(r["ticker"], {"ticker": r["ticker"], "company": r["company"], "funds": [], "max_weight_pct": 0.0})
+            o["funds"].append(tick)
+            o["max_weight_pct"] = max(o["max_weight_pct"], r["weight_pct"])
+
+    if not funds:
+        print(
+            "[export-terminal] SKIP ark: no parseable snapshots (tracked "
+            "JSON retains last-committed value)",
+            flush=True,
+        )
+        return
+    shared = sorted(
+        (o for o in overlap.values() if len(o["funds"]) >= 2),
+        key=lambda o: (-len(o["funds"]), -o["max_weight_pct"], o["ticker"]),
+    )[:20]
+
+    payload = {
+        "status": "ok",
+        "as_of": max(f["as_of"] for f in funds),
+        "n_funds": len(funds),
+        "n_funds_expected": len(FUND_CSV_URLS),
+        "funds": funds,
+        "family_overlap": shared,
+        "methodology": (
+            "ARK Invest daily fund holdings, from ARK's own official Full "
+            "Holdings CSVs on assets.ark-funds.com (free, public, published "
+            "each trading day after close). The eight endpoint URLs were "
+            "extracted once via browser from each fund page's live DOM "
+            "(2026-08-23) — the fund pages are a JS shell with no href in "
+            "raw HTML; a fund rename surfaces as an honest per-fund failure, "
+            "never a silent gap. Rows: official weight/market value as "
+            "published; skipped rows are counted and disclosed (the trailing "
+            "disclaimer footer, warrant/unit rows with no ticker, CASHX "
+            "cash rows). Top-10 per fund by weight; family overlap lists "
+            "tickers held by 2+ ARK funds. ARK keeps no CSV history — the "
+            "dated local snapshots are the only time series. Display-only, "
+            "exploratory; no prices, no returns, no performance claim; NOT "
+            "part of any research or OOS pipeline."
+        ),
+    }
+    (WEB / "ark.json").write_text(
+        json.dumps(_stamp(payload), indent=2, default=str)
+    )
+    print(
+        f"[export-terminal] ark: {payload['n_funds']}/{payload['n_funds_expected']} "
+        f"funds, {sum(f['n_positions'] for f in funds)} positions, "
+        f"{len(shared)} family-overlap tickers, as_of {payload['as_of']}",
+        flush=True,
+    )
+
+
 def export_executives() -> None:
     """Officer/director-change filings — 8-K Item 5.02 stream (display-only).
 
@@ -3810,6 +3927,7 @@ def main() -> None:
     _safe_export("macro_drivers", export_macro_drivers)
     _safe_export("smart_money", export_smart_money)
     _safe_export("stakes_13g", export_stakes13g)
+    _safe_export("ark", export_ark)
     _safe_export("reddit_meta", export_reddit_meta)
     _safe_export("ledger_audit", export_ledger_audit)
     _safe_export("headline_provenance", export_headline_provenance)

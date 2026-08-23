@@ -26,7 +26,7 @@ import { stockUniverse } from "@/data/aionis/stock-universe";
 // ticker OUTSIDE that universe (foreign ADRs, OTC preferreds, ETF trusts)
 // must not link — it would 404. We keep the resolved ticker as a plain-text
 // label (identity info) and link only when a page exists.
-const STOCK_PAGE_TICKERS: ReadonlySet<string> = new Set(
+export const STOCK_PAGE_TICKERS: ReadonlySet<string> = new Set(
   stockUniverse.stocks.map((s) => s.ticker),
 );
 

@@ -14,11 +14,13 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { form13f } from "@/data/aionis/form13f";
+import { aionis } from "@/data/aionis";
 import {
   CATEGORY_LABEL,
   CATEGORY_ORDER,
   categoryLabelKey,
   fmtUsd,
+  STOCK_PAGE_TICKERS,
   type Category,
 } from "@/components/institutions/manager-book";
 
@@ -30,6 +32,117 @@ import {
 // Everything is client-filtered — no extra data fetch, no server round-trip.
 
 type CategoryFilter = "all" | Category;
+
+/** ARK 家族 — 8-ETF daily holdings from ARK's own official CSVs (the
+ *  institutions-cluster dimension xiaoyinsi carries; here it is a separate
+ *  card block because ARK funds publish daily books, not 13F quarters).
+ *  Top-5 by weight per fund with weight bars + the family-overlap table
+ *  (tickers held by 2+ funds). Tickers link to /stock pages ONLY when a
+ *  static page exists (same guard as the 13F book). */
+function ArkSection() {
+  const { t } = useI18n();
+  const ark = aionis.ark;
+  if (ark.status !== "ok" || ark.funds.length === 0) return null;
+
+  const maxTop = Math.max(
+    ...ark.funds.flatMap((f) => f.top.map((p) => p.weight_pct)),
+    0.01,
+  );
+
+  const tickerCell = (ticker: string) =>
+    STOCK_PAGE_TICKERS.has(ticker) ? (
+      <Link
+        href={`/stock/${ticker}`}
+        className="font-mono text-xs font-semibold text-primary hover:underline"
+      >
+        {ticker}
+      </Link>
+    ) : (
+      <span className="font-mono text-xs font-semibold">{ticker}</span>
+    );
+
+  return (
+    <div className="space-y-3">
+      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+        <h2 className="text-lg font-semibold tracking-tight">
+          {t("institutions.ark.title")}
+        </h2>
+        <span className="font-mono text-xs text-muted-foreground tabular-nums">
+          {ark.as_of} · {ark.n_funds}/{ark.n_funds_expected} ·{" "}
+          {ark.funds.reduce((a, f) => a + f.n_positions, 0)}{" "}
+          {t("institutions.ark.positions")}
+        </span>
+      </div>
+      <p className="text-xs text-muted-foreground">{t("institutions.ark.note")}</p>
+
+      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+        {ark.funds.map((f) => (
+          <Card key={f.ticker} className="py-0">
+            <CardHeader className="border-b">
+              <div className="flex items-baseline justify-between gap-2">
+                <CardTitle className="font-mono text-sm">{f.ticker}</CardTitle>
+                <span className="font-mono text-[11px] text-muted-foreground tabular-nums">
+                  {f.n_positions} · {f.as_of.slice(5)}
+                </span>
+              </div>
+              <CardDescription className="truncate" title={f.fund}>
+                {f.fund || "—"}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-1.5 p-3">
+              {f.top.slice(0, 5).map((p) => (
+                <div key={p.ticker} className="flex items-center gap-2">
+                  <span className="w-14 shrink-0">{tickerCell(p.ticker)}</span>
+                  <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
+                    <span
+                      className="block h-full rounded-full bg-primary/50"
+                      style={{ width: `${Math.max(2, Math.round((p.weight_pct / maxTop) * 100))}%` }}
+                    />
+                  </span>
+                  <span className="w-10 shrink-0 text-right font-mono text-[11px] tabular-nums">
+                    {p.weight_pct.toFixed(2)}%
+                  </span>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      <Card className="min-w-0 py-0">
+        <CardHeader className="border-b">
+          <CardTitle className="text-base">{t("institutions.ark.overlap_title")}</CardTitle>
+          <CardDescription>{t("institutions.ark.overlap_note")}</CardDescription>
+        </CardHeader>
+        <CardContent className="p-0">
+          <div className="divide-y">
+            {ark.family_overlap.slice(0, 10).map((o) => (
+              <div key={o.ticker} className="flex items-center gap-3 px-4 py-2">
+                <span className="w-14 shrink-0">{tickerCell(o.ticker)}</span>
+                <span className="min-w-0 flex-1 truncate text-xs text-muted-foreground" title={o.company}>
+                  {o.company || "—"}
+                </span>
+                <span className="flex shrink-0 gap-1">
+                  {o.funds.map((fd) => (
+                    <span
+                      key={fd}
+                      className="rounded-[4px] bg-muted px-1.5 py-px font-mono text-[10px] font-medium text-muted-foreground"
+                    >
+                      {fd}
+                    </span>
+                  ))}
+                </span>
+                <span className="w-14 shrink-0 text-right font-mono text-[11px] tabular-nums">
+                  {o.max_weight_pct.toFixed(2)}%
+                </span>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
 
 export function InstitutionsView() {
   const { t } = useI18n();
@@ -218,6 +331,10 @@ export function InstitutionsView() {
           {t("institutions.search.empty")}
         </p>
       ) : null}
+
+      {/* ARK 家族 (daily official CSVs) — the institutions cluster's
+          non-13F member: daily books instead of quarterly filings. */}
+      <ArkSection />
 
       <p className="text-xs text-muted-foreground">{t("institutions.explain")}</p>
     </div>
