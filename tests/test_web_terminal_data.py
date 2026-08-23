@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import json
 import re
+from datetime import datetime
 from pathlib import Path
 
 DATA = Path("web/src/data/aionis")
@@ -584,6 +585,34 @@ def test_form_ipo_panel_contract() -> None:
         if form in f["by_form"]:
             assert f["by_form"][form] <= f["by_status"][status]
 
+
+
+def test_politician_trades_tx_panel_contract() -> None:
+    """Transaction-level STOCK Act panel (PTR PDF parse, TASK-S).
+
+    Locks the honest-coverage shape the /congress transaction section and the
+    /stock politician-trades join consume: direction enum mirrors the view's
+    DIRECTION labels, late_days is internally consistent with the two dates,
+    and the by_party arithmetic sums to total.
+    """
+    f = _load("politician_trades_tx.json")
+    assert f["status"] in {"ok", "awaiting_fetch"}
+    if f["status"] != "ok":
+        return
+    assert f["total"] > 0
+    assert set(f["by_party"]) <= {"D", "R", "unknown"}
+    assert sum(v["n_trades"] for v in f["by_party"].values()) == f["total"]
+    for tx in f["transactions"]:
+        assert tx["direction"] in {"buy", "sell_partial", "sell_full"}
+        assert tx["amount_range"]
+        assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(tx["transaction_date"]))
+        d1 = datetime.strptime(str(tx["transaction_date"]), "%Y-%m-%d")
+        d2 = datetime.strptime(str(tx["filing_date"]), "%Y-%m-%d")
+        assert tx["days_late"] == (d2 - d1).days
+        assert tx["doc_url"].startswith("https://disclosures-clerk.house.gov/")
+    # Late-filing KPI reconciles with the visible rows it summarizes.
+    n_late = sum(1 for tx in f["transactions"] if tx["days_late"] > 45)
+    assert f["late_filings"] >= n_late  # KPI over ALL rows, visible subset <= it
 
 def test_form13f_panel_contract() -> None:
     """13F panel schema: manager shape, positions/changes enums, coverage format.

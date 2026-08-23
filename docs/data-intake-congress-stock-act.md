@@ -99,3 +99,18 @@
 - **join 键 = 选区码 + 姓氏双重佐证**：FD 索引含候选人/前议员申报人，仅按选区 join 会把现任党派错配给他们——姓氏不一致即诚实 null。精确字符串匹配（casefold），无模糊。
 - **实测**（2026-08-22）：目录 430 席（218 R / 211 D / 1 I）→ 874 份申报 join 上 806 份；未链接 68 = 前议员/补选过渡（如 McCormick GA06、Menefee TX18）——按设计诚实留空。
 - **7-gate 快评**：G1 公共域 ✓；G2 快照语义（当前目录 vs 历史申报，姓氏双键消除错配）✓；G7 单请求 ✓。
+
+---
+
+## 交易级增补（2026-08-23，TASK-S / D4 业主指令"彻底对齐颗粒度"）
+
+**数据链**：申报流面板的 DocID → `disclosures-clerk.house.gov/public_disc/ptr-pdfs/{YYYY}/{DocID}.pdf`
+→ 纯 stdlib 解密（ISO 32000 Algorithms 3.2/3.4 RC4 + ToUnicode CMap 文本恢复，右锚定行解析）
+→ `data/cache/politician_trades_tx.parquet`（幂等 per-DocID PDF cache）。
+
+**诚实覆盖（2026 全量实测）**：361 份 PDF = 299 可解析（**2,812 笔交易 / 94 议员**）+ 43 no-text
+（扫描件，列出 DocID）+ 33 exchange 类排除 + 54 解析失败（候选−行−排除，披露不静默丢）。
+金额为法定 $ 区间非精确值；`days_late = 申报日 − 交易日`（45 天法定钟，>45 标 ⚠；实测 379 笔迟报）。
+
+**礼貌账**：PDF 逐份 ≥2s 间距（共享 policy）；--minutes 硬预算断点续存；361 份全量一轮 ≈ 12 分钟
+（PDF cache 命中后 0 请求）。无第三方库、无竞品站请求（一手公共域）。

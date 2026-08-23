@@ -2343,6 +2343,7 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
     ("executives", "executives.json", _DH_DAILY),
     ("ipo", "ipo.json", _DH_DAILY),
     ("politician_trades", "politician_trades.json", _DH_DAILY),
+    ("politician_trades_tx", "politician_trades_tx.json", _DH_DAILY),
     ("reddit", "reddit.json", _DH_DAILY),
     ("headline_provenance", "headline_provenance.json", _DH_DAILY),
     ("ledger_audit", "ledger_audit.json", _DH_DAILY),
@@ -2422,6 +2423,9 @@ def _dh_as_of(key: str, fname: str) -> str | None:
         return p.get("as_of")
     if key == "politician_trades":
         # as_of = latest as-filed FilingDate carried by the bulk FD.xml index.
+        return p.get("as_of")
+    if key == "politician_trades_tx":
+        # as_of = latest filing date among the filings the transactions parse.
         return p.get("as_of")
     if key == "cot":
         return p.get("latest_date")
@@ -2616,6 +2620,11 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
         "U.S. House Clerk — public domain",
         "STOCK Act PTR filing index (House-only, filing-stream level; "
         "transactions remain in the source PDFs)",
+    ),
+    "politician_trades_tx": (
+        "U.S. House Clerk — public domain",
+        "STOCK Act PTR transactions parsed from the source PDFs (House-only; "
+        "statutory amount bands; parse failures disclosed)",
     ),
     "reddit": ("Reddit public Atom RSS — Reddit ToS, display-only", "retail mention counts, forward-only"),
     "headline_provenance": ("Aionis append-only ledger (repo MIT)", "ledger.jsonl freeze→result pairing"),
@@ -3341,6 +3350,143 @@ def export_politician_trades() -> None:
     )
 
 
+def export_politician_trades_tx() -> None:
+    """STOCK Act — House PTR TRANSACTION-level panel (display-only).
+
+    Reads ``data/cache/politician_trades_tx.parquet`` (+ ``_stats.json``;
+    gitignored, produced by ``scripts/politician_trades_tx_fetch.py`` — the
+    revived salvage parser: per-PDF transaction rows with ticker / asset /
+    direction / statutory $ band / dates, plus the honest reconciliation
+    counters). Party join reuses the filing-stream panel's district+last-name
+    double corroboration (``join_party`` — candidates/former members stay
+    null). The filing-stream panel above is untouched; this is the
+    transaction-granularity companion (owner D4 gate).
+    """
+    fp = Path("data/cache/politician_trades_tx.parquet")
+    stats_fp = Path("data/cache/politician_trades_tx_stats.json")
+    if not fp.exists() or not stats_fp.exists():
+        print(
+            "[export-terminal] SKIP politician_trades_tx: data/cache/"
+            "politician_trades_tx{.parquet,_stats.json} not present (tracked "
+            "JSON retains last-committed value)",
+            flush=True,
+        )
+        return
+
+    df = pd.read_parquet(fp)
+    stats = json.loads(stats_fp.read_text(encoding="utf-8"))
+    if df.empty:
+        print(
+            "[export-terminal] SKIP politician_trades_tx: empty parquet "
+            "(tracked JSON retains last-committed value)",
+            flush=True,
+        )
+        return
+
+    from aionis.ingest.politician_trades import join_party
+
+    directory_fp = Path("data/cache/house_directory.parquet")
+    parties: list[str | None] = [None] * len(df)
+    if directory_fp.exists():
+        parties = join_party(df, pd.read_parquet(directory_fp))
+    df["party"] = parties
+    n_party = int(df["party"].notna().sum())
+
+    # Full export (visible == total; cap is a payload-size safety net only).
+    transactions = []
+    for _, r in df.head(5000).iterrows():
+        transactions.append({
+            "member": str(r["member"]),
+            "party": r["party"] if pd.notna(r["party"]) else None,
+            "office": str(r["office"]),
+            "ticker": str(r["ticker"]),
+            "asset": str(r["asset"]),
+            "type": str(r["asset_class"]),
+            "direction": str(r["direction"]),
+            "amount_range": str(r["amount_range"]),
+            "transaction_date": str(r["transaction_date"].date()),
+            "filing_date": str(r["filing_date"].date())
+            if pd.notna(r["filing_date"]) else None,
+            "days_late": int(r["days_late"]) if pd.notna(r["days_late"]) else None,
+            "doc_url": str(r["doc_url"]),
+        })
+
+    by_party: dict[str, dict[str, int]] = {}
+    for party_key, g in df.groupby(df["party"].fillna("unknown")):
+        by_party[str(party_key)] = {
+            "n_trades": int(len(g)),
+            "n_buy": int((g["direction"] == "buy").sum()),
+            "n_sell_partial": int((g["direction"] == "sell_partial").sum()),
+            "n_sell_full": int((g["direction"] == "sell_full").sum()),
+        }
+
+    payload = {
+        "status": "ok",
+        # Latest as-filed FilingDate among the filings the rows came from.
+        "as_of": str(df["filing_date"].dropna().max())
+        if df["filing_date"].notna().any() else None,
+        "year": int(stats.get("year", df["filing_year"].max())),
+        "total": int(len(df)),
+        "n_members": int(df["member"].nunique()),
+        "n_tickered": int((df["ticker"] != "").sum()),
+        "by_party": by_party,
+        # STOCK Act 45-day clock, per transaction (filing - transacted).
+        "late_filings": int((df["days_late"] > 45).sum()),
+        "party_coverage": f"{n_party}/{len(df)}",
+        "transactions": transactions,
+        # Honest parsing reconciliation — never silently dropped rows.
+        "parse": {
+            "filings_total": int(stats.get("filings_total", 0)),
+            "filings_processed": int(stats.get("filings_processed", 0)),
+            "fetch_errors": int(len(stats.get("fetch_errors", []))),
+            "no_text_pdfs": int(len(stats.get("no_text_pdfs", []))),
+            "row_candidates": int(stats.get("row_candidates", 0)),
+            "rows_parsed": int(stats.get("rows_parsed", 0)),
+            "rows_exchanged": int(stats.get("rows_excluded", 0)),
+            "parse_failures": int(
+                stats.get("row_candidates", 0)
+                - stats.get("rows_parsed", 0)
+                - stats.get("rows_excluded", 0)
+            ),
+            "complete": bool(stats.get("complete", False)),
+        },
+        "senate": {
+            "status": "blocked",
+            "note": "efdsearch.senate.gov serves Akamai 'Access Denied' to plain GET — no first-party access; disclosed rather than routed through third parties.",
+        },
+        "methodology": (
+            "STOCK Act congressional trading, v2 = TRANSACTION level. Source: "
+            "the same U.S. House Clerk public-domain filings as the filing-"
+            "stream panel, with the PTR PDFs themselves parsed (RC4-decrypted "
+            "with the Python standard library; no third-party data). Each row "
+            "is one transaction as filed: member, ticker (when the PDF "
+            "carries one), asset description, buy vs sell (partial/full), the "
+            "STATUTORY DISCLOSURE BAND (not an exact amount), transaction "
+            "date, and filing date; days_late = filing - transacted against "
+            "the 45-day STOCK Act clock. Parsing is disclosed, never silent: "
+            "row_candidates counts every type+dates+amount anchor found; "
+            "non-purchase/sale types (e.g. exchanges) are excluded and "
+            "counted; parse_failures = candidates - rows - exchanges; "
+            "no-text (scanned) PDFs are counted separately; an asset "
+            "description may retain a brokerage annotation on wrapped rows. "
+            "Party labels reuse the house.gov directory join (district + "
+            "last name; candidates/former members stay null). Senate eFD is "
+            "Akamai-blocked and disclosed. House-only, 2026 filings to date. "
+            "Display-only, not a research claim; NOT part of any OOS "
+            "pipeline."
+        ),
+    }
+    (WEB / "politician_trades_tx.json").write_text(
+        json.dumps(_stamp(payload), indent=2, default=str)
+    )
+    print(
+        f"[export-terminal] politician_trades_tx: {payload['total']} transactions, "
+        f"{payload['n_members']} members, late>45d {payload['late_filings']}, "
+        f"parse failures {payload['parse']['parse_failures']}, as_of {payload['as_of']}",
+        flush=True,
+    )
+
+
 def export_executives() -> None:
     """Officer/director-change filings — 8-K Item 5.02 stream (display-only).
 
@@ -3464,6 +3610,7 @@ def main() -> None:
     _safe_export("form8k", export_form8k)
     _safe_export("form_ipo", export_form_ipo)
     _safe_export("politician_trades", export_politician_trades)
+    _safe_export("politician_trades_tx", export_politician_trades_tx)
     _safe_export("form13f", export_form13f)
     _safe_export("market_context", export_market_context)
     _safe_export("macro_drivers", export_macro_drivers)
