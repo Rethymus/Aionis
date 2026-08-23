@@ -8,6 +8,12 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-23 (j) S 主线预跑：salvage PDF 栈复活 + 20 份真 PDF 验证 + 2026 全量批启动
+
+**S 的最高风险部分已由主线完成**（ws worktree，feat/ptr-transactions 分支）：salvage `agent/politician` 的 PDF 栈提取为独立模块 `src/aionis/ingest/ptr_pdf.py`（纯 stdlib：ISO 32000 RC4 密钥派生 + ToUnicode CMap 文本恢复 + 流式行正则）+ runner `scripts/ptr_transactions_fetch.py`（年份分批、幂等 DocID cache、三分类计数）。**20 份真 PDF 抽样：12 ok（45 交易行，PFE/OGN/ABT/GOOGM 等真 ticker）**；6 no_rows = 2 字节 CID 字体部分 cmap 缺映射（NUL 损失，`$200?` 残迹——NUL 剥离验证不可救，诚实计数不猜）；2 no_text = 扫描件。**2026 全量批（359 份）后台 fetch 中**（house.gov，与 sec.gov 的 form4 fetch 不同 host 并行礼貌安全）。修复插曲：一次批量改名误伤 fonts_from 循环变量导致提取退化（45→5 行），从首个 commit 重置后行号级外科修（E501+B007），ruff 净 + 抽样复验 20/20@45。TASK-S 文件已更新（接手者只剩任务 4-7：导出面/前端/测试/7-gate）。
+
+**并行状态**：form4 fetch @ ~17/30 发行人（968 笔）；T 已完成；U 待 20:10 cron。
+
 ## 2026-08-23 (i) 主线接管 T 完成（配额未重置期的第二块主线工作）
 
 **T（manager 页对齐，`f0fbc9c`）**：① **数据可得性通过**——form13f_aggregate.parquet 实为全持仓（131,020 行；BRK 单管理人 179 行跨季），非只有 top10；② 导出 `top10`→**`positions` ≤50**（可见持仓簿）+ changes ≤20，coverage **285/398 → 1,181/1,580**；③ **form13f 移出共享 barrel**（form13f.json 100KB→653KB，照 stock-universe 先例独立模块 `web/src/data/aionis/form13f.ts`，五消费方改导入——+550KB 不再摊到每个页面）；④ manager-view 双 tab（当前持仓=PositionsTable+**前 6 大集中度条形 widget**（按可见持仓合计口径+脚注）/ 调仓=四态 KPI 计数+Δ市值芯片）；⑤ institutions 管理人搜索（name/中文别名/CIK 子串，诚实空态）。验证：pytest 全套 0 失败 + ruff 净 + tsc 0 + eslint 净（build 留待与 R 收尾同批跑）。wt worktree 清、分支删。
