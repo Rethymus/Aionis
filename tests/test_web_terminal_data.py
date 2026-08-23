@@ -1486,6 +1486,40 @@ def test_api_catalog_disclosure() -> None:
 # --- smart_money ticker/filer restoration (daily-index dedup round) ----------
 
 
+def pct_contract(r: dict, *, form: str | None = None) -> None:
+    """The percent-of-class contract shared by the 13D and 13G panels.
+
+    * ``pct_now`` / ``pct_prev`` are floats within [0, 100] or honest nulls —
+      never strings, never out-of-range, never negative.
+    * ``pct_prev`` only on /A amendments (the previous value lives in the
+      amendment narrative; original filings never carry one).
+    * ``pct_status`` is DERIVED from parsed values only: "exited" iff an
+      explicit parsed 0, "below_5" iff a parsed value in (0, 5); a null
+      pct_now must yield a null status (no parsing → no state machine).
+    """
+    for k in ("pct_now", "pct_prev"):
+        v = r.get(k)
+        assert v is None or (isinstance(v, (int, float)) and 0.0 <= v <= 100.0), (
+            f"{k} must be null or a number in [0,100], got {v!r}"
+        )
+    if form is None:
+        form = str(r.get("form", ""))
+    if not form.endswith("/A") and not r.get("is_amendment"):
+        assert r.get("pct_prev") is None, (
+            f"pct_prev only in amendments, got {r.get('pct_prev')!r} on {form!r}"
+        )
+    st = r.get("pct_status")
+    now = r.get("pct_now")
+    if now is None:
+        assert st is None, "null pct_now must yield a null pct_status"
+    elif now == 0:
+        assert st == "exited", f"pct_now 0 must be 'exited', got {st!r}"
+    elif now < 5:
+        assert st == "below_5", f"pct_now <5 must be 'below_5', got {st!r}"
+    else:
+        assert st is None, f"pct_now >=5 has no derived status, got {st!r}"
+
+
 def test_smart_money_recent_ticker_and_filer_restored() -> None:
     """recent_filings must carry parsed tickers + real filers where resolvable.
 
@@ -1530,6 +1564,9 @@ def test_smart_money_recent_ticker_and_filer_restored() -> None:
     for r in recent:
         if r["ticker"]:
             assert r["ticker"] == r["ticker"].strip().upper()
+    # Percent-of-class contract on every visible 13D row (null-tolerant).
+    for r in recent:
+        pct_contract(r, form=r.get("form"))
 
 
 def test_smart_money_source_health_counts_agree_with_panel() -> None:
@@ -1543,6 +1580,12 @@ def test_smart_money_source_health_counts_agree_with_panel() -> None:
     assert sh["ticker_null"] == sum(1 for r in recent if not r.get("ticker"))
     assert sh["ticker_null"] <= sh["n_recent"]
     assert isinstance(sh["days_since_latest"], int) and sh["days_since_latest"] >= 0
+    # Parsed-percent null rate: misses are counted, never papered over.
+    assert isinstance(sh["pct_now_null"], int)
+    assert sh["pct_now_null"] == sum(
+        1 for r in recent if r.get("pct_now") is None
+    )
+    assert sh["pct_now_null"] <= sh["n_recent"]
 
 
 def test_stakes_13g_panel_contract() -> None:
@@ -1590,9 +1633,19 @@ def test_stakes_13g_panel_contract() -> None:
         "methodology must disclose the display-only boundary"
     )
     assert "2024-12-17" in m, "must disclose the EFTS Schedule-13 freeze"
+    # Percent second stage: the parsing BOUNDARY must be disclosed — visible
+    # rows parsed, misses honest nulls, status derived from parsed values only.
     assert "NOT parsed" in m or "not parsed" in m, (
-        "must disclose the deferred ownership/state-machine parsing"
+        "must disclose the bounded parse window (rows beyond it not parsed)"
     )
+    assert "honest null" in m, "must disclose the honest-null policy"
+    assert "pct_status" in m or "exited" in m, (
+        "must disclose the derived-status boundary"
+    )
+    # --- percent-of-class contract (bounded document parse merge) -----------
+    for r in f["filings"]:
+        assert {"pct_now", "pct_prev", "pct_status"} <= set(r)
+        pct_contract(r, form=r["form"])
 
 
 def test_stakes_13g_source_health_counts_agree_with_panel() -> None:
@@ -1608,6 +1661,10 @@ def test_stakes_13g_source_health_counts_agree_with_panel() -> None:
     )
     assert sh["ticker_null"] <= sh["n_filings"]
     assert isinstance(sh["days_since_latest"], int) and sh["days_since_latest"] >= 0
+    # Parsed-percent null rate: misses are counted, never papered over.
+    assert isinstance(sh["pct_now_null"], int)
+    assert sh["pct_now_null"] == sum(1 for r in filings if r.get("pct_now") is None)
+    assert sh["pct_now_null"] <= sh["n_filings"]
 
 
 def test_data_health_source_health_shape() -> None:
@@ -1615,9 +1672,12 @@ def test_data_health_source_health_shape() -> None:
     dh = _load("data_health.json")
     sh = dh["source_health"]
     assert set(sh) == {"smart_money", "stakes_13g", "reddit", "cot"}
-    assert set(sh["smart_money"]) == {"ticker_null", "n_recent", "days_since_latest"}
+    assert set(sh["smart_money"]) == {
+        "ticker_null", "n_recent", "days_since_latest", "pct_now_null",
+    }
     assert set(sh["stakes_13g"]) == {
         "ticker_null", "filer_unresolved", "n_filings", "days_since_latest",
+        "pct_now_null",
     }
     assert set(sh["reddit"]) == {"bull_ratio_null", "n_picks"}
     assert set(sh["cot"]) == {"weeks_since_latest"}

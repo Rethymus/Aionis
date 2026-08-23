@@ -241,9 +241,21 @@ export type RedditPick = {
   bull_ratio: number | null;
 };
 
+// Percent-of-class parsed from the filing's primary document (bounded second
+// stage; visible rows only). null = honest miss (not extracted / not walked /
+// EFTS-era row without an archive url) — never a guess.
+export type StakesPct = {
+  pct_now?: number | null;
+  // Previous percent — /A amendments only ("previous X%"-style narrative).
+  pct_prev?: number | null;
+  // DERIVED from pct_now ONLY: "exited" (parsed 0) | "below_5" (parsed <5) |
+  // null. No parsed value → no status. Active/passive is the form type.
+  pct_status?: "exited" | "below_5" | null;
+};
+
 export type SmartMoney = {
   methodology?: string;
-  recent_filings: {
+  recent_filings: ({
     filer: string;
     target: string;
     ticker: string;
@@ -251,8 +263,7 @@ export type SmartMoney = {
     form: string;
     is_amendment: boolean;
     url?: string;
-  }[];
-  active_filers: { filer: string; count: number }[];
+  } & StakesPct)[];  active_filers: { filer: string; count: number }[];
   total_filings: number;
   n_filers: number;
   latest_date: string | null;
@@ -270,7 +281,7 @@ export type Stakes13GFiling = {
   // SC 13G | SC 13G/A (immutable form type — one row per accession filing).
   form: string;
   doc_url: string;
-};
+} & StakesPct;
 
 export type Stakes13G = {
   status: string;

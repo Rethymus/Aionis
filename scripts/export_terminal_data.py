@@ -1404,6 +1404,61 @@ def _sm_dedup_enrich(
     return [to_row(m, tk_of(m), _SM_FILER_PLACEHOLDER) for m in members]
 
 
+def _pct_status(pct_now: float | None) -> str | None:
+    """Derive the /stakes-style status FROM PARSED VALUES ONLY (never guessed).
+
+    ``exited`` requires an explicitly parsed 0; ``below_5`` a parsed value
+    below 5%; a null pct stays a null status — no parsing, no state machine,
+    honestly. The active/passive axis is NOT here: it derives from the form
+    type (13D active / 13G passive) in the frontend with zero parsing.
+    """
+    if pct_now is None:
+        return None
+    if pct_now == 0:
+        return "exited"
+    if pct_now < 5:
+        return "below_5"
+    return None
+
+
+def _apply_pct(rows: list[dict]) -> list[dict]:
+    """Merge parsed percent-of-class fields into display rows (null-tolerant).
+
+    Join key: the accession parsed from the row's EDGAR archive url (rows
+    without a url — EFTS-era — keep honest nulls). The cache
+    (``data/cache/stakes_pct_parsed.json``, produced by the BOUNDED
+    ``scripts/stakes_pct_parse.py`` walk over the visible rows) may be absent
+    or partial: every row then carries null pct fields, never a guess.
+    Export-layer contract enforcement: values clipped to [0, 100] or nulled;
+    ``pct_prev`` only on /A amendments.
+    """
+    import re as _re
+
+    from aionis.ingest.stakes_pct import load_pct_cache
+
+    pct_cache = load_pct_cache()
+    for r in rows:
+        url = str(r.get("url") or r.get("doc_url") or "")
+        tail = url.rstrip("/").rsplit("/", 1)[-1]
+        acc = tail.removesuffix("-index.htm").removesuffix("-index.html")
+        if not _re.fullmatch(r"\d{10}-\d{2}-\d{6}", acc):
+            acc = ""
+        e = pct_cache.get(acc) or {}
+        now = e.get("pct_now")
+        if now is not None and not (isinstance(now, (int, float)) and 0.0 <= now <= 100.0):
+            now = None
+        prev = e.get("pct_prev")
+        is_amd = bool(r.get("is_amendment")) or str(r.get("form", "")).endswith("/A")
+        if prev is not None and (
+            not is_amd or not (isinstance(prev, (int, float)) and 0.0 <= prev <= 100.0)
+        ):
+            prev = None
+        r["pct_now"] = now
+        r["pct_prev"] = prev
+        r["pct_status"] = _pct_status(now)
+    return rows
+
+
 def _rows_from_daily_aggregate(daily_path: Path) -> list[dict]:
     """Enriched, per-accession-deduped SC 13D rows from the daily aggregate.
 
@@ -1483,6 +1538,19 @@ def _sm_committed_extra(
     return extra, verbatim
 
 
+_SM_PCT_METHODOLOGY = (
+    " Percent-of-class fields (pct_now / pct_prev) are regex-parsed from each"
+    " filing's primary document for the VISIBLE rows only (bounded second"
+    " stage: structured cover-page tag first, then the 'Percent of class'"
+    " label, then the 'X.X% of the ... class' narrative; amendments carry"
+    " pct_prev from 'previous X%'-style sentences only) — misses stay honest"
+    " nulls, counted in data_health.source_health. pct_status is DERIVED"
+    " from parsed values only: exited = an explicit parsed 0, below_5 = a"
+    " parsed value < 5; a null pct never yields a status. Group filings show"
+    " the FIRST reporting person's cover-page percentage."
+)
+
+
 def _refresh_smart_money_recent_only(committed_path: Path, daily_path: Path) -> dict | None:
     """Refresh smart_money's live window when only the daily index exists.
 
@@ -1516,8 +1584,13 @@ def _refresh_smart_money_recent_only(committed_path: Path, daily_path: Path) -> 
     extra, verbatim = _sm_committed_extra(fresh_accs, cik2tk, name2tk, committed_path)
     rows = daily_rows + extra + verbatim
     rows.sort(key=lambda r: r["date"], reverse=True)
+    rows = _apply_pct(rows)  # parsed pct (visible rows only); null-tolerant
 
     prev["recent_filings"] = rows[:120]
+    # Refresh the methodology's parse-boundary paragraph (idempotent append):
+    # the committed JSON predates the pct second stage.
+    if "Percent-of-class fields" not in str(prev.get("methodology", "")):
+        prev["methodology"] = str(prev.get("methodology", "")) + _SM_PCT_METHODOLOGY
     prev["latest_date"] = max(
         str(prev.get("latest_date") or ""), str(rows[0]["date"])
     )
@@ -1629,7 +1702,7 @@ def export_smart_money() -> None:
         rows.extend(daily_rows)
         rows.extend(extra)
     rows.sort(key=lambda r: r["date"], reverse=True)
-    recent = rows[:120]
+    recent = _apply_pct(rows[:120])  # parsed pct (visible rows only); null-tolerant
     from collections import Counter
     # Rank real filers: EFTS rows name the reporting person; daily-index rows
     # surface the co-indexed filer entities for single-subject accessions. The
@@ -1656,7 +1729,7 @@ def export_smart_money() -> None:
             "LLCs, individuals) or with several listed candidates honestly "
             "keep an empty ticker / placeholder filer (counted in "
             "data_health.source_health). Real data; descriptive display, not "
-            "an Aionis research claim."
+            "an Aionis research claim." + _SM_PCT_METHODOLOGY
         ),
         "recent_filings": recent,
         "active_filers": [{"filer": filer, "count": count} for filer, count in active],
@@ -1679,8 +1752,11 @@ def export_stakes13g() -> None:
     same offline heuristic as the 13D daily path (``_sm_dedup_enrich``): the
     one listed company is the subject, the co-indexed names surface as the
     filer; ambiguous groups keep every member honestly (placeholder filer).
-    The % ownership / passive-state machine needs per-document parsing and is
-    DEFERRED (disclosed, never fabricated) — each row is one immutable filing.
+    The percent-of-class fields (``pct_now`` / ``pct_prev`` / derived
+    ``pct_status``) are merged from the bounded document-parse cache
+    (``data/cache/stakes_pct_parsed.json``, produced by
+    ``scripts/stakes_pct_parse.py`` over these VISIBLE rows); an absent or
+    partial cache leaves honest nulls, never a guess.
     """
     fp = Path("data/cache/sc13g_daily_aggregate.json")
     if not fp.exists():
@@ -1744,7 +1820,13 @@ def export_stakes13g() -> None:
             "date": str(r["date"]),
             "form": str(r["form"]),
             "doc_url": url,
+            # Filled by _apply_pct from the bounded document-parse cache
+            # (null-tolerant: absent/partial cache → honest nulls).
+            "pct_now": None,
+            "pct_prev": None,
+            "pct_status": None,
         })
+    filings = _apply_pct(filings)
     dates = [r["date"] for r in rows]
     payload = {
         "status": "ok",
@@ -1768,23 +1850,34 @@ def export_stakes13g() -> None:
             "unlisted groups honestly keep every member (placeholder filer / "
             "null ticker, counted in data_health.source_health), so the row "
             "count can slightly exceed the distinct-accession count. Honest "
-            "v1 limits, disclosed not papered over: the % ownership, share "
-            "count, event date, and the passive/active/exited state machine "
-            "live INSIDE the filing documents and are NOT parsed here "
-            "(per-accession index.json fetches would cost thousands of "
-            "requests — deferred); each row links the filing's EDGAR index "
-            "page, which lists every document and names the reporting "
-            "person. Counts are FILING counts, not holder counts. "
-            "Display-only, exploratory, not a research claim; NOT part of "
-            "any OOS pipeline."
+            "v1 limits, disclosed not papered over: the share count and event "
+            "date live INSIDE the filing documents and are NOT parsed here. "
+            "The percent-of-class second stage IS bounded-parsed for the "
+            "VISIBLE top-150 rows only (EDGAR index.json + primary document, "
+            "≤2 polite requests per row; structured cover-page tag first, "
+            "then the 'Percent of class' label, then the 'X.X% of the ... "
+            "class' narrative; /A amendments carry pct_prev from 'previous "
+            "X%'-style sentences only): rows beyond the visible window are "
+            "NOT parsed, and every extraction miss stays an honest null "
+            "(counted in data_health.source_health), never a guess or a "
+            "default. pct_status is DERIVED from parsed values only: exited "
+            "= an explicit parsed 0, below_5 = a parsed value < 5; a null "
+            "pct never yields a status. Group filings show the FIRST "
+            "reporting person's cover-page percentage. Each row links the "
+            "filing's EDGAR index page, which lists every document and names "
+            "the reporting person. Counts are FILING counts, not holder "
+            "counts. Display-only, exploratory, not a research claim; NOT "
+            "part of any OOS pipeline."
         ),
     }
     (WEB / "stakes_13g.json").write_text(json.dumps(_stamp(payload), indent=2))
     n_tk = sum(1 for f in filings if f["ticker"])
+    n_pct = sum(1 for f in filings if f["pct_now"] is not None)
     print(
         f"[export-terminal] stakes_13g: {payload['total']} filings "
         f"{payload['by_form']}, as_of {payload['as_of']}, "
-        f"ticker {n_tk}/{len(filings)} on top-{len(filings)}",
+        f"ticker {n_tk}/{len(filings)} on top-{len(filings)}, "
+        f"pct_now {n_pct}/{len(filings)}",
         flush=True,
     )
 
@@ -2515,6 +2608,7 @@ def _source_health() -> dict:
             "ticker_null": sum(1 for r in recent if not r.get("ticker")),
             "n_recent": len(recent),
             "days_since_latest": _dh_days_since(sm.get("latest_date")),
+            "pct_now_null": sum(1 for r in recent if r.get("pct_now") is None),
         },
         "stakes_13g": {
             "ticker_null": sum(1 for r in sg_filings if not r.get("ticker")),
@@ -2523,6 +2617,7 @@ def _source_health() -> dict:
             ),
             "n_filings": len(sg_filings),
             "days_since_latest": _dh_days_since(sg.get("as_of")),
+            "pct_now_null": sum(1 for r in sg_filings if r.get("pct_now") is None),
         },
         "reddit": {
             "bull_ratio_null": sum(1 for p in picks if p.get("bull_ratio") is None),
