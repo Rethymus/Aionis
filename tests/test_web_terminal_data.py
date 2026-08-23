@@ -528,6 +528,97 @@ def test_executives_panel_contract() -> None:
     assert "deferred" in x["methodology"].lower()
 
 
+def test_party_index_panel_contract() -> None:
+    """Party index panel: derivation pinned against the source tx panel.
+
+    The panel is DERIVED from the committed politician_trades_tx.json (zero
+    new fetches) — the contract recomputes the aggregation from the source
+    and demands row-for-row agreement: monthly D/R tx counts, the opposition
+    share (n_opposed/n_directional over BOTH-directional common tickers,
+    null when none), and the trailing-90d follow portfolios (net_buy =
+    n_buy − n_sell, count-weighted only). The methodology must disclose the
+    no-prices/no-returns boundary (a display signal list, never performance).
+    """
+    x = _load("party_index.json")
+    src = _load("politician_trades_tx.json")
+    assert x["status"] in {"ok", "awaiting_fetch"}
+    assert {"as_of", "window_anchor", "window_days", "n_source_tx", "months",
+            "latest", "portfolios", "methodology", "snapshot_ts"} <= set(x)
+    assert x["source_panel"] == "politician_trades_tx"
+    if x["status"] != "ok":
+        return
+    assert x["as_of"] == src["as_of"], "as_of mirrors the source panel"
+
+    # Source of truth: tickered D/R transactions only.
+    tx = [r for r in src["transactions"]
+          if r.get("ticker") and r.get("party") in ("D", "R")]
+    assert x["n_source_tx"] == len(tx)
+
+    months: dict = {}
+    for r in tx:
+        b = months.setdefault(r["transaction_date"][:7], {"D": [0, 0], "R": [0, 0]})
+        # [buy, sell] per party per month
+        b[r["party"]][0 if r["direction"] == "buy" else 1] += 1
+
+    got = x["months"]
+    assert [m["month"] for m in got] == sorted(months), "months ascending, no gaps"
+    for m in got:
+        d_buy, d_sell = months[m["month"]]["D"]
+        r_buy, r_sell = months[m["month"]]["R"]
+        assert m["d_tx"] == d_buy + d_sell
+        assert m["r_tx"] == r_buy + r_sell
+        assert m["d_buy"] == d_buy
+        assert m["r_buy"] == r_buy
+        assert 0 <= m["n_opposed"] <= m["n_directional"] <= m["n_common"]
+        if m["n_directional"] == 0:
+            assert m["opposition"] is None
+        else:
+            opp = m["opposition"]
+            assert opp is not None and 0.0 <= opp <= 1.0
+            assert abs(opp - m["n_opposed"] / m["n_directional"]) < 5e-4
+
+    # Latest headline month must exist in the series; opposed/consensus rows
+    # must actually be opposed / consensus by sign.
+    assert x["latest"]["month"] in {m["month"] for m in got}
+    for row in x["latest"]["opposed"]:
+        assert (row["d_net"] > 0) != (row["r_net"] > 0), "opposed = opposite signs"
+    for row in x["latest"]["consensus"]:
+        assert row["d_net"] > 0 and row["r_net"] > 0, "consensus = both net-buy"
+
+    # Follow portfolios: trailing window from the latest transaction date.
+    from datetime import date, timedelta
+
+    max_tx = max(r["transaction_date"] for r in tx)
+    cutoff = (date.fromisoformat(max_tx) - timedelta(days=90)).isoformat()
+    assert x["window_anchor"] == max_tx
+    assert x["window_days"] == 90
+    for p in ("D", "R"):
+        book = x["portfolios"][p]
+        rows = [r for r in tx if r["party"] == p and r["transaction_date"] >= cutoff]
+        assert book["n_tx"] == len(rows)
+        assert book["n_members"] == len({r["member"] for r in rows})
+        # Full recompute of the top-10 net-buy book (same aggregation).
+        agg: dict = {}
+        for r in rows:
+            a = agg.setdefault(r["ticker"], [0, 0])
+            a[0 if r["direction"] == "buy" else 1] += 1
+        want = sorted(
+            ({"ticker": t, "net_buy": a[0] - a[1], "n_buy": a[0], "n_sell": a[1]}
+             for t, a in agg.items()),
+            key=lambda h: (-h["net_buy"], -h["n_buy"], h["ticker"]),
+        )[:10]
+        got_h = book["holdings"]
+        assert [h["ticker"] for h in got_h] == [h["ticker"] for h in want], (
+            "holdings = the true top-10 by (net_buy desc, n_buy desc, ticker)"
+        )
+        for h in got_h:
+            assert h["net_buy"] == h["n_buy"] - h["n_sell"]
+
+    # Display-lane boundary: signal lists, never performance.
+    ml = x["methodology"].lower()
+    assert "house" in ml and ("no prices" in ml or "no returns" in ml)
+
+
 def test_form_ipo_panel_contract() -> None:
     """IPO panel schema: filing shape, status enum, honest counting, date order.
 
