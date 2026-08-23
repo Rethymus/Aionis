@@ -46,6 +46,7 @@ import politicianTradesTxJson from "./politician_trades_tx.json";
 import partyIndexJson from "./party_index.json";
 import arkJson from "./ark.json";
 import redditTrendingJson from "./reddit_trending.json";
+import formDJson from "./form_d.json";
 import executivesJson from "./executives.json";
 
 export type Pick = {
@@ -821,6 +822,31 @@ export type RedditTrending = {
   snapshot_ts?: string;
 };
 
+export type FormDFiling = {
+  company: string;
+  // Almost always empty — Form D filers are private companies by definition
+  // (the EDGAR display name carries no symbol); honest, never guessed.
+  ticker: string;
+  filed_date: string;
+  // "D" (new notice) | "D/A" (amendment).
+  form: string;
+  // "new" | "amendment" — derived from the immutable form type.
+  status: string;
+  doc_url: string;
+};
+
+export type FormD = {
+  status: string;
+  as_of: string;
+  window: { start: string; end: string };
+  issuers: number;
+  total: number;
+  by_form: Record<string, number>;
+  filings: FormDFiling[];
+  methodology: string;
+  snapshot_ts?: string;
+};
+
 export type ExecutivesEvent = {
   company: string;
   ticker: string;
@@ -892,5 +918,6 @@ export const aionis = {
   partyIndex: partyIndexJson as PartyIndex,
   ark: arkJson as Ark,
   redditTrending: redditTrendingJson as RedditTrending,
+  formD: formDJson as FormD,
   executives: executivesJson as Executives,
 };

@@ -2357,6 +2357,7 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
     ("form8k", "form8k.json", _DH_DAILY),
     ("executives", "executives.json", _DH_DAILY),
     ("ipo", "ipo.json", _DH_DAILY),
+    ("form_d", "form_d.json", _DH_DAILY),
     ("politician_trades", "politician_trades.json", _DH_DAILY),
     ("politician_trades_tx", "politician_trades_tx.json", _DH_DAILY),
     ("party_index", "party_index.json", _DH_DAILY),
@@ -2439,6 +2440,13 @@ def _dh_as_of(key: str, fname: str) -> str | None:
         return p.get("as_of")
     if key == "ipo":
         return p.get("as_of")
+    if key == "form_d":
+        return p.get("as_of")
+    if key == "ark":
+        return p.get("as_of")
+    if key == "reddit_trending":
+        ts = p.get("as_of")
+        return ts.split("T")[0] if ts else None
     if key == "politician_trades":
         # as_of = latest as-filed FilingDate carried by the bulk FD.xml index.
         return p.get("as_of")
@@ -2633,6 +2641,11 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
         "U.S. SEC EDGAR — public domain",
         "IPO registration/pricing stream (S-1/S-1/A + 424B4) via EFTS "
         "form-level queries, filed-date PIT; offer terms not extracted",
+    ),
+    "form_d": (
+        "U.S. SEC EDGAR — public domain",
+        "Form D exempt-offering notices (D + D/A) via EFTS form-level "
+        "queries, filed-date PIT; offering amounts not extracted",
     ),
     "politician_trades": (
         "U.S. House Clerk — public domain",
@@ -3271,6 +3284,94 @@ def export_form_ipo() -> None:
     print(
         f"[export-terminal] form_ipo: {payload['total']} filings "
         f"({payload['by_status']}), {payload['issuers']} issuers, "
+        f"as_of {payload['as_of']}",
+        flush=True,
+    )
+
+
+def export_form_d() -> None:
+    """US Form D exempt-offering stream — the primary-market (一级市场) panel.
+
+    Reads ``data/cache/form_d_aggregate.parquet`` (gitignored; produced by
+    ``scripts/form_d_fetch.py`` — whole-market EFTS form-level query,
+    ``forms=D`` expands to D + D/A, fixed ~90-day window). Status from the
+    immutable form type: D = ``new`` (a new exempt-offering notice),
+    D/A = ``amendment`` (new accession). The offering amount / sold amount /
+    industry live inside the filing's primary XML and are NOT parsed (honest
+    v1 limit, disclosed — resolving one primary doc per filing would cost
+    ~4,300 extra requests for the window). Filers are private companies by
+    definition: ``ticker`` is almost always empty (honest, never guessed).
+    """
+    fp = Path("data/cache/form_d_aggregate.parquet")
+    if not fp.exists():
+        print(
+            "[export-terminal] SKIP form_d: data/cache/form_d_aggregate.parquet "
+            "not present (tracked JSON retains last-committed value)",
+            flush=True,
+        )
+        return
+
+    df = pd.read_parquet(fp)
+    if df.empty:
+        print(
+            "[export-terminal] SKIP form_d: empty parquet (tracked JSON "
+            "retains last-committed value)",
+            flush=True,
+        )
+        return
+    by_form = {k: int(v) for k, v in df["form"].value_counts().sort_index().items()}
+    # ~145 notices/day → ~4,300/window; visible rows capped for payload size
+    # (the stream reads newest-first with client-side paging).
+    filings = []
+    for _, r in df.head(600).iterrows():
+        filings.append({
+            "company": str(r["company"]),
+            "ticker": str(r["ticker"]),
+            "filed_date": str(r["filed_date"]),
+            "form": str(r["form"]),
+            "status": str(r["status"]),
+            "doc_url": str(r["doc_url"]),
+        })
+    payload = {
+        "status": "ok",
+        "as_of": str(df["filed_date"].max()),
+        "window": {"start": str(df["filed_date"].min()), "end": str(df["filed_date"].max())},
+        "issuers": int(df["issuer_cik"].nunique()),
+        "total": int(len(df)),
+        "by_form": by_form,
+        "filings": filings,
+        "methodology": (
+            "US Form D exempt-offering notices (一级市场) — SEC EDGAR EFTS "
+            "whole-market form-level queries (public domain, 17 U.S.C. §105), "
+            "fixed ~90-day window, filed-date point-in-time, one row per "
+            "accession (a D/A amendment is a new filing, never a silent "
+            "overwrite). forms=D expands to D + D/A (live-probed 2026-08-23; "
+            "volume ~145 notices/day). Status from the immutable form type: "
+            "D = new exempt-offering notice; D/A = amendment. Honest v1 "
+            "limits, disclosed not papered over: (1) the offering amount, "
+            "amount sold, industry, and related persons live INSIDE the "
+            "filing's primary XML document and are not extracted here — each "
+            "row links the filing's EDGAR index page, which lists every "
+            "document; (2) Form D filers are typically private companies, so "
+            "the ticker column is almost always empty (the EDGAR display "
+            "name carries none) — honest, never guessed; (3) Form D covers "
+            "Regulation D and other exemptions, including hedge-fund and "
+            "fund notices — this panel is the exempt-offering STREAM, not a "
+            "curated venture-round list; (4) EFTS serves at most 10,000 hits "
+            "per query — the first 90-day probe (2026-08-23) hit the cap and "
+            "received only the newest 41 days, so the fetch now queries a "
+            "rolling 30-day window (~7,300 filings, under the cap) and the "
+            "aggregate ACCUMULATES across runs (dedup by accession; the "
+            "panel's window spans everything ever fetched). Visible rows "
+            "capped at 600 newest for payload size (total/by_form count the "
+            "full aggregate). Display-only, exploratory, NOT a research "
+            "claim."
+        ),
+    }
+    (WEB / "form_d.json").write_text(json.dumps(_stamp(payload), indent=2, default=str))
+    print(
+        f"[export-terminal] form_d: {payload['total']} filings "
+        f"({payload['by_form']}), {payload['issuers']} issuers, "
         f"as_of {payload['as_of']}",
         flush=True,
     )
@@ -4030,6 +4131,7 @@ def main() -> None:
     _safe_export("form4", export_form4)
     _safe_export("form8k", export_form8k)
     _safe_export("form_ipo", export_form_ipo)
+    _safe_export("form_d", export_form_d)
     _safe_export("politician_trades", export_politician_trades)
     _safe_export("politician_trades_tx", export_politician_trades_tx)
     # party_index derives from the committed politician_trades_tx.json written

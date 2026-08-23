@@ -36,6 +36,133 @@ const STOCK_PAGE_TICKERS: ReadonlySet<string> = new Set(
   stockUniverse.stocks.map((s) => s.ticker),
 );
 
+type FormDFilter = "all" | "new" | "amendment";
+
+/** 豁免发行 · Form D — the primary-market (一级市场) companion stream: exempt
+ *  offering notices (Reg D family) from the same EDGAR form-level machinery
+ *  as the S-1/424B4 stream above. Filing-stream v1: offering amounts live
+ *  inside the filing XML and are NOT parsed (disclosed); filers are private
+ *  companies, so no ticker links are attempted. Newest-first + form filter
+ *  + client-side paging, the same stream kit as the IPO table. */
+function FormDSection() {
+  const { t } = useI18n();
+  const f = aionis.formD;
+  const [filter, setFilter] = useState<FormDFilter>("all");
+  const { visibleCount, reset, loadMore } = usePaged(50);
+
+  // Hooks stay unconditional (the early return below must not skip them).
+  const counts = useMemo(() => {
+    const c: Record<string, number> = { new: 0, amendment: 0 };
+    for (const r of f.filings) {
+      if (r.status in c) c[r.status] += 1;
+    }
+    return c;
+  }, [f.filings]);
+  const filtered = useMemo(
+    () => (filter === "all" ? f.filings : f.filings.filter((r) => r.status === filter)),
+    [f.filings, filter],
+  );
+
+  if (f.status !== "ok" || f.filings.length === 0) return null;
+  const visible = filtered.slice(0, visibleCount);
+  const apply = (k: FormDFilter) => {
+    setFilter(k);
+    reset();
+  };
+
+  return (
+    <Card className="min-w-0 overflow-hidden py-0">
+      <CardHeader className="border-b">
+        <CardTitle className="flex flex-wrap items-baseline gap-x-2 text-base">
+          {t("ipo.form_d.title")}
+          <span className="font-mono text-xs font-normal text-muted-foreground tabular-nums">
+            {f.total.toLocaleString("en-US")} · {f.issuers.toLocaleString("en-US")} ·{" "}
+            {f.window.start} → {f.window.end}
+          </span>
+        </CardTitle>
+        <CardDescription>{t("ipo.form_d.note")}</CardDescription>
+        <div className="pt-1">
+          <FilterPills<FormDFilter>
+            label={t("ipo.form_d.filter")}
+            value={filter}
+            onChange={apply}
+            options={[
+              { key: "all", label: t("ipo.form_d.all"), count: f.filings.length },
+              { key: "new", label: t("ipo.form_d.status_new"), count: counts.new },
+              { key: "amendment", label: t("ipo.form_d.status_amendment"), count: counts.amendment },
+            ]}
+          />
+        </div>
+      </CardHeader>
+      <CardContent className="p-0">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>{t("ipo.form_d.company")}</TableHead>
+              <TableHead>{t("ipo.form_d.form")}</TableHead>
+              <TableHead className="text-right">{t("ipo.form_d.filed")}</TableHead>
+              <TableHead className="text-right">EDGAR</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {visible.map((r) => (
+              <TableRow key={r.doc_url || `${r.company}-${r.filed_date}-${r.form}`}>
+                <TableCell className="max-w-[320px]">
+                  <span className="block truncate font-medium" title={r.company}>
+                    {r.company || "—"}
+                  </span>
+                  {r.ticker && STOCK_PAGE_TICKERS.has(r.ticker) ? (
+                    <Link
+                      href={`/stock/${r.ticker}`}
+                      className="font-mono text-[11px] text-primary hover:underline"
+                    >
+                      {r.ticker}
+                    </Link>
+                  ) : null}
+                </TableCell>
+                <TableCell>
+                  <Badge variant="secondary" className="font-mono text-[11px]">
+                    {r.form}
+                  </Badge>
+                </TableCell>
+                <TableCell className="whitespace-nowrap text-right font-mono text-xs text-muted-foreground tabular-nums">
+                  {fmtDateShort(r.filed_date)}
+                </TableCell>
+                <TableCell className="text-right">
+                  {r.doc_url ? (
+                    <a
+                      href={r.doc_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-primary hover:underline"
+                    >
+                      EDGAR
+                      <ExternalLinkIcon className="size-3" />
+                    </a>
+                  ) : (
+                    <span className="text-muted-foreground">—</span>
+                  )}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <LoadMoreFooter
+          shown={visible.length}
+          total={filtered.length}
+          onLoadMore={loadMore}
+          pageSize={50}
+        />
+        <p className="border-t px-4 py-2 text-[11px] leading-relaxed text-muted-foreground">
+          {t("ipo.form_d.limit_note")
+            .replace("{total}", f.total.toLocaleString("en-US"))
+            .replace("{visible}", f.filings.length.toLocaleString("en-US"))}
+        </p>
+      </CardContent>
+    </Card>
+  );
+}
+
 // Status → i18n key (t() takes a strict DictKey — no template literals).
 const STATUS_LABEL: Record<string, "ipo.status_filed" | "ipo.status_priced"> = {
   filed: "ipo.status_filed",
@@ -302,6 +429,10 @@ export function IpoView() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Form D 豁免发行流 — the primary-market companion under the same
+          route: exempt notices stream below the public-registration stream. */}
+      <FormDSection />
 
       <Card>
         <CardHeader className="pb-3">
