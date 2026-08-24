@@ -201,6 +201,10 @@ export function MarketView() {
         <Badge variant="outline" className="w-fit border-amber-400/50 text-amber-700 dark:text-amber-300">
           {mc.start_label}
         </Badge>
+        <p className="font-mono text-xs text-muted-foreground tabular-nums">
+          {mc.market_series.length} mo · VIX {mc.vix_series[mc.vix_series.length - 1]?.vix ?? "—"} ·{" "}
+          {mc.market_series[0]?.month} → {mc.market_series[mc.market_series.length - 1]?.month}
+        </p>
       </header>
 
       <div className="grid grid-cols-2 gap-3 md:grid-cols-4">

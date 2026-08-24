@@ -43,6 +43,10 @@ export function TacoView() {
       <header className="space-y-1">
         <h1 className="text-2xl font-bold tracking-tight">{t("taco.title")}</h1>
         <p className="text-sm text-muted-foreground">{t("taco.subtitle")}</p>
+        <p className="font-mono text-xs text-muted-foreground tabular-nums">
+          {data.length} VIX mo · {taco.events.length} events ·{" "}
+          {data[0]?.month} → {data[data.length - 1]?.month}
+        </p>
       </header>
 
       <div className="grid grid-cols-3 gap-3">
