@@ -158,7 +158,7 @@ function SentimentWall() {
           );
           const style: React.CSSProperties = {
             flexGrow: Math.max(row.mentions, 1),
-            flexBasis: `${Math.max(72, Math.sqrt(row.mentions / maxMentions) * 320)}px`,
+            flexBasis: `${Math.max(72, Math.sqrt(row.mentions / maxMentions) * 430)}px`,
             background: `color-mix(in oklab, var(--${positive ? "green" : "red"}-fill) ${intensity}%, var(--card))`,
           };
           const label = `${row.ticker} ${row.name} · ${t("reddit.wall.mentions")} ${row.mentions}`;
@@ -176,7 +176,7 @@ function SentimentWall() {
               href={`/stock/${row.ticker}`}
               title={label}
               style={style}
-              className="flex h-[96px] min-w-[72px] flex-col items-center justify-center overflow-hidden rounded-md px-1 text-center leading-tight transition-opacity hover:opacity-75"
+              className="flex h-[112px] min-w-[88px] flex-col items-center justify-center overflow-hidden rounded-md px-1 text-center leading-tight transition-opacity hover:opacity-75"
             >
               {inner}
             </Link>
@@ -185,7 +185,7 @@ function SentimentWall() {
               key={row.ticker}
               title={label}
               style={style}
-              className="flex h-[96px] min-w-[72px] flex-col items-center justify-center overflow-hidden rounded-md px-1 text-center leading-tight"
+              className="flex h-[112px] min-w-[88px] flex-col items-center justify-center overflow-hidden rounded-md px-1 text-center leading-tight"
             >
               {inner}
             </span>

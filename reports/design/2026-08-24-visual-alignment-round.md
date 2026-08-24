@@ -129,3 +129,11 @@ distribution (buy/sell ratio, language mix), not design language.
   rows).
 - /quarterly spot-check: converged (6.05 vs 6.89).
 - pytest after tier 2: **2,016 passed, 9 skipped**.
+
+## Tier-2 packing follow-up
+
+- /reddit wall tiles enlarged (basis sqrt×430, h-112): content 25.0 → **39.16**
+  (theirs 42.3) — inside their range; text 12.15 vs 9.82.
+- /insiders and /market on their side render empty headless (client fetches
+  never settle under virtual-time) — no pixel baseline; compared structurally.
+- /companies converged (7.75 vs 10.19, rail identical).
