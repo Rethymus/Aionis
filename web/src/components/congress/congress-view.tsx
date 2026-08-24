@@ -26,6 +26,7 @@ import { AvatarInitials } from "@/components/stream/avatar-initials";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
 import type { PoliticianTx } from "@/data/aionis";
+import { STOCK_PAGE_TICKERS } from "@/components/institutions/manager-book";
 
 const PAGE_SIZE = 50;
 const TX_PAGE_SIZE = 50;
@@ -466,6 +467,52 @@ function PartyIndexSection() {
   );
 }
 
+
+/** 热门标的芯片行 — deployed-terminal alignment: the congress page carries
+ *  a top-tickers chip strip aggregated CLIENT-SIDE from the transaction
+ *  panel (zero new exports). Tickers link to /stock pages only where a
+ *  static page exists; counts are honest transaction counts. */
+function HotTickerStrip() {
+  const { t } = useI18n();
+  const f = aionis.politicianTradesTx;
+  const rows = f.status === "ok" ? f.transactions : [];
+  const top = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const r of rows) {
+      if (r.ticker) counts.set(r.ticker, (counts.get(r.ticker) ?? 0) + 1);
+    }
+    return [...counts.entries()]
+      .sort((a, b) => b[1] - a[1] || (a[0] < b[0] ? -1 : 1))
+      .slice(0, 10);
+  }, [rows]);
+  if (top.length === 0) return null;
+  return (
+    <div className="flex flex-wrap items-center gap-1.5">
+      <span className="text-xs text-muted-foreground">{t("congress.hot_tickers")}</span>
+      {top.map(([tk, n]) =>
+        STOCK_PAGE_TICKERS.has(tk) ? (
+          <Link
+            key={tk}
+            href={`/stock/${tk}`}
+            className="rounded-[4px] bg-muted/60 px-2 py-0.5 font-mono text-xs font-semibold text-primary hover:underline"
+          >
+            {tk}
+            <span className="ml-1 font-normal text-muted-foreground tabular-nums">{n}</span>
+          </Link>
+        ) : (
+          <span
+            key={tk}
+            className="rounded-[4px] bg-muted/60 px-2 py-0.5 font-mono text-xs font-semibold"
+          >
+            {tk}
+            <span className="ml-1 font-normal text-muted-foreground tabular-nums">{n}</span>
+          </span>
+        ),
+      )}
+    </div>
+  );
+}
+
 export function CongressView() {
   const { t } = useI18n();
   const f = aionis.politicianTrades;
@@ -547,6 +594,8 @@ export function CongressView() {
           </CardHeader>
         </Card>
       </div>
+
+      <HotTickerStrip />
 
       {/* 政党对立指数 + 两党跟单组合 (derived, zero new data): the analytical
           layer ABOVE the raw streams — index first, then filings/rows. */}

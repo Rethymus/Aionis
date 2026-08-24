@@ -400,10 +400,14 @@ export function InstitutionsView() {
           <Link key={m.cik} href={`/manager/${m.cik}`} className="group block">
             <Card className="h-full py-0 transition-colors group-hover:border-primary/40">
               <CardHeader className="border-b">
-                <div className="flex flex-wrap items-center gap-2">
-                  <CardTitle className="text-sm">{m.name}</CardTitle>
+                <div className="min-w-0">
+                  <CardTitle className="truncate text-sm" title={m.name}>
+                    {m.name}
+                  </CardTitle>
                   {m.zh_name ? (
-                    <span className="text-xs text-muted-foreground">{m.zh_name}</span>
+                    <p className="truncate text-xs text-muted-foreground" title={m.zh_name}>
+                      {m.zh_name}
+                    </p>
                   ) : null}
                 </div>
                 <CardDescription className="flex flex-wrap items-center gap-1.5">

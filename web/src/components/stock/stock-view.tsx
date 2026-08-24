@@ -105,6 +105,43 @@ function Stat({ label, children, hint }: { label: string; children: React.ReactN
 /** 机构持有者（策展 13F 管理人反查，xiaoyinsi /stock 同位模块——其同位页当前
  *  空壳"共 0 家"，Aionis 用一手 13F 填上）。窗口 = 各管理人最新季前十大持仓；
  *  pct 口径按本页所列持有人的市值合计（脚注披露），与其"占前十"同型。 */
+
+/** 锚点芯片导航条 — deployed-terminal alignment: the stock page opens with
+ *  an anchor chip strip (holdings / politicians / insiders) that smooth-
+ *  scrolls to the existing sections. Insiders anchor is honest: the Form 4
+ *  stream lives on /insiders (linked), this page carries the f4 KPI only. */
+function AnchorNav({ ticker }: { ticker: string }) {
+  const { t } = useI18n();
+  return (
+    <div className="flex flex-wrap items-center gap-1.5">
+      <a
+        href="#stock-holders"
+        className="rounded-[4px] bg-muted/60 px-2.5 py-1 text-xs font-medium text-primary hover:underline"
+      >
+        {t("stock.anchor.holders")}
+      </a>
+      <a
+        href="#stock-politicians"
+        className="rounded-[4px] bg-muted/60 px-2.5 py-1 text-xs font-medium text-primary hover:underline"
+      >
+        {t("stock.anchor.politicians")}
+      </a>
+      <Link
+        href="/insiders"
+        className="rounded-[4px] bg-muted/60 px-2.5 py-1 text-xs font-medium text-primary hover:underline"
+      >
+        {t("stock.anchor.insiders")}
+      </Link>
+      <Link
+        href="/manager"
+        className="rounded-[4px] bg-muted/60 px-2.5 py-1 text-xs font-medium text-primary hover:underline"
+      >
+        {t("stock.anchor.managers")}
+      </Link>
+    </div>
+  );
+}
+
 function InstitutionalHolders({ ticker }: { ticker: string }) {
   const { t } = useI18n();
   const f = form13f;
@@ -447,6 +484,8 @@ export function StockView({ ticker }: { ticker: string }) {
 
       <NullDisclaimer />
 
+      <AnchorNav ticker={stock.ticker} />
+
       <div className="grid gap-4 md:grid-cols-2">
         <Card className="py-0">
           <CardHeader className="border-b">
@@ -579,9 +618,13 @@ export function StockView({ ticker }: { ticker: string }) {
           </CardContent>
         </Card>
 
-        <InstitutionalHolders ticker={stock.ticker} />
+        <div id="stock-holders" className="md:col-span-2 scroll-mt-24">
+          <InstitutionalHolders ticker={stock.ticker} />
+        </div>
 
-        <PoliticianTradesCard ticker={stock.ticker} />
+        <div id="stock-politicians" className="md:col-span-2 scroll-mt-24">
+          <PoliticianTradesCard ticker={stock.ticker} />
+        </div>
       </div>
 
       <TickerSwitcher current={stock.ticker} />

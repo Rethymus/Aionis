@@ -317,9 +317,98 @@ function Hero() {
   );
 }
 
+
+/** 数据驾驶舱 — deployed-terminal alignment: the home page opens with a
+ *  live-data cockpit (headlines / retail heat / congressional trades)
+ *  aggregated CLIENT-SIDE from existing panels — zero new exports, zero
+ *  new fetches. The validity-argument narrative continues below it. */
+function DataCockpit() {
+  const { t } = useI18n();
+  const news = aionis.newsFeed.status === "ok" ? aionis.newsFeed.items.slice(0, 5) : [];
+  const heat = aionis.redditTrending.status === "ok" ? aionis.redditTrending.tickers.slice(0, 10) : [];
+  const ctx = aionis.politicianTradesTx;
+  const trades = ctx.status === "ok" ? ctx.transactions.slice(0, 5) : [];
+  if (news.length === 0 && heat.length === 0 && trades.length === 0) return null;
+  return (
+    <section className="grid items-start gap-3 lg:grid-cols-3">
+      <Card className="min-w-0 py-0">
+        <CardHeader className="border-b">
+          <CardTitle className="text-sm">{t("overview.cockpit.news")}</CardTitle>
+          <CardDescription className="font-mono text-[11px] tabular-nums">
+            {aionis.newsFeed.as_of?.split("T")[0] ?? "—"} · {aionis.newsFeed.n_sources ?? 0} src
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="divide-y p-0">
+          {news.map((n) => (
+            <a
+              key={n.url}
+              href={n.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block px-4 py-2"
+            >
+              <p className="truncate text-xs font-medium" title={n.title}>{n.title}</p>
+              <p className="truncate font-mono text-[10px] text-muted-foreground">
+                {n.domain} · {n.seendate.slice(5, 10).replace("-", "/")}
+              </p>
+            </a>
+          ))}
+        </CardContent>
+      </Card>
+      <Card className="min-w-0 py-0">
+        <CardHeader className="border-b">
+          <CardTitle className="text-sm">{t("overview.cockpit.heat")}</CardTitle>
+          <CardDescription className="font-mono text-[11px] tabular-nums">
+            {aionis.redditTrending.as_of?.split("T")[0] ?? "—"} · top {heat.length}
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-wrap gap-1.5 p-4">
+          {heat.map((h, i) => (
+            <span key={h.ticker} className="inline-flex items-center gap-1 rounded-[4px] bg-muted/60 px-2 py-0.5">
+              <span className="font-mono text-[10px] text-muted-foreground tabular-nums">{i + 1}</span>
+              <span className="font-mono text-xs font-semibold">{h.ticker}</span>
+              <span className="font-mono text-[10px] text-muted-foreground tabular-nums">{h.mentions}</span>
+            </span>
+          ))}
+        </CardContent>
+      </Card>
+      <Card className="min-w-0 py-0">
+        <CardHeader className="border-b">
+          <CardTitle className="text-sm">{t("overview.cockpit.trades")}</CardTitle>
+          <CardDescription className="font-mono text-[11px] tabular-nums">
+            {ctx.total ?? 0} tx · {ctx.year ?? "—"}
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="divide-y p-0">
+          {trades.map((r) => (
+            <div key={`${r.doc_url}-${r.transaction_date}-${r.ticker || "x"}`} className="flex items-center gap-2 px-4 py-2">
+              <span className="w-16 shrink-0 truncate text-[11px] font-medium" title={r.member}>
+                {r.member.split(",")[0]}
+              </span>
+              <span className="font-mono text-[11px] font-semibold">{r.ticker || "—"}</span>
+              <span
+                className={
+                  "rounded-[3px] px-1 font-mono text-[10px] " +
+                  (r.direction === "buy" ? "bg-emerald-500/10 text-emerald-500" : "bg-rose-500/10 text-rose-500")
+                }
+              >
+                {r.direction === "buy" ? "B" : "S"}
+              </span>
+              <span className="ml-auto shrink-0 font-mono text-[10px] text-muted-foreground tabular-nums">
+                {r.transaction_date.slice(5).replace("-", "/")}
+              </span>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+    </section>
+  );
+}
+
 export function Overview() {
   return (
     <div className="space-y-5 p-4 md:p-6">
+      <DataCockpit />
       <Hero />
       {/* Affirmative trust basis next to the verdict it underwrites — the
           complement to the hero's "non-investment advice" disclaimer. */}

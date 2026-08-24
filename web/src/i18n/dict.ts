@@ -20,6 +20,9 @@ export const dict = {
     "nav.group.discipline": "守卫 · 反泄漏纪律",
     "nav.macro": "宏观",
     "overview.loop.title": "效度论证链 · 一条主张的旅程",
+    "overview.cockpit.news": "新闻快讯",
+    "overview.cockpit.heat": "散户情绪榜",
+    "overview.cockpit.trades": "政客交易",
     "overview.loop.subtitle": "语境 → 证据 → 效度 → 裁决（守卫横贯全程）",
     "overview.loop.feedback": "裁决回灌语境：每一轮论证收紧下一次主张",
     "overview.verdict.claim": "可证伪主张",
@@ -538,6 +541,7 @@ export const dict = {
 
     "nav.congress": "政客交易",
     "congress.intro": "STOCK Act 政客交易（v1 = 众议院 PTR 申报流级）：谁在何时申报了交易报告——议员、选区、申报类型与 PDF 原文链。交易明细（资产/金额/日期）仅存于官方 PDF 内，本面板不解析不编造；参议院源被 Akamai 拦截、如实披露。公共域、年粒度；仅展示层，非研究 claim。",
+    "congress.hot_tickers": "热门标的",
     "congress.title": "政客交易 · 众议院 PTR",
     "congress.window": "STOCK Act · U.S. House Clerk · 申报流级 · 年粒度 · 公共域",
     "congress.tx.title": "交易明细（PTR PDF 解析）",
@@ -1000,6 +1004,10 @@ export const dict = {
     "stock.search.placeholder": "搜索代码或名称…",
     "stock.search.none": "无匹配标的",
     "stock.methodology": "方法学与边界",
+    "stock.anchor.holders": "持仓机构",
+    "stock.anchor.politicians": "政客交易",
+    "stock.anchor.insiders": "内部人交易",
+    "stock.anchor.managers": "明星基金经理",
 
     // API docs (/api-docs — public static data API)
     "nav.apidocs": "数据 API",
@@ -1123,6 +1131,9 @@ export const dict = {
     "nav.group.discipline": "Guard · anti-leakage",
     "nav.macro": "Macro",
     "overview.loop.title": "Validity argument chain · one claim's journey",
+    "overview.cockpit.news": "Latest headlines",
+    "overview.cockpit.heat": "Retail heat board",
+    "overview.cockpit.trades": "Congress trades",
     "overview.loop.subtitle": "context → evidence → validity → verdict (guard spans the whole chain)",
     "overview.loop.feedback": "Verdict feeds back to context: each pass of the argument tightens the next claim",
     "overview.verdict.claim": "Falsifiable claim",
@@ -1641,6 +1652,7 @@ export const dict = {
 
     "nav.congress": "Congress trades",
     "congress.intro": "STOCK Act congressional trading (v1 = House PTR filing-stream level): who filed a periodic transaction report, when — member, state-district, filing type, and the source PDF link. Transaction detail (assets/amounts/dates) lives inside the official PDFs and is neither parsed nor fabricated; the Senate source is Akamai-blocked and disclosed. Public domain, year granularity; display-only, not a research claim.",
+    "congress.hot_tickers": "Hot tickers",
     "congress.title": "Congress trades · House PTR",
     "congress.window": "STOCK Act · U.S. House Clerk · filing-stream · yearly · public domain",
     "congress.tx.title": "Transactions (parsed from PTR PDFs)",
@@ -2103,6 +2115,10 @@ export const dict = {
     "stock.search.placeholder": "Search ticker or name…",
     "stock.search.none": "No matching ticker",
     "stock.methodology": "Methodology & boundaries",
+    "stock.anchor.holders": "Institutional holders",
+    "stock.anchor.politicians": "Politician trades",
+    "stock.anchor.insiders": "Insider trades",
+    "stock.anchor.managers": "Star managers",
 
     // API docs (/api-docs — public static data API)
     "nav.apidocs": "Data API",
