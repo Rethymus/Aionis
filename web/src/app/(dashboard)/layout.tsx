@@ -51,7 +51,10 @@ export default function DashboardLayout({
             hidden-overflow ancestor becomes the sticky element's scroll
             container and never scrolls) — h-overflow is prevented by
             min-w-0 on SidebarInset instead. */}
-        <main className="flex min-w-0 flex-1 flex-col">{children}</main>
+        <main className="flex min-w-0 flex-1 flex-col">
+          {/* Deployed-terminal alignment: one shared 1320px content rail. */}
+          <div className="mx-auto w-full max-w-[1320px] flex-1">{children}</div>
+        </main>
         <BackToTop />
       </SidebarInset>
     </SidebarProvider>

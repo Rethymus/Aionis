@@ -42,13 +42,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   // No numbers, no "定调/定标/佐证/问责" role labels: the structure emerges
   // from the falsifiable-claim argument, not an analyst's workflow.
   const navHome = [
-    { title: t("nav.overview"), url: "/dashboard", icon: <LayoutDashboardIcon /> },
+    { title: t("nav.overview"), sub: t("nav.sub.overview"), url: "/dashboard", icon: <LayoutDashboardIcon /> },
   ];
   const navContext = [
-    { title: t("nav.group.regime"), url: "/regime", icon: <GlobeIcon /> },
+    { title: t("nav.group.regime"), sub: t("nav.sub.regime"), url: "/regime", icon: <GlobeIcon /> },
     // GDELT headline stream — market CONTEXT (the news the regime sits in),
     // not evidence: link-out metadata only, display lane.
-    { title: t("nav.newsfeed"), url: "/news", icon: <NewspaperIcon /> },
+    { title: t("nav.newsfeed"), sub: t("nav.sub.news"), url: "/news", icon: <NewspaperIcon /> },
   ];
   // Evidence segment: core evidence (model picks) + independent corroboration
   // (smart money / insiders / retail) — both feed the same claim, kept as two
@@ -57,17 +57,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     { title: t("nav.group.picks"), url: "/picks", icon: <FlaskConicalIcon /> },
     { title: t("nav.heatmap"), url: "/heatmap", icon: <LayoutGridIcon /> },
     { title: t("nav.group.confirm"), url: "/confirmation", icon: <UsersIcon /> },
-    { title: t("nav.institutions"), url: "/institutions", icon: <LandmarkIcon /> },
-    { title: t("nav.filers"), url: "/filers", icon: <ListIcon /> },
-    { title: t("nav.events"), url: "/events", icon: <ZapIcon /> },
+    { title: t("nav.institutions"), sub: t("nav.sub.institutions"), url: "/institutions", icon: <LandmarkIcon /> },
+    { title: t("nav.filers"), sub: t("nav.sub.filers"), url: "/filers", icon: <ListIcon /> },
+    { title: t("nav.events"), sub: t("nav.sub.events"), url: "/events", icon: <ZapIcon /> },
     // Periodic-report deep cuts over the same filing-stream v2 panel (the
     // 10-K/10-Q families get their own routes because the 800-newest visible
     // cap squeezes them out of the unified stream in filing season).
-    { title: t("nav.quarterly"), url: "/quarterly", icon: <CalendarDaysIcon /> },
-    { title: t("nav.annual"), url: "/annual", icon: <FileClockIcon /> },
-    { title: t("nav.executives"), url: "/executives", icon: <UserRoundIcon /> },
-    { title: t("nav.ipo"), url: "/ipo", icon: <RocketIcon /> },
-    { title: t("nav.congress"), url: "/congress", icon: <LandmarkIcon /> },
+    { title: t("nav.quarterly"), sub: t("nav.sub.quarterly"), url: "/quarterly", icon: <CalendarDaysIcon /> },
+    { title: t("nav.annual"), sub: t("nav.sub.annual"), url: "/annual", icon: <FileClockIcon /> },
+    { title: t("nav.executives"), sub: t("nav.sub.executives"), url: "/executives", icon: <UserRoundIcon /> },
+    { title: t("nav.ipo"), sub: t("nav.sub.ipo"), url: "/ipo", icon: <RocketIcon /> },
+    { title: t("nav.congress"), sub: t("nav.sub.congress"), url: "/congress", icon: <LandmarkIcon /> },
   ];
   const navValidity = [
     { title: t("nav.group.track"), url: "/track", icon: <GaugeCircleIcon /> },
@@ -77,11 +77,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     { title: t("nav.datahealth"), url: "/data-health", icon: <ActivityIcon /> },
   ];
   const navReference = [
-    { title: t("nav.companies"), url: "/companies", icon: <BuildingIcon /> },
+    { title: t("nav.companies"), sub: t("nav.sub.companies"), url: "/companies", icon: <BuildingIcon /> },
     // Method shelf — the repo's own method docs as a browsable library plus
     // curated outbound research bookmarks (reference lane, link-out only).
-    { title: t("nav.shelf"), url: "/shelf", icon: <BookOpenIcon /> },
-    { title: t("nav.apidocs"), url: "/api-docs", icon: <TerminalIcon /> },
+    { title: t("nav.shelf"), sub: t("nav.sub.shelf"), url: "/shelf", icon: <BookOpenIcon /> },
+    { title: t("nav.apidocs"), sub: t("nav.sub.apidocs"), url: "/api-docs", icon: <TerminalIcon /> },
     {
       title: t("nav.method"),
       url: "https://github.com/Rethymus/Aionis/blob/main/docs/RESULTS.md",

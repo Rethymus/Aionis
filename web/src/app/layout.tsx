@@ -1,4 +1,9 @@
 import type { Metadata } from "next";
+import { Geist } from "next/font/google";
+
+// Deployed-terminal alignment: Geist as the latin display face (self-hosted
+// at build time via next/font; CJK falls back to the native system stack).
+const geist = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" });
 import { ThemeProvider } from "next-themes";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { I18nProvider } from "@/i18n/provider";
@@ -35,7 +40,7 @@ export default function RootLayout({
   return (
     <html
       lang="zh-CN"
-      className="h-full antialiased font-sans"
+      className={`${geist.variable} h-full antialiased font-sans`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">

@@ -9,9 +9,9 @@
   --color-foreground: var(--foreground);
   /* SF on Apple devices, Segoe/system-ui elsewhere, PingFang/YaHei for CJK —
      the native stack IS the Apple signature (no webfont approximation). */
-  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
-    "Segoe UI", system-ui, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
-    sans-serif;
+  --font-sans: "Geist", "Geist Fallback", var(--font-geist), -apple-system,
+    BlinkMacSystemFont, "Segoe UI", system-ui, "PingFang SC",
+    "Hagino Sans GB", "Microsoft YaHei", sans-serif;
   --font-mono: ui-monospace, "SF Mono", SFMono-Regular, "Cascadia Code",
     "JetBrains Mono", Menlo, Consolas, monospace;
   --font-heading: var(--font-sans);
@@ -109,20 +109,23 @@
 .dark {
   /* Apple HIG dark — iOS OLED canvas, elevated #1C1C1E cards, #2C2C2E chrome,
      bright systemBlue accent. Depth by surface elevation, not borders. */
-  --background: oklch(0.08 0.002 267);
-  --foreground: oklch(0.976 0.002 267);
-  --card: oklch(0.226 0.003 267);
+  /* OLED canvas (deployed-terminal alignment 2026-08-24): pure black
+     ground, near-black elevated surfaces with hairline borders — depth by
+     hairline, not by big surface steps. */
+  --background: oklch(0 0 0);
+  --foreground: oklch(0.93 0.002 267);
+  --card: oklch(0.145 0.002 267);
   --card-foreground: oklch(0.976 0.002 267);
-  --popover: oklch(0.298 0.003 267);
-  --popover-foreground: oklch(0.976 0.002 267);
+  --popover: oklch(0.17 0.002 267);
+  --popover-foreground: oklch(0.93 0.002 267);
   --primary: oklch(0.634 0.169 257);
   --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.298 0.003 267);
-  --secondary-foreground: oklch(0.976 0.002 267);
-  --muted: oklch(0.298 0.003 267);
-  --muted-foreground: oklch(0.708 0.004 267);
-  --accent: oklch(0.298 0.003 267);
-  --accent-foreground: oklch(0.976 0.002 267);
+  --secondary: oklch(0.17 0.002 267);
+  --secondary-foreground: oklch(0.93 0.002 267);
+  --muted: oklch(0.17 0.002 267);
+  --muted-foreground: oklch(0.66 0.003 267);
+  --accent: oklch(0.19 0.002 267);
+  --accent-foreground: oklch(0.93 0.002 267);
   --destructive: oklch(0.665 0.219 22.4);
   --border: oklch(1 0 0 / 12%);
   --input: oklch(1 0 0 / 18%);
@@ -132,7 +135,7 @@
   --chart-3: oklch(0.79 0.148 70);
   --chart-4: oklch(0.665 0.219 22.4);
   --chart-5: oklch(0.65 0.19 302);
-  --sidebar: oklch(0.13 0.002 267);
+  --sidebar: oklch(0 0 0);
   --sidebar-foreground: oklch(0.976 0.002 267);
   --sidebar-primary: oklch(0.634 0.169 257);
   --sidebar-primary-foreground: oklch(1 0 0);
