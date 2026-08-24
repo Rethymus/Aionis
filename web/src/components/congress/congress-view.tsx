@@ -44,10 +44,10 @@ function PartyBadge({ party }: { party: string | null }) {
   if (!party) return null;
   const cls =
     party === "D"
-      ? "bg-primary/10 text-primary"
+      ? "bg-blue-tint text-blue"
       : party === "R"
-        ? "bg-rose-500/10 text-rose-600 dark:text-rose-400"
-        : "bg-muted text-muted-foreground";
+        ? "bg-red-tint text-red"
+        : "bg-soft text-mute";
   return (
     <span
       className={cn(
@@ -200,7 +200,7 @@ function TxSection() {
                     href={r.doc_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-medium text-primary hover:underline"
+                    className="font-semibold text-ink hover:text-brand"
                     title={r.doc_url}
                   >
                     {r.member}
@@ -212,7 +212,7 @@ function TxSection() {
                     {r.ticker ? (
                       <Link
                         href={`/stock/${r.ticker}`}
-                        className="shrink-0 font-mono text-xs font-semibold text-primary hover:underline"
+                        className="shrink-0 font-mono text-xs font-semibold text-ink hover:text-brand"
                       >
                         {r.ticker}
                       </Link>
@@ -283,7 +283,7 @@ function PartyIndexSection() {
     <span
       className={cn(
         "font-mono text-[11px] font-semibold tabular-nums",
-        party === "D" ? "text-primary" : "text-rose-600 dark:text-rose-400",
+        party === "D" ? "text-blue" : "text-red",
       )}
     >
       {party}
@@ -302,7 +302,7 @@ function PartyIndexSection() {
     >
       <Link
         href={`/stock/${r.ticker}`}
-        className="font-mono text-xs font-semibold text-primary hover:underline"
+        className="font-mono text-xs font-semibold text-ink hover:text-brand"
       >
         {r.ticker}
       </Link>
@@ -430,7 +430,7 @@ function PartyIndexSection() {
                       <div className="min-w-0 flex-1">
                         <Link
                           href={`/stock/${h.ticker}`}
-                          className="font-mono text-xs font-semibold text-primary hover:underline"
+                          className="font-mono text-xs font-semibold text-ink hover:text-brand"
                         >
                           {h.ticker}
                         </Link>
@@ -494,7 +494,7 @@ function HotTickerStrip() {
           <Link
             key={tk}
             href={`/stock/${tk}`}
-            className="rounded-[4px] bg-muted/60 px-2 py-0.5 font-mono text-xs font-semibold text-primary hover:underline"
+            className="rounded-[4px] bg-soft px-2 py-0.5 font-mono text-xs font-semibold text-ink hover:text-brand"
           >
             {tk}
             <span className="ml-1 font-normal text-muted-foreground tabular-nums">{n}</span>
@@ -639,7 +639,7 @@ export function CongressView() {
                         href={p.doc_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="font-medium text-primary hover:underline"
+                        className="font-semibold text-ink hover:text-brand"
                       >
                         {p.member}
                       </a>
@@ -662,7 +662,7 @@ export function CongressView() {
                         href={p.doc_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-primary hover:underline"
+                        className="inline-flex items-center gap-1 text-ink hover:text-brand"
                       >
                         PDF
                         <ExternalLinkIcon className="size-3" />

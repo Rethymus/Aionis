@@ -121,6 +121,81 @@ function TrendingSection() {
   );
 }
 
+/** Sentiment tile wall (aligned-site /reddit anatomy): treemap-style tiles
+ *  sized by mention count (flex-grow + sqrt width basis) and colored by the
+ *  honest 24h mention-count change (green/red fill mixed into the card
+ *  surface, intensity ∝ |Δ%|, capped like theirs). Tickers link to /stock
+ *  pages only where a static page exists. */
+function SentimentWall() {
+  const { t } = useI18n();
+  const f = aionis.redditTrending;
+  const rows = f.status === "ok" ? f.tickers : [];
+  const tiles = rows.slice(0, 46);
+  if (tiles.length === 0) return null;
+  const maxMentions = tiles[0]?.mentions || 1;
+  return (
+    <div className="overflow-hidden rounded-xl border border-line bg-card">
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-line2 px-5 py-4">
+        <h2 className="text-[17px] font-semibold tracking-[-0.02em]">
+          {t("reddit.wall.title")}
+        </h2>
+        <span className="font-mono text-[11px] text-mute tabular-nums">
+          {tiles.length}/{rows.length} · {f.as_of?.split("T")[0] ?? "—"}
+        </span>
+      </div>
+      <div className="flex flex-wrap items-stretch gap-[2px] p-3">
+        {tiles.map((row) => {
+          const dPct =
+            row.mentions_24h_ago && row.mentions_24h_ago > 0
+              ? (row.mentions - row.mentions_24h_ago) / row.mentions_24h_ago
+              : null;
+          const positive = (dPct ?? 0) >= 0;
+          // Their wall reads at 30–46% mixes; a 14% floor keeps low-Δ tiles
+          // visibly tinted instead of near-invisible on the dark card.
+          const intensity = Math.min(
+            46,
+            Math.max(14, Math.round(Math.abs(dPct ?? 0) * 100 * 0.16)),
+          );
+          const style: React.CSSProperties = {
+            flexGrow: Math.max(row.mentions, 1),
+            flexBasis: `${Math.max(72, Math.sqrt(row.mentions / maxMentions) * 320)}px`,
+            background: `color-mix(in oklab, var(--${positive ? "green" : "red"}-fill) ${intensity}%, var(--card))`,
+          };
+          const label = `${row.ticker} ${row.name} · ${t("reddit.wall.mentions")} ${row.mentions}`;
+          const inner = (
+            <>
+              <span className="text-[13px] font-semibold">{row.ticker}</span>
+              <span className="mt-[1px] text-[10px] text-sub">
+                {dPct === null ? "—" : `${dPct > 0 ? "+" : ""}${Math.round(dPct * 100)}%`}
+              </span>
+            </>
+          );
+          return STOCK_PAGE_TICKERS.has(row.ticker) ? (
+            <Link
+              key={row.ticker}
+              href={`/stock/${row.ticker}`}
+              title={label}
+              style={style}
+              className="flex h-[96px] min-w-[72px] flex-col items-center justify-center overflow-hidden rounded-md px-1 text-center leading-tight transition-opacity hover:opacity-75"
+            >
+              {inner}
+            </Link>
+          ) : (
+            <span
+              key={row.ticker}
+              title={label}
+              style={style}
+              className="flex h-[96px] min-w-[72px] flex-col items-center justify-center overflow-hidden rounded-md px-1 text-center leading-tight"
+            >
+              {inner}
+            </span>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 export function RedditView() {
   const { t } = useI18n();
   const r = aionis.reddit;
@@ -143,6 +218,8 @@ export function RedditView() {
         <h1 className="text-2xl font-semibold tracking-[-0.032em]">{t("reddit.title")}</h1>
         <p className="mt-2 text-[13px] text-mute">{t("reddit.window")}</p>
       </header>
+
+      <SentimentWall />
 
       {/* Status badge */}
       <Card className={cn(

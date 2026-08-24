@@ -111,3 +111,21 @@ distribution (buy/sell ratio, language mix), not design language.
 - `/filers` on their side renders empty headless — no pixel baseline.
 - Their full-bleed right-edge modules on some pages (R0) vs our symmetric
   rail — a deliberate non-goal; the 1320 rail is the shared spine.
+
+## Tier-2 round (same session, second commit)
+
+- **/congress**: party colors moved to the political convention (D = blue
+  tint, R = red tint via new bare `red`/`red-tint` tokens); member/ticker
+  links de-greened (ink + brand hover). Green accent share 38.7 → 8.6
+  (theirs 14.6).
+- **/stock/[ticker]**: score history upgraded to the aligned chart anatomy —
+  green-fill stroke + gradient area fill (h-40). Content 7.66 → 8.26.
+- **/reddit**: NEW sentiment tile wall (their flagship module) — treemap-style
+  tiles sized by mentions (flex-grow + sqrt basis), colored by honest 24h
+  mention-count change, `color-mix(in oklab, green/red-fill N%, card)` with a
+  14% tint floor and 46% cap. Accent mix now near-identical: green 86.1 vs
+  86.3, blue 5.3 vs 4.8, orange 4.9 vs 4.8; text 8.45 vs 9.82; content 25.0
+  vs 42.3 (residual = their absolute-packed tiles vs our flex-wrap ragged
+  rows).
+- /quarterly spot-check: converged (6.05 vs 6.89).
+- pytest after tier 2: **2,016 passed, 9 skipped**.

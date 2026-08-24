@@ -52,23 +52,33 @@ function ScoreSparkline({ data }: { data: number[] }) {
   const max = Math.max(...data);
   const range = max - min || 1;
   const w = 100;
-  const h = 24;
+  const h = 40;
   const pts = data
     .map((v, i) => `${(i / (data.length - 1)) * w},${h - ((v - min) / range) * h}`)
     .join(" ");
+  // Aligned-site chart anatomy: brand-green stroke with a gradient area fill
+  // (green-tint fading to transparent) — the signature look of their charts.
   return (
     <svg
       viewBox={`0 0 ${w} ${h}`}
-      className="h-12 w-full text-muted-foreground/60"
+      className="h-40 w-full"
       preserveAspectRatio="none"
       aria-hidden
     >
+      <defs>
+        <linearGradient id="score-area" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="var(--green-fill)" stopOpacity={0.35} />
+          <stop offset="100%" stopColor="var(--green-fill)" stopOpacity={0} />
+        </linearGradient>
+      </defs>
+      <polygon points={`0,${h} ${pts} ${w},${h}`} fill="url(#score-area)" />
       <polyline
         points={pts}
         fill="none"
-        stroke="currentColor"
-        strokeWidth={2}
+        stroke="var(--green-fill)"
+        strokeWidth={1.6}
         vectorEffect="non-scaling-stroke"
+        strokeLinejoin="round"
       />
     </svg>
   );
