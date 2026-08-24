@@ -54,7 +54,7 @@ export function FreightProxySection() {
 
   return (
     <section className="space-y-6">
-      <header className="space-y-1">
+      <header>
         <h2 className="text-lg font-semibold tracking-tight">{t("freight.title")}</h2>
         <p className="text-sm text-muted-foreground">{t("freight.subtitle")}</p>
       </header>

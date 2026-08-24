@@ -205,12 +205,12 @@ export function IpoView() {
 
   if (f.status !== "ok" || f.filings.length === 0) {
     return (
-      <div className="space-y-6 p-4 md:p-6">
-        <header className="space-y-1">
-          <h1 className="text-2xl font-bold tracking-tight">
+      <div className="flex flex-col gap-4">
+        <header>
+          <h1 className="text-2xl font-semibold tracking-[-0.032em]">
             {t("ipo.title")}
           </h1>
-          <p className="text-sm text-muted-foreground">{t("ipo.window")}</p>
+          <p className="mt-2 text-[13px] text-mute">{t("ipo.window")}</p>
         </header>
         <Card className="border-amber-500/30 bg-amber-500/5">
           <CardContent className="space-y-1 p-4">

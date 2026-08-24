@@ -221,11 +221,11 @@ export function ThemesView() {
   const sigsByGroup = (g: string) => sigEntries.filter((s) => s.group === g);
 
   return (
-    <div className="space-y-6 p-4 md:p-6">
+    <div className="flex flex-col gap-4">
       <SegmentHeader segment="verdict" introKey="themes.role" />
-      <header className="space-y-1">
-        <h1 className="text-2xl font-bold tracking-tight">{t("themes.title")}</h1>
-        <p className="text-sm text-muted-foreground">
+      <header>
+        <h1 className="text-2xl font-semibold tracking-[-0.032em]">{t("themes.title")}</h1>
+        <p className="mt-2 text-[13px] text-mute">
           {th.freshness?.mixed
             ? `${t("themes.asof")} ${th.freshness.earliest} → ${th.freshness.latest} · ${t("themes.freshness.mixed")}`
             : th.as_of_date

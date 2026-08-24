@@ -164,8 +164,8 @@ export function MarketView() {
   const mc = aionis.marketContext;
   if (!mc?.market_series?.length) {
     return (
-      <div className="space-y-6 p-4 md:p-6">
-        <h1 className="text-2xl font-bold tracking-tight">{t("module.market.title")}</h1>
+      <div className="flex flex-col gap-4">
+        <h1 className="text-2xl font-semibold tracking-[-0.032em]">{t("module.market.title")}</h1>
         <Card><CardContent className="p-6 text-sm text-muted-foreground">{t("market.awaiting")}</CardContent></Card>
       </div>
     );
@@ -193,10 +193,10 @@ export function MarketView() {
   ];
 
   return (
-    <div className="space-y-6 p-4 md:p-6">
+    <div className="flex flex-col gap-4">
       <p className="text-xs font-medium text-primary">{t("market.role")}</p>
       <header className="space-y-2">
-        <h1 className="text-2xl font-bold tracking-tight">{t("module.market.title")}</h1>
+        <h1 className="text-2xl font-semibold tracking-[-0.032em]">{t("module.market.title")}</h1>
         <p className="max-w-2xl text-sm text-muted-foreground">{t("market.intro")}</p>
         <Badge variant="outline" className="w-fit border-amber-400/50 text-amber-700 dark:text-amber-300">
           {mc.start_label}

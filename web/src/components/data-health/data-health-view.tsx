@@ -131,11 +131,11 @@ export function DataHealthView() {
     dh.panels.filter((p) => p.category === cat);
 
   return (
-    <div className="space-y-6 p-4 md:p-6">
+    <div className="flex flex-col gap-4">
       <p className="text-xs font-medium text-primary">{t("datahealth.role")}</p>
       <header className="flex flex-wrap items-start justify-between gap-3">
-        <div className="space-y-1">
-          <h1 className="text-2xl font-bold tracking-tight">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-[-0.032em]">
             {t("datahealth.title")}
           </h1>
           <p className="max-w-2xl text-sm text-muted-foreground">

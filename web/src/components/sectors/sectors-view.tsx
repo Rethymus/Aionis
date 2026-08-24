@@ -104,8 +104,8 @@ export function SectorsView() {
   const sb = aionis.sectorBreakdown;
   if (sb.status !== "ok") {
     return (
-      <div className="space-y-6 p-4 md:p-6">
-        <h1 className="text-2xl font-bold tracking-tight">{t("module.sectors.title")}</h1>
+      <div className="flex flex-col gap-4">
+        <h1 className="text-2xl font-semibold tracking-[-0.032em]">{t("module.sectors.title")}</h1>
         <Card>
           <CardContent className="p-6 text-sm text-muted-foreground">
             {sb.methodology ?? t("sectors.awaiting")}
@@ -125,10 +125,10 @@ export function SectorsView() {
     : "";
 
   return (
-    <div className="space-y-6 p-4 md:p-6">
+    <div className="flex flex-col gap-4">
       <p className="text-xs font-medium text-primary">{t("sectors.role")}</p>
       <header className="space-y-2">
-        <h1 className="text-2xl font-bold tracking-tight">{t("module.sectors.title")}</h1>
+        <h1 className="text-2xl font-semibold tracking-[-0.032em]">{t("module.sectors.title")}</h1>
         <p className="max-w-2xl text-sm text-muted-foreground">{t("sectors.intro")}</p>
         <div className="flex flex-wrap gap-x-6 gap-y-1 pt-1 text-sm">
           <span className="text-muted-foreground">

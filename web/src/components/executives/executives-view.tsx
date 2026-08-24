@@ -398,11 +398,11 @@ export function ExecutivesView() {
   if (f.status !== "ok" || f.events.length === 0) {
     return (
       <div className="space-y-6">
-        <header className="space-y-1">
-          <h1 className="text-2xl font-bold tracking-tight">
+        <header>
+          <h1 className="text-2xl font-semibold tracking-[-0.032em]">
             {t("executives.title")}
           </h1>
-          <p className="text-sm text-muted-foreground">{t("executives.window")}</p>
+          <p className="mt-2 text-[13px] text-mute">{t("executives.window")}</p>
         </header>
         <Card className="border-amber-500/30 bg-amber-500/5">
           <CardContent className="space-y-1 p-4">

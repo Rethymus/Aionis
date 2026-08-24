@@ -38,11 +38,11 @@ export function TacoView() {
   ];
 
   return (
-    <div className="space-y-6 p-4 md:p-6">
+    <div className="flex flex-col gap-4">
       <p className="text-xs font-medium text-primary">{t("taco.role")}</p>
-      <header className="space-y-1">
-        <h1 className="text-2xl font-bold tracking-tight">{t("taco.title")}</h1>
-        <p className="text-sm text-muted-foreground">{t("taco.subtitle")}</p>
+      <header>
+        <h1 className="text-2xl font-semibold tracking-[-0.032em]">{t("taco.title")}</h1>
+        <p className="mt-2 text-[13px] text-mute">{t("taco.subtitle")}</p>
         <p className="font-mono text-xs text-muted-foreground tabular-nums">
           {data.length} VIX mo · {taco.events.length} events ·{" "}
           {data[0]?.month} → {data[data.length - 1]?.month}

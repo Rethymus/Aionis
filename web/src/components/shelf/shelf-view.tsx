@@ -120,8 +120,8 @@ export function ShelfView() {
     <div className="space-y-4">
       <p className="text-xs font-medium text-primary">{t("shelf.role")}</p>
       <header className="flex flex-wrap items-start justify-between gap-3">
-        <div className="space-y-1">
-          <h1 className="text-2xl font-bold tracking-tight">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-[-0.032em]">
             {t("shelf.title")}
           </h1>
         </div>

@@ -45,11 +45,11 @@ export function ModelHealthView() {
   const regions = Object.values(mh.regions ?? {});
 
   return (
-    <div className="space-y-6 p-4 md:p-6">
+    <div className="flex flex-col gap-4">
       <p className="text-xs font-medium text-primary">{t("modelhealth.role")}</p>
-      <header className="space-y-1">
-        <h1 className="text-2xl font-bold tracking-tight" title={t("modelhealth.termHint")}>{t("modelhealth.title")}</h1>
-        <p className="text-sm text-muted-foreground">{t("modelhealth.window")}</p>
+      <header>
+        <h1 className="text-2xl font-semibold tracking-[-0.032em]" title={t("modelhealth.termHint")}>{t("modelhealth.title")}</h1>
+        <p className="mt-2 text-[13px] text-mute">{t("modelhealth.window")}</p>
       </header>
 
       {mh.status !== "ok" || regions.length === 0 ? (

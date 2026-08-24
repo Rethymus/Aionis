@@ -397,9 +397,9 @@ export function StockView({ ticker }: { ticker: string }) {
 
   if (!stock) {
     return (
-      <div className="space-y-6 p-4 md:p-6">
-        <header className="space-y-1">
-          <h1 className="font-mono text-2xl font-bold tracking-tight">{ticker}</h1>
+      <div className="flex flex-col gap-4">
+        <header>
+          <h1 className="font-mono text-2xl font-semibold tracking-[-0.032em]">{ticker}</h1>
         </header>
         <Card className="border-amber-500/30 bg-amber-500/5">
           <CardContent className="space-y-3 p-4 text-sm text-muted-foreground">
@@ -436,11 +436,11 @@ export function StockView({ ticker }: { ticker: string }) {
     : null;
 
   return (
-    <div className="space-y-6 p-4 md:p-6">
+    <div className="flex flex-col gap-4">
       <p className="text-xs font-medium text-primary">{t("stock.role")}</p>
       <header className="flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0 space-y-1.5">
-          <h1 className="flex flex-wrap items-baseline gap-2 text-2xl font-bold tracking-tight">
+          <h1 className="flex flex-wrap items-baseline gap-2 text-2xl font-semibold tracking-[-0.032em]">
             <span className="truncate">{displayName}</span>
             <span className="font-mono text-base text-muted-foreground">{stock.ticker}</span>
             <Badge variant="outline" className="px-1.5 py-0 font-normal">

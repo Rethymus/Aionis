@@ -134,8 +134,14 @@ export function CommandPalette() {
         setOpen((o) => !o);
       }
     };
+    // Hero search box (and any fake-input trigger) opens the same palette.
+    const openEvt = () => setOpen(true);
     document.addEventListener("keydown", down);
-    return () => document.removeEventListener("keydown", down);
+    window.addEventListener("aionis:open-palette", openEvt);
+    return () => {
+      document.removeEventListener("keydown", down);
+      window.removeEventListener("aionis:open-palette", openEvt);
+    };
   }, []);
 
   const runItem = (item: PaletteItem) => {

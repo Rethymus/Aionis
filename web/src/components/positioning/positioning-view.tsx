@@ -33,10 +33,10 @@ export function PositioningView() {
 
   if (c.status === "awaiting_fetch") {
     return (
-      <div className="space-y-6 p-4 md:p-6">
-        <header className="space-y-1">
-          <h1 className="text-2xl font-bold tracking-tight">{t("positioning.title")}</h1>
-          <p className="text-sm text-muted-foreground">{t("positioning.window")}</p>
+      <div className="flex flex-col gap-4">
+        <header>
+          <h1 className="text-2xl font-semibold tracking-[-0.032em]">{t("positioning.title")}</h1>
+          <p className="mt-2 text-[13px] text-mute">{t("positioning.window")}</p>
         </header>
         <Card className="border-amber-500/30 bg-amber-500/5">
           <CardContent className="space-y-1 p-4">
@@ -54,11 +54,11 @@ export function PositioningView() {
   const biasPositive = comp.mean_z >= 0;
 
   return (
-    <div className="space-y-6 p-4 md:p-6">
+    <div className="flex flex-col gap-4">
       <p className="text-xs font-medium text-primary">{t("positioning.role")}</p>
-      <header className="space-y-1">
-        <h1 className="text-2xl font-bold tracking-tight">{t("positioning.title")}</h1>
-        <p className="text-sm text-muted-foreground">{t("positioning.window")}</p>
+      <header>
+        <h1 className="text-2xl font-semibold tracking-[-0.032em]">{t("positioning.title")}</h1>
+        <p className="mt-2 text-[13px] text-mute">{t("positioning.window")}</p>
       </header>
 
       <div className="grid grid-cols-3 gap-3">

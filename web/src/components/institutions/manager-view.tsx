@@ -42,7 +42,7 @@ export function ManagerView({ cik }: { cik: string }) {
     // Unreachable via generateStaticParams, but honest if a stale link or a
     // hand-typed CIK lands here — never a fabricated book.
     return (
-      <div className="space-y-4 p-4 md:p-6">
+      <div className="flex flex-col gap-4">
         <Card className="border-amber-500/30 bg-amber-500/5">
           <CardContent className="space-y-2 p-4">
             <p className="text-sm font-medium text-amber-700 dark:text-amber-400">
@@ -62,7 +62,7 @@ export function ManagerView({ cik }: { cik: string }) {
   }
 
   return (
-    <div className="space-y-6 p-4 md:p-6">
+    <div className="flex flex-col gap-4">
       <Link
         href="/institutions"
         className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground"
@@ -74,7 +74,7 @@ export function ManagerView({ cik }: { cik: string }) {
       <header className="space-y-2">
         <p className="text-xs font-medium text-primary">{t("manager.role")}</p>
         <div className="flex flex-wrap items-center gap-2">
-          <h1 className="text-2xl font-bold tracking-tight">{m.name}</h1>
+          <h1 className="text-2xl font-semibold tracking-[-0.032em]">{m.name}</h1>
           {m.zh_name ? (
             <span className="text-sm text-muted-foreground">{m.zh_name}</span>
           ) : null}

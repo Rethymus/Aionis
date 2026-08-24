@@ -275,12 +275,12 @@ export function InstitutionsView() {
 
   if (f.status !== "ok" || f.managers.length === 0) {
     return (
-      <div className="space-y-6 p-4 md:p-6">
-        <header className="space-y-1">
-          <h1 className="text-2xl font-bold tracking-tight">
+      <div className="flex flex-col gap-4">
+        <header>
+          <h1 className="text-2xl font-semibold tracking-[-0.032em]">
             {t("institutions.title")}
           </h1>
-          <p className="text-sm text-muted-foreground">{t("institutions.window")}</p>
+          <p className="mt-2 text-[13px] text-mute">{t("institutions.window")}</p>
         </header>
         <Card className="border-amber-500/30 bg-amber-500/5">
           <CardContent className="space-y-1 p-4">
@@ -320,32 +320,14 @@ export function InstitutionsView() {
     "rounded-full border px-3 py-1 text-xs font-medium transition-colors";
 
   return (
-    <div className="space-y-6 p-4 md:p-6">
-      <p className="text-xs font-medium text-primary">{t("institutions.role")}</p>
-      <header className="space-y-1">
-        <h1 className="text-2xl font-bold tracking-tight">{t("institutions.title")}</h1>
-        <p className="text-sm text-muted-foreground">{t("institutions.window")}</p>
-      </header>
-
-      <div className="grid grid-cols-3 gap-3">
-        <Card>
-          <CardContent className="p-4">
-            <p className="text-xs text-muted-foreground">{t("institutions.kpi_managers")}</p>
-            <p className="mt-1 text-2xl font-bold tabular-nums">{f.managers.length}</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-4">
-            <p className="text-xs text-muted-foreground">{t("institutions.kpi_quarter")}</p>
-            <p className="mt-1 text-2xl font-bold tabular-nums">{f.as_of}</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-4">
-            <p className="text-xs text-muted-foreground">{t("institutions.kpi_value")}</p>
-            <p className="mt-1 text-2xl font-bold tabular-nums">{fmtUsd(combinedValue)}</p>
-          </CardContent>
-        </Card>
+    <div className="flex flex-col gap-4">
+      <div>
+        <h1 className="text-2xl font-semibold tracking-[-0.032em]">{t("institutions.title")}</h1>
+        <p className="mt-2 text-[13px] text-mute">
+          {t("institutions.kpi_managers")} {f.managers.length} ·{" "}
+          {t("institutions.total_value")} {fmtUsd(combinedValue)} · {f.as_of} ·{" "}
+          {t("institutions.window")}
+        </p>
       </div>
 
       {/* Category filter chips: 全部 + the 7 editorial categories, with the
@@ -358,8 +340,8 @@ export function InstitutionsView() {
           className={cn(
             chipBase,
             filter === "all"
-              ? "border-primary bg-primary text-primary-foreground"
-              : "bg-background text-muted-foreground hover:text-foreground",
+              ? "border-brand bg-brand-tint font-mono font-semibold text-brand"
+              : "border-line bg-card font-mono font-semibold text-sub hover:border-faint hover:text-ink",
           )}
         >
           {t("institutions.cat_all")} ({f.managers.length})
@@ -373,88 +355,73 @@ export function InstitutionsView() {
             className={cn(
               chipBase,
               filter === c
-                ? "border-primary bg-primary text-primary-foreground"
-                : "bg-background text-muted-foreground hover:text-foreground",
+                ? "border-brand bg-brand-tint font-mono font-semibold text-brand"
+                : "border-line bg-card font-mono font-semibold text-sub hover:border-faint hover:text-ink",
             )}
           >
             {t(CATEGORY_LABEL[c])} ({counts.get(c)})
           </button>
         ))}
       </div>
-      <p className="text-xs text-muted-foreground">{t("institutions.cat_note")}</p>
 
       {/* Manager search: name / 中文别名 / CIK substring, client-side. */}
       <div className="relative max-w-sm">
-        <SearchIcon className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+        <SearchIcon className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-faint" />
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={t("institutions.search.placeholder")}
           aria-label={t("institutions.search.label")}
-          className="h-9 w-full rounded-md border bg-transparent pl-9 pr-3 text-sm outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring"
+          className="h-9 w-full rounded-md border border-line bg-card pl-9 pr-3 text-[13px] outline-none placeholder:text-faint focus-visible:ring-2 focus-visible:ring-ring"
         />
       </div>
 
-      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-        {searched.map((m) => (
-          <Link key={m.cik} href={`/manager/${m.cik}`} className="group block">
-            <Card className="h-full py-0 transition-colors group-hover:border-primary/40">
-              <CardHeader className="border-b">
-                <div className="min-w-0">
-                  <CardTitle className="truncate text-sm" title={m.name}>
-                    {m.name}
-                  </CardTitle>
-                  {m.zh_name ? (
-                    <p className="truncate text-xs text-muted-foreground" title={m.zh_name}>
-                      {m.zh_name}
-                    </p>
-                  ) : null}
-                </div>
-                <CardDescription className="flex flex-wrap items-center gap-1.5">
-                  <Badge variant="secondary" className="text-[11px]">
-                    {t(categoryLabelKey(m.category))}
-                  </Badge>
-                  <Badge variant="outline" className="tabular-nums text-[11px]">
-                    {m.quarter}
-                  </Badge>
-                  <span className="text-[11px]">
-                    {t("institutions.filed")} {m.filed}
-                  </span>
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="grid grid-cols-2 gap-x-3 gap-y-2 p-4 text-xs">
-                <div>
-                  <p className="text-muted-foreground">{t("institutions.n_positions")}</p>
-                  <p className="mt-0.5 font-medium tabular-nums">{m.n_positions}</p>
-                </div>
-                <div>
-                  <p className="text-muted-foreground">{t("institutions.total_value")}</p>
-                  <p className="mt-0.5 font-medium tabular-nums">
-                    {fmtUsd(m.total_value)}
-                  </p>
-                </div>
-                <div className="col-span-2">
-                  <p className="text-muted-foreground">{t("institutions.top_holding")}</p>
-                  <p className="mt-0.5 truncate font-medium">
-                    {m.positions[0] ? m.positions[0].issuer : "—"}
-                    {m.positions[0] ? (
-                      <span className="ml-1 font-normal text-muted-foreground tabular-nums">
-                        {m.positions[0].pct.toFixed(1)}%
-                      </span>
-                    ) : null}
-                  </p>
-                </div>
-                <p className="col-span-2 mt-1 inline-flex items-center gap-1 text-primary">
-                  {t("institutions.view_detail")}
-                  <ArrowRightIcon className="size-3 transition-transform group-hover:translate-x-0.5" />
-                </p>
-              </CardContent>
-            </Card>
+      {/* Ranked manager list (aligned-site anatomy): rank in brand mono,
+          truncate name + mono value on line 1; 5px share bar + meta on
+          line 2. Bar width = share of the largest visible book. */}
+      <div className="overflow-x-auto rounded-xl border border-line bg-card">
+        {searched.map((m, i) => (
+          <Link
+            key={m.cik}
+            href={`/manager/${m.cik}`}
+            className={`flex flex-col gap-1.5 px-4 py-3 transition-colors hover:bg-soft ${
+              i > 0 ? "border-t border-line2" : ""
+            }`}
+          >
+            <div className="flex items-baseline gap-2 text-[13px]">
+              <span className="w-6 flex-none text-right font-mono font-bold text-brand">{i + 1}</span>
+              <span className="min-w-0 flex-1 truncate font-semibold" title={m.name}>
+                {m.name}
+                {m.zh_name ? (
+                  <span className="ml-1.5 font-normal text-mute">{m.zh_name}</span>
+                ) : null}
+              </span>
+              <span className="flex-none font-mono font-semibold tabular-nums">
+                {fmtUsd(m.total_value)}
+              </span>
+            </div>
+            <div className="flex items-center gap-2.5 pl-8">
+              <div className="h-[5px] flex-1 overflow-hidden rounded bg-line2">
+                <div
+                  className="h-full rounded bg-green-fill"
+                  style={{
+                    width: `${Math.max(
+                      1.5,
+                      (m.total_value / Math.max(...searched.map((x) => x.total_value), 1)) * 100,
+                    )}%`,
+                  }}
+                />
+              </div>
+              <span className="flex-none font-mono text-[11px] text-mute tabular-nums">
+                {t("institutions.n_positions")} {m.n_positions} · {m.quarter} ·{" "}
+                {m.positions[0] ? `${m.positions[0].issuer} ${m.positions[0].pct.toFixed(1)}%` : "—"}
+              </span>
+            </div>
           </Link>
         ))}
       </div>
       {searched.length === 0 ? (
-        <p className="text-sm italic text-muted-foreground">
+        <p className="text-[13px] italic text-mute">
           {t("institutions.search.empty")}
         </p>
       ) : null}

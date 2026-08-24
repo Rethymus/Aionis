@@ -63,3 +63,6 @@ htmlcov/
 # Next.js build output (stray root builds)
 .next/
 runs/xys-design/
+# Visual-iteration capture artifacts (screenshots, edge profiles, fetched
+# reference HTML/CSS) — regenerable display-lane QA evidence, never tracked.
+runs/ui-iter/

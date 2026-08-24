@@ -203,8 +203,8 @@ export function CompaniesView() {
   return (
     <div className="space-y-4">
       <p className="text-xs font-medium text-primary">{t("companies.role")}</p>
-      <header className="space-y-1">
-        <h1 className="text-2xl font-bold tracking-tight">
+      <header>
+        <h1 className="text-2xl font-semibold tracking-[-0.032em]">
           {t("companies.title")}
         </h1>
       </header>

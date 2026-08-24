@@ -12,6 +12,7 @@ import {
   GavelIcon,
   ShieldCheckIcon,
   ScaleIcon,
+  SearchIcon,
 } from "lucide-react";
 import {
   Card,
@@ -300,19 +301,161 @@ function GuardBand() {
   );
 }
 
+/** Aligned-site home hero: centered 34→52px headline with a brand-colored
+ *  accent span, radial glow + grid decorative layers, a 560px search box that
+ *  opens the command palette, and mono pill chips. */
 function Hero() {
   const { t } = useI18n();
+  const openPalette = () =>
+    window.dispatchEvent(new Event("aionis:open-palette"));
   return (
-    <section className="space-y-3">
-      <Badge variant="secondary" className="rounded-full px-3 py-1 text-xs">
-        {t("hero.badge")}
-      </Badge>
-      <h1 className="text-3xl font-bold tracking-tight text-balance md:text-4xl">
-        {t("hero.title")}
-      </h1>
-      <p className="max-w-2xl text-pretty text-sm text-muted-foreground md:text-base">
-        {t("hero.subtitle")}
-      </p>
+    <section className="relative -mt-8 pt-14 pb-4 text-center md:pt-20">
+      <div className="hero-glow pointer-events-none absolute inset-0" aria-hidden="true" />
+      <div className="hero-grid" aria-hidden="true" />
+      <div className="relative">
+        <h1 className="mx-auto mt-5 max-w-[16em] text-[34px] leading-[1.15] font-bold tracking-[-0.035em] text-balance md:text-[52px]">
+          <span className="text-brand">{t("hero.title.accent")}</span>
+          {t("hero.title.rest")}
+        </h1>
+        <p className="mx-auto mt-4 max-w-[36em] text-[14px] leading-relaxed text-sub md:text-[15px]">
+          {t("hero.subtitle")}
+        </p>
+        <div className="mt-7">
+          <button
+            type="button"
+            onClick={openPalette}
+            className="relative mx-auto flex h-12 w-full max-w-[560px] cursor-pointer items-center rounded-xl border border-line bg-card pr-24 pl-11 text-left shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_-12px_rgba(0,0,0,0.12)] transition-colors hover:border-faint"
+          >
+            <SearchIcon className="pointer-events-none absolute left-4 size-[17px] text-faint" />
+            <span className="truncate text-[14px] text-mute">
+              {t("overview.search.placeholder")}
+            </span>
+            <span className="pointer-events-none absolute right-4 flex items-center gap-1 font-mono text-[11px] text-faint">
+              ⌘K
+            </span>
+          </button>
+        </div>
+        <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+          {(
+            [
+              ["/institutions", t("nav.institutions")],
+              ["/congress", t("nav.congress")],
+              ["/insiders", t("nav.insiders")],
+              ["/ipo", t("nav.ipo")],
+            ] as const
+          ).map(([href, label]) => (
+            <Link
+              key={href}
+              href={href}
+              className="rounded-full border border-line bg-card px-3 py-1 font-mono text-[12px] font-semibold text-sub transition-colors hover:border-faint hover:text-ink"
+            >
+              {label}
+            </Link>
+          ))}
+          <span className="rounded-full border border-line bg-card px-3 py-1 font-semibold text-[12px] text-sub">
+            {t("hero.badge")}
+          </span>
+        </div>
+        <StatBand />
+      </div>
+    </section>
+  );
+}
+
+/** Centered mono stat band (720px, hairline dividers between cells). */
+function StatBand() {
+  const { t } = useI18n();
+  const m = aionis.metrics;
+  const vix = aionis.marketContext.vix_series;
+  const latestVix = vix[vix.length - 1]?.vix ?? 0;
+  const sm = aionis.smartMoney;
+  const cells: { label: string; value: string }[] = [
+    { label: t("overview.stat.picks"), value: String(m.n_picks_total) },
+    { label: t("overview.stat.months"), value: String(m.n_months) },
+    { label: t("overview.stat.vix"), value: latestVix.toFixed(1) },
+    { label: t("overview.stat.filings"), value: String(sm.total_filings ?? 0) },
+  ];
+  return (
+    <div className="mx-auto mt-10 flex max-w-[720px] flex-wrap items-stretch justify-center gap-y-4">
+      {cells.map((c, i) => (
+        <div
+          key={c.label}
+          className={`px-5 text-center md:px-7 ${i > 0 ? "border-l border-line" : ""}`}
+        >
+          <div className="text-[11px] text-mute">{c.label}</div>
+          <div className="font-mono text-[20px] font-bold tracking-tight md:text-[24px]">
+            {c.value}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** Market snapshot cards (3-col grid, mono 22px values, up/down deltas). */
+function MarketCards() {
+  const { t } = useI18n();
+  const vix = aionis.marketContext.vix_series;
+  const ms = aionis.marketContext.market_series;
+  const lastVix = vix[vix.length - 1]?.vix ?? 0;
+  const prevVix = vix[vix.length - 2]?.vix ?? 0;
+  const vixDelta = lastVix - prevVix;
+  const lastIdx = ms[ms.length - 1];
+  const ctx = aionis.politicianTradesTx;
+  const cards: {
+    label: string;
+    value: string;
+    delta: string;
+    tone: "up" | "down" | "flat";
+    sub: string;
+  }[] = [
+    {
+      label: "VIX",
+      value: lastVix.toFixed(1),
+      delta: `${vixDelta > 0 ? "+" : ""}${vixDelta.toFixed(1)}`,
+      tone: vixDelta > 0.05 ? "up" : vixDelta < -0.05 ? "down" : "flat",
+      sub: t("overview.market.vs_prev"),
+    },
+    {
+      label: t("overview.market.index"),
+      value: lastIdx ? lastIdx.index.toFixed(2) : "—",
+      delta: lastIdx ? `${(lastIdx.ret * 100) > 0 ? "+" : ""}${(lastIdx.ret * 100).toFixed(2)}%` : "—",
+      tone: lastIdx && lastIdx.ret > 0 ? "up" : "down",
+      sub: lastIdx?.month ?? "—",
+    },
+    {
+      label: t("overview.market.trades"),
+      value: String(ctx.total ?? 0),
+      delta: String(ctx.year ?? "—"),
+      tone: "flat",
+      sub: t("nav.congress"),
+    },
+  ];
+  return (
+    <section className="grid grid-cols-1 gap-3 md:grid-cols-3">
+      {cards.map((c) => (
+        <div
+          key={c.label}
+          className="flex items-center justify-between gap-3 rounded-xl border border-line bg-card px-5 py-4"
+        >
+          <div className="min-w-0">
+            <div className="truncate text-[12px] text-mute">{c.label}</div>
+            <div className="font-mono text-[22px] font-semibold tracking-tight">
+              {c.value}
+            </div>
+          </div>
+          <div className="shrink-0 text-right">
+            <div
+              className={`text-[12px] font-semibold ${
+                c.tone === "up" ? "text-up" : c.tone === "down" ? "text-down" : "text-sub"
+              }`}
+            >
+              {c.delta}
+            </div>
+            <div className="text-[11px] text-mute">{c.sub}</div>
+          </div>
+        </div>
+      ))}
     </section>
   );
 }
@@ -345,10 +488,10 @@ function DataCockpit() {
               href={n.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="block px-4 py-2"
+              className="block px-4 py-3 transition-colors hover:bg-soft"
             >
-              <p className="truncate text-xs font-medium" title={n.title}>{n.title}</p>
-              <p className="truncate font-mono text-[10px] text-muted-foreground">
+              <p className="truncate text-[13px] font-medium" title={n.title}>{n.title}</p>
+              <p className="truncate font-mono text-[11px] text-mute">
                 {n.domain} · {n.seendate.slice(5, 10).replace("-", "/")}
               </p>
             </a>
@@ -362,14 +505,27 @@ function DataCockpit() {
             {aionis.redditTrending.as_of?.split("T")[0] ?? "—"} · top {heat.length}
           </CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-wrap gap-1.5 p-4">
-          {heat.map((h, i) => (
-            <span key={h.ticker} className="inline-flex items-center gap-1 rounded-[4px] bg-muted/60 px-2 py-0.5">
-              <span className="font-mono text-[10px] text-muted-foreground tabular-nums">{i + 1}</span>
-              <span className="font-mono text-xs font-semibold">{h.ticker}</span>
-              <span className="font-mono text-[10px] text-muted-foreground tabular-nums">{h.mentions}</span>
-            </span>
-          ))}
+        <CardContent className="p-0">
+          {heat.map((h, i) => {
+            const max = heat[0]?.mentions || 1;
+            return (
+              <div key={h.ticker} className="flex flex-col gap-1.5 border-t border-line2 px-4 py-3 first:border-t-0">
+                <div className="flex items-baseline gap-2 text-[13px]">
+                  <span className="w-6 flex-none text-right font-mono font-bold text-brand">{i + 1}</span>
+                  <span className="min-w-0 flex-1 truncate font-semibold">{h.ticker}</span>
+                  <span className="flex-none font-mono font-semibold tabular-nums">{h.mentions}</span>
+                </div>
+                <div className="flex items-center gap-2.5 pl-8">
+                  <div className="h-[5px] flex-1 overflow-hidden rounded bg-line2">
+                    <div
+                      className="h-full rounded bg-green-fill"
+                      style={{ width: `${Math.max(3, (h.mentions / max) * 100)}%` }}
+                    />
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </CardContent>
       </Card>
       <Card className="min-w-0 py-0">
@@ -379,22 +535,22 @@ function DataCockpit() {
             {ctx.total ?? 0} tx · {ctx.year ?? "—"}
           </CardDescription>
         </CardHeader>
-        <CardContent className="divide-y p-0">
+        <CardContent className="p-0">
           {trades.map((r) => (
-            <div key={`${r.doc_url}-${r.transaction_date}-${r.ticker || "x"}`} className="flex items-center gap-2 px-4 py-2">
+            <div key={`${r.doc_url}-${r.transaction_date}-${r.ticker || "x"}`} className="flex items-center gap-2 border-t border-line2 px-4 py-3 first:border-t-0 transition-colors hover:bg-soft">
               <span className="w-16 shrink-0 truncate text-[11px] font-medium" title={r.member}>
                 {r.member.split(",")[0]}
               </span>
-              <span className="font-mono text-[11px] font-semibold">{r.ticker || "—"}</span>
+              <span className="font-mono text-[13px] font-semibold">{r.ticker || "—"}</span>
               <span
                 className={
-                  "rounded-[3px] px-1 font-mono text-[10px] " +
-                  (r.direction === "buy" ? "bg-emerald-500/10 text-emerald-500" : "bg-rose-500/10 text-rose-500")
+                  "rounded-[3px] px-1 font-mono text-[10px] font-semibold " +
+                  (r.direction === "buy" ? "badge-up border" : "badge-down border")
                 }
               >
                 {r.direction === "buy" ? "B" : "S"}
               </span>
-              <span className="ml-auto shrink-0 font-mono text-[10px] text-muted-foreground tabular-nums">
+              <span className="ml-auto shrink-0 font-mono text-[11px] text-mute tabular-nums">
                 {r.transaction_date.slice(5).replace("-", "/")}
               </span>
             </div>
@@ -407,9 +563,10 @@ function DataCockpit() {
 
 export function Overview() {
   return (
-    <div className="space-y-5 p-4 md:p-6">
-      <DataCockpit />
+    <div className="flex flex-col gap-10">
       <Hero />
+      <MarketCards />
+      <DataCockpit />
       {/* Affirmative trust basis next to the verdict it underwrites — the
           complement to the hero's "non-investment advice" disclaimer. */}
       <TrustRibbon />

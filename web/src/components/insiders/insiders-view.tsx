@@ -53,10 +53,10 @@ export function InsidersView() {
 
   if (f.status === "awaiting_fetch") {
     return (
-      <div className="space-y-6 p-4 md:p-6">
-        <header className="space-y-1">
-          <h1 className="text-2xl font-bold tracking-tight">{t("insiders.title")}</h1>
-          <p className="text-sm text-muted-foreground">{t("insiders.window")}</p>
+      <div className="flex flex-col gap-4">
+        <header>
+          <h1 className="text-2xl font-semibold tracking-[-0.032em]">{t("insiders.title")}</h1>
+          <p className="mt-2 text-[13px] text-mute">{t("insiders.window")}</p>
         </header>
         <Card className="border-amber-500/30 bg-amber-500/5">
           <CardContent className="space-y-1 p-4">
@@ -71,11 +71,11 @@ export function InsidersView() {
   }
 
   return (
-    <div className="space-y-6 p-4 md:p-6">
+    <div className="flex flex-col gap-4">
       <p className="text-xs font-medium text-primary">{t("insiders.role")}</p>
-      <header className="space-y-1">
-        <h1 className="text-2xl font-bold tracking-tight">{t("insiders.title")}</h1>
-        <p className="text-sm text-muted-foreground">{t("insiders.window")}</p>
+      <header>
+        <h1 className="text-2xl font-semibold tracking-[-0.032em]">{t("insiders.title")}</h1>
+        <p className="mt-2 text-[13px] text-mute">{t("insiders.window")}</p>
         {f.status === "ok" ? (
           <p className="font-mono text-xs tabular-nums text-muted-foreground/80">
             {(f.buys + f.sells).toLocaleString("en-US")} · {f.window}

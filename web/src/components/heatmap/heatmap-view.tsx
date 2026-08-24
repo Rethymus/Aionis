@@ -244,10 +244,10 @@ export function HeatmapView() {
   ];
 
   return (
-    <div className="space-y-6 p-4 md:p-6">
+    <div className="flex flex-col gap-4">
       <p className="text-xs font-medium text-primary">{t("heatmap.role")}</p>
-      <header className="space-y-1">
-        <h1 className="text-2xl font-bold tracking-tight">{t("heatmap.title")}</h1>
+      <header>
+        <h1 className="text-2xl font-semibold tracking-[-0.032em]">{t("heatmap.title")}</h1>
         <p className="max-w-2xl text-sm text-muted-foreground">{t("heatmap.intro")}</p>
       </header>
 

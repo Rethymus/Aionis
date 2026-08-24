@@ -7,13 +7,14 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  /* SF on Apple devices, Segoe/system-ui elsewhere, PingFang/YaHei for CJK —
-     the native stack IS the Apple signature (no webfont approximation). */
-  --font-sans: "Geist", "Geist Fallback", var(--font-geist), -apple-system,
-    BlinkMacSystemFont, "Segoe UI", system-ui, "PingFang SC",
-    "Hagino Sans GB", "Microsoft YaHei", sans-serif;
-  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, "Cascadia Code",
-    "JetBrains Mono", Menlo, Consolas, monospace;
+  /* Deployed-terminal font stack (GeistSans/GeistMono via next/font, CJK
+     fallbacks PingFang/YaHei) — token values captured from the aligned
+     site's compiled stylesheet 2026-08-24. */
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hagino Sans GB",
+    "Microsoft YaHei", sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo,
+    Consolas, monospace;
   --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -44,113 +45,158 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+  /* Native aligned-site token classes (text-ink / bg-soft / border-line …).
+     Values defined per-theme below; the class surface mirrors the aligned
+     site so compact terminal components read the same. */
+  --color-ink: var(--ink);
+  --color-mute: var(--mute);
+  --color-sub: var(--sub);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-line2: var(--line2);
+  --color-soft: var(--soft);
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-tint: var(--green-tint);
+  --color-green-fill: var(--green-fill);
+  --color-red-tint: var(--red-tint);
+  --color-blue: var(--blue-text);
+  --color-blue-tint: var(--blue-tint);
+  --color-amber: var(--amber-text);
+  --color-amber-tint: var(--amber-tint);
 }
 
+/* Tailwind v4 default radius scale matches the aligned site exactly
+   (md 6px, xl 12px); --radius kept for shadcn primitives. */
 :root {
-  /* Apple HIG light — canvas #F5F5F7, white cards, near-black #1D1D1F ink,
-     one blue accent (text-safe deepened systemBlue), hairline #E5E5EA. */
-  --background: oklch(0.976 0.002 267);
-  --foreground: oklch(0.245 0.005 267);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.245 0.005 267);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.245 0.005 267);
-  /* text-capable accent: deepened systemBlue (≈#0062CC) for ≥4.9:1 on white;
-     the brighter #007AFF stays available for fills/graphics via chart-1. */
-  --primary: oklch(0.545 0.19 256);
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.968 0.002 267);
-  --secondary-foreground: oklch(0.245 0.005 267);
-  --muted: oklch(0.949 0.002 267);
-  --muted-foreground: oklch(0.502 0.004 267);
-  --accent: oklch(0.936 0.002 267);
-  --accent-foreground: oklch(0.245 0.005 267);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.915 0.003 267);
-  --input: oklch(0.936 0.002 267);
-  --ring: oklch(0.584 0.19 256);
-  --chart-1: oklch(0.584 0.19 256);
-  --chart-2: oklch(0.769 0.17 149.8);
-  --chart-3: oklch(0.769 0.15 70.08);
-  --chart-4: oklch(0.666 0.219 22.4);
-  --chart-5: oklch(0.606 0.19 302);
-  --radius: 0.75rem;
-  --sidebar: oklch(0.986 0.002 267);
-  --sidebar-foreground: oklch(0.245 0.005 267);
-  --sidebar-primary: oklch(0.584 0.19 256);
-  --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.584 0.19 256 / 0.14);
-  --sidebar-accent-foreground: oklch(0.45 0.16 256);
-  --sidebar-border: oklch(0.915 0.003 267);
-  --sidebar-ring: oklch(0.584 0.19 256);
+  /* Aligned-site light ramp (exact values): page #fafafa, white cards,
+     #171717 ink, black-alpha hairlines, green #107d32 brand. */
+  --radius: 12px;
+  --background: #fafafa;
+  --foreground: #171717;
+  --card: #ffffff;
+  --card-foreground: #171717;
+  --popover: #ffffff;
+  --popover-foreground: #171717;
+  --primary: #107d32;
+  --primary-foreground: #ffffff;
+  --secondary: #0000000d;
+  --secondary-foreground: #171717;
+  --muted: #0000000d;
+  --muted-foreground: #8f8f8f;
+  --accent: #00000015;
+  --accent-foreground: #171717;
+  --destructive: #d8001b;
+  --border: #0000001f;
+  --input: #0000001f;
+  --ring: #107d32;
+  --chart-1: #28a948;
+  --chart-2: #d8001b;
+  --chart-3: #0059ec;
+  --chart-4: #aa4d00;
+  --chart-5: #787878;
+  --sidebar: #fafafa;
+  --sidebar-foreground: #171717;
+  --sidebar-primary: #107d32;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #0000000d;
+  --sidebar-accent-foreground: #171717;
+  --sidebar-border: #0000001f;
+  --sidebar-ring: #107d32;
 
-  /* Up/down direction colors. Default = international (green up / rose down).
-     [data-colorconv="cn"] swaps to the A-share convention (red up / green
-     down) — set pre-paint by the inline script in the dashboard layout and
-     toggled via the header switch. Only numeric direction sites use
-     .text-up/.text-down/.bg-up/.bg-down; semantic colors (trust emerald,
-     risk rose) stay fixed. */
-  --up: oklch(0.596 0.145 163);
-  --down: oklch(0.586 0.223 16.4);
+  --ink: #171717;
+  --mute: #8f8f8f;
+  --sub: #4d4d4d;
+  --faint: #787878;
+  --line: #0000001f;
+  --line2: #00000015;
+  --soft: #0000000d;
+  --brand: #107d32;
+  --brand-hover: #0a6428;
+  --green-text: #107d32;
+  --green-fill: #28a948;
+  --green-tint: #e6f5ec;
+  --red-text: #d8001b;
+  --red-tint: #fdeaec;
+  --blue-text: #0059ec;
+  --blue-tint: #e6f0ff;
+  --amber-text: #aa4d00;
+  --amber-tint: #fff3e0;
+
+  /* Up/down direction colors (international default: green up / red down,
+     values from the aligned ramp). [data-colorconv="cn"] swaps to the A-share
+     convention. Only numeric direction sites use .text-up/.text-down/.bg-up/
+     .bg-down; semantic colors stay fixed. */
+  --up: #107d32;
+  --down: #d8001b;
 }
 
 [data-colorconv="cn"] {
-  --up: oklch(0.577 0.245 27.325);
-  --down: oklch(0.627 0.17 149.8);
+  --up: #d8001b;
+  --down: #107d32;
 }
 
 .dark {
-  /* Apple HIG dark — iOS OLED canvas, elevated #1C1C1E cards, #2C2C2E chrome,
-     bright systemBlue accent. Depth by surface elevation, not borders. */
-  /* OLED canvas (deployed-terminal alignment 2026-08-24): pure black
-     ground, near-black elevated surfaces with hairline borders — depth by
-     hairline, not by big surface steps. */
-  --background: oklch(0 0 0);
-  --foreground: oklch(0.93 0.002 267);
-  --card: oklch(0.145 0.002 267);
-  --card-foreground: oklch(0.976 0.002 267);
-  --popover: oklch(0.17 0.002 267);
-  --popover-foreground: oklch(0.93 0.002 267);
-  --primary: oklch(0.634 0.169 257);
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.17 0.002 267);
-  --secondary-foreground: oklch(0.93 0.002 267);
-  --muted: oklch(0.17 0.002 267);
-  --muted-foreground: oklch(0.66 0.003 267);
-  --accent: oklch(0.19 0.002 267);
-  --accent-foreground: oklch(0.93 0.002 267);
-  --destructive: oklch(0.665 0.219 22.4);
-  --border: oklch(1 0 0 / 12%);
-  --input: oklch(1 0 0 / 18%);
-  --ring: oklch(0.634 0.169 257);
-  --chart-1: oklch(0.634 0.169 257);
-  --chart-2: oklch(0.79 0.17 150);
-  --chart-3: oklch(0.79 0.148 70);
-  --chart-4: oklch(0.665 0.219 22.4);
-  --chart-5: oklch(0.65 0.19 302);
-  --sidebar: oklch(0 0 0);
-  --sidebar-foreground: oklch(0.976 0.002 267);
-  --sidebar-primary: oklch(0.634 0.169 257);
-  --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.634 0.169 257 / 0.28);
-  --sidebar-accent-foreground: oklch(0.78 0.13 257);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.634 0.169 257);
-  /* Dark up/down (brighter for contrast on elevated cards). */
-  --up: oklch(0.765 0.17 163);
-  --down: oklch(0.712 0.194 13.4);
+  /* Aligned-site dark ramp (exact values): #000 canvas, #0a0a0a cards,
+     white-alpha hairlines, #ededed ink, green #00ca50 brand. */
+  --background: #000000;
+  --foreground: #ededed;
+  --card: #0a0a0a;
+  --card-foreground: #ededed;
+  --popover: #0a0a0a;
+  --popover-foreground: #ededed;
+  --primary: #00ca50;
+  --primary-foreground: #04240f;
+  --secondary: #ffffff12;
+  --secondary-foreground: #ededed;
+  --muted: #ffffff12;
+  --muted-foreground: #8f8f8f;
+  --accent: #ffffff17;
+  --accent-foreground: #ededed;
+  --destructive: #ff565f;
+  --border: #ffffff24;
+  --input: #ffffff24;
+  --ring: #00ca50;
+  --chart-1: #00ac3a;
+  --chart-2: #ff565f;
+  --chart-3: #47a8ff;
+  --chart-4: #ff9300;
+  --chart-5: #a8a8a8;
+  --sidebar: #000000;
+  --sidebar-foreground: #ededed;
+  --sidebar-primary: #00ca50;
+  --sidebar-primary-foreground: #04240f;
+  --sidebar-accent: #ffffff12;
+  --sidebar-accent-foreground: #ededed;
+  --sidebar-border: #ffffff24;
+  --sidebar-ring: #00ca50;
+
+  --ink: #ededed;
+  --mute: #8f8f8f;
+  --sub: #a0a0a0;
+  --faint: #a8a8a8;
+  --line: #ffffff24;
+  --line2: #ffffff17;
+  --soft: #ffffff12;
+  --brand: #00ca50;
+  --brand-hover: #4ade80;
+  --green-text: #00ca50;
+  --green-fill: #00ac3a;
+  --green-tint: #04240f;
+  --red-text: #ff565f;
+  --red-tint: #2b0b0e;
+  --blue-text: #47a8ff;
+  --blue-tint: #06203f;
+  --amber-text: #ff9300;
+  --amber-tint: #2a1a00;
+
+  --up: #00ca50;
+  --down: #ff565f;
 }
 
 .dark[data-colorconv="cn"] {
-  --up: oklch(0.704 0.191 22.2);
-  --down: oklch(0.79 0.17 150);
+  --up: #ff565f;
+  --down: #00ca50;
 }
 
 /* Direction utilities — the ONLY sanctioned way to color numeric up/down
@@ -186,13 +232,61 @@
   color: var(--down);
 }
 
+/* ---- Top-nav dropdown (verbatim from the aligned site's stylesheet) ---- */
+.navi {
+  position: relative;
+}
+.navi > .drop {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  z-index: 30;
+  min-width: 232px;
+  padding: 6px;
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.06),
+    0 12px 32px -8px rgba(0, 0, 0, 0.24);
+}
+.navi > .drop:before {
+  content: "";
+  height: 10px;
+  position: absolute;
+  top: -10px;
+  left: 0;
+  right: 0;
+}
+.navi:hover > .drop {
+  display: block;
+}
+
+/* ---- Home hero decorative layers (verbatim from the aligned site) ---- */
+.hero-grid {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, var(--soft) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--soft) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: linear-gradient(rgba(0, 0, 0, 0.9), transparent 85%);
+  mask-image: linear-gradient(rgba(0, 0, 0, 0.9), transparent 85%);
+}
+.hero-glow {
+  background:
+    radial-gradient(640px 300px at 18% -10%, var(--green-tint), transparent 68%),
+    radial-gradient(760px 340px at 82% -12%, var(--blue-tint), transparent 68%);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
-    /* Apple-style text rendering: crisp on light, weighted on dark. */
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
@@ -203,10 +297,10 @@
     @apply font-sans;
   }
   ::selection {
-    background: oklch(0.584 0.19 256 / 0.22);
+    background: rgba(0, 202, 80, 0.22);
   }
   .dark ::selection {
-    background: oklch(0.634 0.169 257 / 0.35);
+    background: rgba(0, 202, 80, 0.35);
   }
 }
 

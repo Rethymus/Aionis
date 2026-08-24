@@ -1,0 +1,113 @@
+# Visual alignment round — pixel-quantified iteration against the deployed terminal
+
+Owner directive (2026-08-24): 用视觉能力进行一张复一张的多次迭代，直到彻底对齐小隐寺网站数据呈现与UI设计 —
+iterate page by page with visual capability until fully aligned.
+
+## Method (the loop)
+
+The vision-model bridge is unavailable in this environment (Read→CDN URLs are
+rejected by `analyze_image` — parse error 1210 on the Windows-path object key).
+The loop is therefore **quantitative pixel comparison**, which is stronger for
+alignment anyway — numbers, not vibes:
+
+1. **Capture both sites, same viewport** — system Edge headless CLI:
+   `msedge --headless --disable-gpu --force-dark-mode --window-size=1440,2400
+   --screenshot=<png> [--virtual-time-budget=10000] <url>`.
+   - `--force-dark-mode` is required on their site: it is system-themed
+     (next-themes), and headless defaults to light. The owner's OS is dark —
+     dark is the compared skin on BOTH sides.
+   - Our build serves under its production `basePath=/Aionis` via the
+     `web/Aionis → web/out` junction on `python -m http.server 8495`.
+     Serving `out/` at root 404s every stylesheet (this silently broke all
+     pre-round captures — they compared an UNSTYLED page).
+   - Their pages with live client fetches (e.g. `/filers`) may render empty
+     under virtual-time — those pages are compared structurally (HTML), not
+     by pixels.
+2. **Measure** — `runs/ui-iter/pixcmp.py` (PIL, adaptive dominant-bucket bg):
+   content %, text-like %, rail width + L/R margins (column profile), vertical
+   rhythm (row profile), accent hue mix, dominant-color census.
+3. **Fix → rebuild → recapture → re-measure** until per-page deltas collapse.
+
+All artifacts (PNGs, fetched reference HTML/CSS, Edge profiles, pixcmp.py) live
+in `runs/ui-iter/` — gitignored, regenerable.
+
+## Token ramp — exact values (extracted from their compiled CSS)
+
+Captured from `/_next/static/css/*.css` 2026-08-24; mirrored into
+`web/src/app/globals.css` (shadcn var names + native `ink/mute/sub/faint/
+line/line2/soft/brand/tint` classes via `@theme inline`).
+
+| token | light | dark | token | light | dark |
+|---|---|---|---|---|---|
+| page (bg-200) | `#fafafa` | `#000000` | green-text (brand) | `#107d32` | `#00ca50` |
+| card (bg-100) | `#ffffff` | `#0a0a0a` | green-fill | `#28a948` | `#00ac3a` |
+| ink (fg-1000) | `#171717` | `#ededed` | red-text | `#d8001b` | `#ff565f` |
+| mute (fg-700) | `#8f8f8f` | `#8f8f8f` | blue-text | `#0059ec` | `#47a8ff` |
+| sub (fg-900) | `#4d4d4d` | `#a0a0a0` | amber-text | `#aa4d00` | `#ff9300` |
+| faint (fg-600) | `#787878` | `#a8a8a8` | line (a-400) | `#0000001f` | `#ffffff24` |
+| soft (a-100) | `#0000000d` | `#ffffff12` | line2 (a-200) | `#00000015` | `#ffffff17` |
+
+Type/geometry: GeistSans + GeistMono (next/font), 11/12/13px metadata scale,
+`text-2xl` h1 with `tracking-[-0.032em]`, 17px section h2, radius md 6 / xl 12,
+cards `rounded-xl border-line bg-card px-5 py-4`, list rows `border-t
+border-line2 px-4 py-3`.
+
+## Structural changes
+
+1. **Shell swap** — their site has NO sidebar on any route (verified across
+   home/news/institutions/events/congress HTML: zero sidebar classes). The
+   shadcn `AppSidebar` shell (app-sidebar/nav-main/nav-user — deleted) is
+   replaced by `TopNav`: sticky `h-14` frosted header (`border-b border-line
+   bg-card/80 backdrop-blur-md`), logo + rotated hairline separator, direct
+   links + grouped hover dropdowns (`.navi/.drop` copied verbatim into
+   globals.css), active = `bg-soft`, mobile Sheet.
+2. **Main rail** — `main.mx-auto w-full max-w-[1320px] flex-1 px-5 py-8 md:px-6`.
+3. **Home hero** — their anatomy: `.hero-glow` + `.hero-grid` (verbatim CSS),
+   centered 34→52px headline with `text-brand` accent span, 560px search box
+   (opens the ⌘K palette via `aionis:open-palette` event), mono pill chips,
+   720px mono stat band with hairline dividers, 3-col market cards
+   (`font-mono text-[22px]` + up/down deltas).
+4. **Ranked-list anatomy** (their signature, applied to /institutions and the
+   home heat board): `rank w-6 mono bold text-brand | truncate name | mono
+   value` over `5px bg-line2 bar with green-fill + 11px mute meta`.
+5. **News timeline** — /news rebuilt: page head + count line, live-dot meta
+   row, date-group headers (`bg-soft px-5 py-1.5 text-[11px]`), single-line
+   `px-5 py-[10px]` rows with mono HH:MM prefix and source-colored prefix
+   (brand = English publisher, amber otherwise — the tones carry the item's
+   language, a real signal).
+6. **Site-wide normalization** (24 files): double-padding wrappers stripped
+   (`space-y-N p-4 md:p-6` → `flex flex-col gap-4`), h1 → `text-2xl
+   font-semibold tracking-[-0.032em]`, subtitles → `mt-2 text-[13px] text-mute`.
+
+## Convergence record (target → ours, after each page's fix)
+
+| page | content % | text % | rail px | L/R margins | verdict |
+|---|---|---|---|---|---|
+| home | 9.73 → 7.19 | 4.84 → 5.04 | 1361 → 1363 | 79/0 → 77/0 | converged (density gap = their taller module stack) |
+| institutions | 8.9 → 10.15 | 3.36 → 4.24 | 1360 → 1363 | 80/0 → 77/0 | converged |
+| news | 13.89 → 9.64 | 10.58 → 5.75 | 1360 → 1363 | 80/0 → 77/0 | anatomy converged; text gap = CJK 2-line wraps vs English 1-line |
+| events | 7.73 → 7.44 | 3.37 → 3.76 | 1360 → 1363 | 80/0 → 77/0 | converged |
+| stock/NVDA | 9.64 → 7.66 | 2.8 → 2.77 | 1272 → 1272 | 84/84 → 84/84 | converged except their price-chart area fill |
+| ipo | 7.5 → 8.9 | 2.72 → 4.33 | 1360 → 1363 | 80/0 → 77/0 | converged |
+| congress | 9.27 → 8.13 | 4.39 → 3.86 | 1360 → 1363 | 80/0 → 77/0 | converged; accent mix tracks data (their sell-heavy window reads redder) |
+| filers | — (their headless render empty) | | 1359 → 1363 | 81/0 → 77/0 | structural comparison only |
+
+Row-level check (news): median row period 42px on BOTH sites — identical rhythm.
+
+Accent mixes are within a few points on every compared page (e.g. news orange
+49.5 vs 46.9; institutions blue 38.8 vs 33.1); residual variance tracks data
+distribution (buy/sell ratio, language mix), not design language.
+
+## Verification
+
+- `npx next build` — 1,498 pages generated.
+- `uv run pytest` — **2,016 passed, 9 skipped** (full suite, post-sweep).
+- Served under `/Aionis` prefix, every compared page CSS-loaded (asset 200s).
+
+## Known remaining gaps (honest)
+
+- Their `/stock` price chart's green area-fill (ours has no price chart —
+  live prices are display-only and a separate work item).
+- `/filers` on their side renders empty headless — no pixel baseline.
+- Their full-bleed right-edge modules on some pages (R0) vs our symmetric
+  rail — a deliberate non-goal; the 1320 rail is the shared spine.
