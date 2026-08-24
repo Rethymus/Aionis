@@ -8,6 +8,10 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-24 (cc) UI 遗留精化三件收官——计数窗全站对齐
+
+核验修正：congress/events **本已有 countHint 计数窗**（审计时漏记）；/filers /companies 行密度**已达标**（50 行 mono 单元格+truncate 实证）。真缺口仅 /taco /market 两页——各在页头加 mono 计数轨（taco：N VIX 月·N 事件·窗口；market：N 月·最新 VIX·窗口，与韩国代理卡共存）。IAB 三页验证 + build 1,498 页 + 数据测试绿。**UI 颗粒度对齐轮（审计→基座→页面组→精化）全链闭环。**
+
 ## 2026-08-24 (bb) UI 颗粒度对齐轮：审计 + 基座 + 四组页面升级（业主"UI 过于简陋"判定响应）
 
 **审计方法论修正（业主硬条件重申后）**：浏览器逐页实测部署端——**关键发现：data.xiaoyinsi.com = 本仓库的部署皮肤**（其 /institutions 载本仓 40 位明星策展+中文别名+七分类按钮原样；侧栏"语境/效度/可证伪主张/守卫"= 本仓 IA；⌘K/颜色约定切换/语言/主题四件套同款）→ **同数据两套皮肤，对齐 = 1:1 可映射**。审计文档 `reports/design/2026-08-24-ui-granularity-audit.md`（token 差距表/导航壳差距/逐页版式差距/可复算验证记录）。
