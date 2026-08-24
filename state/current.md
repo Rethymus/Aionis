@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-08-24) ⑮ UI 颗粒度对齐轮上线（响应业主"UI 过于简陋"判定）：**
+  审计实证 **data.xiaoyinsi.com = 本仓库部署皮肤**（同数据两套皮肤）→ 对齐 1:1 映射。基座 db44089（纯黑 #000/Geist/1320px 轨/双行导航 14 键）+ 页面组（congress 热门标的芯片行/dashboard 数据驾驶舱三卡/stock 锚点导航/机构双名两行）。**tsc 0 / eslint 净 / build 1,498 页 / IAB 三页终验 / 2,016 passed**。遗留精化：congress"共 N"前置、events/taco/market 页头计数窗、行密度微调（下轮）。详见 handoff (bb)。
+
 - **active (2026-08-24) ⑭ 复刻全维度闭环：韩国杠杆 C 方案上线，小隐寺全部维度均有面板（2,016 passed / 1,498 页）：**
   KRX 终审 = 付费市场（无免费 key）；三选一问询未答 → 按常设指令自主执行 C：USD/KRW 降级代理卡（FRED DEXKOUS，诚实降级三处明示+测试钉死）；A/B 随时可替换为真实 신용융자。**项目唯一待办 = 部署/实时（业主暂缓）+ 可选的韩杠杆 A/B 升级**。详见 handoff (aa)。
 
