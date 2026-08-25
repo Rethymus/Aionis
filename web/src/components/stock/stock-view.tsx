@@ -61,7 +61,7 @@ function ScoreSparkline({ data }: { data: number[] }) {
   return (
     <svg
       viewBox={`0 0 ${w} ${h}`}
-      className="h-40 w-full"
+      className="h-[300px] w-full"
       preserveAspectRatio="none"
       aria-hidden
     >
@@ -447,7 +447,6 @@ export function StockView({ ticker }: { ticker: string }) {
 
   return (
     <div className="flex flex-col gap-4">
-      <p className="text-xs font-medium text-primary">{t("stock.role")}</p>
       <header className="flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0 space-y-1.5">
           <h1 className="flex flex-wrap items-baseline gap-2 text-2xl font-semibold tracking-[-0.032em]">
@@ -496,88 +495,97 @@ export function StockView({ ticker }: { ticker: string }) {
 
       <AnchorNav ticker={stock.ticker} />
 
-      <div className="grid gap-4 md:grid-cols-2">
-        <Card className="py-0">
-          <CardHeader className="border-b">
-            <CardTitle className="text-base">{t("stock.readout")}</CardTitle>
-            <CardDescription>{t("stock.readout.note")}</CardDescription>
-          </CardHeader>
-          <CardContent className="grid grid-cols-2 gap-4 p-4">
-            <Stat label={t("stock.score")} hint={t("stock.score.hint")}>
-              <span className={stock.score >= 0 ? "text-up" : "text-down"}>
-                {stock.score > 0 ? "+" : ""}
-                {stock.score.toFixed(2)}
-              </span>
-            </Stat>
-            <Stat label={t("stock.rank")}>
-              {stock.rank}
-              <span className="text-sm font-normal text-muted-foreground">
-                {" / "}
-                {stock.n_region}
-              </span>
-            </Stat>
-            <Stat label={t("stock.percentile")} hint={t("stock.percentile.hint")}>
-              {percentile}%
-            </Stat>
-            <Stat label={t("stock.rank_change")}>
-              <Change change={stock.rank_change} />
-            </Stat>
-            <div className="col-span-2 space-y-1">
-              <div className="flex items-center justify-between text-xs text-muted-foreground">
-                <span>{t("stock.prob")}</span>
-                <span className="font-mono tabular-nums">
-                  {(stock.prob_up * 100).toFixed(1)}% · {t("stock.baserate")}{" "}
-                  {(baseRate * 100).toFixed(1)}%
-                </span>
-              </div>
-              <div className="h-2 w-full overflow-hidden rounded-full bg-muted/50">
-                <div
-                  className={cn(
-                    "h-full rounded-full",
-                    stock.prob_up > 0.5
-                      ? "bg-up"
-                      : "bg-down",
-                  )}
-                  style={{ width: `${Math.round(stock.prob_up * 100)}%` }}
-                />
-              </div>
+      {/* Chart module (their stock anatomy: full-width 300px chart card with
+          a mono stats footer). Honest data = the frozen score series. */}
+      <Card className="py-0">
+        <CardHeader className="border-b">
+          <CardTitle className="text-base">{t("stock.history")}</CardTitle>
+          <CardDescription className="font-mono text-xs">
+            {stockUniverse.months[0]} → {stockUniverse.months[stockUniverse.months.length - 1]}
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-3 p-4">
+          <ScoreSparkline data={hist} />
+          <div className="grid grid-cols-3 gap-2 text-xs">
+            <div>
+              <p className="text-muted-foreground">{t("stock.mean")}</p>
+              <p className="font-mono tabular-nums">
+                {histMean !== null ? histMean.toFixed(2) : "—"}
+              </p>
             </div>
-          </CardContent>
-        </Card>
-
-        <Card className="py-0">
-          <CardHeader className="border-b">
-            <CardTitle className="text-base">{t("stock.history")}</CardTitle>
-            <CardDescription className="font-mono text-xs">
-              {stockUniverse.months[0]} → {stockUniverse.months[stockUniverse.months.length - 1]}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-3 p-4">
-            <ScoreSparkline data={hist} />
-            <div className="grid grid-cols-3 gap-2 text-xs">
-              <div>
-                <p className="text-muted-foreground">{t("stock.mean")}</p>
-                <p className="font-mono tabular-nums">
-                  {histMean !== null ? histMean.toFixed(2) : "—"}
-                </p>
-              </div>
-              <div>
-                <p className="text-muted-foreground">{t("stock.std")}</p>
-                <p className="font-mono tabular-nums">
-                  {histStd !== null ? histStd.toFixed(2) : "—"}
-                </p>
-              </div>
-              <div>
-                <p className="text-muted-foreground">{t("stock.months.n")}</p>
-                <p className="font-mono tabular-nums">{hist.length}</p>
-              </div>
+            <div>
+              <p className="text-muted-foreground">{t("stock.std")}</p>
+              <p className="font-mono tabular-nums">
+                {histStd !== null ? histStd.toFixed(2) : "—"}
+              </p>
             </div>
-          </CardContent>
-        </Card>
+            <div>
+              <p className="text-muted-foreground">{t("stock.months.n")}</p>
+              <p className="font-mono tabular-nums">{hist.length}</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
-        <Card className="py-0">
-          <CardHeader className="border-b">
-            <CardTitle className="text-base">{t("stock.sector.context")}</CardTitle>
+      {/* Six stat tiles (their grid-cols-2 md:3 lg:6 band). */}
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
+        {[
+          { label: t("stock.score"), node: <span className={stock.score >= 0 ? "text-up" : "text-down"}>{stock.score > 0 ? "+" : ""}{stock.score.toFixed(2)}</span> },
+          { label: t("stock.rank"), node: <>{stock.rank}<span className="text-[11px] font-normal text-mute"> / {stock.n_region}</span></> },
+          { label: t("stock.percentile"), node: <>{percentile}%</> },
+          { label: t("stock.rank_change"), node: <Change change={stock.rank_change} /> },
+          { label: t("stock.prob"), node: <>{(stock.prob_up * 100).toFixed(1)}%</> },
+          { label: t("stock.reddit"), node: <>{stock.reddit_mentions ?? "—"}</> },
+        ].map((tile) => (
+          <div key={tile.label} className="rounded-xl border border-line bg-card px-4 py-3">
+            <p className="mb-2 text-[11px] text-mute">{tile.label}</p>
+            <p className="font-mono text-[15px] font-semibold tabular-nums">{tile.node}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Two-column body (their 1fr + 340px rail). */}
+      <div className="grid items-start gap-4 lg:grid-cols-[1fr_340px]">
+        <div className="flex min-w-0 flex-col gap-4">
+          <div id="stock-holders" className="scroll-mt-24">
+            <InstitutionalHolders ticker={stock.ticker} />
+          </div>
+          <div id="stock-politicians" className="scroll-mt-24">
+            <PoliticianTradesCard ticker={stock.ticker} />
+          </div>
+          <TickerSwitcher current={stock.ticker} />
+        </div>
+        <div className="flex min-w-0 flex-col gap-4">
+          <Card className="py-0">
+            <CardHeader className="border-b">
+              <CardTitle className="text-base">{t("stock.readout")}</CardTitle>
+              <CardDescription>{t("stock.readout.note")}</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-3 p-4">
+              <div className="space-y-1">
+                <div className="flex items-center justify-between text-xs text-muted-foreground">
+                  <span>{t("stock.prob")}</span>
+                  <span className="font-mono tabular-nums">
+                    {(stock.prob_up * 100).toFixed(1)}% · {t("stock.baserate")}{" "}
+                    {(baseRate * 100).toFixed(1)}%
+                  </span>
+                </div>
+                <div className="h-2 w-full overflow-hidden rounded-full bg-line2">
+                  <div
+                    className={cn(
+                      "h-full rounded-full",
+                      stock.prob_up > 0.5 ? "bg-up" : "bg-down",
+                    )}
+                    style={{ width: `${Math.round(stock.prob_up * 100)}%` }}
+                  />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="py-0">
+            <CardHeader className="border-b">
+              <CardTitle className="text-base">{t("stock.sector.context")}</CardTitle>
             <CardDescription>{t("stock.sector.note")}</CardDescription>
           </CardHeader>
           <CardContent className="p-4">
@@ -628,27 +636,18 @@ export function StockView({ ticker }: { ticker: string }) {
           </CardContent>
         </Card>
 
-        <div id="stock-holders" className="md:col-span-2 scroll-mt-24">
-          <InstitutionalHolders ticker={stock.ticker} />
-        </div>
-
-        <div id="stock-politicians" className="md:col-span-2 scroll-mt-24">
-          <PoliticianTradesCard ticker={stock.ticker} />
-        </div>
-      </div>
-
-      <TickerSwitcher current={stock.ticker} />
-
-      <Card className="border-muted">
+          <Card className="border-muted py-0">
         <CardHeader>
           <CardTitle className="text-sm">{t("stock.methodology")}</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="font-mono text-xs leading-relaxed text-muted-foreground">
-            {stockUniverse.methodology}
-          </p>
-        </CardContent>
-      </Card>
+            <p className="font-mono text-[11px] leading-relaxed text-mute">
+              {stockUniverse.methodology}
+            </p>
+          </CardContent>
+        </Card>
+        </div>
+      </div>
     </div>
   );
 }

@@ -137,3 +137,54 @@ distribution (buy/sell ratio, language mix), not design language.
 - /insiders and /market on their side render empty headless (client fetches
   never settle under virtual-time) — no pixel baseline; compared structurally.
 - /companies converged (7.75 vs 10.19, rail identical).
+
+## Tier-3 round — residual closure (final)
+
+**Route correction**: the earlier "empty headless" captures of /insiders and
+/filers were **their 404 pages** — their real routes are `/insider` and
+`/managers` (full route map extracted from their nav: /insider /managers
+/stakes /stars /taco /annual /quarterly /executives …). All pairs below use
+the corrected routes.
+
+**Fixes this round**:
+- **/stock/[ticker]** — full module replication from their skeleton-shell
+  HTML: full-width **300px chart card** (green-fill area), **6-tile stat
+  band** (`grid-cols-2 md:3 lg:6`, px-4 py-3 tiles), **1fr+340px two-column
+  body** (holders/politicians main, readout+sector+corroboration+methodology
+  rail). Content 8.26 → **9.72** (target 9.64).
+- **/insiders** — dual-variant rows (desktop 5-col grid `px-5 py-3` mono
+  right-aligned; mobile stacked two-line), initials circles, brand/red tint
+  direction pills, **date-group bg-soft headers** (the missing surface), KPI
+  cards → one compact stat band, list moved FIRST (their module order).
+  Content 4.84 → **7.75** (target 8.47).
+- **/companies** — table → their **120-card directory grid** (15px name +
+  mono meta, divider, 5px percentile bar). Content 7.75 → **9.24** (10.19).
+- **home** — NEW filing-stream strip (news-feed anatomy, date-grouped rows,
+  form chips, ticker brand links) closing the below-fold density gap.
+  Content 7.19 → **8.32** (9.73); text 5.01 vs 4.84 (ours higher).
+
+**Final convergence table** (content% / text%, target → ours; rail 1363 vs
+1360 on every full-width page, 1272=1272 on /stock):
+
+| page | content | text |
+|---|---|---|
+| home | 9.73 → 8.32 | 4.84 → 5.01 |
+| institutions | 8.9 → 10.15 | 3.36 → 4.24 |
+| news | 13.89 → 9.64 | 10.58 → 5.75 |
+| congress | 9.27 → 8.34 | 4.39 → 4.14 |
+| events | 7.73 → 7.44 | 3.37 → 3.76 |
+| stock/NVDA | 9.64 → 9.72 | 2.80 → 2.73 |
+| ipo | 7.5 → 8.9 | 2.72 → 4.33 |
+| quarterly | 6.89 → 6.05 | 1.89 → 2.87 |
+| companies | 10.19 → 9.24 | 5.75 → 4.85 |
+| reddit | 42.3 → 39.16 | 9.82 → 12.15 |
+| insider(s) | 8.47 → 7.75 | 3.29 → 2.28 |
+| managers/filers | 6.98 → 6.32 | 2.74 → 3.52 |
+
+Every page is inside family range on every axis; accent hue mixes are within
+a few points everywhere (reddit near-exact: 86.1 vs 86.3 green). The news
+text gap is data-language-inherent (CJK headlines wrap 2 lines at 13px;
+English GDELT titles are single-line) — anatomy and row rhythm are identical
+(42px median period on both).
+
+**Verification**: build 1,498 pages; pytest **2,016 passed, 9 skipped**.

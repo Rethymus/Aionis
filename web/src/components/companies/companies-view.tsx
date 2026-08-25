@@ -76,69 +76,6 @@ function RankChange({ change }: { change: number | null }) {
   );
 }
 
-function CompanyRow({ s }: { s: StockRow }) {
-  const { t } = useI18n();
-  const positive = s.score >= 0;
-  return (
-    <TableRow>
-      <TableCell className="pl-4">
-        <Link
-          href={`/stock/${s.ticker}`}
-          className="font-mono text-xs font-semibold hover:underline"
-        >
-          {s.ticker}
-        </Link>
-      </TableCell>
-      <TableCell className="max-w-48 truncate text-sm lg:max-w-72">
-        {s.name ? (
-          s.name
-        ) : (
-          <span className="italic text-muted-foreground">
-            {t("companies.no_name")}
-          </span>
-        )}
-      </TableCell>
-      <TableCell>
-        <Badge
-          variant="outline"
-          className="px-1 py-0 text-[11px] font-normal text-muted-foreground"
-        >
-          {t(s.region === "us" ? "companies.region.us" : "companies.region.cn")}
-        </Badge>
-      </TableCell>
-      <TableCell
-        className="hidden max-w-40 truncate text-xs text-muted-foreground md:table-cell lg:max-w-64"
-        title={s.sector || undefined}
-      >
-        {s.sector ? (
-          s.sector
-        ) : (
-          <span className="italic">{t("picks.no_sector")}</span>
-        )}
-      </TableCell>
-      <TableCell
-        className={cn(
-          "text-right font-mono text-xs tabular-nums",
-          positive ? "text-up" : "text-down",
-        )}
-      >
-        {s.score > 0 ? "+" : ""}
-        {s.score.toFixed(2)}
-      </TableCell>
-      <TableCell className="whitespace-nowrap pr-4 text-right">
-        <span className="font-mono text-xs font-semibold tabular-nums">
-          {s.rank}
-        </span>
-        <span className="font-mono text-[11px] text-muted-foreground/50">
-          /{s.n_region}
-        </span>{" "}
-        <span title={t("companies.rank.change")}>
-          <RankChange change={s.rank_change} />
-        </span>
-      </TableCell>
-    </TableRow>
-  );
-}
 
 const pillCls = (active: boolean) =>
   cn(
@@ -317,31 +254,49 @@ export function CompaniesView() {
             </p>
           ) : (
             <>
-              <Table>
-                <TableHeader>
-                  <TableRow className="hover:bg-transparent">
-                    <TableHead className="pl-4">
-                      {t("companies.col.ticker")}
-                    </TableHead>
-                    <TableHead>{t("companies.col.name")}</TableHead>
-                    <TableHead>{t("companies.col.region")}</TableHead>
-                    <TableHead className="hidden md:table-cell">
-                      {t("companies.col.sector")}
-                    </TableHead>
-                    <TableHead className="text-right">
-                      {t("companies.col.score")}
-                    </TableHead>
-                    <TableHead className="pr-4 text-right">
-                      {t("companies.col.rank")}
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {visible.map((s) => (
-                    <CompanyRow key={s.ticker} s={s} />
-                  ))}
-                </TableBody>
-              </Table>
+              {/* Aligned-site directory cards: 15px name + mono meta over a
+                  divider and a percentile bar (5px, green-fill). */}
+              <div className="grid gap-3 p-4 md:grid-cols-2 xl:grid-cols-3">
+                {visible.map((s) => (
+                  <Link
+                    key={s.ticker}
+                    href={`/stock/${s.ticker}`}
+                    className="block rounded-xl border border-line bg-card px-5 py-4 transition-colors hover:border-faint"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="min-w-0 flex-1">
+                        <span className="block truncate text-[15px] font-semibold">
+                          {s.name || s.ticker}
+                        </span>
+                        <span className="block truncate font-mono text-xs text-mute">
+                          {s.ticker} · {s.sector || "—"}
+                        </span>
+                      </div>
+                      <span
+                        className={`flex-none font-mono text-[13px] font-semibold tabular-nums ${
+                          s.score >= 0 ? "text-up" : "text-down"
+                        }`}
+                      >
+                        {s.score > 0 ? "+" : ""}{s.score.toFixed(2)}
+                      </span>
+                    </div>
+                    <div className="mt-3 border-t border-line2 pt-3 text-xs text-mute">
+                      <div className="flex items-baseline justify-between gap-2">
+                        <span>{t("companies.col.rank")}</span>
+                        <span className="font-mono tabular-nums">
+                          {s.rank} / {s.n_region}
+                        </span>
+                      </div>
+                      <div className="mt-1.5 h-[5px] overflow-hidden rounded bg-line2">
+                        <div
+                          className="h-full rounded bg-green-fill"
+                          style={{ width: `${(s.rank / Math.max(s.n_region, 1)) * 100}%` }}
+                        />
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
               {visible.length < filtered.length ? (
                 <div className="flex items-center justify-center gap-3 border-t p-3">
                   <Button

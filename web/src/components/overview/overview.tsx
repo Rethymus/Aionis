@@ -392,6 +392,68 @@ function StatBand() {
   );
 }
 
+/** Filing stream strip (aligned-site news-feed anatomy): the latest EDGAR
+ *  filings client-side from the existing panel — date-group header + single
+ *  line rows, form type in a bordered mono chip. Zero new data paths. */
+function FilingStrip() {
+  const { t } = useI18n();
+  const f = aionis.filingStream;
+  const rows = f.status === "ok" ? f.filings.slice(0, 14) : [];
+  if (rows.length === 0) return null;
+  const byDay: { day: string; items: typeof rows }[] = [];
+  for (const r of rows) {
+    const last = byDay[byDay.length - 1];
+    if (last && last.day === r.filed_date) last.items.push(r);
+    else byDay.push({ day: r.filed_date, items: [r] });
+  }
+  return (
+    <section className="grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div className="overflow-hidden rounded-xl border border-line bg-card md:col-span-2">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-line2 px-5 py-4">
+          <h2 className="text-[17px] font-semibold tracking-[-0.02em]">
+            {t("overview.filings.title")}
+          </h2>
+          <span className="font-mono text-[11px] text-mute tabular-nums">
+            {f.n_visible ?? rows.length} · {f.as_of?.split("T")[0] ?? "—"}
+          </span>
+          <Link
+            href="/events"
+            className="ml-auto text-[13px] font-semibold text-brand hover:text-brand-hover"
+          >
+            {t("overview.filings.link")}
+          </Link>
+        </div>
+        {byDay.map((g) => (
+          <div key={g.day}>
+            <div className="border-t border-line2 bg-soft px-5 py-1.5 text-[11px] font-semibold text-mute first:border-t-0">
+              {g.day}
+            </div>
+            {g.items.map((r, i) => (
+              <a
+                key={`${r.doc_url}-${i}`}
+                href={r.doc_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-baseline gap-3 border-t border-line2 px-5 py-[10px] transition-colors hover:bg-soft"
+              >
+                <span className="flex-none rounded border border-line bg-soft px-1.5 py-px font-mono text-[10px] font-semibold text-sub">
+                  {r.form}
+                </span>
+                <span className="min-w-0 truncate text-[13px] text-ink">{r.who}</span>
+                {r.ticker ? (
+                  <span className="ml-auto flex-none font-mono text-[11px] font-semibold text-brand">
+                    {r.ticker}
+                  </span>
+                ) : null}
+              </a>
+            ))}
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 /** Market snapshot cards (3-col grid, mono 22px values, up/down deltas). */
 function MarketCards() {
   const { t } = useI18n();
@@ -567,6 +629,7 @@ export function Overview() {
       <Hero />
       <MarketCards />
       <DataCockpit />
+      <FilingStrip />
       {/* Affirmative trust basis next to the verdict it underwrites — the
           complement to the hero's "non-investment advice" disclaimer. */}
       <TrustRibbon />
