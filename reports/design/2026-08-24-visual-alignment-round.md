@@ -232,3 +232,32 @@ archetypes (content% target-archetype → ours):
 | /stakes | their /insider (stream) | 8.47 → 6.35 | family ✓ (new route) |
 
 Every one of their 19 routes now has a live counterpart on our build.
+
+## Tier-5 — reference-site DNS removal (definitive) + /taco closure
+
+**The reference is gone, not down.** During tier-4 `data.xiaoyinsi.com`
+became unreachable; diagnosis is conclusive:
+- public DNS (1.1.1.1 + 223.5.5.5, DoH — bypassing the local fake-IP proxy
+  which hijacks plaintext DNS): **Status 3 NXDOMAIN** for
+  `data.xiaoyinsi.com` and `app.xiaoyinsi.com`, while root `xiaoyinsi.com`
+  resolves (216.150.16.1, Cloudflare NS `christian.ns.cloudflare.com`) —
+  the data-terminal subdomain record was **deleted by its operator**
+  mid-session;
+- Wayback Machine CDX (`url=data.xiaoyinsi.com*`, domain-wide): **zero
+  snapshots** — no external fallback exists.
+
+The 7 remaining direct baselines (their annual / executives / manager /
+taco / api-docs / stakes / stars) are therefore **permanently unobtainable
+— the reference pages no longer exist at any resolvable address**. The
+frozen reference for everything measurable remains the session cache in
+`runs/ui-iter/` (10 pages of their HTML + 12 PNG baselines, captured while
+live), and every one of their 19 routes has a live counterpart built to the
+same converged design system.
+
+**/taco density closure** (the flagged residual): rebuilt to the family
+anatomy — KPI cards → one compact stat band, VIX line chart → amber
+area-fill (their chart signature), events table → date-grouped stream
+(bg-soft month headers, brand/red direction pills, mono meta). Archetype
+comparison: content **7.76 vs 7.73** (was 3.59).
+
+pytest after the rewrite: **2,016 passed, 9 skipped**. Build: 1,499 pages.
