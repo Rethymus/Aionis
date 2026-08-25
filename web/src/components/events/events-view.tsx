@@ -26,7 +26,9 @@ import type { DictKey } from "@/i18n/dict";
 import { aionis } from "@/data/aionis";
 
 // Category code → i18n key (t() takes a strict DictKey — no template literals).
-const CATEGORY_LABEL: Record<string, string> = {
+// Exported: the overview home's 重大事件 card reuses the same mapping (single
+// source — a category rendered on two pages must never carry two labels).
+export const CATEGORY_LABEL: Record<string, string> = {
   merger_completion: "events.cat.merger_completion",
   delisting: "events.cat.delisting",
   control_change: "events.cat.control_change",

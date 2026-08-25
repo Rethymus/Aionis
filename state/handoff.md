@@ -8,6 +8,24 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-25 (dd) Tier-7 视觉多轮迭代：首页模块全齐 + 双语新闻流 + 全页目视终验 + 后 parity 规划
+
+**参照态复查**：data.xiaoyinsi.com / app.xiaoyinsi.com 仍 NXDOMAIN（DoH 1.1.1.1，08-25 实证；根域存活无终端）→ `runs/ui-iter/` 冻结基线（12 PNG + 10 HTML + 编译 CSS）为唯一合法参照。**视觉通道本 session 重建**：Read→CDN→analyze_image 三连可用（CDN URL 须原样含反斜杠路径——上轮 1210 阻断已消，环境差异）。
+
+**首页 15 模块全齐（T7A 代理全胜 + 主线两处裁决）**：对方首页完整解剖（hero 目录规模统计条 / 指数三卡 / 中文快讯 / 最新举牌 / 近期 IPO / 机构申报 / 情绪榜 / 政客环形 / 明星投资人 / ARK 异动 / 重大事件 / 高管变动 / 探索全部模块页脚）vs 我方原 6 模块 → 补齐 7 新模块 + 情绪榜/政客卡全解剖升级 + 统计条切目录规模（10,387 公司 / 9,385 申报人 / 40 明星 / 2,812 政客交易 / 290 Reddit——全部实数，data_health 新增全 47 面板 `rows` 字段为源 + 对账契约测试）。诚实降级七处入代码注释：IPO 用 ipo 面板（formD 是 Reg-D 无法映射状态）；高管变动按公司级（人名/方向解析 = 既有红线）；ARK 无 ±pp（无历史）→ 基金共振排名；Reddit Δ 显示 24h 提及变化非价格；机构申报无时间字段只显 MM/DD；举牌 chips 是 13G 家族；明星计数 40 非 43（诚实策展）。**主线裁决一**：明星卡不进 650KB 全量书 → `export_form13f_stars`（导出时从已提交面板派生 top-8，~2.4KB）+ form13f-stars.ts 专用小模块 + 摘要/全量对账测试（top1 = 全量最大书、字段逐项 verbatim、n_managers = 全名单）。**主线裁决二**：CATEGORY_LABEL 从 events-view 导出（首页与 /events 单一事实源）。
+
+**双语新闻流（T7B 代理证据先行全胜 + 主线接线）**：Phase-1 探针（10 礼貌槽）——`sourcelang:zho domainis:wallstreetcn.com` **200/200 满帽真中文财经快讯**（API language 字段全 "Chinese"）；财联社 cls.cn 零 GDELT 覆盖；CJK 短语查询被 API 拒（"phrase too short"）→ 域锚定是唯一证明形态。Phase-2 ingest：`_LANES` 双车道（eng 查询原样 + zho 域锚定）、`lang_code()`（API language 优先 → 请求车道兜底 → 绝不从标题字节猜）、legacy 缓存回填 eng、单车道失败诚实降级（存活车道合并 + 失败车道自然老化）+ 10 测试。真实抓取 400 条（200 中 fresh 至 08-25T10:00Z + 200 英缓存保留——eng 撞 429 降级路径实战验证，次日自愈）。**主线接线**：export_news_feed 增 lang/n_zho 字段 + query 双车道 verbatim + 方法学双语披露（财联社零覆盖/CJK 被拒入档）+ 契约测试扩展（lang∈{eng,zho}、与 language 字段一致、n_zho 窗口口径）；前端 NewsFeed 类型 + 双语计数芯片（中文 200 / EN 200，琥珀/brand 双色）+ 前缀色调改读 lang 字段；`docs/data-intake-gdelt-news-feed.md` v0.2 探针证据表。
+
+**视觉轮抓到真 bug（正是多轮目视的价值）**：news-view `groupByDate` 仍按 GDELT 紧凑格式 `slice(0,8)` 切早已 ISO 化的 seendate → 日期头渲染 **"0月NaN日"**（此前像素通道量不出来——分组头存在但内容错）。修为 ISO 切片，产物实证 8月25日/8月24日 分组降序正确。
+
+**8 无基线页目视终验**（taco/stakes/market/annual/executives/manager/api-docs/filers——Tier-4/5 只做过 proxy 家族对照）：逐页 PASS/FAIL 清单式目视（页头计数/统计带/面积图签名/日期分组流/行对齐/渲染缺陷）**全部 PASS**；market 一条"图例重叠"报告经 DOM 反证为视觉幻觉（无 Legend 元素）——幻觉交叉核验铁律再次生效。
+
+**内容深度终审（对方首页声明口径 vs 我方面板实深）**：公司 10,387 > 6,517；申报人 9,385 > 8,741；政客 2,812 交易级 > 2,778 申报级；明星 40 vs 43（诚实策展差 3）；Reddit 290/100 vs 681（源分页死，披露）；举牌 15,982 vs 流；IPO 1,046 无价格（v1 边界）；高管公司级（人级红线）；ARK 快照（历史累积中）。诚实残余四项全部记入规划文档 backlog，不为凑数编造。
+
+**后 parity 规划（`reports/design/2026-08-25-post-parity-roadmap.md`）**：战略判定 = 参照站已被运营者删除，**Aionis web = 终局形态的唯一存活实现**（且多三层对方没有的：溯源优先/可证伪研究层/双语+颜色约定）。优先级阶梯：H1 终端重新上线（Actions 计费冻结中；realtime-architecture 文档阶梯 1 半天可解）；H2 /stock 实时价图（display-only Worker 已有）；H3 深度残余（IPO 价格解析 S/M、ARK 历史自动累积、明星诚实 +3）；H4 E3 前瞻账本收敛（驾驶舱变 E3 观测台，AUD-06+GO 门不变）；H5 势力阵营（对方 TODO = 我方血缘图谱原始模块）；H6 API 目录随面板深化。反目标三条入档（不凑数/研究面零接触/不复活抓取已删参照）。
+
+**验证**：pytest **2,028 passed**/9 skip（+12：rows 对账、stars 摘要对账、news 双语 ×10）+ ruff 净（本 lane 全部）+ tsc 0 + eslint 0 错（33 警告全存量）+ build **1,496 页** + 目视验收（首页 10 模块/统计条/无渲染错误；新闻双语混排/多日分组/无 NaN）+ 像素复核（首页 8.78 vs 9.73、新闻 10.25 vs 13.89，残余=语言构成数据属性；rail 1363=1361、margins 77/79 一致）。**未 push**（计费阻断持续，业主指示后面解决）。
+
 ## 2026-08-24 (cc) UI 遗留精化三件收官——计数窗全站对齐
 
 核验修正：congress/events **本已有 countHint 计数窗**（审计时漏记）；/filers /companies 行密度**已达标**（50 行 mono 单元格+truncate 实证）。真缺口仅 /taco /market 两页——各在页头加 mono 计数轨（taco：N VIX 月·N 事件·窗口；market：N 月·最新 VIX·窗口，与韩国代理卡共存）。IAB 三页验证 + build 1,498 页 + 数据测试绿。**UI 颗粒度对齐轮（审计→基座→页面组→精化）全链闭环。**

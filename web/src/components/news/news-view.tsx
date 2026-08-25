@@ -31,14 +31,16 @@ function groupByDate(
   const groups: Group[] = [];
   const byDate = new Map<string, typeof aionis.newsFeed.items>();
   for (const r of items) {
-    const d = r.seendate.slice(0, 8); // YYYYMMDD
+    // seendate is ISO-UTC "YYYY-MM-DDTHH:MM:SSZ" (the export normalizes it;
+    // the compact GDELT form is long gone — slice the ISO date prefix).
+    const d = r.seendate.slice(0, 10);
     if (!byDate.has(d)) byDate.set(d, []);
     byDate.get(d)!.push(r);
   }
   for (const [d, rows] of byDate) {
     const y = +d.slice(0, 4);
-    const m = +d.slice(4, 6);
-    const day = +d.slice(6, 8);
+    const m = +d.slice(5, 7);
+    const day = +d.slice(8, 10);
     const MONTHS_EN = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const label =
       lang === "zh"
@@ -106,6 +108,17 @@ export function NewsView() {
           <span className="inline-flex h-8 items-center rounded-md bg-ink px-3 text-[13px] font-medium text-inverse">
             GDELT
           </span>
+          <span className="inline-flex h-8 items-center gap-1.5 rounded-md border border-line px-3 text-[13px] font-medium text-sub">
+            <span className="text-amber">{t("news.chip.zho")}</span>
+            <span className="font-mono text-[12px] tabular-nums">
+              {f.n_zho.toLocaleString("en-US")}
+            </span>
+            <span className="text-faint">/</span>
+            <span className="text-brand">{t("news.chip.eng")}</span>
+            <span className="font-mono text-[12px] tabular-nums">
+              {(f.total - f.n_zho).toLocaleString("en-US")}
+            </span>
+          </span>
           <span className="inline-flex h-8 items-center rounded-md border border-line px-3 text-[13px] font-medium text-sub">
             {t("news.chip.dedup")}
           </span>
@@ -136,7 +149,7 @@ export function NewsView() {
                 <span className="min-w-0 text-[13px] leading-relaxed text-ink">
                   <span
                     className={`font-semibold ${
-                      (r.language || "eng") === "eng" ? "text-brand" : "text-amber"
+                      r.lang === "eng" ? "text-brand" : "text-amber"
                     }`}
                   >
                     {r.domain || "—"}｜

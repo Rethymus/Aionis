@@ -1124,6 +1124,9 @@ def test_news_feed_panel_contract() -> None:
     assert x["window"]["start"] <= x["window"]["end"]
     assert x["n_sources"] >= 1
     assert "sourcelang:eng" in x["query"], "the fixed query is shown verbatim"
+    # Bilingual lanes (2026-08-25): the zho lane is domain-anchored on
+    # wallstreetcn.com; its query is disclosed alongside the eng one.
+    assert "wallstreetcn.com" in x["query"], "zho lane query shown verbatim"
     ml = x["methodology"].lower()
     assert "gdelt" in ml and "display-only" in ml, (
         "must disclose the source and the display-lane boundary"
@@ -1131,6 +1134,15 @@ def test_news_feed_panel_contract() -> None:
     assert "outbound link" in ml and "no article text" in ml, (
         "must disclose the link-out / no-article-text boundary"
     )
+    # lang = ingest-resolved lane on every row; n_zho counts the FULL window.
+    assert "n_zho" in x and 0 <= x["n_zho"] <= x["total"]
+    for r in x["items"]:
+        assert r["lang"] in {"eng", "zho"}, r["lang"]
+        # lang must agree with the API language field it derives from.
+        if r["language"] == "Chinese":
+            assert r["lang"] == "zho"
+    n_zho_visible = sum(1 for r in x["items"] if r["lang"] == "zho")
+    assert n_zho_visible <= x["n_zho"], "visible prefix cannot exceed window zho"
 
 
 
@@ -1699,6 +1711,42 @@ def test_data_health_as_of_matches_source_panels() -> None:
         assert by_key["cot"]["as_of"] == cot["latest_date"]
 
 
+def test_data_health_rows_reconcile_with_source_lists() -> None:
+    """rows = len() of each panel's exported row list, never a declared total.
+
+    The terminal home's directory-scale stats (companies / filers / managers /
+    trades / reddit tickers) render from this field, so it must reconcile 1:1
+    with the committed payload's actual list lengths — a collapsed export must
+    collapse the count, never keep a stale literal.
+    """
+    dh = _load("data_health.json")
+    by_key = {p["key"]: p for p in dh["panels"]}
+    for p in dh["panels"]:
+        assert "rows" in p, f"{p['key']} panel entry must carry the rows field"
+        assert p["rows"] is None or (
+            isinstance(p["rows"], int) and p["rows"] > 0
+        ), f"{p['key']} rows must be a positive int or None"
+    # Index/series panels have no natural row table → honest null.
+    for k in ("metrics", "market_context", "macro_drivers", "picks_meta"):
+        assert by_key[k]["rows"] is None, f"{k} is not a row table"
+    # Directory-scale panels the home StatBand renders: reconcile against the
+    # actual exported lists.
+    expect = {
+        "companies_dir": ("companies_dir.json", "companies"),
+        "filers13f": ("filers13f.json", "filers"),
+        "form13f": ("form13f.json", "managers"),
+        "politician_trades_tx": ("politician_trades_tx.json", "transactions"),
+        "reddit_trending": ("reddit_trending.json", "tickers"),
+        "stakes_13g": ("stakes_13g.json", "filings"),
+        "filing_stream": ("filing_stream.json", "filings"),
+    }
+    for key, (fname, field) in expect.items():
+        src = _load(fname)
+        assert by_key[key]["rows"] == len(src[field]), (
+            f"{key} rows must equal len({fname}:{field})"
+        )
+
+
 # --- stock universe (per-stock frozen readout) --------------------------------
 
 
@@ -2182,3 +2230,35 @@ def test_form13f_category_counts_honest() -> None:
         assert sum(counts.values()) == len(f["managers"])
     # Methodology must disclose that the tags are curated, not sourced.
     assert "curated" in f["methodology"].lower() or "curation" in f["methodology"].lower()
+
+
+def test_form13f_stars_digest_reconciles_with_panel() -> None:
+    """The home star-card digest must be a faithful slice of the form13f panel.
+
+    The digest exists so the landing page never loads the ~650KB full book:
+    it must carry the SAME top managers the panel would rank (top 8 by
+    total_value), verbatim fields, and the full-roster count — never a number
+    invented to match an external reference.
+    """
+    f = _load("form13f.json")
+    d = _load("form13f-stars.json")
+    if f["status"] != "ok":
+        assert d["status"] != "ok", "digest cannot outrun its source panel"
+        return
+    assert d["status"] == "ok"
+    assert d["n_managers"] == len(f["managers"]), "count = full roster, not top-8"
+    stars = d["stars"]
+    assert 1 <= len(stars) <= 8
+    values = [s["total_value"] for s in stars]
+    assert values == sorted(values, reverse=True), "digest ordered by book value desc"
+    by_cik = {m["cik"]: m for m in f["managers"]}
+    for s in stars:
+        m = by_cik.get(s["cik"])
+        assert m is not None, "digest CIK must exist in the panel"
+        assert s["name"] == m["name"] and s["zh_name"] == m.get("zh_name")
+        assert s["total_value"] == m["total_value"]
+        top = m["positions"][0] if m["positions"] else None
+        assert s["top_issuer"] == (top["issuer"] if top else None)
+        assert s["top_ticker"] == (top["ticker"] if top else None)
+    # The #1 digest slot must be the panel's largest book — no curation drift.
+    assert stars[0]["cik"] == max(f["managers"], key=lambda m: m["total_value"])["cik"]

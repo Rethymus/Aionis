@@ -607,7 +607,7 @@ def export_companies_dir() -> None:
     rows = sorted(
         (
             {"ticker": str(t).strip(), "name": str(n).strip()}
-            for t, n in zip(us["ticker"], us["name"])
+            for t, n in zip(us["ticker"], us["name"], strict=False)
             if str(n).strip()
         ),
         key=lambda r: r["ticker"],
@@ -2618,6 +2618,7 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
     ("ark", "ark.json", _DH_DAILY),
     ("theme_etfs", "theme_etfs.json", _DH_DAILY),
     ("form13f", "form13f.json", _DH_CADENCE),
+    ("form13f_stars", "form13f-stars.json", _DH_CADENCE),
     ("filers13f", "filers13f.json", _DH_CADENCE),
     # Method library over repo docs — advances on the repo's own documentation
     # cadence (a doc commit), never on market data.
@@ -2631,6 +2632,73 @@ def _dh_read(fname: str):
         return json.loads((WEB / fname).read_text())
     except (FileNotFoundError, json.JSONDecodeError):
         return None
+
+
+# key → the panel's exported row list field (its natural "how many rows does
+# this panel carry" count). Panels that are indices/series rather than row
+# tables (metrics, market_context, macro_drivers, …) carry no entry → rows
+# None. The count is computed from the ACTUAL committed payload — never a
+# static literal — so a collapsed/empty export honestly collapses the count.
+_DH_ROWS_LIST: dict[str, str] = {
+    "sector_breakdown": "all_sectors",
+    "picks_backtest": "months",
+    "pick_conviction": "series",
+    "power_floor": "looks",
+    "sigma_survey": "rows",
+    "stock_universe": "stocks",
+    "themes": "themes",
+    "companies_dir": "companies",
+    "form4": "recent",
+    "form8k": "events",
+    "news_feed": "items",
+    "executives": "events",
+    "ipo": "filings",
+    "form_d": "filings",
+    "form_def14a": "filings",
+    "def14a_persons": "boards",
+    "filing_stream": "filings",
+    "reddit": "picks",
+    "reddit_trending": "tickers",
+    "ledger_audit": "entries",
+    "cot": "markets",
+    "smart_money": "recent_filings",
+    "stakes_13g": "filings",
+    "ark": "funds",
+    "theme_etfs": "funds",
+    "form13f": "managers",
+    "form13f_stars": "stars",
+    "filers13f": "filers",
+    "knowledge_shelf": "docs",
+}
+
+
+def _dh_rows(key: str, payload) -> int | None:
+    """Natural row count of the panel's exported table (None = not a table).
+
+    Root-list panels (picks / shorts / ic_monthly / bps_sweep / evidence) count
+    the list itself; nested-list panels count the mapped field; dict-shaped
+    tables (politician trades, tx) are special-cased. Always len() of the real
+    exported objects — never a payload-declared total, so the count can only
+    claim what the JSON actually carries.
+    """
+    if isinstance(payload, list):
+        return len(payload)
+    if not isinstance(payload, dict):
+        return None
+    if key == "politician_trades":
+        rows = (payload.get("house") or {}).get("filings")
+        return len(rows) if isinstance(rows, list) else None
+    if key == "politician_trades_tx":
+        rows = payload.get("transactions")
+        return len(rows) if isinstance(rows, list) else None
+    if key == "theme_signals":
+        sig = payload.get("signals")
+        return len(sig) if isinstance(sig, dict) else None
+    field = _DH_ROWS_LIST.get(key)
+    if not field:
+        return None
+    rows = payload.get(field)
+    return len(rows) if isinstance(rows, list) else None
 
 
 def _dh_last_month_of_series(panel: dict) -> str | None:
@@ -2830,6 +2898,10 @@ def export_data_health() -> None:
             "as_of": as_of,
             "exported_at": snap.split("T")[0] if snap else None,
             "present": payload is not None,
+            # Natural row count of the exported table (None = index/series
+            # panel, or panel absent) — directory-scale scale stats for the
+            # terminal home read this instead of importing heavy panels.
+            "rows": _dh_rows(key, payload),
         })
     summary = {
         "n_panels": len(panels),
@@ -2854,7 +2926,11 @@ def export_data_health() -> None:
             "publication rhythm (CFTC weekly, price caches ~5-day grace, EDGAR "
             "filing rhythm). as_of is read from each panel's own timestamp "
             "fields; null = the panel carries no observation date (static "
-            "research artifact). The only legal way frozen numbers move "
+            "research artifact). rows is the len() of the panel's exported "
+            "row list — computed from the committed payload, never a declared "
+            "total; null = index/series panel with no natural row table (the "
+            "terminal home's directory-scale counts render from it). "
+            "The only legal way frozen numbers move "
             "forward: E3 forward-live accumulation or a new pre-registered "
             "phase. source_health quantifies field-level quality on the "
             "committed JSONs (smart_money ticker nulls = filings on unlisted "
@@ -2989,6 +3065,11 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
         "ownership % / state machine not parsed",
     ),
     "form13f": ("U.S. SEC EDGAR — public domain", "13F-HR quarterly holdings XML, filed-date PIT, whole-USD values"),
+    "form13f_stars": (
+        "Aionis-derived from U.S. SEC EDGAR public-domain 13F parses",
+        "home-card digest of the form13f panel: top-8 managers by book value "
+        "(name/firm/quarter/value/top holding), count = full roster",
+    ),
     "filers13f": (
         "U.S. SEC EDGAR — public domain",
         "13F filer directory: every CIK filing 13F-HR(/A) over the trailing "
@@ -3459,6 +3540,49 @@ def export_form13f() -> None:
         f"as_of {payload['as_of']}, ticker link coverage {payload['ticker_coverage']}",
         flush=True,
     )
+
+
+def export_form13f_stars() -> None:
+    """Home-page star-investors DIGEST — top managers by book value.
+
+    The full form13f panel is a dedicated heavy module (~650KB, loaded only by
+    /institutions + /manager). The home 明星投资人 card needs six rows and a
+    count, so this digest derives them from the COMMITTED form13f.json at
+    export time (idempotent, zero network, zero parquet deps) — the landing
+    page never pays for the full book. Fields mirror the panel verbatim; the
+    count is the full manager roster so the card's header stays honest.
+    """
+    panel = _dh_read("form13f.json")
+    if not panel or panel.get("status") != "ok" or not panel.get("managers"):
+        print("[export-terminal] SKIP form13f_stars: form13f.json absent/empty", flush=True)
+        return
+    stars = []
+    for m in sorted(panel["managers"], key=lambda x: -(x.get("total_value") or 0))[:8]:
+        top = m.get("positions") or []
+        stars.append(
+            {
+                "cik": m["cik"],
+                "name": m["name"],
+                "zh_name": m.get("zh_name"),
+                "quarter": m.get("quarter"),
+                "total_value": m.get("total_value"),
+                "top_issuer": top[0].get("issuer") if top else None,
+                "top_ticker": top[0].get("ticker") if top else None,
+            }
+        )
+    payload = {
+        "status": "ok",
+        "as_of": panel.get("as_of"),
+        "n_managers": len(panel["managers"]),
+        "stars": stars,
+        "methodology": "Top-manager digest for the home star-investors card — "
+        "derived from the committed form13f panel (same SEC EDGAR public-domain "
+        "13F-HR parses) at export time: top 8 by total book value, fields "
+        "verbatim, count = the full curated roster. Display-only digest, not a "
+        "separate data source; NOT part of any OOS pipeline.",
+    }
+    (WEB / "form13f-stars.json").write_text(json.dumps(_stamp(payload), default=str))
+    print(f"[export-terminal] form13f_stars: top {len(stars)} of {payload['n_managers']}", flush=True)
 
 
 def export_form8k() -> None:
@@ -4433,7 +4557,7 @@ def export_news_feed() -> None:
     summarized or fabricated. Payload caps the item list at 150 newest while
     ``by_day`` / ``total`` cover the full retained window (honest counting).
     """
-    from aionis.ingest.news_feed import DEFAULT_QUERY, count_by_day
+    from aionis.ingest.news_feed import DEFAULT_QUERY, DEFAULT_QUERY_ZHO, count_by_day
 
     fp = Path("data/cache/news_feed.parquet")
     if not fp.exists():
@@ -4449,6 +4573,14 @@ def export_news_feed() -> None:
         return  # fetch-side warning already logged; keep last-committed JSON
 
     rows = df.to_dict("records")
+
+    def _lang(r: dict) -> str:
+        """Ingest's lang column is authoritative; a legacy eng-only parquet
+        falls back to the API language field (never guessed from bytes)."""
+        if r.get("lang"):
+            return str(r["lang"])
+        return "zho" if r.get("language") == "Chinese" else "eng"
+
     by_day = count_by_day(rows)
     dates = sorted(r["seendate"][:10] for r in rows if r.get("seendate"))
     items = [
@@ -4458,37 +4590,46 @@ def export_news_feed() -> None:
             "url": str(r["url"]),
             "domain": str(r["domain"]),
             "language": str(r["language"]),
+            "lang": _lang(r),
             "sourcecountry": str(r["sourcecountry"]),
         }
         for r in rows[:150]
     ]
+    n_zho = sum(1 for r in rows if _lang(r) == "zho")
     payload = {
         "status": "ok",
         # as_of = latest GDELT first-seen stamp in the retained window.
         "as_of": max(r["seendate"] for r in rows if r.get("seendate")),
         "window": {"start": dates[0], "end": dates[-1]},
-        "query": DEFAULT_QUERY,
+        "query": f"{DEFAULT_QUERY} | {DEFAULT_QUERY_ZHO}",
         "total": int(len(rows)),
         "n_sources": int(df["domain"].nunique()),
+        "n_zho": int(n_zho),
         "by_day": by_day,
         "items": items,
         "methodology": (
-            "GDELT Doc 2.0 artlist — a machine index of worldwide news. One "
-            "bounded request per refresh (<=200 records, >=15s host spacing; "
+            "GDELT Doc 2.0 artlist — a machine index of worldwide news. TWO "
+            "bounded requests per refresh (one per LANGUAGE LANE, the two "
+            "fixed queries above, <=200 records each, >=15s host spacing; "
             "GDELT open data: URL/title/date/domain are facts, article "
-            "copyright stays with the publishers) for the FIXED quoted-phrase "
-            "query shown above, sourcelang:eng, sort=datedesc (machine "
-            "ordering, not editorial). seendate is GDELT's first-seen UTC "
-            "stamp (15-min resolution) — the display freshness anchor. Rows "
-            "are metadata + outbound links only: no article text is stored, "
-            "summarized or fabricated; missing source fields are shown "
-            "empty, never guessed. Dedup key = exact URL; syndicated copies "
-            "of the same story on different domains are NOT collapsed and "
-            "count separately (honest counting). Coverage = whatever "
-            "GDELT's crawl saw (English-biased); gaps are gaps. The payload "
-            "caps the item list at 150 newest while by_day/total cover the "
-            "full trailing 30-day cache window. Display-only, not a research "
-            "claim; NOT part of any OOS pipeline."
+            "copyright stays with the publishers), sort=datedesc (machine "
+            "ordering, not editorial). The Chinese lane is domain-anchored "
+            "on wallstreetcn.com (华尔街见闻 — a 财联社-style 7×24 financial "
+            "newswire): 财联社 itself has ZERO GDELT crawl coverage and CJK "
+            "phrase queries are rejected by the API ('phrase too short'), "
+            "so a domain seed is the only proven form (probe evidence in "
+            "docs/data-intake-gdelt-news-feed.md). lang = the ingest-resolved "
+            "lane (API language field first, request provenance fallback; "
+            "never guessed from title bytes). seendate is GDELT's first-seen "
+            "UTC stamp (15-min resolution) — the display freshness anchor. "
+            "Rows are metadata + outbound links only: no article text is "
+            "stored, summarized or fabricated; missing source fields are "
+            "shown empty, never guessed. Dedup key = exact URL WITHIN a "
+            "lane; the two languages are different articles and are never "
+            "collapsed across lanes. Coverage = whatever GDELT's crawl saw; "
+            "gaps are gaps. The payload caps the item list at 150 newest "
+            "while by_day/total cover the full trailing 30-day cache window. "
+            "Display-only, not a research claim; NOT part of any OOS pipeline."
         ),
     }
     (WEB / "news_feed.json").write_text(
@@ -5582,6 +5723,9 @@ def main() -> None:
     # just above — keep directly after it, before the freshness map.
     _safe_export("party_index", export_party_index)
     _safe_export("form13f", export_form13f)
+    # Home star-card digest derives from the committed form13f.json written
+    # just above — directly after it, before the freshness map / catalog.
+    _safe_export("form13f_stars", export_form13f_stars)
     _safe_export("filers13f", export_form13f_dir)
     _safe_export("market_context", export_market_context)
     _safe_export("macro_drivers", export_macro_drivers)

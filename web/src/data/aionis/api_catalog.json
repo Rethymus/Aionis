@@ -284,7 +284,7 @@
       "method": "GET",
       "status": "available",
       "freshness": "daily",
-      "as_of": "2026-08-23T12:30:00Z",
+      "as_of": "2026-08-25T10:00:00Z",
       "license": "GDELT open data (facts; article copyright stays with publishers)",
       "source": "GDELT Doc 2.0 artlist market headlines, seendate PIT, link-out only"
     },
@@ -498,6 +498,17 @@
       "source": "13F-HR quarterly holdings XML, filed-date PIT, whole-USD values"
     },
     {
+      "key": "form13f_stars",
+      "file": "form13f-stars.json",
+      "path": "/api/v1/panels/form13f-stars.json",
+      "method": "GET",
+      "status": "available",
+      "freshness": "cadence",
+      "as_of": null,
+      "license": "Aionis-derived from U.S. SEC EDGAR public-domain 13F parses",
+      "source": "home-card digest of the form13f panel: top-8 managers by book value (name/firm/quarter/value/top holding), count = full roster"
+    },
+    {
       "key": "filers13f",
       "file": "filers13f.json",
       "path": "/api/v1/panels/filers13f.json",
@@ -535,5 +546,5 @@
     "server": "https://api.aionis-prices.workers.dev"
   },
   "methodology": "Public static data API over the terminal's committed panels (display-only). Every endpoint carries its 7-gate intake facts: license + primary source, plus the freshness class (daily / cadence / frozen). Frozen endpoints derive from frozen OOS artifacts (ledger #49 lineage) and deliberately do NOT advance \u2014 consuming them expecting daily updates misreads the contract. Endpoints with status=planned are NOT built: the path is a reserved future location, no payload is served, as_of is null, and the license/source describe the primary source the future fetcher would use. Research ingestion of any endpoint requires the full 7-gate rubric (docs/data-intake-rubric.md); the live-prices worker is display-only and must never enter the OOS pipeline.",
-  "snapshot_ts": "2026-08-25T14:15:42.831433+00:00"
+  "snapshot_ts": "2026-08-25T16:29:06.866638+00:00"
 }

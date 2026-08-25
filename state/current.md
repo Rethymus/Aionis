@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-08-25) ⑯ 视觉多轮迭代 Tier-7：首页 15 模块全齐 + 双语新闻流 + 8 无基线页目视终验（2,028 passed）：**
+  参照站复查仍 NXDOMAIN（DoH 1.1.1.1 实证）→ 冻结基线（runs/ui-iter/）为唯一参照；视觉通道重建（Read→CDN→视觉模型三连可用）。**T7A 首页模块全齐**（7 新模块：最新举牌/近期 IPO/明星投资人/ARK 共振/重大事件/高管变动/探索全部数据模块 12 磁贴 + 情绪榜/政客卡全解剖升级 + 统计条→目录规模 10,387/9,385/40/2,812/290 + data_health 全 47 面板 rows 字段 + 对账契约测试）；**主线裁决**：明星卡改走 ~2KB form13f-stars 导出时摘要（650KB 全量书绝不进首页；export_form13f_stars + 摘要与全量对账测试）。**T7B 双语新闻**：华尔街见闻域锚定中文车道证据坐实（200/200 满帽；财联社零 GDELT 覆盖、CJK 短语查询被 API 拒——探针证据表入档 data-intake 文档）→ ingest 双车道 + lang 解析（API language 字段优先，绝不从字节猜）+ 面板 400 条（200 中/200 英）+ 前端双语计数芯片与琥珀/绿语言前缀 + **视觉轮抓到真 bug**：groupByDate 按 GDELT 紧凑格式 slice(0,8) 切 ISO 日期 → "0月NaN日"（已修）。8 无基线页（taco/stakes/market/annual/executives/manager/api-docs/filers）逐页目视全 PASS（market"图例重叠"= 视觉幻觉，DOM 无 Legend 元素反证）。内容深度终审：目录全面反超（10,387 vs 6,517 公司；9,385 vs 8,741 申报人；2,812 交易级 vs 2,778 申报级）；诚实残余 = IPO 价格未解析 / ARK 无历史（快照累积中）/ Reddit 源分页死 / 高管人级红线。**规划文档** `reports/design/2026-08-25-post-parity-roadmap.md`（终局判定：参照站已被运营者删除，Aionis = 终局形态的存活实现；H1 重新上线（部署/计费）/ H2 实时价面 / H3 深度残余 / H4 E3 前瞻收敛 / H5 势力阵营 / H6 API 扩展）。验证：pytest **2,028 passed**/9 skip + ruff 净 + tsc 0 + eslint 0 错 + build **1,496 页** + 首页/新闻目视+像素双验收（首页 content 8.32→8.78 vs 9.73；新闻 9.64→10.25 vs 13.89，残余=数据语言属性）。详见 handoff (dd)。
+
 - **active (2026-08-24) ⑮ UI 颗粒度对齐轮上线（响应业主"UI 过于简陋"判定）：**
   审计实证 **data.xiaoyinsi.com = 本仓库部署皮肤**（同数据两套皮肤）→ 对齐 1:1 映射。基座 db44089（纯黑 #000/Geist/1320px 轨/双行导航 14 键）+ 页面组（congress 热门标的芯片行/dashboard 数据驾驶舱三卡/stock 锚点导航/机构双名两行）。**tsc 0 / eslint 净 / build 1,498 页 / IAB 三页终验 / 2,016 passed**。遗留精化：congress"共 N"前置、events/taco/market 页头计数窗、行密度微调（下轮）。详见 handoff (bb)。
 

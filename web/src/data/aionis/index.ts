@@ -566,6 +566,11 @@ export type DataHealthPanel = {
   as_of: string | null;
   exported_at: string | null;
   present: boolean;
+  // len() of the panel's exported row list, computed at export time from the
+  // committed payload (never a declared total). null = index/series panel with
+  // no natural row table (or panel absent). Directory-scale counts (companies /
+  // filers / managers) render from this instead of importing heavy panels.
+  rows?: number | null;
 };
 
 export type DataHealth = {
@@ -1106,6 +1111,10 @@ export type NewsFeedItem = {
   url: string;
   domain: string;
   language: string;
+  // Ingest-resolved language lane: "eng" | "zho" (API language field first,
+  // request-provenance fallback — never guessed from title bytes). Carries
+  // the row's language tone on the stream (brand vs amber).
+  lang: "eng" | "zho";
   sourcecountry: string;
 };
 
@@ -1114,11 +1123,13 @@ export type NewsFeed = {
   // Newest GDELT first-seen stamp in the retained window (= items[0].seendate).
   as_of: string;
   window: { start: string; end: string };
-  // The FIXED quoted-phrase query (displayed verbatim — fixed query, no
-  // editorial tuning possible after the fact).
+  // The FIXED quoted-phrase queries, one per language lane (displayed
+  // verbatim — fixed queries, no editorial tuning possible after the fact).
   query: string;
   // Full retained-window count; items is a capped (<=150) newest prefix.
   total: number;
+  // Chinese-lane count over the FULL retained window (bilingual stream).
+  n_zho: number;
   n_sources: number;
   by_day: { date: string; count: number }[];
   items: NewsFeedItem[];
