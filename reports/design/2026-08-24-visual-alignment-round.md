@@ -261,3 +261,28 @@ area-fill (their chart signature), events table → date-grouped stream
 comparison: content **7.76 vs 7.73** (was 3.59).
 
 pytest after the rewrite: **2,016 passed, 9 skipped**. Build: 1,499 pages.
+
+## Tier-6 — content-depth round ("内容完整，非表层数据")
+
+Content-depth audit per panel (declared = source window; visible = payload):
+
+| panel | declared | visible | action |
+|---|---|---|---|
+| filers13f | — | **9,385** | already deeper than their 8,741 directory |
+| politician tx | 2,812 | 2,812 | fully visible |
+| stakes_13g | 15,982 | 150 → **400** | visible cap raised (cache re-export) |
+| companies | 6,517 (theirs) | 1,421 → **10,387 + CN** | NEW `companies_dir` panel |
+
+**`export_companies_dir`** (zero network — reads the existing
+`ticker_metadata.parquet` snapshot): 10,387 named US tickers as a display
+directory, honestly labeled "current snapshot, not point-in-time"; frozen
+readouts (score/rank/bar + /stock links) render only for universe members.
+`/companies` now spans the full directory (universe-first sort so the page
+opens on scored cards; A-Z rail + search + load-more over everything).
+Registered in `_API_LICENSE` + `_DH` manifest; dedicated module
+`companies-dir.ts` (barrel untouched). Pixel: **9.35 vs their 10.19**.
+
+**/stakes** depth: 400 visible rows (366 ticker-resolved / 150 pct-parsed —
+the bounded parse cache, honest nulls disclosed).
+
+pytest: **2,016 passed, 9 skipped**. Build 1,499 pages.

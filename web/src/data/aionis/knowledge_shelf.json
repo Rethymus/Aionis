@@ -1,14 +1,14 @@
 {
   "status": "ok",
   "as_of": "2026-08-23",
-  "n_docs": 66,
+  "n_docs": 68,
   "n_categories": 5,
   "categories": {
     "preregistration": 10,
     "adr": 13,
     "results": 2,
     "rubric": 2,
-    "theory": 39
+    "theory": 41
   },
   "docs": [
     {
@@ -417,6 +417,15 @@
       "url": "https://github.com/Rethymus/Aionis/blob/main/docs/data-intake-baostock-industry.md"
     },
     {
+      "title": "\u6570\u636e\u63a5\u5165 7 \u95e8 \u2014 BTS \u8d27\u8fd0 TSI\uff08freight_taco / /taco \u9875 FreightProxySection\uff09",
+      "path": "docs/data-intake-bts-tsi.md",
+      "category": "theory",
+      "date": "2026-08-23",
+      "n_chars": 4518,
+      "summary": "\u72b6\u6001\uff1av0.1 \u00b7 2026-08-23 \u00b7 exploratory-only display module\u3002 \u8303\u56f4\uff1a\u5c0f\u9690\u5bfa TACO \u536b\u661f\u6570\u636e\uff08Trucking Activity Co. \u5546\u4e1a\u5361\u8f66\u8ba1\u6570\uff09\u5e9f\u9664\u8c41\u514d\u540e\u7684\u516c\u5171\u57df\u964d\u7ea7\u7b49\u4ef7\u7269\u2014\u2014\u7f8e\u56fd\u4ea4\u901a\u7edf\u8ba1\u5c40\uff08BTS\uff09\u8fd0\u8f93\u670d\u52a1\u6307\u6570\uff08Freight TSI\uff0c\u6708\u9891\uff09\u4e3a\u4e3b\u6e90 + FRED/BLS CES \u5361\u8f66\u8fd0\u8f93\u5c31\u4e1a\u4e3a\u8f85\u52a9\u3002",
+      "url": "https://github.com/Rethymus/Aionis/blob/main/docs/data-intake-bts-tsi.md"
+    },
+    {
       "title": "\u4e2d\u56fd\u5b8f\u89c2\u6570\u636e\u63a5\u5165\u8bc4\u4f30\uff08Track C \u2014 S0 \u6570\u636e\u6784\u9020\uff09",
       "path": "docs/data-intake-cn-macro.md",
       "category": "theory",
@@ -457,8 +466,8 @@
       "path": "docs/data-intake-edgar-def14a.md",
       "category": "theory",
       "date": "2026-08-23",
-      "n_chars": 3260,
-      "summary": "\u72b6\u6001\uff1av0.1 \u00b7 2026-08-23 \u00b7 exploratory-only display module\u3002 \u8303\u56f4\uff1aEDGAR DEF 14A \u7533\u62a5\u6570\u636e\u901a\u8fc7 7 \u95e8\u5f3a\u5236\u6e05\u5355\uff0c\u6240\u6709\u7b2c\u4e09\u65b9\u6570\u636e\u96c6\u8fdb Aionis \u524d \u5fc5\u987b \u5168\u90e8\u8fc7\u5173\u3002 \u5f15\u7528\uff1a\u4e3b rubric \u89c1 docs/data-intake-rubric.md\u3002",
+      "n_chars": 4964,
+      "summary": "\u72b6\u6001\uff1av0.2 \u00b7 2026-08-23 \u00b7 exploratory-only display module\u3002 \u8303\u56f4\uff1aEDGAR DEF 14A \u7533\u62a5\u6570\u636e\u901a\u8fc7 7 \u95e8\u5f3a\u5236\u6e05\u5355\uff0c\u6240\u6709\u7b2c\u4e09\u65b9\u6570\u636e\u96c6\u8fdb Aionis \u524d \u5fc5\u987b \u5168\u90e8\u8fc7\u5173\u3002 \u5f15\u7528\uff1a\u4e3b rubric \u89c1 docs/data-intake-rubric.md\u3002",
       "url": "https://github.com/Rethymus/Aionis/blob/main/docs/data-intake-edgar-def14a.md"
     },
     {
@@ -514,6 +523,15 @@
       "n_chars": 2647,
       "summary": "\u72b6\u6001\uff1av0.1 \u00b7 2026-08-22 \u00b7 exploratory-only display module\u3002 \u8303\u56f4\uff1aGDELT Doc 2.0 artlist \u5e02\u573a\u65b0\u95fb\u6d41\u901a\u8fc7 7 \u95e8\u5f3a\u5236\u6e05\u5355\uff0c\u6240\u6709\u7b2c\u4e09\u65b9\u6570\u636e\u96c6\u8fdb Aionis \u524d \u5fc5\u987b \u5168\u90e8\u8fc7\u5173\u3002 \u5f15\u7528\uff1a\u4e3b rubric \u89c1 docs/data-intake-rubric.md\uff1bGDELT \u5148\u4f8b\u89c1 news_sentiment_gdelt.py\uff08themes \u7684 news_sentiment \u4e3b\u9898\uff09\u3002",
       "url": "https://github.com/Rethymus/Aionis/blob/main/docs/data-intake-gdelt-news-feed.md"
+    },
+    {
+      "title": "\u6570\u636e\u63a5\u5165 7 \u95e8 \u2014 \u65b9\u6cd5\u4e66\u67b6\uff08knowledge_shelf / /shelf \u9762\u677f\uff09",
+      "path": "docs/data-intake-knowledge-shelf.md",
+      "category": "theory",
+      "date": "2026-08-23",
+      "n_chars": 3134,
+      "summary": "\u72b6\u6001\uff1av0.1 \u00b7 2026-08-23 \u00b7 reference \u663e\u793a\u6a21\u5757\uff08\u4e1a\u4e3b\u5e9f\u9664\u8c41\u514d\u540e\u7684\u5c0f\u9690\u5bfa\"\u4e66\u67b6\"\u7b49\u4ef7\u7269\uff09\u3002 \u8303\u56f4\uff1a\u672c\u9762\u677f\u901a\u8fc7 7 \u95e8\u5f3a\u5236\u6e05\u5355\uff08docs/data-intake-rubric.md\uff09\u3002 \u4e0e\u5176\u5b83\u9762\u677f\u4e0d\u540c\uff0c\u672c\u9762\u677f \u81ea\u6709\u5185\u5bb9\u5c42\u96f6\u7b2c\u4e09\u65b9\u7248\u6743\u9762\uff08\u5168\u90e8\u4e3a\u4ed3\u5e93 MIT \u81ea\u6709\u6587\u6863\u7684\u76ee\u5f55\uff09\uff1b\u5916\u94fe\u5c42\u4e3a\u7f16\u8f91\u7cbe\u9009\u4e66\u7b7e \uff08\u53ea\u94fe\u51fa + \u4e00\u53e5\u9759\u6001\u63cf\u8ff0\uff0c\u4e0d\u6293\u53d6\uff09\u3002",
+      "url": "https://github.com/Rethymus/Aionis/blob/main/docs/data-intake-knowledge-shelf.md"
     },
     {
       "title": "Aionis Frontier Positioning & Next Steps",
@@ -665,5 +683,5 @@
     }
   ],
   "methodology": "Layer 1 \u2014 Aionis's OWN method library: catalog of docs/ + decisions/ markdown (repo MIT; zero third-party copyright surface). Each entry carries metadata plus a safe teaser slice (first 2-3 sentences, <=240 chars) extracted at export time; the full text stays on GitHub (link-out). Dates are last-commit dates read from the LOCAL git repository (no network). Layer 2 \u2014 a FIXED editorially-curated bookmark list of first-hand public research sources (BIS / Fed FEDS / IMF / NBER / arXiv q-fin / FRASER / FRED-ALFRED / RePEc): link-out + one static sentence each, no fetching, no scraping, no summary APIs \u2014 copyright stays with the authors, we only catalog. Categories are a fixed 5-rail whitelist (preregistration / adr / results / rubric / theory); n_docs reconciles to the sum of the rails. Display-only reference lane \u2014 never part of any research or OOS pipeline.",
-  "snapshot_ts": "2026-08-23T15:08:06.390098+00:00"
+  "snapshot_ts": "2026-08-25T14:15:42.583600+00:00"
 }

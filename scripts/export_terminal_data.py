@@ -583,6 +583,45 @@ def export_taco() -> None:
     (WEB / "taco.json").write_text(json.dumps(_stamp(payload), indent=2))
 
 
+def export_companies_dir() -> None:
+    """US company directory over the cached ticker snapshot (display lane).
+
+    Content completeness for /companies: the FULL named US directory
+    (~10.4k tickers, the counterpart of the reference site's 6,517-company
+    directory) instead of only the 1,421-stock frozen OOS universe. Source =
+    the same ``data/cache/ticker_metadata.parquet`` the stakes ticker
+    backfill uses (EDGAR company_tickers snapshot). Honest caliber label:
+    a CURRENT snapshot directory, NOT point-in-time — frozen-universe
+    readouts (score/rank/bars) render only for universe members.
+    """
+    cache = Path("data/cache/ticker_metadata.parquet")
+    if not cache.exists():
+        print(
+            "[export-terminal] SKIP companies_dir: data/cache/ticker_metadata.parquet "
+            "absent (tracked JSON retains last-committed value)",
+            flush=True,
+        )
+        return
+    df = pd.read_parquet(cache)
+    us = df[df["region"] == "us"]
+    rows = sorted(
+        (
+            {"ticker": str(t).strip(), "name": str(n).strip()}
+            for t, n in zip(us["ticker"], us["name"])
+            if str(n).strip()
+        ),
+        key=lambda r: r["ticker"],
+    )
+    payload = {
+        "status": "ok",
+        "n": len(rows),
+        "source": "SEC EDGAR company_tickers snapshot (display directory; current snapshot, not point-in-time)",
+        "companies": rows,
+    }
+    (WEB / "companies_dir.json").write_text(json.dumps(_stamp(payload), indent=2))
+    print(f"[export-terminal] companies_dir: {len(rows)} US tickers", flush=True)
+
+
 def export_freight_taco() -> None:
     """Freight TACO equivalent — BTS TSI public-domain proxy (display-only).
 
@@ -1915,7 +1954,7 @@ def export_stakes13g() -> None:
     for r in rows:
         by_form[r["form"]] = by_form.get(r["form"], 0) + 1
     filings = []
-    for r in rows[:150]:
+    for r in rows[:400]:
         # Normalize the daily index's http:// links to https:// (EDGAR serves
         # both; https is the terminal's link convention).
         url = str(r["url"])
@@ -2555,6 +2594,7 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
     ("macro_drivers", "macro_drivers.json", _DH_DAILY),
     ("taco", "taco.json", _DH_DAILY),
     ("freight_taco", "freight_taco.json", _DH_CADENCE),
+    ("companies_dir", "companies_dir.json", _DH_CADENCE),
     ("korea_proxy", "korea_proxy.json", _DH_CADENCE),
     ("form4", "form4.json", _DH_DAILY),
     ("form8k", "form8k.json", _DH_DAILY),
@@ -2941,6 +2981,7 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
     "ledger_audit": ("Aionis append-only ledger (repo MIT)", "ledger.jsonl claim-row timeline"),
     "cot": ("U.S. CFTC — public domain", "Commitments of Traders legacy futures, weekly"),
     "smart_money": ("U.S. SEC EDGAR — public domain", "13D/G filings via EFTS, filed-date PIT"),
+    "companies_dir": ("SEC EDGAR public domain (17 U.S.C. §105)", "company_tickers snapshot directory"),
     "stakes_13g": (
         "U.S. SEC EDGAR — public domain",
         "SC 13G/G-A passive-stake stream via the daily crawler index "
@@ -5514,6 +5555,7 @@ def main() -> None:
     _safe_export("picks_backtest", export_picks_backtest)
     _safe_export("taco", export_taco)
     _safe_export("freight_taco", export_freight_taco)
+    _safe_export("companies_dir", export_companies_dir)
     _safe_export("korea_proxy", export_korea_proxy)
     _safe_export("pick_conviction", export_pick_conviction)
     _safe_export("themes", export_themes)

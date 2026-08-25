@@ -28,6 +28,7 @@ import {
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { stockUniverse, type StockRow } from "@/data/aionis/stock-universe";
+import { companiesDir } from "@/data/aionis/companies-dir";
 import { ProvenanceBadge } from "@/components/provenance-badge";
 
 // Company directory over the FROZEN universe (xiaoyinsi-style A-Z index):
@@ -45,10 +46,10 @@ type RegionFilter = "all" | "us" | "cn";
 
 /** Index char for the A-Z rail: first char of the ticker code (exchange
  * prefix stripped for CN), uppercased; digits collapse into "0-9". */
-function initialOf(s: StockRow): string {
-  const code = s.ticker.includes(".")
-    ? (s.ticker.split(".").pop() ?? s.ticker)
-    : s.ticker;
+function initialOfTicker(ticker: string): string {
+  const code = ticker.includes(".")
+    ? (ticker.split(".").pop() ?? ticker)
+    : ticker;
   const c = code.charAt(0).toUpperCase();
   return c >= "A" && c <= "Z" ? c : "0-9";
 }
@@ -107,23 +108,62 @@ export function CompaniesView() {
     setVisibleCount(PAGE_SIZE);
   };
 
+  // Content completeness: the directory spans the FULL named US snapshot
+  // (~10.4k, companies_dir) plus the CN universe rows; frozen-universe
+  // readouts (score/rank/bar) exist only for universe members — everyone
+  // else renders as a plain directory card (honest caliber: the snapshot is
+  // current, not point-in-time; scores are the frozen OOS readout).
+  const dirRows = useMemo(() => {
+    const byTicker = new Map(stockUniverse.stocks.map((s) => [s.ticker, s]));
+    type DirRow = {
+      ticker: string;
+      name: string;
+      region: "us" | "cn";
+      sector: string;
+      stock: StockRow | null;
+    };
+    const rows: DirRow[] = companiesDir.companies.map((c) => {
+      const stock = byTicker.get(c.ticker) ?? null;
+      return {
+        ticker: c.ticker,
+        name: c.name,
+        region: "us" as const,
+        sector: stock?.sector ?? "",
+        stock,
+      };
+    });
+    for (const s of stockUniverse.stocks) {
+      if (s.region === "cn") {
+        rows.push({ ticker: s.ticker, name: s.name, region: "cn", sector: s.sector, stock: s });
+      }
+    }
+    return rows;
+  }, []);
+
   const filtered = useMemo(() => {
     const needle = query.trim().toLowerCase();
-    return stockUniverse.stocks
+    return dirRows
       .filter((s) => {
         if (region !== "all" && s.region !== region) return false;
-        if (initial !== "all" && initialOf(s) !== initial) return false;
+        if (initial !== "all" && initialOfTicker(s.ticker) !== initial) return false;
         if (needle) {
           const hit =
             s.ticker.toLowerCase().includes(needle) ||
-            (s.name.length > 0 && s.name.toLowerCase().includes(needle));
+            s.name.toLowerCase().includes(needle);
           if (!hit) return false;
         }
         return true;
       })
       // Plain ASCII compare — locale-independent, so the prerendered HTML and
       // the client render agree (no hydration drift on Intl collation).
-      .sort((a, b) => (a.ticker < b.ticker ? -1 : a.ticker > b.ticker ? 1 : 0));
+      // Frozen-universe members (scored cards) sort FIRST — the directory
+      // opens on the readout-bearing rows; plain snapshot entries follow.
+      .sort((a, b) => {
+        const au = a.stock ? 0 : 1;
+        const bu = b.stock ? 0 : 1;
+        if (au !== bu) return au - bu;
+        return a.ticker < b.ticker ? -1 : a.ticker > b.ticker ? 1 : 0;
+      });
   }, [region, initial, query]);
 
   const visible = filtered.slice(0, visibleCount);
@@ -144,6 +184,11 @@ export function CompaniesView() {
         <h1 className="text-2xl font-semibold tracking-[-0.032em]">
           {t("companies.title")}
         </h1>
+        <p className="mt-2 text-[13px] text-mute">
+          {t("companies.dir.count").replace("{n}", dirRows.length.toLocaleString())}
+          {" · "}
+          {t("companies.dir.caliber")}
+        </p>
       </header>
 
       {/* Filter toolbar: region + initial rail + search, all client-side. */}
@@ -228,7 +273,7 @@ export function CompaniesView() {
           <CardTitle className="flex flex-wrap items-center gap-2 text-base">
             {t("companies.title")}
             <span className="text-sm font-normal text-muted-foreground">
-              {stockUniverse.n_stocks.toLocaleString()}
+              {dirRows.length.toLocaleString()}
             </span>
             <span className="ml-auto flex flex-wrap items-center gap-2">
               <ProvenanceBadge
@@ -257,45 +302,65 @@ export function CompaniesView() {
               {/* Aligned-site directory cards: 15px name + mono meta over a
                   divider and a percentile bar (5px, green-fill). */}
               <div className="grid gap-3 p-4 md:grid-cols-2 xl:grid-cols-3">
-                {visible.map((s) => (
-                  <Link
-                    key={s.ticker}
-                    href={`/stock/${s.ticker}`}
-                    className="block rounded-xl border border-line bg-card px-5 py-4 transition-colors hover:border-faint"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="min-w-0 flex-1">
-                        <span className="block truncate text-[15px] font-semibold">
-                          {s.name || s.ticker}
-                        </span>
-                        <span className="block truncate font-mono text-xs text-mute">
-                          {s.ticker} · {s.sector || "—"}
-                        </span>
+                {visible.map((s) => {
+                  const inner = (
+                    <>
+                      <div className="flex items-center gap-3">
+                        <div className="min-w-0 flex-1">
+                          <span className="block truncate text-[15px] font-semibold">
+                            {s.name || s.ticker}
+                          </span>
+                          <span className="block truncate font-mono text-xs text-mute">
+                            {s.ticker} · {s.region.toUpperCase()} · {s.sector || "—"}
+                          </span>
+                        </div>
+                        {s.stock ? (
+                          <span
+                            className={`flex-none font-mono text-[13px] font-semibold tabular-nums ${
+                              s.stock.score >= 0 ? "text-up" : "text-down"
+                            }`}
+                          >
+                            {s.stock.score > 0 ? "+" : ""}{s.stock.score.toFixed(2)}
+                          </span>
+                        ) : null}
                       </div>
-                      <span
-                        className={`flex-none font-mono text-[13px] font-semibold tabular-nums ${
-                          s.score >= 0 ? "text-up" : "text-down"
-                        }`}
-                      >
-                        {s.score > 0 ? "+" : ""}{s.score.toFixed(2)}
-                      </span>
+                      {s.stock ? (
+                        <div className="mt-3 border-t border-line2 pt-3 text-xs text-mute">
+                          <div className="flex items-baseline justify-between gap-2">
+                            <span>{t("companies.col.rank")}</span>
+                            <span className="font-mono tabular-nums">
+                              {s.stock.rank} / {s.stock.n_region}
+                            </span>
+                          </div>
+                          <div className="mt-1.5 h-[5px] overflow-hidden rounded bg-line2">
+                            <div
+                              className="h-full rounded bg-green-fill"
+                              style={{ width: `${(s.stock.rank / Math.max(s.stock.n_region, 1)) * 100}%` }}
+                            />
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="mt-3 border-t border-line2 pt-3 text-xs text-mute">
+                          <div className="flex items-baseline justify-between gap-2">
+                            <span>{t("companies.col.rank")}</span>
+                            <span className="font-mono">{t("companies.outside_universe")}</span>
+                          </div>
+                        </div>
+                      )}
+                    </>
+                  );
+                  const cardCls =
+                    "block rounded-xl border border-line bg-card px-5 py-4 transition-colors hover:border-faint";
+                  return s.stock ? (
+                    <Link key={s.ticker} href={`/stock/${s.ticker}`} className={cardCls}>
+                      {inner}
+                    </Link>
+                  ) : (
+                    <div key={s.ticker} className={cardCls}>
+                      {inner}
                     </div>
-                    <div className="mt-3 border-t border-line2 pt-3 text-xs text-mute">
-                      <div className="flex items-baseline justify-between gap-2">
-                        <span>{t("companies.col.rank")}</span>
-                        <span className="font-mono tabular-nums">
-                          {s.rank} / {s.n_region}
-                        </span>
-                      </div>
-                      <div className="mt-1.5 h-[5px] overflow-hidden rounded bg-line2">
-                        <div
-                          className="h-full rounded bg-green-fill"
-                          style={{ width: `${(s.rank / Math.max(s.n_region, 1)) * 100}%` }}
-                        />
-                      </div>
-                    </div>
-                  </Link>
-                ))}
+                  );
+                })}
               </div>
               {visible.length < filtered.length ? (
                 <div className="flex items-center justify-center gap-3 border-t p-3">

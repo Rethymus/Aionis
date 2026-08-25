@@ -1221,5 +1221,5 @@
     }
   ],
   "methodology": "GDELT Doc 2.0 artlist \u2014 a machine index of worldwide news. One bounded request per refresh (<=200 records, >=15s host spacing; GDELT open data: URL/title/date/domain are facts, article copyright stays with the publishers) for the FIXED quoted-phrase query shown above, sourcelang:eng, sort=datedesc (machine ordering, not editorial). seendate is GDELT's first-seen UTC stamp (15-min resolution) \u2014 the display freshness anchor. Rows are metadata + outbound links only: no article text is stored, summarized or fabricated; missing source fields are shown empty, never guessed. Dedup key = exact URL; syndicated copies of the same story on different domains are NOT collapsed and count separately (honest counting). Coverage = whatever GDELT's crawl saw (English-biased); gaps are gaps. The payload caps the item list at 150 newest while by_day/total cover the full trailing 30-day cache window. Display-only, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-08-23T13:04:45.043196+00:00"
+  "snapshot_ts": "2026-08-25T14:15:06.480406+00:00"
 }
