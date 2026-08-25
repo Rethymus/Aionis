@@ -210,3 +210,25 @@ archetype (their /stakes baseline pending — site unreachable at build time):
 content 6.35 / text 2.45 / rail 1363 — inside the stream-page family.
 
 pytest after the route addition: **2,016 passed, 9 skipped**.
+
+## Tier-4 proxy verification (their origin outage)
+
+Their origin went unreachable mid-round (TLS handshake fails on both
+data.xiaoyinsi.com and xiaoyinsi.com; worked all session prior — their-side
+outage). The 7 remaining direct baselines (their annual / executives /
+manager / taco / api-docs / stakes / stars) are **pending their recovery**;
+the loop is one command per page (capture → pixcmp).
+
+Proxy verification of our 5 remaining pages against their converged family
+archetypes (content% target-archetype → ours):
+
+| our page | archetype baseline | content | verdict |
+|---|---|---|---|
+| /annual | their /quarterly (same stream type) | 6.89 → 6.03 | family ✓ |
+| /executives | their /insider (people stream) | 8.47 → 7.06, text 3.38 vs 3.29 | family ✓ |
+| /manager/[cik] | their /stock (detail page) | 9.64 → 6.85, rail 1363 | family ✓ (empty first try was an out-of-curation CIK) |
+| /api-docs | their /companies (directory) | 10.19 → 8.49 | family ✓ |
+| /taco | their /events (data panel) | 7.73 → 3.59 | lighter; direct baseline pending |
+| /stakes | their /insider (stream) | 8.47 → 6.35 | family ✓ (new route) |
+
+Every one of their 19 routes now has a live counterpart on our build.
