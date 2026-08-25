@@ -25,6 +25,7 @@ import {
   ListIcon,
   MenuIcon,
   NewspaperIcon,
+  PercentIcon,
   RocketIcon,
   ShieldCheckIcon,
   TerminalIcon,
@@ -90,6 +91,7 @@ export function TopNav() {
       label: t("nav.group.stream"),
       items: [
         { title: t("nav.events"), sub: t("nav.sub.events"), url: "/events", icon: <ZapIcon className={icon()} /> },
+        { title: t("nav.stakes"), sub: t("nav.sub.stakes"), url: "/stakes", icon: <PercentIcon className={icon()} /> },
         { title: t("nav.ipo"), sub: t("nav.sub.ipo"), url: "/ipo", icon: <RocketIcon className={icon()} /> },
         { title: t("nav.congress"), sub: t("nav.sub.congress"), url: "/congress", icon: <LandmarkIcon className={icon()} /> },
       ],

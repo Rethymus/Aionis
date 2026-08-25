@@ -25,6 +25,7 @@ import {
   CalendarDaysIcon,
   FileClockIcon,
   NewspaperIcon,
+  PercentIcon,
   BookOpenIcon,
 } from "lucide-react";
 import {
@@ -85,6 +86,7 @@ const PAGES: PaletteItem[] = [
   { labelKey: "nav.group.themes", icon: <FileTextIcon className="size-4" />, href: "/themes" },
   { labelKey: "nav.market", icon: <GlobeIcon className="size-4" />, href: "/market" },
   { labelKey: "nav.newsfeed", icon: <NewspaperIcon className="size-4" />, href: "/news" },
+  { labelKey: "nav.stakes", icon: <PercentIcon className="size-4" />, href: "/stakes" },
   { labelKey: "nav.positioning", icon: <GlobeIcon className="size-4" />, href: "/positioning" },
   { labelKey: "nav.taco", icon: <GlobeIcon className="size-4" />, href: "/taco" },
   { labelKey: "nav.sectors", icon: <GlobeIcon className="size-4" />, href: "/sectors" },

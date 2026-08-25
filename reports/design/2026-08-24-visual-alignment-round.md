@@ -188,3 +188,25 @@ English GDELT titles are single-line) — anatomy and row rhythm are identical
 (42px median period on both).
 
 **Verification**: build 1,498 pages; pytest **2,016 passed, 9 skipped**.
+
+## Tier-4 — full route coverage ("适配其所有内容")
+
+Their complete route map (from nav): / /annual /api-docs /companies
+/congress /events /executives /insider /institutions /ipo /manager/[cik]
+/managers /news /quarterly /reddit /stakes /stars /stock/[ticker] /taco.
+
+Coverage audit result: every route has a counterpart EXCEPT **/stakes
+(举牌 — active/passive large-stake disclosures)**. Their /stars (明星投资人)
+= our /institutions content; their /managers (机构持仓) = our /filers;
+their /institutions (机构目录) ≈ our /filers directory.
+
+**NEW ROUTE /stakes** (zero new data paths): stakes13g panel (parsed-ownership
+SC 13G stream, 150 visible) merged client-side with filing_stream's
+SC 13D(/A) rows ("FILER → TARGET" parsed from `who`), one date-grouped stream
+in the insider-page anatomy (bg-soft date headers, two-line rows, 13G/13D
+pills, pct in mono text-up, ticker brand links). Wired into TopNav 动态 group
++ ⌘K palette + zh/en dict. Proxy-compared against their insider stream
+archetype (their /stakes baseline pending — site unreachable at build time):
+content 6.35 / text 2.45 / rail 1363 — inside the stream-page family.
+
+pytest after the route addition: **2,016 passed, 9 skipped**.
