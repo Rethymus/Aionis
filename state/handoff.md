@@ -8,6 +8,20 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-26 (ee) 多 agent 分工轮：视觉/数据核查 → H2 实时价图 + H3 IPO 发行价 + H5 设计规格
+
+**编排（业主授权"设计开发任务区分、分配给不同 agents，避免单 agent 上下文/token 膨胀"）**：主线先完成业主要的**视觉+真实数据核查**再派工。核查结论：构建产物健康（本地静态服务需经 `web/Aionis` junction 以 basePath `/Aionis` 服务——直服 out/ 会全 404 黑屏，本次踩到并即修）；首页/新闻/AAPL 页逐项核验通过；24 日更面板 as_of 冻结在 08-18~21 = Actions 计费门实证（H1 未触碰）。两处方法论记录：截图管线间歇超时 → DOM 实测等效替代（handoff (l) 先例）；"首页内容横向重复"视觉报告被 DOM 反证（scrollWidth==clientWidth、VIX 叶节点唯一）→ 截图合成伪影。
+
+**三 agent 并行布局**：DESIGN 主仓直做（纯文档零冲突）+ DEV-A worktree wa/feat/stock-live-chart + DEV-B worktree wb/feat/ipo-offer-price；任务规格三份自包含文件先落 `tasks/active/TASK-DISP-{DES-force-camp-graph,H2-stock-live-chart,H3-ipo-offer-price}.md`（完成后前两者与 DES 已归档 tasks/completed/，H5 构建规格留 active）。junction 预挂 node_modules、ledger LF 预拷（CRLF pin 假阳性预防）、form_ipo 缓存预播种。
+
+- **DESIGN 全胜**：`reports/design/2026-08-26-force-camp-design.md`（数据模型/采样口径/派生 schema/可视化决策/契约测试清单/实施阶梯全答）+ `tasks/active/TASK-DISP-H5-lineage-build.md`（可直接派发的构建规格）。实测基础扎实：三条边规模（13F 共同持仓 636 对 / DEF14A 人物共席 68 对 / 13D/G 同目标聚集 53 对）、ticker 并集 1,015 中仅 227 在 stock_universe（深链必须门控）。**关键诚实发现**：可见 520 行 13D/G doc_url 全唯一——联合申报未被按成员拆解，边只能叫"同目标聚集"，绝不能叫"联盟"。形态推荐手写确定性 SVG 力导向（种子 0 固定布局，照 heatmap 手写 squarified 判例）+ 常驻四分区表格回退态。跨域共同标的只落桥接表不画布（公司级巧合≠法律关系）。**勘误入档**：导出端真实路径是 `scripts/export_terminal_data.py`（非 src/aionis/reporting/）。**留业主 GO 门**（roadmap H5 即业主决策项），GO 后直接派发构建规格。
+- **DEV-A（H2）3 commits**（2ed8327/7a19fde/5bc1275）：前置核查实证 workers/prices 三端点（us=Tiingo IEX ~15min 延迟/cn=新浪 hq.sinajs.cn/health）均**无序列端点** → 按任务书三选一裁决取 (b) 本页累计采样（诚实口径：60s 轮询累加、stepAfter 忠实恒定段、环形上限 240≈4h、刷新清零明示）；复用父级 useLivePrices 零新网络回路；render 期派生状态（避开 effect 同步 setState lint error 的实战修复）；组件顶 display-only 反泄漏注释；Worker 失败整组件返 null 静默退化 header pill。i18n stock.live.chart.* zh/en 各 8 键对称（node 脚本验证 1082=1082）。文件：components/stock/live-price-chart.tsx 新建 + stock-view.tsx 挂载（统计瓦片之下双栏主体之上）+ dict.ts。
+- **DEV-B（H3）真抓取落地**：bounded-parse 照 stakes_pct 先例镜像——`src/aionis/ingest/form_ipo_price.py` + `scripts/form_ipo_price_parse.py` + `tests/test_form_ipo_price.py` 三件套。最新 ≤80 priced(424B4) 逐份 index.json→主文档封面价分级解析：**exact=63（28.5% of priced）/ low=0 / none=15（14 no-match + 1 no_primary_doc）/ fetch 失败 1 保留重试资格**；草稿区间措辞与假设语句整句跳过绝不猜值。请求账 **169/≤170**（EFTS 窗口刷新 12→聚合升至 1,077 filings/priced 221 + 试跑 4 + 主走查 153，cap 154 于 77/78 触发截断如实披露）、≥2.1s 显式抬高。幂等实证：--max-requests 0 复跑 78 条 ok 零请求 + hermetic 测试钉死。导出 offer_price 可空 per-row + offer_price_parsed/meta 汇总（覆盖数学与可见行同源选择规则调和）、ipo-view 第 5 KPI 卡 + 价格列 + 披露行、dict ipo.price.* 四键对称并修正过时"v1 不解析"文案、7-gate 文档 v0.2 附请求账。
+
+**集成与验证**：五 commits cherry-pick 进 main 零冲突（双方 dict.ts 改动不同区域自动合并；B 初版未 commit 由主线审查后代提交为两个原子 commit）；缓存同步主仓后统一重生成 form_ipo/data_health/api_catalog——重导出与 agent 版逐字一致仅 snapshot_ts 差 = **确定性复现证明**。pytest 全套 exit 0（agent 侧全量 2046 passed/10 skip）；ruff 本 lane 净（全仓 20 存量错全他方：docs/code-review/_sync.py 8、scripts/bts_tsi_fetch.py 3 [A3 salvaged caef736]、archive/krx-probes/* 9 [探针档案不改写]）；tsc 0；eslint 0 error/33 存量警告；build **1,498 页**。运行时目视双验：/stock/AAPL 六要素（标题「实时走势（本次访问）」/口径注记/display-only 徽章/采集中态/Tiingo 来源行/recharts SVG 挂载）；/ipo KPI「发行价已解析」+ 列头「申报日 公司 状态 发行价 文件类型 原文」+ $23.50(ALH)/$17.50(LYNX) 与解析账吻合 + 无渲染垃圾。worktree wa/wb 双清（junction 先摘铁律，主仓 node_modules 完好性实测）、分支双删（`git cherry` 五补丁全 `-` 等价核验后 -D）；本地服务已停。
+
+**边界**：display-lane 全程；0 ledger/frozen/config/prereg/OOS 接触；真实抓取仅 DEV-B 预算内 EDGAR/EFTS 礼貌请求。**未 push**（计费阻断持续）。**待办交接**：(1) 势力阵营 GO 后派发 `tasks/active/TASK-DISP-H5-lineage-build.md`；(2) H1 部署门（D0 计费/阶梯 1 本地 runner）不变；(3) ARK 快照按日累积中，~30 日后首页卡可升 ±pp 真增量。
+
 ## 2026-08-25 (dd) Tier-7 视觉多轮迭代：首页模块全齐 + 双语新闻流 + 全页目视终验 + 后 parity 规划
 
 **参照态复查**：data.xiaoyinsi.com / app.xiaoyinsi.com 仍 NXDOMAIN（DoH 1.1.1.1，08-25 实证；根域存活无终端）→ `runs/ui-iter/` 冻结基线（12 PNG + 10 HTML + 编译 CSS）为唯一合法参照。**视觉通道本 session 重建**：Read→CDN→analyze_image 三连可用（CDN URL 须原样含反斜杠路径——上轮 1210 阻断已消，环境差异）。
