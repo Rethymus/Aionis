@@ -3668,9 +3668,16 @@ def export_form_ipo() -> None:
     ``scripts/form_ipo_fetch.py`` — whole-market EFTS form-level queries over a
     fixed ~120-day window). Status is derived from the immutable form type:
     S-1/S-1/A = ``filed`` (registration on file), 424B4 = ``priced`` (statutory
-    final prospectus = pricing complete). Offer price / proceeds / listing date
-    live inside the prospectus documents and are NOT parsed (honest v1 limit,
-    disclosed in the methodology — never fabricated).
+    final prospectus = pricing complete).
+
+    Offer price comes from the BOUNDED second stage
+    (``data/cache/form_ipo_price_parsed.json``, produced by
+    ``scripts/form_ipo_price_parse.py`` — cover-page parse of the NEWEST ≤80
+    priced 424B4 filings only). The cache may be absent or partial: every row
+    then carries ``offer_price: null``, never a guess. Only exact-tier parses
+    become values (draft/range wording and no-match stay honest nulls — see
+    ``aionis.ingest.form_ipo_price``); this exporter re-validates every value
+    into a sane envelope before it ships.
     """
     fp = Path("data/cache/form_ipo_aggregate.parquet")
     if not fp.exists():
@@ -3681,11 +3688,20 @@ def export_form_ipo() -> None:
         )
         return
 
+    from aionis.ingest.form_ipo_price import (
+        load_cache_meta,
+        load_price_cache,
+        merge_offer_prices,
+    )
+
     df = pd.read_parquet(fp)
     by_status = {
         k: int(v) for k, v in df["status"].value_counts().sort_index().items()
     }
     by_form = {k: int(v) for k, v in df["form"].value_counts().sort_index().items()}
+    price_cache = load_price_cache()
+    price_meta_src = load_cache_meta()
+
     filings = []
     # Full window export (every filing visible — the /ipo stream reads newest-
     # first with client-side paging); 1200 is a payload-size safety cap only.
@@ -3698,6 +3714,35 @@ def export_form_ipo() -> None:
             "status": str(r["status"]),
             "doc_url": str(r["doc_url"]),
         })
+    merge_offer_prices(filings, price_cache)
+
+    # Coverage math over the bounded target set (newest ≤80 priced 424B4) —
+    # recomputed here from the SAME stable selection rule the walker uses so
+    # the disclosed counts always reconcile with the visible rows.
+    TARGET_CAP = 80
+    n_priced = by_status.get("priced", 0)
+    priced_newest = (
+        df[df["status"] == "priced"]
+        .sort_values("filed_date", ascending=False, kind="stable")
+    )
+    target_accs = priced_newest.head(TARGET_CAP)["accession"]
+    conf = {"exact": 0, "low": 0, "none": 0}
+    attempted = failed = 0
+    errors: dict[str, int] = {}
+    for acc in target_accs:
+        e = price_cache.get(acc)
+        if e is None:
+            continue  # never walked yet (walk aborted before reaching this row)
+        attempted += 1
+        if e.get("ok") is False:
+            failed += 1
+            key = str(e.get("error") or "unknown").split(":")[0]
+            errors[key] = errors.get(key, 0) + 1
+        elif e.get("confidence") in conf:
+            conf[e["confidence"]] += 1
+    parsed_exact = sum(1 for f in filings if f.get("offer_price") is not None)
+    coverage_pct = round(100.0 * parsed_exact / n_priced, 1) if n_priced else 0.0
+
     payload = {
         "status": "ok",
         "as_of": str(df["filed_date"].max()),
@@ -3706,6 +3751,30 @@ def export_form_ipo() -> None:
         "total": int(len(df)),
         "by_status": by_status,
         "by_form": by_form,
+        # Rows carrying an exact-tier offer price (all other rows null).
+        "offer_price_parsed": parsed_exact,
+        "offer_price_meta": {
+            "target_cap_docs": TARGET_CAP,
+            "priced_filings": n_priced,
+            "newest_targeted": min(n_priced, TARGET_CAP),
+            "attempted": attempted,
+            "fetch_failed": failed,
+            "fetch_errors": errors,
+            "confidence": conf,
+            "coverage_pct_of_priced": coverage_pct,
+            # Honest request ledger recorded by the bounded walk.
+            "requests": {
+                "task_budget": price_meta_src.get("task_budget_requests", 170),
+                "cumulative_walk": price_meta_src.get("requests_cumulative", 0),
+                "walk_cap": price_meta_src.get("walk_cap_requests"),
+            },
+            "target_as_of": (
+                # Newest TARGETED filed_date (the same stable selection as the
+                # walker) — a DATE, not an accession.
+                str(priced_newest.iloc[0]["filed_date"])
+                if len(priced_newest) else None
+            ),
+        },
         "filings": filings,
         "methodology": (
             "US IPO registration/pricing stream — SEC EDGAR EFTS whole-market "
@@ -3715,27 +3784,33 @@ def export_form_ipo() -> None:
             "derived from the immutable form type: S-1 / S-1/A = filed "
             "(registration statement on file); 424B4 = priced (the statutory "
             "final prospectus under Securities Act Rule 424(b)(4) is filed "
-            "after pricing — its appearance marks a priced offering). Honest "
-            "v1 limits, disclosed not papered over: (1) the offer price, share "
-            "count, proceeds, and expected listing date live INSIDE the "
-            "prospectus documents and are not extracted here — each row links "
-            "the filing's EDGAR index page, which lists every document; (2) the "
-            "424B4 form-level catch includes priced follow-on offerings by "
-            "already-listed issuers (e.g. S-3 shelf takedowns), not only "
-            "first-day IPOs — this panel is the registration/pricing STREAM, "
-            "not a curated IPO list; (3) a 424B4 whose issuer also filed an S-1 "
-            "family document in the window is the classic register-then-price "
-            "path, but no company-level state machine is applied (rows are "
-            "filing-level). Ticker is parsed from the EDGAR display name where "
-            "present; pre-symbol S-1 filers carry none (empty, never guessed). "
-            "Counts are FILING counts, not company counts. Display-only, "
-            "exploratory, not a research claim; NOT part of any OOS pipeline."
+            "after pricing — its appearance marks a priced offering). Offer "
+            "price is a BOUNDED second-stage extraction, not full coverage: "
+            "only the newest ≤80 priced (424B4) filings are walked politely "
+            "(≥2.1 s spacing, hard request budget disclosed in "
+            "offer_price_meta.requests), their EDGAR index + primary document "
+            "fetched, and the cover page regex-parsed with graded confidence — "
+            "EXACT (single final printed price → exported), LOW (draft/range "
+            "wording near the label → value withheld, counted, never guessed) "
+            "and NO-MATCH; every unparsed row stays offer_price=null with its "
+            "EDGAR index link. Share count, proceeds, and expected listing "
+            "date are NOT extracted at any tier. Honest scope disclosures: "
+            "(2) the 424B4 form-level catch includes priced follow-on "
+            "offerings by already-listed issuers (e.g. S-3 shelf takedowns), "
+            "not only first-day IPOs — this panel is the registration/pricing "
+            "STREAM, not a curated IPO list; (3) no company-level state "
+            "machine is applied (rows are filing-level). Ticker is parsed from "
+            "the EDGAR display name where present; pre-symbol S-1 filers carry "
+            "none (empty, never guessed). Counts are FILING counts, not "
+            "company counts. Display-only, exploratory, not a research claim; "
+            "NOT part of any OOS pipeline."
         ),
     }
     (WEB / "ipo.json").write_text(json.dumps(_stamp(payload), indent=2, default=str))
     print(
         f"[export-terminal] form_ipo: {payload['total']} filings "
         f"({payload['by_status']}), {payload['issuers']} issuers, "
+        f"offer_price {parsed_exact}/{n_priced} priced ({coverage_pct}%), "
         f"as_of {payload['as_of']}",
         flush=True,
     )

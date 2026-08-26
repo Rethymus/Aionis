@@ -670,6 +670,31 @@ export type FormIpoFiling = {
   // filed (registration on file) | priced (statutory 424B4 final prospectus).
   status: "filed" | "priced";
   doc_url: string;
+  // Cover-page offer price of the 424B4 final prospectus — bounded second-
+  // stage parse (newest ≤80 priced filings only, exact-tier parses only).
+  // null everywhere else: older filings beyond the request budget,
+  // low-confidence / no-match extractions, unpriced S-1 rows (honest blank,
+  // never guessed). TASK-DISP-H3.
+  offer_price: number | null;
+};
+
+export type FormIpoOfferPriceMeta = {
+  target_cap_docs: number;
+  priced_filings: number;
+  newest_targeted: number;
+  attempted: number;
+  fetch_failed: number;
+  fetch_errors: Record<string, number>;
+  // Graded-extraction tiers (aionis.ingest.form_ipo_price): only exact ships
+  // a value; low/none are counted but stay honest nulls.
+  confidence: { exact: number; low: number; none: number };
+  coverage_pct_of_priced: number;
+  requests: {
+    task_budget: number;
+    cumulative_walk: number;
+    walk_cap: number | null;
+  };
+  target_as_of: string | null;
 };
 
 export type FormIpo = {
@@ -680,6 +705,11 @@ export type FormIpo = {
   total: number;
   by_status: Record<string, number>;
   by_form: Record<string, number>;
+  // Count of rows carrying an exact-tier offer_price (≤ by_status.priced ≤
+  // total); offer_price_meta carries the bounded-walk disclosure (target cap,
+  // confidence tiers, request ledger). TASK-DISP-H3.
+  offer_price_parsed: number;
+  offer_price_meta: FormIpoOfferPriceMeta;
   filings: FormIpoFiling[];
   methodology: string;
   snapshot_ts?: string;

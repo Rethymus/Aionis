@@ -173,6 +173,16 @@ const PAGE_SIZE = 50;
 
 type StatusFilter = "all" | "filed" | "priced";
 
+// Offer price renders at full cent precision ($11.00 / $7.50) — NOT fmtUsd,
+// whose magnitude rounding would blur sub-$1000 share prices.
+function fmtOfferPrice(p: number | null): string {
+  if (p == null || Number.isNaN(p)) return "—";
+  return `$${p.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })}`;
+}
+
 export function IpoView() {
   const { t } = useI18n();
   const f = aionis.ipo;
@@ -185,6 +195,14 @@ export function IpoView() {
     [filings, status],
   );
   const visible = filtered.slice(0, visibleCount);
+
+  // Bounded offer-price walk disclosure (TASK-DISP-H3): counts come straight
+  // from the export's honest accounting block.
+  const priceMeta = f.offer_price_meta;
+  const priceNote = t("ipo.price.note")
+    .replace("{targeted}", String(priceMeta?.newest_targeted ?? 0))
+    .replace("{priced}", String(priceMeta?.priced_filings ?? 0))
+    .replace("{budget}", String(priceMeta?.requests?.task_budget ?? 170));
 
   // Sidebar "recently priced" list: newest 424B4 filings, defensively sorted
   // by filed_date desc (source order is already descending, but the slice
@@ -226,7 +244,7 @@ export function IpoView() {
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-5">
         <Card>
           <CardHeader className="pb-2">
             <CardDescription>{t("ipo.total")}</CardDescription>
@@ -255,6 +273,26 @@ export function IpoView() {
             <CardTitle className="text-2xl tabular-nums">{f.issuers}</CardTitle>
           </CardHeader>
         </Card>
+        <Card className="max-md:col-span-2 md:col-span-1">
+          <CardHeader className="pb-2">
+            <CardDescription>{t("ipo.price.kpi")}</CardDescription>
+            <CardTitle className="text-2xl tabular-nums">
+              {f.offer_price_parsed}
+              <span className="text-sm font-normal text-muted-foreground">
+                {" "}
+                / {f.by_status.priced ?? 0}
+              </span>
+            </CardTitle>
+            <p className="text-[11px] leading-snug text-muted-foreground">
+              {t("ipo.price.kpi_sub").replace(
+                "{cap}",
+                String(priceMeta?.target_cap_docs ?? 80),
+              )}
+              {" · "}
+              {priceMeta?.coverage_pct_of_priced ?? 0}%
+            </p>
+          </CardHeader>
+        </Card>
       </div>
 
       <div className="grid items-start gap-6 lg:grid-cols-[1fr_320px]">
@@ -274,6 +312,11 @@ export function IpoView() {
                 ]}
               />
             </div>
+            {/* Bounded-parse honesty line (TASK-DISP-H3): what is priced,
+                what got a value, and the request budget that bounds it. */}
+            <p className="pt-1 text-[11px] leading-relaxed text-muted-foreground">
+              {priceNote}
+            </p>
           </CardHeader>
           <CardContent className="p-0">
             <Table>
@@ -282,6 +325,7 @@ export function IpoView() {
                   <TableHead>{t("ipo.date")}</TableHead>
                   <TableHead>{t("ipo.company")}</TableHead>
                   <TableHead>{t("ipo.status")}</TableHead>
+                  <TableHead className="text-right">{t("ipo.price.col")}</TableHead>
                   <TableHead className="hidden md:table-cell">
                     {t("ipo.form")}
                   </TableHead>
@@ -323,6 +367,17 @@ export function IpoView() {
                       <Badge variant="secondary">
                         {t((STATUS_LABEL[r.status] ?? "ipo.status_filed") as DictKey)}
                       </Badge>
+                    </TableCell>
+                    <TableCell className="whitespace-nowrap text-right font-mono text-xs tabular-nums">
+                      {/* Honest blank: only exact-tier cover parses of the
+                          newest ≤80 priced filings carry a value — everything
+                          else (budget-clipped, low-confidence, no-match, S-1)
+                          renders "—", never a guess. */}
+                      {r.offer_price != null ? (
+                        fmtOfferPrice(r.offer_price)
+                      ) : (
+                        <span className="text-muted-foreground">—</span>
+                      )}
                     </TableCell>
                     <TableCell className="hidden font-mono text-xs text-muted-foreground md:table-cell">
                       {r.form}
@@ -404,6 +459,14 @@ export function IpoView() {
                       <span className="min-w-0 flex-1 truncate" title={r.company}>
                         {r.company}
                       </span>
+                      {r.offer_price != null && (
+                        <span
+                          className="shrink-0 font-mono text-xs tabular-nums"
+                          title={t("ipo.price.col")}
+                        >
+                          {fmtOfferPrice(r.offer_price)}
+                        </span>
+                      )}
                       {r.doc_url ? (
                         <a
                           href={r.doc_url}

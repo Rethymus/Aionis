@@ -1211,8 +1211,12 @@ def test_form_ipo_panel_contract() -> None:
     2026-08-22, every filing visible), so the visible list's per-status counts
     equal by_status exactly; filings sorted by filed_date descending; the
     ticker is empty for pre-symbol filers (honest, never guessed); each row
-    links the EDGAR filing-index page (offer terms live inside the
-    prospectus documents — v1 does not parse them).
+    links the EDGAR filing-index page. TASK-DISP-H3 adds the BOUNDED offer-
+    price lane: every row carries ``offer_price`` that is null or a positive
+    number (exact-tier parses ONLY — low-confidence/no-match/budget-clipped
+    rows stay honest nulls), and the coverage math
+    (offer_price_parsed ≤ priced ≤ total, confidence tiers reconciling with
+    attempted) plus the request-budget disclosure must hold end to end.
     """
     f = _load("ipo.json")
     assert f["status"] in {"ok", "awaiting_fetch"}
@@ -1223,13 +1227,22 @@ def test_form_ipo_panel_contract() -> None:
     dates: list[str] = []
     for r in f["filings"]:
         assert {"company", "ticker", "filed_date", "form", "status",
-                "doc_url"} <= set(r)
+                "doc_url", "offer_price"} <= set(r)
         assert r["status"] in {"filed", "priced"}, f"bad status: {r['status']!r}"
         # Status must agree with the immutable form type it is derived from.
         if r["form"] in ("S-1", "S-1/A"):
             assert r["status"] == "filed"
         else:
             assert r["form"] == "424B4" and r["status"] == "priced"
+        # TASK-DISP-H3: price is null or a positive number — never 0, never a
+        # negative/garbage sentinel (exact-tier parse or honest blank, only).
+        assert r["offer_price"] is None or (
+            isinstance(r["offer_price"], (int, float)) and r["offer_price"] > 0
+        ), f"bad offer_price: {r['offer_price']!r}"
+        # A price may only sit on a PRICED row (S-1 filings are unpriced by
+        # definition — no exact-tier parse could exist there).
+        if r["offer_price"] is not None:
+            assert r["status"] == "priced"
         assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", r["filed_date"])
         assert r["doc_url"].startswith("https://www.sec.gov/Archives/edgar/data/")
         assert r["doc_url"].endswith("-index.htm")
@@ -1258,7 +1271,39 @@ def test_form_ipo_panel_contract() -> None:
         if form in f["by_form"]:
             assert f["by_form"][form] <= f["by_status"][status]
 
-
+    # --- bounded offer-price lane (TASK-DISP-H3) -----------------------------
+    # The summary must reconcile with the visible rows it summarizes, and the
+    # honest-coverage chain must hold: parsed ≤ attempted ≤ targeted ≤ priced.
+    n_priced = f["by_status"].get("priced", 0)
+    parsed_visible = sum(1 for r in f["filings"] if r.get("offer_price") is not None)
+    assert f["offer_price_parsed"] == parsed_visible, (
+        "offer_price_parsed must equal the rows actually carrying a value"
+    )
+    m = f["offer_price_meta"]
+    assert m["target_cap_docs"] == 80
+    assert m["priced_filings"] == n_priced
+    assert m["newest_targeted"] == min(n_priced, 80)
+    conf = m["confidence"]
+    assert set(conf) == {"exact", "low", "none"}
+    # Coverage math (may be partially walked — budget truncation is legal and
+    # disclosed via attempted < targeted; the ordering chain is not negotiable).
+    assert conf["exact"] == f["offer_price_parsed"], (
+        "only exact-tier parses may ship a value"
+    )
+    assert 0 <= conf["low"] and 0 <= conf["none"]
+    assert m["attempted"] <= m["newest_targeted"]
+    assert m["attempted"] == conf["exact"] + conf["low"] + conf["none"] + (
+        m["fetch_failed"]
+    ), "attempted must decompose exactly into tiers + fetch failures"
+    req = m["requests"]
+    assert req["task_budget"] <= 170, "task request budget is capped at 170"
+    assert req["cumulative_walk"] <= req["task_budget"], (
+        "the walk ledger may never claim more requests than the task budget"
+    )
+    # methodology must disclose the bounded scope + request budget honestly.
+    assert "BOUNDED second-stage extraction" in f["methodology"]
+    assert "≤80" in f["methodology"] and "LOW" in f["methodology"]
+    assert "offer_price=null" in f["methodology"]
 
 def test_politician_trades_tx_panel_contract() -> None:
     """Transaction-level STOCK Act panel (PTR PDF parse, TASK-S).
