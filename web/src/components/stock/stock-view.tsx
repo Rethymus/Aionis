@@ -17,6 +17,7 @@ import { form13f } from "@/data/aionis/form13f";
 import { stockUniverse, type StockRow } from "@/data/aionis/stock-universe";
 import { ProvenanceBadge } from "@/components/provenance-badge";
 import { useLivePrices } from "@/lib/live-prices";
+import { LivePriceChart } from "@/components/stock/live-price-chart";
 import { fmtDateShort, fmtShares, fmtUsd } from "@/lib/format";
 import {
   ArrowUpIcon,
@@ -394,7 +395,7 @@ export function StockView({ ticker }: { ticker: string }) {
     () => stockUniverse.stocks.find((s) => s.ticker === ticker),
     [ticker],
   );
-  const { prices, updatedAt } = useLivePrices(
+  const { prices, status, updatedAt } = useLivePrices(
     stock ? [{ ticker: stock.ticker, region: stock.region }] : [],
   );
   // 1s tick so the relative "updated Xs ago" indicator stays live.
@@ -543,6 +544,16 @@ export function StockView({ ticker }: { ticker: string }) {
           </div>
         ))}
       </div>
+
+      {/* Live price tape — DISPLAY ONLY (workers/prices data, never a research
+          input). Cumulative samples since page open; renders nothing when the
+          Worker is unavailable (header pill keeps its own degraded behavior). */}
+      <LivePriceChart
+        region={stock.region}
+        quote={live}
+        status={status}
+        updatedAt={updatedAt}
+      />
 
       {/* Two-column body (their 1fr + 340px rail). */}
       <div className="grid items-start gap-4 lg:grid-cols-[1fr_340px]">
