@@ -187,6 +187,9 @@ export const dict = {
     "forcecamp.table.shared": "明细",
     "forcecamp.drawer.roles": "角色清单",
     "forcecamp.drawer.seats": "关联席",
+    "forcecamp.islands.title": "未入画布的小微分量",
+    "forcecamp.islands.hint":
+      "共 {n} 个连通分量、{m} 个实体规模过小（分量节点数少于 3），不进入上方力导向画布；点按成员名打开详情卡。",
     "forcecamp.disclaimer.coordination":
       "共同持仓与同目标申报均为各自独立申报的事实重合，不构成一致行动或任何联合主张。",
     "forcecamp.disclaimer.window":
@@ -1427,6 +1430,9 @@ export const dict = {
     "forcecamp.table.shared": "Details",
     "forcecamp.drawer.roles": "Roles",
     "forcecamp.drawer.seats": "Board seats",
+    "forcecamp.islands.title": "Off-canvas micro-components",
+    "forcecamp.islands.hint":
+      "{n} connected components ({m} entities) are too small for the force canvas above (components under 3 nodes); select a member chip to open its detail card.",
     "forcecamp.disclaimer.coordination":
       "Co-holding and same-target filing overlaps are factual coincidences of separate filings — neither coordination nor any joint-action claim.",
     "forcecamp.disclaimer.window":

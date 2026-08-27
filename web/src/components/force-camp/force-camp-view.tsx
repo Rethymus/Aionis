@@ -15,6 +15,7 @@ import {
 } from "@/data/aionis/lineage-graph";
 import { stockUniverse } from "@/data/aionis/stock-universe";
 import { forceCampLayout } from "./layout";
+import { IslandsCard, partitionIslands } from "./islands-card";
 
 // /force-camp — 势力阵营 lineage graph over the COMMITTED panels (display
 // lane, zero fetches): KPI band → edge-type pills + min-weight stepper →
@@ -125,12 +126,30 @@ export function ForceCampView() {
 
   const g = lineageGraph;
 
-  // Frozen layout: computed once over the FULL graph (filters hide elements,
-  // they never re-run the simulation).
+  // Island partition over the FULL graph (filter toggles hide elements, they
+  // never change composition). Components below ISLAND_MIN_NODES move to the
+  // honest summary card below the canvas; the frozen layout and the SVG
+  // render consume only the kept sub-graph. layout.ts stays untouched —
+  // positions remain a deterministic pure function of the sub-graph payload.
+  const partition = useMemo(
+    () =>
+      g.status === "ok"
+        ? partitionIslands(g.nodes, g.edges)
+        : {
+            canvasIds: new Set<string>(),
+            canvasNodes: [],
+            canvasEdges: [],
+            islands: [],
+          },
+    [g.status, g.nodes, g.edges],
+  );
+
+  // Frozen layout: computed once per mount over the KEPT sub-graph (filters
+  // hide elements, they never re-run the simulation).
   const layout = useMemo(() => {
-    if (g.status !== "ok" || !g.nodes.length) return [];
-    return forceCampLayout(g.nodes, g.edges);
-  }, [g.status, g.nodes, g.edges]);
+    if (!partition.canvasNodes.length) return [];
+    return forceCampLayout(partition.canvasNodes, partition.canvasEdges);
+  }, [partition]);
   const posById = useMemo(
     () => new Map(layout.map((p) => [p.id, p])),
     [layout],
@@ -154,7 +173,11 @@ export function ForceCampView() {
   const visible = useMemo(() => {
     let min = Infinity;
     let max = -Infinity;
-    const edges = g.edges.filter((e) => on[e.type] && e.w >= minW);
+    // Source list is the KEPT sub-graph only — island components never
+    // re-enter the canvas through filter toggles.
+    const edges = partition.canvasEdges.filter(
+      (e) => on[e.type] && e.w >= minW,
+    );
     const ids = new Set<string>();
     for (const e of edges) {
       ids.add(e.a);
@@ -167,7 +190,7 @@ export function ForceCampView() {
       edges.map((e) => [e, 1 + (3 * (e.w - min)) / span] as const),
     );
     return { edges, ids, width };
-  }, [g.edges, on, minW]);
+  }, [partition, on, minW]);
 
   const byId = useMemo(
     () => new Map(g.nodes.map((n) => [n.id, n])),
@@ -355,6 +378,14 @@ export function ForceCampView() {
               <span className="ml-auto font-mono">— / ‑ ‑ : co_board · · : co_target</span>
             </div>
           </div>
+
+          {/* Micro-component summary card — honest accounting of what stays
+              off-canvas; chips reuse the node drawer below. */}
+          <IslandsCard
+            islands={partition.islands}
+            drawerId={drawerId}
+            onSelect={setDrawerId}
+          />
 
           {/* Node drawer card */}
           {drawer ? (
