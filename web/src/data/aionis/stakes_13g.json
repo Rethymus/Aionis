@@ -1,16 +1,555 @@
 {
   "status": "ok",
-  "as_of": "2026-08-21",
+  "as_of": "2026-08-26",
   "window": {
-    "start": "2026-04-27",
-    "end": "2026-08-21"
+    "start": "2026-04-30",
+    "end": "2026-08-26"
   },
-  "total": 15982,
+  "total": 14029,
   "by_form": {
-    "SC 13G": 7419,
-    "SC 13G/A": 8563
+    "SC 13G": 5844,
+    "SC 13G/A": 8185
   },
   "filings": [
+    {
+      "filer": "Alta Partners LLC",
+      "target": "Tianci International, Inc.",
+      "ticker": "CIIT",
+      "date": "2026-08-26",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1557798/0001094891-26-000283-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "target": "BlackRock, Inc.",
+      "ticker": "BLK",
+      "date": "2026-08-26",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2012383/0002012383-26-003240-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "target": "Vesta Real Estate Corporation, S.A.B. de C.V.",
+      "ticker": "VTMX",
+      "date": "2026-08-26",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1969373/0002012383-26-003240-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Branham Justin Earl",
+      "target": "LISATA THERAPEUTICS, INC.",
+      "ticker": "LSTA",
+      "date": "2026-08-26",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/320017/0002150037-26-000001-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Chernett Jorey",
+      "target": "WW INTERNATIONAL, INC.",
+      "ticker": "WW",
+      "date": "2026-08-26",
+      "form": "SC 13G/A",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/105319/0000921895-26-002313-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "United Capital Management of KS, Inc.",
+      "target": "Crypto Co",
+      "ticker": "CRCW",
+      "date": "2026-08-26",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1688126/0001941040-26-000687-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "L1 Capital Global Opportunities Master Fund, Ltd.",
+      "target": "EShallGo Inc.",
+      "ticker": "EHGO",
+      "date": "2026-08-26",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1879754/0001079973-26-001183-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Stonepine Capital Management, LLC",
+      "target": "Edesa Biotech, Inc.",
+      "ticker": "EDSA",
+      "date": "2026-08-26",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1540159/0001440771-26-000020-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Hamble International Inc.",
+      "target": "Vertical Data Inc.",
+      "ticker": "VDTA",
+      "date": "2026-08-26",
+      "form": "SC 13G/A",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2033264/0002145730-26-000002-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "PT TUMBUH LESTARI ABADI",
+      "target": "iOThree Ltd",
+      "ticker": "IOTR",
+      "date": "2026-08-26",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1997637/0001213900-26-094031-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Iroquois Capital Management, LLC",
+      "target": "22nd Century Group, Inc.",
+      "ticker": "XXII",
+      "date": "2026-08-25",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1347858/0000930413-26-002666-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Feis Equities LLC",
+      "target": "Alpex Acquisition Corp",
+      "ticker": "ALPX",
+      "date": "2026-08-25",
+      "form": "SC 13G/A",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2125551/0001376474-26-000581-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Black Spade Sponsor LLC III",
+      "target": "Black Spade Acquisition III Co",
+      "ticker": "BIII",
+      "date": "2026-08-25",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2087087/0001104659-26-100536-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "CAPTRUST FINANCIAL ADVISORS",
+      "target": "Bluerock Private Real Estate Fund",
+      "ticker": "BPRE",
+      "date": "2026-08-25",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1551047/0001062993-26-004619-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "THRIVENT FINANCIAL FOR LUTHERANS",
+      "target": "CALAMOS CONVERTIBLE & HIGH INCOME FUND",
+      "ticker": "CHY",
+      "date": "2026-08-25",
+      "form": "SC 13G/A",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1222719/0000314984-26-000031-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "THRIVENT FINANCIAL FOR LUTHERANS",
+      "target": "CALAMOS CONVERTIBLE OPPORTUNITIES & INCOME FUND",
+      "ticker": "CHI",
+      "date": "2026-08-25",
+      "form": "SC 13G/A",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1171471/0000314984-26-000029-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Swedbank Robur Fonder AB",
+      "target": "CI&T Inc",
+      "ticker": "CINT",
+      "date": "2026-08-25",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1868995/0001547676-26-000009-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "THRIVENT FINANCIAL FOR LUTHERANS",
+      "target": "Calamos Dynamic Convertible & Income Fund",
+      "ticker": "CCD",
+      "date": "2026-08-25",
+      "form": "SC 13G/A",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1602584/0000314984-26-000030-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Stonepine Capital Management, LLC",
+      "target": "CalciMedica, Inc.",
+      "ticker": "CALC",
+      "date": "2026-08-25",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1534133/0001440771-26-000018-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Lind Global Fund III LP",
+      "target": "DEFSEC Technologies Inc.",
+      "ticker": "DFSC",
+      "date": "2026-08-25",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1889823/0000929638-26-003207-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Host-Plus Pty Ltd as trustee for the HOSTPLUS Pooled Superan",
+      "target": "EBR Systems, Inc.",
+      "ticker": "NONE.",
+      "date": "2026-08-25",
+      "form": "SC 13G/A",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1347123/0002041658-26-000010-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "target": "Equinox Gold Corp.",
+      "ticker": "EQX",
+      "date": "2026-08-25",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1756607/0000947871-26-000832-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "target": "FAIRFAX FINANCIAL HOLDINGS LTD/ CAN",
+      "ticker": "FRFHF",
+      "date": "2026-08-25",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/915191/0000947871-26-000832-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "JPMorgan Chase Bank, N.A.",
+      "target": "PIMCO NEW YORK MUNICIPAL INCOME FUND II",
+      "ticker": "PNI",
+      "date": "2026-08-25",
+      "form": "SC 13G/A",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1170311/0001193125-26-365160-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "JPMorgan Chase Bank, N.A.",
+      "target": "PIMCO CALIFORNIA MUNICIPAL INCOME FUND",
+      "ticker": "PCQ",
+      "date": "2026-08-25",
+      "form": "SC 13G/A",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1140411/0001193125-26-365171-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "NexGenAI Holding Group, Inc.",
+      "target": "Nixxy, Inc.",
+      "ticker": "NIXX",
+      "date": "2026-08-25",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1462223/0001213900-26-093315-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Streeterville Capital LLC",
+      "target": "NorthStrive Acquisition Corp I.",
+      "ticker": "NSAI",
+      "date": "2026-08-25",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2133719/0001851416-26-000027-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Orca Capital AG",
+      "target": "Singularity Future Technology Ltd.",
+      "ticker": "SGLY",
+      "date": "2026-08-25",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1422892/0001493152-26-040071-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Vanguard Charitable Endowment Program",
+      "target": "Solo Brands, Inc.",
+      "ticker": "SBDS",
+      "date": "2026-08-25",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1870600/0000929638-26-003194-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Vanguard Charitable Endowment Program",
+      "target": "Solo Brands, Inc.",
+      "ticker": "SBDS",
+      "date": "2026-08-25",
+      "form": "SC 13G/A",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1870600/0000929638-26-003196-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "TALL PINES CAPITAL, LLC",
+      "target": "Usio, Inc.",
+      "ticker": "USIO",
+      "date": "2026-08-25",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1088034/0001214659-26-010805-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "WANG JUNYUAN",
+      "target": "Agencia Comercial Spirits Ltd.",
+      "ticker": "AGCC",
+      "date": "2026-08-24",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2060016/0001213900-26-092798-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Alta Partners LLC",
+      "target": "NFT Ltd",
+      "ticker": "MI",
+      "date": "2026-08-24",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1958713/0001094891-26-000282-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Feis Equities LLC",
+      "target": "BOA Acquisition Corp. II",
+      "ticker": "THEO",
+      "date": "2026-08-24",
+      "form": "SC 13G/A",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2080216/0001376474-26-000579-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "LEHMAN KENNETH R",
+      "target": "Burke & Herbert Financial Services Corp.",
+      "ticker": "BHRB",
+      "date": "2026-08-24",
+      "form": "SC 13G/A",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1964333/0001170549-26-000003-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "INTEGRATED CORE STRATEGIES (US) LLC",
+      "target": "COLLEGIUM PHARMACEUTICAL, INC",
+      "ticker": "COLL",
+      "date": "2026-08-24",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1267565/0001104659-26-100342-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "MILLENNIUM MANAGEMENT LLC",
+      "target": "Catalyst Acquisition Corp.",
+      "ticker": "CATL",
+      "date": "2026-08-24",
+      "form": "SC 13G/A",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2104391/0001104659-26-100431-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "L1 Capital Global Opportunities Master Fund, Ltd.",
+      "target": "Dare Bioscience, Inc.",
+      "ticker": "DARE",
+      "date": "2026-08-24",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1401914/0001079973-26-001171-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Vivasor, Inc.",
+      "target": "Datavault AI Inc.",
+      "ticker": "DVLT",
+      "date": "2026-08-24",
+      "form": "SC 13G/A",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1682149/0001104659-26-100304-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "target": "Direxion Shares ETF Trust",
+      "ticker": null,
+      "date": "2026-08-24",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1424958/0001694283-26-000006-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "target": "Robinson Value Management, Ltd.",
+      "ticker": null,
+      "date": "2026-08-24",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1694283/0001694283-26-000006-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Five Narrow Lane LP",
+      "target": "Expion Energy Inc.",
+      "ticker": "XPON",
+      "date": "2026-08-24",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1894954/0001213900-26-092998-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "INTEGRITY WEALTH ADVISORS, INC.",
+      "target": "Genasys Inc.",
+      "ticker": "GNSS",
+      "date": "2026-08-24",
+      "form": "SC 13G/A",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/924383/0001172661-26-003947-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "INTEGRATED CORE STRATEGIES (US) LLC",
+      "target": "Tenaya Therapeutics, Inc.",
+      "ticker": "TNYA",
+      "date": "2026-08-24",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1858848/0001104659-26-100403-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Kite Lake Capital Management (UK) LLP",
+      "target": "Optimum Communications, Inc.",
+      "ticker": "OPTU",
+      "date": "2026-08-24",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1702780/0000919574-26-005682-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Weinstein Benjamin",
+      "target": "PRECISION BIOSCIENCES INC",
+      "ticker": "DTIL",
+      "date": "2026-08-24",
+      "form": "SC 13G/A",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1357874/0002033801-26-000004-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Solana Rocket Holdings Ltd",
+      "target": "Solana Co",
+      "ticker": "HSDT",
+      "date": "2026-08-24",
+      "form": "SC 13G/A",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1610853/0001104659-26-100294-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "THIRUMALA SRINIDHI",
+      "target": "Sound Group Inc.",
+      "ticker": "SOGP",
+      "date": "2026-08-24",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1783407/0002133483-26-000004-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Wynn Kevyn Q.",
+      "target": "WYNN RESORTS LTD",
+      "ticker": "WYNN",
+      "date": "2026-08-24",
+      "form": "SC 13G/A",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1174922/0001213900-26-093182-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
     {
       "filer": "LYNCH TIMOTHY P",
       "target": "AEON Biopharma, Inc.",
@@ -1668,7 +2207,7 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/75398/0001172661-26-003707-index.htm",
-      "pct_now": null,
+      "pct_now": 5.87,
       "pct_prev": null,
       "pct_status": null
     },
@@ -1679,9 +2218,9 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1812923/0001172661-26-003708-index.htm",
-      "pct_now": null,
+      "pct_now": 3.97,
       "pct_prev": null,
-      "pct_status": null
+      "pct_status": "below_5"
     },
     {
       "filer": "1607 Capital Partners, LLC",
@@ -1690,9 +2229,9 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/809559/0001172661-26-003709-index.htm",
-      "pct_now": null,
+      "pct_now": 2.84,
       "pct_prev": null,
-      "pct_status": null
+      "pct_status": "below_5"
     },
     {
       "filer": "METEORA CAPITAL, LLC",
@@ -1701,7 +2240,7 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2054272/0001905106-26-000140-index.htm",
-      "pct_now": null,
+      "pct_now": 9.85,
       "pct_prev": null,
       "pct_status": null
     },
@@ -1723,7 +2262,7 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1347858/0001193125-26-352074-index.htm",
-      "pct_now": null,
+      "pct_now": 6.7,
       "pct_prev": null,
       "pct_status": null
     },
@@ -1734,7 +2273,7 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1343009/0001753926-26-001524-index.htm",
-      "pct_now": null,
+      "pct_now": 9.9,
       "pct_prev": null,
       "pct_status": null
     },
@@ -1745,7 +2284,7 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1555279/0001012975-26-000768-index.htm",
-      "pct_now": null,
+      "pct_now": 13.9,
       "pct_prev": null,
       "pct_status": null
     },
@@ -1756,7 +2295,7 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1555279/0001104659-26-096944-index.htm",
-      "pct_now": null,
+      "pct_now": 5.32,
       "pct_prev": null,
       "pct_status": null
     },
@@ -1767,7 +2306,7 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1555279/0001535264-26-000046-index.htm",
-      "pct_now": null,
+      "pct_now": 11.8,
       "pct_prev": null,
       "pct_status": null
     },
@@ -1778,7 +2317,7 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1866030/0001013594-26-000914-index.htm",
-      "pct_now": null,
+      "pct_now": 7.6,
       "pct_prev": null,
       "pct_status": null
     },
@@ -1789,9 +2328,9 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2075336/0001905106-26-000166-index.htm",
-      "pct_now": null,
+      "pct_now": 1.15,
       "pct_prev": null,
-      "pct_status": null
+      "pct_status": "below_5"
     },
     {
       "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
@@ -1800,7 +2339,7 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1982701/0001109448-26-000259-index.htm",
-      "pct_now": null,
+      "pct_now": 11.2,
       "pct_prev": null,
       "pct_status": null
     },
@@ -1811,7 +2350,7 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1109448/0001109448-26-000259-index.htm",
-      "pct_now": null,
+      "pct_now": 11.2,
       "pct_prev": null,
       "pct_status": null
     },
@@ -1822,7 +2361,7 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1333986/0001333986-26-000041-index.htm",
-      "pct_now": null,
+      "pct_now": 66.7,
       "pct_prev": null,
       "pct_status": null
     },
@@ -1833,9 +2372,9 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/318306/0000919574-26-005538-index.htm",
-      "pct_now": null,
+      "pct_now": 0.9,
       "pct_prev": null,
-      "pct_status": null
+      "pct_status": "below_5"
     },
     {
       "filer": "ABG Management Ltd.",
@@ -1844,9 +2383,9 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1422142/0001493152-26-038432-index.htm",
-      "pct_now": null,
+      "pct_now": 1.4,
       "pct_prev": null,
-      "pct_status": null
+      "pct_status": "below_5"
     },
     {
       "filer": "Karpus Management, Inc.",
@@ -1855,7 +2394,7 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/779336/0001072613-26-000669-index.htm",
-      "pct_now": null,
+      "pct_now": 8.51,
       "pct_prev": null,
       "pct_status": null
     },
@@ -1866,9 +2405,9 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1156041/0001172661-26-003766-index.htm",
-      "pct_now": null,
+      "pct_now": 4.86,
       "pct_prev": null,
-      "pct_status": null
+      "pct_status": "below_5"
     },
     {
       "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
@@ -1877,7 +2416,7 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/899629/0001193125-26-350673-index.htm",
-      "pct_now": null,
+      "pct_now": 14.13,
       "pct_prev": null,
       "pct_status": null
     },
@@ -1888,7 +2427,7 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1284812/0001193125-26-350673-index.htm",
-      "pct_now": null,
+      "pct_now": 14.13,
       "pct_prev": null,
       "pct_status": null
     },
@@ -1899,7 +2438,7 @@
       "date": "2026-08-14",
       "form": "SC 13G",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2026053/0001140361-26-033226-index.htm",
-      "pct_now": null,
+      "pct_now": 45.3,
       "pct_prev": null,
       "pct_status": null
     },
@@ -1910,7 +2449,7 @@
       "date": "2026-08-14",
       "form": "SC 13G",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2111542/0001326389-26-000053-index.htm",
-      "pct_now": null,
+      "pct_now": 7.3,
       "pct_prev": null,
       "pct_status": null
     },
@@ -1921,7 +2460,7 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1637873/0001777813-26-000007-index.htm",
-      "pct_now": null,
+      "pct_now": 5.7,
       "pct_prev": null,
       "pct_status": null
     },
@@ -1932,7 +2471,7 @@
       "date": "2026-08-14",
       "form": "SC 13G",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1772918/0001193125-26-351727-index.htm",
-      "pct_now": null,
+      "pct_now": 80.17,
       "pct_prev": null,
       "pct_status": null
     },
@@ -1943,7 +2482,7 @@
       "date": "2026-08-14",
       "form": "SC 13G",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2137923/0001193125-26-351727-index.htm",
-      "pct_now": null,
+      "pct_now": 80.17,
       "pct_prev": null,
       "pct_status": null
     },
@@ -1954,7 +2493,7 @@
       "date": "2026-08-14",
       "form": "SC 13G",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2112457/0001104659-26-097417-index.htm",
-      "pct_now": null,
+      "pct_now": 9.6,
       "pct_prev": null,
       "pct_status": null
     },
@@ -1965,7 +2504,7 @@
       "date": "2026-08-14",
       "form": "SC 13G",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1782303/0001104659-26-097418-index.htm",
-      "pct_now": null,
+      "pct_now": 8.8,
       "pct_prev": null,
       "pct_status": null
     },
@@ -1976,7 +2515,7 @@
       "date": "2026-08-14",
       "form": "SC 13G",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1755237/0001104659-26-097419-index.htm",
-      "pct_now": null,
+      "pct_now": 7.0,
       "pct_prev": null,
       "pct_status": null
     },
@@ -1987,7 +2526,7 @@
       "date": "2026-08-14",
       "form": "SC 13G",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1650664/0001104659-26-097420-index.htm",
-      "pct_now": null,
+      "pct_now": 5.8,
       "pct_prev": null,
       "pct_status": null
     },
@@ -1998,7 +2537,7 @@
       "date": "2026-08-14",
       "form": "SC 13G",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2112446/0001104659-26-097421-index.htm",
-      "pct_now": null,
+      "pct_now": 5.4,
       "pct_prev": null,
       "pct_status": null
     },
@@ -2009,7 +2548,7 @@
       "date": "2026-08-14",
       "form": "SC 13G",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1746473/0001104659-26-097422-index.htm",
-      "pct_now": null,
+      "pct_now": 8.9,
       "pct_prev": null,
       "pct_status": null
     },
@@ -2020,7 +2559,7 @@
       "date": "2026-08-14",
       "form": "SC 13G",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2118032/0001104659-26-097423-index.htm",
-      "pct_now": null,
+      "pct_now": 8.4,
       "pct_prev": null,
       "pct_status": null
     },
@@ -2031,7 +2570,7 @@
       "date": "2026-08-14",
       "form": "SC 13G",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1420565/0001104659-26-097425-index.htm",
-      "pct_now": null,
+      "pct_now": 5.3,
       "pct_prev": null,
       "pct_status": null
     },
@@ -2042,7 +2581,7 @@
       "date": "2026-08-14",
       "form": "SC 13G",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1566044/0001104659-26-097426-index.htm",
-      "pct_now": null,
+      "pct_now": 8.8,
       "pct_prev": null,
       "pct_status": null
     },
@@ -2053,7 +2592,7 @@
       "date": "2026-08-14",
       "form": "SC 13G",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1661059/0001104659-26-097427-index.htm",
-      "pct_now": null,
+      "pct_now": 15.8,
       "pct_prev": null,
       "pct_status": null
     },
@@ -2064,9 +2603,9 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1683553/0001104659-26-097316-index.htm",
-      "pct_now": null,
+      "pct_now": 2.5,
       "pct_prev": null,
-      "pct_status": null
+      "pct_status": "below_5"
     },
     {
       "filer": "ADAR1 Capital Management, LLC",
@@ -2075,7 +2614,7 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2017526/0001104659-26-097320-index.htm",
-      "pct_now": null,
+      "pct_now": 8.3,
       "pct_prev": null,
       "pct_status": null
     },
@@ -2086,7 +2625,7 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1372514/0001104659-26-097323-index.htm",
-      "pct_now": null,
+      "pct_now": 9.9,
       "pct_prev": null,
       "pct_status": null
     },
@@ -2097,7 +2636,7 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1637715/0001104659-26-097335-index.htm",
-      "pct_now": null,
+      "pct_now": 5.5,
       "pct_prev": null,
       "pct_status": null
     },
@@ -2108,7 +2647,7 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1444192/0001104659-26-097338-index.htm",
-      "pct_now": null,
+      "pct_now": 9.9,
       "pct_prev": null,
       "pct_status": null
     },
@@ -2119,7 +2658,7 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2006986/0001104659-26-097340-index.htm",
-      "pct_now": null,
+      "pct_now": 5.4,
       "pct_prev": null,
       "pct_status": null
     },
@@ -2130,7 +2669,7 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1636651/0001104659-26-097342-index.htm",
-      "pct_now": null,
+      "pct_now": 5.1,
       "pct_prev": null,
       "pct_status": null
     },
@@ -2141,7 +2680,7 @@
       "date": "2026-08-14",
       "form": "SC 13G",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1771910/0001104659-26-097255-index.htm",
-      "pct_now": null,
+      "pct_now": 9.69,
       "pct_prev": null,
       "pct_status": null
     },
@@ -2152,7 +2691,7 @@
       "date": "2026-08-14",
       "form": "SC 13G",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1158449/0001512162-26-000024-index.htm",
-      "pct_now": null,
+      "pct_now": 7.8,
       "pct_prev": null,
       "pct_status": null
     },
@@ -2163,7 +2702,7 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1158449/0000080255-26-000541-index.htm",
-      "pct_now": null,
+      "pct_now": 14.0,
       "pct_prev": null,
       "pct_status": null
     },
@@ -2174,7 +2713,7 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1468079/0000919859-26-000013-index.htm",
-      "pct_now": null,
+      "pct_now": 8.0,
       "pct_prev": null,
       "pct_status": null
     },
@@ -2185,7 +2724,7 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/919859/0000919859-26-000013-index.htm",
-      "pct_now": null,
+      "pct_now": 8.0,
       "pct_prev": null,
       "pct_status": null
     },
@@ -2196,9 +2735,9 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1040470/0001535264-26-000048-index.htm",
-      "pct_now": null,
+      "pct_now": 1.1,
       "pct_prev": null,
-      "pct_status": null
+      "pct_status": "below_5"
     },
     {
       "filer": "AEROEQUITY GP, LLC",
@@ -2207,7 +2746,7 @@
       "date": "2026-08-14",
       "form": "SC 13G/A",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2086587/0001104659-26-097095-index.htm",
-      "pct_now": null,
+      "pct_now": 23.96,
       "pct_prev": null,
       "pct_status": null
     },
@@ -3871,547 +4410,8 @@
       "pct_now": null,
       "pct_prev": null,
       "pct_status": null
-    },
-    {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-      "target": "Nuveen Mortgage & Income Fund/MA/",
-      "ticker": "JLS",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1472215/0001193125-26-350923-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-      "target": "AMERIPRISE FINANCIAL INC",
-      "ticker": "AMP",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/820027/0001193125-26-350945-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-      "target": "Hamilton Beach Brands Holding Co",
-      "ticker": "HBB",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1709164/0001193125-26-350945-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-      "target": "AMERIPRISE FINANCIAL INC",
-      "ticker": "AMP",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/820027/0001193125-26-350958-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-      "target": "Empire State Realty Trust, Inc.",
-      "ticker": "ESRT",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1541401/0001193125-26-350958-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-      "target": "AMERIPRISE FINANCIAL INC",
-      "ticker": "AMP",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/820027/0001193125-26-350980-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-      "target": "Match Group, Inc.",
-      "ticker": "MTCH",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/891103/0001193125-26-350980-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-      "target": "AMERIPRISE FINANCIAL INC",
-      "ticker": "AMP",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/820027/0001193125-26-351134-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-      "target": "SEMTECH CORP",
-      "ticker": "SMTC",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/88941/0001193125-26-351134-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-      "target": "AMERIPRISE FINANCIAL INC",
-      "ticker": "AMP",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/820027/0001193125-26-351142-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-      "target": "BANCROFT FUND LTD",
-      "ticker": "BCV",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/9521/0001193125-26-351142-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-      "target": "AMERIPRISE FINANCIAL INC",
-      "ticker": "AMP",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/820027/0001193125-26-351147-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-      "target": "AMPCO PITTSBURGH CORP",
-      "ticker": "AP",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/6176/0001193125-26-351147-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-      "target": "AMERIPRISE FINANCIAL INC",
-      "ticker": "AMP",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/820027/0001193125-26-351173-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-      "target": "Energy Recovery, Inc.",
-      "ticker": "ERII",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1421517/0001193125-26-351173-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-      "target": "AMERIPRISE FINANCIAL INC",
-      "ticker": "AMP",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/820027/0001193125-26-351226-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-      "target": "Adeia Inc.",
-      "ticker": "ADEA",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1803696/0001193125-26-351226-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Fourthstone LLC",
-      "target": "AMES NATIONAL CORP",
-      "ticker": "ATLO",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1132651/0001767803-26-000049-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Sirenia Capital Management LP",
-      "target": "ANAPTYSBIO, INC",
-      "ticker": "ANAB",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1370053/0000919574-26-005200-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-      "target": "APEX Tech Acquisition Inc.",
-      "ticker": "TRAD",
-      "date": "2026-08-14",
-      "form": "SC 13G",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2085485/0000886982-26-000512-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-      "target": "GOLDMAN SACHS GROUP INC",
-      "ticker": "GS",
-      "date": "2026-08-14",
-      "form": "SC 13G",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/886982/0000886982-26-000512-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Karpus Management, Inc.",
-      "target": "APEX Tech Acquisition Inc.",
-      "ticker": "TRAD",
-      "date": "2026-08-14",
-      "form": "SC 13G",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2085485/0001072613-26-000682-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Harraden Circle Investments, LLC",
-      "target": "APEX Tech Acquisition Inc.",
-      "ticker": "TRAD",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2085485/0001193125-26-351102-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "RPD Fund Management LLC",
-      "target": "APPIAN CORP",
-      "ticker": "APPN",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1441683/0000919574-26-005228-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "AQR CAPITAL MANAGEMENT LLC",
-      "target": "Roman DBDR Acquisition Corp. II",
-      "ticker": "DRDB",
-      "date": "2026-08-14",
-      "form": "SC 13G",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2032528/0001167557-26-000225-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "AQR CAPITAL MANAGEMENT LLC",
-      "target": "Hadron Energy, Inc.",
-      "ticker": "HDRN",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2023730/0001167557-26-000218-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "AQR CAPITAL MANAGEMENT LLC",
-      "target": "BOXABL Inc.",
-      "ticker": "BXBL",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1906364/0001167557-26-000219-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "AQR CAPITAL MANAGEMENT LLC",
-      "target": "Centurion Acquisition Corp.",
-      "ticker": "ALFUU",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2010930/0001167557-26-000221-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "AQR CAPITAL MANAGEMENT LLC",
-      "target": "GP-Act III Acquisition Corp.",
-      "ticker": "GPAT",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1834526/0001167557-26-000222-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "AQR CAPITAL MANAGEMENT LLC",
-      "target": "Spark I Acquisition Corp",
-      "ticker": "SPKL",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1884046/0001167557-26-000223-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "AQR CAPITAL MANAGEMENT LLC",
-      "target": "PALOMA ACQUISITION CORP I",
-      "ticker": "PALO",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2101562/0001167557-26-000224-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "HIGHBRIDGE CAPITAL MANAGEMENT LLC",
-      "target": "ARC Group Acquisition I Corp.",
-      "ticker": "ARCL",
-      "date": "2026-08-14",
-      "form": "SC 13G",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2073515/0000919574-26-005356-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "ARISTEIA CAPITAL, L.L.C.",
-      "target": "ARC Group Acquisition I Corp.",
-      "ticker": "ARCL",
-      "date": "2026-08-14",
-      "form": "SC 13G",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2073515/0001172661-26-003563-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Harraden Circle Investments, LLC",
-      "target": "ARC Group Acquisition I Corp.",
-      "ticker": "ARCL",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2073515/0001193125-26-351081-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "ARCH Venture Fund IX, L.P.",
-      "target": "Sana Biotechnology, Inc.",
-      "ticker": "SANA",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1770121/0001012975-26-000773-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "ARCH Venture Fund XII, L.P.",
-      "target": "Parabilis Medicines, Inc.",
-      "ticker": "PBLS",
-      "date": "2026-08-14",
-      "form": "SC 13G",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1657677/0001193125-26-352189-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Rubric Capital Management LP",
-      "target": "ARDELYX, INC.",
-      "ticker": "ARDX",
-      "date": "2026-08-14",
-      "form": "SC 13G",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1437402/0001104659-26-097075-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "PRICE T ROWE ASSOCIATES INC /MD/",
-      "target": "ARGENX SE",
-      "ticker": "ARGX",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1697862/0000080255-26-000563-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "ARIEL INVESTMENTS, LLC",
-      "target": "MATTEL INC /DE/",
-      "ticker": "MAT",
-      "date": "2026-08-14",
-      "form": "SC 13G",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/63276/0000936753-26-000047-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "ARIEL INVESTMENTS, LLC",
-      "target": "Core Laboratories Inc. /DE/",
-      "ticker": "CLB",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1958086/0000936753-26-000045-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "ARIEL INVESTMENTS, LLC",
-      "target": "LINDBLAD EXPEDITIONS HOLDINGS, INC.",
-      "ticker": "LIND",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1512499/0000936753-26-000046-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "ARIEL INVESTMENTS, LLC",
-      "target": "Madison Square Garden Entertainment Corp.",
-      "ticker": "MSGE",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1952073/0000936753-26-000048-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "ARIEL INVESTMENTS, LLC",
-      "target": "Sphere Entertainment Co.",
-      "ticker": "SPHR",
-      "date": "2026-08-14",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1795250/0000936753-26-000049-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "ARISTEIA CAPITAL, L.L.C.",
-      "target": "Apogee Acquisition Corp",
-      "ticker": "AACP",
-      "date": "2026-08-14",
-      "form": "SC 13G",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2102123/0001172661-26-003542-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "ARISTEIA CAPITAL, L.L.C.",
-      "target": "SM Energy Co",
-      "ticker": "SM",
-      "date": "2026-08-14",
-      "form": "SC 13G",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/893538/0001172661-26-003553-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "ARISTEIA CAPITAL, L.L.C.",
-      "target": "Columbus Circle Capital Corp II",
-      "ticker": "CMII",
-      "date": "2026-08-14",
-      "form": "SC 13G",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2088805/0001172661-26-003559-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "ARISTEIA CAPITAL, L.L.C.",
-      "target": "Collective Acquisition Corp. II",
-      "ticker": "CAII",
-      "date": "2026-08-14",
-      "form": "SC 13G",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2115404/0001172661-26-003574-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "ARISTEIA CAPITAL, L.L.C.",
-      "target": "Praetorian Acquisition Corp.",
-      "ticker": "PTOR",
-      "date": "2026-08-14",
-      "form": "SC 13G",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2093912/0001172661-26-003575-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "ARISTEIA CAPITAL, L.L.C.",
-      "target": "FortuneX Acquisition Corp",
-      "ticker": "FXAC",
-      "date": "2026-08-14",
-      "form": "SC 13G",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2121703/0001172661-26-003578-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
     }
   ],
   "methodology": "SC 13G passive-stake filing stream \u2014 SEC EDGAR daily crawler index (public domain, 17 U.S.C. \u00a7105), trailing ~120-day window, filed-date point-in-time; a SC 13G/A amendment is a new filing, never a silent overwrite. EFTS full-text search froze on the Schedule 13 family after 2024-12-17 (live-verified: forms=SC 13G returns 0 hits for 2025+ windows), so the daily index is the source. It lists a filing under EVERY covered company, so rows are DEDUPED per accession: the one listed company is the SUBJECT (ticker backfilled OFFLINE from the cached SEC company_tickers snapshot \u2014 a current-snapshot display label, not as-of-filing) and the co-indexed names surface as the FILER; ambiguous or unlisted groups honestly keep every member (placeholder filer / null ticker, counted in data_health.source_health), so the row count can slightly exceed the distinct-accession count. Honest v1 limits, disclosed not papered over: the share count and event date live INSIDE the filing documents and are NOT parsed here. The percent-of-class second stage IS bounded-parsed for the VISIBLE top-150 rows only (EDGAR index.json + primary document, \u22642 polite requests per row; structured cover-page tag first, then the 'Percent of class' label, then the 'X.X% of the ... class' narrative; /A amendments carry pct_prev from 'previous X%'-style sentences only): rows beyond the visible window are NOT parsed, and every extraction miss stays an honest null (counted in data_health.source_health), never a guess or a default. pct_status is DERIVED from parsed values only: exited = an explicit parsed 0, below_5 = a parsed value < 5; a null pct never yields a status. Group filings show the FIRST reporting person's cover-page percentage. Each row links the filing's EDGAR index page, which lists every document and names the reporting person. Counts are FILING counts, not holder counts. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-08-25T14:15:24.024522+00:00"
+  "snapshot_ts": "2026-08-27T16:21:23.059689+00:00"
 }

@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "as_of": "2026-08-23",
+  "as_of": "2026-08-27",
   "n_docs": 68,
   "n_categories": 5,
   "categories": {
@@ -492,9 +492,9 @@
       "title": "\u6570\u636e\u63a5\u5165 7 \u95e8 \u2014 EDGAR IPO \u7533\u62a5/\u5b9a\u4ef7\u6d41\uff08S-1 \u5bb6\u65cf + 424B4\uff09",
       "path": "docs/data-intake-edgar-ipo.md",
       "category": "theory",
-      "date": "2026-08-22",
-      "n_chars": 2629,
-      "summary": "\u72b6\u6001\uff1av0.1 \u00b7 2026-08-22 \u00b7 exploratory-only display module\u3002 \u8303\u56f4\uff1aEDGAR IPO \u6ce8\u518c/\u5b9a\u4ef7\u7533\u62a5\u6570\u636e\u901a\u8fc7 7 \u95e8\u5f3a\u5236\u6e05\u5355\uff0c\u6240\u6709\u7b2c\u4e09\u65b9\u6570\u636e\u96c6\u8fdb Aionis \u524d \u5fc5\u987b \u5168\u90e8\u8fc7\u5173\u3002 \u5f15\u7528\uff1a\u4e3b rubric \u89c1 docs/data-intake-rubric.md\u3002",
+      "date": "2026-08-27",
+      "n_chars": 4716,
+      "summary": "\u72b6\u6001\uff1av0.2 \u00b7 2026-08-26\uff08TASK-DISP-H3 \u6709\u754c\u53d1\u884c\u4ef7\u89e3\u6790\uff1bv0.1 \u00b7 2026-08-22 \u539f\u59cb\u63a5\u5165\uff09\u00b7 exploratory-only display module\u3002 \u8303\u56f4\uff1aEDGAR IPO \u6ce8\u518c/\u5b9a\u4ef7\u7533\u62a5\u6570\u636e\u901a\u8fc7 7 \u95e8\u5f3a\u5236\u6e05\u5355\uff0c\u6240\u6709\u7b2c\u4e09\u65b9\u6570\u636e\u96c6\u8fdb Aionis \u524d \u5fc5\u987b \u5168\u90e8\u8fc7\u5173\u3002 \u5f15\u7528\uff1a\u4e3b rubric \u89c1 docs/data-intake-rubric.md\u3002",
       "url": "https://github.com/Rethymus/Aionis/blob/main/docs/data-intake-edgar-ipo.md"
     },
     {
@@ -519,9 +519,9 @@
       "title": "\u6570\u636e\u63a5\u5165 7 \u95e8 \u2014 GDELT \u5e02\u573a\u65b0\u95fb\u6d41\uff08news_feed / /news \u9762\u677f\uff09",
       "path": "docs/data-intake-gdelt-news-feed.md",
       "category": "theory",
-      "date": "2026-08-23",
-      "n_chars": 2647,
-      "summary": "\u72b6\u6001\uff1av0.1 \u00b7 2026-08-22 \u00b7 exploratory-only display module\u3002 \u8303\u56f4\uff1aGDELT Doc 2.0 artlist \u5e02\u573a\u65b0\u95fb\u6d41\u901a\u8fc7 7 \u95e8\u5f3a\u5236\u6e05\u5355\uff0c\u6240\u6709\u7b2c\u4e09\u65b9\u6570\u636e\u96c6\u8fdb Aionis \u524d \u5fc5\u987b \u5168\u90e8\u8fc7\u5173\u3002 \u5f15\u7528\uff1a\u4e3b rubric \u89c1 docs/data-intake-rubric.md\uff1bGDELT \u5148\u4f8b\u89c1 news_sentiment_gdelt.py\uff08themes \u7684 news_sentiment \u4e3b\u9898\uff09\u3002",
+      "date": "2026-08-26",
+      "n_chars": 3880,
+      "summary": "\u72b6\u6001\uff1av0.2 \u00b7 2026-08-25 \u00b7 exploratory-only display module\uff08v0.2 \u589e\u8865\u53cc\u8bed zho lane\uff09\u3002 \u8303\u56f4\uff1aGDELT Doc 2.0 artlist \u5e02\u573a\u65b0\u95fb\u6d41\u901a\u8fc7 7 \u95e8\u5f3a\u5236\u6e05\u5355\uff0c\u6240\u6709\u7b2c\u4e09\u65b9\u6570\u636e\u96c6\u8fdb Aionis \u524d \u5fc5\u987b \u5168\u90e8\u8fc7\u5173\u3002",
       "url": "https://github.com/Rethymus/Aionis/blob/main/docs/data-intake-gdelt-news-feed.md"
     },
     {
@@ -683,5 +683,5 @@
     }
   ],
   "methodology": "Layer 1 \u2014 Aionis's OWN method library: catalog of docs/ + decisions/ markdown (repo MIT; zero third-party copyright surface). Each entry carries metadata plus a safe teaser slice (first 2-3 sentences, <=240 chars) extracted at export time; the full text stays on GitHub (link-out). Dates are last-commit dates read from the LOCAL git repository (no network). Layer 2 \u2014 a FIXED editorially-curated bookmark list of first-hand public research sources (BIS / Fed FEDS / IMF / NBER / arXiv q-fin / FRASER / FRED-ALFRED / RePEc): link-out + one static sentence each, no fetching, no scraping, no summary APIs \u2014 copyright stays with the authors, we only catalog. Categories are a fixed 5-rail whitelist (preregistration / adr / results / rubric / theory); n_docs reconciles to the sum of the rails. Display-only reference lane \u2014 never part of any research or OOS pipeline.",
-  "snapshot_ts": "2026-08-25T14:15:42.583600+00:00"
+  "snapshot_ts": "2026-08-27T16:21:29.404151+00:00"
 }

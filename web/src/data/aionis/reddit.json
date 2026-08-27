@@ -10,68 +10,61 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-08-08T03:45:06+00:00",
-  "n_snapshots": 1,
+  "latest_snapshot_ts": "2026-08-27T10:59:09+00:00",
+  "n_snapshots": 2,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
-      "ticker": "PLTR",
-      "mentions": 1,
-      "sentiment": 0.021,
-      "bull_ratio": null,
+      "ticker": "NVDA",
+      "mentions": 6,
+      "sentiment": 0.129,
+      "bull_ratio": 0.667,
       "score_sum": 0
     },
     {
-      "ticker": "SMCI",
-      "mentions": 1,
-      "sentiment": 0.851,
-      "bull_ratio": 1.0,
+      "ticker": "AMZN",
+      "mentions": 2,
+      "sentiment": -0.126,
+      "bull_ratio": 0.5,
       "score_sum": 0
     },
     {
-      "ticker": "TSLA",
-      "mentions": 1,
-      "sentiment": -0.559,
+      "ticker": "META",
+      "mentions": 2,
+      "sentiment": -0.737,
       "bull_ratio": 0.0,
       "score_sum": 0
     },
     {
-      "ticker": "UBER",
+      "ticker": "MSFT",
       "mentions": 1,
-      "sentiment": -0.03,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "TTWO",
-      "mentions": 1,
-      "sentiment": -0.091,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "EPAM",
-      "mentions": 1,
-      "sentiment": -0.962,
+      "sentiment": -0.799,
       "bull_ratio": 0.0,
       "score_sum": 0
     },
     {
-      "ticker": "SNDK",
+      "ticker": "GOOGL",
       "mentions": 1,
-      "sentiment": 0.629,
-      "bull_ratio": 1.0,
+      "sentiment": -0.799,
+      "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "AVGO",
+      "mentions": 1,
+      "sentiment": -0.799,
+      "bull_ratio": 0.0,
       "score_sum": 0
     }
   ],
   "pressure": {
     "status": "accumulating",
     "by_ticker": {},
-    "n_snapshots": 1,
-    "latest_date": "2026-08-08",
+    "n_snapshots": 2,
+    "latest_date": "2026-08-27",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-08-20T03:15:06.551049+00:00"
+  "snapshot_ts": "2026-08-27T16:21:23.099065+00:00"
 }

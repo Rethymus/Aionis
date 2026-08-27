@@ -1,9 +1,9 @@
 {
   "status": "ok",
-  "as_of_date": "2026-06-30",
+  "as_of_date": "2026-08-21",
   "freshness": {
-    "earliest": "2026-06-30",
-    "latest": "2026-08-04",
+    "earliest": "2021-07",
+    "latest": "2026-08-27",
     "mixed": true
   },
   "methodology": "Seven-theme signal overview (display-only, NOT a research claim). Aggregates are cross-sectional means over the S&P 500 PIT panel at the latest realized month; the macro theme uses the Track-C macro-regime composite; net cost uses the bps sweep. Themes marked forward_only / needs_work / partial have no real historical signal yet \u2014 shown honestly, never mocked. Not the frozen Track-B verdict.",
@@ -11,62 +11,50 @@
     {
       "key": "price",
       "status": "live",
-      "as_of": "2026-06-30",
+      "as_of": "2026-08-21",
       "headline": "21d momentum + 63d vol + 252d \u03b2 + 21d RSI(\u4e0a\u884c\u5e7f\u5ea6) + 63d timetohigh(\u8ddd\u9ad8\u70b9) (cross-sectional mean)",
       "signals": [
         {
           "name": "momentum_21d",
-          "value": 0.021
+          "value": 0.0543
         },
         {
           "name": "volatility_63d",
-          "value": 0.0227
-        },
-        {
-          "name": "beta_252d",
-          "value": 0.6822
+          "value": 0.0236
         },
         {
           "name": "reversal_5d",
-          "value": -0.0188
+          "value": 0.0013
         },
         {
           "name": "rsi_21d",
-          "value": 0.5334
+          "value": 0.5519
         },
         {
           "name": "timetohigh_63d",
-          "value": 0.3994
+          "value": 0.3716
         }
       ],
       "series": [
         {
-          "month": "2025-07",
-          "value": 0.0372
-        },
-        {
-          "month": "2025-08",
-          "value": 0.0055
-        },
-        {
           "month": "2025-09",
-          "value": 0.0164
+          "value": 0.0165
         },
         {
           "month": "2025-10",
-          "value": 0.0063
+          "value": 0.006
         },
         {
           "month": "2025-11",
-          "value": -0.0114
+          "value": -0.0115
         },
         {
           "month": "2025-12",
-          "value": 0.0295
+          "value": 0.0297
         },
         {
           "month": "2026-01",
-          "value": 0.029
+          "value": 0.0289
         },
         {
           "month": "2026-02",
@@ -74,11 +62,11 @@
         },
         {
           "month": "2026-03",
-          "value": -0.0316
+          "value": -0.0318
         },
         {
           "month": "2026-04",
-          "value": 0.024
+          "value": 0.0236
         },
         {
           "month": "2026-05",
@@ -87,211 +75,151 @@
         {
           "month": "2026-06",
           "value": 0.0268
+        },
+        {
+          "month": "2026-07",
+          "value": 0.027
+        },
+        {
+          "month": "2026-08",
+          "value": 0.0403
         }
       ]
     },
     {
       "key": "macro",
       "status": "live",
-      "as_of": "2026-08-04",
+      "as_of": "2026-08-27",
       "signals": [
         {
           "name": "macro_regime",
-          "value": -0.2847
+          "value": 0.1018
         }
       ],
       "series": [
         {
-          "date": "2026-05-13",
-          "value": 0.409
-        },
-        {
-          "date": "2026-05-14",
-          "value": 0.37
-        },
-        {
-          "date": "2026-05-15",
-          "value": 0.697
-        },
-        {
-          "date": "2026-05-18",
-          "value": 0.699
-        },
-        {
-          "date": "2026-05-19",
-          "value": 0.808
-        },
-        {
-          "date": "2026-05-20",
-          "value": 0.596
-        },
-        {
-          "date": "2026-05-21",
-          "value": 0.307
-        },
-        {
-          "date": "2026-05-22",
-          "value": 0.327
-        },
-        {
-          "date": "2026-05-25",
-          "value": -0.185
-        },
-        {
-          "date": "2026-05-26",
-          "value": 0.31
-        },
-        {
-          "date": "2026-05-27",
-          "value": 0.235
-        },
-        {
-          "date": "2026-05-28",
-          "value": 0.109
-        },
-        {
-          "date": "2026-05-29",
-          "value": 0.088
-        },
-        {
-          "date": "2026-06-01",
-          "value": 0.113
-        },
-        {
-          "date": "2026-06-02",
-          "value": 0.084
-        },
-        {
-          "date": "2026-06-03",
-          "value": 0.136
-        },
-        {
-          "date": "2026-06-04",
-          "value": 0.069
-        },
-        {
           "date": "2026-06-05",
-          "value": 0.726
+          "value": 0.574
         },
         {
           "date": "2026-06-08",
-          "value": 0.556
+          "value": 0.709
         },
         {
           "date": "2026-06-09",
-          "value": 0.464
+          "value": 0.426
         },
         {
           "date": "2026-06-10",
-          "value": 0.744
+          "value": 0.492
         },
         {
           "date": "2026-06-11",
-          "value": 0.346
+          "value": 0.314
         },
         {
           "date": "2026-06-12",
-          "value": 0.214
+          "value": 0.382
         },
         {
           "date": "2026-06-15",
-          "value": 0.087
+          "value": 0.414
         },
         {
           "date": "2026-06-16",
-          "value": 0.012
+          "value": 0.27
         },
         {
           "date": "2026-06-17",
-          "value": 0.147
+          "value": 0.168
         },
         {
           "date": "2026-06-18",
-          "value": -0.3
+          "value": -0.197
         },
         {
           "date": "2026-06-19",
-          "value": -0.146
+          "value": 0.102
         },
         {
           "date": "2026-06-22",
-          "value": -0.19
-        },
-        {
-          "date": "2026-06-23",
-          "value": 0.076
-        },
-        {
-          "date": "2026-06-24",
-          "value": -0.181
-        },
-        {
-          "date": "2026-06-25",
-          "value": -0.11
-        },
-        {
-          "date": "2026-06-26",
-          "value": -0.16
-        },
-        {
-          "date": "2026-06-29",
-          "value": -0.312
-        },
-        {
-          "date": "2026-06-30",
-          "value": -0.314
-        },
-        {
-          "date": "2026-07-01",
-          "value": -0.675
-        },
-        {
-          "date": "2026-07-02",
-          "value": -0.176
-        },
-        {
-          "date": "2026-07-03",
-          "value": -0.297
-        },
-        {
-          "date": "2026-07-06",
-          "value": -0.235
-        },
-        {
-          "date": "2026-07-07",
-          "value": -0.281
-        },
-        {
-          "date": "2026-07-08",
-          "value": -0.182
-        },
-        {
-          "date": "2026-07-09",
-          "value": -0.24
-        },
-        {
-          "date": "2026-07-10",
-          "value": -0.496
-        },
-        {
-          "date": "2026-07-13",
           "value": -0.163
         },
         {
+          "date": "2026-06-23",
+          "value": -0.095
+        },
+        {
+          "date": "2026-06-24",
+          "value": -0.351
+        },
+        {
+          "date": "2026-06-25",
+          "value": -0.282
+        },
+        {
+          "date": "2026-06-26",
+          "value": -0.284
+        },
+        {
+          "date": "2026-06-29",
+          "value": -0.397
+        },
+        {
+          "date": "2026-06-30",
+          "value": -0.218
+        },
+        {
+          "date": "2026-07-01",
+          "value": -0.746
+        },
+        {
+          "date": "2026-07-02",
+          "value": 0.033
+        },
+        {
+          "date": "2026-07-03",
+          "value": 0.102
+        },
+        {
+          "date": "2026-07-06",
+          "value": 0.029
+        },
+        {
+          "date": "2026-07-07",
+          "value": -0.124
+        },
+        {
+          "date": "2026-07-08",
+          "value": -0.09
+        },
+        {
+          "date": "2026-07-09",
+          "value": -0.019
+        },
+        {
+          "date": "2026-07-10",
+          "value": -0.282
+        },
+        {
+          "date": "2026-07-13",
+          "value": -0.101
+        },
+        {
           "date": "2026-07-14",
-          "value": -0.078
+          "value": 0.126
         },
         {
           "date": "2026-07-15",
-          "value": -0.113
+          "value": 0.2
         },
         {
           "date": "2026-07-16",
-          "value": 0.113
+          "value": 0.38
         },
         {
           "date": "2026-07-17",
-          "value": 0.088
+          "value": 0.036
         },
         {
           "date": "2026-07-20",
@@ -299,47 +227,115 @@
         },
         {
           "date": "2026-07-21",
-          "value": -0.064
+          "value": 0.07
         },
         {
           "date": "2026-07-22",
-          "value": -0.079
+          "value": 0.107
         },
         {
           "date": "2026-07-23",
-          "value": 0.126
+          "value": 0.104
         },
         {
           "date": "2026-07-24",
-          "value": 0.085
+          "value": 0.06
         },
         {
           "date": "2026-07-27",
-          "value": -0.018
+          "value": -0.106
         },
         {
           "date": "2026-07-28",
-          "value": -0.04
+          "value": -0.069
         },
         {
           "date": "2026-07-29",
-          "value": 0.503
+          "value": 0.379
         },
         {
           "date": "2026-07-30",
-          "value": 0.168
+          "value": 0.417
         },
         {
           "date": "2026-07-31",
-          "value": 0.137
+          "value": 0.539
         },
         {
           "date": "2026-08-03",
-          "value": -0.284
+          "value": 0.369
         },
         {
           "date": "2026-08-04",
-          "value": -0.285
+          "value": 0.196
+        },
+        {
+          "date": "2026-08-05",
+          "value": 0.236
+        },
+        {
+          "date": "2026-08-06",
+          "value": 0.362
+        },
+        {
+          "date": "2026-08-07",
+          "value": 0.402
+        },
+        {
+          "date": "2026-08-10",
+          "value": 0.574
+        },
+        {
+          "date": "2026-08-11",
+          "value": 0.528
+        },
+        {
+          "date": "2026-08-12",
+          "value": 0.57
+        },
+        {
+          "date": "2026-08-13",
+          "value": 0.477
+        },
+        {
+          "date": "2026-08-14",
+          "value": 0.654
+        },
+        {
+          "date": "2026-08-17",
+          "value": 0.74
+        },
+        {
+          "date": "2026-08-18",
+          "value": 0.735
+        },
+        {
+          "date": "2026-08-19",
+          "value": 0.414
+        },
+        {
+          "date": "2026-08-20",
+          "value": 0.638
+        },
+        {
+          "date": "2026-08-21",
+          "value": 0.679
+        },
+        {
+          "date": "2026-08-24",
+          "value": 0.447
+        },
+        {
+          "date": "2026-08-25",
+          "value": 0.307
+        },
+        {
+          "date": "2026-08-26",
+          "value": 0.102
+        },
+        {
+          "date": "2026-08-27",
+          "value": 0.102
         }
       ],
       "headline": "macro-regime composite z (VIX+credit+term+DFF surprise)"
@@ -347,124 +343,234 @@
     {
       "key": "fundamentals",
       "status": "live",
-      "as_of": "2026-06-30",
+      "as_of": "2026-08-21",
       "headline": "ROE / margin / revenue growth / leverage (cross-sectional mean)",
       "signals": [
         {
           "name": "roe",
-          "value": 0.044
+          "value": 0.164
         },
         {
           "name": "profit_margin",
-          "value": 0.3194
+          "value": 0.276
         },
         {
           "name": "revenue_growth_12m",
-          "value": 0.0052
+          "value": 0.05
         },
         {
           "name": "leverage",
-          "value": 0.2529
+          "value": 0.2543
         }
       ],
       "series": [
         {
-          "month": "2025-07",
-          "value": 0.0778
-        },
-        {
-          "month": "2025-08",
-          "value": 0.0574
-        },
-        {
           "month": "2025-09",
-          "value": 0.0549
+          "value": 0.0618
         },
         {
           "month": "2025-10",
-          "value": 0.0514
+          "value": 0.0588
         },
         {
           "month": "2025-11",
-          "value": 0.0286
+          "value": 0.035
         },
         {
           "month": "2025-12",
-          "value": 0.0299
+          "value": 0.0362
         },
         {
           "month": "2026-01",
-          "value": 0.0329
+          "value": 0.0387
         },
         {
           "month": "2026-02",
-          "value": 0.1019
+          "value": 0.049
         },
         {
           "month": "2026-03",
-          "value": 0.1973
+          "value": 0.1302
         },
         {
           "month": "2026-04",
-          "value": 0.1931
+          "value": 0.1264
         },
         {
           "month": "2026-05",
-          "value": 0.0578
+          "value": 0.0316
         },
         {
           "month": "2026-06",
-          "value": 0.0431
+          "value": 0.0322
+        },
+        {
+          "month": "2026-07",
+          "value": 0.0396
+        },
+        {
+          "month": "2026-08",
+          "value": 0.1603
         }
       ]
     },
     {
       "key": "news_sentiment",
-      "status": "forward_only",
-      "headline": "\u65b0\u95fb\u60c5\u7eea\u00b7\u5efa\u8bbe\u4e2d\uff1aGDELT \u5e02\u573a\u65b0\u95fb\u8bed\u8c03\uff08ECON_STOCKMARKET\uff0c2017-04 \u8d77\uff09\u56de\u586b\u8fdb\u884c\u4e2d\uff0c\u672c\u5feb\u7167\u6682\u65e0\u6570\u636e",
-      "as_of": null,
-      "signals": [],
-      "series": []
-    },
-    {
-      "key": "risk",
       "status": "live",
-      "as_of": "2026-06-30",
-      "headline": "\u4e0b\u884c\u03b2 + \u7279\u8d28\u6ce2\u52a8 + \u504f\u5ea6 + \u6700\u5927\u5355\u65e5\u56de\u64a4\uff08\u6a2a\u622a\u9762\u5747\u503c\uff09",
+      "as_of": "2021-07",
+      "headline": "GDELT \u901a\u7528\u8bed\u8c03\uff08US \u5e02\u573a\u65b0\u95fb\uff0c2017-04\u21922021-07\uff09\uff1b\u901a\u7528\u8bcd\u5178\u975e\u91d1\u878d\u57df\u2014\u2014\u538b\u529b/\u60c5\u7eea\u4ee3\u7406\uff0c\u975e\u9009\u80a1\u4fe1\u53f7\uff08display-only, exploratory\uff09",
       "signals": [
         {
-          "name": "downside_beta",
-          "value": 1.0006
+          "name": "tone_latest",
+          "value": -0.092
         },
         {
-          "name": "idiosyncratic_volatility",
-          "value": 0.0209
+          "name": "tone_mean",
+          "value": -0.309
         },
         {
-          "name": "return_skewness",
-          "value": 0.1481
+          "name": "tone_min",
+          "value": -1.895
         },
         {
-          "name": "worst_day_drawdown",
-          "value": -0.0599
+          "name": "volume_latest",
+          "value": 0
+        },
+        {
+          "name": "n_months",
+          "value": 46
         }
       ],
       "series": [
         {
-          "month": "2025-07",
-          "value": 0.998
+          "month": "2019-06",
+          "value": -0.304
         },
         {
-          "month": "2025-08",
-          "value": 0.9981
+          "month": "2019-07",
+          "value": -0.068
         },
+        {
+          "month": "2019-08",
+          "value": -0.646
+        },
+        {
+          "month": "2019-09",
+          "value": -0.276
+        },
+        {
+          "month": "2019-10",
+          "value": 0.165
+        },
+        {
+          "month": "2019-11",
+          "value": 0.179
+        },
+        {
+          "month": "2019-12",
+          "value": -0.088
+        },
+        {
+          "month": "2020-01",
+          "value": -0.41
+        },
+        {
+          "month": "2020-02",
+          "value": -0.799
+        },
+        {
+          "month": "2020-03",
+          "value": -1.895
+        },
+        {
+          "month": "2020-04",
+          "value": -1.155
+        },
+        {
+          "month": "2020-05",
+          "value": -0.924
+        },
+        {
+          "month": "2020-06",
+          "value": -0.944
+        },
+        {
+          "month": "2020-07",
+          "value": -0.449
+        },
+        {
+          "month": "2020-08",
+          "value": -0.546
+        },
+        {
+          "month": "2020-09",
+          "value": -0.581
+        },
+        {
+          "month": "2020-10",
+          "value": -0.424
+        },
+        {
+          "month": "2020-11",
+          "value": -0.35
+        },
+        {
+          "month": "2020-12",
+          "value": -0.373
+        },
+        {
+          "month": "2021-01",
+          "value": -0.493
+        },
+        {
+          "month": "2021-04",
+          "value": -0.071
+        },
+        {
+          "month": "2021-05",
+          "value": -0.221
+        },
+        {
+          "month": "2021-06",
+          "value": -0.124
+        },
+        {
+          "month": "2021-07",
+          "value": -0.092
+        }
+      ]
+    },
+    {
+      "key": "risk",
+      "status": "live",
+      "as_of": "2026-08-21",
+      "headline": "\u4e0b\u884c\u03b2 + \u7279\u8d28\u6ce2\u52a8 + \u504f\u5ea6 + \u6700\u5927\u5355\u65e5\u56de\u64a4\uff08\u6a2a\u622a\u9762\u5747\u503c\uff09",
+      "signals": [
+        {
+          "name": "downside_beta",
+          "value": 1.0
+        },
+        {
+          "name": "idiosyncratic_volatility",
+          "value": 0.0219
+        },
+        {
+          "name": "return_skewness",
+          "value": 0.1564
+        },
+        {
+          "name": "worst_day_drawdown",
+          "value": -0.0595
+        }
+      ],
+      "series": [
         {
           "month": "2025-09",
-          "value": 0.9959
+          "value": 0.9975
         },
         {
           "month": "2025-10",
-          "value": 1.0054
+          "value": 1.0063
         },
         {
           "month": "2025-11",
@@ -476,7 +582,7 @@
         },
         {
           "month": "2026-01",
-          "value": 1.0003
+          "value": 1.0001
         },
         {
           "month": "2026-02",
@@ -488,15 +594,23 @@
         },
         {
           "month": "2026-04",
-          "value": 0.9998
+          "value": 0.9999
         },
         {
           "month": "2026-05",
-          "value": 1.0011
+          "value": 1.0012
         },
         {
           "month": "2026-06",
           "value": 1.0009
+        },
+        {
+          "month": "2026-07",
+          "value": 1.0003
+        },
+        {
+          "month": "2026-08",
+          "value": 1.0
         }
       ]
     },
@@ -524,69 +638,16 @@
     {
       "key": "market_structure",
       "status": "live",
-      "as_of": "2026-06-30",
+      "as_of": "2026-08-21",
       "headline": "Amihud illiquidity + 252d \u03b2 (cross-sectional mean)",
       "signals": [
         {
           "name": "amihud_illiquidity_21d",
-          "value": 0.0
-        },
-        {
-          "name": "beta_252d",
-          "value": 0.6822
+          "value": null
         }
       ],
-      "series": [
-        {
-          "month": "2025-07",
-          "value": 0.0
-        },
-        {
-          "month": "2025-08",
-          "value": 0.0
-        },
-        {
-          "month": "2025-09",
-          "value": 0.0
-        },
-        {
-          "month": "2025-10",
-          "value": 0.0
-        },
-        {
-          "month": "2025-11",
-          "value": 0.0
-        },
-        {
-          "month": "2025-12",
-          "value": 0.0
-        },
-        {
-          "month": "2026-01",
-          "value": 0.0
-        },
-        {
-          "month": "2026-02",
-          "value": 0.0
-        },
-        {
-          "month": "2026-03",
-          "value": 0.0
-        },
-        {
-          "month": "2026-04",
-          "value": 0.0
-        },
-        {
-          "month": "2026-05",
-          "value": 0.0
-        },
-        {
-          "month": "2026-06",
-          "value": 0.0
-        }
-      ]
+      "series": []
     }
   ],
-  "snapshot_ts": "2026-08-25T14:15:06.231478+00:00"
+  "snapshot_ts": "2026-08-27T16:21:16.359581+00:00"
 }
