@@ -1,6 +1,7 @@
 """Bounded 13F-HR star-manager holdings fetch (display-only, exploratory).
 
-40 celebrity institutional managers × the 2 most recent DISTINCT report
+A curated registry of celebrity institutional managers × the 2 most recent
+DISTINCT report
 quarters (the second quarter exists purely for the quarter-over-quarter frame
 diff shown in the /institutions panel and /manager/[cik] detail pages). NOT
 the ~9,000-filer full 13F universe — scope is deliberately bounded and polite.
@@ -111,6 +112,14 @@ MANAGERS: dict[int, tuple[str, str | None, str]] = {
     # names verbatim from data.sec.gov submissions) ---------------------------
     1535472: ("Corvex Management LP", None, "activist"),
     807249: ("GAMCO INVESTORS, INC. ET AL", "GAMCO（加贝利）", "value"),
+    # --- +1 admitted 2026-08-28 (TASK-DISP-T; six-gate curation bar PASS,
+    # evidence: reports/design/2026-08-27-stars-candidates-evidence-round2.json
+    # (8/8 consecutive 13F-HR on this LP shell) + round-1 report for fame/
+    # category; LP is the HR-bearing shell — the LLC master (0001378377,
+    # NT-only) stays OUT to avoid double-counting. zh=null per the Corvex
+    # precedent (no whitelisted zh source); category=macro per the round-1
+    # recommendation (macro-manager identity, Duquesne-style) --------------
+    1319998: ("Southpoint Capital Advisors LP", None, "macro"),
 }
 
 QUARTERS = 2  # latest report quarter + previous (frame diff needs both)

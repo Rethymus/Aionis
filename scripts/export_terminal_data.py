@@ -3358,7 +3358,8 @@ def export_form13f() -> None:
     """SEC 13F-HR star-manager quarterly holdings (display-only, exploratory).
 
     Reads ``data/cache/form13f_aggregate.parquet`` (gitignored; produced by
-    ``scripts/form13f_fetch.py`` — 40 verified celebrity managers × the 2 most
+    ``scripts/form13f_fetch.py`` — the verified celebrity-manager registry ×
+    the 2 most
     recent distinct report quarters). Public domain (17 U.S.C. §105);
     filing-date PIT; quarterly cadence; ``value`` as filed in the EDGAR 2014+
     XML (whole USD). Issuer→ticker links are EXACT normalized-name matches
@@ -3519,9 +3520,10 @@ def export_form13f() -> None:
             "SEC Form 13F-HR quarterly institutional holdings — the legally "
             "mandated public report (public domain, 17 U.S.C. §105) every "
             "institutional manager with >=US$100M discretion must file within "
-            "45 days of quarter-end. Panel shows a bounded subset of ~40 star "
-            "managers (CIKs verified against EDGAR submissions JSON "
-            "2026-08-22; candidates not verifiable as actively filing — e.g. "
+            "45 days of quarter-end. Panel shows a bounded curated subset of "
+            "star managers (CIKs verified against EDGAR submissions JSON; "
+            "registry re-verified on each admission, latest 2026-08-28; "
+            "candidates not verifiable as actively filing — e.g. "
             "Scion, Greenlight, Omega Advisors, Pabrai — were honestly "
             "dropped), latest quarter top-10 holdings plus "
             "quarter-over-quarter frame diff (new/increased/reduced/exited on "
