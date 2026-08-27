@@ -8,6 +8,25 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-26 (ff) H5 势力阵营 GO 轮：设计规格单 agent 构建 → 集成上线（1,499 页）
+
+**业主裁决**："授权你处理，部署部分暂时仍不做安排"——即 (ee) 待办清单第 1 项 GO、第 2 项（H1 部署/计费）维持冻结。单构建 agent 派发（worktree wc，junction+LF ledger 预置），规格 = (dd) DESIGN 轮产出的 `tasks/active/TASK-DISP-H5-lineage-build.md`（自包含，agent 未读设计文档亦能执行）。
+
+**交付**（3 commits：34d86f9 面板导出 / 1729885 契约测试 / 5df18c8 页面视图）：文件清单与规格 §2 逐项一致（5 新建 + 8 修改，零越界）。
+
+- **主线审查裁定的偏差七处**（报告完整披露，逐一采信）：① 唯一实质项 = **体积门 200KB→512KB**——实测 co_hold 平均 w=4.61（max 20，与设计期 D.E.Shaw×Millennium/Millennium×Citadel 双 20 吻合）×2,553 条 shared 明细 ≈ 本征 412KB，"不改 lied 数据的任何编码都不可达 200KB"；照 form4 cap 先例提升 + 导出器注释写明推导 + T1 测试同值。② SegmentHeader 无 segment="institution"（联合类型仅 context/evidence/validity/verdict/guard）→ 用 evidence（与 /institutions 同款）。③ co_target 权重语义统一到全局不变式 w==len(shared)（T5 钉死）：w=不同共同目标数。④ bridges 行落 `stock_routable` 布尔（§7 导出期判定路径），shared 形状零增项。⑤⑥⑦ 环境类（内联三函数导出/PYTHONPATH venv/npx 等价命令/build 留主线）。
+- **规模对账**：co_hold 636 / co_board 68 与设计精确吻合；co_target **68 vs 预估 53**——agent 穷举自然过滤候选（修正案/ticker 过滤/跨 lane 配对）均推不出 53，定性为**同窗口径差而非数据漂移**（可见日期跨度逐日一致、四面板 as_of 同为 2026-08-21），实现在字面规则上冻结并全文重算钉死。146 节点/46 bridges（CALM 唯一三 lane）/components {36, largest 44}/truncated 边 103 全自洽。payload 412.1KB。
+- **身份合并诚实性**：实际并入仅 ARK/GLENVIEW/Point72 三家——设计预估五家中 AQR/Millennium 在当前可见窗是**单申报人组**（无 pair 无边则不建节点）。代码只写 `_lg_norm(filer)==_lg_norm(manager.name)` 规则绝不写名单，T7 反漂移测试验证。
+- **红线落实**：methodology 与界面双 disclaimer 完整（joint filings NOT DECOMPOSED / INDEPENDENTLY / no COORDINATION implied / NO PRICES NO RETURNS）；grep 复查 "consortium|联盟" 仅否定语境注释命中；深链门控实测。
+
+**集成与验证**：3 commits cherry-pick 进 main 零冲突；主线重生成 lineage_graph/data_health/api_catalog——与 agent 版**逐字一致仅 snapshot_ts 差**（本轮第二次确定性复现证明）。pytest 全套 exit 0（11 新契约测试含三个逐边重算比对类）；ruff 本 lane 净；tsc 0；eslint 0 error；build **1,499 页（+/force-camp ○ 静态预渲染）**。目视终验（本地 junction 服务 + IAB 截图/DOM 双通道）：KPI 带 146/772/36/40、三药丸计数吻合、SVG 冻结布局主簇居中、边级 a11y 标签 "A ↔ B · w=N" 齐、min-weight 步进器在位；抽屉卡点击实测（COATUE MANAGEMENT LLC/蔻图资本双语名 + 13F 徽章 + 度数分解 共同持仓37 + 关联席位 ticker 门控深链 PYPL/AMD/ENPH 可点·TSMC/SpaceX 纯文本 + /manager/0001135730 深链 + close 按钮）；四分区表列头先渲染（P9）。worktree wc 清（junction 先摘）、分支删（git cherry 三补丁全 `-` 后 -D）、任务书归档 completed/、本地服务已停。
+
+**记录的残留（非本 lane，未处理）**：(a) co_board 人名含 "…Age"/"Insider Participation" 类噪声 = def14a_persons 上游解析分级输出的 verbatim 投影（人级解析红线域）；(b) 图谱外围 36 个小微分量的信息密度低（"岛屿卡"列为 L1 可选增强非验收门）。
+
+**边界**：display-lane；零新抓取（纯派生四 committed 面板）；0 ledger/frozen/config/prereg/OOS 接触。**未 push**（计费阻断持续，部署冻结中）。**下一步候选**：ARK ±pp 待快照累积 ~30 日；势力阵营 L1 增强（岛屿卡/URL 态筛选）另议；H1 部署门等业主。
+
+
+
 ## 2026-08-26 (ee) 多 agent 分工轮：视觉/数据核查 → H2 实时价图 + H3 IPO 发行价 + H5 设计规格
 
 **编排（业主授权"设计开发任务区分、分配给不同 agents，避免单 agent 上下文/token 膨胀"）**：主线先完成业主要的**视觉+真实数据核查**再派工。核查结论：构建产物健康（本地静态服务需经 `web/Aionis` junction 以 basePath `/Aionis` 服务——直服 out/ 会全 404 黑屏，本次踩到并即修）；首页/新闻/AAPL 页逐项核验通过；24 日更面板 as_of 冻结在 08-18~21 = Actions 计费门实证（H1 未触碰）。两处方法论记录：截图管线间歇超时 → DOM 实测等效替代（handoff (l) 先例）；"首页内容横向重复"视觉报告被 DOM 反证（scrollWidth==clientWidth、VIX 叶节点唯一）→ 截图合成伪影。
