@@ -19,6 +19,10 @@ EXTRACTION CONTRACT (confidence tiers, 宁可 null 不猜测):
     30-99, and a role word WITNESSED on the same row. The age anchor makes
     false positives vanishingly rare — no company/section/boilerplate phrase
     carries a plausible human age directly after a name-shaped span.
+    Anchored names are DENOISED of the structural age-header glue (see
+    :func:`_strip_structural_age_tail`): only a provable trailing
+    ``Age <digits>`` tail is stripped, so one real person is never split
+    into a clean and an "... Age"-suffixed identity (TASK-DISP-D).
   * ``section_name_roles`` (MEDIUM) — inside a located directors/executives
     section, ``First M. Last`` (middle token = single capital letter, the
     conservative pattern) + a role word on the same row.
@@ -163,6 +167,21 @@ _AGE_PAREN_RE = re.compile(rf"\b({_NAME_CORE})\s*[(,]\s*(\d{{2}})\s*[),]")
 _AGE_WORD_RE = re.compile(rf"\b({_NAME_CORE})\s*,?\s+age\s+(\d{{2}})\b", re.I)
 _AGE_CELL_RE = re.compile(rf"\b({_NAME_CORE})\s+(\d{{2}})\b")
 
+# Structural "Name Age" glue: proxy roster tables spell the age COLUMN header
+# inline on every summary row ("John Smith Age 64 Director since 2019"), and
+# the greedy _NAME_CORE of the age anchors absorbs the capitalized header word
+# "Age" as a final name token before the standalone digits — producing dirty
+# identities like "Charles M. Chiappone Age" that split one real person into
+# two keys downstream. Only the PROVABLE structural tail is stripped: the
+# trailing independent token Age (case variants, enumerated literally below)
+# immediately followed by the isolated 2-3 digit age number the anchor already
+# witnessed (the digits are anchor group(2), bounded 30-99). No fuzzy
+# matching: absent the witnessed digit run ("Age" with nothing after it) the
+# token stays — it could be someone's surname and we would rather keep the
+# span than guess.
+_AGE_TAIL_WORD = r"[Aa][Gg][Ee]"
+_AGE_STRUCT_TAIL_RE = re.compile(rf"\s+{_AGE_TAIL_WORD}\s+\d{{2,3}}$")
+
 # MEDIUM tier — single-letter middle token required (inherently conservative:
 # "Securities and Exchange Commission" style spans never match), role word on
 # the same row.
@@ -218,6 +237,34 @@ def _clean_name(name: str) -> str:
     return " ".join(tokens)
 
 
+def _strip_structural_age_tail(raw_name: str, age_digits: str) -> str:
+    """Denoise an age-anchored captured name (TASK-DISP-D).
+
+    ``raw_name`` is anchor group(1), ``age_digits`` anchor group(2) — the
+    digits were WITNESSED by the anchor itself, so a trailing independent
+    ``Age`` token here is provably the absorbed column header, not part of
+    the person's name: ``"John Smith Age" + "64" -> "John Smith"``,
+    ``"John Smith" + "64" -> "John Smith"`` (unchanged). Case variants only
+    (see ``_AGE_STRUCT_TAIL_RE``); without the digit run nothing is stripped
+    (an un-witnessed "Age" could be a surname — 宁可保留不猜测). A post-strip
+    remnant below 2 word tokens was never a plausible personal name ("<X>
+    Age 63"): the caller drops such spans entirely."""
+    composed = f"{raw_name} {age_digits}"
+    glued = _AGE_STRUCT_TAIL_RE.search(composed)
+    return composed[: glued.start()].strip() if glued else raw_name.strip()
+
+
+def _anchor_person_name(m: re.Match[str]) -> str | None:
+    """Cleaned display name from an age-anchor match, or None when the span
+    denoises into something name-shaped-invisible (fewer than 2 tokens)."""
+    name = _clean_name(
+        _strip_structural_age_tail(m.group(1).strip(), str(m.group(2))),
+    )
+    if len(name.split()) < 2 or not _name_ok(name):
+        return None
+    return name
+
+
 def _roles_in_line(line: str) -> list[str]:
     """Canonical roles witnessed on the row, display order (may be [])."""
     roles: list[str] = []
@@ -262,10 +309,11 @@ def _extract_from_line(window: str) -> list[tuple[str, str, list[str]]]:
             for m in rx.finditer(line):
                 if not (_MIN_AGE <= int(m.group(2)) <= _MAX_AGE):
                     continue
-                name = _clean_name(m.group(1).strip())
-                if _name_ok(name):
-                    out.append((name, "section_age_rows", roles))
-                    high = True
+                name = _anchor_person_name(m)
+                if name is None:
+                    continue
+                out.append((name, "section_age_rows", roles))
+                high = True
     if not high:
         for line in window.split("\n"):
             roles = _roles_in_line(line)
@@ -309,14 +357,19 @@ def _extract_from_stream(window: str) -> list[tuple[str, str, list[str]]]:
         for m in rx.finditer(stream):
             if not (_MIN_AGE <= int(m.group(2)) <= _MAX_AGE):
                 continue
-            name = _clean_name(m.group(1).strip())
-            if _name_ok(name):
-                # The cleaned name is a SUFFIX of the matched span — the row
-                # delimiter is the cleaned name's start (an absorbed leading
-                # "Director"/"Executive Officer" token must not cut the
-                # PREVIOUS person's role context short).
-                start = m.end(1) - len(name)
-                cands.append((start, m.end(), name))
+            name = _anchor_person_name(m)
+            if name is None:
+                continue
+            # The cleaned name is a SUFFIX of the matched span — the row
+            # delimiter is the cleaned name's start (an absorbed leading
+            # "Director"/"Executive Officer" token must not cut the
+            # PREVIOUS person's role context short; likewise an absorbed
+            # trailing header "Age" shifts the true start back). Locate the
+            # cleaned name inside group(1) exactly; fall back to the old
+            # end-anchored arithmetic when absent (leading-title strip).
+            at = m.group(1).rfind(name)
+            start = m.start(1) + at if at >= 0 else m.end(1) - len(name)
+            cands.append((start, m.end(), name))
     cands.sort()
     out: list[tuple[str, str, list[str]]] = []
     for i, (_start, end, name) in enumerate(cands):
