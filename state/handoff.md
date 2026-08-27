@@ -8,6 +8,21 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-27 (gg) 双轨轮：def14a 人名降噪 + 明星投资人诚实 +2（Corvex/GAMCO 准入）
+
+**编排**：继续设计/开发分离多 agent 模式。DESIGN（主仓，纯文档）+ INVESTIGATOR-E（worktree we，只查证据不做裁决）+ DEV-D（worktree wd，修复）先并行；证据落盘后按规格 §2-4 裁决程序由主线代裁（全 PASS 才代裁，BORDERLINE 留业主），再派 DEV-F（worktree wf）落地。任务书四份 TASK-DISP-{DES-stars-curation-bar,D-def14a-name-denoise,E-stars-evidence,F-stars-admission}.md 全部归档 completed/。
+
+- **策展门槛规格**：`reports/design/2026-08-26-stars-curation-bar.md`——从现役 40+5 剔除档案提炼 11 条隐含标准（S1-S11），固化为六闸门 G0-G5 与 watch/出局规则（落后一季=watch 展示、连缺两季出局、复活须重赢 4 季）。契约测试均为派生锚：roster 变化无须编辑测试，唯一枚举对齐点 = FORM13F_CATEGORIES（新增第八类定为超权限留业主）。**Pershing Square 面板停在 2026-03-31** = watch 态活体案例（Q2 只报 NT 是忠实 EDGAR 行为非 bug），集成时明令 F 不触碰。
+- **证据报告**（INVESTIGATOR-E，commit 3be1432 → cherry-pick 0b4daa4）：`reports/design/2026-08-26-stars-candidates-evidence.{md,json}`，请求账 58/60（≥2.25s、SSL 瞬时退避、403 后换 SEC 式 UA 全通；实体名以 data.sec.gov submissions 为权威——EDGAR atom conformed-name 有 Perl bug 的实测情报）。判定：PASS=Corvex(0001535472, ≥13 季)+GAMCO(0000807249, 改名链核验)；FAIL=JANA/Tudor/Blue Ridge；BORDERLINE=Southpoint（第二壳被预算闸截断）；UNVERIFIED=Icahn 主壳/Baron/Gundlach/Bessent。**净潜在增量 +2 而非 −3 归零**。起点池七人中 Ackman/Klarman/Coleman/Halvorsen/Mandel/Tepper 均已在册（诚实记录避免重复考察）；GLENVIEW/Point72 大写节点已与在册 CIK 对齐无重复壳。
+- **人名降噪**（DEV-D，3 commits）：根因 = `src/aionis/ingest/def14a_persons.py` HIGH 层三年龄锚点正则的 `_NAME_CORE` 贪婪把行内 "Age" 吸作名字尾部 token；既有 `_NAME_STOPWORDS`/`_TITLE_PREFIX_WORDS` 两道防线都够不到尾部。修 = 字面枚举正则 `_AGE_STRUCT_TAIL_RE`（"Age"+2-3 位数字才剥；无数字见证的裸 Age 可能是姓氏→不剥不猜）；残渣 span 整体丢弃。有界重抓恰 4 份脏文档（8 GET 入 request_accounting，repair_log 记录 before→after）。结果：distinct 660→644（25 行脏身份并回）、roles 取并集（有测试钉死）、lineage 幻影自并边清除（772→763、co_board 68→59、144 节点）——是边数收缩而非权重膨胀形态，同样正确。
+- **准入落地**（DEV-F，2 commits f9c4763+ccb4012）：`MANAGERS` 字典 +2 行 verbatim（Corvex zh=null/activist——medium 置信中文宁缺毋滥照 S7；GAMCO（加贝利）/value high 置信采纳）。抓取插曲如实入档：首派同任务中断调用的缓存已在 worktree，F 探测后零请求复用（212 文件 mtime 金丝雀证明幂等），代价推算 ≤10 polite GET 远低于预算但无第一方账目——诚实声明处理。连锁：明星 **40→42**、ticker 覆盖 1181/1580→1242/1655、co_hold 636→697（+61 全经新人）、bridges 46→51、largest 分量 44→46、首页统计条自动跟随、/manager/[cik] SSG +2。
+- **集成教训二次实证**：主线首轮内联重生成曾回退到 40 管理人旧态——form13f 抓取缓存（212 文件 + aggregate/dir parquet）在 worktree 未同步主仓；从 wf 拷回后重生成与 agent 版逐字一致仅 snapshot_ts 差（本轮第四确定性复现）。J/K/O 轮"聚合缓存拷回主仓"惯例再次必要，凡新数据 lane 记住这条。
+- **验证**：pytest 全套 0 FAILED（新增 test_def14a_person_names.py 11 测试全绿；定向 97 passed）+ ruff 本 lane 净（新发现记录：ruff format --check 对 scripts/ 72 文件报基线漂移系存量惯例外，仓库只跑 ruff check，未做格式 churn）+ tsc 0 + eslint 0 error/33 存量 + build **1,501 页**（manager/[cik] SSG +2 实证）。四页联动目视复验全过：dashboard 明星投资人=42 / institutions GAMCO·Corvex 卡在册 / executives "Age" 噪声清零且 Chiappone 干净名在场 / force-camp KPI 146-824 与共同持仓 697、共席 59 及干净人名全部一致。worktree wd/we/wf 三清（junction 先摘铁律）、三分支 git cherry 全 `-` 后 -D；本地服务已停。
+
+**边界**：display-lane；在册 40 人零触碰、不凑数不新类别；真实 EDGAR 请求全部礼貌记账；0 ledger/frozen/config/prereg/OOS。**未 push**。**待业主**：H1 部署门不变；BORDERLINE（Southpoint）与 UNVERIFIED 四人如需再查另派证据轮。
+
+
+
 ## 2026-08-26 (ff) H5 势力阵营 GO 轮：设计规格单 agent 构建 → 集成上线（1,499 页）
 
 **业主裁决**："授权你处理，部署部分暂时仍不做安排"——即 (ee) 待办清单第 1 项 GO、第 2 项（H1 部署/计费）维持冻结。单构建 agent 派发（worktree wc，junction+LF ledger 预置），规格 = (dd) DESIGN 轮产出的 `tasks/active/TASK-DISP-H5-lineage-build.md`（自包含，agent 未读设计文档亦能执行）。
