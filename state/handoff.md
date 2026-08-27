@@ -8,6 +8,19 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-27 (hh) 全站审计驱动轮：P1×2 修复 + 死链全清 + i18n -96 + L1（1,501 页）
+
+**编排**：四 agent（VERIFY 全站审计（零修复）+ DEV-G force-camp L1 + DEV-H i18n 清理 + DESIGN-J ARK 条件规格）。**先核查再派工**再次生效：ARK 快照实测停在 08-21（H1 冻结连带）——原拟的 ±pp 实施任务降级为条件触发式规格 `reports/design/2026-08-27-ark-pp-upgrade-spec.md`（Δpp=w2−w1 双端点+gap 披露、new/exited 标签 delta 恒 null、N=5 distinct-days 触发、冻结期零行为变化、启用构建任务输入清单 §6 全列）。
+
+- **审计（commit 39c3aa0，两文件入 reports/audit/）**：全量 1,501 页、674 distinct 内链逐一核验、剥 <script> 后扫渲染文本。发现 **AUD-T1(P1) ×1,421 死链**（stock 页 managers chip→/manager 索引不存在——路由只有 [cik]）、**AUD-T2(P1)** stakes 副标题 `[object Object]`（window {start,end} 对象直插模板，tsc 拦不住）、T3(P2) 53 死链×115（BRK-B 双拼写/SNDK 更名未过宇宙门）、T4/5/6(P3) insiders·stakes·congress-tx 缺 as_of 披露、T7(P3) overview 注释写死 40。渲染垃圾全站唯一命中=T2；StatBand 五数调和全过（42✓）；i18n 对称 PASS。
+- **主线直修 P1 对**（b0d12f2）：chip 目标改 /institutions（语义正确：策展明星目录在彼处）；stakes 窗口渲染 start→end（顺带覆盖 T5 窗口披露）。
+- **DEV-K 修复批**（cf42785+3ecb459）：T3 六视图（smart-money 48/congress 16/events 1/executives 1/reddit 1 首屏死链→0）——门控源经 bundle 实证选择：universe 553KB 已是共享 chunk 且五个 hub 页本就加载，smart-money/events 新增该缓存 chunk 为对齐代价（如实记录）；降级=纯文本保留 ticker 不发链（站内 reddit/congress 先例）。T4/5/6 复用 ProvenanceBadge + provenance.asof 既有键零新增 i18n；badge 对 null 不渲染无伪造新鲜度。T7 改动态表述。85 契约测试绿。
+- **DEV-G L1**（dbe6045+8996599）：主画布留 ≥3 节点分量（23 个 2 节点微分量全为"2 实体+单条 w=1 边"，无中间态可选）→ 折叠摘要卡 + chips 复用抽屉卡；入画子图重排冻结布局（layout.ts 零改动仍 seed-0 纯函数），近触对 86→31（↓64%）、保留边权 99.3%；URL 态 `?t=&w=` 照仓内"确定性 SSR + mount 客户端读"惯例（40 组往返用例），replaceState 写。i18n +4 键对称。
+- **DEV-H i18n**（b15fdf4+c16112d）：扫描器覆盖 DictKey props 暗面（全域字符串字面量匹配）+ 前缀模板通配 → 确证孤儿 **96 删**（zh=en=1,093；纯删 198 行；零误判零回滚，tsc 类型守卫未触发）；6 存疑（forcecamp.legend/type 前缀）保留；历史 58/476 与本轮口径不可比已注明。
+- **验证**：pytest 全套 0 FAILED + ruff 净 + tsc 0 + eslint 0 error/33 存量 + build **1,501 页**。三页联动目视复验（本地 junction 服务）：stakes 无 [object Object] 且日期区间渲染、force-camp 岛屿卡在位、stock 死链消失 + /institutions 链在场。worktree wg/wh/wi 三清（junction 先摘）、三分支 git cherry 全 `-` 后 -D、任务书五份归档 completed/、本地服务已停。
+
+**边界**：display-lane；审计零修复承诺兑现（修复全部走独立任务/主线裁决）；0 ledger/frozen/config/prereg/OOS。**未 push**。**待办交接**：(1) H1 部署门（ARK ±pp、theme_signals 06-30、全站数据新鲜度都被它门着）；(2) Southpoint 二壳（CIK 0001319998）证据轮可选；(3) universe 模块头注释过时（"only /stock imports it"）供后续 lane 顺手改。
+
 ## 2026-08-27 (gg) 双轨轮：def14a 人名降噪 + 明星投资人诚实 +2（Corvex/GAMCO 准入）
 
 **编排**：继续设计/开发分离多 agent 模式。DESIGN（主仓，纯文档）+ INVESTIGATOR-E（worktree we，只查证据不做裁决）+ DEV-D（worktree wd，修复）先并行；证据落盘后按规格 §2-4 裁决程序由主线代裁（全 PASS 才代裁，BORDERLINE 留业主），再派 DEV-F（worktree wf）落地。任务书四份 TASK-DISP-{DES-stars-curation-bar,D-def14a-name-denoise,E-stars-evidence,F-stars-admission}.md 全部归档 completed/。
