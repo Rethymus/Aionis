@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { XIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -16,6 +16,11 @@ import {
 import { stockUniverse } from "@/data/aionis/stock-universe";
 import { forceCampLayout } from "./layout";
 import { IslandsCard, partitionIslands } from "./islands-card";
+import {
+  parseForceCampQuery,
+  serializeForceCampQuery,
+  type ForceCampFilters,
+} from "./url-state";
 
 // /force-camp — 势力阵营 lineage graph over the COMMITTED panels (display
 // lane, zero fetches): KPI band → edge-type pills + min-weight stepper →
@@ -116,13 +121,30 @@ function SharedLine({ e }: { e: LineageEdge }) {
 
 export function ForceCampView() {
   const { t } = useI18n();
-  const [on, setOn] = useState<Record<LineageEdgeType, boolean>>({
-    co_hold: true,
-    co_board: true,
-    co_target: true,
-  });
-  const [minW, setMinW] = useState(1);
+  const [filters, setFilters] = useState<ForceCampFilters>(() => ({
+    on: { co_hold: true, co_board: true, co_target: true },
+    minW: 1,
+  }));
+  // One-time URL hydration AFTER mount: the prerendered HTML stays
+  // deterministic (all on, w=1), then a shared/refreshed URL wins — same
+  // deferred-read contract as the i18n provider's localStorage read.
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time hydration from the address bar
+    setFilters(parseForceCampQuery(window.location.search));
+  }, []);
+  // Canonical two-way sync: state first, then replaceState so refresh/share
+  // keep the pills (no navigation, no history entries).
+  const applyFilters = (next: ForceCampFilters) => {
+    setFilters(next);
+    const qs = serializeForceCampQuery(next);
+    window.history.replaceState(
+      null,
+      "",
+      qs ? `${window.location.pathname}?${qs}` : window.location.pathname,
+    );
+  };
   const [drawerId, setDrawerId] = useState<string | null>(null);
+  const { on, minW } = filters;
 
   const g = lineageGraph;
 
@@ -264,7 +286,12 @@ export function ForceCampView() {
                 key={kind}
                 type="button"
                 aria-pressed={on[kind]}
-                onClick={() => setOn((s) => ({ ...s, [kind]: !s[kind] }))}
+                onClick={() =>
+                  applyFilters({
+                    ...filters,
+                    on: { ...on, [kind]: !on[kind] },
+                  })
+                }
                 className={cn(
                   "rounded-full border px-3 py-1 font-mono text-xs font-semibold transition-colors motion-reduce:transition-none",
                   on[kind]
@@ -284,7 +311,7 @@ export function ForceCampView() {
                   key={v}
                   type="button"
                   aria-pressed={minW === v}
-                  onClick={() => setMinW(v)}
+                  onClick={() => applyFilters({ ...filters, minW: v })}
                   className={cn(
                     "size-6 rounded-full font-mono text-[11px] font-semibold",
                     minW === v ? "bg-soft text-ink" : "text-mute hover:text-ink",
