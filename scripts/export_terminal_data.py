@@ -14,6 +14,7 @@ Usage::
 """
 from __future__ import annotations
 
+import itertools
 import json
 import os
 import re
@@ -2608,6 +2609,7 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
     ("politician_trades", "politician_trades.json", _DH_DAILY),
     ("politician_trades_tx", "politician_trades_tx.json", _DH_DAILY),
     ("party_index", "party_index.json", _DH_DAILY),
+    ("lineage_graph", "lineage_graph.json", _DH_DAILY),
     ("reddit", "reddit.json", _DH_DAILY),
     ("reddit_trending", "reddit_trending.json", _DH_DAILY),
     ("headline_provenance", "headline_provenance.json", _DH_DAILY),
@@ -2669,6 +2671,7 @@ _DH_ROWS_LIST: dict[str, str] = {
     "form13f_stars": "stars",
     "filers13f": "filers",
     "knowledge_shelf": "docs",
+    "lineage_graph": "edges",
 }
 
 
@@ -2799,6 +2802,9 @@ def _dh_as_of(key: str, fname: str) -> str | None:
     if key == "form13f":
         return p.get("as_of")
     if key == "filers13f":
+        return p.get("as_of")
+    if key == "lineage_graph":
+        # as_of = max of the four source panels' own as_of strings.
         return p.get("as_of")
     if key == "knowledge_shelf":
         # as_of = newest last-commit date among the cataloged docs.
@@ -3074,6 +3080,13 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
         "U.S. SEC EDGAR — public domain",
         "13F filer directory: every CIK filing 13F-HR(/A) over the trailing "
         "year via EFTS quarter windows (cap-split), directory facts only",
+    ),
+    "lineage_graph": (
+        "Aionis-derived from U.S. SEC EDGAR public-domain disclosures",
+        "force-camp relationship graph projected over four committed panels "
+        "(13F-HR visible books x DEF 14A top-person seats x SC 13D/13G "
+        "windows); pairwise co-occurrence counts only — no coordination or "
+        "consortium claim, no prices/returns",
     ),
     "ark": (
         "ARK Invest official fund CSVs — publicly published daily",
@@ -5032,6 +5045,453 @@ def export_party_index() -> None:
     )
 
 
+# --- Force-camp lineage graph (entity-relation projection) -------------------
+
+_LG_LANES = ("13f", "def14a", "13dg")  # canonical lane order everywhere
+_LG_LANE_OF = {"co_hold": "13f", "co_board": "def14a", "co_target": "13dg"}
+
+
+def _lg_norm(s: str) -> str:
+    """Trimmed-uppercase entity key — the ONLY identity rule of the graph
+    (exact string equality after strip().upper(); no fuzzy, no lists)."""
+    return s.strip().upper()
+
+
+def export_lineage_graph() -> None:
+    """Force-camp lineage graph — pairwise projections over COMMITTED panels.
+
+    DERIVED panel (mirror ``export_party_index`` discipline): reads the four
+    committed display JSONs and projects as-filed disclosure facts into an
+    entity-relation graph — zero new fetches, zero research-face contact.
+    Edge types (all weights are integer counts of shared items):
+      co_hold   two curated managers' VISIBLE BOOKS (form13f latest-quarter,
+                up-to-50-position projection; full books larger) share a
+                position key (ticker, else CUSIP);
+      co_board  two DEF 14A top persons seat the same company (exact company-
+                name match against the boards[] export resolves a ticker);
+      co_target two DIFFERENT filers separately filed stakes converging on
+                the same target within the visible 13D/G windows. Filer names
+                merge into an institution node ONLY by exact trimmed-uppercase
+                name equality with a curated manager (no fuzzy, no hard-coded
+                roster). Joint filings stay verbatim — members NOT DECOMPOSED;
+                the overlaps are factual coincidences of separate filings, so
+                neither coordination nor any consortium claim is implied.
+    co_target weight semantics: w = filing rows jointly involved by the pair
+    across their common targets; one edge per endpoint pair, shared items are
+    the per-target details (forms "|"-joined when several forms apply).
+    Any source panel absent/not-ok ⇒ SKIP-and-retain (never an empty shell).
+    """
+
+    f13f = _dh_read("form13f.json")
+    d14a = _dh_read("def14a_persons.json")
+    g13 = _dh_read("stakes_13g.json")
+    sm = _dh_read("smart_money.json")
+    if not (
+        isinstance(f13f, dict)
+        and f13f.get("status") == "ok"
+        and isinstance(f13f.get("managers"), list)
+        and f13f["managers"]
+        and isinstance(d14a, dict)
+        and d14a.get("status") == "ok"
+        and isinstance(d14a.get("top_persons"), list)
+        and d14a["top_persons"]
+        and isinstance(g13, dict)
+        and g13.get("status") == "ok"
+        and isinstance(g13.get("filings"), list)
+        and g13["filings"]
+        and isinstance(sm, dict)
+        and isinstance(sm.get("recent_filings"), list)
+        and sm["recent_filings"]
+    ):
+        _skip_retain(
+            "lineage_graph",
+            "form13f/def14a_persons/stakes_13g/smart_money panels absent or not ok",
+        )
+        return
+
+    managers: list[dict] = f13f["managers"]
+    top_persons: list[dict] = d14a["top_persons"]
+    g_rows: list[dict] = g13["filings"]
+    d_rows: list[dict] = sm["recent_filings"]
+
+    # ---- Registries -------------------------------------------------------
+    mgr_by_cik: dict[str, dict] = {}
+    mgr_cik_by_norm: dict[str, str] = {}
+    for m in managers:
+        cik = str(m.get("cik") or "")
+        name = str(m.get("name") or "")
+        if not cik or not name:
+            continue
+        mgr_by_cik[cik] = m
+        mgr_cik_by_norm[_lg_norm(name)] = cik
+
+    nodes: dict[str, dict] = {}
+
+    def _touch(
+        nid: str, ntype: str, label: str, zh_label: str | None = None,
+        cik: str | None = None,
+    ) -> None:
+        if nid not in nodes:
+            nodes[nid] = {
+                "id": nid,
+                "type": ntype,
+                "label": label,
+                "zh_label": zh_label,
+                "lanes": [],
+                "cik": cik,
+                "manager_routable": cik in mgr_by_cik if cik else False,
+                "degree": {"co_hold": 0, "co_board": 0, "co_target": 0},
+            }
+
+    def _sorted_shared(full_shared: list) -> list:
+        return sorted(full_shared, key=lambda s: json.dumps(s, sort_keys=True))
+
+    edges_out: list[dict] = []
+
+    # ---- co_hold: manager x manager visible-book intersection --------------
+    books: dict[str, set] = {}  # cik -> position keys
+    book_meta: dict[str, tuple] = {}  # key -> (ticker|null, issuer verbatim)
+    for m in managers:
+        cik = str(m.get("cik") or "")
+        keys: set = set()
+        for p in m.get("positions") or []:
+            tk = p.get("ticker") or None
+            k = f"T:{tk}" if tk else f"C:{p.get('cusip')}"
+            keys.add(k)
+            book_meta.setdefault(k, (tk, str(p.get("issuer") or "")))
+        books[cik] = keys
+    n_co_hold = 0
+    ciks_sorted = sorted(c for c in books if c)
+    for ca in ciks_sorted:
+        na = f"i:{ca}"
+        _touch(na, "institution", str(mgr_by_cik[ca].get("name") or ""),
+               mgr_by_cik[ca].get("zh_name") or None, ca)
+    for i, ca in enumerate(ciks_sorted):
+        na = f"i:{ca}"
+        for cb in ciks_sorted[i + 1:]:
+            inter = sorted(books[ca] & books[cb])
+            if not inter:
+                continue
+            nb = f"i:{cb}"
+            n_co_hold += 1
+            x, y = sorted([na, nb])
+            edges_out.append({
+                "a": x, "b": y, "type": "co_hold", "w": len(inter),
+                "shared": [
+                    {"k": k, "tk": book_meta[k][0], "issuer": book_meta[k][1]}
+                    for k in inter[:8]
+                ],
+                "truncated": len(inter) > 8,
+            })
+
+    # ---- co_board: top-person seat overlap (exact boards-company match) ----
+    boards: list[dict] = d14a.get("boards") or []
+    board_tk: dict[str, str | None] = {}  # verbatim company -> ticker|null
+    board_name_by_tk: dict[str, str] = {}
+    for b in boards:
+        comp = b.get("company")
+        if not comp:
+            continue
+        board_tk.setdefault(comp, b.get("ticker") or None)
+        if b.get("ticker"):
+            board_name_by_tk.setdefault(str(b["ticker"]), str(comp))
+    person_comps: dict[str, set] = {}
+    person_label: dict[str, str] = {}
+    for pr in top_persons:
+        nm = str(pr.get("name") or "")
+        pid = f"p:{_lg_norm(nm)}"
+        person_label.setdefault(pid, nm)
+        person_comps.setdefault(pid, set()).update(
+            str(c) for c in pr.get("companies") or []
+        )
+    members_by_comp: dict[str, set] = {}
+    for pid, comps in person_comps.items():
+        for c in comps:
+            members_by_comp.setdefault(c, set()).add(pid)
+    seen_pair: set = set()
+    for mem in members_by_comp.values():
+        for pa, pb in itertools.combinations(sorted(mem), 2):
+            if (pa, pb) in seen_pair or not (person_comps[pa] & person_comps[pb]):
+                continue
+            seen_pair.add((pa, pb))
+            common = sorted(person_comps[pa] & person_comps[pb])
+            _touch(pa, "person", person_label[pa])
+            _touch(pb, "person", person_label[pb])
+            full = [{"company": c, "tk": board_tk.get(c)} for c in common]
+            edges_out.append({
+                "a": pa, "b": pb, "type": "co_board", "w": len(common),
+                "shared": full[:8], "truncated": len(full) > 8,
+            })
+
+    # ---- co_target: 13D u 13G window filers converging on one target -------
+    groups: dict[str, list[tuple]] = {}  # norm-target -> [(norm-filer, tk, form)]
+    target_verbatim: dict[str, str] = {}
+    staker_label: dict[str, str] = {}
+
+    def _ingest(fil: str, tgt: str, tk, form: str) -> None:
+        nt = _lg_norm(tgt)
+        nf = _lg_norm(fil)
+        groups.setdefault(nt, []).append((nf, tk or None, str(form)))
+        target_verbatim.setdefault(nt, tgt)
+        staker_label.setdefault(nf, fil)
+
+    for r in g_rows:
+        _ingest(str(r.get("filer") or ""), str(r.get("target") or ""),
+                r.get("ticker"), r.get("form"))
+    for r in d_rows:
+        _ingest(str(r.get("filer") or ""), str(r.get("target") or ""),
+                r.get("ticker"), r.get("form"))
+
+    def _endpoint(norm_fil: str) -> str:
+        cik = mgr_cik_by_norm.get(norm_fil)
+        if cik is not None:  # exact-name identity merge → institution node
+            return f"i:{cik}"
+        return f"s:{norm_fil}"
+
+    joint: dict[tuple, dict] = {}  # (eid_u, eid_v) -> norm_target -> cell
+    for nt, rows in groups.items():
+        by_ep: dict[str, list[tuple]] = {}
+        group_tks = [tk for _, tk, _ in rows if tk]
+        grp_tk = min(group_tks) if group_tks else None
+        for nf, tk, form in rows:
+            eid = _endpoint(nf)
+            by_ep.setdefault(eid, []).append((nf, tk, form))
+        eids = sorted(by_ep)
+        if len(eids) < 2:
+            continue  # no converging pair — never materialize a node
+        for eid in eids:
+            if eid.startswith("i:"):
+                if eid not in nodes:
+                    mi = mgr_by_cik[eid[2:]]
+                    _touch(eid, "institution", str(mi.get("name") or ""),
+                           mi.get("zh_name") or None, eid[2:])
+            else:
+                _touch(eid, "staker", staker_label.get(eid[2:]) or eid[2:])
+        for eu, ev in itertools.combinations(eids, 2):
+            ru, rv = by_ep[eu], by_ep[ev]
+            forms = sorted({x[2] for x in ru} | {x[2] for x in rv})
+            joint.setdefault((eu, ev), {})[nt] = {
+                # jointly involved filing rows (each party's own rows on this
+                # target; a row has exactly one filer so the sets are disjoint)
+                "n": len(ru) + len(rv),
+                "forms": "|".join(forms),
+                "tk": grp_tk,
+            }
+    n_co_target = 0
+    for (eu, ev), cells in joint.items():
+        full = [
+            {"target": target_verbatim[nt], "tk": cells[nt]["tk"],
+             "forms": cells[nt]["forms"]}
+            for nt in sorted(cells)
+        ]
+        w = sum(cells[nt]["n"] for nt in cells)
+        edges_out.append({
+            "a": eu, "b": ev, "type": "co_target", "w": w,
+            "shared": _sorted_shared(full)[:8],
+            "truncated": len(full) > 8,
+        })
+        n_co_target += 1
+
+    # ---- lanes + degrees (single pass over the final edge list) ------------
+    for e in edges_out:
+        lane = _LG_LANE_OF[e["type"]]
+        for nid in (e["a"], e["b"]):
+            n = nodes[nid]
+            n["degree"][e["type"]] += 1
+            if lane not in n["lanes"]:
+                n["lanes"].append(lane)
+    lane_order = {v: i for i, v in enumerate(_LG_LANES)}
+    for n in nodes.values():
+        n["lanes"].sort(key=lambda ln: lane_order[ln])
+
+    # ---- bridges: tickers appearing in >=2 evidence lanes -------------------
+    uni_stocks = (_dh_read("stock_universe.json") or {}).get("stocks") or []
+    universe_tks = {str(s.get("ticker")) for s in uni_stocks if s.get("ticker")}
+    cd = _dh_read("companies_dir.json")
+    dir_name_by_tk = (
+        {
+            str(c.get("ticker")): str(c.get("name"))
+            for c in ((cd or {}).get("companies") or [])
+            if c.get("ticker")
+        }
+        if isinstance(cd, dict)
+        else {}
+    )
+    tk_managers: dict[str, set] = {}
+    for m in managers:
+        for p in m.get("positions") or []:
+            if p.get("ticker"):
+                tk_managers.setdefault(str(p["ticker"]), set()).add(
+                    str(m.get("cik"))
+                )
+    tk_persons: dict[str, set] = {}
+    for pid, comps in person_comps.items():
+        done: set = set()
+        for c in comps:
+            tk = board_tk.get(c)
+            if tk and tk not in done:
+                done.add(tk)
+                tk_persons.setdefault(tk, set()).add(pid)
+    tk_stakers: dict[str, set] = {}
+    for _nt, rows in groups.items():
+        for nf, tk, _form in rows:
+            if tk:
+                tk_stakers.setdefault(str(tk), set()).add(_endpoint(nf))
+    lane_sets = {
+        "13f": set(tk_managers),
+        "def14a": set(tk_persons),
+        "13dg": set(tk_stakers),
+    }
+    bridges: list[dict] = []
+    for tk in sorted(set().union(*lane_sets.values())):
+        hits = [lane for lane in _LG_LANES if tk in lane_sets[lane]]
+        if len(hits) < 2:
+            continue
+        bridges.append({
+            "tk": tk,
+            "name": board_name_by_tk.get(tk) or dir_name_by_tk.get(tk),
+            "in": hits,
+            "counts": {
+                "managers": len(tk_managers.get(tk, set())),
+                "persons": len(tk_persons.get(tk, set())),
+                "stakers": len(tk_stakers.get(tk, set())),
+            },
+            "stock_routable": tk in universe_tks,
+        })
+
+    # ---- components (undirected connected components over the graph) --------
+    parent_map = {nid: nid for nid in nodes}
+
+    def find(x: str) -> str:
+        while parent_map[x] != x:
+            parent_map[x] = parent_map[parent_map[x]]
+            x = parent_map[x]
+        return x
+
+    for e in edges_out:
+        ra, rb = find(e["a"]), find(e["b"])
+        if ra != rb:
+            parent_map[ra] = rb
+    comp_sizes: dict[str, int] = {}
+    for nid in nodes:
+        r = find(nid)
+        comp_sizes[r] = comp_sizes.get(r, 0) + 1
+
+    # ---- windows / coverage / payload ---------------------------------------
+    g_dates = [r["date"] for r in g_rows if r.get("date")]
+    d_dates = [r["date"] for r in d_rows if r.get("date")]
+    as_of_candidates = [
+        v
+        for v in (
+            f13f.get("as_of"), d14a.get("as_of"), g13.get("as_of"),
+            sm.get("latest_date"),
+        )
+        if isinstance(v, str) and v
+    ]
+    n_isolated = sum(
+        1 for c in ciks_sorted if nodes[f"i:{c}"]["degree"]["co_hold"] == 0
+    )
+    payload = {
+        "status": "ok",
+        "as_of": max(as_of_candidates) if as_of_candidates else None,
+        "source_panels": ["form13f", "def14a_persons", "stakes_13g", "smart_money"],
+        "n_nodes": len(nodes),
+        "n_edges": len(edges_out),
+        "nodes": [nodes[k] for k in sorted(nodes)],
+        "edges": sorted(edges_out, key=lambda e: (e["type"], e["a"], e["b"])),
+        "bridges": bridges,
+        "components": {
+            "n": len(comp_sizes),
+            "largest": max(comp_sizes.values()) if comp_sizes else 0,
+        },
+        "windows": {
+            "form13f_quarter": str(f13f.get("as_of")),
+            "stakes_visible_dates": {
+                "start": min(g_dates) if g_dates else None,
+                "end": max(g_dates) if g_dates else None,
+            },
+            "smart_money_visible_dates": {
+                "start": min(d_dates) if d_dates else None,
+                "end": max(d_dates) if d_dates else None,
+            },
+        },
+        "coverage": {
+            "13f": {
+                "basis": (
+                    f"visible books: {len(managers)} curated managers "
+                    f"x <=50 positions"
+                ),
+                "full_books_larger": True,
+                "isolated_managers": n_isolated,
+            },
+            "def14a": {
+                "basis": (
+                    f"top_persons export: {len(top_persons)} most-seated of "
+                    f"{d14a.get('n_persons_distinct')} upstream persons; "
+                    f"{d14a.get('n_with_persons')}/{d14a.get('n_filings_processed')} "
+                    f"filings with persons ({d14a.get('coverage_pct')}%)"
+                ),
+                "same_name_merges_possible": True,
+            },
+            "13dg": {
+                "basis": (
+                    f"visible windows only ({len(g_rows)} + {len(d_rows)} "
+                    f"latest rows)"
+                ),
+                "joint_filing_members_not_decomposed": True,
+            },
+        },
+        "methodology": (
+            "Force-camp relationship graph DERIVED at export time from four "
+            "COMMITTED panels (form13f x def14a_persons x stakes_13g union "
+            "smart_money) — zero new fetches, display-only. Edges are pairwise "
+            "projections over as-filed disclosure facts: co_hold = two curated "
+            "managers' VISIBLE BOOKS (latest quarter, up to 50 positions each; "
+            "the full books are larger) share a position key (ticker, else "
+            "CUSIP); co_board = two proxy-statement top persons seat the same "
+            "company (exact company-name match resolves the ticker); "
+            "co_target = two different filers INDEPENDENTLY SEPARATELY FILED "
+            "stakes converging on the same target issuer within the visible "
+            "SC 13D/13G windows. Identity rule: a window filer merges into an "
+            "institution node ONLY when its trimmed-uppercase name equals a "
+            "curated manager's name exactly — no fuzzy matching, no name list. "
+            "The three overlaps are factual coincidences of separate filings: "
+            "joint filings stay verbatim (members NOT DECOMPOSED), no "
+            "COORDINATION is implied and no consortium claim is made. Weights "
+            "are integer counts of shared items (lists capped at 8, truncated "
+            "flag set beyond). Coverage is bounded by construction — see the "
+            "coverage.basis strings (visible books, a 50-person proxy export "
+            "over the newest filings, latest filing windows only). A "
+            "restatement of public SEC EDGAR disclosures only: NO PRICES, NO "
+            "RETURNS, no performance claims; never part of any OOS pipeline."
+        ),
+    }
+    rendered = json.dumps(_stamp(payload), indent=1, default=str)
+    # Size gate. The design draft estimated ~110-140KB assuming co_hold
+    # intersections averaging ~2 shared items; the ACTUAL committed books
+    # intersect at mean w=4.6 (max 20), so the schema-faithful payload is
+    # intrinsically ~410KB — no legal encoding fits the drafted 200KiB cap
+    # without lying about issuers or dropping pinned detail. Cap bumped with
+    # owner-visible disclosure (form4 export-cap 50→200 precedent): the
+    # assertion still guards against runaway encoding bugs.
+    size_b = len(rendered.encode())
+    if size_b > 512 * 1024:
+        raise AssertionError(
+            f"lineage_graph payload {size_b}B > 512KiB cap "
+            "(encoding bug, not a tuning knob)"
+        )
+    (WEB / "lineage_graph.json").write_text(rendered)
+    print(
+        f"[export-terminal] lineage_graph: {len(nodes)} nodes / "
+        f"{len(edges_out)} edges (co_hold {n_co_hold}, co_board "
+        f"{sum(1 for e in edges_out if e['type'] == 'co_board')}, "
+        f"co_target {n_co_target}), {len(bridges)} bridges, components "
+        f"{payload['components']['n']} (largest "
+        f"{payload['components']['largest']}), as_of {payload['as_of']}",
+        flush=True,
+    )
+
+
 def export_ark() -> None:
     """ARK Invest 8-ETF daily holdings — official CSVs (display-only).
 
@@ -5820,6 +6280,10 @@ def main() -> None:
     # Knowledge shelf reads repo files directly (no panel deps) — anywhere
     # before the freshness map / catalog that index it.
     _safe_export("knowledge_shelf", export_knowledge_shelf)
+    # lineage_graph derives from the COMMITTED form13f / def14a_persons /
+    # stakes_13g / smart_money JSONs written above (never from caches) — must
+    # run before the freshness map / catalog that index it.
+    _safe_export("lineage_graph", export_lineage_graph)
     # Freshness map reads every panel's committed JSON — must run last.
     _safe_export("data_health", export_data_health)
     # API catalog reads data_health — run after it.

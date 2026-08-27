@@ -388,6 +388,17 @@
       "source": "monthly D-vs-R net-direction opposition share + trailing-90d count-weighted follow portfolios (signal lists, no returns)"
     },
     {
+      "key": "lineage_graph",
+      "file": "lineage_graph.json",
+      "path": "/api/v1/panels/lineage_graph.json",
+      "method": "GET",
+      "status": "available",
+      "freshness": "daily",
+      "as_of": "2026-08-21",
+      "license": "Aionis-derived from U.S. SEC EDGAR public-domain disclosures",
+      "source": "force-camp relationship graph projected over four committed panels (13F-HR visible books x DEF 14A top-person seats x SC 13D/13G windows); pairwise co-occurrence counts only \u2014 no coordination or consortium claim, no prices/returns"
+    },
+    {
       "key": "reddit",
       "file": "reddit.json",
       "path": "/api/v1/panels/reddit.json",
@@ -546,5 +557,5 @@
     "server": "https://api.aionis-prices.workers.dev"
   },
   "methodology": "Public static data API over the terminal's committed panels (display-only). Every endpoint carries its 7-gate intake facts: license + primary source, plus the freshness class (daily / cadence / frozen). Frozen endpoints derive from frozen OOS artifacts (ledger #49 lineage) and deliberately do NOT advance \u2014 consuming them expecting daily updates misreads the contract. Endpoints with status=planned are NOT built: the path is a reserved future location, no payload is served, as_of is null, and the license/source describe the primary source the future fetcher would use. Research ingestion of any endpoint requires the full 7-gate rubric (docs/data-intake-rubric.md); the live-prices worker is display-only and must never enter the OOS pipeline.",
-  "snapshot_ts": "2026-08-26T17:23:08.716789+00:00"
+  "snapshot_ts": "2026-08-27T04:30:23.443902+00:00"
 }
