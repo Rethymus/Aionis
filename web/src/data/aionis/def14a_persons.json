@@ -5,18 +5,18 @@
   "n_filings_processed": 150,
   "n_with_persons": 104,
   "coverage_pct": 69.3,
-  "n_persons_distinct": 660,
+  "n_persons_distinct": 644,
   "by_role": {
-    "ceo": 173,
-    "cfo": 93,
+    "ceo": 172,
+    "cfo": 92,
     "coo": 34,
     "cto": 7,
     "chairman": 157,
-    "president": 135,
+    "president": 134,
     "vice_president": 131,
     "treasurer": 12,
     "secretary": 47,
-    "director": 498,
+    "director": 490,
     "officer": 164
   },
   "confidence": {
@@ -26,26 +26,6 @@
     "fetch_or_doc_errors": 3
   },
   "boards": [
-    {
-      "company": "WORTHINGTON ENTERPRISES, INC.",
-      "ticker": "WOR",
-      "issuer_cik": "108516",
-      "n_persons": 22,
-      "n_directors": 18,
-      "n_officers": 10,
-      "filed_date": "2026-08-13",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/108516/000119312526348765/wor-20260810.htm"
-    },
-    {
-      "company": "Worthington Steel, Inc.",
-      "ticker": "WS",
-      "issuer_cik": "1968487",
-      "n_persons": 18,
-      "n_directors": 14,
-      "n_officers": 5,
-      "filed_date": "2026-08-14",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1968487/000119312526352256/d163786ddef14a.htm"
-    },
     {
       "company": "CULP INC",
       "ticker": "CULP",
@@ -87,14 +67,14 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/16160/000114036126033569/ny20077563x1_def14a.htm"
     },
     {
-      "company": "GENERAL MILLS INC",
-      "ticker": "GIS",
-      "issuer_cik": "40704",
+      "company": "WORTHINGTON ENTERPRISES, INC.",
+      "ticker": "WOR",
+      "issuer_cik": "108516",
       "n_persons": 15,
-      "n_directors": 11,
-      "n_officers": 7,
+      "n_directors": 13,
+      "n_officers": 10,
       "filed_date": "2026-08-13",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/40704/000162828026056619/gis-20260810.htm"
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/0000108516/000119312526348765/wor-20260810.htm"
     },
     {
       "company": "MOTORCAR PARTS OF AMERICA INC",
@@ -157,6 +137,16 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/355948/000035594826000010/rell-20260821.htm"
     },
     {
+      "company": "GENERAL MILLS INC",
+      "ticker": "GIS",
+      "issuer_cik": "40704",
+      "n_persons": 13,
+      "n_directors": 10,
+      "n_officers": 7,
+      "filed_date": "2026-08-13",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/0000040704/000162828026056619/gis-20260810.htm"
+    },
+    {
       "company": "AAR CORP",
       "ticker": "AIR",
       "issuer_cik": "1750",
@@ -185,6 +175,16 @@
       "n_officers": 10,
       "filed_date": "2026-07-29",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/924805/000092480526000041/fre-20260729.htm"
+    },
+    {
+      "company": "Worthington Steel, Inc.",
+      "ticker": "WS",
+      "issuer_cik": "1968487",
+      "n_persons": 11,
+      "n_directors": 11,
+      "n_officers": 5,
+      "filed_date": "2026-08-14",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/0001968487/000119312526352256/d163786ddef14a.htm"
     },
     {
       "company": "DAKTRONICS INC /SD/",
@@ -447,16 +447,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1333986/000119312526341149/d58865ddef14a.htm"
     },
     {
-      "company": "RENN Fund, Inc.",
-      "ticker": "RCG",
-      "issuer_cik": "919567",
-      "n_persons": 7,
-      "n_directors": 7,
-      "n_officers": 1,
-      "filed_date": "2026-08-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/919567/000139834426013489/fp0100292-1_def14a.htm"
-    },
-    {
       "company": "ORAMED PHARMACEUTICALS INC.",
       "ticker": "ORMP",
       "issuer_cik": "1176309",
@@ -655,6 +645,16 @@
       "n_officers": 4,
       "filed_date": "2026-08-04",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/709005/000165495426007236/nrom_def14a.htm"
+    },
+    {
+      "company": "RENN Fund, Inc.",
+      "ticker": "RCG",
+      "issuer_cik": "919567",
+      "n_persons": 5,
+      "n_directors": 5,
+      "n_officers": 0,
+      "filed_date": "2026-08-04",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/0000919567/000139834426013489/fp0100292-1_def14a.htm"
     },
     {
       "company": "ACORN ENERGY, INC.",
@@ -1136,18 +1136,6 @@
         "director"
       ],
       "n_companies": 2,
-      "n_director_seats": 1,
-      "companies": [
-        "Worthington Steel, Inc.",
-        "WORTHINGTON ENTERPRISES, INC."
-      ]
-    },
-    {
-      "name": "Charles M. Chiappone Age",
-      "roles": [
-        "director"
-      ],
-      "n_companies": 2,
       "n_director_seats": 2,
       "companies": [
         "Worthington Steel, Inc.",
@@ -1252,18 +1240,6 @@
       ]
     },
     {
-      "name": "John B. Blystone Age",
-      "roles": [
-        "director"
-      ],
-      "n_companies": 2,
-      "n_director_seats": 2,
-      "companies": [
-        "Worthington Steel, Inc.",
-        "WORTHINGTON ENTERPRISES, INC."
-      ]
-    },
-    {
       "name": "John H. McConnell II",
       "roles": [
         "director"
@@ -1289,8 +1265,10 @@
       ]
     },
     {
-      "name": "Mark C. Davis Age",
+      "name": "Mark C. Davis",
       "roles": [
+        "ceo",
+        "chairman",
         "director"
       ],
       "n_companies": 2,
@@ -1699,14 +1677,38 @@
       "companies": [
         "OneMedNet Corp"
       ]
+    },
+    {
+      "name": "Andy Kaplan",
+      "roles": [
+        "director"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "NextTrip, Inc."
+      ]
+    },
+    {
+      "name": "Angelo N. Chaclas",
+      "roles": [
+        "vice_president",
+        "secretary",
+        "officer"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 0,
+      "companies": [
+        "Trinseo PLC"
+      ]
     }
   ],
   "request_accounting": {
-    "n_http_requests_last_fetch": 293,
+    "n_http_requests_last_fetch": 301,
     "budget_seconds": 2700,
     "budget_hit": false,
     "fetched_at": "2026-08-23T15:36:40.278716+00:00"
   },
-  "methodology": "DEF 14A person-level panel (\u8463\u4e8b/\u9ad8\u7ba1\u4eba\u7ea7\u6863\u6848) over the NEWEST 150 proxy filings of the /executives DEF 14A stream \u2014 a bounded lane: each filing's primary document resolved from its EDGAR filing index (<= 2 GETs per filing, idempotent per-accession caches, >= 2.1s spacing, hard 45-minute wall-clock budget; the last fetch spent 293 HTTP requests and did not hit the budget). Parsing is CONSERVATIVE and TIERED: (1) section_age_rows (HIGH) \u2014 the classic 'Name (Age) Title Since' roster row in any spelling, a 2-4 token capitalized name with a standalone age bounded 30-99 and a role word witnessed on the same row, also reconstructed from word-fragmented inline-XBRL layouts by anchor-delimiting the joined stream; (2) section_name_roles (MEDIUM) \u2014 'First M. Last' (middle-initial) + a role word inside a located directors/executives section. Everything else yields persons=[] and parsed=false \u2014 an honest NULL, never a guessed name (\u5b81\u53ef null \u4e0d\u731c\u6d4b); coverage below counts only what was processed (104/150 filings with persons = 69.3%), never an extrapolation. Roles are canonical role WORDS witnessed near the person's row or bio \u2014 they may include past or external-company titles (e.g. a director who is CEO of another firm), displayed as text-witnessed hints not employment records; boards-card director/officer counts are independent sets (a CEO-director counts in both). Distinct-person identity keys on the normalized full name across filings \u2014 same-name merges may join namesakes and hyphenated/apostrophe/initials-first names (JW Roth) are conservatively MISSED, both disclosed. Display-only, exploratory, NOT a research claim.",
-  "snapshot_ts": "2026-08-25T14:15:06.829207+00:00"
+  "methodology": "DEF 14A person-level panel (\u8463\u4e8b/\u9ad8\u7ba1\u4eba\u7ea7\u6863\u6848) over the NEWEST 150 proxy filings of the /executives DEF 14A stream \u2014 a bounded lane: each filing's primary document resolved from its EDGAR filing index (<= 2 GETs per filing, idempotent per-accession caches, >= 2.1s spacing, hard 45-minute wall-clock budget; the last fetch spent 301 HTTP requests and did not hit the budget). Parsing is CONSERVATIVE and TIERED: (1) section_age_rows (HIGH) \u2014 the classic 'Name (Age) Title Since' roster row in any spelling, a 2-4 token capitalized name with a standalone age bounded 30-99 and a role word witnessed on the same row, also reconstructed from word-fragmented inline-XBRL layouts by anchor-delimiting the joined stream; (2) section_name_roles (MEDIUM) \u2014 'First M. Last' (middle-initial) + a role word inside a located directors/executives section. Everything else yields persons=[] and parsed=false \u2014 an honest NULL, never a guessed name (\u5b81\u53ef null \u4e0d\u731c\u6d4b); coverage below counts only what was processed (104/150 filings with persons = 69.3%), never an extrapolation. Roles are canonical role WORDS witnessed near the person's row or bio \u2014 they may include past or external-company titles (e.g. a director who is CEO of another firm), displayed as text-witnessed hints not employment records; boards-card director/officer counts are independent sets (a CEO-director counts in both). Distinct-person identity keys on the normalized full name across filings \u2014 same-name merges may join namesakes and hyphenated/apostrophe/initials-first names (JW Roth) are conservatively MISSED, both disclosed. Display-only, exploratory, NOT a research claim.",
+  "snapshot_ts": "2026-08-27T06:07:38.669416+00:00"
 }

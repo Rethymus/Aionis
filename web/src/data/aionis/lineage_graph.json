@@ -7,8 +7,8 @@
   "stakes_13g",
   "smart_money"
  ],
- "n_nodes": 146,
- "n_edges": 772,
+ "n_nodes": 144,
+ "n_edges": 763,
  "nodes": [
   {
    "id": "i:0000807985",
@@ -841,23 +841,7 @@
    "manager_routable": false,
    "degree": {
     "co_hold": 0,
-    "co_board": 5,
-    "co_target": 0
-   }
-  },
-  {
-   "id": "p:CHARLES M. CHIAPPONE AGE",
-   "type": "person",
-   "label": "Charles M. Chiappone Age",
-   "zh_label": null,
-   "lanes": [
-    "def14a"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 5,
+    "co_board": 3,
     "co_target": 0
    }
   },
@@ -969,23 +953,7 @@
    "manager_routable": false,
    "degree": {
     "co_hold": 0,
-    "co_board": 5,
-    "co_target": 0
-   }
-  },
-  {
-   "id": "p:JOHN B. BLYSTONE AGE",
-   "type": "person",
-   "label": "John B. Blystone Age",
-   "zh_label": null,
-   "lanes": [
-    "def14a"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 5,
+    "co_board": 3,
     "co_target": 0
    }
   },
@@ -1001,7 +969,7 @@
    "manager_routable": false,
    "degree": {
     "co_hold": 0,
-    "co_board": 5,
+    "co_board": 3,
     "co_target": 0
    }
   },
@@ -1022,9 +990,9 @@
    }
   },
   {
-   "id": "p:MARK C. DAVIS AGE",
+   "id": "p:MARK C. DAVIS",
    "type": "person",
-   "label": "Mark C. Davis Age",
+   "label": "Mark C. Davis",
    "zh_label": null,
    "lanes": [
     "def14a"
@@ -1033,7 +1001,7 @@
    "manager_routable": false,
    "degree": {
     "co_hold": 0,
-    "co_board": 5,
+    "co_board": 3,
     "co_target": 0
    }
   },
@@ -2457,41 +2425,7 @@
   },
   {
    "a": "p:CHARLES M. CHIAPPONE",
-   "b": "p:CHARLES M. CHIAPPONE AGE",
-   "type": "co_board",
-   "w": 2,
-   "shared": [
-    {
-     "company": "WORTHINGTON ENTERPRISES, INC.",
-     "tk": "WOR"
-    },
-    {
-     "company": "Worthington Steel, Inc.",
-     "tk": "WS"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "p:CHARLES M. CHIAPPONE",
    "b": "p:JOHN B. BLYSTONE",
-   "type": "co_board",
-   "w": 2,
-   "shared": [
-    {
-     "company": "WORTHINGTON ENTERPRISES, INC.",
-     "tk": "WOR"
-    },
-    {
-     "company": "Worthington Steel, Inc.",
-     "tk": "WS"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "p:CHARLES M. CHIAPPONE",
-   "b": "p:JOHN B. BLYSTONE AGE",
    "type": "co_board",
    "w": 2,
    "shared": [
@@ -2525,75 +2459,7 @@
   },
   {
    "a": "p:CHARLES M. CHIAPPONE",
-   "b": "p:MARK C. DAVIS AGE",
-   "type": "co_board",
-   "w": 2,
-   "shared": [
-    {
-     "company": "WORTHINGTON ENTERPRISES, INC.",
-     "tk": "WOR"
-    },
-    {
-     "company": "Worthington Steel, Inc.",
-     "tk": "WS"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "p:CHARLES M. CHIAPPONE AGE",
-   "b": "p:JOHN B. BLYSTONE",
-   "type": "co_board",
-   "w": 2,
-   "shared": [
-    {
-     "company": "WORTHINGTON ENTERPRISES, INC.",
-     "tk": "WOR"
-    },
-    {
-     "company": "Worthington Steel, Inc.",
-     "tk": "WS"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "p:CHARLES M. CHIAPPONE AGE",
-   "b": "p:JOHN B. BLYSTONE AGE",
-   "type": "co_board",
-   "w": 2,
-   "shared": [
-    {
-     "company": "WORTHINGTON ENTERPRISES, INC.",
-     "tk": "WOR"
-    },
-    {
-     "company": "Worthington Steel, Inc.",
-     "tk": "WS"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "p:CHARLES M. CHIAPPONE AGE",
-   "b": "p:JOHN H. MCCONNELL II",
-   "type": "co_board",
-   "w": 2,
-   "shared": [
-    {
-     "company": "WORTHINGTON ENTERPRISES, INC.",
-     "tk": "WOR"
-    },
-    {
-     "company": "Worthington Steel, Inc.",
-     "tk": "WS"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "p:CHARLES M. CHIAPPONE AGE",
-   "b": "p:MARK C. DAVIS AGE",
+   "b": "p:MARK C. DAVIS",
    "type": "co_board",
    "w": 2,
    "shared": [
@@ -3120,23 +2986,6 @@
   },
   {
    "a": "p:JOHN B. BLYSTONE",
-   "b": "p:JOHN B. BLYSTONE AGE",
-   "type": "co_board",
-   "w": 2,
-   "shared": [
-    {
-     "company": "WORTHINGTON ENTERPRISES, INC.",
-     "tk": "WOR"
-    },
-    {
-     "company": "Worthington Steel, Inc.",
-     "tk": "WS"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "p:JOHN B. BLYSTONE",
    "b": "p:JOHN H. MCCONNELL II",
    "type": "co_board",
    "w": 2,
@@ -3154,41 +3003,7 @@
   },
   {
    "a": "p:JOHN B. BLYSTONE",
-   "b": "p:MARK C. DAVIS AGE",
-   "type": "co_board",
-   "w": 2,
-   "shared": [
-    {
-     "company": "WORTHINGTON ENTERPRISES, INC.",
-     "tk": "WOR"
-    },
-    {
-     "company": "Worthington Steel, Inc.",
-     "tk": "WS"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "p:JOHN B. BLYSTONE AGE",
-   "b": "p:JOHN H. MCCONNELL II",
-   "type": "co_board",
-   "w": 2,
-   "shared": [
-    {
-     "company": "WORTHINGTON ENTERPRISES, INC.",
-     "tk": "WOR"
-    },
-    {
-     "company": "Worthington Steel, Inc.",
-     "tk": "WS"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "p:JOHN B. BLYSTONE AGE",
-   "b": "p:MARK C. DAVIS AGE",
+   "b": "p:MARK C. DAVIS",
    "type": "co_board",
    "w": 2,
    "shared": [
@@ -3205,7 +3020,7 @@
   },
   {
    "a": "p:JOHN H. MCCONNELL II",
-   "b": "p:MARK C. DAVIS AGE",
+   "b": "p:MARK C. DAVIS",
    "type": "co_board",
    "w": 2,
    "shared": [
@@ -23591,7 +23406,7 @@
    "isolated_managers": 0
   },
   "def14a": {
-   "basis": "top_persons export: 50 most-seated of 660 upstream persons; 104/150 filings with persons (69.3%)",
+   "basis": "top_persons export: 50 most-seated of 644 upstream persons; 104/150 filings with persons (69.3%)",
    "same_name_merges_possible": true
   },
   "13dg": {
@@ -23600,5 +23415,5 @@
   }
  },
  "methodology": "Force-camp relationship graph DERIVED at export time from four COMMITTED panels (form13f x def14a_persons x stakes_13g union smart_money) \u2014 zero new fetches, display-only. Edges are pairwise projections over as-filed disclosure facts: co_hold = two curated managers' VISIBLE BOOKS (latest quarter, up to 50 positions each; the full books are larger) share a position key (ticker, else CUSIP); co_board = two proxy-statement top persons seat the same company (exact company-name match resolves the ticker); co_target = two different filers INDEPENDENTLY SEPARATELY FILED stakes converging on the same target issuer within the visible SC 13D/13G windows. Identity rule: a window filer merges into an institution node ONLY when its trimmed-uppercase name equals a curated manager's name exactly \u2014 no fuzzy matching, no name list. The three overlaps are factual coincidences of separate filings: joint filings stay verbatim (members NOT DECOMPOSED), no COORDINATION is implied and no consortium claim is made. Weights are integer counts of shared items (lists capped at 8, truncated flag set beyond). Coverage is bounded by construction \u2014 see the coverage.basis strings (visible books, a 50-person proxy export over the newest filings, latest filing windows only). A restatement of public SEC EDGAR disclosures only: NO PRICES, NO RETURNS, no performance claims; never part of any OOS pipeline.",
- "snapshot_ts": "2026-08-27T05:33:54.151611+00:00"
+ "snapshot_ts": "2026-08-27T06:07:38.717459+00:00"
 }
