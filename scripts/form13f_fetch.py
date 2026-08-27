@@ -106,6 +106,11 @@ MANAGERS: dict[int, tuple[str, str | None, str]] = {
     807985: ("SOUTHEASTERN ASSET MANAGEMENT INC/TN/", "东南资产管理（霍金斯）", "value"),
     1138995: ("GLENVIEW CAPITAL MANAGEMENT, LLC", "格伦维尤资本（罗宾斯）", "growth"),
     1448574: ("MOORE CAPITAL MANAGEMENT, LP", "摩尔资本（培根）", "macro"),
+    # --- +2 admitted 2026-08-27 (TASK-DISP-F; six-gate curation bar PASS,
+    # evidence: reports/design/2026-08-26-stars-candidates-evidence.json;
+    # names verbatim from data.sec.gov submissions) ---------------------------
+    1535472: ("Corvex Management LP", None, "activist"),
+    807249: ("GAMCO INVESTORS, INC. ET AL", "GAMCO（加贝利）", "value"),
 }
 
 QUARTERS = 2  # latest report quarter + previous (frame diff needs both)
