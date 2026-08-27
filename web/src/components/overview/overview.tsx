@@ -393,7 +393,8 @@ function StatBand() {
   const dh = (key: string) =>
     aionis.dataHealth.panels.find((p) => p.key === key)?.rows ?? null;
   const ctx = aionis.politicianTradesTx;
-  const cells: { label: string; value: number | null }[] = [
+  const rt = aionis.redditTrending;
+  const cells: { label: string; value: number | null; sub?: string }[] = [
     { label: t("overview.stat.companies"), value: dh("companies_dir") },
     { label: t("overview.stat.filers"), value: dh("filers13f") },
     {
@@ -403,7 +404,16 @@ function StatBand() {
     { label: t("overview.stat.trades"), value: ctx.status === "ok" ? ctx.total : null },
     {
       label: t("overview.stat.reddit"),
-      value: aionis.redditTrending.status === "ok" ? aionis.redditTrending.count_declared : null,
+      value: rt.status === "ok" ? rt.count_declared : null,
+      // Proximate disclosure (audit 2026-08-28 P2-1): count_declared is the
+      // API-DECLARED total; the free tier serves page 1 only (ApeWisdom
+      // pagination cap), so the loaded row count differs. reddit.html
+      // discloses this in full — the stat band carries the inline short form
+      // so 297-vs-100 never reads as an inconsistency.
+      sub:
+        rt.status === "ok"
+          ? t("overview.stat.redditLoaded").replace("{n}", String(rt.tickers.length))
+          : undefined,
     },
   ];
   return (
@@ -417,6 +427,9 @@ function StatBand() {
           <div className="font-mono text-[20px] font-bold tracking-tight tabular-nums md:text-[24px]">
             {c.value != null ? fmtInt(c.value) : "—"}
           </div>
+          {c.sub && (
+            <div className="text-[10px] text-mute/80 tabular-nums">{c.sub}</div>
+          )}
         </div>
       ))}
     </div>
