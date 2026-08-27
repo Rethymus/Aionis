@@ -16,6 +16,7 @@ import { AvatarInitials } from "@/components/stream/avatar-initials";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
 import { stockUniverse } from "@/data/aionis/stock-universe";
+import { ProvenanceBadge } from "@/components/provenance-badge";
 import Link from "next/link";
 import {
   Bar,
@@ -37,6 +38,12 @@ type SideFilter = "all" | "buy" | "sell";
 const STOCK_PAGE_TICKERS_SET: ReadonlySet<string> = new Set(
   stockUniverse.stocks.map((s) => s.ticker),
 );
+
+// Page-level freshness anchor: form4.json carries no as_of of its own — the
+// export-day value lives in data_health.panels (same lookup overview.tsx uses
+// for row counts). Rendered via ProvenanceBadge; absent badge = honest null.
+const FORM4_AS_OF: string | null =
+  aionis.dataHealth.panels.find((p) => p.key === "form4")?.as_of ?? null;
 
 export function InsidersView() {
   const { t } = useI18n();
@@ -83,6 +90,7 @@ export function InsidersView() {
         <p className="mt-2 text-[13px] text-mute">
           {t("insiders.window")}
           {f.status === "ok" ? ` · ${(f.buys + f.sells).toLocaleString("en-US")} · ${f.window}` : ""}
+          <ProvenanceBadge ts={FORM4_AS_OF} className="ml-2 align-middle" />
         </p>
       </header>
 

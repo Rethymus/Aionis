@@ -8,6 +8,7 @@ import { LoadMoreFooter, usePaged } from "@/components/stream/stream-kit";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
 import { stockUniverse } from "@/data/aionis/stock-universe";
+import { ProvenanceBadge } from "@/components/provenance-badge";
 
 // /stakes — 举牌 stream (their /stakes: active or passive large-stake
 // disclosures). Two existing panels, ZERO new data paths:
@@ -111,11 +112,17 @@ export function StakesView() {
     <div className="flex flex-col gap-4">
       <div>
         <h1 className="text-2xl font-semibold tracking-[-0.032em]">{t("stakes.title")}</h1>
-        <p className="mt-2 text-[13px] text-mute">
-          {t("stakes.subtitle")}
-          {g.status === "ok" && g.window
-            ? ` · ${g.total.toLocaleString("en-US")} 13G · ${g.window.start}→${g.window.end}`
-            : ""}
+        <p className="mt-2 flex flex-wrap items-center gap-2 text-[13px] text-mute">
+          <span>
+            {t("stakes.subtitle")}
+            {g.status === "ok" && g.window
+              ? ` · ${g.total.toLocaleString("en-US")} 13G · ${g.window.start}→${g.window.end}`
+              : ""}
+          </span>
+          {/* Same disclosure line carries the 13G stream's own as_of — the
+              window above is the filing range, this is collection freshness
+              (stakes_13g.json as_of). */}
+          {g.status === "ok" ? <ProvenanceBadge ts={g.as_of} /> : null}
         </p>
       </div>
 

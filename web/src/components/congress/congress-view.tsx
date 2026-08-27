@@ -27,6 +27,7 @@ import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
 import type { PoliticianTx } from "@/data/aionis";
 import { STOCK_PAGE_TICKERS } from "@/components/institutions/manager-book";
+import { ProvenanceBadge } from "@/components/provenance-badge";
 
 const PAGE_SIZE = 50;
 const TX_PAGE_SIZE = 50;
@@ -137,11 +138,15 @@ function TxSection() {
   return (
     <Card className="min-w-0">
       <CardHeader className="pb-3">
-        <CardTitle>
+        <CardTitle className="flex flex-wrap items-center gap-1">
           {t("congress.tx.title")}{" "}
-          <span className="ml-1 font-mono text-sm font-normal text-muted-foreground tabular-nums">
+          <span className="font-mono text-sm font-normal text-muted-foreground tabular-nums">
             {f.total.toLocaleString("en-US")} · {f.n_members} · {f.year}
           </span>
+          {/* The page-level anchor (guard band) carries the v1 index stream's
+              date; this card's rows come from the v2 transaction panel — label
+              it with its OWN as_of so the two versions are never conflated. */}
+          <ProvenanceBadge ts={f.as_of} />
         </CardTitle>
         <CardDescription>{t("congress.tx.note")}</CardDescription>
         <div className="space-y-1 pt-1">

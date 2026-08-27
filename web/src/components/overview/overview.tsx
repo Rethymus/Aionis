@@ -601,10 +601,12 @@ function IpoCard() {
   );
 }
 
-/** 明星投资人 — curated 13F managers (40 in the committed panel; the count in
- *  the header is the digest's n_managers = full roster, honest, never the
- *  reference's 43). Avatar initials + locale-aware name (zh_name in zh) + $B
- *  book + top holding. Data = the ~2KB export-time digest, not the full book. */
+/** 明星投资人 — curated 13F managers (the curated roster is a subset of the
+ *  committed panel and can grow independently — see form13f-stars.json
+ *  n_managers for the live count; the header number is that digest value =
+ *  full roster, honest, never the reference's count). Avatar initials +
+ *  locale-aware name (zh_name in zh) + $B book + top holding. Data = the
+ *  ~2KB export-time digest, not the full book. */
 function StarInvestorsCard() {
   const { t, lang } = useI18n();
   const stars = form13fStars.status === "ok" ? form13fStars.stars.slice(0, 6) : [];
