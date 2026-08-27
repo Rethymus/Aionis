@@ -486,12 +486,16 @@ export function ExecutivesView() {
                     {fmtDateShort(e.filing_date)}
                   </TableCell>
                   <TableCell>
-                    <Link
-                      href={`/stock/${e.ticker}`}
-                      className="font-medium text-primary hover:underline"
-                    >
-                      {e.company}
-                    </Link>
+                    {STOCK_PAGE_TICKERS.has(e.ticker) ? (
+                      <Link
+                        href={`/stock/${e.ticker}`}
+                        className="font-medium text-primary hover:underline"
+                      >
+                        {e.company}
+                      </Link>
+                    ) : (
+                      <span className="font-medium">{e.company}</span>
+                    )}
                     <span className="ml-2 text-xs text-muted-foreground">
                       {e.ticker}
                     </span>

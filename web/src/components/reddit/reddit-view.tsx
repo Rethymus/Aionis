@@ -308,7 +308,11 @@ export function RedditView() {
                       <span className="w-6 shrink-0 text-muted-foreground tabular-nums">
                         {i + 1}
                       </span>
-                      <Link href={`/stock/${pick.ticker}`} className="truncate font-mono text-primary hover:underline">{pick.ticker}</Link>
+                      {STOCK_PAGE_TICKERS.has(pick.ticker) ? (
+                        <Link href={`/stock/${pick.ticker}`} className="truncate font-mono text-primary hover:underline">{pick.ticker}</Link>
+                      ) : (
+                        <span className="truncate font-mono text-xs">{pick.ticker}</span>
+                      )}
                       <Badge
                         variant="secondary"
                         className="ml-auto shrink-0 tabular-nums"

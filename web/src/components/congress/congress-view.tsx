@@ -209,7 +209,7 @@ function TxSection() {
                 </TableCell>
                 <TableCell className="max-w-[280px]">
                   <div className="flex items-center gap-1.5">
-                    {r.ticker ? (
+                    {r.ticker && STOCK_PAGE_TICKERS.has(r.ticker) ? (
                       <Link
                         href={`/stock/${r.ticker}`}
                         className="shrink-0 font-mono text-xs font-semibold text-ink hover:text-brand"
@@ -300,12 +300,18 @@ function PartyIndexSection() {
       key={`${r.ticker}-${i}`}
       className="inline-flex items-center gap-1.5 rounded-[4px] bg-muted/60 px-2 py-1"
     >
-      <Link
-        href={`/stock/${r.ticker}`}
-        className="font-mono text-xs font-semibold text-ink hover:text-brand"
-      >
-        {r.ticker}
-      </Link>
+      {/* Same static-export guard as HotTickerStrip: link only where a
+          /stock/[ticker] page exists, else keep the ticker as plain text. */}
+      {STOCK_PAGE_TICKERS.has(r.ticker) ? (
+        <Link
+          href={`/stock/${r.ticker}`}
+          className="font-mono text-xs font-semibold text-ink hover:text-brand"
+        >
+          {r.ticker}
+        </Link>
+      ) : (
+        <span className="font-mono text-xs font-semibold">{r.ticker}</span>
+      )}
       {netChip("D", r.d_net)}
       {netChip("R", r.r_net)}
     </span>
@@ -428,12 +434,16 @@ function PartyIndexSection() {
                         {i + 1}
                       </span>
                       <div className="min-w-0 flex-1">
-                        <Link
-                          href={`/stock/${h.ticker}`}
-                          className="font-mono text-xs font-semibold text-ink hover:text-brand"
-                        >
-                          {h.ticker}
-                        </Link>
+                        {STOCK_PAGE_TICKERS.has(h.ticker) ? (
+                          <Link
+                            href={`/stock/${h.ticker}`}
+                            className="font-mono text-xs font-semibold text-ink hover:text-brand"
+                          >
+                            {h.ticker}
+                          </Link>
+                        ) : (
+                          <span className="font-mono text-xs font-semibold">{h.ticker}</span>
+                        )}
                         <p
                           className="truncate text-[11px] text-muted-foreground"
                           title={h.asset}

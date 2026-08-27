@@ -14,7 +14,17 @@ import { fmtDateShort } from "@/lib/format";
 import { FilterPills, LoadMoreFooter, usePaged } from "@/components/stream/stream-kit";
 import { useI18n } from "@/i18n/provider";
 import { aionis, type StakesPct } from "@/data/aionis";
+import { stockUniverse } from "@/data/aionis/stock-universe";
 import Link from "next/link";
+
+// Same guard as executives-view / manager-book.STOCK_PAGE_TICKERS: the terminal
+// is a STATIC export and /stock/[ticker] pages exist only for the frozen OOS
+// universe. A 13D/13G filer resolves to plenty of real tickers outside it
+// (BRK-B, renamed SNDK, ...) — keep the ticker as plain-text identity info,
+// link only where a static page exists.
+const STOCK_PAGE_TICKERS: ReadonlySet<string> = new Set(
+  stockUniverse.stocks.map((s) => s.ticker),
+);
 import {
   Bar,
   BarChart,
@@ -234,11 +244,17 @@ export function SmartMoneyView() {
                 )}
                 <StakesPctBadges row={r} />
                 {r.ticker ? (
-                  <Link href={`/stock/${r.ticker}`} className="ml-auto shrink-0">
-                    <Badge variant="secondary" className="font-mono text-xs">
+                  STOCK_PAGE_TICKERS.has(r.ticker) ? (
+                    <Link href={`/stock/${r.ticker}`} className="ml-auto shrink-0">
+                      <Badge variant="secondary" className="font-mono text-xs">
+                        {r.ticker}
+                      </Badge>
+                    </Link>
+                  ) : (
+                    <span className="ml-auto shrink-0 font-mono text-xs text-muted-foreground">
                       {r.ticker}
-                    </Badge>
-                  </Link>
+                    </span>
+                  )
                 ) : null}
               </div>
             ))}

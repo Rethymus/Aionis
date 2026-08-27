@@ -24,6 +24,15 @@ import { FilterPills, LoadMoreFooter, usePaged } from "@/components/stream/strea
 import { useI18n } from "@/i18n/provider";
 import type { DictKey } from "@/i18n/dict";
 import { aionis } from "@/data/aionis";
+import { stockUniverse } from "@/data/aionis/stock-universe";
+
+// Same guard as executives-view / manager-book.STOCK_PAGE_TICKERS: the terminal
+// is a STATIC export and /stock/[ticker] pages exist only for the frozen OOS
+// universe. An 8-K issuer outside it (BRK-B, delisted/renamed symbols, ...)
+// keeps its company name as plain text — never a 404 deep link.
+const STOCK_PAGE_TICKERS: ReadonlySet<string> = new Set(
+  stockUniverse.stocks.map((s) => s.ticker),
+);
 
 // Category code → i18n key (t() takes a strict DictKey — no template literals).
 // Exported: the overview home's 重大事件 card reuses the same mapping (single
@@ -286,12 +295,16 @@ export function EventsView() {
                     {fmtDateShort(e.filing_date)}
                   </TableCell>
                   <TableCell>
-                    <Link
-                      href={`/stock/${e.ticker}`}
-                      className="font-medium text-primary hover:underline"
-                    >
-                      {e.company}
-                    </Link>
+                    {STOCK_PAGE_TICKERS.has(e.ticker) ? (
+                      <Link
+                        href={`/stock/${e.ticker}`}
+                        className="font-medium text-primary hover:underline"
+                      >
+                        {e.company}
+                      </Link>
+                    ) : (
+                      <span className="font-medium">{e.company}</span>
+                    )}
                     <span className="ml-2 text-xs text-muted-foreground">
                       {e.ticker}
                     </span>
