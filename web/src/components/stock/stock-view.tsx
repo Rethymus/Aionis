@@ -144,7 +144,7 @@ function AnchorNav({ ticker }: { ticker: string }) {
         {t("stock.anchor.insiders")}
       </Link>
       <Link
-        href="/manager"
+        href="/institutions"
         className="rounded-[4px] bg-muted/60 px-2.5 py-1 text-xs font-medium text-primary hover:underline"
       >
         {t("stock.anchor.managers")}

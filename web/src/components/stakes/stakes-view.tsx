@@ -113,7 +113,9 @@ export function StakesView() {
         <h1 className="text-2xl font-semibold tracking-[-0.032em]">{t("stakes.title")}</h1>
         <p className="mt-2 text-[13px] text-mute">
           {t("stakes.subtitle")}
-          {g.status === "ok" ? ` · ${g.total.toLocaleString("en-US")} 13G · ${g.window}` : ""}
+          {g.status === "ok" && g.window
+            ? ` · ${g.total.toLocaleString("en-US")} 13G · ${g.window.start}→${g.window.end}`
+            : ""}
         </p>
       </div>
 
