@@ -3082,7 +3082,7 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
         "year via EFTS quarter windows (cap-split), directory facts only",
     ),
     "lineage_graph": (
-        "Aionis-derived from U.S. SEC EDGAR public-domain disclosures",
+        "Aionis-derived from U.S. SEC EDGAR public domain disclosures",
         "force-camp relationship graph projected over four committed panels "
         "(13F-HR visible books x DEF 14A top-person seats x SC 13D/13G "
         "windows); pairwise co-occurrence counts only — no coordination or "
@@ -5076,9 +5076,9 @@ def export_lineage_graph() -> None:
                 roster). Joint filings stay verbatim — members NOT DECOMPOSED;
                 the overlaps are factual coincidences of separate filings, so
                 neither coordination nor any consortium claim is implied.
-    co_target weight semantics: w = filing rows jointly involved by the pair
-    across their common targets; one edge per endpoint pair, shared items are
-    the per-target details (forms "|"-joined when several forms apply).
+    co_target weight semantics: one edge per endpoint pair; each common
+    target contributes exactly one shared item, so w == number of distinct
+    commonly-filed targets (== len(shared), the global panel invariant).
     Any source panel absent/not-ok ⇒ SKIP-and-retain (never an empty shell).
     """
 
@@ -5250,12 +5250,11 @@ def export_lineage_graph() -> None:
 
     joint: dict[tuple, dict] = {}  # (eid_u, eid_v) -> norm_target -> cell
     for nt, rows in groups.items():
-        by_ep: dict[str, list[tuple]] = {}
+        by_ep: dict[str, set] = {}
         group_tks = [tk for _, tk, _ in rows if tk]
         grp_tk = min(group_tks) if group_tks else None
-        for nf, tk, form in rows:
-            eid = _endpoint(nf)
-            by_ep.setdefault(eid, []).append((nf, tk, form))
+        for nf, _tk, form in rows:
+            by_ep.setdefault(_endpoint(nf), set()).add(form)
         eids = sorted(by_ep)
         if len(eids) < 2:
             continue  # no converging pair — never materialize a node
@@ -5268,12 +5267,8 @@ def export_lineage_graph() -> None:
             else:
                 _touch(eid, "staker", staker_label.get(eid[2:]) or eid[2:])
         for eu, ev in itertools.combinations(eids, 2):
-            ru, rv = by_ep[eu], by_ep[ev]
-            forms = sorted({x[2] for x in ru} | {x[2] for x in rv})
+            forms = sorted(by_ep[eu] | by_ep[ev])
             joint.setdefault((eu, ev), {})[nt] = {
-                # jointly involved filing rows (each party's own rows on this
-                # target; a row has exactly one filer so the sets are disjoint)
-                "n": len(ru) + len(rv),
                 "forms": "|".join(forms),
                 "tk": grp_tk,
             }
@@ -5284,12 +5279,19 @@ def export_lineage_graph() -> None:
              "forms": cells[nt]["forms"]}
             for nt in sorted(cells)
         ]
-        w = sum(cells[nt]["n"] for nt in cells)
+        # w == len(shared) is a GLOBAL panel invariant (schema contract):
+        # one shared item per commonly-filed target, so the weight IS the
+        # distinct common-target count (joint ROW depth lives inside each
+        # item's "forms" repetition instead).
+        full_sorted = _sorted_shared(full)
         edges_out.append({
-            "a": eu, "b": ev, "type": "co_target", "w": w,
-            "shared": _sorted_shared(full)[:8],
-            "truncated": len(full) > 8,
+            "a": eu, "b": ev, "type": "co_target", "w": len(full),
+            "shared": full_sorted,
+            "truncated": False,
         })
+        if len(full) > 8:
+            edges_out[-1]["shared"] = full_sorted[:8]
+            edges_out[-1]["truncated"] = True
         n_co_target += 1
 
     # ---- lanes + degrees (single pass over the final edge list) ------------

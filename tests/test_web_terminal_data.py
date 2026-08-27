@@ -2307,3 +2307,439 @@ def test_form13f_stars_digest_reconciles_with_panel() -> None:
         assert s["top_ticker"] == (top["ticker"] if top else None)
     # The #1 digest slot must be the panel's largest book — no curation drift.
     assert stars[0]["cik"] == max(f["managers"], key=lambda m: m["total_value"])["cik"]
+
+
+# --- Force-camp lineage graph -------------------------------------------------
+
+
+def _lg_norm(s: str) -> str:
+    """The graph's ONLY identity rule — exact trimmed-uppercase equality."""
+    return s.strip().upper()
+
+
+def _lg_stake_windows() -> tuple[list[dict], list[dict]]:
+    g = _load("stakes_13g.json")
+    sm = _load("smart_money.json")
+    return g.get("filings") or [], sm.get("recent_filings") or []
+
+
+def test_lineage_graph_panel_contract() -> None:
+    """Top-level schema is EXACT (no missing, no extra key); counts reconcile.
+
+    The panel shape pins the view contract: source_panels in declared order,
+    status ok, node/edge field bags exactly as specified, and the payload
+    inside the size gate the exporter itself asserts.
+    """
+    p = DATA / "lineage_graph.json"
+    x = json.loads(p.read_text())
+    assert set(x) == {
+        "status", "as_of", "source_panels", "n_nodes", "n_edges", "nodes",
+        "edges", "bridges", "components", "windows", "coverage",
+        "methodology", "snapshot_ts",
+    }
+    assert x["status"] == "ok"
+    assert x["source_panels"] == [
+        "form13f", "def14a_persons", "stakes_13g", "smart_money",
+    ]
+    assert x["n_nodes"] == len(x["nodes"])
+    assert x["n_edges"] == len(x["edges"])
+    assert len(p.read_bytes()) <= 512 * 1024, "payload outside the size gate"
+    for n in x["nodes"]:
+        assert set(n) == {
+            "id", "type", "label", "zh_label", "lanes", "cik",
+            "manager_routable", "degree",
+        }
+        assert n["type"] in {"institution", "person", "staker"}
+        assert n["id"][:2] in {"i:", "p:", "s:"}
+        assert set(n["degree"]) == {"co_hold", "co_board", "co_target"}
+    for e in x["edges"]:
+        assert set(e) == {"a", "b", "type", "w", "shared", "truncated"}
+        assert e["type"] in {"co_hold", "co_board", "co_target"}
+        assert isinstance(e["shared"], list) and len(e["shared"]) <= 8
+
+
+def test_lineage_graph_co_hold_recompute_agrees_with_panel() -> None:
+    """co_hold edges = manager x manager visible-book key intersection.
+
+    Recomputes every pair→weight→(truncated) detail triplet straight from
+    form13f.json with the same key rule (ticker, else CUSIP) and demands
+    row-for-row agreement with the panel.
+    """
+    x = _load("lineage_graph.json")
+    f = _load("form13f.json")
+    books: dict[str, set] = {}
+    meta: dict[str, tuple] = {}
+    for m in f["managers"]:
+        keys = set()
+        for p in m.get("positions") or []:
+            tk = p.get("ticker") or None
+            k = f"T:{tk}" if tk else f"C:{p['cusip']}"
+            keys.add(k)
+            meta.setdefault(k, (tk, p["issuer"]))
+        books[m["cik"]] = keys
+    want: dict[tuple, list] = {}
+    ciks = sorted(books)
+    for i, a in enumerate(ciks):
+        for b in ciks[i + 1:]:
+            inter = sorted(books[a] & books[b])
+            if inter:
+                ia, ib = sorted([f"i:{a}", f"i:{b}"])
+                want[(ia, ib)] = inter
+    got = {
+        (e["a"], e["b"]): e
+        for e in x["edges"] if e["type"] == "co_hold"
+    }
+    assert set(got) == set(want), "pair set must equal the recomputation"
+    for pair, inter in want.items():
+        e = got[pair]
+        assert e["w"] == len(inter)
+        assert e["truncated"] == (len(inter) > 8)
+        assert e["shared"] == [
+            {"k": k, "tk": meta[k][0], "issuer": meta[k][1]} for k in inter[:8]
+        ]
+
+
+def test_lineage_graph_co_board_recompute_agrees_with_panel() -> None:
+    """co_board edges = top-person common-company intersections.
+
+    Same method as the panel: exact verbatim company strings from each
+    person's companies[] list; ticker resolved per boards[].company exact
+    match; w = number of commonly seated companies.
+    """
+    x = _load("lineage_graph.json")
+    d14 = _load("def14a_persons.json")
+    board_tk: dict[str, str | None] = {}
+    for b in d14.get("boards") or []:
+        if b.get("company"):
+            board_tk.setdefault(b["company"], b.get("ticker") or None)
+    pc: dict[str, set] = {}
+    for pr in d14["top_persons"]:
+        pid = f"p:{_lg_norm(pr['name'])}"
+        pc.setdefault(pid, set()).update(
+            str(c) for c in pr.get("companies") or []
+        )
+    by_comp: dict[str, set] = {}
+    for pid, comps in pc.items():
+        for c in comps:
+            by_comp.setdefault(c, set()).add(pid)
+    want: dict[tuple, list] = {}
+    seen: set = set()
+    for mem in by_comp.values():
+        ids = sorted(mem)
+        for i, pa in enumerate(ids):
+            for pb in ids[i + 1:]:
+                if (pa, pb) in seen:
+                    continue
+                seen.add((pa, pb))
+                common = sorted(pc[pa] & pc[pb])
+                if common:
+                    want[(pa, pb)] = common
+    got = {
+        (e["a"], e["b"]): e
+        for e in x["edges"] if e["type"] == "co_board"
+    }
+    assert set(got) == set(want)
+    for pair, common in want.items():
+        e = got[pair]
+        assert e["w"] == len(common)
+        assert e["truncated"] == (len(common) > 8)
+        assert e["shared"] == [
+            {"company": c, "tk": board_tk.get(c)} for c in common[:8]
+        ]
+
+
+def test_lineage_graph_co_target_recompute_agrees_with_windows() -> None:
+    """co_target edges = distinct filers converging on one norm-target.
+
+    Recomputes from BOTH visible windows (13G ∪ 13D): grouping by
+    strip+upper target, endpoint identity (exact manager-name merge),
+    per-pair joint filing-row weight and the per-target shared details.
+    """
+    import itertools
+
+    x = _load("lineage_graph.json")
+    f = _load("form13f.json")
+    g_rows, d_rows = _lg_stake_windows()
+    mgr_cik = {_lg_norm(m["name"]): m["cik"] for m in f["managers"]}
+
+    def endpoint(nfil: str) -> str:
+        cik = mgr_cik.get(nfil)
+        return f"i:{cik}" if cik else f"s:{nfil}"
+
+    groups: dict[str, list] = {}
+    verbatim: dict[str, str] = {}
+    # ingest G rows first so target_verbatim matches the panel's first-seen
+    # ordering, then D rows (mirrors export order exactly).
+    for r in g_rows:
+        nt = _lg_norm(r["target"])
+        groups.setdefault(nt, []).append(
+            (_lg_norm(r["filer"]), r.get("ticker"), r.get("form"))
+        )
+        verbatim.setdefault(nt, r["target"])
+    for r in d_rows:
+        nt = _lg_norm(r["target"])
+        groups.setdefault(nt, []).append(
+            (_lg_norm(r["filer"]), r.get("ticker"), r.get("form"))
+        )
+        verbatim.setdefault(nt, r["target"])
+
+    joint: dict[tuple, dict] = {}
+    for nt, rows in groups.items():
+        by_ep: dict[str, set] = {}
+        grp_tks = [tk for _, tk, _ in rows if tk]
+        grp_tk = min(grp_tks) if grp_tks else None
+        for nf, _tk, form in rows:
+            by_ep.setdefault(endpoint(nf), set()).add(form)
+        eids = sorted(by_ep)
+        if len(eids) < 2:
+            continue
+        for eu, ev in itertools.combinations(eids, 2):
+            forms = sorted(by_ep[eu] | by_ep[ev])
+            joint.setdefault((eu, ev), {})[nt] = (
+                "|".join(forms), grp_tk,
+            )
+    got = {
+        (e["a"], e["b"]): e
+        for e in x["edges"] if e["type"] == "co_target"
+    }
+    assert set(got) == set(joint), "endpoint pairs must equal the recomputation"
+    def srt(items: list) -> list:
+        return sorted(items, key=lambda s: json.dumps(s, sort_keys=True))
+    for pair, cells in joint.items():
+        full = [
+            {"target": verbatim[nt], "tk": cells[nt][1], "forms": cells[nt][0]}
+            for nt in sorted(cells)
+        ]
+        w = len(cells)  # one shared item per common target == len(shared)
+        e = got[pair]
+        assert e["w"] == w
+        assert e["truncated"] == (len(full) > 8)
+        assert e["shared"] == srt(full)[:8]
+
+
+def test_lineage_graph_weights_are_integer_counts() -> None:
+    """Weights are positive ints; truncation ⇔ len(shared)==8 ∧ w>8."""
+    x = _load("lineage_graph.json")
+    for e in x["edges"]:
+        assert isinstance(e["w"], int) and not isinstance(e["w"], bool)
+        assert e["w"] >= 1
+        if e["truncated"]:
+            assert len(e["shared"]) == 8 and e["w"] > 8
+        else:
+            assert len(e["shared"]) == e["w"]
+            assert not (e["w"] > 8)
+
+
+def test_lineage_graph_edges_reference_existing_nodes_and_lanes() -> None:
+    """Endpoints exist; each edge type stamps its evidence lane on both ends."""
+    x = _load("lineage_graph.json")
+    ids = {n["id"]: n for n in x["nodes"]}
+    need = {"co_hold": "13f", "co_board": "def14a", "co_target": "13dg"}
+    for e in x["edges"]:
+        assert e["a"] in ids and e["b"] in ids, e
+        lane = need[e["type"]]
+        for nid in (e["a"], e["b"]):
+            assert lane in ids[nid]["lanes"], (e["type"], nid)
+
+
+def test_lineage_graph_identity_merge_only_by_exact_name() -> None:
+    """No name-identity drift beyond the exact trim+upper rule.
+
+    Every institution carrying a 13dg lane must have its label found among
+    the window filer names after the SAME normalization — anything else
+    would mean a merge outside the declared rule. Person/staker nodes keep
+    their type prefixes and labels; routing flags follow the manager CIK set.
+    """
+    x = _load("lineage_graph.json")
+    f = _load("form13f.json")
+    g_rows, d_rows = _lg_stake_windows()
+    filer_norms = {_lg_norm(r["filer"]) for r in (*g_rows, *d_rows)}
+    mgr_ciks = {m["cik"] for m in f["managers"]}
+    merged_lanes = []
+    for n in x["nodes"]:
+        prefix, rest = n["id"][:2], n["id"][2:]
+        if n["type"] == "institution":
+            assert prefix == "i:" and n["cik"], n["id"]
+            if "13dg" in n["lanes"]:
+                merged_lanes.append(n)
+                assert _lg_norm(n["label"]) in filer_norms, n["label"]
+        elif n["type"] == "person":
+            assert prefix == "p:" and n["cik"] is None
+            assert rest == _lg_norm(n["label"]), n
+        else:
+            assert n["type"] == "staker" and prefix == "s:" and n["cik"] is None
+            assert rest == _lg_norm(n["label"]), n
+        assert n["manager_routable"] == (n["cik"] in mgr_ciks)
+    # No parallel duplicate of a merged institution survives as a staker.
+    inst_norms = {
+        _lg_norm(n["label"]) for n in x["nodes"] if n["type"] == "institution"
+    }
+    for n in x["nodes"]:
+        if n["type"] == "staker":
+            assert _lg_norm(n["label"]) not in inst_norms, n["label"]
+    for n in x["nodes"]:
+        assert n["lanes"], f"node without any evidence lane: {n['id']}"
+
+
+def test_lineage_graph_stock_routable_flags_match_stock_universe() -> None:
+    """/stock link gating is decided at export time and never over-claims.
+
+    bridges[].stock_routable may only be true for stock_universe members,
+    and non-null shared.tk values must genuinely occur in their own lane's
+    source pool (existence only — never a fabricated symbol).
+    """
+    x = _load("lineage_graph.json")
+    su = _load("stock_universe.json")
+    universe = {s["ticker"] for s in su["stocks"]}
+    for b in x["bridges"]:
+        assert isinstance(b["stock_routable"], bool)
+        if b["stock_routable"]:
+            assert b["tk"] in universe, b["tk"]
+
+    f13 = _load("form13f.json")
+    d14 = _load("def14a_persons.json")
+    g_rows, d_rows = _lg_stake_windows()
+    pools = {
+        "co_hold": {p["ticker"] for m in f13["managers"]
+                    for p in m.get("positions") or [] if p.get("ticker")},
+        "co_board": {b["ticker"] for b in d14.get("boards") or [] if b.get("ticker")},
+        "co_target": {r["ticker"] for r in (*g_rows, *d_rows) if r.get("ticker")},
+    }
+    for e in x["edges"]:
+        pool = pools[e["type"]]
+        for item in e["shared"]:
+            tk = item.get("tk")
+            if tk is not None:
+                assert tk in pool, (e["type"], tk)
+
+
+def test_lineage_graph_bridges_consistent_with_sources() -> None:
+    """Bridge rows recomputed end-to-end from the three lane ticker sets."""
+    x = _load("lineage_graph.json")
+    f13 = _load("form13f.json")
+    d14 = _load("def14a_persons.json")
+    cd = _load("companies_dir.json")
+    su = _load("stock_universe.json")
+    board_tk: dict[str, str | None] = {}
+    board_name: dict[str, str] = {}
+    for b in d14.get("boards") or []:
+        if b.get("company"):
+            board_tk.setdefault(b["company"], b.get("ticker"))
+            if b.get("ticker"):
+                board_name.setdefault(str(b["ticker"]), b["company"])
+    dir_name = {
+        c["ticker"]: c["name"]
+        for c in (cd.get("companies") or []) if c.get("ticker")
+    }
+
+    pc: dict[str, set] = {}
+    for pr in d14["top_persons"]:
+        pid = f"p:{_lg_norm(pr['name'])}"
+        pc.setdefault(pid, set()).update(pr.get("companies") or [])
+    mgr_cik = {_lg_norm(m["name"]): m["cik"] for m in f13["managers"]}
+    universe = {s["ticker"] for s in su["stocks"]}
+
+    tk_managers: dict[str, set] = {}
+    for m in f13["managers"]:
+        for p in m.get("positions") or []:
+            if p.get("ticker"):
+                tk_managers.setdefault(p["ticker"], set()).add(m["cik"])
+    tk_persons: dict[str, set] = {}
+    for pid, comps in pc.items():
+        done = set()
+        for c in comps:
+            tk = board_tk.get(c)
+            if tk and tk not in done:
+                done.add(tk)
+                tk_persons.setdefault(tk, set()).add(pid)
+
+    def endpoint(nf: str) -> str:
+        cik = mgr_cik.get(nf)
+        return f"i:{cik}" if cik else f"s:{nf}"
+
+    tk_stakers: dict[str, set] = {}
+    g_rows, d_rows = _lg_stake_windows()
+    groups: dict[str, list] = {}
+    for r in g_rows:
+        groups.setdefault(_lg_norm(r["target"]), []).append(
+            (_lg_norm(r["filer"]), r.get("ticker"))
+        )
+    for r in d_rows:
+        groups.setdefault(_lg_norm(r["target"]), []).append(
+            (_lg_norm(r["filer"]), r.get("ticker"))
+        )
+    for rows in groups.values():
+        for nf, tk in rows:
+            if tk:
+                tk_stakers.setdefault(str(tk), set()).add(endpoint(nf))
+
+    lanes = {"13f": set(tk_managers), "def14a": set(tk_persons),
+             "13dg": set(tk_stakers)}
+    want = []
+    for tk in sorted(set().union(*lanes.values())):
+        hits = [ln for ln in ("13f", "def14a", "13dg") if tk in lanes[ln]]
+        if len(hits) < 2:
+            continue
+        want.append({
+            "tk": tk,
+            "name": board_name.get(tk) or dir_name.get(tk),
+            "in": hits,
+            "counts": {
+                "managers": len(tk_managers.get(tk, set())),
+                "persons": len(tk_persons.get(tk, set())),
+                "stakers": len(tk_stakers.get(tk, set())),
+            },
+            "stock_routable": tk in universe,
+        })
+    assert x["bridges"] == want, "bridges must equal the recomputation"
+
+
+def test_lineage_graph_disclosures_present() -> None:
+    """Methodology + coverage carry the honesty spine; wording stays negated."""
+    x = _load("lineage_graph.json")
+    ml = x["methodology"].lower()
+    assert "separately filed" in ml or "joint filing" in ml
+    assert "not decomposed" in ml or "independently" in ml
+    assert "coordination" in ml and "no coordination" in ml.replace(".", " ")
+    assert "no prices" in ml or "no returns" in ml
+
+    cov = x["coverage"]
+    assert set(cov) == {"13f", "def14a", "13dg"}
+    for block in cov.values():
+        assert isinstance(block.get("basis"), str) and block["basis"].strip()
+    src = _load("def14a_persons.json")
+    pct = src.get("coverage_pct")
+    assert str(pct) in cov["def14a"]["basis"], "pct mirror missing"
+
+    # Interface red line: 联盟/consortium may appear ONLY negated. Checks run
+    # over this methodology plus the bilingual dictionary block, the two
+    # surfaces where an assertive phrasing could leak into the UI copy.
+    for line in x["methodology"].splitlines():
+        low = line.lower()
+        if "consortium" in low:
+            assert any(w in low for w in ("no ", "nor", "never", "without")), line
+    dict_txt = (Path("web/src/i18n/dict.ts")).read_text(encoding="utf-8")
+    for raw in dict_txt.splitlines():
+        low = raw.lower()
+        if "consortium" in low:
+            assert any(w in low for w in ("nor", "never", "not ", "no ")), raw
+        if "联盟" in raw:
+            assert any(w in raw for w in ("不构成", "非", "并非", "绝不")), raw
+
+
+def test_lineage_graph_registered_in_health_and_catalog() -> None:
+    """lineage_graph travels with its intake facts (freight_taco mirror)."""
+    cat = _load("api_catalog.json")
+    entry = next((e for e in cat["endpoints"] if e["key"] == "lineage_graph"), None)
+    assert entry is not None, "lineage_graph missing from api_catalog"
+    assert "public domain" in entry["license"].lower()
+    assert "sec edgar" in entry["license"].lower()
+    assert entry["freshness"] == "daily"
+    assert entry["as_of"], "lineage_graph must carry an as_of"
+
+    dh = _load("data_health.json")
+    panel = next((v for v in dh["panels"] if v["key"] == "lineage_graph"), None)
+    assert panel is not None, "lineage_graph missing from data_health panels"
+    assert panel["category"] == "daily"
+    assert panel["present"] is True
+    assert isinstance(panel["rows"], int) and panel["rows"] > 0
