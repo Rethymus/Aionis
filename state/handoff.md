@@ -8,6 +8,19 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-28 (jj) 查漏补缺+视觉持续优化轮②：审计抓新数据 P0×2→修复 + Southpoint 准入（明星 43）+ 缺口补跑 + worktree 内务
+
+**编排**：长周期循环第二轮（业主定帧"查漏补缺+视觉持续优化"超长期任务）。主线先行（窗口探针 → 缺口补跑 → 视觉巡检）→ 双 agent 并行（审计 0 网络 / T 准入 efts+www 车道）→ 审计产出即派 U 修复 agent → 主线集成/重建/视觉终验。**"审计→修复→重建→复验"四步全在本轮闭环。**
+
+- **主线缺口补跑**：filing_stream 加预算 890s 成功（**08-21→08-27**）；cot/politician 幂等无新（源节奏，诚实）；export + 85 契约绿；提交在案。视觉巡检 /news（665 条·198 源）与 /institutions（42 管理人）：零 P0/P1。
+- **审计 agent（零网络静态扫查，`46edbaf`）**：新数据引爆 2×P0——(1) **13G 死链 58 处**（刷新带入 27 个宇宙外 ticker；根因：smart-money-view.tsx 的 13G 卡是 ⑳ DEV-K 未盖到的**第二条 ticker→Link 路径**，confirmation 复用组件 ×2）；(2) **`"NONE."` 解析哨兵**被渲染成链接（stakes_13g filings[20] Host-Plus）。P2×2：Reddit 统计条 count_declared(297) vs 载入 100 无就近披露；out/Aionis junction 令目录遍历递归（预览产物特性，记录在案）。**通过项**：统计条五数可复算、八 hub as_of 披露一致（08-26/27 水位上墙）、i18n 1,094 对称、诚实披露全部在位。**方法论确认**：每次数据刷新后跑一轮全站静态审计是本仓库的正确循环——新数据就是新死链/新垃圾的最大来源。
+- **T agent（Southpoint 准入，wt）**：六闸门全 PASS（G2 知名度轨：$4.40B<$5B 但 Citrone 公开评论人身份，Corvex 口径；G3 macro 按 round-1 条件规则；G4 zh=null；G5 仅入 LP 壳 0001319998，LLC 主壳 NT-only 排除；5 请求记账）。**明星 42→43**。集成遇 cherry-pick JSON 冲突（agent 基线早于 08-27 刷新）→ 按正典处置：**中止 cherry-pick、只取 MANAGERS +1 代码行、主仓全量缓存统一重生成**（`d633e54`）；顺带三处 "~40/40" 过时计数措辞改中性。
+- **U agent（P0 修复，wu，三 commit `8e25c31`/`54abc43`/`ee6ea16`）**：13G 卡接 DEV-K 同款 STOCK_PAGE_TICKERS 门（未收录→mono 纯文本，文件顶注"本文件所有 ticker→Link 必须过门"防第三犯）；导出端 `_cleanse_ticker()` 哨兵集合清洗（NONE/N-A/NULL/NIL/UNKNOWN/NAN→null、BRK.B 不误伤、11 边界用例、计数入 source_health 37/400、新增契约测试钉死）；Reddit StatBand 就近披露（zh/en 1,095 对称）。闸门：tsc 0 / eslint 0 error（33 存量不变）/ pytest 86/86。
+- **重建终验（1,502 页 = +1 新 manager 页）**：哨兵 0、CIIT/VTMX/LSTA/WW 链接 0、python 复核存量 /stock 链接全在宇宙内、manager 页 129=43×3、StatBand 明星 43、"已载 100"披露上墙、smart-money 页视觉干净。tsc 真闸门用 `node node_modules/typescript/bin/tsc --noEmit`（**`npx tsc` 会命中 npm 假 tsc 包**）。
+- **环境事故**：web/node_modules .pnpm 虚拟库损坏（@babel 系 dangling，`.bin/next` 消失）→ 清空重装 14.9s 修复。**教训：junction 共享的 node_modules 上禁跑 pnpm store/repair 类操作（会损坏本体）**；worktree 共享 node_modules 只读消费（tsc/eslint/next bin）安全。
+- **内务**：旧 worktree m/n/wr/ws 物理目录全清（rd /s /q，不跟随 reparse point；0 junction 已核）。分支处置：agent-n/feat/ptr-transactions cherry 全 `-` → 删；agent-m（news salvaged WIP）/feat/insiders-breadth（form4 v2 WIP）**保留**（已回收进主线的演化前史，非补丁等价）。
+- **边界**：display/data lane；0 ledger/frozen/config/prereg/OOS；未 push。**待业主**：H1 部署门不变。**循环续跑清单（下轮候选）**：eslint 33 warning 清理（低价值可排队）；ARK ±pp distinct-days 计数（每轮 +1 快照累积中）；Reddit/ApeWisdom 源分页死（源端限制）；smart_money 13D 族 08-21 水位（需 13D 日常增量窗口）。
+
 ## 2026-08-27 (ii) 视觉+真实数据核查轮：S 证据轮 2 全胜集成 / R 宿主病理确诊后续跑全胜集成（数据刷新到 08-27）
 
 **编排**：业主 /goal 授权"视觉+真实数据核查进展 → 设计/开发任务区分 → 多 agent 分派"。主线先核查再派工（三度实证有效）：51 面板 as_of 扫描证实 ~24 日更面板停 08-18~25（→ R 派发正当）；全套 pytest exit 0；`next build`（pnpm@10——PATH 里 pnpm 9 会对 web/pnpm-workspace.yaml 的 config-only workspace 报 "packages field missing" 误障）1,501 页；IAB 视觉复验着陆页 + /data-health 全绿、零渲染垃圾。**首页误报排除（重要防再犯）**：`out/index.html` 为 13KB `__next_error__` 壳 = **正常**——`web/src/app/page.tsx` 本就是 `redirect("/dashboard")`，Next16 静态导出下重定向页即此形态（有 /dashboard 标记与 RSC payload）；"回归"假象由本地裸 `python -m http.server` 触发（basePath /Aionis + 无扩展名 URL 不解析 + 缺 out/Aionis junction——已按仓内先例建 `out/Aionis→out` junction 后正确复验）。部署冻结期无人看本地构建首页，故此形态从未被质疑。
