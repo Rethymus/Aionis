@@ -24,6 +24,7 @@ import {
   LayoutGridIcon,
   ListIcon,
   MenuIcon,
+  NetworkIcon,
   NewspaperIcon,
   PercentIcon,
   RocketIcon,
@@ -85,6 +86,7 @@ export function TopNav() {
         { title: t("nav.quarterly"), sub: t("nav.sub.quarterly"), url: "/quarterly", icon: <CalendarDaysIcon className={icon()} /> },
         { title: t("nav.annual"), sub: t("nav.sub.annual"), url: "/annual", icon: <FileClockIcon className={icon()} /> },
         { title: t("nav.executives"), sub: t("nav.sub.executives"), url: "/executives", icon: <UserRoundIcon className={icon()} /> },
+        { title: t("nav.forcecamp"), sub: t("nav.sub.forcecamp"), url: "/force-camp", icon: <NetworkIcon className={icon()} /> },
       ],
     },
     {

@@ -25,6 +25,7 @@ import {
   CalendarDaysIcon,
   FileClockIcon,
   NewspaperIcon,
+  NetworkIcon,
   PercentIcon,
   BookOpenIcon,
 } from "lucide-react";
@@ -77,6 +78,7 @@ const PAGES: PaletteItem[] = [
   { labelKey: "nav.shelf", icon: <BookOpenIcon className="size-4" />, href: "/shelf" },
   { labelKey: "nav.group.confirm", icon: <ShieldCheckIcon className="size-4" />, href: "/confirmation" },
   { labelKey: "nav.institutions", icon: <LandmarkIcon className="size-4" />, href: "/institutions" },
+  { labelKey: "nav.forcecamp", icon: <NetworkIcon className="size-4" />, href: "/force-camp" },
   { labelKey: "nav.filers", icon: <ListIcon className="size-4" />, href: "/filers" },
   { labelKey: "nav.quarterly", icon: <CalendarDaysIcon className="size-4" />, href: "/quarterly" },
   { labelKey: "nav.annual", icon: <FileClockIcon className="size-4" />, href: "/annual" },
