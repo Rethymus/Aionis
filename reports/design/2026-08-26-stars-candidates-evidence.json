@@ -1,0 +1,252 @@
+{
+  "schema_version": 1,
+  "task": "TASK-DISP-E",
+  "title": "明星投资人 '+3' 候选考察：EDGAR 证据包（纯调查 lane）",
+  "generated_at_date": "2026-08-27",
+  "worktree": "F:/ZCodeData/Aionis-we",
+  "branch": "feat/stars-evidence",
+  "base_commit_at_investigation_start": "38c287c",
+  "design_bar_doc_available": false,
+  "design_bar_doc_note": "reports/design/*stars-curation-bar* 未落盘（DESIGN agent 并行产物检查于 2026-08-27）；按任务书 §3 字段表自建。",
+  "active_registry": {
+    "config_path": "scripts/form13f_fetch.py",
+    "dict_name": "MANAGERS",
+    "dict_contract": "CIK(int, zero-pad at use) -> (EDGAR verbatim name, zh_name str|null, category enum)",
+    "categories_enum": ["value", "growth", "activist", "quant", "macro", "china_background", "other"],
+    "count_active": 40,
+    "adding_one_manager_requires": ["cik", "edgar_verbatim_name", "zh_name(nullable)", "category"],
+    "export_chain": [
+      "scripts/form13f_fetch.py -> data/cache/form13f_aggregate.parquet (zh_name/category columns attached)",
+      "scripts/export_terminal_data.py -> web/src/data/aionis/form13f.json"
+    ],
+    "source_snapshot": {
+      "path": "web/src/data/aionis/form13f.json",
+      "as_of": "2026-06-30",
+      "category_counts": {"quant": 6, "value": 9, "other": 2, "activist": 6, "growth": 8, "macro": 5, "china_background": 4}
+    }
+  },
+  "previously_excluded_5": {
+    "source": "git commit 4405724 (feat(display): extend 13F star-manager registry 12->40 + editorial categories), commit message body",
+    "quote": "Candidates not verifiable as actively filing were honestly dropped: Scion, Greenlight (last 13F-HR 2024-02), Omega Advisors, Pabrai, Glenpoint.",
+    "names": ["Scion (Michael Burry)", "Greenlight (David Einhorn; last 13F-HR 2024-02)", "Omega Advisors", "Pabrai", "Glenpoint"]
+  },
+  "coordinator_pool_dedupe_vs_active_40": [
+    {"person": "Bill Ackman", "entity": "Pershing Square Capital Management, L.P.", "cik": "0001336528", "already_enrolled": true},
+    {"person": "Seth Klarman", "entity": "BAUPOST GROUP LLC/MA/", "cik": "0001061768", "already_enrolled": true},
+    {"person": "Chase Coleman", "entity": "TIGER GLOBAL MANAGEMENT LLC", "cik": "0001167483", "already_enrolled": true},
+    {"person": "Andreas Halvorsen (Ole Andreas Halvorsen，同一人)", "entity": "VIKING GLOBAL INVESTORS LP", "cik": "0001103804", "already_enrolled": true},
+    {"person": "Steve Mandel", "entity": "LONE PINE CAPITAL LLC", "cik": "0001061165", "already_enrolled": true},
+    {"person": "David Tepper", "entity": "Appaloosa LP", "cik": "0001656456", "already_enrolled": true, "note": "'是否已停' 答：未停，快照含 2026-Q2 HR (filed 2026-08-14)"},
+    {"person": "Larry Robbins", "entity": "GLENVIEW CAPITAL MANAGEMENT, LLC", "cik": "0001138995", "already_enrolled": true, "note": "lineage_graph 大写节点 i:0001138995 即同一实体，非独立新壳"},
+    {"person": "Ryan Israel", "note": "Pershing 同壳（Pershing Square CIK 1336528），若入册为同人同壳重复 → 不考察"}
+  ],
+  "lineage_dedupe_check": {
+    "file": "web/src/data/aionis/lineage_graph.json",
+    "result": "机构节点 = 在册 40 的 CIK 对齐（如 GLENVIEW->i:0001138995）；未发现需新增防重的独立大写壳。"
+  },
+  "request_budget": {
+    "cap": 60,
+    "used_cumulative": 58,
+    "politeness_min_gap_s": 2.25,
+    "backoff_observed_s": [8, 16],
+    "user_agent_format": "\"AionisResearch owner-reachable@example.com\"（首请求 403 后改为 SEC 要求的联系式 UA）",
+    "endpoints": ["www.sec.gov/cgi-bin/browse-edgar (atom, company search)", "data.sec.gov/submissions/CIK##########.json"],
+    "transient_failure_mode": "SSL UNEXPECTED_EOF（约四成瞬时率），全部计入请求账并按 8s/16s 退避重试",
+    "accounting_note": "每次网络往返（含失败尝试与重试）均逐条记账；本地缓存命中不产生请求。原始逐条账目见 request_ledger（本文件 request_ledger_digest + 会话侧 JSON）。"
+  },
+  "request_ledger_digest": [
+    {"phase": "probe", "requests": 1, "outcome": "403 -> UA fixed"},
+    {"phase": "probe2+dbg (corvex/pershing)", "requests": 4, "outcome": "200；发现缺口（漏 output=atom 参数返回 HTML）"},
+    {"phase": "v1 parse-failure run", "requests": 16, "outcome": "响应获取成功但解析失败，未落盘正文"},
+    {"phase": "dbg3 corvex atom", "requests": 1, "outcome": "确证 Corvex Management LP / CIK 0001535472（atom conformed-name 字段）"},
+    {"phase": "v2 run (无类型过滤 atom)", "requests": 10, "outcome": "全部为单/多命中形态；conformed-name 存在 EDGAR Perl bug (ARRAY(...)) 不能依赖，身份改由 submissions 权威核验"},
+    {"phase": "v3+final (搜索补缺+submissions 批量)", "requests": 24, "outcome": "GAMCO/JANA/Tudor/SouthpointA/Corvex/Pershing 历史 + icahn/gamco 检索落地；southpoint shell2/blue_ridge 身份/doubleline/baron/key_square 因预算硬闸止步"},
+    {"total": 58}
+  ],
+  "candidates": [
+    {
+      "id": "corvex_meister",
+      "person": "Keith Meister",
+      "origin": "本轮新增（激进阵营常任人选）",
+      "cik": "0001535472",
+      "entity_verbatim": "Corvex Management LP",
+      "state": "NY",
+      "latest_13f_hr": {"reportDate": "2026-06-30", "filed": "2026-08-14"},
+      "continuity_last_8q": "PASS（2023-06-30 起 ≥13 季连续 13F-HR，2024-12-31 有一次 13F-HR/A 修订不构成断报）",
+      "recent_filings_sample": [
+        {"form": "13F-HR", "reportDate": "2026-06-30", "filed": "2026-08-14"},
+        {"form": "13F-HR", "reportDate": "2026-03-31", "filed": "2026-05-15"},
+        {"form": "13F-HR", "reportDate": "2025-12-31", "filed": "2026-02-17"},
+        {"form": "13F-HR", "reportDate": "2025-09-30", "filed": "2025-11-14"},
+        {"form": "13F-HR", "reportDate": "2025-06-30", "filed": "2025-08-14"},
+        {"form": "13F-HR/A", "reportDate": "2024-12-31", "filed": "2025-05-15"},
+        {"form": "13F-HR", "reportDate": "2024-12-31", "filed": "2025-02-14"},
+        {"form": "13F-HR", "reportDate": "2024-09-30", "filed": "2024-11-14"}
+      ],
+      "public_fame": "知名 activist 投资人，公众认知度高（一般知识；无需抓媒体）",
+      "zh_name_suggestion": {"value": "Corvex（迈斯特）", "basis": "沿用在册既有惯例模式 '英文品牌+（中文姓氏）'（如 Point72（科恩）、TCI 基金（霍恩））；迈斯特为 Keith Meister 在中文财经媒体的惯用姓氏音译", "confidence": "medium（公司名不建议生造中文直译；若编辑部拿不准可置 null，视图容忍）"},
+      "category_suggestion": {"value": "activist", "rationale": "集中持仓推动治理变革的激进投资人（与其公开投资风格一致）"},
+      "dedupe_check": "不在现役 40；lineage 无同名壳；与前身管理人体系（索罗斯系/Icahn 系出身）的在册实体不同壳",
+      "verdict": "PASS",
+      "evidence_chain": ["atom 单命中 conformed-name=Corvex Management LP（dbg3 抓取）", "submissions/CIK0001535472.json：entity_name 同名；f13f_recent 连续季度 HR 直到 2026-06-30"]
+    },
+    {
+      "id": "gamco_gabelli",
+      "person": "Mario Gabelli",
+      "origin": "本轮新增（价值阵营常任人选）",
+      "cik": "0000807249",
+      "entity_verbatim": "GAMCO INVESTORS, INC. ET AL",
+      "state": "CT",
+      "former_names": ["GABELLI ASSET MANAGEMENT INC ET AL", "GABELLI FUNDS INC ET AL", "GABELLI FUNDS INC"],
+      "latest_13f_hr": {"reportDate": "2026-06-30", "filed": "2026-08-12"},
+      "continuity_last_8q": "PASS（2023-06-30 起 ≥13 季连续 13F-HR，仅 2023-06-30 带 HR/A 修订）",
+      "recent_filings_sample": [
+        {"form": "13F-HR", "reportDate": "2026-06-30", "filed": "2026-08-12"},
+        {"form": "13F-HR", "reportDate": "2026-03-31", "filed": "2026-05-14"},
+        {"form": "13F-HR", "reportDate": "2025-12-31", "filed": "2026-02-05"},
+        {"form": "13F-HR", "reportDate": "2025-09-30", "filed": "2025-11-12"},
+        {"form": "13F-HR", "reportDate": "2025-06-30", "filed": "2025-08-13"},
+        {"form": "13F-HR", "reportDate": "2025-03-31", "filed": "2025-05-14"},
+        {"form": "13F-HR", "reportDate": "2024-12-31", "filed": "2025-02-13"},
+        {"form": "13F-HR", "reportDate": "2024-09-30", "filed": "2024-11-14"}
+      ],
+      "public_fame": "价值投资元老（Gabelli），公众认知度高（一般知识；无需抓媒体）",
+      "zh_name_suggestion": {"value": "GAMCO（加贝利）", "basis": "加贝利为 Mario Gabelli 在中文财经媒体长期沿用的音译；公司名保留 GAMCO 原文符合在册惯例（Appaloosa（泰珀）式）", "confidence": "high"},
+      "category_suggestion": {"value": "value", "rationale": "经典基本面价值/私有市场价值路线（PRS 与自下而上选股）"},
+      "dedupe_check": "不在现役 40；former_names（Gabelli 系改名链）均为同一主体演进，不构成与任何在册实体的重复",
+      "verdict": "PASS",
+      "evidence_chain": ["icahn/gamco 多关键词检索 atom：gamco investors 命中多公司列表", "submissions/CIK0000807249.json：entity=GAMCO INVESTORS, INC. ET AL + 35 行 13F 历史无断档"]
+    },
+    {
+      "id": "jana_rosenstein",
+      "person": "Barry Rosenstein",
+      "origin": "本轮新增（激进阵营）",
+      "cik": "0001159159",
+      "entity_verbatim": "JANA PARTNERS LLC",
+      "state": "NY",
+      "last_13f_filing_of_any_kind": {"form": "13F-NT", "reportDate": "2023-09-30", "filed": "2023-11-14"},
+      "continuity_last_8q": "FAIL（2023-Q3 之后 ≥11 个季度无任何 13F 申报）",
+      "public_fame": "知名 activist（一般知识）",
+      "zh_name_suggestion": null,
+      "category_would_be": "activist",
+      "verdict": "FAIL",
+      "evidence_chain": ["submissions/CIK0001159159.json：f13f_recent 顶格行为 13F-NT(2023-09-30)，此后空窗至近窗结束"]
+    },
+    {
+      "id": "tudor_ptj",
+      "person": "Paul Tudor Jones II",
+      "origin": "协调人扩展（宏观传奇）",
+      "cik": "0001080384",
+      "entity_verbatim": "TUDOR INVESTMENT CORP",
+      "state": "NY",
+      "latest_13f_hr": null,
+      "continuity_last_8q": "FAIL（submissions recent 全窗无任何 13F* 形式申报，现存文件以 X-17A/40-6B 类为主）",
+      "public_fame": "宏观交易传奇，公众认知度极高（一般知识）",
+      "zh_name_suggestion": null,
+      "category_would_be": "macro",
+      "verdict": "FAIL",
+      "evidence_chain": ["submissions/CIK0001080384.json（1382B 小文件）：entity=TUDOR INVESTMENT CORP；f13f_recent=[]"],
+      "honesty_note": "不排除 PTJ 经其他壳申报的可能，但本频道的门槛是『可归因的可检 13F 载体』，该载体未找到，故如实记 FAIL"
+    },
+    {
+      "id": "blue_ridge_griffin",
+      "person": "John Griffin",
+      "origin": "协调人起点名单（预期清盘）",
+      "cik": null,
+      "entity_verbatim": null,
+      "latest_13f_hr": null,
+      "continuity_last_8q": "N/A（基金已于 2021 年对外宣布收缩并清盘——广泛报道的公开事实；本频道语境下属停报实体）",
+      "public_fame": "知名（老虎系二代，一般知识）",
+      "zh_name_suggestion": null,
+      "verdict": "EXCLUDED/FAIL",
+      "evidence_chain": ["browse-edgar 'blue ridge capital' atom 仅命中 CIK 0002023701，其 submissions 核验被预算硬闸（58/60）截断；Griffin 本体的历史 CIK 未在本轮实证中重新取得 → 该 2023701 身份标 UNVERIFIED，不影响清盘结论"]
+    },
+    {
+      "id": "southpoint_citrone",
+      "person": "Rob Citrone",
+      "origin": "协调人起点名单",
+      "cik_primary": "0001378377",
+      "cik_second_shell": "0001319998",
+      "entity_verbatim": "Southpoint Capital Advisors LLC",
+      "state": "NY",
+      "latest_13f_filing": {"form": "13F-NT", "reportDate": "2026-06-30", "filed": "2026-08-14"},
+      "continuity_last_8q": "特殊（实体活着且每季准时申报，但最近 ≥12 季全部为 13F-NT，无 13F-HR 持仓信息表）",
+      "public_fame": "知名宏观/Tiger cub（一般知识）",
+      "zh_name_suggestion": null,
+      "category_would_be": "macro",
+      "verdict": "BORDERLINE",
+      "implication_for_panel": "面板管线消费的是 13F-HR 持仓；纯 NT 串意味着零头寸行，入册即成空壳行。只有当第二壳（0001319998，同址同电话）被证实承载 HR、或主壳恢复 HR 时才可转 PASS；第二壳核验被预算硬闸截断",
+      "evidence_chain": ["browse-edgar 'southpoint capital' atom 双命中：0001378377 + 0001319998（同 NY 地址电话）", "submissions/CIK0001378377.json：entity=Southpoint Capital Advisors LLC；f13f_recent 全部 13F-NT 至 2026-06-30", "submissions/CIK0001319998.json：请求失败（SSL EOF×1，预算已达 58/60）→ UNVERIFIED"]
+    },
+    {
+      "id": "icahn_carl",
+      "person": "Carl Icahn",
+      "origin": "本轮新增（activist 代表）",
+      "cik": null,
+      "verified_entities": [
+        {"cik": "0000049578", "entity_verbatim": "ICAHN & CO., INC.", "note": "券商经纪商壳（FOCUSN/X-17A-5），非 13F 申报人"},
+        {"cik": "0000813762", "entity_verbatim": "ICAHN ENTERPRISES L.P.", "tickers": ["IEP"], "note": "上市合伙主体（8-K/4/10-Q），近窗样本非 13F 申报载体"}
+      ],
+      "unseen_candidate_shells": ["0000860850", "0000881188（icahn 关键词命中，未及逐一验证）"],
+      "public_fame": "顶级 activist，公众认知度极高（一般知识）",
+      "zh_name_suggestion": null,
+      "category_would_be": "activist",
+      "verdict": "UNVERIFIED",
+      "evidence_chain": ["browse-edgar 'icahn' atom 四命中", "其中两壳经 submissions 核验均非 13F 申报主载体；个人/家族 13F 申报壳未能在预算内定位 → 如实停在 UNVERIFIED，绝不猜 CIK"]
+    },
+    {
+      "id": "baron_ron",
+      "person": "Ron Baron",
+      "origin": "本轮新增（growth 阵营）",
+      "verdict": "UNVERIFIED",
+      "reason": "'baron capital' 检索两次均遇 SSL EOF/预算闸，未能完成定位",
+      "zh_name_suggestion": null,
+      "category_would_be": "growth"
+    },
+    {
+      "id": "doubleline_gundlach",
+      "person": "Jeffrey Gundlach",
+      "origin": "本轮新增（固收/宏观）",
+      "verdict": "UNVERIFIED",
+      "reason": "'doubleline' 检索三次（v2 成功一次但为无 type 过滤形态且解析器失配，v3 两次 SSL EOF）后预算闸触发；未获实体级证据",
+      "note": "固收为主的管理人即使活跃也常不经 13F 报权益持仓——预期 PASS 概率低，但未经实证不预设结论",
+      "zh_name_suggestion": null,
+      "category_would_be": "macro"
+    },
+    {
+      "id": "key_square_bessent",
+      "person": "Scott Bessent",
+      "origin": "本轮新增（宏观，预期 FAIL 方向）",
+      "verdict": "UNVERIFIED",
+      "reason": "'key square' 检索请求失败（SSL EOF）且预算已达上限",
+      "note": "公开事实：Bessent 自 2025 年起任美国财政部长，外部资管业务此前已收缩——方向上大概率 FAIL，但本轮未取得工具级证据，保持 UNVERIFIED",
+      "zh_name_suggestion": null,
+      "category_would_be": "macro"
+    },
+    {
+      "id": "pershing_q2_check",
+      "person": "(在册观察项) Bill Ackman / Pershing Square",
+      "cik": "0001336528",
+      "finding": {
+        "q2_form": "13F-NT",
+        "q2_reportDate": "2026-06-30",
+        "q2_filed": "2026-08-14",
+        "last_hr": {"reportDate": "2026-03-31", "filed": "2026-05-15"}
+      },
+      "interpretation": "本地快照 web/src/data/aionis/form13f.json 中 Pershing 停在 2026-Q1 是忠实反映 EDGAR 现状（Q2 只报了 NT，未报 HR），不是抓取 bug。若后续季度继续 NT-only，其面板行会自然老化滑退——策展集成时注意不要把这当成缺报错误而『修复』掉（那会是编造数据）。N=36 行历史无断报先例，本次为近年首次 NT。",
+      "verdict": "OBSERVATION（不改在册状态）"
+    }
+  ],
+  "summary": {
+    "pass": ["Corvex Management LP / Keith Meister (0001535472)", "GAMCO INVESTORS, INC. ET AL / Mario Gabelli (0000807249)"],
+    "fail_or_excluded": ["JANA PARTNERS LLC / Barry Rosenstein（断报≥11季）", "TUDOR INVESTMENT CORP / Paul Tudor Jones（全窗无 13F）", "Blue Ridge Capital / John Griffin（公开清盘；历史壳未在预算内复证）"],
+    "borderline": ["Southpoint Capital Advisors LLC / Rob Citrone（活跃但 ≥12 季纯 13F-NT，零持仓行；第二壳 UNVERIFIED）"],
+    "unverified_blocked_by_budget": ["Carl Icahn（主 13F 壳未定位）", "Ron Baron", "Jeffrey Gundlach / DoubleLine", "Scott Bessent / Key Square"],
+    "net_potential_delta": "+2 可候选（在 '-3 差距' 下缩至 '-1'；仍不满数，符合绝不凑数原则）"
+  },
+  "integrity_notes": [
+    "全部 CIK/申报期来自本轮真实 EDGAR 工具输出，零编造；查不到的一律标 UNVERIFIED。",
+    "DESIGN 判据文档未落盘时按任务书 §3 自建字段表并在报告中声明版本差异风险。",
+    "本文件只产证据与建议，不做策展裁决；裁决在主线集成时由 owner/Reviewer 按 DESIGN 规格执行。"
+  ]
+}
