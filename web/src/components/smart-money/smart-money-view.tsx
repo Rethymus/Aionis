@@ -21,7 +21,12 @@ import Link from "next/link";
 // is a STATIC export and /stock/[ticker] pages exist only for the frozen OOS
 // universe. A 13D/13G filer resolves to plenty of real tickers outside it
 // (BRK-B, renamed SNDK, ...) — keep the ticker as plain-text identity info,
-// link only where a static page exists.
+// link only where a static page exists. BOTH ticker→Link paths in this file
+// (13D recent rows AND the SC 13G card below) must pass through this gate:
+// the 2026-08-27 data refresh brought 27 new 13G tickers in through the then
+// ungated 13G card (58 dead links across smart-money + confirmation, which
+// reuses this view) — audit 2026-08-28 P0-1. Every future row anatomy here
+// gets the gate too, no exceptions.
 const STOCK_PAGE_TICKERS: ReadonlySet<string> = new Set(
   stockUniverse.stocks.map((s) => s.ticker),
 );
@@ -373,11 +378,17 @@ export function SmartMoneyView() {
                     )}
                     <StakesPctBadges row={r} />
                     {r.ticker ? (
-                      <Link href={`/stock/${r.ticker}`} className="ml-auto shrink-0">
-                        <Badge variant="secondary" className="font-mono text-xs">
+                      STOCK_PAGE_TICKERS.has(r.ticker) ? (
+                        <Link href={`/stock/${r.ticker}`} className="ml-auto shrink-0">
+                          <Badge variant="secondary" className="font-mono text-xs">
+                            {r.ticker}
+                          </Badge>
+                        </Link>
+                      ) : (
+                        <span className="ml-auto shrink-0 font-mono text-xs text-muted-foreground">
                           {r.ticker}
-                        </Badge>
-                      </Link>
+                        </span>
+                      )
                     ) : null}
                   </div>
                 ))}
