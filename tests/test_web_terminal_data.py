@@ -2069,6 +2069,29 @@ def test_stakes_13g_panel_contract() -> None:
         pct_contract(r, form=r["form"])
 
 
+def test_stakes_13g_no_sentinel_tickers() -> None:
+    """Audit 2026-08-28 P0-2: parse-failure sentinel tickers never ship.
+
+    A leaked literal "NONE." (failed offline ticker backfill) used to render
+    as junk text AND a dead /stock/NONE. deep link on smart-money +
+    confirmation. The export must cleanse sentinels to an honest null — the
+    gap then shows up in source_health.stakes_13g.ticker_null — never as a
+    ticker value.
+    """
+    f = _load("stakes_13g.json")
+    assert f["status"] in {"ok", "awaiting_fetch"}
+    sentinels = {"NONE", "N/A", "NA", "NULL", "NIL", "UNKNOWN", "NAN"}
+    for i, r in enumerate(f.get("filings") or []):
+        tk = r.get("ticker")
+        if tk is None:
+            continue
+        assert isinstance(tk, str), f"filings[{i}]: non-string ticker {tk!r}"
+        norm = tk.strip().upper().rstrip(". ")
+        assert norm not in sentinels, (
+            f"filings[{i}]: parse-failure sentinel ticker leaked through: {tk!r}"
+        )
+
+
 def test_stakes_13g_source_health_counts_agree_with_panel() -> None:
     """data_health.source_health must mirror the committed stakes_13g panel."""
     dh = _load("data_health.json")

@@ -30,6 +30,15 @@ import Link from "next/link";
 const STOCK_PAGE_TICKERS: ReadonlySet<string> = new Set(
   stockUniverse.stocks.map((s) => s.ticker),
 );
+
+// Sentinel defense on top of the universe gate (audit 2026-08-28 P0-2): a
+// parse-failure ticker like "NONE." must never render as a deep link. The
+// gate already excludes every sentinel (none are in the universe), but a dot
+// in a SEC-form ticker is a parse-failure signature in its own right — US
+// class shares use "-" (BRK-B), never "." — so keep this belt-and-braces
+// check in case a future sentinel variant ever enters the universe snapshot.
+const isLinkableTicker = (ticker: string) =>
+  !ticker.includes(".") && STOCK_PAGE_TICKERS.has(ticker);
 import {
   Bar,
   BarChart,
@@ -249,7 +258,7 @@ export function SmartMoneyView() {
                 )}
                 <StakesPctBadges row={r} />
                 {r.ticker ? (
-                  STOCK_PAGE_TICKERS.has(r.ticker) ? (
+                  isLinkableTicker(r.ticker) ? (
                     <Link href={`/stock/${r.ticker}`} className="ml-auto shrink-0">
                       <Badge variant="secondary" className="font-mono text-xs">
                         {r.ticker}
@@ -378,7 +387,7 @@ export function SmartMoneyView() {
                     )}
                     <StakesPctBadges row={r} />
                     {r.ticker ? (
-                      STOCK_PAGE_TICKERS.has(r.ticker) ? (
+                      isLinkableTicker(r.ticker) ? (
                         <Link href={`/stock/${r.ticker}`} className="ml-auto shrink-0">
                           <Badge variant="secondary" className="font-mono text-xs">
                             {r.ticker}
@@ -389,7 +398,14 @@ export function SmartMoneyView() {
                           {r.ticker}
                         </span>
                       )
-                    ) : null}
+                    ) : (
+                      // Honest-miss placeholder (audit P0-2): the export
+                      // cleanses parse-failure tickers to null; the row keeps
+                      // its tail slot with "—" so the gap stays visible.
+                      <span className="ml-auto shrink-0 font-mono text-xs text-muted-foreground">
+                        —
+                      </span>
+                    )}
                   </div>
                 ))}
               </div>

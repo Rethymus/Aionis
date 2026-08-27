@@ -1889,6 +1889,30 @@ def export_smart_money() -> None:
     (WEB / "smart_money.json").write_text(json.dumps(_stamp(payload), indent=2))
 
 
+# Parse-failure sentinel tickers that must never reach the display layer as a
+# value: a failed offline ticker backfill leaked through as the literal
+# "NONE." and rendered as junk text AND a dead /stock/NONE. deep link on
+# smart-money + confirmation (audit 2026-08-28 P0-2). Cleansed to an honest
+# null — the row still renders via its target name, and the miss is COUNTED
+# in data_health.source_health.stakes_13g.ticker_null (which recomputes from
+# the written JSON), so the parse failure stays visible, never papered over.
+# Comparison is case/terminator-insensitive ("NONE." / "none" both hit); real
+# tickers pass through untouched (US class shares use "-", never a sentinel
+# word, and the universe gate in the view layer excludes everything not on a
+# static /stock page anyway).
+_TICKER_SENTINELS = {"", "NONE", "N/A", "NA", "NULL", "NIL", "UNKNOWN", "NAN"}
+
+
+def _cleanse_ticker(raw: object) -> str | None:
+    """Normalize a raw ticker to a display value or an honest None."""
+    if raw is None:
+        return None
+    t = str(raw).strip()
+    if t.upper().rstrip(". ") in _TICKER_SENTINELS:
+        return None
+    return t or None
+
+
 def export_stakes13g() -> None:
     """SC 13G passive-stake filing stream — EDGAR daily index (display-only).
 
@@ -1955,16 +1979,22 @@ def export_stakes13g() -> None:
     for r in rows:
         by_form[r["form"]] = by_form.get(r["form"], 0) + 1
     filings = []
+    n_sentinel = 0
     for r in rows[:400]:
         # Normalize the daily index's http:// links to https:// (EDGAR serves
         # both; https is the terminal's link convention).
         url = str(r["url"])
         if url.startswith("http://www.sec.gov/"):
             url = "https://www.sec.gov/" + url[len("http://www.sec.gov/"):]
+        tk = _cleanse_ticker(r.get("ticker"))
+        # A cleansed NON-EMPTY raw value is a parse-failure sentinel — count
+        # it so the export log shows the failure instead of absorbing it.
+        if tk is None and str(r.get("ticker") or "").strip():
+            n_sentinel += 1
         filings.append({
             "filer": str(r["filer"]),
             "target": str(r["target"]),
-            "ticker": str(r["ticker"]) or None,  # unresolved → honest null
+            "ticker": tk,  # unresolved / sentinel → honest null (counted)
             "date": str(r["date"]),
             "form": str(r["form"]),
             "doc_url": url,
@@ -2025,7 +2055,8 @@ def export_stakes13g() -> None:
         f"[export-terminal] stakes_13g: {payload['total']} filings "
         f"{payload['by_form']}, as_of {payload['as_of']}, "
         f"ticker {n_tk}/{len(filings)} on top-{len(filings)}, "
-        f"pct_now {n_pct}/{len(filings)}",
+        f"pct_now {n_pct}/{len(filings)}"
+        + (f", sentinel-ticker-cleansed {n_sentinel}" if n_sentinel else ""),
         flush=True,
     )
 
