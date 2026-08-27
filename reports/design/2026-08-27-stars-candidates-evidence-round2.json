@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "task": "TASK-DISP-S",
+  "round": 2,
+  "title": "明星证据轮 2：UNVERIFIED 四人 + Southpoint 二壳（data.sec.gov 单源车道）",
+  "generated_at_date": "2026-08-27",
+  "worktree": "F:/ZCodeData/Aionis-wk",
+  "branch": "feat/stars-evidence-2",
+  "base_commit_at_investigation_start": "5475f6d",
+  "upstream_inputs": [
+    "tasks/active/TASK-DISP-S-stars-evidence-2.md",
+    "reports/design/2026-08-26-stars-candidates-evidence.md",
+    "reports/design/2026-08-26-stars-candidates-evidence.json"
+  ],
+  "lane_constraints": {
+    "allowed_hosts": ["data.sec.gov"],
+    "requests_budget_cap": 20,
+    "requests_used": 7,
+    "min_gap_enforced_s": 2.6,
+    "min_gap_observed_s": 2.65,
+    "gap_convention": "上一请求发起时间 -> 下一请求发起时间（脚本强制下限 2.6s+ε）",
+    "user_agent": "AionisResearch owner-reachable@example.com（沿用 scripts/build_ticker_metadata.py SEC_UA 联系式约定与轮 1 修正后格式）",
+    "forbidden_hosts_touched": false,
+    "retry_events": 0
+  },
+  "structural_finding_host_coverage": {
+    "statement": "company_tickers.json 在 data.sec.gov 上不存在（/files/ 与根路径两变体均 404）；权威副本在 www.sec.gov/files/（本车道禁访）。故本 lane 内没有名称->CIK 发现手段，定位只能依赖既有锚点探针。",
+    "attempts": [
+      {"url": "https://data.sec.gov/files/company_tickers.json", "status": 404},
+      {"url": "https://data.sec.gov/company_tickers.json", "status": 404}
+    ]
+  },
+  "window_last_8_report_quarters": ["2024-09-30", "2024-12-31", "2025-03-31", "2025-06-30", "2025-09-30", "2025-12-31", "2026-03-31", "2026-06-30"],
+  "window_closed_note": "Q2-2026 法定申报期限 2026-08-14 早于执行日，八季窗口全部封闭，无申报期未到歧义。",
+  "request_ledger": [
+    {"n": 1, "ts_utc": "2026-08-27T10:41:21.749+00:00", "host": "data.sec.gov", "path": "/files/company_tickers.json", "status": 404, "bytes": null, "gap_from_prev_s": null},
+    {"n": 2, "ts_utc": "2026-08-27T10:41:41.418+00:00", "host": "data.sec.gov", "path": "/company_tickers.json", "status": 404, "bytes": null, "gap_from_prev_s": 19.67},
+    {"n": 3, "ts_utc": "2026-08-27T10:42:17.641+00:00", "host": "data.sec.gov", "path": "/submissions/CIK0001319998.json", "status": 200, "bytes": 43026, "gap_from_prev_s": 36.22},
+    {"n": 4, "ts_utc": "2026-08-27T10:42:20.291+00:00", "host": "data.sec.gov", "path": "/submissions/CIK0000819252.json", "status": 404, "bytes": null, "gap_from_prev_s": 2.65},
+    {"n": 5, "ts_utc": "2026-08-27T10:42:57.182+00:00", "host": "data.sec.gov", "path": "/submissions/CIK0000860850.json", "status": 200, "bytes": 1837, "gap_from_prev_s": 36.89},
+    {"n": 6, "ts_utc": "2026-08-27T10:42:59.832+00:00", "host": "data.sec.gov", "path": "/submissions/CIK0000881188.json", "status": 200, "bytes": 3078, "gap_from_prev_s": 2.65},
+    {"n": 7, "ts_utc": "2026-08-27T10:43:56.578+00:00", "host": "data.sec.gov", "path": "/submissions/CIK0000916324.json", "status": 404, "bytes": null, "gap_from_prev_s": 56.75}
+  ],
+  "subjects": [
+    {
+      "id": "icahn_carl",
+      "person": "Carl Icahn",
+      "r1_verdict": "UNVERIFIED",
+      "cik_located_this_round": null,
+      "probes": [
+        {"origin": "轮1遗留命中A", "cik": "0000860850", "entity_verbatim": "ICAHN HOLDING CORP/NY", "state": "DE", "outcome": "EXCLUDED(非13F载体)", "evidence": "全史仅5行=SC 13D x2 + SC 13D/A x3；任何年份 0 次 13F*", "accession_span": ["1994-10-14 filed 起"], "row_count_recent": 5},
+        {"origin": "轮1遗留命中B", "cik": "0000881188", "entity_verbatim": "ICAHN & CO INC", "state": null, "outcome": "EXCLUDED(末次13F活动2003)", "evidence": "末次 13F* = 13F-NT reportDate 2003-09-30 filed 2003-11-14（acc 0000928475-03-000163）；历史仅 2000 两季 13F-HR；近窗 0", "row_count_recent": 11},
+        {"origin": "记忆假设①(非检索产物)", "cik": "0000819252", "entity_verbatim": null, "outcome": "HYPOTHESIS_FALSIFIED(submissions 404，无EDGAR档案)", "note": "仅用于消除错误路径并完整记账，不作任何 CIK 断言来源"},
+        {"origin": "记忆假设②(非检索产物)", "cik": "0000916324", "entity_verbatim": null, "outcome": "HYPOTHESIS_FALSIFIED(submissions 404，无EDGAR档案)"}
+      ],
+      "cumulative_status_with_round1": "族内已核五实名实体 + 双壳命中全部验毕（另含轮1的 0000049578 经纪商壳、0000813762 IEP），均非活跃 13F-HR 申报壳",
+      "hr_sequence_recent8": null,
+      "verdict": "STILL-UNVERIFIED",
+      "verdict_reason": "在 data.sec.gov 单源车道内无法穷举族内其余候选壳（无名称发现端点）；『存在某个活跃载体』既未被证实也未被证伪；按纪律绝不猜 CIK 入档",
+      "changes_round1": false,
+      "changes_round1_note": "verdict 类别不变；证据边界显著扩大（新增两实体排除 + 两假设号证伪）"
+    },
+    {
+      "id": "baron_ron",
+      "person": "Ron Baron / Baron Funds",
+      "r1_verdict": "UNVERIFIED",
+      "cik_located_this_round": null,
+      "blocking_reason": "结构性：本 lane 唯一名称->CIK 手段（company_tickers.json）在允许主机上不存在（见 structural_finding），browse-edgar 名称检索端点在被禁主机。无可辩护起点 CIK，按『绝不猜 CIK』纪律不发起盲探。",
+      "context_hypothesis_level_only": "Baron 系以注册基金复合体为主，权益持仓披露走 §16/登记基金报告体系的可能性高——即便完成取证，形态也未必是 13F-HR 连续串；PASS 先验偏低但未经实证不预设结论。",
+      "hr_sequence_recent8": null,
+      "verdict": "STILL-UNVERIFIED",
+      "changes_round1": false,
+      "changes_round1_note": "阻塞原因从『预算耗尽』改为『车道限制』"
+    },
+    {
+      "id": "doubleline_gundlach",
+      "person": "Jeffrey Gundlach / DoubleLine",
+      "r1_verdict": "UNVERIFIED",
+      "cik_located_this_round": null,
+      "blocking_reason": "同 Baron：lane 内无名称发现手段，无可辩护起点 CIK，不猜号。",
+      "context_hypothesis_level_only": "固收为主的管理人通常不经 13F 报权益持仓（承轮 1 备注），PASS 先验概率低。",
+      "hr_sequence_recent8": null,
+      "verdict": "STILL-UNVERIFIED",
+      "changes_round1": false
+    },
+    {
+      "id": "key_square_bessent",
+      "person": "Scott Bessent / Key Square Group",
+      "r1_verdict": "UNVERIFIED",
+      "cik_located_this_round": null,
+      "blocking_reason": "同 Baron：lane 内无名称发现手段，无可辩护起点 CIK，不猜号。",
+      "context_hypothesis_level_only": "Bessent 自 2025 年起任美国财政部长、外部资管业务此前已收缩/清盘处置——方向上大概率 FAIL，但本轮无工具级证据，保持 UNVERIFIED；不接受公开报道替代申报数据作判定输入。",
+      "hr_sequence_recent8": null,
+      "verdict": "STILL-UNVERIFIED",
+      "changes_round1": false
+    },
+    {
+      "id": "southpoint_second_shell_1319998",
+      "person": "(Southpoint/Citrone 体系) 二壳",
+      "cik": "0001319998",
+      "entity_verbatim": "Southpoint Capital Advisors LP",
+      "state": "DE",
+      "relation_to_primary_shell": "主壳 0001378377 = Southpoint Capital Advisors LLC（同名分立法人，LP 变体；轮 1 已证双壳同址同电话）",
+      "recent_array_coverage": "回溯至 2005-03-08 filed，窗口无截断风险 (row_count=249)",
+      "hr_sequence_recent8": [
+        {"reportDate": "2024-09-30", "form": "13F-HR", "filed": "2024-11-14", "acc": "0001012975-24-000491"},
+        {"reportDate": "2024-12-31", "form": "13F-HR", "filed": "2025-02-14", "acc": "0001012975-25-000092"},
+        {"reportDate": "2025-03-31", "form": "13F-HR", "filed": "2025-05-15", "acc": "0001012975-25-000254"},
+        {"reportDate": "2025-06-30", "form": "13F-HR", "filed": "2025-08-14", "acc": "0001012975-25-000450"},
+        {"reportDate": "2025-09-30", "form": "13F-HR", "filed": "2025-11-14", "acc": "0001012975-25-000765"},
+        {"reportDate": "2025-12-31", "form": "13F-HR", "filed": "2026-02-17", "acc": "0001012975-26-000162"},
+        {"reportDate": "2026-03-31", "form": "13F-HR", "filed": "2026-05-15", "acc": "0001012975-26-000456"},
+        {"reportDate": "2026-06-30", "form": "13F-HR", "filed": "2026-08-14", "acc": "0001012975-26-000789"}
+      ],
+      "continuity_score": "8/8 全部 13F-HR",
+      "long_run_context": "自 2005-12-31 报告季起申报；within-window 累计 13F-HR=83 + 13F-HR/A=3（修订仅 2006/2018/2021 各一次，不影响连续性）；另有大量 SC 13G/G-A 共同申报行",
+      "evidence_string": "data.sec.gov/submissions/CIK0001319998.json name='Southpoint Capital Advisors LP'; reportDate 2024-09-30..2026-06-30 各季度恰有 13F-HR（filed 2024-11-14/2025-02-14/2025-05-15/2025-08-14/2025-11-14/2026-02-17/2026-05-15/2026-08-14）; 窗口累计 HR=83",
+      "verdict": "PASS(壳级)",
+      "r1_verdict": "BORDERLINE",
+      "changes_round1": true,
+      "changes_round1_note": "轮 1 BORDERLINE 的两条前提（主壳 LLC 近 ≥12 季纯 NT；第二壳空窗疑云被预算截断）均被推翻：Citrone 体系的持仓信息一直由 LP 壳连续承载（20 年不断），NT-only 现象只属于 LLC 壳。verdict 由 BORDERLINE 升格为壳级 PASS。"
+    }
+  ],
+  "new_pass_candidates_evidence_only_no_admission": {
+    "candidate": "Southpoint Capital Advisors LP (Rob Citrone), CIK 0001319998",
+    "shell_level_criteria_met": "近 8 季 13F-HR 8/8 连续，最新 2026-06-30 / filed 2026-08-14",
+    "admission_out_of_scope": true,
+    "integration_layer_decisions_reserved_for_spec_ruling": [
+      "双壳归属选择：注册字典指向 LP 壳（HR 载体）还是把两个 CIK 关联为同一管理人条目——LLC 只发 NT，面板管线只消费 HR，混用会产生空行或重复行",
+      "与在册 40 的去重语义（Citrone 目前不在册，无冲突；防未来双录）",
+      "zh_name/category 建议：依轮 1 先例不对 BORDERLINE/升级项出中文名建议，维持『届时另行评估』"
+    ],
+    "delta_reminder": "若准入采纳 = net delta 再 +1（叠加轮 1 的 +2 候选）；Pershing Q2 NT-only 观察项仍构成潜在 -1 自然减员位（承轮 1 §e，状态未复核）"
+  },
+  "summary": {
+    "pass_at_shell_level": ["Southpoint Capital Advisors LP / CIK 0001319998（升级候选待规格 §2-4 裁决，不做准入）"],
+    "fail": [],
+    "still_unverified": ["Carl Icahn（证据边界扩大）", "Ron Baron（车道限制）", "Jeffrey Gundlach/DoubleLine（车道限制）", "Scott Bessent/Key Square（车道限制）"],
+    "changed_vs_round1": ["Southpoint：BORDERLINE -> 壳级 PASS（第二壳实为真实 HR 载体）"]
+  },
+  "integrity_notes": [
+    "全部 CIK/申报期/entity name 来自本轮真实 data.sec.gov submissions 输出，零编造；未定位的一律 STILL-UNVERIFIED。",
+    "两个记忆假设号（0000819252/0000916324）的 404 结果如实入账，仅为消除错误路径，不构成任何身份断言。",
+    "404 是端点存在性事实而非网络故障；间隔合规按『发起-发起』口径记录（最小 2.65s >= 2.5s 红线）。",
+    "纯调查 lane 声明：零 ledger/frozen/config/prereg/OOS 接触；零生产代码/导出/前端改动；fetch 脚本留在系统临时目录不入仓库；commit 仅含本文件与配对 md。"
+  ]
+}
