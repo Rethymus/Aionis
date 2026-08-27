@@ -1,0 +1,58 @@
+[
+  {
+    "id": "AUD-T1",
+    "severity": "P1",
+    "area": "internal-links / routing",
+    "evidence_path": "web/out/stock/AAPL.html (representative; all 1421 stock/*.html pages)",
+    "snippet": "<a class=\"...\" href=\"/Aionis/insiders\">内部人交易</a><a class=\"...\" href=\"/Aionis/manager\">明星基金经理</a> — target out/manager.html does not exist",
+    "suggestion": "display-routes lane: add missing index route web/src/app/(dashboard)/manager/page.tsx (only [cik]/page.tsx exists today), or repoint the chip in web/src/components/stock/stock-view.tsx:147 to an existing route (/Aionis/filers). One fix removes all 1,421 dead instances."
+  },
+  {
+    "id": "AUD-T2",
+    "severity": "P1",
+    "area": "render-garbage / views",
+    "evidence_path": "web/out/stakes.html",
+    "snippet": "SC 13D 主动举牌与 SC 13G 被动大额持股披露 · 15,982 13G · [object Object]",
+    "suggestion": "display-integration lane: stakes hero subtitle interpolates an object into the string; format the intended value explicitly. Only visible garbage hit across all 1,501 pages."
+  },
+  {
+    "id": "AUD-T3",
+    "severity": "P2",
+    "area": "internal-links / deep-links",
+    "evidence_path": "web/out/{confirmation,smart-money,congress,events,executives,reddit}.html",
+    "snippet": "53 distinct dead hrefs /Aionis/stock/<T> x115 instances: confirmation x48, smart-money x48, congress x16 (BRK.B BWXT DEO ESAB FMAO FWONK GOOGN LPLA LTH OGN PINS SPCX VSNT ...), events x1 BRK-B, executives x1 BRK-B, reddit x1 SNDK. Tickers exist in panel rows but not in stock_universe.json export (n_stocks=1421).",
+    "suggestion": "display-integration lane: gate cross-links by stock_universe membership at render time or degrade to plain text; alternatively emit honest placeholder pages for high-traffic external tickers."
+  },
+  {
+    "id": "AUD-T4",
+    "severity": "P3",
+    "area": "freshness-disclosure",
+    "evidence_path": "web/out/insiders.html",
+    "snippet": "No page-level date anchor anywhere (0 ISO dates in file); only month-range '2013-03..2026-08' and row-level MM/DD stamps. data_health has form4 as_of=2026-08-20 not displayed.",
+    "suggestion": "display-views lane: add ProvenanceAnchor-style day-level as_of badge to match sibling daily-panel pages."
+  },
+  {
+    "id": "AUD-T5",
+    "severity": "P3",
+    "area": "freshness-disclosure",
+    "evidence_path": "web/out/stakes.html",
+    "snippet": "Only EFTS freeze note (2024-12-17) and row-level MM/DD; no window/as_of for the 15,982-row 13G stream. data_health stakes_13g as_of=2026-08-21.",
+    "suggestion": "display-views lane: same as AUD-T4; can be fixed together with AUD-T2 on the same page."
+  },
+  {
+    "id": "AUD-T6",
+    "severity": "P3",
+    "area": "freshness-disclosure / dual-panel clarity",
+    "evidence_path": "web/out/congress.html",
+    "snippet": "TX card shows '2,812 · 94 · 2026' (year granularity); politician_trades_tx as_of=2026-08-20 not shown while the page guard band carries v1's 2026-08-18.",
+    "suggestion": "display-views lane: add the tx card's own as_of micro-label so the two panel versions are not conflated."
+  },
+  {
+    "id": "AUD-T7",
+    "severity": "P3",
+    "area": "source-comment drift (outside build artifacts)",
+    "evidence_path": "web/src/components/overview/overview.tsx:604",
+    "snippet": "/** 明星投资人 — curated 13F managers (40 in the committed panel; the count in ...) */ vs current form13f-stars.json n_managers=42 (+2 Corvex/GAMCO admitted)",
+    "suggestion": "i18n-cleanup lane: refresh stale comment; runtime value is correct (StatBand uses digest n_managers=42)."
+  }
+]
