@@ -4061,8 +4061,15 @@ def export_def14a_persons() -> None:
     guessed name (宁可 null 不猜测). Coverage is reported as-counted over the
     processed prefix; the top-persons "board-seat intersection" keys on
     normalized full names (same-name merges may join namesakes — disclosed,
-    display-only)."""
-    from aionis.ingest.def14a_persons import ROLE_ORDER, _norm_name
+    display-only). Cache rows parsed by the PRE-fix parser (the parse cache
+    predates the structural-age-tail fix) are cleansed at assembly via
+    ``cleanse_cached_person_rows`` — provably structural bare "Age" tails are
+    stripped / re-merged before any row enters the panel."""
+    from aionis.ingest.def14a_persons import (
+        ROLE_ORDER,
+        _norm_name,
+        cleanse_cached_person_rows,
+    )
 
     fp = Path("data/cache/def14a_persons_parsed.json")
     if not fp.exists():
@@ -4084,6 +4091,15 @@ def export_def14a_persons() -> None:
 
     n_processed = len(results)
     n_with = sum(1 for r in results.values() if r.get("parsed"))
+    # TASK-DISP-X: stale PRE-fix cache rows (bare "Age" tails) are cleansed
+    # before assembly; the panel-wide name keys give every filing — including
+    # filings whose roster rows are ALL dirty — the same clean-twin witness.
+    panel_keys = {
+        _norm_name(str(p.get("name") or ""))
+        for r in results.values()
+        if r.get("parsed")
+        for p in (r.get("persons") or [])
+    }
     boards: list[dict] = []
     # name-key -> {roles union, seats: [(company, roles-at-that-company)]}
     persons: dict[str, dict] = {}
@@ -4091,6 +4107,7 @@ def export_def14a_persons() -> None:
         ps = rec.get("persons") or []
         if not (rec.get("parsed") and ps):
             continue
+        ps = cleanse_cached_person_rows(ps, known_name_keys=panel_keys)
         n_directors = sum(1 for p in ps if p["roles"] and set(p["roles"]) & {"director", "chairman"})
         n_officers = sum(1 for p in ps if p["roles"] and set(p["roles"]) - {"director", "chairman"})
         boards.append({

@@ -528,6 +528,100 @@ def fetch_def14a_doc(
     return text, doc
 
 
+# --- consumption-layer cleanse for stale PRE-fix cache rows (TASK-DISP-X) ----
+
+# A trailing INDEPENDENT "Age" token (case variants per _AGE_TAIL_WORD) with no
+# digit run — the shape a PRE-fix parse cached when the greedy _NAME_CORE
+# absorbed the roster's age-column header and the anchor's digits landed in the
+# row context instead of the captured name.
+_CACHED_BARE_AGE_TAIL_RE = re.compile(rf"\s+({_AGE_TAIL_WORD})$")
+
+
+def strip_cached_bare_age_tail(
+    name: str,
+    *,
+    witnessed_age: int | str | None = None,
+    known_name_keys: frozenset[str] | set[str] | None = None,
+) -> str | None:
+    """Name with a provably structural bare ``Age`` tail stripped, else None.
+
+    Consumption-layer counterpart of :func:`_strip_structural_age_tail` for
+    rows already cached by the PRE-fix parser: ``data/cache/
+    def14a_persons_parsed.json`` ok-rows are idempotent artifacts that
+    predate round-19, so a window slide re-admits dirty identities like
+    ``"John B. Blystone Age"`` into the exported panel even though the
+    current parse rule can no longer produce them. The tail is stripped ONLY
+    on proof, never on shape suspicion (宁可保留不猜测, same conservative
+    semantics as the parse layer):
+
+      * ``witnessed_age`` is not None — the row itself carries the anchor's
+        digit run (the spec arm; rows that persist an ``age`` field);
+      * OR ``known_name_keys`` witnesses the stripped identity as an existing
+        clean twin (the split-identity signature the glue produces: one real
+        person shipped as a clean and an "... Age"-suffixed row — the twin's
+        presence proves the tail is the absorbed header, and re-joining
+        namesakes operates strictly inside the panel's already-disclosed
+        same-normalized-name identity contract).
+
+    The stripped remnant must still be a plausible personal name (>= 2
+    tokens, all tokens clear the stopword list) — cleansing never mints a
+    sub-name. Returns None (= keep the row as captured) when the tail is
+    absent or unproven. Idempotent: a cleansed name matches neither arm's
+    tail and re-enters unchanged."""
+    cleaned = str(name).strip()
+    m = _CACHED_BARE_AGE_TAIL_RE.search(cleaned)
+    if not m:
+        return None
+    stripped = cleaned[: m.start()].strip()
+    twin_witnessed = bool(known_name_keys) and _norm_name(stripped) in known_name_keys
+    if witnessed_age is None and not twin_witnessed:
+        return None
+    if len(stripped.split()) < 2 or not _name_ok(stripped):
+        return None
+    return stripped
+
+
+def cleanse_cached_person_rows(
+    persons: list[dict],
+    *,
+    known_name_keys: frozenset[str] | set[str] | None = None,
+) -> list[dict]:
+    """Assemble-cache-safe person rows for ONE filing (pure, idempotent).
+
+    Applies :func:`strip_cached_bare_age_tail` to every row (a non-null
+    ``age`` field on the row counts as the witnessed digit run), then
+    re-enforces the parser's own per-filing invariant that stale PRE-fix
+    rows violate — ONE row per normalized identity, roles unioned
+    (:func:`_merge_roles`). The re-merge is what keeps assembly honest: the
+    export appends one board seat per surviving row, so an un-deduped
+    clean+strip twin pair would double-count the same company seat.
+    ``known_name_keys`` (normalized names from the whole panel) lets a
+    filing whose rows are ALL dirty still witness its twins cross-filing.
+    Input rows are never mutated."""
+    keys: frozenset[str] = frozenset(known_name_keys or ()) | {
+        _norm_name(str(p.get("name") or "")) for p in persons
+    }
+    merged: dict[str, dict] = {}
+    for p in persons:
+        row = dict(p)
+        stripped = strip_cached_bare_age_tail(
+            str(row.get("name") or ""),
+            witnessed_age=row.get("age"),
+            known_name_keys=keys,
+        )
+        if stripped is not None:
+            row["name"] = stripped
+        key = _norm_name(str(row.get("name") or ""))
+        if key in merged:
+            merged[key]["roles"] = _merge_roles(
+                merged[key].get("roles") or [], list(row.get("roles") or []),
+            )
+        else:
+            row["roles"] = list(row.get("roles") or [])
+            merged[key] = row
+    return list(merged.values())
+
+
 def fetch_def14a_persons(
     filings: list[dict], *, limit: int = 150, budget_seconds: float = 2700.0,
     cache_dir: Path | None = None,

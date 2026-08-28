@@ -16,9 +16,23 @@ from __future__ import annotations
 
 import json
 import re
+import sys
 from pathlib import Path
 
-from aionis.ingest.def14a_persons import parse_def14a_persons
+from aionis.ingest.def14a_persons import (
+    cleanse_cached_person_rows,
+    parse_def14a_persons,
+    strip_cached_bare_age_tail,
+)
+
+# export_terminal_data.py uses a sibling import (``import export_quarto_data``),
+# so it must be imported with scripts/ on sys.path (the
+# tests/test_export_terminal_data.py pattern).
+_SCRIPTS = Path(__file__).resolve().parent.parent / "scripts"
+if str(_SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(_SCRIPTS))
+
+import export_terminal_data as etd  # noqa: E402
 
 DATA = Path("web/src/data/aionis")
 _SECTION = "<h2>Directors and Executive Officers</h2>"
@@ -112,6 +126,149 @@ def test_clean_rows_are_byte_untouched_by_denoise() -> None:
         "Jane R. Doe": ["secretary"],
         "Peter Q. Principal": ["treasurer"],
     }
+
+
+# --- consumption layer: stale PRE-fix cache rows (TASK-DISP-X) ---------------
+#
+# The parse cache (data/cache/def14a_persons_parsed.json) predates the
+# structural-age-tail fix, so its ok-rows still carry bare-Age-tailed names
+# that the current parse rule can no longer produce; a window slide re-admits
+# them into the exported panel. These tests pin the CONSUMPTION-layer cleanse:
+# strip only on proof (a witnessed `age` field on the row, or the clean twin
+# of the split identity witnessed in the panel), keep otherwise, never mint a
+# sub-name, and re-merge twin rows so assembly does not double-count seats.
+
+
+def test_cached_bare_age_with_witnessed_age_field_stripped() -> None:
+    """A cached row carrying the anchor's digit run (non-null ``age`` field)
+    has its bare ``Age`` tail deterministically stripped; roles survive."""
+    row = {"name": "John B. Blystone Age", "roles": ["director"], "age": 77}
+    assert cleanse_cached_person_rows([row]) == [
+        {"name": "John B. Blystone", "roles": ["director"], "age": 77},
+    ]
+    # Case variants of the tail token strip identically.
+    assert strip_cached_bare_age_tail("Mark C. Davis AGE", witnessed_age=64) == (
+        "Mark C. Davis"
+    )
+
+
+def test_cached_bare_age_without_witness_is_kept() -> None:
+    """No ``age`` field and no clean twin in the panel keys -> the row ships
+    as captured (the tail could be a surname; 宁可保留不猜测) — the
+    consumption mirror of test_bare_age_without_digits_is_not_stripped."""
+    row = {"name": "Bob J. Smith Age", "roles": ["director"]}
+    assert cleanse_cached_person_rows([row]) == [row]
+    assert strip_cached_bare_age_tail("Bob J. Smith Age") is None
+
+
+def test_cached_twin_witness_merges_split_identity() -> None:
+    """The clean twin in the filing witnesses the tail as the absorbed header:
+    the rows re-merge into ONE identity carrying the roles union (never two
+    rows / two seats for one real person at one company)."""
+    rows = [
+        {"name": "Charles M. Chiappone", "roles": ["director"]},
+        {"name": "Charles M. Chiappone Age", "roles": ["director", "ceo"]},
+    ]
+    assert cleanse_cached_person_rows(rows) == [
+        {"name": "Charles M. Chiappone", "roles": ["ceo", "director"]},
+    ]
+
+
+def test_cached_normal_names_untouched_and_no_subname_minted() -> None:
+    """Clean names pass through byte-identical, and cleansing never strips
+    down to a one-token remnant ('One Age' is kept, not reduced to 'One')."""
+    rows = [
+        {"name": "Mary J. Roe", "roles": ["cfo"]},
+        {"name": "One Age", "roles": ["director"]},
+    ]
+    assert cleanse_cached_person_rows(rows) == rows
+
+
+def test_cached_cleanse_is_idempotent() -> None:
+    """cleanse(cleanse(rows)) == cleanse(rows): a cleansed panel re-enters
+    the cleanse unchanged."""
+    dirty = [
+        {"name": "John B. Blystone Age", "roles": ["director"]},
+        {"name": "John B. Blystone", "roles": ["director"]},
+        {"name": "Mark C. Davis Age", "roles": ["director"]},
+        {"name": "Mark C. Davis", "roles": ["director"]},
+    ]
+    once = cleanse_cached_person_rows(dirty)
+    assert [r["name"] for r in once] == ["John B. Blystone", "Mark C. Davis"]
+    assert cleanse_cached_person_rows(once) == once
+
+
+def test_assembly_cleanse_stale_cache_trio(tmp_path, monkeypatch) -> None:
+    """Assembly-level: stale PRE-fix cache rows carrying the Chiappone /
+    Blystone / Davis dirty forms are cleansed when the cache assembles into
+    the panel — the exported payload ships no ' Age'-tailed name, each trio
+    member merges into its clean twin's two-board entry, and the clean twin +
+    stripped-twin pair counts ONE seat per company."""
+    web = tmp_path / "web" / "src" / "data" / "aionis"
+    web.mkdir(parents=True)
+    monkeypatch.setattr(etd, "WEB", web)
+    cache_dir = tmp_path / "data" / "cache"
+    cache_dir.mkdir(parents=True)
+    filings = {
+        "0001193125-26-352256": {
+            "company": "WORTHINGTON ENTERPRISES, INC.",
+            "ticker": "WOR",
+            "issuer_cik": "1093815",
+            "filed_date": "2026-07-28",
+            "parsed": True,
+            "method": "section_age_rows",
+            "persons": [
+                {"name": "John H. McConnell II", "roles": ["chairman"]},
+                {"name": "Charles M. Chiappone", "roles": ["director"]},
+                {"name": "Charles M. Chiappone Age", "roles": ["director"]},
+                {"name": "John B. Blystone", "roles": ["director"]},
+                {"name": "Mark C. Davis", "roles": ["director"]},
+            ],
+        },
+        "0001193125-26-348765": {
+            "company": "Worthington Steel, Inc.",
+            "ticker": "WS",
+            "issuer_cik": "1967512",
+            "filed_date": "2026-08-04",
+            "parsed": True,
+            "method": "section_age_rows",
+            "persons": [
+                {"name": "Charles M. Chiappone Age", "roles": ["director"]},
+                {"name": "John B. Blystone Age", "roles": ["director"]},
+                {"name": "Mark C. Davis Age", "roles": ["director"]},
+            ],
+        },
+    }
+    (cache_dir / "def14a_persons_parsed.json").write_text(json.dumps({
+        "fetched_at": "2026-08-23T15:36:40+00:00",
+        "n_target": 2,
+        "n_processed": 2,
+        "n_with_persons": 2,
+        "budget_seconds": 2700,
+        "budget_hit": False,
+        "n_requests": 0,
+        "results": filings,
+    }), encoding="utf-8")
+    monkeypatch.chdir(tmp_path)
+    etd.export_def14a_persons()
+    payload = json.loads((web / "def14a_persons.json").read_text())
+    names = [e["name"] for e in payload["top_persons"]]
+    assert all(not re.search(r"\s[Aa][Gg][Ee]$", n) for n in names)
+    for dirty in _DIRTY_TRIO:
+        assert dirty not in names, f"dirty identity shipped: {dirty}"
+    by_name = {e["name"]: e for e in payload["top_persons"]}
+    assert "John H. McConnell II" in by_name  # clean control untouched
+    for clean in _CLEAN_TRIO:
+        e = by_name[clean]
+        assert e["n_companies"] == 2, clean
+        assert sorted(e["companies"]) == [
+            "WORTHINGTON ENTERPRISES, INC.",
+            "Worthington Steel, Inc.",
+        ]
+        assert set(e["roles"]) & {"director"}, clean
+    by_ticker = {b["ticker"]: b for b in payload["boards"]}
+    assert by_ticker["WOR"]["n_persons"] == 4  # 5 cached rows, twin pair merged
+    assert by_ticker["WS"]["n_persons"] == 3
 
 
 # --- artifact layer: committed export + derived lineage ----------------------
