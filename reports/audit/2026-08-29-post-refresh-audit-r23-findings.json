@@ -1,0 +1,50 @@
+{
+  "audit": "2026-08-29-post-refresh-audit-r23",
+  "subject": "web/out build after round-23 data refresh (1,502 html pages; HEAD 43ffa25 on main, refresh commit 9e8d21f)",
+  "method": "junction-guarded full-site static scan (scripts in data/cache/audit_r23/, uncommitted); visible-text extraction after script/style/comment/tag stripping; all <a href> resolved against out/ full-file universe (15,116 files); panel JSON recomputation vs page disclosures; i18n key-set diff",
+  "summary": {
+    "audit_items": "8/8 PASS",
+    "findings": { "P0": 0, "P1": 0, "P2": 0, "P3": 2 },
+    "r22_regression_recheck": {
+      "stock_universe_gate": "PASS (0 dead / 41,483 internal links; 503 unique /stock/ tickers all resolve)",
+      "sentinel_ticker_cleansing": "PASS (0 in links/clickable text; NONE. residue 0; stakes_13g 37/400 null tickers counted in data_health.source_health.ticker_null=37)",
+      "reddit_statband_disclosure": "PASS (dashboard 'Reddit 标的 322' + adjacent '已载 100' = count_declared 322 / n_rows 100)"
+    },
+    "def14a_age_dirty_tail": "0 hits site-wide (r23 cleanse held); lineage_graph 135 nodes / 840 edges as declared, as_of 2026-08-27"
+  },
+  "findings": [
+    {
+      "id": "R23-P3-1",
+      "severity": "P3",
+      "area": "freshness-disclosure / institutions hub",
+      "evidence_path": "web/out/institutions.html",
+      "snippet": "@char 35125 visible: 覆盖管理人 43 · 申报总市值 $2.72T · 2026-06-30 · SEC 13F-HR · EDGAR · filed-date PIT · 季度 · 公共域; page contains no '2026-08-21' anywhere, while filers13f.json as_of=2026-08-21 (window.end). r22 report had recorded 'institutions 08-21 = filers13f OK'. Filed-envelope as_of remains disclosed on data-health.html and filers.html.",
+      "suggestion": "Add a filed-envelope as_of chip (e.g. 截至 2026-08-21（filed）) to the institutions hub KPI row to align with the data-health layer; quarter water-level disclosure itself is honest and labeled 季度 — no overclaim."
+    },
+    {
+      "id": "R23-P3-2",
+      "severity": "P3",
+      "area": "ipo walk-request ledger (panel state, not a build defect)",
+      "evidence_path": "web/out/api/v1/panels/ipo.json",
+      "snippet": "offer_price_meta.requests = {task_budget:170, cumulative_walk:171, walk_cap:156, last_walk:0}; round-process notes quoted last_walk=14. Contract last_walk<=walk_cap holds (0<=156); confidence.exact(63)==offer_price_parsed(63) invariant holds; ipo.html discloses 63/227 · ≤80 bounded · 27.8% faithfully.",
+      "suggestion": "Data lane to confirm the final rerun was a full cache-hit walk (requests_this_walk=0 is legal per scripts/form_ipo_price_parse.py contract); if confirmed, no change needed."
+    }
+  ],
+  "key_numbers": {
+    "pages_html": 1502,
+    "pages_manager": 43,
+    "pages_stock": 1421,
+    "links_total": 46856,
+    "links_internal": 41483,
+    "dead_links": 0,
+    "stock_tickers_linked_unique": 503,
+    "sentinel_link_text_hits": 0,
+    "visible_null_semantic_hits": 2881,
+    "render_garbage_visible": 0,
+    "i18n_zh": 1095,
+    "i18n_en": 1095,
+    "statband": { "companies": 10391, "filers": 9385, "star_managers": 43, "politician_trades": 2812, "reddit_tickers": 322, "reddit_loaded": 100 },
+    "ipo": { "offer_price_parsed": 63, "priced_filings": 227, "coverage_pct": 27.8, "confidence_exact": 63 },
+    "data_health": { "n_daily": 25, "n_cadence": 9, "n_frozen": 15, "n_panels": 49 }
+  }
+}
