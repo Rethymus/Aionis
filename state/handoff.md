@@ -8,6 +8,17 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-28 (rr) 轮㉜：溯源研究档案管线——来源研究→报告生成→建模分析全流程贯通（[S#] 引用闭包硬门；三 agent 并行+集成对账，全套绿）
+
+**编排**：业主新命题"实现覆盖基于来源的金融研究、报告生成到金融建模与分析的完整流程,全程可追溯可溯源"→ 主线设计三阶段架构写入任务书 → 三 dev agent 并行（wh1/wh2/wk1;D 首派死于并发限额,续派成功）→ cherry-pick + 集成接缝对账。
+
+- **D（档案管线,`efa9d29`→`7fdfcbf`）**：`scripts/export_research_dossier.py` + `reports/evidence/research-dossier-v1.html`(46.7KB,字节稳定双跑 sha 一致)。**S-registry 24 条来源**(panel×9 内容 sha256 现算 / ledger×2 行号+行 sha[horizon sweep line39 + config_committed line48] / doc×3 预注册+intake-rubric sha / artifact×1 / external×9 如实 self-declared),正文引用 141 处;**闭包硬门**=孤儿引用/未引用来源/含数字无引用行三类违反 raise(开发中真实拦截 2 处);七章节全 committed 实值(头条卡/设计门禁/50 端点×license 分组/冻结链 row48→row49→snapshot+森林图+IC 条形+校准+score 诊断+horizon 稳健性/evidence 表+HLZ 语境+8 书签/局限/自检);16 契约测试零 skip。
+- **H1（horizon 面板,`d1bd888`→`9897d90`）**：`export_horizon_robustness()` 读 tracked ledger latest 行(ts 2026-07-30,a2 版含 E1)→ 面板+四注册点+barrel 显式类型+dict 12 键+**/track calibration tab 尾部 HorizonRobustnessCard**(四相×h10/h42 diff+CI+DM p,emerald verdict 徽章,EXPLORATORY note);**四相 8 格全 null 保持**(B/C/D/E1 CI 全跨零)——冻结零结果对 horizon 不敏感的实证上墙。
+- **H2（覆盖契约,`e9b6df8`→`7cd787b`）**：`tests/test_data_health_coverage_contract.py` 7 测试——50 key(barrel 44+模块 6)↔manifest 双向精确闭合+反幽灵行+barrel 运行时解析护栏+atlas 六面板 dated 专项;**KNOWN-GAP 1 项按 protocol 写死实况**:calibration_reliability as_of=None(可标注而未标注)。
+- **集成接缝(主线正典处置)**：① H1 给 manifest 加第 51 行 ↔ H2 硬编码表按 50 行基线写 → 按"合同与测试同步改"把 horizon_robustness 行补进 EXPECTED_PANELS(51 行);② **KNOWN-GAP 主线直修**:`_dh_as_of` 补 calibration_reliability 分支(as_of=各 region series 末月 max=2026-06)+翻转断言为严格;③ **闭包硬门当场生效**:data_health 重导出后 sha 变化 → D 档案完整性失配被测试拦下 → 重生成档案(51 面板 17/25/9 新计数,双跑 sha `f1db9600…` 一致)——溯源体系自我修正闭环实证。
+- **验证**：三 worktree 各自全净(H1 全套 exit 0/2123+;H2 93 passed/全仓 2156 exit 0;D 25 passed)+ 主线全套 pytest exit 0 + ruff 全净 + tsc/eslint 0 + build 1,503 页 + 目视终验(track 卡片 Horizon 稳健性/arm_state/arm_prop/null 保持 全在墙)。**内务**：wh1-2/wk1 清(wh1 junction 先摘)、三分支 cherry 全 `-` 删、三任务书归档。**边界**：display/export 派生 lane;runs/ 只读;冻结产物零触碰。待业主：E3 契约冻结+GO;档案 v1 扩展(多 claim/版本化/CI 挂钩)与 LLM vintage 探针(R1-2)。
+
+
 ## 2026-08-28 (qq) 轮㉚：P0-3②+P3-2 lite+P2-1 lite 执行轮——atlas 文献语境线/样本期稳定条 + 自包含证据工件 + CSI300 半开语义落盘（全套绿）
 
 **编排**：业主授权"继续最优处理，部署仍冻结"→ 主线快探（CSI300 抓取器=本地嵌入包非网络；中途遇本机 0xC0並0142 坏窗口，按轮㉑预案 Write 工具先行+shell 恢复后重试）→ 两份任务书（`0318212`）→ 两 dev agent 分 lane 并行（wg1 junction/wg2）→ cherry-pick+全套验证。
