@@ -3813,6 +3813,10 @@ def export_form_ipo() -> None:
                 "task_budget": price_meta_src.get("task_budget_requests", 170),
                 "cumulative_walk": price_meta_src.get("requests_cumulative", 0),
                 "walk_cap": price_meta_src.get("walk_cap_requests"),
+                # The latest walk's own count (refresh rounds re-run the walk
+                # once per slide of the newest-80 window; each is bounded by
+                # walk_cap, while cumulative_walk is the lifetime ledger).
+                "last_walk": price_meta_src.get("requests_this_walk", 0),
             },
             "target_as_of": (
                 # Newest TARGETED filed_date (the same stable selection as the

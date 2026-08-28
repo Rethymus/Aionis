@@ -9,11 +9,17 @@ regex-extract the cover-page offer price into a graded confidence
 (``exact`` / ``low`` / ``none`` — low never yields a value; see
 ``aionis.ingest.form_ipo_price``).
 
-Request budget (owner brief 2026-08-26): ≤170 total requests for BOTH stages
-— this walk defaults to ``--max-requests 156`` leaving ≥14 headroom for the
+Request budget (owner brief 2026-08-26): the H3 construction task was
+capped at ≤170 total requests for BOTH stages — this walk defaults to
+``--max-requests 156`` leaving ≥14 headroom for the
 EFTS window refresh (``scripts/form_ipo_fetch.py``, ~13 pages); when the cap
 is hit the walk stops wherever it is — cached rows survive, coverage stays
-honest. Idempotent + resumable via ``data/cache/form_ipo_price_parsed.json``
+honest. Refresh rounds re-run the walk once per slide of the newest-80
+window: each walk stays bounded by ``--max-requests`` (asserted as
+``last_walk <= walk_cap`` in the panel contract) while
+``requests_cumulative`` is the lifetime never-reset politeness ledger,
+disclosed in ``offer_price_meta.requests``.
+Idempotent + resumable via ``data/cache/form_ipo_price_parsed.json``
 (one entry per accession; ``ok`` entries are NEVER re-fetched ⇒ a rerun makes
 ZERO new requests; failed entries retry on the next run).
 
@@ -112,6 +118,10 @@ def main() -> None:
         return {
             **saved_meta,
             "requests_cumulative": cumulative,
+            # This walk's own request count — refresh rounds assert their
+            # politeness bound against walk_cap, while requests_cumulative
+            # stays the lifetime never-reset ledger across rounds.
+            "requests_this_walk": n_req,
             "last_run": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             "task_budget_requests": TASK_BUDGET,
             "walk_cap_requests": args.max_requests,
