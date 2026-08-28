@@ -72,7 +72,7 @@ export function MacroDriversCard() {
         <div className="grid gap-4 md:grid-cols-3">
           {/* CPI YoY Chart */}
           <div className="space-y-2">
-            <h4 className="text-xs font-semibold text-foreground">{t("macro.cpi")}</h4>
+            <h2 className="text-xs font-semibold text-foreground">{t("macro.cpi")}</h2>
             <div className="h-[140px] w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={cpiData} margin={{ top: 8, right: 8, bottom: 0, left: 0 }}>
@@ -103,7 +103,7 @@ export function MacroDriversCard() {
 
           {/* Payrolls YoY Chart */}
           <div className="space-y-2">
-            <h4 className="text-xs font-semibold text-foreground">{t("macro.payrolls")}</h4>
+            <h2 className="text-xs font-semibold text-foreground">{t("macro.payrolls")}</h2>
             <div className="h-[140px] w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={payrollsData} margin={{ top: 8, right: 8, bottom: 0, left: 0 }}>
@@ -134,7 +134,7 @@ export function MacroDriversCard() {
 
           {/* Fed Funds Chart */}
           <div className="space-y-2">
-            <h4 className="text-xs font-semibold text-foreground">{t("macro.fedfunds")}</h4>
+            <h2 className="text-xs font-semibold text-foreground">{t("macro.fedfunds")}</h2>
             <div className="h-[140px] w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={fedfundsData} margin={{ top: 8, right: 8, bottom: 0, left: 0 }}>

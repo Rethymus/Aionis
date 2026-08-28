@@ -137,7 +137,7 @@ export function FilersView() {
 
       <Card className="min-w-0 overflow-hidden py-0">
         <CardHeader className="border-b">
-          <CardTitle className="text-base">{t("filers.title")}</CardTitle>
+          <CardTitle as="h1" className="text-base">{t("filers.title")}</CardTitle>
           <CardDescription>{t("filers.note")}</CardDescription>
         </CardHeader>
         <CardContent className="p-0">

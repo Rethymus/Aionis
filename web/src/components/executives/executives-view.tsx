@@ -418,6 +418,9 @@ export function ExecutivesView() {
 
   return (
     <div className="space-y-6">
+      {/* No visible page title in the ok state (DEF 14A / persons are section
+          titles) — sr-only h1 keeps heading navigation usable. */}
+      <h1 className="sr-only">{t("nav.executives")}</h1>
       <p className="text-xs font-medium text-primary">{t("executives.role")}</p>
       <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
         <Card>

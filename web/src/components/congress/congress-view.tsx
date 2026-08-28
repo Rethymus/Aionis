@@ -577,6 +577,9 @@ export function CongressView() {
 
   return (
     <div className="space-y-6">
+      {/* No visible page title in the ok state (the card title below is the
+          stream section) — sr-only h1 keeps heading navigation usable. */}
+      <h1 className="sr-only">{t("nav.congress")}</h1>
       <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
         <Card>
           <CardHeader className="pb-2">

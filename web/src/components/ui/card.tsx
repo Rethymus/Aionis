@@ -35,9 +35,21 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
+function CardTitle({
+  className,
+  as,
+  ...props
+}: React.ComponentProps<"div"> & {
+  /** Optional semantic-heading override (a11y: page/section titles). Default
+   *  "div" — rendering, classes and data-slot are unchanged; heading tags are
+   *  visually identical here because preflight resets h1-h6 font/margins. */
+  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
+}) {
+  // Heading tags accept every div-level attribute we pass (className,
+  // data-slot, children), so the narrow cast is sound.
+  const Tag = (as ?? "div") as "div"
   return (
-    <div
+    <Tag
       data-slot="card-title"
       className={cn(
         "font-heading text-base leading-snug font-medium group-data-[size=sm]/card:text-sm",

@@ -256,6 +256,9 @@ export function ForceCampView() {
 
   return (
     <div className="flex flex-col gap-4">
+      {/* Section h2s below carry no page-level heading — sr-only h1 (nav
+          label) gives screen readers the page title without any visual. */}
+      <h1 className="sr-only">{t("nav.forcecamp")}</h1>
       {!ready ? (
         <div className="rounded-xl border border-line bg-card px-5 py-10 text-center text-[13px] text-mute">
           {t("forcecamp.empty")}

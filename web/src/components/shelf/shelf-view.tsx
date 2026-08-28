@@ -71,7 +71,7 @@ function DocCard({ doc }: { doc: KnowledgeShelfDoc }) {
             {t("shelf.chars").replace("{n}", doc.n_chars.toLocaleString())}
           </span>
         </div>
-        <h3 className="text-sm font-semibold leading-snug">{doc.title}</h3>
+        <h2 className="text-sm font-semibold leading-snug">{doc.title}</h2>
         {/* Two-line teaser (line-clamp keeps cards even); the body stays on
             GitHub — this is a catalog entry, not a copy. */}
         <p className="line-clamp-2 text-xs leading-relaxed text-muted-foreground">

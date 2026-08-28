@@ -148,7 +148,10 @@ export function FinDeadlineView({ variant }: { variant: FinDeadlineVariant }) {
 
       <Card className="min-w-0 overflow-hidden py-0">
         <CardHeader className="border-b">
-          <CardTitle className="flex flex-wrap items-baseline gap-x-2 text-base">
+          <CardTitle
+            as="h1"
+            className="flex flex-wrap items-baseline gap-x-2 text-base"
+          >
             {t(variant === "annual" ? "filings.annual.title" : "filings.quarterly.title")}
             <span className="font-mono text-xs font-normal text-muted-foreground tabular-nums">
               {total.toLocaleString("en-US")} · {f.window.start} → {f.window.end}
