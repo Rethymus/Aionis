@@ -28,6 +28,7 @@ import {
   NetworkIcon,
   PercentIcon,
   BookOpenIcon,
+  MapIcon,
 } from "lucide-react";
 import {
   CommandDialog,
@@ -83,6 +84,7 @@ const PAGES: PaletteItem[] = [
   { labelKey: "nav.quarterly", icon: <CalendarDaysIcon className="size-4" />, href: "/quarterly" },
   { labelKey: "nav.annual", icon: <FileClockIcon className="size-4" />, href: "/annual" },
   { labelKey: "nav.group.track", icon: <GaugeCircleIcon className="size-4" />, href: "/track" },
+  { labelKey: "nav.atlas", icon: <MapIcon className="size-4" />, href: "/atlas" },
   { labelKey: "nav.group.discipline", icon: <ShieldCheckIcon className="size-4" />, href: "/discipline" },
   { labelKey: "nav.datahealth", icon: <ActivityIcon className="size-4" />, href: "/data-health" },
   { labelKey: "nav.group.themes", icon: <FileTextIcon className="size-4" />, href: "/themes" },

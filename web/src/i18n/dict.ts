@@ -1146,6 +1146,50 @@ export const dict = {
     "shelf.sources.note": "固定 8 项编辑精选书签：只外链 + 一句静态描述，不抓内容、不调摘要 API——版权在作者，我们只做目录。",
     "shelf.methodology.title": "方法学与边界",
     "shelf.empty": "当前类别下没有文档（诚实空态，不伪造条目）。",
+    // Research atlas (/atlas — editorial deterministic research diagrams)
+    "nav.atlas": "研究图谱",
+    "nav.sub.atlas": "编辑级研究叙事图：主张 · 分差 · 血缘",
+    "atlas.intro":
+      "用编辑级确定性图表回答三个可信度问题：主张说了什么（IC 透视与结论区间）、预测与实现分差多大（校准带）、每个数字从哪来（数据血缘）。全部服务端渲染、零客户端 JS、附完整数据表回退。",
+    "atlas.claims.title": "核心主张透视图",
+    "atlas.claims.desc":
+      "预注册主张（处理项−纯基本面的横截面月度 rank-IC 差分）的完整 OOS 呈现：逐月热力透视 + 结论森林图。",
+    "atlas.claims.table": "数据表（无障碍与降级回退）",
+    "atlas.icpivot.title": "月度 rank-IC 热力透视",
+    "atlas.icpivot.desc":
+      "每月一行：US / CN / 合并的横截面 rank-IC，颜色围绕零双向发散（蓝=负、橙=正，色盲安全）。这是预注册主张的完整序列——包括失效的月份。",
+    "atlas.icpivot.legend": "|IC| 色标：≤0.05 弱 → ≥0.30 强（围绕零对称）",
+    "atlas.icpivot.n": "{n} 个月 · {start} → {end}",
+    "atlas.forest.title": "结论森林图：预注册区间",
+    "atlas.forest.desc":
+      "合并 rank-IC 的点估计与 95% 置信区间，对照零线与实际显著域 SESOI（±0.01）。判定 NULL 且区间窄于等价域 = 有信息量的零结果——这是纪律的胜利，不是失败。",
+    "atlas.forest.point": "点估计",
+    "atlas.forest.ci": "95% CI",
+    "atlas.forest.sesoi": "SESOI ±{v}（等价域边界）",
+    "atlas.forest.zeroLine": "零（无效应）",
+    "atlas.forest.verdict": "判定：{v} · p={p} · n={n} 个月",
+    "atlas.div.title": "预测—实现分差带",
+    "atlas.div.desc":
+      "每月走前（walk-forward）校准的预测概率带（prob_min–prob_max）与当月实现基准率的对照：点落在带内=覆盖，带外=分差。预测的意义不在点命中，而在区间的诚实校准。",
+    "atlas.div.band": "预测概率带",
+    "atlas.div.realized": "实现基准率",
+    "atlas.div.coverage": "带内覆盖率：{n}/{m} 月（{pct}%）",
+    "atlas.div.ece.title": "月度 ECE 分差",
+    "atlas.div.ece.desc":
+      "期望校准误差（ECE，越低越好）逐月条形：校准质量随月份波动，长周期完整视角防止选择性呈现。",
+    "atlas.div.table": "数据表（无障碍与降级回退）",
+    "atlas.div.n": "{n} 个月 · {start} → {end}",
+    "atlas.flow.title": "数据血缘流",
+    "atlas.flow.desc":
+      "一手来源族 → 面板类别 → 新鲜度三层流图（节点面积=面板数）。每个终端数字的出处、节奏与许可能在此一眼溯源——反泄漏纪律的可视化。",
+    "atlas.flow.l1": "一手来源族",
+    "atlas.flow.l2": "面板类别",
+    "atlas.flow.l3": "新鲜度",
+    "atlas.flow.cat.daily": "日更",
+    "atlas.flow.cat.cadence": "源节奏",
+    "atlas.flow.cat.frozen": "冻结",
+    "atlas.flow.table": "数据表（无障碍与降级回退）",
+    "atlas.flow.n": "{n} 个面板",
   },
   en: {
     "brand.name": "Aionis",
@@ -2292,6 +2336,50 @@ export const dict = {
     "shelf.sources.note": "A fixed editorially-curated bookmark list: link-out + one static sentence each — no content fetched, no summary APIs. Copyright stays with the authors; we only catalog.",
     "shelf.methodology.title": "Methodology & boundaries",
     "shelf.empty": "No documents in this category (honest empty state, no fabricated entries).",
+    // Research atlas (/atlas — editorial deterministic research diagrams)
+    "nav.atlas": "Research atlas",
+    "nav.sub.atlas": "Editorial research diagrams: claims · divergence · lineage",
+    "atlas.intro":
+      "Editorial deterministic diagrams answering three credibility questions: what the claim says (IC pivots and the claim interval), how far forecasts diverge from realization (calibration bands), and where every number comes from (data lineage). All server-rendered, zero client JS, with full data-table fallbacks.",
+    "atlas.claims.title": "Core-claim pivots",
+    "atlas.claims.desc":
+      "The complete OOS presentation of the preregistered claim (treatment-minus-fundamentals-only differential in cross-sectional monthly rank-IC): monthly pivot heatmap + claim forest plot.",
+    "atlas.claims.table": "Data table (accessibility & fallback)",
+    "atlas.icpivot.title": "Monthly rank-IC pivot heatmap",
+    "atlas.icpivot.desc":
+      "One row per month: US / CN / combined cross-sectional rank-IC, colored by a zero-centered diverging scale (blue = negative, orange = positive, colorblind-safe). The complete preregistered series — including the months that fail.",
+    "atlas.icpivot.legend": "|IC| scale: ≤0.05 weak → ≥0.30 strong (symmetric around zero)",
+    "atlas.icpivot.n": "{n} months · {start} → {end}",
+    "atlas.forest.title": "Claim forest: preregistered interval",
+    "atlas.forest.desc":
+      "The combined rank-IC point estimate with its 95% confidence interval, against the zero line and the practically-significant region SESOI (±0.01). A NULL verdict with an interval narrower than the equivalence zone is an informative null — a victory of discipline, not a failure.",
+    "atlas.forest.point": "Point estimate",
+    "atlas.forest.ci": "95% CI",
+    "atlas.forest.sesoi": "SESOI ±{v} (equivalence bounds)",
+    "atlas.forest.zeroLine": "Zero (no effect)",
+    "atlas.forest.verdict": "Verdict: {v} · p={p} · n={n} months",
+    "atlas.div.title": "Forecast–realized divergence bands",
+    "atlas.div.desc":
+      "Each month's walk-forward calibrated forecast probability band (prob_min–prob_max) against that month's realized base rate: a point inside the band = covered, outside = divergence. The point of forecasting is not point accuracy but honest interval calibration.",
+    "atlas.div.band": "Forecast probability band",
+    "atlas.div.realized": "Realized base rate",
+    "atlas.div.coverage": "In-band coverage: {n}/{m} months ({pct}%)",
+    "atlas.div.ece.title": "Monthly ECE divergence",
+    "atlas.div.ece.desc":
+      "Expected calibration error (ECE, lower is better) as monthly bars: calibration quality fluctuates month to month, and the full long-window view prevents selective presentation.",
+    "atlas.div.table": "Data table (accessibility & fallback)",
+    "atlas.div.n": "{n} months · {start} → {end}",
+    "atlas.flow.title": "Data lineage flow",
+    "atlas.flow.desc":
+      "A three-layer flow diagram (first-hand source family → panel category → freshness; node area = panel count). The provenance, cadence, and license of every terminal number traceable at a glance — anti-leakage discipline made visible.",
+    "atlas.flow.l1": "First-hand source family",
+    "atlas.flow.l2": "Panel category",
+    "atlas.flow.l3": "Freshness",
+    "atlas.flow.cat.daily": "Daily",
+    "atlas.flow.cat.cadence": "Source cadence",
+    "atlas.flow.cat.frozen": "Frozen",
+    "atlas.flow.table": "Data table (accessibility & fallback)",
+    "atlas.flow.n": "{n} panels",
   },
 } as const;
 
