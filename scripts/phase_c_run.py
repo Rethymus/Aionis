@@ -41,6 +41,29 @@ def _sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest() if path.exists() else ""
 
 
+def _input_shas(cache: Path) -> dict[str, str]:
+    """sha256 anchors over the run's ACTUAL input files (audit P1-2).
+
+    The VIX surprise is built by ``build_bundle`` -> ``vix_surprise_panel`` ->
+    ``vix_as_of`` -> ``fetch_vix_vintages``, which reads ``alfred_VIXCLS.json``
+    (the self-dated vintage cache) — NOT ``vix_cls.parquet`` (the realized-series
+    cache written by ``fetch_vix``, an inspection-only path). The corrected
+    anchor is therefore a NEW key (``vix_vintages_sha256``); the legacy
+    ``vix_sha256`` (parquet) is kept because the ledger contract is add-only —
+    never a silent key swap.
+    """
+    return {
+        "fund_sha256": _sha(cache / "phase_b_fundamentals.parquet"),
+        "prices_sha256": _sha(cache / "phase_b_prices.parquet"),
+        "membership_sha256": _sha(cache / "universe_pierrebrunelle.parquet"),
+        "uv_lock_sha256": _sha(Path("uv.lock")),
+        "alfred_cpiaucsl_sha256": _sha(cache / "alfred_CPIAUCSL.json"),
+        "alfred_payems_sha256": _sha(cache / "alfred_PAYEMS.json"),
+        "vix_sha256": _sha(cache / "vix_cls.parquet"),
+        "vix_vintages_sha256": _sha(cache / "alfred_VIXCLS.json"),
+    }
+
+
 def main() -> None:
     import hashlib
     import json
@@ -70,15 +93,7 @@ def main() -> None:
           f"earnings_long={earnings_long.shape}  sanity={sanity_broadcast.shape}",
           flush=True)
 
-    shas = {
-        "fund_sha256": _sha(CACHE / "phase_b_fundamentals.parquet"),
-        "prices_sha256": _sha(CACHE / "phase_b_prices.parquet"),
-        "membership_sha256": _sha(CACHE / "universe_pierrebrunelle.parquet"),
-        "uv_lock_sha256": _sha(Path("uv.lock")),
-        "alfred_cpiaucsl_sha256": _sha(CACHE / "alfred_CPIAUCSL.json"),
-        "alfred_payems_sha256": _sha(CACHE / "alfred_PAYEMS.json"),
-        "vix_sha256": _sha(CACHE / "vix_cls.parquet"),
-    }
+    shas = _input_shas(CACHE)
     bundle_meta = {
         "vix_surprise_kind": VIX_KIND,
         "earnings_eps_num": "net_income",

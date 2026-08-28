@@ -157,3 +157,46 @@ def test_run_confirmatory_full_pipeline_synthetic(tmp_path: Path) -> None:
     assert loaded["h6_deterministic"] is True
     assert loaded["config_sig"] == sig
     assert np.isfinite(loaded["differential"]["mean_diff"])
+
+
+# --- haircut table: p_raw underflow contract (audit P1-1) --------------------
+
+
+def test_haircut_table_flags_underflow_with_none_never_infinity() -> None:
+    """A p_raw underflow (extreme z) propagates through phase_c.haircut_table as
+    haircut_sharpe=None + the underflow flag (survival kept) — no float(None)
+    crash, no ±Infinity. The normal path's 2-key row shape is unchanged."""
+    extreme = phase_c.haircut_table({"mean_ic": 1000.0, "se_hac": 1.0, "n": 1000})
+    assert extreme  # the n_trials grid is non-empty
+    for row in extreme.values():
+        assert row == {"haircut_sharpe": None, "survives": True, "p_raw_underflow": True}
+
+    normal = phase_c.haircut_table({"mean_ic": 0.05, "se_hac": 1.0, "n": 250})
+    for row in normal.values():
+        assert set(row) == {"haircut_sharpe", "survives"}
+
+
+# --- runner input sha anchors (audit P1-2) -----------------------------------
+
+
+def test_phase_c_runner_pins_actual_vix_input_sha(tmp_path: Path) -> None:
+    """The VIX surprise is built from ``vix_as_of`` -> ``fetch_vix_vintages`` ->
+    ``alfred_VIXCLS.json`` (NOT ``vix_cls.parquet``), so the runner's frozen
+    config must sha-pin the vintages file. Add-only ledger contract: the legacy
+    parquet key is retained, the real input gets a NEW key."""
+    import hashlib
+
+    from scripts.phase_c_run import _input_shas
+
+    (tmp_path / "alfred_VIXCLS.json").write_text("{}", encoding="utf-8")
+    (tmp_path / "vix_cls.parquet").write_bytes(b"parquet")
+
+    shas = _input_shas(tmp_path)
+
+    # the REAL VIX-surprise input is now pinned
+    assert shas["vix_vintages_sha256"] == hashlib.sha256(b"{}").hexdigest()
+    # add-only: the legacy realized-series key is retained, not swapped
+    assert shas["vix_sha256"] == hashlib.sha256(b"parquet").hexdigest()
+    # missing files keep the empty-string sentinel (same convention as the rest)
+    assert _input_shas(tmp_path / "does-not-exist")["vix_vintages_sha256"] == ""
+    assert _input_shas(tmp_path / "does-not-exist")["vix_sha256"] == ""

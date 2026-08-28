@@ -452,7 +452,20 @@ def harvey_liu_haircut(
         may be ``<= 0`` when the Sharpe does not survive Bonferroni),
         ``haircut_pct`` (percentage of the original Sharpe trimmed),
         ``z_obs``, ``se``, ``p_raw``, ``p_bonferroni``, ``survives_bonferroni``
-        (``p_bonf <= alpha``), and ``method``.
+        (``p_bonf <= alpha``), ``p_raw_underflow``, and ``method``.
+
+    Floating-point honesty at the two numeric edges (no fake precision):
+
+    * **p_raw underflow** — ``stats.norm.sf`` flushes to ``0.0`` for extreme
+      ``z_obs`` (beyond ~1e-308 tail mass, ``z_obs`` ≳ 39). The skill survival
+      is then REAL (``0.0 <= alpha``) but the haircut *magnitude* is not
+      computable in double precision: the function returns
+      ``haircut_sharpe=None`` and ``haircut_pct=None`` with
+      ``p_raw_underflow=True`` (plus the finite ``z_obs`` / ``se`` / ``p_raw=0``)
+      rather than ``ppf(1) * se = +inf`` masquerading as a number.
+    * **p_bonf saturation** — ``p_bonf == 1`` (weak Sharpe, many trials) keeps
+      the documented ``ppf(0) * se = -inf`` haircut branch: no credible skill
+      remains; callers branch on ``survives_bonferroni``.
     """
     if not isinstance(n_trials, (int, np.integer)) or isinstance(n_trials, bool):
         raise TypeError(f"n_trials must be an integer, got {type(n_trials).__name__}.")
@@ -472,11 +485,34 @@ def harvey_liu_haircut(
     se = float(np.sqrt(var_sharpe))
     z_obs = float(sharpe / se)
     p_raw = float(stats.norm.sf(z_obs))  # 1 - Phi(z_obs), one-sided
+    if p_raw == 0.0:
+        # p_raw UNDERFLOWED to 0.0 (sf flushes below ~1e-308 for z_obs >=~ 39):
+        # the skill survival is real (0.0 <= alpha) but the haircut magnitude is
+        # NOT computable in double precision — ppf(1 - 0) = +inf would fabricate
+        # an infinite haircut Sharpe. Report honestly instead: None for the
+        # haircut fields, p_raw_underflow=True, finite z/se kept. Never ±Infinity
+        # masquerading as a value.
+        return {
+            "observed_sr": float(sharpe),
+            "haircut_sharpe": None,
+            "haircut_pct": None,
+            "z_obs": z_obs,
+            "se": se,
+            "p_raw": p_raw,
+            "p_bonferroni": 0.0,
+            "survives_bonferroni": bool(0.0 <= alpha),
+            "alpha": float(alpha),
+            "n_trials": int(n_trials),
+            "n_obs": int(n_obs),
+            "p_raw_underflow": True,
+            "method": "bonferroni",
+        }
     p_bonf = float(min(1.0, n_trials * p_raw))
     # z implied by the Bonferroni-adjusted p-value. If p_bonf saturates at 1
     # the Sharpe does not survive: ppf(0) = -inf => haircut_sharpe = -inf,
     # i.e. no credible skill remains. We surface that honestly rather than
-    # floor it; callers branch on `survives_bonferroni`.
+    # floor it; callers branch on `survives_bonferroni`. (The opposite edge —
+    # p_raw UNDERFLOWING to 0.0 — is handled above and never reaches ppf.)
     z_bonf = float(stats.norm.ppf(1.0 - p_bonf))
     haircut_sharpe = z_bonf * se
     haircut_pct = (sharpe - haircut_sharpe) / sharpe * 100.0
@@ -492,5 +528,6 @@ def harvey_liu_haircut(
         "alpha": float(alpha),
         "n_trials": int(n_trials),
         "n_obs": int(n_obs),
+        "p_raw_underflow": False,
         "method": "bonferroni",
     }

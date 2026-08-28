@@ -204,10 +204,26 @@ def main(
 
     AUD-06 readiness gate: validates the commit targets the requested live session
     with complete PIT inputs BEFORE any fit/LLM call/artifact write/ledger append.
+    Fail-closed on the cutoff too: a configured ``provider_cutoff_policy`` with no
+    ``provider_cutoff`` raises ValueError at entry (the fake predict_ts fallback
+    is only for the legacy no-policy path).
     """
     artifacts_only = os.environ.get("PHASE_E3_NO_LEDGER") == "1"
     runs = Path(runs_dir)
     cache = Path(cache_dir) if cache_dir is not None else settings.data_dir / "cache"
+
+    # AUD-06 P1 (fail-closed): a configured provider_cutoff_policy demands a REAL
+    # verifiable knowledge cutoff. With no cutoff supplied we refuse HERE — before
+    # the freeze / any ledger write / any LLM call — instead of silently faking
+    # predict_ts: the readiness gate only policy-checks the literal "unknown", so
+    # a faked timestamp would otherwise pass undetected (reason code
+    # provider_cutoff_faked exists precisely for this and could never fire).
+    if enforce_live_readiness and provider_cutoff_policy is not None and provider_cutoff is None:
+        raise ValueError(
+            "provider_cutoff_policy is configured but provider_cutoff is None; "
+            "refusing to fake the cutoff to predict_ts (AUD-06 fail-closed). "
+            "Supply the provider's real knowledge cutoff."
+        )
 
     # I6: resolve the SINGLE pinned provider BEFORE the freeze (refuse early on a missing key)
     provider = resolve_pinned_provider("glm")
@@ -274,8 +290,10 @@ def main(
     print(f"[E3] panel_base={panel_base.shape} panel_e13={panel_e13.shape}", flush=True)
 
     # --- AUD-06 readiness gate (BEFORE any fit/LLM call/artifact write/ledger append)
-    # Only enforced when enforce_live_readiness=True (opt-in for live paths)
-    # Use real provider_cutoff (owner-provided), not faked to predict_ts
+    # Only enforced when enforce_live_readiness=True (opt-in for live paths).
+    # provider_cutoff: the enforced+policy path guarantees a caller-supplied real
+    # cutoff (guard above); without a policy the legacy predict_ts fallback is
+    # kept for artifacts-only / reproducibility reruns.
     actual_provider_cutoff = provider_cutoff if provider_cutoff is not None else predict_ts
 
     if enforce_live_readiness:

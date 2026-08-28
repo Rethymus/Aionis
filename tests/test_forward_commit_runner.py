@@ -270,3 +270,53 @@ def test_runner_never_touches_real_ledger(
     RUN.main(runs_dir=tmp_path, today=pd.Timestamp("2026-07-15"))
     after = real_ledger.read_bytes() if real_ledger.exists() else b""
     assert before == after
+
+
+# ---------------------------------------------------------------------------
+# AUD-06 P1: configured provider_cutoff_policy + missing cutoff fails closed
+# ---------------------------------------------------------------------------
+
+
+def test_runner_policy_without_cutoff_fails_closed_before_any_write(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """A configured ProviderCutoffPolicy + provider_cutoff=None must raise
+    ValueError BEFORE the freeze / any ledger row. Rationale: the readiness gate
+    only policy-checks the literal "unknown", so the old silent fallback to
+    predict_ts faked the cutoff and sailed through undetected."""
+    from aionis.eval.forward_live_readiness import ProviderCutoffPolicy
+
+    _patch_runner(monkeypatch)
+    with pytest.raises(ValueError, match="provider_cutoff"):
+        RUN.main(
+            runs_dir=tmp_path,
+            today=pd.Timestamp("2026-07-15"),
+            enforce_live_readiness=True,
+            provider_cutoff_policy=ProviderCutoffPolicy(block_on_unknown=True),
+            provider_cutoff=None,
+        )
+    assert _forward_rows(tmp_path) == []  # nothing frozen, nothing committed
+
+
+def test_runner_policy_with_real_cutoff_reaches_readiness_gate(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """With the policy satisfied (a real cutoff supplied) the entry guard passes
+    and the AUD-06 readiness gate itself decides — fail-closed dict, no commit."""
+    from aionis.eval.forward_live_readiness import ProviderCutoffPolicy
+
+    _patch_runner(monkeypatch)
+    res = RUN.main(
+        runs_dir=tmp_path,
+        today=pd.Timestamp("2026-07-15"),
+        enforce_live_readiness=True,
+        provider_cutoff_policy=ProviderCutoffPolicy(block_on_unknown=True),
+        provider_cutoff="2025-06-30T16:00:00-04:00",
+    )
+    assert res["committed"] is False
+    assert res["readiness_failed"] is True
+    # the synthetic panel (Jan-Feb 2026) cannot contain the July predict session
+    assert res["reason_code"] == "predict_session_not_in_panel"
+    assert "forward_prediction_committed" not in [
+        r["event"] for r in _forward_rows(tmp_path)
+    ]

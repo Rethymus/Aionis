@@ -140,7 +140,15 @@ def haircut_table(summary: dict) -> dict:
     out = {}
     for nt in N_TRIALS_GRID:
         h = harvey_liu_haircut(sharpe, nt, n_obs)
-        out[nt] = {"haircut_sharpe": h["haircut_sharpe"], "survives": h["survives_bonferroni"]}
+        if h.get("p_raw_underflow"):
+            # p_raw flushed to 0.0 (audit P1-1): the survival is real but the
+            # haircut magnitude is not computable — propagate None + the flag,
+            # never ±Infinity, and never crash on float(None).
+            out[nt] = {"haircut_sharpe": None,
+                       "survives": bool(h["survives_bonferroni"]),
+                       "p_raw_underflow": True}
+        else:
+            out[nt] = {"haircut_sharpe": h["haircut_sharpe"], "survives": h["survives_bonferroni"]}
     return out
 
 

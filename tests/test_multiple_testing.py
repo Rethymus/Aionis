@@ -306,3 +306,39 @@ def test_haircut_rejects_non_positive_sharpe() -> None:
         harvey_liu_haircut(0.0, n_trials=5, n_obs=60)
     with pytest.raises(ValueError):
         harvey_liu_haircut(-0.5, n_trials=5, n_obs=60)
+
+
+def test_haircut_p_raw_underflow_reports_none_not_infinity() -> None:
+    """p_raw = sf(z_obs) flushes to 0.0 for extreme z (audit P1-1): the skill
+    survival is real but the haircut MAGNITUDE is not computable in double
+    precision. The function must report None + p_raw_underflow=True and keep
+    the finite z/se — never ±Infinity masquerading as a value."""
+    # Arrange — sharpe=1000 over n_obs=1000 gives z_obs ~= 44.7, deep in the
+    # underflow regime (scipy sf(x) == 0.0 for x >=~ 38).
+    # Act
+    res = harvey_liu_haircut(sharpe=1000.0, n_trials=1, n_obs=1000)
+    # Assert — the trigger really is the underflow regime
+    assert res["z_obs"] >= 38.0
+    assert res["p_raw"] == 0.0
+    # honest presentation: survival kept, magnitude unknown (None, not ±inf)
+    assert res["p_raw_underflow"] is True
+    assert res["haircut_sharpe"] is None
+    assert res["haircut_pct"] is None
+    assert res["survives_bonferroni"] is True
+    assert res["p_bonferroni"] == 0.0
+    assert np.isfinite(res["z_obs"]) and np.isfinite(res["se"])
+    assert not any(isinstance(v, float) and np.isinf(v) for v in res.values())
+
+
+def test_haircut_p_bonf_saturation_minus_inf_branch_unchanged() -> None:
+    """p_bonf saturating at 1 (weak Sharpe, many trials) keeps the documented
+    existing branch — ppf(0) * se = -inf, no credible skill remains — and is
+    NOT flagged as p_raw underflow."""
+    # Arrange/Act — p_raw ~= 0.44, x1000 trials -> Bonferroni saturates at 1.
+    res = harvey_liu_haircut(sharpe=0.02, n_trials=1000, n_obs=60)
+    # Assert
+    assert res["p_raw"] > 0.0
+    assert res["p_bonferroni"] == 1.0
+    assert res["p_raw_underflow"] is False
+    assert res["haircut_sharpe"] == float("-inf")  # existing documented semantics
+    assert not res["survives_bonferroni"]

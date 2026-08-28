@@ -245,8 +245,16 @@ def haircut_table(summary: dict) -> dict:
     for nt in N_TRIALS_GRID:
         if sharpe > 0:
             h = harvey_liu_haircut(sharpe, nt, n)
-            out[nt] = {"haircut_sharpe": float(h["haircut_sharpe"]),
-                       "survives": bool(h["survives_bonferroni"])}
+            if h.get("p_raw_underflow"):
+                # p_raw flushed to 0.0 (audit P1-1): the survival is real but the
+                # haircut magnitude is not computable — propagate None + the flag,
+                # never ±Infinity, and never crash on float(None).
+                out[nt] = {"haircut_sharpe": None,
+                           "survives": bool(h["survives_bonferroni"]),
+                           "p_raw_underflow": True}
+            else:
+                out[nt] = {"haircut_sharpe": float(h["haircut_sharpe"]),
+                           "survives": bool(h["survives_bonferroni"])}
         else:
             out[nt] = {"haircut_sharpe": sharpe, "survives": False}
     return out

@@ -58,3 +58,22 @@ def test_within_month_placebo_keeps_timing_preserves_multiset() -> None:
             broke = True
             break
     assert broke, "placebo never broke alignment across 10 seeds"
+
+
+# --- haircut table: p_raw underflow contract (audit P1-1) --------------------
+
+
+def test_haircut_table_flags_underflow_with_none_never_infinity() -> None:
+    """A p_raw underflow (extreme z) propagates through phase_b_run.haircut_table
+    as haircut_sharpe=None + the underflow flag (survival kept) — no float(None)
+    crash, no ±Infinity. The normal path's 2-key row shape is unchanged."""
+    import scripts.phase_b_run as pb
+
+    extreme = pb.haircut_table({"mean_ic": 1000.0, "se_hac": 1.0, "n": 1000})
+    assert extreme  # the n_trials grid is non-empty
+    for row in extreme.values():
+        assert row == {"haircut_sharpe": None, "survives": True, "p_raw_underflow": True}
+
+    normal = pb.haircut_table({"mean_ic": 0.05, "se_hac": 1.0, "n": 250})
+    for row in normal.values():
+        assert set(row) == {"haircut_sharpe", "survives"}
