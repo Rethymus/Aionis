@@ -8,6 +8,16 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-28 (nn) 轮㉗：调研结论最优处理轮——/atlas h1 修复 + R1-lite 分数面诊断透视图上线（单 agent 垂直切片，1,503 页全套绿）
+
+**编排**：业主授权"继续根据调研结论最优处理，部署仍冻结"→ 主线快探（/atlas 零 h1 坐实=轮㉕标准 P1 回归；R1 可行性核查：decile 收益单调性需全样本前向收益=展示层重算收益有口径漂移风险→**业主门**；改 R1-lite=纯分数面派生）→ 主线直修+任务书（`156ec72`）→ **单 dev agent 全栈垂直切片**（wr1，真实 parquet 拷入 worktree）→ 主线 cherry-pick+确定性复核+全套验证。
+
+- **主线直修**：/atlas 页壳翻 client（shelf 先例）+ sr-only h1（`nav.atlas` 既有键）——轮㉕"每页恰一 h1"标准在新页回归的修复。
+- **R1 决策入档**（设计规格 §6 改写）：R1-full（decile 收益单调性，金标准）需要 94,438 行 × 价格 join,与冻结 run 收益口径（next-open vs close）不对齐则"分差"成口径伪影→不擅启,业主门；**R1-lite 落地**=`score_diagnostics.json`（月×区域 → n/score_mean/std/IQR/月度秩自相关,重叠<30 诚实 null）,纯读冻结 `track_c_confirmatory_oos_scores.parquet`,零收益口径风险。
+- **R1 agent 交付**（`993d9d7`→cherry `8085d1a`,10 文件 +2280）：export_quarto_data 新函数（export_ic_monthly 同区同风格,round 6 字节稳定）+ export_terminal_data 四注册点（_safe_export/data_health frozen 行/as_of 分支/api_catalog source）+ 10 个 hermetic 契约测试（合成 parquet 夹具+numpy/scipy-free 双算交叉验证钉死精确值,零 skip）+ barrel 显式类型 ScoreDiagnosticsRow + dict 9 组键 + atlas-diagnostics.tsx 三面板（离散度带/宇宙宽度条/惯性折线,CardTitle as="h2",表格回退全渲染）+ page.tsx 插入第四区块。**agent 合理自裁三件**（主线采信）：再生 data_health/api_catalog（注册一致性,n_panels 49→50）、退化截面 NaN 守卫（allow_nan=False 下防崩）、atlas.intro/nav.sub.atlas 文案三→四区块同步。**数据事实勘误**：US 19 个月含错峰打分日,已验证 (month,region,ticker) 全局唯一,按月分组语义无损。
+- **实测数字上墙**：134 (month,region) 组/68 月（2021-01→2026-08,CN 68 月 n=929、US 66 月 n≈446-492）;rank_autocorr 132 非空,范围 0.194→0.939（null 恰两区域首月）;离散度最大月 2021-11 US（std 1.0015）、IQR 最大 2025-02 US。
+- **验证**：worktree 内 96 passed（10 新+86 契约）+ ruff 净 + tsc/eslint 0;主线 cherry-pick 后**主仓 parquet 重导出 score_diagnostics.json 逐字节一致**（确定性证明）+ 全套 pytest exit 0 + tsc/eslint 0 + build 1,503 页 + 目视终验（h1=1、h2×2、53 SVG/10 表、0.938698/1.001488 在墙）。**内务**：wr1 清（junction 先摘）、agent/r1 cherry 全 `-` 删、任务书归档。**边界**：display/export 派生 lane;只读冻结产物;0 ledger/frozen 写/config/prereg/OOS 计算;未 push。待业主：H1 部署门不变;R1-full（decile 收益）业主门;R2/R3 待后裁。
+
 ## 2026-08-28 (mm) 轮㉖：编辑级图表语言 /atlas 研究图谱上线（diagram-design 文章移植；1,503 页，全套验证绿）
 
 **编排**：业主 /goal（研读 diagram-design 文章→结合金融学+数据透视/BI 视角→多样化呈现→设计/开发分离多 agent）→ 主线调研+设计+基础设施 → 三 dev agent 分仓并行（worktree wd1/wd2/wd3）→ 主线 cherry-pick 集成+全套验证+收口。部署冻结不触碰；0 ledger/frozen/config/prereg/OOS。
