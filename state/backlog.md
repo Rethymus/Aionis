@@ -21,8 +21,12 @@
   ledger row). Never mutate B/C/D/E1. **M** task (eval-layer only). Source: 2026-08-02 owner-shared
   trading-report debrief — only the methodological point transferred (sector rotation / hedging /
   "beat the market" are out of scope by design).
-- **Horizon-robustness extension.** Sweep E1 at h=10 / h=42 (B/C/D already done) for symmetry.
-  **S** task.
+- ~~**Horizon-robustness extension.** Sweep E1 at h=10 / h=42 (B/C/D already done) for symmetry.~~
+  **DONE (discovered 2026-08-28 round ㉛ audit):** both sweeps already ran — B/C/D/E1 all
+  nulls hold at h=10 AND h=42 (`runs/sensitivity_horizon.log` + `_a2.log`, gitignored;
+  durable evidence = two `exploratory` `phase:"sensitivity_horizon"` rows in tracked
+  `runs/ledger.jsonl`, latest = a2 amend). No rerun needed; surfacing happens via the
+  `horizon_robustness` display panel (round ㉛ H1).
 - **SIC vintage.** SIC is current-snapshot (mild lookahead for reclassifiers) — a vintage SIC
   would close it; low priority (effect estimated small). **M** task.
 - **evals/cases golden fixtures.** Slot in once E3 forward-live produces commit/reveal fixtures.
