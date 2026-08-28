@@ -3,6 +3,7 @@
 - 日期:2026-08-28
 - 状态:PROPOSED(方向文件;每项实施前按 lane 走各自 gate)
 - 调研通道(诚实披露):WebSearch 后端周配额尽(09-03 重置)→ 改用 **arXiv API 一手检索**(LLM alpha mining / agent harness / LLM 收益预测三路,20 篇 2024-2026 文献)+ 计量金融领域知识综述;仓内 backlog/tasks/active/blockers 全盘点。
+- **深挖互证(2026-08-28 第二轮)**:`2026-08-28-evidence-corroboration.md` —— 追加 8 个查询面、22 篇 API 实检文献,把本路线图每条主张对账到 ≥3 独立研究(含 Look-Ahead-Freedom 可验证属性、TS-Arena 活体预注册、FinBench 校准门控、双曲衰减律);证据分级 A(API 实检)/B(领域知识待核)已声明。
 
 ---
 
