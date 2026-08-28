@@ -121,12 +121,17 @@ jobs:
 
       - name: Fetch recent SC 13D stakes (EDGAR daily index, unfreezes past EFTS cutoff)
         run: uv run python scripts/stakes_13d_daily_fetch.py
-        timeout-minutes: 15  # step cap: cold pull walks ~430 business days (≥2s each
-        # ≈ 14min) — same insurance as the Form 4 cap. Per-day idempotent cache means
-        # a timeout resumes on the next run without re-fetching cached days.
+        timeout-minutes: 40  # step cap: the window grows daily (2024-12-17 → today
+        # = 619 calendar days on 2026-08-28, ≈ 19-27min wall in a good window) and
+        # the script writes its aggregate ONCE at the end — no per-day checkpoint.
+        # The old 15min cap killed every run mid-walk and continue-on-error masked
+        # it, so the committed panel silently never advanced (smart_money stuck at
+        # 08-21 for two rounds; diagnosed 2026-08-28, local repro: a 900s kill
+        # produced zero output). 40min = observed cold walk + multi-month headroom
+        # (~+1.5min/month of window growth); revisit if it ever approaches the cap.
         continue-on-error: true  # EDGAR rate-limits; per-day resilient skip
 
-      - name: Fetch recent 8-K material events (EDGAR EFTS, 5 issuers)
+      - name: Fetch recent 8-K material events (EDGAR EFTS, 50 issuers)
         run: uv run python scripts/form8k_fetch.py
         timeout-minutes: 10  # EFTS + per-accession caches are idempotent; daily runs
         # fetch only new filings (cold pull ≈ 3min for 23 docs on 2026-08-21)
