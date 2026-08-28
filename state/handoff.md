@@ -8,6 +8,16 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-29 (ss) 轮㉝：超长期任务开局——数据补漏扫荡 + 全站审计 r3 全 PASS（单进程纪律；全套绿）
+
+**编排**：业主定帧"超长期查漏补缺+视觉持续优化;**agent 派发改单进程串行**(速率限制,质量优先)"→ 主线新鲜度探针 → 定向补漏抓取(runbook=轮㉑ TASK-DISP-R 实测协议) → 全量导出 → 单 agent 全站审计。
+
+- **新鲜度探针**(53 面板逐一 as_of 实测):28 ok / 23 "stale" 中甄别——frozen 设计使然 10(metrics/picks 族/evidence/bps_sweep/calibration/model_health/score_diagnostics 等)+源节奏诚实 5(13F 季节奏/cot 周更/korea 源停)→ **真正可补 8**:politician_trades(08-18)/party_index/executives/filers13f/def14a_persons(08-21)/picks_backtest/sector_breakdown/stock_universe(08-20)。
+- **定向补漏**(单进程串行,礼貌间隔):politician_trades 874 份(无新增=源节奏)、**PTR tx 全量 359/359→2,811 笔/94 人**(parse 54 失败+33 exchange 诚实计数)、form13f_dir 重开窗 9,385 filers(latest 08-21);全量导出 53 文件(衍生面板重算;stock_universe 走 retain 守卫=设计;executives 停 08-21=8-K 缓存内无新 5.02,诚实)→ 契约测试全过 → commit `0633dab`。
+- **AUD-08 全站审计 r3**(单 agent 零修复,`55c758b`→`d2b460e`):**8/8 项 PASS,P0/P1/P2 全零,P3×3**(index redirect 桩=轮㉑已裁决非缺陷;i18n 空串=设计模式;ipo last_walk=0=守望)。通过:可见垃圾 0/死内链 0(42,958 内链)/ticker 宇宙门 1,407 链接零回归(DEV-K)/h1 1,502 页恰一/五项结构全零/i18n 1,162 对称/as_of 抽样 8/8。**数据-呈现调和 4/4 复算全过**(horizon 卡 24 数逐字/稳定条 Δ 9 值精确复现含 null 诚实口径/语境行 t 反推成立/data_health 51 行三分区对账)。轮㉒ P3-1 修复确认在位。
+- **内务**：wa1 清(无 junction)、分支 cherry 全 `-` 删、任务书归档(注:AUD-08 任务书未预提交,agent 从主仓未跟踪路径读取——如实披露)。**边界**：data/display/audit lane;runs/ledger 零触碰;0 frozen/config/prereg/OOS。**单进程纪律生效**:本轮全程串行(抓取链→导出→审计),无并发 agent。待业主：E3 契约冻结+GO;下轮候选=P3 处置与档案 v1 扩展。
+
+
 ## 2026-08-28 (rr) 轮㉜：溯源研究档案管线——来源研究→报告生成→建模分析全流程贯通（[S#] 引用闭包硬门；三 agent 并行+集成对账，全套绿）
 
 **编排**：业主新命题"实现覆盖基于来源的金融研究、报告生成到金融建模与分析的完整流程,全程可追溯可溯源"→ 主线设计三阶段架构写入任务书 → 三 dev agent 并行（wh1/wh2/wk1;D 首派死于并发限额,续派成功）→ cherry-pick + 集成接缝对账。
