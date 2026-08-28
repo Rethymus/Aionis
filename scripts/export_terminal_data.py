@@ -2612,6 +2612,7 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
     ("sector_breakdown", "sector_breakdown.json", _DH_FROZEN),
     ("picks_backtest", "picks_backtest.json", _DH_FROZEN),
     ("ic_monthly", "ic_monthly.json", _DH_FROZEN),
+    ("score_diagnostics", "score_diagnostics.json", _DH_FROZEN),
     ("pick_conviction", "pick_conviction.json", _DH_FROZEN),
     ("model_health", "model_health.json", _DH_FROZEN),
     ("calibration_reliability", "calibration_reliability.json", _DH_FROZEN),
@@ -2763,6 +2764,11 @@ def _dh_as_of(key: str, fname: str) -> str | None:
         months = [m.get("month") for m in p.get("months", []) if m.get("month")]
         return months[-1] if months else None
     if key == "ic_monthly":
+        rows = [r.get("month") for r in p if isinstance(r, dict) and r.get("month")]
+        return rows[-1] if rows else None
+    if key == "score_diagnostics":
+        # Same root-list shape as ic_monthly; rows sort by month first, so the
+        # last row's month is the newest observed month.
         rows = [r.get("month") for r in p if isinstance(r, dict) and r.get("month")]
         return rows[-1] if rows else None
     if key == "pick_conviction":
@@ -2997,6 +3003,10 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
     "sector_breakdown": ("Aionis research artifacts (repo MIT)", "frozen OOS scores by sector"),
     "picks_backtest": ("Aionis research artifacts (repo MIT)", "realized OOS picks vs base, 131 months"),
     "ic_monthly": ("Aionis research artifacts (repo MIT)", "confirmatory monthly rank-IC series"),
+    "score_diagnostics": (
+        "Aionis research artifacts (repo MIT)",
+        "confirmatory OOS cross-sectional score diagnostics (display-only derivation)",
+    ),
     "pick_conviction": ("Aionis research artifacts (repo MIT)", "cross-sectional score dispersion"),
     "model_health": ("Aionis research artifacts (repo MIT)", "PSI + rolling IC on realized OOS"),
     "calibration_reliability": ("Aionis research artifacts (repo MIT)", "walk-forward calibration audit"),
@@ -6286,6 +6296,7 @@ def main() -> None:
     _safe_export("power_floor", eq.export_power_floor)
     _safe_export("evidence", eq.export_evidence)
     _safe_export("ic_monthly", eq.export_ic_monthly)
+    _safe_export("score_diagnostics", eq.export_score_diagnostics)
     # Terminal-specific.
     picks = _safe_export("picks", export_picks)
     if picks is not None:

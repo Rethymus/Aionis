@@ -3,8 +3,8 @@
 The Quarto research site was archived on 2026-08-15 (publication track retired);
 this module survives as the library that ``export_terminal_data.py`` imports for
 the shared payloads (evidence / power_floor / ic_monthly / sigma_survey /
-bps_sweep). ``export_terminal_data.py`` redirects ``OUT`` to
-``web/src/data/aionis/`` before calling the builders.
+bps_sweep / score_diagnostics). ``export_terminal_data.py`` redirects ``OUT``
+to ``web/src/data/aionis/`` before calling the builders.
 
 Standalone use still works: reads local gitignored runs/*.parquet and writes
 small aggregated JSON files into ``OUT`` (default ``archive/quarto-site/data/``,
@@ -16,6 +16,7 @@ Usage::
 from __future__ import annotations
 
 import json
+import math
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -148,6 +149,63 @@ def export_ic_monthly() -> None:
         for idx, g in grouped
     ]
     (OUT / "ic_monthly.json").write_text(json.dumps(rows, indent=2, allow_nan=False))
+
+
+# TASK-DISP-R1A: a Spearman on fewer names than this is not reported (honest
+# null) — a tiny overlap makes the rank correlation more noise than signal.
+SCORE_AC_MIN_OVERLAP = 30
+
+
+def export_score_diagnostics() -> None:
+    """Score-surface diagnostics per (month, region) — display-only derivation.
+
+    Reads the FROZEN confirmatory OOS score cross-section (the same parquet the
+    IC series aggregates from) and emits pure descriptive statistics of the
+    score distribution: cross-sectional width (``n``), first moments
+    (``score_mean`` / ``score_std``, ddof=1), the interquartile range
+    (``score_iqr``, linear-interpolated P75-P25), and the month-over-month
+    Spearman rank autocorrelation of scores (``rank_autocorr``) on the tickers
+    overlapping the region's PREVIOUS WITH-DATA month (per-region independent
+    chains; overlap < 30 names or a degenerate/constant cross-section -> honest
+    null, and each chain's first month is always null).
+
+    No returns join, no config, no ledger — this only characterizes the frozen
+    score surface the display layer already serves; it supports no new research
+    claim. Rows are sorted by month ascending, then region lexicographic; all
+    floats are rounded to 6 decimals for byte-stable output.
+    """
+    df = pd.read_parquet("runs/track_c_confirmatory_oos_scores.parquet")
+    df["month"] = pd.to_datetime(df["date"]).dt.strftime("%Y-%m")
+    # groupby(sort=True) yields exactly the contract order: month asc, then
+    # region lexicographic ("cn" < "us"). ISO month strings sort chronologically.
+    prev: dict[str, pd.Series] = {}  # region -> scores indexed by ticker
+    rows = []
+    for (month, region), g in df.groupby(["month", "region"], sort=True):
+        cur = g.set_index("ticker")["score"].astype(float)
+        p = prev.get(region)
+        ac: float | None = None
+        if p is not None:
+            j = pd.concat([cur.rename("cur"), p.rename("prev")], axis=1,
+                          join="inner").dropna()
+            if len(j) >= SCORE_AC_MIN_OVERLAP:
+                rho = float(j["cur"].corr(j["prev"], method="spearman"))
+                # A constant cross-section makes the correlation undefined
+                # (NaN) — JSON forbids NaN (allow_nan=False), and an
+                # uncomputable statistic is honestly null, never fabricated.
+                ac = round(rho, 6) if math.isfinite(rho) else None
+        q1, q3 = cur.quantile([0.25, 0.75], interpolation="linear")
+        rows.append({
+            "month": str(month),
+            "region": str(region),
+            "n": int(len(cur)),
+            "score_mean": round(float(cur.mean()), 6),
+            "score_std": round(float(cur.std()), 6),
+            "score_iqr": round(float(q3 - q1), 6),
+            "rank_autocorr": ac,
+        })
+        prev[region] = cur
+    (OUT / "score_diagnostics.json").write_text(
+        json.dumps(rows, indent=2, allow_nan=False))
 
 
 def main() -> None:

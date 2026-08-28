@@ -1148,9 +1148,9 @@ export const dict = {
     "shelf.empty": "当前类别下没有文档（诚实空态，不伪造条目）。",
     // Research atlas (/atlas — editorial deterministic research diagrams)
     "nav.atlas": "研究图谱",
-    "nav.sub.atlas": "编辑级研究叙事图：主张 · 分差 · 血缘",
+    "nav.sub.atlas": "编辑级研究叙事图：主张 · 分差 · 诊断 · 血缘",
     "atlas.intro":
-      "用编辑级确定性图表回答三个可信度问题：主张说了什么（IC 透视与结论区间）、预测与实现分差多大（校准带）、每个数字从哪来（数据血缘）。全部服务端渲染、零客户端 JS、附完整数据表回退。",
+      "用编辑级确定性图表回答四个可信度问题：主张说了什么（IC 透视与结论区间）、预测与实现分差多大（校准带）、分数面形态如何（诊断）、每个数字从哪来（数据血缘）。全部服务端渲染、零客户端 JS、附完整数据表回退。",
     "atlas.claims.title": "核心主张透视图",
     "atlas.claims.desc":
       "预注册主张（处理项−纯基本面的横截面月度 rank-IC 差分）的完整 OOS 呈现：逐月热力透视 + 结论森林图。",
@@ -1190,6 +1190,22 @@ export const dict = {
     "atlas.flow.cat.frozen": "冻结",
     "atlas.flow.table": "数据表（无障碍与降级回退）",
     "atlas.flow.n": "{n} 个面板",
+    // Score-surface diagnostics (TASK-DISP-R1A) — display-only derivation over
+    // the frozen confirmatory OOS score cross-section. Measurement only.
+    "atlas.diag.title": "分数面诊断透视图",
+    "atlas.diag.desc":
+      "派生自冻结的 confirmatory OOS 分数横截面（与 rank-IC 同源），纯描述性统计：每月每区域的分数离散度、宇宙宽度与月度秩自相关。秩自相关 = 相邻月重叠 ticker 上分数的横截面 Spearman 秩相关（各区域独立成链）；重叠不足 30 只时诚实留空。只呈现测量，无收益口径、无投资含义。",
+    "atlas.diag.disp.title": "月度分数离散度",
+    "atlas.diag.disp.desc":
+      "每月每区域横截面分数的标准差（竖带）与四分位距 IQR（细线）：分数面展幅的逐月测量。离散度是幅度不是方向——它与当月 IC 好坏没有红绿含义。",
+    "atlas.diag.breadth.title": "宇宙宽度",
+    "atlas.diag.breadth.desc":
+      "每月每区域参与打分的股票数（n）：横截面宽度的诚实记录。窄月份的解释力天然更弱——宽度本身是读数的一部分。",
+    "atlas.diag.ac.title": "分数惯性 · 月度秩自相关",
+    "atlas.diag.ac.desc":
+      "相邻有数据月之间重叠 ticker 上分数排名的横截面 Spearman 秩相关（各区域独立成链，断点 = 重叠不足或不可计算）。虚线参考 0 与 0.5：读数越接近 0.5，分数面的月度排名惯性越强。",
+    "atlas.diag.table": "数据表（无障碍与降级回退）",
+    "atlas.diag.n": "{n} 个月 · {start} → {end}",
   },
   en: {
     "brand.name": "Aionis",
@@ -2338,9 +2354,9 @@ export const dict = {
     "shelf.empty": "No documents in this category (honest empty state, no fabricated entries).",
     // Research atlas (/atlas — editorial deterministic research diagrams)
     "nav.atlas": "Research atlas",
-    "nav.sub.atlas": "Editorial research diagrams: claims · divergence · lineage",
+    "nav.sub.atlas": "Editorial research diagrams: claims · divergence · diagnostics · lineage",
     "atlas.intro":
-      "Editorial deterministic diagrams answering three credibility questions: what the claim says (IC pivots and the claim interval), how far forecasts diverge from realization (calibration bands), and where every number comes from (data lineage). All server-rendered, zero client JS, with full data-table fallbacks.",
+      "Editorial deterministic diagrams answering four credibility questions: what the claim says (IC pivots and the claim interval), how far forecasts diverge from realization (calibration bands), what the score surface looks like (diagnostics), and where every number comes from (data lineage). All server-rendered, zero client JS, with full data-table fallbacks.",
     "atlas.claims.title": "Core-claim pivots",
     "atlas.claims.desc":
       "The complete OOS presentation of the preregistered claim (treatment-minus-fundamentals-only differential in cross-sectional monthly rank-IC): monthly pivot heatmap + claim forest plot.",
@@ -2380,6 +2396,22 @@ export const dict = {
     "atlas.flow.cat.frozen": "Frozen",
     "atlas.flow.table": "Data table (accessibility & fallback)",
     "atlas.flow.n": "{n} panels",
+    // Score-surface diagnostics (TASK-DISP-R1A) — display-only derivation over
+    // the frozen confirmatory OOS score cross-section. Measurement only.
+    "atlas.diag.title": "Score-surface diagnostics",
+    "atlas.diag.desc":
+      "Derived from the frozen confirmatory OOS score cross-section (same source as the rank-IC), purely descriptive: per-month, per-region score dispersion, universe breadth, and monthly rank autocorrelation. Rank autocorrelation = cross-sectional Spearman of scores on the tickers overlapping the previous with-data month (an independent chain per region); honestly blank when the overlap is under 30 names. Measurement only — no return window, no investment implication.",
+    "atlas.diag.disp.title": "Monthly score dispersion",
+    "atlas.diag.disp.desc":
+      "Cross-sectional score standard deviation (bars) and interquartile range (thin line) per month and region: how wide the score surface sits. Dispersion is a magnitude, not a direction — it carries no good/bad coloring.",
+    "atlas.diag.breadth.title": "Universe breadth",
+    "atlas.diag.breadth.desc":
+      "Number of scored names per month and region (n): an honest record of cross-sectional width. Narrower months naturally carry less explanatory weight — width is part of the reading.",
+    "atlas.diag.ac.title": "Score inertia · monthly rank autocorrelation",
+    "atlas.diag.ac.desc":
+      "Cross-sectional Spearman rank correlation of scores between adjacent with-data months on their overlapping tickers (an independent chain per region; a break = overlap too small or not computable). Dashed references at 0 and 0.5: the closer to 0.5, the stronger the month-over-month rank inertia of the score surface.",
+    "atlas.diag.table": "Data table (accessibility & fallback)",
+    "atlas.diag.n": "{n} months · {start} → {end}",
   },
 } as const;
 

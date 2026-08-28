@@ -65,6 +65,15 @@
       "rows": 66
     },
     {
+      "key": "score_diagnostics",
+      "file": "score_diagnostics.json",
+      "category": "frozen",
+      "as_of": "2026-08",
+      "exported_at": null,
+      "present": true,
+      "rows": 134
+    },
+    {
       "key": "pick_conviction",
       "file": "pick_conviction.json",
       "category": "frozen",
@@ -444,8 +453,8 @@
     }
   ],
   "summary": {
-    "n_panels": 49,
-    "n_frozen": 15,
+    "n_panels": 50,
+    "n_frozen": 16,
     "n_daily": 25,
     "n_cadence": 9
   },
@@ -473,5 +482,5 @@
   },
   "planned": [],
   "methodology": "Freshness/provenance map of every terminal panel. frozen = derived from frozen OOS artifacts (ledger #49 lineage): the daily lane deliberately does NOT advance these \u2014 recomputing them from newer data would be rerun-to-significance. daily = recomputed by each CI refresh from live caches. cadence = advances on its source's publication rhythm (CFTC weekly, price caches ~5-day grace, EDGAR filing rhythm). as_of is read from each panel's own timestamp fields; null = the panel carries no observation date (static research artifact). rows is the len() of the panel's exported row list \u2014 computed from the committed payload, never a declared total; null = index/series panel with no natural row table (the terminal home's directory-scale counts render from it). The only legal way frozen numbers move forward: E3 forward-live accumulation or a new pre-registered phase. source_health quantifies field-level quality on the committed JSONs (smart_money ticker nulls = filings on unlisted targets honestly left empty; reddit bull_ratio nulls = sentiment not yet gradable in the accumulating window; cot staleness in weeks vs the Friday publication rhythm). planned lists panels that are NOT built \u2014 no fetcher, no data, no endpoint payload \u2014 disclosed so the panel count is never mistaken for coverage.",
-  "snapshot_ts": "2026-08-28T05:51:38.311886+00:00"
+  "snapshot_ts": "2026-08-28T08:23:00.846238+00:00"
 }

@@ -3,14 +3,16 @@
 import { SegmentHeader } from "@/components/segment-header";
 import AtlasClaims from "@/components/atlas/atlas-claims";
 import AtlasDivergence from "@/components/atlas/atlas-divergence";
+import AtlasDiagnostics from "@/components/atlas/atlas-diagnostics";
 import AtlasDataflow from "@/components/atlas/atlas-dataflow";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
 import { fmtInt } from "@/lib/format";
 
 // /atlas — 研究图谱(编辑级确定性研究图表;display lane:全部从已提交面板
-// 派生,零新抓取、零研究面接触)。三区块各答一个可信度问题:主张说了什么
-// (claims)/预测与实现分差多大(divergence)/每个数字从哪来(dataflow)。
+// 派生,零新抓取、零研究面接触)。四区块各答一个可信度问题:主张说了什么
+// (claims)/预测与实现分差多大(divergence)/分数面形态如何(diagnostics)/
+// 每个数字从哪来(dataflow)。
 // 设计规格:reports/design/2026-08-28-editorial-diagram-language.md。
 // Client shell(shelf 先例):sr-only h1 用既有 nav.atlas 键——server 壳拿
 // 不到 i18n,轮㉕审计标准要求每页恰好一个 h1。
@@ -29,6 +31,7 @@ export default function AtlasPage() {
       />
       <AtlasClaims />
       <AtlasDivergence />
+      <AtlasDiagnostics />
       <AtlasDataflow />
     </div>
   );

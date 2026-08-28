@@ -21,6 +21,7 @@ import marketContextJson from "./market_context.json";
 import evidenceJson from "./evidence.json";
 import powerFloorJson from "./power_floor.json";
 import icMonthlyJson from "./ic_monthly.json";
+import scoreDiagnosticsJson from "./score_diagnostics.json";
 import sigmaSurveyJson from "./sigma_survey.json";
 import bpsSweepJson from "./bps_sweep.json";
 import tacoJson from "./taco.json";
@@ -1217,6 +1218,20 @@ export type KnowledgeShelf = {
   snapshot_ts?: string;
 };
 
+// TASK-DISP-R1A — score-surface diagnostics: pure descriptive statistics per
+// (month, region) over the frozen confirmatory OOS score cross-section.
+// rank_autocorr is honestly null when a region chain's overlap with its
+// previous with-data month is under 30 names (always null on the first month).
+export type ScoreDiagnosticsRow = {
+  month: string;
+  region: string;
+  n: number;
+  score_mean: number;
+  score_std: number;
+  score_iqr: number;
+  rank_autocorr: number | null;
+};
+
 export const aionis = {
   metrics: metricsJson as Metrics,
   picks: picksJson as Pick[],
@@ -1233,6 +1248,7 @@ export const aionis = {
     cn: number;
     combined: number;
   }[],
+  scoreDiagnostics: scoreDiagnosticsJson as ScoreDiagnosticsRow[],
   sigmaSurvey: sigmaSurveyJson as SigmaSurvey,
   bpsSweep: bpsSweepJson as {
     bps: number;
