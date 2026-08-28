@@ -1,45 +1,116 @@
 {
   "status": "ok",
-  "as_of": "2026-08-26",
+  "as_of": "2026-08-27",
   "window": {
     "start": "2026-04-27",
-    "end": "2026-08-26"
+    "end": "2026-08-27"
   },
-  "issuers": 496,
-  "total": 1077,
+  "issuers": 501,
+  "total": 1090,
   "by_status": {
-    "filed": 856,
-    "priced": 221
+    "filed": 863,
+    "priced": 227
   },
   "by_form": {
-    "424B4": 221,
-    "S-1": 349,
-    "S-1/A": 507
+    "424B4": 227,
+    "S-1": 352,
+    "S-1/A": 511
   },
   "offer_price_parsed": 63,
   "offer_price_meta": {
     "target_cap_docs": 80,
-    "priced_filings": 221,
+    "priced_filings": 227,
     "newest_targeted": 80,
-    "attempted": 79,
-    "fetch_failed": 1,
-    "fetch_errors": {
-      "HTTPStatusError": 1
-    },
+    "attempted": 80,
+    "fetch_failed": 0,
+    "fetch_errors": {},
     "confidence": {
       "exact": 63,
       "low": 0,
-      "none": 15
+      "none": 17
     },
-    "coverage_pct_of_priced": 28.5,
+    "coverage_pct_of_priced": 27.8,
     "requests": {
       "task_budget": 170,
-      "cumulative_walk": 157,
-      "walk_cap": 154
+      "cumulative_walk": 171,
+      "walk_cap": 156,
+      "last_walk": 0
     },
-    "target_as_of": "2026-08-24"
+    "target_as_of": "2026-08-27"
   },
   "filings": [
+    {
+      "company": "Youmi Inc.",
+      "ticker": "",
+      "filed_date": "2026-08-27",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2137360/000152013826000375/0001520138-26-000375-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Reliance Global Group, Inc.",
+      "ticker": "EZRA",
+      "filed_date": "2026-08-27",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1812727/000149315226040436/0001493152-26-040436-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "FullPAC, Inc.",
+      "ticker": "",
+      "filed_date": "2026-08-27",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2076148/000149315226040434/0001493152-26-040434-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "USBC, Inc.",
+      "ticker": "USBC",
+      "filed_date": "2026-08-27",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1074828/000107482826000074/0001074828-26-000074-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Republic Power Group Ltd",
+      "ticker": "RPGL",
+      "filed_date": "2026-08-27",
+      "form": "424B4",
+      "status": "priced",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1912884/000121390026094237/0001213900-26-094237-index.htm",
+      "offer_price": 4.0
+    },
+    {
+      "company": "Check-Cap Ltd",
+      "ticker": "MBAI",
+      "filed_date": "2026-08-27",
+      "form": "424B4",
+      "status": "priced",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1610590/000121390026094129/0001213900-26-094129-index.htm",
+      "offer_price": 6.5
+    },
+    {
+      "company": "Rainier Acquisition Corp",
+      "ticker": "",
+      "filed_date": "2026-08-27",
+      "form": "424B4",
+      "status": "priced",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2147219/000110465926102498/0001104659-26-102498-index.htm",
+      "offer_price": 10.0
+    },
+    {
+      "company": "COLONY BANKCORP INC",
+      "ticker": "CBAN",
+      "filed_date": "2026-08-27",
+      "form": "424B4",
+      "status": "priced",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/711669/000110465926102490/0001104659-26-102490-index.htm",
+      "offer_price": null
+    },
     {
       "company": "RZ Wellness Ltd",
       "ticker": "",
@@ -48,6 +119,51 @@
       "status": "filed",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2130959/000213095926000007/0002130959-26-000007-index.htm",
       "offer_price": null
+    },
+    {
+      "company": "Dare Bioscience, Inc.",
+      "ticker": "DARE",
+      "filed_date": "2026-08-26",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1401914/000149315226040265/0001493152-26-040265-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Velos Acquisition I Corp.",
+      "ticker": "",
+      "filed_date": "2026-08-26",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2016072/000121390026094011/0001213900-26-094011-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Starfighters Space, Inc.",
+      "ticker": "FJET",
+      "filed_date": "2026-08-26",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1947016/000106299326004648/0001062993-26-004648-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Southern Cross Acquisition II Corp.",
+      "ticker": "SCAT",
+      "filed_date": "2026-08-26",
+      "form": "424B4",
+      "status": "priced",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2133239/000192998026000507/0001929980-26-000507-index.htm",
+      "offer_price": 10.0
+    },
+    {
+      "company": "JATT III Acquisition Corp",
+      "ticker": "",
+      "filed_date": "2026-08-26",
+      "form": "424B4",
+      "status": "priced",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2145659/000121390026093949/0001213900-26-093949-index.htm",
+      "offer_price": 10.0
     },
     {
       "company": "Sadot Group Inc.",
@@ -3611,7 +3727,7 @@
       "form": "424B4",
       "status": "priced",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1263364/000149315226032040/0001493152-26-032040-index.htm",
-      "offer_price": 4.85
+      "offer_price": null
     },
     {
       "company": "Viking Acquisition Corp. II",
@@ -3620,7 +3736,7 @@
       "form": "424B4",
       "status": "priced",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2139246/000121390026075135/0001213900-26-075135-index.htm",
-      "offer_price": 10.0
+      "offer_price": null
     },
     {
       "company": "Dear Industrial Gas Inc",
@@ -3746,7 +3862,7 @@
       "form": "424B4",
       "status": "priced",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1699963/000162828026046635/0001628280-26-046635-index.htm",
-      "offer_price": 25.0
+      "offer_price": null
     },
     {
       "company": "Osprey Acquisition Corp. III",
@@ -3755,7 +3871,7 @@
       "form": "424B4",
       "status": "priced",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2113481/000121390026074446/0001213900-26-074446-index.htm",
-      "offer_price": 10.0
+      "offer_price": null
     },
     {
       "company": "Forgent Power Solutions, Inc.",
@@ -3764,7 +3880,7 @@
       "form": "424B4",
       "status": "priced",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2080126/000119312526294982/0001193125-26-294982-index.htm",
-      "offer_price": 27.0
+      "offer_price": null
     },
     {
       "company": "ITG, Inc./DE/",
@@ -9735,5 +9851,5 @@
     }
   ],
   "methodology": "US IPO registration/pricing stream \u2014 SEC EDGAR EFTS whole-market form-level queries (public domain, 17 U.S.C. \u00a7105), fixed ~120-day window, filed-date point-in-time, one row per accession (an S-1/A amendment is a new filing, never a silent overwrite). Status is derived from the immutable form type: S-1 / S-1/A = filed (registration statement on file); 424B4 = priced (the statutory final prospectus under Securities Act Rule 424(b)(4) is filed after pricing \u2014 its appearance marks a priced offering). Offer price is a BOUNDED second-stage extraction, not full coverage: only the newest \u226480 priced (424B4) filings are walked politely (\u22652.1 s spacing, hard request budget disclosed in offer_price_meta.requests), their EDGAR index + primary document fetched, and the cover page regex-parsed with graded confidence \u2014 EXACT (single final printed price \u2192 exported), LOW (draft/range wording near the label \u2192 value withheld, counted, never guessed) and NO-MATCH; every unparsed row stays offer_price=null with its EDGAR index link. Share count, proceeds, and expected listing date are NOT extracted at any tier. Honest scope disclosures: (2) the 424B4 form-level catch includes priced follow-on offerings by already-listed issuers (e.g. S-3 shelf takedowns), not only first-day IPOs \u2014 this panel is the registration/pricing STREAM, not a curated IPO list; (3) no company-level state machine is applied (rows are filing-level). Ticker is parsed from the EDGAR display name where present; pre-symbol S-1 filers carry none (empty, never guessed). Counts are FILING counts, not company counts. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-08-27T17:23:22.866336+00:00"
+  "snapshot_ts": "2026-08-28T04:33:27.638134+00:00"
 }

@@ -2,8 +2,8 @@
   "status": "ok",
   "as_of_date": "2026-08-21",
   "freshness": {
-    "earliest": "2021-07",
-    "latest": "2026-08-27",
+    "earliest": "2026-08",
+    "latest": "2026-08-28",
     "mixed": true
   },
   "methodology": "Seven-theme signal overview (display-only, NOT a research claim). Aggregates are cross-sectional means over the S&P 500 PIT panel at the latest realized month; the macro theme uses the Track-C macro-regime composite; net cost uses the bps sweep. Themes marked forward_only / needs_work / partial have no real historical signal yet \u2014 shown honestly, never mocked. Not the frozen Track-B verdict.",
@@ -89,7 +89,7 @@
     {
       "key": "macro",
       "status": "live",
-      "as_of": "2026-08-27",
+      "as_of": "2026-08-28",
       "signals": [
         {
           "name": "macro_regime",
@@ -97,10 +97,6 @@
         }
       ],
       "series": [
-        {
-          "date": "2026-06-05",
-          "value": 0.574
-        },
         {
           "date": "2026-06-08",
           "value": 0.709
@@ -336,6 +332,10 @@
         {
           "date": "2026-08-27",
           "value": 0.102
+        },
+        {
+          "date": "2026-08-28",
+          "value": 0.102
         }
       ],
       "headline": "macro-regime composite z (VIX+credit+term+DFF surprise)"
@@ -417,16 +417,16 @@
     {
       "key": "news_sentiment",
       "status": "live",
-      "as_of": "2021-07",
-      "headline": "GDELT \u901a\u7528\u8bed\u8c03\uff08US \u5e02\u573a\u65b0\u95fb\uff0c2017-04\u21922021-07\uff09\uff1b\u901a\u7528\u8bcd\u5178\u975e\u91d1\u878d\u57df\u2014\u2014\u538b\u529b/\u60c5\u7eea\u4ee3\u7406\uff0c\u975e\u9009\u80a1\u4fe1\u53f7\uff08display-only, exploratory\uff09",
+      "as_of": "2026-08",
+      "headline": "GDELT \u901a\u7528\u8bed\u8c03\uff08US \u5e02\u573a\u65b0\u95fb\uff0c2017-04\u21922026-08\uff09\uff1b\u901a\u7528\u8bcd\u5178\u975e\u91d1\u878d\u57df\u2014\u2014\u538b\u529b/\u60c5\u7eea\u4ee3\u7406\uff0c\u975e\u9009\u80a1\u4fe1\u53f7\uff08display-only, exploratory\uff09",
       "signals": [
         {
           "name": "tone_latest",
-          "value": -0.092
+          "value": 0.411
         },
         {
           "name": "tone_mean",
-          "value": -0.309
+          "value": -0.077
         },
         {
           "name": "tone_min",
@@ -438,105 +438,105 @@
         },
         {
           "name": "n_months",
-          "value": 46
+          "value": 95
         }
       ],
       "series": [
         {
-          "month": "2019-06",
-          "value": -0.304
+          "month": "2024-06",
+          "value": 0.755
         },
         {
-          "month": "2019-07",
-          "value": -0.068
+          "month": "2024-07",
+          "value": 0.81
         },
         {
-          "month": "2019-08",
-          "value": -0.646
+          "month": "2024-08",
+          "value": 0.605
         },
         {
-          "month": "2019-09",
-          "value": -0.276
+          "month": "2024-09",
+          "value": 0.707
         },
         {
-          "month": "2019-10",
-          "value": 0.165
+          "month": "2024-10",
+          "value": 0.63
         },
         {
-          "month": "2019-11",
-          "value": 0.179
+          "month": "2024-11",
+          "value": 0.649
         },
         {
-          "month": "2019-12",
-          "value": -0.088
+          "month": "2024-12",
+          "value": 0.51
         },
         {
-          "month": "2020-01",
-          "value": -0.41
+          "month": "2025-01",
+          "value": 0.688
         },
         {
-          "month": "2020-02",
-          "value": -0.799
+          "month": "2025-02",
+          "value": 0.782
         },
         {
-          "month": "2020-03",
-          "value": -1.895
+          "month": "2025-03",
+          "value": 0.461
         },
         {
-          "month": "2020-04",
-          "value": -1.155
-        },
-        {
-          "month": "2020-05",
-          "value": -0.924
-        },
-        {
-          "month": "2020-06",
-          "value": -0.944
-        },
-        {
-          "month": "2020-07",
-          "value": -0.449
-        },
-        {
-          "month": "2020-08",
-          "value": -0.546
-        },
-        {
-          "month": "2020-09",
-          "value": -0.581
-        },
-        {
-          "month": "2020-10",
-          "value": -0.424
-        },
-        {
-          "month": "2020-11",
-          "value": -0.35
-        },
-        {
-          "month": "2020-12",
+          "month": "2025-04",
           "value": -0.373
         },
         {
-          "month": "2021-01",
-          "value": -0.493
+          "month": "2025-05",
+          "value": -0.174
         },
         {
-          "month": "2021-04",
-          "value": -0.071
+          "month": "2025-06",
+          "value": 0.152
         },
         {
-          "month": "2021-05",
-          "value": -0.221
+          "month": "2025-10",
+          "value": 0.295
         },
         {
-          "month": "2021-06",
-          "value": -0.124
+          "month": "2025-11",
+          "value": 0.766
         },
         {
-          "month": "2021-07",
-          "value": -0.092
+          "month": "2025-12",
+          "value": 0.755
+        },
+        {
+          "month": "2026-01",
+          "value": 0.609
+        },
+        {
+          "month": "2026-02",
+          "value": 0.649
+        },
+        {
+          "month": "2026-03",
+          "value": -0.013
+        },
+        {
+          "month": "2026-04",
+          "value": -0.024
+        },
+        {
+          "month": "2026-05",
+          "value": 0.372
+        },
+        {
+          "month": "2026-06",
+          "value": 0.479
+        },
+        {
+          "month": "2026-07",
+          "value": 0.441
+        },
+        {
+          "month": "2026-08",
+          "value": 0.411
         }
       ]
     },
@@ -649,5 +649,5 @@
       "series": []
     }
   ],
-  "snapshot_ts": "2026-08-27T17:23:22.404347+00:00"
+  "snapshot_ts": "2026-08-28T04:33:27.095263+00:00"
 }

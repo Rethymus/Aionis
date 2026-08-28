@@ -490,5 +490,5 @@
     }
   },
   "methodology": "Party opposition index + follow portfolios, DERIVED from the committed politician_trades_tx panel (House-only 2026 PTR PDF parses; zero new fetches). Opposition: per calendar month, for every ticker BOTH parties traded, net direction = buys \u2212 sells (count-weighted; the PTR discloses statutory $ bands, not exact amounts, so dollar-weighting would be fabricated precision); the index = share of both-directional common tickers signed opposite (D net-buy vs R net-sell or vice versa); null when no ticker carries both parties' net direction that month. Follow portfolios: trailing 90 days from the latest transaction date, top-10 tickers per party by net buy count \u2014 SIGNAL LISTS ONLY, no prices, no returns, no performance claim (display lane; live prices are display-only and never enter any pipeline). Unknown-party and un-tickered rows are excluded from the math and remain visible in the source panel.",
-  "snapshot_ts": "2026-08-27T17:23:23.513724+00:00"
+  "snapshot_ts": "2026-08-28T04:33:28.620309+00:00"
 }
