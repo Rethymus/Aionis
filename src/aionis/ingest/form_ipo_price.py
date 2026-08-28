@@ -222,6 +222,33 @@ def save_price_cache(cache: dict[str, dict], meta: dict | None = None,
     )
 
 
+def prune_price_cache_to_target(
+    cache: dict[str, dict], target_accessions: set[str]
+) -> dict[str, dict]:
+    """Restrict the parse cache to the current bounded-walk target window.
+
+    The target window only ever ADVANCES at its newest edge (a newly priced
+    424B4 enters as an older one slides out) and filed dates are immutable, so
+    an entry that left the newest-≤cap priced window can never re-enter:
+    keeping it would be dead weight that ``merge_offer_prices`` still serves to
+    every visible row while the export layer's ``conf["exact"]`` counts only
+    in-window entries — the drift that broke the
+    ``conf["exact"] == offer_price_parsed`` panel contract. Pruning makes the
+    cache structurally equal to "the current bounded-walk state", i.e. exactly
+    the window the panel discloses (single source of truth: the cache IS the
+    window).
+
+    FAIL (``ok: false``) entries whose accession is still in target ARE window
+    state (they retry on the next run) and are kept like any other. Zero
+    information loss: slid-out accessions are dropped whole, never rewritten
+    or re-graded, and they would never be reached again by any future walk.
+    Returns a NEW dict; the input is not mutated (pure function).
+    """
+    return {
+        acc: entry for acc, entry in cache.items() if acc in target_accessions
+    }
+
+
 def _acc_nodash(accession: str) -> str:
     return accession.replace("-", "")
 

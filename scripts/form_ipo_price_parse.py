@@ -41,6 +41,7 @@ from aionis.ingest.form_ipo_price import (
     load_cache_meta,
     load_price_cache,
     parse_filing_offer_price,
+    prune_price_cache_to_target,
     save_price_cache,
     stamp_row,
 )
@@ -117,6 +118,21 @@ def main() -> None:
             "target_cap_docs": args.max_docs,
         }
 
+    target_accessions = {str(a) for a in target["accession"]}
+
+    def _save() -> None:
+        # Cache hygiene on EVERY persist (cap early-exit, periodic and final
+        # saves, and the --max-requests 0 dry pass): drop entries that slid
+        # out of the target window. A slid-out accession can never re-enter
+        # (filed dates are immutable), so this is zero information loss — and
+        # it keeps the cache structurally equal to the disclosed window, so
+        # the export layer's full-cache merge and its window-scoped exact
+        # count can never drift apart again.
+        save_price_cache(
+            prune_price_cache_to_target(cache, target_accessions),
+            meta=_run_meta(),
+        )
+
     for i, (cik, acc) in enumerate(todo, 1):
         if n_req + 2 > args.max_requests:
             stop_reason = (
@@ -128,7 +144,7 @@ def main() -> None:
         cumulative += 2 if res["ok"] else 1
         cache[acc] = stamp_row({**res, "issuer_cik": cik})
         if i % 10 == 0 or i == len(todo):
-            save_price_cache(cache, meta=_run_meta())
+            _save()
             print(
                 f"[ipo-price] {i}/{len(todo)} ({(time.monotonic() - t0) / 60:.1f}min, "
                 f"~{n_req} reqs this walk / {cumulative} cumulative) — {acc}: "
@@ -136,7 +152,7 @@ def main() -> None:
                 f"{'' if res['ok'] else ' ERROR ' + str(res['error'])}",
                 flush=True,
             )
-    save_price_cache(cache, meta=_run_meta())
+    _save()
     if stop_reason:
         print(f"[ipo-price] {stop_reason}", flush=True)
 
