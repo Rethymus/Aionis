@@ -8,6 +8,15 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-28 (ll) 轮⑤：13D 检查点可续跑化（实战验证）+ 全站 a11y 首轮审计 + 标题语义修复
+
+**编排**：主线快探（负载均值 73KB 无巨页；CI yml 语法验证）→ 三 agent 并行（Y dev=13D 检查点/wz、Z 审计=a11y 结构/主仓只读、AA dev=标题语义/wy）→ 主线集成/甄别/重建/收口。
+
+- **Y（13D 按日检查点，`a3393e1`/`08145d1`）**：指纹版检查点 `sc13d_daily_checkpoint.json`——前提核查证明日索引不可变（URL=日期纯函数+Last-Data-Received 钉死头），诚实例外=当天文件在传播窗口会增长 → 每日行带原文 sha256，重跑磁盘比对零请求零解析、漂移只重算当日；6 新测试（中断续跑逐字节等价）+172 存量绿。**集成实战**：真网络首跑死于 WinError 5（Defender 瞬锁 tmp.replace）→ 主线热修 `ba89153`（3 次退避重试+直写兜底+永不外抛）→ 重跑复用崩溃遗留 27 天检查点、只补 592 天完成——续跑当场实战验证。遗留：CI cron 22:00 UTC 处传播窗口中段（指纹自愈；根治=调 cron，业主门）。
+- **Z（a11y/结构首轮审计，`3a3d7bd`）**：1,502 页 8 项，5/8 干净（img-alt 0 缺/空交互 0/重复 id 0/正 tabindex 0/表单标签 0）；发现 8 hub 页零标题（P1）、footer 0/1,502（P2）、跳级 3 页、index 空壳（P1→甄别=轮 21 已裁决 redirect 非缺陷勿修）。
+- **AA（标题语义，`b9ea8b7`）**：7 页 CardTitle→h1（`as` prop 可选升级、默认逐字节不变）、4 页 sr-only h1（既有键零新增 i18n）、跳级 3 页消除、force-camp h1、not-found `<main>`；tsc 0/eslint 0/19-19 校验；Tailwind v4 preflight h 继承实证=视觉零变化。**F-AUD3 改判误报**：站点无共享视觉 footer（命中=shadcn Card 类名 token），换 footer 会造伪 landmark → 关闭。
+- **验证**：全套 pytest exit 0 + 重建 1,502 页 + 结构复验（7 页 h1=1、跳级消除）。wz/wy 清（junction 先摘、cherry 全 `-`）；Y/Z/AA 任务书归档。
+
 ## 2026-08-28 (kk) 轮③：契约闸门双拦真回归（ipo 价格窗口 / def14a 缓存脏行潜伏两轮）+ 审计 8/8 PASS + CI 13D 步预算修正
 
 **编排**：主线核查（窗口探针 OK → 50 面板水位 → 16 步 fetch 族）→ 契约闸门拦截 → W/W2+X dev agent（worktree wx/wy）→ 集成/重建 → V 审计 agent → P3-1 主线直修 → 收口。业主授权继续，部署仍冻结。
