@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { ArrowRightIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -37,6 +38,7 @@ export function SegmentHeader({
   asOf,
   frozen = false,
   countHint,
+  extra,
 }: {
   segment: Segment;
   introKey: DictKey;
@@ -46,6 +48,11 @@ export function SegmentHeader({
    *  under the intro so the first screen anchors count AND freshness. The
    *  caller composes it from real panel data (never a hardcoded literal). */
   countHint?: string;
+  /** Optional extra provenance chips for pages whose panels carry MORE than
+   *  one waterline (e.g. institutions: quarterly holdings vs the filer
+   *  directory's filed envelope). Rendered right after the page's own as_of
+   *  badge so every freshness claim stays in one place. */
+  extra?: ReactNode;
 }) {
   const { t } = useI18n();
   return (
@@ -78,6 +85,7 @@ export function SegmentHeader({
         })}
         {/* Provenance chip — the page's own freshness, inline with the spine. */}
         {asOf ? <ProvenanceBadge ts={asOf} frozen={frozen} className="ml-1" /> : null}
+        {extra}
         {/* Guard spans the whole chain — shown as a trailing chip; highlighted
             when the page IS the guard segment (so /discipline shows its place). */}
         <Link
