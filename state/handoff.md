@@ -8,6 +8,14 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-28 (oo) 轮㉘：远程同步 + AI harness/金融计量深度调研 + 未来方向优先级路线图
+
+**编排**：业主指令①未提交部分原子 commit 同步远程 ②网络深调经济学/金融学 × AI harness 概念 ③未实施项优先级细致排列。
+
+- **远程同步**：唯一未提交项=并发 session 的 `docs/code-review/` 全历史审查工作库（286/439 commits 已审；有效发现 P0=0/P1=15/P2=109/P3=323，均分 8.28/10）→ 原子 commit `8187c0b` 前身 + **push 成功 `5475f6d..8187c0b main->main`，本地与 origin 完全同步（0 领先）**——08-22 以来的 44 commit（含轮㉖/㉗全部 display 交付）首次上远程。
+- **调研通道（诚实披露）**：WebSearch 后端周配额尽（09-03 重置）→ **arXiv API 一手检索三路**（LLM alpha mining / agent harness / LLM 收益预测，20 篇 2024-2026 文献）+ 计量金融领域知识。三线结论：① LLM 因子挖掘闭环自动化成主流（AlphaSchema/CogAlpha/TreEvo/AlphaEval/AlphaAgent 等）但**评估纪律缺位**（回测内优化=overfitting 工厂；例外可移植：AlphaEval 五维免回测、AlphaAgent 抗 decay 三件套）；② 2026 harness 科学显式化"**external verifiability**"为稀缺分化轴——Aionis 的 ledger/sha256/commit-then-reveal 已站在该轴上，应显式化输出；③ **DatedGPT 实测 lookahead premium 26.4bp/σ** = Aionis 反泄漏立场的外部定量佐证；factor zoo 复制危机（HLY t>3.0/HXZ 65% 失败/McLean-Pontiff 衰减）是本项目存在理由的文献注脚。
+- **交付**：`reports/design/2026-08-28-future-roadmap-research.md` —— P0（E3 forward-live 发射准备=业主命题正统锚定 Slice1-7 已毕仅差契约冻结+GO / code-review 15 条 P1 修复其中 forward 线三条为 E3 硬前置 / 传播层收尾 h10-h42+haircut 语境线）/ P1（Track A 因子生成器=RD 系列任务单即地基+AlphaAgent 三件套 Aionis 化 / LLM vintage 纪律=provider cutoff 入 ledger+探针检验 / R1-full）/ P2（R2 图表工件、CI 恢复迁移+cron 修正、评估层小升级、旧豁免升级）/ P3（harness 自指演进、decay 监测面板、earnings 臂）。排列原则=证据强度>反泄漏纯度>门状态；"若只做三件事"已写明。0 代码改动。
+
 ## 2026-08-28 (nn) 轮㉗：调研结论最优处理轮——/atlas h1 修复 + R1-lite 分数面诊断透视图上线（单 agent 垂直切片，1,503 页全套绿）
 
 **编排**：业主授权"继续根据调研结论最优处理，部署仍冻结"→ 主线快探（/atlas 零 h1 坐实=轮㉕标准 P1 回归；R1 可行性核查：decile 收益单调性需全样本前向收益=展示层重算收益有口径漂移风险→**业主门**；改 R1-lite=纯分数面派生）→ 主线直修+任务书（`156ec72`）→ **单 dev agent 全栈垂直切片**（wr1，真实 parquet 拷入 worktree）→ 主线 cherry-pick+确定性复核+全套验证。
