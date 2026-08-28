@@ -8,6 +8,16 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-28 (qq) 轮㉚：P0-3②+P3-2 lite+P2-1 lite 执行轮——atlas 文献语境线/样本期稳定条 + 自包含证据工件 + CSI300 半开语义落盘（全套绿）
+
+**编排**：业主授权"继续最优处理，部署仍冻结"→ 主线快探（CSI300 抓取器=本地嵌入包非网络；中途遇本机 0xC0並0142 坏窗口，按轮㉑预案 Write 工具先行+shell 恢复后重试）→ 两份任务书（`0318212`）→ 两 dev agent 分 lane 并行（wg1 junction/wg2）→ cherry-pick+全套验证。
+
+- **G1（web lane，`2e6af47`→`6236c12`）**：① 森林图"文献语境"行——从 metrics 推导 t 值（se≈(ci_hi−ci_lo)/3.92=0.0126 → **t≈−0.70**），并列 Harvey-Liu-Zhu (2016 RFS) t>3.0 阈值；纯语境并列，明示"展示性推导、非模型输出、NULL 不因对照改变"；无 CI 诚实不渲染。② IC 样本期稳定性描述条——前/后半分样本（33/33，规则写死）：US −0.0157→+0.0267（Δ+0.0424）、CN −0.0584→+0.0054（Δ+0.0638）、合并 −0.0347→+0.0218（Δ+0.0565）；注明"描述性,非检验"，半样本<12 月不渲染，null 月份不计入并在注脚披露。7 个新 i18n 键对称。
+- **G2（scripts lane，`edf2cca`→`f1d7b4d`）**：**R2-lite 自包含证据工件** `reports/evidence/atlas-claim-v1.html`（24KB,零 JS/零外部资源/零字体,浏览器直开）——七区块（主张/头条读数卡/SVG 森林图含 evidence 10 条有 CI 记录/66 月 IC 条形/逐月表/方法学含 E3 现状如实/溯源链 freeze48→result49）；**字节稳定契约**（零时钟、排序写死、双算 sha 一致 `c44cba3e…`、测试钉"与当前面板新鲜渲染逐字节相等"）+ 11 契约测试零 skip；数字全部 metrics 实值逐字嵌入（IC=-0.0088/CI/p=0.484/n=71/NULL/SESOI±0.01/config e14b9d44）。external verifiability 的文献支撑=OpenPM 可审计评估+TS-Arena 预注册工件。
+- **主线**：CSI300 成员缓存 force 重拉成功（本地嵌入包 `--with index-constitution`,零网络）——**max date=2026-08-27=今日−1,半开语义落盘实锤**（2,349,460 行/949 票）；CN 面板本身未重建（研究输入变更留待有意的专项运行）。
+- **验证**：两 worktree 内 tsc/eslint/pytest 全净（G2:95 passed,11 新测试）；主线 cherry-pick 零冲突 + 全套 pytest exit 0 + build 1,503 页 + 目视终验（Harvey 语境行 t≈-0.70 在墙、稳定条 Δ+0.0638 在墙、h1=1/h2=2、零渲染垃圾）。**内务**：wg1-2 清（junction 先摘）、g1/g2 分支 cherry 全 `-` 删、任务书归档。**边界**：display/scripts lane;冻结产物零触碰;未 push（随本 state 提交一并推）。待业主：E3 契约冻结+GO;CN 面板重建专项时机;R2-full（多工件/格式矩阵）。
+
+
 ## 2026-08-28 (pp) 轮㉙：P0-2 执行轮——code-review P1 逐条核实 + 三 agent 分 lane 修复 7 条（E3 硬前置清障）
 
 **编排**：业主授权"继续根据调研结论最优处理，部署仍冻结"→ 主线**先核查再派工**（15 条 P1 逐条对照当前 HEAD：P1-3/P1-10 已被后续修复；P1-5/P1-12 archived-lane/疑被 _safe_export 守卫取代不派；**7 条确认存活**；3 条标注需 agent 追踪裁定）→ 三份任务书（`0c3f58d`）→ 三 dev agent 分 lane 并行（wf1/wf2/wf3）→ 主线 cherry-pick+全套验证。
