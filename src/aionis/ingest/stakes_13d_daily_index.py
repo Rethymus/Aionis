@@ -107,15 +107,37 @@ def load_checkpoint(cache_dir: Path | None = None) -> dict[str, dict[str, Any]]:
 def save_checkpoint(
     days: dict[str, dict[str, Any]], cache_dir: Path | None = None
 ) -> None:
-    """Persist the checkpoint sidecar atomically (tmp write + replace)."""
+    """Persist the checkpoint sidecar atomically (tmp write + replace).
+
+    The checkpoint is ADVISORY: losing or skipping one save may cost re-parses
+    on the next run, but it must NEVER kill the walk. Windows can deny the
+    ``tmp.replace`` for seconds at a time (Defender/indexer holding the freshly
+    written file — observed live as WinError 5, 2026-08-28), so the replace is
+    retried with backoff and a direct write is the last-resort fallback; the
+    defensive loader already tolerates a torn file.
+    """
+    import time
+
     fp = _checkpoint_path(cache_dir)
     fp.parent.mkdir(parents=True, exist_ok=True)
     tmp = fp.with_suffix(".json.tmp")
-    tmp.write_text(
-        json.dumps({"version": _CHECKPOINT_VERSION, "days": days}, indent=2),
-        encoding="utf-8",
-    )
-    tmp.replace(fp)
+    payload = json.dumps({"version": _CHECKPOINT_VERSION, "days": days}, indent=2)
+    for attempt in range(3):
+        try:
+            tmp.write_text(payload, encoding="utf-8")
+            tmp.replace(fp)
+            return
+        except OSError:
+            if attempt == 0:
+                time.sleep(0.3)
+            elif attempt == 1:
+                time.sleep(1.0)
+    # Last resort: direct write (non-atomic). If even that fails, drop the
+    # save silently — the walk continues, the next day's save retries.
+    try:
+        fp.write_text(payload, encoding="utf-8")
+    except OSError:
+        pass
 
 
 def fetch_daily_crawler_index(
