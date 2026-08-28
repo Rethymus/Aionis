@@ -62,17 +62,26 @@ def _cache_dir(cache_dir: Path | None = None) -> Path:
 def _parse_opt_in_opt_out_to_long(df: pd.DataFrame) -> pd.DataFrame:
     """Convert opt-in/opt-out wide format to long [date, ticker] daily membership.
 
-    Each row is one stock's CSI300 membership period; opt-in/opt-out are datetime
-    (NaT allowed). NaT handling (the raw data has 4 NaT opt-in + 300 NaT opt-out):
+    SEMANTICS (pinned): membership days are the HALF-OPEN interval
+    ``[opt_in, opt_out)`` — from the opt-in day INCLUSIVE to the opt-out day
+    EXCLUSIVE. On the opt-out (index-removal) day the stock is already NOT an
+    index member, so no membership row is generated for that date. NaT handling
+    (the raw data has 4 NaT opt-in + 300 NaT opt-out):
 
     * NaT opt-in, known opt-out → the stock predates the dataset's recording window
       (early/founding member); treat opt-in as the dataset's earliest known opt-in
       (conservative: member from data start).
     * NaT opt-out → still a member → extend to the SNAPSHOT DATE (not 2099-12-31 — the
       prior cap materialized ~73 years of future daily rows per current member, ~12M
-      rows total). A future re-pull extends the cap; constituents_on(t) for t <= snapshot
-      date is exact, t > snapshot returns nothing (we never query future membership).
+      rows total). A future re-pull extends the cap; under the half-open contract
+      constituents_on(t) is exact for t < snapshot date and returns nothing for
+      t >= snapshot date for capped still-members (the cap day itself yields no row;
+      we never query future membership).
     * both NaT → skip (cannot place membership).
+
+    Degenerate intervals: ``opt_out < opt_in`` is skipped upstream (defensive);
+    ``opt_out == opt_in`` yields an EMPTY membership period (zero rows); a one-day
+    window (``opt_out == opt_in + 1``) yields exactly one row (the opt-in day).
     """
     if df.empty:
         return pd.DataFrame(columns=_LONG_COLUMNS)
@@ -96,7 +105,9 @@ def _parse_opt_in_opt_out_to_long(df: pd.DataFrame) -> pd.DataFrame:
         if opt_out < opt_in:
             continue  # defensive: malformed interval
 
-        dates = pd.date_range(start=opt_in, end=opt_out, freq="D")
+        # Half-open [opt_in, opt_out): the removal day itself is NOT a member day.
+        # opt_in == opt_out -> end < start -> empty range (empty membership period).
+        dates = pd.date_range(start=opt_in, end=opt_out - pd.Timedelta(days=1), freq="D")
         for date in dates:
             rows.append((date, symbol))
 

@@ -5,12 +5,23 @@ Mirrors the US-side Track B pipeline, but for A-shares. Constructs a
 cross-sectional panel [date, ticker, 10_price_features, limit_up_down_distance,
 suspension_flag, forward_return_h] from CSI300 daily price data.
 
+PIT universe: the source price snapshot is an EVER-MEMBER pool (every historical
+CSI300 constituent fetched over full history). Before writing, the panel is
+filtered to (date, ticker) cells that were PIT index members per
+``data/cache/csi300_constituents.parquet`` (half-open membership [opt_in, opt_out)
+— the removal day itself is NOT a member), so a date's cross-section is exactly
+its then-current CSI300 constituents, not the ever-member pool. Coverage note:
+the membership table caps still-members at its snapshot date, so panel dates at
+or beyond that snapshot have no membership rows and are dropped — refresh the
+constituents cache to extend the panel's effective end date.
+
 This is an exploratory feature set (NOT wired to the live pipeline, NO ledger
 write). Uses H6 determinism (seed=0, n_jobs=1) and PIT leakage guards.
 
 Run: uv run python scripts/build_cn_price_panel.py
 
 Data source: data/cache/ashare_prices_csi300.parquet (929 tickers, 2014-2026)
+Membership:  data/cache/csi300_constituents.parquet (PIT long table, mandatory)
 Output: data/cache/cn_price_panel.parquet
 """
 
@@ -36,6 +47,7 @@ log = structlog.get_logger()
 H = 21  # Forward return horizon (sessions, ~1 month)
 CACHE_DIR = settings.data_dir / "cache"
 SOURCE_PARQUET = CACHE_DIR / "ashare_prices_csi300.parquet"
+CONSTITUENTS_PARQUET = CACHE_DIR / "csi300_constituents.parquet"
 OUTPUT_PARQUET = CACHE_DIR / "cn_price_panel.parquet"
 
 
@@ -83,6 +95,57 @@ def _compute_market_proxy(close_wide: pd.DataFrame) -> pd.Series:
     market_prices = close_wide.mean(axis=1)
     log.info("computed_market_proxy", ew_mean=True)
     return market_prices
+
+
+def _membership_ticker_to_panel_format(ticker: str) -> str:
+    """``SZ000001`` (index-constitution) -> ``sz.000001`` (baostock code).
+
+    The membership long table uses index-constitution symbols (exchange prefix
+    upper-case); the price panel stores raw baostock ``code`` values. This mirrors
+    ``scripts/ashare_price_fetch_csi300.py::_csi300_to_baostock`` so the join keys
+    line up exactly as they did at fetch time. Already-dotted (baostock-format)
+    tickers pass through unchanged.
+    """
+    t = str(ticker).strip()
+    return t if "." in t else t[:2].lower() + "." + t[2:]
+
+
+def _filter_to_pit_members(
+    panel: pd.DataFrame, membership: pd.DataFrame
+) -> pd.DataFrame:
+    """Filter a tidy [date, ticker, ...] panel to PIT CSI300 member (date, ticker) cells.
+
+    The source price snapshot is an ever-member pool, so without this mask a date's
+    cross-section would include tickers already removed from (or not yet added to)
+    the index — survivorship/look-ahead contamination. Membership semantics follow
+    ``csi300_constituents._parse_opt_in_opt_out_to_long``: a ticker is a member on
+    ``date`` iff ``opt_in <= date < opt_out`` (half-open; the removal day itself is
+    NOT a member, so no membership row exists for it).
+
+    Args:
+        panel: Long panel with at least [date, ticker] columns (month-end sampled).
+        membership: Long [date, ticker] CSI300 membership table (one row per
+            member-day, e.g. from ``fetch_csi300_constituents``).
+
+    Returns:
+        Panel rows restricted to member (date, ticker) cells, sorted by
+        [date, ticker], index reset.
+    """
+    mem = membership.loc[:, ["date", "ticker"]].copy()
+    mem["date"] = pd.to_datetime(mem["date"]).dt.normalize()
+    mem["ticker"] = mem["ticker"].map(_membership_ticker_to_panel_format)
+    mem = mem.drop_duplicates()
+
+    pan = panel.copy()
+    pan["date"] = pd.to_datetime(pan["date"]).dt.normalize()
+    out = pan.merge(mem, on=["date", "ticker"], how="inner")
+    log.info(
+        "pit_membership_filter",
+        rows_before=len(pan),
+        rows_after=len(out),
+        dropped_non_members=len(pan) - len(out),
+    )
+    return out.sort_values(["date", "ticker"]).reset_index(drop=True)
 
 
 def _build_features(
@@ -252,6 +315,16 @@ def main() -> None:
     if no_ledger:
         log.info("PHASE_C_NO_LEDGER=1: artifacts-only mode (no ledger)")
 
+    # PIT membership table is MANDATORY: without it the panel would be an
+    # ever-member pool (survivorship/look-ahead contamination). Fail closed.
+    if not CONSTITUENTS_PARQUET.exists():
+        raise SystemExit(
+            f"[ERROR] {CONSTITUENTS_PARQUET} missing — run the CSI300 constituents "
+            "fetch first. The (date, ticker) PIT membership filter is mandatory; "
+            "building an unfiltered ever-member panel would leak."
+        )
+    membership = pd.read_parquet(CONSTITUENTS_PARQUET)
+
     # Load and pivot data
     close_wide, volume_wide, tradestatus_wide = _load_and_pivot_data()
 
@@ -260,6 +333,9 @@ def main() -> None:
 
     # Add label and apply month-end sampling
     panel = _add_label_and_sample(panel, close_wide)
+
+    # PIT CSI300 membership filter (ever-member pool -> per-date member cross-section)
+    panel = _filter_to_pit_members(panel, membership)
 
     # Sort by date, ticker
     panel = panel.sort_values(["date", "ticker"]).reset_index(drop=True)
@@ -291,6 +367,7 @@ def main() -> None:
     print(f"Columns ({len(cols)}): {cols}")
     print(f"Output: {OUTPUT_PARQUET}")
     print("Leakage self-check: PASSED")
+    print("PIT membership filter: applied (cross-section = per-date CSI300 members)")
     print(
         "Caveat: market_prices = equal-weight CSI300 proxy "
         "(cap-weight would need separate fetch)"

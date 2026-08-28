@@ -68,12 +68,13 @@ def test_parse_opt_in_opt_out_to_long_expands_daily(_mock_index_constitution):
     )
 
     # Assert: still-member is capped at the SNAPSHOT date (today), not 2099-12-31.
+    # Half-open [opt_in, opt_out): the snapshot cap day itself yields no row.
     today = pd.Timestamp.today().normalize()
     assert list(df.columns) == ["date", "ticker"]
     assert df["ticker"].unique()[0] == "SZ000001"
     assert df["date"].min() == pd.Timestamp("2018-01-15")
-    assert df["date"].max() == today
-    expected_days = (today - pd.Timestamp("2018-01-15")).days + 1
+    assert df["date"].max() == today - pd.Timedelta(days=1)
+    expected_days = (today - pd.Timestamp("2018-01-15")).days
     assert len(df) == expected_days
 
 
@@ -86,8 +87,9 @@ def test_parse_handles_nat_opt_in_as_data_start(_mock_index_constitution):
     df = csi300_constituents._parse_opt_in_opt_out_to_long(_mock_index_constitution.history_data)
     sub = df[df["ticker"] == "SH600549"]
     # NaT opt-in falls back to data_start (2010-01-04); opt-out honored.
+    # Half-open [opt_in, opt_out): last member day = opt-out - 1.
     assert sub["date"].min() == pd.Timestamp("2010-01-04")
-    assert sub["date"].max() == pd.Timestamp("2019-06-17")
+    assert sub["date"].max() == pd.Timestamp("2019-06-16")
 
 
 def test_parse_skips_row_with_both_nat(_mock_index_constitution):
@@ -112,16 +114,61 @@ def test_parse_opt_in_opt_out_with_exit_date(_mock_index_constitution):
         _mock_index_constitution.history_data
     )
 
-    # Assert: daily rows from opt-in to opt_out (exclusive)
+    # Assert: daily rows [opt_in, opt_out) — removal day 2019-06-20 EXCLUDED
     assert df["date"].min() == pd.Timestamp("2018-01-15")
-    assert df["date"].max() == pd.Timestamp("2019-06-20")
-    # Count days from 2018-01-15 to 2019-06-20 inclusive
-    expected_days = (pd.Timestamp("2019-06-20") - pd.Timestamp("2018-01-15")).days + 1
+    assert df["date"].max() == pd.Timestamp("2019-06-19")
+    expected_days = (pd.Timestamp("2019-06-20") - pd.Timestamp("2018-01-15")).days
     assert len(df) == expected_days
 
 
+def test_parse_half_open_membership_excludes_opt_out_day(_mock_index_constitution):
+    """P1-8 regression: the removal day (opt-out) must NOT be a member day.
+
+    Half-open [opt_in, opt_out) semantics: 2020-06-15 (opt-out) absent,
+    2020-06-14 (last member day) present.
+    """
+    _mock_index_constitution.history_data = pd.DataFrame([
+        {"symbol": "SZ000004", "name": "边界", "opt-in": "2020-01-01", "opt-out": "2020-06-15"},
+    ])
+    df = csi300_constituents._parse_opt_in_opt_out_to_long(
+        _mock_index_constitution.history_data
+    )
+    dates = set(df["date"])
+    assert pd.Timestamp("2020-06-15") not in dates  # removal day: not a member
+    assert pd.Timestamp("2020-06-14") in dates  # last member day
+    assert pd.Timestamp("2020-01-01") in dates  # opt-in day: member (inclusive)
+    expected_days = (pd.Timestamp("2020-06-15") - pd.Timestamp("2020-01-01")).days
+    assert len(df) == expected_days
+
+
+def test_parse_one_day_window_yields_single_member_day(_mock_index_constitution):
+    """Boundary: opt_out == opt_in + 1 -> exactly one member day (the opt-in day)."""
+    _mock_index_constitution.history_data = pd.DataFrame([
+        {"symbol": "SZ000005", "name": "单日", "opt-in": "2020-01-01", "opt-out": "2020-01-02"},
+    ])
+    df = csi300_constituents._parse_opt_in_opt_out_to_long(
+        _mock_index_constitution.history_data
+    )
+    assert len(df) == 1
+    assert df["date"].iloc[0] == pd.Timestamp("2020-01-01")
+    assert df["ticker"].iloc[0] == "SZ000005"
+
+
+def test_constituents_on_removal_day_not_member(_mock_index_constitution, tmp_path):
+    """PIT query ON the opt-out day must not see the removed stock (half-open)."""
+    _mock_index_constitution.history_data = pd.DataFrame([
+        {"symbol": "SZ000004", "name": "边界", "opt-in": "2020-01-01", "opt-out": "2020-06-15"},
+    ])
+    df = csi300_constituents.fetch_csi300_constituents(
+        cache_dir=tmp_path, enable_fetch=True
+    )
+    assert "SZ000004" not in csi300_constituents.constituents_on(df, "2020-06-15")
+    assert "SZ000004" in csi300_constituents.constituents_on(df, "2020-06-14")
+
+
 def test_parse_opt_in_opt_out_single_day_membership(_mock_index_constitution):
-    # Arrange: stock joined and exited same day (opt-in == opt-out)
+    # Arrange: degenerate interval opt-in == opt-out -> EMPTY membership period
+    # (half-open [d, d) contains no days; the stock was never a member row).
     _mock_index_constitution.history_data = pd.DataFrame([
         {"symbol": "SZ000003", "name": "神州高铁", "opt-in": "2018-06-15", "opt-out": "2018-06-15"},
     ])
@@ -131,10 +178,9 @@ def test_parse_opt_in_opt_out_single_day_membership(_mock_index_constitution):
         _mock_index_constitution.history_data
     )
 
-    # Assert: one row for that single day
-    assert len(df) == 1
-    assert df["date"].iloc[0] == pd.Timestamp("2018-06-15")
-    assert df["ticker"].iloc[0] == "SZ000003"
+    # Assert: zero membership rows for the degenerate interval
+    assert len(df) == 0
+    assert list(df.columns) == ["date", "ticker"]
 
 
 def test_parse_opt_in_opt_out_multiple_stocks(_mock_index_constitution):
@@ -151,10 +197,10 @@ def test_parse_opt_in_opt_out_multiple_stocks(_mock_index_constitution):
 
     # Assert: both stocks present
     assert set(df["ticker"].unique()) == {"SZ000001", "SZ000002"}
-    # Check that SZ000002 only appears in 2019
+    # Check that SZ000002 only appears in 2019 (half-open: [2019-01-01, 2019-12-31))
     sz000002_rows = df[df["ticker"] == "SZ000002"]
     assert sz000002_rows["date"].min() == pd.Timestamp("2019-01-01")
-    assert sz000002_rows["date"].max() == pd.Timestamp("2019-12-31")
+    assert sz000002_rows["date"].max() == pd.Timestamp("2019-12-30")
 
 
 def test_fetch_csi300_constituents_enable_fetch_true(_mock_index_constitution, tmp_path):

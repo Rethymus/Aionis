@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import numpy as np
 import pandas as pd
+import pytest
 
 from aionis.features.ashare_extras import limit_up_down_distance, suspension_flag
 from aionis.features.price_features import (
@@ -440,3 +441,120 @@ class TestH6Determinism:
         # Assert: bit-identical
         pd.testing.assert_frame_equal(limit1, limit2)
         pd.testing.assert_frame_equal(susp1, susp2)
+
+
+class TestPitMembershipFilter:
+    """P1-9 regression: the panel cross-section must be PIT CSI300 members.
+
+    The source price snapshot is an ever-member pool; the builder must filter
+    (date, ticker) cells against the CSI300 membership long table so a date's
+    cross-section is exactly its then-current constituents (half-open
+    [opt_in, opt_out): the removal day itself has no membership row).
+    """
+
+    def _panel(self) -> pd.DataFrame:
+        dates = pd.to_datetime(
+            ["2020-01-02", "2020-01-02", "2020-01-03", "2020-01-03"]
+        )
+        return pd.DataFrame(
+            {
+                "date": dates,
+                "ticker": ["sz.000001", "sz.000002", "sz.000001", "sz.000002"],
+                "momentum_21d": [0.01, 0.02, 0.03, 0.04],
+                "forward_return_h": [0.05, -0.01, 0.02, 0.00],
+            }
+        )
+
+    def _membership(self) -> pd.DataFrame:
+        # index-constitution symbol format (SZ.../SH...); sz.000002 removed after
+        # 2020-01-02 (no membership row on 2020-01-03 — half-open opt-out).
+        return pd.DataFrame(
+            {
+                "date": pd.to_datetime(
+                    ["2020-01-02", "2020-01-02", "2020-01-03"]
+                ),
+                "ticker": ["SZ000001", "SZ000002", "SZ000001"],
+            }
+        )
+
+    def test_filter_drops_removed_ticker_on_removal_day(self) -> None:
+        """The (removal-day, removed-ticker) cell is dropped; kept the day before."""
+        from scripts.build_cn_price_panel import _filter_to_pit_members
+
+        out = _filter_to_pit_members(self._panel(), self._membership())
+
+        assert len(out) == 3
+        removed = (out["date"] == pd.Timestamp("2020-01-03")) & (
+            out["ticker"] == "sz.000002"
+        )
+        assert not removed.any(), "removed ticker must not appear on its removal day"
+        kept = (out["date"] == pd.Timestamp("2020-01-02")) & (
+            out["ticker"] == "sz.000002"
+        )
+        assert kept.any(), "still-member cells must be kept"
+
+    def test_filter_normalizes_membership_ticker_format(self) -> None:
+        """Membership SZ000001 joins panel sz.000001 (baostock code format)."""
+        from scripts.build_cn_price_panel import _filter_to_pit_members
+
+        out = _filter_to_pit_members(self._panel(), self._membership())
+
+        assert set(out["ticker"]) == {"sz.000001", "sz.000002"}
+        # Both tickers present on 2020-01-02 -> format normalization worked.
+        day1 = out[out["date"] == pd.Timestamp("2020-01-02")]
+        assert set(day1["ticker"]) == {"sz.000001", "sz.000002"}
+
+    def test_filter_drops_never_member_ticker_entirely(self) -> None:
+        """A ticker absent from the membership table is dropped on every date."""
+        from scripts.build_cn_price_panel import _filter_to_pit_members
+
+        panel = self._panel()
+        panel.loc[len(panel)] = {
+            "date": pd.Timestamp("2020-01-02"),
+            "ticker": "sz.999999",
+            "momentum_21d": 0.5,
+            "forward_return_h": 0.1,
+        }
+        out = _filter_to_pit_members(panel, self._membership())
+
+        assert "sz.999999" not in set(out["ticker"])
+        assert len(out) == 3
+
+    def test_filter_preserves_columns_and_sorting(self) -> None:
+        """Feature/label columns survive the filter; output sorted, index reset."""
+        from scripts.build_cn_price_panel import _filter_to_pit_members
+
+        out = _filter_to_pit_members(self._panel(), self._membership())
+
+        assert list(out.columns) == ["date", "ticker", "momentum_21d", "forward_return_h"]
+        assert out[["date", "ticker"]].equals(
+            out[["date", "ticker"]].sort_values(["date", "ticker"])
+        )
+        assert out.index.tolist() == list(range(len(out)))
+
+    def test_filter_deduplicates_membership_rows(self) -> None:
+        """Duplicate membership rows do not duplicate panel rows."""
+        from scripts.build_cn_price_panel import _filter_to_pit_members
+
+        membership = pd.concat([self._membership(), self._membership()], ignore_index=True)
+        out = _filter_to_pit_members(self._panel(), membership)
+
+        assert len(out) == 3
+        assert not out.duplicated(["date", "ticker"]).any()
+
+    def test_main_fails_closed_without_membership_parquet(
+        self, tmp_path, monkeypatch
+    ) -> None:
+        """main() refuses to build when the PIT membership table is missing.
+
+        Fail-closed: silently skipping the filter would reproduce the ever-member
+        leak the filter exists to prevent.
+        """
+        import scripts.build_cn_price_panel as builder
+
+        monkeypatch.setattr(builder, "CONSTITUENTS_PARQUET", tmp_path / "missing_mem.parquet")
+        monkeypatch.setattr(builder, "SOURCE_PARQUET", tmp_path / "missing_prices.parquet")
+        monkeypatch.setattr(builder, "OUTPUT_PARQUET", tmp_path / "out.parquet")
+
+        with pytest.raises(SystemExit, match="PIT membership filter is mandatory"):
+            builder.main()
