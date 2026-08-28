@@ -39,6 +39,7 @@ import macroDriversJson from "./macro_drivers.json";
 import koreaProxyJson from "./korea_proxy.json";
 import themesJson from "./themes.json";
 import ledgerAuditJson from "./ledger_audit.json";
+import horizonRobustnessJson from "./horizon_robustness.json";
 import headlineProvenanceJson from "./headline_provenance.json";
 import dataHealthJson from "./data_health.json";
 import apiCatalogJson from "./api_catalog.json";
@@ -1232,6 +1233,47 @@ export type ScoreDiagnosticsRow = {
   rank_autocorr: number | null;
 };
 
+// TASK-H1 — horizon robustness of the frozen h=21 nulls: the latest
+// exploratory `sensitivity_horizon` ledger row projected to a panel. One
+// entry per phase per swept horizon; every field that can be absent in the
+// ledger row (missing phase/horizon, non-numeric cell) is `| null` — the
+// exporter never guesses. null_holds/verdicts are three-valued (true / false
+// / null = coverage incomplete), horizon_robust_all is true only when EVERY
+// phase held at BOTH horizons. Display-only derivation of an exploratory row
+// (h≠21 = changed config) — it asserts no confirmatory claim.
+export type HorizonHorizonCell = {
+  enhanced_mean_ic: number | null;
+  base_mean_ic: number | null;
+  mean_diff: number | null;
+  ci_lo: number | null;
+  ci_hi: number | null;
+  dm_p_mbb: number | null;
+  null_holds: boolean | null;
+};
+
+export type HorizonPhase = {
+  arm_enhanced: string | null;
+  // E1's differential base is arm_base_self (propagation beyond SELF); the
+  // shared-base phases (B/C/D) carry no arm_base field at all.
+  arm_base?: string | null;
+  h10: HorizonHorizonCell | null;
+  h42: HorizonHorizonCell | null;
+  null_holds_both: boolean | null;
+};
+
+export type HorizonRobustness = {
+  status: string;
+  // The ledger row's own ts (the result's birth stamp) — never a gen clock.
+  source_ts: string | null;
+  frozen_confirmatory_horizon: number | null;
+  horizons: number[];
+  phases: Record<string, HorizonPhase>;
+  horizon_robust_all: boolean | null;
+  null_criterion: string | null;
+  notes: string | null;
+  snapshot_ts?: string;
+};
+
 export const aionis = {
   metrics: metricsJson as Metrics,
   picks: picksJson as Pick[],
@@ -1271,6 +1313,7 @@ export const aionis = {
   koreaProxy: koreaProxyJson as KoreaProxy,
   themes: themesJson as Themes,
   ledgerAudit: ledgerAuditJson as LedgerAudit,
+  horizonRobustness: horizonRobustnessJson as HorizonRobustness,
   headlineProvenance: headlineProvenanceJson as HeadlineProvenance,
   dataHealth: dataHealthJson as DataHealth,
   apiCatalog: apiCatalogJson as ApiCatalog,

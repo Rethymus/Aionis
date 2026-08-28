@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { aionis, type CalibrationReliability } from "@/data/aionis";
+import { HorizonRobustnessCard } from "@/components/calibration/horizon-robustness-card";
 import { ShieldAlertIcon, ShieldCheckIcon } from "lucide-react";
 import {
   CartesianGrid,
@@ -221,6 +222,13 @@ export function CalibrationView() {
           </p>
         </CardContent>
       </Card>
+
+      {/* TASK-H1 — horizon robustness of the frozen nulls (validity family):
+          the calibration tab is the /track validity entry, and this panel is
+          the same kind of measurement self-check (does the frozen verdict
+          survive a non-frozen horizon?). No new tab/route — hash behavior
+          unchanged. */}
+      <HorizonRobustnessCard />
     </div>
   );
 }

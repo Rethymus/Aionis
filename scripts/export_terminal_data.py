@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import itertools
 import json
+import math
 import os
 import re
 import sys
@@ -2503,6 +2504,117 @@ def export_ledger_audit() -> None:
     (WEB / "ledger_audit.json").write_text(json.dumps(_stamp(payload), indent=2, default=str))
 
 
+def export_horizon_robustness() -> None:
+    """Export the horizon-robustness sweep summary (READ-ONLY ledger projection).
+
+    TASK-H1: the horizon sweep (h=10/h=42 re-estimation of the frozen h=21
+    Phase B/C/D/E1 differentials) already ran and its verdict — every null
+    holds at BOTH non-frozen horizons — only lived in gitignored logs. This
+    export lifts the LATEST ``event=="exploratory" and phase=="sensitivity_
+    horizon"`` ledger row into a browser-renderable summary. It never mutates
+    the ledger and adds no confirmatory claim: h≠21 is a changed config, the
+    row is exploratory by construction (``null_criterion``/``notes`` are
+    carried verbatim from the row).
+
+    Missing pieces are honest nulls, never guessed: a phase absent from a
+    horizon's ``results`` bucket yields a null cell for that horizon and a
+    null ``null_holds_both``; ``horizon_robust_all`` is three-valued (True
+    only when EVERY phase held at both horizons, False when any explicitly
+    broke, null when coverage is incomplete). Absent any sweep row the export
+    raises FileNotFoundError so ``_safe_export`` skips (tracked JSON retains
+    its last committed value) instead of fabricating a panel.
+    """
+    rows = _read_ledger_rows()
+    sweep = None
+    for _, row in rows:
+        if row.get("event") == "exploratory" and row.get("phase") == "sensitivity_horizon":
+            sweep = row  # rows are appended chronologically → keep the LAST match
+    if sweep is None:
+        raise FileNotFoundError(
+            "runs/ledger.jsonl: no exploratory sensitivity_horizon row "
+            "(tracked JSON retains last-committed value)"
+        )
+
+    def _num(v) -> float | None:
+        if isinstance(v, bool) or not isinstance(v, int | float):
+            return None
+        return round(float(v), 6) if math.isfinite(v) else None
+
+    def _holds(v) -> bool | None:
+        return v if isinstance(v, bool) else None
+
+    horizons = [int(h) for h in (sweep.get("horizons") or []) if isinstance(h, int | float)]
+    results = sweep.get("results") if isinstance(sweep.get("results"), dict) else {}
+    # Phase list = the union the row itself carries (no hardcoded whitelist);
+    # insertion order of the row is preserved (B, C, D, E1 in the real row).
+    phase_names: list[str] = []
+    for h in horizons:
+        bucket = results.get(str(h)) if isinstance(results.get(str(h)), dict) else {}
+        for ph in bucket:
+            if ph not in phase_names:
+                phase_names.append(ph)
+
+    phases: dict[str, dict] = {}
+    holds_flags: list[bool | None] = []
+    for ph in phase_names:
+        entry: dict = {"arm_enhanced": None, "arm_base": None}
+        h_flags: list[bool | None] = []
+        for h in horizons:
+            cell = results.get(str(h), {}).get(ph) if isinstance(results.get(str(h)), dict) else None
+            if not isinstance(cell, dict):
+                entry[f"h{h}"] = None
+                h_flags.append(None)
+                continue
+            if entry["arm_enhanced"] is None:
+                entry["arm_enhanced"] = cell.get("arm_enhanced")
+            if entry["arm_base"] is None and "arm_base" in cell:
+                # E1's differential base is arm_base_self (propagation beyond
+                # SELF) — kept only when the row carries it (B/C/D do not).
+                entry["arm_base"] = cell.get("arm_base")
+            holds = _holds(cell.get("null_holds"))
+            entry[f"h{h}"] = {
+                "enhanced_mean_ic": _num(cell.get("enhanced_mean_ic")),
+                "base_mean_ic": _num(cell.get("base_mean_ic")),
+                "mean_diff": _num(cell.get("mean_diff")),
+                "ci_lo": _num(cell.get("ci_lo")),
+                "ci_hi": _num(cell.get("ci_hi")),
+                "dm_p_mbb": _num(cell.get("dm_p_mbb")),
+                "null_holds": holds,
+            }
+            h_flags.append(holds)
+        if h_flags and all(f is True for f in h_flags):
+            both: bool | None = True
+        elif any(f is False for f in h_flags):
+            both = False
+        else:
+            both = None
+        entry["null_holds_both"] = both
+        if entry["arm_base"] is None:
+            del entry["arm_base"]  # B/C/D share the plain arm_base — not per-phase
+        phases[ph] = entry
+        holds_flags.append(both)
+
+    if holds_flags and all(f is True for f in holds_flags):
+        robust_all: bool | None = True
+    elif any(f is False for f in holds_flags):
+        robust_all = False
+    else:
+        robust_all = None
+
+    frozen_h = sweep.get("frozen_confirmatory_horizon")
+    payload = {
+        "status": "ok",
+        "source_ts": sweep.get("ts"),
+        "frozen_confirmatory_horizon": int(frozen_h) if isinstance(frozen_h, int | float) else None,
+        "horizons": horizons,
+        "phases": phases,
+        "horizon_robust_all": robust_all,
+        "null_criterion": sweep.get("null_criterion"),
+        "notes": str(sweep.get("notes") or "")[:500],
+    }
+    (WEB / "horizon_robustness.json").write_text(json.dumps(_stamp(payload), indent=2, default=str))
+
+
 def export_headline_provenance() -> None:
     """Export the birth certificate of the headline claim (READ-ONLY).
 
@@ -2646,6 +2758,11 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
     ("reddit_trending", "reddit_trending.json", _DH_DAILY),
     ("headline_provenance", "headline_provenance.json", _DH_DAILY),
     ("ledger_audit", "ledger_audit.json", _DH_DAILY),
+    # Horizon-robustness sweep summary — derived from a TRACKED exploratory
+    # ledger row, so it only moves when the sweep itself is re-run. frozen,
+    # honestly: the daily lane deliberately never advances it (advancing would
+    # mean re-running an exploratory sweep = rerun-to-significance territory).
+    ("horizon_robustness", "horizon_robustness.json", _DH_FROZEN),
     ("cot", "cot.json", _DH_CADENCE),
     ("smart_money", "smart_money.json", _DH_CADENCE),
     ("stakes_13g", "stakes_13g.json", _DH_DAILY),
@@ -2848,6 +2965,11 @@ def _dh_as_of(key: str, fname: str) -> str | None:
         return p.get("as_of")
     if key == "headline_provenance":
         ts = p.get("result_ts")
+        return ts.split("T")[0] if ts else None
+    if key == "horizon_robustness":
+        # as_of = the sweep row's own ledger ts (the result's birth stamp, not
+        # the export clock) — date-only like headline_provenance.
+        ts = p.get("source_ts")
         return ts.split("T")[0] if ts else None
     # model_health / calibration_reliability / power_floor / sigma_survey /
     # bps_sweep / evidence / reddit / ledger_audit: no observation date field.
@@ -3102,6 +3224,10 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
     ),
     "headline_provenance": ("Aionis append-only ledger (repo MIT)", "ledger.jsonl freeze→result pairing"),
     "ledger_audit": ("Aionis append-only ledger (repo MIT)", "ledger.jsonl claim-row timeline"),
+    "horizon_robustness": (
+        "Aionis exploratory ledger row (repo MIT)",
+        "horizon-robustness sweep summary of the frozen h=21 nulls",
+    ),
     "cot": ("U.S. CFTC — public domain", "Commitments of Traders legacy futures, weekly"),
     "smart_money": ("U.S. SEC EDGAR — public domain", "13D/G filings via EFTS, filed-date PIT"),
     "companies_dir": ("SEC EDGAR public domain (17 U.S.C. §105)", "company_tickers snapshot directory"),
@@ -6346,6 +6472,9 @@ def main() -> None:
     _safe_export("reddit_meta", export_reddit_meta)
     _safe_export("reddit_trending", export_reddit_trending)
     _safe_export("ledger_audit", export_ledger_audit)
+    # horizon_robustness projects the latest exploratory sensitivity_horizon
+    # ledger row (READ-ONLY) — before the freshness map / catalog that index it.
+    _safe_export("horizon_robustness", export_horizon_robustness)
     _safe_export("headline_provenance", export_headline_provenance)
     # Per-stock view joins the corroboration JSONs above — keep after them.
     _safe_export("stock_universe", export_stock_universe)
