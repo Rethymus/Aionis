@@ -49,6 +49,9 @@ EXPECTED_PANELS: dict[str, tuple[str, str, str]] = {
     "picks_backtest": ("picksBacktest", "picks_backtest.json", "frozen"),
     "ic_monthly": ("icMonthly", "ic_monthly.json", "frozen"),
     "score_diagnostics": ("scoreDiagnostics", "score_diagnostics.json", "frozen"),
+    # Round-31 H1 panel (ledger-derived horizon sweep summary; frozen — static
+    # until a new sweep appends an exploratory row).
+    "horizon_robustness": ("horizonRobustness", "horizon_robustness.json", "frozen"),
     "pick_conviction": ("pickConviction", "pick_conviction.json", "frozen"),
     "model_health": ("modelHealth", "model_health.json", "frozen"),
     "calibration_reliability": (
@@ -324,21 +327,18 @@ def test_atlas_row_panels_present_and_dated() -> None:
         assert rows[key]["as_of"] == newest, (
             f"{key}: manifest as_of must be the last row's month"
         )
-    # KNOWN-GAP (TASK-H2 report top item): calibration_reliability is datable —
-    # it carries per-region series[].month — yet its manifest row ships
-    # as_of=None (the exporter's _dh_as_of has no branch for it and buckets it
-    # with the "no observation date field" panels). The atlas card therefore
-    # renders an empty observation date. Current reality is pinned below; once
-    # the exporter derives as_of = max(last month per region series), FLIP to
-    # the strict pair: as_of == max(series_months) and non-empty.
+    # FLIPPED (round-32 integration): calibration_reliability is datable from
+    # its own payload — the exporter now derives as_of = max(last month per
+    # region series). The TASK-H2 KNOWN-GAP (as_of=None) is closed.
     cr_row = rows["calibration_reliability"]
     assert cr_row["present"] is True
-    assert cr_row["as_of"] is None  # KNOWN-GAP: flip to strict once fixed
     cr = _load("calibration_reliability.json")
     series_months = [r["series"][-1]["month"] for r in cr["regions"].values()]
     assert all(series_months), (
-        "the panel carries datable per-region series — the as_of=None gap is "
-        "real and fixable, not an honest no-date panel"
+        "the panel carries datable per-region series — as_of must track them"
+    )
+    assert cr_row["as_of"] == max(series_months), (
+        "calibration_reliability manifest as_of must be the newest series month"
     )
 
 

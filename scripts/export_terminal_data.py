@@ -2888,6 +2888,17 @@ def _dh_as_of(key: str, fname: str) -> str | None:
         # last row's month is the newest observed month.
         rows = [r.get("month") for r in p if isinstance(r, dict) and r.get("month")]
         return rows[-1] if rows else None
+    if key == "calibration_reliability":
+        # Datable from the payload itself: the newest month across every
+        # region's walk-forward series (us/cn series carry `month` keys).
+        months = [
+            row.get("month")
+            for region in (p.get("regions") or {}).values()
+            if isinstance(region, dict)
+            for row in region.get("series", [])
+            if isinstance(row, dict) and row.get("month")
+        ]
+        return max(months) if months else None
     if key == "pick_conviction":
         latest = p.get("latest")
         return latest.get("date") if latest else None
