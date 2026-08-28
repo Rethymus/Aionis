@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="aionis export_evidence_html.py 1.0.0">
+<title>Aionis 研究证据工件 · Atlas Claim Evidence (atlas-claim-v1)</title>
+<!--
+  Aionis standalone evidence artifact — atlas-claim-v1
+  byte-stable artifact — regenerate with: `uv run python scripts/export_evidence_html.py`
+  generator version: 1.0.0
+  self-contained: zero JS, zero external resources, zero font requests
+  (system font stack only). All numbers are verbatim panel values from
+  web/src/data/aionis/*.json; as-of stamps come from panel fields only.
+-->
+<style>
+:root { color-scheme: light; }
+* { box-sizing: border-box; }
+body { margin: 0; background: #f5f5f4; color: #171717; line-height: 1.55;
+  font-family: ui-sans-serif, system-ui, "Segoe UI", "PingFang SC",
+  "Hagino Sans GB", "Microsoft YaHei", sans-serif; }
+main { max-width: 880px; margin: 0 auto; padding: 26px 20px 64px; }
+section { background: #ffffff; border: 1px solid #e4e4e7; border-radius: 10px;
+  padding: 20px 22px; margin: 18px 0; }
+h1 { font-size: 1.4rem; margin: 0 0 8px; }
+h2 { font-size: 1.02rem; margin: 0 0 12px; }
+p { margin: 8px 0; }
+.sub { color: #55555c; font-size: 0.88rem; }
+.accent { color: #0059ec; }
+.badge { display: inline-block; border: 1px solid #0059ec; color: #0059ec;
+  border-radius: 999px; padding: 1px 10px; font-size: 0.78rem;
+  letter-spacing: 0.04em; vertical-align: 2px; }
+dl.card { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px 18px; margin: 0; }
+dl.card div { border-top: 1px solid #ececf0; padding-top: 8px; }
+dt { font-size: 0.76rem; color: #55555c; letter-spacing: 0.02em; }
+dd { margin: 2px 0 0; font-size: 1.1rem; font-variant-numeric: tabular-nums; }
+dl.kv { margin: 0; font-size: 0.84rem; }
+dl.kv div { display: flex; gap: 12px; border-bottom: 1px solid #ececf0;
+  padding: 4px 0; }
+dl.kv dt { flex: 0 0 260px; color: #55555c; }
+dl.kv dd { margin: 0; font-size: 0.84rem; font-variant-numeric: tabular-nums; }
+.tbl { max-height: 430px; overflow: auto; border: 1px solid #ececf0;
+  border-radius: 6px; }
+table { border-collapse: collapse; width: 100%; font-size: 0.8rem;
+  font-variant-numeric: tabular-nums; }
+th, td { border-bottom: 1px solid #ececf0; padding: 4px 10px; text-align: right; }
+th:first-child, td:first-child { text-align: left; }
+th { color: #55555c; font-weight: 600; background: #fafafa; position: sticky;
+  top: 0; }
+svg { display: block; width: 100%; height: auto; }
+.note { font-size: 0.8rem; color: #55555c; }
+.na { font-size: 0.86rem; color: #55555c; background: #fafafa;
+  border: 1px dashed #c9c9cf; border-radius: 6px; padding: 8px 12px; }
+ul.methods { margin: 0; padding-left: 1.25em; }
+ul.methods li { margin: 7px 0; font-size: 0.88rem; }
+code { background: #f2f2f4; border-radius: 4px; padding: 1px 5px;
+  font-family: ui-monospace, Consolas, "Courier New", monospace;
+  font-size: 0.86em; }
+footer { color: #55555c; font-size: 0.78rem; padding: 0 4px; }
+</style>
+</head>
+<body>
+<main>
+<section>
+<h1>Aionis 研究证据工件 · Atlas Claim Evidence <span class="badge">atlas-claim-v1</span></h1>
+<p class="sub">One pre-registered two-tailed claim per phase — cross-sectional monthly rank-IC on S&amp;P 500 point-in-time constituents. 每相单一预注册两尾主张:横截面月度 rank-IC 差分。</p>
+<p>主张(预注册、两尾):<em>处理信号(treatment)相对纯基本面基线的月度 cross-sectional rank-IC <span class="accent">差分</span>与零无差异</em>。本页是该主张一次确认性测量的自包含呈现:全部数字逐字取自已提交的显示面板(web/src/data/aionis/*.json)。NULL 判定 + 窄置信区间 = 有信息量的结论(纪律的胜利),不是失败。本工件只呈现测量与设计,不构成投资建议。</p>
+</section>
+<section>
+<h2>2 · 头条读数 / Headline reading</h2>
+<dl class="card"><div><dt>combined_ic · 月度 rank-IC 差分</dt><dd>-0.0088</dd></div><div><dt>95% CI(HAC)</dt><dd>[-0.0336, 0.0159]</dd></div><div><dt>p(HAC)</dt><dd>0.484</dd></div><div><dt>n_months · 样本外月数</dt><dd>71</dd></div><div><dt>verdict · 预注册两尾判定</dt><dd><span class="badge">NULL</span></dd></div><div><dt>SESOI · 实际显著域</dt><dd>±0.01</dd></div><div><dt>config_sig_short · 冻结配置签名</dt><dd>e14b9d44</dd></div><div><dt>ledger_row · 账本行</dt><dd>49</dd></div></dl>
+<p class="note">以上读数全部取自 metrics.json 面板实值(数字逐字嵌入,不经过任何重算或四舍五入);verdict 按预注册两尾判定规则给出。面板 snapshot_ts:2026-08-22T13:32:20.445645+00:00。</p>
+</section>
+<section>
+<h2>3 · 森林图 / Forest — 95% CI vs SESOI 带 vs 零线</h2>
+<svg viewBox="0 0 760 430" role="img" aria-label="森林图:95% CI 与 SESOI 带对零线">
+<text x="276" y="16" font-size="11" fill="#55555c">■ SESOI 带实际显著域 ±0.01</text>
+<text x="491" y="16" font-size="11" fill="#55555c">—— 预注册确认 / CONFIRMATORY</text>
+<text x="691" y="16" font-size="11" fill="#55555c">—— 其它入账估计</text>
+<rect x="448.50" y="48" width="115.00" height="330" fill="#e6f0ff"/>
+<line x1="506.00" y1="48" x2="506.00" y2="378" stroke="#a1a1aa" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="268" y="67.00" font-size="12" fill="#171717" text-anchor="end">row 49 预注册确认主张(claim)</text>
+<line x1="312.80" y1="64.00" x2="597.43" y2="64.00" stroke="#0059ec" stroke-width="2.5" stroke-linecap="round"/>
+<circle cx="455.40" cy="64.00" r="4" fill="#0059ec" stroke="#ffffff" stroke-width="1.5"/>
+<text x="268" y="97.00" font-size="12" fill="#171717" text-anchor="end">#1 Phase B differential</text>
+<line x1="445.05" y1="94.00" x2="557.75" y2="94.00" stroke="#44474f" stroke-width="2.5" stroke-linecap="round"/>
+<circle cx="501.40" cy="94.00" r="4" fill="#44474f" stroke="#ffffff" stroke-width="1.5"/>
+<text x="268" y="127.00" font-size="12" fill="#171717" text-anchor="end">#2 Phase C differential</text>
+<line x1="393.88" y1="124.00" x2="543.95" y2="124.00" stroke="#44474f" stroke-width="2.5" stroke-linecap="round"/>
+<circle cx="468.62" cy="124.00" r="4" fill="#44474f" stroke="#ffffff" stroke-width="1.5"/>
+<text x="268" y="157.00" font-size="12" fill="#171717" text-anchor="end">#3 Phase D differential</text>
+<line x1="427.23" y1="154.00" x2="550.85" y2="154.00" stroke="#44474f" stroke-width="2.5" stroke-linecap="round"/>
+<circle cx="488.75" cy="154.00" r="4" fill="#44474f" stroke="#ffffff" stroke-width="1.5"/>
+<text x="268" y="187.00" font-size="12" fill="#171717" text-anchor="end">#4 Phase E1 differential</text>
+<line x1="439.88" y1="184.00" x2="539.92" y2="184.00" stroke="#44474f" stroke-width="2.5" stroke-linecap="round"/>
+<circle cx="489.90" cy="184.00" r="4" fill="#44474f" stroke="#ffffff" stroke-width="1.5"/>
+<text x="268" y="217.00" font-size="12" fill="#171717" text-anchor="end">#5 Track B treatment</text>
+<line x1="385.25" y1="214.00" x2="695.75" y2="214.00" stroke="#44474f" stroke-width="2.5" stroke-linecap="round"/>
+<circle cx="537.62" cy="214.00" r="4" fill="#44474f" stroke="#ffffff" stroke-width="1.5"/>
+<text x="268" y="247.00" font-size="12" fill="#171717" text-anchor="end">#6 Track B differential</text>
+<line x1="483.00" y1="244.00" x2="621.00" y2="244.00" stroke="#44474f" stroke-width="2.5" stroke-linecap="round"/>
+<circle cx="549.70" cy="244.00" r="4" fill="#44474f" stroke="#ffffff" stroke-width="1.5"/>
+<text x="268" y="277.00" font-size="12" fill="#171717" text-anchor="end">#7 Track C joint combined IC</text>
+<line x1="333.50" y1="274.00" x2="598.00" y2="274.00" stroke="#44474f" stroke-width="2.5" stroke-linecap="round"/>
+<circle cx="465.75" cy="274.00" r="4" fill="#44474f" stroke="#ffffff" stroke-width="1.5"/>
+<text x="268" y="307.00" font-size="12" fill="#171717" text-anchor="end">#13 Track C asymmetric-35</text>
+<line x1="304.75" y1="304.00" x2="569.25" y2="304.00" stroke="#44474f" stroke-width="2.5" stroke-linecap="round"/>
+<circle cx="436.43" cy="304.00" r="4" fill="#44474f" stroke="#ffffff" stroke-width="1.5"/>
+<text x="268" y="337.00" font-size="12" fill="#171717" text-anchor="end">#14 Track C asymmetric-41</text>
+<line x1="310.50" y1="334.00" x2="598.00" y2="334.00" stroke="#44474f" stroke-width="2.5" stroke-linecap="round"/>
+<circle cx="455.40" cy="334.00" r="4" fill="#44474f" stroke="#ffffff" stroke-width="1.5"/>
+<text x="268" y="367.00" font-size="12" fill="#171717" text-anchor="end">#15 Track C confirmatory (climax)</text>
+<line x1="310.50" y1="364.00" x2="598.00" y2="364.00" stroke="#0059ec" stroke-width="2.5" stroke-linecap="round"/>
+<circle cx="455.40" cy="364.00" r="4" fill="#0059ec" stroke="#ffffff" stroke-width="1.5"/>
+<line x1="276" y1="390" x2="736" y2="390" stroke="#e4e4e7" stroke-width="1"/>
+<line x1="276.00" y1="390" x2="276.00" y2="395" stroke="#e4e4e7" stroke-width="1"/>
+<text x="276.00" y="408" font-size="11" fill="#55555c" text-anchor="middle">-0.04</text>
+<line x1="448.50" y1="390" x2="448.50" y2="395" stroke="#e4e4e7" stroke-width="1"/>
+<text x="448.50" y="408" font-size="11" fill="#55555c" text-anchor="middle">-0.01</text>
+<line x1="506.00" y1="390" x2="506.00" y2="395" stroke="#e4e4e7" stroke-width="1"/>
+<text x="506.00" y="408" font-size="11" fill="#55555c" text-anchor="middle">0.00</text>
+<line x1="563.50" y1="390" x2="563.50" y2="395" stroke="#e4e4e7" stroke-width="1"/>
+<text x="563.50" y="408" font-size="11" fill="#55555c" text-anchor="middle">0.01</text>
+<line x1="736.00" y1="390" x2="736.00" y2="395" stroke="#e4e4e7" stroke-width="1"/>
+<text x="736.00" y="408" font-size="11" fill="#55555c" text-anchor="middle">0.04</text>
+<text x="736" y="424" font-size="11" fill="#55555c" text-anchor="end">横截面月度 rank-IC 差分</text>
+</svg>
+<p class="note">估计 #8, #9, #10, #11 在 evidence 面板中无 CI 入账,如实不入图(点估计见 evidence 面板)。</p>
+</section>
+<section>
+<h2>4 · 逐月 IC 序列 / Monthly combined IC, inline SVG</h2>
+<svg viewBox="0 0 760 246" role="img" aria-label="逐月 combined IC 序列条形图(66 个月)">
+<text x="44" y="16" font-size="11" fill="#55555c">combined IC · 66 个月面板序列(蓝 = 非负 / 灰 = 负 / 浅带 = SESOI ±0.01)</text>
+<rect x="44" y="115.16" width="704" height="5.68" fill="#e6f0ff"/>
+<rect x="45.71" y="118.00" width="7.25" height="7.12" fill="#44474f"/>
+<text x="49.33" y="226" font-size="10" fill="#55555c" text-anchor="middle">2021</text>
+<rect x="56.37" y="118.00" width="7.25" height="71.22" fill="#44474f"/>
+<rect x="67.04" y="118.00" width="7.25" height="28.19" fill="#44474f"/>
+<rect x="77.71" y="97.87" width="7.25" height="20.13" fill="#0059ec"/>
+<rect x="88.37" y="117.08" width="7.25" height="0.92" fill="#0059ec"/>
+<rect x="99.04" y="118.00" width="7.25" height="11.65" fill="#44474f"/>
+<rect x="109.71" y="118.00" width="7.25" height="13.75" fill="#44474f"/>
+<rect x="120.37" y="118.00" width="7.25" height="16.83" fill="#44474f"/>
+<rect x="131.04" y="118.00" width="7.25" height="21.79" fill="#44474f"/>
+<rect x="141.71" y="99.16" width="7.25" height="18.84" fill="#0059ec"/>
+<rect x="152.37" y="118.00" width="7.25" height="47.81" fill="#44474f"/>
+<rect x="163.04" y="118.00" width="7.25" height="62.51" fill="#44474f"/>
+<rect x="173.71" y="105.89" width="7.25" height="12.11" fill="#0059ec"/>
+<text x="177.33" y="226" font-size="10" fill="#55555c" text-anchor="middle">2022</text>
+<rect x="184.37" y="105.19" width="7.25" height="12.81" fill="#0059ec"/>
+<rect x="195.04" y="114.82" width="7.25" height="3.18" fill="#0059ec"/>
+<rect x="205.71" y="76.72" width="7.25" height="41.28" fill="#0059ec"/>
+<rect x="216.37" y="118.00" width="7.25" height="3.94" fill="#44474f"/>
+<rect x="227.04" y="100.99" width="7.25" height="17.01" fill="#0059ec"/>
+<rect x="237.71" y="118.00" width="7.25" height="21.33" fill="#44474f"/>
+<rect x="248.37" y="118.00" width="7.25" height="26.95" fill="#44474f"/>
+<rect x="259.04" y="107.72" width="7.25" height="10.28" fill="#0059ec"/>
+<rect x="269.71" y="118.00" width="7.25" height="8.03" fill="#44474f"/>
+<rect x="280.37" y="118.00" width="7.25" height="29.94" fill="#44474f"/>
+<rect x="291.04" y="61.54" width="7.25" height="56.46" fill="#0059ec"/>
+<rect x="301.71" y="118.00" width="7.25" height="21.86" fill="#44474f"/>
+<text x="305.33" y="226" font-size="10" fill="#55555c" text-anchor="middle">2023</text>
+<rect x="312.37" y="91.01" width="7.25" height="26.99" fill="#0059ec"/>
+<rect x="323.04" y="118.00" width="7.25" height="73.81" fill="#44474f"/>
+<rect x="333.71" y="103.57" width="7.25" height="14.43" fill="#0059ec"/>
+<rect x="344.37" y="101.78" width="7.25" height="16.22" fill="#0059ec"/>
+<rect x="355.04" y="118.00" width="7.25" height="46.39" fill="#44474f"/>
+<rect x="365.71" y="118.00" width="7.25" height="20.43" fill="#44474f"/>
+<rect x="376.37" y="118.00" width="7.25" height="31.23" fill="#44474f"/>
+<rect x="387.04" y="118.00" width="7.25" height="10.86" fill="#44474f"/>
+<rect x="397.71" y="111.90" width="7.25" height="6.10" fill="#0059ec"/>
+<rect x="408.37" y="93.75" width="7.25" height="24.25" fill="#0059ec"/>
+<rect x="419.04" y="118.00" width="7.25" height="66.02" fill="#44474f"/>
+<rect x="429.71" y="86.96" width="7.25" height="31.04" fill="#0059ec"/>
+<text x="433.33" y="226" font-size="10" fill="#55555c" text-anchor="middle">2024</text>
+<rect x="440.37" y="100.39" width="7.25" height="17.61" fill="#0059ec"/>
+<rect x="451.04" y="99.15" width="7.25" height="18.85" fill="#0059ec"/>
+<rect x="461.71" y="118.00" width="7.25" height="24.37" fill="#44474f"/>
+<rect x="472.37" y="94.36" width="7.25" height="23.64" fill="#0059ec"/>
+<rect x="483.04" y="118.00" width="7.25" height="33.82" fill="#44474f"/>
+<rect x="493.71" y="118.00" width="7.25" height="28.38" fill="#44474f"/>
+<rect x="504.37" y="102.92" width="7.25" height="15.08" fill="#0059ec"/>
+<rect x="515.04" y="100.51" width="7.25" height="17.49" fill="#0059ec"/>
+<rect x="525.71" y="118.00" width="7.25" height="27.29" fill="#44474f"/>
+<rect x="536.37" y="110.50" width="7.25" height="7.50" fill="#0059ec"/>
+<rect x="547.04" y="114.02" width="7.25" height="3.98" fill="#0059ec"/>
+<rect x="557.71" y="32.74" width="7.25" height="85.26" fill="#0059ec"/>
+<text x="561.33" y="226" font-size="10" fill="#55555c" text-anchor="middle">2025</text>
+<rect x="568.37" y="115.26" width="7.25" height="2.74" fill="#0059ec"/>
+<rect x="579.04" y="105.87" width="7.25" height="12.13" fill="#0059ec"/>
+<rect x="589.71" y="112.82" width="7.25" height="5.18" fill="#0059ec"/>
+<rect x="600.37" y="57.68" width="7.25" height="60.32" fill="#0059ec"/>
+<rect x="611.04" y="110.29" width="7.25" height="7.71" fill="#0059ec"/>
+<rect x="621.71" y="93.26" width="7.25" height="24.74" fill="#0059ec"/>
+<rect x="632.37" y="108.89" width="7.25" height="9.11" fill="#0059ec"/>
+<rect x="643.04" y="118.00" width="7.25" height="17.22" fill="#44474f"/>
+<rect x="653.71" y="118.00" width="7.25" height="18.16" fill="#44474f"/>
+<rect x="664.37" y="118.00" width="7.25" height="7.04" fill="#44474f"/>
+<rect x="675.04" y="118.00" width="7.25" height="12.38" fill="#44474f"/>
+<rect x="685.71" y="118.00" width="7.25" height="0.50" fill="#44474f"/>
+<text x="689.33" y="226" font-size="10" fill="#55555c" text-anchor="middle">2026</text>
+<rect x="696.37" y="118.00" width="7.25" height="0.69" fill="#44474f"/>
+<rect x="707.04" y="70.47" width="7.25" height="47.53" fill="#0059ec"/>
+<rect x="717.71" y="88.96" width="7.25" height="29.04" fill="#0059ec"/>
+<rect x="728.37" y="118.00" width="7.25" height="4.65" fill="#44474f"/>
+<rect x="739.04" y="118.00" width="7.25" height="4.97" fill="#44474f"/>
+<line x1="44" y1="118.00" x2="748" y2="118.00" stroke="#a1a1aa" stroke-width="1"/>
+<text x="38" y="33.00" font-size="10" fill="#55555c" text-anchor="end">+0.31</text>
+<text x="38" y="121.00" font-size="10" fill="#55555c" text-anchor="end">0</text>
+<text x="38" y="209.00" font-size="10" fill="#55555c" text-anchor="end">-0.31</text>
+</svg>
+</section>
+<section>
+<h2>5 · 逐月 IC 数据表(无 JS 回退)/ Monthly IC table</h2>
+<div class="tbl"><table><thead><tr><th>month(月)</th><th>us</th><th>cn</th><th>combined</th></tr></thead><tbody><tr><td>2021-01</td><td>0.3602</td><td>-0.4103</td><td>-0.0251</td></tr><tr><td>2021-02</td><td>-0.3460</td><td>-0.1558</td><td>-0.2509</td></tr><tr><td>2021-03</td><td>-0.1265</td><td>-0.0721</td><td>-0.0993</td></tr><tr><td>2021-04</td><td>0.1676</td><td>-0.0258</td><td>0.0709</td></tr><tr><td>2021-05</td><td>0.0032</td><td>0.0827</td><td>0.0032</td></tr><tr><td>2021-06</td><td>-0.0903</td><td>0.0082</td><td>-0.0410</td></tr><tr><td>2021-07</td><td>0.0657</td><td>-0.1626</td><td>-0.0484</td></tr><tr><td>2021-08</td><td>-0.0099</td><td>-0.1087</td><td>-0.0593</td></tr><tr><td>2021-09</td><td>-0.0089</td><td>-0.1446</td><td>-0.0767</td></tr><tr><td>2021-10</td><td>0.0416</td><td>0.0911</td><td>0.0664</td></tr><tr><td>2021-11</td><td>-0.0961</td><td>-0.2407</td><td>-0.1684</td></tr><tr><td>2021-12</td><td>-0.1318</td><td>-0.3087</td><td>-0.2202</td></tr><tr><td>2022-01</td><td>-0.0458</td><td>0.0427</td><td>0.0427</td></tr><tr><td>2022-02</td><td>-0.0085</td><td>0.0987</td><td>0.0451</td></tr><tr><td>2022-03</td><td>-0.0709</td><td>0.0933</td><td>0.0112</td></tr><tr><td>2022-04</td><td>0.0104</td><td>0.2805</td><td>0.1454</td></tr><tr><td>2022-05</td><td>-0.0817</td><td>0.0539</td><td>-0.0139</td></tr><tr><td>2022-06</td><td>0.0954</td><td>0.0244</td><td>0.0599</td></tr><tr><td>2022-07</td><td>-0.0699</td><td>-0.0804</td><td>-0.0751</td></tr><tr><td>2022-08</td><td>-0.1460</td><td>-0.0439</td><td>-0.0949</td></tr><tr><td>2022-09</td><td>-0.0498</td><td>0.1222</td><td>0.0362</td></tr><tr><td>2022-10</td><td>0.1079</td><td>-0.1644</td><td>-0.0283</td></tr><tr><td>2022-11</td><td>-0.2172</td><td>0.0063</td><td>-0.1055</td></tr><tr><td>2022-12</td><td>0.3857</td><td>0.0121</td><td>0.1989</td></tr><tr><td>2023-01</td><td>0.0418</td><td>-0.1958</td><td>-0.0770</td></tr><tr><td>2023-02</td><td>0.1567</td><td>0.0334</td><td>0.0951</td></tr><tr><td>2023-03</td><td>-0.2534</td><td>-0.2666</td><td>-0.2600</td></tr><tr><td>2023-04</td><td>0.0964</td><td>0.0053</td><td>0.0508</td></tr><tr><td>2023-05</td><td>0.0573</td><td>0.0571</td><td>0.0572</td></tr><tr><td>2023-06</td><td>0.0894</td><td>-0.4163</td><td>-0.1634</td></tr><tr><td>2023-07</td><td>-0.1583</td><td>0.0144</td><td>-0.0720</td></tr><tr><td>2023-08</td><td>-0.1027</td><td>-0.1173</td><td>-0.1100</td></tr><tr><td>2023-09</td><td>-0.1840</td><td>-0.0382</td><td>-0.0382</td></tr><tr><td>2023-10</td><td>0.0489</td><td>-0.0060</td><td>0.0215</td></tr><tr><td>2023-11</td><td>0.1499</td><td>0.0209</td><td>0.0854</td></tr><tr><td>2023-12</td><td>-0.1722</td><td>-0.2930</td><td>-0.2326</td></tr><tr><td>2024-01</td><td>0.0439</td><td>0.1747</td><td>0.1093</td></tr><tr><td>2024-02</td><td>0.0188</td><td>0.1052</td><td>0.0620</td></tr><tr><td>2024-03</td><td>0.0664</td><td>-0.0922</td><td>0.0664</td></tr><tr><td>2024-04</td><td>-0.0355</td><td>-0.1362</td><td>-0.0858</td></tr><tr><td>2024-05</td><td>0.1023</td><td>0.0643</td><td>0.0833</td></tr><tr><td>2024-06</td><td>-0.1953</td><td>-0.0430</td><td>-0.1191</td></tr><tr><td>2024-07</td><td>-0.1083</td><td>-0.0916</td><td>-0.1000</td></tr><tr><td>2024-08</td><td>0.0067</td><td>0.0996</td><td>0.0531</td></tr><tr><td>2024-09</td><td>0.0496</td><td>0.0737</td><td>0.0616</td></tr><tr><td>2024-10</td><td>-0.1390</td><td>-0.0532</td><td>-0.0961</td></tr><tr><td>2024-11</td><td>0.1648</td><td>-0.1119</td><td>0.0264</td></tr><tr><td>2024-12</td><td>0.0111</td><td>0.0169</td><td>0.0140</td></tr><tr><td>2025-01</td><td>0.0371</td><td>0.3004</td><td>0.3004</td></tr><tr><td>2025-02</td><td>0.1769</td><td>-0.1576</td><td>0.0096</td></tr><tr><td>2025-03</td><td>0.1322</td><td>-0.0468</td><td>0.0427</td></tr><tr><td>2025-04</td><td>0.0538</td><td>-0.0173</td><td>0.0183</td></tr><tr><td>2025-05</td><td>0.3855</td><td>0.0395</td><td>0.2125</td></tr><tr><td>2025-06</td><td>0.0904</td><td>-0.0361</td><td>0.0272</td></tr><tr><td>2025-07</td><td>-0.0570</td><td>0.2312</td><td>0.0871</td></tr><tr><td>2025-08</td><td>-0.0050</td><td>0.0692</td><td>0.0321</td></tr><tr><td>2025-09</td><td>0.1336</td><td>-0.2549</td><td>-0.0607</td></tr><tr><td>2025-10</td><td>-0.0437</td><td>-0.0842</td><td>-0.0640</td></tr><tr><td>2025-11</td><td>-0.1345</td><td>0.0849</td><td>-0.0248</td></tr><tr><td>2025-12</td><td>-0.0009</td><td>-0.0864</td><td>-0.0436</td></tr><tr><td>2026-01</td><td>-0.0182</td><td>0.0170</td><td>-0.0006</td></tr><tr><td>2026-02</td><td>0.0092</td><td>-0.0140</td><td>-0.0024</td></tr><tr><td>2026-03</td><td>0.1483</td><td>0.1865</td><td>0.1674</td></tr><tr><td>2026-04</td><td>0.0364</td><td>0.1681</td><td>0.1023</td></tr><tr><td>2026-05</td><td>-0.1005</td><td>0.0678</td><td>-0.0164</td></tr><tr><td>2026-06</td><td>—</td><td>-0.0175</td><td>-0.0175</td></tr></tbody></table></div>
+<p class="note">表行数:66(ic_monthly 面板实有记录;null 以 — 如实呈现)。若与 metrics.json 的 n_months 不同,系两面板各自如实取值,口径以 runs 账本与预注册文档为准。</p>
+</section>
+<section>
+<h2>6 · 方法学与边界 / Methodology &amp; boundaries</h2>
+<ul class="methods">
+<li><strong>预注册 + commit-then-reveal:</strong>冻结配置的 sha256 在任何样本外观测前先入账(config_committed),同一签名重跑位级一致;结论不可被事后重跑拯救。本测量:freeze row 48 @ 2026-08-05T04:19:50.785179+00:00 → result row 49 @ 2026-08-05T10:27:13.421731+00:00(freeze_before_result=True)。</li>
+<li><strong>无泄漏数据契约:</strong>PIT 数据(fundamentals 按 filed 日期、宏经 ALFRED vintage、宇宙按 PIT 成分);PurgedGroupKFold + embargo (group=month, embargo=21 sessions),标签无泄漏。</li>
+<li><strong>确定性(H6):</strong>PASS — n_jobs=1、种子全固定、版本锁定;IC 序列与原始分数跨重跑位级一致。</li>
+<li><strong>等价性检验(如实呈现):</strong>JT look1 = NOT_EQUIVALENT(metrics.json 实值,不修饰)。</li>
+<li><strong>E3 forward-live(P0-1):</strong>forward-live 已实现,待业主契约冻结(按仓库现状如实表述;本页不宣称已完成的活体验证)。</li>
+<li><strong>NULL 判定立场:</strong>按预注册判定规则如实呈现——零结果 + 窄 CI 是预期内且有信息量的结果;本工件仅呈现测量与设计,不给投资建议,不构成任何收益承诺。</li>
+</ul>
+</section>
+<section>
+<h2>7 · 溯源 / Provenance</h2>
+<p class="note">metrics 面板 snapshot_ts:2026-08-22T13:32:20.445645+00:00。</p>
+<dl class="kv"><div><dt>headline_provenance.status / phase</dt><dd>ok / track_c</dd></div><div><dt>result(ledger_row / ts / event)</dt><dd>49 / 2026-08-05T10:27:13.421731+00:00 / confirmatory:first</dd></div><div><dt>freeze(config_committed)</dt><dd>row 48 / 2026-08-05T04:19:50.785179+00:00 / config_committed</dd></div><div><dt>config_sig_short / source</dt><dd>e14b9d44 / track_c_amend2.build_amendment() (#46+#47+#48 cumulative)</dd></div><div><dt>contract</dt><dd>freeze_before_result=True — freeze sha256 == result sha256, and freeze ts precedes result ts</dd></div><div><dt>headline(全精度实值)</dt><dd>combined_ic=-0.008840749458819833, p_hac=0.48377253118952823, ci=[-0.03358563149479441, 0.015904132577154742], n_months=71</dd></div><div><dt>provenance 面板 snapshot_ts</dt><dd>2026-08-28T05:51:27.445235+00:00</dd></div></dl>
+<p class="note">生成器:export_evidence_html.py v1.0.0;artifact id:atlas-claim-v1。byte-stable artifact — regenerate with <code>uv run python scripts/export_evidence_html.py</code>(确定性:无运行时时钟,as_of 全部取自面板字段,排序写死,LF 换行)。</p>
+<p class="note">配色说明:本工件不依赖站点 CSS 变量,使用硬编码 hex 并与 web/src/app/globals.css 浅色 token 对应——#ffffff=--card、#171717=--ink、#0059ec=--blue-text(单蓝强调)、#e6f0ff=--blue-tint、#e4e4e7≈--line;方向编码用蓝/灰明度差(色盲安全,非红绿对)。</p>
+</section>
+</main>
+<footer>
+Aionis — falsifiable, anti-leakage research harness. 自包含证据工件:零 JS、零外部资源、零字体请求;浏览器直开即读。</footer>
+</body>
+</html>
