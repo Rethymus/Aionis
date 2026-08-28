@@ -1,0 +1,5 @@
+[
+  {"hash": "14b2f8404aa2d5eb6973f29b33bc30572821c6e5", "date": "2026-07-30", "subject": "chore(ledger): strategy-eval re-run (ls_returns persisted, grid DSR unchanged)", "status": "skipped", "skip_reason": "纯机器生成数据追加：仅向 runs/ledger.jsonl 追加 1 行 exploratory 结果行，无任何源码/配置/CI 改动；账本纪律合规（append-only、非 confirmatory）", "module": "data"},
+  {"hash": "65ad7b36f16c4caec05099e23fb8f653231ea850", "date": "2026-08-02", "subject": "feat(site): add real IC monthly series chart (v2, from track_b_data.json)", "status": "skipped", "skip_reason": "纯机器生成数据导出（site/track_b_data.json 65 个月 IC 序列）+ 再生 index.html，无源码/配置/CI 改动；快查无 NaN、量级合理、研究→展示单向", "module": "site"},
+  {"hash": "59008839f3132c521a1b1fab6558ff8f64a3a1a4", "date": "2026-08-03", "subject": "data(site): track_b_data.json now includes monthly portfolio returns (top-q + ew)", "status": "skipped", "skip_reason": "纯机器生成数据导出 commit（仅 site/track_b_data.json 新增 65 个月组合收益字段），无源码/配置/CI 改动；JSON 严格可解析、无 NaN", "module": "site"}
+]

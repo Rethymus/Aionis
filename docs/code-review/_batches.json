@@ -1,0 +1,2257 @@
+{
+ "batch_01": [
+  {
+   "hash": "ce036449d0edd4390921d4c3d36298e4d86b7a99",
+   "date": "2026-07-27",
+   "subject": "chore: initialize Aionis git repo + commit conventions"
+  },
+  {
+   "hash": "fc2a1b518ef10e51200f91ef44be19b88afc3c19",
+   "date": "2026-07-28",
+   "subject": "feat(dashboard): Streamlit results dashboard + reporting interface"
+  },
+  {
+   "hash": "0797221cfbe0a8a631bb3243758549c0a4ec6c59",
+   "date": "2026-07-28",
+   "subject": "feat(data): VIX-via-FRED ingest + anti-leakage governance docs"
+  },
+  {
+   "hash": "bdf3fd9b5f1eb9aa22955247d587201130cf08cb",
+   "date": "2026-07-28",
+   "subject": "feat(phase-b): first confirmatory run (null) + critic fixes"
+  },
+  {
+   "hash": "1e57335ed64b4098a69e7f6ece865750dae51260",
+   "date": "2026-07-28",
+   "subject": "feat(phase-c): surprise/sentiment transforms + Reddit forward-collector"
+  },
+  {
+   "hash": "10b33e230d17bf09cd41b424a13f1fcb279cfbb7",
+   "date": "2026-07-28",
+   "subject": "docs(phase-c): pre-registration v0.1 (B+C bundle, defer-run)"
+  },
+  {
+   "hash": "deff68f359d4273813f3bbde39d01a922ae2aad6",
+   "date": "2026-07-28",
+   "subject": "chore: wrap long Tiingo probe line in phase_b_fetch (ruff E501)"
+  },
+  {
+   "hash": "beb44ea2298b18d53280ac43cfcd3f396b6f6908",
+   "date": "2026-07-28",
+   "subject": "feat(eval): Phase C bundle plumbing + price anomaly audit"
+  },
+  {
+   "hash": "1b8f353d4946807f7da371e5f6b14ca83ebffd1e",
+   "date": "2026-07-28",
+   "subject": "feat(phase-c): confirmatory runner (surprise bundle vs fundamentals-only)"
+  },
+  {
+   "hash": "b8270049a177518bc59b0dce70e687deee60d857",
+   "date": "2026-07-28",
+   "subject": "fix(ingest): VIXCLS is unrevised + not vintage-tracked — PIT via G3, self-dated vintages"
+  },
+  {
+   "hash": "ddd77d06e3ac47897e30db543a79e57a050752c3",
+   "date": "2026-07-28",
+   "subject": "docs(phase-c): correct VIX PIT basis — unrevised (G3), not vintage-tracked"
+  },
+  {
+   "hash": "387ac0217cf9a67e792f343899fb366e0435dfba",
+   "date": "2026-07-28",
+   "subject": "feat(phase-c): first confirmatory run (null) + save-artifact fix"
+  },
+  {
+   "hash": "384584650e0f26ce281fb0d7b7617a0027f791c1",
+   "date": "2026-07-28",
+   "subject": "feat(phase-c): PHASE_C_NO_LEDGER artifacts-only rerun mode"
+  },
+  {
+   "hash": "5f227b33ce20a118df0a3d64390b1e3fb7113c19",
+   "date": "2026-07-28",
+   "subject": "feat(eval): strategy-return evaluation (long-short + DSR/Hansen-SPA/MCS)"
+  },
+  {
+   "hash": "9937fddc80f313d5e39e340074e26fa0d2897b8a",
+   "date": "2026-07-28",
+   "subject": "docs(phase-d): pre-registration v0.1 (WRL.Relationship bundle, defer-run)"
+  }
+ ],
+ "batch_02": [
+  {
+   "hash": "efe471aadcf47c93f053f2485cf9fdbcfed23d85",
+   "date": "2026-07-28",
+   "subject": "feat(eval): strategy-return result (exploratory) — confirms the rank-IC nulls"
+  },
+  {
+   "hash": "c6384e0fa99364342e645fc334d65d85dbb7ddc5",
+   "date": "2026-07-28",
+   "subject": "fix(eval): strategy_returns review fixes — DSR grid, guarded deflated_sharpe, SPA/MCS floor"
+  },
+  {
+   "hash": "98b8eba4da3267a2c92aa1c0cca0419119148487",
+   "date": "2026-07-28",
+   "subject": "feat(eval): strategy-return result (conservative grid DSR) — none survive"
+  },
+  {
+   "hash": "c4bd21ee7230a21d3a3e3fa5fd857cb42a211614",
+   "date": "2026-07-28",
+   "subject": "docs(phase-d): pre-reg v0.2 — {13D + peers} confirmatory; 13F/supply-chain exploratory"
+  },
+  {
+   "hash": "4b9ecec0cb505c2f2a531e82d74a466c8fd961a0",
+   "date": "2026-07-28",
+   "subject": "feat(phase-d): 13D activist-stake ingest + SIC (submissions-based, PIT via filed)"
+  },
+  {
+   "hash": "616253e65efbfcfe162bfc3bc4220f791528db13",
+   "date": "2026-07-29",
+   "subject": "fix(ingest): stakes_13d _get_json — fail fast on permanent 4xx, retry only transient"
+  },
+  {
+   "hash": "048cd930e03bd478fbf77e2f3a9628275374180b",
+   "date": "2026-07-29",
+   "subject": "feat(phase-d): peer-momentum + 13D event-indicator features"
+  },
+  {
+   "hash": "08b0db569ef74addab45c6bd70b4697af94c4f11",
+   "date": "2026-07-29",
+   "subject": "feat(phase-d): confirmatory runner orchestrator (relationship bundle)"
+  },
+  {
+   "hash": "099a3a5b90829f76bca02ac9031046f4598edd49",
+   "date": "2026-07-29",
+   "subject": "test(phase-d): joined-panel PIT glue for the relationship bundle (§5 #4)"
+  },
+  {
+   "hash": "a1a8094faa684d8d08dc5c08679698d79d1b96a5",
+   "date": "2026-07-29",
+   "subject": "feat(phase-d): EFTS self-filing filter for 13D (subject-side filer resolution)"
+  },
+  {
+   "hash": "7fff18639412d29f3c0678a6889f0acf0f6ec7ef",
+   "date": "2026-07-29",
+   "subject": "feat(phase-d): confirmatory run script (assembles rel bundle, runs)"
+  },
+  {
+   "hash": "3f86c4720d785dd91c05177988c6a9c5037bfd9d",
+   "date": "2026-07-29",
+   "subject": "feat(phase-d): batch fetch (SIC + external 13D events) for the relationship bundle"
+  },
+  {
+   "hash": "05264c69b88a5d4abb2c02636a95049f279ed0af",
+   "date": "2026-07-29",
+   "subject": "fix(phase-d): peer_momentum ex-self mean — count not size (pandas>=3.0 NaN bug)"
+  },
+  {
+   "hash": "e0c26b9db457e1f3d76715b1d789f811889bb83b",
+   "date": "2026-07-29",
+   "subject": "docs(phase-d): disclose SIC-snapshot + efts-filter limitations (review MEDIUMs)"
+  },
+  {
+   "hash": "b65c50f917dccdc0e057f4d8c7bb0ccb29f35d63",
+   "date": "2026-07-29",
+   "subject": "docs: RESULTS.md — falsifiable-results snapshot (B/C nulls + strategy-return)"
+  }
+ ],
+ "batch_03": [
+  {
+   "hash": "a8c7798f98cc40d324eed3cc638bd96f784cd3a1",
+   "date": "2026-07-29",
+   "subject": "fix(phase-d): window-keyed fetch cache + coverage guard (review HIGH/MEDIUM)"
+  },
+  {
+   "hash": "5f00a148fadeecdee89f9223e82c551d1ff1e268",
+   "date": "2026-07-29",
+   "subject": "feat(dashboard): Strategy Return tab (DSR grid + SPA/MCS from the ledger)"
+  },
+  {
+   "hash": "dada000acb3df13e0a9f7b2b8bdd253d0d1140f0",
+   "date": "2026-07-29",
+   "subject": "docs(phase-e): pre-reg v0.1 — causal reasoning / simulation layer (3-stage program)"
+  },
+  {
+   "hash": "32244e8f843f2be8b7ab977388e92467e86023a4",
+   "date": "2026-07-29",
+   "subject": "feat(phase-d): first confirmatory run (null) — relationship bundle vs fundamentals"
+  },
+  {
+   "hash": "ef4c94806657a185ee4a855eefedd6040535542d",
+   "date": "2026-07-29",
+   "subject": "fix(phase-d): run_confirmatory always saves artifacts (base=None->default)"
+  },
+  {
+   "hash": "f4aa3349fec562a3d6a129b2efa3535cc1dc4ef0",
+   "date": "2026-07-29",
+   "subject": "feat(phase-e1): structural shock propagation (zero-leakage baseline)"
+  },
+  {
+   "hash": "8ec7282709557fae0ce58fb3b4773b9688bbc4e6",
+   "date": "2026-07-29",
+   "subject": "feat(eval): horizon-robustness sweep — B/C/D nulls hold at h=10 and h=42"
+  },
+  {
+   "hash": "4cf8fe928af9e38ed0a328babeffdd080d6649fa",
+   "date": "2026-07-29",
+   "subject": "docs(results): Phase D null — 3/3 publishable (agent update)"
+  },
+  {
+   "hash": "031e6eee6abf007a979c9a60c6009d9ceffeb69e",
+   "date": "2026-07-29",
+   "subject": "fix(phase-e1): run_confirmatory always saves artifacts (base=None->default)"
+  },
+  {
+   "hash": "21d6d3b5dd2d8a9c297207aa5c387d071d474d2e",
+   "date": "2026-07-29",
+   "subject": "feat(phase-e1): first confirmatory run (null) — structural shock propagation"
+  },
+  {
+   "hash": "ecd68a1b6ceebdb57f5f1c5cd0d745ea7048dc2e",
+   "date": "2026-07-29",
+   "subject": "docs(dashboard): v2 design — near-final quant-eval interface (5 dimensions)"
+  },
+  {
+   "hash": "257336ce9240083c6e00dbf5f76e174e759ebcc0",
+   "date": "2026-07-29",
+   "subject": "feat(reporting): persist OOS score panels + L-S returns (schema 2, additive)"
+  },
+  {
+   "hash": "ec35d97d49e65e9d61d369d7cfec1e3b31499f66",
+   "date": "2026-07-29",
+   "subject": "feat(eval): event-study CAR module (dashboard v2 'pre/post-event' dimension)"
+  },
+  {
+   "hash": "d2acf32546fc92a509a79ba67383263442b65829",
+   "date": "2026-07-29",
+   "subject": "feat(dashboard): v2 — near-final quant-evaluation interface (5 dimensions)"
+  },
+  {
+   "hash": "480caa881314d337bb84e7787cb62ef60fa12b72",
+   "date": "2026-07-29",
+   "subject": "feat(dashboard): wire OOS fit-charts + event-study CAR (complete 5 dimensions)"
+  }
+ ],
+ "batch_04": [
+  {
+   "hash": "8fa8b10bdbdfb3eccb4ca19ef6777edd472cae89",
+   "date": "2026-07-29",
+   "subject": "docs(phase-e2): pre-reg v0.1 — LLM macro-causal (cutoff-controlled) design"
+  },
+  {
+   "hash": "2de52a87a35de3dbc8158f65b68af04795f9fadf",
+   "date": "2026-07-30",
+   "subject": "fix(dashboard): review HIGHs — correct CI band σ + Phase B schema + MEDIUMs"
+  },
+  {
+   "hash": "e07cab0fc93d3d206943ac349eb7aeec6d50ca0c",
+   "date": "2026-07-30",
+   "subject": "feat(dashboard): strategy L-S equity-curve (curve-evolution view)"
+  },
+  {
+   "hash": "b5de014d94cae153aa73fa85b42317cd52838556",
+   "date": "2026-07-30",
+   "subject": "feat(dashboard): Horizon Robustness tab + fix multi-run KeyError; docs(phase-e3)"
+  },
+  {
+   "hash": "091260b4e0d8e472a2cab68fed0fe7b55a813c30",
+   "date": "2026-07-30",
+   "subject": "docs(readme): rewrite for the current project — 4 nulls, anti-leakage, TCR roadmap"
+  },
+  {
+   "hash": "14b2f8404aa2d5eb6973f29b33bc30572821c6e5",
+   "date": "2026-07-30",
+   "subject": "chore(ledger): strategy-eval re-run (ls_returns persisted, grid DSR unchanged)"
+  },
+  {
+   "hash": "254426c48b2c4a6e5be81646f611df3a9e73f683",
+   "date": "2026-07-30",
+   "subject": "docs(workflow): adopt unified AI-workflow scaffold"
+  },
+  {
+   "hash": "4de45c27d2000147915d8c78e441f9802f9d9298",
+   "date": "2026-07-30",
+   "subject": "feat(eval): E1 horizon-robustness sweep (h=10/42) + TASK-STRAT decision brief"
+  },
+  {
+   "hash": "4027472ad4a63e37f0cf9feba8dad4edfad8ced2",
+   "date": "2026-07-30",
+   "subject": "docs(brief): 在 TASK-STRAT brief 顶部加中文决策摘要"
+  },
+  {
+   "hash": "c2df3d40e0188bd35b7017d693a5828351fff3c8",
+   "date": "2026-07-30",
+   "subject": "docs(decisions): ADR-008 — launch E3 + broaden nulls (TASK-STRAT verdict)"
+  },
+  {
+   "hash": "a202e1b98513a4616d82fd61192ae17b93254f33",
+   "date": "2026-07-30",
+   "subject": "docs(e3): implementation plan + owner decisions (GLM pin, shadow 1-2mo)"
+  },
+  {
+   "hash": "64ce5082a9e4e925f8aef00bd6626fa99abe14ad",
+   "date": "2026-07-30",
+   "subject": "docs(tasks): fix TASK-STRAT status → VERDICT RENDERED (ADR-008)"
+  },
+  {
+   "hash": "7ce7f080022fbd03b09b4a3a88273865c0093502",
+   "date": "2026-07-30",
+   "subject": "feat(e3): Slice 1 forward-ledger commit-reveal core (TDD keystone)"
+  },
+  {
+   "hash": "3b2b1fba8a81c62fd54a819198796331b5e25368",
+   "date": "2026-07-30",
+   "subject": "docs(state): sediment E3 Slice 1 completion (keystone done)"
+  },
+  {
+   "hash": "5c564f84fb22575e684fb21fd716eae5ed5c145d",
+   "date": "2026-07-30",
+   "subject": "feat(e3): Slice 2 forward PIT-as-of-t ingest (3 snapshot-on-arrival collectors)"
+  }
+ ],
+ "batch_05": [
+  {
+   "hash": "6f04f26efb3fc157cead37658f31d514215f27be",
+   "date": "2026-07-31",
+   "subject": "feat(e3): Slice 3 forward commit-reveal + ADR-009 hybrid causal layer"
+  },
+  {
+   "hash": "d86ecd7d954e6da8f6ed8f8f5f12a8596cbbc2b7",
+   "date": "2026-07-31",
+   "subject": "feat(e3): Slice 4 forward scoring + accumulation"
+  },
+  {
+   "hash": "62bcd13d736f3a8317cbd8f10060fb21aa29c0f5",
+   "date": "2026-07-31",
+   "subject": "feat(e3): Slice 5 dashboard Forward-IC tab"
+  },
+  {
+   "hash": "c2b5908936769f1eadca2a7d1334dd768a4aad1e",
+   "date": "2026-07-31",
+   "subject": "docs: GitHub Pages display plan (DRAFT v0.1)"
+  },
+  {
+   "hash": "9575cfdedd13a2f78dfea452ae29aaf7738ebe37",
+   "date": "2026-07-31",
+   "subject": "docs: GitHub Pages plan v0.2 — decisions resolved"
+  },
+  {
+   "hash": "87af58335d245ff9bc80560ecf95c9d837352c8a",
+   "date": "2026-07-31",
+   "subject": "feat(dashboard): mature the 5-axis analysis interface to near-final-product"
+  },
+  {
+   "hash": "e8545d40a34b6cf73444d462192c17ac6d707857",
+   "date": "2026-07-31",
+   "subject": "audit: quant-LLM research audit + remediation (AUD-01..05C, ADR-010, RES-01..10)"
+  },
+  {
+   "hash": "7dede9b9150d56955ddf81d53a395eab3ddcb848",
+   "date": "2026-08-01",
+   "subject": "chore: finalize dashboard and health remediation"
+  },
+  {
+   "hash": "6085e923af05e48a5406a080d6dd2915c028f5a4",
+   "date": "2026-08-01",
+   "subject": "fix(ingest): close remaining transport policy gaps"
+  },
+  {
+   "hash": "26539079cf62950746543d64917a5b9093a84b52",
+   "date": "2026-08-01",
+   "subject": "feat(extraction): add deterministic evaluation foundations"
+  },
+  {
+   "hash": "5f884a357da1cc0d6d3261dbd14d03fa2a4fce31",
+   "date": "2026-08-01",
+   "subject": "feat(research): add offline cost momentum and universe oracles"
+  },
+  {
+   "hash": "7339ff8a1c4954f7aa325d6b6cb64b85af26416e",
+   "date": "2026-08-01",
+   "subject": "docs: record low-reasoning RD program specs and Wave-A state"
+  },
+  {
+   "hash": "97e56884cf5146fdf03bfaf7a017b1d0d83649ff",
+   "date": "2026-08-01",
+   "subject": "feat(eval): add validation manifest schema (RD-02)"
+  },
+  {
+   "hash": "feb80ba25b7c54a27f7bf4dd9c9ad8f012f831f2",
+   "date": "2026-08-01",
+   "subject": "feat(scripts): add task-contract linter (RD-01)"
+  },
+  {
+   "hash": "2f0efd0ef63489087b38d20e160fe8b2ed0339a1",
+   "date": "2026-08-01",
+   "subject": "feat(features): add cross-sectional variation diagnostics guard (RD-13)"
+  }
+ ],
+ "batch_06": [
+  {
+   "hash": "5dfe849d81aa39148aca583f764339694879bac0",
+   "date": "2026-08-01",
+   "subject": "feat(reporting): add trial-intent registry contract (RD-17)"
+  },
+  {
+   "hash": "ee223ae908d87db098ea0f5bcbc539d45dc00ebd",
+   "date": "2026-08-01",
+   "subject": "feat(extraction): add deterministic eval uncertainty intervals (RD-16)"
+  },
+  {
+   "hash": "8a4617913860e1b93ca02dfb0afd149377a89dea",
+   "date": "2026-08-01",
+   "subject": "feat(extraction): add offline provider replay stability harness (RD-11)"
+  },
+  {
+   "hash": "af7d6739fbc70a50c36a80de64a27b250e7700b9",
+   "date": "2026-08-01",
+   "subject": "test(eval): add chronological split oracle and regression matrix (RD-03)"
+  },
+  {
+   "hash": "f39738397128f42ec395ee139ed47e106a80c6fc",
+   "date": "2026-08-01",
+   "subject": "feat(reporting): add outcome-free reproducibility capsule (RD-14)"
+  },
+  {
+   "hash": "a6822e2eeb20a26b112fe23d328a690b6dce47b8",
+   "date": "2026-08-01",
+   "subject": "docs: record Wave-B completion (RD-01/02/03/11/13/14/16/17)"
+  },
+  {
+   "hash": "20581ffa2360088b84bbe27d1e0399c087c44c0b",
+   "date": "2026-08-01",
+   "subject": "docs(audit): add E3 TOST/sequential statistical review (AUD-07B)"
+  },
+  {
+   "hash": "e50d67486c9d37052f902888f968607ab6f95fbb",
+   "date": "2026-08-01",
+   "subject": "docs(design): propose rank-objective contract decision (RD-15)"
+  },
+  {
+   "hash": "ea335c825839ff99326242ef74505e5373e75b2f",
+   "date": "2026-08-01",
+   "subject": "feat(eval): add rank-objective contract (RD-15)"
+  },
+  {
+   "hash": "e58b16ee73297f083019212131d3238fd7beb85b",
+   "date": "2026-08-01",
+   "subject": "docs(eval): propose zero-LLM rule table (RD-08 precondition)"
+  },
+  {
+   "hash": "da764d0e1e4312c3bb068dd60d90cb6e0b1074fb",
+   "date": "2026-08-01",
+   "subject": "docs(eval): freeze zero-LLM rule table after review (RD-08); freeze RD-15 bin_count"
+  },
+  {
+   "hash": "9edf3c60e0b2390d03a59d09480dae85be11fe29",
+   "date": "2026-08-01",
+   "subject": "feat(extraction): add zero-LLM baseline extractor (RD-08)"
+  },
+  {
+   "hash": "12751c2d72c36f500116d055fc771e45c19633d4",
+   "date": "2026-08-01",
+   "subject": "feat(decisions): amend ADR-010 to Jennison-Turnbull group-sequential equivalence (AUD-07B correction)"
+  },
+  {
+   "hash": "145f9b65be473a29e7cae0b8635c69643ba1e150",
+   "date": "2026-08-01",
+   "subject": "feat(dashboard): add v2 5-dimension analysis interface (demonstrative data)"
+  },
+  {
+   "hash": "2484a16d38187ccc98675906174c874439a65c3a",
+   "date": "2026-08-01",
+   "subject": "feat(site): add static dashboard presentation site (demonstrative, 5 dimensions)"
+  }
+ ],
+ "batch_07": [
+  {
+   "hash": "f353ddb508ccd5b451100428b8395078d599401a",
+   "date": "2026-08-01",
+   "subject": "ci(pages): use astral-sh/setup-uv + dashboard extra (fix cache:uv failure)"
+  },
+  {
+   "hash": "95ba1cf765c55a958d2cf9ed6bc03f5bdcd17815",
+   "date": "2026-08-01",
+   "subject": "docs(state): record static dashboard deploy to GitHub Pages"
+  },
+  {
+   "hash": "5c5a33dfe72359b6b56f05b68d7a377eee40db50",
+   "date": "2026-08-01",
+   "subject": "feat(eval): implement Jennison-Turnbull SESOI equivalence gate (ADR-010 amendment)"
+  },
+  {
+   "hash": "7e666d87c1bc1f8d9ccb1e0364ae37bac7e2a516",
+   "date": "2026-08-01",
+   "subject": "feat(eval): add E3 live-input readiness gate, opt-in + parameterized (AUD-06)"
+  },
+  {
+   "hash": "213ed21e6c18bf18d55b03f12b6a8a9bf469230a",
+   "date": "2026-08-01",
+   "subject": "docs(e3): update Slice 6/7 dependencies — AUD-07B resolved, AUD-06 implemented"
+  },
+  {
+   "hash": "38457c62960e7409af60badcd59675186526c41f",
+   "date": "2026-08-02",
+   "subject": "feat(site): rebuild static dashboard on OSS tearsheets (reuse-first)"
+  },
+  {
+   "hash": "162702dde8e0a2645202c98630acabfee6c0fc5e",
+   "date": "2026-08-02",
+   "subject": "feat(e3): add Slice 6 NYSE month-end scheduler (manual + shadow, reuse pandas_market_calendars)"
+  },
+  {
+   "hash": "c98754dad8e3762158fbf9655780f32e530b2a82",
+   "date": "2026-08-02",
+   "subject": "docs: strategic review + seven-theme coverage plans + reuse design pack"
+  },
+  {
+   "hash": "d876dee177ff37a453c0c315bce9eb29bae72bad",
+   "date": "2026-08-02",
+   "subject": "feat(eval): FF5 residual + Amihud utility (track_b mount 3)"
+  },
+  {
+   "hash": "232327fb0e9ded6a3e5856b822140d53049e6c06",
+   "date": "2026-08-02",
+   "subject": "docs(track-b): PROPOSED pre-registration + ADR-011 (Track B adopted)"
+  },
+  {
+   "hash": "4025ceb24b4b4bcb2560c15992c49aed25aeac46",
+   "date": "2026-08-02",
+   "subject": "docs(track-b): S0-S01 universe audit (Jaccard 0.8544 -> 2016+) + freeze recommendations"
+  },
+  {
+   "hash": "4059bccafe4ba377427c2b979408508d22d91382",
+   "date": "2026-08-02",
+   "subject": "feat(track-b): FREEZE config (sha256 7a1357... -> ledger #40); prereg PROPOSED->FROZEN"
+  },
+  {
+   "hash": "af7b93193a646a4c7ab21836d8e637f22673d104",
+   "date": "2026-08-02",
+   "subject": "feat(track-b): S0-S02 fundamentals + price feature modules (pre-specified)"
+  },
+  {
+   "hash": "a287b1781a7c4d5865680317c25224320653a650",
+   "date": "2026-08-02",
+   "subject": "feat(track-b): S0-L panel PIT alignment (anti-leakage asserted); S0-S03 satisfied by reuse"
+  },
+  {
+   "hash": "a09b9e4280243037e649529fc83ff3848725bfc2",
+   "date": "2026-08-02",
+   "subject": "feat(track-b): FREEZE feature_cols amendment (ledger #41, 23 features); S0 complete"
+  }
+ ],
+ "batch_08": [
+  {
+   "hash": "574e1910f29e2abf62ce44e5a4a2cdda48415a91",
+   "date": "2026-08-02",
+   "subject": "feat(track-b): S1-M01 ignite pipeline (lambdarank via LightGBMFrozen.fit_predict_rank)"
+  },
+  {
+   "hash": "5864cab8112d948b9b95caf0ccd06a6d8f93a8d5",
+   "date": "2026-08-02",
+   "subject": "feat(track-b): panel materialization script (1.17M rows, 566 tickers, 2016-2026)"
+  },
+  {
+   "hash": "b7472c3afa57a08a82d4e7460bf5f7deacf521f9",
+   "date": "2026-08-02",
+   "subject": "feat(track-b): volume + SPY fetch (reuse _volume_from_alpaca) -> all 23 features materialized"
+  },
+  {
+   "hash": "30e2a2bcd669d2a8f037646f1df91eef15ca3dda",
+   "date": "2026-08-02",
+   "subject": "feat(track-b): (a-run) first rank-IC runner (binds config #41)"
+  },
+  {
+   "hash": "1376c75898e05e2015d8e5a2daa2253304ac9040",
+   "date": "2026-08-02",
+   "subject": "fix(track-b): month-end cross-section sampling (LightGBM 10000-rows/query limit)"
+  },
+  {
+   "hash": "d620e99614c3828f3d452cf93c2b844961dbe6de",
+   "date": "2026-08-02",
+   "subject": "fix(track-b): expanding walk-forward min_train=60 + DM on portfolio returns (H-1)"
+  },
+  {
+   "hash": "5c64e571829ecf30b97eace76604091828fef1ce",
+   "date": "2026-08-02",
+   "subject": "feat(track-b): price-only baseline arm (#42) + differential (null, non-significant)"
+  },
+  {
+   "hash": "f6af91afdda73232451c69ce2cb1a737f747a2e2",
+   "date": "2026-08-02",
+   "subject": "feat(site): rebuild GitHub Pages as Chinese, content-driven, real Track B findings"
+  },
+  {
+   "hash": "8345641247883e6266606574e112804c29249aa5",
+   "date": "2026-08-02",
+   "subject": "feat(site): Tailwind CSS dark financial-terminal UI (reuse framework, not hand-rolled CSS)"
+  },
+  {
+   "hash": "65ad7b36f16c4caec05099e23fb8f653231ea850",
+   "date": "2026-08-02",
+   "subject": "feat(site): add real IC monthly series chart (v2, from track_b_data.json)"
+  },
+  {
+   "hash": "c672c34c4187eb4db1f6141b07a98fe71bc6b87f",
+   "date": "2026-08-03",
+   "subject": "feat(track-b): expose monthly portfolio returns (top-q + equal-weight) for eval-layer mounts"
+  },
+  {
+   "hash": "1879af1f818bc692960e33e6c425f8c5963a75b4",
+   "date": "2026-08-03",
+   "subject": "feat(track-b): tearsheet_adapter (mount 1, reuse empyrical risk metrics)"
+  },
+  {
+   "hash": "59008839f3132c521a1b1fab6558ff8f64a3a1a4",
+   "date": "2026-08-03",
+   "subject": "data(site): track_b_data.json now includes monthly portfolio returns (top-q + ew)"
+  },
+  {
+   "hash": "475447bd3286e938f1a81cda4e2978da97e75dd0",
+   "date": "2026-08-03",
+   "subject": "feat(track-b): mount-runner (tearsheet+FF5 on real returns) + mount_metrics.json"
+  },
+  {
+   "hash": "28ac54b8c5bfefe8bc22b56b57eeddf4417083c9",
+   "date": "2026-08-03",
+   "subject": "feat(site): add gross risk-metrics section (tearsheet via empyrical, mount 1)"
+  }
+ ],
+ "batch_09": [
+  {
+   "hash": "74abe382ec79c52bffcb2cc3d18e4490b9ae8183",
+   "date": "2026-08-03",
+   "subject": "feat(track-b): FF5 mount via Kenneth-French fallback (alpha/betas obtained)"
+  },
+  {
+   "hash": "9970fc3cb603b4460d3b6bb625a94b6b04b9a915",
+   "date": "2026-08-03",
+   "subject": "feat(site): add FF5 residual decomposition section (mount 3, market structure)"
+  },
+  {
+   "hash": "0343ce5e21c4233348b83f797d9ccea5a81d892b",
+   "date": "2026-08-03",
+   "subject": "fix(site): rename ambiguous loop var l -> lbl (ruff E741)"
+  },
+  {
+   "hash": "42c150b649eb8eb3dd1199c9f5003fc119d8e95e",
+   "date": "2026-08-03",
+   "subject": "docs(track-b): FINSABER real API findings (mount 2 integration scope)"
+  },
+  {
+   "hash": "daa92e8c0c1fce841552a419c3ee0af92a8fd7ec",
+   "date": "2026-08-03",
+   "subject": "feat(orchestration): codify supervisor+worker dispatch protocol (ADR-012)"
+  },
+  {
+   "hash": "8d19b28a9da6258130164aa5d3783e3102a8a951",
+   "date": "2026-08-03",
+   "subject": "test(ingest): add macro forward cumulative-preserve invariant (ORCH-01)"
+  },
+  {
+   "hash": "83d9d617c3e36c6cbf7b62e4009c07cc88ae68fc",
+   "date": "2026-08-03",
+   "subject": "docs(orchestration): sediment ORCH-01 + idle-without-result operability note"
+  },
+  {
+   "hash": "3ad4710db83695bdbd5eed1de953bd5ca555cbb0",
+   "date": "2026-08-03",
+   "subject": "docs(orchestration): reject ORCH-02 (premise miss) + harden §8 (partial-write by failed agent)"
+  },
+  {
+   "hash": "f6e053691067db2c38f29e20f8f0b5a3b5ae6ad4",
+   "date": "2026-08-03",
+   "subject": "refactor(ingest): DRY forward-collector persist tail into _common.persist_snapshot"
+  },
+  {
+   "hash": "e6c71ec4713e8c53f62438ca461c0dde11be266f",
+   "date": "2026-08-03",
+   "subject": "test(site): align static-site tests with the Track B page + hermetic --out-dir"
+  },
+  {
+   "hash": "d927ee0de00946ea24fd29001fd05bdfbc64529e",
+   "date": "2026-08-03",
+   "subject": "docs(state): sediment /goal batch (DRY persist_snapshot + static-site tests green 1352)"
+  },
+  {
+   "hash": "5ffdbe1c6b95c07f55cb5736d83c7d427902c017",
+   "date": "2026-08-03",
+   "subject": "docs(ingest): note first-run last_poll_ts=None seeding in the 3 forward collectors"
+  },
+  {
+   "hash": "758d87e58c2c3514f44d751f7aade0aff8d5a991",
+   "date": "2026-08-03",
+   "subject": "feat(ingest): warn when persist_snapshot writes the REAL ledger (runs_dir=None)"
+  },
+  {
+   "hash": "cac92ca94438749f26f5e53f8df80953fd804e5a",
+   "date": "2026-08-03",
+   "subject": "docs(state): sediment Slice-2 batch close (5ffdbe1 + 758d87e)"
+  },
+  {
+   "hash": "20191fd2f13725594759cf35009ab61d2a01038d",
+   "date": "2026-08-03",
+   "subject": "docs(frontier): citation-integrity audit — 11/11 verified, 3 precision fixes"
+  }
+ ],
+ "batch_10": [
+  {
+   "hash": "577f5492b4272820e6a427f99de25d08cf16845f",
+   "date": "2026-08-03",
+   "subject": "docs(state): sediment citation-audit batch (20191fd)"
+  },
+  {
+   "hash": "c09bd0b5cd50f05efc54dfffcc03974276d88306",
+   "date": "2026-08-03",
+   "subject": "docs(decisions): execute approved owner decisions (D1-D8) with evidence"
+  },
+  {
+   "hash": "503b8bdd60603bf9250d2783cf404902674f6648",
+   "date": "2026-08-03",
+   "subject": "docs(state): sediment approved-decisions batch (c09bd0b)"
+  },
+  {
+   "hash": "2f879708892997db236e9915ee707aad8ffe80fb",
+   "date": "2026-08-03",
+   "subject": "docs(tasks): rewrite 4 defective RES specs (D5) via 4 parallel worktree-free agents"
+  },
+  {
+   "hash": "14be67d2f2974c3a24e8ca0d9313271783576eca",
+   "date": "2026-08-03",
+   "subject": "docs(state): sediment RES-rewrite batch (2f87970)"
+  },
+  {
+   "hash": "825658bbfd6ffecdb8ebb09277eabdf965470f6a",
+   "date": "2026-08-03",
+   "subject": "feat(res): execute RES-02 + RES-03 baselines (2 worktree-isolated sonnet agents)"
+  },
+  {
+   "hash": "3dc4dfea08b7261bc37215c13b9f13f37a021db7",
+   "date": "2026-08-03",
+   "subject": "docs(state): sediment RES-02/RES-03 execution batch (825658b)"
+  },
+  {
+   "hash": "0f94620e1e5282ba5718e8c751e11b4a1fcfb1fd",
+   "date": "2026-08-03",
+   "subject": "test(e3): add Slice 7 hermetic E2E chain + freeze AUD-06 contracts (D2)"
+  },
+  {
+   "hash": "7e3e195232501f87b2248395de3a9dc83160aa24",
+   "date": "2026-08-03",
+   "subject": "docs(state): sediment E3 Slice 7 E2E + AUD-06 contract freeze batch (0f94620)"
+  },
+  {
+   "hash": "6a4528c982d2a5646f407cd37e862c47aaad8415",
+   "date": "2026-08-03",
+   "subject": "fix(res): harden RES runners with SIG_ONLY + ledger gate; fix FF5 parser footer bug"
+  },
+  {
+   "hash": "ddbb47d79099fc266aea0a15d23690b3f6eeac0b",
+   "date": "2026-08-03",
+   "subject": "fix(ingest): sharded ALFRED DFF vintage fetch (2000-vintage cap) + datetime dtype"
+  },
+  {
+   "hash": "104b21edb3602d8238ad75dfbf190dcd57f45233",
+   "date": "2026-08-03",
+   "subject": "feat(res): execute BASELINE-FF5-001 + BASELINE-RANK-001 real runs (owner-authorized)"
+  },
+  {
+   "hash": "55f94a7f98b315eeeb12e7615f44a4ee01f4001e",
+   "date": "2026-08-03",
+   "subject": "docs(state): sediment RES-02/RES-03 real-run batch (104b21e)"
+  },
+  {
+   "hash": "c9e9eb66463e7fbc94d2cab90e9dbcea9d75a845",
+   "date": "2026-08-03",
+   "subject": "docs(evals): register BASELINE-FF5-001 + BASELINE-RANK-001 trial-intent manifests (RD-17)"
+  },
+  {
+   "hash": "d97c78c8f02030737dc0dad0aa45a656f3c97682",
+   "date": "2026-08-03",
+   "subject": "docs(tasks): RES-08 stage 1 complete — schema contract verified (22 tests), stage 2 awaits owner sample review"
+  }
+ ],
+ "batch_11": [
+  {
+   "hash": "0e6ea808692cf0b4eb559ec54aed1b1f7b500925",
+   "date": "2026-08-03",
+   "subject": "docs(track-c): Option A′ design corpus (qlib POC + prereg v1.0 + impl plan)"
+  },
+  {
+   "hash": "30ae69fbd92d0b3b415545b84a1100abc96217a6",
+   "date": "2026-08-03",
+   "subject": "feat(track-c): freeze Track C config_committed (ledger #46, sig 758ca4d7)"
+  },
+  {
+   "hash": "5e2ce6d815a5406a92d5f3a301e81a09a13455b8",
+   "date": "2026-08-04",
+   "subject": "feat(eval): expose Track B OOS scores + fix ranking_contract single-row-month"
+  },
+  {
+   "hash": "ab4345419dccb2082bbe6df1d6c96ecab7251502",
+   "date": "2026-08-04",
+   "subject": "docs(intake): propose A-share price (baostock) + CN macro 7-gate intake for Track C S0"
+  },
+  {
+   "hash": "178d1fd1fac9c8eb9e3ba0ebf82b2682ad85eb69",
+   "date": "2026-08-04",
+   "subject": "feat(ingest): baostock A-share price adapter for Track C S0 (lazy-import, G3-raw default)"
+  },
+  {
+   "hash": "420fba1837af8e1cfdba3b2fae1e901719c569a7",
+   "date": "2026-08-04",
+   "subject": "docs(survey): OSS wheel survey synthesis + same-day erratum (mount①② already implemented)"
+  },
+  {
+   "hash": "6bd360ff5e55d25032bf0f8026198a239cbc276f",
+   "date": "2026-08-04",
+   "subject": "docs(track-c): commit amendment #47 — A-share cninfo fundamentals → exploratory-only"
+  },
+  {
+   "hash": "5b561e48b4853aa431ab4e460f47848349b2dabe",
+   "date": "2026-08-04",
+   "subject": "feat(ingest): CSI300 PIT constituents intake adapter (Track C S0 universe, lazy + owner-gated fetch)"
+  },
+  {
+   "hash": "8bbe6a674c098d04b7a05719dbd332d9edebc6a9",
+   "date": "2026-08-04",
+   "subject": "feat(eval): mount② net-cost runner wiring execution_costs+empyrical (bps=5 default)"
+  },
+  {
+   "hash": "58814ff7567b8550bcf702b02d69d8f5070ee02c",
+   "date": "2026-08-04",
+   "subject": "fix(eval): mount② net-cost — correct turnover model, real runner, anti-degeneracy tests"
+  },
+  {
+   "hash": "3caa3ad9072be815d44d0479dcd3334e30ec94fb",
+   "date": "2026-08-04",
+   "subject": "fix(ingest): CSI300 adapter NaT handling + snapshot-date cap; pull S0 universe"
+  },
+  {
+   "hash": "ba157f57e7aecf47cc3f00a865a56ccab20a515c",
+   "date": "2026-08-04",
+   "subject": "feat(ingest): A-share price fetch for CSI300 universe + S0 snapshot (sig a4614876)"
+  },
+  {
+   "hash": "97184c9526ea8639eabfa5ecfa5ba1e182d00ed1",
+   "date": "2026-08-04",
+   "subject": "feat(features): CN price-only panel (mirror us_price_10 + A-share limit/suspension)"
+  },
+  {
+   "hash": "715c91bc581640d322a1ccbc1e47ea4f60dd37f7",
+   "date": "2026-08-04",
+   "subject": "fix(features): CN panel builder bugs + first A-share rank-IC (null, exploratory)"
+  },
+  {
+   "hash": "abab13e3f41a39928bad1d41461c0bbd4c897e2c",
+   "date": "2026-08-04",
+   "subject": "feat(features): regime macro 5-line layer (vix/credit/term/dff + EPU-exploratory)"
+  }
+ ],
+ "batch_12": [
+  {
+   "hash": "9093100cd12265e56bb19a84d194dbaba5f34bec",
+   "date": "2026-08-04",
+   "subject": "feat(features): regime global DY spillover layer"
+  },
+  {
+   "hash": "df57a4a95b7ba436d31e41256b60031dda941d80",
+   "date": "2026-08-04",
+   "subject": "feat(features): regime composite — equal-weight z-scored layers + TACO (2-layer, meso deferred)"
+  },
+  {
+   "hash": "a0b3d2370881a45a9b65c34d27cfe89738427bdc",
+   "date": "2026-08-04",
+   "subject": "docs(state): sediment regime composite milestone (macro+global+composite; meso deferred)"
+  },
+  {
+   "hash": "fafc4011653ea3063a87207329e6911fc08f9183",
+   "date": "2026-08-04",
+   "subject": "feat(eval): Track C conditional rank-IC (IC~regime, exploratory) — marginal regime interaction"
+  },
+  {
+   "hash": "33b5cfb521a6cc8e0c2857eb0c5115e5b5e27c31",
+   "date": "2026-08-04",
+   "subject": "feat(features): regime meso layer (cross-sector momentum; CN shenwan + US SIC EDGAR)"
+  },
+  {
+   "hash": "f7c57896f3e5e520b204c671aa22dc0748e42cfd",
+   "date": "2026-08-04",
+   "subject": "feat(features): composite builder 3-layer (macro+global+meso) — conditional-IC null under spec regime"
+  },
+  {
+   "hash": "90351e06aec3709b3844ffef8693299a50adcb35",
+   "date": "2026-08-04",
+   "subject": "docs(state): sediment Track C culmination — 3-layer conditional-IC null; 17-commit session summary"
+  },
+  {
+   "hash": "841fee4fa3f7c6b0b75f1ebe3dc52a70776500db",
+   "date": "2026-08-04",
+   "subject": "feat(eval): Track C joint US-CN chronological fold estimator (confirmatory machinery)"
+  },
+  {
+   "hash": "d2606d755002b51861f4b4102b940cf5ee27368c",
+   "date": "2026-08-04",
+   "subject": "docs(state): shenwan meso 7-gate verdict (G3→exploratory) + Track C joint-fold sediment"
+  },
+  {
+   "hash": "f4bbab74a77eb5eb9e71795d3699b065b0d49117",
+   "date": "2026-08-04",
+   "subject": "docs(design): Track C amendment #48 PROPOSED — meso narrowed to US-only (confirmatory)"
+  },
+  {
+   "hash": "418e3308afd166f79c84c35d4e21c711161dbe06",
+   "date": "2026-08-04",
+   "subject": "docs(state): current.md — Track C joint-fold machinery milestone (3 commits; pending real-data run + review)"
+  },
+  {
+   "hash": "6512fb9cab4469389b4dbb4e9ffbe5563c2e7e17",
+   "date": "2026-08-04",
+   "subject": "docs(design): Track C Q1 group-construction decision brief (recommend region-month)"
+  },
+  {
+   "hash": "a04cebf6fd5dbdfbc6a3f957ff4f7434e017cb9d",
+   "date": "2026-08-04",
+   "subject": "docs(state): sediment Track C joint-fold real-data result — combined IC -0.007 (null), cond-IC beta -0.015 (p=0.20)"
+  },
+  {
+   "hash": "bb52a76c0262d8353f1f58b84d829ca9339e3497",
+   "date": "2026-08-04",
+   "subject": "docs(state): Track C joint-fold review outcome — deterministic self-audit PASS (agent lane [1210]-failed; disclosed)"
+  },
+  {
+   "hash": "7ffbd2e4729df8fe447c0e77de87a35f08c70149",
+   "date": "2026-08-04",
+   "subject": "docs: methods+results publishable-unit draft v0.1 (anti-leakage discipline as contribution; 12-row null evidence table)"
+  }
+ ],
+ "batch_13": [
+  {
+   "hash": "e8d59d0cf0df2f93b64593ecdf672c34fd985328",
+   "date": "2026-08-04",
+   "subject": "docs(state): sediment methods+results draft v0.1 milestone (process->product)"
+  },
+  {
+   "hash": "a526488e7a6d7b09fdd7f5cac4d19708df67817a",
+   "date": "2026-08-05",
+   "subject": "feat(track-c): amendment #48 confirmatory GO + P1 audit closure"
+  },
+  {
+   "hash": "c98f4c8ea3a43f0b0a14a985191deebc4da5e5b0",
+   "date": "2026-08-05",
+   "subject": "feat(eval): build_joint_panel asymmetric region-specific features (A1)"
+  },
+  {
+   "hash": "b178a67d479123bf1898e3867b4f9300fc7500c9",
+   "date": "2026-08-05",
+   "subject": "feat(scripts): track_c_joint_run asymmetric35 toggle (A1 companion)"
+  },
+  {
+   "hash": "3e8b979a9bfaa5cf7473aff8c74713837bd17541",
+   "date": "2026-08-05",
+   "subject": "docs: baseline executed sediment (P1(b) closure) + Extension A progress + state calibration"
+  },
+  {
+   "hash": "52a8d0982de07fda7fffbcef9fdec5db73328740",
+   "date": "2026-08-05",
+   "subject": "fix(eval): pandas4 concat-sort + asymmetric35 exploratory result sediment"
+  },
+  {
+   "hash": "77aff3d310352dd6339edc5b6565d634ed5f1453",
+   "date": "2026-08-05",
+   "subject": "docs(draft): sediment asymmetric35 exploratory null to evidence table (#13)"
+  },
+  {
+   "hash": "8fea1ebd4e4775dfc64f297eb291433935f3cc09",
+   "date": "2026-08-05",
+   "subject": "docs(design): A2/A3 macro-6 fetch+broadcast spec (owner authorized full 41 path)"
+  },
+  {
+   "hash": "be115ea8a0c9500a592a786fa5328795968ed902",
+   "date": "2026-08-05",
+   "subject": "feat(features): A2a US macro 4 fetch+surprise (cap-bug pending fix); A2b GREEN"
+  },
+  {
+   "hash": "cd3008fab9337053d39e25ea190a11c9b1ab3332",
+   "date": "2026-08-05",
+   "subject": "docs(state): calibrate macro-7gate agent status idle -> failed [1210]"
+  },
+  {
+   "hash": "edc1add7f7f9bdac1553ff23512315e7dc3243ce",
+   "date": "2026-08-05",
+   "subject": "fix(features): A2a cap bug — generic per-year slice for daily ALFRED series"
+  },
+  {
+   "hash": "4062b19dd0fc4a75dd636df48276cac67a94fbed",
+   "date": "2026-08-05",
+   "subject": "docs(state): A2a cap fix verified — real fetch bypasses HTTP 400"
+  },
+  {
+   "hash": "9a13518bc16ce507c91f40c29f65aba1b59e7106",
+   "date": "2026-08-05",
+   "subject": "feat(features): A2b CN macro 2 + A3 broadcast join + runner asymmetric41"
+  },
+  {
+   "hash": "a4175988c927623f046cb33dbbce5826e39797d2",
+   "date": "2026-08-05",
+   "subject": "docs(state): climax prerequisite machinery complete (A1+A2a+A2b+A3+runner asym41)"
+  },
+  {
+   "hash": "e92b3986f79697630a1be7ce29f3c294c7a4ac39",
+   "date": "2026-08-05",
+   "subject": "feat(track-c): first confirmatory OOS climax — ledger #49 (IC -0.0088, J-T look-1 NOT_EQUIVALENT)"
+  }
+ ],
+ "batch_14": [
+  {
+   "hash": "76bacbfd30a3ce0fc96e3a7b98f3b8661669fb0a",
+   "date": "2026-08-05",
+   "subject": "feat(track-c): prospective power analysis — J-T schedule structurally underpowered for SESOI +/-0.010"
+  },
+  {
+   "hash": "a86fe8a10c8bf0a89aa96f35936470d06acac2cb",
+   "date": "2026-08-05",
+   "subject": "fix(scripts): clear pre-existing track_c_commit.py E501 lint debt"
+  },
+  {
+   "hash": "da9f4a65e9095923abf93b71be05ec91ae095cd4",
+   "date": "2026-08-05",
+   "subject": "docs(draft): finalize methods-and-results v1.0 under option A (accept reframing)"
+  },
+  {
+   "hash": "efb4f390d79d57d00a81b8537c82eedae2754d91",
+   "date": "2026-08-05",
+   "subject": "docs(readme): add Track C confirmatory climax + fix Phase B paired-CI staleness"
+  },
+  {
+   "hash": "e94eac29049254511f80e3b117f060eaba78ed2e",
+   "date": "2026-08-05",
+   "subject": "feat(site): add Track C confirmatory climax section to static page"
+  },
+  {
+   "hash": "3a3c2cfd6107cfc3d764c4baf451cd51d5b18169",
+   "date": "2026-08-05",
+   "subject": "feat(scripts): bps-cost sensitivity sweep -- Track B economic-validity lens"
+  },
+  {
+   "hash": "52a3d6956761941a8bbe97c3dfa54f48d792bed9",
+   "date": "2026-08-05",
+   "subject": "docs(draft): English v1.0-en translation of methods-and-results draft"
+  },
+  {
+   "hash": "6bba398d1a0b344f82d338650c387abb5353c2d3",
+   "date": "2026-08-05",
+   "subject": "docs(positioning): publishable-unit venue brief + sediment bps-sweep + session state"
+  },
+  {
+   "hash": "a36988d926d7218664a6d6315386b6d5633e3ad0",
+   "date": "2026-08-05",
+   "subject": "docs(strengthening): power-floor literature anchoring + replication-availability statement"
+  },
+  {
+   "hash": "30e27d8972991948d61d951a86fa1908686da201",
+   "date": "2026-08-05",
+   "subject": "feat(scripts): IC noise-floor survey + empirical power-floor verification"
+  },
+  {
+   "hash": "023dfe4aca5198789e7aa8147b6871658391939b",
+   "date": "2026-08-05",
+   "subject": "feat(manuscript): arXiv preprint scaffold (framing a; PREP, not uploaded)"
+  },
+  {
+   "hash": "4c47add21fca97ac42154aac6fe5d0bc48a1e5d2",
+   "date": "2026-08-05",
+   "subject": "feat(scripts): power-floor theoretical derivation (pure-noise bound + ML excess)"
+  },
+  {
+   "hash": "08af75db41ec9537fb02ac6cc7f90e3158fbe0c8",
+   "date": "2026-08-06",
+   "subject": "feat(site): bilingual Quarto research site (brand + interactive tables)"
+  },
+  {
+   "hash": "f5763d533fd480440e3bd7cb0d979d4bdfdf7327",
+   "date": "2026-08-06",
+   "subject": "docs(state): mark bilingual Quarto site deployed (CI success, Pages 200)"
+  },
+  {
+   "hash": "c80838a21b915e54e85d6d2a5c899b6aee139b92",
+   "date": "2026-08-06",
+   "subject": "feat(web): fintech data terminal (Next.js + shadcn) — xiaoyinsi-style main site"
+  }
+ ],
+ "batch_15": [
+  {
+   "hash": "2a45f23b6eed6b9b4976d5458e2d20978451a28c",
+   "date": "2026-08-06",
+   "subject": "fix(web): add pnpm-lock.yaml (CI cache-dep + frozen-install were failing: paths not resolved)"
+  },
+  {
+   "hash": "4ae335ea2b10282f5355128e93e04abb80f6f9d9",
+   "date": "2026-08-06",
+   "subject": "feat(web): special alt-data modules — TACO pressure index + Reddit retail buzz"
+  },
+  {
+   "hash": "85942088cbaa079268f0c2b1159bf76b3c259289",
+   "date": "2026-08-06",
+   "subject": "feat(web): smart-money module — EDGAR 13D institutional stake filings"
+  },
+  {
+   "hash": "63aec0133829f5238466287424ec2cc89d65f9a0",
+   "date": "2026-08-06",
+   "subject": "feat(web): pick-conviction index — Aionis-unique model meta-signal"
+  },
+  {
+   "hash": "3eac022baf7ef8b4d27a68d839d268b159f2220d",
+   "date": "2026-08-06",
+   "subject": "feat(ingest): Form 4 insider-trading ingest (SEC EDGAR, 7-gate cleared)"
+  },
+  {
+   "hash": "80dc36457f660d8aa85deb8db419d1c452d29994",
+   "date": "2026-08-06",
+   "subject": "feat(ingest): Form 4 XML orchestrator (opus fallback) + export_terminal_data lint fix"
+  },
+  {
+   "hash": "9414a2ca606309e931cb229bf0b82d3bf7aba1fb",
+   "date": "2026-08-06",
+   "subject": "feat(ingest+web): Form 4 insiders module live (real data) + 2 parser schema fixes"
+  },
+  {
+   "hash": "881a441cc1dda3d71623fed4a90b608b01593e29",
+   "date": "2026-08-06",
+   "subject": "feat(web): CFTC COT long/short positioning-pressure index"
+  },
+  {
+   "hash": "552e35e3e8f18b289bb324206932cd4c84e189e6",
+   "date": "2026-08-07",
+   "subject": "fix(scripts)+test: form4_fetch buy_or_sell column + web terminal data contract tests"
+  },
+  {
+   "hash": "77f6311acdaff7a8d39885ed107041818b3e3b40",
+   "date": "2026-08-07",
+   "subject": "refactor(cot): 10-market cross-asset set + resilient per-year fetch"
+  },
+  {
+   "hash": "54fac14717f1b9a56017b6ae63d42085acc42602",
+   "date": "2026-08-07",
+   "subject": "feat(web): /insiders enriched to 5-issuer — 2415 insider txns (real, NVDA-led)"
+  },
+  {
+   "hash": "33035c3a21c7b5025cd4835cbc46dce395359041",
+   "date": "2026-08-07",
+   "subject": "fix(site): sanitize NaN→null in ic_monthly.json (JSON spec violation)"
+  },
+  {
+   "hash": "bb83117b7bbd64d5ef0647a7b9470c13ce9a9489",
+   "date": "2026-08-07",
+   "subject": "feat(web+calibration): honest probability readouts + sector breakdown + ticker names"
+  },
+  {
+   "hash": "db7452cbb0c701f97ca91e6fb000f0d52a8b2049",
+   "date": "2026-08-07",
+   "subject": "docs(state): handoff §2026-08-07(a) path-A calibration+sectors+names landed"
+  },
+  {
+   "hash": "0aeac7d0099ee2d7de2aebc3a4cfb1180bc582eb",
+   "date": "2026-08-07",
+   "subject": "feat(web): track record (prediction vs reality) + A-share board tiers"
+  }
+ ],
+ "batch_16": [
+  {
+   "hash": "86fce92963167974052d498725fe15862fbe6eb5",
+   "date": "2026-08-07",
+   "subject": "fix(web): overview picks preview shows company names (not raw tickers)"
+  },
+  {
+   "hash": "45d0d81b066fb5142c10bb9105fc864f05b05371",
+   "date": "2026-08-08",
+   "subject": "feat(infra+web): Cloudflare Worker real-time price proxy + live price overlay"
+  },
+  {
+   "hash": "8176146ba44f431d39e8f668cfd46b0fe63db051",
+   "date": "2026-08-08",
+   "subject": "feat(web): enable live prices — Worker URL configured"
+  },
+  {
+   "hash": "3ba4251ab468995aa1d0d441799e4a36989af018",
+   "date": "2026-08-08",
+   "subject": "fix(worker): US change_pct from open + CN stock/get endpoint (ulist.np 502)"
+  },
+  {
+   "hash": "38342d4ca5449faeded67e7db23033ef05f46d6e",
+   "date": "2026-08-08",
+   "subject": "fix(worker): rename to 'api' for clean URL (api.aionis-prices.workers.dev)"
+  },
+  {
+   "hash": "a4ff39e72f077a11a06bad1ab6cb3e9c5cd8ff30",
+   "date": "2026-08-08",
+   "subject": "fix(worker): switch CN backend to Sina (东方财富 502 from edge)"
+  },
+  {
+   "hash": "c9e8f9fe41620123f4f8f0e82b9f41190f65a7c4",
+   "date": "2026-08-08",
+   "subject": "fix(worker): bump CN cache key to v2 — bypass stale East Money 24h cache"
+  },
+  {
+   "hash": "0a17416bdbc8f257b11ce1f3f76d4188516a5f91",
+   "date": "2026-08-08",
+   "subject": "feat(data+cron): full track record (131mo) + daily refresh cron + Reddit hidden"
+  },
+  {
+   "hash": "7d90176fb136dd92b98eb4c83aabc763416e93df",
+   "date": "2026-08-08",
+   "subject": "feat(web): 川普元年 market context — VIX × index × events (2016→today)"
+  },
+  {
+   "hash": "a5ca91582299f219211d6f7309ef64585a1e7e8a",
+   "date": "2026-08-08",
+   "subject": "fix(data): default BACKTEST_MONTHS=99 (full OOS history) in export + cron"
+  },
+  {
+   "hash": "1a0f4bf5530daf9e1c9297bc2e68915a4a33d251",
+   "date": "2026-08-08",
+   "subject": "feat(data): extend terminal history to 2016 — COT full + Form4 deepening"
+  },
+  {
+   "hash": "52f14e8563a91578c25e53d2a333d54ab035a19f",
+   "date": "2026-08-08",
+   "subject": "feat(data): TACO + smart-money to 2016; COT Russell variant; form4 2016 data"
+  },
+  {
+   "hash": "0677acf5fa4b44154e4b646981e42542a8c24cb7",
+   "date": "2026-08-08",
+   "subject": "feat(web+data): activate Reddit retail-sentiment (zero-credential Atom RSS)"
+  },
+  {
+   "hash": "92bc7a615637dfe6cd545609073e2ec161f51ee5",
+   "date": "2026-08-08",
+   "subject": "docs(design): live-refresh + adaptive-calibration analysis (Track A/B)"
+  },
+  {
+   "hash": "482144626cfbf8207fbba5a5153c77081fc006be",
+   "date": "2026-08-08",
+   "subject": "chore(data): re-export form4 with full 5-issuer deep history (2013-2026, 13544 txns)"
+  }
+ ],
+ "batch_17": [
+  {
+   "hash": "4b8d583cb67e64375b62a55a70cb63b6999c2cdf",
+   "date": "2026-08-08",
+   "subject": "feat(eval+web): model-drift health monitor (Track A, leakage-safe display)"
+  },
+  {
+   "hash": "a755339c858946e0459ce0e9931af25575e85e73",
+   "date": "2026-08-08",
+   "subject": "feat(web+data): restore /reddit nav + form4 complete 5-issuer (2013-2026, 16564 txns)"
+  },
+  {
+   "hash": "98f4d5742af08450199e2e813ede150f20881eda",
+   "date": "2026-08-08",
+   "subject": "docs(prereg): Track Adaptive — adaptive-refit rank-IC preregistration (PROPOSED)"
+  },
+  {
+   "hash": "620e710a972c37fb968e3cc4223672510fca647c",
+   "date": "2026-08-08",
+   "subject": "feat(eval+design): DSR/PBO anti-overfit utility + /themes display design"
+  },
+  {
+   "hash": "728f752fe32a4c05d0defa28a326f650c1a9d60b",
+   "date": "2026-08-08",
+   "subject": "feat(web+data): /themes display — seven-theme signals surfaced (display-only)"
+  },
+  {
+   "hash": "600eeddf76500e3ccf53906e55765abf7da683fd",
+   "date": "2026-08-08",
+   "subject": "feat(eval): Track Adaptive config_committed (frozen before any OOS)"
+  },
+  {
+   "hash": "d91e94139bab590f097462146de36e1edfb5910b",
+   "date": "2026-08-08",
+   "subject": "feat(eval): Track Adaptive amend1 — WEEKLY cadence + truly-frozen baseline (#52)"
+  },
+  {
+   "hash": "089f256b3c485c8985b755cbd4c2cff2b19748c6",
+   "date": "2026-08-09",
+   "subject": "feat(eval): Track Adaptive weekly runner + hermetic tests (leakage-verified)"
+  },
+  {
+   "hash": "475061842b70e78a0f13bac0cb4e5afea8a26b3e",
+   "date": "2026-08-09",
+   "subject": "test(eval): add realization invariant — proves embargo=5 is leak-free"
+  },
+  {
+   "hash": "fdd9398e8f37cc34f6950d8a8fe0e534f4e034f1",
+   "date": "2026-08-09",
+   "subject": "fix(eval): Track Adaptive amend2 ruff + runner n_jobs=4→2 (crash fix)"
+  },
+  {
+   "hash": "22f6f65871c0ffb7a1d318ee77423f62d69c8797",
+   "date": "2026-08-09",
+   "subject": "fix(eval): Track Adaptive runner n_jobs→1 (sequential, reliable)"
+  },
+  {
+   "hash": "8ea99d53b25ba5da52184431cc505bb0d00bef36",
+   "date": "2026-08-09",
+   "subject": "docs(state): handoff (j) Track Adaptive OOS execution journey"
+  },
+  {
+   "hash": "4868e9019c0884eb0133426fe272bd52442b4074",
+   "date": "2026-08-09",
+   "subject": "docs(design): adaptive-learning OSS survey — reuse-first verdict (minimal deps)"
+  },
+  {
+   "hash": "2e2ab30935178b8e88853eaa5e217e13bd02e768",
+   "date": "2026-08-09",
+   "subject": "feat(eval): Track Adaptive OOS result — NULL (IC_diff -0.0037, p=0.26)"
+  },
+  {
+   "hash": "27a18f36dfaaff2c20faedcdb83da252eb79bf78",
+   "date": "2026-08-09",
+   "subject": "docs(state): handoff (k) — Track Adaptive OOS result NULL (-0.0037, p=0.26)"
+  }
+ ],
+ "batch_18": [
+  {
+   "hash": "df3497975320b5389b63f519cb2801ad8a30bc44",
+   "date": "2026-08-09",
+   "subject": "feat(eval): walk-forward calibration reliability display (Track A slice A1)"
+  },
+  {
+   "hash": "681b7dfa8cf0e5c48d069c3ea09c2dff298862db",
+   "date": "2026-08-09",
+   "subject": "docs(state): handoff (l) — Track A slice A1 walk-forward calibration reliability"
+  },
+  {
+   "hash": "459d96e5673494626dc50a14480db3c74eab8fc2",
+   "date": "2026-08-09",
+   "subject": "feat(web): calibration reliability view (Track A slice A1 display)"
+  },
+  {
+   "hash": "511782f8ad74b371741521f2513f97b9e4718f43",
+   "date": "2026-08-09",
+   "subject": "docs(state): handoff (l) update — Track A slice A1 frontend complete"
+  },
+  {
+   "hash": "3aa2c1b846a11a5f32d8983874f069fafc9ce665",
+   "date": "2026-08-09",
+   "subject": "feat(scripts): Track LLM Phase-0 feasibility pilot (coverage + projected cost)"
+  },
+  {
+   "hash": "f7ffe772715603790aa8e389f964f646abb009eb",
+   "date": "2026-08-09",
+   "subject": "docs: Track LLM PROPOSED prereg + Phase-0 feasibility report"
+  },
+  {
+   "hash": "e3274e3e6a4b15cf0a38f97b9426801e09aba13b",
+   "date": "2026-08-09",
+   "subject": "fix(web): dev basePath 404 + empty taco chart"
+  },
+  {
+   "hash": "bab3e18aeeaa2fe012f9d7412a9da70fb95c83c4",
+   "date": "2026-08-09",
+   "subject": "fix(web): mark Trump (+Biden) inaugurations as pivotal market events"
+  },
+  {
+   "hash": "b1d195d97db868297a92a76ef6f0a35cca92f916",
+   "date": "2026-08-09",
+   "subject": "docs: terminal IA redesign proposal — decision funnel (PROPOSED)"
+  },
+  {
+   "hash": "2bc32bfeb67cb1de1983588d69cc3acfd214f409",
+   "date": "2026-08-09",
+   "subject": "docs(state): handoff (n) — dashboard diagnosis + IA funnel proposal (pushed)"
+  },
+  {
+   "hash": "40f3b9d4a7a046c26dccf27fa9bff633fa3082a4",
+   "date": "2026-08-09",
+   "subject": "refactor(web): decision-funnel nav + delete template cruft + daily fetch cron"
+  },
+  {
+   "hash": "e714d349a15a427c184d87bcc55185d47ea78316",
+   "date": "2026-08-09",
+   "subject": "docs(state): P3 funnel IA rebuild shipped (40f3b9d) — themes+risk next"
+  },
+  {
+   "hash": "b0e07b623363ef304a9c4c05b9752fcf5f30e413",
+   "date": "2026-08-09",
+   "subject": "feat(eval): portfolio_risk + retail_pressure + theme_signals display modules"
+  },
+  {
+   "hash": "ef792bfdd2e6896df7e3e396c371612b4b185085",
+   "date": "2026-08-09",
+   "subject": "feat(web): operationalize seven themes — direction × strength × favorites"
+  },
+  {
+   "hash": "2a1958da2f24468d1ce093a00a746f70df1ce79e",
+   "date": "2026-08-10",
+   "subject": "feat(web): market risk panel — Sharpe/Sortino/MaxDD/VaR/CVaR (⑤ risk)"
+  }
+ ],
+ "batch_19": [
+  {
+   "hash": "f268d6ad07967ca46423b78c8852dd1d78e51ec0",
+   "date": "2026-08-10",
+   "subject": "feat(web): role-tagline kickers across all 15 panels (decision-funnel roles)"
+  },
+  {
+   "hash": "81077b97092401671352ff0accb0d04db9a9559f",
+   "date": "2026-08-10",
+   "subject": "feat(web): funnel-overview landing + picks P(up) + yearly history (3 parallel agents)"
+  },
+  {
+   "hash": "bff871dd3c3a90c37a529302058a5bdb01ad5041",
+   "date": "2026-08-10",
+   "subject": "refactor(web): market panorama → President ↔ Fed structural axis (verified)"
+  },
+  {
+   "hash": "a40f42b3dc12a25902777cb4378530e56bb256cc",
+   "date": "2026-08-10",
+   "subject": "feat(web): macro-driver sub-panel — the President↔Fed objective functions"
+  },
+  {
+   "hash": "7b7b0052856b52e2a324d34beceae803d0d3ae89",
+   "date": "2026-08-10",
+   "subject": "feat(web): wire retail-pressure display (GME-style velocity × crowding-z × lean)"
+  },
+  {
+   "hash": "0476af2aa5032be7b488131ff12eb545ea970e59",
+   "date": "2026-08-10",
+   "subject": "feat(web): deepen macro-driver sub-panel — dollar/yield-curve/mandate + real rate"
+  },
+  {
+   "hash": "a08ec16cd901bfea6c46d9887156d969865b5aa0",
+   "date": "2026-08-10",
+   "subject": "fix(ci): unblock daily refresh — YAML colon + graceful artifact skip"
+  },
+  {
+   "hash": "06834a443c275013c7ad670463496847b4e0d4eb",
+   "date": "2026-08-10",
+   "subject": "fix(test): align market_context event-type allowlist with President↔Fed reframe"
+  },
+  {
+   "hash": "da94dd84c3a9e61687447566ff99a9fa5441c130",
+   "date": "2026-08-10",
+   "subject": "feat(themes): fill the empty risk theme with cross-sectional risk factors"
+  },
+  {
+   "hash": "4b10c06d985b3fa8718e9db60480ae088ee5867d",
+   "date": "2026-08-10",
+   "subject": "feat(data): expand smart-money 13D historical coverage (2872->3754 filings)"
+  },
+  {
+   "hash": "d0d43af60b28709d6f7261407491c0fd96c66b08",
+   "date": "2026-08-10",
+   "subject": "fix(ci): preserve tracked JSON across all fetch-driven exporters + VIX refresh"
+  },
+  {
+   "hash": "e211a97bd9755e993f18978a829a5be1ddc16e73",
+   "date": "2026-08-10",
+   "subject": "feat(web): consolidate 16 panels into 7 hub pages (①→⑥ funnel)"
+  },
+  {
+   "hash": "0958bee4eb84c470cd18f6ff0f30a7443972edf0",
+   "date": "2026-08-10",
+   "subject": "fix(overview): point funnel cards at the consolidated hub routes"
+  },
+  {
+   "hash": "82fbd6daaebd66a7f9be734451f3d87ac8ceb22e",
+   "date": "2026-08-10",
+   "subject": "ci: bump refresh job timeout 30->45 min for the expanded Form 4 fetch"
+  },
+  {
+   "hash": "3b15e765d76f805fe1d4e1e29bcb00da8e4e3bb1",
+   "date": "2026-08-10",
+   "subject": "feat(web): professional terms + plain-language glosses (owner directive)"
+  }
+ ],
+ "batch_20": [
+  {
+   "hash": "fd3e07f909ceeea6d15b78c6dfe906a578e3f7ce",
+   "date": "2026-08-10",
+   "subject": "ci: cache data/cache so daily fetches are deltas, not full re-pulls"
+  },
+  {
+   "hash": "4c1fab6d3bfc96503cefe0dd37a599e42d6e81b0",
+   "date": "2026-08-10",
+   "subject": "fix(web): demote hub h1 to stage-chip (single h1 per page)"
+  },
+  {
+   "hash": "dd0ba7074ee7efc4e767e9cbcec533f6e52f6b73",
+   "date": "2026-08-10",
+   "subject": "feat(data): unfreeze smart-money SC 13D via EDGAR daily crawler index"
+  },
+  {
+   "hash": "ac35c4d719228cec61878154e1288cdd85241f34",
+   "date": "2026-08-10",
+   "subject": "fix(web): explicit SmartMoney type — unbreak deploy (empty active_filers → never[])"
+  },
+  {
+   "hash": "ca93f39e06cd0e1de6567122a5bf636363dfc373",
+   "date": "2026-08-10",
+   "subject": "fix(smart-money): active_filers over all real-filer rows (non-empty ranking)"
+  },
+  {
+   "hash": "51b6d38aa5de686fb2a2e5974096a7c65cffd65e",
+   "date": "2026-08-11",
+   "subject": "fix(ci)+feat(data): form4 back to 5 issuers (CI reliability) + smart_money 2025 filled"
+  },
+  {
+   "hash": "70e86514eb13996516f6635fa69d480167166908",
+   "date": "2026-08-11",
+   "subject": "feat(smart-money): link recent 13D targets to EDGAR filing (recover the filer)"
+  },
+  {
+   "hash": "6cf4f24dc23353b95967c3b120f9be63e8c6921c",
+   "date": "2026-08-11",
+   "subject": "feat(market): gloss the risk-stat terms (title tooltips) for plain-language access"
+  },
+  {
+   "hash": "ee1b14f113bad0234a3b362f9e610227fa0e60a2",
+   "date": "2026-08-11",
+   "subject": "feat(data): GDELT news-sentiment ingest for news_sentiment theme (option a)"
+  },
+  {
+   "hash": "463136a90642c179554756a47c38060001a7282e",
+   "date": "2026-08-11",
+   "subject": "feat(web): 5-layer stock-picking funnel + theme regrouping"
+  },
+  {
+   "hash": "06da22082410a8cb3aedd26f1131c7441b271c49",
+   "date": "2026-08-11",
+   "subject": "docs+ci: qlib/RD-Agent reuse-audit + bump refresh timeout 45→75"
+  },
+  {
+   "hash": "fc91fe0d81d988bc30b52ed4ba05d8c6c619caf4",
+   "date": "2026-08-11",
+   "subject": "feat(factors): close-only qlib factor-pack (display-only price enrichment)"
+  },
+  {
+   "hash": "2211e891733d1091b65c4c20550c7e2903044e12",
+   "date": "2026-08-11",
+   "subject": "docs: disciplined-adaptive A+B synthesis (research-grounded)"
+  },
+  {
+   "hash": "1b3fe8a94ea2e8448ef8a6e950d2c65f699b9f5d",
+   "date": "2026-08-11",
+   "subject": "refactor(web): dissolve the seven themes into the hub taxonomy"
+  },
+  {
+   "hash": "b39ed58adc33db12994c4b63b78906e19f696f7a",
+   "date": "2026-08-11",
+   "subject": "docs: OHLCV panel extension plan (step 1, evidence-grounded)"
+  }
+ ],
+ "batch_21": [
+  {
+   "hash": "1d75a7a57fc6fcad687a734ed489b8ad51d1ae25",
+   "date": "2026-08-11",
+   "subject": "ci: bump refresh timeout 75→150 (Form 4 cold pull exceeded 75min)"
+  },
+  {
+   "hash": "6ae06ea75bfb0c6d359a2ea1cfae63f0d6e65c18",
+   "date": "2026-08-11",
+   "subject": "fix(form4): incremental fetch — preserve multi-tx accessions + schema migration"
+  },
+  {
+   "hash": "05ab7b16972d6c756ef36174f05f70d5c3785857",
+   "date": "2026-08-11",
+   "subject": "fix(form4): per-issuer write-through checkpointing — always accumulate"
+  },
+  {
+   "hash": "66a3d3c8b4291924e0ffed11c649d2239e07f1c9",
+   "date": "2026-08-11",
+   "subject": "ci: step-cap Form 4 (20min) so it can't block GDELT/reddit/export"
+  },
+  {
+   "hash": "8b0154d0e5023e9d110d7faab27548a2dd0d5835",
+   "date": "2026-08-11",
+   "subject": "feat(ingest): fetch_ohlcv_panel — additive OHLCV fetch (step 1 groundwork)"
+  },
+  {
+   "hash": "a954acb73909d9204ca3708f50fb4910803b1e38",
+   "date": "2026-08-11",
+   "subject": "feat(web): gloss track-hub technical terms (title tooltips, zh+en)"
+  },
+  {
+   "hash": "1a62ed27a9782e48ac17489c0cb598e2b82decf3",
+   "date": "2026-08-11",
+   "subject": "feat(web): gloss confirmation-hub terms (13D/Form 4/bull_ratio zh+en)"
+  },
+  {
+   "hash": "3e54d901ac6fa44ca4415e5ebd2566754cdb665b",
+   "date": "2026-08-11",
+   "subject": "ci(refresh): drop [skip ci] so daily data commit deploys"
+  },
+  {
+   "hash": "e9bc33b6593c2fe280cb06a8c852408589b714d6",
+   "date": "2026-08-11",
+   "subject": "docs(state): track-hub/confirmation-hub gloss live + [skip ci] root-cause fix"
+  },
+  {
+   "hash": "cd239f310cba02f4653196fdec0601aa450999d6",
+   "date": "2026-08-11",
+   "subject": "ci(refresh): step-cap SC 13D step (15min) — same insurance as Form 4"
+  },
+  {
+   "hash": "ff3c0ecc724460d28e4ebcf8fb8b57f171feb13c",
+   "date": "2026-08-11",
+   "subject": "ci(refresh): rebase onto latest main before data commit"
+  },
+  {
+   "hash": "764581bede472c7ca6a91bf5a619c21c15341fd5",
+   "date": "2026-08-11",
+   "subject": "docs(audit): ingest anti-leakage audit — all 7 modules CLEAN"
+  },
+  {
+   "hash": "0781eb0631f0f903667314f4aa853a689abb9a75",
+   "date": "2026-08-11",
+   "subject": "docs(audit): terminal UX/structure dogfood — structurally sound"
+  },
+  {
+   "hash": "a4736735d47c7caada54d96dfa0774d8d9a36306",
+   "date": "2026-08-11",
+   "subject": "docs(research): adaptive A+B deep-dive — Romano-Wolf × adaptive is uncharted"
+  },
+  {
+   "hash": "b8d204e50687d55bc2e830142a2091e2130935e1",
+   "date": "2026-08-11",
+   "subject": "docs(research): correct adaptive deep-dive — Track Adaptive already ran (null)"
+  }
+ ],
+ "batch_22": [
+  {
+   "hash": "c24dd16c09b51186dc89841ca2fefe8f59bbbd55",
+   "date": "2026-08-11",
+   "subject": "chore(data): daily terminal refresh"
+  },
+  {
+   "hash": "66d46c360446a5e1a22fde5cd4b7e6ba733f9250",
+   "date": "2026-08-11",
+   "subject": "docs(state): session arc — CI reliability + 3 audits + adaptive null correction"
+  },
+  {
+   "hash": "50388b243db1c75ad04dd6920ad154b0b28b79ab",
+   "date": "2026-08-11",
+   "subject": "fix(ingest): GDELT news_sentiment — ECON_MKT (invalid) → ECON_STOCKMARKET"
+  },
+  {
+   "hash": "d5e02b0366be88a27bb80384480713c1512c7055",
+   "date": "2026-08-11",
+   "subject": "refactor(ingest): remove stale duplicate _GDELT_MIN_INTERVAL in news_sentiment_gdelt"
+  },
+  {
+   "hash": "73c265ed6034012cb142d9f35e23f426ce8bbaa5",
+   "date": "2026-08-11",
+   "subject": "fix(export): news_sentiment fallback headline — drop stale pre-GDELT framing"
+  },
+  {
+   "hash": "9d260c9d11839f14b5e7924f90eb0281580b18ee",
+   "date": "2026-08-11",
+   "subject": "refactor(web): four-hub research closed loop — dissolve themes/discipline groups"
+  },
+  {
+   "hash": "fa465efd10550eb5d106e5eb80479bc2c48a6283",
+   "date": "2026-08-11",
+   "subject": "chore(data): daily terminal refresh"
+  },
+  {
+   "hash": "ed27f4fc755a2eba840eeb48000d6a60f22f09d1",
+   "date": "2026-08-11",
+   "subject": "refactor(web): overview → four-hub closed-loop navigator"
+  },
+  {
+   "hash": "4c9e7c2f8b7de7669a17733d7038afc395f12d89",
+   "date": "2026-08-11",
+   "subject": "fix(export): news_sentiment panel-gate — refresh independently when panel absent"
+  },
+  {
+   "hash": "34eacb23740895628680bc369521098f1ffb5a86",
+   "date": "2026-08-11",
+   "subject": "fix(ingest): GDELT news_sentiment per-chunk checkpoint — survive CI timeout"
+  },
+  {
+   "hash": "84127df158be5fc012df9c46b93a28dcbc8515f2",
+   "date": "2026-08-11",
+   "subject": "docs(state): session arc — 四枢纽 IA 重组 + news 3 根因链"
+  },
+  {
+   "hash": "ebc55a58e7881490758a2f7739857f3c2c5b2466",
+   "date": "2026-08-11",
+   "subject": "feat(themes): per-theme as_of timestamp — PIT honesty on the display layer"
+  },
+  {
+   "hash": "cb6cf53aac003e7424ed13f735557f89f4a82def",
+   "date": "2026-08-11",
+   "subject": "chore(data): daily terminal refresh"
+  },
+  {
+   "hash": "c12378deb4c4349bc1305e635f52283434b46d6b",
+   "date": "2026-08-12",
+   "subject": "feat(display): rebuild display panel daily (option B1) — fresh as_of for terminal themes"
+  },
+  {
+   "hash": "2afcf27ad971e054eb9bdc893c3c4ec3c510adaf",
+   "date": "2026-08-12",
+   "subject": "feat(export): snapshot_ts on every terminal panel — PIT honesty baseline"
+  }
+ ],
+ "batch_23": [
+  {
+   "hash": "d799c3a9f7d42ff368fd791944a3ec52d323368a",
+   "date": "2026-08-12",
+   "subject": "docs(state): 续④ B1 display panel + snapshot_ts baseline"
+  },
+  {
+   "hash": "37b419968980b3ce22b8e082982a3992088da72e",
+   "date": "2026-08-12",
+   "subject": "refactor(web): terminal IA → validity-argument chain (paradigm α, ECD)"
+  },
+  {
+   "hash": "8d675e228441cc2e354b9f40f7224fb6de85e18e",
+   "date": "2026-08-11",
+   "subject": "chore(data): daily terminal refresh"
+  },
+  {
+   "hash": "bf1f3b6ba39e89510fa2594dfa4a0ba5c76b4154",
+   "date": "2026-08-12",
+   "subject": "refactor(web): Overview → one composed validity-argument surface"
+  },
+  {
+   "hash": "caeb2fb85688ea850f6e8a610a41c610b2c553c6",
+   "date": "2026-08-12",
+   "subject": "feat(web): SegmentHeader — every hub page declares its spine segment"
+  },
+  {
+   "hash": "247f0776b871859f358b41f6e344bbdda22bb901",
+   "date": "2026-08-12",
+   "subject": "feat(web): SegmentHeader on /themes (the full-chain overview page)"
+  },
+  {
+   "hash": "5a40562d05fa57689edee4f177e89a009a446a2c",
+   "date": "2026-08-12",
+   "subject": "feat(web): provenance spine — ProvenanceBadge on the SegmentHeader"
+  },
+  {
+   "hash": "48d2dda0c849a392d1a9fbf146945195113e0725",
+   "date": "2026-08-12",
+   "subject": "docs(state): 续⑥ IA optimized to plateau — Overview argument surface + SegmentHeader + provenance"
+  },
+  {
+   "hash": "2045a32a678319d09d8e8bdf34a1540cd8fa831e",
+   "date": "2026-08-12",
+   "subject": "refactor(web): ThemesFunnel → ArgumentChainDiagram (ECD warrants)"
+  },
+  {
+   "hash": "e5c95c97457127d2ec4aa4cfac11577198d0a0af",
+   "date": "2026-08-12",
+   "subject": "docs(state): 续⑦ themes widget funnel→argument-chain redesign + visual audit"
+  },
+  {
+   "hash": "c0aa3355b9ac3b12ee5fec8314468520b6fd61e8",
+   "date": "2026-08-12",
+   "subject": "fix(web): visual-audit fixes + scientific-system synthesis doc"
+  },
+  {
+   "hash": "ec1115880927c8763a5a530dcef72839d7198708",
+   "date": "2026-08-12",
+   "subject": "fix(web): SidebarInset min-w-0 — root cause of /confirmation overflow"
+  },
+  {
+   "hash": "1ee5fc32fe8b40933e80aa0988316bd18275ba3b",
+   "date": "2026-08-11",
+   "subject": "chore(data): daily terminal refresh"
+  },
+  {
+   "hash": "feea401265acadee5d7139fea5f80a9d2f88c6e1",
+   "date": "2026-08-12",
+   "subject": "feat(web): AI attribution card (Track B, display-only, leakage-safe)"
+  },
+  {
+   "hash": "2ff29aa42dbffba3278b1e32d7498fcf6d36eae9",
+   "date": "2026-08-12",
+   "subject": "feat(web): factor-family coverage map (Track C, display-only)"
+  }
+ ],
+ "batch_24": [
+  {
+   "hash": "31739d2d8287d79092f7300706a3102089e343c8",
+   "date": "2026-08-12",
+   "subject": "docs(state): 续⑨ AI attribution + coverage map (Track B+C) delivered"
+  },
+  {
+   "hash": "83f8f64c6085bc819ae88e63fa7734ef95336f3f",
+   "date": "2026-08-12",
+   "subject": "feat(web): ResearchGlance — Overview surfaces attribution + coverage"
+  },
+  {
+   "hash": "9fb76345f9e89fe27205cda858097a4091b3b9bf",
+   "date": "2026-08-12",
+   "subject": "docs: web/README — document the terminal as a validity-argument chain"
+  },
+  {
+   "hash": "bd7733193cd534e62e4208707b117d2599512116",
+   "date": "2026-08-12",
+   "subject": "refactor(web): redesign ThemeCard for α — role badge, drop legacy status"
+  },
+  {
+   "hash": "a82f8b0ed83eaf8cecbd9089f9c5dd1625a13dbe",
+   "date": "2026-08-12",
+   "subject": "docs(state): 续⑩ ThemeCard α redesign + full visual audit closed"
+  },
+  {
+   "hash": "f7a1d4c5a9f4e77faa0325f92fed746ea13dfe7c",
+   "date": "2026-08-12",
+   "subject": "docs(state): 续⑪ full 7-page visual audit + frontier synthesis — display-layer IA plateau confirmed"
+  },
+  {
+   "hash": "f2f37985c57180927bd973ffb24582c861b4b147",
+   "date": "2026-08-12",
+   "subject": "feat(web): scientific-honesty upgrade — factor-family theory anchors + frozen-config audit timeline"
+  },
+  {
+   "hash": "e03775c4598c84889fb2089fd09889aca260bd19",
+   "date": "2026-08-12",
+   "subject": "docs(state): 续⑫ scientific-honesty upgrade — theory anchors + audit timeline deployed"
+  },
+  {
+   "hash": "498bf099918166a228e591889347e56c984583ac",
+   "date": "2026-08-12",
+   "subject": "feat(web): headline birth certificate — trace every claim to its frozen config"
+  },
+  {
+   "hash": "5b2a131a1df26a1444021869a88406ab963bee52",
+   "date": "2026-08-12",
+   "subject": "fix(data): display path tolerates missing share-class tickers + fix test harness"
+  },
+  {
+   "hash": "a8c17519d14090da9e97796c2a3efb94161983cd",
+   "date": "2026-08-12",
+   "subject": "docs(state): 续⑭ deploy verify + display tolerance fix + harness bug fix"
+  },
+  {
+   "hash": "a18b80aeab63f10247023ae606852760d646e245",
+   "date": "2026-08-12",
+   "subject": "fix(web): correct stale coverage tally + add IC provenance tooltip"
+  },
+  {
+   "hash": "c303b06edbddd1dfae354642b9f286de527ba415",
+   "date": "2026-08-13",
+   "subject": "fix(web): make hero number's display source trace to its frozen config"
+  },
+  {
+   "hash": "7603430914174a572e5177130131fc424ace126e",
+   "date": "2026-08-13",
+   "subject": "fix(web): surface themes' mixed-source freshness honestly"
+  },
+  {
+   "hash": "41e53ec625469e7ab2ad7ba88edfe45986a437ec",
+   "date": "2026-08-13",
+   "subject": "docs(state): 续⑯ themes freshness honest labeling — integrity audit fully closed"
+  }
+ ],
+ "batch_25": [
+  {
+   "hash": "ef199e0f92bad108735c82209efdc1668e20124e",
+   "date": "2026-08-13",
+   "subject": "fix(web): stop truncating pick names to an unreadable 56px in MiniPicks"
+  },
+  {
+   "hash": "b5b3a9bea8f8a2349807b6aa5db4c1a62e55028b",
+   "date": "2026-08-12",
+   "subject": "chore(data): daily terminal refresh"
+  },
+  {
+   "hash": "9edd8793441742c0afd37c4c66086f532014771d",
+   "date": "2026-08-13",
+   "subject": "feat(web): TrustRibbon — surface anti-leakage trust basis next to the verdict"
+  },
+  {
+   "hash": "ea0542bbdc89b0f3bfe79657e6befe240611b621",
+   "date": "2026-08-13",
+   "subject": "docs(state): 续⑰ visual audit + MiniPicks truncation fix + TrustRibbon"
+  },
+  {
+   "hash": "85f7acfb8752543e7870cd8c71a7aae45399acb9",
+   "date": "2026-08-13",
+   "subject": "feat(web): P2 verdict framing + P3 mobile audit-table column hide"
+  },
+  {
+   "hash": "bc5177be040d6e86b9412308b2f0834580ff7a4f",
+   "date": "2026-08-13",
+   "subject": "docs(state): 续⑱ P2 verdict framing + P3 mobile audit-table"
+  },
+  {
+   "hash": "6c5c800f760d76d856cac8135bedd002807d27b6",
+   "date": "2026-08-13",
+   "subject": "test(web): contract coverage for 8 previously-untested display panels"
+  },
+  {
+   "hash": "a60394b2390326801396fc845cd01a13b1350481",
+   "date": "2026-08-13",
+   "subject": "docs(state): 续⑲ contract test coverage for 8 display panels"
+  },
+  {
+   "hash": "d321125b0d4ef847eb4d5d2c20de00df1fbcd37d",
+   "date": "2026-08-13",
+   "subject": "fix(web): restore missing macro series + dedupe ic_monthly (audit-found defects)"
+  },
+  {
+   "hash": "6357af3ff6bda122da094f959737fd477243b0db",
+   "date": "2026-08-13",
+   "subject": "docs(state): 续⑳ audit-found display defects fixed (macro_drivers + ic_monthly)"
+  },
+  {
+   "hash": "edd5485904a2e8607c96b9dbe6982b6542573ff8",
+   "date": "2026-08-13",
+   "subject": "chore(scripts): wrap over-long FROZEN_SIG constant to satisfy full-repo ruff"
+  },
+  {
+   "hash": "d0ee67b7dc6a30f60590497d0bc873090258b17a",
+   "date": "2026-08-14",
+   "subject": "fix(web): resize ThemeCard content (not just color) + market_context freshness"
+  },
+  {
+   "hash": "041b09c9201c5aa94ff6770de62ece18e1ca8409",
+   "date": "2026-08-14",
+   "subject": "docs(state): 续㉒ real resize + market_context provenance + data-refresh root cause"
+  },
+  {
+   "hash": "eb370c7d033e9dbb85c3befdae608855b9c55183",
+   "date": "2026-08-14",
+   "subject": "fix(data): theme_signals reads display panel for daily freshness (last fixable)"
+  },
+  {
+   "hash": "c853f667c919326a3fec6368975032b19a43c614",
+   "date": "2026-08-14",
+   "subject": "fix(extraction): glm provider reads settings.llm_base_url (not hardcoded)"
+  }
+ ],
+ "batch_26": [
+  {
+   "hash": "c47535a81b3b2203a65fa3e98e19f3b7c2799bbd",
+   "date": "2026-08-13",
+   "subject": "chore(data): daily terminal refresh"
+  },
+  {
+   "hash": "9e58e01b125432a1ae3c2a8f1e64942c51ee519d",
+   "date": "2026-08-13",
+   "subject": "chore(data): daily terminal refresh"
+  },
+  {
+   "hash": "05a3b338a0ad467b52821df9962d6373a856792a",
+   "date": "2026-08-14",
+   "subject": "fix(ingest): Alpaca free-tier feed=iex (was 403 SIP, empty results)"
+  },
+  {
+   "hash": "a9913f3546db92883312374f3e4aa973b37c2ea2",
+   "date": "2026-08-14",
+   "subject": "docs(state): 续㉓ Alpaca feed=iex fixes data-refresh blocker + glm base_url + auth diag"
+  },
+  {
+   "hash": "8e88770112dc3811091947fb99f1d0ee96fa69fe",
+   "date": "2026-08-14",
+   "subject": "chore(data): daily terminal refresh"
+  },
+  {
+   "hash": "97191eed0a1330e6f1ddd5cc779e4270d5c2c08e",
+   "date": "2026-08-14",
+   "subject": "fix(ingest): surface Tiingo/Alpaca fetch-failure reasons (was silent +0/N)"
+  },
+  {
+   "hash": "45d799a0b515674cb8956b8f8077ae009767ef51",
+   "date": "2026-08-14",
+   "subject": "chore(data): daily terminal refresh"
+  },
+  {
+   "hash": "00a88827c4b5614b9469983ffec1e46600f18a93",
+   "date": "2026-08-14",
+   "subject": "fix(ingest): resolve display endDate 'today' to an ISO date (was HTTP 400)"
+  },
+  {
+   "hash": "d5199fe9c963f17fa3ed399cfd0f2ce11181d6cb",
+   "date": "2026-08-14",
+   "subject": "chore(data): daily terminal refresh"
+  },
+  {
+   "hash": "fb970005d07e27f94b7431f1cfb2aa58b7656c44",
+   "date": "2026-08-14",
+   "subject": "docs(state): 续㉔ today-400 root cause fixed, +20/20 batches live, cap-convergence in progress"
+  },
+  {
+   "hash": "b29a5a265096440f141b6d5118e6cbe0dc542fe9",
+   "date": "2026-08-14",
+   "subject": "chore(data): daily terminal refresh"
+  },
+  {
+   "hash": "d7e34a964ec08b736a66306ee18b5f574c436df2",
+   "date": "2026-08-15",
+   "subject": "fix(ingest): display fetch converges across runs (budget exit + cache freshness)"
+  },
+  {
+   "hash": "92d98ae5208ada1b32252f912edb376722ab0278",
+   "date": "2026-08-14",
+   "subject": "chore(data): daily terminal refresh"
+  },
+  {
+   "hash": "d4bc5d588ea267a3e9991234af1735e35106e249",
+   "date": "2026-08-15",
+   "subject": "fix(ci): split display B1 into 3 steps (fundamentals / prices / materialize)"
+  },
+  {
+   "hash": "833f7ff2ea38c2cd209fc7b5ab876fe0b6c3b22f",
+   "date": "2026-08-15",
+   "subject": "ci: raise refresh job timeout 90 → 150min (run 31825889043 died mid-fetch)"
+  }
+ ],
+ "batch_27": [
+  {
+   "hash": "14e3c73a96abf43753cf63fd97143307c8b1aec2",
+   "date": "2026-08-15",
+   "subject": "ci: materialize step continue-on-error during cache convergence"
+  },
+  {
+   "hash": "a6bedd7f72fa97c790ff2922cd7e91f568b6c6fe",
+   "date": "2026-08-15",
+   "subject": "chore(data): daily terminal refresh"
+  },
+  {
+   "hash": "4bd8a78da166eae531f7283107ff1be6609c476d",
+   "date": "2026-08-15",
+   "subject": "ci: guaranteed-persistence snapshot lane for display convergence (orphan-safe)"
+  },
+  {
+   "hash": "fabe77ac07ac7fbb50887181445ad8cad390bd67",
+   "date": "2026-08-15",
+   "subject": "chore(data): daily terminal refresh"
+  },
+  {
+   "hash": "c10993bf3639f7f44756f633d5643a63c1f102e3",
+   "date": "2026-08-15",
+   "subject": "chore: retire publication track — archive manuscript/quarto/drafts, purge publishable wording"
+  },
+  {
+   "hash": "3c5aaf827e429fcfa8a4ee91e14fb09490790d3f",
+   "date": "2026-08-15",
+   "subject": "fix(web): explicit RedditPick type — daily-refresh JSON literal inference collapsed bull_ratio"
+  },
+  {
+   "hash": "22ce0bbf4d52dd69a0e5b903503f6c5567ccc43b",
+   "date": "2026-08-15",
+   "subject": "fix(ci): fetch DFF in display lane + contract-test gate before data commit; restore macro_drivers"
+  },
+  {
+   "hash": "c429435329f741cd90fe43aa562547cf75bb493c",
+   "date": "2026-08-15",
+   "subject": "docs(state): record publication retirement, Pages/macro fixes, glm key verdict"
+  },
+  {
+   "hash": "ae83fe3dcef1eb3009d97facb18727812d19dcfb",
+   "date": "2026-08-15",
+   "subject": "fix: AGENTS.md recorded with symlink mode despite regular-file content"
+  },
+  {
+   "hash": "a09773dbd23b89f1d6022be91a2cd978e0a3a186",
+   "date": "2026-08-15",
+   "subject": "docs(state): push outcome — deploy green (two hops), live-site verified, CI gate validation running"
+  },
+  {
+   "hash": "2d47db456a31818b63337072b470e211b04bfcf0",
+   "date": "2026-08-15",
+   "subject": "ci: deselect ledger-pin test from refresh gate — reddit collector legitimately appends data_ingest"
+  },
+  {
+   "hash": "4b09cd84e744635e03cdf23b22a4c7cd9369bf25",
+   "date": "2026-08-15",
+   "subject": "chore(data): daily terminal refresh"
+  },
+  {
+   "hash": "2e6d379ca96641ba65aa776bf52fa3e5dc30aa7c",
+   "date": "2026-08-15",
+   "subject": "ci: dispatch deploy-pages after data commit — GITHUB_TOKEN pushes never fire on:push"
+  },
+  {
+   "hash": "0c38f6fd4a4caa8416471b03c591803d1d9ee93c",
+   "date": "2026-08-15",
+   "subject": "chore(data): daily terminal refresh"
+  },
+  {
+   "hash": "4070670383a34043586e6a6f87c6f223d7eab4f2",
+   "date": "2026-08-15",
+   "subject": "chore(data): daily terminal refresh"
+  }
+ ],
+ "batch_28": [
+  {
+   "hash": "5c4fa539ccaa942e7b02804b2d75ea1ee318f819",
+   "date": "2026-08-15",
+   "subject": "chore(data): daily terminal refresh"
+  },
+  {
+   "hash": "dd64a50a999413640e88c66c6d8a4f4782f804c8",
+   "date": "2026-08-15",
+   "subject": "fix(web): explicit per-panel contract types replace as-typeof JSON inference"
+  },
+  {
+   "hash": "d07f4a81ee47e9d112112323c1a281891a9f4212",
+   "date": "2026-08-15",
+   "subject": "fix(tests): use as_posix() in run_dir sanitization assertion"
+  },
+  {
+   "hash": "ed4741ac07d292e895f068f323d98fabd42933a6",
+   "date": "2026-08-15",
+   "subject": "docs(state): web type hardening landed, perf exploration outcome recorded"
+  },
+  {
+   "hash": "2df61444bc42b75843647d77948d9c962bce76e8",
+   "date": "2026-08-15",
+   "subject": "chore(web): remove dead template components and unused heavy deps"
+  },
+  {
+   "hash": "233ad6b657233105a24561c4829ba787c9126191",
+   "date": "2026-08-15",
+   "subject": "docs(state): second-pass sweep — dead-code cleanup, lint zero, freshness audit, optimization roadmap"
+  },
+  {
+   "hash": "e2b19e907dd408ceba28c05fda788cdea3781a89",
+   "date": "2026-08-15",
+   "subject": "perf(web): defer conviction tab on /picks — recharts out of initial payload"
+  },
+  {
+   "hash": "282491cf45cc2eed5d3b2432e23a323412351c00",
+   "date": "2026-08-15",
+   "subject": "docs(state): third-pass sweep — picks -22% initial payload, integration/runtime verification green, 58 orphan i18n keys quantified"
+  },
+  {
+   "hash": "8d89aafc442afdddf9c28ad70cf7653942be86a8",
+   "date": "2026-08-16",
+   "subject": "fix(ci): let materialize self-populate the universe cache — pre-check crashed fresh CI"
+  },
+  {
+   "hash": "828a00767e36dafbee0e2f5c0933b32dbed09cfe",
+   "date": "2026-08-16",
+   "subject": "fix(ci): build regime_macro in the refresh lane + honest macro-theme degradation"
+  },
+  {
+   "hash": "95f293ef5421962630da1bdcb8788f5e7c9825d8",
+   "date": "2026-08-16",
+   "subject": "chore(data): daily terminal refresh"
+  },
+  {
+   "hash": "33b3d9faf2da2dc1fcc9885622363de14a897cb4",
+   "date": "2026-08-16",
+   "subject": "docs(state): auto-update chain closed end-to-end — convergence 587/587, universe self-populate, regime build step, themes as_of 06-30 → 08-14"
+  },
+  {
+   "hash": "cfb92404ce63e992521ce5d18e52f6f8bd850584",
+   "date": "2026-08-16",
+   "subject": "fix(display): stop reusing a complete-but-date-stale price panel — as_of froze at build date"
+  },
+  {
+   "hash": "d0b7d9c881886bb3827de5d134874ad3427b1410",
+   "date": "2026-08-16",
+   "subject": "chore(data): daily terminal refresh"
+  },
+  {
+   "hash": "67c193866b2deccea5d836575f8896367c47de78",
+   "date": "2026-08-16",
+   "subject": "docs(state): stale-panel reuse fix pushed and validated end-to-end (586+1 fetch, wide rebuild 4s, auto-deploy green)"
+  }
+ ],
+ "batch_29": [
+  {
+   "hash": "7cf5167dd4bef9024e6ddfaca36b8d6a15f8249e",
+   "date": "2026-08-16",
+   "subject": "test(display): pin the stale-panel rebuild + frozen-reuse contract"
+  },
+  {
+   "hash": "af504b81aced64bef08095fef17f37e4aebc79cc",
+   "date": "2026-08-16",
+   "subject": "docs(state): dual-session convergence on the staleness root cause; regression tests landed"
+  },
+  {
+   "hash": "5ea664973eec1d415ce16f778986614cd54f6b13",
+   "date": "2026-08-16",
+   "subject": "fix(display): smart_money refreshes its live window daily — EFTS history retained"
+  },
+  {
+   "hash": "fb661afcea22666fb10b6942a6251a186d7b8e61",
+   "date": "2026-08-16",
+   "subject": "chore(data): daily terminal refresh"
+  },
+  {
+   "hash": "d776dc1c8c2ee25dcf269ec97483cb35f0edc7e1",
+   "date": "2026-08-16",
+   "subject": "docs(state): panel-by-panel daily-update audit — smart_money unfrozen to 08-14, frozen research face classified by design"
+  },
+  {
+   "hash": "ab90a9258b85e401652615372499f5266e67cae5",
+   "date": "2026-08-16",
+   "subject": "fix(test): drop unused json imports and split overlong assert in smart_money tests"
+  },
+  {
+   "hash": "c7ad6b107d28d082cd96ab8b011d0b40481595eb",
+   "date": "2026-08-16",
+   "subject": "fix(display): visual-audit round — WCAG contrast, CJK type floor, long-page ergonomics"
+  },
+  {
+   "hash": "b4d25796c43462512675cbfa915ed320f7530b74",
+   "date": "2026-08-16",
+   "subject": "docs(state): visual-audit round 2 — dual-channel audit findings, P0-P2 delivery, toolchain notes"
+  },
+  {
+   "hash": "1e7dd2fc34ab226856b86e93c4399f036d865311",
+   "date": "2026-08-16",
+   "subject": "feat(display): real cmdk command palette (60s tour) — replace template cruft; light-mode palette tokens"
+  },
+  {
+   "hash": "6dae54e5aecf690d4745af99a85ff16dabc09255",
+   "date": "2026-08-17",
+   "subject": "docs(state): user-journey round — cmdk palette delivery, template-cruft chain removal, light-mode token fix"
+  },
+  {
+   "hash": "518fbdb297cfbb8ce23b0cc4b5df6b2662a48b6f",
+   "date": "2026-08-17",
+   "subject": "feat(display): Apple-HIG design-language overhaul — system fonts, dual-theme tokens, frosted chrome, single blue accent"
+  },
+  {
+   "hash": "f854e3957221facf3b9f244d14363ba037c1397b",
+   "date": "2026-08-17",
+   "subject": "docs(state): Apple-HIG design-language overhaul — token architecture, contrast ledger, verification chain"
+  },
+  {
+   "hash": "4b888409c45c8a11554c2c14a0b6ead6c1a86edd",
+   "date": "2026-08-17",
+   "subject": "chore(data): daily terminal refresh"
+  },
+  {
+   "hash": "d04dba2ede0c293800bfe2ceec6c0b7990125dff",
+   "date": "2026-08-18",
+   "subject": "chore(data): daily terminal refresh"
+  },
+  {
+   "hash": "34bad9f4a2d7f86a1d0b28ec363b653a51aa7092",
+   "date": "2026-08-19",
+   "subject": "feat(display): per-stock drill-down pages + data-health freshness map"
+  }
+ ],
+ "batch_30": [
+  {
+   "hash": "48bf0263875cc46dd31638711343b198c5162fe8",
+   "date": "2026-08-19",
+   "subject": "docs(state): xiaoyinsi contrast round — stock drill-down + data-health map + rank_change fix"
+  },
+  {
+   "hash": "0e201be3ed01df0f7bf97765fb69e812127d830e",
+   "date": "2026-08-19",
+   "subject": "chore(data): regenerate data_health against latest daily-refreshed panels"
+  },
+  {
+   "hash": "c8a9bb6b7af74fb75086364d93001c4e4cd9dfbc",
+   "date": "2026-08-20",
+   "subject": "feat(display): public static data API - catalog, OpenAPI spec, /api-docs page"
+  },
+  {
+   "hash": "cec4105b3356204ca06bfca97284ee41bec1c3da",
+   "date": "2026-08-20",
+   "subject": "docs(state): static data API round - catalog/OpenAPI/api-docs, prebuild pitfall"
+  }
+ ]
+}
