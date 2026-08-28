@@ -1,10 +1,10 @@
 {
   "status": "ok",
-  "as_of": "2026-08-20 00:00:00",
+  "as_of": "2026-08-18 00:00:00",
   "source_panel": "politician_trades_tx",
-  "window_anchor": "2026-08-14",
+  "window_anchor": "2026-08-13",
   "window_days": 90,
-  "n_source_tx": 1983,
+  "n_source_tx": 1982,
   "months": [
     {
       "month": "2023-10",
@@ -284,7 +284,7 @@
     {
       "month": "2026-08",
       "d_tx": 1,
-      "r_tx": 11,
+      "r_tx": 10,
       "d_buy": 1,
       "r_buy": 0,
       "n_common": 0,
@@ -317,15 +317,15 @@
   },
   "portfolios": {
     "D": {
-      "n_tx": 159,
+      "n_tx": 191,
       "n_members": 16,
       "holdings": [
         {
           "ticker": "MSFT",
           "asset": "Microsoft Corporation - Common Stock",
-          "n_buy": 4,
+          "n_buy": 5,
           "n_sell": 1,
-          "net_buy": 3,
+          "net_buy": 4,
           "n_members": 3
         },
         {
@@ -377,6 +377,14 @@
           "n_members": 2
         },
         {
+          "ticker": "AMD",
+          "asset": "Advanced Micro Devices, Inc.",
+          "n_buy": 2,
+          "n_sell": 0,
+          "net_buy": 2,
+          "n_members": 1
+        },
+        {
           "ticker": "COO",
           "asset": "The Cooper Companies, Inc.",
           "n_buy": 2,
@@ -385,27 +393,27 @@
           "n_members": 1
         },
         {
-          "ticker": "GOOGN",
-          "asset": "Share of Series B Mandatory Convertible Preferred Stock",
+          "ticker": "CRWD",
+          "asset": "CrowdStrike Holdings, Inc. - Class A Common Stock",
           "n_buy": 2,
           "n_sell": 0,
           "net_buy": 2,
-          "n_members": 1
-        },
-        {
-          "ticker": "HCA",
-          "asset": "HCA Healthcare, Inc. Common Stock",
-          "n_buy": 2,
-          "n_sell": 0,
-          "net_buy": 2,
-          "n_members": 1
+          "n_members": 2
         }
       ]
     },
     "R": {
-      "n_tx": 159,
+      "n_tx": 171,
       "n_members": 22,
       "holdings": [
+        {
+          "ticker": "T",
+          "asset": "AT&T Inc.",
+          "n_buy": 5,
+          "n_sell": 1,
+          "net_buy": 4,
+          "n_members": 2
+        },
         {
           "ticker": "EQT",
           "asset": "EQT Corporation Common Stock",
@@ -471,16 +479,8 @@
           "n_members": 1
         },
         {
-          "ticker": "MU",
-          "asset": "Micron Technology, Inc. - Common Stock",
-          "n_buy": 2,
-          "n_sell": 0,
-          "net_buy": 2,
-          "n_members": 2
-        },
-        {
-          "ticker": "ZTS",
-          "asset": "Zoetis Inc. Class A Common Stock",
+          "ticker": "HD",
+          "asset": "Home Depot, Inc.",
           "n_buy": 2,
           "n_sell": 0,
           "net_buy": 2,
@@ -490,5 +490,5 @@
     }
   },
   "methodology": "Party opposition index + follow portfolios, DERIVED from the committed politician_trades_tx panel (House-only 2026 PTR PDF parses; zero new fetches). Opposition: per calendar month, for every ticker BOTH parties traded, net direction = buys \u2212 sells (count-weighted; the PTR discloses statutory $ bands, not exact amounts, so dollar-weighting would be fabricated precision); the index = share of both-directional common tickers signed opposite (D net-buy vs R net-sell or vice versa); null when no ticker carries both parties' net direction that month. Follow portfolios: trailing 90 days from the latest transaction date, top-10 tickers per party by net buy count \u2014 SIGNAL LISTS ONLY, no prices, no returns, no performance claim (display lane; live prices are display-only and never enter any pipeline). Unknown-party and un-tickered rows are excluded from the math and remain visible in the source panel.",
-  "snapshot_ts": "2026-08-28T05:51:21.533981+00:00"
+  "snapshot_ts": "2026-08-28T17:55:01.948249+00:00"
 }

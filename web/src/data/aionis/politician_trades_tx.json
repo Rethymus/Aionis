@@ -1,10 +1,10 @@
 {
   "status": "ok",
-  "as_of": "2026-08-20 00:00:00",
+  "as_of": "2026-08-18 00:00:00",
   "year": 2026,
-  "total": 2812,
+  "total": 2811,
   "n_members": 94,
-  "n_tickered": 2295,
+  "n_tickered": 2294,
   "by_party": {
     "D": {
       "n_trades": 1490,
@@ -13,10 +13,10 @@
       "n_sell_full": 390
     },
     "R": {
-      "n_trades": 1007,
+      "n_trades": 1006,
       "n_buy": 539,
       "n_sell_partial": 137,
-      "n_sell_full": 331
+      "n_sell_full": 330
     },
     "unknown": {
       "n_trades": 315,
@@ -26,22 +26,8 @@
     }
   },
   "late_filings": 379,
-  "party_coverage": "2497/2812",
+  "party_coverage": "2496/2811",
   "transactions": [
-    {
-      "member": "Moore, Hon. Tim",
-      "party": "R",
-      "office": "NC14",
-      "ticker": "T",
-      "asset": "AT&T Inc.",
-      "type": "ST",
-      "direction": "sell_full",
-      "amount_range": "$50,001 - $100,000",
-      "transaction_date": "2026-08-14",
-      "filing_date": "2026-08-20",
-      "days_late": 6,
-      "doc_url": "https://disclosures-clerk.house.gov/public_disc/ptr-pdfs/2026/20035291.pdf"
-    },
     {
       "member": "Case, Hon. Ed",
       "party": "D",
@@ -39398,12 +39384,12 @@
     }
   ],
   "parse": {
-    "filings_total": 361,
-    "filings_processed": 361,
+    "filings_total": 359,
+    "filings_processed": 359,
     "fetch_errors": 0,
     "no_text_pdfs": 43,
-    "row_candidates": 2899,
-    "rows_parsed": 2812,
+    "row_candidates": 2898,
+    "rows_parsed": 2811,
     "rows_exchanged": 33,
     "parse_failures": 54,
     "complete": true
@@ -39413,5 +39399,5 @@
     "note": "efdsearch.senate.gov serves Akamai 'Access Denied' to plain GET \u2014 no first-party access; disclosed rather than routed through third parties."
   },
   "methodology": "STOCK Act congressional trading, v2 = TRANSACTION level. Source: the same U.S. House Clerk public-domain filings as the filing-stream panel, with the PTR PDFs themselves parsed (RC4-decrypted with the Python standard library; no third-party data). Each row is one transaction as filed: member, ticker (when the PDF carries one), asset description, buy vs sell (partial/full), the STATUTORY DISCLOSURE BAND (not an exact amount), transaction date, and filing date; days_late = filing - transacted against the 45-day STOCK Act clock. Parsing is disclosed, never silent: row_candidates counts every type+dates+amount anchor found; non-purchase/sale types (e.g. exchanges) are excluded and counted; parse_failures = candidates - rows - exchanges; no-text (scanned) PDFs are counted separately; an asset description may retain a brokerage annotation on wrapped rows. Party labels reuse the house.gov directory join (district + last name; candidates/former members stay null). Senate eFD is Akamai-blocked and disclosed. House-only, 2026 filings to date. Display-only, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-08-23T08:46:21.481285+00:00"
+  "snapshot_ts": "2026-08-28T17:55:01.914786+00:00"
 }
