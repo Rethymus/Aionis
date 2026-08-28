@@ -1,0 +1,84 @@
+[
+  {
+    "id": "F-AUD1",
+    "severity": "P1",
+    "area": "root-shell (landmarks+lang+headings+content)",
+    "count": 1,
+    "samples": [
+      "out/index.html: <html id=\"__next_error__\"> — body = <div hidden><!--$--><!--/$--></div> + 7 scripts, 13KB, no SSR content, no lang, no main/nav/footer, no headings"
+    ],
+    "suggestion": "display/engineer: investigate prerender failure of / route in static export (index.html is the Next error shell). Hydration likely renders full page client-side (static-only audit boundary; severity capped at P1, not P0)."
+  },
+  {
+    "id": "F-AUD2",
+    "severity": "P1",
+    "area": "headings (zero-heading pages)",
+    "count": 8,
+    "samples": [
+      "out/annual.html: 0 h1-h6 (170KB SSR content; visual titles are styled span/div)",
+      "out/congress.html: 0 h1-h6",
+      "out/events.html: 0 h1-h6",
+      "out/executives.html: 0 h1-h6",
+      "out/filers.html: 0 h1-h6",
+      "out/ipo.html: 0 h1-h6",
+      "out/quarterly.html: 0 h1-h6",
+      "out/index.html: 0 h1-h6 (see F-AUD1)"
+    ],
+    "suggestion": "display: convert visual page titles to semantic h1 (keep CSS); screen-reader heading navigation currently unusable on all major hub pages. Server-rendered DOM truly lacks headings — hydration-independent."
+  },
+  {
+    "id": "F-AUD3",
+    "severity": "P2",
+    "area": "landmarks (footer/contentinfo)",
+    "count": 1502,
+    "samples": [
+      "out/annual.html: visual footer is <div class~=\"footer\">, no <footer> element",
+      "out/picks.html: same pattern (5-6 footer-classed divs)",
+      "site-wide: 0/1502 pages contain a semantic <footer>"
+    ],
+    "suggestion": "display: single layout-component change div->footer restores the contentinfo landmark site-wide. main/nav coverage is otherwise good (1499/1502)."
+  },
+  {
+    "id": "F-AUD4",
+    "severity": "P3",
+    "area": "landmarks (error pages)",
+    "count": 2,
+    "samples": [
+      "out/404.html: no <main>, no <nav> (lang=zh-CN present)",
+      "out/_not-found.html: no <main>, no <nav> (lang=zh-CN present)"
+    ],
+    "suggestion": "display: low priority; minimal-content error pages, static omission may partially remain after hydration (downgraded per static-audit boundary)."
+  },
+  {
+    "id": "F-AUD5",
+    "severity": "P3",
+    "area": "headings (level skips)",
+    "count": 3,
+    "samples": [
+      "out/market.html: h1 -> h4",
+      "out/regime.html: h1 -> h4",
+      "out/shelf.html: h1 -> h3"
+    ],
+    "suggestion": "display: card-grid titles likely use h3/h4 after h1; reorder to sequential levels (h2/h3) or restyle. No content loss; phantom depth in screen-reader heading tree."
+  },
+  {
+    "id": "F-AUD6",
+    "severity": "P3",
+    "area": "headings (h2 without h1)",
+    "count": 1,
+    "samples": [
+      "out/force-camp.html: h2 sections present ('未入画布的小微分量'/'共同持仓'/'人物共席') but no h1; chart svg has exemplary role=img aria-label"
+    ],
+    "suggestion": "display: add a visible or visually-hidden h1 for the page."
+  },
+  {
+    "id": "F-AUD7",
+    "severity": "P3",
+    "area": "contrast (static clues)",
+    "count": 25,
+    "samples": [
+      "out/picks.html: <span class=\"w-16 shrink-0 text-right text-xs text-muted-foreground/30\">—</span> (25x, empty-value placeholder dash)"
+    ],
+    "suggestion": "display (optional): placeholder dash carries no-data semantics at /30 opacity; consider /50 or classify as decorative and accept. Full contrast computation requires rendering (out of scope; dark+light themes)."
+  }
+]
