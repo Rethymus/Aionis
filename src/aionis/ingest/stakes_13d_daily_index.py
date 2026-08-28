@@ -14,20 +14,38 @@ reported — the reporting person is often an individual and is not indexed as a
 accession URL. The filer (activist) is in the cover page, not the index; left
 blank here and surfaced honestly downstream.
 
+Per-day checkpoint (resumable walk): each day-index file is date-keyed and
+archived under ``daily-index/{year}/QTR{q}/crawler.{yyyymmdd}.idx`` — an
+immutable snapshot once the day closes — so parsed rows cache permanently.
+``fetch_recent_13d_daily`` persists them to the sidecar
+``data/cache/sc13d_daily_checkpoint.json`` after EVERY day, so a killed walk
+(timeout/CI cap) resumes with zero re-parsing and zero requests for cached
+days. Each entry stores the sha256 of the raw day text and is reused only
+while the locally cached raw index still hashes to it (disk-only check): the
+one mutation window is the CURRENT day's file, which can still grow during
+EDGAR's dissemination window (the cron captures it mid-window) — a changed
+fingerprint recomputes just that day. The final aggregate is byte-identical
+to the checkpoint-free walk.
+
 Public domain (SEC). Polite via ``_policy_get`` (≥2s host spacing + backoff).
 Filed-date PIT. Display-only, exploratory — NOT a research claim.
 """
 from __future__ import annotations
 
+import hashlib
+import json
 import re
 from datetime import date, timedelta
 from pathlib import Path
+from typing import Any
 
 from aionis.config import settings
 from aionis.ingest.universe import _policy_get
 
 _UA = "Aionis research 13d-daily-index contact@example.com"
 _DAILY_INDEX = "https://www.sec.gov/Archives/edgar/daily-index/{year}/QTR{q}/crawler.{yyyymmdd}.idx"
+_CHECKPOINT_NAME = "sc13d_daily_checkpoint.json"
+_CHECKPOINT_VERSION = 1
 # Data rows are whitespace-aligned; fields are separated by 2+ spaces. The form
 # type ("SCHEDULE 13D" / "SCHEDULE 13D/A") contains a single internal space, so a
 # 2+-space split keeps it as one token.
@@ -46,6 +64,58 @@ def _daily_index_url(d: date) -> str:
 
 def _daily_index_cache_path(d: date, cache_dir: Path | None) -> Path:
     return _cache_dir(cache_dir) / f"daily_idx_{d.strftime('%Y%m%d')}.txt"
+
+
+def _checkpoint_path(cache_dir: Path | None = None) -> Path:
+    return _cache_dir(cache_dir) / _CHECKPOINT_NAME
+
+
+def _fingerprint(text: str) -> str:
+    """sha256 of a raw day-index text — the checkpoint's content link."""
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def load_checkpoint(cache_dir: Path | None = None) -> dict[str, dict[str, Any]]:
+    """Load the per-day checkpoint sidecar.
+
+    Shape: ``{iso_date: {"fingerprint": <sha256 of raw day text>, "rows": [...]}}``.
+    Defensive by design — the sidecar is regenerable cache: a missing, corrupt,
+    or unknown-version file yields ``{}`` and the walk recomputes every day from
+    the raw day-index caches (zero extra requests) and rebuilds the sidecar.
+    """
+    fp = _checkpoint_path(cache_dir)
+    if not fp.exists():
+        return {}
+    try:
+        raw = json.loads(fp.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError):
+        return {}
+    if not isinstance(raw, dict) or raw.get("version") != _CHECKPOINT_VERSION:
+        return {}
+    days = raw.get("days")
+    if not isinstance(days, dict):
+        return {}
+    return {
+        d: e
+        for d, e in days.items()
+        if isinstance(e, dict)
+        and isinstance(e.get("fingerprint"), str)
+        and isinstance(e.get("rows"), list)
+    }
+
+
+def save_checkpoint(
+    days: dict[str, dict[str, Any]], cache_dir: Path | None = None
+) -> None:
+    """Persist the checkpoint sidecar atomically (tmp write + replace)."""
+    fp = _checkpoint_path(cache_dir)
+    fp.parent.mkdir(parents=True, exist_ok=True)
+    tmp = fp.with_suffix(".json.tmp")
+    tmp.write_text(
+        json.dumps({"version": _CHECKPOINT_VERSION, "days": days}, indent=2),
+        encoding="utf-8",
+    )
+    tmp.replace(fp)
 
 
 def fetch_daily_crawler_index(
@@ -115,26 +185,83 @@ def parse_daily_13d(idx_text: str) -> list[dict]:
 
 
 def fetch_recent_13d_daily(
-    start: date, end: date, cache_dir: Path | None = None, *, force: bool = False
+    start: date,
+    end: date,
+    cache_dir: Path | None = None,
+    *,
+    force: bool = False,
+    use_checkpoint: bool = True,
 ) -> list[dict]:
     """Every SC 13D filing in [start, end], business days only.
 
     Polite: one fetch per business day (the index lists ALL of that day's
-    filings). Cache-per-day makes re-runs free. Returns rows sorted newest-first.
+    filings) — and only genuinely fetched/verified days touch the network;
+    checkpoint hits make zero requests. Idempotent + resumable: each parsed
+    day is persisted to the checkpoint sidecar immediately, so a killed walk
+    resumes where it stopped — cached days are neither re-fetched nor
+    re-parsed, only missing days are computed. Cached rows are reused while
+    the locally cached raw day-index still hashes to the stored fingerprint
+    (disk-only verification); a mismatch recomputes just that day.
+    ``use_checkpoint=False`` restores the checkpoint-free path (identical
+    output); ``force=True`` ignores the checkpoint and rebuilds it. Returns
+    rows sorted newest-first — byte-identical to the checkpoint-free walk for
+    the same input sequence.
     """
     rows: list[dict] = []
+    checkpoint: dict[str, dict[str, Any]] = {}
+    if use_checkpoint and not force:
+        checkpoint = load_checkpoint(cache_dir)
+
+    def _persist(d: date, text: str, day_rows: list[dict]) -> None:
+        if not use_checkpoint:
+            return
+        checkpoint[str(d)] = {"fingerprint": _fingerprint(text), "rows": day_rows}
+        save_checkpoint(checkpoint, cache_dir)
+
     cur = start
     while cur <= end:
-        try:
-            text = fetch_daily_crawler_index(cur, cache_dir, force=force)
-        except Exception:
-            # Per-day resilience: a 403/429/5xx on one day (EDGAR rate-limits)
-            # must not kill the whole backfill. Skip + continue; cached days still
-            # parse. The cron re-runs daily and fills gaps once EDGAR cools.
-            cur += timedelta(days=1)
-            continue
+        entry = checkpoint.get(str(cur))
+        text = ""
+        if entry is not None:
+            # Checkpoint hit: re-verify the stored fingerprint against the
+            # locally cached raw day-index (disk read + sha256 only — zero
+            # requests, zero parsing), then reuse the persisted rows.
+            raw_fp = _daily_index_cache_path(cur, cache_dir)
+            if (
+                raw_fp.exists()
+                and _fingerprint(raw_fp.read_text()) == entry["fingerprint"]
+            ):
+                rows.extend(entry["rows"])
+                cur += timedelta(days=1)
+                continue
+            # Raw index cache evicted: one polite re-fetch to re-verify the
+            # fingerprint before trusting the persisted rows (no re-parse when
+            # it still matches). A mismatch (same-day file grew, cache
+            # rewritten) falls through and recomputes the day below.
+            try:
+                text = fetch_daily_crawler_index(cur, cache_dir)
+            except Exception:
+                cur += timedelta(days=1)
+                continue
+            if text and _fingerprint(text) == entry["fingerprint"]:
+                rows.extend(entry["rows"])
+                cur += timedelta(days=1)
+                continue
+        else:
+            try:
+                text = fetch_daily_crawler_index(cur, cache_dir, force=force)
+            except Exception:
+                # Per-day resilience: a 403/429/5xx on one day (EDGAR
+                # rate-limits) must not kill the whole backfill. Skip +
+                # continue; cached days still parse. A failed day gets NO
+                # checkpoint entry, so the daily cron re-runs fill exactly the
+                # missing days once EDGAR cools.
+                cur += timedelta(days=1)
+                continue
         if text:
-            rows.extend(parse_daily_13d(text))
+            day_rows = parse_daily_13d(text)
+            rows.extend(day_rows)
+            _persist(cur, text, day_rows)
         cur += timedelta(days=1)
     rows.sort(key=lambda r: r["date"], reverse=True)
     return rows
