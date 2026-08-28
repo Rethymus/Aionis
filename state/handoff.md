@@ -8,6 +8,18 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-28 (kk) 轮③：契约闸门双拦真回归（ipo 价格窗口 / def14a 缓存脏行潜伏两轮）+ 审计 8/8 PASS + CI 13D 步预算修正
+
+**编排**：主线核查（窗口探针 OK → 50 面板水位 → 16 步 fetch 族）→ 契约闸门拦截 → W/W2+X dev agent（worktree wx/wy）→ 集成/重建 → V 审计 agent → P3-1 主线直修 → 收口。业主授权继续，部署仍冻结。
+
+- **fetch 族**：15/16 步收尾行验证；**13D 日更抓取被 900s 帽静默杀**（本地 18.5min 实证；脚本结尾一次写、无中间检查点，超时=零产出）——**这就是 smart_money 停 08-21 两轮的真根因**；2400s 重跑成功（18,668 行→08-27）。水位：news/reddit→08-28；ark/def14a(+2)/form_d/filing_stream/smart_money→08-27；cot 08-18 / korea 08-14 = 源节奏诚实（FRED DEXKOUS 08-28 复查仍停 08-14）；ARK distinct-days 仍 2（±pp ≥5 日门槛继续门控）。CI 侧同款病理已修：`refresh-terminal-data.yml` 13D 步 timeout 15→40min + 失实注释（"per-day cache 可续跑"）改正，8-K 步名 5→50 issuers。
+- **W（ipo 价格窗口不变量，`9366fc5`）**：walker 不裁剪滑出"最新 80 priced"窗口的缓存条目 → priced 219→227 后带价 63 vs 窗口内 exact 58。W agent 代码完成后死于提供商网络错误，**W2 续作**补 5 测试（36 passed）。重跑暴露第二层：cumulative_walk(171)>task_budget(170) 一次性预算 vs 常态化每轮 walk 结构冲突 → 主线改造 per-walk bound（`requests_this_walk`/`last_walk` 字段 + 契约改写，`b9bbf4d`/`3365e4a`）。
+- **X（def14a 缓存脏行，`1604be0`）**：全套 pytest 抓到轮 19 已修的 " Age" 尾三人组回归——轮 21 刷新把**修复前的脏解析缓存行**重新带入，潜伏两轮（21/22 只跑契约子集）。X agent 实证缓存行无 age 字段（任务书前提错→诚实偏离）：净名双胞胎见证谓词（19/25 命中含 trio；6 条无见证保守保留不进 lineage）+ 解析层单身份不变量；装配点在 `export_def14a_persons` → 重导出即净（644 人/co_board 59）。
+- **ledger**：reddit data_ingest +1 行 append-only 复核重钉（LF 正典化 `83fa2778`）。
+- **V 审计（`b799d06`）**：8/8 PASS，P0-P2 零；轮 22 修复全保持（死链 0/41,483、哨兵 0、Reddit 披露在位）；StatBand 10,391/9,385/43/2,812/322 复算吻合；i18n 1,095。P3-1 institutions 页头缺 filed 水位徽标 → 主线直修（SegmentHeader `extra` 槽 + 双徽标 + 1,096 对称，`8e87236`）；P3-2 ipo last_walk=0 为自愈伪影（下轮 walk 自动带真值）。
+- **executives 方法学失真修正**：文本硬编码 "bounded 5-issuer universe and 2026-05 window" 而实际继承 50 发行人宇宙（/events 扩容漂移）→ 改动态插值（宇宙数+窗口起止），导出验证 "bounded 50-issuer universe and its 2026-05-01..2026-08-21 window"。
+- **环境**：本地 pnpm 降为 9.15.1（`web/pnpm-workspace.yaml` 无 packages 字段：CI pnpm v10 合法、v9 报错）→ 本地构建 `pnpm --ignore-workspace build`；node_modules 再次损坏 → 清空重装 37.6s。全套 pytest 绿 + 重建 1,502 页。wx/wy 清（junction 先摘、cherry 全 `-`）；V/W/X 任务书归档。
+
 ## 2026-08-28 (jj) 查漏补缺+视觉持续优化轮②：审计抓新数据 P0×2→修复 + Southpoint 准入（明星 43）+ 缺口补跑 + worktree 内务
 
 **编排**：长周期循环第二轮（业主定帧"查漏补缺+视觉持续优化"超长期任务）。主线先行（窗口探针 → 缺口补跑 → 视觉巡检）→ 双 agent 并行（审计 0 网络 / T 准入 efts+www 车道）→ 审计产出即派 U 修复 agent → 主线集成/重建/视觉终验。**"审计→修复→重建→复验"四步全在本轮闭环。**
