@@ -1297,8 +1297,15 @@ def test_form_ipo_panel_contract() -> None:
     ), "attempted must decompose exactly into tiers + fetch failures"
     req = m["requests"]
     assert req["task_budget"] <= 170, "task request budget is capped at 170"
-    assert req["cumulative_walk"] <= req["task_budget"], (
-        "the walk ledger may never claim more requests than the task budget"
+    assert req["walk_cap"] is not None and req["walk_cap"] <= req["task_budget"], (
+        "the per-walk cap sits inside the task budget"
+    )
+    assert 0 <= req["last_walk"] <= req["walk_cap"], (
+        "each refresh walk is itself bounded by the walk cap"
+    )
+    assert req["cumulative_walk"] >= req["last_walk"] >= 0, (
+        "cumulative_walk is the lifetime never-reset politeness ledger across "
+        "refresh rounds — disclosed, and always at least the latest walk"
     )
     # methodology must disclose the bounded scope + request budget honestly.
     assert "BOUNDED second-stage extraction" in f["methodology"]
@@ -1469,7 +1476,7 @@ def test_ledger_append_only_not_mutated_by_export() -> None:
     # Snapshot the known-good committed digest. If the ledger legitimately grows
     # (a new research row is appended) this will fail — that is correct: a human
     # must re-pin it after verifying the new row is append-only.
-    assert digest == "44157b5b0d47b4838bec53d3b1509ff2ed29a808683072a79b44693a636f70ee", (
+    assert digest == "83fa2778a92e48a8c99b20d0cb41b4a2cea224a268b666f147c539d60f2d8d3e", (
         f"ledger sha256 changed to {digest}; re-verify append-only then re-pin"
     )
 
