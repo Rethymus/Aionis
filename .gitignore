@@ -60,6 +60,9 @@ htmlcov/
 # --- OMC operational state (.omc/skills/** is the intentional committable exception) ---
 .omc/
 
+# --- Mimosa security-scan plugin runtime store (hook state, regenerable) ---
+.mimosa/
+
 # Next.js build output (stray root builds)
 .next/
 runs/xys-design/
