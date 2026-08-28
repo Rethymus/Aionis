@@ -8,6 +8,16 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-28 (pp) 轮㉙：P0-2 执行轮——code-review P1 逐条核实 + 三 agent 分 lane 修复 7 条（E3 硬前置清障）
+
+**编排**：业主授权"继续根据调研结论最优处理，部署仍冻结"→ 主线**先核查再派工**（15 条 P1 逐条对照当前 HEAD：P1-3/P1-10 已被后续修复；P1-5/P1-12 archived-lane/疑被 _safe_export 守卫取代不派；**7 条确认存活**；3 条标注需 agent 追踪裁定）→ 三份任务书（`0c3f58d`）→ 三 dev agent 分 lane 并行（wf1/wf2/wf3）→ 主线 cherry-pick+全套验证。
+
+- **F1（eval/forward lane，`deb0b6e`→`f175357`）全胜 3 条**：① P1-1 haircut 下溢——实测 `sf(38)=0.0` 下溢 → `ppf(0)=+inf` 且 survives=true；修为 `p_raw==0` 时返回 `haircut_sharpe=None`+`p_raw_underflow=True`（诚实呈现绝不 ±Infinity），phase_c/phase_b 的 haircut_table 透传 None 防中途崩溃，饱和分支语义测试钉住。② **P1-2 判非误报**：VIX surprise 实际输入链追踪到 `data/cache/alfred_VIXCLS.json`（`vix_cls.parquet` 只被检查路径读写）→ 新增 `vix_vintages_sha256` 钉真实输入，只增不删；**诚实后果=未来 Phase C run 的 config sig 改变（按 ledger 契约是新 ledger 行非静默变更，冻结产物零触碰）**。③ P1-4 判外层未强制：`_check_provider_cutoff` 只认字面量 "unknown"，`provider_cutoff_faked` 从未 raise，且 **e3_forward_trigger 真实 live 路径正在踩此洞**（enforce=True+policy+None cutoff）→ `main()` 在 freeze/ledger 写/LLM 调用前 fail-closed ValueError；legacy 无 policy 路径保留回退（复现模式不受影响）。
+- **F2（ingest/data lane，前任死于提供商限流留下半成品，续作 agent 逐行审查后保留+修正 3 处+补齐文档，`28b1b11`→`f498ff4`）**：① P1-8 闭区间→半开 [opt_in, opt_out)——**决定性证据=仓内 intake 契约文档早已钉死半开语义（`opt-in <= date < opt_out`），代码是对自身契约的偏离**；消费方核查零依赖旧语义。② P1-9 判非误报：949 历史成员 ever-member 池全历史拉价、下游（track_c_a/joint/confirmatory/export）确无任何成员过滤 → builder 源头加 (date,ticker) 级 PIT 过滤+fail-closed；诚实残余=现存成员缓存 parquet 仍是旧闭区间产物需 force 重拉（真实抓取超范围），面板有效终点被成员快照日封顶（已 docstring 钉明）。
+- **F3（features/scripts/tests lane，`930b098`→`3e7c096`）全胜 3 条**：① **P1-6（最重，反泄漏核心）**——"PIT 过滤"实为恒真式（`filed_date <= ticker全局max` 对每行恒真）+ 断言被自己的列排除短路成死代码 → 真 PIT（merge_asof backward by ticker，stable sort H6 级确定）+ 断言合并前复活 + NaT 豁免；**影响面核实：唯一生产调用点以 fundamentals=None 调用，行为修复不触及任何既有研究产物路径**。② P1-7 track_b 运行时 config_sha256（特征集+面板字节）写输出。③ P1-11 9 个 skip 全部替换 hermetic 真断言（预写 alfred 缓存+sleep 补丁，零网络）——目标文件 skip 9→0。
+- **验证**：各 agent worktree 全套 pytest exit 0（F1 2103 passed / F2 exit0+2115 collected / F3 2123 passed、skip 净 -9）+ ruff 全净；主线 cherry-pick 零冲突 + 全套 pytest + ruff 全净。**内务**：wf1-3 清（无 junction）、f1-f3 分支 cherry 全 `-` 删、三任务书归档。**裁定总结**：15 条 P1 → 修复 7（F1×3+F2×2+F3×3 中 P1-6/7/8/9/11 + P1-1 + P1-2）+ P1-4 fail-closed 加固 = **8 条处理**；已修 2、archived-lane 不派 2、误报 0。**边界**：研究/eval/ingest 代码修复 lane；冻结产物零触碰；未来 run 的 config sig 变化已按契约声明；未 push（等全套绿后随 state 一起推）。待业主：E3 契约冻结+GO（P0-1 剩余全部是业主门）；成员缓存 force 重拉时机。
+
+
 ## 2026-08-28 (oo) 轮㉘：远程同步 + AI harness/金融计量深度调研 + 未来方向优先级路线图
 
 **编排**：业主指令①未提交部分原子 commit 同步远程 ②网络深调经济学/金融学 × AI harness 概念 ③未实施项优先级细致排列。
