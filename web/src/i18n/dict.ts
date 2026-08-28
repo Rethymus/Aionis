@@ -1206,6 +1206,19 @@ export const dict = {
       "相邻有数据月之间重叠 ticker 上分数排名的横截面 Spearman 秩相关（各区域独立成链，断点 = 重叠不足或不可计算）。虚线参考 0 与 0.5：读数越接近 0.5，分数面的月度排名惯性越强。",
     "atlas.diag.table": "数据表（无障碍与降级回退）",
     "atlas.diag.n": "{n} 个月 · {start} → {end}",
+    // TASK-DISP-G1 — forest-plot literature context + IC sample-period
+    // stability halves. Juxtaposition only: no pass/fail framing against the
+    // literature threshold, no significance claim, all build-time derivation.
+    "atlas.forest.context":
+      "文献语境：本研究合并 rank-IC 的展示性推导 t ≈ {t}（由 95% CI 宽度反推，非模型输出）与上述已发表因子阈值并列；NULL 是预注册诚实结论，不因该对照改变。",
+    "atlas.forest.context.source":
+      "Harvey, Liu & Zhu (2016 RFS)：已发表因子多重检验阈值 t > 3.0",
+    "atlas.icpivot.halves.title": "样本期稳定性（描述性）",
+    "atlas.icpivot.halves.first": "前半样本",
+    "atlas.icpivot.halves.second": "后半样本",
+    "atlas.icpivot.halves.delta": "Δ",
+    "atlas.icpivot.halves.note":
+      "描述性，非检验：前半 {n1} 个月（{r1}）对照后半 {n2} 个月（{r2}）；Δ = 后半均值 − 前半均值，均值仅计有数据月份，不作显著性声明。",
   },
   en: {
     "brand.name": "Aionis",
@@ -2412,6 +2425,19 @@ export const dict = {
       "Cross-sectional Spearman rank correlation of scores between adjacent with-data months on their overlapping tickers (an independent chain per region; a break = overlap too small or not computable). Dashed references at 0 and 0.5: the closer to 0.5, the stronger the month-over-month rank inertia of the score surface.",
     "atlas.diag.table": "Data table (accessibility & fallback)",
     "atlas.diag.n": "{n} months · {start} → {end}",
+    // TASK-DISP-G1 — forest-plot literature context + IC sample-period
+    // stability halves. Juxtaposition only: no pass/fail framing against the
+    // literature threshold, no significance claim, all build-time derivation.
+    "atlas.forest.context":
+      "Literature context: the study's combined rank-IC carries a display-derived t ≈ {t} (backed out of the 95% CI width, not a model output), juxtaposed with the published-factor threshold above; the NULL verdict is the preregistered honest conclusion and does not change with this comparison.",
+    "atlas.forest.context.source":
+      "Harvey, Liu & Zhu (2016 RFS): multiple-testing threshold for published factors, t > 3.0",
+    "atlas.icpivot.halves.title": "Sample-period stability (descriptive)",
+    "atlas.icpivot.halves.first": "First half",
+    "atlas.icpivot.halves.second": "Second half",
+    "atlas.icpivot.halves.delta": "Δ",
+    "atlas.icpivot.halves.note":
+      "Descriptive, not a test: first half {n1} months ({r1}) vs second half {n2} months ({r2}); Δ = second-half mean − first-half mean, with-data months only, no significance claim.",
   },
 } as const;
 

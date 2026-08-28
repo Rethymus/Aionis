@@ -3,7 +3,12 @@
 // /atlas block 1 — core-claim pivots (display lane, zero fetches): a monthly
 // rank-IC pivot heatmap (month × {US, CN, combined}) plus the preregistered
 // claim forest plot (point estimate vs 95% CI vs SESOI equivalence zone vs
-// the zero line). Every layout coordinate is a fixed constant or derived from
+// the zero line). TASK-DISP-G1 additions keep the same discipline: a
+// literature-context line under the forest plot (display-derived t vs the
+// Harvey-Liu-Zhu 2016 published-factor threshold — juxtaposition only, no
+// pass/fail framing) and a descriptive first/second-half IC stability strip
+// under the heatmap (never rendered when either half holds fewer than 12
+// months). Every layout coordinate is a fixed constant or derived from
 // the committed panels — no Date.now / new Date / Math.random / locale
 // formatting — so the SSG output stays byte-stable (H6 spirit). Each SVG
 // ships with a full <table> fallback (force-camp precedent: column headers
@@ -42,11 +47,22 @@ import {
 // The committed panel types IC cells as `number`, but the exporter can emit
 // `null` for months a region has not scored yet (e.g. 2026-06 US). Treat any
 // non-finite value as honestly missing — never coerce, never fabricate.
-const isNum = (v: number): boolean =>
+// (`v is number` keeps the guard usable as a filter/narrower for the
+// number-or-null aggregates produced by the stability strip below.)
+const isNum = (v: number | null | undefined): v is number =>
   typeof v === "number" && Number.isFinite(v);
 
-const fmt = (v: number, dp: number): string =>
+const fmt = (v: number | null | undefined, dp: number): string =>
   isNum(v) ? v.toFixed(dp) : "—";
+
+// Arithmetic mean over the finite values only; honestly null when a series
+// contributes nothing usable (renders as "—", never as 0).
+function meanOf(values: number[]): number | null {
+  const finite = values.filter(isNum);
+  return finite.length > 0
+    ? finite.reduce((a, b) => a + b, 0) / finite.length
+    : null;
+}
 
 // The i18n provider's t() takes a bare key; placeholder substitution follows
 // the repo-wide `t(key).replace("{x}", …)` convention (companies / congress /
@@ -274,6 +290,100 @@ function IcPivotFigure() {
 }
 
 // ---------------------------------------------------------------------------
+// Block A2 — sample-period stability strip (descriptive): first vs second half
+// of the month-ordered IC series per region, plus Δ. TASK-DISP-G1.
+// ---------------------------------------------------------------------------
+
+// Honesty gate: if either half holds fewer than 12 months the whole strip is
+// not rendered (too little sample to even describe — never fabricate a row).
+const HALVES_MIN_MONTHS = 12;
+
+// Fixed split rule, not tunable: sort months ascending (ISO month strings
+// compare lexicographically), split by count; with an odd total the FIRST
+// half keeps the extra month.
+function monthHalves() {
+  const rows = [...aionis.icMonthly].sort((a, b) =>
+    a.month < b.month ? -1 : a.month > b.month ? 1 : 0,
+  );
+  const half = Math.ceil(rows.length / 2);
+  return [rows.slice(0, half), rows.slice(half)] as const;
+}
+
+function HalvesStabilityStrip() {
+  const { t } = useI18n();
+
+  const [firstHalf, secondHalf] = monthHalves();
+  if (
+    firstHalf.length < HALVES_MIN_MONTHS ||
+    secondHalf.length < HALVES_MIN_MONTHS
+  ) {
+    return null;
+  }
+
+  // Per region: mean of with-data months per half, then Δ = second − first.
+  // Any half missing all values for a region stays honestly "—"; Δ needs
+  // both halves to exist and is never coerced from blanks.
+  const stats = P_SERIES.map((s) => {
+    const first = meanOf(firstHalf.map((r) => r[s.key]));
+    const second = meanOf(secondHalf.map((r) => r[s.key]));
+    const delta = first !== null && second !== null ? second - first : null;
+    return { key: s.key, label: s.label, first, second, delta };
+  });
+
+  const range = (h: (typeof firstHalf)[number][]): string =>
+    h.length > 0 ? `${h[0].month} → ${h[h.length - 1].month}` : "—";
+  const noteLine = tf(t("atlas.icpivot.halves.note"), {
+    n1: String(firstHalf.length),
+    r1: range(firstHalf),
+    n2: String(secondHalf.length),
+    r2: range(secondHalf),
+  });
+
+  return (
+    <div className="overflow-hidden rounded-xl border border-line bg-card">
+      <div className="border-b border-line2 bg-soft px-4 py-2 text-[13px] font-semibold">
+        {t("atlas.icpivot.halves.title")}
+      </div>
+      <table className="w-full text-left text-[12px]">
+        <thead>
+          <tr className="text-mute">
+            <th className="w-[34%] px-4 py-1.5 font-mono font-medium">series</th>
+            <th className="px-2 py-1.5 text-right font-mono font-medium">
+              {t("atlas.icpivot.halves.first")}
+            </th>
+            <th className="px-2 py-1.5 text-right font-mono font-medium">
+              {t("atlas.icpivot.halves.second")}
+            </th>
+            <th className="px-2 py-1.5 text-right font-mono font-medium">
+              {t("atlas.icpivot.halves.delta")}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {stats.map((s) => (
+            <tr key={s.key} className="border-t border-line2">
+              <td className="px-4 py-1.5 font-mono text-sub">{s.label}</td>
+              <td className="px-2 py-1.5 text-right font-mono tabular-nums">
+                {fmt(s.first, 4)}
+              </td>
+              <td className="px-2 py-1.5 text-right font-mono tabular-nums">
+                {fmt(s.second, 4)}
+              </td>
+              <td className="px-2 py-1.5 text-right font-mono tabular-nums">
+                {fmt(s.delta, 4)}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div className="border-t border-line2 px-4 py-2 text-[11px] text-mute">
+        {noteLine}
+      </div>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Block B — claim forest plot: point estimate vs 95% CI vs SESOI zone
 // ---------------------------------------------------------------------------
 
@@ -304,6 +414,19 @@ function ForestFigure() {
     p: fmt(m.p, 3),
     n: isNum(m.n_months) ? String(m.n_months) : "—",
   });
+
+  // TASK-DISP-G1 — display-derived t for the literature-context line. Pure
+  // arithmetic over the committed panel, NOT a model output and NOT a test
+  // statistic. Fixed formula: se ≈ (ci_hi − ci_lo) / (2 × 1.96), then
+  // t = combined_ic / se. Rendered only when both CI bounds exist and the
+  // implied width gives se > 0 — no CI → the line honestly does not render.
+  const se = hasCi ? (m.ci_hi - m.ci_lo) / (2 * 1.96) : null;
+  const derivedT =
+    se !== null && se > 0 && hasPoint ? m.combined_ic / se : null;
+  const contextLine =
+    derivedT !== null
+      ? tf(t("atlas.forest.context"), { t: fmt(derivedT, 2) })
+      : null;
 
   const forestRows: { label: string; value: string }[] = [
     { label: t("atlas.forest.point"), value: fmt(m.combined_ic, 4) },
@@ -489,6 +612,19 @@ function ForestFigure() {
             {t("atlas.forest.zeroLine")}
           </span>
         </div>
+        {/* Literature context (TASK-DISP-G1): the derived t is juxtaposed
+            with the Harvey-Liu-Zhu (2016 RFS) published-factor threshold —
+            context only. No pass/fail framing in either direction: the NULL
+            verdict stands as preregistered regardless of the comparison. */}
+        {contextLine ? (
+          <div className="border-t border-line2 px-2 pb-1 pt-2 text-[11px] leading-relaxed text-mute">
+            <span className="font-medium text-sub">
+              {t("atlas.forest.context.source")}
+            </span>
+            <span className="mx-1.5">·</span>
+            <span>{contextLine}</span>
+          </div>
+        ) : null}
       </div>
     </DiagramFigure>
   );
@@ -508,6 +644,7 @@ export default function AtlasClaims() {
       </CardHeader>
       <CardContent className="space-y-8">
         <IcPivotFigure />
+        <HalvesStabilityStrip />
         <ForestFigure />
       </CardContent>
     </Card>
