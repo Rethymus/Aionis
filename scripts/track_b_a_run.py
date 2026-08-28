@@ -7,11 +7,20 @@ Modes:
   differential -> both arms + paired monthly IC differential (treatment - price_only),
                   the pre-reg section 1 headline claim (HAC CI via rank_ic_summary).
 
+Runtime config binding: at run time a sha256 fingerprint is recomputed over the
+effective feature-column sets (both arms) + the panel file bytes, printed to
+stdout as ``[track_b] config_sha256=...`` and stamped into the differential
+site_data JSON (``config_sha256``). This makes the "config #41/#42" claim
+verifiable per run; a changed feature set or panel changes the fingerprint.
+No ledger write here — the frozen-config ledger rule lives upstream.
+
 Run:  uv run python scripts/track_b_a_run.py --mode differential
 """
 from __future__ import annotations
 
 import argparse
+import hashlib
+from pathlib import Path
 
 import pandas as pd
 
@@ -27,6 +36,20 @@ ARMS: dict[str, list[str]] = {
     "price_only": TRACK_B_PRICE_FEATURE_COLS,  # 10, config #42
 }
 ARM_CONFIG = {"treatment": "#41 (sig bf620b...)", "price_only": "#42 (sig 9af9e8b...)"}
+
+
+def _config_sha256(panel_path: Path) -> str:
+    """Runtime config fingerprint: sha256 over feature-column sets + panel file bytes.
+
+    Deterministic given the same feature sets + panel artifact (sorted arm names,
+    byte-exact file read). The docstring "config #41/#42" binding is only honest
+    if recomputed from live state at run time — this is that recomputation.
+    """
+    hasher = hashlib.sha256()
+    for arm in sorted(ARMS):
+        hasher.update(f"arm={arm};features={','.join(ARMS[arm])};".encode())
+    hasher.update(panel_path.read_bytes())
+    return hasher.hexdigest()
 
 
 def _run_arm(panel: pd.DataFrame, arm: str) -> object:
@@ -64,6 +87,13 @@ def main() -> None:
     args = parser.parse_args()
 
     panel = pd.read_parquet(PANEL_PATH)
+    config_sha256 = _config_sha256(PANEL_PATH)
+    print(f"[track_b] config_sha256={config_sha256}", flush=True)
+    print(
+        f"[track_b] arms={ {a: len(f) for a, f in sorted(ARMS.items())} } "
+        f"panel={PANEL_PATH}",
+        flush=True,
+    )
     print(f"panel: {panel.shape}, dates {panel['date'].min()}..{panel['date'].max()}", flush=True)
     print(f"mode: {args.mode}", flush=True)
 
@@ -128,6 +158,9 @@ def main() -> None:
                 "ic_series": {str(k): v for k, v in diff.items()},
             },
         }
+        # Runtime config binding stamp (feature sets + panel bytes) into the
+        # output summary — honest provenance, no ledger write.
+        site_data["config_sha256"] = config_sha256
         site_path = settings.data_dir.parent / "site" / "track_b_data.json"
         site_path.parent.mkdir(parents=True, exist_ok=True)
         site_path.write_text(json.dumps(site_data, indent=2), encoding="utf-8")

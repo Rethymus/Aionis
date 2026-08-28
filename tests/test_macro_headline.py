@@ -6,10 +6,17 @@ Tests enforce:
 - Term/credit spreads vary cross-sectionally (not CONSTANT)
 - Vintage cache is idempotent (second call hits cache, no re-download)
 - As-of merge is strictly before (allow_exact_matches=False enforced)
+
+Hermetic ALFRED fixtures: the fetchers short-circuit on the on-disk cache file
+(``alfred_{series_id}.json``) BEFORE any HTTP call, so pre-writing realistic
+payloads into a tmp cache dir exercises the exact public-function path with
+zero network. No pytest.skip anywhere (repo DoD forbids placeholder skips).
 """
 
 from __future__ import annotations
 
+import json
+import time
 from pathlib import Path
 from unittest.mock import patch
 
@@ -17,7 +24,6 @@ import pandas as pd
 import pytest
 from pandas.api.types import is_datetime64_any_dtype
 
-from aionis.config import settings
 from aionis.features.macro_headline import (
     DAILY_SURPRISE_MIN,
     DAILY_Z_CLIP,
@@ -32,8 +38,71 @@ from aionis.features.macro_headline import (
     vix_surprise,
 )
 
-# Test date range: 2020-2022 (covers COVID shock + recovery, enough history)
-TEST_DATES = pd.date_range("2020-01-01", "2022-12-31", freq="B")  # business days
+# ---------------------------------------------------------------------------
+# Hermetic ALFRED cache fixtures (exact on-disk payload shape, no network)
+# ---------------------------------------------------------------------------
+
+# 突变截止点：realtime_start >= 该日的观测在"扰动"运行中被改写为 999.0。
+# 过去 as-of 日期（< cutoff）只能看到 realtime_start < d < cutoff 的首印，
+# 因此两次运行的过去值必须逐点相同。
+_CUTOFF = pd.Timestamp("2020-06-01")
+_AS_OF_DATES = pd.bdate_range("2020-02-03", "2020-05-29")
+_REF_DATES = pd.bdate_range("2019-11-01", "2020-06-30")
+
+
+def _synthetic_observations(
+    ref_dates: pd.DatetimeIndex,
+    *,
+    base: float,
+    step: float,
+    corrupt_from: pd.Timestamp | None = None,
+) -> list[dict]:
+    """Deterministic ALFRED-style observations (first print at ref+1d, revision at ref+3d).
+
+    ``corrupt_from``：realtime_start >= 该日的观测值改写为 999.0（模拟未来
+    数据被篡改/修订），用于 no-future-leakage 断言。
+    """
+    obs: list[dict] = []
+    for i, ref in enumerate(ref_dates):
+        level = base + step * i
+        first_rt = ref + pd.Timedelta(days=1)
+        rev_rt = ref + pd.Timedelta(days=3)
+        for rt in (first_rt, rev_rt):
+            value = 999.0 if (corrupt_from is not None and rt >= corrupt_from) else level
+            obs.append({
+                "date": ref.strftime("%Y-%m-%d"),
+                "realtime_start": rt.strftime("%Y-%m-%d"),
+                "value": f"{value:.4f}",
+            })
+    return obs
+
+
+def _write_alfred_cache(cache_dir: Path, series_id: str, obs: list[dict]) -> Path:
+    """Pre-write the on-disk ALFRED cache file (fetch then short-circuits, no HTTP)."""
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    path = cache_dir / f"alfred_{series_id}.json"
+    path.write_text(json.dumps({"observations": obs}), encoding="utf-8")
+    return path
+
+
+def _write_series_caches(
+    cache_dir: Path,
+    series: dict[str, tuple[float, float]],
+    *,
+    corrupt_from: pd.Timestamp | None = None,
+) -> Path:
+    """Write one ALFRED cache per series_id: {sid: (base, step)}."""
+    for sid, (base, step) in series.items():
+        _write_alfred_cache(
+            cache_dir, sid, _synthetic_observations(_REF_DATES, base=base, step=step,
+                                                    corrupt_from=corrupt_from)
+        )
+    return cache_dir
+
+
+def _disable_polite_sleep(monkeypatch: pytest.MonkeyPatch) -> None:
+    """无网络的 hermetic 路径中跳过 ≥2s 礼貌等待（缓存命中本就无 HTTP 调用）。"""
+    monkeypatch.setattr(time, "sleep", lambda _s: None)
 
 
 @pytest.fixture
@@ -166,57 +235,129 @@ class TestDailyAsOfSeries:
 
 
 class TestNoFutureLeakage:
-    """Tests for future leakage — mutating future should NOT affect past as-of."""
+    """Tests for future leakage — mutating future values must NOT affect past as-of.
 
-    def test_term_spread_no_future_leakage(self, cache_dir: Path, mock_fred_api_key: str) -> None:
-        """Mutating a future GS10/TB3MS value should NOT change past term_spread."""
-        # This test requires mocking the ALFRED fetch to inject a known pattern
-        # For now, we test with real cached data (if available) or skip
-        pytest.skip("Requires full ALFRED mock fixture - deferred to integration suite")
+    Hermetic：预写 tmp ALFRED 缓存（命中即零 HTTP），"扰动"运行把
+    realtime_start >= _CUTOFF 的观测改写为 999.0；<_CUTOFF 的过去 as-of 值
+    在两次运行间必须逐点相同（含 NaN 位置）。
+    """
 
-    def test_credit_spread_no_future_leakage(self, cache_dir: Path, mock_fred_api_key: str) -> None:
-        """Mutating a future BAA10Y value should NOT change past credit_spread."""
-        pytest.skip("Requires full ALFRED mock fixture - deferred to integration suite")
+    def test_term_spread_no_future_leakage(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        """Mutating future GS10/TB3MS values should NOT change past term_spread."""
+        _disable_polite_sleep(monkeypatch)
+        dir_a = _write_series_caches(
+            tmp_path / "a", {"GS10": (100.0, 0.5), "TB3MS": (4.0, 0.2)}
+        )
+        dir_b = _write_series_caches(
+            tmp_path / "b", {"GS10": (100.0, 0.5), "TB3MS": (4.0, 0.2)},
+            corrupt_from=_CUTOFF,
+        )
 
-    def test_vix_surprise_no_future_leakage(self, cache_dir: Path) -> None:
-        """Mutating a future VIXCLS value should NOT change past vix_surprise."""
-        pytest.skip("Requires full ALFRED mock fixture - deferred to integration suite")
+        past = _AS_OF_DATES[_AS_OF_DATES < _CUTOFF]
+        s_a = term_spread_1y_10y(_AS_OF_DATES, "test_key", dir_a)
+        s_b = term_spread_1y_10y(_AS_OF_DATES, "test_key", dir_b)
 
-    def test_dff_surprise_no_future_leakage(self, cache_dir: Path) -> None:
-        """Mutating a future DFF value should NOT change past dff_surprise."""
-        pytest.skip("Requires full ALFRED mock fixture - deferred to integration suite")
+        # 过去值逐点相同（断言非空洞：两次运行过去区间都有有限值）
+        pd.testing.assert_series_equal(s_a.loc[past], s_b.loc[past])
+        valid = s_a.loc[past].dropna()
+        assert len(valid) > 0
+        assert (valid.abs() < float("inf")).all()
+
+    def test_credit_spread_no_future_leakage(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        """Mutating future BAA10Y/GS10 values should NOT change past credit_spread."""
+        _disable_polite_sleep(monkeypatch)
+        dir_a = _write_series_caches(
+            tmp_path / "a", {"GS10": (100.0, 0.5), "BAA10Y": (6.0, 0.4)}
+        )
+        dir_b = _write_series_caches(
+            tmp_path / "b", {"GS10": (100.0, 0.5), "BAA10Y": (6.0, 0.4)},
+            corrupt_from=_CUTOFF,
+        )
+
+        past = _AS_OF_DATES[_AS_OF_DATES < _CUTOFF]
+        s_a = credit_spread(_AS_OF_DATES, "test_key", dir_a)
+        s_b = credit_spread(_AS_OF_DATES, "test_key", dir_b)
+
+        pd.testing.assert_series_equal(s_a.loc[past], s_b.loc[past])
+        valid = s_a.loc[past].dropna()
+        assert len(valid) > 0
+        assert (valid.abs() < float("inf")).all()
+
+    def test_vix_surprise_no_future_leakage(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        """Mutating future VIXCLS values should NOT change past vix_surprise."""
+        _disable_polite_sleep(monkeypatch)
+        dir_a = _write_series_caches(tmp_path / "a", {"VIXCLS": (20.0, 0.3)})
+        dir_b = _write_series_caches(
+            tmp_path / "b", {"VIXCLS": (20.0, 0.3)}, corrupt_from=_CUTOFF
+        )
+
+        past = _AS_OF_DATES[_AS_OF_DATES < _CUTOFF]
+        s_a = vix_surprise(_AS_OF_DATES, dir_a)
+        s_b = vix_surprise(_AS_OF_DATES, dir_b)
+
+        pd.testing.assert_series_equal(s_a.loc[past], s_b.loc[past])
+        valid = s_a.loc[past].dropna()
+        assert len(valid) > 0
+        assert (valid.abs() < float("inf")).all()
+
+    def test_dff_surprise_no_future_leakage(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        """Mutating future DFF values should NOT change past dff_surprise."""
+        _disable_polite_sleep(monkeypatch)
+        dir_a = _write_series_caches(tmp_path / "a", {"DFF": (2.0, 0.05)})
+        dir_b = _write_series_caches(
+            tmp_path / "b", {"DFF": (2.0, 0.05)}, corrupt_from=_CUTOFF
+        )
+
+        past = _AS_OF_DATES[_AS_OF_DATES < _CUTOFF]
+        s_a = dff_surprise(_AS_OF_DATES, dir_a)
+        s_b = dff_surprise(_AS_OF_DATES, dir_b)
+
+        pd.testing.assert_series_equal(s_a.loc[past], s_b.loc[past])
+        valid = s_a.loc[past].dropna()
+        assert len(valid) > 0
+        assert (valid.abs() < float("inf")).all()
 
 
 class TestTermSpreadCreditSpreadVary:
-    """Tests for cross-sectional variation (RD-13: not CONSTANT)."""
+    """Tests for cross-sectional variation (RD-13: not CONSTANT) — hermetic."""
 
-    def test_term_spread_varies_with_real_data(
-        self, cache_dir: Path, mock_fred_api_key: str
+    def test_term_spread_varies_with_synthetic_vintages(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
     ) -> None:
-        """Real term_spread should vary across dates (not all same value)."""
-        # This test uses real cached data if available
-        try:
-            result = term_spread_1y_10y(TEST_DATES, mock_fred_api_key, cache_dir)
-            valid = result.dropna()
-            if len(valid) == 0:
-                pytest.skip("No valid term_spread values (cache miss?)")
-            # Check variation: std > 0
-            assert valid.std() > 0, "term_spread is CONSTANT across dates (std=0)"
-        except Exception as e:
-            pytest.skip(f"Real data fetch failed: {e}")
+        """term_spread should vary across dates (not all same value)."""
+        _disable_polite_sleep(monkeypatch)
+        cache = _write_series_caches(
+            tmp_path / "cache", {"GS10": (100.0, 0.5), "TB3MS": (4.0, 0.2)}
+        )
+        result = term_spread_1y_10y(_AS_OF_DATES, "test_key", cache)
 
-    def test_credit_spread_varies_with_real_data(
-        self, cache_dir: Path, mock_fred_api_key: str
+        valid = result.dropna()
+        assert len(valid) > 0, "term_spread has NO valid values"
+        assert valid.std() > 0, "term_spread is CONSTANT across dates (std=0)"
+        assert (valid.abs() < float("inf")).all()
+
+    def test_credit_spread_varies_with_synthetic_vintages(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
     ) -> None:
-        """Real credit_spread should vary across dates."""
-        try:
-            result = credit_spread(TEST_DATES, mock_fred_api_key, cache_dir)
-            valid = result.dropna()
-            if len(valid) == 0:
-                pytest.skip("No valid credit_spread values (cache miss?)")
-            assert valid.std() > 0, "credit_spread is CONSTANT across dates (std=0)"
-        except Exception as e:
-            pytest.skip(f"Real data fetch failed: {e}")
+        """credit_spread should vary across dates (not all same value)."""
+        _disable_polite_sleep(monkeypatch)
+        cache = _write_series_caches(
+            tmp_path / "cache", {"GS10": (100.0, 0.5), "BAA10Y": (6.0, 0.4)}
+        )
+        result = credit_spread(_AS_OF_DATES, "test_key", cache)
+
+        valid = result.dropna()
+        assert len(valid) > 0, "credit_spread has NO valid values"
+        assert valid.std() > 0, "credit_spread is CONSTANT across dates (std=0)"
+        assert (valid.abs() < float("inf")).all()
 
 
 class TestVintageCacheIdempotent:
@@ -272,58 +413,57 @@ class TestAsOfIsStrictlyBefore:
 
 
 class TestUsMacroSurpriseFinite:
-    """Tests that surprise values are finite (not all NaN/0/Inf)."""
+    """Tests that surprise values are finite (not all NaN/0/Inf) — hermetic."""
 
-    def test_fetch_us_macro_4_finite(self, cache_dir: Path, mock_fred_api_key: str) -> None:
-        """All 4 features should have finite values (not all NaN)."""
-        try:
-            df = fetch_us_macro_4(TEST_DATES, mock_fred_api_key, cache_dir)
+    def test_fetch_us_macro_4_finite(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        """All 4 features should have finite values (not all NaN/Inf)."""
+        _disable_polite_sleep(monkeypatch)
+        cache = _write_series_caches(
+            tmp_path / "cache",
+            {
+                "GS10": (100.0, 0.5),
+                "TB3MS": (4.0, 0.2),
+                "BAA10Y": (6.0, 0.4),
+                "VIXCLS": (20.0, 0.3),
+                "DFF": (2.0, 0.05),
+            },
+        )
+        df = fetch_us_macro_4(_AS_OF_DATES, "test_key", cache)
 
-            for col in df.columns:
-                valid_count = df[col].notna().sum()
-                assert valid_count > 0, f"{col} has NO valid values (all NaN)"
-                # Check no Inf values
-                finite = df[col].dropna()
-                assert (finite.abs() < float("inf")).all(), f"{col} has Inf values"
-
-        except Exception as e:
-            pytest.skip(f"Real data fetch failed (cache miss or network): {e}")
+        assert len(df.columns) == 4
+        for col in df.columns:
+            valid_count = df[col].notna().sum()
+            assert valid_count > 0, f"{col} has NO valid values (all NaN)"
+            finite = df[col].dropna()
+            assert (finite.abs() < float("inf")).all(), f"{col} has Inf values"
 
 
-class TestIntegrationWithRealCache:
-    """Integration tests with real cached ALFRED data (if available)."""
+class TestVixDffSurpriseFinite:
+    """vix_surprise / dff_surprise end-to-end on synthetic cached vintages (hermetic)."""
 
-    def test_vix_surprise_with_cached_vixcls(self) -> None:
-        """VIXCLS cached → vix_surprise should produce finite values."""
-        cache_dir = settings.data_dir / "cache"
-        vix_cache = cache_dir / "alfred_VIXCLS.json"
+    def test_vix_surprise_finite_with_synthetic_cache(
+        self, tmp_path: Path
+    ) -> None:
+        """VIXCLS cache present (tmp) → vix_surprise produces finite values."""
+        cache = _write_series_caches(tmp_path / "cache", {"VIXCLS": (20.0, 0.3)})
 
-        if not vix_cache.exists():
-            pytest.skip(f"VIXCLS cache not found at {vix_cache}")
+        result = vix_surprise(_AS_OF_DATES, cache)
+        valid = result.dropna()
+        assert len(valid) > 0, "vix_surprise has NO valid values"
+        assert (valid.abs() < float("inf")).all(), "vix_surprise has Inf values"
 
-        try:
-            result = vix_surprise(TEST_DATES, cache_dir)
-            valid = result.dropna()
-            assert len(valid) > 0, "vix_surprise has NO valid values"
-            assert (valid.abs() < float("inf")).all(), "vix_surprise has Inf values"
-        except Exception as e:
-            pytest.skip(f"vix_surprise failed: {e}")
+    def test_dff_surprise_finite_with_synthetic_cache(
+        self, tmp_path: Path
+    ) -> None:
+        """DFF cache present (tmp) → dff_surprise produces finite values."""
+        cache = _write_series_caches(tmp_path / "cache", {"DFF": (2.0, 0.05)})
 
-    def test_dff_surprise_with_cached_dff(self) -> None:
-        """DFF cached → dff_surprise should produce finite values."""
-        cache_dir = settings.data_dir / "cache"
-        dff_cache = cache_dir / "alfred_DFF.json"
-
-        if not dff_cache.exists():
-            pytest.skip(f"DFF cache not found at {dff_cache}")
-
-        try:
-            result = dff_surprise(TEST_DATES, cache_dir)
-            valid = result.dropna()
-            assert len(valid) > 0, "dff_surprise has NO valid values"
-            assert (valid.abs() < float("inf")).all(), "dff_surprise has Inf values"
-        except Exception as e:
-            pytest.skip(f"dff_surprise failed: {e}")
+        result = dff_surprise(_AS_OF_DATES, cache)
+        valid = result.dropna()
+        assert len(valid) > 0, "dff_surprise has NO valid values"
+        assert (valid.abs() < float("inf")).all(), "dff_surprise has Inf values"
 
 
 class TestPolitenessEnforced:

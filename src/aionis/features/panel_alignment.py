@@ -98,34 +98,29 @@ def build_pit_panel(
         fund_df[_DATE_COL] = pd.to_datetime(fund_df[_DATE_COL]).dt.normalize()
         fund_df["filed_date"] = pd.to_datetime(fund_df["filed_date"]).dt.normalize()
 
-        # PIT 合并：只保留 filed_date <= row_date 的基本面
-        # 对每个 (date, ticker)，取 filed_date <= date 的最新 filed_date 记录
-        fund_pit = (
-            fund_df.merge(
-                fund_df.groupby([_TICKER_COL])["filed_date"].max().rename("_max_filed"),
-                on=_TICKER_COL,
-                how="left",
-            )
-            .query("filed_date <= _max_filed")
-            .drop(columns=["_max_filed"])
-        )
+        # 无 filed_date 的申报无法做 PIT 锚定，诚实丢弃（缺 filed_date 的行
+        # 在旧过滤下同样不可用；显式丢弃避免 merge_asof 对 NaT 键未定义行为）
+        n_undated = int(fund_df["filed_date"].isna().sum())
+        if n_undated:
+            log.warning("panel_alignment_dropped_undated_filings", n_rows=n_undated)
+            fund_df = fund_df.dropna(subset=["filed_date"])
 
-        # 对每个 row_date，取 filed_date <= row_date 的最新记录
-        fund_pit = fund_pit.sort_values([_TICKER_COL, "filed_date"]).drop_duplicates(
-            [_TICKER_COL, _DATE_COL], keep="last"
-        )
+        # 真 PIT：对每个 panel (row_date, ticker)，只保留 filed_date <= row_date
+        # 的申报中 filed_date 最大的一条；无满足申报 → 基本面列诚实 null。
+        fund_pit = _align_fundamentals_pit(panel[[_DATE_COL, _TICKER_COL]], fund_df)
 
-        # 合并到 panel
+        # 反泄漏断言（合并**前**复活）：fund_pit 的 filed_date 必须 <= row_date。
+        # 旧实现把 filed_date 从合并列中排除，导致 `if "filed_date" in panel.columns`
+        # 永假、断言死代码；现改为对合并前的 fund_pit 直接断言，不依赖 panel 列。
+        _assert_pit_boundary(fund_pit, "filed_date")
+
+        # 合并到 panel（只带特征列；date/ticker/filed_date 不进面板）
         fund_cols = [c for c in fund_pit.columns if c not in {_DATE_COL, _TICKER_COL, "filed_date"}]
         panel = panel.merge(
             fund_pit[[_DATE_COL, _TICKER_COL] + fund_cols],
             on=[_DATE_COL, _TICKER_COL],
             how="left",
         )
-
-        # 反泄漏断言：基本面 filed_date <= row_date
-        if "filed_date" in panel.columns:
-            _assert_pit_boundary(panel, "filed_date")
 
     # 合并宏观（横向广播）
     if macro is not None:
@@ -282,6 +277,55 @@ def _validate_ff5_input(ff5: pd.DataFrame) -> None:
         raise ValueError("ff5 不能为空")
 
 
+# --- PIT 对齐（内部辅助） ---
+
+def _align_fundamentals_pit(panel_keys: pd.DataFrame, fund_df: pd.DataFrame) -> pd.DataFrame:
+    """真 PIT 对齐：每个 (row_date, ticker) 取 filed_date <= row_date 的最新申报。
+
+    merge_asof(backward, by=ticker)：left 为 panel 的 (date, ticker) 键，
+    right 为按 filed_date 稳定排序的申报记录。无满足申报的 (row_date, ticker)
+    基本面列为 NaN（诚实缺失）。确定性：全部 mergesort（stable）+ merge_asof，
+    同输入比特级可复现（H6）。`allow_exact_matches=True`：filed_date == row_date
+    当日可知（PIT 边界含等号）。
+
+    Args:
+        panel_keys: panel 的 [date, ticker] 键（决定输出行集）。
+        fund_df: 已规范化日期、已丢弃 NaT filed_date 的申报记录
+                 [date, ticker, filed_date, *fund_features]。
+
+    Returns:
+        [date, ticker, filed_date, *fund_features]；每行对应一个 panel 键。
+    """
+    feature_cols = [
+        c for c in fund_df.columns if c not in {_DATE_COL, _TICKER_COL, "filed_date"}
+    ]
+    left = (
+        panel_keys.drop_duplicates()
+        .sort_values(_DATE_COL, kind="mergesort")
+        .reset_index(drop=True)
+    )
+    if fund_df.empty:
+        out = left.copy()
+        for c in feature_cols:
+            out[c] = float("nan")
+        out["filed_date"] = pd.NaT
+        return out[[ _DATE_COL, _TICKER_COL, "filed_date"] + feature_cols]
+
+    right = fund_df.sort_values("filed_date", kind="mergesort").reset_index(drop=True)
+    # 丢弃 right 的 date 列：申报自身适用日期在 as-of 语义下不参与合并，
+    # 且与 left 的 date 键同名，保留会触发后缀改名破坏 on=[date, ticker] 合并。
+    aligned = pd.merge_asof(
+        left,
+        right.drop(columns=[_DATE_COL]),
+        left_on=_DATE_COL,
+        right_on="filed_date",
+        by=_TICKER_COL,
+        direction="backward",
+        allow_exact_matches=True,
+    )
+    return aligned
+
+
 # --- 前向收益计算（内部辅助） ---
 
 def _compute_forward_returns(panel: pd.DataFrame, horizon: int) -> pd.Series:
@@ -296,12 +340,15 @@ def _compute_forward_returns(panel: pd.DataFrame, horizon: int) -> pd.Series:
 # --- 反泄漏断言（核心安全保证） ---
 
 def _assert_pit_boundary(panel: pd.DataFrame, date_col: str) -> None:
-    """断言：date_col 值 <= row_date（PIT 边界）。"""
+    """断言：date_col 值 <= row_date（PIT 边界）。
+
+    NaT（无满足申报的诚实缺失）豁免；只有真实值越过边界才视为泄漏。
+    """
     if date_col not in panel.columns:
         return
 
-    # 检查 filed_date <= date
-    valid = panel[date_col] <= panel[_DATE_COL]
+    # 检查 filed_date <= date（NaT 比较结果为 False，必须显式豁免诚实缺失行）
+    valid = (panel[date_col] <= panel[_DATE_COL]) | panel[date_col].isna()
     if not valid.all():
         violating = panel[~valid].head(5)
         raise AssertionError(
