@@ -65,7 +65,8 @@
 
 ## 6. 前瞻路线(R1-R3,记录不实施)
 
-- **R1 BI 透视图(探索层)**:交叉表 month × region × decile 的 IC 透视(需导出端新增 decile 维度派生面板,过契约测试后接入);象限图(模型分 × 实现收益,评估语境)。
+- **R1 BI 透视图(探索层)——R1-lite 已于轮㉗落地**:分数面诊断透视图(月×区域的 score σ/IQR/宇宙宽度/月度秩自相关),纯派生自冻结 `runs/track_c_confirmatory_oos_scores.parquet`(94,438 行),零收益口径风险;面板 `score_diagnostics.json` + 契约测试 + /atlas 第四区块。
+- **R1-full(decile 收益单调性)——业主门**:金标准诊断需要全样本前向收益(94,438 行 × 价格 join)。`picks_backtest` 只有 top picks 收益、`strategy_returns` 是组合级;在展示层重算收益需与冻结 run 的收益口径(next-open vs close 等)逐一对齐,否则呈现的"分差"是口径伪影。归属研究相邻 lane 决策,不擅启。
 - **R2 独立图表工件**:构建期生成自包含 HTML/SVG 研究图表文件(文章的完整形态),如 `runs/` 附带的 phase 报告插图;Mermaid/Draw.io 源重绘通道。
 - **R3 品牌适配器**:从任意品牌 URL 提取配色/字体并映射为语义角色 + WCAG 核验(文章的 brand-adapter 概念),服务于未来多皮肤部署。
 - 每一期都保持 display/派生 lane 与"每图承载一个可证伪主张"原则。
