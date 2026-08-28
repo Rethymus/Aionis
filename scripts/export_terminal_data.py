@@ -5917,6 +5917,10 @@ def export_executives() -> None:
     # Count-desc then name — deterministic pill order for the view.
     by_company = dict(sorted(by_company.items(), key=lambda kv: (-kv[1], kv[0])))
     dates = [e["filing_date"] for e in events]
+    # The universe claim is DYNAMIC on purpose: the /events panel's bounded
+    # issuer set has been widened before (5 → 50) and a hardcoded count here
+    # silently became a false disclosure (caught 2026-08-28).
+    universe_issuers = f8.get("issuers")
     payload = {
         "status": "ok",
         "as_of": max(dates) if dates else None,
@@ -5938,7 +5942,11 @@ def export_executives() -> None:
             "is DEFERRED: parsing names from 8-K free text is unreliable and "
             "an honest omission beats a guessed name — the same v1 boundary "
             "as the /congress PTR panel. Inherits the /events panel's "
-            "bounded 5-issuer universe and 2026-05 window. Display-only, "
+            + (
+                f"bounded {universe_issuers}-issuer universe and its "
+                f"{min(dates) if dates else '?'}..{max(dates) if dates else '?'} window. "
+            )
+            + "Display-only, "
             "exploratory, not a research claim; NOT part of any OOS pipeline."
         ),
     }
