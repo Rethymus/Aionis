@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-08-29) ㊲ E3 cutoff 阻塞解决轮：经验探针实测边界 (2023-03, 2024-11]（业主授权直接决策；单进程）：**
+  按 advisory 决策树执行：方案 A 前提不成立(GLM-4.5 报告全文实检**无截止日声明**)→ **B 探针落地执行**:`scripts/probe_provider_cutoff.py`(双盲日期事件阶梯+虚假对照;SSRF 守卫按 Mimosa 清单加固;GLM thinking 禁用+429 退避)。**实测 9/9**:KNOWS 2023-03-10(SVB)/UNKNOWN 2024-11-06+/对照零捏造 → **边界 ∈ (2023-03, 2024-11],对 2026-08+ 前向窗口训练数据泄漏结构性排除**。**冻结 YAML amendment**:provider_cutoff=2023-03-10(conservative 下界,provenance=empirical-probe-v1,非厂商声明,逐条出处注释;探针产物提交副本 reports/evidence/)。**shadow 重跑推进**:cutoff 过守卫→新阻塞=Phase4 面板未物化;缓存续跑 570/587(tiingo 429 自愈),下轮续。**教训**:nohup 后台链病理窗口静默失败→TaskOutput+日志双确认。**边界**：E3 lane;shadow 零写;headline GO 仍业主门。待业主(唯一)：headline GO;厂商日后声明则覆盖 probe 值。
+
 - **active (2026-08-29) ㊱ E3 shadow 触发预演 + provider_cutoff 接线轮（业主授权直接决策；全套绿）：**
   业主授权直接决策。**账实更正**：E3 契约**早已 FROZEN**(业主 2026-08-03 D2:max_age_sessions=22/block_on_unknown=true)——历轮"待契约冻结"为过时记账。**决策执行**：Phase4 预备(phase_b_fetch 按预算 396 票续跑)→ **08-31 月末 shadow 触发本地预演**(PHASE_E3_NO_LEDGER=1 零 ledger 写)——全链路验证成功:FROZEN 契约加载生效→轮㊟ fail-closed 守卫正确拒绝伪造 cutoff→零不可逆写；**唯一精确阻塞**=GLM 真实知识截止值需供应商一手查证(页面 JS 壳不可得,绝不捏造)。**接线落地**:`_load_provider_cutoff()` 从冻结 YAML 可选字段读取,剩余阻塞收敛为"填一个已查证的值"；触发器 14 测试过。**教训**：pytest 管道吞退出码再犯——一律重定向后 echo。**边界**：E3 lane;shadow 零写;headline GO 仍业主门。待业主(唯一)：headline GO;GLM cutoff 一手出处。
 

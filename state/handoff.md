@@ -8,6 +8,16 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-29 (zzz) 轮㊲：E3 cutoff 阻塞解决——经验探针 v1 实测边界(2023-03, 2024-11];冻结 YAML amendment(业主授权直接决策;单进程)
+
+**编排**：业主授权直接决策 → 按 advisory(report 2026-08-29-e3-cutoff-advisory.md)决策树执行：方案 A(供应商声明)→ **前提不成立**(GLM-4.5 技术报告 arXiv 2508.06471 全文实检,§2.2 Pre-Training Data 无截止日声明,全文无任何数据截止日期)→ 落 **方案 B(经验探针为主)**。
+
+- **探针工具落地**(`scripts/probe_provider_cutoff.py`):双盲日期事件阶梯(5 个 2023-25 公共事件+面板一手 2026 事件+虚假对照测捏造)+ KNOWN/UNKNOWN 分类;Mimosa SSRF 拦截→按其清单加固(https+host 白名单+DNS 解析公网校验+禁重定向+代理 fake-IP 段 198.18.0.0/15 放行);GLM thinking 通道禁用(前 3 问空答案的根因)+429 退避重试。
+- **实测结果**(9/9 完成闭环):**模型 KNOWS 2023-03-10(SVB);UNKNOWN 2024-11-06 及以后(选举/DeepSeek/关税);虚假对照零捏造** → 边界 ∈ (2023-03, 2024-11] → 对 E3 前向窗口(2026-08+)**训练数据泄漏结构性排除**。
+- **冻结 YAML amendment(conservative 下界 2023-03-10,provenance=empirical-probe-v1,非厂商声明,措辞如实)**:`provider_cutoff_policy.provider_cutoff` 填入+逐条出处注释;探针产物 `runs/provider_cutoff_probe.json` 提交副本入 `reports/evidence/`。
+- **shadow 重跑推进**:cutoff 过守卫(新阻塞=Phase4 面板未物化);Phase4 缓存续跑 570/587(tiingo 间歇 429,会话间自愈)——shadow 重跑下轮续。**教训追加**:nohup 后台链在本机病理窗口静默失败(日志空)→ 重型链一律走 TaskOutput 后台+日志文件双确认。
+- **验证**：探针 9/9+触发器/清单契约测试 exit 0+ruff 净;临时文件 glm45_tmp/pg.html 清理。**边界**：E3 lane;shadow 零写;headline GO 仍业主门。**待业主(唯一不变)**：headline GO;GLM cutoff 若厂商日后声明,以 vendor 声明覆盖 probe 值(provenance 升级)。
+
 ## 2026-08-29 (yyy) 轮㊱：E3 shadow 触发预演 + provider_cutoff 接线（业主授权直接决策；单进程；全套绿）
 
 **编排**：业主授权"结合调研结论直接决策,非必要不再业主决策"→ 主线账实核查 → 决策与执行 → 精确阻塞定位 + 接线。
