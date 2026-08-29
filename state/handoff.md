@@ -8,6 +8,15 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-29 (ww) 轮㊲：建模决策谱系图——显式取代链解析 + 账本序演化的诚实区分（单进程；全套绿）
+
+**编排**：业主授权继续 → 选点=H5 清单的 11 条 config-only 背后的**决策链**(ledger amendment 原文实测锚点:#52 "Supersedes #51 (monthly-A, redundant with Track C)";#53 "n_estimators 500→100 (feasibility ~5min vs ~27min)")→ H6 任务书(`cd54419`)→ 单 agent 交付(`13cb648`)→ cherry-pick+主线重生成+全套验证。
+
+- **H6（`13cb648`,6 文件 +679/−81)**:`export_model_inventory()` 增 `chains` 计算——按 phase 分组账本序,组内非首行须声明指向同组更早行的引用(`Supersedes\s+#(\d+)` IGNORECASE 或顶层 amends 含 `#NN`)→ `explicit-supersede`(理由原文 200ch 摘录)与 `ledger-sequence`(推断性排列,诚实标注)两种 kind;单行组无链;`MODEL_INVENTORY_VERSION` 升 v2。真实面板 chains 恰 2 块:**track_adaptive explicit**(原因原文全上墙:WEEKLY 化因 monthly-A 与 Track C 冗余;n_estimators 500→100 因可行性 ~5min vs ~27min)+ **track_c ledger-sequence**(双区域→拆分→确认 GO,#48 resulted=true);track_b 臂变体/baselines 诚实不出现。渲染:链式行 `#46 → #47 → #48`+kind 徽章(sky=显式/amber=推断警示)+reason blockquote 挂被取代行下;`inventory.genealogy.*` 6 键对称;契约测试 31 个(新增 4 chains)零 skip;双跑 sha `87c19c3a…` 一致。
+- **集成口径**:wh6 无 runs/(任务书误判纯 ledger 即可)→ 其重生成 JSON 的 local-dir 字段诚实转 null → **主线重生成即恢复对账**(B/C/D/E1 true),14 测试过;agent 全套失败经 stash 对照确认为 wh6 环境性(dossier 缺 runs 哈希),非引入。
+- **验证**：主线全套 pytest **exit 0(无管道)**+ruff 净+tsc 0+build 1,503 页+目视终验(谱系节:#52/#53 reason 原文"redundant with Track C"/"n_estimators 500→100"上墙)。**内务**：wh6 清(真 node_modules 验证后随树删)、分支 cherry 全 `-` 删、任务书归档。**边界**：display/export 派生;runs/ 只读。待业主：E3 契约冻结+GO;谱系 v3(链上挂 diff 数字与档案互链)与 vintage 探针。
+
+
 ## 2026-08-29 (vv) 轮㊙：SR 11-7 模型清单全集——ledger×冻结目录对账 + /model-health 清单表（单进程；全套绿）
 
 **编排**：业主授权继续 → 选点=模型卡设计的 SR 11-7 延伸("文档"已有,补"**清单**")→ 主线先核实映射(4 目录恰为 B/C/D/E1 confirmatory;11 条 config-only 无目录)→ H5 任务书(`15ad203`)→ 单 agent 交付(`5db5918`)→ cherry-pick+正典重生成+全套验证。
