@@ -83,3 +83,30 @@ Harvey-Liu-Zhu(2016 RFS,t>3.0 阈值)、Harvey haircut p 值(2017 JPM)、McLean-
 排序依据:① 对"可靠性主张"的证据强度(forward live > 修复评估线缺陷 > 新评估层 > 展示);② 反泄漏纯度;③ 门的状态(已开 > 低门 > 业主门)。
 
 **若只做三件事**:P0-2 的 forward 线三条 P1(清 E3 路障)→ P0-1 业主契约冻结+shadow 启动 → P0-3 传播层收尾。研究线(P1-1/P1-2)在 E3 shadow 期间并行准备 RD 系列地基。
+
+---
+
+## 5. 剩余未实施项优先级排列(2026-08-29 轮㊶ 后快照,前版第 3 节作废)
+
+**已销项**:P0-2(15 P1→8 修复+2 已修+2 不派)、P0-3①②③、R1-lite、R2-lite、模型卡、模型清单、决策谱系、E3 契约(FROZEN 账实更正)、cutoff 阻塞(探针 v1 解决)、GitHub Pages 更新(gh-pages 手动通道,Actions 计费封锁中)。
+
+### P0 —— 业主门(代码侧全部就绪)
+1. **GLM cutoff 厂商声明升级**:probe v1(2023-03-10)已在冻结 YAML;厂商日后声明则覆盖(provenance 升级为 vendor)。无业主动作也安全(probe 值保守且已排除泄漏)。
+2. **E3 影子例行化**:Phase4 缓存收尾(570/587,tiingo 429 会话自愈)→ 08-31 shadow 完整跑通 → 此后每月末本地跑 e3_forward_trigger.py(计费解冻前 cron 不可用;单进程一轮 ~40min)。
+3. **headline GO(唯一不可代行)**:影子积满(业主 07-30 定 1-2 月)后,业主对非影子首次提交点头——此门不可下放。
+
+### P1 —— 研究线(需预注册级 GO)
+4. **Track A 因子生成器**:RD-01~17 任务单为地基;AlphaAgent 三件套(原创性/对齐/复杂度)Aionis 化;trial registry 先注册后评估;haircut p 值判定。
+5. **LLM vintage 纪律深化**:探针套件 CI 化(每 provider/模型定期实测)+ 模型卡 vintage 字段联动(probe v1 已是模板)。
+6. **R1-full decile 收益单调性**:冻结收益口径对齐工程 → 面板 + atlas 第五区块。
+
+### P2 —— 显示/基建(零门)
+7. **谱系 v3**:链上挂各配置的 diff 数字与 dossier 互链(决策→结果直读)。
+8. **R2-full 工件矩阵**:多 claim 档案、版本化、CI 挂钩(shadow 数据入库后自动更新 dossier)。
+9. **新鲜度巡检制度**:Actions 计费解冻前,本地扫荡每 2-3 天例行(轮㊳ 模板);解冻后 re-enable refresh workflow + 修 13D cron 时点。
+10. **atlas 小项**:i18n 表头残余、上游面板变更触发 dossier/工件自动重生成钩子。
+
+### P3 —— 远期/记录性
+11. 韩国杠杆 A/B / TACO 升级(源就绪即可换);12. BLS 传输策略接受(AUD-05C-C1);13. earnings abstain 臂与 SIC vintage(E3 GO 后);14. 模型卡 v2 多 run 卡片化(每 confirmatory run 一卡,清单表直链)。
+
+**部署通道现状**(2026-08-29 定):Actions 计费封锁 → gh-pages 手动通道为标准(本地 build→临时仓库→force push→Pages legacy 源;本轮已验证在墙:模型卡/清单/谱系全渲染);Actions 解冻后恢复 deploy workflow 并退役手动通道。
