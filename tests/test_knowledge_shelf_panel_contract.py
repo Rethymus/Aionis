@@ -9,6 +9,7 @@ runs/cache dependency), plus unit locks on the exporter's pure helpers
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import sys
@@ -27,6 +28,10 @@ _DATE = re.compile(r"\d{4}-\d{2}-\d{2}")
 # Teaser contract: first 2-3 sentences, hard-capped at 240 chars (the "…"
 # ellipsis may push the truncated form to 241).
 _MAX_TEASER = 241
+# Layer 3: the fixed evidence-artifact ids (pinned — a new artifact is a new
+# catalog entry + a new id, never a rename of these).
+ARTIFACT_IDS = {"atlas-claim-v1", "research-dossier-v1"}
+_DICT = Path("web/src/i18n/dict.ts")
 
 
 def _load() -> dict:
@@ -199,6 +204,13 @@ def test_export_knowledge_shelf_end_to_end(tmp_path, monkeypatch) -> None:
     assert all(d["date"] is None for d in payload["docs"])
     assert payload["as_of"] is None
     assert payload["snapshot_ts"]
+    # No reports/evidence/ in the fixture tree -> the artifact layer must
+    # degrade honestly (null sha256/n_bytes), never fabricate a hash.
+    assert len(payload["evidence_artifacts"]) == 2
+    assert {a["id"] for a in payload["evidence_artifacts"]} == ARTIFACT_IDS
+    for a in payload["evidence_artifacts"]:
+        assert a["sha256"] is None and a["n_bytes"] is None, a["id"]
+    assert "layer 3" in payload["methodology"].lower()
     for d in payload["docs"]:
         assert d["url"].startswith("https://github.com/Rethymus/Aionis/blob/main/")
         assert 0 < len(d["summary"]) <= _MAX_TEASER
@@ -208,3 +220,54 @@ def test_export_knowledge_shelf_raises_when_docs_absent(tmp_path, monkeypatch) -
     monkeypatch.chdir(tmp_path)
     with pytest.raises(FileNotFoundError):
         et.export_knowledge_shelf()  # _safe_export convention: skip + retain
+
+
+# --- Layer 3: generated evidence artifacts (sha256 verification loop) ---------
+
+
+def test_knowledge_shelf_evidence_artifacts_reconcile_to_repo() -> None:
+    """Exactly the two round artifacts; sha256/bytes re-computed from the repo.
+
+    This is the reader-side verification loop, enforced at contract level:
+    the catalog's sha256 and byte count must equal a fresh re-hash/re-count
+    of the tracked file — otherwise a stale catalog would silently mis-verify.
+    """
+    ks = _load()
+    arts = ks["evidence_artifacts"]
+    assert isinstance(arts, list) and len(arts) == 2, "exactly two evidence artifacts"
+    assert {a["id"] for a in arts} == ARTIFACT_IDS, "artifact ids are pinned"
+    for a in arts:
+        assert a["path"].startswith("reports/evidence/"), a["id"]
+        assert a["url"] == _GITHUB + a["path"], a["id"]
+        for k in ("name_en", "name_zh", "desc_en", "desc_zh"):
+            assert isinstance(a[k], str) and a[k].strip(), (a["id"], k)
+        # Bilingual strings are distinct static content, not translations
+        # collapsed onto one value.
+        assert a["name_en"] != a["name_zh"], a["id"]
+        assert a["desc_en"] != a["desc_zh"], a["id"]
+        p = Path(a["path"])
+        assert p.is_file(), f"{a['id']} missing from repo — re-export or restore"
+        raw = p.read_bytes()
+        assert a["n_bytes"] == len(raw), f"{a['id']} byte count stale — re-export"
+        assert a["sha256"] == hashlib.sha256(raw).hexdigest(), (
+            f"{a['id']} sha256 stale — re-export"
+        )
+    assert "layer 3" in ks["methodology"].lower(), "evidence layer must be disclosed"
+
+
+def test_knowledge_shelf_artifacts_barrel_and_dict_registered() -> None:
+    """Barrel type + /shelf view + dict keys (both locales, non-empty)."""
+    barrel = Path("web/src/data/aionis/index.ts").read_text(encoding="utf-8")
+    assert "KnowledgeShelfArtifact" in barrel, "barrel type missing"
+    assert "evidence_artifacts: KnowledgeShelfArtifact[]" in barrel
+    view = Path("web/src/components/shelf/shelf-view.tsx").read_text(encoding="utf-8")
+    assert "evidence_artifacts" in view, "/shelf view must render the layer"
+    assert "shelf.artifacts.title" in view
+    raw = _DICT.read_text(encoding="utf-8")
+    zh = raw[raw.index("  zh: {") : raw.index("  en: {")]
+    en = raw[raw.index("  en: {") :]
+    for key in ("shelf.artifacts.title", "shelf.artifacts.note", "shelf.artifacts.sha"):
+        for block in (zh, en):
+            m = re.search(rf'"{re.escape(key)}":\s*"([^"]*)"', block)
+            assert m, f"dict key {key!r} missing in one locale"
+            assert m.group(1).strip(), f"dict key {key!r} empty in one locale"

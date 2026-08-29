@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { ArrowUpRightIcon, BookOpenIcon } from "lucide-react";
+import { ArrowUpRightIcon, BookOpenIcon, FileCheckIcon } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -214,6 +214,55 @@ export function ShelfView() {
                 </span>
                 <span className="text-xs leading-relaxed text-muted-foreground">
                   {lang === "zh" ? s.desc_zh : s.desc_en}
+                </span>
+              </a>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Generated evidence layer: the round-produced self-contained HTML
+          artifacts — export-time sha256 pins let the reader verify the
+          downloaded bytes against the catalog (missing file degrades to "—",
+          never fabricated). */}
+      <Card className="border-muted py-0">
+        <CardHeader className="border-b">
+          <CardTitle className="flex items-center gap-2 text-base">
+            <FileCheckIcon className="size-4 text-muted-foreground" />
+            {t("shelf.artifacts.title")}
+          </CardTitle>
+          <CardDescription>{t("shelf.artifacts.note")}</CardDescription>
+        </CardHeader>
+        <CardContent className="p-0">
+          <div className="grid divide-y md:grid-cols-2 md:divide-y-0">
+            {shelf.evidence_artifacts.map((a) => (
+              <a
+                key={a.id}
+                href={a.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex flex-col gap-1 border-border/60 p-4 transition-colors hover:bg-muted/50 md:border-l md:first:border-l-0"
+              >
+                <span className="flex items-center gap-1 text-sm font-semibold group-hover:text-primary">
+                  {lang === "zh" ? a.name_zh : a.name_en}
+                  <ArrowUpRightIcon className="size-3 shrink-0" aria-hidden />
+                </span>
+                <span className="font-mono text-[11px] text-muted-foreground">
+                  {a.id}
+                </span>
+                <span className="text-xs leading-relaxed text-muted-foreground">
+                  {lang === "zh" ? a.desc_zh : a.desc_en}
+                </span>
+                {/* sha256 first 12 chars + byte count — the reader-side
+                    verification pair; "—" is the honest-null degradation. */}
+                <span className="flex flex-wrap items-center gap-x-3 font-mono text-[11px] tabular-nums text-muted-foreground/70">
+                  <span>
+                    {t("shelf.artifacts.sha")}{" "}
+                    {a.sha256 ? a.sha256.slice(0, 12) : "—"}
+                  </span>
+                  <span>
+                    {a.n_bytes !== null ? `${a.n_bytes.toLocaleString()} B` : "—"}
+                  </span>
                 </span>
               </a>
             ))}

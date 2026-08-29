@@ -682,6 +682,30 @@
       "desc_zh": "\u793e\u533a\u8fd0\u7ef4\u7684\u7ecf\u6d4e\u5b66\u7814\u7a76\u7d22\u5f15\u2014\u2014\u4e66\u76ee\u76ee\u5f55\uff0c\u94fe\u51fa\u5230\u5404\u4e00\u624b\u6765\u6e90\u3002"
     }
   ],
-  "methodology": "Layer 1 \u2014 Aionis's OWN method library: catalog of docs/ + decisions/ markdown (repo MIT; zero third-party copyright surface). Each entry carries metadata plus a safe teaser slice (first 2-3 sentences, <=240 chars) extracted at export time; the full text stays on GitHub (link-out). Dates are last-commit dates read from the LOCAL git repository (no network). Layer 2 \u2014 a FIXED editorially-curated bookmark list of first-hand public research sources (BIS / Fed FEDS / IMF / NBER / arXiv q-fin / FRASER / FRED-ALFRED / RePEc): link-out + one static sentence each, no fetching, no scraping, no summary APIs \u2014 copyright stays with the authors, we only catalog. Categories are a fixed 5-rail whitelist (preregistration / adr / results / rubric / theory); n_docs reconciles to the sum of the rails. Display-only reference lane \u2014 never part of any research or OOS pipeline.",
-  "snapshot_ts": "2026-08-28T17:55:18.089519+00:00"
+  "evidence_artifacts": [
+    {
+      "id": "atlas-claim-v1",
+      "name_en": "Headline claim evidence card",
+      "name_zh": "\u5934\u6761\u4e3b\u5f20\u8bc1\u636e\u5361",
+      "desc_en": "Single-page glance of the headline claim: IC / CI / p / verdict / SESOI \u2014 the provenance-pinned counterpart of web/out/atlas.html.",
+      "desc_zh": "\u5934\u6761\u4e3b\u5f20\u7684\u5355\u9875\u901f\u89c8\uff1aIC / CI / p / verdict / SESOI\u2014\u2014web/out/atlas.html \u7684\u53ef\u6eaf\u6e90\u5bf9\u5e94\u7269\u3002",
+      "path": "reports/evidence/atlas-claim-v1.html",
+      "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/atlas-claim-v1.html",
+      "sha256": "4f3279ca3a3f83d80b7f685712199b2705bee0bffc0f683f6d11b5af129a10c8",
+      "n_bytes": 24481
+    },
+    {
+      "id": "research-dossier-v1",
+      "name_en": "Research provenance dossier",
+      "name_zh": "\u6eaf\u6e90\u7814\u7a76\u6863\u6848",
+      "desc_en": "Full provenance chain \u2014 24-entry source register through report to modeling analysis \u2014 with a closed [S#] citation loop.",
+      "desc_zh": "\u6eaf\u6e90\u7814\u7a76\u6863\u6848\uff1a24 \u6761\u6765\u6e90\u767b\u8bb0\u8868 \u2192 \u62a5\u544a \u2192 \u5efa\u6a21\u5206\u6790\u5168\u6d41\u7a0b\uff0c[S#] \u5f15\u7528\u95ed\u5305\u3002",
+      "path": "reports/evidence/research-dossier-v1.html",
+      "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/research-dossier-v1.html",
+      "sha256": "fc7b53ff81ff3b8e7226f34d7e14c65f380aca85bc66be9cdc0cf83dc546fbce",
+      "n_bytes": 47057
+    }
+  ],
+  "methodology": "Layer 1 \u2014 Aionis's OWN method library: catalog of docs/ + decisions/ markdown (repo MIT; zero third-party copyright surface). Each entry carries metadata plus a safe teaser slice (first 2-3 sentences, <=240 chars) extracted at export time; the full text stays on GitHub (link-out). Dates are last-commit dates read from the LOCAL git repository (no network). Layer 2 \u2014 a FIXED editorially-curated bookmark list of first-hand public research sources (BIS / Fed FEDS / IMF / NBER / arXiv q-fin / FRASER / FRED-ALFRED / RePEc): link-out + one static sentence each, no fetching, no scraping, no summary APIs \u2014 copyright stays with the authors, we only catalog. Categories are a fixed 5-rail whitelist (preregistration / adr / results / rubric / theory); n_docs reconciles to the sum of the rails. Layer 3 \u2014 generated evidence artifacts: self-contained HTML, byte-stable, sha256 + byte count pinned at export time from the local tracked file so a reader can verify the download against the catalog (a missing file degrades honestly to null \u2014 never fabricated). Display-only reference lane \u2014 never part of any research or OOS pipeline.",
+  "snapshot_ts": "2026-08-29T03:14:14.148053+00:00"
 }

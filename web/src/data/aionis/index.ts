@@ -1203,6 +1203,26 @@ export type KnowledgeShelfSource = {
   desc_zh: string;
 };
 
+// Layer 3 — generated evidence artifacts (round-produced self-contained HTML
+// under reports/evidence/, tracked in the repo).
+export type KnowledgeShelfArtifact = {
+  id: string;
+  name_en: string;
+  name_zh: string;
+  desc_en: string;
+  desc_zh: string;
+  // Repo-relative path of the tracked artifact.
+  path: string;
+  // GitHub blob link-out — the only way to obtain the artifact.
+  url: string;
+  // sha256 computed at export time from the LOCAL tracked file so a reader
+  // can verify the downloaded bytes; null only when the file is absent
+  // (honest degradation, never a fabricated hash).
+  sha256: string | null;
+  // Byte count of the same file; null under the same honest degradation.
+  n_bytes: number | null;
+};
+
 export type KnowledgeShelf = {
   status: string;
   // Newest last-commit date among the cataloged docs (repo documentation
@@ -1215,6 +1235,9 @@ export type KnowledgeShelf = {
   // FIXED editorially-curated bookmarks (frozen literals in the exporter —
   // link-out + one static sentence, no fetching/scraping/summary APIs).
   research_sources: KnowledgeShelfSource[];
+  // FIXED catalog of the generated evidence artifacts, with export-time
+  // sha256 pins for reader-side byte verification.
+  evidence_artifacts: KnowledgeShelfArtifact[];
   methodology: string;
   snapshot_ts?: string;
 };

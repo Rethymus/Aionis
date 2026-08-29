@@ -1158,6 +1158,9 @@ export const dict = {
     "shelf.sources.note": "固定 8 项编辑精选书签：只外链 + 一句静态描述，不抓内容、不调摘要 API——版权在作者，我们只做目录。",
     "shelf.methodology.title": "方法学与边界",
     "shelf.empty": "当前类别下没有文档（诚实空态，不伪造条目）。",
+    "shelf.artifacts.title": "证据工件",
+    "shelf.artifacts.note": "自包含 HTML，字节稳定；sha256 在导出时钉死，供读者校验所下载文件与目录一致。",
+    "shelf.artifacts.sha": "SHA-256",
     // Research atlas (/atlas — editorial deterministic research diagrams)
     "nav.atlas": "研究图谱",
     "nav.sub.atlas": "编辑级研究叙事图：主张 · 分差 · 诊断 · 血缘",
@@ -2389,6 +2392,9 @@ export const dict = {
     "shelf.sources.note": "A fixed editorially-curated bookmark list: link-out + one static sentence each — no content fetched, no summary APIs. Copyright stays with the authors; we only catalog.",
     "shelf.methodology.title": "Methodology & boundaries",
     "shelf.empty": "No documents in this category (honest empty state, no fabricated entries).",
+    "shelf.artifacts.title": "Evidence artifacts",
+    "shelf.artifacts.note": "Self-contained HTML, byte-stable; sha256 pinned at export time so a reader can verify the download against the catalog.",
+    "shelf.artifacts.sha": "SHA-256",
     // Research atlas (/atlas — editorial deterministic research diagrams)
     "nav.atlas": "Research atlas",
     "nav.sub.atlas": "Editorial research diagrams: claims · divergence · diagnostics · lineage",

@@ -14,6 +14,7 @@ Usage::
 """
 from __future__ import annotations
 
+import hashlib
 import itertools
 import json
 import math
@@ -6206,6 +6207,52 @@ _KS_RESEARCH_SOURCES: list[dict[str, str]] = [
     },
 ]
 
+# Layer 3 — generated evidence artifacts: the self-contained HTML evidence
+# cards produced by earlier research rounds (tracked under reports/evidence/).
+# The catalog entries are fixed literals (bilingual names/descriptions are
+# static strings, not scraped); sha256 + byte count are computed AT EXPORT
+# TIME from the local tracked file so a reader can verify the downloaded
+# artifact byte-for-byte against the catalog entry. A missing file degrades
+# honestly (sha256/n_bytes = null) — never a fabricated hash.
+_KS_EVIDENCE_ARTIFACTS: list[dict[str, str]] = [
+    {
+        "id": "atlas-claim-v1",
+        "name_en": "Headline claim evidence card",
+        "name_zh": "头条主张证据卡",
+        "desc_en": (
+            "Single-page glance of the headline claim: IC / CI / p / verdict "
+            "/ SESOI — the provenance-pinned counterpart of web/out/atlas.html."
+        ),
+        "desc_zh": (
+            "头条主张的单页速览：IC / CI / p / verdict / SESOI——"
+            "web/out/atlas.html 的可溯源对应物。"
+        ),
+        "path": "reports/evidence/atlas-claim-v1.html",
+        "url": (
+            "https://github.com/Rethymus/Aionis/blob/main/"
+            "reports/evidence/atlas-claim-v1.html"
+        ),
+    },
+    {
+        "id": "research-dossier-v1",
+        "name_en": "Research provenance dossier",
+        "name_zh": "溯源研究档案",
+        "desc_en": (
+            "Full provenance chain — 24-entry source register through report "
+            "to modeling analysis — with a closed [S#] citation loop."
+        ),
+        "desc_zh": (
+            "溯源研究档案：24 条来源登记表 → 报告 → 建模分析全流程，"
+            "[S#] 引用闭包。"
+        ),
+        "path": "reports/evidence/research-dossier-v1.html",
+        "url": (
+            "https://github.com/Rethymus/Aionis/blob/main/"
+            "reports/evidence/research-dossier-v1.html"
+        ),
+    },
+]
+
 # ADR-style front-matter list rows ("- **date:** 2026-07-27") are registry
 # metadata, not prose — skipped when mining the teaser.
 _KS_META_SKIP = re.compile(
@@ -6326,6 +6373,29 @@ def _ks_git_date(rel: str) -> str | None:
     return out[:10] if len(out) >= 10 else None
 
 
+def _ks_evidence_artifacts() -> list[dict[str, object]]:
+    """Pin export-time sha256 + byte count for the tracked evidence artifacts.
+
+    The catalog entries are frozen literals; the hash and size are computed
+    HERE from the LOCAL tracked file so a reader can verify the downloaded
+    artifact byte-for-byte against the catalog entry. A missing file degrades
+    honestly (sha256/n_bytes = null) — never a fabricated hash.
+    """
+    out: list[dict[str, object]] = []
+    for spec in _KS_EVIDENCE_ARTIFACTS:
+        entry: dict[str, object] = dict(spec)
+        p = Path(spec["path"])
+        if p.is_file():
+            raw = p.read_bytes()
+            entry["sha256"] = hashlib.sha256(raw).hexdigest()
+            entry["n_bytes"] = len(raw)
+        else:
+            entry["sha256"] = None  # honest null: artifact absent on checkout
+            entry["n_bytes"] = None
+        out.append(entry)
+    return out
+
+
 def export_knowledge_shelf() -> None:
     """Method shelf catalog over docs/ + decisions/ (display-only, zero network).
 
@@ -6361,6 +6431,7 @@ def export_knowledge_shelf() -> None:
     docs.sort(key=lambda d: (_KS_CATEGORY_ORDER[d["category"]], d["path"]))
     categories = {c: sum(1 for d in docs if d["category"] == c) for c in _KS_CATEGORIES}
     dates = [d["date"] for d in docs if d["date"]]
+    artifacts = _ks_evidence_artifacts()
     payload = {
         "status": "ok",
         # Shelf freshness = the newest last-commit date among the cataloged
@@ -6371,6 +6442,7 @@ def export_knowledge_shelf() -> None:
         "categories": categories,
         "docs": docs,
         "research_sources": _KS_RESEARCH_SOURCES,
+        "evidence_artifacts": artifacts,
         "methodology": (
             "Layer 1 — Aionis's OWN method library: catalog of docs/ + "
             "decisions/ markdown (repo MIT; zero third-party copyright "
@@ -6385,8 +6457,12 @@ def export_knowledge_shelf() -> None:
             "copyright stays with the authors, we only catalog. Categories "
             "are a fixed 5-rail whitelist (preregistration / adr / results / "
             "rubric / theory); n_docs reconciles to the sum of the rails. "
-            "Display-only reference lane — never part of any research or OOS "
-            "pipeline."
+            "Layer 3 — generated evidence artifacts: self-contained HTML, "
+            "byte-stable, sha256 + byte count pinned at export time from the "
+            "local tracked file so a reader can verify the download against "
+            "the catalog (a missing file degrades honestly to null — never "
+            "fabricated). Display-only reference lane — never part of any "
+            "research or OOS pipeline."
         ),
     }
     (WEB / "knowledge_shelf.json").write_text(json.dumps(_stamp(payload), indent=2))
@@ -6394,6 +6470,7 @@ def export_knowledge_shelf() -> None:
         f"[export-terminal] knowledge_shelf: {len(docs)} docs across "
         f"{payload['n_categories']} categories "
         f"({', '.join(f'{c}={n}' for c, n in categories.items())}), "
+        f"{len(artifacts)} evidence artifacts, "
         f"as_of {payload['as_of']}",
         flush=True,
     )
