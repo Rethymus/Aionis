@@ -1416,6 +1416,26 @@ export type ModelInventoryRun = {
   } | null;
 };
 
+export type ModelInventoryChainLink = {
+  row: number;
+  config_sig: string;
+  ts: string | null;
+  // The link row's own amendment declaration, verbatim ledger text truncated
+  // at a fixed 200 chars; head rows declare nothing → honest null.
+  amendment_excerpt: string | null;
+  // The sig has a confirmatory:first row or a local frozen directory.
+  resulted: boolean;
+};
+
+// TASK-H6: a modeling-decision genealogy chain — explicit-supersede rows
+// declare "Supersedes #NN" in their amendment; ledger-sequence chains are the
+// honestly-inferred ledger-order arrangement (no explicit supersession claim).
+export type ModelInventoryChain = {
+  phase: string;
+  kind: "explicit-supersede" | "ledger-sequence";
+  links: ModelInventoryChainLink[];
+};
+
 export type ModelInventory = {
   model_inventory_version: string;
   status: string;
@@ -1427,6 +1447,7 @@ export type ModelInventory = {
     row: number;
     ts: string | null;
   }[];
+  chains: ModelInventoryChain[];
   summary: {
     n_confirmatory_runs: number;
     n_local_dirs: number;

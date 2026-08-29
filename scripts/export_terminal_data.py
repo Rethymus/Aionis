@@ -2881,7 +2881,127 @@ def export_model_card(*, allow_uv_lock_drift: bool = False) -> None:
     )
 
 
-MODEL_INVENTORY_VERSION = "v1"
+MODEL_INVENTORY_VERSION = "v2"
+
+# TASK-H6 genealogy parsing: the pre-registered explicit-supersede regex
+# (case-insensitive, verbatim per the task spec) and the generic ledger-row
+# reference used for the honest ledger-sequence kind.
+_SUPERSEDE_RE = re.compile(r"Supersedes\s+#(\d+)", re.IGNORECASE)
+_LEDGER_ROW_REF_RE = re.compile(r"#(\d+)")
+# Hard-coded excerpt truncation (~200 chars of verbatim ledger text; never
+# paraphrased — a truncated quote stays the ledger's own words).
+_GENEALOGY_EXCERPT_CHARS = 200
+
+
+def _inv_amendment_decl(rec: dict) -> str | None:
+    """A config_committed row's row-level amendment declaration, or None.
+
+    Two ledger shapes carry one: the top-level ``amends`` string (the
+    ledger-row-level amendment record — track_c #47/#48 pattern) and
+    ``config.amendment`` (the config-level amendment note carrying the
+    explicit Supersedes declaration — track_adaptive #52/#53 pattern). A
+    ``amends`` string nested inside the frozen config BODY (track_b #41/#42
+    — provenance narration bound to the config payload, alongside numeric
+    ``amends_row``/``companion_to_row`` pointers) is config bookkeeping, not
+    a row-level replacement declaration, and never makes a row a chain link.
+    """
+    config = rec.get("config")
+    for candidate in (
+        rec.get("amends"),
+        config.get("amendment") if isinstance(config, dict) else None,
+    ):
+        if isinstance(candidate, str) and candidate.strip():
+            return candidate
+    return None
+
+
+def _inv_chains(
+    rows: list[tuple[int, dict]], confirmed: set[str]
+) -> tuple[list[dict], list[str]]:
+    """Derive supersession chains from config_committed rows (pure ledger
+    projection — TASK-H6).
+
+    config_committed rows are grouped by phase in ledger order (first-row
+    order groups the output). A group of ≥2 rows is a chain only when EVERY
+    row after the first declares a backward reference resolving to an
+    earlier row of the SAME group:
+
+    - ``kind="explicit-supersede"`` — its declaration text matches the
+      pre-registered ``Supersedes #NN`` regex (case-insensitive);
+    - ``kind="ledger-sequence"`` — otherwise, the top-level ``amends``
+      string references ``#NN``: honestly an inferred ledger-order
+      evolution, NOT an explicit supersession claim.
+
+    Groups whose later rows carry no row-level declaration (same-claim arm
+    variants, single-row phases) are NOT chains and never appear here. Each
+    link's ``amendment_excerpt`` is that row's own declaration text,
+    verbatim-truncated (head rows declare nothing → honest null); ``resulted``
+    is whether the sig has a confirmatory:first row or a local frozen
+    directory. Returns ``(chains, chain_row_ts)`` — the ts values the chains
+    cover, so ``as_of`` spans every row the inventory derives from.
+    """
+    by_phase: dict[str, list[tuple[int, dict]]] = {}
+    for lineno, rec in rows:
+        if rec.get("event") == "config_committed":
+            by_phase.setdefault(str(rec.get("phase")), []).append((lineno, rec))
+
+    chains: list[dict] = []
+    chain_ts: list[str] = []
+    for phase, group in by_phase.items():
+        if len(group) < 2:
+            continue  # single-row group: nothing to supersede — no chain
+        member_rows = {lineno for lineno, _ in group}
+        links: list[dict] = []
+        kinds: list[str] = []
+        for idx, (lineno, rec) in enumerate(group):
+            explicit = False
+            sequential = False
+            if idx > 0:
+                decl = _inv_amendment_decl(rec)
+                if decl is not None:
+                    match = _SUPERSEDE_RE.search(decl)
+                    if match:
+                        ref = int(match.group(1))
+                        explicit = ref in member_rows and ref < lineno
+                    if not explicit and isinstance(rec.get("amends"), str):
+                        sequential = any(
+                            int(m.group(1)) in member_rows and int(m.group(1)) < lineno
+                            for m in _LEDGER_ROW_REF_RE.finditer(rec["amends"])
+                        )
+                if not (explicit or sequential):
+                    links = []  # un-declared row: the group is not a chain
+                    break
+                kinds.append("explicit-supersede" if explicit else "ledger-sequence")
+            excerpt = _inv_amendment_decl(rec)
+            links.append({
+                "row": lineno,
+                "config_sig": str(rec.get("config_sig") or ""),
+                "ts": rec.get("ts"),
+                "amendment_excerpt": (
+                    excerpt[:_GENEALOGY_EXCERPT_CHARS] if excerpt is not None else None
+                ),
+                "resulted": False,  # filled after the link exists (sig known)
+            })
+        if not links:
+            continue
+        for link in links:
+            sig = link["config_sig"]
+            link["resulted"] = sig in confirmed or (
+                bool(sig) and _inv_read_meta(_CARD_RESULTS_ROOT / sig, sig) is not None
+            )
+        chains.append({
+            "phase": phase,
+            # A single explicit declaration makes the chain explicit; a mixed
+            # chain is reported by its strongest (declared) evidence.
+            "kind": (
+                "explicit-supersede"
+                if "explicit-supersede" in kinds
+                else "ledger-sequence"
+            ),
+            "links": links,
+        })
+        chain_ts.extend(str(link["ts"]) for link in links if link["ts"])
+    return chains, chain_ts
 
 # Diff fields lifted verbatim from each frozen run's differential.json (key
 # names verified against the real artifacts: mean_diff/ci_lo/ci_hi/dm_p_mbb
@@ -2954,6 +3074,18 @@ def export_model_inventory() -> None:
     sig has NO confirmatory:first run and NO local directory are listed
     honestly as ``config_only`` (superseded or directory not retained — the
     reason is never guessed).
+
+    TASK-H6 (inventory v2): the payload also carries ``chains`` — the
+    modeling-decision genealogy derived purely from the same ledger scan.
+    config_committed rows grouped by phase form a supersession chain only
+    when every row after the first declares a backward reference into its
+    own group: an explicit ``Supersedes #NN`` (case-insensitive) in the
+    amendment declaration → ``explicit-supersede``, otherwise a top-level
+    ``amends`` row reference → the honestly-inferred ``ledger-sequence``.
+    Groups without row-level declarations (arm variants, single-row phases)
+    never appear. Excerpts are verbatim ledger text truncated at a fixed
+    200 chars; ``resulted`` flags sigs with a confirmatory:first run or a
+    local frozen directory.
 
     READ-ONLY over ``runs/``; zero-clock (every timestamp is machine-read
     from the ledger or meta.json — no ``now()``, no ``snapshot_ts``), so
@@ -3047,6 +3179,10 @@ def export_model_inventory() -> None:
     else:
         all_null_holds = None
 
+    # --- decision genealogy: supersession chains over the same ledger --------
+    chains, chain_ts = _inv_chains(rows, confirmed)
+    relevant_ts.extend(chain_ts)
+
     payload = {
         "model_inventory_version": MODEL_INVENTORY_VERSION,
         "status": "ok",
@@ -3055,6 +3191,7 @@ def export_model_inventory() -> None:
         "as_of": max(relevant_ts) if relevant_ts else None,
         "runs": runs,
         "config_only": config_only,
+        "chains": chains,
         "summary": {
             "n_confirmatory_runs": len(runs),
             "n_local_dirs": sum(1 for r in runs if r["local_dir_present"]),

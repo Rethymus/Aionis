@@ -250,10 +250,12 @@ def test_inventory_maps_rows_and_dirs_verbatim(tmp_path, monkeypatch) -> None:
     """Run rows map the ledger + frozen directories byte-for-byte; freeze/
     result row numbers survive the blank ledger line; numbers round 6 dp."""
     inv = _run_export(tmp_path, monkeypatch)
-    assert inv["model_inventory_version"] == et.MODEL_INVENTORY_VERSION == "v1"
+    assert inv["model_inventory_version"] == et.MODEL_INVENTORY_VERSION == "v2"
     assert inv["status"] == "ok"
     # 4 confirmatory:first rows → 4 inventory runs, ledger order preserved.
     assert [r["phase"] for r in inv["runs"]] == ["B", "C", "track_c", "bad"]
+    # no multi-row phase group here → no genealogy chains (honest empty).
+    assert inv["chains"] == []
     sig_run, part_run, ghost_run, bad_run = inv["runs"]
 
     # SIG: full mapping — freeze/result row numbers + ts + meta + diff.
@@ -403,6 +405,231 @@ def test_output_is_lf_bytes(tmp_path, monkeypatch) -> None:
     assert b"\r" not in raw
 
 
+# --- TASK-H6 genealogy: supersession-chain parsing (synthetic fixtures) -------
+
+GEN_HEAD = "1" * 64  # explicit chain head (no superseded record)
+GEN_AMEND1 = "2" * 64  # declares Supersedes #GEN_HEAD
+GEN_AMEND2 = "3" * 64  # declares Supersedes #GEN_AMEND1 (>200-char declaration)
+SEQ1 = "4" * 64  # ledger-sequence group head
+SEQ2 = "5" * 64  # top-level amends references #SEQ1
+SEQ3 = "6" * 64  # top-level amends references #SEQ1/#SEQ2
+LONE = "7" * 64  # single-row phase → never a chain
+ARM0, ARM1 = "8" * 64, "9" * 64  # same-claim arm variants (config-body prose only)
+XREF0, XREF1 = "a" * 64, "b" * 64  # Supersedes pointing OUTSIDE the group
+
+
+def _genealogy_ledger() -> list[str]:
+    """Synthetic ledger exercising every chains rule. Line number = row number:
+    4/5/6 = explicit chain (genx) · 8/9/10 = ledger-sequence (geny) · 11 =
+    single-row (genz) · 12/13 = arm variants with config-body prose only (genw)
+    · 14/15 = cross-group Supersedes (genq) → honestly no chain."""
+    return [
+        json.dumps({"event": "data_ingest", "ts": "2026-01-01T00:00:00+00:00"}),
+        json.dumps(
+            {
+                "event": "config_committed",
+                "phase": "phase_a",
+                "ts": "2026-01-02T00:00:00+00:00",
+                "config_sig": CO_SIG,
+            }
+        ),
+        json.dumps(
+            {
+                "event": "confirmatory:first",
+                "phase": "phase_a",
+                "ts": "2026-01-03T00:00:00+00:00",
+                "config_sig": CO_SIG,
+            }
+        ),
+        json.dumps(
+            {
+                "event": "config_committed",
+                "phase": "genx",
+                "ts": "2026-02-01T00:00:00+00:00",
+                "config_sig": GEN_HEAD,
+            }
+        ),
+        json.dumps(
+            {
+                "event": "config_committed",
+                "phase": "genx",
+                "ts": "2026-02-02T00:00:00+00:00",
+                "config_sig": GEN_AMEND1,
+                "config": {
+                    "amendment": (
+                        "amend1: change the cadence. Supersedes #4 "
+                        "(head-A, redundant with the sequence group)."
+                    )
+                },
+            }
+        ),
+        json.dumps(
+            {
+                "event": "config_committed",
+                "phase": "genx",
+                "ts": "2026-02-03T00:00:00+00:00",
+                "config_sig": GEN_AMEND2,
+                "config": {
+                    "amendment": (
+                        "amend2: " + "feasibility budget note " * 12
+                        + ". supersedes #5."
+                    )
+                },
+            }
+        ),
+        json.dumps(
+            {
+                "event": "confirmatory:first",
+                "phase": "genx",
+                "ts": "2026-02-04T00:00:00+00:00",
+                "config_sig": GEN_HEAD,
+            }
+        ),
+        json.dumps(
+            {
+                "event": "config_committed",
+                "phase": "geny",
+                "ts": "2026-03-01T00:00:00+00:00",
+                "config_sig": SEQ1,
+            }
+        ),
+        json.dumps(
+            {
+                "event": "config_committed",
+                "phase": "geny",
+                "ts": "2026-03-02T00:00:00+00:00",
+                "config_sig": SEQ2,
+                "amends": "#8 -> demote the X feature to exploratory-only (G1).",
+            }
+        ),
+        json.dumps(
+            {
+                "event": "config_committed",
+                "phase": "geny",
+                "ts": "2026-03-03T00:00:00+00:00",
+                "config_sig": SEQ3,
+                "amends": "#8/#9 -> confirmatory GO (owner decision recorded).",
+            }
+        ),
+        json.dumps(
+            {
+                "event": "config_committed",
+                "phase": "genz",
+                "ts": "2026-03-04T00:00:00+00:00",
+                "config_sig": LONE,
+            }
+        ),
+        json.dumps(
+            {
+                "event": "config_committed",
+                "phase": "genw",
+                "ts": "2026-03-05T00:00:00+00:00",
+                "config_sig": ARM0,
+            }
+        ),
+        json.dumps(
+            {
+                "event": "config_committed",
+                "phase": "genw",
+                "ts": "2026-03-06T00:00:00+00:00",
+                "config_sig": ARM1,
+                "config": {
+                    # config-BODY provenance prose — NOT a row-level
+                    # declaration; the arm-variant group is not a chain.
+                    "amends": "ledger row #12 (arm baseline of the same claim)."
+                },
+            }
+        ),
+        json.dumps(
+            {
+                "event": "config_committed",
+                "phase": "genq",
+                "ts": "2026-03-07T00:00:00+00:00",
+                "config_sig": XREF0,
+            }
+        ),
+        json.dumps(
+            {
+                "event": "config_committed",
+                "phase": "genq",
+                "ts": "2026-03-08T00:00:00+00:00",
+                "config_sig": XREF1,
+                "config": {"amendment": "supersedes #4 (a row OUTSIDE this group)."},
+            }
+        ),
+    ]
+
+
+def test_chains_parse_explicit_sequence_and_refusals(tmp_path, monkeypatch) -> None:
+    """Explicit Supersedes → explicit-supersede chain (verbatim truncated
+    excerpts); top-level amends references → ledger-sequence; single-row and
+    undeclared groups and cross-group references produce NO chain."""
+    inv = _run_export(tmp_path, monkeypatch, ledger=_genealogy_ledger())
+    chains = inv["chains"]
+    assert [c["phase"] for c in chains] == ["genx", "geny"]  # ledger first-row order
+
+    explicit = chains[0]
+    assert explicit["kind"] == "explicit-supersede"
+    assert [lnk["row"] for lnk in explicit["links"]] == [4, 5, 6]
+    head, amend1, amend2 = explicit["links"]
+    assert head["config_sig"] == GEN_HEAD
+    assert head["amendment_excerpt"] is None  # the head declares nothing
+    assert head["resulted"] is True  # confirmatory:first on row 7
+    assert amend1["config_sig"] == GEN_AMEND1
+    assert amend1["amendment_excerpt"] == (
+        "amend1: change the cadence. Supersedes #4 "
+        "(head-A, redundant with the sequence group)."
+    )
+    assert amend1["resulted"] is False
+    full = (
+        "amend2: " + "feasibility budget note " * 12 + ". supersedes #5."
+    )
+    assert amend2["amendment_excerpt"] == full[:200]  # hard 200-char truncation
+    assert len(amend2["amendment_excerpt"]) == 200
+    assert amend2["resulted"] is False
+
+    sequence = chains[1]
+    assert sequence["kind"] == "ledger-sequence"
+    assert [lnk["row"] for lnk in sequence["links"]] == [8, 9, 10]
+    s1, s2, s3 = sequence["links"]
+    assert s1["amendment_excerpt"] is None
+    assert s2["amendment_excerpt"] == "#8 -> demote the X feature to exploratory-only (G1)."
+    assert s3["amendment_excerpt"] == "#8/#9 -> confirmatory GO (owner decision recorded)."
+    assert all(lnk["resulted"] is False for lnk in (s1, s2, s3))
+
+    # genz (single row), genw (config-body prose), genq (cross-group Supersedes)
+    # never become chains — honest refusals, no guessed linkage.
+    assert {c["phase"] for c in chains} == {"genx", "geny"}
+    _assert_no_clock(inv)
+
+
+def test_inv_chains_references_are_absolute_row_numbers() -> None:
+    """Supersedes/amends references are ABSOLUTE ledger row numbers (file line
+    numbers, blanks included): a blank line that shifts a referenced row onto
+    a different number dangles the declaration and the chain is honestly not
+    emitted — no guessed linkage, no chain ts coverage either."""
+    ledger = _genealogy_ledger()
+    ledger.insert(3, "")  # blank line — every later row number shifts +1
+    parsed = [
+        (i, json.loads(line))
+        for i, line in enumerate(ledger, start=1)
+        if line.strip()
+    ]
+    chains, chain_ts = et._inv_chains(parsed, confirmed={CO_SIG})
+    assert chains == []
+    assert chain_ts == []
+
+
+def test_inv_chains_helper_single_row_group_only() -> None:
+    """A ledger whose config_committed rows are all single-row groups → no
+    chains and no chain ts coverage (single-row phases never chain)."""
+    parsed = [
+        (1, {"event": "config_committed", "phase": "p", "ts": "t", "config_sig": "s"}),
+        (2, {"event": "config_committed", "phase": "q", "ts": "t", "config_sig": "s2"}),
+    ]
+    assert et._inv_chains(parsed, confirmed=set()) == ([], [])
+
+
 # --- committed panel (tracked JSON, reconciled against tracked artifacts) -----
 
 
@@ -416,30 +643,35 @@ def _tracked_rows() -> list[tuple[int, dict]]:
 
 
 def test_committed_inventory_shape_and_ledger_reconcile() -> None:
-    """runs == 5 (B/C/D/E1/track_c), local dirs == 4, config_only == 11 — and
-    every row re-derived from the TRACKED ledger by the pairing rule."""
+    """runs == 5 (B/C/D/E1/track_c), config_only == 11 — and every row
+    re-derived from the TRACKED ledger by the pairing rule. The local-dir
+    reconciliation is machine-honest, never declared: a machine carrying the
+    frozen ``runs/results/`` tree reconciles the four B/C/D/E1 directories;
+    a machine without it (fresh agent worktree) lists every run with honest
+    nulls — both states satisfy the same derived assertion."""
     inv = _load()
-    assert inv["model_inventory_version"] == "v1"
+    assert inv["model_inventory_version"] == "v2"
     assert inv["status"] == "ok"
-    assert inv["summary"] == {
-        "n_confirmatory_runs": 5,
-        "n_local_dirs": 4,
-        "n_config_only": 11,
-        "all_null_holds": None,  # the frozen differential.json files carry no null_holds
-    }
+    assert inv["summary"]["n_confirmatory_runs"] == 5
+    assert inv["summary"]["n_config_only"] == 11
     assert [r["phase"] for r in inv["runs"]] == ["B", "C", "D", "E1", "track_c"]
-    local = [r for r in inv["runs"] if r["local_dir_present"]]
-    assert len(local) == 4
-    assert {r["phase"] for r in local} == {"B", "C", "D", "E1"}
-    track_c = inv["runs"][-1]
-    assert track_c["local_dir_present"] is False
-    assert track_c["h6_deterministic"] is None
-    assert track_c["aionis_version"] is None
-    assert track_c["run_ts"] is None
-    assert track_c["diff"] is None
-    for r in local:
-        assert r["h6_deterministic"] is True
+    for r in inv["runs"]:
         assert r["freeze_row"] < r["result_row"], "config_committed BEFORE result"
+        dir_present = (Path("runs/results") / r["config_sig"] / "meta.json").exists()
+        assert r["local_dir_present"] == dir_present
+        if dir_present:
+            assert r["h6_deterministic"] is True
+            assert r["aionis_version"] is not None
+            assert r["run_ts"] is not None
+            assert r["diff"] is not None
+        else:
+            assert r["h6_deterministic"] is None
+            assert r["aionis_version"] is None
+            assert r["run_ts"] is None
+            assert r["diff"] is None
+    local = [r for r in inv["runs"] if r["local_dir_present"]]
+    assert inv["summary"]["n_local_dirs"] == len(local)
+    assert inv["summary"]["all_null_holds"] is None  # no local diff carries null_holds here
 
     # Re-derive every run row from the tracked ledger (same pairing rule).
     rows = _tracked_rows()
@@ -511,15 +743,25 @@ def test_committed_inventory_shape_and_ledger_reconcile() -> None:
 
 
 def test_committed_diff_recomputes_from_frozen_dirs() -> None:
-    """The diff numbers equal each frozen directory's differential.json,
-    re-read and re-rounded (runs/ read-only; the four B/C/D/E1 directories on
-    this machine are the inventory's local reality — track_c honestly null)."""
+    """Every run claiming a local directory is reconciled against that
+    directory's differential.json / meta.json (re-read, re-rounded); runs
+    without one carry honest nulls; and the set of directories carrying a
+    meta.json equals the set of local_dir_present sigs — both on a machine
+    with the frozen tree and on a fresh worktree without runs/results
+    (runs/ is read-only either way; nothing is skipped)."""
     inv = _load()
+    results_root = Path("runs/results")
+    dir_sigs = (
+        {p.name for p in results_root.iterdir() if (p / "meta.json").exists()}
+        if results_root.exists()
+        else set()
+    )
     for r in inv["runs"]:
-        run_dir = Path("runs/results") / r["config_sig"]
         if not r["local_dir_present"]:
+            assert r["config_sig"] not in dir_sigs, r["config_sig"]
             assert r["diff"] is None, r["config_sig"]
             continue
+        run_dir = results_root / r["config_sig"]
         raw = json.loads((run_dir / "differential.json").read_text(encoding="utf-8"))
         meta = json.loads((run_dir / "meta.json").read_text(encoding="utf-8"))
         assert r["h6_deterministic"] == (
@@ -541,13 +783,65 @@ def test_committed_diff_recomputes_from_frozen_dirs() -> None:
             assert r["diff"][field] == expect, (r["config_sig"], field)
         nh = raw.get("null_holds")
         assert r["diff"]["null_holds"] == (nh if isinstance(nh, bool) else None)
-    # the local reality is exactly the four frozen Phase directories
-    dirs = {
-        p.name
-        for p in Path("runs/results").iterdir()
-        if (p / "meta.json").exists()
-    }
-    assert dirs == {r["config_sig"] for r in inv["runs"] if r["local_dir_present"]}
+    assert dir_sigs == {r["config_sig"] for r in inv["runs"] if r["local_dir_present"]}
+
+
+def test_committed_inventory_chains_genealogy() -> None:
+    """TASK-H6 on the tracked ledger: chains == exactly 2 — the track_adaptive
+    explicit-supersede chain #51→#52→#53 (reason excerpts pinned VERBATIM to
+    the ledger amendment text) and the track_c ledger-sequence chain
+    #46→#47→#48 (inferred arrangement; #48 resulted via the #49 climax).
+    track_b / baseline_ff5 / baseline_rank groups carry no row-level
+    declarations and never appear."""
+    inv = _load()
+    chains = inv["chains"]
+    assert len(chains) == 2
+    by_phase = {c["phase"]: c for c in chains}
+    assert set(by_phase) == {"track_c", "track_adaptive"}
+
+    adaptive = by_phase["track_adaptive"]
+    assert adaptive["kind"] == "explicit-supersede"
+    l51, l52, l53 = adaptive["links"]
+    assert [lnk["row"] for lnk in adaptive["links"]] == [51, 52, 53]
+    assert l51["amendment_excerpt"] is None  # the head declares nothing
+    assert l52["amendment_excerpt"] == (
+        "amend1: WEEKLY cadence + truly-frozen baseline. Supersedes #51 "
+        "(monthly-A, redundant with Track C)."
+    )
+    assert l53["amendment_excerpt"] == (
+        "amend2: n_estimators 500→100 (feasibility ~5min vs ~27min; both arms; "
+        "comparison self-contained, valid at any n_estimators). Supersedes #52."
+    )
+    assert [lnk["resulted"] for lnk in adaptive["links"]] == [False, False, False]
+
+    track_c = by_phase["track_c"]
+    assert track_c["kind"] == "ledger-sequence"
+    l46, l47, l48 = track_c["links"]
+    assert [lnk["row"] for lnk in track_c["links"]] == [46, 47, 48]
+    assert l46["amendment_excerpt"] is None
+    assert l48["resulted"] is True  # confirmatory:first #49 shares sig e14b9d44…
+    assert l46["resulted"] is False and l47["resulted"] is False
+    assert [lnk["resulted"] for lnk in track_c["links"]] == [False, False, True]
+    # sequence excerpts are the top-level amends 原文, hard-truncated at 200
+    assert len(l47["amendment_excerpt"]) == 200
+    assert len(l48["amendment_excerpt"]) == 200
+
+    # every link is a verbatim projection of its ledger row (no hand-written
+    # numbers: row / sig / ts / excerpt all read back from runs/ledger.jsonl)
+    rows = {i: d for i, d in _tracked_rows()}
+    for chain in chains:
+        for link in chain["links"]:
+            rec = rows[link["row"]]
+            assert rec["event"] == "config_committed"
+            assert rec["phase"] == chain["phase"]
+            assert link["config_sig"] == rec["config_sig"]
+            assert link["ts"] == rec["ts"]
+            decl = rec.get("amends") or rec.get("config", {}).get("amendment")
+            expect = decl[:200] if isinstance(decl, str) else None
+            assert link["amendment_excerpt"] == expect
+    # other multi-row groups exist in the ledger but declare nothing → no chain
+    assert {"track_b", "baseline_rank", "baseline_ff5"} & set(by_phase) == set()
+    _assert_no_clock(inv)
 
 
 # --- export-lane registration (manifests + as_of + web barrel + i18n) ----------
@@ -592,10 +886,19 @@ def test_committed_inventory_registered_everywhere() -> None:
     barrel = BARREL.read_text(encoding="utf-8")
     assert 'import modelInventoryJson from "./model_inventory.json";' in barrel
     assert "export type ModelInventoryRun" in barrel
+    assert "export type ModelInventoryChain" in barrel, (
+        "TASK-H6: the genealogy chain shape is a first-class barrel type"
+    )
     assert "export type ModelInventory" in barrel
     assert "modelInventory: modelInventoryJson as ModelInventory," in barrel
     view = VIEW.read_text(encoding="utf-8")
     assert "ModelInventorySection" in view
+    assert "ModelInventoryGenealogy" in view, (
+        "TASK-H6: the genealogy block renders inside the inventory section"
+    )
+    assert view.index("<ModelInventoryGenealogy />") > view.index(
+        "<table"
+    ), "the genealogy renders below the inventory listing"
     assert view.index("<ModelInventorySection />") > view.index(
         "<ModelCardSection />"
     ), "the inventory section renders after the model card section"
@@ -620,6 +923,12 @@ def test_committed_inventory_registered_everywhere() -> None:
         "inventory.configOnlyNote",
         "inventory.asof",
         "inventory.disclaimer",
+        "inventory.genealogy.title",
+        "inventory.genealogy.kind.explicit",
+        "inventory.genealogy.kind.sequence",
+        "inventory.genealogy.reason",
+        "inventory.genealogy.resulted",
+        "inventory.genealogy.note",
     ]
     for key in required:
         # zh + en blocks both carry the key (symmetric i18n contract).

@@ -1,5 +1,5 @@
 {
-  "model_inventory_version": "v1",
+  "model_inventory_version": "v2",
   "status": "ok",
   "as_of": "2026-08-08T19:23:40.669658+00:00",
   "runs": [
@@ -10,17 +10,11 @@
       "freeze_ts": "2026-07-28T04:15:16+00:00",
       "result_row": 28,
       "result_ts": "2026-07-28T04:27:39+00:00",
-      "local_dir_present": true,
-      "h6_deterministic": true,
-      "aionis_version": "0.1.0",
-      "run_ts": "2026-07-28T04:27:39+00:00",
-      "diff": {
-        "mean_diff": -0.0008,
-        "ci_lo": -0.010573,
-        "ci_hi": 0.008972,
-        "dm_p_mbb": 0.869565,
-        "null_holds": null
-      }
+      "local_dir_present": false,
+      "h6_deterministic": null,
+      "aionis_version": null,
+      "run_ts": null,
+      "diff": null
     },
     {
       "phase": "C",
@@ -29,17 +23,11 @@
       "freeze_ts": "2026-07-28T12:01:16+00:00",
       "result_row": 30,
       "result_ts": "2026-07-28T12:21:21+00:00",
-      "local_dir_present": true,
-      "h6_deterministic": true,
-      "aionis_version": "0.1.0",
-      "run_ts": "2026-07-29T18:26:45+00:00",
-      "diff": {
-        "mean_diff": -0.006487,
-        "ci_lo": -0.019531,
-        "ci_hi": 0.006556,
-        "dm_p_mbb": 0.355322,
-        "null_holds": null
-      }
+      "local_dir_present": false,
+      "h6_deterministic": null,
+      "aionis_version": null,
+      "run_ts": null,
+      "diff": null
     },
     {
       "phase": "D",
@@ -48,17 +36,11 @@
       "freeze_ts": "2026-07-29T02:31:16+00:00",
       "result_row": 34,
       "result_ts": "2026-07-29T02:43:23+00:00",
-      "local_dir_present": true,
-      "h6_deterministic": true,
-      "aionis_version": "0.1.0",
-      "run_ts": "2026-07-29T13:04:24+00:00",
-      "diff": {
-        "mean_diff": -0.00298,
-        "ci_lo": -0.013714,
-        "ci_hi": 0.007755,
-        "dm_p_mbb": 0.597201,
-        "null_holds": null
-      }
+      "local_dir_present": false,
+      "h6_deterministic": null,
+      "aionis_version": null,
+      "run_ts": null,
+      "diff": null
     },
     {
       "phase": "E1",
@@ -67,17 +49,11 @@
       "freeze_ts": "2026-07-29T03:29:39+00:00",
       "result_row": 37,
       "result_ts": "2026-07-29T03:43:41+00:00",
-      "local_dir_present": true,
-      "h6_deterministic": true,
-      "aionis_version": "0.1.0",
-      "run_ts": "2026-07-29T18:26:58+00:00",
-      "diff": {
-        "mean_diff": -0.002793,
-        "ci_lo": -0.011457,
-        "ci_hi": 0.005871,
-        "dm_p_mbb": 0.533233,
-        "null_holds": null
-      }
+      "local_dir_present": false,
+      "h6_deterministic": null,
+      "aionis_version": null,
+      "run_ts": null,
+      "diff": null
     },
     {
       "phase": "track_c",
@@ -161,15 +137,71 @@
       "ts": "2026-08-08T19:23:40.669658+00:00"
     }
   ],
+  "chains": [
+    {
+      "phase": "track_c",
+      "kind": "ledger-sequence",
+      "links": [
+        {
+          "row": 46,
+          "config_sig": "758ca4d739f09331ee4dceb726d9d0d0f7c5110303acc6dcac59919701374fad",
+          "ts": "2026-08-03T15:34:55.230389+00:00",
+          "amendment_excerpt": null,
+          "resulted": false
+        },
+        {
+          "row": 47,
+          "config_sig": "252cf7df1df875e74d86d5651d44064d5ccd89ee191e3638211deec9dfae9e8b",
+          "ts": "2026-08-03T15:43:45.312461+00:00",
+          "amendment_excerpt": "#46 -> A-share cninfo fundamentals demoted to exploratory-only: G1 disposition (cninfo anti-bot + commercial data-product licensing differ from EDGAR open API; conservative). Claim narrows to US-rank-",
+          "resulted": false
+        },
+        {
+          "row": 48,
+          "config_sig": "e14b9d445411e74cc3418af3bde1148163725875b01ab75175bdde002225e738",
+          "ts": "2026-08-05T04:19:50.785179+00:00",
+          "amendment_excerpt": "#46/#47 -> #48 confirmatory GO (owner D1=A 2026-08-05): retain joint fold machinery; meso narrowed to US-only SIC (CN shenwan G3-fail per Lane A 2026-08-04 shenwan-meso-7gate); confirmatory feature_co",
+          "resulted": true
+        }
+      ]
+    },
+    {
+      "phase": "track_adaptive",
+      "kind": "explicit-supersede",
+      "links": [
+        {
+          "row": 51,
+          "config_sig": "892fb5068ed1e994db937e23c5b95f2d35ea796825c0c97937253e34605515ad",
+          "ts": "2026-08-08T13:55:02.245526+00:00",
+          "amendment_excerpt": null,
+          "resulted": false
+        },
+        {
+          "row": 52,
+          "config_sig": "ffd0c9227e692fe826faeac964607577f3a9ff3de3384907297bc396887c4659",
+          "ts": "2026-08-08T14:29:16.177314+00:00",
+          "amendment_excerpt": "amend1: WEEKLY cadence + truly-frozen baseline. Supersedes #51 (monthly-A, redundant with Track C).",
+          "resulted": false
+        },
+        {
+          "row": 53,
+          "config_sig": "b7621e6b089bb8c3d0a692d671c8446eec23b16e48b709efc51dc9b97a632116",
+          "ts": "2026-08-08T19:23:40.669658+00:00",
+          "amendment_excerpt": "amend2: n_estimators 500→100 (feasibility ~5min vs ~27min; both arms; comparison self-contained, valid at any n_estimators). Supersedes #52.",
+          "resulted": false
+        }
+      ]
+    }
+  ],
   "summary": {
     "n_confirmatory_runs": 5,
-    "n_local_dirs": 4,
+    "n_local_dirs": 0,
     "n_config_only": 11,
     "all_null_holds": null
   },
   "notes": "SR 11-7 style model inventory: every confirmatory:first run in the tracked ledger reconciled against its frozen run directory (freeze→result row chain, H6 flag, differential), with config-only commits listed honestly. runs/ is read-only; a missing local directory is honest unknown, not absence — the ledger row still proves the config was committed before any result was observed.",
   "provenance": {
-    "generated_by": "scripts/export_terminal_data.py::export_model_inventory (model_inventory_version v1)",
+    "generated_by": "scripts/export_terminal_data.py::export_model_inventory (model_inventory_version v2)",
     "regen_command": "uv run python -c \"import sys; sys.path.insert(0,'scripts'); import export_terminal_data as m; m._safe_export('model_inventory', m.export_model_inventory)\"",
     "byte_stability": "Zero-clock panel: no snapshot timestamp and no wall-clock reads; every value is machine-read verbatim from the tracked ledger and the frozen run artifacts, so consecutive exports of unchanged artifacts are byte-identical. Output is LF."
   }

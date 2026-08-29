@@ -295,6 +295,13 @@ export const dict = {
     "inventory.asof": "覆盖账本行截至",
     "inventory.disclaimer":
       "清单为展示层治理记录——runs/ 只读；无本地目录=诚实未知而非不存在；非投资建议。",
+    "inventory.genealogy.title": "建模决策谱系",
+    "inventory.genealogy.kind.explicit": "显式取代",
+    "inventory.genealogy.kind.sequence": "账本序演化",
+    "inventory.genealogy.reason": "取代理由（ledger amendment 原文）",
+    "inventory.genealogy.resulted": "该配置已有 confirmatory 结果或本地冻结目录",
+    "inventory.genealogy.note":
+      "显式取代 = ledger amendment 原文声明（Supersedes #NN），取代理由挂在被取代行下；账本序演化 = 按账本序推断的排列，非显式取代声明。emerald 行 = 该配置已有 confirmatory 结果或本地冻结目录。",
     "nav.calibration": "校准可靠性",
     "calibration.title": "校准可靠性 / 自校正显示",
     "calibration.window": "leakage-safe · walk-forward 扩窗重拟合 Platt 显示映射",
@@ -1613,6 +1620,13 @@ export const dict = {
     "inventory.asof": "Ledger rows covered through",
     "inventory.disclaimer":
       "Display-layer governance record — runs/ is read-only; a missing local directory is honest unknown, not absence; not investment advice.",
+    "inventory.genealogy.title": "Modeling decision genealogy",
+    "inventory.genealogy.kind.explicit": "Explicit supersede",
+    "inventory.genealogy.kind.sequence": "Ledger-order evolution",
+    "inventory.genealogy.reason": "Supersede reason (verbatim ledger amendment)",
+    "inventory.genealogy.resulted": "This config has a confirmatory result or a local frozen directory",
+    "inventory.genealogy.note":
+      "Explicit supersede = a verbatim ledger amendment declaration (Supersedes #NN), with the reason quoted under the row it replaced; ledger-order evolution = an inferred ledger-order arrangement, NOT an explicit supersession claim. Emerald rows have a confirmatory result or a local frozen directory.",
     "nav.calibration": "Calibration",
     "calibration.title": "Calibration reliability / self-correcting display",
     "calibration.window": "leakage-safe · walk-forward expanding-window Platt display refit",

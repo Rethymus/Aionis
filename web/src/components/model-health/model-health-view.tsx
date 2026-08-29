@@ -11,9 +11,11 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
-import { aionis, type ModelCard, type ModelInventory } from "@/data/aionis";
+import { aionis, type ModelCard, type ModelInventory, type ModelInventoryChain } from "@/data/aionis";
 import {
+  ArrowRightIcon,
   FileTextIcon,
+  GitBranchIcon,
   ListIcon,
   ScrollTextIcon,
   ShieldAlertIcon,
@@ -461,6 +463,87 @@ function H6Cell({ value }: { value: boolean | null }) {
   );
 }
 
+// --- modeling decision genealogy (TASK-H6) ------------------------------------
+//
+// Rendered below the inventory listing: every supersession chain the exporter
+// derived from the tracked ledger, one block per chain — phase title, kind
+// badge, and the linked row row `#46 → #47 → #48`. Explicit chains hang each
+// supersede reason (verbatim ledger amendment text) under the row it replaced;
+// ledger-sequence chains carry no reason quotes (an inferred arrangement, not
+// an explicit supersession claim — the honest distinction lives in the note).
+// Emerald chips reuse the section's existing resulted semantics; amber flags
+// the inferred kind (caution, not a direction color).
+
+const GENEALOGY_KIND_STYLE: Record<ModelInventoryChain["kind"], string> = {
+  "explicit-supersede": "border-sky-500/40 bg-sky-500/10 text-sky-700 dark:text-sky-400",
+  "ledger-sequence": "border-amber-500/40 bg-amber-500/10 text-amber-700 dark:text-amber-400",
+};
+const GENEALOGY_RESULTED_STYLE =
+  "border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400";
+
+function ModelInventoryGenealogy() {
+  const { t } = useI18n();
+  const chains = aionis.modelInventory?.chains ?? [];
+  if (chains.length === 0) return null;
+  return (
+    <div className="space-y-2">
+      <p className="flex items-center gap-1.5 text-xs font-medium">
+        <GitBranchIcon className="size-3.5" /> {t("inventory.genealogy.title")}
+      </p>
+      {chains.map((chain) => (
+        <div
+          key={chain.phase}
+          className="space-y-1.5 rounded-md border border-dashed p-3 text-xs"
+        >
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="font-medium">{chain.phase}</span>
+            <Badge variant="outline" className={GENEALOGY_KIND_STYLE[chain.kind]}>
+              {chain.kind === "explicit-supersede"
+                ? t("inventory.genealogy.kind.explicit")
+                : t("inventory.genealogy.kind.sequence")}
+            </Badge>
+          </div>
+          <div className="flex flex-wrap items-start gap-x-1.5 gap-y-2">
+            {chain.links.map((link, i) => {
+              const reason =
+                chain.kind === "explicit-supersede"
+                  ? (chain.links[i + 1]?.amendment_excerpt ?? null)
+                  : null;
+              return (
+                <span key={link.row} className="flex flex-col items-start gap-1">
+                  <span className="flex items-center gap-1.5">
+                    {i > 0 ? (
+                      <ArrowRightIcon className="size-3 shrink-0 text-muted-foreground" />
+                    ) : null}
+                    <code
+                      title={t("inventory.genealogy.resulted")}
+                      className={cn(
+                        "rounded border px-1.5 py-0.5 font-mono tabular-nums",
+                        link.resulted && GENEALOGY_RESULTED_STYLE
+                      )}
+                    >
+                      #{link.row}
+                    </code>
+                  </span>
+                  {reason ? (
+                    <span className="block max-w-[22rem] border-l-2 border-l-muted-foreground/30 pl-2 text-[11px] text-muted-foreground">
+                      <span className="block font-medium">
+                        {t("inventory.genealogy.reason")}
+                      </span>
+                      {reason}
+                    </span>
+                  ) : null}
+                </span>
+              );
+            })}
+          </div>
+        </div>
+      ))}
+      <p className="text-xs text-muted-foreground">{t("inventory.genealogy.note")}</p>
+    </div>
+  );
+}
+
 function ModelInventorySection() {
   const { t } = useI18n();
   const inv: ModelInventory | undefined = aionis.modelInventory;
@@ -550,6 +633,8 @@ function ModelInventorySection() {
           </summary>
           <p className="mt-1 text-muted-foreground">{t("inventory.configOnlyNote")}</p>
         </details>
+
+        <ModelInventoryGenealogy />
 
         <p className="flex items-center gap-1.5 text-xs text-amber-700 dark:text-amber-400">
           <ScrollTextIcon className="size-3.5 shrink-0" />
