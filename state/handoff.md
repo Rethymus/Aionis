@@ -8,6 +8,16 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-29 (tt) 轮㊟：可追溯金融建模落地——model_card 机器可读卡片(文献印证;单进程;全套绿)
+
+**编排**：业主命题"实现真正可追溯可溯源的金融建模,调研大量资料印证而非凭空想象"→ 主线 arXiv API 实检三面(**Model Cards** 2018 Mitchell/32K 卡系统分析 2024/OWFM 治理 2026;**Datasheets** 2018 Gebru;**NeurIPS 复现程序** 2020 Pineau;**AI-BOM 完整性测量** 2026/LLM 血统追踪 2026/FAIR-HEP 2022)+B 级领域知识(SR 11-7/FAIR 2016/Tactical Investment Algorithms 2019,分级声明)→ 冻结产物实测(config.json 全字段恰为卡片所需)→ 设计文档+H4 任务书(`f8ceff7`)→ 单 agent 垂直切片。
+
+- **H4（`945f458`→`0b44b70`,9 文件 +1734）**:`export_model_card()` 七节机器可读卡(identity/intended_use/data/model/evaluation_protocol/results/governance/provenance)——全部机器读自工件零手写:冻结 config.json(9 特征列/horizon=21/n_splits=5/embargo=21/PurgedGroupKFold scheme/frozen_params 全超参含 seeds 全 0+n_jobs=1/end_lag/versions lightgbm 4.7.0+purgedcv 0.1.2+arch 8.0.0/输入 sha×4+uv_lock)+meta.json(config_sig/h6=true/aionis_version)+ledger freeze→result 行(行号+行 sha)+metrics 实值逐字(results 节)+预注册文档 sha;uv_lock 双 sha+match 标志;四注册点+barrel+dict `modelcard.*`+/model-health 新节(空态表头仍渲染);11 契约测试零 skip;双跑 sha 一致 `78f9563a…`。
+- **两处裁决(主线采信,均有实测证据)**:① 任务书写 track_c,但 **track_c 结果行 #49 无本地 runs/results 目录**;设计稿实测的 schema 唯一匹配 Phase B run(17245a75,ledger #27→#28)→ 实现为 **ledger confirmatory 行时间序扫描、首个可本地解析者**(零目录名硬编码),results 节仍逐字嵌 track_c 头条+trace 标签。② **uv_lock 合法漂移**(冻结 e045a023→当前 5c5cff1c,08-11 blob)→ 默认严格 raise(测试钉死)+ `allow_uv_lock_drift=True` 显式披露路径,卡片双 sha+match=false 上墙。**主线验证时严格路径当场 raise=自校验按设计工作**;已提交面板为披露模式产物(正确状态)。
+- **教训(工具链)**:`pytest | tail` 管道吞真实退出码——本轮由此漏判一次失败;改用无管道重跑确证。下游工件因 H4 面板变更按正典重生成(atlas 不变 dc2101e6/dossier `0e2e9232`/shelf 重钉)。
+- **验证**：主线全套 pytest exit 0(无管道确证)+ ruff 净 + tsc/eslint 0 + build 1,503 页 + 目视终验(/model-health 模型卡节:模型卡/17245a75/lightgbm 4.7.0/e14b9d44/NULL/PurgedGroupKFold/uv_lock 全在墙,h1=1,零垃圾)。**内务**：wh4 清(runs junction 先摘+真 node_modules 随树删)、主仓冻结产物完好(4 目录/内容未动)、分支 cherry 全 `-` 删、任务书归档。**边界**：display/export 派生;runs/ 只读;冻结产物零触碰。文献证据:`reports/design/2026-08-29-model-card-design.md`(A/B 分级)。待业主：E3 契约冻结+GO;模型卡 v2(多 run 清单化=SR 11-7 inventory 全集)。
+
+
 ## 2026-08-29 (uu) 轮㉞：证据工件上架 /shelf + 循环哈希依赖打破（单进程；全套绿）
 
 **编排**：业主确认超长期任务+单进程纪律 → 选点=溯源链最后一公里(两证据工件终端不可发现)→ H3 任务书(`2ad5a5d`)→ 单 agent 交付(`a71e1e3`→cherry)→ **集成接缝两连修(主线正典)**。
