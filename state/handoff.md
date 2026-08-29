@@ -8,6 +8,17 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-29 (xx) 轮㊳：例行新鲜度扫荡 + 导出中止缺陷修复（model_card 严格模式误伤日常 lane;全套绿）
+
+**编排**：业主授权继续 → 主线漂移探针(多数 1-2 天,form8k/13G 3d)→ 全套扫荡链(Phase1 十步+Phase2 十步含 form4 重步+衍生+全量导出,单进程串行 ~50min)→ **两闸门发现+修复** → 下游正典重生成+全套验证。
+
+- **扫荡成果**:13D/13G 推进至 08-28(新申报 AH Bio Fund II/AGARWAL AMIT MOHAN 入库)、form4 1,525 笔(+61)、PTR 全量复核一致(2,811/94)、form8k 209/def14a 1,430/form_d 11,163/ipo 1,105、全量导出 55 文件。
+- **闸门发现①(model_card 中止 main())**:全量导出在 model_card 处 ValueError 中止(uv_lock 合法漂移 × 严格模式),而 `_safe_export` 只吞 FileNotFoundError——**7251 行之后的全部导出静默跳过**(lineage/knowledge_shelf/data_health/api_catalog 等),契约测试随即拦下 lineage bridges 与新面板的失配(多 7 桥=旧缓存状态残影)。修复:main() 的 model_card 调用改**披露模式**(allow_uv_lock_drift=True,H4 裁决的日常 lane 语义;严格模式保留给独立校验调用),注释记录本次事故;完整重跑导出 55 文件全成功,lineage 新鲜(153 节点/859 边/34 桥)且契约通过。
+- **闸门发现②(ledger append-only 重钉)**:抓取器追加 1 行 data_ingest → 摘要 83fa2778→8136b09f;git diff 复核纯追加(+1/0 删改)后按协议重钉测试锚。
+- **下游正典重生成**:atlas-claim `51755c92`(metrics latest_month 推进)/dossier `aab73c4a`(data_health/api_catalog/账本行更新)/shelf 重钉。**验证**:契约 13 过 + 全套 pytest **exit 0(无管道)** + ruff 净 + tsc 0 + build 1,503 页(模型清单/谱系/模型卡三新面全在墙)。**工具链注记**:Mimosa 钩子对 gitignored web/out 构建产物的 SSRF 误报转为确定性拦截(build 后哈希变化)——**新收尾定律:build→目视→摘 web/Aionis 链接→删 out→commit**(本轮执行;out 可随时 pnpm build 再生)。
+- **内务**：任务书无(本轮无 agent);runs/ledger 纯追加已复核重钉;冻结产物零触碰。**边界**：data/display lane。待业主：E3 契约冻结+GO;下轮候选=谱系 v3/vintage 探针(需门)。
+
+
 ## 2026-08-29 (ww) 轮㊲：建模决策谱系图——显式取代链解析 + 账本序演化的诚实区分（单进程；全套绿）
 
 **编排**：业主授权继续 → 选点=H5 清单的 11 条 config-only 背后的**决策链**(ledger amendment 原文实测锚点:#52 "Supersedes #51 (monthly-A, redundant with Track C)";#53 "n_estimators 500→100 (feasibility ~5min vs ~27min)")→ H6 任务书(`cd54419`)→ 单 agent 交付(`13cb648`)→ cherry-pick+主线重生成+全套验证。

@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-08-29) ㊳ 例行新鲜度扫荡 + 导出中止缺陷修复轮（单进程；全套绿）：**
+  超长期日常。**扫荡**：Phase1 十步+Phase2 十步(含 form4 重步)+衍生+全量导出——13D/13G→08-28(新申报入库)、form4 1,525(+61)、PTR 复核一致；**闸门发现①**：全量导出在 model_card 处 ValueError **中止 main()**(`_safe_export` 只吞 FileNotFound,uv_lock 漂移×严格模式),7251 行后全部静默跳过,契约测试拦下 lineage 失配(旧缓存残影多 7 桥)→ 修:main() 改**披露模式**(H4 裁决的日常 lane 语义;严格模式保留独立校验),重跑 55 文件全成功,lineage 新鲜(153/859/34)契约过；**闸门发现②**：ledger +1 行 data_ingest,diff 复核纯追加后重钉(83fa2778→8136b09f)。**下游正典重生成**:atlas `51755c92`/dossier `aab73c4a`/shelf。**验证**：全套 pytest exit 0(无管道)+ruff/tsc 0+build 1,503 页+三新面在墙。**新收尾定律**：build→目视→摘 web/Aionis 链接→删 out→commit(Mimosa 对 out 构建产物的 SSRF 误报已转确定性拦截;out 可随时再生)。**边界**：data/display lane;冻结产物零触碰。待业主：E3 契约冻结+GO。
+
 - **active (2026-08-29) ㊲ 建模决策谱系图轮：显式取代链解析 + 账本序演化的诚实区分（单进程；全套绿）：**
   业主授权继续。**选点**：H5 清单 11 条 config-only 背后的**决策链**(ledger 实测锚点:#52 "Supersedes #51 (monthly-A, redundant with Track C)";#53 "n_estimators 500→100 (feasibility ~5min vs ~27min)")。**H6**(`13cb648`,6 文件):`export_model_inventory()` 增 `chains`——按 phase 分组账本序,组内非首行须声明同组更早行引用(`Supersedes #NN` 正则/顶层 amends)→ **explicit-supersede**(理由原文 200ch)与 **ledger-sequence**(推断性,诚实标注)两 kind;真实面板 chains 恰 2 块:track_adaptive 显式链(reason 全文上墙)+track_c 账本序演化(#48 resulted=true);v2 形状;渲染链式行+kind 徽章(sky/amber)+reason blockquote;契约 31 个(新 4)零 skip;双跑 sha `87c19c3a…` 一致。**集成口径**：wh6 无 runs/ → 其 JSON local-dir 字段诚实 null → **主线重生成即恢复对账**(B/C/D/E1 true);agent 全套失败经 stash 对照=wh6 环境性非引入。**验证**：全套 pytest exit 0(无管道)+ruff/tsc 0+build 1,503 页+目视终验(谱系 reason 原文上墙)。**内务**：wh6 清、分支删、归档。待业主：E3 契约冻结+GO;谱系 v3(链挂 diff 与档案互链)与 vintage 探针。
 
