@@ -491,7 +491,7 @@ def export_metrics(latest: str, n_total: int) -> None:
     never renders empty.
     """
     def _num(v: object) -> float | None:
-        return float(v) if isinstance(v, (int, float)) else None
+        return float(v) if isinstance(v, int | float) else None
 
     climax = _find_climax_row()
     if climax is not None:
@@ -503,12 +503,12 @@ def export_metrics(latest: str, n_total: int) -> None:
         n_months = _num(d.get("n_months_ic") or (cic.get("n") if isinstance(cic, dict) else None))
         sig_full = d.get("config_sig") or ""
         payload = {
-            "combined_ic": round(mean, 4) if isinstance(mean, (int, float)) else -0.0088,
-            "p": round(_num(cic.get("p_hac")), 3) if isinstance(cic, dict) and isinstance(cic.get("p_hac"), (int, float)) else 0.484,
+            "combined_ic": round(mean, 4) if isinstance(mean, int | float) else -0.0088,
+            "p": round(_num(cic.get("p_hac")), 3) if isinstance(cic, dict) and isinstance(cic.get("p_hac"), int | float) else 0.484,
             "n_months": int(n_months) if n_months is not None else 71,
             "ci_lo": round(mean - ci_half, 4) if None not in (mean, ci_half) else -0.034,
             "ci_hi": round(mean + ci_half, 4) if None not in (mean, ci_half) else 0.016,
-            "verdict": "NULL" if (isinstance(mean, (int, float)) and mean <= 0) else "NULL",
+            "verdict": "NULL" if (isinstance(mean, int | float) and mean <= 0) else "NULL",
             "jt_look1": jt.get("look1_verdict", "NOT_EQUIVALENT"),
             "h6": "PASS" if d.get("H6_deterministic") else "FAIL",
             "sesoi": 0.010,
@@ -1595,12 +1595,12 @@ def _apply_pct(rows: list[dict]) -> list[dict]:
             acc = ""
         e = pct_cache.get(acc) or {}
         now = e.get("pct_now")
-        if now is not None and not (isinstance(now, (int, float)) and 0.0 <= now <= 100.0):
+        if now is not None and not (isinstance(now, int | float) and 0.0 <= now <= 100.0):
             now = None
         prev = e.get("pct_prev")
         is_amd = bool(r.get("is_amendment")) or str(r.get("form", "")).endswith("/A")
         if prev is not None and (
-            not is_amd or not (isinstance(prev, (int, float)) and 0.0 <= prev <= 100.0)
+            not is_amd or not (isinstance(prev, int | float) and 0.0 <= prev <= 100.0)
         ):
             prev = None
         r["pct_now"] = now
@@ -2249,7 +2249,7 @@ def export_market_context() -> None:
     from aionis.eval.portfolio_risk import (
         summarize as risk_summarize,
     )
-    _ew_returns = [m["ret"] for m in market_series if isinstance(m.get("ret"), (int, float))]
+    _ew_returns = [m["ret"] for m in market_series if isinstance(m.get("ret"), int | float)]
     risk_json = (
         risk_summary_to_jsonable(risk_summarize(_ew_returns, periods_per_year=12))
         if len(_ew_returns) >= 12
@@ -2469,14 +2469,14 @@ def export_ledger_audit() -> None:
             cic = row.get("combined_ic")
             if isinstance(cic, dict) and "mean" in cic:
                 p_hac = cic.get("p_hac")
-                p_str = f"{p_hac:.3f}" if isinstance(p_hac, (int, float)) else "?"
+                p_str = f"{p_hac:.3f}" if isinstance(p_hac, int | float) else "?"
                 metric = f"combined_IC={cic['mean']:.4f} (p={p_str})"
                 jt = row.get("jt_gate") or {}
                 look1 = jt.get("look1_verdict")
                 verdict = look1 or verdict
-            elif isinstance(cic, (int, float)):
+            elif isinstance(cic, int | float):
                 metric = f"combined_IC={cic:.4f}"
-            elif isinstance(row.get("mean_diff"), (int, float)):
+            elif isinstance(row.get("mean_diff"), int | float):
                 metric = f"mean_diff={row['mean_diff']:.4f}"
         h6 = row.get("H6_deterministic")
         entries.append(
@@ -2503,6 +2503,382 @@ def export_ledger_audit() -> None:
         ),
     }
     (WEB / "ledger_audit.json").write_text(json.dumps(_stamp(payload), indent=2, default=str))
+
+
+# --- model card (machine-readable card of the frozen confirmatory model) ------
+#
+# TASK-H4: the frozen modeling metadata (feature table, hyperparameters, seeds,
+# CV scheme, library versions, input hashes, ledger chain) is scattered across
+# gitignored runs/results/<sig>/ artifacts; the card lifts it into ONE
+# machine-readable, hash-pinned, browser-renderable document aligned with the
+# model-card / datasheets reporting tradition (design:
+# reports/design/2026-08-29-model-card-design.md).
+
+MODEL_CARD_VERSION = "v1"
+
+# Where the card's frozen artifacts live (the confirmatory run dirs, named by
+# their own config_sig — never hardcoded, always resolved via the ledger).
+_CARD_RESULTS_ROOT = Path("runs/results")
+# The pre-registered claim document the intended_use section cites (content
+# sha — the doc itself is the claim source of record).
+_CARD_PREREG_DOC = "docs/track-c-preregistration.md"
+# Headline fields embedded VERBATIM from metrics.json (byte-identical values;
+# the card never recomputes a result).
+_CARD_RESULT_FIELDS = (
+    "combined_ic",
+    "ci_lo",
+    "ci_hi",
+    "p",
+    "n_months",
+    "verdict",
+    "sesoi",
+    "config_sig_short",
+    "ledger_row",
+)
+# Determinism-relevant frozen_params lifted into model.determinism (H6: all
+# seeds pinned, single-threaded). Absent keys are honest nulls.
+_CARD_DETERMINISM_KEYS = (
+    "random_state",
+    "bagging_seed",
+    "feature_fraction_seed",
+    "drop_seed",
+    "n_jobs",
+)
+
+
+def _sha256_file_raw(path: Path) -> str:
+    """sha256 over the file's raw bytes (run artifacts, written once)."""
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _sha256_file_lf(path: Path) -> str:
+    """sha256 over the file's canonical LF bytes (git-blob form).
+
+    Tracked text files can be re-checked-out with CRLF on Windows worktrees
+    (the same false-positive class as the ledger sha pins); normalizing to LF
+    compares against the blob form every freeze-time hash was computed on.
+    """
+    return hashlib.sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
+
+
+def _sha256_line(line: str) -> str:
+    """sha256 over one raw ledger line's text (export_research_dossier convention)."""
+    return hashlib.sha256(line.encode("utf-8")).hexdigest()
+
+
+def export_model_card(*, allow_uv_lock_drift: bool = False) -> None:
+    """Export ``model_card.json`` — the frozen confirmatory model's card.
+
+    Byte-stable, zero-clock panel (no ``snapshot_ts``, no ``now()``): every
+    value is machine-read verbatim from pinned artifacts, so consecutive
+    exports of unchanged artifacts are byte-identical. Output is LF.
+
+    Run resolution (no hardcoded directory name): scan the tracked ledger's
+    ``confirmatory:first`` rows in chronological order and take the first whose
+    ``config_sig`` resolves to a local ``runs/results/<sig>/meta.json`` whose
+    own ``config_sig`` equals the ledger sig (mismatch = wrong/corrupted dir →
+    raise). Locally absent artifacts (fresh CI) → ``FileNotFoundError`` so
+    ``_safe_export`` skips and the tracked JSON retains its last committed
+    value. The results section always embeds the tracked headline
+    ``metrics.json`` verbatim — its own ``config_sig_short``/``ledger_row``
+    fields are the embedded values' trace labels.
+
+    Self-checks: (a) ledger sig vs ``meta.json.config_sig`` — raise on
+    mismatch; (b) frozen ``uv_lock_sha256`` vs the repo ``uv.lock`` recomputed
+    sha — raise on drift unless ``allow_uv_lock_drift=True`` (a deliberate,
+    disclosed regeneration; the card then carries both hashes + a drift note).
+    Regenerate via the canonical one-liner (see provenance.regen_command in
+    the committed card for the exact string).
+    """
+    rows = _read_ledger_rows()
+    if not rows:
+        raise FileNotFoundError(
+            "runs/ledger.jsonl (tracked ledger absent; tracked JSON retains "
+            "last-committed value)"
+        )
+    ledger_lines = Path("runs/ledger.jsonl").read_text(encoding="utf-8").splitlines()
+
+    # --- resolve the confirmatory run: first result row with local artifacts --
+    result_lineno: int | None = None
+    result_rec: dict | None = None
+    sig: str | None = None
+    run_dir: Path | None = None
+    for lineno, rec in rows:
+        if rec.get("event") != "confirmatory:first":
+            continue
+        cand_sig = str(rec.get("config_sig") or "")
+        if not cand_sig:
+            continue
+        cand_dir = _CARD_RESULTS_ROOT / cand_sig
+        if not (cand_dir / "meta.json").exists():
+            continue  # artifacts not present locally — keep scanning
+        result_lineno, result_rec, sig, run_dir = lineno, rec, cand_sig, cand_dir
+        break
+    if sig is None or run_dir is None or result_rec is None or result_lineno is None:
+        raise FileNotFoundError(
+            f"{_CARD_RESULTS_ROOT}/<confirmatory config_sig>/ (no confirmatory "
+            "ledger row's frozen artifacts present locally; tracked JSON "
+            "retains last-committed value)"
+        )
+
+    # --- self-check (a): the directory must BE this sig's run -----------------
+    meta_path = run_dir / "meta.json"
+    meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    if meta.get("config_sig") != sig:
+        raise ValueError(
+            f"model card: {meta_path} config_sig={meta.get('config_sig')!r} != "
+            f"ledger confirmatory sig {sig!r} — wrong/corrupted run directory"
+        )
+    cfg_path = run_dir / "config.json"
+    cfg = json.loads(cfg_path.read_text(encoding="utf-8"))  # missing → SKIP
+
+    # --- results: verbatim headline embed (its own trace labels ride along) ---
+    metrics_path = WEB / "metrics.json"
+    metrics = json.loads(metrics_path.read_text(encoding="utf-8"))
+    results = {field: metrics.get(field) for field in _CARD_RESULT_FIELDS}
+
+    # --- self-check (b): frozen uv_lock sha vs the repo's current lock -------
+    frozen_uv = cfg.get("uv_lock_sha256")
+    uv_current = _sha256_file_lf(Path("uv.lock"))
+    uv_match = frozen_uv == uv_current if isinstance(frozen_uv, str) else None
+    if uv_match is False and not allow_uv_lock_drift:
+        raise ValueError(
+            f"model card: uv.lock recomputed sha256 {uv_current} != frozen "
+            f"config uv_lock_sha256 {frozen_uv} — dependency lock drifted since "
+            "the freeze; regenerate with allow_uv_lock_drift=True to disclose "
+            "the drift explicitly"
+        )
+
+    prereg_sha = _sha256_file_lf(Path(_CARD_PREREG_DOC))
+
+    # --- governance: the freeze→result ledger chain of THIS card's sig --------
+    freeze: tuple[int, dict] | None = None
+    for lineno, rec in rows:
+        if (
+            lineno < result_lineno
+            and rec.get("event") == "config_committed"
+            and (rec.get("config_sig") or "") == sig
+        ):
+            freeze = (lineno, rec)  # last freeze row before its result (append-only)
+    versions = cfg.get("versions") if isinstance(cfg.get("versions"), dict) else None
+    frozen_params = (
+        cfg.get("frozen_params")
+        if isinstance(cfg.get("frozen_params"), dict)
+        else None
+    )
+    feature_cols = cfg.get("feature_cols") if isinstance(cfg.get("feature_cols"), list) else None
+
+    payload = {
+        "model_card_version": MODEL_CARD_VERSION,
+        "identity": {
+            "phase": result_rec.get("phase"),
+            "config_sig": sig,
+            "config_sig_short": sig[:8],
+            "results_dir": f"{_CARD_RESULTS_ROOT.as_posix()}/{sig}",
+            "aionis_version": meta.get("aionis_version"),
+            "schema": meta.get("schema"),
+            "h6_deterministic": (
+                meta.get("h6_deterministic")
+                if isinstance(meta.get("h6_deterministic"), bool)
+                else None
+            ),
+            "run_ts": meta.get("ts"),
+        },
+        "intended_use": {
+            "primary_use": (
+                "Display-layer documentation of the frozen confirmatory model: "
+                "a pre-registered, two-tailed, null-expected rank-IC claim whose "
+                "config was committed to the append-only ledger before any "
+                "out-of-sample metric was observed. The card exists for "
+                "transparency and reproducibility inspection, not for "
+                "performance advertisement."
+            ),
+            "display_only": True,
+            "not_investment_advice": True,
+            "out_of_scope": (
+                "Not a trading signal and not investment advice; null results "
+                "with tight confidence intervals are the intended outcome of "
+                "the protocol, and a null verdict must never be re-run toward "
+                "significance."
+            ),
+            "prereg": {
+                "path": _CARD_PREREG_DOC,
+                "sha256": prereg_sha,
+                "sid": "S6",
+            },
+        },
+        "data": {
+            "fund_sha256": cfg.get("fund_sha256"),
+            "prices_sha256": cfg.get("prices_sha256"),
+            "membership_sha256": cfg.get("membership_sha256"),
+            "end_lag_months": cfg.get("end_lag_months"),
+            "feature_cols": feature_cols,
+            "feature_cols_n": len(feature_cols) if feature_cols is not None else None,
+            "universe_note": (
+                "Universe membership is point-in-time (resolved as-of each "
+                "historical panel date, never a today snapshot); fundamentals "
+                "enter via filing dates. The input sha256 pins identify the "
+                "exact frozen data artifacts behind the feature table."
+            ),
+        },
+        "model": {
+            "learner": "lightgbm" if isinstance(versions, dict) and "lightgbm" in versions else None,
+            "learner_version": versions.get("lightgbm") if isinstance(versions, dict) else None,
+            "versions": versions,
+            "frozen_params": frozen_params,
+            "determinism": (
+                {k: (frozen_params or {}).get(k) for k in _CARD_DETERMINISM_KEYS}
+                if frozen_params is not None
+                else None
+            ),
+        },
+        "evaluation_protocol": {
+            "cv_scheme": cfg.get("cv_scheme"),
+            "horizon": cfg.get("horizon"),
+            "n_splits": cfg.get("n_splits"),
+            "embargo_sessions": cfg.get("embargo_sessions"),
+        },
+        "results": {
+            "source": "web/src/data/aionis/metrics.json",
+            "note": (
+                "Headline values embedded verbatim from metrics.json (the "
+                "site's live projection of the confirmatory climax ledger row); "
+                "config_sig_short and ledger_row are the embedded values' own "
+                "trace labels and may reference a newer confirmatory run than "
+                "this card's frozen model artifacts."
+            ),
+            **results,
+        },
+        "governance": {
+            "ledger_freeze_row": (
+                {
+                    "row": freeze[0],
+                    "ts": freeze[1].get("ts"),
+                    "line_sha256": _sha256_line(ledger_lines[freeze[0] - 1]),
+                    "sid": "S3",
+                }
+                if freeze is not None
+                else None
+            ),
+            "ledger_result_row": {"row": result_lineno, "sid": "S4"},
+            "contract_note": (
+                "The config_committed row precedes the result row sharing its "
+                "sha256 — the anti-leakage ordering, verifiable against "
+                "runs/ledger.jsonl."
+            ),
+            "uv_lock_sha256": frozen_uv,
+            "uv_lock_recomputed_sha256": uv_current,
+            "uv_lock_match": uv_match,
+            # Note only on a MEASURED drift (False); match=True and a missing
+            # frozen value (None → nothing to compare) both stay honestly null.
+            "uv_lock_note": (
+                (
+                    "Dependency lock drifted since the freeze (later repo lanes "
+                    "added dependencies); the frozen training environment stays "
+                    "pinned by uv_lock_sha256 and versions. The current lock "
+                    "hash is embedded beside it for honest comparison."
+                )
+                if uv_match is False
+                else None
+            ),
+        },
+        "provenance": {
+            "generated_by": (
+                "scripts/export_terminal_data.py::export_model_card "
+                f"(model_card_version {MODEL_CARD_VERSION})"
+            ),
+            "regen_command": (
+                "uv run python -c \"import sys; sys.path.insert(0,'scripts'); "
+                "import export_terminal_data as m; m._safe_export('model_card', "
+                'm.export_model_card)"'
+            ),
+            "byte_stability": (
+                "Zero-clock panel: no snapshot timestamp and no wall-clock "
+                "reads; every value is machine-read verbatim from the pinned "
+                "artifacts, so consecutive exports of unchanged artifacts are "
+                "byte-identical. Output is LF."
+            ),
+            "sources": [
+                {
+                    "sid": "S1",
+                    "type": "frozen artifact",
+                    "locator": f"{run_dir.as_posix()}/config.json",
+                    "integrity": f"sha256:{_sha256_file_raw(cfg_path)} (file bytes)",
+                    "role": (
+                        "frozen model configuration: feature table, "
+                        "hyperparameters, CV scheme, library versions, input "
+                        "hashes"
+                    ),
+                },
+                {
+                    "sid": "S2",
+                    "type": "frozen artifact",
+                    "locator": f"{run_dir.as_posix()}/meta.json",
+                    "integrity": f"sha256:{_sha256_file_raw(meta_path)} (file bytes)",
+                    "role": "run identity (config_sig / schema / H6 / version / ts)",
+                },
+                {
+                    "sid": "S3",
+                    "type": "ledger row",
+                    "locator": (
+                        f"runs/ledger.jsonl line {freeze[0]}"
+                        if freeze is not None
+                        else "runs/ledger.jsonl (freeze row absent locally)"
+                    ),
+                    "integrity": (
+                        f"sha256:{_sha256_line(ledger_lines[freeze[0] - 1])} "
+                        "(line text)"
+                        if freeze is not None
+                        else None
+                    ),
+                    "role": "config_committed freeze row (ts + line sha + line number)",
+                },
+                {
+                    "sid": "S4",
+                    "type": "ledger row",
+                    "locator": f"runs/ledger.jsonl line {result_lineno}",
+                    "integrity": (
+                        f"sha256:{_sha256_line(ledger_lines[result_lineno - 1])} "
+                        "(line text)"
+                    ),
+                    "role": "confirmatory:first result row for this card's config_sig",
+                },
+                {
+                    "sid": "S5",
+                    "type": "panel",
+                    "locator": "web/src/data/aionis/metrics.json",
+                    "integrity": (
+                        "verbatim value embed (results section); the source "
+                        "file carries a snapshot_ts clock, so no file hash is "
+                        "pinned"
+                    ),
+                    "role": "headline results (IC / CI / p / n / verdict / SESOI / sig / row)",
+                },
+                {
+                    "sid": "S6",
+                    "type": "repo doc",
+                    "locator": _CARD_PREREG_DOC,
+                    "integrity": f"sha256:{prereg_sha} (LF bytes)",
+                    "role": "pre-registered claim cited by intended_use",
+                },
+                {
+                    "sid": "S7",
+                    "type": "repo file",
+                    "locator": "uv.lock",
+                    "integrity": f"sha256:{uv_current} (LF bytes)",
+                    "role": (
+                        "current dependency lock hash, compared against the "
+                        "frozen uv_lock_sha256"
+                    ),
+                },
+            ],
+        },
+    }
+    (WEB / "model_card.json").write_text(
+        json.dumps(payload, indent=2, ensure_ascii=False),
+        encoding="utf-8",
+        newline="\n",
+    )
 
 
 def export_horizon_robustness() -> None:
@@ -2660,7 +3036,7 @@ def export_headline_provenance() -> None:
     jt = result_d.get("jt_gate") or {}
 
     def _num(v: object) -> float | None:
-        return float(v) if isinstance(v, (int, float)) else None
+        return float(v) if isinstance(v, int | float) else None
 
     payload = {
         "status": "ok",
@@ -2764,6 +3140,10 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
     # honestly: the daily lane deliberately never advances it (advancing would
     # mean re-running an exploratory sweep = rerun-to-significance territory).
     ("horizon_robustness", "horizon_robustness.json", _DH_FROZEN),
+    # TASK-H4 — machine-readable card of the frozen confirmatory model
+    # (identity/data/model/eval/results/governance), hash-pinned; zero-clock,
+    # so it only changes when the frozen artifacts themselves do.
+    ("model_card", "model_card.json", _DH_FROZEN),
     ("cot", "cot.json", _DH_CADENCE),
     ("smart_money", "smart_money.json", _DH_CADENCE),
     ("stakes_13g", "stakes_13g.json", _DH_DAILY),
@@ -2982,6 +3362,12 @@ def _dh_as_of(key: str, fname: str) -> str | None:
         # as_of = the sweep row's own ledger ts (the result's birth stamp, not
         # the export clock) — date-only like headline_provenance.
         ts = p.get("source_ts")
+        return ts.split("T")[0] if ts else None
+    if key == "model_card":
+        # as_of = the frozen run's own ts (meta.json ts via identity.run_ts),
+        # date-only — never the export clock (the card is zero-clock by design).
+        identity = p.get("identity")
+        ts = identity.get("run_ts") if isinstance(identity, dict) else None
         return ts.split("T")[0] if ts else None
     # model_health / calibration_reliability / power_floor / sigma_survey /
     # bps_sweep / evidence / reddit / ledger_audit: no observation date field.
@@ -3239,6 +3625,10 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
     "horizon_robustness": (
         "Aionis exploratory ledger row (repo MIT)",
         "horizon-robustness sweep summary of the frozen h=21 nulls",
+    ),
+    "model_card": (
+        "Aionis research artifacts (repo MIT)",
+        "machine-readable model card of the frozen confirmatory Track C model",
     ),
     "cot": ("U.S. CFTC — public domain", "Commitments of Traders legacy futures, weekly"),
     "smart_money": ("U.S. SEC EDGAR — public domain", "13D/G filings via EFTS, filed-date PIT"),
@@ -6489,6 +6879,10 @@ def main() -> None:
     # ledger row (READ-ONLY) — before the freshness map / catalog that index it.
     _safe_export("horizon_robustness", export_horizon_robustness)
     _safe_export("headline_provenance", export_headline_provenance)
+    # model_card lifts the frozen confirmatory run artifacts + tracked headline
+    # metrics into one hash-pinned card (READ-ONLY) — before the freshness map
+    # / catalog that index it.
+    _safe_export("model_card", export_model_card)
     # Per-stock view joins the corroboration JSONs above — keep after them.
     _safe_export("stock_universe", export_stock_universe)
     # Executives derives from the committed form8k.json written above — after

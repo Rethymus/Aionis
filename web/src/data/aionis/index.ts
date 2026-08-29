@@ -41,6 +41,7 @@ import themesJson from "./themes.json";
 import ledgerAuditJson from "./ledger_audit.json";
 import horizonRobustnessJson from "./horizon_robustness.json";
 import headlineProvenanceJson from "./headline_provenance.json";
+import modelCardJson from "./model_card.json";
 import dataHealthJson from "./data_health.json";
 import apiCatalogJson from "./api_catalog.json";
 import form8kJson from "./form8k.json";
@@ -1297,6 +1298,96 @@ export type HorizonRobustness = {
   snapshot_ts?: string;
 };
 
+// TASK-H4 — machine-readable model card of the frozen confirmatory model:
+// identity / data / model / evaluation protocol / headline results / ledger
+// governance, every value machine-read and hash-pinned by the exporter.
+// Zero-clock by design (no snapshot_ts): the card changes only when the frozen
+// artifacts themselves do. Fields that may be absent in a frozen artifact are
+// honestly `| null` — never guessed.
+export type ModelCardIdentity = {
+  phase: string | null;
+  config_sig: string;
+  config_sig_short: string;
+  results_dir: string;
+  aionis_version: string | null;
+  schema: number | null;
+  h6_deterministic: boolean | null;
+  run_ts: string | null;
+};
+
+export type ModelCard = {
+  model_card_version: string;
+  identity: ModelCardIdentity;
+  intended_use: {
+    primary_use: string;
+    display_only: boolean;
+    not_investment_advice: boolean;
+    out_of_scope: string;
+    prereg: { path: string; sha256: string; sid: string };
+  };
+  data: {
+    fund_sha256: string | null;
+    prices_sha256: string | null;
+    membership_sha256: string | null;
+    end_lag_months: Record<string, number> | null;
+    feature_cols: string[] | null;
+    feature_cols_n: number | null;
+    universe_note: string;
+  };
+  model: {
+    learner: string | null;
+    learner_version: string | null;
+    versions: Record<string, string> | null;
+    frozen_params: Record<string, number | string> | null;
+    determinism: Record<string, number | null> | null;
+  };
+  evaluation_protocol: {
+    cv_scheme: string | null;
+    horizon: number | null;
+    n_splits: number | null;
+    embargo_sessions: number | null;
+  };
+  results: {
+    source: string;
+    note: string;
+    combined_ic: number | null;
+    ci_lo: number | null;
+    ci_hi: number | null;
+    p: number | null;
+    n_months: number | null;
+    verdict: string | null;
+    sesoi: number | null;
+    config_sig_short: string | null;
+    ledger_row: number | null;
+  };
+  governance: {
+    ledger_freeze_row: {
+      row: number;
+      ts: string | null;
+      line_sha256: string;
+      sid: string;
+    } | null;
+    ledger_result_row: { row: number; sid: string };
+    contract_note: string;
+    uv_lock_sha256: string | null;
+    uv_lock_recomputed_sha256: string;
+    uv_lock_match: boolean | null;
+    uv_lock_note: string | null;
+  };
+  provenance: {
+    generated_by: string;
+    regen_command: string;
+    byte_stability: string;
+    sources: {
+      sid: string;
+      type: string;
+      locator: string;
+      integrity: string | null;
+      role: string;
+    }[];
+  };
+};
+
 export const aionis = {
   metrics: metricsJson as Metrics,
   picks: picksJson as Pick[],
@@ -1338,6 +1429,7 @@ export const aionis = {
   ledgerAudit: ledgerAuditJson as LedgerAudit,
   horizonRobustness: horizonRobustnessJson as HorizonRobustness,
   headlineProvenance: headlineProvenanceJson as HeadlineProvenance,
+  modelCard: modelCardJson as ModelCard,
   dataHealth: dataHealthJson as DataHealth,
   apiCatalog: apiCatalogJson as ApiCatalog,
   form8k: form8kJson as Form8k,

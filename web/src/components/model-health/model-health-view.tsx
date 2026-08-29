@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import {
   Card,
   CardContent,
@@ -10,8 +11,14 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
-import { aionis } from "@/data/aionis";
-import { ShieldAlertIcon, ShieldCheckIcon } from "lucide-react";
+import { aionis, type ModelCard } from "@/data/aionis";
+import {
+  FileTextIcon,
+  ScrollTextIcon,
+  ShieldAlertIcon,
+  ShieldCheckIcon,
+} from "lucide-react";
+import Link from "next/link";
 
 const REGIME_STYLE: Record<string, string> = {
   stable: "border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400",
@@ -36,6 +43,373 @@ function Stat({ label, value, hint }: { label: string; value: string; hint?: str
       <p className="text-xs text-muted-foreground">{label}</p>
       <p className="mt-1 text-xl font-bold tabular-nums">{value}</p>
     </div>
+  );
+}
+
+// --- model card (TASK-H4) -----------------------------------------------------
+//
+// The machine-readable card of the frozen confirmatory model, rendered as an
+// identity row card + per-section field tables. Every value is shown verbatim
+// from model_card.json (no formatting beyond joins); hashes render mono; links
+// point at the GitHub preregistration doc and the /discipline ledger audit.
+// Honest empty state: with no card data the table headers still render.
+
+type KVRow = { k: string; v: ReactNode };
+
+function Sha({ value }: { value: string | null | undefined }) {
+  if (!value) return <span className="text-muted-foreground">—</span>;
+  return <code className="break-all font-mono text-xs">{value}</code>;
+}
+
+function Plain({ value }: { value: string | null | undefined }) {
+  return value ? <span>{value}</span> : <span className="text-muted-foreground">—</span>;
+}
+
+function KVTable({
+  title,
+  rows,
+  emptyText,
+}: {
+  title: string;
+  rows: KVRow[];
+  emptyText?: string;
+}) {
+  const { t } = useI18n();
+  const empty = emptyText !== undefined;
+  return (
+    <div>
+      <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        {title}
+      </p>
+      <table className="w-full border-collapse text-[13px]">
+        <thead>
+          <tr className="border-b text-left text-xs text-muted-foreground">
+            <th className="w-56 py-1.5 pr-4 font-medium">{t("modelcard.col.field")}</th>
+            <th className="py-1.5 font-medium">{t("modelcard.col.value")}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {empty ? (
+            <tr>
+              <td className="py-2 text-muted-foreground" colSpan={2}>
+                {emptyText}
+              </td>
+            </tr>
+          ) : (
+            rows.map((r) => (
+              <tr key={r.k} className="border-b align-top last:border-0">
+                <td className="py-1.5 pr-4 text-muted-foreground">{r.k}</td>
+                <td className="py-1.5">{r.v}</td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function joinRecord(
+  record: Record<string, number | string | null> | null,
+  sep: string,
+): string | null {
+  if (!record || Object.keys(record).length === 0) return null;
+  return Object.entries(record)
+    .map(([k, v]) => `${k}${sep}${v === null ? "—" : String(v)}`)
+    .join(" · ");
+}
+
+function ModelCardSection() {
+  const { t } = useI18n();
+  const card: ModelCard | undefined = aionis.modelCard;
+  const present = !!card?.identity?.config_sig;
+  const id = card?.identity;
+  const res = card?.results;
+  const gov = card?.governance;
+  const ciText =
+    res?.ci_lo != null && res.ci_hi != null ? `[${String(res.ci_lo)}, ${String(res.ci_hi)}]` : null;
+  const freeze = gov?.ledger_freeze_row;
+  const freezeText =
+    freeze != null
+      ? `#${freeze.row} · ${freeze.ts ?? "—"}`
+      : null;
+
+  return (
+    <Card className="border-dashed">
+      <CardHeader className="border-b">
+        <CardTitle className="flex items-center gap-2 text-base">
+          <FileTextIcon className="size-4" /> {t("modelcard.title")}
+        </CardTitle>
+        <CardDescription>{t("modelcard.subtitle")}</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-5 p-4">
+        <KVTable
+          title={t("modelcard.section.identity")}
+          emptyText={present ? undefined : t("modelcard.empty")}
+          rows={
+            present && id
+              ? [
+                  { k: t("modelcard.field.phase"), v: <Plain value={id.phase} /> },
+                  {
+                    k: t("modelcard.field.configSig"),
+                    v: <Sha value={id.config_sig} />,
+                  },
+                  {
+                    k: t("modelcard.field.resultsDir"),
+                    v: <Sha value={id.results_dir} />,
+                  },
+                  {
+                    k: t("modelcard.field.aionisVersion"),
+                    v: <Plain value={id.aionis_version} />,
+                  },
+                  { k: t("modelcard.field.schema"), v: <Plain value={id.schema == null ? null : String(id.schema)} /> },
+                  {
+                    k: t("modelcard.field.h6"),
+                    v: id.h6_deterministic ? (
+                      <Badge variant="outline" className="border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
+                        PASS
+                      </Badge>
+                    ) : (
+                      <Plain value={id.h6_deterministic == null ? null : "FAIL"} />
+                    ),
+                  },
+                  {
+                    k: t("modelcard.field.runTs"),
+                    v: <Plain value={id.run_ts} />,
+                  },
+                ]
+              : []
+          }
+        />
+
+        {present && card && (
+          <>
+            <KVTable
+              title={t("modelcard.section.intendedUse")}
+              rows={[
+                { k: t("modelcard.field.primaryUse"), v: <Plain value={card.intended_use.primary_use} /> },
+                {
+                  k: t("modelcard.field.displayOnly"),
+                  v: <Plain value={card.intended_use.display_only ? "true" : "false"} />,
+                },
+                {
+                  k: t("modelcard.field.notAdvice"),
+                  v: (
+                    <Plain
+                      value={card.intended_use.not_investment_advice ? "true" : "false"}
+                    />
+                  ),
+                },
+                {
+                  k: t("modelcard.field.prereg"),
+                  v: (
+                    <span className="flex flex-col gap-0.5">
+                      <Sha value={card.intended_use.prereg.sha256} />
+                      <a
+                        className="inline-flex items-center gap-1 text-xs text-primary underline-offset-2 hover:underline"
+                        href={`https://github.com/Rethymus/Aionis/blob/main/${card.intended_use.prereg.path}`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {t("modelcard.link.prereg")}
+                      </a>
+                    </span>
+                  ),
+                },
+              ]}
+            />
+
+            <KVTable
+              title={t("modelcard.section.data")}
+              rows={[
+                { k: t("modelcard.field.fundSha"), v: <Sha value={card.data.fund_sha256} /> },
+                { k: t("modelcard.field.pricesSha"), v: <Sha value={card.data.prices_sha256} /> },
+                {
+                  k: t("modelcard.field.membershipSha"),
+                  v: <Sha value={card.data.membership_sha256} />,
+                },
+                {
+                  k: t("modelcard.field.endLag"),
+                  v: <Plain value={joinRecord(card.data.end_lag_months, ": ")} />,
+                },
+                {
+                  k: t("modelcard.field.featureCols"),
+                  v: (
+                    <Plain
+                      value={
+                        card.data.feature_cols && card.data.feature_cols_n != null
+                          ? `${card.data.feature_cols_n} · ${card.data.feature_cols.join(", ")}`
+                          : null
+                      }
+                    />
+                  ),
+                },
+                { k: t("modelcard.field.universe"), v: <Plain value={card.data.universe_note} /> },
+              ]}
+            />
+
+            <KVTable
+              title={t("modelcard.section.model")}
+              rows={[
+                {
+                  k: t("modelcard.field.learner"),
+                  v: (
+                    <Plain
+                      value={
+                        card.model.learner
+                          ? `${card.model.learner} ${card.model.learner_version ?? ""}`.trim()
+                          : null
+                      }
+                    />
+                  ),
+                },
+                {
+                  k: t("modelcard.field.versions"),
+                  v: <Plain value={joinRecord(card.model.versions, " ")} />,
+                },
+                {
+                  k: t("modelcard.field.frozenParams"),
+                  v: <Plain value={joinRecord(card.model.frozen_params, "=")} />,
+                },
+                {
+                  k: t("modelcard.field.determinism"),
+                  v: <Plain value={joinRecord(card.model.determinism, "=")} />,
+                },
+              ]}
+            />
+
+            <KVTable
+              title={t("modelcard.section.evaluation")}
+              rows={[
+                { k: t("modelcard.field.cvScheme"), v: <Plain value={card.evaluation_protocol.cv_scheme} /> },
+                {
+                  k: t("modelcard.field.horizon"),
+                  v: <Plain value={card.evaluation_protocol.horizon == null ? null : String(card.evaluation_protocol.horizon)} />,
+                },
+                {
+                  k: t("modelcard.field.nSplits"),
+                  v: <Plain value={card.evaluation_protocol.n_splits == null ? null : String(card.evaluation_protocol.n_splits)} />,
+                },
+                {
+                  k: t("modelcard.field.embargo"),
+                  v: <Plain value={card.evaluation_protocol.embargo_sessions == null ? null : String(card.evaluation_protocol.embargo_sessions)} />,
+                },
+              ]}
+            />
+
+            <KVTable
+              title={t("modelcard.section.results")}
+              rows={[
+                { k: t("modelcard.field.ic"), v: <Plain value={res?.combined_ic == null ? null : String(res.combined_ic)} /> },
+                { k: t("modelcard.field.ci"), v: <Plain value={ciText} /> },
+                { k: t("modelcard.field.p"), v: <Plain value={res?.p == null ? null : String(res.p)} /> },
+                {
+                  k: t("modelcard.field.nMonths"),
+                  v: <Plain value={res?.n_months == null ? null : String(res.n_months)} />,
+                },
+                { k: t("modelcard.field.verdict"), v: <Plain value={res?.verdict} /> },
+                {
+                  k: t("modelcard.field.sesoi"),
+                  v: <Plain value={res?.sesoi == null ? null : String(res.sesoi)} />,
+                },
+                { k: t("modelcard.field.resultSig"), v: <Sha value={res?.config_sig_short ?? null} /> },
+                {
+                  k: t("modelcard.field.ledgerRow"),
+                  v: <Plain value={res?.ledger_row == null ? null : `#${res.ledger_row}`} />,
+                },
+              ]}
+            />
+
+            <KVTable
+              title={t("modelcard.section.governance")}
+              rows={[
+                {
+                  k: t("modelcard.field.freezeRow"),
+                  v: <Plain value={freezeText} />,
+                },
+                { k: `${t("modelcard.field.freezeRow")} · sha256`, v: <Sha value={freeze?.line_sha256 ?? null} /> },
+                {
+                  k: t("modelcard.field.resultRow"),
+                  v: <Plain value={gov ? `#${gov.ledger_result_row.row}` : null} />,
+                },
+                { k: t("modelcard.field.contract"), v: <Plain value={gov?.contract_note} /> },
+                { k: t("modelcard.field.uvLockFrozen"), v: <Sha value={gov?.uv_lock_sha256} /> },
+                {
+                  k: t("modelcard.field.uvLockCurrent"),
+                  v: <Sha value={gov?.uv_lock_recomputed_sha256} />,
+                },
+                {
+                  k: t("modelcard.field.uvMatch"),
+                  v: (
+                    <span className="flex flex-col gap-0.5">
+                      <Plain
+                        value={
+                          gov?.uv_lock_match == null
+                            ? null
+                            : gov.uv_lock_match
+                              ? "true"
+                              : "false"
+                        }
+                      />
+                      {gov?.uv_lock_note ? (
+                        <span className="text-xs text-muted-foreground">
+                          {gov.uv_lock_note}
+                        </span>
+                      ) : null}
+                    </span>
+                  ),
+                },
+                {
+                  k: t("modelcard.link.ledgerAudit"),
+                  v: (
+                    <Link
+                      className="text-xs text-primary underline-offset-2 hover:underline"
+                      href="/discipline"
+                    >
+                      {t("modelcard.link.ledgerAudit")}
+                    </Link>
+                  ),
+                },
+              ]}
+            />
+
+            <KVTable
+              title={t("modelcard.section.provenance")}
+              rows={[
+                { k: t("modelcard.field.generatedBy"), v: <Plain value={card.provenance.generated_by} /> },
+                { k: t("modelcard.field.regenCommand"), v: <Sha value={card.provenance.regen_command} /> },
+                { k: t("modelcard.field.byteStability"), v: <Plain value={card.provenance.byte_stability} /> },
+                {
+                  k: t("modelcard.field.sources"),
+                  v: (
+                    <span className="flex flex-col gap-1">
+                      {card.provenance.sources.map((s) => (
+                        <span key={s.sid} className="text-xs">
+                          <span className="font-mono font-semibold">{s.sid}</span>{" "}
+                          <span className="text-muted-foreground">{s.type} · </span>
+                          <code className="break-all font-mono">{s.locator}</code>
+                          {s.integrity ? (
+                            <>
+                              {" — "}
+                              <code className="break-all font-mono text-muted-foreground">{s.integrity}</code>
+                            </>
+                          ) : null}
+                        </span>
+                      ))}
+                    </span>
+                  ),
+                },
+              ]}
+            />
+          </>
+        )}
+
+        <p className="flex items-center gap-1.5 text-xs text-amber-700 dark:text-amber-400">
+          <ScrollTextIcon className="size-3.5 shrink-0" />
+          {t("modelcard.disclaimer")}
+        </p>
+      </CardContent>
+    </Card>
   );
 }
 
@@ -85,6 +459,8 @@ export function ModelHealthView() {
           </Card>
         ))
       )}
+
+      <ModelCardSection />
 
       <Card className="border-dashed">
         <CardHeader className="border-b">

@@ -52,6 +52,9 @@ EXPECTED_PANELS: dict[str, tuple[str, str, str]] = {
     # Round-31 H1 panel (ledger-derived horizon sweep summary; frozen — static
     # until a new sweep appends an exploratory row).
     "horizon_robustness": ("horizonRobustness", "horizon_robustness.json", "frozen"),
+    # Round-H4 model card (frozen run artifacts + tracked headline, hash-pinned;
+    # zero-clock — changes only when the frozen artifacts themselves do).
+    "model_card": ("modelCard", "model_card.json", "frozen"),
     "pick_conviction": ("pickConviction", "pick_conviction.json", "frozen"),
     "model_health": ("modelHealth", "model_health.json", "frozen"),
     "calibration_reliability": (
