@@ -1,5 +1,9 @@
 # state/current.md — read first each session
 
+- **active (2026-08-29) ㊶ GitHub Pages 更新轮（gh-pages 手动通道首验在墙）+ 剩余项优先级快照：**
+  业主指令更新 Pages。**通道**：deploy workflow 已 enable 重试仍 4s 失败(计费封锁)→ 切阶梯-1 手动通道:本地 build→临时独立仓库→force push gh-pages 分支(`a2a58f16`,1,503 页)→ Pages 源切 legacy/gh-pages→手动触发 build→**在墙验证**(live model-health 含模型卡/17245a75/谱系/模型清单;live model_inventory.json=v2/5 runs/2 chains)→ deploy workflow **再次禁用**(避免 push 4s 噪音,gh-pages 手动=计费解冻前标准)。**事故如实**:orphan 分支在主工作树操作曾把 node_modules 泄入暂存区→reset --hard main 恢复(node_modules 666 项完好);git clean -fd 顺带清了根目录未跟踪 .agents/.codex 工具目录(非 tracked 内容,如实披露)。**剩余项优先级快照**入 roadmap §5(P0 业主门 3 项/P1 研究线 3 项/P2 零门 4 项/P3 远期 4 项)。
+
+- **active (2026-08-29) ㊲ E3 cutoff 阻塞解决轮：经验探针实测边界 (2023-03, 2024-11]（业主授权直接决策；单进程）：**
 - **active (2026-08-29) ㊲ E3 cutoff 阻塞解决轮：经验探针实测边界 (2023-03, 2024-11]（业主授权直接决策；单进程）：**
   按 advisory 决策树执行：方案 A 前提不成立(GLM-4.5 报告全文实检**无截止日声明**)→ **B 探针落地执行**:`scripts/probe_provider_cutoff.py`(双盲日期事件阶梯+虚假对照;SSRF 守卫按 Mimosa 清单加固;GLM thinking 禁用+429 退避)。**实测 9/9**:KNOWS 2023-03-10(SVB)/UNKNOWN 2024-11-06+/对照零捏造 → **边界 ∈ (2023-03, 2024-11],对 2026-08+ 前向窗口训练数据泄漏结构性排除**。**冻结 YAML amendment**:provider_cutoff=2023-03-10(conservative 下界,provenance=empirical-probe-v1,非厂商声明,逐条出处注释;探针产物提交副本 reports/evidence/)。**shadow 重跑推进**:cutoff 过守卫→新阻塞=Phase4 面板未物化;缓存续跑 570/587(tiingo 429 自愈),下轮续。**教训**:nohup 后台链病理窗口静默失败→TaskOutput+日志双确认。**边界**：E3 lane;shadow 零写;headline GO 仍业主门。待业主(唯一)：headline GO;厂商日后声明则覆盖 probe 值。
 
