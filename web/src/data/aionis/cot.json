@@ -3,79 +3,79 @@
   "methodology": "CFTC Commitments of Traders (COT) \u2014 net non-commercial (speculator) positioning (Long - Short contracts) per key futures market, with a trailing 52-week crowding z-score. z>0 = net-long more crowded than usual; z<0 = net-short crowded. Free, no-API, US-gov public domain, weekly (filed Friday, archived and NOT revised). Coverage starts 2016 (Trump Era). Display-only, not a research claim.",
   "markets": [
     {
+      "name": "Copper",
+      "net": 85266,
+      "z": 1.87,
+      "long": 121419,
+      "short": 36153
+    },
+    {
       "name": "Gold",
-      "net": 222189,
-      "z": 1.49,
-      "long": 256902,
-      "short": 34713
+      "net": 243334,
+      "z": 1.32,
+      "long": 277159,
+      "short": 33825
     },
     {
       "name": "S&P 500",
-      "net": -10560,
-      "z": 1.43,
-      "long": 275315,
-      "short": 285875
-    },
-    {
-      "name": "Copper",
-      "net": 79748,
-      "z": 1.19,
-      "long": 111399,
-      "short": 31651
-    },
-    {
-      "name": "Japanese Yen",
-      "net": -52893,
-      "z": 0.73,
-      "long": 128932,
-      "short": 181825
-    },
-    {
-      "name": "Silver",
-      "net": 23625,
-      "z": -0.07,
-      "long": 38353,
-      "short": 14728
-    },
-    {
-      "name": "Russell 2000",
-      "net": -42215,
-      "z": -0.5,
-      "long": 76902,
-      "short": 119117
-    },
-    {
-      "name": "WTI Crude",
-      "net": -17451,
-      "z": -0.71,
-      "long": 72230,
-      "short": 89681
+      "net": -67994,
+      "z": 0.86,
+      "long": 241495,
+      "short": 309489
     },
     {
       "name": "Nasdaq 100",
-      "net": -12067,
-      "z": -0.93,
-      "long": 79203,
-      "short": 91270
+      "net": 11127,
+      "z": -0.09,
+      "long": 83872,
+      "short": 72745
+    },
+    {
+      "name": "Japanese Yen",
+      "net": -63298,
+      "z": -0.39,
+      "long": 128340,
+      "short": 191638
     },
     {
       "name": "VIX",
-      "net": -89446,
-      "z": -1.82,
-      "long": 87155,
-      "short": 176601
+      "net": -78164,
+      "z": -0.39,
+      "long": 80331,
+      "short": 158495
+    },
+    {
+      "name": "Silver",
+      "net": 25261,
+      "z": -0.52,
+      "long": 37871,
+      "short": 12610
+    },
+    {
+      "name": "WTI Crude",
+      "net": -15142,
+      "z": -0.89,
+      "long": 70137,
+      "short": 85279
+    },
+    {
+      "name": "Russell 2000",
+      "net": -51578,
+      "z": -1.02,
+      "long": 65674,
+      "short": 117252
     },
     {
       "name": "Euro FX",
-      "net": -59088,
-      "z": -1.87,
-      "long": 196241,
-      "short": 255329
+      "net": -36352,
+      "z": -1.49,
+      "long": 198919,
+      "short": 235271
     }
   ],
   "composite": {
-    "mean_z": -0.11,
-    "crowding": 1.08,
+    "mean_z": -0.08,
+    "crowding": 0.88,
     "n": 10
   },
   "composite_series": [
@@ -2146,8 +2146,12 @@
     {
       "date": "2026-08-18",
       "z": -0.11
+    },
+    {
+      "date": "2026-08-25",
+      "z": -0.08
     }
   ],
-  "latest_date": "2026-08-18",
-  "snapshot_ts": "2026-08-28T17:55:00.903301+00:00"
+  "latest_date": "2026-08-25",
+  "snapshot_ts": "2026-08-29T09:04:20.052362+00:00"
 }

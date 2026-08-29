@@ -1,14 +1,14 @@
 {
   "status": "ok",
-  "as_of": "2026-08-28T01:30:00Z",
+  "as_of": "2026-08-29T07:45:00Z",
   "window": {
     "start": "2026-08-18",
-    "end": "2026-08-28"
+    "end": "2026-08-29"
   },
   "query": "(\"stock market\" OR \"S&P 500\" OR \"Federal Reserve\") sourcelang:eng | sourcelang:zho domainis:wallstreetcn.com",
-  "total": 865,
-  "n_sources": 306,
-  "n_zho": 265,
+  "total": 1118,
+  "n_sources": 398,
+  "n_zho": 318,
   "by_day": [
     {
       "date": "2026-08-18",
@@ -48,1365 +48,1369 @@
     },
     {
       "date": "2026-08-27",
-      "count": 343
+      "count": 359
     },
     {
       "date": "2026-08-28",
-      "count": 72
+      "count": 160
+    },
+    {
+      "date": "2026-08-29",
+      "count": 149
     }
   ],
   "items": [
     {
-      "seendate": "2026-08-28T01:30:00Z",
-      "title": "Why Im Still Not Putting My $25 , 000 in a 30 - Year Treasury Paying 5 . 23 %",
-      "url": "https://finance.yahoo.com/markets/options/articles/why-m-still-not-putting-130412531.html",
+      "seendate": "2026-08-29T07:45:00Z",
+      "title": "Ex - White House teleprompter operator ordered to pay $172 , 000 for Trump speech bets",
+      "url": "https://www.bbc.co.uk/news/articles/c4gj2dl4x52o",
+      "domain": "bbc.co.uk",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United Kingdom"
+    },
+    {
+      "seendate": "2026-08-29T07:45:00Z",
+      "title": "AP News in Brief at 12 : 04 a . m . EDT",
+      "url": "http://www.idahostatejournal.com/news/national/ap-news-in-brief-at-12-04-a-m-edt/article_45f288f2-aaa8-5d70-b0f6-cc7cc6ccc78d.html",
+      "domain": "idahostatejournal.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T07:45:00Z",
+      "title": "IPO fever grips D - Street : 3 issues to open for subscription ; 8 new listings lined up for next week",
+      "url": "https://economictimes.indiatimes.com/markets/ipos/fpos/ipo-fever-grips-d-street-3-companies-to-raise-rs-1265-crore-8-set-to-list-next-week/articleshow/133605837.cms",
+      "domain": "economictimes.indiatimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-08-29T07:45:00Z",
+      "title": "Vietnam seeks to attract more US capital to stock market",
+      "url": "https://news.tuoitre.vn/vietnam-seeks-to-attract-more-us-capital-to-stock-market-103260829100306309.htm",
+      "domain": "news.tuoitre.vn",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": ""
+    },
+    {
+      "seendate": "2026-08-29T07:45:00Z",
+      "title": "F & O Talk : Traders should maintain caution amid CAS volatility , says Sudeep Shah ; picks 6 stocks for next week",
+      "url": "https://economictimes.indiatimes.com/markets/expert-view/fo-talk-traders-should-maintain-caution-amid-cas-volatility-says-sudeep-shah-picks-6-stocks-for-next-week/articleshow/133606328.cms",
+      "domain": "economictimes.indiatimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-08-29T07:45:00Z",
+      "title": "AP News in Brief at 11 : 04 p . m . EDT",
+      "url": "http://www.idahostatejournal.com/news/national/ap-news-in-brief-at-11-04-p-m-edt/article_aa62eb4a-9407-57dc-8332-1f13a637fefd.html",
+      "domain": "idahostatejournal.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T07:45:00Z",
+      "title": "Starting to invest at age 35 rather than 25 can more than halve your nest egg",
+      "url": "https://www.dailymail.com/money/investing/article-16081831/Starting-invest-age-35-25-halve-nest-egg.html",
+      "domain": "dailymail.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T07:45:00Z",
+      "title": "Bank of England governor hints interest rate hikes can wait",
+      "url": "https://www.dailymail.com/money/markets/article-16087663/Bank-England-governor-hints-wait-hikes-wait.html",
+      "domain": "dailymail.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T07:15:00Z",
+      "title": "Fed Chair Warsh signals rate hikes may be needed with US inflation stubbornly elevated",
+      "url": "https://www.decaturdaily.com/business/fed-chair-warsh-signals-rate-hikes-may-be-needed-with-us-inflation-stubbornly-elevated/article_7d1492e4-2a0c-45ba-b44b-57ab8f966d0c.html",
+      "domain": "decaturdaily.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T07:15:00Z",
+      "title": "Investors bet on hike to interest rates as stocks dip | The Arkansas Democrat - Gazette",
+      "url": "https://www.arkansasonline.com/news/2026/aug/29/investors-bet-on-hike-to-interest-rates-as-stocks/",
+      "domain": "arkansasonline.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T07:15:00Z",
+      "title": "The Bank of Thailand unanimously decided to keep the policy rate steady at 1 %",
+      "url": "https://www.thailand-business-news.com/banking/325563-the-bank-of-thailand-unanimously-decided-to-keep-the-policy-rate-steady-at-1-00-percent",
+      "domain": "thailand-business-news.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Thailand"
+    },
+    {
+      "seendate": "2026-08-29T07:15:00Z",
+      "title": "What Happens When You Invest Just $100 a Month in the S & P 500 for 20 Years ?",
+      "url": "https://www.aol.com/articles/happens-invest-just-100-month-055000000.html",
+      "domain": "aol.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T07:15:00Z",
+      "title": "C3 . ai vs . Oracle : Which Artificial Intelligence Stock Is a Better Investment in 2026 ?",
+      "url": "https://finance.yahoo.com/technology/ai/articles/c3-ai-vs-oracle-artificial-235659206.html",
       "domain": "finance.yahoo.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-08-28T01:30:00Z",
-      "title": "Markets Watching As Fed Chair Kevin Warsh Speaks Friday",
-      "url": "https://wham1180.iheart.com/content/2026-08-27-markets-watching-as-fed-chair-kevin-warsh-speaks-friday/",
-      "domain": "wham1180.iheart.com",
+      "seendate": "2026-08-29T07:15:00Z",
+      "title": "Fed Chair Warsh signals rate hikes may be needed with US inflation stubbornly elevated",
+      "url": "https://www.vindy.com/news/business-news/2026/08/fed-chair-warsh-signals-rate-hikes-may-be-needed-with-us-inflation-stubbornly-elevated/",
+      "domain": "vindy.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-08-28T01:30:00Z",
-      "title": "7 Investing Terms Every Beginner Should Know",
-      "url": "https://www.newsitem.com/sponsored/7-investing-terms-every-beginner-should-know/article_49a9ced5-c19c-4120-9c85-33166f187ed3.html",
-      "domain": "newsitem.com",
+      "seendate": "2026-08-29T07:15:00Z",
+      "title": "SEC proposes shift to profit reporting | The Arkansas Democrat - Gazette",
+      "url": "https://www.arkansasonline.com/news/2026/aug/29/sec-proposes-shift-to-profit-reporting/",
+      "domain": "arkansasonline.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-08-28T01:30:00Z",
-      "title": "FBI says Chinese hacking group targeted US government agencies for years",
-      "url": "https://www.yahoo.com/news/us/articles/fbi-says-chinese-hacking-group-163746299.html",
-      "domain": "yahoo.com",
+      "seendate": "2026-08-29T07:15:00Z",
+      "title": "Inflation still high , rate hikes possible , Fed Warsh warns | The Arkansas Democrat - Gazette",
+      "url": "https://www.arkansasonline.com/news/2026/aug/29/inflation-still-high-rate-hikes-possible-feds/",
+      "domain": "arkansasonline.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-08-28T01:30:00Z",
-      "title": "Stock Market Cheers Nvidia , Salesforce Earnings ; Nasdaq , S & P 500 Make Key Technical Moves",
-      "url": "https://www.investors.com/market-trend/the-big-picture/stock-market-nvidia-salesforce-earnings-nasdaq-sp500/",
-      "domain": "investors.com",
+      "seendate": "2026-08-29T07:15:00Z",
+      "title": "\u6c83\u4ec0  \u653e\u9e70 \uff0c \u9ad8\u76db\u4f9d\u65e7\u4e0d\u4fe1  9\u6708\u52a0\u606f \u3001 \u6469\u6839\u5927\u901a\u79f0  \u8fd8\u662f\u8981\u770b8\u6708\u975e\u519c\u548cCPI",
+      "url": "https://wallstreetcn.com/articles/3780629",
+      "domain": "wallstreetcn.com",
+      "language": "Chinese",
+      "lang": "zho",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-08-29T07:15:00Z",
+      "title": "\u534a\u5e74\u6838\u9500\u5904\u7f6e\u903c\u8fd1\u53bb\u5e74\u5168\u5e74 \uff0c \u5149\u5927\u94f6\u884c\u4e0a\u534a\u5e74\u51c0\u5229\u4e0b\u6ed124 %",
+      "url": "https://wallstreetcn.com/articles/3780628",
+      "domain": "wallstreetcn.com",
+      "language": "Chinese",
+      "lang": "zho",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-08-29T07:00:00Z",
+      "title": "US Says Chinese Hackers Targeted Justice Department , NASA and Federal Reserve in Cyber Campaign",
+      "url": "https://www.khaama.com/us-says-chinese-hackers-targeted-justice-department-nasa-and-federal-reserve-in-cyber-campaign/",
+      "domain": "khaama.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Afghanistan"
+    },
+    {
+      "seendate": "2026-08-29T07:00:00Z",
+      "title": "Super Bowl Themed Stories Get Nearly 5X the Coverage of January Jobs Report",
+      "url": "https://www.newsbusters.org/blogs/business/julia-seymour/2018/02/07/super-bowl-themed-stories-get-nearly-5x-coverage-january",
+      "domain": "newsbusters.org",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-08-28T01:30:00Z",
-      "title": "New Fed chair holds cards  close to his chest  ahead of Jackson Hole address",
-      "url": "https://wchstv.com/news/nation-world/new-fed-chair-holds-cards-close-to-his-chest-ahead-of-jackson-hole-address",
-      "domain": "wchstv.com",
+      "seendate": "2026-08-29T07:00:00Z",
+      "title": "AP News in Brief at 12 : 04 a . m . EDT",
+      "url": "https://www.winknews.com/news/international/ap-news-in-brief-at-12-04-a-m-edt/article_490edafd-9542-570b-89df-03862b954e6e.html",
+      "domain": "winknews.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-08-28T01:30:00Z",
-      "title": "Gold holds near US$4 , 600 as investors focus on US Fed rate - hike path",
-      "url": "https://www.businesstimes.com.sg/companies-markets/energy-commodities/gold-holds-near-us4600-investors-focus-us-fed-rate-hike-path",
-      "domain": "businesstimes.com.sg",
+      "seendate": "2026-08-29T07:00:00Z",
+      "title": "Books by Day , Business by Night : Inside Pakistan Student Side Hustle Boom",
+      "url": "https://pakobserver.net/books-by-day-business-by-night-inside-pakistans-student-side-hustle-boom/",
+      "domain": "pakobserver.net",
       "language": "English",
       "lang": "eng",
-      "sourcecountry": "Singapore"
+      "sourcecountry": "Pakistan"
     },
     {
-      "seendate": "2026-08-28T01:30:00Z",
-      "title": "Merchant Banking Investments : Balancing Portfolio Oversight With Operating Restrictions",
-      "url": "https://www.mondaq.com:443/unitedstates/financial-services/1836126/merchant-banking-investments-balancing-portfolio-oversight-with-operating-restrictions",
-      "domain": "mondaq.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T01:30:00Z",
-      "title": "Markets Watching As Fed Chair Kevin Warsh Speaks Friday",
-      "url": "https://kprcradio.iheart.com/content/2026-08-27-markets-watching-as-fed-chair-kevin-warsh-speaks-friday/",
-      "domain": "kprcradio.iheart.com",
+      "seendate": "2026-08-29T07:00:00Z",
+      "title": "Mobius Social Stock Investment Simulation Competition Officially Launches , Registration Now Opens \u2013 IT Business Net",
+      "url": "https://itbusinessnet.com/2026/08/mobius-social-stock-investment-simulation-competition-officially-launches-registration-now-opens/",
+      "domain": "itbusinessnet.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-08-28T01:30:00Z",
-      "title": "Seoul stocks open lower despite US rally - The Korea Times",
-      "url": "https://www.koreatimes.co.kr/economy/20260828/seoul-stocks-open-lower-despite-us-rally",
-      "domain": "koreatimes.co.kr",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "South Korea"
-    },
-    {
-      "seendate": "2026-08-28T01:30:00Z",
-      "title": "New Fed chair holds cards  close to his chest  ahead of Jackson Hole address",
-      "url": "https://myfox28columbus.com/news/nation-world/new-fed-chair-holds-cards-close-to-his-chest-ahead-of-jackson-hole-address",
-      "domain": "myfox28columbus.com",
+      "seendate": "2026-08-29T07:00:00Z",
+      "title": "What Happens When You Invest Just $100 a Month in the S & P 500 for 20 Years ?",
+      "url": "https://www.fool.com/investing/2026/08/29/what-happens-when-you-invest-just-100-a-month-in-t/?source=iedfolrf0000001",
+      "domain": "fool.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-08-28T01:30:00Z",
-      "title": "Markets Watching As Fed Chair Kevin Warsh Speaks Friday",
-      "url": "https://hallelujah955.iheart.com/content/2026-08-27-markets-watching-as-fed-chair-kevin-warsh-speaks-friday/",
-      "domain": "hallelujah955.iheart.com",
+      "seendate": "2026-08-29T07:00:00Z",
+      "title": "Billionaire Hedge Fund Investor Ray Dalio Now Advises Holding a Small Amount of Bitcoin . Here Why He Wrong .",
+      "url": "https://www.fool.com/investing/2026/08/29/billionaire-hedge-fund-investor-ray-dalio-now-advi/?source=iedfolrf0000001",
+      "domain": "fool.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-08-28T01:30:00Z",
-      "title": "Nvidia adds US$442 billion after robust forecast sparks second - biggest stock surge ever",
-      "url": "https://www.businesstimes.com.sg/international/global/nvidia-adds-us442-billion-after-robust-forecast-sparks-second-biggest-stock-surge-ever",
-      "domain": "businesstimes.com.sg",
+      "seendate": "2026-08-29T06:45:00Z",
+      "title": "Jio Platforms gets Sebi nod to launch country biggest - ever IPO",
+      "url": "https://kashmirreader.com/2026/08/29/jio-platforms-gets-sebi-nod-to-launch-countrys-biggest-ever-ipo/",
+      "domain": "kashmirreader.com",
       "language": "English",
       "lang": "eng",
-      "sourcecountry": "Singapore"
+      "sourcecountry": "India"
     },
     {
-      "seendate": "2026-08-28T01:30:00Z",
-      "title": "Markets Watching As Fed Chair Kevin Warsh Speaks Friday",
-      "url": "https://koacolorado.iheart.com/content/2026-08-27-markets-watching-as-fed-chair-kevin-warsh-speaks-friday/",
-      "domain": "koacolorado.iheart.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T01:30:00Z",
-      "title": "Friday big stock stories : What likely to move the market",
-      "url": "https://www.cnbc.com/2026/08/27/fridays-big-stock-stories-whats-likely-to-move-the-market.html",
-      "domain": "cnbc.com",
+      "seendate": "2026-08-29T06:45:00Z",
+      "title": "Can a $68 Billion Payout Save UNH Stock ?",
+      "url": "https://finance.yahoo.com/healthcare/articles/68-billion-payout-save-unh-232631702.html",
+      "domain": "finance.yahoo.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-08-28T01:30:00Z",
-      "title": "Stock Market Cheers Nvidia , Salesforce Earnings ; Nasdaq , S & P 500 Make Key Technical Moves",
-      "url": "https://www.investors.com:443/market-trend/the-big-picture/stock-market-nvidia-salesforce-earnings-nasdaq-sp500/",
-      "domain": "investors.com",
+      "seendate": "2026-08-29T06:45:00Z",
+      "title": "SEBI proposes advertisement code for online bond platforms",
+      "url": "https://www.thehindu.com/business/markets/sebi-proposes-advertisement-code-for-online-bond-platforms/article71374557.ece",
+      "domain": "thehindu.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-08-29T06:45:00Z",
+      "title": "How Much Track Is Left For SNOW Stock ?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/much-track-left-snow-stock-231459125.html",
+      "domain": "finance.yahoo.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-08-28T01:30:00Z",
-      "title": "Markets Watching As Fed Chair Kevin Warsh Speaks Friday | News Radio 920 AM & 104 . 7 FM",
-      "url": "https://newsradiori.iheart.com/content/2026-08-27-markets-watching-as-fed-chair-kevin-warsh-speaks-friday/",
-      "domain": "newsradiori.iheart.com",
+      "seendate": "2026-08-29T06:45:00Z",
+      "title": "Warsh inflation warning could reset the Fed rate outlook",
+      "url": "https://www.businessreport.com/article/warshs-inflation-warning-could-reset-the-feds-rate-outlook",
+      "domain": "businessreport.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-08-28T01:30:00Z",
-      "title": "Asian stocks set to edge lower ahead of US Fed chair policy speech",
-      "url": "https://www.businesstimes.com.sg/companies-markets/capital-markets-currencies/asian-stocks-set-edge-lower-ahead-us-fed-chairs-policy-speech",
-      "domain": "businesstimes.com.sg",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Singapore"
-    },
-    {
-      "seendate": "2026-08-28T01:30:00Z",
-      "title": "New Fed chair holds cards  close to his chest  ahead of Jackson Hole address",
-      "url": "https://upnorthlive.com/news/nation-world/new-fed-chair-holds-cards-close-to-his-chest-ahead-of-jackson-hole-address",
-      "domain": "upnorthlive.com",
+      "seendate": "2026-08-29T06:30:00Z",
+      "title": "Fed chair Warsh signals  work to do  on high US inflation",
+      "url": "https://www.digitaljournal.com/article/fed-chair-warsh-signals-work-to-do-on-high-us-inflation/",
+      "domain": "digitaljournal.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-08-28T01:30:00Z",
-      "title": "Markets Watching As Fed Chair Kevin Warsh Speaks Friday",
-      "url": "https://wlap.iheart.com/content/2026-08-27-markets-watching-as-fed-chair-kevin-warsh-speaks-friday/",
-      "domain": "wlap.iheart.com",
+      "seendate": "2026-08-29T06:30:00Z",
+      "title": "Trump may overplay his hand with economic threats",
+      "url": "https://www.dailypress.net/opinion/editorial/2026/08/trump-may-overplay-his-hand-with-economic-threats/",
+      "domain": "dailypress.net",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-08-28T01:30:00Z",
-      "title": "The states with the highest ( and lowest ) stock market participation",
-      "url": "http://northcountrynow.com/premium/stacker/stories/the-states-with-the-highest-and-lowest-stock-market-participation,387992",
+      "seendate": "2026-08-29T06:30:00Z",
+      "title": "What Happens When You Invest Just $100 a Month in the S & P 500 for 20 Years ?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/happens-invest-just-100-month-055000991.html",
+      "domain": "finance.yahoo.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T06:30:00Z",
+      "title": "Jio Platforms IPO : Jio Platforms Secures Sebi Approval for Record $3 . 8 Billion IPO , ETTelecom",
+      "url": "https://telecom.economictimes.indiatimes.com/news/industry/jio-platforms-gets-sebi-nod-for-3-8-bn-ipo-set-to-be-indias-biggest/133602243",
+      "domain": "telecom.economictimes.indiatimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-08-29T06:15:00Z",
+      "title": "Fed Chair Warsh signals rate hikes may be needed with US inflation stubbornly elevated",
+      "url": "https://www.tribtoday.com/news/business/2026/08/fed-chair-warsh-signals-rate-hikes-may-be-needed-with-us-inflation-stubbornly-elevated/",
+      "domain": "tribtoday.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T06:15:00Z",
+      "title": "Wall Street Blaming Bessent And Warsh For Trump Economic Chaos",
+      "url": "https://www.nationalmemo.com/wall-street-journal-trump-article",
+      "domain": "nationalmemo.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T06:15:00Z",
+      "title": "Billionaire Hedge Fund Investor Ray Dalio Now Advises Holding a Small Amount of Bitcoin . Here Why He Wrong .",
+      "url": "https://www.aol.com/articles/billionaire-hedge-fund-investor-ray-052000000.html",
+      "domain": "aol.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T05:45:00Z",
+      "title": "The market has calmed . Retail investors still dont believe it .",
+      "url": "http://northcountrynow.com/premium/stacker/stories/the-market-has-calmed-retail-investors-still-don039t-believe-it,388153",
       "domain": "northcountrynow.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-08-28T01:30:00Z",
-      "title": "New Fed chair holds cards  close to his chest  ahead of Jackson Hole address",
-      "url": "https://wlos.com/news/nation-world/new-fed-chair-holds-cards-close-to-his-chest-ahead-of-jackson-hole-address",
-      "domain": "wlos.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T01:15:00Z",
-      "title": "Markets Watching As Fed Chair Kevin Warsh Speaks Friday",
-      "url": "https://wmrn.iheart.com/content/2026-08-27-markets-watching-as-fed-chair-kevin-warsh-speaks-friday/",
-      "domain": "wmrn.iheart.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T01:15:00Z",
-      "title": "New Fed chair holds cards  close to his chest  ahead of Jackson Hole address",
-      "url": "https://cbs2iowa.com/news/nation-world/new-fed-chair-holds-cards-close-to-his-chest-ahead-of-jackson-hole-address",
-      "domain": "cbs2iowa.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T01:15:00Z",
-      "title": "Nasdaq , S & P 500 lifted by Nvidia forecast ; investors eye speech by Fed Warsh",
-      "url": "https://www.galvnews.com/business/nasdaq-s-p-500-lifted-by-nvidias-forecast-investors-eye-speech-by-feds-warsh/article_eef91b7e-1785-4e26-b9a9-0f6298b2d712.html",
-      "domain": "galvnews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T01:15:00Z",
-      "title": "Why Tenable Stock Triumphed on Thursday",
-      "url": "https://www.aol.com/articles/why-tenable-stock-triumphed-thursday-000322000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T01:15:00Z",
-      "title": "3 Dividend Stocks Id Actually Bet My Own Portfolio On",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/3-dividend-stocks-id-actually-130100331.html",
-      "domain": "finance.yahoo.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T01:15:00Z",
-      "title": "Cmb . Tech ( CMBT ) Q2 2026 Earnings Call Transcript",
-      "url": "https://www.aol.com/articles/cmb-tech-cmbt-q2-2026-004335000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T01:15:00Z",
-      "title": "The Options Market Says Micron Stock Can Halve Or Double From Here",
-      "url": "https://finance.yahoo.com/markets/options/articles/options-market-says-micron-stock-125720007.html",
-      "domain": "finance.yahoo.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T01:15:00Z",
-      "title": "UBS lifts S & P 500 target to 8 , 100 as earnings upgrades broaden beyond AI",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/ubs-lifts-p-500-target-130100132.html",
-      "domain": "finance.yahoo.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T01:15:00Z",
-      "title": "Alibaba ( BABA ) Q1 2027 Earnings Call Transcript",
-      "url": "https://www.aol.com/articles/alibaba-baba-q1-2027-earnings-002934000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T01:15:00Z",
-      "title": "Markets Watching As Fed Chair Kevin Warsh Speaks Friday",
-      "url": "https://wvoc.iheart.com/content/2026-08-27-markets-watching-as-fed-chair-kevin-warsh-speaks-friday/",
-      "domain": "wvoc.iheart.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T01:15:00Z",
-      "title": "Fed Collins says latest U . S . inflation readings are  mixed",
-      "url": "https://www.spokesman.com/stories/2026/aug/27/feds-collins-says-latest-us-inflation-readings-are/",
-      "domain": "spokesman.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T01:15:00Z",
-      "title": "Gaotu ( GOTU ) Q2 2026 Earnings Call Transcript",
-      "url": "https://www.aol.com/articles/gaotu-gotu-q2-2026-earnings-002830000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T01:15:00Z",
-      "title": "CIBC ( CM ) Q3 2026 Earnings Call Transcript",
-      "url": "https://www.aol.com/articles/cibc-cm-q3-2026-earnings-002829000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T01:15:00Z",
-      "title": "Ringgit opens higher against greenback",
-      "url": "https://www.freemalaysiatoday.com/category/business/2026/08/28/ringgit-opens-higher-against-greenback-24",
-      "domain": "freemalaysiatoday.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Malaysia"
-    },
-    {
-      "seendate": "2026-08-28T01:15:00Z",
-      "title": "Markets Watching As Fed Chair Kevin Warsh Speaks Friday | News Radio 103 . 1 and 810 WGY",
-      "url": "https://wgy.iheart.com/content/2026-08-27-markets-watching-as-fed-chair-kevin-warsh-speaks-friday/",
-      "domain": "wgy.iheart.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T01:15:00Z",
-      "title": "Wall Street Rallies on Nvidia , Eyes Powell",
-      "url": "https://athens-times.com/wall-street-rallies-on-nvidia-earnings-eyes-powells-speech/",
-      "domain": "athens-times.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Greece"
-    },
-    {
-      "seendate": "2026-08-28T01:15:00Z",
-      "title": "New Fed chair holds cards  close to his chest  ahead of Jackson Hole address",
-      "url": "https://okcfox.com/news/nation-world/new-fed-chair-holds-cards-close-to-his-chest-ahead-of-jackson-hole-address",
-      "domain": "okcfox.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T01:00:00Z",
-      "title": "Nasdaq closes sharply higher as Nvidia reignites AI rally",
-      "url": "https://www.proactiveinvestors.com/companies/news/1097723/nasdaq-closes-sharply-higher-as-nvidia-reignites-ai-rally-1097723.html",
-      "domain": "proactiveinvestors.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T01:00:00Z",
-      "title": "Hong Kong home prices end 13 - month upswing as mainland Chinese tax fears weigh on demand",
-      "url": "https://www.scmp.com/business/article/3365479/hong-kong-home-prices-end-13-month-upswing-mainland-chinese-tax-fears-weigh-demand",
-      "domain": "scmp.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-08-28T00:30:00Z",
-      "title": "New Fed chair holds cards  close to his chest  ahead of Jackson Hole address",
-      "url": "https://weartv.com/news/nation-world/new-fed-chair-holds-cards-close-to-his-chest-ahead-of-jackson-hole-address",
-      "domain": "weartv.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T00:30:00Z",
-      "title": "Markets Watching As Fed Chair Kevin Warsh Speaks Friday",
-      "url": "https://wrko.iheart.com/content/2026-08-27-markets-watching-as-fed-chair-kevin-warsh-speaks-friday/",
-      "domain": "wrko.iheart.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T00:30:00Z",
-      "title": "Gold tops US$4 , 600 as investors weigh Federal Reserve path",
-      "url": "https://windsorstar.com:443/news/economy/gold-tops-us4600-investors-weigh-fed-path",
-      "domain": "windsorstar.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Canada"
-    },
-    {
-      "seendate": "2026-08-28T00:30:00Z",
-      "title": "Markets Watching As Fed Chair Kevin Warsh Speaks Friday",
-      "url": "https://1190kex.iheart.com/content/2026-08-27-markets-watching-as-fed-chair-kevin-warsh-speaks-friday/",
-      "domain": "1190kex.iheart.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T00:30:00Z",
-      "title": "New Fed chair holds cards  close to his chest  ahead of Jackson Hole address",
-      "url": "https://wtov9.com/news/nation-world/new-fed-chair-holds-cards-close-to-his-chest-ahead-of-jackson-hole-address",
-      "domain": "wtov9.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T00:30:00Z",
-      "title": "Markets Watching As Fed Chair Kevin Warsh Speaks Friday",
-      "url": "https://600wrec.iheart.com/content/2026-08-27-markets-watching-as-fed-chair-kevin-warsh-speaks-friday/",
-      "domain": "600wrec.iheart.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T00:15:00Z",
-      "title": "Markets Watching As Fed Chair Kevin Warsh Speaks Friday",
-      "url": "https://wrak.iheart.com/content/2026-08-27-markets-watching-as-fed-chair-kevin-warsh-speaks-friday/",
-      "domain": "wrak.iheart.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T00:15:00Z",
-      "title": "New Fed chair holds cards  close to his chest  ahead of Jackson Hole address",
-      "url": "https://wjla.com/news/nation-world/new-fed-chair-holds-cards-close-to-his-chest-ahead-of-jackson-hole-address",
-      "domain": "wjla.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T00:15:00Z",
-      "title": "Nasdaq , S & P 500 lifted by Nvidia forecast , investors eye speech by Fed Warsh",
-      "url": "https://www.freemalaysiatoday.com/category/business/2026/08/28/nasdaq-s-p-500-lifted-by-nvidia-s-forecast-investors-eye-speech-by-fed-s-warsh",
-      "domain": "freemalaysiatoday.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Malaysia"
-    },
-    {
-      "seendate": "2026-08-28T00:15:00Z",
-      "title": "Markets Watching As Fed Chair Kevin Warsh Speaks Friday",
-      "url": "https://khow.iheart.com/content/2026-08-27-markets-watching-as-fed-chair-kevin-warsh-speaks-friday/",
-      "domain": "khow.iheart.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T00:15:00Z",
-      "title": "New Fed chair holds cards  close to his chest  ahead of Jackson Hole address",
-      "url": "https://nbcmontana.com/news/nation-world/new-fed-chair-holds-cards-close-to-his-chest-ahead-of-jackson-hole-address",
-      "domain": "nbcmontana.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T00:15:00Z",
-      "title": "Markets Watching As Fed Chair Kevin Warsh Speaks Friday",
-      "url": "https://newsradio1290wtks.iheart.com/content/2026-08-27-markets-watching-as-fed-chair-kevin-warsh-speaks-friday/",
-      "domain": "newsradio1290wtks.iheart.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T00:15:00Z",
-      "title": "New Fed chair holds cards  close to his chest  ahead of Jackson Hole address",
-      "url": "https://wach.com/news/nation-world/new-fed-chair-holds-cards-close-to-his-chest-ahead-of-jackson-hole-address",
-      "domain": "wach.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T00:15:00Z",
-      "title": "Markets Watching As Fed Chair Kevin Warsh Speaks Friday",
-      "url": "https://kxic.iheart.com/content/2026-08-27-markets-watching-as-fed-chair-kevin-warsh-speaks-friday/",
-      "domain": "kxic.iheart.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T00:15:00Z",
-      "title": "New Fed chair holds cards  close to his chest  ahead of Jackson Hole address",
-      "url": "https://fox42kptm.com/news/nation-world/new-fed-chair-holds-cards-close-to-his-chest-ahead-of-jackson-hole-address",
-      "domain": "fox42kptm.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T00:15:00Z",
-      "title": "The bond market has a passive investing problem , and it getting worse",
-      "url": "https://www.theglobeandmail.com/investing/investment-ideas/article-the-bond-market-has-a-passive-investing-problem-and-its-getting-worse/",
-      "domain": "theglobeandmail.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Canada"
-    },
-    {
-      "seendate": "2026-08-28T00:15:00Z",
-      "title": "ASX set to edge higher after rate hike fears trigger sharpest sell - off in 12 weeks",
-      "url": "https://www.proactiveinvestors.com.au/companies/news/1097753/asx-set-to-edge-higher-after-rate-hike-fears-trigger-sharpest-sell-off-in-12-weeks-1097753.html",
-      "domain": "proactiveinvestors.com.au",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Australia"
-    },
-    {
-      "seendate": "2026-08-28T00:15:00Z",
-      "title": "Federal Reserve chief faces pivotal moment in Jackson Hole",
-      "url": "https://www.aol.com/articles/federal-chief-faces-pivotal-moment-213427000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T00:00:00Z",
-      "title": "Looking Beyond NVIDIA ? These 3 AI ETFs Are Beating the Market",
-      "url": "https://finance.yahoo.com/technology/ai/articles/looking-beyond-nvidia-3-ai-161500855.html",
-      "domain": "finance.yahoo.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T00:00:00Z",
-      "title": "Applied Digital Corporation ( NASDAQ : APLD ) Surges 8 . 4 % Post - Earnings As Revenue Jumps 407 % Year Over Year",
-      "url": "https://www.foreignpolicyjournal.com/2026/08/27/applied-digital-corporation-nasdaq-apld-surges-8-4-post-earnings-as-revenue-jumps-407-year-over-year/",
-      "domain": "foreignpolicyjournal.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Israel"
-    },
-    {
-      "seendate": "2026-08-28T00:00:00Z",
-      "title": "Nasdaq Jumps 411 Points as Nvidia Soars : Stock Market Today",
-      "url": "https://www.kiplinger.com/investing/stocks/nasdaq-jumps-411-points-as-nvidia-stock-soars-stock-market-today",
-      "domain": "kiplinger.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T00:00:00Z",
-      "title": "New Fed chair holds cards  close to his chest  ahead of Jackson Hole address",
-      "url": "https://wset.com/news/nation-world/new-fed-chair-holds-cards-close-to-his-chest-ahead-of-jackson-hole-address",
-      "domain": "wset.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T00:00:00Z",
-      "title": "New Fed chair holds cards  close to his chest  ahead of Jackson Hole address",
-      "url": "https://wgme.com/news/nation-world/new-fed-chair-holds-cards-close-to-his-chest-ahead-of-jackson-hole-address",
-      "domain": "wgme.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T00:00:00Z",
-      "title": "New Fed chair holds cards  close to his chest  ahead of Jackson Hole address",
-      "url": "https://13wham.com/news/nation-world/new-fed-chair-holds-cards-close-to-his-chest-ahead-of-jackson-hole-address",
-      "domain": "13wham.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T00:00:00Z",
-      "title": "Commentary : Phil Scott is no affordability governor",
-      "url": "http://www.deerfieldvalleynews.org/letters-editor/commentary-phil-scott-no-affordability-governor",
-      "domain": "deerfieldvalleynews.org",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": ""
-    },
-    {
-      "seendate": "2026-08-28T00:00:00Z",
-      "title": "From $71 to $9 million : how a mocked Chinese animation became an unlikely box - office hit - 28 - Aug - 2026",
-      "url": "https://home.nzcity.co.nz/news/article.aspx?id=452904&fm=psp,tst",
-      "domain": "home.nzcity.co.nz",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "New Zealand"
-    },
-    {
-      "seendate": "2026-08-28T00:00:00Z",
-      "title": "New Fed chair holds cards  close to his chest  ahead of Jackson Hole address",
-      "url": "https://kfoxtv.com/news/nation-world/new-fed-chair-holds-cards-close-to-his-chest-ahead-of-jackson-hole-address",
-      "domain": "kfoxtv.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T00:00:00Z",
-      "title": "Indonesia Protests Turn Violent ; Scores Detained - Worthy Christian News",
-      "url": "https://www.worthynews.com/117075-indonesia-protests-turn-violent-scores-detained",
-      "domain": "worthynews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Israel"
-    },
-    {
-      "seendate": "2026-08-28T00:00:00Z",
-      "title": "New Fed chair holds cards  close to his chest  ahead of Jackson Hole address",
-      "url": "https://kpic.com/news/nation-world/new-fed-chair-holds-cards-close-to-his-chest-ahead-of-jackson-hole-address",
-      "domain": "kpic.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T00:00:00Z",
-      "title": "Rickards : The Dollar Not Dying - The Daily Reckoning",
-      "url": "https://dailyreckoning.com/rickards-the-dollars-not-dying/",
-      "domain": "dailyreckoning.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-28T00:00:00Z",
-      "title": "US shuts down China - linked hacking tools accused of targeting NASA , federal agencies",
-      "url": "https://www.fox35orlando.com/news/china-hacking-qscan-qtrouter",
-      "domain": "fox35orlando.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T23:45:00Z",
-      "title": "Ex - JPMorgan exec says he shared market - sensitive bank info with Epstein",
-      "url": "https://www.staradvertiser.com/2026/08/27/breaking-news/ex-jpmorgan-executive-says-he-shared-market-sensitive-bank-info-with-epstein/",
-      "domain": "staradvertiser.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T23:45:00Z",
-      "title": "Inflation holds steady , giving Fed room to leave main rate unchanged",
-      "url": "https://finance.yahoo.com/economy/policy/articles/inflation-holds-steady-giving-fed-155806327.html",
-      "domain": "finance.yahoo.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T23:45:00Z",
-      "title": "New Fed chair holds cards  close to his chest  ahead of Jackson Hole address",
-      "url": "https://fox23.com/news/nation-world/new-fed-chair-holds-cards-close-to-his-chest-ahead-of-jackson-hole-address",
-      "domain": "fox23.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T23:15:00Z",
-      "title": "Stock Market Today , Aug . 27 : Tech Strength Powers Nasdaq Higher as Nvidia Leads Rally",
-      "url": "https://www.fool.com/coverage/stock-market-today/2026/08/27/stock-market-today-aug-27-tech-strength-powers-nasdaq-higher-as-nvidia-leads-rally/",
-      "domain": "fool.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T23:15:00Z",
-      "title": "Warren Buffett Says This 1 Move Is the Key to Surviving a Stock Market Crash . 100 Years of History Says He Right .",
-      "url": "https://www.fool.com/investing/2026/08/27/warren-buffett-says-this-1-move-is-the-key-to-surv/",
-      "domain": "fool.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T23:15:00Z",
-      "title": "The Data Is Clear : Investors Who Make This 1 Move During Bear Markets Always Come Out Ahead",
-      "url": "https://www.fool.com/investing/2026/08/27/the-data-is-clear-investors-who-make-this-1-move-d/",
-      "domain": "fool.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T23:15:00Z",
-      "title": "New Fed chair holds cards  close to his chest  ahead of Jackson Hole address",
-      "url": "https://wwmt.com/news/nation-world/new-fed-chair-holds-cards-close-to-his-chest-ahead-of-jackson-hole-address",
-      "domain": "wwmt.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T23:15:00Z",
-      "title": "New Fed chair holds cards  close to his chest  ahead of Jackson Hole address",
-      "url": "https://katv.com/news/nation-world/new-fed-chair-holds-cards-close-to-his-chest-ahead-of-jackson-hole-address",
-      "domain": "katv.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T23:15:00Z",
-      "title": "FinVolution Group Reports Second Quarter 2026 Unaudited Financial Results",
-      "url": "https://www.manilatimes.net/2026/08/28/tmt-newswire/globenewswire/finvolution-group-reports-second-quarter-2026-unaudited-financial-results/2413820",
-      "domain": "manilatimes.net",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Philippines"
-    },
-    {
-      "seendate": "2026-08-27T23:00:00Z",
-      "title": "All eyes on Warsh : Trump new Fed chair speaks Friday at Jackson Hole",
-      "url": "https://www.bostonherald.com/2026/08/27/all-eyes-on-warsh-trumps-new-fed-chair-speaks-friday-at-jackson-hole/",
-      "domain": "bostonherald.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T23:00:00Z",
-      "title": "Here How Many Americans Regret Using Buy Now , Pay Later Right Now",
-      "url": "https://www.aol.com/articles/heres-many-americans-regret-using-214000000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T23:00:00Z",
-      "title": "America Retirees Are Going Broke",
-      "url": "https://www.aol.com/articles/america-retirees-going-broke-214653000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T23:00:00Z",
-      "title": "How major US stock indexes fared Thursday 8 / 27 / 2026",
-      "url": "http://www.leadertelegram.com/news/nation-world/how-major-us-stock-indexes-fared-thursday-8-27-2026/article_1b40b27d-8b10-5caa-ad0d-1d8e18f19491.html",
-      "domain": "leadertelegram.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T23:00:00Z",
-      "title": "You Have $1 Million in an IRA . At 73 the IRS Makes You Withdraw $37 , 736 Whether You Want It or Not . These 4 ETFs Make It Pay",
-      "url": "https://www.aol.com/articles/1-million-ira-73-irs-214553000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T23:00:00Z",
-      "title": "Tech Stocks Rally On Upbeat Results From Nvidia , Salesforce",
-      "url": "https://www.rttnews.com/story.aspx?Id=3685754",
-      "domain": "rttnews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T23:00:00Z",
-      "title": "THE CLOSING BELL : Tech stocks lead Wall Street after Nvidia , Salesforce and others say AI is creating big growth",
-      "url": "https://www.wptf.com/2026/08/27/the-closing-bell-tech-stocks-lead-wall-street-after-nvidia-salesforce-and-others-say-ai-is-creating-big-growth/",
-      "domain": "wptf.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T23:00:00Z",
-      "title": "Michael Burry says AI is a  byzantine  money loop Nvidia monster results could be ammo for his argument",
-      "url": "https://www.aol.com/articles/michael-burry-says-ai-byzantine-220000000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T23:00:00Z",
-      "title": "Stocks Slip Ahead of Nvidia Earnings as Bond Yields Rise",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/stocks-slip-ahead-nvidia-earnings-151335301.html",
-      "domain": "finance.yahoo.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T23:00:00Z",
+      "seendate": "2026-08-29T05:45:00Z",
       "title": "Nervous About the Stock Market ? This Is Warren Buffett Best Advice .",
-      "url": "https://www.aol.com/articles/nervous-stock-market-warren-buffetts-222500000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T23:00:00Z",
-      "title": "New Fed chair holds cards  close to his chest  ahead of Jackson Hole address",
-      "url": "https://turnto10.com/news/nation-world/new-fed-chair-holds-cards-close-to-his-chest-ahead-of-jackson-hole-address",
-      "domain": "turnto10.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T23:00:00Z",
-      "title": "The Data Is Clear : Investors Who Make This 1 Move During Bear Markets Always Come Out Ahead",
-      "url": "https://www.aol.com/articles/data-clear-investors-1-move-222000000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T23:00:00Z",
-      "title": "What Are Wall Street Analyst Target Price for M & T Bank Stock ?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/wall-street-analysts-target-price-151354127.html",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/nervous-stock-market-warren-buffetts-222500631.html",
       "domain": "finance.yahoo.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-08-27T23:00:00Z",
-      "title": "New Fed chair holds cards  close to his chest  ahead of Jackson Hole address",
-      "url": "https://kval.com/news/nation-world/new-fed-chair-holds-cards-close-to-his-chest-ahead-of-jackson-hole-address",
-      "domain": "kval.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T23:00:00Z",
-      "title": "New Fed chair holds cards  close to his chest  ahead of Jackson Hole address",
-      "url": "https://cbs6albany.com/news/nation-world/new-fed-chair-holds-cards-close-to-his-chest-ahead-of-jackson-hole-address",
-      "domain": "cbs6albany.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T23:00:00Z",
-      "title": "How Major US Stock Indexes Fared Aug . 27",
-      "url": "https://www.theepochtimes.com/bright/how-major-us-stock-indexes-fared-aug-27-post-6080511",
-      "domain": "theepochtimes.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T23:00:00Z",
-      "title": "Investors , Fed watchers want one thing from Kevin Warsh in his Jackson Hole debut : Clarity",
-      "url": "https://www.aol.com/articles/investors-fed-watchers-want-one-215704000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T23:00:00Z",
-      "title": "$250 , 000 in SGOV Earned $9 , 500 Last Year While the Same Money in SPY Earned $48 , 000",
-      "url": "https://www.aol.com/articles/250-000-sgov-earned-9-220504000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T22:45:00Z",
-      "title": "European stocks drop as political worries weigh on French banks",
-      "url": "https://www.businesstimes.com.sg/companies-markets/capital-markets-currencies/european-stocks-drop-political-worries-weigh-french-banks",
-      "domain": "businesstimes.com.sg",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Singapore"
-    },
-    {
-      "seendate": "2026-08-27T22:45:00Z",
-      "title": "New Fed chair holds cards  close to his chest  ahead of Jackson Hole address",
-      "url": "https://cbs12.com/news/nation-world/new-fed-chair-holds-cards-close-to-his-chest-ahead-of-jackson-hole-address",
-      "domain": "cbs12.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T22:45:00Z",
-      "title": "Financial Review : Autodesk ( NASDAQ : ADSK ) versus Greenlane ( NASDAQ : GNLN )",
-      "url": "https://www.themarketsdaily.com/2026/08/27/financial-review-autodesk-nasdaqadsk-versus-greenlane-nasdaqgnln.html",
-      "domain": "themarketsdaily.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T22:45:00Z",
-      "title": "$250 , 000 in SGOV Earned $9 , 500 Last Year While the Same Money in SPY Earned $48 , 000",
-      "url": "https://247wallst.com/investing/etf/2026/08/27/250000-in-sgov-earned-9500-last-year-while-the-same-money-in-spy-earned-48000/",
-      "domain": "247wallst.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T22:45:00Z",
-      "title": "America Retirees Are Going Broke",
-      "url": "https://247wallst.com/economy/2026/08/27/americas-retirees-are-going-broke-2/",
-      "domain": "247wallst.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T22:30:00Z",
-      "title": "BOJ deputy chief calls for more rate hikes on inflation risks",
-      "url": "https://japantoday.com/category/business/update2-boj-deputy-chief-calls-for-more-rate-hikes-on-inflation-risks",
-      "domain": "japantoday.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Japan"
-    },
-    {
-      "seendate": "2026-08-27T22:30:00Z",
-      "title": "Investors , Fed watchers want one thing from Kevin Warsh in his Jackson Hole debut : Clarity",
-      "url": "https://finance.yahoo.com/economy/policy/article/investors-fed-watchers-want-one-thing-from-kevin-warsh-in-his-jackson-hole-debut-clarity-215704020.html",
-      "domain": "finance.yahoo.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T22:30:00Z",
-      "title": "Gold finishes little changed ahead of Warsh Jackson Hole speech ( GLD : NYSEARCA )",
-      "url": "https://seekingalpha.com/news/4637723-gold-finishes-little-changed-ahead-of-warshs-jackson-hole-speech",
-      "domain": "seekingalpha.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T22:30:00Z",
-      "title": "Stock market today : Live updates",
-      "url": "https://www.cnbc.com/2026/08/27/stock-market-today-live-updates.html",
-      "domain": "cnbc.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T22:30:00Z",
-      "title": "Trump oil and gas stock trades continued during Iran war , filings show \u00a0| Peak Oil News and Message Boards",
-      "url": "https://peakoil.com/publicpolicy/trumps-oil-and-gas-stock-trades-continued-during-iran-war-filings-show",
-      "domain": "peakoil.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T22:30:00Z",
-      "title": "U . S . Bancorp ( USB ): Buy , Sell , or Hold Post Q2 Earnings ?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/u-bancorp-usb-buy-sell-215307583.html",
-      "domain": "finance.yahoo.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T22:15:00Z",
-      "title": "Global stock market - record capitalization , dominated by the US",
-      "url": "https://www.bursa.ro/global-stock-market-record-capitalization-dominated-by-the-us-62230063",
-      "domain": "bursa.ro",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Romania"
-    },
-    {
-      "seendate": "2026-08-27T22:15:00Z",
-      "title": "Costco ( COST ) Stock Drops Despite Market Gains : Important Facts to Note",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/costco-cost-stock-drops-despite-214503123.html",
-      "domain": "finance.yahoo.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T22:15:00Z",
-      "title": "Archer Aviation vs . GE Aerospace : Which Industrials Stock Is a Better Buy in 2026 ?",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/archer-aviation-vs-ge-aerospace-215001436.html",
-      "domain": "finance.yahoo.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T22:15:00Z",
-      "title": "The stakes are high as Kevin Warsh is set to give his first major speech as Fed Chair",
-      "url": "https://kansaspublicradio.org/npr-news/2026-08-27/the-stakes-are-high-as-kevin-warsh-is-set-to-give-his-first-major-speech-as-fed-chair",
-      "domain": "kansaspublicradio.org",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T22:15:00Z",
-      "title": "U . S . stocks climb after strong Nvidia earnings",
-      "url": "http://www.bignewsnetwork.com/news/279269789/us-stocks-climb-after-strong-nvidia-earnings",
-      "domain": "bignewsnetwork.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T22:15:00Z",
-      "title": "Is China Pragmatic AI Strategy Winning ?",
-      "url": "https://foreignpolicy.com/2026/08/27/china-ai-technology-trump-silicon-valley-open-weights/",
-      "domain": "foreignpolicy.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T22:15:00Z",
-      "title": "The stakes are high as Kevin Warsh is set to give his first major speech as Fed Chair",
-      "url": "https://wnyc.org/npr/nx-s1-5945044",
-      "domain": "wnyc.org",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T22:15:00Z",
-      "title": "The stakes are high as Kevin Warsh is set to give his first major speech as Fed Chair",
-      "url": "https://www.wfae.org/united-states-world/2026-08-27/the-stakes-are-high-as-kevin-warsh-is-set-to-give-his-first-major-speech-as-fed-chair",
-      "domain": "wfae.org",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T22:00:00Z",
-      "title": "Trading Day : Tech on a tear , attention Fed chair",
-      "url": "https://www.aol.com/articles/trading-day-tech-tear-attention-210316000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T22:00:00Z",
-      "title": "The stakes are high as Kevin Warsh is set to give his first major speech as Fed Chair",
-      "url": "https://www.wvasfm.org/business/2026-08-27/the-stakes-are-high-as-kevin-warsh-is-set-to-give-his-first-major-speech-as-fed-chair",
-      "domain": "wvasfm.org",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T22:00:00Z",
-      "title": "The stakes are high as Kevin Warsh is set to give his first major speech as Fed Chair",
-      "url": "https://www.southcarolinapublicradio.org/news/2026-08-27/the-stakes-are-high-as-kevin-warsh-is-set-to-give-his-first-major-speech-as-fed-chair",
-      "domain": "southcarolinapublicradio.org",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T22:00:00Z",
-      "title": "Stock Transaction : Powell Industries Richard Williams Sells 2 , 250 Shares",
-      "url": "https://www.fool.com/coverage/filings/2026/08/27/stock-transaction-powell-industries-richard-williams-sells-2-250-shares/?source=iedfolrf0000001",
-      "domain": "fool.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T22:00:00Z",
-      "title": "We Put $750 , 000 Into an Annuity for a Guaranteed $4 , 200 Monthly Check . Then Realized We Wiped Out Our Children $610 , 000 Inheritance",
-      "url": "https://www.aol.com/articles/put-750-000-annuity-guaranteed-211502000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T22:00:00Z",
-      "title": "Worried About a Bear Market ? Have This One Type of Stock in Your Portfolio Before a 20 % Crash .",
-      "url": "https://www.aol.com/articles/worried-bear-market-one-type-205000000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T22:00:00Z",
-      "title": "Measured confidence : RBC , TD Bank , CIBC share optimistic outlook for Canada economy",
-      "url": "https://www.cbc.ca/news/business/banks-tariffs-rbc-td-cibc-9.7323054",
-      "domain": "cbc.ca",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Canada"
-    },
-    {
-      "seendate": "2026-08-27T22:00:00Z",
-      "title": "U . S . Disrupts China - Linked Cyber Campaign Targeting Critical Infrastructure",
-      "url": "https://wardheernews.com/u-s-disrupts-china-linked-cyber-campaign-targeting-critical-infrastructure/",
-      "domain": "wardheernews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Somalia"
-    },
-    {
-      "seendate": "2026-08-27T22:00:00Z",
-      "title": "Drawing Board \u2013 Standpoint Magazine",
-      "url": "https://www.standpointmag.co.uk/category/magazine/drawing-board/",
-      "domain": "standpointmag.co.uk",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United Kingdom"
-    },
-    {
-      "seendate": "2026-08-27T22:00:00Z",
-      "title": "Gold Tops $4 , 600 as Investors Weigh Fed Path Before Jackson Hole",
-      "url": "https://www.livemint.com/market/gold-tops-4-600-as-investors-weigh-fed-path-before-jackson-hole-11787865436959.html",
+      "seendate": "2026-08-29T05:45:00Z",
+      "title": "SIP inflows surge , but small savers shrink : What the latest data reveals",
+      "url": "https://www.livemint.com/money/sip-inflows-surge-but-small-savers-shrink-what-the-latest-data-reveals-11787500884929.html",
       "domain": "livemint.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "India"
     },
     {
-      "seendate": "2026-08-27T22:00:00Z",
-      "title": "Markets live updates : ASX set to edge higher as AI giant Nvidia powers Wall St rally",
-      "url": "https://www.abc.net.au/news/2026-08-28/asx-markets-business-news-live-updates/107087998",
-      "domain": "abc.net.au",
+      "seendate": "2026-08-29T05:45:00Z",
+      "title": "US Fed Chair Kevin Warsh Jackson Hole speech impact on Indian stock market , gold - silver rates | Prediction for Monday",
+      "url": "https://www.livemint.com/market/stock-market-news/us-fed-chair-kevin-warsh-jackson-hole-speech-impact-on-indian-stock-market-gold-silver-rates-prediction-for-monday-11787969910435.html",
+      "domain": "livemint.com",
       "language": "English",
       "lang": "eng",
-      "sourcecountry": "Australia"
+      "sourcecountry": "India"
     },
     {
-      "seendate": "2026-08-27T22:00:00Z",
-      "title": "INVESTOR ALERT : Pomerantz Law Firm Reminds Investors with Losses on their Investment in Smartsheet , Inc . of Class Action Lawsuit and Upcoming Deadlines",
-      "url": "http://www.prnewswire.com/news-releases/investor-alert-pomerantz-law-firm-reminds-investors-with-losses-on-their-investment-in-smartsheet-inc-of-class-action-lawsuit-and-upcoming-deadlines--smar-302862288.html",
-      "domain": "prnewswire.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T22:00:00Z",
-      "title": "The stakes are high as Kevin Warsh is set to give his first major speech as Fed Chair",
-      "url": "https://knpr.org/npr/2026-08-27/the-stakes-are-high-as-kevin-warsh-is-set-to-give-his-first-major-speech-as-fed-chair",
-      "domain": "knpr.org",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-08-27T22:00:00Z",
-      "title": "Stocks Slightly Higher on Mixed US Economic News",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/stocks-slightly-higher-mixed-us-140350730.html",
+      "seendate": "2026-08-29T05:45:00Z",
+      "title": "The Data Is Clear : Investors Who Make This 1 Move During Bear Markets Always Come Out Ahead",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/data-clear-investors-1-move-222000747.html",
       "domain": "finance.yahoo.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-08-27T22:00:00Z",
-      "title": "I Checked My Savings Rate for the First Time in 5 Years and It Felt Like a Punch in the Gut",
-      "url": "https://www.aol.com/articles/checked-savings-rate-first-time-201409000.html",
-      "domain": "aol.com",
+      "seendate": "2026-08-29T05:45:00Z",
+      "title": "U . S . officials revise claims that government agencies were hacked by Chinese , now say they were targets",
+      "url": "https://www.thehindu.com/sci-tech/technology/us-officials-revise-claims-that-government-agencies-were-hacked-by-chinese-now-say-they-were-targets/article71403434.ece",
+      "domain": "thehindu.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-08-29T05:45:00Z",
+      "title": "What If the Inflation Cure Is Worse Than the Disease ? - Investment Watch Blog",
+      "url": "https://www.investmentwatchblog.com/what-if-the-inflation-cure-is-worse-than-the-disease/",
+      "domain": "investmentwatchblog.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-08-27T22:00:00Z",
-      "title": "The stakes are high as Kevin Warsh is set to give his first major speech as Fed Chair",
-      "url": "https://www.kccu.org/business/2026-08-27/the-stakes-are-high-as-kevin-warsh-is-set-to-give-his-first-major-speech-as-fed-chair",
-      "domain": "kccu.org",
+      "seendate": "2026-08-29T05:45:00Z",
+      "title": "Federal Health Agencies Were Among the Targets of a China Linked Hacking Network the FBI Just Shut Down",
+      "url": "https://www.medicaldaily.com/doj-fbi-qtfy-china-hacking-hhs-nih-critical-infrastructure-477938",
+      "domain": "medicaldaily.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-08-27T22:00:00Z",
-      "title": "A breath of fresh paint \u2013 Standpoint Magazine",
-      "url": "https://www.standpointmag.co.uk/2020/03/25/a-breath-of-fresh-paint/",
-      "domain": "standpointmag.co.uk",
+      "seendate": "2026-08-29T05:45:00Z",
+      "title": "The biggest IPOs ever . And where Anthropic could land",
+      "url": "http://northcountrynow.com/premium/stacker/stories/the-biggest-ipos-ever-and-where-anthropic-could-land,388155",
+      "domain": "northcountrynow.com",
       "language": "English",
       "lang": "eng",
-      "sourcecountry": "United Kingdom"
+      "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-08-27T22:00:00Z",
-      "title": "Worried About a Bear Market ? Have This One Type of Stock in Your Portfolio Before a 20 % Crash .",
-      "url": "https://www.fool.com/investing/2026/08/27/worried-about-a-bear-market-have-this-one-type-of/?source=iedfolrf0000001",
+      "seendate": "2026-08-29T05:45:00Z",
+      "title": "The Federal Reserve purchases of short duration T - Bills jumped to $542 billion this week . US defends yen support to protect borrowing costs",
+      "url": "https://www.investmentwatchblog.com/the-federal-reserves-purchases-of-short-duration-t-bills-jumped-to-542-billion-this-week-us-defends-yen-support-to-protect-borrowing-costs/",
+      "domain": "investmentwatchblog.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T05:45:00Z",
+      "title": "What is really behind the rise in bond yields ? - Investment Watch Blog",
+      "url": "https://www.investmentwatchblog.com/what-is-really-behind-the-rise-in-bond-yields/",
+      "domain": "investmentwatchblog.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T04:45:00Z",
+      "title": "Wall Street Week Ahead : Jobs report , Broadcom results pose next hurdles for stock market rally",
+      "url": "https://economictimes.indiatimes.com/markets/us-stocks/news/wall-steet-week-ahead-jobs-report-broadcom-results-pose-next-hurdles-for-stock-market-rally/articleshow/133603682.cms",
+      "domain": "economictimes.indiatimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-08-29T04:45:00Z",
+      "title": "Oil settles lower on clues about Fed policy , rumors of Hormuz deal",
+      "url": "https://economictimes.indiatimes.com/markets/commodities/news/oil-settles-lower-on-clues-about-fed-policy-rumors-of-hormuz-deal/articleshow/133603629.cms",
+      "domain": "economictimes.indiatimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-08-29T04:45:00Z",
+      "title": "Global Markets | European shares rise as French stocks rebound ; markets digest Warsh speech",
+      "url": "https://economictimes.indiatimes.com/markets/us-stocks/news/global-markets-european-shares-rise-as-french-stocks-rebound-markets-digest-warsh-speech/articleshow/133603603.cms",
+      "domain": "economictimes.indiatimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-08-29T04:45:00Z",
+      "title": "Investors heartened by Warsh inflation talk , still uncertain about Fed action",
+      "url": "https://economictimes.indiatimes.com/markets/us-stocks/news/investors-heartened-by-warsh-inflation-talk-still-uncertain-about-fed-action/articleshow/133603732.cms",
+      "domain": "economictimes.indiatimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-08-29T04:45:00Z",
+      "title": "Fed Chair dodged growing turf war with Scott Bessent Treasury : expert",
+      "url": "https://www.rawstory.com/kevin-warsh-2677793718/",
+      "domain": "rawstory.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T04:30:00Z",
+      "title": "S & P 500 investors are quietly making a huge shift",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/p-500-investors-quietly-making-211700649.html",
+      "domain": "finance.yahoo.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T04:30:00Z",
+      "title": "Magnite Director Paul Caine Sells 7 , 500 Shares for $187 , 500",
+      "url": "https://www.fool.com/coverage/filings/2026/08/28/magnite-director-paul-caine-sells-7500-shares-for-187500/?source=iedfolrf0000001",
       "domain": "fool.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-08-27T22:00:00Z",
+      "seendate": "2026-08-29T04:30:00Z",
+      "title": "A Costco Special Dividend Could Be Coming , but Walmart Has Raised Its Dividend for 53 Consecutive Years . Here the Better Buy Now .",
+      "url": "https://www.fool.com/investing/2026/08/28/a-costco-special-dividend-could-be-coming-but-walm/?source=iedfolrf0000001",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T04:30:00Z",
       "title": "Stock Market Today , Aug . 27 : HP Slips 3 % on Weak PC Shipments Despite Fiscal Q3 Beat",
-      "url": "https://www.fool.com/coverage/stock-market-today/2026/08/27/stock-market-today-aug-27-hp-slips-3-on-weak-pc-shipments-despite-fiscal-q3-beat/?source=iedfolrf0000001",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/stock-market-today-aug-27-211310615.html",
+      "domain": "finance.yahoo.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T04:30:00Z",
+      "title": "Boeing vs . Joby Aviation : Which Airplane Manufacturing Stock Promises High - Flying Profits ?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/boeing-vs-joby-aviation-airplane-212101870.html",
+      "domain": "finance.yahoo.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T04:30:00Z",
+      "title": "Stock Market Today , Aug . 28 : Marvell Slides 10 % on Softer Fiscal 2028 Guidance and Google Deal Timing",
+      "url": "https://www.fool.com/coverage/stock-market-today/2026/08/28/stock-market-today-aug-28-marvell-slides-10-on-softer-fiscal-2028-guidance-and-google-deal-timing/?source=iedfolrf0000001",
       "domain": "fool.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-08-27T22:00:00Z",
-      "title": "Stock Market Today , Aug . 27 : Nvidia Surges on Blowout Results and Surprising Guidance",
-      "url": "https://www.fool.com/coverage/stock-market-today/2026/08/27/stock-market-today-aug-27-nvidia-surges-on-blowout-results-and-surprising-guidance/?source=iedfolrf0000001",
+      "seendate": "2026-08-29T04:30:00Z",
+      "title": "AP News in Brief at 12 : 04 a . m . EDT \u2013 Winnipeg Free Press",
+      "url": "https://www.winnipegfreepress.com/world/2026/08/28/ap-news-in-brief-at-1204-a-m-edt-965",
+      "domain": "winnipegfreepress.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Canada"
+    },
+    {
+      "seendate": "2026-08-29T04:30:00Z",
+      "title": "IP Strategy Receives Nasdaq Notification Regarding Delayed Form 10 - Q Filing",
+      "url": "http://www.newjerseytelegraph.com/news/279272095/ip-strategy-receives-nasdaq-notification-regarding-delayed-form-10-q-filing",
+      "domain": "newjerseytelegraph.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T04:30:00Z",
+      "title": "World Kinect CFO Jose - Miguel Tejada Sells 6 , 000 Shares for $223 , 000",
+      "url": "https://www.fool.com/coverage/filings/2026/08/28/world-kinect-cfo-jose-miguel-tejada-sells-6000-shares-for-223000/?source=iedfolrf0000001",
       "domain": "fool.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-08-27T22:00:00Z",
-      "title": "Inadvertent ? Lawyer for Fed governor accused of mortgage fraud says it was all an  oversight  * WorldNetDaily * by Bob Unruh",
-      "url": "https://www.wnd.com/2026/08/inadvertent-lawyer-fed-governor-accused-mortgage-fraud-says/",
-      "domain": "wnd.com",
+      "seendate": "2026-08-29T04:30:00Z",
+      "title": "Stock Market Today , Aug . 28 : PG & E Falls 8 % on Wildfire - Liability Uncertainty Ahead of Aug . 31 Deadline",
+      "url": "https://www.fool.com/coverage/stock-market-today/2026/08/28/stock-market-today-aug-28-pg-and-e-falls-8-on-wildfire-liability-uncertainty-ahead-of-aug-31-deadline/?source=iedfolrf0000001",
+      "domain": "fool.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-08-27T22:00:00Z",
-      "title": "US bank regulators finalize rules defining  unsafe  bank practices",
-      "url": "https://www.aol.com/articles/us-bank-regulators-finalize-rules-205359000.html",
-      "domain": "aol.com",
+      "seendate": "2026-08-29T04:30:00Z",
+      "title": "\u4e16\u7eaa\u8fd0\u6cb3  \u5f00\u901a\u5728\u5373 \uff0c \u6c5f\u6d77\u8054\u8fd0\u5982\u4f55\u6539\u53d8\u4e2d\u56fd\u4e0e\u4e1c\u76df",
+      "url": "https://wallstreetcn.com/articles/3780621",
+      "domain": "wallstreetcn.com",
+      "language": "Chinese",
+      "lang": "zho",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-08-29T04:30:00Z",
+      "title": "\u5168\u7403\u9996\u53d1 \uff0c \u96f7\u519b\u70b9\u8d5e \uff01 \u957f\u946b\u5b98\u5ba3LPDDR6\u5185\u5b58\u91cf\u4ea7",
+      "url": "https://wallstreetcn.com/articles/3780625",
+      "domain": "wallstreetcn.com",
+      "language": "Chinese",
+      "lang": "zho",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-08-29T04:30:00Z",
+      "title": "\u745e\u94f6\u8be6\u89e3\u5b87\u6811\u79d1\u6280 \uff1a \u4eba\u5f62\u673a\u5668\u4eba\u6574\u673a\u5148\u884c\u8005 \uff0c \u5c0f\u8111  \u4e0e\u672c\u4f53\u6280\u672f\u9886\u5148",
+      "url": "https://wallstreetcn.com/articles/3780624",
+      "domain": "wallstreetcn.com",
+      "language": "Chinese",
+      "lang": "zho",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-08-29T04:15:00Z",
+      "title": "A Costco Special Dividend Could Be Coming , but Walmart Has Raised Its Dividend for 53 Consecutive Years . Here the Better Buy Now .",
+      "url": "https://www.fool.com/investing/2026/08/28/a-costco-special-dividend-could-be-coming-but-walm/",
+      "domain": "fool.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-08-27T22:00:00Z",
-      "title": "ATF announces investigation into  major  cybersecurity incident",
-      "url": "https://midmichigannow.com/news/nation-world/atf-announces-investigation-into-major-cybersecurity-incident-doj-ransomware-russia",
-      "domain": "midmichigannow.com",
+      "seendate": "2026-08-29T04:15:00Z",
+      "title": "Fed Chair Kevin Warsh warns inflation is still too high : NPR",
+      "url": "https://www.npr.org/transcripts/nx-s1-5947903",
+      "domain": "npr.org",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T04:15:00Z",
+      "title": "Inflation data  concerning : Fed chair Warsh signals rates may need to rise",
+      "url": "https://timesofindia.indiatimes.com/business/international-business/inflation-data-concerning-fed-chair-warsh-signals-rates-may-need-to-rise/articleshow/133603111.cms",
+      "domain": "timesofindia.indiatimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-08-29T04:15:00Z",
+      "title": "After FTSE Russell Reclassification , Moody Upgrades Nigeria Outlook on Stronger External Position \u2013 THISDAYLIVE",
+      "url": "https://www.thisdaylive.com/2026/08/29/after-ftse-russell-reclassification-moodys-upgrades-nigerias-outlook-on-stronger-external-position/",
+      "domain": "thisdaylive.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Nigeria"
+    },
+    {
+      "seendate": "2026-08-29T04:00:00Z",
+      "title": "These 3 Dividend ETFs Cost Less Than 7 Cents a Year per $100 and Still Pay You Up to 4 Percent",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/3-dividend-etfs-cost-less-213535559.html",
+      "domain": "finance.yahoo.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T04:00:00Z",
+      "title": "IP Strategy Receives Nasdaq Notification Regarding Delayed Form 10 - Q Filing",
+      "url": "http://www.californiatelegraph.com/news/279272095/ip-strategy-receives-nasdaq-notification-regarding-delayed-form-10-q-filing",
+      "domain": "californiatelegraph.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T03:45:00Z",
+      "title": "Brambles ( OTCMKTS : BXBLY ) vs . GFL Environmental ( NYSE : GFL ) Head - To - Head Survey",
+      "url": "https://www.dailypolitical.com/2026/08/28/brambles-otcmktsbxbly-vs-gfl-environmental-nysegfl-head-to-head-survey.html",
+      "domain": "dailypolitical.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T03:45:00Z",
+      "title": "Warsh inflation warning sets up September showdown for the Fed",
+      "url": "https://www.businesstimes.com.sg/companies-markets/banking-finance/warshs-inflation-warning-sets-september-showdown-fed",
+      "domain": "businesstimes.com.sg",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Singapore"
+    },
+    {
+      "seendate": "2026-08-29T03:45:00Z",
+      "title": "The biggest IPOs ever . And where Anthropic could land",
+      "url": "https://www.97xonline.com/news/biggest-ipos-ever/4JEDRMSVWEYEXPICCOUZHAR7RM/",
+      "domain": "97xonline.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T03:45:00Z",
+      "title": "The biggest IPOs ever . And where Anthropic could land",
+      "url": "https://www.easy931miami.com/news/biggest-ipos-ever/4JEDRMSVWEYEXPICCOUZHAR7RM/",
+      "domain": "easy931miami.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": ""
     },
     {
-      "seendate": "2026-08-27T22:00:00Z",
-      "title": "Is Soaring AI CapEx Putting Microsoft Stock Valuation At Risk ?",
-      "url": "https://finance.yahoo.com/technology/ai/articles/soaring-ai-capex-putting-microsoft-134637658.html",
-      "domain": "finance.yahoo.com",
+      "seendate": "2026-08-29T03:45:00Z",
+      "title": "IP Strategy Receives Nasdaq Notification Regarding Delayed Form 10 - Q Filing",
+      "url": "http://www.tennesseedaily.com/news/279272095/ip-strategy-receives-nasdaq-notification-regarding-delayed-form-10-q-filing",
+      "domain": "tennesseedaily.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-08-27T22:00:00Z",
-      "title": "The stakes are high as Kevin Warsh is set to give his first major speech as Fed Chair",
-      "url": "https://www.wxpr.org/2026-08-27/the-stakes-are-high-as-kevin-warsh-is-set-to-give-his-first-major-speech-as-fed-chair",
-      "domain": "wxpr.org",
+      "seendate": "2026-08-29T03:45:00Z",
+      "title": "Yen passes 160 per dollar to hit weakest level in a month",
+      "url": "https://www.businesstimes.com.sg/companies-markets/banking-finance/yen-passes-160-dollar-hit-weakest-level-month",
+      "domain": "businesstimes.com.sg",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Singapore"
+    },
+    {
+      "seendate": "2026-08-29T03:30:00Z",
+      "title": "On August 2 , 1994 , a squirrel chewed through a power line in Trumbull , Connecticut , and froze the Nasdaq for 34 minutes , the second blackout a squirrel had handed the exchange in seven years , because every trade in America electronic market ran...",
+      "url": "https://spacedaily.com/b-on-august-2-1994-a-squirrel-chewed-through-a-power-line-in-trumbull-connecticut-and-froze-the-nasdaq-for-34-minutes-the-second-blackout-a-squirrel-had-handed-the-exchange-in-seven-years-because/",
+      "domain": "spacedaily.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-08-27T22:00:00Z",
-      "title": "These 3 Dividend ETFs Cost Less Than 7 Cents a Year per $100 and Still Pay You Up to 4 Percent",
-      "url": "https://www.aol.com/articles/3-dividend-etfs-cost-less-213535000.html",
+      "seendate": "2026-08-29T03:30:00Z",
+      "title": "Chinese hackers did not target Nasa , Senate - US reverses statement on agency breaches",
+      "url": "https://timesofindia.indiatimes.com/world/us/nasa-senate-were-targeted-by-chinese-hackers-not-all-were-breached-us/articleshow/133602616.cms",
+      "domain": "timesofindia.indiatimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-08-29T03:30:00Z",
+      "title": "Fed Chair Warsh signals rate hikes may be needed with U . S . inflation stubbornly elevated",
+      "url": "https://www.texarkanagazette.com/news/2026/aug/28/fed-chair-warsh-signals-rate-hikes-may-be-needed/",
+      "domain": "texarkanagazette.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T03:30:00Z",
+      "title": "AP News in Brief at 11 : 04 p . m . EDT",
+      "url": "https://santamariatimes.com/ap/national/ap-news-in-brief-at-11-04-p-m-edt/article_ed30d031-44f5-587c-bd78-b92cf123ac3a.html",
+      "domain": "santamariatimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T03:30:00Z",
+      "title": "NatWest ( NWG ) Looks to America for Growth as united kingdom Banking Competition Intensifies",
+      "url": "https://www.insidermonkey.com/blog/natwest-nwg-looks-to-america-for-growth-as-uk-banking-competition-intensifies-1822896/",
+      "domain": "insidermonkey.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T03:15:00Z",
+      "title": "Wall Street holds out hope for gold despite fall to $4 , 445 / oz , Main Street pares bullish majority with payrolls now in focus",
+      "url": "http://www.kitco.com/news/article/2026-08-28/wall-street-holds-out-hope-gold-despite-fall-4445oz-main-street-pares",
+      "domain": "kitco.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-08-29T03:15:00Z",
+      "title": "Fed Kevin Warsh warns inflation is too high , sparking bets rate hikes are coming",
+      "url": "https://www.ijpr.org/npr-news/2026-08-28/feds-kevin-warsh-warns-inflation-is-too-high-sparking-bets-rate-hikes-are-coming",
+      "domain": "ijpr.org",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T03:15:00Z",
+      "title": "Bank of America takes heat for stark S & P 500 call",
+      "url": "https://www.aol.com/articles/bank-america-takes-heat-stark-223700000.html",
       "domain": "aol.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-08-27T22:00:00Z",
-      "title": "New York : Diary \u2013 Standpoint Magazine",
-      "url": "https://www.standpointmag.co.uk/2008/10/24/dispatches-november/",
-      "domain": "standpointmag.co.uk",
+      "seendate": "2026-08-29T03:15:00Z",
+      "title": "Kevin Warsh is driving treasuries market , whether he wants to or not",
+      "url": "https://www.moneycontrol.com/news/business/kevin-warsh-is-driving-treasuries-market-whether-he-wants-to-or-not-14017863.html",
+      "domain": "moneycontrol.com",
       "language": "English",
       "lang": "eng",
-      "sourcecountry": "United Kingdom"
+      "sourcecountry": "India"
     },
     {
-      "seendate": "2026-08-27T22:00:00Z",
-      "title": "Art \u2013 Standpoint Magazine",
-      "url": "https://www.standpointmag.co.uk/category/magazine/civilisation/art/",
-      "domain": "standpointmag.co.uk",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United Kingdom"
-    },
-    {
-      "seendate": "2026-08-27T21:45:00Z",
-      "title": "The stakes are high as Kevin Warsh is set to give his first major speech as Fed Chair",
-      "url": "https://www.publicradiotulsa.org/npr-national-news/2026-08-27/the-stakes-are-high-as-kevin-warsh-is-set-to-give-his-first-major-speech-as-fed-chair",
-      "domain": "publicradiotulsa.org",
+      "seendate": "2026-08-29T03:15:00Z",
+      "title": "The biggest IPOs ever . And where Anthropic could land",
+      "url": "https://www.y100fm.com/news/biggest-ipos-ever/4JEDRMSVWEYEXPICCOUZHAR7RM/",
+      "domain": "y100fm.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-08-27T21:45:00Z",
-      "title": "Quinn : They Know What Coming , Because They Planned It ...",
-      "url": "https://www.zerohedge.com/markets/quinn-they-know-whats-coming-because-they-planned-it",
+      "seendate": "2026-08-29T03:15:00Z",
+      "title": "A Costco Special Dividend Could Be Coming , but Walmart Has Raised Its Dividend for 53 Consecutive Years . Here the Better Buy Now .",
+      "url": "https://www.aol.com/articles/costco-special-dividend-could-coming-023500000.html",
+      "domain": "aol.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T03:15:00Z",
+      "title": "Reviewing Genuine Parts ( NYSE : GPC ) and Pool ( NASDAQ : POOL )",
+      "url": "https://www.tickerreport.com/banking-finance/13564092/reviewing-genuine-parts-nysegpc-and-pool-nasdaqpool.html",
+      "domain": "tickerreport.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T03:15:00Z",
+      "title": "Critical Comparison : ALT5 Sigma ( AIFC ) versus Its Peers",
+      "url": "https://www.tickerreport.com/banking-finance/13564089/critical-comparison-alt5-sigma-aifc-versus-its-peers.html",
+      "domain": "tickerreport.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T02:45:00Z",
+      "title": "Dow Jones Top Markets Headlines at 7 PM ET : Warsh Says the Fed May Not Be Done Fighting Inflation | U . S . ...",
+      "url": "https://www.morningstar.com/news/dow-jones/202608289275/dow-jones-top-markets-headlines-at-7-pm-et-warsh-says-the-fed-may-not-be-done-fighting-inflation-us",
+      "domain": "morningstar.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-08-29T02:45:00Z",
+      "title": "The biggest IPOs ever . And where Anthropic could land",
+      "url": "https://www.wsbtv.com/news/biggest-ipos-ever/4JEDRMSVWEYEXPICCOUZHAR7RM/",
+      "domain": "wsbtv.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T02:45:00Z",
+      "title": "Dollar rallies after Fed chief lifts rate expectations",
+      "url": "https://www.channelnewsasia.com/world/dollar-rallies-after-fed-chief-lifts-rate-expectations-6348726",
+      "domain": "channelnewsasia.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T02:45:00Z",
+      "title": "AppLovin vs . Alphabet : Which High - Growth Digital Media Stock Is the Better Investment in 2026 ?",
+      "url": "https://finance.yahoo.com/media-advertising/articles/applovin-vs-alphabet-high-growth-021135202.html",
+      "domain": "finance.yahoo.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T02:45:00Z",
+      "title": "Breakfast @ Tuoi Tre News \u2013 August 29",
+      "url": "https://news.tuoitre.vn/breakfast-tuoi-tre-news-august-29-103260828211753027.htm",
+      "domain": "news.tuoitre.vn",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": ""
+    },
+    {
+      "seendate": "2026-08-29T02:30:00Z",
+      "title": "Here Why Fed Chair Warsh Is So Worried About Guiding Markets",
+      "url": "https://www.forbes.com/sites/eriksherman/2026/08/28/heres-why-fed-chair-warsh-is-so-worried-about-guiding-markets/",
+      "domain": "forbes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T02:30:00Z",
+      "title": "Fed Chair Warsh signals rate hikes may be needed with US inflation stubbornly elevated",
+      "url": "https://www.channel3000.com/news/politics/fed-chair-warsh-signals-rate-hikes-may-be-needed-with-us-inflation-stubbornly-elevated/article_ea85eac3-de9b-5f5d-bde2-58638476c62b.html",
+      "domain": "channel3000.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T02:30:00Z",
+      "title": "The biggest IPOs ever . And where Anthropic could land",
+      "url": "https://www.magic1021.com/news/biggest-ipos-ever/4JEDRMSVWEYEXPICCOUZHAR7RM/",
+      "domain": "magic1021.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T02:30:00Z",
+      "title": "Reviewing Unitil ( NYSE : UTL ) and CenterPoint Energy ( NYSE : CNP )",
+      "url": "https://www.dailypolitical.com/2026/08/28/reviewing-unitil-nyseutl-and-centerpoint-energy-nysecnp.html",
+      "domain": "dailypolitical.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T02:30:00Z",
+      "title": "Doximity ( NYSE : DOCS ) vs . Aclarion ( NASDAQ : ACON ) Critical Analysis",
+      "url": "https://www.themarketsdaily.com/2026/08/29/doximity-nysedocs-vs-aclarion-nasdaqacon-critical-analysis.html",
+      "domain": "themarketsdaily.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T02:30:00Z",
+      "title": "Motley Fool Advisor Tracks iShares Semiconductor ETF 70 % Gain",
+      "url": "https://www.el-balad.com/17046414",
+      "domain": "el-balad.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Egypt"
+    },
+    {
+      "seendate": "2026-08-29T02:30:00Z",
+      "title": "Nvidia Earnings Blowout Is Good News and Bad News for Retirement Investors",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/nvidia-earnings-blowout-good-news-200227224.html",
+      "domain": "finance.yahoo.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T02:30:00Z",
+      "title": "Marvell Q2 FY2027 earnings : record revenue , raised guidance",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/marvell-q2-fy2027-earnings-record-202719586.html",
+      "domain": "finance.yahoo.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T02:30:00Z",
+      "title": "The week in charts : A decade of UPI , services inflation , Kanda Express",
+      "url": "https://www.livemint.com/news/the-week-in-charts-upi-milestone-services-inflation-kanda-express-11787816764963.html",
+      "domain": "livemint.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-08-29T02:30:00Z",
+      "title": "Stock Transaction : Powell Industries Richard Williams Sells 2 , 250 Shares",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/stock-transaction-powell-industries-richard-202004359.html",
+      "domain": "finance.yahoo.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T02:30:00Z",
+      "title": "I Think Johnson & Johnson Is the Best Dividend Stock to Buy Right Now",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/think-johnson-johnson-best-dividend-202100641.html",
+      "domain": "finance.yahoo.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T02:15:00Z",
+      "title": "US officials revise claims that government agencies were hacked by Chinese , now say they were targets",
+      "url": "https://wiky.com/2026/08/28/us-officials-backpedal-on-claims-that-government-agencies-were-hacked-by-chinese-now-say-they-were-targets/",
+      "domain": "wiky.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T02:15:00Z",
+      "title": "Fed Warsh not ruling out rate hike amid inflation concerns",
+      "url": "https://www.krwg.org/shows/newshour/clip/inflation-worries-1787949751",
+      "domain": "krwg.org",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T02:15:00Z",
+      "title": "Bank of America takes heat for stark S & P 500 call",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/bank-america-takes-heat-stark-013700400.html",
+      "domain": "finance.yahoo.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T02:15:00Z",
+      "title": "US revises statements suggesting Chinese hackers attacked agencies - Dominican Republic Post \u2013 Caribbean News , Business , Travel & Culture",
+      "url": "https://dominicanrepublicpost.com/us-revises-statements-suggesting-chinese-hackers-attacked-agencies/",
+      "domain": "dominicanrepublicpost.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T02:15:00Z",
+      "title": "Kevin Warsh puts September Fed rate hike back on the table",
+      "url": "https://www.afr.com/chanticleer/warsh-just-set-up-another-pressure-test-for-markets-in-18-days-time-20260829-p60sll",
+      "domain": "afr.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Australia"
+    },
+    {
+      "seendate": "2026-08-29T02:15:00Z",
+      "title": "Republicans Pitch Plan To Protect Investments From  Inflation Tax : What To Know",
+      "url": "https://www.zerohedge.com/political/republicans-pitch-plan-protect-investments-inflation-tax-what-know",
       "domain": "zerohedge.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-08-27T21:45:00Z",
-      "title": "There so much betting against long - term bonds that a turnaround could catch investors off guard , says Citadel Securities",
-      "url": "https://finance.yahoo.com/markets/stocks/articles/much-betting-against-long-term-133600254.html",
+      "seendate": "2026-08-29T02:15:00Z",
+      "title": "Fed Chair Warsh signals rate hikes may be needed with US inflation stubbornly elevated - WSVN 7News | Miami News , Weather , Sports",
+      "url": "https://wsvn.com/news/us-world/fed-chair-warsh-signals-rate-hikes-may-be-needed-with-us-inflation-stubbornly-elevated/",
+      "domain": "wsvn.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T02:15:00Z",
+      "title": "The biggest IPOs ever . And where Anthropic could land",
+      "url": "https://www.hot105fm.com/news/biggest-ipos-ever/4JEDRMSVWEYEXPICCOUZHAR7RM/",
+      "domain": "hot105fm.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T02:00:00Z",
+      "title": "The biggest IPOs ever . And where Anthropic could land",
+      "url": "https://www.kkyx.com/news/biggest-ipos-ever/4JEDRMSVWEYEXPICCOUZHAR7RM/",
+      "domain": "kkyx.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T02:00:00Z",
+      "title": "The biggest IPOs ever . And where Anthropic could land",
+      "url": "https://www.wdbo.com/news/biggest-ipos-ever/4JEDRMSVWEYEXPICCOUZHAR7RM/",
+      "domain": "wdbo.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T02:00:00Z",
+      "title": "Why Goldgroup Mining Tumbled Today | The Motley Fool",
+      "url": "https://www.fool.com/investing/2026/08/28/why-goldgroup-mining-tumbled-today/?source=iedfolrf0000001",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T02:00:00Z",
+      "title": "Kevin Warsh  quieter Fed  now includes a smidgen of guidance",
+      "url": "https://economictimes.indiatimes.com/news/international/global-trends/kevin-warshs-quieter-fed-now-includes-a-smidgen-of-guidance/articleshow/133602144.cms",
+      "domain": "economictimes.indiatimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-08-29T02:00:00Z",
+      "title": "US officials revise claims that government agencies were hacked by Chinese , now say they were targets",
+      "url": "https://kfgo.com/2026/08/28/us-officials-backpedal-on-claims-that-government-agencies-were-hacked-by-chinese-now-say-they-were-targets/",
+      "domain": "kfgo.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T02:00:00Z",
+      "title": "The biggest IPOs ever . And where Anthropic could land",
+      "url": "https://www.k991fm.com/news/biggest-ipos-ever/4JEDRMSVWEYEXPICCOUZHAR7RM/",
+      "domain": "k991fm.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": ""
+    },
+    {
+      "seendate": "2026-08-29T02:00:00Z",
+      "title": "US officials revise claims that government agencies were hacked by Chinese , now say they were targets",
+      "url": "https://economictimes.indiatimes.com/news/international/world-news/us-officials-revise-claims-that-government-agencies-were-hacked-by-chinese-now-say-they-were-targets/articleshow/133602116.cms",
+      "domain": "economictimes.indiatimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-08-29T02:00:00Z",
+      "title": "Why Did D - Wave Quantum Stock Fall 16 . 6 % This Week ?",
+      "url": "https://www.fool.com/investing/2026/08/28/why-did-d-wave-quantum-stock-fall-166-this-week/?source=iedfolrf0000001",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T02:00:00Z",
+      "title": "Prediction : This Is What a $1 , 000 Investment in Micron Stock Will Be Worth by 2030",
+      "url": "https://www.fool.com/investing/2026/08/28/prediction-this-is-what-a-usd1-000-investment-in-micron-stock-will-be-worth-by-2030/?source=iedfolrf0000001",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T02:00:00Z",
+      "title": "The biggest IPOs ever . And where Anthropic could land",
+      "url": "https://www.wpxi.com/news/biggest-ipos-ever/4JEDRMSVWEYEXPICCOUZHAR7RM/",
+      "domain": "wpxi.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T02:00:00Z",
+      "title": "Why HP Stock Topped the Market Today | The Motley Fool",
+      "url": "https://www.fool.com/investing/2026/08/28/why-hp-stock-topped-the-market-today/?source=iedfolrf0000001",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T02:00:00Z",
+      "title": "PayPal Stock Biggest Risk Shows Up In Its Take Rate",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/paypal-stocks-biggest-risk-shows-184801581.html",
       "domain": "finance.yahoo.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-08-27T21:45:00Z",
-      "title": "U . S . PCE inflation rises slightly more than expected in July",
-      "url": "https://finance.yahoo.com/economy/policy/articles/u-pce-inflation-rises-slightly-132202909.html",
+      "seendate": "2026-08-29T02:00:00Z",
+      "title": "US officials revise claims that government agencies were hacked by Chinese , now say they were targets",
+      "url": "https://wkzo.com/2026/08/28/us-officials-backpedal-on-claims-that-government-agencies-were-hacked-by-chinese-now-say-they-were-targets/",
+      "domain": "wkzo.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T02:00:00Z",
+      "title": "\u4e09\u7bad\u9f50\u53d1 \uff0c \u4e2d\u56fd\u4f4f\u623f\u91d1\u878d\u5236\u5ea6\u8fce\u6765\u5212\u65f6\u4ee3\u53d8\u9769",
+      "url": "https://wallstreetcn.com/articles/3780620",
+      "domain": "wallstreetcn.com",
+      "language": "Chinese",
+      "lang": "zho",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-08-29T02:00:00Z",
+      "title": "\u7279\u6717\u666e\u5ba3\u5e03\u4e0e\u59d4\u5185\u745e\u62c9\u8fbe\u6210\u77f3\u6cb9\u534f\u8bae \uff0c \u79f0\u83b7\u903e650\u4ebf\u6876\u50a8\u91cf  \u591a\u6570\u63a7\u5236\u6743",
+      "url": "https://wallstreetcn.com/articles/3780618",
+      "domain": "wallstreetcn.com",
+      "language": "Chinese",
+      "lang": "zho",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-08-29T02:00:00Z",
+      "title": "\u6c83\u4ec0  \u6770\u514b\u900a\u970d\u5c14  \u8bb2\u5b8c \uff0c \u7f8e\u8054\u50a89\u6708  \u4e0d\u52a0\u4e5f\u5f97\u52a0 \uff1f",
+      "url": "https://wallstreetcn.com/articles/3780619",
+      "domain": "wallstreetcn.com",
+      "language": "Chinese",
+      "lang": "zho",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-08-29T02:00:00Z",
+      "title": "\u4f0a\u6717 \uff1a \u6301\u7eed\u63a7\u5236\u970d\u5c14\u6728\u5179\u6d77\u5ce1 \uff0c \u7f8e\u56fd\u5fc5\u987b\u5c65\u884c\u4e49\u52a1",
+      "url": "https://wallstreetcn.com/articles/3780616",
+      "domain": "wallstreetcn.com",
+      "language": "Chinese",
+      "lang": "zho",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-08-29T01:45:00Z",
+      "title": "European\u00a0shares rise as French stocks rebound ; markets digest Warsh speech",
+      "url": "https://www.businesstimes.com.sg/companies-markets/capital-markets-currencies/european-shares-rise-french-stocks-rebound-markets-digest-warsh-speech",
+      "domain": "businesstimes.com.sg",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Singapore"
+    },
+    {
+      "seendate": "2026-08-29T01:45:00Z",
+      "title": "US\u00a0stocks : Wall Street ends lower after Fed Chair Warsh reaffirms inflation fight",
+      "url": "https://www.businesstimes.com.sg/companies-markets/capital-markets-currencies/us-stocks-wall-street-ends-lower-after-fed-chair-warsh-reaffirms-inflation-fight",
+      "domain": "businesstimes.com.sg",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Singapore"
+    },
+    {
+      "seendate": "2026-08-29T01:45:00Z",
+      "title": "Jiayin ( JFIN ) Q2 2026 Earnings Call Transcript",
+      "url": "https://www.aol.com/articles/jiayin-jfin-q2-2026-earnings-002816000.html",
+      "domain": "aol.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T01:45:00Z",
+      "title": "Oil\u00a0settles lower on clues about Fed policy , rumours of Hormuz deal",
+      "url": "https://www.businesstimes.com.sg/companies-markets/energy-commodities/oil-settles-lower-clues-about-fed-policy-rumours-hormuz-deal",
+      "domain": "businesstimes.com.sg",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Singapore"
+    },
+    {
+      "seendate": "2026-08-29T01:45:00Z",
+      "title": "Webull Surges 8 %, Robinhood Ticks Up as the Retail Trading Bid Extends",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/webull-surges-8-robinhood-ticks-183724062.html",
       "domain": "finance.yahoo.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T01:45:00Z",
+      "title": "The biggest IPOs ever . And where Anthropic could land",
+      "url": "https://www.1015vibe.com/news/biggest-ipos-ever/4JEDRMSVWEYEXPICCOUZHAR7RM/",
+      "domain": "1015vibe.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": ""
+    },
+    {
+      "seendate": "2026-08-29T01:45:00Z",
+      "title": "The biggest IPOs ever . And where Anthropic could land",
+      "url": "https://www.powerorlando.com/news/biggest-ipos-ever/4JEDRMSVWEYEXPICCOUZHAR7RM/",
+      "domain": "powerorlando.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": ""
+    },
+    {
+      "seendate": "2026-08-29T01:30:00Z",
+      "title": "AP News in Brief at 9 : 04 p . m . EDT",
+      "url": "http://www.idahostatejournal.com/news/national/ap-news-in-brief-at-9-04-p-m-edt/article_aa62eb4a-9407-57dc-8332-1f13a637fefd.html",
+      "domain": "idahostatejournal.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T01:30:00Z",
+      "title": "U . S . stocks slide after Federal Reserve chair hints interest rates to remain firm",
+      "url": "http://www.iranherald.com/news/279271420/u-s-stocks-slide-after-federal-reserve-chair-hints-interest-rates-to-remain-firm",
+      "domain": "iranherald.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Iran"
+    },
+    {
+      "seendate": "2026-08-29T01:30:00Z",
+      "title": "The biggest IPOs ever . And where Anthropic could land",
+      "url": "https://www.wsoctv.com/news/biggest-ipos-ever/4JEDRMSVWEYEXPICCOUZHAR7RM/",
+      "domain": "wsoctv.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T01:30:00Z",
+      "title": "Wall Street Review : Stocks End Week Mixed Amid Strong Nvidia Earnings , Fed Clarity",
+      "url": "https://www.theepochtimes.com/business/wall-street-review-stocks-end-week-mixed-amid-strong-nvidia-earnings-fed-clarity-6080921",
+      "domain": "theepochtimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T01:30:00Z",
+      "title": "Strategy Rally Takes Pause : Stock ( MSTR ) Flashes Overbought Signal",
+      "url": "https://thebull.com.au/us-news/strategy-rally-takes-pause-stock-mstr-flashes-overbought-signal/",
+      "domain": "thebull.com.au",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Australia"
+    },
+    {
+      "seendate": "2026-08-29T01:30:00Z",
+      "title": "The bond market prepares for a hike to interest rates , while US stocks drift lower",
+      "url": "http://www.idahostatejournal.com/news/world/the-bond-market-prepares-for-a-hike-to-interest-rates-while-us-stocks-drift-lower/article_2db217c2-58b3-58be-8a64-7c3f0d4b3f15.html",
+      "domain": "idahostatejournal.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T01:30:00Z",
+      "title": "The biggest IPOs ever . And where Anthropic could land",
+      "url": "https://www.wsbradio.com/news/biggest-ipos-ever/4JEDRMSVWEYEXPICCOUZHAR7RM/",
+      "domain": "wsbradio.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T00:15:00Z",
+      "title": "The biggest IPOs ever . And where Anthropic could land",
+      "url": "https://www.wape.com/news/biggest-ipos-ever/4JEDRMSVWEYEXPICCOUZHAR7RM/",
+      "domain": "wape.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-29T00:15:00Z",
+      "title": "Fed Chair Warsh indicates hawkish shift , puts inflation back at centre",
+      "url": "http://www.middleeaststar.com/news/279271839/fed-chair-warsh-indicates-hawkish-shift-puts-inflation-back-at-centre",
+      "domain": "middleeaststar.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Syria"
+    },
+    {
+      "seendate": "2026-08-29T00:15:00Z",
+      "title": "The biggest IPOs ever . And where Anthropic could land",
+      "url": "https://www.theboneonline.com/news/biggest-ipos-ever/4JEDRMSVWEYEXPICCOUZHAR7RM/",
+      "domain": "theboneonline.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-08-28T23:45:00Z",
+      "title": "Unfounded : Reliance Industries rejects allegations by Subhash Chandra",
+      "url": "https://timesofindia.indiatimes.com/business/india-business/unfounded-reliance-industries-rejects-allegations-by-subhash-chandra/articleshow/133601710.cms",
+      "domain": "timesofindia.indiatimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
     }
   ],
   "methodology": "GDELT Doc 2.0 artlist \u2014 a machine index of worldwide news. TWO bounded requests per refresh (one per LANGUAGE LANE, the two fixed queries above, <=200 records each, >=15s host spacing; GDELT open data: URL/title/date/domain are facts, article copyright stays with the publishers), sort=datedesc (machine ordering, not editorial). The Chinese lane is domain-anchored on wallstreetcn.com (\u534e\u5c14\u8857\u89c1\u95fb \u2014 a \u8d22\u8054\u793e-style 7\u00d724 financial newswire): \u8d22\u8054\u793e itself has ZERO GDELT crawl coverage and CJK phrase queries are rejected by the API ('phrase too short'), so a domain seed is the only proven form (probe evidence in docs/data-intake-gdelt-news-feed.md). lang = the ingest-resolved lane (API language field first, request provenance fallback; never guessed from title bytes). seendate is GDELT's first-seen UTC stamp (15-min resolution) \u2014 the display freshness anchor. Rows are metadata + outbound links only: no article text is stored, summarized or fabricated; missing source fields are shown empty, never guessed. Dedup key = exact URL WITHIN a lane; the two languages are different articles and are never collapsed across lanes. Coverage = whatever GDELT's crawl saw; gaps are gaps. The payload caps the item list at 150 newest while by_day/total cover the full trailing 30-day cache window. Display-only, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-08-28T17:55:00.953893+00:00"
+  "snapshot_ts": "2026-08-29T09:04:20.121458+00:00"
 }

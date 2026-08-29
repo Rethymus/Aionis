@@ -10,54 +10,26 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-08-28T02:02:49+00:00",
-  "n_snapshots": 3,
+  "latest_snapshot_ts": "2026-08-29T08:09:06+00:00",
+  "n_snapshots": 4,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
       "ticker": "NVDA",
-      "mentions": 6,
-      "sentiment": 0.013,
-      "bull_ratio": 0.5,
-      "score_sum": 0
-    },
-    {
-      "ticker": "META",
-      "mentions": 2,
-      "sentiment": -0.168,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "MSFT",
       "mentions": 1,
-      "sentiment": 0.033,
+      "sentiment": -0.295,
       "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "GOOG",
-      "mentions": 1,
-      "sentiment": 0.105,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "AMZN",
-      "mentions": 1,
-      "sentiment": 0.547,
-      "bull_ratio": 1.0,
       "score_sum": 0
     }
   ],
   "pressure": {
     "status": "accumulating",
     "by_ticker": {},
-    "n_snapshots": 3,
-    "latest_date": "2026-08-28",
+    "n_snapshots": 4,
+    "latest_date": "2026-08-29",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-08-28T17:55:08.219534+00:00"
+  "snapshot_ts": "2026-08-29T09:04:27.839736+00:00"
 }

@@ -1,12 +1,12 @@
 {
   "status": "ok",
-  "as_of": "2026-08-26",
+  "as_of": "2026-08-28",
   "window": {
     "start": "2026-05-01",
-    "end": "2026-08-26"
+    "end": "2026-08-28"
   },
   "issuers": 50,
-  "total": 206,
+  "total": 209,
   "unclassified": 8,
   "by_category": {
     "agreement_termination": 1,
@@ -14,12 +14,12 @@
     "delisting": 1,
     "exhibits": 4,
     "exit_costs": 1,
-    "financial_obligation": 4,
-    "major_agreement": 3,
+    "financial_obligation": 5,
+    "major_agreement": 4,
     "merger_completion": 1,
     "officer_changes": 44,
     "other": 1,
-    "other_events": 29,
+    "other_events": 30,
     "reg_fd": 14,
     "results": 60,
     "security_terms": 4,
@@ -27,6 +27,43 @@
     "vote_results": 24
   },
   "events": [
+    {
+      "ticker": "XOM",
+      "company": "ExxonMobil Holdings Corp",
+      "filing_date": "2026-08-28",
+      "form": "8-K",
+      "items": [
+        "8.01",
+        "9.01"
+      ],
+      "category": "other_events",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2115436/000119312526373026/d82162d8k.htm"
+    },
+    {
+      "ticker": "BA",
+      "company": "BOEING CO",
+      "filing_date": "2026-08-28",
+      "form": "8-K",
+      "items": [
+        "1.01",
+        "2.03",
+        "9.01"
+      ],
+      "category": "financial_obligation",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/12927/000162828026059427/ba-20260824.htm"
+    },
+    {
+      "ticker": "LMT",
+      "company": "LOCKHEED MARTIN CORP",
+      "filing_date": "2026-08-28",
+      "form": "8-K",
+      "items": [
+        "1.01",
+        "9.01"
+      ],
+      "category": "major_agreement",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/936468/000119312526371750/d177255d8k.htm"
+    },
     {
       "ticker": "NVDA",
       "company": "NVIDIA CORP",
@@ -2495,5 +2532,5 @@
     }
   ],
   "methodology": "SEC Form 8-K current reports \u2014 the legally mandated material-event disclosure (public domain, 17 U.S.C. \u00a7105), due within 4 business days of the event. Panel streams a bounded 50 large-cap issuer set (5 mega-cap seed + v2 20 + v3 25 across financials, payments, healthcare, staples, energy, industrials, tech/comm \u2014 breadth expansions 2026-08-22; still bounded, NOT full market; XOM carries both its pre-succession CIK and the 2026-07-01 8-K12B successor entity) since 2026-05-01; each row links the EDGAR primary document. Items are regex-extracted from the primary doc (nbsp/thin-space entities normalized) and mapped to ONE category by a rare-material-first precedence (delisting > merger completion > control change > non-reliance > officer changes > ... > exhibits); the full item list is preserved per row. Documents whose items cannot be extracted are counted as unclassified \u2014 never guessed. Filing-date point-in-time; 8-K/A amendments are new accessions (immutable). Display-only, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-08-28T17:55:00.938810+00:00"
+  "snapshot_ts": "2026-08-29T09:04:20.100176+00:00"
 }

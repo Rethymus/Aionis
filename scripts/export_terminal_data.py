@@ -7247,8 +7247,16 @@ def main() -> None:
     _safe_export("headline_provenance", export_headline_provenance)
     # model_card lifts the frozen confirmatory run artifacts + tracked headline
     # metrics into one hash-pinned card (READ-ONLY) — before the freshness map
-    # / catalog that index it.
-    _safe_export("model_card", export_model_card)
+    # / catalog that index it. The daily lane runs in DISCLOSURE mode: uv.lock
+    # legally drifts after a freeze, and a strict raise here would abort main()
+    # mid-run (observed live: everything after this line silently skipped while
+    # the lineage contract test then ran against the STALE committed panel).
+    # Strict mode stays available for standalone verification invocations.
+    _safe_export(
+        "model_card",
+        export_model_card,
+        allow_uv_lock_drift=True,
+    )
     # model_inventory reconciles the tracked ledger's confirmatory:first runs
     # against the frozen run directories + lists config-only commits honestly
     # (READ-ONLY) — before the freshness map / catalog that index it.

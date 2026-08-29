@@ -1476,7 +1476,10 @@ def test_ledger_append_only_not_mutated_by_export() -> None:
     # Snapshot the known-good committed digest. If the ledger legitimately grows
     # (a new research row is appended) this will fail — that is correct: a human
     # must re-pin it after verifying the new row is append-only.
-    assert digest == "83fa2778a92e48a8c99b20d0cb41b4a2cea224a268b666f147c539d60f2d8d3e", (
+    # Re-pinned 2026-08-29 (round 38): +1 data_ingest row from the routine
+    # local refresh sweep — git diff verified pure append (1 insertion, 0
+    # deletions/modifications) before re-pinning.
+    assert digest == "8136b09fd7d11d2eaa6f3fadf627f51019d1189752831f439bfed0f8ffda53af", (
         f"ledger sha256 changed to {digest}; re-verify append-only then re-pin"
     )
 
