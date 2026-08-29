@@ -39,7 +39,8 @@ def view_event_study(run: dict, is_syn: bool = False) -> None:
                 return
 
             prices = _prices()
-            st.plotly_chart(_car_chart(prices, events), use_container_width=True)
+            st.plotly_chart(_car_chart(prices, events),
+                        use_container_width=True, key="event-car-real")
             n_surv = int(_car_summary(prices, events)["n_events"].iloc[0])
             st.caption(f"{n_surv} of {len(events)} {etype} events survived the session/window "
                        "filter; CAR = mean across survivors of the per-event cumulative abnormal "
@@ -101,7 +102,7 @@ def view_event_study(run: dict, is_syn: bool = False) -> None:
             title=f"CAR ({etype}, {subset['event_id'].nunique()} events) ±95% CI — demo data",
         )
         fig = apply_theme(fig)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True, key=f"event-car-demo-{etype}")
 
     st.caption("Demo: synthetic event windows (rng=7) illustrate CAR computation. "
                "Real event-study requires the event_study module + cached event parquet files.")

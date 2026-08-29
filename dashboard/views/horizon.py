@@ -10,32 +10,33 @@ from dashboard.views.data_loading import _ledger_rows, _phase_of
 
 def view_horizon_robustness(runs: list[dict]) -> None:
     st.subheader("Horizon Robustness")
-    st.caption("The 3 confirmatory nulls re-tested at h=10 and h=42 (h=21 is the frozen "
-               "confirmatory horizon). All differentials stay ≈0 with CI bracketing 0 ⇒ "
-               "the nulls are horizon-robust, strengthening the publishable-as-null result.")
+    st.caption("The 4 confirmatory nulls (B/C/D/E1) re-tested at h=10 and h=42 (h=21 is the "
+               "frozen confirmatory horizon). All differentials stay ≈0 with CI bracketing 0 ⇒ "
+               "the nulls are horizon-robust, strengthening the null verdicts.")
     sweep = _horizon_sweep()
     if not sweep:
         st.info("No horizon-sensitivity sweep yet (run scripts/sensitivity_horizon.py).")
         return
-    st.plotly_chart(_horizon_robustness_chart(runs, sweep), use_container_width=True)
+    st.plotly_chart(_horizon_robustness_chart(runs, sweep),
+        use_container_width=True, key="horizon-robust")
     sw = sweep.get("results", {})
     n_cells = sum(
-        1 for h in ("10", "42") for ph in ("B", "C", "D")
+        1 for h in ("10", "42") for ph in ("B", "C", "D", "E1")
         if sw.get(h, {}).get(ph, {}).get("null_holds")
     )
-    st.caption(f"{n_cells}/6 exploratory cells hold NULL (CI brackets 0); plus the 3 frozen "
+    st.caption(f"{n_cells}/8 exploratory cells hold NULL (CI brackets 0); plus the 4 frozen "
                f"h=21 confirmatory nulls.")
 
 
 @st.cache_data(show_spinner=False)
 def _horizon_sweep() -> dict | None:
-    """The latest exploratory sensitivity_horizon ledger row (B/C/D at h=10, 42)."""
+    """The latest exploratory sensitivity_horizon ledger row (B/C/D/E1 at h=10, 42)."""
     rows = [r for r in _ledger_rows() if r.get("phase") == "sensitivity_horizon"]
     return max(rows, key=lambda r: r.get("ts", "")) if rows else None
 
 
 def _horizon_robustness_chart(runs: list[dict], sweep: dict) -> go.Figure:
-    """B/C/D differential (mean ± 95% CI) across h=10/21/42 — all NULL-robust.
+    """B/C/D/E1 differential (mean ± 95% CI) across h=10/21/42 — all NULL-robust.
     h=21 from the confirmatory runs; h=10/42 from the exploratory sweep."""
     h21 = {}
     for r in runs:
@@ -43,7 +44,7 @@ def _horizon_robustness_chart(runs: list[dict], sweep: dict) -> go.Figure:
         d = r["differential"]
         h21[p] = (d.get("mean_diff", float("nan")),
                   d.get("ci_lo", float("nan")), d.get("ci_hi", float("nan")))
-    phases = ["B", "C", "D"]
+    phases = ["B", "C", "D", "E1"]
     horizons = [10, 21, 42]
     sw = (sweep or {}).get("results", {})
     fig = go.Figure()
@@ -68,6 +69,6 @@ def _horizon_robustness_chart(runs: list[dict], sweep: dict) -> go.Figure:
                       yaxis_title="differential (treatment − base) rank-IC",
                       height=380, legend=dict(orientation="h", y=-0.2),
                       margin=dict(l=10, r=10, t=45, b=10),
-                      title="horizon robustness — B/C/D across h=10/21/42 "
+                      title="horizon robustness — B/C/D/E1 across h=10/21/42 "
                             "(CI brackets 0 ⇒ NULL)")
     return fig

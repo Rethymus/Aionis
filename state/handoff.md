@@ -8,6 +8,21 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-30 (zz10) 轮㊺：长周期查漏补缺协议轮——三通道（视觉×学科×本质）：Streamlit v1 三层运行时缺陷修复 + 学科语义校正 + 协议沉淀（单进程；全套绿）
+
+**编排**：业主命题"设计长周期查漏补缺任务（视觉能力探查代码外问题 + 学科知识判断改进空间 + 打磨细节彰显本质）"→ 深研状态（current/handoff/roadmap§5/RESULTS）→ 基线验证（pytest exit 0 + ruff 存量债甄别）→ 三通道执行 → 协议沉淀。
+
+- **协议落地**：`reports/design/2026-08-30-longcycle-gapfill-protocol.md` —— 把轮 ㉝ 起的隐式做法显式化：通道A 视觉（headless 截图管线+像素地面真值+小裁剪二元提问+DOM 交叉核验四道防线）、通道B 学科（统计语义/命名纪律/指标命名/账实对账/框架运行时契约五查）、通道C 本质（诚实性>可核验性>可用性>一致性>美学的裁决序）、轮换池+停止条件+工具病理备忘。本轮即首个执行样本。
+- **通道A（web 终端，零新缺陷）**：1,503 页构建基线持平；11 研究页×双主题 18 截图；像素级核验 = 轮 44 navy→oklch 描边修复成立（conviction/regime/power-floor 蓝琥珀线像素充足）+ 内容密度切片正常 + SSG 文本实测零渲染垃圾、关键统计值（−0.0088/[−0.0336,0.0159]/0.484/71/72.5y/48.3y/36.2y）全在墙；atlas 森林图（CI whisker/SESOI 域/零线/t≈−0.70 语境行）、热力图（66 月对齐无重叠）、分差带（明暗可辨）视觉核验通过。**视觉模型开放式审查全幻觉**（转写错误/重复计数/臆造元素；与轮㉔㉖病理一致）→ 0 采信，纪律=只对 ≤1/3 页裁剪问二元视觉问题+逐条 DOM/像素核验。
+- **通道A+（Streamlit v1 三层运行时缺陷，AX 树抓到，pytest 全掩盖——本轮最重要发现族）**：
+  - **①启动即 ModuleNotFoundError**：正典命令 `uv run streamlit run dashboard/app.py` 自 `7dede9b`（views 抽子模块）起即坏——streamlit 只把脚本目录（dashboard/）入 sys.path，`dashboard.views.*` 绝对导入不可解析；pytest 从仓库根导入故全套绿。修：app.py 在导入前插入仓库根 sys.path 引导 + pyproject `per-file-ignores "dashboard/app.py" = ["E402"]`（导入必须在引导后）。
+  - **②StreamlitDuplicateElementId**：`_cumulative_ic_chart` 在 fit.py 与 volatility.py 以同参双调，Streamlit 1.59 的元素 ID 唯一性强制 → 脚本在 Curve Evolution 标签崩溃，**其后 7 个标签（Event/Uncertainty/Horizon/Coverage/Strategy/Forward/Run history）从未渲染**。修：全仓 22 个 `st.plotly_chart` 调用点加唯一确定性 key。
+  - **③修②后暴露 strategy.py Styler None 格式化 TypeError**（`df.style.format("{:.3f}")` 遇账本合法的 None 单元格）→ Strategy/Forward/Run history 三标签死。修：None/NaN-guard 格式化函数（"—" 占位）。三层洋葱缺陷 = "真实启动才暴露"的活教材。
+- **通道B（学科语义）**：① **账实对账**——horizon 视图硬编码 "3 confirmatory nulls"/"6 cells"/图表仅 B/C/D，但冻结账本 `sensitivity_horizon` 最新行实为 **B/C/D/E1 四相 × h=10/42 = 8 格全 null_holds**（E1 加入扫描晚于视图编写；`_TREATMENT_LABEL` 本就含 E1 映射）→ 四相化+8/8 格+phase E1 入图。② **命名纪律**——"publishable/publishability/publishable-as-null" 显示文案是 2026-08-15 发表线废除的遗留语义，与 "NULL 是预期结果" 框架相抵 → 显示层改 **null-precision gate**（schema 字段 `publishable_ci_half` 冻结不动=业主门，README 注明 legacy）。③ **指标命名精确性**——IC 序列上的 mean/σ·√12 被标 "Annualized Sharpe"，量化语义是**年化 IC-IR**（真 Sharpe 在 Strategy Return 的 gross L-S）→ 重标 + st.metric help 披露语义边界 + caption。
+- **通道C（本质打磨）**：app.py 自称 "dashboard v2" 与轮㊸刚退役的 v2 演示面撞名 → 标题/文档字符串去版本号、过时的 "demonstrates the methods, not final conclusions" 框架改为 "renders real frozen runs"；dashboard/README.md 停留 "Phase B Dashboard/4 视图" 时代 → 全量重写（11 标签如实清单+legacy 字段说明+复用记账保留）。
+- **验证**：dashboard 相关 9 测试文件 73 passed + ruff dashboard lane All checks passed + 全套 pytest 回归 exit 0 + 真实浏览器 AX 树终验（11 标签全渲染、零 traceback、"4/4 precision-gate (ci_half < 0.015)" 上墙、Horizon 标签 "8/8 exploratory cells…4 frozen" + phase E1 图例在墙、表格 B/C/D/E1 四行与 ledger #28/#30/#34/#37 数值逐位一致）。
+- **内务**：Edge/两个 http 服务/streamlit 全停；web/out 按收尾定律删除（含明色种子页 helper）；截图证据留 gitignored `runs/ui-audit-r45/`（不入库）。**边界**：display/docs lane；0 ledger/frozen/config/prereg/OOS。未 push（本地 ahead 3）。**待业主（不变）**：E3 headline GO；E3 影子例行（08-31 月末）。
+
 ## 2026-08-30 (zz9) 轮㊸：v2 演示面退役（业主授权直接决策）+ 全站扫查补完 + ruff 0.16 适配（单进程；全套绿）
 
 **编排**：业主授权"结合调研结论直接决策,继续最优迭代"→ 执行轮㊷推荐方案(只归档 v2,保留 v1)→ 依赖面核查 → 归档落地 → 环境适配 → 全站扫查补完 → 新鲜度探针。

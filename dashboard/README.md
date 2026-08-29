@@ -1,9 +1,11 @@
-# Aionis Phase B Dashboard
+# Aionis Research Dashboard (Streamlit)
 
-A research dashboard for Aionis's Phase B results: the filed-date (`arm_state`) vs
-period-end+lag (`arm_base`) cross-sectional rank-IC differential, the
-publishability gate, universe coverage, and the control / robustness gates.
-Built **by reusing OSS**, not reinventing.
+The researcher-facing quant-evaluation tool over the **real frozen run artifacts**
+in `runs/results/<config_sig>/` (B/C/D/E1 confirmatory + exploratory rows in
+`runs/ledger.jsonl`). The web terminal (`web/`) is the public display layer; this
+dashboard is the working bench for the same numbers — it never recomputes a
+frozen result (no rerun-to-significance), it only renders what `save_run(...)`
+persisted.
 
 ## Launch
 
@@ -19,24 +21,37 @@ the core env:
 uv sync --extra dashboard
 ```
 
-The dashboard runs on **synthetic demo data** when no result dir exists yet
-(`runs/results/<config_sig>/`), so it is demoable now; it switches to real data
-the moment the run script calls `aionis.reporting.results.save_run(...)`.
+The dashboard runs on **labeled synthetic demo data** when no result dir exists
+(`runs/results/<config_sig>/`); it switches to real data the moment a run script
+calls `aionis.reporting.results.save_run(...)`.
 
-## Views
+## Views (11 tabs)
 
-1. **Run history** — table of `runs/ledger.jsonl` rows (ts, config_sig, event,
-   verdict). Phase A rows are DA-lift evals; Phase B rows are freeze / reframe /
-   universe / coverage annotations (the durable registry, pre-reg §9).
-2. **Selected run** — monthly rank-IC for `arm_state` vs `arm_base`, plus the
-   differential with a 95% CI band. Horizontal lines at `±0.015` (the §7
-   publishability gate) and at `0`.
-3. **Coverage** — OOS-resolvable universe `588/705`, hanshof-vs-pierrebrunelle
-   Jaccard (~`0.93`), and the dropped wrong-entity reuses `{POM, SE, STI}`,
-   pulled live from the ledger when present.
-4. **Robustness** — the H6 determinism flag, the `lag_shift` and `placebo`
-   control differentials (pre-reg §5), and a Harvey-Liu haircut sensitivity
-   over `n_trials` (pre-reg §6).
+1. **Overview** — headline table + differential forest plot (per-phase treatment −
+   base rank-IC, 95% HAC CI; CI brackets 0 ⇒ NULL) + CI-precision bars against
+   the null-precision gate (`ci_half < 0.015`; legacy field name
+   `publishable_ci_half`).
+2. **Fit Quality** — cumulative IC vs random-walk band, KPI (mean / NW-HAC t /
+   IC-IR / hit-rate), score-vs-return scatter + decile spread when the OOS panel
+   is persisted.
+3. **Volatility** — IC histogram, return distribution, underwater curve; KPI row
+   computed on the IC series (annualized IC-IR, Calmar, downside deviation,
+   vol-of-vol).
+4. **Curve Evolution** — monthly IC heatmap (year × month), top drawdowns,
+   cumulative IC with random-walk CI band, rolling 12m IC + IC-vol.
+5. **Event Study** — CAR around 13D / earnings (descriptive realized drift;
+   forward returns by design, not a PIT feature).
+6. **Uncertainty** — differential forest + CV-fold stability + haircut pointers.
+7. **Horizon Robustness** — the 4 confirmatory nulls (B/C/D/E1) re-tested at
+   h=10/42 from the `sensitivity_horizon` ledger row.
+8. **Coverage** — OOS-resolvable universe and membership reconciliation, pulled
+   from the ledger when present.
+9. **Strategy Return** — secondary/exploratory L-S lens: per-strategy Sharpe +
+   DSR grid over `n_trials`, Hansen SPA, gross-of-costs disclosure.
+10. **Forward IC** — E3 forward-live progress (parity months, committed-vs-
+    revealed counts, cumulative forward differential IC).
+11. **Run history** — `runs/ledger.jsonl` rows (ts, config_sig, event, verdict):
+    the durable registry, pre-reg §9.
 
 ## Reuse accounting (permissive licenses only)
 
@@ -54,12 +69,12 @@ footprint minimal, per KISS/YAGNI):
 
 | OSS | License | What we adapted (concept only) |
 |---|---|---|
-| `stefan-jansen/pyfolio-reloaded` | Apache-2.0 | the IC / tear-sheet time-series plot shape (View 2) |
+| `stefan-jansen/pyfolio-reloaded` | Apache-2.0 | the IC / tear-sheet time-series plot shape (fit view) |
 | `ranaroussi/quantstats` | Apache-2.0 (GitHub SPDX; the historical Commons-Clause overlay is gone on the current default branch) | the "headline metric + gate" framing — rejected for runtime to avoid any residual license ambiguity |
 | `mlflow/mlflow` | Apache-2.0 | the **run-artifact layout** (one dir per run keyed by a config signature, holding param/meta JSON + binary artifacts) — `results.py` mirrors this; the ledger plays the tracking store |
-| `YannickKae/Evaluating-Investment-Strategies` | CC0-1.0 | already ported into `eval.multiple_testing.harvey_liu_haircut`, reused as-is for View 4 |
+| `YannickKae/Evaluating-Investment-Strategies` | CC0-1.0 | already ported into `eval.multiple_testing.harvey_liu_haircut`, reused as-is for the strategy lens |
 
-The Harvey-Liu haircut sensitivity (View 4) calls the existing
+The Harvey-Liu haircut sensitivity calls the existing
 `aionis.eval.multiple_testing.harvey_liu_haircut` — no new wheel added.
 
 ## Result artifacts (read by this dashboard)
@@ -74,9 +89,10 @@ differential.json  controls.json       # ΔIC + CI, lag_shift/placebo gates
 config.json        meta.json           # frozen config + ts / H6 flag
 ```
 
-## Wiring a real run (parent todo)
+## Wiring a real run
 
-One call in `scripts/phase_b_run.py`, after the OOS rank-IC is computed:
+One call in the phase run scripts (e.g. `scripts/phase_b_run.py`), after the OOS
+rank-IC is computed:
 
 ```python
 from aionis.reporting import results

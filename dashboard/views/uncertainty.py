@@ -15,8 +15,8 @@ def view_uncertainty(runs: list[dict], run: dict) -> None:
     st.subheader("Uncertainty")
     st.markdown("**Differential forest plot** (all phases) — CI brackets 0 ⇒ NULL")
     if runs:
-        st.plotly_chart(_differential_forest(runs), use_container_width=True)
-        st.plotly_chart(_ci_half_bar(runs), use_container_width=True)
+        st.plotly_chart(_differential_forest(runs), use_container_width=True, key="unc-forest")
+        st.plotly_chart(_ci_half_bar(runs), use_container_width=True, key="unc-cihalf")
 
     st.markdown(f"**Selected run** `{run['config_sig'][:12]}…` · H6 deterministic: "
                 f"{run.get('h6_deterministic')}")
@@ -42,11 +42,11 @@ def view_uncertainty(runs: list[dict], run: dict) -> None:
             "not a research conclusion."
         )
         demo_folds = _demo_fold_ics(n_folds=5, n_repeats=3, rng=None)  # Uses default rng=7
-        st.plotly_chart(_cv_fold_box(demo_folds), use_container_width=True)
+        st.plotly_chart(_cv_fold_box(demo_folds), use_container_width=True, key="unc-cvfold-demo")
         st.caption("Demo: synthetic fold ICs (rng=7) illustrate CV stability visualization. "
                    "Real CV-fold data requires fold-level IC persistence in run artifacts.")
     else:
-        st.plotly_chart(_cv_fold_box(fold_data), use_container_width=True)
+        st.plotly_chart(_cv_fold_box(fold_data), use_container_width=True, key="unc-cvfold-real")
         n_folds = fold_data["fold"].nunique()
         st.caption(f"CV stability across {n_folds} folds — IC spread by arm.")
 

@@ -14,9 +14,10 @@ def view_overview(runs: list[dict]) -> None:
     _headline_table_impl(runs)
     st.markdown("**Differential forest plot** — mean ± 95% CI per phase (CI brackets 0 ⇒ NULL)")
     if runs:
-        st.plotly_chart(_differential_forest(runs), use_container_width=True)
-        st.markdown("**CI precision per phase** — green = publishable-as-null (ci_half < 0.015)")
-        st.plotly_chart(_ci_half_bar(runs), use_container_width=True)
+        st.plotly_chart(_differential_forest(runs), use_container_width=True, key="overview-forest")
+        st.markdown("**CI precision per phase** — green = null-precision gate "
+                    "passed (ci_half < 0.015)")
+        st.plotly_chart(_ci_half_bar(runs), use_container_width=True, key="overview-cihalf")
 
 
 def _headline_table_impl(runs: list[dict]) -> None:
@@ -36,5 +37,5 @@ def _headline_table_impl(runs: list[dict]) -> None:
     n_null = int(((df["_ci_lo"] <= 0) & (df["_ci_hi"] >= 0)).sum())
     st.caption(f"{len(df)} confirmatory claims · "
                f"{n_null}/{len(df)} NULL (95% CI brackets 0) · "
-               f"{n_pub}/{len(df)} publishable (ci_half < 0.015) · "
+               f"{n_pub}/{len(df)} precision-gate (ci_half < 0.015) · "
                f"all H6 deterministic: {bool(df['H6'].all())}")

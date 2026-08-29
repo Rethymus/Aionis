@@ -157,7 +157,7 @@ def _drawdown_chart(cum_ic: pd.Series) -> go.Figure:
 
 
 def _ci_half_bar(runs: list[dict]) -> go.Figure:
-    """Uncertainty: ci_half per phase vs the 0.015 publishability gate."""
+    """Uncertainty: ci_half per phase vs the 0.015 null-precision gate."""
     from dashboard.views.data_loading import _phase_of
 
     phases, cis = [], []
@@ -178,10 +178,11 @@ def _ci_half_bar(runs: list[dict]) -> go.Figure:
         )
     )
     fig.add_hline(y=PUBLISHABILITY_GATE, line_dash="dash", line_color="black",
-                  annotation_text=f"publishability gate {PUBLISHABILITY_GATE}")
+                  annotation_text=f"null-precision gate {PUBLISHABILITY_GATE}")
     fig.update_layout(xaxis_title="phase", yaxis_title="95% CI half-width",
                       height=340, margin=dict(l=10, r=10, t=20, b=10),
-                      title="differential CI precision per phase (green = publishable-as-null)")
+                      title="differential CI precision per phase "
+                            "(green = null-precision gate passed)")
     return fig
 
 

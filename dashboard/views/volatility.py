@@ -38,19 +38,26 @@ def view_volatility(run: dict) -> None:
     vov_val = _vol_of_vol(ic)
 
     c1, c2, c3, c4 = st.columns(4)
-    c1.metric("Annualized Sharpe", f"{sharpe_val:+.3f}" if np.isfinite(sharpe_val) else "N/A")
-    c2.metric("Calmar", f"{calmar_val:+.3f}" if np.isfinite(calmar_val) else "∞")
+    c1.metric("Annualized IC-IR", f"{sharpe_val:+.3f}" if np.isfinite(sharpe_val) else "N/A",
+              help="mean(monthly IC)/σ(IC)·√12 — signal consistency on the IC series, "
+                   "NOT a strategy Sharpe (see Strategy Return tab for that).")
+    c2.metric("Calmar (cum IC / max DD)", f"{calmar_val:+.3f}" if np.isfinite(calmar_val) else "∞",
+              help="Cumulative-IC path over its max drawdown — descriptive on the signal "
+                   "path, not a return metric.")
     c3.metric("Downside deviation", f"{downside_val:.4f}")
     c4.metric("Vol-of-vol", f"{vov_val:.4f}" if np.isfinite(vov_val) else "N/A")
+    st.caption("Volatility metrics are computed on the monthly rank-IC series "
+               "(signal consistency), not on strategy returns.")
 
     st.markdown("**IC distribution** (spread ⇒ how volatile the monthly signal is)")
-    st.plotly_chart(_ic_histogram(run["ic_state"]), use_container_width=True)
+    st.plotly_chart(_ic_histogram(run["ic_state"]), use_container_width=True, key="vol-ic-hist")
 
     st.markdown("**Return distribution** vs normal overlay")
-    st.plotly_chart(_return_distribution(ic), use_container_width=True)
+    st.plotly_chart(_return_distribution(ic), use_container_width=True, key="vol-ret-dist")
 
     st.markdown("**Underwater curve** — cumulative IC drawdown (how far below its peak)")
-    st.plotly_chart(_drawdown_chart(_cumulative_ic(run["ic_state"])), use_container_width=True)
+    st.plotly_chart(_drawdown_chart(_cumulative_ic(run["ic_state"])),
+        use_container_width=True, key="vol-drawdown")
 
 
 def view_evolution(run: dict) -> None:
@@ -79,7 +86,7 @@ def view_evolution(run: dict) -> None:
             margin=dict(l=10, r=10, t=20, b=10),
             title="monthly IC (red=negative, blue=positive)"
         )
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True, key="evol-heatmap")
     else:
         st.info("Not enough data for monthly heatmap.")
 
@@ -101,7 +108,8 @@ def view_evolution(run: dict) -> None:
 
     se = _ic_kpi(ic)["std"]  # monthly σ (not se_hac=σ/√n) for the band
     st.markdown("**Cumulative IC with random-walk CI band** (evolution of the signal over time)")
-    st.plotly_chart(_cumulative_ic_chart(ic, treat, se), use_container_width=True)
+    st.plotly_chart(_cumulative_ic_chart(ic, treat, se),
+                   use_container_width=True, key="evol-cum-ic")
 
     st.markdown("**Rolling 12-month IC + IC-vol** (trend + changing volatility)")
-    st.plotly_chart(_rolling_ic_chart(ic, 12), use_container_width=True)
+    st.plotly_chart(_rolling_ic_chart(ic, 12), use_container_width=True, key="evol-rolling")

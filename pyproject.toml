@@ -103,3 +103,6 @@ select = ["E", "F", "I", "W", "UP", "B"]
 "scripts/export_terminal_data.py" = ["E501"]
 # Form 4 orchestrator tests: compact XML fixtures + monkeypatch chains run long.
 "tests/test_form4_orchestrator.py" = ["E501"]
+# Streamlit entrypoint: the repo-root sys.path bootstrap MUST precede the
+# dashboard.views imports (streamlit puts only the script dir on sys.path).
+"dashboard/app.py" = ["E402"]

@@ -33,9 +33,18 @@ def view_strategy_return() -> None:
             rec[f"p@n{nt}"] = (dbt.get(nt) or {}).get("p_value") if dbt else None
         recs.append(rec)
     df = pd.DataFrame(recs)
-    fmt = {"sharpe_ann": "{:+.3f}", "dsr_p_conservative": "{:.3f}"}
+    # Ledger rows legitimately carry None cells (e.g. a strategy without the
+    # DSR grid); .style.format spec strings can't format None — guard per cell.
+    def _num(spec: str):
+        def f(v):
+            if v is None or (isinstance(v, float) and pd.isna(v)):
+                return "—"
+            return format(v, spec)
+        return f
+
+    fmt = {"sharpe_ann": _num("+.3f"), "dsr_p_conservative": _num(".3f")}
     for nt in grid:
-        fmt[f"p@n{nt}"] = "{:.3f}"
+        fmt[f"p@n{nt}"] = _num(".3f")
     st.dataframe(df.style.format({k: v for k, v in fmt.items() if k in df.columns}),
                  use_container_width=True, hide_index=True)
     spa = row.get("spa", {})
@@ -53,7 +62,8 @@ def view_strategy_return() -> None:
         st.info("Equity curve needs ``runs/strategy_returns.parquet`` "
                 "(written by ``scripts/strategy_eval_run.py``); not found.")
     else:
-        st.plotly_chart(_equity_curve_chart(ls_wide), use_container_width=True)
+        st.plotly_chart(_equity_curve_chart(ls_wide),
+                       use_container_width=True, key="strategy-equity")
         st.caption("Cumulative sum of each strategy's monthly long-short return "
                    "(secondary/exploratory lens; gross-of-costs). Dashed grey = "
                    f"{row.get('benchmark', 'arm_base')} benchmark. The rank-IC "

@@ -34,23 +34,27 @@ def view_fit_quality(run: dict, is_syn: bool) -> None:
 
     st.markdown("**Cumulative IC vs random-walk 95% band** — stays in band ⇒ no detectable skill")
     se = _ic_kpi(run["ic_state"])["std"]  # monthly σ (not se_hac=σ/√n) for the band
-    st.plotly_chart(_cumulative_ic_chart(run["ic_state"], treat, se), use_container_width=True)
+    st.plotly_chart(_cumulative_ic_chart(run["ic_state"], treat, se),
+                    use_container_width=True, key="fit-cum-ic")
 
     st.markdown("**Monthly rank-IC — treatment vs base**")
-    st.plotly_chart(_ic_chart(run), use_container_width=True)
+    st.plotly_chart(_ic_chart(run), use_container_width=True, key="fit-ic-monthly")
 
     if oos is not None and len(oos):
         c1, c2 = st.columns(2)
         with c1:
             st.markdown("**Score vs forward-return with regression line**")
-            st.plotly_chart(_score_vs_return_scatter_with_fit(oos), use_container_width=True)
+            st.plotly_chart(_score_vs_return_scatter_with_fit(oos),
+                               use_container_width=True, key="fit-scatter")
         with c2:
             st.markdown("**Quantile spread** (decile)")
-            st.plotly_chart(_quantile_spread_chart(oos), use_container_width=True)
+            st.plotly_chart(_quantile_spread_chart(oos),
+                                  use_container_width=True, key="fit-quantile")
 
         # Add IC-by-regime box plot
         st.markdown("**IC by volatility regime** (rolling-σ quartiles)")
-        st.plotly_chart(_ic_by_regime_box(run["ic_state"]), use_container_width=True)
+        st.plotly_chart(_ic_by_regime_box(run["ic_state"]),
+                    use_container_width=True, key="fit-regime-box")
     else:
         st.info("Score-vs-return scatter / quantile spread / R² need the per-ticker OOS panel, "
                 "which this run didn't persist (pre-schema-2). A re-run enables them.")

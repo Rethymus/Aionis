@@ -1,10 +1,10 @@
-"""Aionis research dashboard v2 — near-final quant-evaluation interface.
+"""Aionis research dashboard — quant-evaluation interface over real frozen runs.
 
-Five analytical dimensions (the owner judges: 拟合质量/波动结构/曲线演化/事件前后
-差异/不确定性), where the current data only DEMONSTRATES the analysis methods +
-interaction structure (not final conclusions):
+Six analytical dimensions (the owner judges: 拟合质量/波动结构/曲线演化/事件前后
+差异/不确定性), rendering whatever artifacts the selected runs/ result dir
+persisted (real frozen confirmatory results; no rerun-to-significance):
 
-  1. Overview        — the headline (4 confirmatory claims → 4 publishable nulls).
+  1. Overview        — the headline (4 confirmatory claims → 4 nulls).
   2. Fit Quality     — cumulative IC + KPI (mean / NW-t / IC-IR / hit-rate) +
                        (score-vs-return scatter + quantile spread when the OOS
                         panel is persisted).
@@ -13,22 +13,32 @@ interaction structure (not final conclusions):
   5. Event Study     — CAR around 13D / earnings / macro (when event_study lands).
   6. Uncertainty     — ci_half vs the 0.015 publishability gate + differential
                        forest plot + H6/controls/haircut.
-  + Coverage + Strategy Return (retained).
+  + Coverage + Strategy Return + Forward IC + Run history (retained).
 
 Launch::
 
     uv run streamlit run dashboard/app.py
 
 Reuses Streamlit (Apache-2.0) + plotly (MIT) + ``aionis.reporting.results`` +
-``aionis.eval.rank_ic`` (NW-HAC). Charts degrade gracefully to a synthetic demo
-when no real result dir exists, and to a "data not persisted" notice for charts
-that need artifacts the older runs lack.
+``aionis.eval.rank_ic`` (NW-HAC). Charts degrade gracefully to a labeled
+synthetic demo when no real result dir exists, and to a "data not persisted"
+notice for charts that need artifacts the older runs lack.
 
-This refactored version extracts view functions and helpers into the
-dashboard/views/ submodule for better organization while maintaining full
-backward compatibility with existing tests.
+View functions and helpers live in the dashboard/views/ submodule (backward
+compatibility with existing test imports is preserved via re-exports).
 """
 from __future__ import annotations
+
+import sys
+from pathlib import Path
+
+# `streamlit run dashboard/app.py` puts the SCRIPT's folder (dashboard/) on
+# sys.path, not the repo root — so the absolute `dashboard.views.*` imports
+# below only resolve under pytest (which imports from the root). Bootstrap the
+# repo root so the documented launch command works as written.
+_ROOT = Path(__file__).resolve().parent.parent
+if str(_ROOT) not in sys.path:
+    sys.path.insert(0, str(_ROOT))
 
 import streamlit as st
 
@@ -150,10 +160,10 @@ __all__ = [
 
 def main() -> None:
     st.set_page_config(page_title="Aionis", page_icon="📊", layout="wide")
-    st.title("Aionis — Research Dashboard v2")
-    st.caption("Near-final quant-evaluation interface · 5 dimensions "
-               "(fit / volatility / evolution / event-study / uncertainty) · "
-               "current data demonstrates the methods, not final conclusions.")
+    st.title("Aionis — Research Dashboard")
+    st.caption("Quant-evaluation over runs/ frozen artifacts · 6 dimensions "
+               "(fit / volatility / evolution / event-study / uncertainty / "
+               "horizon) · synthetic demo only when no result dir exists.")
 
     runs = _list_runs()
     options = [r["config_sig"] for r in runs] if runs else []

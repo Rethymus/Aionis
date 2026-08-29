@@ -41,7 +41,7 @@ def view_forward_ic(
     c3.metric("n months", f"{kpi['n_months']}")
     c4.metric("DM p-value (MBB)", f"{kpi['dm_p_mbb']:.3f}")
     st.caption(
-        f"Publishable (ci_half < {PUBLISHABILITY_GATE}): {kpi['publishable']} · "
+        f"Precision gate (ci_half < {PUBLISHABILITY_GATE}): {kpi['publishable']} · "
         f"DM t-stat: {kpi['t_hac']:.2f}"
     )
 
@@ -83,6 +83,7 @@ def view_forward_ic(
         st.plotly_chart(
             _cumulative_ic_chart(ic_forward, "forward differential IC", monthly_se=monthly_se),
             use_container_width=True,
+            key="fwd-cum-ic",
         )
     else:
         st.info("No forward IC data yet (accumulate via scripts/forward_score.py).")
