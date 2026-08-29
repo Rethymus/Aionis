@@ -44,6 +44,24 @@ membership_freshness_contract:
 provider_cutoff_policy:
   block_on_unknown: true  # FROZEN — owner ratified 2026-08-03 (D2)
 
+  # AMENDMENT (2026-08-29, round 39 — owner-delegated decision authority,
+  # "直接决策,非必要不再业主决策"): provider_cutoff added. The GLM-4.5
+  # technical report (arXiv 2508.06471) declares NO training-data cutoff
+  # date, so a vendor declaration is unavailable. Per the advisory
+  # (reports/design/2026-08-29-e3-cutoff-advisory.md, option B), the value
+  # below is the EMPIRICAL PROBE BOUNDARY (conservative lower bound):
+  #   probe: dual-blind dated-event ladder (runs/provider_cutoff_probe.json,
+  #   committed copy reports/evidence/provider-cutoff-probe.json)
+  #   result: model KNOWS the 2023-03-10 SVB event; does NOT know 2024-11-06
+  #   or later; fake-control (2026-12-25) not fabricated.
+  #   -> conservative cutoff 2023-03-10: every E3 predict session (2026-08+)
+  #      is far after this date, so training-data lookahead is structurally
+  #      excluded for the forward window. Provenance: empirical-probe-v1
+  #      (NOT a vendor declaration). The probe artifact is committed for
+  #      reader verification.
+  provider_cutoff: "2023-03-10"  # EMPIRICAL-PROBE-v1 (conservative lower bound)
+
+
 # -----------------------------------------------------------------------------
 # STATUS: FROZEN (owner ratified 2026-08-03, D2) - HEADLINE IGNITION STILL GATED
 # -----------------------------------------------------------------------------

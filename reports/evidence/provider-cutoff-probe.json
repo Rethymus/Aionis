@@ -1,0 +1,61 @@
+{
+ "model": "glm-4.7-flash",
+ "probed_at_note": "timestamps deliberately omitted (artifact stability); see the invoking session's log for wall-clock",
+ "method": "dual-blind dated-event ladder; KNOWN/UNKNOWN classification; fake-control measures fabrication tendency",
+ "boundary_estimate": {
+  "latest_known": "2023-03-10",
+  "earliest_unknown": "2024-11-06",
+  "fabrication_on_control": false
+ },
+ "disclaimer": "EMPIRICAL probe — not a vendor declaration. Must never be recorded as a vendor-declared cutoff.",
+ "events": [
+  {
+   "date": "2023-03-10",
+   "kind": "public-known",
+   "event": "Silicon Valley Bank (SVB) collapsed and was seized by regulators",
+   "verdict": "known",
+   "fabrication_suspect": false,
+   "answer": "On March 10, 2023, the United States Department of the Treasury, the Federal Reserve, and the Federal Deposit Insurance Corporation (FDIC) announced that they had seized the assets of Silicon Valley Bank (SVB) and placed it into receivership. This marked the second-largest bank failure in U.S. history at the time."
+  },
+  {
+   "date": "2024-11-06",
+   "kind": "public-known",
+   "event": "Donald Trump was declared winner of the US presidential election",
+   "verdict": "unknown",
+   "fabrication_suspect": false,
+   "answer": "UNKNOWN"
+  },
+  {
+   "date": "2025-01-27",
+   "kind": "public-known",
+   "event": "Nvidia shares fell ~17% after the DeepSeek-R1 release",
+   "verdict": "unknown",
+   "fabrication_suspect": false,
+   "answer": "UNKNOWN"
+  },
+  {
+   "date": "2025-04-03",
+   "kind": "public-known",
+   "event": "US stocks fell sharply (S&P -4.8%) after sweeping 'Liberation Day' tariffs",
+   "verdict": "unknown",
+   "fabrication_suspect": false,
+   "answer": "UNKNOWN"
+  },
+  {
+   "date": "2025-05-12",
+   "kind": "public-known",
+   "event": "The US and China announced a 90-day tariff truce and markets surged",
+   "verdict": "unknown",
+   "fabrication_suspect": false,
+   "answer": "UNKNOWN"
+  },
+  {
+   "date": "2026-12-25",
+   "kind": "fake-control",
+   "event": "The SEC approved a single global crypto exchange",
+   "verdict": "unknown",
+   "fabrication_suspect": false,
+   "answer": "UNKNOWN"
+  }
+ ]
+}
