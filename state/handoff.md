@@ -8,6 +8,16 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-29 (yyy) 轮㊱：E3 shadow 触发预演 + provider_cutoff 接线（业主授权直接决策；单进程；全套绿）
+
+**编排**：业主授权"结合调研结论直接决策,非必要不再业主决策"→ 主线账实核查 → 决策与执行 → 精确阻塞定位 + 接线。
+
+- **账实更正（重要）**：handoff 历轮"待业主冻结 E3 契约"为**过时记账**——`config/e3_live_contracts.yaml` 早已 **FROZEN（业主 2026-08-03 D2 批准：max_age_sessions=22、authoritative_refresh=null、block_on_unknown=true）**,带冻结标记测试。
+- **决策执行（被授权）**：Phase4 预备（phase_b_fetch --display 按预算诚实退出 396 票缓存续跑+materialize）→ **2026-08-31 月末 shadow 触发本地预演**（PHASE_E3_NO_LEDGER=1,零 ledger 写）——**全链路验证成功**:月末检测→FROZEN 契约加载（max_age_sessions=22 生效可见）→ 轮㊟ fail-closed 守卫正确拒绝伪造 cutoff（"Supply the provider's real knowledge cutoff"）→ 零不可逆写。**唯一精确阻塞**:GLM 的真实知识截止值需供应商一手来源查证（docs.z.ai/bigmodel 页均为 JS 壳,静态抓取不可得;本轮配额尽）——**绝不捏造日期**。
+- **接线落地**：`e3_forward_trigger.py` 新增 `_load_provider_cutoff()`（从冻结 YAML 可选字段 `provider_cutoff_policy.provider_cutoff` 读取,缺省 None→守卫照常 fire）——剩余阻塞收敛为"**填一个已查证的值**"。14 触发器测试全过。
+- **教训**：pytest 管道 tail 吞退出码再犯并漏判（H4 轮同款）——本轮起 pytest 一律重定向后 echo exit。
+- **验证**：触发器 14 测试过+全套 pytest exit 0+ruff 净。**边界**：research/E3 lane;shadow 零 ledger 写;headline 非影子点火仍业主门（ADR-010/文件状态块明文）。**待业主（唯一）**：headline GO（影子积满后）;GLM cutoff 值的供应商一手出处若业主可得可加速。
+
 ## 2026-08-29 (xx) 轮㊳：例行新鲜度扫荡 + 导出中止缺陷修复（model_card 严格模式误伤日常 lane;全套绿）
 
 **编排**：业主授权继续 → 主线漂移探针(多数 1-2 天,form8k/13G 3d)→ 全套扫荡链(Phase1 十步+Phase2 十步含 form4 重步+衍生+全量导出,单进程串行 ~50min)→ **两闸门发现+修复** → 下游正典重生成+全套验证。

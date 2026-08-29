@@ -120,6 +120,24 @@ def _is_month_end_session(run_date: pd.Timestamp) -> bool:
     return run_date_normalized == month_end_session
 
 
+def _load_provider_cutoff(config_path: Path) -> str | None:
+    """Optional provider_cutoff from the FROZEN contracts config (None if absent).
+
+    Round-39 wiring: the fail-closed guard refuses a None cutoff whenever
+    provider_cutoff_policy is configured, so a real shadow/commit run requires
+    a VERIFIED vendor-declared knowledge cutoff recorded in the contracts YAML
+    (provider_cutoff: "YYYY-MM"). Never fabricate the value — vendor primary
+    source only.
+    """
+    try:
+        with open(config_path) as f:
+            cfg = yaml.safe_load(f) or {}
+    except (FileNotFoundError, yaml.YAMLError):
+        return None
+    pol = cfg.get("provider_cutoff_policy") or {}
+    return pol.get("provider_cutoff") or None
+
+
 def main(
     run_date: pd.Timestamp | None = None,
     config_path: Path | str = "config/e3_live_contracts.yaml",
@@ -197,9 +215,14 @@ def main(
             reason="PHASE_E3_NO_LEDGER=1 - no ledger writes",
         )
 
-    # Set provider_cutoff to None (use predict_ts from forward_commit_runner)
-    # This is the conservative default; owner may override via config if needed
-    provider_cutoff = None
+    # provider_cutoff: read from the FROZEN contracts config when present.
+    # Round-39 wiring: the fail-closed guard (2026-08-29 hardening) refuses a
+    # None cutoff whenever provider_cutoff_policy is configured, so a real
+    # shadow/commit run requires a VERIFIED vendor-declared knowledge cutoff
+    # recorded in config/e3_live_contracts.yaml (provider_cutoff: "YYYY-MM").
+    # Absent → None → the guard fires with the AUD-06 message (fail-closed,
+    # by design). Never fabricate the value — vendor primary source only.
+    provider_cutoff = _load_provider_cutoff(config_path)
 
     try:
         result = forward_commit_main(

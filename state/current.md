@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-08-29) ㊱ E3 shadow 触发预演 + provider_cutoff 接线轮（业主授权直接决策；全套绿）：**
+  业主授权直接决策。**账实更正**：E3 契约**早已 FROZEN**(业主 2026-08-03 D2:max_age_sessions=22/block_on_unknown=true)——历轮"待契约冻结"为过时记账。**决策执行**：Phase4 预备(phase_b_fetch 按预算 396 票续跑)→ **08-31 月末 shadow 触发本地预演**(PHASE_E3_NO_LEDGER=1 零 ledger 写)——全链路验证成功:FROZEN 契约加载生效→轮㊟ fail-closed 守卫正确拒绝伪造 cutoff→零不可逆写；**唯一精确阻塞**=GLM 真实知识截止值需供应商一手查证(页面 JS 壳不可得,绝不捏造)。**接线落地**:`_load_provider_cutoff()` 从冻结 YAML 可选字段读取,剩余阻塞收敛为"填一个已查证的值"；触发器 14 测试过。**教训**：pytest 管道吞退出码再犯——一律重定向后 echo。**边界**：E3 lane;shadow 零写;headline GO 仍业主门。待业主(唯一)：headline GO;GLM cutoff 一手出处。
+
 - **active (2026-08-29) ㊳ 例行新鲜度扫荡 + 导出中止缺陷修复轮（单进程；全套绿）：**
   超长期日常。**扫荡**：Phase1 十步+Phase2 十步(含 form4 重步)+衍生+全量导出——13D/13G→08-28(新申报入库)、form4 1,525(+61)、PTR 复核一致；**闸门发现①**：全量导出在 model_card 处 ValueError **中止 main()**(`_safe_export` 只吞 FileNotFound,uv_lock 漂移×严格模式),7251 行后全部静默跳过,契约测试拦下 lineage 失配(旧缓存残影多 7 桥)→ 修:main() 改**披露模式**(H4 裁决的日常 lane 语义;严格模式保留独立校验),重跑 55 文件全成功,lineage 新鲜(153/859/34)契约过；**闸门发现②**：ledger +1 行 data_ingest,diff 复核纯追加后重钉(83fa2778→8136b09f)。**下游正典重生成**:atlas `51755c92`/dossier `aab73c4a`/shelf。**验证**：全套 pytest exit 0(无管道)+ruff/tsc 0+build 1,503 页+三新面在墙。**新收尾定律**：build→目视→摘 web/Aionis 链接→删 out→commit(Mimosa 对 out 构建产物的 SSRF 误报已转确定性拦截;out 可随时再生)。**边界**：data/display lane;冻结产物零触碰。待业主：E3 契约冻结+GO。
 
