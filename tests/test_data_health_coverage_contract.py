@@ -55,6 +55,9 @@ EXPECTED_PANELS: dict[str, tuple[str, str, str]] = {
     # Round-H4 model card (frozen run artifacts + tracked headline, hash-pinned;
     # zero-clock — changes only when the frozen artifacts themselves do).
     "model_card": ("modelCard", "model_card.json", "frozen"),
+    # Round-H5 model inventory (ledger × frozen-dir reconciliation; frozen —
+    # zero-clock, moves only when the tracked ledger or the frozen run dirs do).
+    "model_inventory": ("modelInventory", "model_inventory.json", "frozen"),
     "pick_conviction": ("pickConviction", "pick_conviction.json", "frozen"),
     "model_health": ("modelHealth", "model_health.json", "frozen"),
     "calibration_reliability": (

@@ -273,6 +273,28 @@ export const dict = {
     "modelcard.link.ledgerAudit": "账本审计（/discipline）",
     "modelcard.disclaimer":
       "展示层档案——非投资建议，不构成任何交易信号；冻结面只在冻结工件变化时更新。",
+    "inventory.title": "模型清单",
+    "inventory.subtitle":
+      "SR 11-7 式模型清单：账本内每条 confirmatory:first 运行与冻结结果目录对账（冻结→结果行链 · H6 · 差分），config-only 提交如实列示。",
+    "inventory.empty":
+      "清单工件缺失（账本或冻结目录不在本地）——工件就位后由导出器再生；表头照常渲染。",
+    "inventory.col.phase": "阶段",
+    "inventory.col.sig": "config_sig（前 12）",
+    "inventory.col.freezeTs": "冻结 ts（ledger）",
+    "inventory.col.h6": "H6",
+    "inventory.col.diff": "差分 mean_diff [95% CI]",
+    "inventory.col.verdict": "零假设",
+    "inventory.col.local": "本地目录",
+    "inventory.verdict.holds": "HOLDS",
+    "inventory.verdict.broken": "BROKEN",
+    "inventory.verdict.unknown": "未知",
+    "inventory.local.missing": "无目录（诚实未知）",
+    "inventory.configOnly": "config-only 提交",
+    "inventory.configOnlyNote":
+      "已提交账本、本地无结果目录——可能被后续配置取代或目录未保留（原因不猜测）；不逐行展开，明细见 model_inventory.json。",
+    "inventory.asof": "覆盖账本行截至",
+    "inventory.disclaimer":
+      "清单为展示层治理记录——runs/ 只读；无本地目录=诚实未知而非不存在；非投资建议。",
     "nav.calibration": "校准可靠性",
     "calibration.title": "校准可靠性 / 自校正显示",
     "calibration.window": "leakage-safe · walk-forward 扩窗重拟合 Platt 显示映射",
@@ -1569,6 +1591,28 @@ export const dict = {
     "modelcard.link.ledgerAudit": "Ledger audit (/discipline)",
     "modelcard.disclaimer":
       "Display-layer record — not investment advice, not a trading signal; the frozen surface updates only when its frozen artifacts do.",
+    "inventory.title": "Model inventory",
+    "inventory.subtitle":
+      "SR 11-7 style model inventory: every confirmatory:first run in the tracked ledger reconciled against its frozen run directory (freeze→result chain · H6 · differential), with config-only commits listed honestly.",
+    "inventory.empty":
+      "Inventory artifacts absent (the ledger or frozen run directories are not on this machine) — the exporter regenerates once artifacts exist; headers render regardless.",
+    "inventory.col.phase": "Phase",
+    "inventory.col.sig": "config_sig (first 12)",
+    "inventory.col.freezeTs": "Freeze ts (ledger)",
+    "inventory.col.h6": "H6",
+    "inventory.col.diff": "Diff mean_diff [95% CI]",
+    "inventory.col.verdict": "Null",
+    "inventory.col.local": "Local dir",
+    "inventory.verdict.holds": "HOLDS",
+    "inventory.verdict.broken": "BROKEN",
+    "inventory.verdict.unknown": "Unknown",
+    "inventory.local.missing": "No dir (honest unknown)",
+    "inventory.configOnly": "Config-only commits",
+    "inventory.configOnlyNote":
+      "Committed to the ledger with no local results directory — possibly superseded by a later config or the directory not retained (the reason is never guessed); not expanded row-by-row, details in model_inventory.json.",
+    "inventory.asof": "Ledger rows covered through",
+    "inventory.disclaimer":
+      "Display-layer governance record — runs/ is read-only; a missing local directory is honest unknown, not absence; not investment advice.",
     "nav.calibration": "Calibration",
     "calibration.title": "Calibration reliability / self-correcting display",
     "calibration.window": "leakage-safe · walk-forward expanding-window Platt display refit",

@@ -42,6 +42,7 @@ import ledgerAuditJson from "./ledger_audit.json";
 import horizonRobustnessJson from "./horizon_robustness.json";
 import headlineProvenanceJson from "./headline_provenance.json";
 import modelCardJson from "./model_card.json";
+import modelInventoryJson from "./model_inventory.json";
 import dataHealthJson from "./data_health.json";
 import apiCatalogJson from "./api_catalog.json";
 import form8kJson from "./form8k.json";
@@ -1388,6 +1389,58 @@ export type ModelCard = {
   };
 };
 
+// TASK-H5 — SR 11-7 style model inventory: every confirmatory:first run in
+// the tracked ledger reconciled against its frozen run directory (freeze→
+// result row chain, H6 flag, differential), plus the config-only commits
+// listed honestly. Zero-clock by design (no snapshot_ts): `as_of` is the
+// newest relevant ledger row ts, and every timestamp is machine-read from
+// the ledger or meta.json. Fields that may be absent (no local directory,
+// missing differential key) are honestly `| null` — never guessed.
+export type ModelInventoryRun = {
+  phase: string | null;
+  config_sig: string;
+  freeze_row: number | null;
+  freeze_ts: string | null;
+  result_row: number;
+  result_ts: string | null;
+  local_dir_present: boolean;
+  h6_deterministic: boolean | null;
+  aionis_version: string | null;
+  run_ts: string | null;
+  diff: {
+    mean_diff: number | null;
+    ci_lo: number | null;
+    ci_hi: number | null;
+    dm_p_mbb: number | null;
+    null_holds: boolean | null;
+  } | null;
+};
+
+export type ModelInventory = {
+  model_inventory_version: string;
+  status: string;
+  as_of: string | null;
+  runs: ModelInventoryRun[];
+  config_only: {
+    phase: string | null;
+    config_sig: string;
+    row: number;
+    ts: string | null;
+  }[];
+  summary: {
+    n_confirmatory_runs: number;
+    n_local_dirs: number;
+    n_config_only: number;
+    all_null_holds: boolean | null;
+  };
+  notes: string;
+  provenance: {
+    generated_by: string;
+    regen_command: string;
+    byte_stability: string;
+  };
+};
+
 export const aionis = {
   metrics: metricsJson as Metrics,
   picks: picksJson as Pick[],
@@ -1430,6 +1483,7 @@ export const aionis = {
   horizonRobustness: horizonRobustnessJson as HorizonRobustness,
   headlineProvenance: headlineProvenanceJson as HeadlineProvenance,
   modelCard: modelCardJson as ModelCard,
+  modelInventory: modelInventoryJson as ModelInventory,
   dataHealth: dataHealthJson as DataHealth,
   apiCatalog: apiCatalogJson as ApiCatalog,
   form8k: form8kJson as Form8k,

@@ -1,0 +1,176 @@
+{
+  "model_inventory_version": "v1",
+  "status": "ok",
+  "as_of": "2026-08-08T19:23:40.669658+00:00",
+  "runs": [
+    {
+      "phase": "B",
+      "config_sig": "17245a75d2d4cd17c68f36a9d0f4b4f7f3baf1db31b33b87be79e6e4a11400da",
+      "freeze_row": 27,
+      "freeze_ts": "2026-07-28T04:15:16+00:00",
+      "result_row": 28,
+      "result_ts": "2026-07-28T04:27:39+00:00",
+      "local_dir_present": true,
+      "h6_deterministic": true,
+      "aionis_version": "0.1.0",
+      "run_ts": "2026-07-28T04:27:39+00:00",
+      "diff": {
+        "mean_diff": -0.0008,
+        "ci_lo": -0.010573,
+        "ci_hi": 0.008972,
+        "dm_p_mbb": 0.869565,
+        "null_holds": null
+      }
+    },
+    {
+      "phase": "C",
+      "config_sig": "a7fdb48f5942fae146b151143807653fd66c4c5f1601dc7cf9d04a796c1fada1",
+      "freeze_row": 29,
+      "freeze_ts": "2026-07-28T12:01:16+00:00",
+      "result_row": 30,
+      "result_ts": "2026-07-28T12:21:21+00:00",
+      "local_dir_present": true,
+      "h6_deterministic": true,
+      "aionis_version": "0.1.0",
+      "run_ts": "2026-07-29T18:26:45+00:00",
+      "diff": {
+        "mean_diff": -0.006487,
+        "ci_lo": -0.019531,
+        "ci_hi": 0.006556,
+        "dm_p_mbb": 0.355322,
+        "null_holds": null
+      }
+    },
+    {
+      "phase": "D",
+      "config_sig": "d31580630ff35326557dda9f50832c7af3625dd6507e47e252ea01800372a12c",
+      "freeze_row": 33,
+      "freeze_ts": "2026-07-29T02:31:16+00:00",
+      "result_row": 34,
+      "result_ts": "2026-07-29T02:43:23+00:00",
+      "local_dir_present": true,
+      "h6_deterministic": true,
+      "aionis_version": "0.1.0",
+      "run_ts": "2026-07-29T13:04:24+00:00",
+      "diff": {
+        "mean_diff": -0.00298,
+        "ci_lo": -0.013714,
+        "ci_hi": 0.007755,
+        "dm_p_mbb": 0.597201,
+        "null_holds": null
+      }
+    },
+    {
+      "phase": "E1",
+      "config_sig": "ef321e9ee808804601e012818fa95522d2dc5f0fe8c53771d7f1b412c25ed49f",
+      "freeze_row": 35,
+      "freeze_ts": "2026-07-29T03:29:39+00:00",
+      "result_row": 37,
+      "result_ts": "2026-07-29T03:43:41+00:00",
+      "local_dir_present": true,
+      "h6_deterministic": true,
+      "aionis_version": "0.1.0",
+      "run_ts": "2026-07-29T18:26:58+00:00",
+      "diff": {
+        "mean_diff": -0.002793,
+        "ci_lo": -0.011457,
+        "ci_hi": 0.005871,
+        "dm_p_mbb": 0.533233,
+        "null_holds": null
+      }
+    },
+    {
+      "phase": "track_c",
+      "config_sig": "e14b9d445411e74cc3418af3bde1148163725875b01ab75175bdde002225e738",
+      "freeze_row": 48,
+      "freeze_ts": "2026-08-05T04:19:50.785179+00:00",
+      "result_row": 49,
+      "result_ts": "2026-08-05T10:27:13.421731+00:00",
+      "local_dir_present": false,
+      "h6_deterministic": null,
+      "aionis_version": null,
+      "run_ts": null,
+      "diff": null
+    }
+  ],
+  "config_only": [
+    {
+      "phase": "track_b",
+      "config_sig": "7a13579eb0ad4db0d5d04489bd8bc6eb7c36b74b0157ea302b2d5449cb708436",
+      "row": 40,
+      "ts": "2026-08-02T04:08:07.458342+00:00"
+    },
+    {
+      "phase": "track_b",
+      "config_sig": "bf620bdf756810d5aab4db639b70856613885ce48e11e6a198884ab4c32ba4f9",
+      "row": 41,
+      "ts": "2026-08-02T04:18:21.293404+00:00"
+    },
+    {
+      "phase": "track_b",
+      "config_sig": "9af9e8b65d8ef1e8db6119f872844aa2f70de4953b1d0edb5f8fcb88bd7f4530",
+      "row": 42,
+      "ts": "2026-08-02T13:03:48.196945+00:00"
+    },
+    {
+      "phase": "baseline_ff5",
+      "config_sig": "0b0b9934b3aa82b5fac86a5b4cde5c71c005ba51dc74010b25175e4c7ad2e9ca",
+      "row": 43,
+      "ts": "2026-08-03T12:37:15.525027+00:00"
+    },
+    {
+      "phase": "baseline_rank",
+      "config_sig": "43ff0e152f96fd4279e3e121ad6249666d23aa68aa53bfbb148aee02797b047b",
+      "row": 44,
+      "ts": "2026-08-03T12:42:43.766073+00:00"
+    },
+    {
+      "phase": "baseline_rank",
+      "config_sig": "228179801a905869f971afeb9687a83ca2554c7923d28d4916a6fe8e990571a6",
+      "row": 45,
+      "ts": "2026-08-03T12:44:43.183158+00:00"
+    },
+    {
+      "phase": "track_c",
+      "config_sig": "758ca4d739f09331ee4dceb726d9d0d0f7c5110303acc6dcac59919701374fad",
+      "row": 46,
+      "ts": "2026-08-03T15:34:55.230389+00:00"
+    },
+    {
+      "phase": "track_c",
+      "config_sig": "252cf7df1df875e74d86d5651d44064d5ccd89ee191e3638211deec9dfae9e8b",
+      "row": 47,
+      "ts": "2026-08-03T15:43:45.312461+00:00"
+    },
+    {
+      "phase": "track_adaptive",
+      "config_sig": "892fb5068ed1e994db937e23c5b95f2d35ea796825c0c97937253e34605515ad",
+      "row": 51,
+      "ts": "2026-08-08T13:55:02.245526+00:00"
+    },
+    {
+      "phase": "track_adaptive",
+      "config_sig": "ffd0c9227e692fe826faeac964607577f3a9ff3de3384907297bc396887c4659",
+      "row": 52,
+      "ts": "2026-08-08T14:29:16.177314+00:00"
+    },
+    {
+      "phase": "track_adaptive",
+      "config_sig": "b7621e6b089bb8c3d0a692d671c8446eec23b16e48b709efc51dc9b97a632116",
+      "row": 53,
+      "ts": "2026-08-08T19:23:40.669658+00:00"
+    }
+  ],
+  "summary": {
+    "n_confirmatory_runs": 5,
+    "n_local_dirs": 4,
+    "n_config_only": 11,
+    "all_null_holds": null
+  },
+  "notes": "SR 11-7 style model inventory: every confirmatory:first run in the tracked ledger reconciled against its frozen run directory (freeze→result row chain, H6 flag, differential), with config-only commits listed honestly. runs/ is read-only; a missing local directory is honest unknown, not absence — the ledger row still proves the config was committed before any result was observed.",
+  "provenance": {
+    "generated_by": "scripts/export_terminal_data.py::export_model_inventory (model_inventory_version v1)",
+    "regen_command": "uv run python -c \"import sys; sys.path.insert(0,'scripts'); import export_terminal_data as m; m._safe_export('model_inventory', m.export_model_inventory)\"",
+    "byte_stability": "Zero-clock panel: no snapshot timestamp and no wall-clock reads; every value is machine-read verbatim from the tracked ledger and the frozen run artifacts, so consecutive exports of unchanged artifacts are byte-identical. Output is LF."
+  }
+}

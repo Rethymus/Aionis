@@ -11,9 +11,10 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
-import { aionis, type ModelCard } from "@/data/aionis";
+import { aionis, type ModelCard, type ModelInventory } from "@/data/aionis";
 import {
   FileTextIcon,
+  ListIcon,
   ScrollTextIcon,
   ShieldAlertIcon,
   ShieldCheckIcon,
@@ -413,6 +414,152 @@ function ModelCardSection() {
   );
 }
 
+// --- model inventory (TASK-H5) -------------------------------------------------
+//
+// SR 11-7 style inventory: the tracked ledger's confirmatory:first runs
+// reconciled against their frozen run directories — one row per phase
+// (freeze row+ts · H6 · differential mean_diff [CI] · null badge), and the
+// config-only commits collapsed into a count + one-sentence disclosure.
+// Every value is verbatim from model_inventory.json; a missing local
+// directory renders the honest "no dir" state, never a guessed value.
+// Honest empty state: with no inventory rows the table headers still render.
+
+const HOLD_BADGE =
+  "border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400";
+const BREAK_BADGE =
+  "border-amber-500/40 bg-amber-500/10 text-amber-700 dark:text-amber-400";
+
+function NullBadge({ holds }: { holds: boolean | null }) {
+  const { t } = useI18n();
+  if (holds === true) {
+    return (
+      <Badge variant="outline" className={HOLD_BADGE}>
+        {t("inventory.verdict.holds")}
+      </Badge>
+    );
+  }
+  if (holds === false) {
+    return (
+      <Badge variant="outline" className={BREAK_BADGE}>
+        {t("inventory.verdict.broken")}
+      </Badge>
+    );
+  }
+  return <span className="text-xs text-muted-foreground">{t("inventory.verdict.unknown")}</span>;
+}
+
+function H6Cell({ value }: { value: boolean | null }) {
+  if (value === true) {
+    return (
+      <Badge variant="outline" className={HOLD_BADGE}>
+        PASS
+      </Badge>
+    );
+  }
+  return (
+    <span className="text-xs text-muted-foreground">{value === false ? "FAIL" : "—"}</span>
+  );
+}
+
+function ModelInventorySection() {
+  const { t } = useI18n();
+  const inv: ModelInventory | undefined = aionis.modelInventory;
+  const runs = inv?.runs ?? [];
+  const coCount = inv?.summary?.n_config_only ?? 0;
+  const asOfDate = inv?.as_of ? inv.as_of.split("T")[0] : null;
+
+  return (
+    <Card className="border-dashed">
+      <CardHeader className="border-b">
+        <CardTitle className="flex items-center gap-2 text-base">
+          <ListIcon className="size-4" /> {t("inventory.title")}
+        </CardTitle>
+        <CardDescription>{t("inventory.subtitle")}</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4 p-4">
+        {asOfDate ? (
+          <p className="text-xs text-muted-foreground">
+            {t("inventory.asof")}: <span className="tabular-nums">{asOfDate}</span>
+          </p>
+        ) : null}
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse text-[13px]">
+            <thead>
+              <tr className="border-b text-left text-xs text-muted-foreground">
+                <th className="py-1.5 pr-3 font-medium">{t("inventory.col.phase")}</th>
+                <th className="py-1.5 pr-3 font-medium">{t("inventory.col.sig")}</th>
+                <th className="py-1.5 pr-3 font-medium">{t("inventory.col.freezeTs")}</th>
+                <th className="py-1.5 pr-3 font-medium">{t("inventory.col.h6")}</th>
+                <th className="py-1.5 pr-3 font-medium">{t("inventory.col.diff")}</th>
+                <th className="py-1.5 pr-3 font-medium">{t("inventory.col.verdict")}</th>
+                <th className="py-1.5 font-medium">{t("inventory.col.local")}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {runs.length === 0 ? (
+                <tr>
+                  <td className="py-2 text-muted-foreground" colSpan={7}>
+                    {t("inventory.empty")}
+                  </td>
+                </tr>
+              ) : (
+                runs.map((r) => {
+                  const diff = r.diff;
+                  const diffText =
+                    diff?.mean_diff != null && diff.ci_lo != null && diff.ci_hi != null
+                      ? `${String(diff.mean_diff)} [${String(diff.ci_lo)}, ${String(diff.ci_hi)}]`
+                      : null;
+                  return (
+                    <tr key={r.config_sig} className="border-b align-top last:border-0">
+                      <td className="py-1.5 pr-3 font-medium">{r.phase ?? "—"}</td>
+                      <td className="py-1.5 pr-3">
+                        <code className="font-mono text-xs">{r.config_sig.slice(0, 12)}</code>
+                      </td>
+                      <td className="py-1.5 pr-3 text-xs tabular-nums">
+                        #{r.freeze_row ?? "—"} · {r.freeze_ts ?? "—"}
+                      </td>
+                      <td className="py-1.5 pr-3">
+                        <H6Cell value={r.h6_deterministic} />
+                      </td>
+                      <td className="py-1.5 pr-3 tabular-nums">
+                        {diffText ?? <span className="text-muted-foreground">—</span>}
+                      </td>
+                      <td className="py-1.5 pr-3">
+                        <NullBadge holds={diff?.null_holds ?? null} />
+                      </td>
+                      <td className="py-1.5">
+                        {r.local_dir_present ? (
+                          <span className="text-xs">v{r.aionis_version ?? "—"}</span>
+                        ) : (
+                          <Badge variant="outline" className={BREAK_BADGE}>
+                            {t("inventory.local.missing")}
+                          </Badge>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        <details className="rounded-md border border-dashed p-3 text-xs">
+          <summary className="cursor-pointer font-medium">
+            {t("inventory.configOnly")}: <span className="tabular-nums">{coCount}</span>
+          </summary>
+          <p className="mt-1 text-muted-foreground">{t("inventory.configOnlyNote")}</p>
+        </details>
+
+        <p className="flex items-center gap-1.5 text-xs text-amber-700 dark:text-amber-400">
+          <ScrollTextIcon className="size-3.5 shrink-0" />
+          {t("inventory.disclaimer")}
+        </p>
+      </CardContent>
+    </Card>
+  );
+}
+
 export function ModelHealthView() {
   const { t } = useI18n();
   const mh = aionis.modelHealth;
@@ -461,6 +608,8 @@ export function ModelHealthView() {
       )}
 
       <ModelCardSection />
+
+      <ModelInventorySection />
 
       <Card className="border-dashed">
         <CardHeader className="border-b">

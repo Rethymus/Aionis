@@ -2881,6 +2881,220 @@ def export_model_card(*, allow_uv_lock_drift: bool = False) -> None:
     )
 
 
+MODEL_INVENTORY_VERSION = "v1"
+
+# Diff fields lifted verbatim from each frozen run's differential.json (key
+# names verified against the real artifacts: mean_diff/ci_lo/ci_hi/dm_p_mbb
+# are present on all four frozen directories; null_holds is NOT — a missing
+# key is an honest null, never guessed).
+_INV_DIFF_FIELDS = ("mean_diff", "ci_lo", "ci_hi", "dm_p_mbb")
+
+
+def _inv_round6(v: object) -> float | None:
+    """6-dp rounded float, or an honest None (non-numeric / non-finite)."""
+    if isinstance(v, bool) or not isinstance(v, int | float):
+        return None
+    return round(float(v), 6) if math.isfinite(v) else None
+
+
+def _inv_read_meta(run_dir: Path, sig: str) -> dict | None:
+    """Read a frozen run's meta.json (readable AND this sig's own) or None.
+
+    ``None`` covers both "directory not on this machine" and "meta.json not
+    readable" — honest unknown either way. A parseable meta whose config_sig
+    disagrees with the ledger sig is a wrong/corrupted directory → raise
+    (the model-card guard): never silently attach another run's identity to a
+    ledger row.
+    """
+    meta_path = run_dir / "meta.json"
+    if not meta_path.exists():
+        return None
+    try:
+        meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    if not isinstance(meta, dict):
+        return None
+    if meta.get("config_sig") != sig:
+        raise ValueError(
+            f"model inventory: {meta_path} config_sig={meta.get('config_sig')!r} "
+            f"!= ledger sig {sig!r} — wrong/corrupted run directory"
+        )
+    return meta
+
+
+def _inv_read_diff(run_dir: Path) -> dict | None:
+    """Lift a frozen run's differential.json (absent / unreadable → None)."""
+    diff_path = run_dir / "differential.json"
+    if not diff_path.exists():
+        return None
+    try:
+        raw = json.loads(diff_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    if not isinstance(raw, dict):
+        return None
+    null_holds = raw.get("null_holds")
+    return {
+        **{field: _inv_round6(raw.get(field)) for field in _INV_DIFF_FIELDS},
+        "null_holds": null_holds if isinstance(null_holds, bool) else None,
+    }
+
+
+def export_model_inventory() -> None:
+    """Export ``model_inventory.json`` — the SR 11-7 style model inventory.
+
+    TASK-H5: H4's card documents THE confirmatory model; the inventory lists
+    EVERY ``confirmatory:first`` run in the tracked ledger (B/C/D/E1/track_c),
+    each reconciled against its frozen ``runs/results/<config_sig>/``
+    directory: freeze row (the config_committed sharing the sig, before the
+    result — the anti-leakage ordering), result row + ts, and — when the
+    directory is on this machine — meta.json's H6 flag / aionis_version /
+    run ts plus differential.json's diff fields. Config-committed rows whose
+    sig has NO confirmatory:first run and NO local directory are listed
+    honestly as ``config_only`` (superseded or directory not retained — the
+    reason is never guessed).
+
+    READ-ONLY over ``runs/``; zero-clock (every timestamp is machine-read
+    from the ledger or meta.json — no ``now()``, no ``snapshot_ts``), so
+    consecutive exports of unchanged artifacts are byte-identical. Output is
+    LF. Numbers round to 6 dp; missing pieces are honest nulls. Absent a
+    ledger (fresh CI) or any confirmatory row → ``FileNotFoundError`` so
+    ``_safe_export`` skips and the tracked JSON retains its committed value.
+    """
+    rows = _read_ledger_rows()
+    if not rows:
+        raise FileNotFoundError(
+            "runs/ledger.jsonl (tracked ledger absent; tracked JSON retains "
+            "last-committed value)"
+        )
+
+    # --- confirmatory runs: every confirmatory:first row, ledger order -------
+    runs: list[dict] = []
+    relevant_ts: list[str] = []  # ledger ts of every row the inventory covers
+    for lineno, rec in rows:
+        if rec.get("event") != "confirmatory:first":
+            continue
+        sig = str(rec.get("config_sig") or "")
+        freeze: tuple[int, dict] | None = None
+        for flineno, frec in rows:
+            if (
+                flineno < lineno
+                and frec.get("event") == "config_committed"
+                and (frec.get("config_sig") or "") == sig
+            ):
+                freeze = (flineno, frec)  # append-only → last freeze before result
+        meta = _inv_read_meta(_CARD_RESULTS_ROOT / sig, sig) if sig else None
+        runs.append({
+            "phase": rec.get("phase"),
+            "config_sig": sig,
+            "freeze_row": freeze[0] if freeze else None,
+            "freeze_ts": freeze[1].get("ts") if freeze else None,
+            "result_row": lineno,
+            "result_ts": rec.get("ts"),
+            "local_dir_present": meta is not None,
+            "h6_deterministic": (
+                meta.get("h6_deterministic")
+                if meta is not None and isinstance(meta.get("h6_deterministic"), bool)
+                else None
+            ),
+            "aionis_version": meta.get("aionis_version") if meta is not None else None,
+            "run_ts": meta.get("ts") if meta is not None else None,
+            "diff": _inv_read_diff(_CARD_RESULTS_ROOT / sig) if meta is not None else None,
+        })
+        for ts in (rec.get("ts"), freeze[1].get("ts") if freeze else None):
+            if ts:
+                relevant_ts.append(str(ts))
+    if not runs:
+        raise FileNotFoundError(
+            "runs/ledger.jsonl: no confirmatory:first rows (tracked JSON "
+            "retains last-committed value)"
+        )
+
+    # --- config-only commits: honest listing, reason never guessed -----------
+    confirmed = {r["config_sig"] for r in runs if r["config_sig"]}
+    config_only: list[dict] = []
+    for lineno, rec in rows:
+        if rec.get("event") != "config_committed":
+            continue
+        sig = str(rec.get("config_sig") or "")
+        if sig in confirmed:
+            continue  # this row IS a confirmatory run's freeze row
+        if sig and _inv_read_meta(_CARD_RESULTS_ROOT / sig, sig) is not None:
+            continue  # frozen artifacts exist locally — not "no local directory"
+        config_only.append({
+            "phase": rec.get("phase"),
+            "config_sig": sig,
+            "row": lineno,
+            "ts": rec.get("ts"),
+        })
+        if rec.get("ts"):
+            relevant_ts.append(str(rec["ts"]))
+
+    # Three-valued aggregate over the diff null_holds actually carried: True
+    # only when every present flag holds, False when any explicitly breaks,
+    # null when no diff carries the flag (honest unknown — the current frozen
+    # directories' differential.json files do not record null_holds).
+    holds = [
+        r["diff"]["null_holds"]
+        for r in runs
+        if r["diff"] is not None and r["diff"]["null_holds"] is not None
+    ]
+    if holds and all(holds):
+        all_null_holds: bool | None = True
+    elif any(h is False for h in holds):
+        all_null_holds = False
+    else:
+        all_null_holds = None
+
+    payload = {
+        "model_inventory_version": MODEL_INVENTORY_VERSION,
+        "status": "ok",
+        # Newest relevant LEDGER row ts (freeze/result/config-only rows the
+        # inventory covers) — the registration as_of reads this field.
+        "as_of": max(relevant_ts) if relevant_ts else None,
+        "runs": runs,
+        "config_only": config_only,
+        "summary": {
+            "n_confirmatory_runs": len(runs),
+            "n_local_dirs": sum(1 for r in runs if r["local_dir_present"]),
+            "n_config_only": len(config_only),
+            "all_null_holds": all_null_holds,
+        },
+        "notes": (
+            "SR 11-7 style model inventory: every confirmatory:first run in "
+            "the tracked ledger reconciled against its frozen run directory "
+            "(freeze→result row chain, H6 flag, differential), with "
+            "config-only commits listed honestly. runs/ is read-only; a "
+            "missing local directory is honest unknown, not absence — the "
+            "ledger row still proves the config was committed before any "
+            "result was observed."
+        ),
+        "provenance": {
+            "generated_by": (
+                "scripts/export_terminal_data.py::export_model_inventory "
+                f"(model_inventory_version {MODEL_INVENTORY_VERSION})"
+            ),
+            "regen_command": (
+                "uv run python -c \"import sys; sys.path.insert(0,'scripts'); "
+                "import export_terminal_data as m; m._safe_export("
+                "'model_inventory', m.export_model_inventory)\""
+            ),
+            "byte_stability": (
+                "Zero-clock panel: no snapshot timestamp and no wall-clock "
+                "reads; every value is machine-read verbatim from the tracked "
+                "ledger and the frozen run artifacts, so consecutive exports "
+                "of unchanged artifacts are byte-identical. Output is LF."
+            ),
+        },
+    }
+    (WEB / "model_inventory.json").write_text(
+        json.dumps(payload, indent=2, ensure_ascii=False),
+        encoding="utf-8",
+        newline="\n",
+    )
+
+
 def export_horizon_robustness() -> None:
     """Export the horizon-robustness sweep summary (READ-ONLY ledger projection).
 
@@ -3144,6 +3358,11 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
     # (identity/data/model/eval/results/governance), hash-pinned; zero-clock,
     # so it only changes when the frozen artifacts themselves do.
     ("model_card", "model_card.json", _DH_FROZEN),
+    # TASK-H5 — SR 11-7 style model inventory: every confirmatory:first run in
+    # the tracked ledger reconciled against its frozen run directory, plus the
+    # config-only commits listed honestly. Zero-clock; moves only when the
+    # ledger or the frozen artifacts themselves do.
+    ("model_inventory", "model_inventory.json", _DH_FROZEN),
     ("cot", "cot.json", _DH_CADENCE),
     ("smart_money", "smart_money.json", _DH_CADENCE),
     ("stakes_13g", "stakes_13g.json", _DH_DAILY),
@@ -3368,6 +3587,12 @@ def _dh_as_of(key: str, fname: str) -> str | None:
         # date-only — never the export clock (the card is zero-clock by design).
         identity = p.get("identity")
         ts = identity.get("run_ts") if isinstance(identity, dict) else None
+        return ts.split("T")[0] if ts else None
+    if key == "model_inventory":
+        # as_of = the newest relevant LEDGER row ts the inventory covers
+        # (freeze/result/config-only rows; the panel's own as_of field),
+        # date-only — never the export clock (zero-clock by design).
+        ts = p.get("as_of")
         return ts.split("T")[0] if ts else None
     # model_health / calibration_reliability / power_floor / sigma_survey /
     # bps_sweep / evidence / reddit / ledger_audit: no observation date field.
@@ -3629,6 +3854,10 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
     "model_card": (
         "Aionis research artifacts (repo MIT)",
         "machine-readable model card of the frozen confirmatory Track C model",
+    ),
+    "model_inventory": (
+        "Aionis research artifacts (repo MIT)",
+        "SR 11-7 style model inventory over the tracked ledger and frozen run directories",
     ),
     "cot": ("U.S. CFTC — public domain", "Commitments of Traders legacy futures, weekly"),
     "smart_money": ("U.S. SEC EDGAR — public domain", "13D/G filings via EFTS, filed-date PIT"),
@@ -6883,6 +7112,10 @@ def main() -> None:
     # metrics into one hash-pinned card (READ-ONLY) — before the freshness map
     # / catalog that index it.
     _safe_export("model_card", export_model_card)
+    # model_inventory reconciles the tracked ledger's confirmatory:first runs
+    # against the frozen run directories + lists config-only commits honestly
+    # (READ-ONLY) — before the freshness map / catalog that index it.
+    _safe_export("model_inventory", export_model_inventory)
     # Per-stock view joins the corroboration JSONs above — keep after them.
     _safe_export("stock_universe", export_stock_universe)
     # Executives derives from the committed form8k.json written above — after
