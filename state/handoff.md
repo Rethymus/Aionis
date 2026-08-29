@@ -8,6 +8,19 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-29 (aaa) 轮㊷：前端真实性与视觉修复——数据审计零 mock / 搜索全宇宙化 / StickyTabs 层级 / 宏观图重设计 / 热力图错位真 bug / WCAG 双主题扫零（单进程；全套绿）
+
+**编排**：业主四点指令（①数据真实性 ②主页搜索修复 ③宏观图参考 VIX 图 ④视觉自检修复）→ 主线先审计再逐项修复 → 浏览器逐页双主题程序化扫查。
+
+- **①数据真实性审计（业主第一关切）**：web 前端数据面 100% 来自 `web/src/data/aionis/*.json`（=committed 导出面板，export_terminal_data 契约测试钉死）；`src/data` 与 `public/api/v1/panels` 双份逐文件比对**语义全等**（仅 CRLF/LF 格式差）；全站 grep 无 mock/dummy/placeholder/样例文本；`dashboard/demo_data.py` 确认为 **Streamlit 旧版仪表盘（app_v2）专用**、文件头即标注 "DEMONSTRATION ONLY"，与用户所见 web 终端零关联——是否退役留业主裁决（未动）。
+- **②主页搜索修复（逻辑缺陷实证）**：hero 占位承诺"搜索公司名/股票代码"但 palette 只搜 13 只热门股。重写：打开时**动态 import `stock-universe`（1,421 只 US+CN，全部有 /stock 页）**成独立 chunk（不进 home barrel，延续 stock-universe 模块的 barrel 教训）；`shouldFilter=false` 自管过滤（cmdk 会渲染全部挂载项，1,421 行直灌不可取）：ticker 精确>前缀>公司名前缀>子串>ticker 中缀，Top12 截断，中文名子串命中（海光信息）；空 query 保持"热门个股"组不变；页面/视图搜索兼匹配路由 slug（zh UI 下输 "picks" 也能中）。i18n +1 键（`palette.stocks.search`，中英对称，{n} 动态插值免陈旧数字）。浏览器实测：tesla→Tesla, Inc. (TSLA)、海光→海光信息 (sh.688041)、点击跳转 /stock/TSLA 全通。
+- **③StickyTabs 遮挡根治**：根因=标签条 z-30 **高于**导航 header z-20，四个 hub 页（picks/regime/confirmation/track）导航 hover 下拉被压在标签条之下；且 top-16 对 h-14 导航留 8px 内容游隙。改 `top-14 z-10`（低于导航、高于内容），悬停截图实证下拉正确绘制于标签条之上。
+- **④宏观图重设计**：/regime#macro 原只有 ThemeCard 迷你 sparkline。新组件 `MacroRegimeChart`（themes.json macro 主题=Track-C 宏观制度综合 z，60 个真实日度点）：KPI 行（最新 z/区间峰值/谷值/样本天数）+ 渐变面积图 + 虚线零轴 + 网格 + 共享 tooltip——对齐「市场指数 × VIX」的图表语言；蓝色（非涨跌语义色，复合 z 极性不声明方向）；X 轴 MM-DD（年月格式在 60 日窗内重复三次）；退化数据回退 ThemeCard。**顺带修类型契约缺口**：Theme.series 实际 `macro 用 date、其余用 month`，旧单 `month` 类型靠 JSON cast 编译通过但运行时读 undefined——类型改双字段可选并注释导出端出处。
+- **⑤热力图标签 + 错位真 bug**：业主报告"只有悬浮才见名"。两修：**(a) 映射真 bug**——RegionMap 用数组位置 `cells[idx]` 对回 squarify 输出，但 squarify 内部按值降序排序、值最大的「其他」桶在输入数组末尾→**整图标签/颜色/链接错位一格**（70% 宽巨格实为"其他 342/779 只"桶，却被标成 COIN/sh.688041 且可点击）——改按 `l.key`（原始索引）映射，其他桶如实灰显不可点；**(b) 标签分级**——旧阈值 w>7%∧h>9% 在双列 420px 容器下中位格恰好不达标（≈40px），近半格子无标签：改大格=代码+评分、中格(w>3.4∧h>4.2)=10px 标签，仅真碎条留悬浮；CN 行标签用中文短名（9 字代码 sh.688041 截断成 `sh._` 乱码根治，悬浮 title 仍含全名+代码）。
+- **⑥亮暗不可见文字（程序化根治）**：自研 WCAG 对比度扫描器（playwright.evaluate 遍历可见文本×祖先背景 alpha 复合，阈值 3.0）扫 22 页×双主题。抓到：**/news「GDELT」芯片 `text-inverse` 类从未在 globals.css 定义**（tailwind v4 无 `--color-inverse` 注册→类不存在→继承前景色）→ **bg-ink 上 ink 字，两主题对比度 1.0 全隐形**；新增 `--inverse` token（亮 #ffffff/暗 #171717）+注册。亮色灰阶系统性偏浅：`--muted-foreground/--mute/--faint` = #8f8f8f/#8f8f8f/#787878（白底 2.8-2.9:1，9-12px 小字几乎不可读）→ #6f6f6f/#757575/#747474（4.6-5.0:1，暗色两值 6:1+ 不动）；修复后 22 页×双主题**扫描全零**。
+- **⑦存量闸门两枚（stash 于干净 HEAD 复现=非本轮引入，按各自协议处置）**：(a) `test_ledger_append_only` 红——轮 38 写入的 pin `8136b09f` 与其同 commit 落盘的 ledger 字节（`a1868289`）**自始不符**（guard 生来就红，故轮 39-41 未跑全套时未暴露）；复核 83fa2778→a1868289 增量恰 +1 行 data_ingest 纯追加（git diff 1 insertion/0 删改）后重钉。(b) `test_real_artifact_equals_fresh_render` 红——dossier S-registry 引用的冻结契约文档 sha 过期（轮 39/40 的 frozen YAML amendment 发生在轮 38 dossier 重生成之后）；按"工件先行→目录次之"重生成 dossier `b1593667`（46,549B，16 契约测试过）+ knowledge_shelf 重钉（旧 aab73c4a→新）+ public 镜像同步。
+- **验证**：全套 pytest **exit 0（无管道确证）**+ ruff 净（仅 archive/krx-probes 存量 24 错=档案证据不改写纪律）+ tsc 0 + eslint 0 error（33 存量警告=既有基线）+ build 成功（HTML 实数 **1,503 页**=上轮持平；日志 "1504/1504" 计数含内部条目）+ WCAG 22 页×双主题全零 + 浏览器实测截图（搜索三路径/下拉层级/宏观图亮暗/热力图标签）。**内务**：dev server 进程已杀（无残留）；web/out 按"新收尾定律"删除（junction 检查先行，本轮无 junction）。**边界**：display lane；0 ledger 新行（仅测试锚重钉）；0 frozen/config/prereg/OOS 触碰。**待业主**：E3 headline GO（不变）；可选裁决=Streamlit demo dashboard 是否退役。
+
 ## 2026-08-29 (zzz) 轮㊲：E3 cutoff 阻塞解决——经验探针 v1 实测边界(2023-03, 2024-11];冻结 YAML amendment(业主授权直接决策;单进程)
 
 **编排**：业主授权直接决策 → 按 advisory(report 2026-08-29-e3-cutoff-advisory.md)决策树执行：方案 A(供应商声明)→ **前提不成立**(GLM-4.5 技术报告 arXiv 2508.06471 全文实检,§2.2 Pre-Training Data 无截止日声明,全文无任何数据截止日期)→ 落 **方案 B(经验探针为主)**。

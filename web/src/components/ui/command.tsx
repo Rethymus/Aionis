@@ -39,12 +39,17 @@ function CommandDialog({
   children,
   className,
   showCloseButton = false,
+  shouldFilter,
   ...props
 }: Omit<React.ComponentProps<typeof Dialog>, "children"> & {
   title?: string
   description?: string
   className?: string
   showCloseButton?: boolean
+  // Forwarded to the inner Command root: `shouldFilter={false}` hands ranking
+  // to the consumer (command-palette does its own CJK-aware stock search and
+  // renders only the top matches instead of the whole universe).
+  shouldFilter?: boolean
   children: React.ReactNode
 }) {
   return (
@@ -65,6 +70,7 @@ function CommandDialog({
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
         <Command
+          shouldFilter={shouldFilter}
           className="[&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group]]:px-2 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-1.5"
         >
           {children}

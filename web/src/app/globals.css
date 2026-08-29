@@ -54,6 +54,7 @@
   --color-faint: var(--faint);
   --color-line: var(--line);
   --color-line2: var(--line2);
+  --color-inverse: var(--inverse);
   --color-soft: var(--soft);
   --color-brand: var(--brand);
   --color-brand-hover: var(--brand-hover);
@@ -85,7 +86,10 @@
   --secondary: #0000000d;
   --secondary-foreground: #171717;
   --muted: #0000000d;
-  --muted-foreground: #8f8f8f;
+  /* Owner-reported legibility (2026-08-29): #8f8f8f on white is 2.9:1 —
+     below even the 3:1 large-text floor. #6f6f6f ≈ 5.0:1 keeps the de-emphasis
+     hierarchy (ink #171717 > sub #4d4d4d > mute/faint) while reading cleanly. */
+  --muted-foreground: #6f6f6f;
   --accent: #00000015;
   --accent-foreground: #171717;
   --destructive: #d8001b;
@@ -107,12 +111,14 @@
   --sidebar-ring: #107d32;
 
   --ink: #171717;
-  --mute: #8f8f8f;
+  --mute: #757575;
   --sub: #4d4d4d;
-  --faint: #787878;
+  --faint: #747474;
   --line: #0000001f;
   --line2: #00000015;
   --soft: #0000000d;
+  /* Text ON bg-ink surfaces (news source chip): the opposite pole of ink. */
+  --inverse: #ffffff;
   --brand: #107d32;
   --brand-hover: #0a6428;
   --green-text: #107d32;
@@ -180,6 +186,9 @@
   --line: #ffffff24;
   --line2: #ffffff17;
   --soft: #ffffff12;
+  /* Text ON bg-ink surfaces (news source chip): ink flips to near-white in
+     dark, so the inverse pole flips to near-black. */
+  --inverse: #171717;
   --brand: #00ca50;
   --brand-hover: #4ade80;
   --green-text: #00ca50;

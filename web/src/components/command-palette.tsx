@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import {
@@ -32,7 +32,6 @@ import {
 } from "lucide-react";
 import {
   CommandDialog,
-  CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
@@ -54,10 +53,22 @@ import { aionis } from "@/data/aionis";
 //
 // The previous command-palette.tsx was unwired template cruft (wallet/crypto/
 // login menus reading template seed data) — deleted together with seed.ts.
+//
+// Stock search (owner-reported 2026-08-29): the hero box promises "公司名 /
+// 股票代码" but only 13 hot picks were searchable. The full frozen universe
+// (1,421 US+CN rows, every one with a live /stock page) loads LAZILY via
+// dynamic import on first open — a dedicated chunk, so the shared home bundle
+// stays lean (the stock-universe module comment's barrel lesson). Filtering is
+// done HERE with shouldFilter={false}: cmdk renders every mounted item, so
+// handing it 1,421 rows would paint the whole universe on open; we render
+// ranked top-N matches instead, and CJK company names (海光信息) match by
+// plain substring, which cmdk's command-score handles poorly.
 
 type PaletteItem = {
   labelKey: DictKey;
-  icon: React.ReactNode;
+  // Optional: settings/action rows render their icon by action kind, and the
+  // theme/lang/results entries are declared without one.
+  icon?: React.ReactNode;
   href?: string; // internal route (may include #tab hash)
   external?: string; // external URL
   action?: "theme" | "lang";
@@ -121,17 +132,50 @@ const VIEWS: PaletteItem[] = [
 // Hot stocks straight from the picks panel: top-10 longs + top-3 shorts, one
 // keystroke from /stock/<ticker>. Display-only navigation over the same frozen
 // picks data the picks page renders — no new data path.
-type StockNavItem = { ticker: string; name: string; short: boolean };
-const STOCKS: StockNavItem[] = [
+type StockNavItem = { ticker: string; name: string; short: boolean; region?: string };
+const HOT_STOCKS: StockNavItem[] = [
   ...aionis.picks.slice(0, 10).map((p) => ({ ticker: p.ticker, name: p.name, short: false })),
   ...aionis.shorts.slice(0, 3).map((s) => ({ ticker: s.ticker, name: s.name, short: true })),
 ];
+
+const STOCK_MATCH_CAP = 12;
+
+type UniverseStock = { ticker: string; name: string; region: "us" | "cn" };
+
+/** Ranked ticker/company-name match over the frozen universe.
+ *  Tiers: exact ticker > ticker prefix > name prefix > name substring >
+ *  ticker infix. Deterministic ordering inside a tier (ticker asc). */
+function searchStocks(universe: UniverseStock[], rawQuery: string): StockNavItem[] {
+  const q = rawQuery.trim().toUpperCase();
+  if (!q) return [];
+  const hits: { tier: number; item: StockNavItem }[] = [];
+  for (const s of universe) {
+    const ticker = s.ticker.toUpperCase();
+    const name = (s.name || "").toUpperCase();
+    let tier: number | null = null;
+    if (ticker === q) tier = 0;
+    else if (ticker.startsWith(q)) tier = 1;
+    else if (name.startsWith(q)) tier = 2;
+    else if (name.includes(q)) tier = 3;
+    else if (ticker.includes(q)) tier = 4;
+    if (tier !== null) {
+      hits.push({ tier, item: { ticker: s.ticker, name: s.name || "", short: false, region: s.region } });
+    }
+  }
+  return hits
+    .sort((a, b) => a.tier - b.tier || a.item.ticker.localeCompare(b.item.ticker))
+    .slice(0, STOCK_MATCH_CAP)
+    .map((h) => h.item);
+}
 
 export function CommandPalette() {
   const { t, lang, setLang } = useI18n();
   const { resolvedTheme, setTheme } = useTheme();
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  // Lazy-loaded frozen universe (1,421 rows) — null until first open.
+  const [universe, setUniverse] = useState<UniverseStock[] | null>(null);
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -150,6 +194,31 @@ export function CommandPalette() {
     };
   }, []);
 
+  // Pull the universe chunk once, on first open (off the home-bundle path).
+  useEffect(() => {
+    if (!open || universe) return;
+    let alive = true;
+    import("@/data/aionis/stock-universe")
+      .then((m) => {
+        if (!alive) return;
+        setUniverse(
+          m.stockUniverse.stocks.map((s) => ({
+            ticker: s.ticker,
+            name: s.name || "",
+            region: s.region,
+          })),
+        );
+      })
+      .catch(() => {
+        // Chunk load failure must not brick the palette: page search keeps
+        // working, stock search degrades to the hot list.
+        if (alive) setUniverse([]);
+      });
+    return () => {
+      alive = false;
+    };
+  }, [open, universe]);
+
   const runItem = (item: PaletteItem) => {
     setOpen(false);
     if (item.action === "theme") {
@@ -163,13 +232,57 @@ export function CommandPalette() {
     }
   };
 
+  const openStock = (ticker: string) => {
+    setOpen(false);
+    router.push(`/stock/${ticker}`);
+  };
+
   const renderItems = (items: PaletteItem[]) =>
     items.map((item) => (
-      <CommandItem key={`${item.labelKey}-${item.href ?? item.action ?? ""}`} onSelect={() => runItem(item)}>
+      <CommandItem
+        key={`${item.labelKey}-${item.href ?? item.action ?? ""}`}
+        onSelect={() => runItem(item)}
+      >
         {item.icon}
         {t(item.labelKey)}
       </CommandItem>
     ));
+
+  // With shouldFilter={false} we own matching: translated label OR the route
+  // slug (typing "picks" finds 选股决策 even in the zh UI).
+  const q = query.trim().toLowerCase();
+  const matchItem = (item: PaletteItem) =>
+    !q ||
+    t(item.labelKey).toLowerCase().includes(q) ||
+    (item.href ?? "").toLowerCase().includes(q);
+
+  const tour = TOUR.filter(matchItem);
+  const pages = PAGES.filter(matchItem);
+  const views = VIEWS.filter(matchItem);
+  const stockMatches = useMemo(
+    () => (q && universe ? searchStocks(universe, query) : []),
+    [q, query, universe],
+  );
+  // Empty query → the curated hot list (today's behavior); non-empty → ranked
+  // universe matches.
+  const stockRows: StockNavItem[] = q ? stockMatches : HOT_STOCKS;
+  const settings = (
+    [
+      { labelKey: "command.theme" as const, action: "theme" as const },
+      { labelKey: "command.lang" as const, action: "lang" as const },
+      {
+        labelKey: "command.results" as const,
+        external: "https://github.com/Rethymus/Aionis/blob/main/docs/RESULTS.md",
+      },
+    ] satisfies PaletteItem[]
+  ).filter(matchItem);
+  const nothingFound =
+    q.length > 0 &&
+    tour.length === 0 &&
+    pages.length === 0 &&
+    views.length === 0 &&
+    settings.length === 0 &&
+    stockRows.length === 0;
 
   return (
     <>
@@ -188,69 +301,102 @@ export function CommandPalette() {
         </kbd>
       </Button>
 
-      <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder={t("command.placeholder")} />
+      <CommandDialog open={open} onOpenChange={setOpen} shouldFilter={false}>
+        <CommandInput
+          value={query}
+          onValueChange={(v) => setQuery(v)}
+          placeholder={t("command.placeholder")}
+        />
         <CommandList>
-          <CommandEmpty>{t("command.empty")}</CommandEmpty>
-          <CommandGroup heading={t("command.group.start")}>
-            {renderItems(TOUR)}
-          </CommandGroup>
-          <CommandSeparator />
-          <CommandGroup heading={t("command.group.pages")}>
-            {renderItems(PAGES)}
-          </CommandGroup>
-          <CommandSeparator />
-          <CommandGroup heading={t("palette.stocks")}>
-            {STOCKS.map((s) => (
-              <CommandItem
-                key={`${s.short ? "short" : "long"}-${s.ticker}`}
-                value={s.name ? `${s.name} (${s.ticker})` : s.ticker}
-                keywords={[s.ticker, s.name]}
-                onSelect={() =>
-                  runItem({ labelKey: "palette.stocks", icon: null, href: `/stock/${s.ticker}` })
-                }
-              >
-                {s.short ? (
-                  <TrendingDownIcon className="size-4 text-down" />
-                ) : (
-                  <TrendingUpIcon className="size-4 text-up" />
-                )}
-                <span className="flex-1">{s.name ? `${s.name} (${s.ticker})` : s.ticker}</span>
-                {s.short && (
-                  <Badge variant="outline" className="badge-down ml-auto shrink-0 px-1.5 py-0 text-[11px] font-normal">
-                    {t("palette.stocks.short")}
-                  </Badge>
-                )}
-              </CommandItem>
-            ))}
-          </CommandGroup>
-          <CommandSeparator />
-          <CommandGroup heading={t("command.group.views")}>
-            {renderItems(VIEWS)}
-          </CommandGroup>
-          <CommandSeparator />
-          <CommandGroup heading={t("command.group.settings")}>
-            <CommandItem onSelect={() => runItem({ labelKey: "command.theme", icon: null, action: "theme" })}>
-              <SunMoonIcon className="size-4" />
-              {t("command.theme")}
-            </CommandItem>
-            <CommandItem onSelect={() => runItem({ labelKey: "command.lang", icon: null, action: "lang" })}>
-              <LanguagesIcon className="size-4" />
-              {t("command.lang")}
-            </CommandItem>
-            <CommandItem
-              onSelect={() =>
-                runItem({
-                  labelKey: "command.results",
-                  icon: null,
-                  external: "https://github.com/Rethymus/Aionis/blob/main/docs/RESULTS.md",
-                })
-              }
-            >
-              <FileTextIcon className="size-4" />
-              {t("command.results")}
-            </CommandItem>
-          </CommandGroup>
+          {nothingFound ? (
+            <div className="py-6 text-center text-sm text-muted-foreground">
+              {t("command.empty")}
+            </div>
+          ) : (
+            <>
+              {tour.length > 0 ? (
+                <>
+                  <CommandGroup heading={t("command.group.start")}>{renderItems(tour)}</CommandGroup>
+                  <CommandSeparator />
+                </>
+              ) : null}
+              {pages.length > 0 ? (
+                <>
+                  <CommandGroup heading={t("command.group.pages")}>{renderItems(pages)}</CommandGroup>
+                  <CommandSeparator />
+                </>
+              ) : null}
+              {stockRows.length > 0 ? (
+                <>
+                  <CommandGroup
+                    heading={
+                      q
+                        ? t("palette.stocks.search").replace(
+                            "{n}",
+                            universe ? String(universe.length) : "—",
+                          )
+                        : t("palette.stocks")
+                    }
+                  >
+                    {stockRows.map((s) => (
+                      <CommandItem
+                        key={`${q ? "search" : "hot"}-${s.ticker}`}
+                        onSelect={() => openStock(s.ticker)}
+                      >
+                        {s.short ? (
+                          <TrendingDownIcon className="size-4 text-down" />
+                        ) : (
+                          <TrendingUpIcon className="size-4 text-up" />
+                        )}
+                        <span className="flex-1 truncate">
+                          {s.name ? `${s.name} (${s.ticker})` : s.ticker}
+                        </span>
+                        {s.short && !q ? (
+                          <Badge
+                            variant="outline"
+                            className="badge-down ml-auto shrink-0 px-1.5 py-0 text-[11px] font-normal"
+                          >
+                            {t("palette.stocks.short")}
+                          </Badge>
+                        ) : null}
+                        {s.region ? (
+                          <Badge
+                            variant="outline"
+                            className="ml-auto shrink-0 px-1.5 py-0 text-[11px] font-normal text-muted-foreground"
+                          >
+                            {s.region.toUpperCase()}
+                          </Badge>
+                        ) : null}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                  <CommandSeparator />
+                </>
+              ) : null}
+              {views.length > 0 ? (
+                <>
+                  <CommandGroup heading={t("command.group.views")}>{renderItems(views)}</CommandGroup>
+                  <CommandSeparator />
+                </>
+              ) : null}
+              {settings.length > 0 ? (
+                <CommandGroup heading={t("command.group.settings")}>
+                  {settings.map((item) => (
+                    <CommandItem key={item.labelKey} onSelect={() => runItem(item)}>
+                      {item.action === "theme" ? (
+                        <SunMoonIcon className="size-4" />
+                      ) : item.action === "lang" ? (
+                        <LanguagesIcon className="size-4" />
+                      ) : (
+                        <FileTextIcon className="size-4" />
+                      )}
+                      {t(item.labelKey)}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              ) : null}
+            </>
+          )}
         </CommandList>
       </CommandDialog>
     </>

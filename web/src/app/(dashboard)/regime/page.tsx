@@ -5,7 +5,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { MarketView } from "@/components/market/market-view";
 import { PositioningView } from "@/components/positioning/positioning-view";
 import { TacoView } from "@/components/taco/taco-view";
-import { ThemeSlice } from "@/components/themes/theme-slice";
+import { MacroRegimeChart } from "@/components/themes/macro-regime-chart";
 import { SegmentHeader } from "@/components/segment-header";
 import { StickyTabs } from "@/components/sticky-tabs";
 import { aionis } from "@/data/aionis";
@@ -70,7 +70,7 @@ export default function RegimePage() {
           <TacoView />
         </TabsContent>
         <TabsContent value="macro">
-          <ThemeSlice keys={["macro"]} />
+          <MacroRegimeChart />
         </TabsContent>
       </Tabs>
     </div>

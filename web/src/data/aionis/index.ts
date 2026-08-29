@@ -501,7 +501,13 @@ export type Theme = {
   as_of: string | null;
   headline: string;
   signals: { name: string; value: number | null }[];
-  series: { month: string; value: number | null }[];
+  // Time axis key diverges by theme in the export contract
+  // (scripts/export_terminal_data.py): every aggregated theme carries monthly
+  // `month`, but the macro theme (Track-C macro-regime composite, 60 daily
+  // sessions) carries `date` — exactly one of the two is present per row.
+  // The old single-`month` shape compiled only because the JSON import is a
+  // cast; reading .month off macro rows returned undefined.
+  series: { month?: string; date?: string; value: number | null }[];
 };
 
 export type Themes = {

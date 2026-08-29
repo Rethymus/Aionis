@@ -158,8 +158,16 @@ function RegionMap({ region, heightClass }: { region: "us" | "cn"; heightClass: 
       </CardHeader>
       <CardContent className="p-2">
         <div className={cn("relative w-full overflow-hidden rounded-md border", heightClass)}>
-          {laid.map((l, idx) => {
-            const prep = cells[idx];
+          {laid.map((l) => {
+            // Map geometry back to data by the ORIGINAL index carried in
+            // l.key — NOT by array position: squarify sorts internally
+            // (descending), and the aggregated "other" bucket (usually the
+            // largest value) sits at the END of `cells`, so position-mapping
+            // shifted every label/color/link one cell off wherever the bucket
+            // outranked its input position (the giant "COIN/sh.688041" cell
+            // was actually the bucket's rectangle — owner-reported 2026-08-29).
+            const prep = cells[Number(l.key)];
+            if (!prep) return null;
             const stock = prep.stock;
             const positive = (stock?.score ?? prep.meanScore ?? 0) >= 0;
             // Intensity: 0.12 → 0.5 alpha by normalized |score| within region.
@@ -174,18 +182,36 @@ function RegionMap({ region, heightClass }: { region: "us" | "cn"; heightClass: 
                   .replace("{n}", String(prep.count))
                   .replace("{shown}", String(TOP_N))
                   .replace("{score}", (prep.meanScore ?? 0).toFixed(2));
-            const showTicker = l.w > 7 && l.h > 9;
-            const showScore = l.w > 15 && l.h > 16;
+            // Label tiers by cell size (percent of the map box). Owner-reported
+            // 2026-08-29: the single threshold (w>7 && h>9) hid tickers on
+            // ~half the cells — the median top-150 cell in the two-up grid is
+            // ≈40px and just missed it, so the map read as hover-only. Now:
+            // big cells carry label + score, medium cells carry a smaller
+            // label; only genuinely tiny slivers go bare (the hover title
+            // still carries the full name everywhere).
+            const big = l.w > 7 && l.h > 9;
+            const medium = !big && l.w > 3.4 && l.h > 4.2;
+            const showScore = big;
+            // CN tickers ("sh.688041") are opaque 9-char codes that clip to
+            // garbage in small cells — the short CJK name is the recognizable
+            // identifier, so CN rows label by name (hover title keeps the
+            // code). US rows keep the ticker (it IS the short id).
+            const cellLabel = stock
+              ? stock.region === "cn" && stock.name
+                ? stock.name
+                : stock.ticker
+              : t("heatmap.other.bucket").replace("{n}", String(prep.count));
             const body = (
               <>
-                {showTicker ? (
+                {big || medium ? (
                   <span
                     className={cn(
-                      "truncate font-mono text-[11px] font-semibold leading-none",
+                      "max-w-full truncate font-mono font-semibold leading-none",
+                      big ? "text-[11px]" : "text-[10px]",
                       stock ? "text-foreground" : "text-muted-foreground",
                     )}
                   >
-                    {stock ? stock.ticker : t("heatmap.other.bucket").replace("{n}", String(prep.count))}
+                    {cellLabel}
                   </span>
                 ) : null}
                 {showScore ? (
