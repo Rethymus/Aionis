@@ -78,7 +78,9 @@ export function ConvictionView() {
         <CardHeader className="border-b">
           <CardTitle className="text-base">{t("conviction.series")}</CardTitle>
           <CardDescription>
-            std <span className="text-primary">●</span> · decile spread{" "}
+            {/* std dot mirrors the Line stroke below (oklch blue) — the old
+                hardcoded navy #0b3d61 was invisible on the dark card. */}
+            std <span style={{ color: "oklch(0.55 0.17 250)" }}>●</span> · decile spread{" "}
             <span className="text-amber-500">●</span>
           </CardDescription>
         </CardHeader>
@@ -100,7 +102,10 @@ export function ConvictionView() {
                   contentStyle={{ fontSize: "12px" }}
                 />
                 <Legend wrapperStyle={{ fontSize: "12px" }} />
-                <Line type="monotone" dataKey="std" name="std" stroke="#0b3d61" strokeWidth={1.8} dot={false} />
+                {/* Theme-safe blue (same hue family as the macro-regime chart):
+                    the old #0b3d61 navy read only on light cards — on dark the
+                    line AND its recharts legend label dropped to ~1.7:1. */}
+                <Line type="monotone" dataKey="std" name="std" stroke="oklch(0.55 0.17 250)" strokeWidth={1.8} dot={false} />
                 <Line type="monotone" dataKey="decile_spread" name="decile spread" stroke="#d97706" strokeWidth={1.5} dot={false} strokeDasharray="4 4" />
               </LineChart>
             </ResponsiveContainer>

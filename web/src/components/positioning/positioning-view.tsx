@@ -119,7 +119,10 @@ export function PositioningView() {
                   labelFormatter={(l) => String(l)}
                   contentStyle={{ fontSize: "12px" }}
                 />
-                <Line type="monotone" dataKey="z" stroke="#0b3d61" strokeWidth={1.5} dot={false} />
+                {/* Theme-safe blue — the old #0b3d61 navy was invisible on the
+                    dark card (line + legend label both ~1.7:1). Same hue as the
+                    macro-regime chart. */}
+                <Line type="monotone" dataKey="z" stroke="oklch(0.55 0.17 250)" strokeWidth={1.5} dot={false} />
               </LineChart>
             </ResponsiveContainer>
           </div>

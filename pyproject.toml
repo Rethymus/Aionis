@@ -87,6 +87,11 @@ filterwarnings = [
 [tool.ruff]
 line-length = 100
 target-version = "py310"
+# archive/ holds frozen, superseded evidence (krx-probes probes, retired
+# streamlit-demo-v2) — deliberately NOT linted or reformatted, per the
+# move-don't-delete archive discipline (rewriting archived evidence would
+# falsify history).
+extend-exclude = ["archive"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "W", "UP", "B"]

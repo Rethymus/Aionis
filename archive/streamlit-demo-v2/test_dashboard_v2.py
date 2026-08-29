@@ -1,3 +1,8 @@
+# Superseded by the web terminal (web/src/app/(dashboard)/, real committed
+# panels) on 2026-08-30 — owner-authorized retirement of the demonstrative
+# v2 dashboard (display role fully covered; no production path imports this).
+# The tests moved with the code they cover; dashboard demo-discipline coverage
+# for the v1 app remains in tests/test_dashboard_demo_discipline.py.
 """Tests for Aionis dashboard v2 (demonstrative data + chart builders)."""
 
 import numpy as np

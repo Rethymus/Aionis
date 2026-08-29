@@ -1,3 +1,6 @@
+# Superseded by the web terminal (web/src/app/(dashboard)/, real committed
+# panels) on 2026-08-30 — owner-authorized retirement of the demonstrative
+# v2 dashboard (display role fully covered; no production path imports this).
 """Aionis Dashboard v2 — Near-Final Quant Model-Evaluation Interface.
 
 Five analytical dimensions:

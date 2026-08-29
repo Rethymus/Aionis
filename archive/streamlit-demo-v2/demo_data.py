@@ -1,3 +1,6 @@
+# Superseded by the web terminal (web/src/app/(dashboard)/, real committed
+# panels) on 2026-08-30 — owner-authorized retirement of the demonstrative
+# v2 dashboard (display role fully covered; no production path imports this).
 """Demonstrative synthetic data generators for Aionis dashboard v2.
 
 All generators are DETERMINISTIC with seed=0 — same input → identical output.

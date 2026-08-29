@@ -8,6 +8,17 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-30 (zz9) 轮㊸：v2 演示面退役（业主授权直接决策）+ 全站扫查补完 + ruff 0.16 适配（单进程；全套绿）
+
+**编排**：业主授权"结合调研结论直接决策,继续最优迭代"→ 执行轮㊷推荐方案(只归档 v2,保留 v1)→ 依赖面核查 → 归档落地 → 环境适配 → 全站扫查补完 → 新鲜度探针。
+
+- **①决策执行（move-don't-delete）**：迁移集 `dashboard/app_v2.py`、`demo_data.py`（全仓唯一合成数据生成器）、`charts_v2.py`、`README_v2.md`、`tests/test_dashboard_v2.py` → `archive/streamlit-demo-v2/`。**工具链插曲**：Mimosa 钩子拦 `git mv` 写 .py（要求 Write 通道可检视）→ 改 Read→Write 带头注副本 + `tail/diff` 归一化逐字比对（CRLF 无关）+ `git rm` 原件；git 状态显示 R 重命名=历史保真。归档注册表（archive/README.md）更新登记。
+- **②依赖面核查纠正初判**：`dashboard/theme.py` **不是 v2 专属**——v1 的 views/{charts,event,helpers,uncertainty} + test_dashboard_theme.py 都在 import → **保留**；`dashboard` extra **保留**——cot_reports 是 scripts/cot_fetch.py 活跃依赖（删 extra 会静默断 CFTC 数据线），quantstats 等 tearsheet 库同住；v1 `app.py`（真实 runs/ 研究者工具）+ demo-discipline 纪律测试零触碰。
+- **③ruff 0.16 适配**：pyproject 编辑触发 uv 重建,ruff 升级至 0.16.0 引入新判定（stash 实验证明 15 个新错误与本次改动无关——无改动时 26 个）。处置：(a) `extend-exclude=["archive"]`——档案证据冻结不 lint 的既有纪律成文化,顺带清掉 krx-probes 存量噪音;(b) `export_research_dossier.py` 机械修复（I001 import 排序+F541×3 无占位符 f 前缀,ruff --fix,4 行零输出变化,**字节稳定契约 16 测试当场验证**）;(c) 剩余 10 错全为他方领地（docs/code-review 并发 session 7 + bts salvaged 3）——纪律不改写,如实记账为 ruff 0.16 下的存量债。
+- **④全站扫查补完（16 路由亮色）**：14 干净;/conviction + /regime#positioning **真缺陷**——`stroke="#0b3d61"` 浅色 navy 在暗色卡 ≈1.7:1,std 线与 recharts 图例标签整体隐形(此前截图"曲线只有左侧一点"=线不可见的错觉,数据 24 月完好)→ 两处改 `oklch(0.55 0.17 250)`（与宏观图同族蓝,双主题已验证）,描述行小色点同步,截图实证修复。**/stakes 1.1 读数判明扫描器伪影**：水合闪变瞬态（SSG 默认类→localStorage 暗色类切换窗）+ SCRIPT 标签文本误计——稳定态目视截图（白字黑底全清晰）+DOM 探针（#ededed on #0a0a0a）双证无缺陷;扫描器若复用需加 SCRIPT 跳过+主题稳定等待。
+- **⑤新鲜度探针**：53 面板 24 个 >2d 逐个甄别=冻结研究面（picks 族/metrics/model_card 等,随冻结相推进）+季度源（13F/filers/PTR）+≤5d 源节奏（cot 周五/korea 周度已知停摆）——零真缺陷;轮 38 昨日刚全量扫荡,本轮跳过重复扫荡。
+- **验证**：全套 pytest exit 0（无管道）+ruff 本 lane 净+tsc 0+eslint 0 error（33 存量警告=基线）+build 1,503 页(基线持平)+目视截图（conviction 修复/stakes 暗色全清晰）。**内务**：dev server 已杀;web/out 已删（junction 检查先行,无 junction）。**边界**：display+archive lane;0 ledger 新行;0 frozen/config/prereg/OOS。**待业主**：E3 headline GO(不变)。
+
 ## 2026-08-29 (aaa) 轮㊷：前端真实性与视觉修复——数据审计零 mock / 搜索全宇宙化 / StickyTabs 层级 / 宏观图重设计 / 热力图错位真 bug / WCAG 双主题扫零（单进程；全套绿）
 
 **编排**：业主四点指令（①数据真实性 ②主页搜索修复 ③宏观图参考 VIX 图 ④视觉自检修复）→ 主线先审计再逐项修复 → 浏览器逐页双主题程序化扫查。

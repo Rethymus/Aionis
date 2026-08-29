@@ -51,9 +51,9 @@ import json
 import math
 import re
 from dataclasses import dataclass, field
+from pathlib import Path
 
 from ks_sources import RESEARCH_SOURCES
-from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PANEL_DIR = ROOT / "web/src/data/aionis"
@@ -1113,9 +1113,9 @@ def _sec5_evidence(a: Assembly) -> list[str]:
     ]
     if bm_indices:
         lines.append(
-            f'<p><strong>编辑精选外部研究书签</strong>(与 knowledge_shelf 面板'
-            f'research_sources 同源字面量 ks_sources.py;链接为 scheme 剥离的'
-            f'纯文本,完整 URL 见字面量文件;每条各自标注引用号):</p>'
+            '<p><strong>编辑精选外部研究书签</strong>(与 knowledge_shelf 面板'
+            'research_sources 同源字面量 ks_sources.py;链接为 scheme 剥离的'
+            '纯文本,完整 URL 见字面量文件;每条各自标注引用号):</p>'
         )
         items = []
         for i in sorted(bm_indices):

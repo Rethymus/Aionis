@@ -1,5 +1,9 @@
 # Aionis Dashboard v2 — Near-Final Quant Model-Evaluation Interface
 
+> Superseded by the web terminal (`web/src/app/(dashboard)/`, real committed
+> panels) on 2026-08-30 — owner-authorized retirement of the demonstrative v2
+> dashboard. Kept for history per the archive move-don't-delete rule.
+
 **Status:** Demonstrative synthetic data only — shows analysis methods + interaction structure, not final conclusions.
 
 ## Overview
