@@ -8,6 +8,15 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-29 (vv) 轮㊙：SR 11-7 模型清单全集——ledger×冻结目录对账 + /model-health 清单表（单进程；全套绿）
+
+**编排**：业主授权继续 → 选点=模型卡设计的 SR 11-7 延伸("文档"已有,补"**清单**")→ 主线先核实映射(4 目录恰为 B/C/D/E1 confirmatory;11 条 config-only 无目录)→ H5 任务书(`15ad203`)→ 单 agent 交付(`5db5918`)→ cherry-pick+正典重生成+全套验证。
+
+- **H5（`5db5918`,9 文件 +1310）**:`export_model_inventory()`——扫描 tracked ledger:**5 条 confirmatory:first**(B 27/28、C 29/30、D 33/34、E1 35/37、track_c 48/49)+ **11 条 config_only 诚实列示**(track_b×3/baselines×3/track_c 被取代×2/track_adaptive×3);local_dir_present 恰 4 true(track_c 无本地目录→h6/version/diff 全 null);diff 字段自各目录 differential.json 重读(B −0.0008 [−0.0106,+0.0090] p=0.870 / C −0.0065 p=0.355 / D −0.0030 p=0.597 / E1 −0.0028 p=0.533——**四相 h=21 冻结差分全 CI 跨零**);differential.json 实无 null_holds 键 → summary.all_null_holds 如实 null。四注册点+barrel+dict 18 键+/model-health 清单节(确认 run 表+config-only 折叠+空态表头)+H2 EXPECTED_PANELS 同步+1;9 契约测试零 skip;双跑 sha `96243fdf…` 一致。
+- **正典下游重生成**:H5 改 data_health/api_catalog → dossier 重生成(`b0825c19`)/shelf 重钉——闭包闭环照常工作。
+- **验证**：主线全套 pytest **exit 0(无管道确证)**+ruff 净+tsc 0+build 1,503 页+目视终验(模型清单节:phase/sig/freeze 行号/config-only 折叠全在墙)。**内务**：wh5 双 junction 先摘(runs+node_modules)、分支 cherry 全 `-` 删、任务书归档。**边界**：display/export 派生;runs/ 只读。待业主：E3 契约冻结+GO;模型卡 v2 深化(被取代配置的谱系图)与 vintage 探针。
+
+
 ## 2026-08-29 (tt) 轮㊟：可追溯金融建模落地——model_card 机器可读卡片(文献印证;单进程;全套绿)
 
 **编排**：业主命题"实现真正可追溯可溯源的金融建模,调研大量资料印证而非凭空想象"→ 主线 arXiv API 实检三面(**Model Cards** 2018 Mitchell/32K 卡系统分析 2024/OWFM 治理 2026;**Datasheets** 2018 Gebru;**NeurIPS 复现程序** 2020 Pineau;**AI-BOM 完整性测量** 2026/LLM 血统追踪 2026/FAIR-HEP 2022)+B 级领域知识(SR 11-7/FAIR 2016/Tactical Investment Algorithms 2019,分级声明)→ 冻结产物实测(config.json 全字段恰为卡片所需)→ 设计文档+H4 任务书(`f8ceff7`)→ 单 agent 垂直切片。
