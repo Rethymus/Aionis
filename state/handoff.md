@@ -8,6 +8,17 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-29 (uu) 轮㉞：证据工件上架 /shelf + 循环哈希依赖打破（单进程；全套绿）
+
+**编排**：业主确认超长期任务+单进程纪律 → 选点=溯源链最后一公里(两证据工件终端不可发现)→ H3 任务书(`2ad5a5d`)→ 单 agent 交付(`a71e1e3`→cherry)→ **集成接缝两连修(主线正典)**。
+
+- **H3（shelf 工件上架,`a71e1e3`）**：`_KS_EVIDENCE_ARTIFACTS` 固定字面量层+导出时现算 sha/字节 → `knowledge_shelf.json` 第三层 → /shelf 新"证据工件"卡(双语名/描述/sha 前 12 位 mono/字节/GitHub link-out)+dict 3 键+契约测试(恰 2 条/sha 与仓内重算一致/零外部资源)。偏离如实:wh3 无 junction,pnpm --offline 零网络装机。
+- **接缝修①(检出环境漂移)**：H3 在 wh3 检出(CRLF)上算 sha → dossier 条目钉了 `fc7b53ff`/47,057(CRLF 膨胀),而 git blob/GitHub raw 是 LF `f1db9600`/46,768——**目录 sha 随检出环境漂移=校验闭环失效**。主线修:导出器与测试双侧改 **LF 规范化**(=git blob 形态),docstring 记录实测案例。
+- **接缝修②(循环哈希依赖,架构级)**：dossier 内嵌 knowledge_shelf 内容 sha,而 shelf(H3 后)内嵌 dossier sha → **互嵌无收敛点**。主线正典解法=**单一事实来源**:书签字面量抽至 `scripts/ks_sources.py`(stdlib-only),exporter 与 dossier 各自导入;dossier 从 PANEL_FILES 移除 knowledge_shelf(不再哈希生成物);渲染节每书签改自身 [S#] 引用。**闭包硬门当场拦截我新写行的未引用数字("共 8 条")**——修正措辞后过。测试对账:sources 18→23(组成注释更新)、defang 断言改真实书签 scheme-stripped+fixture shelf 不泄漏、降级测试改 calibration 载荷。
+- **重生成次序定律确立**：工件先行→目录次之(shelf 哈希工件);同轮上游面板变更则全部下游重生成。终值:atlas-claim `dc2101e6`/24,240、dossier `01bcbe36`/46,549、shelf 目录双侧吻合。
+- **验证**：主线全套 pytest exit 0 + ruff 净 + tsc/eslint 0 + build 1,503 页 + 目视终验(/shelf 证据工件层双语渲染、双 sha/字节在墙)。**内务**：wh3 清(真 node_modules 目录,验证非 junction 后整体删除)、分支 cherry 全 `-` 删、任务书归档。**边界**：display/export lane;零网络(pnpm --offline 先例)。待业主：E3 契约冻结+GO;档案 v1 扩展与 vintage 探针(下一轮单进程候选)。
+
+
 ## 2026-08-29 (ss) 轮㉝：超长期任务开局——数据补漏扫荡 + 全站审计 r3 全 PASS（单进程纪律；全套绿）
 
 **编排**：业主定帧"超长期查漏补缺+视觉持续优化;**agent 派发改单进程串行**(速率限制,质量优先)"→ 主线新鲜度探针 → 定向补漏抓取(runbook=轮㉑ TASK-DISP-R 实测协议) → 全量导出 → 单 agent 全站审计。

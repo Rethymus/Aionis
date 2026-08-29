@@ -224,7 +224,9 @@ def _committed() -> str:
         "reports/evidence/atlas-claim-v1.html must be generated and committed; "
         "run `uv run python scripts/export_evidence_html.py`"
     )
-    return ARTIFACT.read_text(encoding="utf-8")
+    # LF-normalized: the generator writes LF, but a git checkout under
+    # autocrlf materializes CRLF on disk — compare canonical forms.
+    return ARTIFACT.read_text(encoding="utf-8").replace("\r\n", "\n")
 
 
 def test_real_artifact_matches_metrics_json_verbatim() -> None:

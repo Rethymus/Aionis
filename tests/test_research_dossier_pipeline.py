@@ -273,9 +273,18 @@ def test_fixture_pipeline_end_to_end() -> None:
     assert "<!-- s-registry -->" in html_out and "<!-- /s-registry -->" in html_out
     assert html_out.count("<svg") == 2, "forest + monthly-bars SVGs expected"
     assert "<table" in html_out
-    # 9 panels + 2 ledger rows + 3 docs + 1 artifact + HLZ + 2 bookmarks
-    assert len(a.sources) == 18
-    assert len({s.sid for s in a.sources}) == 18
+    # Round-34: bookmarks come from the shared ks_sources.RESEARCH_SOURCES
+    # literals (8 entries), and the knowledge_shelf generated panel is no
+    # longer a hashed source (it embeds this dossier's own hash — circular).
+    # Composition: 8 panels + 2 ledger rows + 3 docs + 1 artifact + HLZ + 8
+    # bookmarks = 23.
+    assert len(a.sources) == 23
+    assert len({s.sid for s in a.sources}) == 23
+    # The generated shelf payload, if present in inputs, must be IGNORED
+    # (no hashed entry for it — the circular-hash break).
+    assert not any(
+        s.type == "panel" and "knowledge_shelf" in s.locator for s in a.sources
+    ), "knowledge_shelf.json must not re-enter the registry (circular hash)"
 
 
 def test_fixture_registry_integrity_and_latest_row_selection() -> None:
@@ -349,10 +358,13 @@ def test_fixture_self_contained_and_defanged_locators() -> None:
     html_out = dr.render(_fixture_assembly())
     for tok in EXTERNAL_TOKENS:
         assert tok not in html_out, f"external resource reference: {tok}"
-    # bookmark locators render scheme-stripped; raw https strings inside the
-    # api_catalog fixture payload must never leak either
-    assert "example.org/shelf-a" in html_out
-    assert "example.org/shelf-b" in html_out
+    # bookmark locators render scheme-stripped: the real shared bookmarks
+    # (ks_sources.RESEARCH_SOURCES) must appear WITHOUT their https:// scheme,
+    # and the fixture's shelf payload (now ignored) must never leak either.
+    assert "www.bis.org" in html_out
+    assert "https://www.bis.org" not in html_out
+    assert "example.org/shelf-a" not in html_out
+    assert "example.org/shelf-b" not in html_out
     assert "secret.example" not in html_out
     for tok in LEAK_TOKENS:
         assert tok not in html_out, f"leakage/undefined token: {tok}"
@@ -372,12 +384,16 @@ def test_fixture_embeds_fixture_numbers_verbatim() -> None:
 
 
 def test_fixture_missing_sources_degrade_honestly() -> None:
+    # Round-34: knowledge_shelf is no longer an input (bookmarks come from the
+    # shared ks_sources literals), so honest degradation is exercised on a
+    # panel that IS still an input: drop calibration and the calibration
+    # section must degrade to its NA marker without breaking the closure.
     payloads = _fixture_payloads()
-    del payloads["knowledge_shelf"]
+    del payloads["calibration"]
     a = dr.build_assembly(payloads, _fixture_ledger_lines())
     out = dr.render(a)  # closure still holds (fewer sources, still all cited)
     assert "source unavailable" in out
-    assert all(not k.startswith("ext_bookmark_") for k in a.sid)
+    assert not any(s.locator.endswith("calibration_reliability.json") for s in a.sources)
 
     a2 = dr.build_assembly(_fixture_payloads(), None)
     out2 = dr.render(a2)
@@ -402,7 +418,9 @@ def _committed() -> str:
         "reports/evidence/research-dossier-v1.html must be generated and "
         "committed; run `uv run python scripts/export_research_dossier.py`"
     )
-    return ARTIFACT.read_text(encoding="utf-8")
+    # LF-normalized: the generator writes LF, but a git checkout under
+    # autocrlf materializes CRLF on disk — compare canonical forms.
+    return ARTIFACT.read_text(encoding="utf-8").replace("\r\n", "\n")
 
 
 def test_real_artifact_equals_fresh_render() -> None:

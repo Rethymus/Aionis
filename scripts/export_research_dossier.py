@@ -32,7 +32,7 @@ Byte-stable by construction: no wall-clock reads anywhere (every as-of stamp
 comes from a committed panel/ledger field), all sort orders are pinned in code,
 numeric rendering is deterministic, and the file is written with LF newlines.
 External URLs are rendered with the scheme stripped (still unique locators;
-the full URLs live in the committed knowledge_shelf.json panel) so the artifact
+the full URLs live in the shared ks_sources.py literals) so the artifact
 stays byte-clean of fetchable resource strings.
 
 Display/derivation-lane script: read-only on panels/docs/ledger (runs/ is
@@ -51,6 +51,8 @@ import json
 import math
 import re
 from dataclasses import dataclass, field
+
+from ks_sources import RESEARCH_SOURCES
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -71,7 +73,6 @@ PANEL_FILES = {
     "api_catalog": "api_catalog.json",
     "evidence": "evidence.json",
     "provenance": "headline_provenance.json",
-    "knowledge_shelf": "knowledge_shelf.json",
 }
 
 DOC_FILES = {
@@ -332,7 +333,6 @@ def build_assembly(
         "api_catalog": "静态 API 端点目录(license/source/freshness)",
         "evidence": "入账估计证据表(多相/多线)",
         "provenance": "头条冻结链(freeze→result)溯源",
-        "knowledge_shelf": "方法目录 + 编辑精选外部研究书签",
     }
     for key, fname in PANEL_FILES.items():
         if key in payloads:
@@ -423,23 +423,23 @@ def build_assembly(
         role="多重检验文献语境(t>3.0 阈值)",
     ))
     a.sid["ext_hlz"] = f"S{len(a.sources)}"
-    shelf = objs.get("knowledge_shelf")
-    if isinstance(shelf, dict) and isinstance(shelf.get("research_sources"), list):
-        for i, bm in enumerate(shelf["research_sources"]):
-            if not isinstance(bm, dict):
-                continue
-            a.sources.append(Source(
-                sid="",
-                type="external",
-                locator=(
-                    f"{_defang_url(str(bm.get('url', '')))} "
-                    "(scheme 剥离;完整 URL 见 knowledge_shelf.json)"
-                ),
-                integrity="external: self-declared (编辑书签,非机器核验)",
-                license="外部站点 link-out (内容版权归原站)",
-                role=f"编辑精选外部研究书签: {bm.get('name', '')}",
-            ))
-            a.sid[f"ext_bookmark_{i}"] = f"S{len(a.sources)}"
+    # Bookmarks come from the SHARED frozen literals (ks_sources.RESEARCH_SOURCES),
+    # NOT from the generated knowledge_shelf.json — the shelf panel embeds this
+    # dossier's own content hash, so hashing the shelf here would create a
+    # circular dependency with no fixpoint (round-34 integration finding).
+    for i, bm in enumerate(RESEARCH_SOURCES):
+        a.sources.append(Source(
+            sid="",
+            type="external",
+            locator=(
+                f"{_defang_url(str(bm.get('url', '')))} "
+                "(scheme 剥离;字面量与 knowledge_shelf.json 同源:ks_sources.py)"
+            ),
+            integrity="external: self-declared (编辑书签,非机器核验)",
+            license="外部站点 link-out (内容版权归原站)",
+            role=f"编辑精选外部研究书签: {bm.get('name', '')}",
+        ))
+        a.sid[f"ext_bookmark_{i}"] = f"S{len(a.sources)}"
     for i, s in enumerate(a.sources, 1):
         s.sid = f"S{i}"
     return a
@@ -1107,24 +1107,22 @@ def _sec5_evidence(a: Assembly) -> list[str]:
             f'仅作外部文献坐标——headline p(HAC)={p_txt} 的 NULL 判定不因外部'
             f'阈值调整(两尾预注册判定优先)。{c("ext_hlz")}{c_opt("metrics")}</p>'
         )
-    shelf = a.payloads.get("knowledge_shelf")
     bm_indices = [
         int(k[len("ext_bookmark_"):])
         for k in a.sid if k.startswith("ext_bookmark_")
     ]
-    if isinstance(shelf, dict) and isinstance(shelf.get("research_sources"), list) \
-            and bm_indices:
+    if bm_indices:
         lines.append(
-            f'<p><strong>编辑精选外部研究书签</strong>(knowledge_shelf 面板 '
-            f'research_sources,共 {plain(len(bm_indices))} 条;链接为 scheme 剥离'
-            f'的纯文本,完整 URL 见面板):{c("knowledge_shelf")}</p>'
+            f'<p><strong>编辑精选外部研究书签</strong>(与 knowledge_shelf 面板'
+            f'research_sources 同源字面量 ks_sources.py;链接为 scheme 剥离的'
+            f'纯文本,完整 URL 见字面量文件;每条各自标注引用号):</p>'
         )
         items = []
         for i in sorted(bm_indices):
             key = f"ext_bookmark_{i}"
-            if i >= len(shelf["research_sources"]):
+            if i >= len(RESEARCH_SOURCES):
                 continue
-            bm = shelf["research_sources"][i]
+            bm = RESEARCH_SOURCES[i]
             if not isinstance(bm, dict):
                 continue
             src = next(s for s in a.sources if s.sid == a.sid[key])
@@ -1132,11 +1130,11 @@ def _sec5_evidence(a: Assembly) -> list[str]:
                 f"<li><strong>{_esc(bm.get('name'))}</strong> · "
                 f"{_esc(bm.get('org'))} — {_esc(bm.get('desc_zh'))} "
                 f'<code class="loc">{_esc(src.locator)}</code> '
-                f'{c("knowledge_shelf", key)}</li>'
+                f'{c(key)}</li>'
             )
         lines.append(f'<ul class="marks">{"".join(items)}</ul>')
     else:
-        lines.append(_na("knowledge_shelf.json(外部研究书签)"))
+        lines.append(_na("ks_sources.py(外部研究书签)"))
     lines.append("</section>")
     return lines
 
@@ -1223,7 +1221,7 @@ def _sregistry_block(a: Assembly, html_text_before: str) -> str:
         f'{plain(n_cited_refs)} 处、覆盖 {plain(len(uniq))} 条;每条来源被引 '
         f"≥1 次;孤儿引用(引用无来源)0 条;含数字而无引用的正文行 0 行。"
         f"external 条目的 URL 以 scheme 剥离形态呈现(零外部资源约束),完整 "
-        f"URL 在 knowledge_shelf.json 面板内。</p>",
+        f"URL 在 ks_sources.py 字面量内(与 knowledge_shelf 面板同源)。</p>",
         "<!-- /s-registry -->",
         "</section>",
     )
@@ -1302,7 +1300,7 @@ def _head() -> list[str]:
         "  self-contained: zero JS, zero external resources, zero font requests",
         "  (system font stack only). All numbers are verbatim values from",
         "  committed panels / the runs ledger; external bookmarks are rendered",
-        "  scheme-stripped (their full URLs live in knowledge_shelf.json).",
+        "  scheme-stripped (full URLs in the shared ks_sources.py literals).",
         "  Citation closure ([S#] registry) is enforced at render time.",
         "-->",
         "<style>",

@@ -6121,91 +6121,10 @@ def export_executives() -> None:
 _KS_CATEGORIES = ("preregistration", "adr", "results", "rubric", "theory")
 _KS_CATEGORY_ORDER = {c: i for i, c in enumerate(_KS_CATEGORIES)}
 
-# Curated outbound bookmarks (editorial selection, frozen in the exporter —
-# no network at export time, ever). Copyright stays with the authors; we only
-# catalog. Bilingual one-liners are static strings, not scraped summaries.
-_KS_RESEARCH_SOURCES: list[dict[str, str]] = [
-    {
-        "name": "BIS Working Papers",
-        "org": "Bank for International Settlements",
-        "url": "https://www.bis.org/list/wppubls/index.htm",
-        "desc_en": (
-            "Monetary and financial-stability research; the series page "
-            "(RSS available) is the first-hand release point."
-        ),
-        "desc_zh": "货币与金融稳定方向的工作论文系列页（提供 RSS）——一手发布处。",
-    },
-    {
-        "name": "FEDS Papers",
-        "org": "Federal Reserve Board",
-        "url": "https://www.federalreserve.gov/econres/feds/index.htm",
-        "desc_en": (
-            "Finance and Economics Discussion Papers — the Board's own "
-            "in-house research series."
-        ),
-        "desc_zh": "美联储理事会的金融与经济学讨论论文（FEDS）——机构自有研究系列。",
-    },
-    {
-        "name": "IMF Working Papers",
-        "org": "International Monetary Fund",
-        "url": "https://www.imf.org/en/Publications/WP",
-        "desc_en": (
-            "IMF staff research on macro-finance topics, published as the "
-            "official WP series."
-        ),
-        "desc_zh": "国际货币基金组织（IMF）工作人员的宏观金融研究——官方工作论文系列。",
-    },
-    {
-        "name": "NBER Working Papers",
-        "org": "National Bureau of Economic Research",
-        "url": "https://www.nber.org/papers",
-        "desc_en": (
-            "The classic economics working-paper series; abstract pages are "
-            "first-hand author submissions."
-        ),
-        "desc_zh": "经典的经济学工作论文系列；摘要页为作者一手提交。",
-    },
-    {
-        "name": "arXiv q-fin",
-        "org": "arXiv (Cornell University)",
-        "url": "https://arxiv.org/archive/q-fin",
-        "desc_en": (
-            "Quantitative finance preprints — open author manuscripts "
-            "before journal versions."
-        ),
-        "desc_zh": "数量金融预印本专区——期刊版本之前的开放作者手稿。",
-    },
-    {
-        "name": "FRASER",
-        "org": "Federal Reserve Bank of St. Louis",
-        "url": "https://fraser.stlouisfed.org",
-        "desc_en": (
-            "Public-domain digital archive of U.S. economic history: Fed "
-            "publications, banking documents, statistical releases."
-        ),
-        "desc_zh": "美国经济史公共领域数字档案：联储出版物、银行文献与统计发布。",
-    },
-    {
-        "name": "FRED / ALFRED",
-        "org": "Federal Reserve Bank of St. Louis",
-        "url": "https://fred.stlouisfed.org",
-        "desc_en": (
-            "U.S. government public-domain macro data + as-of vintages "
-            "(ALFRED) — Aionis's own macro backbone."
-        ),
-        "desc_zh": "美国政府公共领域宏观数据库与 ALFRED 时点版本库——Aionis 宏观数据的主源。",
-    },
-    {
-        "name": "RePEc / IDEAS",
-        "org": "RePEc (Research Papers in Economics)",
-        "url": "https://ideas.repec.org",
-        "desc_en": (
-            "Community-run economics research index — bibliographic catalog "
-            "that links out to primary sources."
-        ),
-        "desc_zh": "社区运维的经济学研究索引——书目目录，链出到各一手来源。",
-    },
-]
+# Curated outbound bookmarks moved verbatim to scripts/ks_sources.py (round-34:
+# single source of truth shared with export_research_dossier — breaks the
+# circular hash dependency dossier<->shelf).
+from ks_sources import RESEARCH_SOURCES as _KS_RESEARCH_SOURCES  # noqa: E402
 
 # Layer 3 — generated evidence artifacts: the self-contained HTML evidence
 # cards produced by earlier research rounds (tracked under reports/evidence/).
@@ -6380,13 +6299,19 @@ def _ks_evidence_artifacts() -> list[dict[str, object]]:
     HERE from the LOCAL tracked file so a reader can verify the downloaded
     artifact byte-for-byte against the catalog entry. A missing file degrades
     honestly (sha256/n_bytes = null) — never a fabricated hash.
+
+    Hashes/bytes are over **LF-normalized content** (CRLF folded to LF) — the
+    git-blob / GitHub-raw form. A working-tree checkout under autocrlf would
+    otherwise pin a checkout-dependent hash and break verification for anyone
+    downloading the raw artifact (observed live in the H3 integration: a CRLF
+    checkout pinned 47,057 bytes where the LF blob is 46,768).
     """
     out: list[dict[str, object]] = []
     for spec in _KS_EVIDENCE_ARTIFACTS:
         entry: dict[str, object] = dict(spec)
         p = Path(spec["path"])
         if p.is_file():
-            raw = p.read_bytes()
+            raw = p.read_bytes().replace(b"\r\n", b"\n")
             entry["sha256"] = hashlib.sha256(raw).hexdigest()
             entry["n_bytes"] = len(raw)
         else:

@@ -247,7 +247,9 @@ def test_knowledge_shelf_evidence_artifacts_reconcile_to_repo() -> None:
         assert a["desc_en"] != a["desc_zh"], a["id"]
         p = Path(a["path"])
         assert p.is_file(), f"{a['id']} missing from repo — re-export or restore"
-        raw = p.read_bytes()
+        # LF-normalized recompute: the catalog pins the git-blob / GitHub-raw
+        # form, so verification must not depend on the checkout's autocrlf.
+        raw = p.read_bytes().replace(b"\r\n", b"\n")
         assert a["n_bytes"] == len(raw), f"{a['id']} byte count stale — re-export"
         assert a["sha256"] == hashlib.sha256(raw).hexdigest(), (
             f"{a['id']} sha256 stale — re-export"

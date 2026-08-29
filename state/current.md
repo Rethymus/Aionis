@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-08-29) ㉞ 证据工件上架 /shelf + 循环哈希打破轮（单进程；全套绿）：**
+  超长期任务第 2 轮。**H3**(`a71e1e3` 单 agent):knowledge_shelf 新 Layer 3"证据工件"(atlas-claim-v1/research-dossier-v1 双条目,GitHub link-out+导出时现算 sha/字节)+/shelf 视图卡+dict 3 键+契约测试(sha 与仓内重算一致)——**溯源链最后一公里接通**(工件此前终端不可发现)。**集成接缝两连修(主线正典)**:① **检出环境漂移**——H3 在 CRLF 检出上算 sha(dossier 条目钉 47,057 vs LF blob 46,768)=校验闭环随 autocrlf 失效 → 导出器+测试双侧改 **LF 规范化**(git blob/GitHub raw 形态),docstring 记录实测;② **循环哈希依赖(架构级)**——dossier 内嵌 shelf sha、shelf 内嵌 dossier sha,互嵌无收敛点 → 正典解法=**单一事实来源**:书签字面量抽至 `scripts/ks_sources.py`(stdlib-only),双方导入,dossier 移除 knowledge_shelf 哈希源;**闭包硬门当场拦截新写行的未引用数字**,测试对账(sources 18→23/defang 改真实书签/降级测试改 calibration)。**重生成次序定律**:工件先行→目录次之。终值 atlas `dc2101e6`/24,240、dossier `01bcbe36`/46,549。**验证**：全套 pytest exit 0+ruff/tsc/eslint 0+build 1,503 页+目视终验(/shelf 双语层+双 sha 在墙)。**内务**：wh3 清(真 node_modules 验证非 junction 后删)、分支删、归档。待业主：E3 契约冻结+GO;档案 v1 扩展与 vintage 探针。
+
 - **active (2026-08-29) ㉝ 超长期任务开局：数据补漏扫荡 + 全站审计 r3 全 PASS（单进程纪律；全套绿）：**
   业主定帧"超长期查漏补缺+视觉持续优化;**agent 派发改单进程串行**"。**新鲜度探针**：53 面板逐一实测——28 ok;23 stale 甄别后 10=frozen 设计/5=源节奏诚实,**8 个真可补**(politician/party/executives/filers13f/def14a_persons/picks_backtest/sector_breakdown/stock_universe)。**定向补漏**(单进程串行)：PTR tx 全量 359/359→**2,811 笔/94 人**、13F 目录重开窗 9,385 filers、全量导出 53 文件(衍生重算;retain 守卫照走;executives 停 08-21=缓存内无新 5.02 诚实)→契约全过(commit `0633dab`)。**AUD-08 全站审计 r3**(单 agent 零修复,`d2b460e`)：**8/8 PASS,P0/P1/P2 全零,P3×3 均已知非缺陷/守望**;通过=可见垃圾 0/死链 0(42,958)/宇宙门零回归/h1 恰一/五结构零/i18n 1,162 对称/as_of 8/8;**数据-呈现调和 4/4 复算全过**(horizon 卡 24 数逐字/稳定条 Δ 精确复现/语境行 t 反推/data_health 51 行对账)。**内务**：wa1 清、分支删、任务书归档。**边界**：data/display/audit lane;ledger 零触碰。**单进程纪律全程生效**。待业主：E3 契约冻结+GO;下轮候选=P3 与档案 v1 扩展。
 
