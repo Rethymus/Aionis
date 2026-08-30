@@ -8,6 +8,17 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-30 (zz14) 轮㊾：协议周期 2 第 1 项收官——修正管线全量非研究页双主题巡检（19 页 × 明暗）零缺陷纯验证轮（单进程；全套绿）
+
+**编排**：补齐轮 48 证据缺口（其 37 张巡检图全在无样式坏管线上拍，仅重验 3-4 页）。开场：git 状态净 + pytest 基线 exit 0 + 干净重建 1,503 页 + junction 重建 + **CSS-200 门禁实测通过后才截图**。
+
+- **①全量重拍**：19 页（confirmation/smart-money/congress/events/institutions/ipo/stakes/executives/insiders/reddit/news/heatmap/market/data-health/api-docs/companies/filers/stock 样本/manager 样本）× 明暗 38+ 张。
+- **②对账结论**：底色全为真实主题色（暗 #0a0a0a/#000、明 #fff/#fafafa）= 样式渲染确认；fine 阈值（@25）下暗色内容量处处 ≥ 明色 = **零"某主题下元素缺失"型缺陷**——周期 2 第 1 项（非研究页双主题复审）在有效证据下正式收官。
+- **③两个初报不对称均判测量伪影**：reddit（@60 明 30% vs 暗 10%）与 heatmap（@60 暗 13% vs 明 4%）在 @25 下反转/收敛（reddit 暗 48% > 明 38%）——根因：暗色设计的 alpha 淡彩（10% tint over #0a0a0a）天然低于固定 @60 检出范围。**双阈值铁律**（@60 粗 + @25 细；真缺陷双阈值都缺）入协议 §4。
+- **④一次视觉模型顺序误报证伪**：其称明色 reddit "我们的采集"区块在前与暗色相反——JSX 源序（状态卡→TrendingSection→isLive ours）+ 明色头部裁剪目视（状态卡在首）双证描述错误；reddit 页文本在 SSG HTML 中极少（客户端渲染），故用 JSX 为序准绳。
+- **⑤一次捕获 flake**：明色 manager 首拍 28KB 空图（种子页重定向瞬时态）——文件尺寸预检 + 异常重拍规则入 §4；重拍正常（真实明色底 + 8% 内容）。
+- **沉淀**：协议 §2e + §4 两条新铁律。**验证**：全套 pytest 基线 exit 0；产品代码零改动。**边界**：docs/protocol lane；0 ledger/frozen/config/prereg/OOS。服务器已停、out 已删（junction 保留）。未 push（本地 ahead 7）。**待业主（不变）**：E3 headline GO。
+
 ## 2026-08-30 (zz13) 轮㊽：协议周期 2 首轮——视觉管线根因缺陷（CSS 404 无样式渲染）发现与修正：一项误报撤回、产品代码零 diff、修正管线重验全过（单进程；全套绿）
 
 **编排**：按协议周期 2 建议执行 web 非研究页双主题复审（周期 1 视觉覆盖仅 11 研究页）。开场：git 状态净 + pytest 基线 exit 0 + 干净重建 1,503 页。

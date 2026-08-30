@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-08-30) ㊾ 协议周期 2 第 1 项收官：修正管线全量非研究页双主题巡检（19 页 × 明暗）——零缺陷纯验证轮（单进程；全套绿）：**
+  补齐轮 48 留下的证据缺口（37 张巡检图全在坏管线上拍）。修正管线（web/ junction 伺服 + CSS-200 门禁 + 截图前门禁实测 200）重拍 19 页 × 明暗 38+ 张：**①底色全为真实主题色**（暗 #0a0a0a/#000、明 #fff/#fafafa）样式渲染确认；**②零渲染缺陷**——fine 阈值（@25）下暗色内容量处处 ≥ 明色；**③两个初报不对称均判测量伪影**（reddit @60 明 30% vs 暗 10%、heatmap 反向）——@25 阈值下反转/收敛（reddit 暗 48% > 明 38%），根因=暗色设计 alpha 淡彩在固定 @60 阈值下系统性漏检，双阈值法入协议 §4；**④视觉模型一次顺序误报证伪**（称明色 reddit 区块顺序与暗色相反——JSX 源序+头部裁剪双证其错）；**⑤一次捕获 flake**（明色 manager 28KB 空图）重拍正常。**沉淀**：协议 §2e（轮 49 记录）+ §4 双阈值铁律 + 空 flake 重拍规则。**验证**：全套 pytest 基线 exit 0；产品代码零改动（纯验证轮，git 仅协议/state 文档）。**边界**：docs/protocol lane；0 ledger/frozen/config/prereg/OOS。未 push。待业主（不变）：E3 headline GO。
+
 - **active (2026-08-30) ㊽ 协议周期 2 首轮：视觉管线根因缺陷（CSS 404 无样式渲染）发现与修正——一项误报撤回、产品代码零 diff、修正管线重验全过（单进程；全套绿）：**
   周期 2 首项（web 非研究页双主题复审）执行中，像素对账抓到 stock 页明暗不对称（暗 8% vs 明 14%）→ 深挖出一个**方法论级根因**：构建产物带 basePath（`/Aionis/_next/...` 绝对路径），从 out/ 直服该前缀 404 → **CSS 全不加载**，页面靠 next-themes 注入的 `color-scheme:dark` UA 画布伪装暗色主题——**轮 45/48 的 headless 截图全部是无样式渲染**（`web/Aionis→out` junction 因轮 44 删 out 消失未重建所致）。**诚实处置**：① 由该管线报出的"stock 评分图暗色隐形"P1 **证伪撤回**（受控实验：样式完好页面上原始 attr 写法 4,478 绿像素=完全正常；0 绿像素系 CSS 404 下 var 回退 black）；相应 style 化代码改动**全部 revert，产品代码零 diff**。② 轮 45 主题保真结论证据作废，corrected 管线（web/ 伺服 + junction + CSS-200 门禁）重验：conviction 暗蓝 221/琥珀 116、明蓝 407/琥珀 183、stock 暗绿 4,478、power-floor 正常——**轮 44 navy 修复在真实双主题成立（结论保持，证据重建）**；轮 45 SSG 文本级扫描不依赖 CSS 继续有效。③ 协议 §2d（轮 48 记录）+ §4 头号病理（伺服目录铁律/CSS-200 门禁/截图模式按页型/EBUSY 构建锁）更新。**验证**：全套 pytest 基线 exit 0；git status 产品代码零改动。**边界**：docs/protocol lane；0 ledger/frozen/config/prereg/OOS；服务器（8934）暂留待下轮复用或收尾停。未 push。待业主（不变）：E3 headline GO。
 
