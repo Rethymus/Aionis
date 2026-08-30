@@ -112,6 +112,31 @@ run 覆盖全部标签代码——st.tabs 每 rerun 执行所有子块，断言 
 13D events parquet 缺失→compute-failed 警告、CV-fold DEMO 标注、forward runs 缺席 info）
 + 漂移扫描 NO DRIFT + tsc 0 + eslint 0 + dashboard/web 契约 159 passed + 全套 pytest。
 
+## 2d. 轮 48 执行记录（周期 2 首轮；同日）——**重要：视觉管线根因缺陷修正 + 一项误报撤回**
+
+**发现（本轮真正产出，方法论级）**：**本地截图管线自轮 45 起一直在渲染无样式页面**。
+构建产物带 GitHub Pages basePath（`/Aionis/_next/...` 绝对路径）；从 `web/out/` 目录直接
+起 http.server 时该前缀 404 → CSS 全部不加载；页面因 next-themes 注入的
+`color-scheme: dark` 呈现 UA 暗色画布（rgb(18,18,18)），**貌似暗色主题实为无样式渲染**。
+自指 junction `web/Aionis → out`（.gitignore #17 正典）正是为本地伺服此前缀而设；
+轮 44 收尾删 out 时 junction 一并消失、此后未重建，轮 45 起 out/ 直服 → 全部截图无样式。
+
+**后果与处置（诚实记账）**：
+1. 轮 48 由该管线报出的"stock 评分走势图暗色隐形"P1 **经证伪撤回**：受控实验在样式完好
+   页面上测原始 attr 写法 → 4,478 绿像素（图表完全正常）；此前 0 绿像素系 CSS 404 下
+   `--green-fill` 不存在 → var 回退 black 所致。相应 style 化代码改动已**全部 revert**
+   （零产品代码 diff）。
+2. 轮 45 的主题保真结论**证据作废、结论以本轮重验为准**：corrected 管线下重验通过——
+   conviction 暗色蓝 221/琥珀 116、明色蓝 407/琥珀 183（轮 44 navy→oklch 修复在真实
+   双主题成立）；stock 暗色绿 4,478；power-floor 暗色正常。轮 45 的 SSG 文本级扫描
+   （垃圾字符串/统计值在墙）不依赖 CSS，**继续有效**。
+3. 教训升格：**截图前的 CSS-200 门禁**（curl 任一 chunk 必须 200）+ 伺服目录铁律入 §4。
+
+**验证**：corrected 管线四页双主题像素重验全过（上表）；全套 pytest 基线 exit 0；产品代码
+零改动（git status 干净）。**边界**：docs/protocol lane；0 ledger/frozen/config/prereg/OOS。
+
+
+
 ## 2c. 轮 47 执行记录（协议第三批；同日）
 
 **通道池进度**：第 4 项（`docs/` 逐文档与账本对账）本轮完成——**轮换池五项全部至少执行一遍**，
@@ -149,6 +174,19 @@ run 覆盖全部标签代码——st.tabs 每 rerun 执行所有子块，断言 
 
 ## 4. 已知工具病理备忘（每轮重读，省重踩）
 
+- **【头号】本地截图必须经 `web/Aionis` junction 伺服，且截图前先过 CSS-200 门禁**。
+  构建产物带 basePath（`/Aionis/_next/...` 绝对路径）：从 `web/out/` 直服该前缀 404 →
+  CSS 全不加载 → 页面以 `color-scheme: dark` 的 UA 画布呈现，**貌似暗色主题实为无样式
+  渲染**（轮 45/48 均中招：轮 48 由此产出 stock 图"暗色隐形"误报，受控证伪后撤回）。
+  正典流程：`cmd /c mklink /J web\Aionis web\out`（已 gitignore）→ `cd web && python -m
+  http.server <port>` → URL 带 `/Aionis/` 前缀 → **先 curl 任一 CSS chunk 必须 200** 再截图。
+  明色主题经种子页跳转时，种子页重定向目标同样必须带 `/Aionis` 前缀。
+- **截图模式按页型选择**：静态/无轮询页用 `--virtual-time-budget`（快进入场动画）；带
+  实时价格轮询的页（/stock）virtual-time 永不结算会挂死 → 用 `--timeout=12000` 墙钟
+  （SSG SVG 无动画安全；recharts 动画图需让动画播完，必要时 virtual-time）。recharts
+  图打在动画首帧 = 假"空白图表"。
+- **构建期不得让任何进程以 out/ 为 CWD**（http.server 尤甚），否则 EBUSY 使 build 静默
+  失败、out/ 停留旧产物——后续"验证"全部打在过期页面上（轮 48 实证）。
 - Chrome headless 相对路径截图会写失败（拒绝访问）——`--screenshot` 必须绝对路径。
 - CDN 传图给视觉模型必须**原样传反斜杠路径**（改正斜杠破坏签名 → 1210 错误）。
 - Streamlit 改模块后必须**重启服务进程**（sys.modules 缓存，浏览器 F5 不重载已导入模块）。

@@ -8,6 +8,16 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-30 (zz13) 轮㊽：协议周期 2 首轮——视觉管线根因缺陷（CSS 404 无样式渲染）发现与修正：一项误报撤回、产品代码零 diff、修正管线重验全过（单进程；全套绿）
+
+**编排**：按协议周期 2 建议执行 web 非研究页双主题复审（周期 1 视觉覆盖仅 11 研究页）。开场：git 状态净 + pytest 基线 exit 0 + 干净重建 1,503 页。
+
+- **①巡检**：37 张双主题截图（19 页：confirmation/smart-money/congress/events/institutions/ipo/stakes/executives/insiders/reddit/news/heatmap/market/data-health/api-docs/companies/filers + stock/manager 样本）→ 像素内容密度 + 明暗对称性对账：16 页对称（差 ≤2%），**stock 页不对称**（暗 8% vs 明 14%，y[933,1400] 暗色整段 0%）。
+- **②深挖与证伪（三轮受控实验）**：不对称区目视 = 评分走势面积图"暗色隐形/明色灰"→ 假设 var() 在 SVG 属性不解析 → 字面色补丁验证（绿像素 0→1,183）→ style 化源码修复 → 但重验时发现**构建 EBUSY 静默失败**（http.server 以 out/ 为 CWD 锁目录）导致"验证"打在过期产物上 → 顺藤查出**真根因**：构建产物带 basePath（`/Aionis/_next/...`），从 out/ 直服 → **CSS 404 全不加载**，UA `color-scheme:dark` 画布伪装暗色主题——轮 45/48 截图全部无样式（`web/Aionis→out` junction 因轮 44 删 out 消失未重建；.gitignore #17 明载其为 local static-serving 而设）。
+- **③诚实处置**：在样式完好页面上重测原始 attr 写法 → **4,478 绿像素 = 图表完全正常** → 本轮"stock 暗色隐形 P1"**证伪撤回**；相应 style 化改动（stock-view/live-price-chart/macro-regime-chart）**全部 revert，产品代码零 diff**。轮 45 的主题保真证据同因作废，corrected 管线重验：conviction 暗蓝 221/琥珀 116、明蓝 407/琥珀 183（轮 44 navy 修复在真实双主题成立）；power-floor 正常；轮 45 SSG 文本级扫描（不依赖 CSS）继续有效。
+- **④沉淀**：协议 §2d（轮 48 记录与撤回说明）+ §4 头号病理（伺服目录铁律 = 必须从 web/ 经 junction 伺服且截图前 curl CSS chunk 必须 200；截图模式按页型 = virtual-time 静态页 / --timeout 墙钟带轮询页；EBUSY 构建锁警告）。
+- **验证**：corrected 管线四页双主题像素重验全过 + 全套 pytest 基线 exit 0 + git status 产品代码零改动。**边界**：docs/protocol lane；0 ledger/frozen/config/prereg/OOS。服务器（8934，web/ 根）暂留供下轮复用。未 push（本地 ahead 6）。**待业主（不变）**：E3 headline GO。
+
 ## 2026-08-30 (zz12) 轮㊼：协议轮 3——docs 引用完整性全扫（6 死链修复）+ RESULTS.md ↔ 冻结工件逐位对账全 MATCH——轮换池周期 1 收官（单进程；全套绿）
 
 **编排**：按协议 §3 轮换池执行第 4 项（docs 逐文档与账本对账）——周期 1（轮 45/46/47）五项全部执行完毕。开场：git 状态净 + pytest 基线 exit 0。
