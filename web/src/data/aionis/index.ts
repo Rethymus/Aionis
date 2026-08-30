@@ -285,6 +285,48 @@ export type RedditPick = {
   bull_ratio: number | null;
 };
 
+// RedditPressureEntry — per-ticker retail-pressure reading
+// (aionis.eval.retail_pressure.pressure_summary_to_jsonable).
+export type RedditPressureEntry = {
+  ticker: string;
+  latest_mentions: number;
+  velocity: number;
+  crowding_z: number;
+  bull_bear_lean: number | null;
+  grade: string;
+  n_days: number;
+};
+
+// RedditPanel — explicit contract for the reddit.json envelope (round 46:
+// replaces the `{ ...redditJson }` literal spread, the last panel still on
+// the pattern that collapsed the deployed build on 2026-08-15 when a JSON
+// literal's inferred type shrank). Every key is present in BOTH exporter
+// branches (export_reddit_meta's stable-schema note), so no optionality
+// except the ones the exporter genuinely writes as null.
+export type RedditPanel = {
+  status: string;
+  methodology: string;
+  collector: string;
+  mode: string;
+  clearance: string;
+  subreddits: string[];
+  how_to_activate: string;
+  latest_snapshot_ts: string | null;
+  n_snapshots: number;
+  transport: string | null;
+  score_available: boolean;
+  score_note: string | null;
+  picks: RedditPick[];
+  pressure: {
+    status: "ok" | "accumulating" | "awaiting";
+    by_ticker: Record<string, RedditPressureEntry>;
+    n_snapshots: number;
+    latest_date: string;
+    note: string;
+  };
+  snapshot_ts?: string;
+};
+
 // Percent-of-class parsed from the filing's primary document (bounded second
 // stage; visible rows only). null = honest miss (not extracted / not walked /
 // EFTS-era row without an archive url) — never a guess.
@@ -1494,7 +1536,7 @@ export const aionis = {
   }[],
   taco: tacoJson as Taco,
   freightTaco: freightTacoJson as FreightTaco,
-  reddit: { ...redditJson, picks: redditJson.picks as RedditPick[] },
+  reddit: redditJson as RedditPanel,
   smartMoney: smartMoneyJson as SmartMoney,
   stakes13g: stakes13gJson as Stakes13G,
   pickConviction: pickConvictionJson as PickConviction,

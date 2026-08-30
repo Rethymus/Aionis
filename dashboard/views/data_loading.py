@@ -66,8 +66,27 @@ def _ledger_rows() -> list[dict]:
 
 @st.cache_data(show_spinner=False)
 def _coverage() -> dict:
+    """Universe coverage from the durable registry (ADR-006): the ledger rows
+    ``oos_resolvable_universe`` (clean/total/dropped) and
+    ``universe_crosscheck`` (jaccard_2016plus.mean). The module-level literals
+    are only a fallback for pre-registry ledgers."""
+    uni = [r for r in _ledger_rows() if r.get("event") == "oos_resolvable_universe"]
+    jac = [r for r in _ledger_rows() if r.get("event") == "universe_crosscheck"]
+    if uni and jac:
+        u = max(uni, key=lambda r: r.get("ts", "")).get("universe", {})
+        j = max(jac, key=lambda r: r.get("ts", "")).get("jaccard_2016plus", {})
+        clean, total, mean = u.get("clean"), u.get("pb_2016plus_tickers"), j.get("mean")
+        if clean and total and isinstance(mean, (int, float)):
+            reuse = u.get("confirmed_reuse") or {}
+            return {
+                "total": total,
+                "clean": clean,
+                "jaccard": float(mean),
+                "dropped": tuple(sorted(reuse.keys())) or _DROPPED_REUSE,
+                "source": f"ledger {max(uni, key=lambda r: r.get('ts', ''))['ts'][:10]}",
+            }
     return {"total": _COV_TOTAL, "clean": _COV_CLEAN, "jaccard": _JACCARD_MEAN,
-            "dropped": _DROPPED_REUSE}
+            "dropped": _DROPPED_REUSE, "source": "frozen constants (pre-registry fallback)"}
 
 
 @st.cache_data(show_spinner=False)

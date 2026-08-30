@@ -599,7 +599,7 @@ export const dict = {
     "evidence.grade.chron": "时序/探索",
     "evidence.grade.CONFIRMATORY": "Confirmatory",
 
-    "powerfloor.intro": "在月频 rank-IC 噪声地板下，宣告 ±0.010 等价结构性不可行——地板由 ML 噪声超额驱动，非纯数学界。",
+    "powerfloor.intro": "在月频 rank-IC 噪声地板下，宣告 ±0.010 等价结构性不可行——地板由 ML 噪声超额驱动，非纯 1/√(N−1) 下界。",
     "discipline.intro": "反泄漏纪律的活体状态：点在时间数据、purged 折 + embargo、H6 比特一致确定性。",
 
     "nav.reddit": "散户热度",

@@ -90,6 +90,28 @@ confirmatory 零结果（IC −0.0088，CI 跨零）是**预期成果而非失�
 **未立项（如实记录）**: 视觉模型对密集中文页的开放式报告全部判幻觉（转写错误、
 重复计数、臆造元素），零采信——验证了"小裁剪+二元问题+DOM 交叉核验"纪律的必要性。
 
+## 2b. 轮 46 执行记录（协议第二批；同日）
+
+**通道池进度**：轮换池第 2 项（Streamlit 剩余标签走查）+ 第 3 项（i18n 术语抽查）+ 第 5 项
+（导出↔类型漂移扫描）本轮完成；第 1 项（web 双主题）轮 45 已覆盖。
+
+**发现与修复**：
+
+| # | 发现 | 通道 | 修复 |
+|---|---|---|---|
+| 1 | coverage 视图为**常量背书**（705/588/0.9272/POM·SE·STI 硬编码），README 却称 "pulled from the ledger"——账本实有 `oos_resolvable_universe`(#25 系) + `universe_crosscheck`(#23 系) 载荷 | A+B(账实对账) | `_coverage()` 接线 durable registry（ADR-006 正典），常量降为 pre-registry fallback，视图新增 `source: ledger 2026-07-27` 来源披露；README 措辞随之成真 |
+| 2 | 55 面板中**唯独 reddit 仍用 `{ ...redditJson }` 字面量展开**——正是 2026-08-15 部署事故的元模式（"凡 as typeof xxx 都有同类风险"教训未竟全功），信封 11 键（collector/mode/clearance/score_note 等）无契约类型 | B(漂移扫描) | 新 `RedditPanel` + `RedditPressureEntry` 显式类型（nullability 逐字段对照导出端），reddit-view 冗余本地类型/转换删除；tsc 0 |
+| 3 | `powerfloor.intro` zh "非纯数学界" 可误读为"数学界(community)"，en 为 "pure math bound"（=1/√(N−1) 纯噪声界） | B(i18n 语义) | 改 "非纯 1/√(N−1) 下界"（与 power-floor 图题/panel verdict 同语言） |
+
+**新工具沉淀**：`scripts/dev_tabwalk_apptest.py`（11 标签 headless 走查：AppTest 一次
+run 覆盖全部标签代码——st.tabs 每 rerun 执行所有子块，断言 uncaught exception/标签序/
+诚实标记/selectbox 交互；依赖本机工件，非 hermetic 不入 CI）；`scripts/dev_panel_type_drift.py`
+（55 面板顶层键 ↔ TS 类型声明对账；只读 tracked 文件 = hermetic，可作轮守门）。
+
+**验证**：AppTest 走查 ALL CHECKS PASS（零异常；本机缓存态的诚实降级警告逐条在册：
+13D events parquet 缺失→compute-failed 警告、CV-fold DEMO 标注、forward runs 缺席 info）
++ 漂移扫描 NO DRIFT + tsc 0 + eslint 0 + dashboard/web 契约 159 passed + 全套 pytest。
+
 ## 3. 后续轮次的轮换建议（长周期节奏）
 
 1. **每轮开场**: 读 state → git status → `uv run pytest -q` 基线 → 选 1-2 个通道深耕
@@ -111,3 +133,11 @@ confirmatory 零结果（IC −0.0088，CI 跨零）是**预期成果而非失�
 - Streamlit 改模块后必须**重启服务进程**（sys.modules 缓存，浏览器 F5 不重载已导入模块）。
 - `--virtual-time-budget` 对 websocket 应用（Streamlit）无效，白屏是假象。
 - Edge 启动走 `cmd /c start`（MCP open_application 对 Windows 名称解析不稳）。
+- **标签内容走查的正典工具 = `scripts/dev_tabwalk_apptest.py`（轮 46 新增）**：Streamlit
+  官方 AppTest headless 执行整个 app——`st.tabs` 每次 rerun 会运行**全部**标签代码，
+  故一次 `at.run()` 即覆盖 11 标签；断言 uncaught exceptions/标签序/诚实标记/selectbox
+  交互。依赖本机工件（runs/results、data/cache），**非 hermetic，不入 CI**——是研究者
+  本机 walk 工具。浏览器像素点击在背景 UI 动画时全屏帧易 stale——内容走查一律走 AppTest。
+- **watch：`use_container_width` 已过 Streamlit 弃用截止日（2025-12-31）**，现装 1.59
+  仍容忍（deprecation warning 刷屏）。未来升级 Streamlit 大版本会硬破 22 个调用点——
+  届时统一迁移 `width='stretch'/'content'`；升级前每次全站走查会继续提醒。

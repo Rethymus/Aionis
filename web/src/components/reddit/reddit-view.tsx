@@ -11,16 +11,6 @@ import { ClockIcon, ShieldCheckIcon } from "lucide-react";
 import { LoadMoreFooter, usePaged } from "@/components/stream/stream-kit";
 import { STOCK_PAGE_TICKERS } from "@/components/institutions/manager-book";
 
-type PressureEntry = {
-  ticker: string;
-  latest_mentions: number;
-  velocity: number;
-  crowding_z: number;
-  bull_bear_lean: number;
-  grade: string;
-  n_days: number;
-};
-
 /** Reddit 热议榜 — ApeWisdom's own trending-stocks board (first-party
  *  fields, verbatim). Independent of OUR Atom collector panel below: this
  *  is the xiaoyinsi-/reddit alignment cut (their board's disclosed source),
@@ -364,7 +354,7 @@ export function RedditView() {
                 {r.pressure.status === "ok" &&
                 Object.keys(r.pressure.by_ticker as Record<string, unknown>).length > 0 ? (
                   <div className="divide-y">
-                    {Object.entries(r.pressure.by_ticker as Record<string, PressureEntry>).map(([tk, pr]) => {
+                    {Object.entries(r.pressure.by_ticker).map(([tk, pr]) => {
                       const tone =
                         pr.grade === "surge"
                           ? "border-rose-500/40 bg-rose-500/10 text-rose-600 dark:text-rose-400"

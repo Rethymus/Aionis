@@ -8,6 +8,17 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-30 (zz11) 轮㊻：协议轮 2——Streamlit 剩余标签 AppTest 走查全过 + coverage 账本接线 + reddit 信封类型化收尾（单进程；全套绿）
+
+**编排**：按轮㊺协议 §3 轮换池继续——剩余标签走查（第 2 项）+ i18n 术语抽查（第 3 项）+ 导出↔类型漂移扫描（第 5 项）。开场：git 状态净 + pytest 基线 exit 0。
+
+- **①标签走查正典化（工具层贡献）**：浏览器坐标点击在背景 UI 动画下全屏帧持续 stale（两次尝试均被拒）→ 切 **Streamlit 官方 AppTest**：headless 执行整个 app，`st.tabs` 每次 rerun 会运行**全部**标签代码（这正是轮㊺ duplicate-ID 崩溃能一次杀死 7 个标签的原因），故一次 `at.run()` 即覆盖 11 标签。沉淀 `scripts/dev_tabwalk_apptest.py`（断言 uncaught exceptions/标签序/诚实标记/覆盖 caption/事件 selectbox 交互；依赖本机 runs/results+cache，**非 hermetic 不入 CI**，定位=研究者本机 walk 工具）：**ALL CHECKS PASS**——零异常；本机缓存态的诚实降级逐条在册（`phase_d_13d_events.parquet` 缺失→compute-failed 警告、CV-fold 未持久化→DEMO 标注、`runs/forward/` 缺席→"No forward runs yet" info）。
+- **②coverage 账实接线（ADR-006 durable registry 正典化）**：`_coverage()` 原为模块常量背书（705/588/0.9272/POM·SE·STI），而 dashboard README 声称 "pulled from the ledger"（旧 README 同病）——账本实有载荷：`oos_resolvable_universe`（2026-07-27：clean=588/pb_2016plus_tickers=705/confirmed_reuse 三只）+`universe_crosscheck`（jaccard_2016plus.mean=0.9272）。改 `_coverage()` 扫账本行取值（离线验证逐值一致），常量降为 pre-registry fallback，coverage 视图新增 `source: ledger 2026-07-27` 来源披露；README 措辞随接线成真。
+- **③导出↔类型漂移扫描（新工具+真发现）**：`scripts/dev_panel_type_drift.py`——55 个 committed 面板 JSON 顶层键 ↔ `web/src/data/aionis/*.ts` 类型声明对账（只读 tracked 文件=hermetic 可守门）。**首跑即抓到 reddit 是 55 面板中唯一仍用 `{ ...redditJson }` 字面量展开者**——信封 11 键（collector/mode/clearance/subreddits/how_to_activate/latest_snapshot_ts/n_snapshots/transport/score_available/score_note/pressure）无契约类型，正是 2026-08-15 部署事故的元模式（reddit literal 类型塌缩）且"逐面板显式类型化"教训的最后漏网。修：新 `RedditPanel`+`RedditPressureEntry`（nullability 逐字段对照 `export_reddit_meta` 双分支稳定 schema：score_note/transport/latest_snapshot_ts 可 null；pressure.by_ticker 条目=retail_pressure.pressure_summary_to_jsonable 七字段）；reddit-view 冗余本地 `PressureEntry` 类型与 as-cast 删除。修后扫描 **NO DRIFT**。
+- **④i18n 术语抽查**：SESOI/power floor/embargo/OOS/haircut 术语对总体忠实；一处 zh 歧义修正——`powerfloor.intro` "非纯数学界"（可读作"数学界 community"）→ "非纯 1/√(N−1) 下界"（对齐 en "pure math bound" 与 /track 图题 "pure-noise bound 1/√(N−1)"）。
+- **验证**：tsc 0 + eslint 0（改动文件）+ 漂移扫描 NO DRIFT + dashboard/web 契约 159 passed + 全套 pytest exit 0 + ruff scripts/dashboard lane 净。协议文档 §2b（轮 46 记录）与 §4（AppTest 正典病理 + `use_container_width` 已过弃用截止日 watch：升级 Streamlit 会破 22 调用点，届时统一迁 `width=`）已更新。
+- **内务**：streamlit/Edge 已停。**边界**：display lane；0 ledger 写/frozen/config/prereg/OOS（ledger 只读扫描）。未 push（本地 ahead 4）。**待业主（不变）**：E3 headline GO。
+
 ## 2026-08-30 (zz10) 轮㊺：长周期查漏补缺协议轮——三通道（视觉×学科×本质）：Streamlit v1 三层运行时缺陷修复 + 学科语义校正 + 协议沉淀（单进程；全套绿）
 
 **编排**：业主命题"设计长周期查漏补缺任务（视觉能力探查代码外问题 + 学科知识判断改进空间 + 打磨细节彰显本质）"→ 深研状态（current/handoff/roadmap§5/RESULTS）→ 基线验证（pytest exit 0 + ruff 存量债甄别）→ 三通道执行 → 协议沉淀。

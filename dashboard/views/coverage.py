@@ -14,3 +14,4 @@ def view_coverage() -> None:
     c2.metric("resolvable superset", cov["total"])
     c3.metric("monthly Jaccard (hanshof vs pierrebrunelle)", f"{cov['jaccard']:.3f}")
     st.caption(f"reuse-dropped tickers: {cov['dropped']}")
+    st.caption(f"source: {cov.get('source', 'ledger')}")
