@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-08-30) ㊿ 远程同步 + Pages 更新 + 优先级快照轮（业主指令三件事）：**
+  ①**原子 commit+push**：唯一未提交项=轮 45-49 截图证据目录未忽略（handoff 曾声称 gitignored 未落实）→ `.gitignore` 增 `runs/ui-audit-*/`（原子 chore commit `606643e`）→ **push 成功 `fca64ee..606643e`（8 commit 首次全上远程,本地与 origin 同步）**。②**GitHub Pages 更新（gh-pages 手动通道,轮 41 正典）**：干净构建 1,503 页 → 临时独立仓库 → force push gh-pages（`c455849`）→ Pages 自动构建 → **在墙验证：`built c455849` + live /power-floor.html 含轮 46 i18n 修正"1/√(N−1)" + dashboard 200**——线上已含轮 ㊷–㊻ 全部前端修正。临时仓库已清、out 已删。③**剩余项优先级快照（roadmap §5 重写,post-㊾ 版）**：P0 时间敏感三件（**E3 月末影子完整跑列首位——08-31 即月末**,headline GO 唯一不可代行,GLM cutoff 厂商声明升级）/P1 研究线三件（Track A、LLM vintage CI 化、R1-full）/P2 零门五件（**新鲜度扫荡已到期**——上次全量 08-29、Pages 刚重发布；长周期协议周期 2 续轮为常设项；谱系 v3；R2-full；atlas 小项）/P3 远期五件（含新增 use_container_width 迁移 watch）。**边界**：docs/deploy lane；0 ledger/frozen/prereg/OOS。待业主：E3 影子（明日月末窗口）与 headline GO。
+
 - **active (2026-08-30) ㊾ 协议周期 2 第 1 项收官：修正管线全量非研究页双主题巡检（19 页 × 明暗）——零缺陷纯验证轮（单进程；全套绿）：**
   补齐轮 48 留下的证据缺口（37 张巡检图全在坏管线上拍）。修正管线（web/ junction 伺服 + CSS-200 门禁 + 截图前门禁实测 200）重拍 19 页 × 明暗 38+ 张：**①底色全为真实主题色**（暗 #0a0a0a/#000、明 #fff/#fafafa）样式渲染确认；**②零渲染缺陷**——fine 阈值（@25）下暗色内容量处处 ≥ 明色；**③两个初报不对称均判测量伪影**（reddit @60 明 30% vs 暗 10%、heatmap 反向）——@25 阈值下反转/收敛（reddit 暗 48% > 明 38%），根因=暗色设计 alpha 淡彩在固定 @60 阈值下系统性漏检，双阈值法入协议 §4；**④视觉模型一次顺序误报证伪**（称明色 reddit 区块顺序与暗色相反——JSX 源序+头部裁剪双证其错）；**⑤一次捕获 flake**（明色 manager 28KB 空图）重拍正常。**沉淀**：协议 §2e（轮 49 记录）+ §4 双阈值铁律 + 空 flake 重拍规则。**验证**：全套 pytest 基线 exit 0；产品代码零改动（纯验证轮，git 仅协议/state 文档）。**边界**：docs/protocol lane；0 ledger/frozen/config/prereg/OOS。未 push。待业主（不变）：E3 headline GO。
 

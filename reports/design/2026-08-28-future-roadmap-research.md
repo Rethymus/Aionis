@@ -86,27 +86,28 @@ Harvey-Liu-Zhu(2016 RFS,t>3.0 阈值)、Harvey haircut p 值(2017 JPM)、McLean-
 
 ---
 
-## 5. 剩余未实施项优先级排列(2026-08-29 轮㊶ 后快照,前版第 3 节作废)
+## 5. 剩余未实施项优先级排列(2026-08-30 轮㊿ 后快照,前两版第 5 节作废)
 
-**已销项**:P0-2(15 P1→8 修复+2 已修+2 不派)、P0-3①②③、R1-lite、R2-lite、模型卡、模型清单、决策谱系、E3 契约(FROZEN 账实更正)、cutoff 阻塞(探针 v1 解决)、GitHub Pages 更新(gh-pages 手动通道,Actions 计费封锁中)。
+**本轮已销项(轮㊷–㊾+㊿)**:前端真实性五修+WCAG 扫零(㊷)、v2 演示面退役+navy 描边修复+ruff 0.16(㊸)、长周期查漏补缺协议建立与四轮执行(㊺–㊾:Streamlit v1 三层运行时修复/coverage 账本接线/reddit 信封类型化/docs 六死链/RESULTS 逐位对账 ALL MATCH/视觉管线根因修正/19 页双主题全量巡检零缺陷)、GitHub Pages 再更新(㊿,gh-pages 手动通道 main@606643e 在墙验证)。
 
-### P0 —— 业主门(代码侧全部就绪)
-1. **GLM cutoff 厂商声明升级**:probe v1(2023-03-10)已在冻结 YAML;厂商日后声明则覆盖(provenance 升级为 vendor)。无业主动作也安全(probe 值保守且已排除泄漏)。
-2. **E3 影子例行化**:Phase4 缓存收尾(570/587,tiingo 429 会话自愈)→ 08-31 shadow 完整跑通 → 此后每月末本地跑 e3_forward_trigger.py(计费解冻前 cron 不可用;单进程一轮 ~40min)。
-3. **headline GO(唯一不可代行)**:影子积满(业主 07-30 定 1-2 月)后,业主对非影子首次提交点头——此门不可下放。
+### P0 —— 业主门/时间敏感(本周)
+1. **E3 月末影子完整跑(时间敏感度最高——08-31 即月末)**:Phase4 缓存收尾(570/587,tiingo 429 会话自愈)→ `e3_forward_trigger.py` shadow 完整跑通(单进程 ~40min;PHASE_E3_NO_LEDGER=1)→ 此后每月末例行(计费解冻前 cron 不可用)。影子积满月数(业主 07-30 定 1-2 月)即解锁 headline 裁决。
+2. **headline GO(唯一不可代行)**:业主对非影子首次提交点头——此门不可下放;建议影子满 2 个月(≈10 月末)后一并裁决。
+3. **GLM cutoff 厂商声明升级**:probe v1(2023-03-10)安全常驻冻结 YAML;厂商日后声明则覆盖(provenance 升级 vendor)。无业主动作亦安全。
 
-### P1 —— 研究线(需预注册级 GO)
+### P1 —— 研究线(需预注册级业主 GO)
 4. **Track A 因子生成器**:RD-01~17 任务单为地基;AlphaAgent 三件套(原创性/对齐/复杂度)Aionis 化;trial registry 先注册后评估;haircut p 值判定。
 5. **LLM vintage 纪律深化**:探针套件 CI 化(每 provider/模型定期实测)+ 模型卡 vintage 字段联动(probe v1 已是模板)。
 6. **R1-full decile 收益单调性**:冻结收益口径对齐工程 → 面板 + atlas 第五区块。
 
-### P2 —— 显示/基建(零门)
-7. **谱系 v3**:链上挂各配置的 diff 数字与 dossier 互链(决策→结果直读)。
-8. **R2-full 工件矩阵**:多 claim 档案、版本化、CI 挂钩(shadow 数据入库后自动更新 dossier)。
-9. **新鲜度巡检制度**:Actions 计费解冻前,本地扫荡每 2-3 天例行(轮㊳ 模板);解冻后 re-enable refresh workflow + 修 13D cron 时点。
-10. **atlas 小项**:i18n 表头残余、上游面板变更触发 dossier/工件自动重生成钩子。
+### P2 —— 显示/基建(零门,可即刻排队)
+7. **数据新鲜度扫荡(本轮新增——已到期)**:上次全量扫荡 08-29(轮㊳),日更面板已 1-2 天陈旧且 Pages 刚重发布;按轮㊳ 模板本地扫荡(13D 日更步 2400s 帽教训)+ 全套 pytest + 契约闸门。
+8. **长周期查漏补缺协议·周期 2 续轮(常设节奏项)**:AppTest 随 Streamlit 改动重跑(含 earnings 真实数据路径——待 cache 补齐)、i18n 二轮(英文语法级+其余 hub 术语)、prereg↔冻结 YAML 只读一致性核验、漂移扫描器随新面板守门。协议见 `2026-08-30-longcycle-gapfill-protocol.md` §3。
+9. **谱系 v3**:链上挂各配置 diff 数字与 dossier 互链(决策→结果直读)。
+10. **R2-full 工件矩阵**:多 claim 档案、版本化、CI 挂钩(shadow 数据入库后自动更新 dossier)。
+11. **atlas 小项**:i18n 表头残余、上游面板变更触发 dossier/工件自动重生成钩子。
 
 ### P3 —— 远期/记录性
-11. 韩国杠杆 A/B / TACO 升级(源就绪即可换);12. BLS 传输策略接受(AUD-05C-C1);13. earnings abstain 臂与 SIC vintage(E3 GO 后);14. 模型卡 v2 多 run 卡片化(每 confirmatory run 一卡,清单表直链)。
+12. 韩国杠杆 A/B / TACO 升级(源就绪即可换);13. BLS 传输策略接受(AUD-05C-C1);14. earnings abstain 臂与 SIC vintage(E3 GO 后);15. 模型卡 v2 多 run 卡片化(每 confirmatory run 一卡,清单表直链);16. **Streamlit `use_container_width` 弃用迁移 watch**(已过 2025-12-31 截止日,1.59 容忍;升级 Streamlit 时统一迁 `width=`,22 个调用点)。
 
-**部署通道现状**(2026-08-29 定):Actions 计费封锁 → gh-pages 手动通道为标准(本地 build→临时仓库→force push→Pages legacy 源;本轮已验证在墙:模型卡/清单/谱系全渲染);Actions 解冻后恢复 deploy workflow 并退役手动通道。
+**部署通道现状**(2026-08-30 复验):Actions 计费封锁 → **gh-pages 手动通道为标准**(本地 build→临时仓库→force push gh-pages→Pages legacy 源自动构建;㊿ 在墙验证 built c455849/live 内容含轮㊺+修正);Actions 解冻后恢复 deploy workflow 并退役手动通道。

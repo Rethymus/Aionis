@@ -8,6 +8,15 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-30 (zz15) 轮㊿：远程同步 + Pages 更新 + 剩余项优先级快照（业主指令三件事）
+
+- **①原子 commit+push**：工作树唯一未提交项 = 轮 45-49 截图证据目录（runs/ui-audit-{45,48,49}/）——handoff 声称 gitignored 但规则未落实 → `.gitignore` 增 `runs/ui-audit-*/`（与既有 `runs/ui-iter/` 同型,原子 chore commit `606643e`）→ **push 成功 `fca64ee..606643e`,8 commit 全上远程,本地=origin**。
+- **②GitHub Pages（gh-pages 手动通道,轮 41 正典,计费封锁未解）**：干净构建 1,503 页（0 build error）→ 临时独立仓库（`git init`+copy out/*+.nojekyll）→ force push gh-pages（`c455849`）→ Pages legacy 源自动构建 → **在墙验证三证：`pages/builds/latest = built c455849`、live /power-floor.html 含轮 46 i18n 修正"非纯 1/√(N−1) 下界"（新内容上线的标记）、dashboard.html 200**。线上现含轮㊷–㊻ 全部前端修正（搜索全宇宙化/StickyTabs/宏观图/热力图映射/WCAG 扫零/conviction+regime 描边）。临时仓库清、out 删（junction 留）。
+- **③剩余项优先级快照（roadmap §5 重写为 post-㊾ 版）**：已销项补记轮㊷–㊿；重排——**P0（本周）**：1. E3 月末影子完整跑（**时间敏感度最高,08-31 即月末**：Phase4 缓存 570/587 收尾→trigger shadow 完整跑通→此后每月末例行）、2. headline GO（唯一不可代行,建议影子满 2 个月后裁决）、3. GLM cutoff 厂商声明升级；**P1（预注册级 GO）**：4. Track A 因子生成器、5. LLM vintage CI 化、6. R1-full decile 单调性；**P2（零门）**：7. **新鲜度扫荡（新增,已到期——上次全量 08-29,日更面板 1-2 天陈旧且 Pages 刚重发布）**、8. 长周期协议周期 2 续轮（常设）、9. 谱系 v3、10. R2-full 工件矩阵、11. atlas 小项；**P3**：12-16（韩国杠杆/TACO、BLS、earnings abstain+SIC、模型卡 v2、use_container_width 迁移 watch）。部署通道复验注记。
+- **边界**：docs/deploy lane；0 ledger/frozen/prereg/OOS。**待业主**：E3 影子（明日月末窗口,~40min 单进程）与 headline GO。
+
+
+
 ## 2026-08-30 (zz14) 轮㊾：协议周期 2 第 1 项收官——修正管线全量非研究页双主题巡检（19 页 × 明暗）零缺陷纯验证轮（单进程；全套绿）
 
 **编排**：补齐轮 48 证据缺口（其 37 张巡检图全在无样式坏管线上拍，仅重验 3-4 页）。开场：git 状态净 + pytest 基线 exit 0 + 干净重建 1,503 页 + junction 重建 + **CSS-200 门禁实测通过后才截图**。
