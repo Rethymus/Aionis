@@ -39,13 +39,13 @@ ledger 行；不重写历史；null-favored（前沿共识 Profit Mirage / Alpha
 |---|---|---|
 | ① 行情/价格 | Tiingo+Alpaca ✅ | **✅ 方向**：baostock 价格（MIT，`tradestatus`停牌 + `adjustflag`/`query_adjust_factor`复权因子 + `query_all_stock(date)`历史含退市 → survivorship/停牌/复权均 PIT-able；**价格交易所定、不类基本面回改 → G3 低危**）或 qlib+AKShare 采集器（MIT，commit `83d089b` 2026-05，但 current-code discovery 需用 baostock 历史成分补退市 survivorship）。qlib+TuShare（PR #2067，显式 L/D/P survivorship-free）作 fallback（G1 paid/ToS）。 |
 | ② 宏观 | ALFRED vintage ✅ | **✅ 部分**：**ALFRED/OECD 中国序列**（GDP/CPI，如 `CHNGDPNQDSMEI`，**vintage 跟踪 → PIT-safe**，复用现有 `macro_surprise.py`/FRED 适配器）= **headline-OK**。**NBS 直取**（M2/社融/NBS-only）→ GDP/CPI **经证实大幅回改**（Sinclair/Holz：单年 GDP 可上修 16.8%、普查 benchmark 回溯、实际 GDP 系统性上偏；NBS 无公开 vintage API、latest-only）→ **G3 高危 → snapshot+exploratory**（EPU 先例）。复用 `mbk-dev/nbsc`（NBS 访问，latest-only，须 snapshot 冻结）。 |
-| ③ 基本面 | EDGAR filed-date PIT ✅ | **✅ 解决方向：cninfo（巨潮，CSRC 官方 = A 股 EDGAR 等价）**——申报日原生 + as-filed PDF + 修订=新公告（revision-transparent，G3 优于 Tushare）；经 OSS 爬虫（`alicexl/a-share-financials` PDF→结构化 / `rollysys/use_cninfo`，**license 待验**）+ Aionis PIT 适配。baostock reject（G3 结构性失败）；Tushare fallback（G1 付费/ToS）。见 [`ashare-fundamentals-source.md`](ashare-fundamentals-source.md)。 |
+| ③ 基本面 | EDGAR filed-date PIT ✅ | **✅ 解决方向：cninfo（巨潮，CSRC 官方 = A 股 EDGAR 等价）**——申报日原生 + as-filed PDF + 修订=新公告（revision-transparent，G3 优于 Tushare）；经 OSS 爬虫（`alicexl/a-share-financials` PDF→结构化 / `rollysys/use_cninfo`，**license 待验**）+ Aionis PIT 适配。baostock reject（G3 结构性失败）；Tushare fallback（G1 付费/ToS）。见 [`ashare-fundamentals-source.md`](2026-08-03-ashare-fundamentals-source.md)。 |
 | ④ 新闻情绪 | E3 闭集 13D/8-K（受控 ablation） | **TBD**（A 股公告情绪：仅 exploratory） |
 | ⑤ 风险 | alphalens/pyfolio ✅ | 复用 |
 | ⑥ 回测净成本 | FINSABER ✅ | 复用 |
 | ⑦ 市场结构 | FF5 + Amihud ✅ | **TBD**（A 股 FF 等价：CH-CN 因子可得性） |
 
-**gate 4 已解（方向）**：cninfo 路径可行（A 股 EDGAR 等价，as-filed + 申报日 + revision-transparent）。进 headline 前须落实 G1（爬虫 license + cninfo ToS）+ G7（礼貌抓取 ≥2s+backoff）+ G4（snapshot+sha256）+ PDF 解析覆盖 + 历史深度。见 [`ashare-fundamentals-source.md`](ashare-fundamentals-source.md)。
+**gate 4 已解（方向）**：cninfo 路径可行（A 股 EDGAR 等价，as-filed + 申报日 + revision-transparent）。进 headline 前须落实 G1（爬虫 license + cninfo ToS）+ G7（礼貌抓取 ≥2s+backoff）+ G4（snapshot+sha256）+ PDF 解析覆盖 + 历史深度。见 [`ashare-fundamentals-source.md`](2026-08-03-ashare-fundamentals-source.md)。
 
 ## 4. Learner — 复用
 

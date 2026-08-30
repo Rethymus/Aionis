@@ -36,7 +36,6 @@ def main() -> int:
 
     caps = [c.value for c in at.caption]
     mds = [m.value for m in at.markdown]
-    heads = [h.value for h in at.subheader]
     infos = [i.value for i in at.info]
     warns = [w.value for w in at.warning]
 

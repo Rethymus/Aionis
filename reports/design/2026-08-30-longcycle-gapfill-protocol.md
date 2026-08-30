@@ -112,7 +112,28 @@ run 覆盖全部标签代码——st.tabs 每 rerun 执行所有子块，断言 
 13D events parquet 缺失→compute-failed 警告、CV-fold DEMO 标注、forward runs 缺席 info）
 + 漂移扫描 NO DRIFT + tsc 0 + eslint 0 + dashboard/web 契约 159 passed + 全套 pytest。
 
+## 2c. 轮 47 执行记录（协议第三批；同日）
+
+**通道池进度**：第 4 项（`docs/` 逐文档与账本对账）本轮完成——**轮换池五项全部至少执行一遍**，
+协议完成第一个完整轮换周期。
+
+**发现与修复**：
+
+| # | 发现 | 通道 | 修复 |
+|---|---|---|---|
+| 1 | docs 引用完整性：214 条相对链接（433 个 md）中 **6 条死链**集中在两个历史设计文档——track-b slice plan 的 `../` 少一级（`../docs/`/`../reports/`/`../state/` ×4，正确为 `../../`），track-c prereg skeleton 引用同目录文件缺日期前缀（`ashare-fundamentals-source.md` ×2，实为 `2026-08-03-ashare-fundamentals-source.md`） | B(引用完整性) | 逐条修目标路径（move-don't-delete 铁律不破：文档零移动，只修链接）；1 条正则误报（`(≤10)` 数学表达式）排除 |
+| 2 | （核验通过项）编号索引 00–08 完整；00-vision/07-roadmap 与现状一致（B–E1 NULL、E3 唯一有功效路径）；ADR 注册表 12/12 全登记；AGENTS.md 引用面 16/16 文件在位 | B | 无需修复（记录为基线） |
+| 3 | （核验通过项）**RESULTS.md ↔ 冻结工件逐位对账**：四相 headline（B −0.0008003561696833403 / C −0.006487473568317837 / D −0.0029798406036171702 / E1 −0.0027928949986939897）与 `runs/results/<sig>/differential.json` **bit-identical**；§6 账本行号索引（#28/#30/#34/#37 confirmatory + #49 track_c）与 ledger 实际行号吻合（sensitivity #39=latest amend，与 backlog 记录一致） | B(账实对账) | 无需修复——项目的本质主张（可追溯性）经受住逐位核验 |
+| 4 | （甄别不动项）adaptive-design-research.md 与 dashboard-v2-design.md 中的发表线措辞均带日期锚（"per the 2026-08-05 framing"）= 2026-08-15 裁决的历史记录保留类，不改写 | B(命名纪律) | 零触碰 |
+
 ## 3. 后续轮次的轮换建议（长周期节奏）
+
+> **周期 1 已完成**（轮 45–47：五项轮换池全部执行一遍）。周期 2 建议：① web 全路由
+> （22 页非研究页）双主题复审 + 新增面板；② Streamlit AppTest 走查脚本随每次 Streamlit
+> 相关改动重跑（含 event/earnings 真实数据路径——待 cache 补齐后验证 CAR 图）；
+> ③ i18n 深查第二轮（其余 hub 页术语 + 英文语法级抽查）；④ docs 第二轮（preregistration
+> 文档与冻结 YAML 的一致性只读核验——零改写）；⑤ 新增面板随建随扫（漂移扫描器已 hermetic
+> 可守门）。
 
 1. **每轮开场**: 读 state → git status → `uv run pytest -q` 基线 → 选 1-2 个通道深耕
    （不必三通道全开）。

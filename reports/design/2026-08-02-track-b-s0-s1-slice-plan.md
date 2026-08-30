@@ -548,9 +548,9 @@ S1-M① (price-only baseline 训练管道)    S1-M② (等权 baseline + DM 检�
 ## 9. 引用
 
 ### 内部来源
-- [`docs/quant-selection-research.md`](../docs/quant-selection-research.md) v0.2 — 横截面选股范围切片 + 轮子栈 + 数据解锁
-- [`reports/2026-08-02-strategic-review-coverage-and-alignment.md`](../reports/2026-08-02-strategic-review-coverage-and-alignment.md) — 战略复盘，轨道 B 五步
-- [`state/current.md`](../state/current.md) + [`state/handoff.md`](../state/handoff.md) — 当前状态
+- [`docs/quant-selection-research.md`](../../docs/quant-selection-research.md) v0.2 — 横截面选股范围切片 + 轮子栈 + 数据解锁
+- [`reports/2026-08-02-strategic-review-coverage-and-alignment.md`](../../reports/2026-08-02-strategic-review-coverage-and-alignment.md) — 战略复盘，轨道 B 五步
+- [`state/current.md`](../../state/current.md) + [`state/handoff.md`](../../state/handoff.md) — 当前状态
 
 ### 外部（OSS 轮子）
 - `microsoft/qlib`（MIT，46.9k★）—— 横截面选股框架

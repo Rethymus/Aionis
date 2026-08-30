@@ -8,6 +8,16 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-30 (zz12) 轮㊼：协议轮 3——docs 引用完整性全扫（6 死链修复）+ RESULTS.md ↔ 冻结工件逐位对账全 MATCH——轮换池周期 1 收官（单进程；全套绿）
+
+**编排**：按协议 §3 轮换池执行第 4 项（docs 逐文档与账本对账）——周期 1（轮 45/46/47）五项全部执行完毕。开场：git 状态净 + pytest 基线 exit 0。
+
+- **①引用完整性（新工具内联扫描）**：433 个 md（docs/decisions/reports-design/state，archive 除外）214 条相对链接 → **6 条死链**全集中于两个历史设计文档：`2026-08-02-track-b-s0-s1-slice-plan.md` §9 引用 `../docs/`、`../reports/`、`../state/` ×4（reports/design/ 基准下少一级，正确 `../../`）；`2026-08-03-track-c-prereg-skeleton.md` ×2 引用同目录文件缺日期前缀（`ashare-fundamentals-source.md` → `2026-08-03-ashare-fundamentals-source.md`）。逐条修目标路径——**零文档移动**（AGENTS.md move 禁令不破）；1 条正则误报（`(≤10)` 数学表达式被当链接）排除。
+- **②核验通过基线（记录不动）**：编号索引 00–08 完整；00-vision 四段（是什么/为何/为谁/改变什么）与现状一致；07-roadmap 相位表 B–E1 done-NULL、E2 designed-underpowered、E3 forward-live = 与 blockers/RESULTS 精确吻合；ADR 注册表 12/12 与 decisions/ 实体一致；AGENTS.md 引用面 16/16 文件在位；adaptive-design-research(-deepdive) 与 dashboard-v2-design 的 "publishable" 措辞均带 2026-08-05 日期锚 = 08-15 裁决的历史保留类，零触碰。
+- **③账实对账核心（本轮最重要——本质主张的逐位核验）**：RESULTS.md §2 四相 headline 差分值与 `runs/results/<config_sig>/differential.json` 的 `mean_diff` **bit-identical**（B −0.0008003561696833403 / C −0.006487473568317837 / D −0.0029798406036171702 / E1 −0.0027928949986939897）；§6 账本行号索引与 ledger 实际行号吻合（#28/#30/#34/#37 confirmatory:first + #49 track_c @2026-08-05；sensitivity_horizon 实际行 36/39，RESULTS 引 #39=latest amend 与 backlog 记录一致；总 56 行）——**"每个数字可追溯到冻结产物"的项目本质主张经受住程序化逐位核验**。
+- **④沉淀**：协议 §2c（轮 47 记录）+ §3 周期 2 建议（web 非研究页双主题复审/AppTest 随 Streamlit 改动重跑含 earnings 真实数据路径/i18n 二轮/prereg 与冻结 YAML 只读一致性核验/漂移扫描器随新面板守门）。
+- **验证**：全套 pytest exit 0（基线）；本轮改动纯 markdown（2 设计文档 + 协议 + state），grep 确认零测试/代码引用，无需重跑套件后仍以基线为准。**边界**：docs lane；0 ledger/frozen/prereg 写。未 push（本地 ahead 5）。**待业主（不变）**：E3 headline GO。
+
 ## 2026-08-30 (zz11) 轮㊻：协议轮 2——Streamlit 剩余标签 AppTest 走查全过 + coverage 账本接线 + reddit 信封类型化收尾（单进程；全套绿）
 
 **编排**：按轮㊺协议 §3 轮换池继续——剩余标签走查（第 2 项）+ i18n 术语抽查（第 3 项）+ 导出↔类型漂移扫描（第 5 项）。开场：git 状态净 + pytest 基线 exit 0。
