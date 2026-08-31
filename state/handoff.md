@@ -8,6 +8,19 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-30 (zz16) 轮㊿+1：计划执行轮——E3 预备收尾 + 新鲜度扫荡 + 谱系 v3 + atlas 小项 + 契约一致性报告：P2 零门项全部销项（单进程；全套绿）
+
+**编排**：按 roadmap 优先级执行零门项（P0-1 今日可做部分/P2-7/P2-8/P2-9/P2-11），门控项如实记录不假装（headline GO=业主门、P1 三项=预注册级 GO、R2-full=L 件待拆分+CI 封锁）。开场：git 同步净 + pytest 基线 exit 0。
+
+- **P0-1 E3 预备（今日可做部分完成，影子完整跑=次日 08-31 月末窗口）**：①NYSE schedule 实测 8 月月末交易日=2026-08-31（27/28/31）→ 触发器当日确定性 NO-OP（`e3_trigger_not_month_end`，exit 0）；②Phase4 价格预备收尾：`phase_b_fetch --display --budget-minutes 10` → **585/585 零缺失**（583 缓存+2 补齐；BBBY 退市→tiingo 空响应=诚实缺失），宽面板 (3937,585) 重写、still-missing=0；③冻结契约 YAML 在位核对（max_age_sessions=22/block_on_unknown=true/cutoff 2023-03-10）。
+- **P2-7 新鲜度扫荡（到期项执行）**：快源族（cot 556 周聚合/reddit 快照+ledger 行/GDELT coverage 2026-08/VIX 2016-08-26）+ EDGAR 族（8-K 209/IPO 1105/PTR 874——周日源空窗计数不变如实；form4 0 新增 graceful skip）→ `track_b_materialize_panel --display`（date_max 2026-08-28，565 tickers）→ `export_terminal_data` 55 面板。
+- **契约闸门两连拦（守卫即钩子的实战证明）**：①ledger +1 追加（reddit data_ingest 2026-08-30T10:01Z n_posts=5）→ `test_ledger_append_only_not_mutated_by_export` 红 → git diff 复核**纯尾部 +1 行零改动** → 重钉 91bc7640（注释记录出处）；②工件链漂移（atlas-claim/dossier vs 刷新面板字节失配）→ 按**"面板全导→工件重生成→shelf 独立重导（不触面板）"**正典次序修复（次序定律首次明文化；shelf 重导会重打面板戳的循环陷阱实证）→ 链守卫 56 测试全绿。
+- **P2-8 一致性报告**：`reports/audits/2026-08-30-prereg-contracts-consistency.md`——冻结 YAML 四值（22/None/true/2023-03-10）逐值出处链核对 owner D2 决策文档+advisory+探针记录全 ✅；预注册文档不含操作性契约值=设计分工非漂移（grep 实证 0 命中）。
+- **P2-9 谱系 v3 上线**：`export_model_inventory` v3——链链接新增 `result_digest`（**双源**：本地 differential.json 优先 `source:"differential"` / 账本 confirmatory 行兜底 `source:"ledger_row"`（combined_ic.mean/p_hac；track_c climax 无本地目录的诚实路径），ci_lo/hi/null_holds 诚实 null）；类型契约 `ModelInventoryChainLink` 扩展；model-health 谱系区每链接渲染 `ΔIC −0.0088 · p 0.484` 摘要（诚实 "ΔIC —" 占位）；版本钉 v2→v3×2 + digest 断言（实测值 −0.008841/0.483773 6dp）。
+- **P2-11 atlas 小项完成**：森林图数据表头 i18n（"指标/数值"zh/en 对称；行标签=schema 名保留+注释——翻译会切断 JSON 键对应损 traceability）；"重生成钩子"判定=**既有契约守卫即漂移警报**（本轮实战拦下 2 次：dossier/atlas-claim），自动重生成会掩盖漂移、按 no-silent-mutation 精神不采用。
+- **验证**：契约 14 + 链守卫 56 + inventory 13 全绿 + 全套 pytest exit 0 + tsc 0/eslint 0（改动文件）+ 修正管线视觉核验三证（model-health 谱系 ΔIC 行/atlas 森林图"指标·数值"表头/model-card 真实冻结数据 −0.0088/[−0.0336,0.0159]/#49 在墙）。
+- **边界**：display/data lane；ledger 仅纯追加重钉；0 frozen/config/prereg 改动。服务器已停、out 已删（junction 留）。**待业主**：明日 08-31 E3 影子窗口 + headline GO。
+
 ## 2026-08-30 (zz15) 轮㊿：远程同步 + Pages 更新 + 剩余项优先级快照（业主指令三件事）
 
 - **①原子 commit+push**：工作树唯一未提交项 = 轮 45-49 截图证据目录（runs/ui-audit-{45,48,49}/）——handoff 声称 gitignored 但规则未落实 → `.gitignore` 增 `runs/ui-audit-*/`（与既有 `runs/ui-iter/` 同型,原子 chore commit `606643e`）→ **push 成功 `fca64ee..606643e`,8 commit 全上远程,本地=origin**。

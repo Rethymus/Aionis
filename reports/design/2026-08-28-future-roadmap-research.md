@@ -89,9 +89,10 @@ Harvey-Liu-Zhu(2016 RFS,t>3.0 阈值)、Harvey haircut p 值(2017 JPM)、McLean-
 ## 5. 剩余未实施项优先级排列(2026-08-30 轮㊿ 后快照,前两版第 5 节作废)
 
 **本轮已销项(轮㊷–㊾+㊿)**:前端真实性五修+WCAG 扫零(㊷)、v2 演示面退役+navy 描边修复+ruff 0.16(㊸)、长周期查漏补缺协议建立与四轮执行(㊺–㊾:Streamlit v1 三层运行时修复/coverage 账本接线/reddit 信封类型化/docs 六死链/RESULTS 逐位对账 ALL MATCH/视觉管线根因修正/19 页双主题全量巡检零缺陷)、GitHub Pages 再更新(㊿,gh-pages 手动通道 main@606643e 在墙验证)。
+**㊿+1 执行轮销项(2026-08-30 下午)**:P0-1 Phase4 价格预备收尾(585/585 零缺失,BBBY 退市空响应诚实;触发器当日确定性 NO-OP,影子完整跑=次日 08-31 月末窗口)、P2-7 新鲜度扫荡(快源+EDGAR 族全跑,周日源空窗如实;ledger +1 纯追加重钉 91bc7640;契约闸门拦下工件链漂移并按"面板→工件→shelf"正典次序修复,链守卫 56 测试全绿)、P2-8 prereg↔冻结契约一致性报告(reports/audits/2026-08-30-prereg-contracts-consistency.md,全值一致)、P2-9 谱系 v3(inventory v3:result_digest 双源——differential.json 优先/账本 confirmatory 行兜底 source 标注;model-health 谱系区 ΔIC 摘要在墙)、P2-11 atlas 表头 i18n(森林图"指标/数值";schema 字段名保留+注释)+重生成钩子判定=既有契约守卫即漂移警报(本轮实战拦下 2 次)。
 
-### P0 —— 业主门/时间敏感(本周)
-1. **E3 月末影子完整跑(时间敏感度最高——08-31 即月末)**:Phase4 缓存收尾(570/587,tiingo 429 会话自愈)→ `e3_forward_trigger.py` shadow 完整跑通(单进程 ~40min;PHASE_E3_NO_LEDGER=1)→ 此后每月末例行(计费解冻前 cron 不可用)。影子积满月数(业主 07-30 定 1-2 月)即解锁 headline 裁决。
+### P0 —— 业主门/时间敏感
+1. **E3 影子完整跑(2026-08-31 月末窗口)**:Phase4 价格预备已收尾(585/585 零缺失,2026-08-30 实测);次日月末交易日(08-31)运行 `PHASE_E3_NO_LEDGER=1 uv run python scripts/e3_forward_trigger.py`(单进程 ~40min);此后每月末例行。08-30 实测触发器当日确定性 NO-OP(exit 0)。
 2. **headline GO(唯一不可代行)**:业主对非影子首次提交点头——此门不可下放;建议影子满 2 个月(≈10 月末)后一并裁决。
 3. **GLM cutoff 厂商声明升级**:probe v1(2023-03-10)安全常驻冻结 YAML;厂商日后声明则覆盖(provenance 升级 vendor)。无业主动作亦安全。
 
@@ -101,11 +102,11 @@ Harvey-Liu-Zhu(2016 RFS,t>3.0 阈值)、Harvey haircut p 值(2017 JPM)、McLean-
 6. **R1-full decile 收益单调性**:冻结收益口径对齐工程 → 面板 + atlas 第五区块。
 
 ### P2 —— 显示/基建(零门,可即刻排队)
-7. **数据新鲜度扫荡(本轮新增——已到期)**:上次全量扫荡 08-29(轮㊳),日更面板已 1-2 天陈旧且 Pages 刚重发布;按轮㊳ 模板本地扫荡(13D 日更步 2400s 帽教训)+ 全套 pytest + 契约闸门。
-8. **长周期查漏补缺协议·周期 2 续轮(常设节奏项)**:AppTest 随 Streamlit 改动重跑(含 earnings 真实数据路径——待 cache 补齐)、i18n 二轮(英文语法级+其余 hub 术语)、prereg↔冻结 YAML 只读一致性核验、漂移扫描器随新面板守门。协议见 `2026-08-30-longcycle-gapfill-protocol.md` §3。
-9. **谱系 v3**:链上挂各配置 diff 数字与 dossier 互链(决策→结果直读)。
-10. **R2-full 工件矩阵**:多 claim 档案、版本化、CI 挂钩(shadow 数据入库后自动更新 dossier)。
-11. **atlas 小项**:i18n 表头残余、上游面板变更触发 dossier/工件自动重生成钩子。
+7. ~~数据新鲜度扫荡~~(**2026-08-30 已执行**:快源+EDGAR 族全跑,周日源空窗如实;ledger 重钉 91bc7640;导出 55 面板+契约闸门绿)。
+8. **长周期查漏补缺协议·周期 2 续轮(常设节奏项)**:AppTest 随 Streamlit 改动重跑(含 earnings 真实数据路径——待 cache 补齐)、i18n 二轮(英文语法级+其余 hub 术语)。协议见 `2026-08-30-longcycle-gapfill-protocol.md` §3。
+9. ~~谱系 v3~~(**2026-08-30 已上线**:inventory v3 result_digest 双源+model-health ΔIC 摘要在墙,链守卫 56 测试绿)。
+10. **R2-full 工件矩阵**:多 claim 档案、版本化、CI 挂钩(shadow 数据入库后自动更新 dossier)——**L 件,Planner 拆分前置**;CI 挂钩部分受 Actions 计费封锁门控。
+11. ~~atlas 小项~~(**2026-08-30 已完成**:森林图表头 i18n"指标/数值"+schema 名保留注释;"重生成钩子"判定=契约守卫即漂移警报,实战拦下 2 次,自动重生成按 no-silent-mutation 精神不采用)。
 
 ### P3 —— 远期/记录性
 12. 韩国杠杆 A/B / TACO 升级(源就绪即可换);13. BLS 传输策略接受(AUD-05C-C1);14. earnings abstain 臂与 SIC vintage(E3 GO 后);15. 模型卡 v2 多 run 卡片化(每 confirmatory run 一卡,清单表直链);16. **Streamlit `use_container_width` 弃用迁移 watch**(已过 2025-12-31 截止日,1.59 容忍;升级 Streamlit 时统一迁 `width=`,22 个调用点)。
