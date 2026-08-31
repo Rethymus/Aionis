@@ -365,7 +365,7 @@
 
 ## 2026-08-25 (dd) Tier-7 视觉多轮迭代：首页模块全齐 + 双语新闻流 + 全页目视终验 + 后 parity 规划
 
-**参照态复查**：data.xiaoyinsi.com / app.xiaoyinsi.com 仍 NXDOMAIN（DoH 1.1.1.1，08-25 实证；根域存活无终端）→ `runs/ui-iter/` 冻结基线（12 PNG + 10 HTML + 编译 CSS）为唯一合法参照。**视觉通道本 session 重建**：Read→CDN→analyze_image 三连可用（CDN URL 须原样含反斜杠路径——上轮 1210 阻断已消，环境差异）。
+**参照态复查**：参照站 / app.参照站.com 仍 NXDOMAIN（DoH 1.1.1.1，08-25 实证；根域存活无终端）→ `runs/ui-iter/` 冻结基线（12 PNG + 10 HTML + 编译 CSS）为唯一合法参照。**视觉通道本 session 重建**：Read→CDN→analyze_image 三连可用（CDN URL 须原样含反斜杠路径——上轮 1210 阻断已消，环境差异）。
 
 **首页 15 模块全齐（T7A 代理全胜 + 主线两处裁决）**：对方首页完整解剖（hero 目录规模统计条 / 指数三卡 / 中文快讯 / 最新举牌 / 近期 IPO / 机构申报 / 情绪榜 / 政客环形 / 明星投资人 / ARK 异动 / 重大事件 / 高管变动 / 探索全部模块页脚）vs 我方原 6 模块 → 补齐 7 新模块 + 情绪榜/政客卡全解剖升级 + 统计条切目录规模（10,387 公司 / 9,385 申报人 / 40 明星 / 2,812 政客交易 / 290 Reddit——全部实数，data_health 新增全 47 面板 `rows` 字段为源 + 对账契约测试）。诚实降级七处入代码注释：IPO 用 ipo 面板（formD 是 Reg-D 无法映射状态）；高管变动按公司级（人名/方向解析 = 既有红线）；ARK 无 ±pp（无历史）→ 基金共振排名；Reddit Δ 显示 24h 提及变化非价格；机构申报无时间字段只显 MM/DD；举牌 chips 是 13G 家族；明星计数 40 非 43（诚实策展）。**主线裁决一**：明星卡不进 650KB 全量书 → `export_form13f_stars`（导出时从已提交面板派生 top-8，~2.4KB）+ form13f-stars.ts 专用小模块 + 摘要/全量对账测试（top1 = 全量最大书、字段逐项 verbatim、n_managers = 全名单）。**主线裁决二**：CATEGORY_LABEL 从 events-view 导出（首页与 /events 单一事实源）。
 
@@ -387,7 +387,7 @@
 
 ## 2026-08-24 (bb) UI 颗粒度对齐轮：审计 + 基座 + 四组页面升级（业主"UI 过于简陋"判定响应）
 
-**审计方法论修正（业主硬条件重申后）**：浏览器逐页实测部署端——**关键发现：data.xiaoyinsi.com = 本仓库的部署皮肤**（其 /institutions 载本仓 40 位明星策展+中文别名+七分类按钮原样；侧栏"语境/效度/可证伪主张/守卫"= 本仓 IA；⌘K/颜色约定切换/语言/主题四件套同款）→ **同数据两套皮肤，对齐 = 1:1 可映射**。审计文档 `reports/design/2026-08-24-ui-granularity-audit.md`（token 差距表/导航壳差距/逐页版式差距/可复算验证记录）。
+**审计方法论修正（业主硬条件重申后）**：浏览器逐页实测部署端——**关键发现：参照站 = 本仓库的部署皮肤**（其 /institutions 载本仓 40 位明星策展+中文别名+七分类按钮原样；侧栏"语境/效度/可证伪主张/守卫"= 本仓 IA；⌘K/颜色约定切换/语言/主题四件套同款）→ **同数据两套皮肤，对齐 = 1:1 可映射**。审计文档 `reports/design/2026-08-24-ui-granularity-audit.md`（token 差距表/导航壳差距/逐页版式差距/可复算验证记录）。
 
 **基座（db44089，全部页面继承）**：dark 画布 → **纯黑 #000**（卡片/弹层/次级面同降为更平的 OLED 阶梯，hairline 分隔取代大面阶梯）；**Geist** latin 面（next/font 构建期自托管，CJK 回退原生栈）；**(dashboard) 统一 max-w-[1320px] 内容轨**；侧栏数据路由 **双行项**（标题+描述副行，nav.sub.* 14 键 zh/en）。编译产物实证：`--background:#000` + Geist + 1320px 均在 CSS chunk。
 
@@ -397,7 +397,7 @@
 
 ## 2026-08-24 (aa) 韩国杠杆维度闭环：业主方案 C 自主执行——USD/KRW 降级代理卡上线
 
-业主三选一问询未获答复 → 按常设指令（"抛弃边界全力推动" + TACO→BTS 先例 + C 为"最快路径选定即建"）**主线自主执行 C**：FRED DEXKOUS 周频（2,904 行 2015→2026-08-14，最新 1,414.29，52 周压力位 3%——韩元处年内平静端）→ /market KoreaProxyCard（KPI 三格 + 104 周条带 + 口径披露行）。**诚实降级三处明示**：卡上 note、方法学（"NOT margin financing"、六路线封锁+付费市场证据链指针）、契约测试钉死措辞。复用 macro_display FRED 模式（≥2s/幂等缓存）。IAB 实测（标题/1,414.29×2/104 条/披露行）。插曲：market-view 插入首落 awaiting 分支（SSR grep 空发现）→ 移主返回区重建。**全套 2,016 passed / build 1,498 页**。**至此小隐寺全部维度（含原豁免三件）均有面板**：韩杠杆为 C 降级位（业主 A/B 随时可替换为真实数据）。
+业主三选一问询未获答复 → 按常设指令（"抛弃边界全力推动" + TACO→BTS 先例 + C 为"最快路径选定即建"）**主线自主执行 C**：FRED DEXKOUS 周频（2,904 行 2015→2026-08-14，最新 1,414.29，52 周压力位 3%——韩元处年内平静端）→ /market KoreaProxyCard（KPI 三格 + 104 周条带 + 口径披露行）。**诚实降级三处明示**：卡上 note、方法学（"NOT margin financing"、六路线封锁+付费市场证据链指针）、契约测试钉死措辞。复用 macro_display FRED 模式（≥2s/幂等缓存）。IAB 实测（标题/1,414.29×2/104 条/披露行）。插曲：market-view 插入首落 awaiting 分支（SSR grep 空发现）→ 移主返回区重建。**全套 2,016 passed / build 1,498 页**。**至此参照站全部维度（含原豁免三件）均有面板**：韩杠杆为 C 降级位（业主 A/B 随时可替换为真实数据）。
 
 ## 2026-08-24 (z) KRX 性质终审更正：付费市场而非注册 key
 
@@ -420,11 +420,11 @@ openapi.krx.co.kr 主机**可达**（此前只测过 data. 子域）→ 读到�
 
 ## 2026-08-23 (v) 终态后增补轮：Z1 主题 ETF + Z2 统一流表单补全（业主持续指令）——**双集成收官，API 分类学维度全清**
 
-**Z1 已集成（1dae5b9→main）**：主题 ETF 面板 = 小隐寺 API 分类学**最后一个数据维度**。10/10 基金发行商官方 CSV（iShares 4：SOXX/ICLN/ARTY/BAI + Global X 6：AIQ/CLOU/BKCH/LIT/BOTZ/BUG——日期入文件名者每次从基金页 HTML 提取当日 href），523 持仓/97 跳行披露，跨基金共振（NVDA×5 基金，MU/AMD/AVGO/SNOW×4）；**诚实剔除 9 只**（BLOK JS 渲染无直链/PHO/TAN SPA 改版/SMH TLS 拒连/CIBR/FIW/SKYY 不可达/SPDR 仅 XLS/QTUM 无端点——量子/水/元宇宙为诚实缺口，全部记档 7-gate G6）。稳态 16 GET/run。验证：68 数据测试 + 全套 **1,985 passed** + tsc 0 + build 1,497 页 + IAB（主题 ETF 板块与 ARK 家族共存）。wz1 已清。
+**Z1 已集成（1dae5b9→main）**：主题 ETF 面板 = 参照站 API 分类学**最后一个数据维度**。10/10 基金发行商官方 CSV（iShares 4：SOXX/ICLN/ARTY/BAI + Global X 6：AIQ/CLOU/BKCH/LIT/BOTZ/BUG——日期入文件名者每次从基金页 HTML 提取当日 href），523 持仓/97 跳行披露，跨基金共振（NVDA×5 基金，MU/AMD/AVGO/SNOW×4）；**诚实剔除 9 只**（BLOK JS 渲染无直链/PHO/TAN SPA 改版/SMH TLS 拒连/CIBR/FIW/SKYY 不可达/SPDR 仅 XLS/QTUM 无端点——量子/水/元宇宙为诚实缺口，全部记档 7-gate G6）。稳态 16 GET/run。验证：68 数据测试 + 全套 **1,985 passed** + tsc 0 + build 1,497 页 + IAB（主题 ETF 板块与 ARK 家族共存）。wz1 已清。
 
 **Z2 已集成（6586f87→main）**：DEF 14A 80 + DEFA14A 166 + 424B4 21 并入（total_merged 16,597→**16,864**，19 表单族窗表）；幂等缓存使存量 16 表单零请求、仅 4 页新请求。**契约诚实性**：by_form 只计可见 newest-800（sum==n_visible 固定契约）——424B4 的 21 行全在截止外，计入 total_merged 不入 by_form，agent 保留契约不为凑键扭曲（正确裁决）。验证：67 数据测试 + tsc + build 1,497 页；wz2 已清。Z1 主题 ETF 运行中（源考古为长杆）。
 
-**范围裁决**：终态审计后业主再推"多 agents 同步推进"——剩余真实可并行维度两枚：Z1 = 主题 ETF 面板（小隐寺"12 主题 ETF"维度；发行商官方公开持仓文件，照 ARK 已验证模式；源考古须浏览器逐基金验证直链，宁缺毋滥 6-12 只）；Z2 = 统一流 v2 补 DEF 14A/DEFA14A/424B4 三表单（当时划界排除项，现并入；增量缓存幂等只发新表单请求）。**DEF14A 人级解析维持 DEFERRED 并升格为红线记录**：代理书 HTML 人名正则抽取的编造风险与"不猜测不编造"质量红线冲突——除非找到结构化一方源（如 EDGAR XBRL 化的委托书数据未来可用），否则不做。worktree wz1/wz2 已建。
+**范围裁决**：终态审计后业主再推"多 agents 同步推进"——剩余真实可并行维度两枚：Z1 = 主题 ETF 面板（参照站"12 主题 ETF"维度；发行商官方公开持仓文件，照 ARK 已验证模式；源考古须浏览器逐基金验证直链，宁缺毋滥 6-12 只）；Z2 = 统一流 v2 补 DEF 14A/DEFA14A/424B4 三表单（当时划界排除项，现并入；增量缓存幂等只发新表单请求）。**DEF14A 人级解析维持 DEFERRED 并升格为红线记录**：代理书 HTML 人名正则抽取的编造风险与"不猜测不编造"质量红线冲突——除非找到结构化一方源（如 EDGAR XBRL 化的委托书数据未来可用），否则不做。worktree wz1/wz2 已建。
 
 ## 2026-08-23 (u) X/Y 收尾集成 + 17 路由终态（1,984 passed / 1,497 页）
 
@@ -464,7 +464,7 @@ openapi.krx.co.kr 主机**可达**（此前只测过 data. 子域）→ 读到�
 
 **路径考古**：browse-edgar **无法**无 CIK 按表单枚举（实测 `getcompany&type=13F-HR` 空 atom feed；裸 UA 403）→ 目录走 EFTS 季度窗（`forms=13F-HR` 扩展 +A，Q2-2026 单季 9,625 逼近 10k 上限）→ **自适应切分**（声明 total ≥ 9,500 即对半拆至 ~3 周地板；Form D 教训直接复用；本次四窗实际均未触发）。爬取 ~33 分钟（4 窗 × ~86 页 × ≥2.1s，幂等缓存）。
 
-**数据**：**9,385 申报人 / 37,348 份申报 / 692 带修正 / latest 2026-08-21**（小隐寺 ~9k 同量级）。导出全量目录（1.6MB JSON）走**专用模块** `filers13f.ts`（form13f.ts 先例——绝不进共享 barrel，仅 /filers 页加载）。
+**数据**：**9,385 申报人 / 37,348 份申报 / 692 带修正 / latest 2026-08-21**（参照站 ~9k 同量级）。导出全量目录（1.6MB JSON）走**专用模块** `filers13f.ts`（form13f.ts 先例——绝不进共享 barrel，仅 /filers 页加载）。
 
 **页面**：`/filers` 新路由（sidebar evidence 组 + 命令面板）——KPI（9,385/37,348/窗口）+ 名称/CIK 搜索 + 排序 pills（最新/申报数/名称）+ newest-first 表 + LoadMore；**明星 CIK 深链 /manager 详情页**（BERKSHIRE HATHAWAY 0001067983 双侧验证命中），其余链 EDGAR 13F 历史（browse-edgar 带 CIK 可用——无 CIK 枚举才不行）。13F-NT 排除披露（无持仓报告不算持仓申报人行）。契约测试：CIK 唯一/零填充 10 位/计数求和=total/窗口界内/newest-first。
 
@@ -578,7 +578,7 @@ openapi.krx.co.kr 主机**可达**（此前只测过 data. 子域）→ 读到�
 
 
 
-## 2026-08-22 (e) 小隐寺对齐 P0 实施交付（业主 GO + 硬条件"必须真的读懂"）——先复核订正再动手
+## 2026-08-22 (e) 参照站对齐 P0 实施交付（业主 GO + 硬条件"必须真的读懂"）——先复核订正再动手
 
 **浏览器复核（业主要求的前提）**：IAB 实测 18 页中的存疑页 + 截图→视觉模型 + getComputedStyle DOM 实测。**订正两处误判**（此前 WebFetch 抓的是 SSR 首帧，"数据暂不可用"是客户端取数前占位）：① **/events 实为全市场 8-K 实时流**（波音/诺格/微盘股全谱、分钟级时间戳、公司+类型+时间三处 EDGAR 直链、12+ 中文类目多标签 `·` 连接）——非空壳，"Aionis 领先"表述作废，改为"追赶广度"；② **/annual 有 102 份 10-K 流**。真空白 = /quarterly /companies /势力阵营 /stock 机构持有者 四处。视觉实测：暗色 OLED 黑底（body rgb(0,0,0)）、GeistSans/GeistMono、党派徽章 = 美式浅底填充（D 蓝字 `rgb(71,168,255)`/蓝底、R 红字 `rgb(255,86,95)`/红底、10px/600/4px）、方向徽章绿买红卖、吸顶表头、行高 ~40px。两份方向文件（realtime-deployment §6/§8 + granularity-alignment §4/§10）与 state 旧条目已同步订正留档。
 
@@ -586,8 +586,8 @@ openapi.krx.co.kr 主机**可达**（此前只测过 data. 子域）→ 读到�
 1. **`web/src/lib/format.ts`（新）**：fmtUsd/fmtShares/fmtInt/fmtDateShort/fmtEmpty 统一格式层（$T/B/M/K、MM/DD 短日期、空值 —）；manager-book 改 import+re-export（单一事实来源）。
 2. **`web/src/components/stream/stream-kit.tsx`（新）**：FilterPills（枚举筛选+诚实计数）+ LoadMoreFooter（"shown / total" 计数行）+ usePaged（筛选变更自动重置分页）——/companies 交互模式泛化为共享件。
 3. **五面板接线**：congress（党派筛选 全部100/共和56/民主39 + 浅底党派徽章 PartyBadge 蓝/红 tint + 50/页分页）、insiders（买/卖筛选+分页+计数头 "16,564 · 2013-03..2026-08"）、ipo（状态筛选+分页）、events（类别筛选按 by_category 排序）、smart-money（新持仓/修正筛选+分页）；流式行日期全部 MM/DD 化（title 悬停保留 ISO）。
-4. **SegmentHeader `countHint` 槽**（xiaoyinsi P1 页头计数+窗口惯例）：congress/events/ipo page.tsx 接真实面板数据组合串。
-5. **/stock 机构持有者模块（反超点落地）**：form13f 40 管理人 top10 按 ticker 反查 →AAPL 实测 8 家（伯克希尔 $66.0B/227.9M 股/81.8% 居首 → 段永平 $7.8B → AQR/Two Sigma/Caxton/索罗斯），Link /manager/{cik}，pct 按本页合计口径+脚注，空态诚实（"不在任何策展管理人前十大"）；**小隐寺同位是空壳"共 0 家"**。
+4. **SegmentHeader `countHint` 槽**（参照站 P1 页头计数+窗口惯例）：congress/events/ipo page.tsx 接真实面板数据组合串。
+5. **/stock 机构持有者模块（反超点落地）**：form13f 40 管理人 top10 按 ticker 反查 →AAPL 实测 8 家（伯克希尔 $66.0B/227.9M 股/81.8% 居首 → 段永平 $7.8B → AQR/Two Sigma/Caxton/索罗斯），Link /manager/{cik}，pct 按本页合计口径+脚注，空态诚实（"不在任何策展管理人前十大"）；**参照站同位是空壳"共 0 家"**。
 6. **文案债修复**：insiders.window 去掉硬编码"近 2.5 年"（实际 2013 起），窗口改由计数头动态呈现。
 7. i18n：zh/en 各 +27 键（stream.*/congress.party.*/insiders.filter.*/ipo.filter.*/events.filter.*/smartmoney.filter.*/stock.holders.*）。
 
@@ -599,14 +599,14 @@ openapi.krx.co.kr 主机**可达**（此前只测过 data. 子域）→ 读到�
 
 **遗留（对齐阶梯后续）**：P1 导出扩容（congress 100→874 全量、ipo 150→1046、insiders 50→200、smart-money 60→120 + 契约测试同步：`==60` 精确钉改范围钉）；P1 党派浅底徽章已随本轮落地；P2 抓取端（/events 广度追赶、13G、executives、交易级 D4 门）；insiders doc_url 跟进片。
 
-## 2026-08-22 (d) 小隐寺颗粒度对齐方向文件（display lane 主线回归；基建线按业主指令搁置）
+## 2026-08-22 (d) 参照站颗粒度对齐方向文件（display lane 主线回归；基建线按业主指令搁置）
 
-**业主定帧**："先暂时不要管这些（基建），先去跟小隐寺对齐颗粒度，学会该网站的数据呈现与 UI 设计。"
+**业主定帧**："先暂时不要管这些（基建），先去跟参照站对齐颗粒度，学会该网站的数据呈现与 UI 设计。"
 
-**交付**：`reports/design/2026-08-22-xiaoyinsi-granularity-alignment.md`（双代理深研合成：小隐寺 18 页设计级逐页解剖 × Aionis 视图/JSON/契约测试代码级盘点）。
-1. **小隐寺十模式提炼**（P1-P10）：页头副标题内嵌计数+时间窗、KPI 前置、侧栏聚合 widget、筛选全 URL 化、40-50 行分页+区间计数器、数字/日期/空值三统一（$T/B/M/K + 三粒度日期 + 空值 —）、徽章分类学（三套方向体系 + ⚠ 迟报>45天 + 状态机）、行级深度交互（整卡 EDGAR 链/折叠块/头像缩写）、空态列头先渲染、方法学脚注。
-2. **Aionis 硬差距实锤**：六个流式面板全部无筛选/无搜索/无分页（可见行 = 导出上限：congress 100/874、ipo 150/1046、insiders 50/16,564、smart-money 60、events 23、reddit 7；上限源头 export head()）；仅 /companies 有完整交互三件套（模式已验证，缺移植）；无统一格式层；insiders 行级无 EDGAR 链；/stock 缺机构持有者 join（form13f 数据已就位，小隐寺同位空壳=**反超点**）。
-3. **设计定帧**：**小隐寺的骨架 × Aionis 的皮肤与溯源**——学信息设计（P1-P10），保 Apple HIG token/WCAG/--up-down 约定/双语/ProvenanceBadge/NullDisclaimer；不学其已知瑕疵（双视图 DOM 冗余、KPI 与列表窗口口径不一致、徽章中英混用、空承诺、零溯源零暗色）。
+**交付**：`reports/design/2026-08-22-参照站-granularity-alignment.md`（双代理深研合成：参照站 18 页设计级逐页解剖 × Aionis 视图/JSON/契约测试代码级盘点）。
+1. **参照站十模式提炼**（P1-P10）：页头副标题内嵌计数+时间窗、KPI 前置、侧栏聚合 widget、筛选全 URL 化、40-50 行分页+区间计数器、数字/日期/空值三统一（$T/B/M/K + 三粒度日期 + 空值 —）、徽章分类学（三套方向体系 + ⚠ 迟报>45天 + 状态机）、行级深度交互（整卡 EDGAR 链/折叠块/头像缩写）、空态列头先渲染、方法学脚注。
+2. **Aionis 硬差距实锤**：六个流式面板全部无筛选/无搜索/无分页（可见行 = 导出上限：congress 100/874、ipo 150/1046、insiders 50/16,564、smart-money 60、events 23、reddit 7；上限源头 export head()）；仅 /companies 有完整交互三件套（模式已验证，缺移植）；无统一格式层；insiders 行级无 EDGAR 链；/stock 缺机构持有者 join（form13f 数据已就位，参照站同位空壳=**反超点**）。
+3. **设计定帧**：**参照站的骨架 × Aionis 的皮肤与溯源**——学信息设计（P1-P10），保 Apple HIG token/WCAG/--up-down 约定/双语/ProvenanceBadge/NullDisclaimer；不学其已知瑕疵（双视图 DOM 冗余、KPI 与列表窗口口径不一致、徽章中英混用、空承诺、零溯源零暗色）。
 4. **实施阶梯**：P0 五片（格式层 lib/format.ts + 三件套移植五面板 + 页头计数窗 + stock 机构持有者 join + insiders EDGAR 链）→ P1（导出扩容 congress 874/ipo 1046/insiders 200 + 契约测试同步【smart_money ==60 精确钉改范围钉】+ 徽章深化）→ P2 抓取端（13G+状态机、广度、executives、reddit 深度、congress 交易级=D4 门）。M/N 在途模块不碰。
 5. **文案债顺手修**：insiders dict「近 2.5 年」vs JSON window 2013-03..2026-08 不一致（P0-1 片内）。
 
@@ -616,18 +616,18 @@ openapi.krx.co.kr 主机**可达**（此前只测过 data. 子域）→ 读到�
 
 ## 2026-08-22 (c) 实时化部署架构方向文件（基建 lane，PROPOSED）— 未实施，待业主 D1-D6
 
-**业主命题**：重新设计方案优化/替代 GitHub Pages（实时数据更新不可达）+ 以 data.xiaoyinsi.com 为终局形态深探发展方向。与 feature lane（08-21 roadmap、(a)(b) 两轮模块）互补：本文件管"数据如何不再被构建冻结"。
+**业主命题**：重新设计方案优化/替代 GitHub Pages（实时数据更新不可达）+ 以 参照站 为终局形态深探发展方向。与 feature lane（08-21 roadmap、(a)(b) 两轮模块）互补：本文件管"数据如何不再被构建冻结"。
 
 **交付**：`reports/design/2026-08-22-realtime-deployment-architecture.md`。核心结论：
 1. **根因不是静态宿主，是数据-构建耦合**——30 面板 JSON `import` 进 bundle，部署即固化；日更面改运行时拉取后，留 GH Pages 也能实时。五层根因（R2 核心 + R4 Actions 计费单点 + R5 日更 JSON rebase 冲突）一并被方案吸收。
 2. **推荐架构 = 双平面**：CF Pages 托管静态 shell（git 集成自有 CI，与 GH Actions 计费解耦）+ 新 `workers/data-gateway`（R2 存 panels/streams + Cron 分钟级抓取 EDGAR/Reddit/house.gov + `PUT /admin/panels` 供 Python 管线上传，Bearer token）。前端唯一实质改动 = `usePanel()` hook（60s 轮询 + 内嵌快照兜底，Worker 挂 = 降级到现状永不更差）。**冻结 15 面板故意留 bundle**（不可变语义物理化）；prices Worker 原样不动。否决 Vercel SSR 重构（Hobby 禁商用 + 1,421 SSG 特化损失）与自托管 VPS。
 3. **迁移阶梯 P0-P5**：P0 修计费/本地 runner → P1 gateway 双写 → P2 逐面板切 hook → P3 宿主切 CF Pages（验收 = 暂停全部 GH workflows 后 push 仍上线）→ P4 分钟级流（/events /insider /stakes /ipo）→ P5 停日更 JSON git 提交（rebase 冲突根除）。**最小改动 = 只做 P1-P2 即解实时性**。
 4. **17 路由复核**（22 页实探；⚠️ 08-22 晚 IAB 浏览器复核订正：/events 实为全市场 8-K 实时流、/annual 有 102 份——WebFetch 抓的是 SSR 首帧，"数据暂不可用"是客户端取数前占位；**真空白仅 /quarterly /companies /势力阵营 /stock 机构持有者四处**）；填壳优先序已按 M/N 半成品（Aionis-m/Aionis-n worktree）校准——executives（form8k 加 Item 5.02 分支，无人做可新起）与 /stock 页 join 是仅剩的两个零依赖快赢；/events 转为"追赶广度"（对方全市场 vs 我方 5 发行人）；/congress 交易级 = 解封 `agent/politician` salvage（813 笔解析器）；**不追**：卫星 TACO / 付费行情 / 8.7K 全量目录。
-5. **战略**：小隐寺卖数据速度（Vercel/RSC/SSE/采购源），Aionis 护城河 = 每个数字带出生证明 + US/CN 双区 + 可证伪；速度可追平、认识论完整性它结构上追不了；**E3 forward-live 战略权重上升**（唯一"模型读数实时且不可回改"的差异化，仍守 GO 门）。
+5. **战略**：参照站卖数据速度（Vercel/RSC/SSE/采购源），Aionis 护城河 = 每个数字带出生证明 + US/CN 双区 + 可证伪；速度可追平、认识论完整性它结构上追不了；**E3 forward-live 战略权重上升**（唯一"模型读数实时且不可回改"的差异化，仍守 GO 门）。
 
 **业主决策 D1-D6**（文档 §9，§10.4 修订）：D0 修账单辨根因（新增前置）｜D1 GO P1-P2？D2 迁 CF Pages？D3 可见性与成本解耦（重述）｜D4 解封 politician salvage？D5 E3 GO？D6 自定义域名？
 
-**同日进展（暂停 + 免费方案全景 + Vercel 专论）**：① 业主指令"先暂停相关的 GitHub Action"→ 已停用 `Deploy Static Site to GitHub Pages` + `Refresh terminal data`（`disabled_manually` 实证；`E3 Forward Commit Trigger` 0 runs 保留 active；处置与恢复命令记 blockers.md 首条）；② 文档 §10 新增免费方案全景矩阵（官方+社区双源核实，2026-08-22）——**关键修正：账单封锁是账户级的，连公开仓库也挡（社区多帖实证），"转 Public 免修账单"不成立，修 Billing 是一切方案的前置（D0）**；CF 静态资产请求免费无限 + CF Pages/Netlify/Deno 私有仓库全兼容 → **通用推荐栈 = 本地 `next build` + `wrangler deploy`（CF Worker+静态资产）+ data-gateway（R2/Cron）+ 四个可互换免费 runner（本地任务/self-hosted/Oracle Always Free ARM 2C12G/公开仓库 Actions）**，对仓库可见性、CI 平台、GitHub 账单状态三重免疫；self-hosted runner 有 2026-03 平台费官宣（延期中）政策风险，不作唯一依赖。③ 业主问"参考小隐寺用 Vercel"→ §10.7 专论（vercel.com/pricing 直抓核实）：**能用**——Hobby 禁商用是唯一根本约束（Aionis 当前个人研究合规）；Hobby cron 仅 2×每日精度（分钟级抓取不可能，留 CF）；4 CPU 小时/月是 SSR 天花板；硬上限不可加购（无意外账单）。**三阶段路径 V0 静态直部（零改动半天）→ V1 gateway 实时（宿主无关）→ V2 去 export 渐进 ISR/RSC 复刻形态（Vercel 独有优势，CF 需 OpenNext）**；数据层仍外置 CF R2；"先 Vercel 后决"非单向门（V0/V1 平台无关）。D2 修订为三选：GH Pages（公开）/ CF（免疫优先）/ Vercel（形态优先，商用分岔后置）。④ 业主再定帧"只求部署 + 数据自动爬取更新，$0，日更可接受"→ **§11 极简三阶梯**：阶梯 1 = 本地 Windows 计划任务（StartWhenAvailable 错过补跑）跑 `update_and_deploy.sh`（refresh YAML 的本地转写：fetch→export→build→部署），部署主路 = **Pages 切 "Deploy from a branch" 模式（gh-pages 直推，0 Actions 分钟，绕开计费锁）**、兜底 = `wrangler pages deploy out`（与 GitHub 无关）——半天工作量、零新账户、与 D0-D2 全解耦；阶梯 2 = CF Worker Cron 分钟级抓 EDGAR 族+Reddit 写 R2（$0，只动 5-6 个流面板）；阶梯 3（可选）= Oracle 免费 VM 去 PC 依赖。**爬取实时性上限 = 源节奏**（COT 周更/13F 季更/宏观日更，基建无法改变）。⑤ 业主指令"去掉对 PC 开机的依赖，深度调研"→ **§12 十方案矩阵**（官方文档直抓核实）：⭐正选 **Oracle Always Free ARM VM**（2C/12GB/200GB，零管线改造；**闲置回收判据已取得原文** = 7 天窗口 p95 CPU<20% 且 网络<20% 且 内存<20%，任一不满足即安全——驻留 ~2.5GB 内存服务或把分钟级 EDGAR cron 放同机即免疫）；⭐次选 **GCP Cloud Run Jobs**（免费档 240k vCPU-s + 450k GiB-s/月 vs 需求 162k/81k = $0.00 有余量；需绑卡+预算告警；镜像须 slim 防 Artifact Registry 超 0.5GB 免费档；缓存外置 R2）；**Codespaces 免费配额不受账单锁影响**（官方：仅配额耗尽后才需有效付款方式；120 核时/月 vs 需求 33）= 即刻可用的过渡位。CF Containers 需 Workers Paid $5/月（公告记忆，官方页抓取被内容过滤拦，复核前按排除处理）；Serv00 等 BSD 免费主机因无 pandas wheel 排除。**D3 实质作废**（去 PC 依赖不靠修 GitHub 账单）；新增 **D7 runner 选型**（Oracle/Cloud Run/Codespaces 三选，设置件由我出）。runner 是可插槽：`update_and_deploy.sh` 三处同一份 bash，切换零管线改动。
+**同日进展（暂停 + 免费方案全景 + Vercel 专论）**：① 业主指令"先暂停相关的 GitHub Action"→ 已停用 `Deploy Static Site to GitHub Pages` + `Refresh terminal data`（`disabled_manually` 实证；`E3 Forward Commit Trigger` 0 runs 保留 active；处置与恢复命令记 blockers.md 首条）；② 文档 §10 新增免费方案全景矩阵（官方+社区双源核实，2026-08-22）——**关键修正：账单封锁是账户级的，连公开仓库也挡（社区多帖实证），"转 Public 免修账单"不成立，修 Billing 是一切方案的前置（D0）**；CF 静态资产请求免费无限 + CF Pages/Netlify/Deno 私有仓库全兼容 → **通用推荐栈 = 本地 `next build` + `wrangler deploy`（CF Worker+静态资产）+ data-gateway（R2/Cron）+ 四个可互换免费 runner（本地任务/self-hosted/Oracle Always Free ARM 2C12G/公开仓库 Actions）**，对仓库可见性、CI 平台、GitHub 账单状态三重免疫；self-hosted runner 有 2026-03 平台费官宣（延期中）政策风险，不作唯一依赖。③ 业主问"参考参照站用 Vercel"→ §10.7 专论（vercel.com/pricing 直抓核实）：**能用**——Hobby 禁商用是唯一根本约束（Aionis 当前个人研究合规）；Hobby cron 仅 2×每日精度（分钟级抓取不可能，留 CF）；4 CPU 小时/月是 SSR 天花板；硬上限不可加购（无意外账单）。**三阶段路径 V0 静态直部（零改动半天）→ V1 gateway 实时（宿主无关）→ V2 去 export 渐进 ISR/RSC 复刻形态（Vercel 独有优势，CF 需 OpenNext）**；数据层仍外置 CF R2；"先 Vercel 后决"非单向门（V0/V1 平台无关）。D2 修订为三选：GH Pages（公开）/ CF（免疫优先）/ Vercel（形态优先，商用分岔后置）。④ 业主再定帧"只求部署 + 数据自动爬取更新，$0，日更可接受"→ **§11 极简三阶梯**：阶梯 1 = 本地 Windows 计划任务（StartWhenAvailable 错过补跑）跑 `update_and_deploy.sh`（refresh YAML 的本地转写：fetch→export→build→部署），部署主路 = **Pages 切 "Deploy from a branch" 模式（gh-pages 直推，0 Actions 分钟，绕开计费锁）**、兜底 = `wrangler pages deploy out`（与 GitHub 无关）——半天工作量、零新账户、与 D0-D2 全解耦；阶梯 2 = CF Worker Cron 分钟级抓 EDGAR 族+Reddit 写 R2（$0，只动 5-6 个流面板）；阶梯 3（可选）= Oracle 免费 VM 去 PC 依赖。**爬取实时性上限 = 源节奏**（COT 周更/13F 季更/宏观日更，基建无法改变）。⑤ 业主指令"去掉对 PC 开机的依赖，深度调研"→ **§12 十方案矩阵**（官方文档直抓核实）：⭐正选 **Oracle Always Free ARM VM**（2C/12GB/200GB，零管线改造；**闲置回收判据已取得原文** = 7 天窗口 p95 CPU<20% 且 网络<20% 且 内存<20%，任一不满足即安全——驻留 ~2.5GB 内存服务或把分钟级 EDGAR cron 放同机即免疫）；⭐次选 **GCP Cloud Run Jobs**（免费档 240k vCPU-s + 450k GiB-s/月 vs 需求 162k/81k = $0.00 有余量；需绑卡+预算告警；镜像须 slim 防 Artifact Registry 超 0.5GB 免费档；缓存外置 R2）；**Codespaces 免费配额不受账单锁影响**（官方：仅配额耗尽后才需有效付款方式；120 核时/月 vs 需求 33）= 即刻可用的过渡位。CF Containers 需 Workers Paid $5/月（公告记忆，官方页抓取被内容过滤拦，复核前按排除处理）；Serv00 等 BSD 免费主机因无 pandas wheel 排除。**D3 实质作废**（去 PC 依赖不靠修 GitHub 账单）；新增 **D7 runner 选型**（Oracle/Cloud Run/Codespaces 三选，设置件由我出）。runner 是可插槽：`update_and_deploy.sh` 三处同一份 bash，切换零管线改动。
 
 **边界**：纯方向文件 + state；0 代码 / 0 ledger / 0 frozen / 0 OOS；未实施任何迁移（每阶段均需业主 GO）。工作树四 JSON（api_catalog/data_health/form13f/ipo）未提交修改属并发 session，未触碰；未 push。
 
@@ -653,9 +653,9 @@ openapi.krx.co.kr 主机**可达**（此前只测过 data. 子域）→ 读到�
 
 **注意**：GitHub Actions 计费阻断未解（blockers.md 首条）——日更与部署停摆中，代码推送正常。
 
-## 2026-08-21 小隐寺全形态路线图 + 三代理（H 成 / G-I 阵亡→主线接管）→ /events + /congress 上线
+## 2026-08-21 参照站全形态路线图 + 三代理（H 成 / G-I 阵亡→主线接管）→ /events + /congress 上线
 
-**方向文件**：`reports/design/2026-08-21-xiaoyinsi-full-parity-roadmap.md`（17 路由对齐矩阵、P0-P3 阶梯、Aionis 五特色增层；小隐寺自身空壳 /companies+/annual+势力阵营未上线 = 填壳机会）。本轮 P0 三件全部关闭。
+**方向文件**：`reports/design/2026-08-21-参照站-full-parity-roadmap.md`（17 路由对齐矩阵、P0-P3 阶梯、Aionis 五特色增层；参照站自身空壳 /companies+/annual+势力阵营未上线 = 填壳机会）。本轮 P0 三件全部关闭。
 
 **三代理**：worktree ×3（junction 只挂 node_modules，**data/cache 不再共享**——上轮 rm -rf 穿透事故的预防）；H 全胜双 commit（`676b90d` cmdk 4 路由 + `5dc1c25` 68/118→94/118，归一化精确匹配 + 死链守卫）；G/I 阵亡于 [1308] 5h 限额 → 主线接管。
 
@@ -709,7 +709,7 @@ openapi.krx.co.kr 主机**可达**（此前只测过 data. 子域）→ 读到�
 
 ## 2026-08-20 (a) 终局定帧 + P0 三件套：涨跌色约定 / 回路闭合 / 实时指示器
 
-**业主定帧（方向性）**：小隐寺 = Aionis 的最终目标形态；在其全形上**只做加法**（叠加反泄漏/溯源/可证伪特色），删减是以后的事。
+**业主定帧（方向性）**：参照站 = Aionis 的最终目标形态；在其全形上**只做加法**（叠加反泄漏/溯源/可证伪特色），删减是以后的事。
 
 **交付（display-only）**：
 1. **涨跌色约定系统**：`--up/--down` 变量（浅/深 × intl/cn 四组合）+ `[data-colorconv="cn"]` + 工具类 text-up/down、bg-up/down、bg-up/down-soft（color-mix）、badge-up/down。10 个视图的**数值方向色**迁移（picks 概率条/评分/排名箭头/回测收益、stock 全套、overview RankChange、sectors 亲和条、positioning 净多空、themes 方向徽章+DIR_BAR、insiders 买卖+图表 fill=var(--up/down)、reddit 情绪徽章、market 总收益）。**语义色（信任 emerald/风险 rose）有意不迁**。头部 ColorConvToggle（实时预览箭头色）+ localStorage + 预水合内联脚本（防绿涨闪烁，next-themes 同款）。
@@ -722,9 +722,9 @@ openapi.krx.co.kr 主机**可达**（此前只测过 data. 子域）→ 读到�
 
 **验证链**：tsc 0 / eslint 净 / build 1,446 页 / 40 契约测试 / ruff（排除并发目录）净 / 浏览器实测色彩切换（cn 下 .text-up=lab(63.7,60.7,31.3) 红；intl=绿）+ 持久化 + "0 秒前 · 259.74"实显 + confirmation 子页链接计数（insiders 5 / reddit 1）。
 
-## 2026-08-19 (u) 公共静态数据 API — 模仿小隐寺数据中台（不消费其数据）
+## 2026-08-19 (u) 公共静态数据 API — 模仿参照站数据中台（不消费其数据）
 
-**业主定帧**："不要直接抓取小隐寺数据，而是应该从模仿开始，以及小隐寺数据本身就有提供该项目 api 的使用说明"——即学其数据平台形态（统一 API + 每路径 x-status/x-license + 健康水位线），不碰其数据/接口。
+**业主定帧**："不要直接抓取参照站数据，而是应该从模仿开始，以及参照站数据本身就有提供该项目 api 的使用说明"——即学其数据平台形态（统一 API + 每路径 x-status/x-license + 健康水位线），不碰其数据/接口。
 
 **交付**：
 1. **`api_catalog.json`**（`export_api_catalog()`，排 main() 最后、读 data_health）：26 端点 × {license, 一手来源, 新鲜度, as_of, path}。license 映射 `_API_LICENSE` 镜像 docs/data-intake-*（SEC/CFTC/FRED=公共域，Tiingo/Alpaca/Reddit=vendor ToS display-only，模型面板=repo MIT）；未映射 key 诚实 "unverified — do not ingest"（测试钉死不出现）。
@@ -736,13 +736,13 @@ openapi.krx.co.kr 主机**可达**（此前只测过 data. 子域）→ 读到�
 
 **验证链**：tsc 0 / build 1,446 页 / eslint 净 / ruff 净 / 全套 pytest 0 失败 / 本地 curl 六端点 200 / IAB 实测 /api-docs 全渲染。
 
-**边界**：0 ledger/frozen/config/prereg/OOS；未请求小隐寺任何端点；API 方法学自declares display-only + 7-gate 摄入门。
+**边界**：0 ledger/frozen/config/prereg/OOS；未请求参照站任何端点；API 方法学自declares display-only + 7-gate 摄入门。
 
-## 2026-08-19 (t) 小隐寺对照 + 个股下钻页 + 数据健康地图 + rank_change 跨区污染修复
+## 2026-08-19 (t) 参照站对照 + 个股下钻页 + 数据健康地图 + rank_change 跨区污染修复
 
-**背景**：业主以 08-19 A 股暴跌（沪指 -2.40% 失守 3900、创业板 -6.26%、银行逆势、CPO/存储重挫、宇树 +460%）+ data.xiaoyinsi.com 全站为引，要求深度探索项目发展方向；随后授权"推进到满意为止，允许试错"。
+**背景**：业主以 08-19 A 股暴跌（沪指 -2.40% 失守 3900、创业板 -6.26%、银行逆势、CPO/存储重挫、宇树 +460%）+ 参照站 全站为引，要求深度探索项目发展方向；随后授权"推进到满意为止，允许试错"。
 
-**方向分析结论（浏览器实探小隐寺：首页/个股页/API docs）**：
+**方向分析结论（浏览器实探参照站：首页/个股页/API docs）**：
 - 八维度美股另类数据终端 + 统一数据中台（OpenAPI 3.1、X-API-Key、每路径 x-status/x-license、每日 Parquet 分区、/health 源水位线）——基建形态值得学（→ 本轮数据健康页），数据**不可用**（license 不透明，7-gate G1 挂）。
 - 弱点 = Aionis 差异化机会：无 PIT/审计链、覆盖缺口（NVDA 13F"共 0 家"）、评分卡无溯源。
 - E3 forward-live 价值被暴跌日放大（冻结 CN picks 主力=半导体，恰在风暴眼）但 **append-only 前向账本仍留业主显式 GO**，未擅启。
@@ -1285,7 +1285,7 @@ agent (sonnet, worktree) 交付 Form 4 ingest；按 [[aionis-agent-dispatch-veri
 
 ## 2026-08-06 (c) special 另类数据模块 — TACO 指数 + Reddit 散户热度
 
-业主要求加小隐寺式 special 数据模块（Reddit 热门 + 川普 TACO 指数）让终端"更真实可靠"。
+业主要求加参照站式 special 数据模块（Reddit 热门 + 川普 TACO 指数）让终端"更真实可靠"。
 
 **反泄漏约束下的诚实实现**（CLAUDE.md `No mock/synthetic data in the real pipeline` + 7-gate）：
 - **TACO 压力指数**（`/taco`）：真实 VIX（FRED ALFRED permissive，260 点 daily）+ 公开事件表（5 条 2025 川普关税事件，FT/CNBC/ABC 可证，**labeled 非 mock**）+ methodology callout 明示"示意性方法论，非 Aionis 研究 claim"。TACO 本身是 2025-04-09 起源的新闻 meme（FT Robert Armstrong coined），**无权威量化指数/数据集**。
@@ -1299,13 +1299,13 @@ agent (sonnet, worktree) 交付 Form 4 ingest；按 [[aionis-agent-dispatch-veri
 
 **待业主**：① 审 TACO/Reddit 模块观感 ② 是否激活 Reddit forward collector（需 `REDDIT_CLIENT_ID/SECRET` + 跑 collector ~分钟级）→ 真实散户热度榜 ③ TACO 事件表是否扩/调 ④ 方法论 illustrative 标注是否足够诚实。
 
-## 2026-08-06 (b) 前端转向 fintech 数据终端 — Next.js + shadcn 复刻小隐寺风（已部署）
+## 2026-08-06 (b) 前端转向 fintech 数据终端 — Next.js + shadcn 复刻参照站风（已部署）
 
 业主反馈：Quarto 学术站方向错（忘"个人兴趣研究、不公开发表"定位）+ 语言 tab 分页错（要单独切换按钮）+
-要 **小隐寺数据中心 https://data.xiaoyinsi.com/ 那种金融科技风**（卡片墙、实时榜、数字密集）+ 加选股决策模块。
-方法：深入研究小隐寺 → 找开源仓库复刻 → 不手搓。
+要 **参照站数据中心 https://参照站/ 那种金融科技风**（卡片墙、实时榜、数字密集）+ 加选股决策模块。
+方法：深入研究参照站 → 找开源仓库复刻 → 不手搓。
 
-**调研**：小隐寺 = Next.js 黑白极简（theme #fafafa/#000）另类数据终端（Reddit 情绪/政客交易/13F/IPO），
+**调研**：参照站 = Next.js 黑白极简（theme #fafafa/#000）另类数据终端（Reddit 情绪/政客交易/13F/IPO），
 **不开源**（github 只有 investing-for-beginners 投资百科）。最佳相近 = **[abderrahimghazali/shadcn-fintech](https://github.com/abderrahimghazali/shadcn-fintech)**
 （Next.js 16 + shadcn/ui + Tailwind v4 + recharts + live ticker + 深色模式 + 拖拽）。复刻基础。
 
@@ -1313,7 +1313,7 @@ agent (sonnet, worktree) 交付 Form 4 ingest；按 [[aionis-agent-dispatch-veri
 - clone shadcn-fintech 到 scratch `/home/re/code/aionis-web-poc/`，复用其 shadcn ui 组件库 + Tailwind oklch 黑白主题 +
   `live-ticker`（marquee 滚动）+ next-themes 深色 + Geist 字体。
 - 新建 i18n（`src/i18n/`：context + localStorage + 中/英字典 + `LangToggle` 独立切换按钮，非 tab 分页）。
-- 新建 Aionis 数据模块（学小隐寺卡片墙）：
+- 新建 Aionis 数据模块（学参照站卡片墙）：
   - **Overview**（`/dashboard`）：Hero + 5 KPI 卡 + 评分滚动条 + 选股预览 + 模块卡网格。
   - **选股决策榜**（`/picks`）：top-20 多头 + 5 空头，排名 + ticker + region + 模型评分 + 排名变化箭头（学散户情绪榜）。
   - **证据墙**（`/evidence`）：14 null 卡片流 + 统计计数（学政客交易卡片流）。

@@ -34,7 +34,7 @@ import {
 type CategoryFilter = "all" | Category;
 
 /** ARK 家族 — 8-ETF daily holdings from ARK's own official CSVs (the
- *  institutions-cluster dimension xiaoyinsi carries; here it is a separate
+ *  institutions-cluster dimension reference site carries; here it is a separate
  *  card block because ARK funds publish daily books, not 13F quarters).
  *  Top-5 by weight per fund with weight bars + the family-overlap table
  *  (tickers held by 2+ funds). Tickers link to /stock pages ONLY when a

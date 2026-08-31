@@ -102,10 +102,12 @@ def test_knowledge_shelf_curated_research_sources() -> None:
 def test_knowledge_shelf_no_third_party_content_or_blocked_hosts() -> None:
     """Anti-appropriation guard: the panel is a catalog, not a copy.
 
-    The shelf is the xiaoyinsi 'bookshelf' equivalent done without content
+    The shelf is the reference 'bookshelf' equivalent done without content
     theft: own MIT docs are cataloged (teaser only), third parties are
     link-outs only, and the blocked host must never appear anywhere in the
-    payload (no requests to it, no references to it).
+    payload (no requests to it, no references to it). The literal below is
+    the guard target itself — it names the blocked host so its absence is
+    testable.
     """
     raw = (DATA / "knowledge_shelf.json").read_text(encoding="utf-8")
     assert "xiaoyinsi" not in raw.lower(), "blocked host must not appear in the panel"

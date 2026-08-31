@@ -13,7 +13,7 @@ import { STOCK_PAGE_TICKERS } from "@/components/institutions/manager-book";
 
 /** Reddit 热议榜 — ApeWisdom's own trending-stocks board (first-party
  *  fields, verbatim). Independent of OUR Atom collector panel below: this
- *  is the xiaoyinsi-/reddit alignment cut (their board's disclosed source),
+ *  is the reference-/reddit alignment cut (their board's disclosed source),
  *  a TODAY snapshot with honest pagination disclosure (the free API served
  *  page 1 only of a declared 3 pages on 2026-08-23). Tickers link to
  *  /stock pages only where a static page exists. */

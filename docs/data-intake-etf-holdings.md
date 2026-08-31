@@ -3,7 +3,7 @@
 > **状态**：**v0.1 · 2026-08-23** · exploratory-only display module。
 > **范围**：10 只主题 ETF 的发行商官方日度持仓文件（iShares/BlackRock + Global X/Mirae Asset）通过 7 门强制清单；所有第三方数据集进 Aionis 前 **必须** 全部过关。
 > **引用**：主 rubric 见 `docs/data-intake-rubric.md`；同构先例 = ARK 官方 CSV 面板（`src/aionis/ingest/ark_holdings.py`，`docs/` 内 methodology 披露）。
-> **铁律 #0**：全程未请求 data.xiaoyinsi.com 或任何竞品站；数据一律发行商官网公开文件。
+> **铁律 #0**：全程未请求 参照站 或任何竞品站；数据一律发行商官网公开文件。
 
 ---
 

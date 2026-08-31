@@ -129,7 +129,7 @@
 | **universe + 价格 + 基本面** | Phase B 冻结产物前向延伸 | constituents-on(t) PIT（无 forward-fill）；价格 Tiingo/Alpaca | [`ingest/universe.py`](../src/aionis/ingest/universe.py) + `fundamentals.py` |
 
 - **不用的源（诚实排除）**：**news / live-cache / social 历史** = rubric-fail（G2 非 PIT / G3 回改 / G6 selection），
-  见 [[aionis-xiaoyinsi-data-source]]、[`data-intake-rubric.md`](data-intake-rubric.md) 接入决策表。
+  见 [[aionis-reference-data-source]]、[`data-intake-rubric.md`](data-intake-rubric.md) 接入决策表。
 - **reddit_sentiment 的角色**：[`reddit_sentiment.py`](../src/aionis/ingest/reddit_sentiment.py) 的前向采集纪律
   （snapshot-on-arrival、UTC `snapshot_ts`、sha256 不可变 raw、append-only parquet、ledger `forward_only:true`）是
   **E3 的数据纪律范本**；但 retail-attention 是 G6 selection-biased → `mode: exploratory`，**可前向并行采集**，

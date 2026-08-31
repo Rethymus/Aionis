@@ -6,10 +6,10 @@
 > 派发：2026-08-23 主线（业主指令"多 agents 同步推进"）。基于 main f759c3f+。
 
 ## 铁律 #0（业主明令）
-**绝不请求/爬取 data.xiaoyinsi.com 或任何竞品站**。数据一律一手公共源（SEC EDGAR）。
+**绝不请求/爬取 参照站 或任何竞品站**。数据一律一手公共源（SEC EDGAR）。
 
 ## 背景
-/events 页已有"全市场申报流"（`filing_stream.json`，2026-08-23 上线）= **六面板派生合并**（800/2,259/11 表单）——覆盖受源面板可见上限约束，且缺 10-K/10-Q 等表单。v2 = **直查 EFTS 多表单族**，覆盖小隐寺统一流的全家桶：8-K / 10-K / 10-Q / S-1 族 / 4 / D / SC 13D / SC 13G。
+/events 页已有"全市场申报流"（`filing_stream.json`，2026-08-23 上线）= **六面板派生合并**（800/2,259/11 表单）——覆盖受源面板可见上限约束，且缺 10-K/10-Q 等表单。v2 = **直查 EFTS 多表单族**，覆盖参照站统一流的全家桶：8-K / 10-K / 10-Q / S-1 族 / 4 / D / SC 13D / SC 13G。
 
 ## 任务
 1. **ingest**：`src/aionis/ingest/filing_stream.py` —— 对每个 root form 逐一 EFTS 表单级查询（**一次一个 form 参数，绝不逗号列表**——efts 对 root+amendment 列表解析有 bug，见 stakes_13d_efts 已验证教训）。窗口 trailing ~14 天（RECENT 流）。表单族与预期体量（14 天窗）：

@@ -37,7 +37,7 @@ type TxParty = "all" | "R" | "D" | "unknown";
 type TxDirecton = "all" | "buy" | "sell_partial" | "sell_full";
 type TxLate = "all" | "late";
 
-/** Party chip, xiaoyinsi-alignment style: US-convention tinted fill (blue for
+/** Party chip, reference-alignment style: US-convention tinted fill (blue for
  *  D, red for R — identity colors, not semantic colors, so the project's
  *  emerald/rose/amber semantics stay untouched). Small square-ish radius,
  *  mono, 11px — matches the measured 10px/600/4px reference. */
@@ -699,7 +699,7 @@ export function CongressView() {
           </CardContent>
         </Card>
 
-        {/* "Most active filers" sidebar (xiaoyinsi-style person list): avatar
+        {/* "Most active filers" sidebar (reference-style person list): avatar
             initials + member + district + filing count. top_members carries NO
             party field (member/office/count only) — party chips stay on the
             stream rows where the join is per-filing, never fabricated here. */}

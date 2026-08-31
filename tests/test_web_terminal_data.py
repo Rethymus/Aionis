@@ -1875,7 +1875,7 @@ def test_api_catalog_shape() -> None:
     license and primary source are non-negotiable (a missing license would
     default to 'unverified — do not ingest'), and the freshness classes must
     reconcile with the data-health map. Planned endpoints (status='planned',
-    xiaoyinsi-style honest disclosure of not-yet-built panels) are exempt from
+    reference-style honest disclosure of not-yet-built panels) are exempt from
     the freshness reconciliation — they describe NO existing health panel by
     construction — but must still carry license + source + a reserved path.
     """
@@ -2152,7 +2152,7 @@ def test_data_health_source_health_shape() -> None:
 def test_planned_disclosure_present_and_consistent() -> None:
     """Planned (not-built) panels disclosed in data_health + api_catalog alike.
 
-    Honesty pattern learned from the xiaoyinsi datahub (x-status: planned):
+    Honesty pattern learned from the reference datahub (x-status: planned):
     the panel count must never be mistaken for coverage. 13f-holdings,
     cn-industry-classification (2026-08-20) and politician-trades (2026-08-21,
     House PTR filing-stream level) ALL GRADUATED to live panels — the planned

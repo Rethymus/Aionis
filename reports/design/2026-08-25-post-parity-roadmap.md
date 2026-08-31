@@ -2,14 +2,14 @@
 
 Owner directive (2026-08-25): iterate visually until fully aligned with the
 reference terminal, adapt ALL of its content (not surface data), then deeply
-plan the project's future direction — the reference (data.xiaoyinsi.com) was
+plan the project's future direction — the reference (参照站) was
 declared the terminal form Aionis has been pursuing.
 
 ## 0. Where this round landed (Tier-7 evidence)
 
 Reference-status fact (re-verified 2026-08-25 via 1.1.1.1/DoH): **the
-reference is still gone** — `data.xiaoyinsi.com` and `app.xiaoyinsi.com` are
-NXDOMAIN (operator-deleted 2026-08-24 mid-session); root `xiaoyinsi.com`
+reference is still gone** — `参照站` and `参照站` are
+NXDOMAIN (operator-deleted 2026-08-24 mid-session); root `参照站`
 resolves but hosts no data terminal; Wayback has zero snapshots. The frozen
 reference set (`runs/ui-iter/`: 12 of their PNGs, 10 HTML pages, their
 compiled CSS) is the only legal baseline, and every one of their 19 routes

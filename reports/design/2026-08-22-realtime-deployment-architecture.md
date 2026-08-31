@@ -1,15 +1,15 @@
-# 2026-08-22 — 实时数据部署架构方案（GitHub Pages 增强/替代）+ 小隐寺终局形态战略复核
+# 2026-08-22 — 实时数据部署架构方案（GitHub Pages 增强/替代）+ 参照站终局形态战略复核
 
-> 定位：**基建 lane 方向文件**（PROPOSED，待业主 GO）。与 `2026-08-21-xiaoyinsi-full-parity-roadmap.md`
+> 定位：**基建 lane 方向文件**（PROPOSED，待业主 GO）。与 `2026-08-21-参照站-full-parity-roadmap.md`
 > （feature lane）互补：那一份管"补齐哪些页面"，这一份管"数据如何不再被构建冻结"。
-> 业主定帧（08-20）不变：小隐寺 = 最终目标形态，只增不删，Aionis 增层五特色。
+> 业主定帧（08-20）不变：参照站 = 最终目标形态，只增不删，Aionis 增层五特色。
 > 本文 0 代码改动；所有迁移步骤均为 display lane，0 ledger/frozen/config/prereg/OOS。
 
 ---
 
 ## 1. 问题定义：为什么"无法实时更新数据"
 
-全站实探小隐寺（22 个页面 + sitemap/robots，2026-08-22 抓取）与本仓现状对照后，根因可拆成
+全站实探参照站（22 个页面 + sitemap/robots，2026-08-22 抓取）与本仓现状对照后，根因可拆成
 五层，**只有第一层是 GitHub Pages 本身**：
 
 | # | 根因 | 现状证据 | 性质 |
@@ -31,7 +31,7 @@ GitHub Pages，数据新鲜度也与"重新构建"彻底解耦——浏览器每
 
 ---
 
-## 2. 小隐寺技术形态还原（实探结论，补充 08-21 roadmap）
+## 2. 参照站技术形态还原（实探结论，补充 08-21 roadmap）
 
 - **部署**：Vercel（资源 URL 带 `?dpl=` 部署 ID）；Next.js App Router + RSC（`?_rsc=` 参数）、
   `next/image` 按需优化、`next/font` 自托管、每页动态 OG 图路由、sitemap 带 hourly/daily
@@ -70,7 +70,7 @@ GitHub Pages，数据新鲜度也与"重新构建"彻底解耦——浏览器每
 
 **冻结面板继续构建期内嵌 bundle（15 个）**——不可变性物理化：冻结数字 literally 烧进工件，
 任何运行时都改不了它；**日更/节奏面板改运行时拉取（12+3 个）**——新鲜度与部署解耦。
-架构分层与数据纪律同构，这是小隐寺（全部动态、来源不透明）在结构上学不去的。
+架构分层与数据纪律同构，这是参照站（全部动态、来源不透明）在结构上学不去的。
 
 ---
 
@@ -154,7 +154,7 @@ P1-P2 交付后"数据实时"即达成（不依赖 P3）；P3 解决的是部署
 
 以 2026-08-22 实探数据更新对齐矩阵（仅列**有变化或需行动**的行；完整版见 08-21 roadmap）：
 
-| 路由 | 小隐寺现状 | Aionis 现状 | 行动（依赖本基建？） |
+| 路由 | 参照站现状 | Aionis 现状 | 行动（依赖本基建？） |
 |------|-----------|------------|---------------------|
 | /events 8-K 流 | **全市场实时流**（08-22 浏览器复核订正，原"空壳"系 SSR 首帧误判：波音/微盘股全谱、分钟级、三处 EDGAR 直链） | ✅ 23 事件/5 发行人 | P4 升分钟级流 + **扩发行人广度是主攻方向**（差距巨大，非"先发优势"） |
 | /quarterly /annual | /quarterly 真空（0 份）；**/annual 实为 102 份实时流**（08-22 订正） | 未建 | /quarterly 仍是最便宜填壳（EFTS form-level，form8k/ipo 模式已验证）；/annual 竞品已在跑 |
@@ -198,13 +198,13 @@ P1-P2 交付后"数据实时"即达成（不依赖 P3）；P3 解决的是部署
 
 ## 8. 战略层：发展方向决策（深度探索结论)
 
-1. **竞争定位一句话**：小隐寺卖"数据速度"（采购源 + SSE + 全市场广度）；Aionis 的护城河是
+1. **竞争定位一句话**：参照站卖"数据速度"（采购源 + SSE + 全市场广度）；Aionis 的护城河是
    "**每个数字带出生证明**"（PIT/冻结账本/license 标注/诚实 null + US/CN 双区域）。速度可以
    用边缘架构追平（本方案），**认识论完整性它结构上追不了**（第三方非公开源 = 无法溯源）。
 2. **它的空白就是我们的路线图**（08-22 复核修订）：真实空白 = /quarterly、/companies、
    势力阵营、/stock 机构持有者四处；Aionis 在 /companies 领先，/events 则相反（对方全市场
    实时流 vs 我方 5 发行人）——填空白、追广度，两条腿；
-3. **E3 forward-live 的战略权重上升**：小隐寺没有模型、没有可证伪主张。E3（append-only 前向
+3. **E3 forward-live 的战略权重上升**：参照站没有模型、没有可证伪主张。E3（append-only 前向
    账本）上线后，Aionis 成为唯一"模型读数可实时追踪、且不可回改"的终端——这是数据聚合类
    产品无法复制的差异化，比任何单页面 parity 都值钱。仍守业主 GO 门，不擅自启动。
 4. **仓库卫生红利**：P5 停止日更 JSON 提交后，"rebase JSON 全冲突"这一类并发事故（handoff
@@ -343,9 +343,9 @@ P1-P2 交付后"数据实时"即达成（不依赖 P3）；P3 解决的是部署
 - Oracle Always Free 减配（2026-08-18 生效）：[oracle.com/cloud/free](https://www.oracle.com/cloud/free/) ·
   [terminalbytes](https://terminalbytes.com/oracle-cloud-free-tier-changes-2026/)
 
-### 10.7 同日追加：Vercel 专论（业主问"能不能参考小隐寺用 Vercel"）
+### 10.7 同日追加：Vercel 专论（业主问"能不能参考参照站用 Vercel"）
 
-**结论：能用，且是复刻小隐寺形态最平滑的宿主路径；唯一的根本性分岔是商用意图，其余约束
+**结论：能用，且是复刻参照站形态最平滑的宿主路径；唯一的根本性分岔是商用意图，其余约束
 （cron、配额）都有免费解法。** 定位：Vercel 替换的是本方案的 **shell 宿主**（§5 P3 的
 替代选项），**数据平面（gateway + R2 + 抓取 cron）在任何宿主下都不变**——Vercel serverless
 无持久存储，其自家 Storage 产品按用量计费，所以数据层照样外置 CF R2。
@@ -359,14 +359,14 @@ P1-P2 交付后"数据实时"即达成（不依赖 P3）；P3 解决的是部署
 | Edge Requests / Function Invocations | 各 100 万/月 | 远够 |
 | **Fluid Active CPU** | **4 小时/月** | SSR/ISR 动态渲染的真实天花板（静态资产不占） |
 | ISR Reads / Writes | 100 万 / 20 万/月 | 够 |
-| Image Optimization | 5K transforms/月 | 小隐寺式 OG/裁图需节制或保持 unoptimized |
+| Image Optimization | 5K transforms/月 | 参照站式 OG/裁图需节制或保持 unoptimized |
 | 超额政策 | **硬上限，不可加购**（无意外账单，超了停服） | 与 Netlify 同款安全模型 |
 | Cron Jobs | **2 个/账户、仅每日精度**（docs 既定；可延迟 ~15min；Pro=40 个/分钟级）* | 分钟级抓取在 Vercel 免费档**不可能**——抓取留 CF |
 
 *本行来自 Vercel docs 训练知识（定价页未列）；WebSearch 当时限流未能二次 live 验证，实施前核对
 vercel.com/docs/cron-jobs/limits。
 
-**三阶段路径（V2 才是真正的"小隐寺形态"）**：
+**三阶段路径（V2 才是真正的"参照站形态"）**：
 - **V0（零改动，半天）**：静态导出产物原样上 Vercel（CLI `vercel deploy --prod` 或 git 集成，
   Hobby 支持个人私有仓库）；去 `basePath:"/Aionis"` 用根路径。立即恢复上线能力（与 GH 账单
   解耦）——效果等同 wrangler 直部 CF，两者可并行验证后择一。
@@ -376,8 +376,8 @@ vercel.com/docs/cron-jobs/limits。
   端点**触发 ISR 刷新（on-demand revalidation，函数调用量极小）。**这是 Vercel 相对 CF 的
   真优势**：CF 走 SSR 需 OpenNext 适配层，Vercel 是 Next.js 原生主场。
 
-**对 小隐寺 本身的诚实推断**：盘中实时 TACO + 7×24 SSE 新闻流 + 卫星数据管线，与 Hobby 的
-4 CPU 小时/月 + 2×每日 cron 不匹配——它几乎肯定在 Pro（$20/月）或自有后端混合。"参考小隐寺"
+**对 参照站 本身的诚实推断**：盘中实时 TACO + 7×24 SSE 新闻流 + 卫星数据管线，与 Hobby 的
+4 CPU 小时/月 + 2×每日 cron 不匹配——它几乎肯定在 Pro（$20/月）或自有后端混合。"参考参照站"
 应参考其**形态**（ISR/动态目录/OG 图），不必假设其宿主账单是 $0。
 
 **裁决（决策轴 = 商用意图，一条）**：

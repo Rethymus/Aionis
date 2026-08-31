@@ -20,7 +20,7 @@ owner 的"板块 / 整体趋势 / 跨市场传染 / 入手跑路"= TCR 的 **mes
 | **macro 市场** | 整体风险偏好/状态 | `market-driver-framework.md` §3 **5 线**：VIX-via-FRED + credit spread + term spread + DFF surprise + EPU（EPU 已 G3 标记 exploratory）。部分已落地（FRED/ALFRED），部分 gap |
 | **global 跨市场传染** | US↔CN 溢出 | **Diebold-Yilmaz spillover**：`connectedness`（PyPI，`franrolotti/connectedness`）或 `diebold-yilmaz`（PyPI，MIT）— US↔CN 收益率面板的 total/directional/net spillover。POC §2.1 已查证存在 |
 
-**PIT 铁律（防批判者 M1 regime 定义泄漏）：** 每个 regime 指标的 σ-归一化 / 分档在**每个 t 冻结的 expanding-as-of 窗**上算，**绝不追溯重算**（`market-driver-framework.md:178-181` TACO 教训：xiaoyinsi TACO 因 σ 分档在增长历史上重算 → 过去分数漂移 = G3 违反）。
+**PIT 铁律（防批判者 M1 regime 定义泄漏）：** 每个 regime 指标的 σ-归一化 / 分档在**每个 t 冻结的 expanding-as-of 窗**上算，**绝不追溯重算**（`market-driver-framework.md:178-181` TACO 教训：参照站 TACO 因 σ 分档在增长历史上重算 → 过去分数漂移 = G3 违反）。
 
 ⚠️ **命名碰撞**：`connectedness` 的 "PIT normality transform" = **概率积分变换**（copula 统计），**非** point-in-time。别误以为它解决时点泄漏——它没有。
 

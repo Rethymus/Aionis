@@ -6,7 +6,7 @@
 //   /api/v1/panels/<panel>.json   — the 27 panel payloads, verbatim
 //   /api/v1/openapi.json          — OpenAPI 3.1 document for the whole surface
 //
-// Imitation of the xiaoyinsi datahub discipline (per its /api-docs): a
+// Imitation of the 参照站 datahub discipline (per its /api-docs): a
 // documented data platform with per-path status/license metadata. Aionis's
 // twist: the license annotations ARE the 7-gate intake facts, and the API is
 // served straight from GitHub Pages (read-only, no auth, no server).

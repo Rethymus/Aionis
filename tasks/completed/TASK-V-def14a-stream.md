@@ -6,10 +6,10 @@
 > 派发：2026-08-23 主线（业主指令"多 agents 同步推进"）。基于 main f759c3f+。
 
 ## 铁律 #0（业主明令）
-**绝不请求/爬取 data.xiaoyinsi.com 或任何竞品站**。数据一律一手公共源（SEC EDGAR）。
+**绝不请求/爬取 参照站 或任何竞品站**。数据一律一手公共源（SEC EDGAR）。
 
 ## 背景
-差距地图（reports/design/2026-08-23-replication-gap-map.md）P3 最后一项：小隐寺有"高管人级档案 + 董事会分析"维度，其一手源 = DEF 14A 代理委托书（股东大会文件，含董事/高管/薪酬/持股）。Aionis 已有 /executives 页（8-K Item 5.02 流，20+ 条）。本任务给 /executives 增加 **DEF 14A 申报流**（v1 = filing-stream 级，人级解析诚实 DEFERRED）。
+差距地图（reports/design/2026-08-23-replication-gap-map.md）P3 最后一项：参照站有"高管人级档案 + 董事会分析"维度，其一手源 = DEF 14A 代理委托书（股东大会文件，含董事/高管/薪酬/持股）。Aionis 已有 /executives 页（8-K Item 5.02 流，20+ 条）。本任务给 /executives 增加 **DEF 14A 申报流**（v1 = filing-stream 级，人级解析诚实 DEFERRED）。
 
 ## 任务
 1. **ingest**：`src/aionis/ingest/form_def14a.py` —— 照 `form_d.py` 模式（EFTS 表单级查询，无 CIK）。表单 `DEF 14A`（含空格 → URL 里 `%20`，照 form_ipo 的 `root_form.replace(' ', '%20')`）。窗口 trailing ~120 天（照 ipo 固定锚 2026-04-25+，只增不减）。**体量先探测一次**：`forms=DEF%2014A` 的 count——若单窗逼近 10,000 则复用 `form13f_dir.py` 的自适应切分模式。注意 DEF 14A 有修正件 DEF 14A/A（root-form 扩展应自动覆盖，探测验证）。`_get_json`/`_cache_dir` 从 `aionis.ingest.form4_efts` 导入；`_parse_company`/`parse_ticker`/`_filing_index_url`/`_issuer_cik` 从 `aionis.ingest.form_ipo` 导入（照抄 form_d.py 的导入行）。**页间 sleep 2.1s 显式**。

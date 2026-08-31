@@ -1,9 +1,9 @@
 # TASK-P2-N — /quarterly + /annual 财务申报流双子模块（移交新 session 接手）
 
 - 编号: P2-N
-- 标题: 10-Q 与 10-K 近窗申报流两页（`/quarterly`、`/annual`），对标小隐寺同名页（其自身为空壳，本项目用真实 EDGAR 数据填上）。
+- 标题: 10-Q 与 10-K 近窗申报流两页（`/quarterly`、`/annual`），对标参照站同名页（其自身为空壳，本项目用真实 EDGAR 数据填上）。
 - 状态: **READY — 前一子代理被取消，worktree 有半成品未提交改动，待新 session 审查后续作**
-- 优先级背景: 见 `reports/design/2026-08-21-xiaoyinsi-full-parity-roadmap.md` P2 行。
+- 优先级背景: 见 `reports/design/2026-08-21-参照站-full-parity-roadmap.md` P2 行。
 - 边界: display + 数据导出 lane。**0 ledger / 0 frozen / 0 prereg / 0 OOS**。真实管线禁 mock。
 
 ## 现场状态（2026-08-22 02:45 交接）

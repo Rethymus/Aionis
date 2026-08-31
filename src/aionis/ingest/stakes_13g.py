@@ -32,7 +32,7 @@ HONEST v1 LIMITS (disclosed in the panel methodology, never papered over): the
 % ownership, share count, and the event date live INSIDE the filing documents;
 v1 does not fetch or parse them (a per-accession ``index.json`` fetch would cost
 thousands of extra requests for the window — deferred to keep the daily lane
-polite). The xiaoyinsi-style passive/active/exited state machine likewise needs
+polite). The the reference site-style passive/active/exited state machine likewise needs
 per-document parsing and is explicitly DEFERRED — each row is one immutable
 filing event (a 13G/A amendment is a new accession, never a silent overwrite).
 

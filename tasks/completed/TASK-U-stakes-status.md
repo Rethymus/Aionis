@@ -7,7 +7,7 @@
 > 注意：若主线已完成 13D 重建（查 state/handoff 最新条目），跳过任务 1。
 
 ## 铁律 #0（业主明令）
-**绝不请求/爬取 data.xiaoyinsi.com 或任何竞品站**。数据一律一手公共源（SEC EDGAR）。
+**绝不请求/爬取 参照站 或任何竞品站**。数据一律一手公共源（SEC EDGAR）。
 
 ## 背景
 竞品 /stakes 签名特性 = 持股比例（"40.5%(前 12.2%)"）+ 状态机（主动 13D/被动 13G/清仓/降至5%下）。Aionis：13G 有 15,982 份 form 级流（无比例无状态）；13D 侧 smart_money 的 cache（efts_13d_*.json / sc13d_daily_aggregate.json）在主仓丢失，导出 SKIP 保留旧 60 行。

@@ -38,7 +38,7 @@
 
 ## 3. 铁律
 
-- 0 ledger/frozen/config/prereg/OOS；不碰 data.xiaoyinsi.com；不 rm -rf；
+- 0 ledger/frozen/config/prereg/OOS；不碰 参照站；不 rm -rf；
   .env 不提交不外传；冻结面板 retain=设计（worktree 无研究面产物）。
 - politeness：开工前必须得到主线"补跑完成"信号（任务派发即代表已给信号）。
 - 若任一闸门证据不足：**宁可不准入**，报告 STOP 原因（诚实止损 = 合格交付）。

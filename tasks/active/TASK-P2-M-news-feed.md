@@ -1,9 +1,9 @@
 # TASK-P2-M — /news 新闻流模块（移交新 session 接手）
 
 - 编号: P2-M
-- 标题: 美股/市场新闻流页面（`/news` 路由），对标小隐寺 /news。
+- 标题: 美股/市场新闻流页面（`/news` 路由），对标参照站 /news。
 - 状态: **READY — 前一子代理被取消，worktree 有半成品未提交改动，待新 session 审查后续作**
-- 优先级背景: 见 `reports/design/2026-08-21-xiaoyinsi-full-parity-roadmap.md` P2 行。
+- 优先级背景: 见 `reports/design/2026-08-21-参照站-full-parity-roadmap.md` P2 行。
 - 边界: display + 数据导出 lane。**0 ledger / 0 frozen / 0 prereg / 0 OOS**。真实管线禁 mock。
 
 ## 现场状态（2026-08-22 02:45 交接）

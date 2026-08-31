@@ -2,7 +2,7 @@
 
 This is the third retail-attention series for the market-driver framework
 (``docs/market-driver-framework.md`` main lines ③/⑤): retail attention is modeled
-as mention volume + sentiment, following the xiaoyinsi-informed methodology.
+as mention volume + sentiment, following the the reference site-informed methodology.
 
 **Forward-collection only — NO historical backfill.** There is no permissively-
 licensed historical Reddit/StockTwits corpus (Pushshift died 2023; StockTwits has

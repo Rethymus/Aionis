@@ -1,7 +1,7 @@
 """ApeWisdom trending-stocks API ingest — free, no-auth JSON (display-only).
 
 ApeWisdom aggregates Reddit (r/wallstreetbets, r/stocks, …) ticker mentions;
-its public JSON API needs no key (the same source xiaoyinsi's /reddit board
+its public JSON API needs no key (the same source the reference site's /reddit board
 discloses). Verified live 2026-08-23 via browser: the domain is
 **apewisdom.io** (the .com domain does not connect — the earlier 403s), and
 only the ``filter/stocks`` view carries data — ``filter/all-posts`` and

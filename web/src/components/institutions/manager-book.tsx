@@ -64,7 +64,7 @@ export function categoryLabelKey(cat: string): DictKey {
 }
 
 // Canonical money/share formatting now lives in the shared format layer
-// (xiaoyinsi P0-1); imported for local use and re-exported so existing
+// (reference P0-1); imported for local use and re-exported so existing
 // manager-book consumers keep their imports unchanged.
 import { fmtShares, fmtUsd } from "@/lib/format";
 export { fmtShares, fmtUsd };
@@ -156,7 +156,7 @@ export function PositionsTable({ manager }: { manager: Form13fManager }) {
   );
 }
 
-/** Top-6 concentration bars over the visible book (xiaoyinsi-style widget).
+/** Top-6 concentration bars over the visible book (reference-style widget).
  *  Shares are renormalized over the page's visible positions total — the
  *  same 口径 footnote the reference site uses ("按本页前 N 大持仓市值合计")
  *  — NOT over the as-filed total, so a >50-position book stays honest. */

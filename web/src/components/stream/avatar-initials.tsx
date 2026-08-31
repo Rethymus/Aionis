@@ -1,4 +1,4 @@
-// Circular name-initials avatar (xiaoyinsi alignment P1): the reference site
+// Circular name-initials avatar (reference alignment P1): the reference site
 // leads every stream row (insider / politician / filer names) with a small
 // muted circle carrying the name's initials — a visual anchor so rows scan by
 // person, not by date. Purely decorative identity chrome: bg-muted /

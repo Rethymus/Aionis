@@ -16,7 +16,7 @@
 | **Senate eFD** `efdsearch.senate.gov` | 普通 GET 即 **Akamai `Access Denied`（403）** | **blocked**——诚实披露，不引入第三方绕过 |
 | 第三方 API（FMP/EODHD/Parse.bot/capitoltrades 等） | 提供 JSON 化政客交易 | **G1 挂**（付费/闭源 license），禁用 |
 
-**结论**：v1 = House PTR 申报流（议员/选区/**申报日**/年/PDF 原文链，来自批量 FD.xml），**不解析 PDF、不编造金额/ticker/交易日期**；迟报天数（>45 天法定线）需交易日期，不可计算，如实不展示。对照小隐寺 /congress 的交易级字段（金额区间/动作/迟报 ⚠），其数据来自"SEC 及其他第三方非公开数据库"——Aionis 以一手公共源诚实降级为申报流级，这是 license 纪律的代价，也是差异化。
+**结论**：v1 = House PTR 申报流（议员/选区/**申报日**/年/PDF 原文链，来自批量 FD.xml），**不解析 PDF、不编造金额/ticker/交易日期**；迟报天数（>45 天法定线）需交易日期，不可计算，如实不展示。对照参照站 /congress 的交易级字段（金额区间/动作/迟报 ⚠），其数据来自"SEC 及其他第三方非公开数据库"——Aionis 以一手公共源诚实降级为申报流级，这是 license 纪律的代价，也是差异化。
 
 ---
 

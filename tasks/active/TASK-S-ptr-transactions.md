@@ -12,7 +12,7 @@
 > 优先级：高（竞品王牌特性）。worktree：`F:\ZCodeData\Aionis-ws`（分支 feat/ptr-transactions）。基于 main ca3074f+。
 
 ## 铁律 #0（业主明令）
-**绝不请求/爬取 data.xiaoyinsi.com 或任何竞品站**。数据一律一手公共源（= 众议院书记官 PTR PDF，公共域）。
+**绝不请求/爬取 参照站 或任何竞品站**。数据一律一手公共源（= 众议院书记官 PTR PDF，公共域）。
 
 ## 背景
 竞品 /congress 是交易级（34,313 笔：申报人/党派/标的/方向/金额区间/披露延迟⚠/交易日）；Aionis 是申报流级（874 份 PTR）。**salvage 分支 `agent/politician`（a2f719b 尽调 + 0b7867a ingest + 70f8ad2 模块）已有 PTR PDF 交易级解析器**——曾实测 813 笔/42 议员（ticker/金额区间/方向/党派 join/迟报 26）。

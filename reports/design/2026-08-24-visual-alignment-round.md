@@ -1,6 +1,6 @@
 # Visual alignment round — pixel-quantified iteration against the deployed terminal
 
-Owner directive (2026-08-24): 用视觉能力进行一张复一张的多次迭代，直到彻底对齐小隐寺网站数据呈现与UI设计 —
+Owner directive (2026-08-24): 用视觉能力进行一张复一张的多次迭代，直到彻底对齐参照站网站数据呈现与UI设计 —
 iterate page by page with visual capability until fully aligned.
 
 ## Method (the loop)
@@ -214,7 +214,7 @@ pytest after the route addition: **2,016 passed, 9 skipped**.
 ## Tier-4 proxy verification (their origin outage)
 
 Their origin went unreachable mid-round (TLS handshake fails on both
-data.xiaoyinsi.com and xiaoyinsi.com; worked all session prior — their-side
+参照站 and 参照站.com; worked all session prior — their-side
 outage). The 7 remaining direct baselines (their annual / executives /
 manager / taco / api-docs / stakes / stars) are **pending their recovery**;
 the loop is one command per page (capture → pixcmp).
@@ -235,15 +235,15 @@ Every one of their 19 routes now has a live counterpart on our build.
 
 ## Tier-5 — reference-site DNS removal (definitive) + /taco closure
 
-**The reference is gone, not down.** During tier-4 `data.xiaoyinsi.com`
+**The reference is gone, not down.** During tier-4 `参照站`
 became unreachable; diagnosis is conclusive:
 - public DNS (1.1.1.1 + 223.5.5.5, DoH — bypassing the local fake-IP proxy
   which hijacks plaintext DNS): **Status 3 NXDOMAIN** for
-  `data.xiaoyinsi.com` and `app.xiaoyinsi.com`, while root `xiaoyinsi.com`
+  `参照站` and `app.参照站.com`, while root `参照站.com`
   resolves (216.150.16.1, Cloudflare NS `christian.ns.cloudflare.com`) —
   the data-terminal subdomain record was **deleted by its operator**
   mid-session;
-- Wayback Machine CDX (`url=data.xiaoyinsi.com*`, domain-wide): **zero
+- Wayback Machine CDX (`url=参照站*`, domain-wide): **zero
   snapshots** — no external fallback exists.
 
 The 7 remaining direct baselines (their annual / executives / manager /

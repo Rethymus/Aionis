@@ -20,7 +20,7 @@ import {
   type KnowledgeShelfDoc,
 } from "@/data/aionis";
 
-// Method shelf (xiaoyinsi "bookshelf" equivalent, no content appropriation):
+// Method shelf (reference "bookshelf" equivalent, no content appropriation):
 // layer 1 catalogs OUR OWN method docs (docs/ + decisions/, repo MIT) —
 // metadata + a safe teaser slice exported at build time, body on GitHub
 // (link-out). Layer 2 is a FIXED editorially-curated bookmark list of

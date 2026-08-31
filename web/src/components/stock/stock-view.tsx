@@ -113,7 +113,7 @@ function Stat({ label, children, hint }: { label: string; children: React.ReactN
   );
 }
 
-/** 机构持有者（策展 13F 管理人反查，xiaoyinsi /stock 同位模块——其同位页当前
+/** 机构持有者（策展 13F 管理人反查，reference /stock 同位模块——其同位页当前
  *  空壳"共 0 家"，Aionis 用一手 13F 填上）。窗口 = 各管理人最新季前十大持仓；
  *  pct 口径按本页所列持有人的市值合计（脚注披露），与其"占前十"同型。 */
 
@@ -230,7 +230,7 @@ function InstitutionalHolders({ ticker }: { ticker: string }) {
   );
 }
 
-/** 国会议员交易（STOCK Act PTR 反查，与机构持有者卡同型——小隐寺 /stock 同位
+/** 国会议员交易（STOCK Act PTR 反查，与机构持有者卡同型——参照站 /stock 同位
  *  模块的政客侧）。2026 众议院 PTR PDF 逐笔解析面板按 ticker 反查，近 8 笔 +
  *  "全部 → /congress" 出口；金额为法定披露区间（非精确值）；⚠ = 迟报超 45 天。 */
 function PoliticianTradesCard({ ticker }: { ticker: string }) {

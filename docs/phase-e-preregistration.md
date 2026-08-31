@@ -114,7 +114,7 @@
    可能仍 null——这是 null favorite 的体现，非失败，但意味着 E1 可能**不交付**你想要的宏观叙事（那是 E2）。
 2. **E2 泄漏只能缓解**：cutoff 控制不能消除 LLM 对宏观历史的参数记忆；E2 正向必须 E3 复现。**这是整个
    Phase E 的核心风险**——你的丰富叙事愿景（E2）天然带泄漏，只能以前向（E3）兜底。
-3. **宏观事件提取**：E2 需要 PIT 的事件源（政策/疫情/技术位移）——news/live-cache 非 PIT（[[aionis-xiaoyinsi-data-source]]）；
+3. **宏观事件提取**：E2 需要 PIT 的事件源（政策/疫情/技术位移）——news/live-cache 非 PIT（[[aionis-reference-data-source]]）；
    需前向采集（E3 同源）或结构化事件表（FOMC/CPI 已有；政策/疫情需建）。
 4. **因果边的真实性**：LLM 生成的因果链可能伪相关或时变（AI→电力在 23 成立、24 电力饱和后失效）；
    传播规则须时变 + 以数据修正（exploratory），但修正本身是 p-hacking 风险——由 durable-registry 守。

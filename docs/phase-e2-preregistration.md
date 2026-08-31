@@ -142,7 +142,7 @@ CausalChain := {
 - **SIC 板块归属**：EDGAR submissions 顶层 `sic`（Phase D 已用；已知局限：当前快照非逐日 vintage，
   见 phase-d §0.5——SIC 对绝大多数发行人稳定，轻度分类 lookahead，作为已知局限披露）。
 - **基本面 + 价格 + universe**：Phase B 冻结产物（config_sig `17245a75…`），原样复用。
-- **不用的数据**（诚实排除）：新闻/live-cache 非 PIT（[[aionis-xiaoyinsi-data-source]]）——**不进 E2 事件源**。
+- **不用的数据**（诚实排除）：新闻/live-cache 非 PIT（[[aionis-reference-data-source]]）——**不进 E2 事件源**。
   政策/疫情/技术位移等更丰富事件类型 = **未来扩展**（需先建 PIT-safe 结构化事件表），E2 v0.1 仅 CPI/NFP。
 
 ---
@@ -250,7 +250,7 @@ CausalChain := {
    underpowered（§7）。**这是 null-favorite 的功率层强化**，也意味着 E2 的诚实交付很可能是「干净 inconclusive
    或 null + E3 接力」，而非回测正向。
 3. **事件提取 PIT（CPI/NFP 之外）**：E2 v0.1 仅 ALFRED CPI/NFP（调度日 = PIT-safe）。用户愿景的疫情/政策/
-   技术位移事件**无 PIT-safe 结构化源**（news/live-cache 非 PIT，[[aionis-xiaoyinsi-data-source]]）→ v0.1 不含；
+   技术位移事件**无 PIT-safe 结构化源**（news/live-cache 非 PIT，[[aionis-reference-data-source]]）→ v0.1 不含；
    需前向采集（E3 同源）或建结构化事件表，留作 E2 v0.2+。
 4. **因果边的真实性/时变性**：LLM 链可能伪相关或时变（AI→电力在 23 成立、24 电力饱和后失效）；mechanism 封闭
    枚举 + LOO + 以数据修正（exploratory）护栏，但修正本身是 p-hacking 风险——由 durable-registry（§9）守。

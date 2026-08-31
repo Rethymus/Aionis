@@ -617,7 +617,7 @@ export const dict = {
     "reddit.trending.title": "Reddit 热议榜（ApeWisdom 口径）",
     "reddit.wall.title": "散户情绪热度墙",
     "reddit.wall.mentions": "提及",
-    "reddit.trending.note": "ApeWisdom 公共 API（apewisdom.io，免鉴权）聚合各 subreddit 的 ticker 提及——小隐寺 /reddit 同源。第一方字段原样呈现：排名/提及数/24h 提及变化；今日快照，无历史。",
+    "reddit.trending.note": "ApeWisdom 公共 API（apewisdom.io，免鉴权）聚合各 subreddit 的 ticker 提及。第一方字段原样呈现：排名/提及数/24h 提及变化；今日快照，无历史。",
     "reddit.trending.mentions": "提及",
     "reddit.trending.pagination_note": "覆盖披露：免费 API 声明 {declared} 只但仅服务第 1 页（{rows} 只可见，2026-08-23 实测 ?page=N 与路径 /N 均回 current_page=1）——如实呈现，不补全不猜测。",
     "reddit.snapshots": "快照数",
@@ -1187,7 +1187,7 @@ export const dict = {
     "colorconv.aria": "切换涨跌颜色约定（红涨绿跌 / 绿涨红跌）",
     "colorconv.hint": "涨跌颜色约定：默认国际惯例（绿涨红跌），可切换 A 股惯例（红涨绿跌）。本终端同时覆盖美股与 A 股，统一使用同一约定以保证混排页面的可读性。",
 
-    // Stock-score heatmap (/heatmap — squarified treemap, xiaoyinsi-style)
+    // Stock-score heatmap (/heatmap — squarified treemap, reference-style)
     "nav.heatmap": "选股热力图",
     "heatmap.role": "证据 · 全宇宙评分分布一眼可比（核心证据的鸟瞰面）",
     "heatmap.title": "选股热力图",
@@ -1951,7 +1951,7 @@ export const dict = {
     "reddit.trending.title": "Reddit trending (ApeWisdom)",
     "reddit.wall.title": "Retail sentiment wall",
     "reddit.wall.mentions": "mentions",
-    "reddit.trending.note": "ApeWisdom's public API (apewisdom.io, no auth) aggregates ticker mentions across subreddits — the same source xiaoyinsi's /reddit board discloses. First-party fields verbatim: rank / mentions / 24h mention change; a today-snapshot, no history.",
+    "reddit.trending.note": "ApeWisdom's public API (apewisdom.io, no auth) aggregates ticker mentions across subreddits. First-party fields verbatim: rank / mentions / 24h mention change; a today-snapshot, no history.",
     "reddit.trending.mentions": "mentions",
     "reddit.trending.pagination_note": "Coverage disclosure: the free API declares {declared} tickers but served page 1 only ({rows} visible; ?page=N and path /N both returned current_page=1 on 2026-08-23) — shown honestly, never padded or guessed.",
     "reddit.snapshots": "Snapshots",
@@ -2521,7 +2521,7 @@ export const dict = {
     "colorconv.aria": "Toggle the up/down color convention",
     "colorconv.hint": "Up/down color convention: international (green up, red down) by default, switchable to the A-share convention (red up, green down). The terminal covers both US and CN markets under ONE convention so mixed-region pages stay readable.",
 
-    // Stock-score heatmap (/heatmap — squarified treemap, xiaoyinsi-style)
+    // Stock-score heatmap (/heatmap — squarified treemap, reference-style)
     "nav.heatmap": "Score heatmap",
     "heatmap.role": "Evidence · the whole-universe score distribution at a glance (bird's-eye over the core evidence)",
     "heatmap.title": "Score heatmap",

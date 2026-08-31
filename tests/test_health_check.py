@@ -16,7 +16,6 @@ BLOCKED_SOURCES = [
     "Yahoo",  # blocked: IP-blocked per CLAUDE.md
     "Stooq",  # blocked: per CLAUDE.md
     "BLS",  # blocked: per CLAUDE.md
-    "xiaoyinsi",  # blocked: exploratory only, not approved
 ]
 
 # Approved sources that MUST remain

@@ -1,6 +1,6 @@
 """13F filer directory via EDGAR full-text search (efts) — display-only.
 
-The /filers directory dimension (xiaoyinsi's ~9k-institution list): every
+The /filers directory dimension (the reference site's ~9k-institution list): every
 CIK that filed a 13F-HR (or 13F-HR/A) over the trailing ~4 quarters — the
 annual filing cycle, so a filer active any time in the year appears.
 

@@ -107,7 +107,7 @@ exploratory；任一门不过 → 仅 exploratory 或 REJECT。
 | **EPU**（Economic Policy Uncertainty） | ✓ CC-BY-4.0 | ✓ 有日 timestamp | ✗ 回改历史 | **快照强制 + exploratory**（修订 = 新版本 / 新行） |
 | **Reddit / StockTwits**（历史 sentiment） | — | — | — | 无 permissive 历史源 → **仅前向采集**（PRAW + FinBERT），不接入历史 dump |
 | **VIX**（via FRED / ALFRED） | ✓ US-gov public domain | ✓ ALFRED as-of join 已在栈内 | ✓ vintage 不可回改 | **无需新接入**——`features/macro_surprise.py` 同路径已 PIT-safe |
-| **xiaoyinsi 小隐寺** | — | ✗ 非 PIT-safe | — | 见 [[aionis-xiaoyinsi-data-source]]；仅 Phase C/D exploratory、仅 SEC-immutable surfaces（Aionis 经 EDGAR 已有）→ **基本冗余** |
+| **参照站 参照站** | — | ✗ 非 PIT-safe | — | 见 [[aionis-参照站-data-source]]；仅 Phase C/D exploratory、仅 SEC-immutable surfaces（Aionis 经 EDGAR 已有）→ **基本冗余** |
 
 ---
 

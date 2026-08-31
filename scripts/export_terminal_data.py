@@ -628,7 +628,7 @@ def export_companies_dir() -> None:
 def export_freight_taco() -> None:
     """Freight TACO equivalent — BTS TSI public-domain proxy (display-only).
 
-    xiaoyinsi's TACO block cites Trucking Activity Co. SATELLITE truck-count
+    the reference site's TACO block cites Trucking Activity Co. SATELLITE truck-count
     data (commercial, no license — the revoked exemption). This panel is the
     honest degraded replacement: the BTS Freight Transportation Services
     Index (first-party data.bts.gov Socrata, public domain, monthly SA index)
@@ -3776,7 +3776,7 @@ def _dh_as_of(key: str, fname: str) -> str | None:
     return None
 
 
-# Planned-but-not-built panels (honest disclosure, mirrors the xiaoyinsi
+# Planned-but-not-built panels (honest disclosure, mirrors the reference site's
 # x-status: planned pattern): nothing is fetched, parsed or served for these
 # keys today. Shared by data_health (key + note) and api_catalog (planned
 # endpoints) from ONE definition so the two can never drift apart.
@@ -3911,7 +3911,7 @@ def export_data_health() -> None:
 
 # --- API catalog (public static data API over the committed panels) ----------
 #
-# Imitation of the xiaoyinsi datahub discipline (learned from its /api-docs):
+# Imitation of the reference datahub discipline (learned from its /api-docs):
 # every data path carries provenance metadata — for Aionis that means the
 # 7-gate intake facts (license + primary source) plus the freshness class.
 # The panels stay verbatim JSON; this catalog is the machine-readable index.
@@ -4426,7 +4426,7 @@ def export_form13f() -> None:
         prev = sub[sub["quarter"] == quarters[1]] if len(quarters) > 1 else pd.DataFrame()
         total_value = float(cur["value_usd"].sum())
         # Up to 50 positions (the whole book for most 13F filers) — the
-        # xiaoyinsi-alignment visible-book granularity; concentration math and
+        # reference-alignment visible-book granularity; concentration math and
         # the /stock holders reverse-lookup both consume the same list.
         positions = []
         for _, r in cur.nlargest(50, "value_usd").iterrows():
@@ -6501,7 +6501,7 @@ def export_ark() -> None:
     the exporter reuses that parser so cache and JSON can never disagree on
     row semantics). Top-10 per fund by weight + a family-overlap view
     (tickers held by ≥2 ARK funds — the "what does the whole family like"
-    cut xiaoyinsi's institutions cluster carries). ARK keeps no CSV history:
+    cut the reference site's institutions cluster carries). ARK keeps no CSV history:
     the dated cache snapshots ARE the time series; no prices, no returns,
     no performance claim. Display lane only.
     """
@@ -6793,7 +6793,7 @@ def export_reddit_trending() -> None:
             "API (apewisdom.io — the .com domain does not connect; verified "
             "live via browser 2026-08-23, no key, no auth). ApeWisdom "
             "aggregates ticker mentions across subreddits (wallstreetbets & "
-            "friends) and is the source xiaoyinsi's own /reddit board "
+            "friends) and is the source the reference site's own /reddit board "
             "discloses. Fields are first-party and stored verbatim: rank, "
             "ticker, name, mentions, upvotes, and the 24h-ago rank/mentions "
             "lags (null = unranked then). Only the filter/stocks endpoint "
@@ -6904,7 +6904,7 @@ def export_executives() -> None:
 
 # --- knowledge shelf (browsable library over the repo's own method docs) ------
 #
-# The xiaoyinsi "bookshelf" equivalent, done WITHOUT content appropriation:
+# The reference "bookshelf" equivalent, done WITHOUT content appropriation:
 # layer 1 is Aionis's OWN method library (docs/ + decisions/ — repo MIT, zero
 # third-party copyright surface): a catalog of metadata + a first-paragraph
 # teaser extracted at EXPORT time into the tracked JSON (the web build

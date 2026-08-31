@@ -124,7 +124,7 @@ export function ManagerView({ cik }: { cik: string }) {
             <CardTitle className="text-base">{t("institutions.book")}</CardTitle>
             <Badge variant="secondary" className="tabular-nums">{m.quarter}</Badge>
             {/* Book tabs: visible holdings vs quarter-over-quarter changes
-                (xiaoyinsi-style two-tab manager page; client state only —
+                (reference-style two-tab manager page; client state only —
                 static-export safe). */}
             <span className="ml-auto flex items-center gap-1">
               {(["holdings", "changes"] as BookTab[]).map((k) => (
@@ -164,7 +164,7 @@ export function ManagerView({ cik }: { cik: string }) {
           </>
         ) : (
           <CardContent className="space-y-3 p-4">
-            {/* Four-state KPI counts (xiaoyinsi's 调仓 header), honest zeros. */}
+            {/* Four-state KPI counts (reference site's 调仓 header), honest zeros. */}
             <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
               {(["new", "increased", "reduced", "exited"] as const).map((d) => (
                 <div key={d} className="rounded-md border p-3">

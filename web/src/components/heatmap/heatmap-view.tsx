@@ -16,7 +16,7 @@ import { stockUniverse, type StockRow } from "@/data/aionis/stock-universe";
 import { ProvenanceBadge } from "@/components/provenance-badge";
 
 // Squarified treemap (Bruls/Dik/Huizing) over the frozen OOS universe —
-// xiaoyinsi-style bird's-eye: cell AREA = |model score|, cell TINT = direction
+// reference-style bird's-eye: cell AREA = |model score|, cell TINT = direction
 // (var(--up)/var(--down) so the color-convention toggle recolors the map).
 // Hand-rolled layout (no new deps): deterministic SSR-friendly divs with
 // percentage geometry. Click-through to /stock/[ticker]; the aggregated

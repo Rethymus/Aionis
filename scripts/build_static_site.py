@@ -1,6 +1,6 @@
 """构建 Aionis 静态研究站点（Tailwind CSS · 暗色金融终端风 · 中文）→ site/index.html。
 
-设计（业主 2026-08-02 反馈：参考 data.xiaoyinsi.com 的 UI，勿手搓 CSS）：
+设计（业主 2026-08-02 反馈：参考 参照站 的 UI，勿手搓 CSS）：
 - 复用 **Tailwind CSS**（CDN，成熟框架，参考站同款）——不手写 CSS。
 - 暗色金融终端风：顶部导航 + KPI 数据卡 + 卡片网格 + 数据表 + 高密度。
 - 全中文；内容驱动（真实 Track B 差分结果 + 七主题 + 反泄漏 + 边界）。

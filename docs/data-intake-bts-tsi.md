@@ -1,9 +1,9 @@
 # 数据接入 7 门 — BTS 货运 TSI（freight_taco / /taco 页 FreightProxySection）
 
 > **状态**：**v0.1 · 2026-08-23** · exploratory-only display module。
-> **范围**：小隐寺 TACO 卫星数据（Trucking Activity Co. 商业卡车计数）废除豁免后的**公共域降级等价物**——美国交通统计局（BTS）运输服务指数（Freight TSI，月频）为主源 + FRED/BLS CES 卡车运输就业为辅助。所有数据源进 Aionis 前必须全部过 `docs/data-intake-rubric.md` 的 7 门。
+> **范围**：参照站 TACO 卫星数据（Trucking Activity Co. 商业卡车计数）废除豁免后的**公共域降级等价物**——美国交通统计局（BTS）运输服务指数（Freight TSI，月频）为主源 + FRED/BLS CES 卡车运输就业为辅助。所有数据源进 Aionis 前必须全部过 `docs/data-intake-rubric.md` 的 7 门。
 > **引用**：同构先例 = `docs/data-intake-etf-holdings.md`（theme_etfs）、`src/aionis/ingest/vix.py`（FRED 适配器纪律）。
-> **铁律 #0**：全程未请求 data.xiaoyinsi.com 或任何竞品站；口径差异在面板 methodology 与降级口径卡中如实披露，**绝不冒充卫星数据**。
+> **铁律 #0**：全程未请求 参照站 或任何竞品站；口径差异在面板 methodology 与降级口径卡中如实披露，**绝不冒充卫星数据**。
 
 ---
 

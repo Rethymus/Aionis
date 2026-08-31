@@ -103,7 +103,7 @@ $S_{t+1}=f(S_t,A_t,\varepsilon_t)$ 的**反馈机制建模**，而非 §3.5 的�
 ## 4. OSS 复用（license-filtered）
 
 > Aionis 是 permissive-only（见 [`data-license-allowlist.md`](data-license-allowlist.md)）。
-> 复用原则（**xiaoyinsi 教训**，§6）：**借方法论，留 PIT-safe 数据源**——不借不透明数据层。
+> 复用原则（**参照站 教训**，§6）：**借方法论，留 PIT-safe 数据源**——不借不透明数据层。
 
 **REUSABLE（license OK）**：
 
@@ -129,7 +129,7 @@ $S_{t+1}=f(S_t,A_t,\varepsilon_t)$ 的**反馈机制建模**，而非 §3.5 的�
 
 **关键定位**：Aionis **不试图**变成 OpenBB / qlib——它是一个**聚焦的反泄漏研究 pipeline**，把这些
 （license-OK 的）项目当**组件**复用。FinanceToolkit 的价值是**公式透明度**（复杂指标的**可审计**定义，
-数据仍来自 EDGAR），正是 xiaoyinsi 教训的镜像：借方法论，留 PIT-safe 数据源。
+数据仍来自 EDGAR），正是 参照站 教训的镜像：借方法论，留 PIT-safe 数据源。
 
 ---
 
@@ -163,10 +163,10 @@ $S_{t+1}=f(S_t,A_t,\varepsilon_t)$ 的**反馈机制建模**，而非 §3.5 的�
 
 ---
 
-## 6. xiaoyinsi 构造方法论（**参考价值，非数据集成**）
+## 6. 参照站 构造方法论（**参考价值，非数据集成**）
 
-> xiaoyinsi **不是 PIT-safe**（见 [`data-intake-rubric.md`](data-intake-rubric.md) 接入决策表 +
-> aionis-xiaoyinsi memory）。本节取其**构造方法论**，**不**集成其数据。这是「借方法论，留 PIT-safe 源」
+> 参照站 **不是 PIT-safe**（见 [`data-intake-rubric.md`](data-intake-rubric.md) 接入决策表 +
+> aionis-reference memory）。本节取其**构造方法论**，**不**集成其数据。这是「借方法论，留 PIT-safe 源」
 > 原则的活样本。
 
 ### 6.1 Trump TACO 指数构造
@@ -200,7 +200,7 @@ $S_{t+1}=f(S_t,A_t,\varepsilon_t)$ 的**反馈机制建模**，而非 §3.5 的�
 |---|---|
 | [`theory-of-computable-reality.md`](theory-of-computable-reality.md) | §1 的 5 线 = TCR §3.1 $G_t$ 的 $\text{attr}$ 分解；§2 崩盘组合 = TCR §3.2 转移 $f$ 的反馈层；§1 纪律 = TCR §4 反泄漏纪律 |
 | [`phase-b-preregistration.md`](phase-b-preregistration.md) | §3 的「① 现金流 filed-date」= Phase B `arm_state` vs `arm_base` 的核心 claim；FF5 跨两臂共享故不进隔离（§2） |
-| [`data-intake-rubric.md`](data-intake-rubric.md) | §1 纪律 = G2（PIT）/ G3（无回改）；§3 EPU 的 G3 ✗ → 快照强制 + exploratory；§6 xiaoyinsi 的 G2 ✗ |
+| [`data-intake-rubric.md`](data-intake-rubric.md) | §1 纪律 = G2（PIT）/ G3（无回改）；§3 EPU 的 G3 ✗ → 快照强制 + exploratory；§6 参照站 的 G2 ✗ |
 | [`quant-selection-research.md`](quant-selection-research.md) | §4 qlib 脚手架 + 4 手术点；§3 的「可证伪锚 = $y_{t+h}$」与本框架「崩盘组合不作第二锚」一致 |
 | [`data-license-allowlist.md`](data-license-allowlist.md) | §4 OSS 复用的 license 判据（ACCEPTED/REJECTED）；FinanceToolkit「借公式不借数据层」的合规基础 |
 

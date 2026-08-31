@@ -1,6 +1,6 @@
 """BTS Freight Transportation Services Index (TSI) — first-party ingest (display-only).
 
-TACO context: xiaoyinsi's TACO block is built on Trucking Activity Co.
+TACO context: the reference site's TACO block is built on Trucking Activity Co.
 satellite truck-count data — commercial, no license path (the original
 exemption). The owner's boundary-revocation directive (2026-08-23) re-opened
 the lane under the constraint that the replacement be a PUBLIC-DOMAIN

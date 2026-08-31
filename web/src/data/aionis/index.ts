@@ -648,7 +648,7 @@ export type DataHealth = {
     reddit: { bull_ratio_null: number; n_picks: number };
     cot: { weeks_since_latest: number };
   };
-  // Designed-but-not-built panels (xiaoyinsi x-status:planned imitation) —
+  // Designed-but-not-built panels (reference x-status:planned imitation) —
   // an honest forward direction, not a commitment.
   planned?: { key: string; note: string }[];
   methodology: string;

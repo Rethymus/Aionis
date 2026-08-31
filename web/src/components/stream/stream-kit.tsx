@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 
-// Shared stream-panel interaction kit (xiaoyinsi alignment P0-2), extracted
+// Shared stream-panel interaction kit (reference alignment P0-2), extracted
 // from the /companies precedent so every stream panel (congress / insiders /
 // ipo / events / smart-money) gets the same filter-pills + load-more +
 // "shown / total" counter pattern without re-implementing it. Client-side
@@ -65,7 +65,7 @@ export function FilterPills<K extends string>({
   );
 }
 
-/** Load-more footer with the "{shown} / {total}" counter (xiaoyinsi P5). */
+/** Load-more footer with the "{shown} / {total}" counter (reference P5). */
 export function LoadMoreFooter({
   shown,
   total,

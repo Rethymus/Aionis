@@ -31,7 +31,7 @@ import { stockUniverse, type StockRow } from "@/data/aionis/stock-universe";
 import { companiesDir } from "@/data/aionis/companies-dir";
 import { ProvenanceBadge } from "@/components/provenance-badge";
 
-// Company directory over the FROZEN universe (xiaoyinsi-style A-Z index):
+// Company directory over the FROZEN universe (reference-style A-Z index):
 // region + initial + substring search, all client-side over the same frozen
 // per-stock readouts the /stock/[ticker] pages render — zero new data paths,
 // zero network. The initial rail is honest about the data's shape instead of

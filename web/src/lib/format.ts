@@ -1,4 +1,4 @@
-// Shared display-format layer (xiaoyinsi alignment P0-1). One place for the
+// Shared display-format layer (reference alignment P0-1). One place for the
 // terminal's number/date/empty conventions so stream views stop scattering
 // toFixed/toLocaleString/ISO-passthrough:
 //   money  → US-style $T/$B/$M/$K (never 亿/万), 1-2 decimals
@@ -34,7 +34,7 @@ export function fmtInt(v: number | null | undefined): string {
   return v.toLocaleString("en-US");
 }
 
-/** Short stream-row date: ISO "2026-08-21" → "08/21" (xiaoyinsi P6). Invalid
+/** Short stream-row date: ISO "2026-08-21" → "08/21" (reference P6). Invalid
  *  or missing input renders honestly as the raw value / em-dash. */
 export function fmtDateShort(iso: string | null | undefined): string {
   if (!iso) return "—";
