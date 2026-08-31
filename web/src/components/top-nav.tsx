@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { useI18n } from "@/i18n/provider";
+import { AionisMark } from "@/components/aionis-mark";
 import { ColorConvToggle } from "@/components/colorconv-toggle";
 import { CommandPalette } from "@/components/command-palette";
 import { LangToggle } from "@/components/lang-toggle";
@@ -146,9 +147,7 @@ export function TopNav() {
     <header className="sticky top-0 z-20 border-b border-line bg-card/80 backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-[1320px] items-center gap-2 px-5 md:px-6">
         <Link href="/dashboard" className="flex flex-none items-center gap-2.5">
-          <span className="flex size-[26px] flex-none items-center justify-center rounded-md bg-brand text-[13px] font-bold text-black">
-            A
-          </span>
+          <AionisMark className="size-[26px] flex-none rounded-md" />
           <span className="text-[14px] font-semibold tracking-[-0.015em]">{t("brand.name")}</span>
         </Link>
         <span
