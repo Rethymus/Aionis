@@ -8,6 +8,27 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-31 (zz17) 轮 53：README 双语精修 + 站点三改造 + 站名清除 + P0-1 E3 影子推进（readiness 链全通、剩内在时钟门）+ 周期 2 续轮（单进程；全套绿）
+
+**本轮四件业主事项全落地**（README 精修→首页改造→Pages 更新→优先级快照），随后按计划继续推进零门项。**开场**：git 净 + pytest 基线 exit 0。**边界**：display/data-caches/docs lane；**0 ledger 写 / 0 frozen / 0 prereg / 0 OOS 计算**（E3 全程 NO-LEDGER 影子模式）；门控项如实不代行（headline GO、P1 三项）。
+
+**① README 双语精修**（commit b2b7118）：四个标杆仓 README 范式调研（qlib/ML4T/evals/mlfinlab 直抓原文）→ 单行主张 + TL;DR 结论条 + "如何读结果表"统计素养段 + 方法学谱系表（6 锚点×经典文献：López de Prado 2018/Bailey&LdP 2014/Hansen 2005/White 2000/DM 1995/Künsch 1989/HLZ 2016/J-T 2000/TOST 1987/Grinold-Kahn 2000/模型卡 2019）+ 术语表 8 条 + 参考文献 11 条 + 非主张强化节；结果表与 `runs/results/<sig>/differential.json`、`metrics.json` **逐位核对**（审计发现并修正 B 相 p 值列头精度：0.872=paired HAC 补算，账本 dm_p_mbb=0.870 同尾，脚注披露）；自绘 SVG 横幅+favicon（无网络素材）。
+
+**② 站点三改造 + Pages 双发布**（commits 2ae130f/9ba0d9a + 部署验证）：首页模块行数重平衡（数据补充自 committed 面板：新闻 5→7/政客交易 5→9/举牌 5→10/IPO 5→7/ARK 6→10/8-K 5→8/高管 5→8；明暗双主题整页截图验证四横带对齐）；英雄区搜索框改**真实内联搜索**（新增 `lib/search-index.ts` 单一来源共享给 ⌘K 面板杜绝漂移；懒加载 1,421 冻结宇宙；↑↓/Enter/Esc + IME 安全；iframe 驱动实测 "tesla"→TSLA 截图在案）；SegmentHeader 每页"语境→证据→效度→可证伪主张"面包屑退役（21 页调用点零改动，as_of 溯源/引言/计数保留；8 页构建产物 grep 证据零残留）；favicon+顶栏换 Aionis A 字砖标。Pages gh-pages 手动通道两轮发布，在墙验证：内联搜索标记命中/旧面包屑零残留/icon 新标 200/CSS 200/API 镜像零站名。
+
+**③ 第三方站名全仓清除**（commit 4130667）：约 90 处——用户可见文案改写（dict zh/en、reddit 面板 methodology 的 exporter 源头+src JSON 同步；public API 镜像系 gitignored 构建产物）、注释中性化、docs/reports/state/tasks 全覆盖；knowledge-shelf 守卫断言字面量按功能保留（其 anti-appropriation 断言目标本身）；health-check 封锁名单条目移除（宿主已死，守卫损失可忽略）；文件名含站名不改（tracked-doc 改名禁令）。**部署验证时发现**全量重导使 exporter 兜底替换句覆盖了 JSON 精改 → 修正 exporter 源头为通顺句式并重导该面板（commit e97c4ac1，Pages 同步重发布，live 命中验证）。
+
+**④ P0-1 E3 影子推进——readiness 链全部打通，剩内在时钟门（如实：本会话无法完成首次影子）**：
+- 窗口判定实测通过：2026-08-31=NYS E 月末交易日，触发器正确激发（轮 51 的 NO-OP 系周日 run_date 推断非缺陷）。
+- readiness 静态依赖逐个补齐（每步实测）：`phase_b_prices.parquet` 研究价格面板（3937×585，2011-01-01..2026-06-30，585 全缓存零网络补抓）→ `phase_d_sic_map.parquet`（585 行，全量重抓）→ `phase_d_13d_events.parquet`（2,877 行/254 发行人）→ `data/cache/volumes/` 585/585 + `spy_benchmark.parquet`（Alpaca，**修 2 真 bug**：类股符号映射 BF-B→BF.B/BRK-B→BRK.B 后 583→585 零失败；volume 列对齐 NaN 化——`compute_price_features` 严格形状契约下诚实缺失列补 NaN 而非崩；SPY 写盘 normalize 修复）→ `track_b_materialize_panel.py` EXIT 0（面板 1,190,229×30，2016-01-04..2026-08-28，565 tickers；特征覆盖率如实：beta 54.0%/turnover 56.3%/amihud 58.7%——Alpaca 量自 2018-11 起）。
+- 触发器实跑裁决（证据在 `/tmp/e3_trigger3.log` 摘录入案）：`readiness_predict_session_not_in_panel panel_max=2026-07-30 < requested=2026-08-31T16:00`，committed=False 零写入——**内在时钟门**：月末收盘（北京周二 04:00）未发生，面板不可能含未来数据。
+- **留给下一轮的 runbook（美股收盘后执行）**：① `uv run python scripts/phase_b_fetch.py`（价格补至收盘）② `uv run python scripts/track_b_fetch_volume.py`（如需）③ `uv run python scripts/track_b_materialize_panel.py` ④ `PHASE_E3_NO_LEDGER=1 uv run python scripts/e3_forward_trigger.py`。headline GO 仍为业主门（影子满 ~2 个月后裁决）。
+
+**⑤ 周期 2 续轮（协议 §3）**：②AppTest 走查 ALL CHECKS PASS 且**事件研究真数据路径首次激活**（存活 caption 断言在墙；tabwalk 断言升级为机器状态感知——旧断言钉缓存缺失态已过时；残余 DEMO 警告=uncertainty 标签同文案属其自身诚实态）；③i18n 二轮 en 811 对语法级扫描**零真缺陷**（3 误报甄别：URL 串/unauth .json 简写/列举省略号——按协议"连续零新发现→降频"记录）。**⑥ R2-full Planner 拆分前置完成**：`tasks/active/TASK-R2-full-artifact-matrix.md`（S1 manifest/S2 每相 dossier/M3 版本化/M4 CI 挂钩（受 Actions 计费门）/L5 终端矩阵页，五切片各自独立验收）。**⑦ 全仓站名清除、roadmap §5 轮 52 快照**随后续 commit 入库。
+
+**验证**：全套 pytest exit 0（两轮）+ ruff 改动文件净 + tsc 0（web 未动，本轮零产品 web 改动→Pages 无需重发布）+ AppTest ALL CHECKS PASS + 触发器/物化/fetch 退出码与日志全部在案。**未 push→已 push**（见 commit 列表）。**待业主**：美股收盘后 runbook 四步（或授权下一轮执行）；headline GO；P1 三项预注册级 GO（Track A/LLM vintage CI/R1-full）。
+
+
 ## 2026-08-30 (zz16) 轮㊿+1：计划执行轮——E3 预备收尾 + 新鲜度扫荡 + 谱系 v3 + atlas 小项 + 契约一致性报告：P2 零门项全部销项（单进程；全套绿）
 
 **编排**：按 roadmap 优先级执行零门项（P0-1 今日可做部分/P2-7/P2-8/P2-9/P2-11），门控项如实记录不假装（headline GO=业主门、P1 三项=预注册级 GO、R2-full=L 件待拆分+CI 封锁）。开场：git 同步净 + pytest 基线 exit 0。

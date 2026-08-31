@@ -93,7 +93,7 @@ Harvey-Liu-Zhu(2016 RFS,t>3.0 阈值)、Harvey haircut p 值(2017 JPM)、McLean-
 **轮 52 销项(2026-08-31)**:①README 双语精修重写(方法学谱系表 6 锚点×经典文献、术语表 8 条、参考文献 11 条、"如何读结果表"统计素养段、功效学科背景段;结果表与 differential.json/metrics.json 逐位核对,修正 B 相 p 值列头精度——DM/MBB vs paired HAC 脚注)+自绘 SVG 横幅/A 字砖标 logo 上 README;②站点品牌替换(favicon+顶栏 AionisMark)+首页 UX 三件(模块行数重平衡使四横带对齐/英雄区搜索框原地内联搜索——search-index 单一来源供 ⌘K 面板与首页共用以绝漂移/每页"语境→证据→效度→可证伪主张"面包屑退役,as_of 溯源/引言/计数保留);③第三方站名全仓清除(可见文案+注释+docs/state/tasks,约 90 处;knowledge-shelf 守卫断言字面量按功能保留);④显示 lane 全量重导(timestamp bump)+证据链按"面板→atlas→dossier→shelf"正典次序重导,字节稳定契约当场拦下顺序错误后修复——全套 pytest exit 0、tsc/eslint 0、build 1,503 页;⑤GitHub Pages 重发布(gh-pages 手动通道,本轮 HEAD 在墙验证)。
 
 ### P0 —— 业主门/时间敏感
-1. **E3 影子完整跑(下一有效窗口,时间敏感度最高)**:Phase4 价格预备已收尾(585/585 零缺失,2026-08-30 实测);运行 `PHASE_E3_NO_LEDGER=1 uv run python scripts/e3_forward_trigger.py`(单进程 ~40min);此后每月末例行。08-30/08-31 两日实测触发器均确定性 NO-OP(exit 0)——影子完整跑窗口顺延至下一交易日窗口,待业主/下一轮执行。
+1. **E3 影子完整跑(美股周一收盘后即可执行,时间敏感度最高)**:readiness 静态依赖已全部打通并实测(2026-08-31 轮 53)——研究价格面板 3937×585 重建、SIC map 585 行、13D 事件 2,877 行、volumes 585/585+SPY(修类股符号映射 BF-B→BF.B/BRK-B→BRK.B 与物化器列对齐/SPY reindex 三 bug)、物化 EXIT 0(面板 1,190,229×30,特征覆盖如实披露)。触发器在真月末交易日正确激发,fail-closed 于 `predict_session_not_in_panel`(panel_max=2026-07-30 < 08-31T16:00 收盘未发生),committed=False 零写入=内在时钟门。**runbook(收盘后按序)**:①`uv run python scripts/phase_b_fetch.py` ②`uv run python scripts/track_b_materialize_panel.py` ③`PHASE_E3_NO_LEDGER=1 uv run python scripts/e3_forward_trigger.py`(单进程 ~40min);此后每月末例行。
 2. **headline GO(唯一不可代行)**:业主对非影子首次提交点头——此门不可下放;建议影子满 2 个月(≈10 月末)后一并裁决。
 3. **GLM cutoff 厂商声明升级**:probe v1(2023-03-10)安全常驻冻结 YAML;厂商日后声明则覆盖(provenance 升级 vendor)。无业主动作亦安全。
 
