@@ -199,6 +199,10 @@ alpha-tint 暗色设计上系统性偏向明色，会制造假"暗色缺失"信�
   正典流程：`cmd /c mklink /J web\Aionis web\out`（已 gitignore）→ `cd web && python -m
   http.server <port>` → URL 带 `/Aionis/` 前缀 → **先 curl 任一 CSS chunk 必须 200** 再截图。
   明色主题经种子页跳转时，种子页重定向目标同样必须带 `/Aionis` 前缀。
+- **部署门禁：`node scripts/build-api.mjs` 必须先于 `next build`**（npx next build 不执行
+  prebuild 钩子）——漏跑则 public/api 镜像停留在旧版，gh-pages 上线后公开 API 与页面数据
+  劈叉（轮 51 实证：页面 v3/API v2，在墙验证抓到后补镜像重部署）。部署后在墙验证必须同时
+  查页面(200)与 API 面板内容标记（如 inventory version/digest），不可只查 200。
 - **截图模式按页型选择**：静态/无轮询页用 `--virtual-time-budget`（快进入场动画）；带
   实时价格轮询的页（/stock）virtual-time 永不结算会挂死 → 用 `--timeout=12000` 墙钟
   （SSG SVG 无动画安全；recharts 动画图需让动画播完，必要时 virtual-time）。recharts

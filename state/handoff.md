@@ -20,6 +20,7 @@
 - **P2-11 atlas 小项完成**：森林图数据表头 i18n（"指标/数值"zh/en 对称；行标签=schema 名保留+注释——翻译会切断 JSON 键对应损 traceability）；"重生成钩子"判定=**既有契约守卫即漂移警报**（本轮实战拦下 2 次：dossier/atlas-claim），自动重生成会掩盖漂移、按 no-silent-mutation 精神不采用。
 - **验证**：契约 14 + 链守卫 56 + inventory 13 全绿 + 全套 pytest exit 0 + tsc 0/eslint 0（改动文件）+ 修正管线视觉核验三证（model-health 谱系 ΔIC 行/atlas 森林图"指标·数值"表头/model-card 真实冻结数据 −0.0088/[−0.0336,0.0159]/#49 在墙）。
 - **边界**：display/data lane；ledger 仅纯追加重钉；0 frozen/config/prereg 改动。服务器已停、out 已删（junction 留）。**待业主**：明日 08-31 E3 影子窗口 + headline GO。
+- **补记（部署在墙验证抓到并修复）**：轮 51 首次 gh-pages 部署漏跑 `build-api.mjs` 预镜像步 → live 公开 API 停留 v2 而页面数据 v3 劈叉——在墙验证（查 API 内容标记而非只查 200）当场抓到 → 补镜像重部署（`built 5b69cac`）→ 复验 **live API = inventory v3 + #48 result_digest（ledger_row, −0.008841/p 0.483773）在墙 + dashboard 200**。教训入协议 §4 部署门禁条（build-api 先行 + API 内容标记验证）。临时仓库清、out 删。main@3b4d8b7 已推远程；本地=origin。
 
 ## 2026-08-30 (zz15) 轮㊿：远程同步 + Pages 更新 + 剩余项优先级快照（业主指令三件事）
 
