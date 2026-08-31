@@ -86,13 +86,14 @@ Harvey-Liu-Zhu(2016 RFS,t>3.0 阈值)、Harvey haircut p 值(2017 JPM)、McLean-
 
 ---
 
-## 5. 剩余未实施项优先级排列(2026-08-30 轮㊿ 后快照,前两版第 5 节作废)
+## 5. 剩余未实施项优先级排列(2026-08-31 轮 52 后快照,前两版第 5 节作废)
 
 **本轮已销项(轮㊷–㊾+㊿)**:前端真实性五修+WCAG 扫零(㊷)、v2 演示面退役+navy 描边修复+ruff 0.16(㊸)、长周期查漏补缺协议建立与四轮执行(㊺–㊾:Streamlit v1 三层运行时修复/coverage 账本接线/reddit 信封类型化/docs 六死链/RESULTS 逐位对账 ALL MATCH/视觉管线根因修正/19 页双主题全量巡检零缺陷)、GitHub Pages 再更新(㊿,gh-pages 手动通道 main@606643e 在墙验证)。
 **㊿+1 执行轮销项(2026-08-30 下午)**:P0-1 Phase4 价格预备收尾(585/585 零缺失,BBBY 退市空响应诚实;触发器当日确定性 NO-OP,影子完整跑=次日 08-31 月末窗口)、P2-7 新鲜度扫荡(快源+EDGAR 族全跑,周日源空窗如实;ledger +1 纯追加重钉 91bc7640;契约闸门拦下工件链漂移并按"面板→工件→shelf"正典次序修复,链守卫 56 测试全绿)、P2-8 prereg↔冻结契约一致性报告(reports/audits/2026-08-30-prereg-contracts-consistency.md,全值一致)、P2-9 谱系 v3(inventory v3:result_digest 双源——differential.json 优先/账本 confirmatory 行兜底 source 标注;model-health 谱系区 ΔIC 摘要在墙)、P2-11 atlas 表头 i18n(森林图"指标/数值";schema 字段名保留+注释)+重生成钩子判定=既有契约守卫即漂移警报(本轮实战拦下 2 次)。
+**轮 52 销项(2026-08-31)**:①README 双语精修重写(方法学谱系表 6 锚点×经典文献、术语表 8 条、参考文献 11 条、"如何读结果表"统计素养段、功效学科背景段;结果表与 differential.json/metrics.json 逐位核对,修正 B 相 p 值列头精度——DM/MBB vs paired HAC 脚注)+自绘 SVG 横幅/A 字砖标 logo 上 README;②站点品牌替换(favicon+顶栏 AionisMark)+首页 UX 三件(模块行数重平衡使四横带对齐/英雄区搜索框原地内联搜索——search-index 单一来源供 ⌘K 面板与首页共用以绝漂移/每页"语境→证据→效度→可证伪主张"面包屑退役,as_of 溯源/引言/计数保留);③第三方站名全仓清除(可见文案+注释+docs/state/tasks,约 90 处;knowledge-shelf 守卫断言字面量按功能保留);④显示 lane 全量重导(timestamp bump)+证据链按"面板→atlas→dossier→shelf"正典次序重导,字节稳定契约当场拦下顺序错误后修复——全套 pytest exit 0、tsc/eslint 0、build 1,503 页;⑤GitHub Pages 重发布(gh-pages 手动通道,本轮 HEAD 在墙验证)。
 
 ### P0 —— 业主门/时间敏感
-1. **E3 影子完整跑(2026-08-31 月末窗口)**:Phase4 价格预备已收尾(585/585 零缺失,2026-08-30 实测);次日月末交易日(08-31)运行 `PHASE_E3_NO_LEDGER=1 uv run python scripts/e3_forward_trigger.py`(单进程 ~40min);此后每月末例行。08-30 实测触发器当日确定性 NO-OP(exit 0)。
+1. **E3 影子完整跑(下一有效窗口,时间敏感度最高)**:Phase4 价格预备已收尾(585/585 零缺失,2026-08-30 实测);运行 `PHASE_E3_NO_LEDGER=1 uv run python scripts/e3_forward_trigger.py`(单进程 ~40min);此后每月末例行。08-30/08-31 两日实测触发器均确定性 NO-OP(exit 0)——影子完整跑窗口顺延至下一交易日窗口,待业主/下一轮执行。
 2. **headline GO(唯一不可代行)**:业主对非影子首次提交点头——此门不可下放;建议影子满 2 个月(≈10 月末)后一并裁决。
 3. **GLM cutoff 厂商声明升级**:probe v1(2023-03-10)安全常驻冻结 YAML;厂商日后声明则覆盖(provenance 升级 vendor)。无业主动作亦安全。
 
