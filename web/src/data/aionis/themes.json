@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "as_of_date": "2026-08-21",
+  "as_of_date": "2026-08-28",
   "freshness": {
     "earliest": "2026-08",
     "latest": "2026-08-28",
@@ -11,42 +11,42 @@
     {
       "key": "price",
       "status": "live",
-      "as_of": "2026-08-21",
+      "as_of": "2026-08-28",
       "headline": "21d momentum + 63d vol + 252d \u03b2 + 21d RSI(\u4e0a\u884c\u5e7f\u5ea6) + 63d timetohigh(\u8ddd\u9ad8\u70b9) (cross-sectional mean)",
       "signals": [
         {
           "name": "momentum_21d",
-          "value": 0.0543
+          "value": 0.0292
         },
         {
           "name": "volatility_63d",
-          "value": 0.0236
+          "value": 0.0233
         },
         {
           "name": "reversal_5d",
-          "value": 0.0013
+          "value": 0.0044
         },
         {
           "name": "rsi_21d",
-          "value": 0.5519
+          "value": 0.519
         },
         {
           "name": "timetohigh_63d",
-          "value": 0.3716
+          "value": 0.4014
         }
       ],
       "series": [
         {
           "month": "2025-09",
-          "value": 0.0165
+          "value": 0.0162
         },
         {
           "month": "2025-10",
-          "value": 0.006
+          "value": 0.0059
         },
         {
           "month": "2025-11",
-          "value": -0.0115
+          "value": -0.0114
         },
         {
           "month": "2025-12",
@@ -54,23 +54,23 @@
         },
         {
           "month": "2026-01",
-          "value": 0.0289
+          "value": 0.0288
         },
         {
           "month": "2026-02",
-          "value": 0.0221
+          "value": 0.0223
         },
         {
           "month": "2026-03",
-          "value": -0.0318
+          "value": -0.032
         },
         {
           "month": "2026-04",
-          "value": 0.0236
+          "value": 0.0238
         },
         {
           "month": "2026-05",
-          "value": 0.019
+          "value": 0.0188
         },
         {
           "month": "2026-06",
@@ -82,7 +82,7 @@
         },
         {
           "month": "2026-08",
-          "value": 0.0403
+          "value": 0.0392
         }
       ]
     },
@@ -343,34 +343,34 @@
     {
       "key": "fundamentals",
       "status": "live",
-      "as_of": "2026-08-21",
+      "as_of": "2026-08-28",
       "headline": "ROE / margin / revenue growth / leverage (cross-sectional mean)",
       "signals": [
         {
           "name": "roe",
-          "value": 0.164
+          "value": 0.1638
         },
         {
           "name": "profit_margin",
-          "value": 0.276
+          "value": 0.2758
         },
         {
           "name": "revenue_growth_12m",
-          "value": 0.05
+          "value": 0.019
         },
         {
           "name": "leverage",
-          "value": 0.2543
+          "value": 0.2544
         }
       ],
       "series": [
         {
           "month": "2025-09",
-          "value": 0.0618
+          "value": 0.0617
         },
         {
           "month": "2025-10",
-          "value": 0.0588
+          "value": 0.0587
         },
         {
           "month": "2025-11",
@@ -378,11 +378,11 @@
         },
         {
           "month": "2025-12",
-          "value": 0.0362
+          "value": 0.0363
         },
         {
           "month": "2026-01",
-          "value": 0.0387
+          "value": 0.0388
         },
         {
           "month": "2026-02",
@@ -390,11 +390,11 @@
         },
         {
           "month": "2026-03",
-          "value": 0.1302
+          "value": 0.13
         },
         {
           "month": "2026-04",
-          "value": 0.1264
+          "value": 0.1262
         },
         {
           "month": "2026-05",
@@ -402,15 +402,15 @@
         },
         {
           "month": "2026-06",
-          "value": 0.0322
+          "value": 0.0324
         },
         {
           "month": "2026-07",
-          "value": 0.0396
+          "value": 0.0398
         },
         {
           "month": "2026-08",
-          "value": 0.1603
+          "value": 0.161
         }
       ]
     },
@@ -543,24 +543,24 @@
     {
       "key": "risk",
       "status": "live",
-      "as_of": "2026-08-21",
+      "as_of": "2026-08-28",
       "headline": "\u4e0b\u884c\u03b2 + \u7279\u8d28\u6ce2\u52a8 + \u504f\u5ea6 + \u6700\u5927\u5355\u65e5\u56de\u64a4\uff08\u6a2a\u622a\u9762\u5747\u503c\uff09",
       "signals": [
         {
           "name": "downside_beta",
-          "value": 1.0
+          "value": 1.0034
         },
         {
           "name": "idiosyncratic_volatility",
-          "value": 0.0219
+          "value": 0.0216
         },
         {
           "name": "return_skewness",
-          "value": 0.1564
+          "value": 0.1331
         },
         {
           "name": "worst_day_drawdown",
-          "value": -0.0595
+          "value": -0.0593
         }
       ],
       "series": [
@@ -570,7 +570,7 @@
         },
         {
           "month": "2025-10",
-          "value": 1.0063
+          "value": 1.0065
         },
         {
           "month": "2025-11",
@@ -582,11 +582,11 @@
         },
         {
           "month": "2026-01",
-          "value": 1.0001
+          "value": 1.0002
         },
         {
           "month": "2026-02",
-          "value": 0.9976
+          "value": 0.9977
         },
         {
           "month": "2026-03",
@@ -598,11 +598,11 @@
         },
         {
           "month": "2026-05",
-          "value": 1.0012
+          "value": 1.0011
         },
         {
           "month": "2026-06",
-          "value": 1.0009
+          "value": 1.0008
         },
         {
           "month": "2026-07",
@@ -610,7 +610,7 @@
         },
         {
           "month": "2026-08",
-          "value": 1.0
+          "value": 1.0003
         }
       ]
     },
@@ -638,7 +638,7 @@
     {
       "key": "market_structure",
       "status": "live",
-      "as_of": "2026-08-21",
+      "as_of": "2026-08-28",
       "headline": "Amihud illiquidity + 252d \u03b2 (cross-sectional mean)",
       "signals": [
         {
@@ -649,5 +649,5 @@
       "series": []
     }
   ],
-  "snapshot_ts": "2026-08-29T09:04:19.627816+00:00"
+  "snapshot_ts": "2026-08-30T13:30:57.706571+00:00"
 }

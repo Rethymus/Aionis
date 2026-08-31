@@ -1473,6 +1473,16 @@ export type ModelInventoryChainLink = {
   amendment_excerpt: string | null;
   // The sig has a confirmatory:first row or a local frozen directory.
   resulted: boolean;
+  // Inventory v3: the frozen run's differential digest (mean_diff / ci_lo /
+  // ci_hi / dm_p_mbb / null_holds) when the frozen directory is local;
+  // honest null otherwise (never guessed).
+  result_digest: {
+    mean_diff: number | null;
+    ci_lo: number | null;
+    ci_hi: number | null;
+    dm_p_mbb: number | null;
+    null_holds: boolean | null;
+  } | null;
 };
 
 // TASK-H6: a modeling-decision genealogy chain — explicit-supersede rows

@@ -250,7 +250,7 @@ def test_inventory_maps_rows_and_dirs_verbatim(tmp_path, monkeypatch) -> None:
     """Run rows map the ledger + frozen directories byte-for-byte; freeze/
     result row numbers survive the blank ledger line; numbers round 6 dp."""
     inv = _run_export(tmp_path, monkeypatch)
-    assert inv["model_inventory_version"] == et.MODEL_INVENTORY_VERSION == "v2"
+    assert inv["model_inventory_version"] == et.MODEL_INVENTORY_VERSION == "v3"
     assert inv["status"] == "ok"
     # 4 confirmatory:first rows → 4 inventory runs, ledger order preserved.
     assert [r["phase"] for r in inv["runs"]] == ["B", "C", "track_c", "bad"]
@@ -650,7 +650,7 @@ def test_committed_inventory_shape_and_ledger_reconcile() -> None:
     a machine without it (fresh agent worktree) lists every run with honest
     nulls — both states satisfy the same derived assertion."""
     inv = _load()
-    assert inv["model_inventory_version"] == "v2"
+    assert inv["model_inventory_version"] == "v3"
     assert inv["status"] == "ok"
     assert inv["summary"]["n_confirmatory_runs"] == 5
     assert inv["summary"]["n_config_only"] == 11
@@ -825,6 +825,19 @@ def test_committed_inventory_chains_genealogy() -> None:
     # sequence excerpts are the top-level amends 原文, hard-truncated at 200
     assert len(l47["amendment_excerpt"]) == 200
     assert len(l48["amendment_excerpt"]) == 200
+
+    # Inventory v3: resulted links carry an outcome digest. #48's climax has
+    # no local differential.json → lifted from the ledger row itself
+    # (combined_ic.mean / p_hac; source-tagged "ledger_row"); non-resulted
+    # links carry an honest null.
+    assert l48["result_digest"] is not None
+    assert l48["result_digest"]["source"] == "ledger_row"
+    assert l48["result_digest"]["mean_diff"] == -0.008841
+    assert l48["result_digest"]["dm_p_mbb"] == 0.483773
+    assert l48["result_digest"]["ci_lo"] is None  # row carries half-width only
+    assert l48["result_digest"]["null_holds"] is None
+    assert l46["result_digest"] is None and l47["result_digest"] is None
+    assert all(lnk["result_digest"] is None for lnk in adaptive["links"])
 
     # every link is a verbatim projection of its ledger row (no hand-written
     # numbers: row / sig / ts / excerpt all read back from runs/ledger.jsonl)

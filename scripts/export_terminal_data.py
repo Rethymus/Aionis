@@ -2881,7 +2881,7 @@ def export_model_card(*, allow_uv_lock_drift: bool = False) -> None:
     )
 
 
-MODEL_INVENTORY_VERSION = "v2"
+MODEL_INVENTORY_VERSION = "v3"
 
 # TASK-H6 genealogy parsing: the pre-registered explicit-supersede regex
 # (case-insensitive, verbatim per the task spec) and the generic ledger-row
@@ -2912,6 +2912,38 @@ def _inv_amendment_decl(rec: dict) -> str | None:
     ):
         if isinstance(candidate, str) and candidate.strip():
             return candidate
+    return None
+
+
+def _inv_result_digest(
+    sig: str, rows: list[tuple[int, dict]]
+) -> dict | None:
+    """Inventory v3: a resulted link's outcome digest, from the first honest
+    source available — the frozen run's differential.json (source=
+    ``"differential"``) when the directory is local, else the ledger
+    ``confirmatory:first`` result row itself (source=``"ledger_row"``;
+    track_c climax keeps its numbers in the flat row payload, not a
+    differential.json). Only fields that verbatim-exist are filled; the
+    rest are honest nulls. Unresulted sig → None.
+    """
+    diff = _inv_read_diff(_CARD_RESULTS_ROOT / sig) if sig else None
+    if diff is not None:
+        return {"source": "differential", **diff}
+    for _lineno, rec in rows:
+        if rec.get("event") == "confirmatory:first" and str(
+            rec.get("config_sig") or ""
+        ) == sig:
+            cic = rec.get("combined_ic")
+            if isinstance(cic, dict):
+                return {
+                    "source": "ledger_row",
+                    "mean_diff": _inv_round6(cic.get("mean")),
+                    "ci_lo": None,
+                    "ci_hi": None,
+                    "dm_p_mbb": _inv_round6(cic.get("p_hac")),
+                    "null_holds": None,
+                }
+            return None
     return None
 
 
@@ -2988,6 +3020,14 @@ def _inv_chains(
             sig = link["config_sig"]
             link["resulted"] = sig in confirmed or (
                 bool(sig) and _inv_read_meta(_CARD_RESULTS_ROOT / sig, sig) is not None
+            )
+            # Inventory v3 (genealogy result digests): a resulted link carries
+            # its outcome digest — differential.json verbatim when local, else
+            # the ledger confirmatory row's own numbers (source-tagged). The
+            # decision chain now reads straight through to outcomes;
+            # non-resulted (or unverifiable) links carry an honest null.
+            link["result_digest"] = (
+                _inv_result_digest(sig, rows) if link["resulted"] else None
             )
         chains.append({
             "phase": phase,

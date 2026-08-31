@@ -533,6 +533,14 @@ function ModelInventoryGenealogy() {
                       {reason}
                     </span>
                   ) : null}
+                  {/* Inventory v3: the frozen run's differential digest — the
+                      decision chain reads straight through to the outcome.
+                      Honest em dash when the frozen dir is not local. */}
+                  <span className="block font-mono text-[11px] tabular-nums text-muted-foreground">
+                    {link.result_digest && link.result_digest.mean_diff !== null
+                      ? `ΔIC ${link.result_digest.mean_diff.toFixed(4)} · p ${link.result_digest.dm_p_mbb?.toFixed(3) ?? "—"}`
+                      : "ΔIC —"}
+                  </span>
                 </span>
               );
             })}

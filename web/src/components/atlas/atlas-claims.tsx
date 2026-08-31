@@ -456,11 +456,14 @@ function ForestFigure() {
             </caption>
             <thead>
               <tr className="text-mute">
+                {/* Column labels are descriptive (i18n); row labels are the
+                    schema names of the committed panel (metric/verdict/p/n)
+                    and stay literal for traceability to the JSON keys. */}
                 <th className="w-[40%] px-4 py-1.5 font-mono font-medium">
-                  metric
+                  {t("atlas.forest.col_metric")}
                 </th>
                 <th className="px-4 py-1.5 text-right font-mono font-medium">
-                  value
+                  {t("atlas.forest.col_value")}
                 </th>
               </tr>
             </thead>
