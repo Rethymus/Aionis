@@ -73,10 +73,28 @@ def main() -> int:
     if not any("DSR deflation" in c for c in caps):
         failures.append("strategy DSR caption missing")
 
-    # 8) event study: honest degradation for this machine (no 13D events
-    #    parquet -> compute-failed warning or no-events warning on default tab)
-    if not any("13D" in w or "event" in w.lower() for w in warns):
-        failures.append(f"event-study honest warning missing; warns={warns}")
+    # 8) event study: machine-state-aware honest rendering.
+    #    - 13D events cache PRESENT (2026-08-31 build, 2,877 rows): the real
+    #      path must render — `event-car-real` plotly chart + survival caption,
+    #      and NO event-tab degradation warning is expected. (The long
+    #      "DEMO: synthetic data" warning in `warns` belongs to the uncertainty
+    #      tab — same wording, different view.)
+    #    - cache ABSENT: expect the honest degradation warning (compute-failed
+    #      or no-events) exactly as round-46/47 pinned.
+    events_cache = Path("data") / "cache" / "phase_d_13d_events.parquet"
+    # Real path's end-marker caption: "N of M 13D events survived the
+    # session/window filter ..." — renders only after the CAR chart succeeds.
+    real_cap = any("13D events survived the session/window filter" in c for c in caps)
+    if events_cache.exists():
+        if not real_cap:
+            failures.append(
+                f"event-study real-path survival caption missing (cache present); warns={warns}"
+            )
+        if any("event-study compute failed" in w for w in warns):
+            failures.append(f"event-study compute failed despite cache present; warns={warns}")
+    else:
+        if not any("13D" in w or "event" in w.lower() for w in warns):
+            failures.append(f"event-study honest warning missing; warns={warns}")
 
     # 9) event-study selectbox interaction: switch to earnings and rerun
     sbs = [s for s in at.selectbox if s.key == "event_type_real"]

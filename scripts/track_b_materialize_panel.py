@@ -369,6 +369,19 @@ def main() -> None:
         volume_wide = volume_wide.loc[common_dates]
         # Also truncate prices to common dates for feature computation
         prices_for_features = prices_wide.loc[common_dates]
+        # Align ticker COLUMNS to the prices panel: honestly-missing tickers
+        # (e.g. Alpaca class-share symbol mismatches) get NaN volume columns so
+        # their turnover/amihud/beta features are NaN — disclosed, not fatal.
+        # compute_price_features enforces exact shape equality by contract.
+        missing_vol_cols = [c for c in prices_for_features.columns
+                            if c not in volume_wide.columns]
+        if missing_vol_cols:
+            log.warning(
+                "volume_missing_tickers_nan",
+                n_missing=len(missing_vol_cols),
+                tickers=[str(c) for c in missing_vol_cols[:8]],
+            )
+            volume_wide = volume_wide.reindex(columns=prices_for_features.columns)
     else:
         log.info("volume_unavailable", note="turnover_amihud_will_be_nan")
         prices_for_features = prices_wide
@@ -378,15 +391,18 @@ def main() -> None:
         # Normalize SPY index to tz-naive (matching prices)
         if spy_benchmark.index.tz is not None:
             spy_benchmark.index = spy_benchmark.index.tz_localize(None)
-        # Align SPY to prices date range
-        common_dates = prices_for_features.index.intersection(spy_benchmark.index)
-        if len(common_dates) < len(spy_benchmark.index):
-            log.warning(
-                "spy_date_truncated",
-                spy_dates=len(spy_benchmark.index),
-                common_dates=len(common_dates),
-            )
-        spy_benchmark = spy_benchmark.loc[common_dates]
+        # Align SPY to the exact prices index — compute_price_features requires
+        # index EQUALITY. reindex (not intersection): sessions the benchmark
+        # source lacks become NaN (beta NaN for those sessions, honest), while
+        # extra benchmark dates are dropped.
+        n_before = len(spy_benchmark)
+        spy_benchmark = spy_benchmark.reindex(prices_for_features.index)
+        log.info(
+            "spy_reindexed_to_prices",
+            n_before=n_before,
+            n_after=int(len(spy_benchmark)),
+            n_nan=int(int(spy_benchmark.isna().sum()) if hasattr(spy_benchmark, "isna") else 0),
+        )
     else:
         log.info("spy_benchmark_unavailable", note="beta_will_be_nan")
 

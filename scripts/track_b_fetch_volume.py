@@ -60,6 +60,9 @@ def _fetch_spy_benchmark() -> pd.DataFrame:
 
     spy_series = spy_data["SPY"]
     df = pd.DataFrame({"date": spy_series.index, "adjClose": spy_series.to_numpy(float)})
+    # Normalize to tz-naive midnight dates (Alpaca bars carry UTC timestamps);
+    # the materializer reads this file expecting a normalized date index.
+    df["date"] = pd.to_datetime(df["date"]).dt.tz_localize(None).dt.normalize()
 
     log.info(
         "fetch_spy_complete",
@@ -111,17 +114,27 @@ def main() -> None:
     for i in range(0, len(todo), BATCH):
         batch = todo[i : i + BATCH]
 
+        # Alpaca lists class shares in dot format (BRK.B/BF.B) while the
+        # universe cache uses the Tiingo dash convention (BRK-B/BF-B).
+        # Translate for the API call only — cache filenames stay in universe
+        # notation so the materializer's per-ticker lookup is unchanged.
+        alpaca_syms = [t.replace("-", ".") for t in batch]
+
         # Alpaca volume fetch (per-symbol, polite spacing via _policy_get)
         got = _volume_from_alpaca(
-            batch,
+            alpaca_syms,
             START,
             END,
             settings.alpaca_key_id,
             settings.alpaca_secret_key,
         )
 
-        # Cache each successfully fetched volume series
-        for t, vol_series in got.items():
+        # Cache each successfully fetched volume series (keyed back to the
+        # universe ticker)
+        for t in batch:
+            vol_series = got.get(t.replace("-", "."))
+            if vol_series is None:
+                continue
             vol_df = pd.DataFrame(
                 {"date": vol_series.index, "volume": vol_series.to_numpy(float)}
             )
@@ -129,7 +142,7 @@ def main() -> None:
             series[t] = vol_series
 
         # Track failures
-        batch_failed = [t for t in batch if t not in got]
+        batch_failed = [t for t in batch if t.replace("-", ".") not in got]
         failed.extend(batch_failed)
 
         done = min(i + BATCH, len(todo))
