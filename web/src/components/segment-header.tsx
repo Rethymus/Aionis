@@ -1,16 +1,16 @@
 "use client";
 
 import type { ReactNode } from "react";
-import Link from "next/link";
-import { ArrowRightIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { ProvenanceBadge } from "@/components/provenance-badge";
 import type { DictKey } from "@/i18n/dict";
 
-// The argument-spine segment a page belongs to (paradigm α). Every page declares
-// its place on the context → evidence → validity → verdict chain (guard spans
-// all), so the whole terminal radiates the spine — not just the Overview.
+// The argument-spine segment a page belongs to (paradigm α). The spine
+// breadcrumb row ("语境 → 证据 → 效度 → 可证伪主张") was retired 2026-08-31
+// (owner call): the top nav + the Overview argument chain already carry that
+// navigation, and the per-page row duplicated them. The segment prop is kept
+// (optional, unused) so 21 page call sites stay untouched; the page-level
+// provenance (as_of badge, intro, count hint) is the part that must survive.
 export type Segment =
   | "context"
   | "evidence"
@@ -18,33 +18,19 @@ export type Segment =
   | "verdict"
   | "guard";
 
-const SEGMENT_META: Record<
-  Segment,
-  { labelKey: DictKey; href: string }
-> = {
-  context: { labelKey: "nav.group.context", href: "/regime" },
-  evidence: { labelKey: "nav.group.evidence", href: "/picks" },
-  validity: { labelKey: "nav.group.validity", href: "/track" },
-  verdict: { labelKey: "overview.verdict.claim", href: "/track#evidence" },
-  guard: { labelKey: "nav.group.guard", href: "/discipline" },
-};
-
-// The linear chain order. Guard is rendered as a spanning suffix, not a step.
-const CHAIN_ORDER: Segment[] = ["context", "evidence", "validity", "verdict"];
-
 export function SegmentHeader({
-  segment,
   introKey,
   asOf,
   frozen = false,
   countHint,
   extra,
 }: {
-  segment: Segment;
+  /** Retained for call-site compatibility; no longer rendered (see above). */
+  segment?: Segment;
   introKey: DictKey;
   asOf?: string | null;
   frozen?: boolean;
-  /** Data scale + window, xiaoyinsi P1 style: "874 份 · 2025–2026". Rendered
+  /** Data scale + window, reference P1 style: "874 份 · 2025–2026". Rendered
    *  under the intro so the first screen anchors count AND freshness. The
    *  caller composes it from real panel data (never a hardcoded literal). */
   countHint?: string;
@@ -57,55 +43,16 @@ export function SegmentHeader({
   const { t } = useI18n();
   return (
     <header className="space-y-2">
-      {/* Spine breadcrumb: every page shows where it sits on the argument. */}
-      <nav aria-label="argument chain" className="flex flex-wrap items-center gap-1 text-xs text-muted-foreground">
-        {CHAIN_ORDER.map((s, i) => {
-          const meta = SEGMENT_META[s];
-          const active = s === segment;
-          const node = (
-            <span
-              className={cn(
-                "rounded px-1.5 py-0.5",
-                active
-                  ? "bg-primary/10 font-medium text-primary"
-                  : "text-muted-foreground hover:text-foreground",
-              )}
-            >
-              {t(meta.labelKey)}
-            </span>
-          );
-          return (
-            <span key={s} className="inline-flex items-center gap-1">
-              {active ? node : <Link href={meta.href}>{node}</Link>}
-              {i < CHAIN_ORDER.length - 1 ? (
-                <ArrowRightIcon className="size-2.5 text-muted-foreground/40" />
-              ) : null}
-            </span>
-          );
-        })}
-        {/* Provenance chip — the page's own freshness, inline with the spine. */}
-        {asOf ? <ProvenanceBadge ts={asOf} frozen={frozen} className="ml-1" /> : null}
-        {extra}
-        {/* Guard spans the whole chain — shown as a trailing chip; highlighted
-            when the page IS the guard segment (so /discipline shows its place). */}
-        <Link
-          href="/discipline"
-          className={cn(
-            "ml-auto inline-flex items-center gap-1 rounded border px-1.5 py-0.5",
-            segment === "guard"
-              ? "border-primary/40 bg-primary/10 font-medium text-primary"
-              : "border-dashed border-muted-foreground/30 text-muted-foreground hover:text-foreground",
-          )}
-        >
-          {t("nav.group.guard")}
-        </Link>
-      </nav>
       <p className="max-w-3xl text-sm text-muted-foreground">{t(introKey)}</p>
-      {countHint ? (
-        <p className="font-mono text-xs tabular-nums text-muted-foreground/80">
-          {countHint}
-        </p>
-      ) : null}
+      <div className="flex flex-wrap items-center gap-2">
+        {asOf ? <ProvenanceBadge ts={asOf} frozen={frozen} /> : null}
+        {extra}
+        {countHint ? (
+          <p className="font-mono text-xs tabular-nums text-muted-foreground/80">
+            {countHint}
+          </p>
+        ) : null}
+      </div>
     </header>
   );
 }

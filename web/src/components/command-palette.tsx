@@ -42,7 +42,14 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useI18n } from "@/i18n/provider";
 import type { DictKey } from "@/i18n/dict";
-import { aionis } from "@/data/aionis";
+import {
+  HOT_STOCKS,
+  SEARCH_PAGES,
+  SEARCH_VIEWS,
+  searchStocks,
+  type StockNavItem,
+  type UniverseStock,
+} from "@/lib/search-index";
 
 // Command palette (cmdk — the same wheel GitHub/Vercel/Linear roll on; already
 // a dependency via shadcn ui/command). The terminal has 20+ routes and deep
@@ -82,91 +89,54 @@ const TOUR: PaletteItem[] = [
   { labelKey: "command.tour5", icon: <ShieldCheckIcon className="size-4" />, href: "/discipline" },
 ];
 
-const PAGES: PaletteItem[] = [
-  { labelKey: "nav.group.regime", icon: <GlobeIcon className="size-4" />, href: "/regime" },
-  { labelKey: "nav.group.picks", icon: <FlaskConicalIcon className="size-4" />, href: "/picks" },
-  { labelKey: "nav.heatmap", icon: <LayoutGridIcon className="size-4" />, href: "/heatmap" },
-  { labelKey: "nav.companies", icon: <BuildingIcon className="size-4" />, href: "/companies" },
-  { labelKey: "nav.shelf", icon: <BookOpenIcon className="size-4" />, href: "/shelf" },
-  { labelKey: "nav.group.confirm", icon: <ShieldCheckIcon className="size-4" />, href: "/confirmation" },
-  { labelKey: "nav.institutions", icon: <LandmarkIcon className="size-4" />, href: "/institutions" },
-  { labelKey: "nav.forcecamp", icon: <NetworkIcon className="size-4" />, href: "/force-camp" },
-  { labelKey: "nav.filers", icon: <ListIcon className="size-4" />, href: "/filers" },
-  { labelKey: "nav.quarterly", icon: <CalendarDaysIcon className="size-4" />, href: "/quarterly" },
-  { labelKey: "nav.annual", icon: <FileClockIcon className="size-4" />, href: "/annual" },
-  { labelKey: "nav.group.track", icon: <GaugeCircleIcon className="size-4" />, href: "/track" },
-  { labelKey: "nav.atlas", icon: <MapIcon className="size-4" />, href: "/atlas" },
-  { labelKey: "nav.group.discipline", icon: <ShieldCheckIcon className="size-4" />, href: "/discipline" },
-  { labelKey: "nav.datahealth", icon: <ActivityIcon className="size-4" />, href: "/data-health" },
-  { labelKey: "nav.group.themes", icon: <FileTextIcon className="size-4" />, href: "/themes" },
-  { labelKey: "nav.market", icon: <GlobeIcon className="size-4" />, href: "/market" },
-  { labelKey: "nav.newsfeed", icon: <NewspaperIcon className="size-4" />, href: "/news" },
-  { labelKey: "nav.stakes", icon: <PercentIcon className="size-4" />, href: "/stakes" },
-  { labelKey: "nav.positioning", icon: <GlobeIcon className="size-4" />, href: "/positioning" },
-  { labelKey: "nav.taco", icon: <GlobeIcon className="size-4" />, href: "/taco" },
-  { labelKey: "nav.sectors", icon: <GlobeIcon className="size-4" />, href: "/sectors" },
-  { labelKey: "nav.conviction", icon: <GlobeIcon className="size-4" />, href: "/conviction" },
-  { labelKey: "nav.smartmoney", icon: <GlobeIcon className="size-4" />, href: "/smart-money" },
-  { labelKey: "nav.insiders", icon: <GlobeIcon className="size-4" />, href: "/insiders" },
-  { labelKey: "nav.reddit", icon: <GlobeIcon className="size-4" />, href: "/reddit" },
-  { labelKey: "nav.calibration", icon: <GaugeCircleIcon className="size-4" />, href: "/calibration" },
-  { labelKey: "nav.modelhealth", icon: <GaugeCircleIcon className="size-4" />, href: "/model-health" },
-  { labelKey: "nav.powerfloor", icon: <GaugeCircleIcon className="size-4" />, href: "/power-floor" },
-  { labelKey: "nav.evidence", icon: <ShieldCheckIcon className="size-4" />, href: "/evidence" },
-  { labelKey: "nav.apidocs", icon: <TerminalIcon className="size-4" />, href: "/api-docs" },
-];
+// Pages/views/hot-stocks/scoring live in lib/search-index — the single source
+// shared with the home hero inline search, so the two boxes can never drift.
+// This surface only attaches icons, by route.
+const PAGE_ICONS: Record<string, React.ReactNode> = {
+  "/regime": <GlobeIcon className="size-4" />,
+  "/picks": <FlaskConicalIcon className="size-4" />,
+  "/heatmap": <LayoutGridIcon className="size-4" />,
+  "/companies": <BuildingIcon className="size-4" />,
+  "/shelf": <BookOpenIcon className="size-4" />,
+  "/confirmation": <ShieldCheckIcon className="size-4" />,
+  "/institutions": <LandmarkIcon className="size-4" />,
+  "/force-camp": <NetworkIcon className="size-4" />,
+  "/filers": <ListIcon className="size-4" />,
+  "/quarterly": <CalendarDaysIcon className="size-4" />,
+  "/annual": <FileClockIcon className="size-4" />,
+  "/track": <GaugeCircleIcon className="size-4" />,
+  "/atlas": <MapIcon className="size-4" />,
+  "/discipline": <ShieldCheckIcon className="size-4" />,
+  "/data-health": <ActivityIcon className="size-4" />,
+  "/themes": <FileTextIcon className="size-4" />,
+  "/market": <GlobeIcon className="size-4" />,
+  "/news": <NewspaperIcon className="size-4" />,
+  "/stakes": <PercentIcon className="size-4" />,
+  "/positioning": <GlobeIcon className="size-4" />,
+  "/taco": <GlobeIcon className="size-4" />,
+  "/sectors": <GlobeIcon className="size-4" />,
+  "/conviction": <GlobeIcon className="size-4" />,
+  "/smart-money": <GlobeIcon className="size-4" />,
+  "/insiders": <GlobeIcon className="size-4" />,
+  "/reddit": <GlobeIcon className="size-4" />,
+  "/calibration": <GaugeCircleIcon className="size-4" />,
+  "/model-health": <GaugeCircleIcon className="size-4" />,
+  "/power-floor": <GaugeCircleIcon className="size-4" />,
+  "/evidence": <ShieldCheckIcon className="size-4" />,
+  "/api-docs": <TerminalIcon className="size-4" />,
+};
 
-const VIEWS: PaletteItem[] = [
-  { labelKey: "nav.factors", icon: <ArrowRightIcon className="size-4" />, href: "/picks#factors" },
-  { labelKey: "nav.sectors", icon: <ArrowRightIcon className="size-4" />, href: "/picks#sectors" },
-  { labelKey: "nav.conviction", icon: <ArrowRightIcon className="size-4" />, href: "/picks#conviction" },
-  { labelKey: "nav.macro", icon: <ArrowRightIcon className="size-4" />, href: "/regime#macro" },
-  { labelKey: "nav.taco", icon: <ArrowRightIcon className="size-4" />, href: "/regime#taco" },
-  { labelKey: "nav.positioning", icon: <ArrowRightIcon className="size-4" />, href: "/regime#positioning" },
-  { labelKey: "nav.insiders", icon: <ArrowRightIcon className="size-4" />, href: "/confirmation#insiders" },
-  { labelKey: "nav.reddit", icon: <ArrowRightIcon className="size-4" />, href: "/confirmation#reddit" },
-  { labelKey: "nav.evidence", icon: <ArrowRightIcon className="size-4" />, href: "/track#evidence" },
-  { labelKey: "nav.modelhealth", icon: <ArrowRightIcon className="size-4" />, href: "/track#model-health" },
-];
+const PAGES: PaletteItem[] = SEARCH_PAGES.map((p) => ({
+  labelKey: p.labelKey,
+  href: p.href,
+  icon: PAGE_ICONS[p.href] ?? <FileTextIcon className="size-4" />,
+}));
 
-// Hot stocks straight from the picks panel: top-10 longs + top-3 shorts, one
-// keystroke from /stock/<ticker>. Display-only navigation over the same frozen
-// picks data the picks page renders — no new data path.
-type StockNavItem = { ticker: string; name: string; short: boolean; region?: string };
-const HOT_STOCKS: StockNavItem[] = [
-  ...aionis.picks.slice(0, 10).map((p) => ({ ticker: p.ticker, name: p.name, short: false })),
-  ...aionis.shorts.slice(0, 3).map((s) => ({ ticker: s.ticker, name: s.name, short: true })),
-];
-
-const STOCK_MATCH_CAP = 12;
-
-type UniverseStock = { ticker: string; name: string; region: "us" | "cn" };
-
-/** Ranked ticker/company-name match over the frozen universe.
- *  Tiers: exact ticker > ticker prefix > name prefix > name substring >
- *  ticker infix. Deterministic ordering inside a tier (ticker asc). */
-function searchStocks(universe: UniverseStock[], rawQuery: string): StockNavItem[] {
-  const q = rawQuery.trim().toUpperCase();
-  if (!q) return [];
-  const hits: { tier: number; item: StockNavItem }[] = [];
-  for (const s of universe) {
-    const ticker = s.ticker.toUpperCase();
-    const name = (s.name || "").toUpperCase();
-    let tier: number | null = null;
-    if (ticker === q) tier = 0;
-    else if (ticker.startsWith(q)) tier = 1;
-    else if (name.startsWith(q)) tier = 2;
-    else if (name.includes(q)) tier = 3;
-    else if (ticker.includes(q)) tier = 4;
-    if (tier !== null) {
-      hits.push({ tier, item: { ticker: s.ticker, name: s.name || "", short: false, region: s.region } });
-    }
-  }
-  return hits
-    .sort((a, b) => a.tier - b.tier || a.item.ticker.localeCompare(b.item.ticker))
-    .slice(0, STOCK_MATCH_CAP)
-    .map((h) => h.item);
-}
+const VIEWS: PaletteItem[] = SEARCH_VIEWS.map((v) => ({
+  labelKey: v.labelKey,
+  href: v.href,
+  icon: <ArrowRightIcon className="size-4" />,
+}));
 
 export function CommandPalette() {
   const { t, lang, setLang } = useI18n();

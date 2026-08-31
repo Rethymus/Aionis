@@ -11,7 +11,6 @@ import {
   GavelIcon,
   ShieldCheckIcon,
   ScaleIcon,
-  SearchIcon,
   NewspaperIcon,
   FlameIcon,
   Building2Icon,
@@ -37,6 +36,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
+import { HomeSearch } from "@/components/home-search";
 // Home star-investors digest (~2KB — top-8 managers derived at export time
 // from the committed form13f panel). The full 13F book (~650KB) stays in its
 // dedicated module for /institutions + /manager; the landing page never pays
@@ -323,11 +323,10 @@ function GuardBand() {
 
 /** Aligned-site home hero: centered 34→52px headline with a brand-colored
  *  accent span, radial glow + grid decorative layers, a 560px search box that
- *  opens the command palette, and mono pill chips. */
+ *  searches INLINE (real input — stocks over the frozen universe + pages,
+ *  same index as the ⌘K palette), and mono pill chips. */
 function Hero() {
   const { t } = useI18n();
-  const openPalette = () =>
-    window.dispatchEvent(new Event("aionis:open-palette"));
   return (
     <section className="relative -mt-8 pt-14 pb-4 text-center md:pt-20">
       <div className="hero-glow pointer-events-none absolute inset-0" aria-hidden="true" />
@@ -341,19 +340,7 @@ function Hero() {
           {t("hero.subtitle")}
         </p>
         <div className="mt-7">
-          <button
-            type="button"
-            onClick={openPalette}
-            className="relative mx-auto flex h-12 w-full max-w-[560px] cursor-pointer items-center rounded-xl border border-line bg-card pr-24 pl-11 text-left shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_-12px_rgba(0,0,0,0.12)] transition-colors hover:border-faint"
-          >
-            <SearchIcon className="pointer-events-none absolute left-4 size-[17px] text-faint" />
-            <span className="truncate text-[14px] text-mute">
-              {t("overview.search.placeholder")}
-            </span>
-            <span className="pointer-events-none absolute right-4 flex items-center gap-1 font-mono text-[11px] text-faint">
-              ⌘K
-            </span>
-          </button>
+          <HomeSearch />
         </div>
         <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
           {(
@@ -498,7 +485,7 @@ function FilingStrip() {
 function StakesCard() {
   const { t } = useI18n();
   const s = aionis.stakes13g;
-  const rows = s.status === "ok" ? s.filings.slice(0, 5) : [];
+  const rows = s.status === "ok" ? s.filings.slice(0, 10) : [];
   if (rows.length === 0) return null;
   return (
     <div className="overflow-hidden rounded-xl border border-line bg-card">
@@ -556,7 +543,7 @@ const MONTHS_EN = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP"
 function IpoCard() {
   const { t } = useI18n();
   const f = aionis.ipo;
-  const rows = f.status === "ok" ? f.filings.slice(0, 5) : [];
+  const rows = f.status === "ok" ? f.filings.slice(0, 7) : [];
   if (rows.length === 0) return null;
   return (
     <div className="overflow-hidden rounded-xl border border-line bg-card">
@@ -691,7 +678,7 @@ function StarInvestorsCard() {
 function ArkCard() {
   const { t } = useI18n();
   const ark = aionis.ark;
-  const rows = ark.status === "ok" ? ark.family_overlap.slice(0, 6) : [];
+  const rows = ark.status === "ok" ? ark.family_overlap.slice(0, 10) : [];
   if (rows.length === 0) return null;
   const maxFunds = Math.max(...rows.map((o) => o.funds.length), 1);
   return (
@@ -748,7 +735,7 @@ function ArkCard() {
 function Events8kCard() {
   const { t } = useI18n();
   const f = aionis.form8k;
-  const rows = f.status === "ok" ? f.events.slice(0, 5) : [];
+  const rows = f.status === "ok" ? f.events.slice(0, 8) : [];
   if (rows.length === 0) return null;
   return (
     <div className="overflow-hidden rounded-xl border border-line bg-card md:col-span-2">
@@ -800,7 +787,7 @@ function Events8kCard() {
 function ExecsCard() {
   const { t } = useI18n();
   const f = aionis.executives;
-  const rows = f.status === "ok" ? f.events.slice(0, 5) : [];
+  const rows = f.status === "ok" ? f.events.slice(0, 8) : [];
   if (rows.length === 0) return null;
   return (
     <div className="overflow-hidden rounded-xl border border-line bg-card">
@@ -981,12 +968,12 @@ function MarketCards() {
  *  count_declared (the board's own declared total), not our visible slice. */
 function DataCockpit() {
   const { t } = useI18n();
-  const news = aionis.newsFeed.status === "ok" ? aionis.newsFeed.items.slice(0, 5) : [];
+  const news = aionis.newsFeed.status === "ok" ? aionis.newsFeed.items.slice(0, 7) : [];
   const rt = aionis.redditTrending;
   const heat = rt.status === "ok" ? rt.tickers.slice(0, 10) : [];
   const ctx = aionis.politicianTradesTx;
   const tx = ctx.status === "ok" ? ctx.transactions : [];
-  const trades = tx.slice(0, 5);
+  const trades = tx.slice(0, 9);
   const nBuy = tx.filter((r) => r.direction === "buy").length;
   const nSell = tx.length - nBuy;
   const nLate = tx.filter((r) => r.days_late !== null && r.days_late > 45).length;
