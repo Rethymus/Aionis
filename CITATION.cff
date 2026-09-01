@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use Aionis in your research, please cite it as below."
+title: "Aionis: a falsifiable, anti-leakage quantitative-finance research harness"
+authors:
+  - name: The Aionis Authors
+type: software
+version: 0.1.0
+date-released: "2026-09-01"
+license: MIT
+repository-code: "https://github.com/Rethymus/Aionis"
+url: "https://rethymus.github.io/Aionis/"
+abstract: >
+  Aionis implements falsifiability as an engineering constraint for
+  quantitative-finance research: one pre-registered two-tailed claim per phase
+  on the cross-sectional monthly rank-IC of S&P 500 point-in-time constituents,
+  with a config-before-result append-only ledger, purged group k-fold with
+  embargo, pinned-version determinism, and honest null results with tight
+  confidence intervals as the intended experimental outcome.
+keywords:
+  - quantitative-finance
+  - point-in-time-data
+  - preregistration
+  - rank-ic
+  - anti-leakage
+  - research-integrity

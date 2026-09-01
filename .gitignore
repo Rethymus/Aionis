@@ -40,6 +40,8 @@ runs/results/
 runs/*.log
 runs/*.json
 runs/health_*.json
+# Stray root-level operational logs (fetch/debug output) — regenerable, never tracked
+/*.log
 
 # --- Tooling caches / coverage ---
 .benchmarks/

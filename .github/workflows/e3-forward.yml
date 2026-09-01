@@ -45,15 +45,22 @@ jobs:
         run: |
           uv sync --extra dashboard --extra extraction
 
+      - name: Capture pre-run ledger digest
+        run: |
+          # runs/ledger.jsonl is a git-tracked file, so file EXISTENCE proves
+          # nothing — compare the sha256 before/after the trigger instead.
+          sha256sum runs/ledger.jsonl | tee /tmp/ledger_pre.sha
+
       - name: Run E3 forward trigger
         run: |
           uv run python scripts/e3_forward_trigger.py
 
-      - name: Verify shadow mode (no ledger writes)
+      - name: Verify shadow mode (ledger byte-identical)
         run: |
-          if [ -f "runs/ledger.jsonl" ]; then
-            echo "ERROR: Ledger was modified in shadow mode!"
-            echo "This should not happen. PHASE_E3_NO_LEDGER=1 prevents writes."
+          sha256sum runs/ledger.jsonl | tee /tmp/ledger_post.sha
+          if ! cmp -s /tmp/ledger_pre.sha /tmp/ledger_post.sha; then
+            echo "ERROR: Ledger changed during a PHASE_E3_NO_LEDGER=1 shadow run!"
+            git diff -- runs/ledger.jsonl || true
             exit 1
           fi
-          echo "✓ Shadow mode verified - no ledger writes"
+          echo "✓ Shadow mode verified - ledger is byte-identical"

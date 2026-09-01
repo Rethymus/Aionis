@@ -1,0 +1,48 @@
+name: Tests
+
+# Hermetic test + lint gate for the research core.
+#
+# STATUS (2026-09-01): DORMANT-BY-BILLING — GitHub Actions on this account is
+# currently blocked (workflows fail ~4s after queueing; see state logs of the
+# 2026-08-29/31 rounds). This workflow is wired in the same dormant-tolerant
+# spirit as e3-forward.yml: once Actions is unblocked it runs automatically on
+# push/PR and turns the H6-determinism claim into externally visible evidence
+# (uv-sync from the pinned uv.lock -> full hermetic pytest -> ruff).
+#
+# Note: as of 2026-09-01 `uv run ruff check` is clean repo-wide (the last
+# mechanical E501/I001 debt in docs/code-review/_sync.py and
+# scripts/bts_tsi_fetch.py was wrapped output-preserving); the gate below runs
+# the full check so any new debt fails loudly.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  tests:
+    name: pytest + ruff (hermetic)
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v1
+        with:
+          version: "latest"
+
+      - name: Install dependencies (pinned by uv.lock)
+        run: |
+          uv sync --all-extras
+
+      - name: Run hermetic test suite
+        run: |
+          uv run pytest -q
+
+      - name: Lint (full repo)
+        run: |
+          uv run ruff check
