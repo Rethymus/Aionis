@@ -106,7 +106,7 @@ Harvey-Liu-Zhu(2016 RFS,t>3.0 阈值)、Harvey haircut p 值(2017 JPM)、McLean-
 7. ~~数据新鲜度扫荡~~(**2026-08-30 已执行**:快源+EDGAR 族全跑,周日源空窗如实;ledger 重钉 91bc7640;导出 55 面板+契约闸门绿)。
 8. **长周期查漏补缺协议·周期 2 续轮(常设节奏项)**:AppTest 随 Streamlit 改动重跑(含 earnings 真实数据路径——待 cache 补齐)、i18n 二轮(英文语法级+其余 hub 术语)。协议见 `2026-08-30-longcycle-gapfill-protocol.md` §3。
 9. ~~谱系 v3~~(**2026-08-30 已上线**:inventory v3 result_digest 双源+model-health ΔIC 摘要在墙,链守卫 56 测试绿)。
-10. ~~R2-full 工件矩阵~~→**推进中(2026-09-01)**:Planner 拆分完成(`tasks/active/TASK-R2-full-artifact-matrix.md`,S1/S2/M3/M4/L5 五切片);**S1 已落地**——`export_evidence_matrix_manifest()` 五主张矩阵 manifest(`reports/evidence/evidence-matrix-v1.json`,值全部机读自 differential.json/ledger/metrics.json,ledger config_sig 失配即 raise,字节稳定双跑契约 3 测试)接入 export_terminal_data main()(正典次序扩展:面板→atlas→dossier→shelf→manifest);M4 CI 挂钩部分仍受 Actions 计费封锁门控。
+10. ~~R2-full 工件矩阵~~→**推进中(2026-09-01)**:Planner 拆分完成(`tasks/active/TASK-R2-full-artifact-matrix.md`,S1/S2/M3/M4/L5 五切片);**S1 已落地**——`export_evidence_matrix_manifest()` 五主张矩阵 manifest(`reports/evidence/evidence-matrix-v1.json`,值全部机读自 differential.json/ledger/metrics.json,ledger config_sig 失配即 raise,字节稳定双跑契约 3 测试)接入 export_terminal_data main()(正典次序扩展:面板→atlas→dossier→shelf→manifest);M4 CI 挂钩部分仍受 Actions 计费封锁门控。**M3 已落地(2026-09-01)**:manifest 增 version=v1 字段;`archive_if_changed()` move-don't-delete 助手接入 atlas/dossier/相卡/manifest 四导出点(旧字节存 reports/evidence/archive/v1/,只增不删);shelf methodology 披露归档策略;修复 Windows write_text CRLF 翻译病理(旧字节≠新字节永真→无限归档);真实重导实测:fd1ab144 前版字节在案。
 11. ~~atlas 小项~~(**2026-08-30 已完成**:森林图表头 i18n"指标/数值"+schema 名保留注释;"重生成钩子"判定=契约守卫即漂移警报,实战拦下 2 次,自动重生成按 no-silent-mutation 精神不采用)。
 
 ### P3 —— 远期/记录性

@@ -83,13 +83,14 @@ def _write_fixture_tree(tmp_path: Path, ledger_sig_override: str | None = None) 
 def test_fixture_manifest_structure_and_byte_stability(tmp_path: Path) -> None:
     fx = _write_fixture_tree(tmp_path)
     out = tmp_path / "matrix.json"
-    m1 = ex.export_evidence_matrix_manifest(out_path=out, **fx)
+    m1 = ex.export_evidence_matrix_manifest(out_path=out, archive_dir=tmp_path / "archive", **fx)
     raw1 = out.read_bytes()
-    ex.export_evidence_matrix_manifest(out_path=out, **fx)
+    ex.export_evidence_matrix_manifest(out_path=out, archive_dir=tmp_path / "archive", **fx)
     assert raw1 == out.read_bytes(), "double-run must be byte-identical"
     assert m1 == json.loads(raw1)
 
     assert set(m1["claims"]) == {"B", "C", "D", "E1", "track_c"}
+    assert m1["version"] == "v1"
     for phase in ("B", "C", "D", "E1"):
         c = m1["claims"][phase]
         assert c["results_sig"] == SIGS[phase]
@@ -125,3 +126,43 @@ def test_real_manifest_equals_fresh_render_of_current_inputs() -> None:
         assert committed == fresh
     finally:
         tmp_unused.unlink(missing_ok=True)
+
+
+def test_archive_preserves_superseded_bytes_and_only_grows(tmp_path: Path) -> None:
+    """R2-full M3: a changed re-export archives the prior bytes (move-
+    don't-delete); an unchanged re-export adds nothing — the archive only
+    grows."""
+    fx = _write_fixture_tree(tmp_path)
+    out = tmp_path / "evidence-matrix-v1.json"
+    archive_root = tmp_path / "archive"
+    archive_v1 = archive_root / "v1"
+
+    ex.export_evidence_matrix_manifest(out_path=out, archive_dir=archive_root, **fx)
+    first = out.read_bytes()
+    assert not archive_v1.exists() or not list(archive_v1.glob("*")), (
+        "first export must not archive anything"
+    )
+
+    # change an input -> manifest content changes
+    diff_path = fx["results_dir"] / SIGS["B"] / "differential.json"
+    diff = json.loads(diff_path.read_text(encoding="utf-8"))
+    diff["mean_diff"] = -0.002
+    diff_path.write_text(json.dumps(diff), encoding="utf-8")
+    ex.export_evidence_matrix_manifest(out_path=out, archive_dir=archive_root, **fx)
+    assert out.read_bytes() != first, "changed inputs must change the manifest"
+
+    archived = sorted(archive_v1.glob("evidence-matrix-v1-*.json"))
+    assert len(archived) == 1, "exactly the superseded manifest is archived"
+    assert archived[0].read_bytes() == first, "archived bytes = superseded bytes"
+
+    # unchanged re-export -> archive only grows (still exactly one entry)
+    ex.export_evidence_matrix_manifest(out_path=out, archive_dir=archive_root, **fx)
+    assert len(list(archive_v1.glob("*"))) == 1, "unchanged re-export must not archive"
+
+
+def test_shelf_methodology_discloses_archive_policy() -> None:
+    """R2-full M3: the shelf methodology must disclose the archive policy."""
+    shelf = json.loads(
+        Path("web/src/data/aionis/knowledge_shelf.json").read_text(encoding="utf-8")
+    )
+    assert "reports/evidence/archive/" in shelf["methodology"]

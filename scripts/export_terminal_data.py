@@ -7236,7 +7236,9 @@ def export_knowledge_shelf() -> None:
             "byte-stable, sha256 + byte count pinned at export time from the "
             "local tracked file so a reader can verify the download against "
             "the catalog (a missing file degrades honestly to null — never "
-            "fabricated). Display-only reference lane — never part of any "
+            "fabricated). Superseded artifact versions are retained under "
+            "reports/evidence/archive/ (move-don't-delete — the archive only "
+            "grows). Display-only reference lane — never part of any "
             "research or OOS pipeline."
         ),
     }

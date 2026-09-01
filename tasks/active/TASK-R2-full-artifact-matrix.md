@@ -37,7 +37,7 @@ hermetic 契约测试：五相齐、账本行号对账、sha 与磁盘重算一�
 **验收**: 每份工件字节稳定双跑 + 契约测试 + 全套 pytest exit 0。
 **注意**: 证据链重导正典次序 = 面板 → atlas → dossier → shelf（轮 51/52 实战定律）。
 
-### M3 — 版本化与保留（M，1 天）
+### M3 — 版本化与保留（M，1 天）——**已完成(2026-09-01)**
 manifest 增 `version` 字段（v1 起步）；重导后旧版本移动至
 `reports/evidence/archive/<version>/`（move-don't-delete，AGENTS 铁律）；shelf 条目
 指向当前版本并在 methodology 披露历史版本路径。契约测试钉"当前版本指针一致 + 归档

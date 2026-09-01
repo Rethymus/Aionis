@@ -54,6 +54,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from ks_sources import RESEARCH_SOURCES
+from export_evidence_html import archive_if_changed  # R2-full M3 (move-don't-delete)
 
 ROOT = Path(__file__).resolve().parents[1]
 PANEL_DIR = ROOT / "web/src/data/aionis"
@@ -1357,6 +1358,7 @@ def render(a: Assembly) -> str:
 def main() -> int:
     a = assemble()
     out = render(a)
+    archive_if_changed(OUT, out.encode("utf-8"))
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with OUT.open("w", encoding="utf-8", newline="\n") as f:
         f.write(out)
@@ -1479,6 +1481,7 @@ def export_phase_dossier_meta(
             results_dir, ledger_lines,
         )
         fp = out_dir / f"research-dossier-{spec['phase'].lower()}-v1.html"
+        archive_if_changed(fp, html_out.encode("utf-8"))
         fp.write_text(html_out, encoding="utf-8", newline="\n")
         written.append({
             # canonical repo location (out_dir is an injectable test seam)

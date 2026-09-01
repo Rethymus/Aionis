@@ -626,6 +626,7 @@ def render_html(panel: dict) -> str:
 def main() -> int:
     panel = load_panel()
     out = render_html(panel)
+    archive_if_changed(OUT, out.encode("utf-8"))
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with OUT.open("w", encoding="utf-8", newline="\n") as f:
         f.write(out)
@@ -643,9 +644,31 @@ def main() -> int:
 # wall clock, byte-stable double-run (contract-tested).
 
 MATRIX_ID = "evidence-matrix-v1"
+MATRIX_VERSION = "v1"
 MATRIX_PATH = ROOT / "reports/evidence/evidence-matrix-v1.json"
+ARCHIVE_DIR = ROOT / "reports/evidence/archive"
 RESULTS_DIR = ROOT / "runs/results"
 LEDGER_PATH = ROOT / "runs/ledger.jsonl"
+
+
+def archive_if_changed(path: Path, new_bytes: bytes, root: Path | None = None) -> Path | None:
+    """move-don't-delete (R2-full M3): preserve the previous artifact bytes
+    under reports/evidence/archive/<version>/ when a re-export changes them.
+    The archive directory only grows — nothing is ever removed. Returns the
+    archive path, or None when the artifact is new/unchanged.
+    """
+    if not path.exists():
+        return None
+    old = path.read_bytes()
+    if old == new_bytes:
+        return None
+    sha8 = hashlib.sha256(old).hexdigest()[:8]
+    root = ARCHIVE_DIR if root is None else Path(root)
+    dest = root / MATRIX_VERSION / f"{path.stem}-{sha8}{path.suffix}"
+    if not dest.exists():
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_bytes(old)
+    return dest
 
 # Frozen claim registry. Provenance: docs/RESULTS.md §2 + §6 ledger index —
 # sigs are the confirmatory results dirs, ledger_row the 1-based ledger line
@@ -683,6 +706,7 @@ def export_evidence_matrix_manifest(
     metrics_path: Path | None = None,
     artifacts_dir: Path | None = None,
     out_path: Path | None = None,
+    archive_dir: Path | None = None,
 ) -> dict:
     """Build and write the five-claim evidence matrix manifest.
 
@@ -694,6 +718,7 @@ def export_evidence_matrix_manifest(
     metrics_path = PANEL_DIR / "metrics.json" if metrics_path is None else Path(metrics_path)
     artifacts_dir = ROOT / "reports/evidence" if artifacts_dir is None else Path(artifacts_dir)
     out_path = MATRIX_PATH if out_path is None else Path(out_path)
+    arch = ARCHIVE_DIR if archive_dir is None else Path(archive_dir)
 
     ledger_lines = ledger_path.read_text(encoding="utf-8").splitlines()
 
@@ -761,13 +786,19 @@ def export_evidence_matrix_manifest(
 
     manifest = {
         "id": MATRIX_ID,
+        "version": MATRIX_VERSION,
         "generator": "scripts/export_evidence_html.py",
         "claims": claims,
         "artifacts": artifacts,
     }
     payload = json.dumps(manifest, indent=2, sort_keys=True, ensure_ascii=False) + "\n"
+    # write BYTES (not write_text): text mode translates \n -> \r\n on Windows,
+    # which would make every subsequent export differ from the on-disk file and
+    # archive a "new" version forever (CRLF pathology, cf. .gitattributes).
+    raw = payload.encode("utf-8")
+    archive_if_changed(out_path, raw, root=arch)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(payload, encoding="utf-8")
+    out_path.write_bytes(raw)
     print(
         f"[evidence-matrix] {len(claims)} claims / {len(artifacts)} artifacts -> {out_path}"
     )
