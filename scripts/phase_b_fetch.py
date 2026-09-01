@@ -64,6 +64,9 @@ def _final_panel_is_complete(path: Path, tickers: list[str]) -> bool:
         panel = pd.read_parquet(path)
     except (OSError, ValueError):
         return False
+    # Ticker-complete ⇒ final (H6 determinism): the frozen research panel is
+    # NEVER silently extended from refreshed caches — post-freeze sessions
+    # belong to the forward lane's own freeze/extra grid, not this file.
     return all(ticker in panel and panel[ticker].notna().any() for ticker in tickers)
 
 

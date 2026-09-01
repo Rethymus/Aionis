@@ -258,8 +258,21 @@ def main(
 
 
 if __name__ == "__main__":
-    # CLI entry point: run with today's date
-    result = main()
+    # CLI entry point. --run-date pins the NYSE session date explicitly —
+    # REQUIRED when invoking from a timezone whose calendar day has already
+    # rolled past the US session (e.g. a post-close run from UTC+8 on the
+    # following morning: "today" is the next day, so the month-end derivation
+    # would silently target the wrong month — observed 2026-09-01).
+    import argparse
+
+    parser = argparse.ArgumentParser(description="E3 forward trigger (month-end session)")
+    parser.add_argument(
+        "--run-date",
+        default=None,
+        help="NYSE session date to evaluate (ISO YYYY-MM-DD). Defaults to today.",
+    )
+    args = parser.parse_args()
+    result = main(run_date=args.run_date)
     # Exit with non-zero if commit failed (but not if just not month-end)
     if result.get("committed") is False:
         if result.get("is_month_end") is False:

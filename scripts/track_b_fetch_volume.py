@@ -93,11 +93,15 @@ def main() -> None:
 
     # 3. Fetch volume per ticker (resumable)
     series: dict[str, pd.Series] = {}
+    stale_cutoff = pd.Timestamp.today().normalize() - pd.Timedelta(days=4)
     for t in tickers:
         fp = VOLUME_DIR / f"{t}.parquet"
         if fp.exists():
             df = pd.read_parquet(fp)
             if not df.empty and "volume" in df.columns:
+                last = pd.to_datetime(df["date"]).max()
+                if last < stale_cutoff:
+                    continue  # stale cache: queue for a fresh fetch
                 series[t] = pd.Series(
                     df["volume"].to_numpy(float),
                     index=pd.to_datetime(df["date"]).dt.normalize(),
