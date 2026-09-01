@@ -242,6 +242,18 @@ jobs:
         run: uv run python scripts/export_terminal_data.py
         # BACKTEST_MONTHS defaults to 99 (full OOS history) in the script.
 
+      - name: Re-export evidence chain (atlas -> dossier -> phase dossiers -> re-pin shelf + manifest)
+        # R2-full M4: the evidence artifacts pin panel snapshot_ts and artifact
+        # shas, so they must re-render AFTER the payload export above (canonical
+        # order: panels -> atlas -> dossier -> phase dossiers -> shelf -> manifest).
+        run: |
+          uv run python scripts/export_evidence_html.py
+          uv run python scripts/export_research_dossier.py
+          uv run python -c "import sys; sys.path.insert(0, 'scripts'); from export_research_dossier import export_phase_dossier_meta; export_phase_dossier_meta()"
+          uv run python -c "import sys; sys.path.insert(0, 'scripts'); from export_terminal_data import export_knowledge_shelf, export_evidence_matrix_manifest; export_knowledge_shelf(); export_evidence_matrix_manifest()"
+        timeout-minutes: 20
+        continue-on-error: true  # evidence artifacts degrade honestly; the display panels stay authoritative
+
       - name: Verify JSON validity
         run: |
           set -e
