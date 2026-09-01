@@ -3551,6 +3551,7 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
     # Method library over repo docs — advances on the repo's own documentation
     # cadence (a doc commit), never on market data.
     ("knowledge_shelf", "knowledge_shelf.json", _DH_CADENCE),
+    ("evidence_matrix", "evidence_matrix.json", _DH_CADENCE),
 ]
 
 
@@ -3597,6 +3598,7 @@ _DH_ROWS_LIST: dict[str, str] = {
     "form13f_stars": "stars",
     "filers13f": "filers",
     "knowledge_shelf": "docs",
+    "evidence_matrix": "docs",
     "lineage_graph": "edges",
 }
 
@@ -3750,6 +3752,9 @@ def _dh_as_of(key: str, fname: str) -> str | None:
         return p.get("as_of")
     if key == "knowledge_shelf":
         # as_of = newest last-commit date among the cataloged docs.
+        return p.get("as_of")
+    if key == "evidence_matrix":
+        # as_of = newest ledger-row ts among the five claims.
         return p.get("as_of")
     if key == "headline_provenance":
         ts = p.get("result_ts")
@@ -4081,6 +4086,12 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
         "docs/ + decisions/ method catalog with GitHub link-outs and a fixed "
         "curated public research-source list; teasers are safe slices of our "
         "own MIT docs, third-party content never copied",
+    ),
+    "evidence_matrix": (
+        "Aionis frozen artifacts (repo MIT)",
+        "five-claim evidence matrix: machine-read differentials + ledger "
+        "reconciliation + artifact sha256 pins; values are verbatim copies of "
+        "the frozen confirmatory files",
     ),
 }
 

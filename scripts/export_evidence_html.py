@@ -23,6 +23,7 @@ import hashlib
 import html
 import json
 import math
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -677,20 +678,27 @@ _CLAIMS: tuple[dict, ...] = (
     {
         "phase": "B", "ledger_row": 28,
         "sig": "17245a75d2d4cd17c68f36a9d0f4b4f7f3baf1db31b33b87be79e6e4a11400da",
+        "prereg_doc": "docs/phase-b-preregistration.md",
     },
     {
         "phase": "C", "ledger_row": 30,
         "sig": "a7fdb48f5942fae146b151143807653fd66c4c5f1601dc7cf9d04a796c1fada1",
+        "prereg_doc": "docs/phase-c-preregistration.md",
     },
     {
         "phase": "D", "ledger_row": 34,
         "sig": "d31580630ff35326557dda9f50832c7af3625dd6507e47e252ea01800372a12c",
+        "prereg_doc": "docs/phase-d-preregistration.md",
     },
     {
         "phase": "E1", "ledger_row": 37,
         "sig": "ef321e9ee808804601e012818fa95522d2dc5f0fe8c53771d7f1b412c25ed49f",
+        "prereg_doc": "docs/phase-e-preregistration.md",
     },
 )
+_TRACK_C_LEDGER_ROW = 49
+_TRACK_C_PREREG = "docs/track-c-preregistration.md"
+_WEB_PANEL_PATH = ROOT / "web/src/data/aionis/evidence_matrix.json"
 _MATRIX_ARTIFACTS = (
     "atlas-claim-v1.html",
     "research-dossier-v1.html",
@@ -722,11 +730,17 @@ def export_evidence_matrix_manifest(
 
     ledger_lines = ledger_path.read_text(encoding="utf-8").splitlines()
 
+    claim_ts: list[str] = []
+
+    def _ledger_rec(row: int) -> dict:
+        return json.loads(ledger_lines[row - 1])
+
     def _ledger_sig(row: int) -> str:
-        rec = json.loads(ledger_lines[row - 1])
+        rec = _ledger_rec(row)
         sig = rec.get("config_sig")
         if not sig:
             raise ValueError(f"ledger line {row} has no config_sig")
+        claim_ts.append(str(rec.get("ts", "")))
         return str(sig)
 
     claims: dict[str, dict] = {}
@@ -741,9 +755,11 @@ def export_evidence_matrix_manifest(
             (results_dir / c["sig"] / "differential.json").read_text(encoding="utf-8")
         )
         claims[c["phase"]] = {
+            "phase": c["phase"],
             "kind": "phase",
             "ledger_row": c["ledger_row"],
             "results_sig": c["sig"],
+            "prereg_doc": c["prereg_doc"],
             "mean_diff": diff["mean_diff"],
             "ci_lo": diff["ci_lo"],
             "ci_hi": diff["ci_hi"],
@@ -759,9 +775,11 @@ def export_evidence_matrix_manifest(
     if int(tc.get("ledger_row", -1)) != 49:
         raise ValueError("metrics.json ledger_row != 49")
     claims["track_c"] = {
+        "phase": "track_c",
         "kind": "confirmatory_oos",
         "ledger_row": 49,
         "config_sig": _ledger_sig(49),
+        "prereg_doc": _TRACK_C_PREREG,
         "combined_ic": tc["combined_ic"],
         "p_hac": tc["p"],
         "ci_lo": tc["ci_lo"],
@@ -799,6 +817,17 @@ def export_evidence_matrix_manifest(
     archive_if_changed(out_path, raw, root=arch)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_bytes(raw)
+
+    # Web mirror (display panel): stamped for the terminal's as-of honesty.
+    # The reports/ canonical copy above stays byte-stable (no wall clock).
+    as_of = max((t for t in claim_ts if t), default="")[:10] or None
+    web = dict(manifest, as_of=as_of, snapshot_ts=datetime.now(timezone.utc).isoformat())
+    web_path = ROOT / "web/src/data/aionis/evidence_matrix.json"
+    web_path.parent.mkdir(parents=True, exist_ok=True)
+    web_path.write_text(
+        json.dumps(web, indent=2, sort_keys=True, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
     print(
         f"[evidence-matrix] {len(claims)} claims / {len(artifacts)} artifacts -> {out_path}"
     )

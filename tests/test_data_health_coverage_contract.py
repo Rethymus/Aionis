@@ -115,6 +115,7 @@ EXPECTED_PANELS: dict[str, tuple[str, str, str]] = {
     "form13f_stars": ("form13f-stars.ts", "form13f-stars.json", "cadence"),
     "filers13f": ("filers13f.ts", "filers13f.json", "cadence"),
     "knowledge_shelf": ("knowledgeShelf", "knowledge_shelf.json", "cadence"),
+    "evidence_matrix": ("evidenceMatrix", "evidence_matrix.json", "cadence"),
 }
 
 # Barrel members that ARE the registries themselves: consumed by the atlas,

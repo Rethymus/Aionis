@@ -1259,6 +1259,20 @@ export const dict = {
     "shelf.artifacts.title": "证据工件",
     "shelf.artifacts.note": "自包含 HTML，字节稳定；sha256 在导出时钉死，供读者校验所下载文件与目录一致。",
     "shelf.artifacts.sha": "SHA-256",
+    // R2-full L5 — five-claim evidence matrix (shelf page)
+    "shelf.matrix.title": "五主张证据矩阵",
+    "shelf.matrix.note":
+      "数值逐字机读自冻结工件（differential / 账本 / metrics 面板）；sha256 供 GitHub 上对照验证。非显著 ≠ 等价。",
+    "shelf.matrix.col.phase": "阶段",
+    "shelf.matrix.col.metric": "差分 / rank-IC",
+    "shelf.matrix.col.ci": "95% CI",
+    "shelf.matrix.col.p": "p 值",
+    "shelf.matrix.col.n": "月数",
+    "shelf.matrix.col.verdict": "裁决",
+    "shelf.matrix.verdict": "裁决",
+    "shelf.matrix.verdict.nullincr": "无显著正增量",
+    "shelf.matrix.prereg": "预注册",
+    "shelf.matrix.zerollm": "零 LLM",
     // Research atlas (/atlas — editorial deterministic research diagrams)
     "nav.atlas": "研究图谱",
     "nav.sub.atlas": "编辑级研究叙事图：主张 · 分差 · 诊断 · 血缘",
@@ -2593,6 +2607,20 @@ export const dict = {
     "shelf.artifacts.title": "Evidence artifacts",
     "shelf.artifacts.note": "Self-contained HTML, byte-stable; sha256 pinned at export time so a reader can verify the download against the catalog.",
     "shelf.artifacts.sha": "SHA-256",
+    // R2-full L5 — five-claim evidence matrix (shelf page)
+    "shelf.matrix.title": "Five-claim evidence matrix",
+    "shelf.matrix.note":
+      "Values are verbatim machine-read copies of the frozen artifacts (differentials / ledger / metrics panel); verify sha256 on GitHub. Non-significance is not equivalence.",
+    "shelf.matrix.col.phase": "Phase",
+    "shelf.matrix.col.metric": "differential / rank-IC",
+    "shelf.matrix.col.ci": "95% CI",
+    "shelf.matrix.col.p": "p-value",
+    "shelf.matrix.col.n": "months",
+    "shelf.matrix.col.verdict": "verdict",
+    "shelf.matrix.verdict": "verdict",
+    "shelf.matrix.verdict.nullincr": "no significant positive increment",
+    "shelf.matrix.prereg": "Prereg",
+    "shelf.matrix.zerollm": "zero-LLM",
     // Research atlas (/atlas — editorial deterministic research diagrams)
     "nav.atlas": "Research atlas",
     "nav.sub.atlas": "Editorial research diagrams: claims · divergence · diagnostics · lineage",

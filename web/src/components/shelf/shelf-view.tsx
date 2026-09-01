@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { ArrowUpRightIcon, BookOpenIcon, FileCheckIcon } from "lucide-react";
+import { ArrowUpRightIcon, BookOpenIcon, FileCheckIcon, TableIcon } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -42,6 +42,10 @@ const CATEGORY_LABEL: Record<KnowledgeShelfCategory, DictKey> = {
   theory: "shelf.cat.theory",
   rubric: "shelf.cat.rubric",
 };
+
+// Matrix row order for the R2-full L5 evidence matrix table (B/C/D/E1 phases
+// + the Track C confirmatory OOS row).
+const MATRIX_ROW_ORDER = ["B", "C", "D", "E1", "track_c"] as const;
 
 function Kpi({ label, value }: { label: string; value: number }) {
   return (
@@ -102,6 +106,7 @@ const pillCls = (active: boolean) =>
 export function ShelfView() {
   const { t, lang } = useI18n();
   const shelf = aionis.knowledgeShelf;
+  const evidenceMatrix = aionis.evidenceMatrix;
   const [category, setCategory] = useState<KnowledgeShelfCategory | "all">("all");
 
   const filtered = useMemo(
@@ -217,6 +222,81 @@ export function ShelfView() {
                 </span>
               </a>
             ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* R2-full L5 — five-claim evidence matrix: verbatim machine-read
+          values from the S1 manifest panel (differentials + ledger rows +
+          metrics). Non-significance is not equivalence — the note says so. */}
+      <Card className="border-muted py-0">
+        <CardHeader className="border-b">
+          <CardTitle className="flex items-center gap-2 text-base">
+            <TableIcon className="size-4 text-muted-foreground" />
+            {t("shelf.matrix.title")}
+          </CardTitle>
+          <CardDescription>{t("shelf.matrix.note")}</CardDescription>
+        </CardHeader>
+        <CardContent className="p-0">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs">
+              <thead className="border-b border-line2 text-muted-foreground">
+                <tr>
+                  <th className="px-4 py-2.5 font-medium">{t("shelf.matrix.col.phase")}</th>
+                  <th className="px-4 py-2.5 font-medium">{t("shelf.matrix.col.metric")}</th>
+                  <th className="px-4 py-2.5 font-medium">{t("shelf.matrix.col.ci")}</th>
+                  <th className="px-4 py-2.5 font-medium">{t("shelf.matrix.col.p")}</th>
+                  <th className="px-4 py-2.5 font-medium">{t("shelf.matrix.col.n")}</th>
+                  <th className="px-4 py-2.5 font-medium">{t("shelf.matrix.col.verdict")}</th>
+                  <th className="px-4 py-2.5 font-medium">{t("shelf.matrix.prereg")}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {MATRIX_ROW_ORDER.map((phase) => {
+                  const c = evidenceMatrix.claims[phase];
+                  if (!c) return null;
+                  const metric = c.combined_ic ?? c.mean_diff ?? 0;
+                  const p = c.p_hac ?? c.dm_p_mbb ?? null;
+                  return (
+                    <tr key={phase} className="border-t border-line2">
+                      <td className="px-4 py-2.5 font-mono font-semibold">{c.phase}</td>
+                      <td className="px-4 py-2.5 font-mono tabular-nums">
+                        {metric > 0 ? "+" : ""}{metric.toFixed(4)}
+                      </td>
+                      <td className="px-4 py-2.5 font-mono tabular-nums">
+                        [{c.ci_lo.toFixed(4)}, {c.ci_hi.toFixed(4)}]
+                      </td>
+                      <td className="px-4 py-2.5 font-mono tabular-nums">
+                        {p !== null && p !== undefined ? p.toFixed(3) : "—"}
+                      </td>
+                      <td className="px-4 py-2.5 font-mono tabular-nums">{c.n_months}</td>
+                      <td className="px-4 py-2.5">
+                        {c.phase === "track_c" && c.verdict ? (
+                          <Badge variant="secondary" className="bg-slate-500/15 text-slate-600 dark:text-slate-300">
+                            {c.verdict}
+                          </Badge>
+                        ) : (
+                          <span className="text-muted-foreground">
+                            {t("shelf.matrix.verdict.nullincr")}
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-4 py-2.5">
+                        <a
+                          href={`https://github.com/Rethymus/Aionis/blob/main/${c.prereg_doc}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-0.5 text-primary hover:underline"
+                        >
+                          {t("shelf.matrix.prereg")}
+                          <ArrowUpRightIcon className="size-3 shrink-0" aria-hidden />
+                        </a>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
         </CardContent>
       </Card>

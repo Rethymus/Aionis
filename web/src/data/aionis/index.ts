@@ -60,6 +60,7 @@ import filingStreamJson from "./filing_stream.json";
 import executivesJson from "./executives.json";
 import newsFeedJson from "./news_feed.json";
 import knowledgeShelfJson from "./knowledge_shelf.json";
+import evidenceMatrixJson from "./evidence_matrix.json";
 
 export type Pick = {
   rank: number;
@@ -1291,6 +1292,49 @@ export type KnowledgeShelf = {
   methodology: string;
   snapshot_ts?: string;
 };
+// R2-full L5 — five-claim evidence matrix (S1 manifest mirrored as a display
+// panel). Every value is a verbatim machine-read copy of the frozen
+// confirmatory files (differential.json / ledger row / metrics panel).
+export type EvidenceMatrixClaim = {
+  phase: string;
+  kind: string;
+  ledger_row: number;
+  results_sig?: string;
+  config_sig?: string;
+  prereg_doc: string;
+  mean_diff?: number;
+  combined_ic?: number;
+  ci_lo: number;
+  ci_hi: number;
+  dm_p_mbb?: number;
+  p_hac?: number;
+  n_months: number;
+  verdict?: string;
+  jt_look1?: string;
+  h6?: string;
+  sesoi?: number;
+  zero_llm?: boolean;
+};
+
+export type EvidenceMatrixArtifact = {
+  id: string;
+  path: string;
+  sha256: string;
+  bytes: number;
+};
+
+export type EvidenceMatrix = {
+  id: string;
+  version: string;
+  generator: string;
+  // Newest ledger-row ts among the five claims (date-only); null when no
+  // claim row carries a ts (honest-null, same pattern as KnowledgeShelf).
+  as_of?: string | null;
+  claims: Record<string, EvidenceMatrixClaim>;
+  artifacts: EvidenceMatrixArtifact[];
+  snapshot_ts?: string;
+};
+
 
 // TASK-DISP-R1A — score-surface diagnostics: pure descriptive statistics per
 // (month, region) over the frozen confirmatory OOS score cross-section.
@@ -1580,4 +1624,5 @@ export const aionis = {
   executives: executivesJson as Executives,
   newsFeed: newsFeedJson as NewsFeed,
   knowledgeShelf: knowledgeShelfJson as KnowledgeShelf,
+  evidenceMatrix: evidenceMatrixJson as EvidenceMatrix,
 };
