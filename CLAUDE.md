@@ -1,7 +1,8 @@
 <!--
   CLAUDE.md — Aionis project instructions for Claude Code.
   Claude Code reads this file NATIVELY (docs.anthropic.com/en/docs/claude-code/memory).
-  `AGENTS.md` is a symlink to THIS file for OpenAI Codex portability — edit HERE, not there.
+  `AGENTS.md` is a byte-identical copy of THIS file (same git blob, for OpenAI Codex
+  portability) — edit HERE, then mirror the exact bytes into AGENTS.md.
   Keep this file <200 lines (longer files reduce adherence). Put long procedures in
   WORKFLOW.md (referenced, NOT @import-ed, so it loads on-demand). Put git conventions in
   CONTRIBUTING.md. This HTML comment is stripped before injection into context.

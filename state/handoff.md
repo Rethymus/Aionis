@@ -8,6 +8,23 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-09-01 (zz19) 轮 55：接手验收轮（业主 /goal）——三子代理审计+调研+文档分工，E3 门控四硬化、全仓 ruff 首次归零、开源要件补齐（LICENSE/CITATION/ci.yml/README 双语升级）
+
+**背景与基线**：业主指令接手核查、查漏补缺、中央指挥子代理、最终验收门、严禁 mock、对标开源。**独立验证不信任自述**：全套 pytest exit 0（显式退出码——防"管道 tail 吞退出码"病理复发）；ruff 实测 13 错（zz18 自述"ruff 三脚本净"仅限三脚本、全仓从未干净——export_research_dossier/manifest_det_check 2 新增 + bts 3 + _sync 8 存量）。
+
+**双审计代理（Explore）**：①管线禁忌模式——synthetic.py 门控 CLEAN（唯一非测试调用方 cli --synthetic 显式旗标,phase/track/e3 runner 零引用）；3 P1 如实（frozen_beta.py:38 TODO=headline 前置标注+状态入 config 已记录、--measure-llm 显式 raise、provider_cutoff_faked 死分支→本轮修）+E3 四缺口（见下）；礼貌策略 CLEAN（http_policy min_interval≥2 硬校验）。②web/workers mock 扫描 CLEAN（6 面板抽查：metrics/ic_monthly/stock_universe/news/reddit_trending/picks 全真实带 as_of+溯源）；README 双语数字逐位一致 PASS；抓 P1 三件：glm46.html（94KB Next 错误页,git 跟踪）、e3-forward.yml shadow 校验必假（checkout 后 tracked ledger.jsonl 恒存在→任何 dispatch 必红）、web/README 7/38 路由腐烂。
+
+**E3 门控四硬化（本轮核心代码改动）**：①`scripts/forward_commit.py` shim 历史上是绕过 readiness 的无门账本写入路径（main() 默认 enforce=False）——重写为与 e3_forward_trigger 同加载 `config/e3_live_contracts.yaml` 冻结契约+enforce=True（sys.path 引 scripts 复用 _load_contracts/_load_provider_cutoff）；②runner 在门前接线 `freeze_out["events_df"]=_events_df(freeze_out)`——readiness 的 llm_event_text_empty 检查读的键 freeze_forward_iset 从不返回,故该 reason code 历史上**永不可触发**（AUD-06 要防的"arm_e13 LLM 边缘静默跳过"实际在场却检测不到）——现激活；③`_check_provider_cutoff` 新增 predict_session 参数,cutoff 月==predict 月→raise provider_cutoff_faked（原 elif bare pass 死分支）；④runner/gate/trigger 三处 docstring 率实化（"BEFORE any fit/LLM call/artifact write/ledger append"过claim→如实分层：forward_iset_frozen 预注册行+LLM Pass A 故意先行[config-before-result 锚],门挡 fit/commit/OOS 工件）。**语义后果如实入 roadmap P0-1**：面板追平 09-30 后 readiness 将先于其它检查在 step13 fail-closed 于 llm_event_text_empty——直到主文档文本抓取切片（"later slice"）实现；这是修复后的正确 fail-closed 非回归。**9 月 runbook 行为不变**（step1 predict_session_not_in_panel 仍先失败）。新增测试 2：test_readiness_fails_on_cutoff_faked_to_predict_month + test_runner_wires_events_df_into_gate_freeze_out（捕获 kwargs 断言）；test_runner_readiness_pass_allows_fit_to_proceed 以 _events_df 接缝模拟已实现文本切片（未来状态的正确姿势）。触发器 14/14 全绿。
+
+**全仓 ruff 归零（11 存量+2 新增）**：bts_tsi_fetch.py I001+2×E501、_sync.py 8×E501——全部机械换行（相邻字面量拼接,输出不变）；_sync.py 三跑 sha 逐字节一致验证（且吸收 286→303 commit 的合法陈旧刷新）+export_research_dossier/manifest_det_check I001 ruff --fix。**"uv run ruff check — lint (must be clean)"自述门自项目成立以来首次真正成立。**
+
+**开源要件（调研代理对标 qlib/vectorbt/alphalens/freqtrade/FinRL/FinGPT）**：①LICENSE 补齐（根文件缺失而 pyproject 声明 MIT——法律要件；含数据源/免责附录,代码与数据许可分离）；②CITATION.cff（GitHub 原生识别）；③ci.yml（pytest+ruff 全量,休眠容忍惯例对齐 e3-forward,计费解冻自动生效——H6 确定性主张转为外部可见证据的管道就位）；④双语 README 升级：徽章×3（MIT/Python/uv）、免责声明前置（freqtrade 位法：一句话结论后即声明,非埋底）、事实修正 5 处（11 标签补"总览"、55→54 面板+披露口径、AGENTS.md"symlink"→"同 blob 双文件"（git mode 100644 实证）、web 命令 npm→pnpm（repo 实为 pnpm-only）、页脚 LICENSE 链接分离代码/数据）；⑤web/README.md 全量重写（子代理 43 次工具调用逐路由核实：38 路由四组表+pnpm 命令+56 文件/54 注册面板分层披露+data 面板 committed 属性纠正——旧文"gitignored source"与 gitignore `!web/src/data/` 矛盾）。
+
+**卫生**：glm46.html git rm+删盘；def14a_persons_fetch.log 解除跟踪（.gitignore +/*.log 根级规则）；panel_alignment._assert_forward_returns_boundary if:pass 空转分支移除（诊断探针语义如实化,行为零变化）；e3-forward.yml shadow 校验改 sha256 前后摘要对比（原存在性检查对 tracked 文件恒真失败）。
+
+**验证**：全套 pytest exit 0（最终回归见 commit 前)+ruff 全仓 0+E3 三文件（readiness/runner/trigger）全绿+shim/trigger 导入核验+_sync 输出字节稳定。**边界**：hardening/docs/display lane；0 ledger/0 frozen/0 prereg/0 OOS。**待业主（不变）**：headline GO；P1 三项；membership 结构性裁决；新增待决：arm_e13 主文档文本切片（llm_event_text_empty 的解锁钥匙）排期。
+
+
 ## 2026-08-31/09-01 (zz18) 轮 54：八月影子窗口失守（事故如实）+ 触发器 --run-date 与新鲜度修复 + 九月窗口武装完成（单进程；全套绿）
 
 **事故如实记录**：08-31 影子窗口（北京 04:00 美股收盘后）执行时**宿主机休眠**——一次性自动化 `automation-33936da8`（05:06 触发）`runCount=0` 过期未执行，runbook 四步未跑；北京 11:41 唤醒后补执行（本条目）。八月首影失守，未伪造补跑。
