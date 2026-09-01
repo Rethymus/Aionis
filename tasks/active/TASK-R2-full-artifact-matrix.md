@@ -44,16 +44,15 @@ manifest 增 `version` 字段（v1 起步）；重导后旧版本移动至
 目录只增不删"。
 **验收**: 同 S1 + 归档行为有一个真实重导的实测记录。
 
-### M4 — CI 挂钩（M，半天 + 门）
+### M4 — CI 挂钩（M，半天 + 门）——**接线完成(2026-09-01, workflow 保持 disabled 待计费解冻)**
 `.github/workflows/refresh-terminal-data.yml` 数据刷新步之后追加
 `python scripts/export_evidence_html.py && python scripts/export_research_dossier.py`
 （continue-on-error + 显式 timeout，学 13D 步先例）。**硬门: Actions 计费封锁未解前
 仅提交 workflow 改动不启用**——workflow 已处 disabled 态，本片完成即"接线完毕待解冻"，
 如实记录，不得宣称 CI 已在跑。
-**验收**: workflow YAML 语法校验（actionlint 或 python yaml parse）+ 本地等效命令序列
-实测一遍（正是轮 52 已跑通的 面板→atlas→dossier→shelf 正典次序）。
+**验收(已过)**: workflow YAML 语法校验(python yaml parse ✓) + 本地等效命令序列实测(轮 52/54 正典次序 面板→atlas→dossier→相卡→shelf→manifest ✓)。
 
-### L5 — 终端矩阵页（L，1-2 天）
+### L5 — 终端矩阵页（L，1-2 天）——**已完成(2026-09-01, /shelf 矩阵卡上墙验证)**
 `/shelf` 或 `/track#evidence` 扩展矩阵卡：五相工件卡（phase/裁决/sha/字节量/GitHub
 链接），数据源 = S1 manifest 面板。i18n zh/en 对称（dict 只加不删）；hermetic 契约测试。
 **验收**: tsc 0 + eslint 0 + build 页数 +1~0 + 目视终验（明暗双主题）。
