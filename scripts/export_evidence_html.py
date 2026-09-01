@@ -820,17 +820,17 @@ def export_evidence_matrix_manifest(
 
     # Web mirror (display panel): stamped for the terminal's as-of honesty.
     # The reports/ canonical copy above stays byte-stable (no wall clock).
-    as_of = max((t for t in claim_ts if t), default="")[:10] or None
-    web = dict(manifest, as_of=as_of, snapshot_ts=datetime.now(timezone.utc).isoformat())
-    web_path = ROOT / "web/src/data/aionis/evidence_matrix.json"
-    web_path.parent.mkdir(parents=True, exist_ok=True)
-    web_path.write_text(
-        json.dumps(web, indent=2, sort_keys=True, ensure_ascii=False) + "\n",
-        encoding="utf-8",
-    )
-    print(
-        f"[evidence-matrix] {len(claims)} claims / {len(artifacts)} artifacts -> {out_path}"
-    )
+    # Written ONLY for the canonical run — fixture tests inject tmp paths and
+    # must not clobber the real panel.
+    if Path(out_path).resolve() == MATRIX_PATH.resolve():
+        as_of = max((t for t in claim_ts if t), default="")[:10] or None
+        web = dict(manifest, as_of=as_of, snapshot_ts=datetime.now(timezone.utc).isoformat())
+        web_path = ROOT / "web/src/data/aionis/evidence_matrix.json"
+        web_path.parent.mkdir(parents=True, exist_ok=True)
+        web_path.write_text(
+            json.dumps(web, indent=2, sort_keys=True, ensure_ascii=False) + "\n",
+            encoding="utf-8",
+        )
     return manifest
 
 
