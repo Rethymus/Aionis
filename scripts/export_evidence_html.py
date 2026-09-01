@@ -668,7 +668,13 @@ _CLAIMS: tuple[dict, ...] = (
         "sig": "ef321e9ee808804601e012818fa95522d2dc5f0fe8c53771d7f1b412c25ed49f",
     },
 )
-_MATRIX_ARTIFACTS = ("atlas-claim-v1.html", "research-dossier-v1.html")
+_MATRIX_ARTIFACTS = (
+    "atlas-claim-v1.html",
+    "research-dossier-v1.html",
+    "research-dossier-b-v1.html",
+    "research-dossier-d-v1.html",
+    "research-dossier-e1-v1.html",
+)
 
 
 def export_evidence_matrix_manifest(

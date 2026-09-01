@@ -1367,3 +1367,125 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
+
+# ---------------------------------------------------------------------------
+# R2-full S2 — per-phase meta dossiers (B / D / E1)
+#
+# Meta-only self-contained cards for the phases that do not have the full
+# Track-C citation-closed dossier. Every value is machine-read from the frozen
+# per-phase artifacts (differential.json / ic parquets / meta.json /
+# controls.json) and the ledger — zero hand-typed numbers, zero wall clock,
+# byte-stable double-run. Honest limitation, disclosed in the card itself: a
+# meta card carries the claim's numbers and reconciliation, not the full [S#]
+# provenance chain (that depth exists for the headline Track C claim).
+#
+# NOTE: pandas (`pd`) is imported lazily inside _ic_summary — this module's
+# header deliberately stays stdlib-only so the ledger probe paths in tests do
+# not pay the pandas import cost.
+
+_META_PHASES: tuple[dict, ...] = (
+    {"phase": "B", "ledger_row": 28, "prereg": "docs/phase-b-preregistration.md"},
+    {"phase": "D", "ledger_row": 34, "prereg": "docs/phase-d-preregistration.md"},
+    {"phase": "E1", "ledger_row": 37, "prereg": "docs/phase-e-preregistration.md"},
+)
+
+
+def _phase_dossier_html(phase, ledger_row, prereg, results_dir, ledger_lines):
+    import pandas as pd
+
+    rec = json.loads(ledger_lines[ledger_row - 1])
+    sig = str(rec.get("config_sig", ""))
+    rdir = results_dir / sig
+    if not rdir.is_dir():
+        raise ValueError(f"results dir missing for {phase}: {rdir}")
+    diff = json.loads((rdir / "differential.json").read_text(encoding="utf-8"))
+
+    def _ic_summary(name):
+        p = rdir / name
+        if not p.exists():
+            return {"present": False}
+        df = pd.read_parquet(p)
+        out = {"present": True, "rows": int(len(df)),
+               "columns": [str(c) for c in df.columns]}
+        num = df.select_dtypes(include="number")
+        if num.shape[1]:
+            col = num.columns[0]
+            out["first_col"] = str(col)
+            out["mean"] = float(num[col].mean())
+            out["min"] = float(num[col].min())
+            out["max"] = float(num[col].max())
+        return out
+
+    meta = json.loads((rdir / "meta.json").read_text(encoding="utf-8"))
+    controls = json.loads((rdir / "controls.json").read_text(encoding="utf-8"))
+
+    rows = "".join(
+        f"<tr><th>{_esc(k)}</th><td>{_esc(v)}</td></tr>"
+        for k, v in (
+            ("phase", phase),
+            ("ledger_row", ledger_row),
+            ("config_sig", sig),
+            ("H6_deterministic", meta.get("h6_deterministic", "—")),
+            ("mean_diff", repr(diff.get("mean_diff"))),
+            ("ci_lo", repr(diff.get("ci_lo"))),
+            ("ci_hi", repr(diff.get("ci_hi"))),
+            ("dm_p_mbb", repr(diff.get("dm_p_mbb"))),
+            ("n_months", diff.get("n_months", "—")),
+            ("controls", ", ".join(sorted(controls.keys())) or "—"),
+            ("ic_state", json.dumps(_ic_summary("ic_state.parquet"), sort_keys=True)),
+            ("ic_base", json.dumps(_ic_summary("ic_base.parquet"), sort_keys=True)),
+            ("preregistration", prereg),
+        )
+    )
+    return (
+        '<!DOCTYPE html>\n<html lang="zh-CN"><head><meta charset="utf-8">'
+        f"<title>Aionis — {phase} meta dossier</title>\n"
+        "<style>body{font-family:system-ui,sans-serif;max-width:860px;margin:2rem auto;"
+        "padding:0 1rem;color:#1f2328}table{border-collapse:collapse}th,td{border:1px solid #ccc;"
+        "padding:4px 10px;text-align:left}th{background:#f6f8fa}</style></head>\n<body>\n"
+        f"<h1>{_esc(phase)} — research dossier (meta)</h1>\n"
+        '<p class="note">meta-only 卡：承载该相主张的机读数值与账本对账；'
+        "完整 [S#] 引用闭合的溯源深度在头条 Track C 档案中。"
+        "Meta-only card: claim numbers + ledger reconciliation; the full [S#] "
+        "closed provenance chain covers the headline Track C claim.</p>\n"
+        f"<table>{rows}</table>\n"
+        "<p>byte-stable artifact — regenerate with "
+        "<code>scripts/export_research_dossier.py</code> (phase meta export).</p>\n"
+        "</body></html>\n"
+    )
+
+
+def export_phase_dossier_meta(
+    results_dir=None,
+    ledger_path=None,
+    out_dir=None,
+):
+    """Write research-dossier-<phase>-v1.html for B / D / E1 (meta-only).
+
+    Returns the written-artifact summary list. Raises on ledger/results-dir
+    reconciliation failures (export-time gate).
+    """
+    results_dir = ROOT / "runs/results" if results_dir is None else Path(results_dir)
+    ledger_path = ROOT / "runs/ledger.jsonl" if ledger_path is None else Path(ledger_path)
+    out_dir = ROOT / "reports/evidence" if out_dir is None else Path(out_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    ledger_lines = ledger_path.read_text(encoding="utf-8").splitlines()
+
+    written = []
+    for spec in _META_PHASES:
+        html_out = _phase_dossier_html(
+            spec["phase"], spec["ledger_row"], spec["prereg"],
+            results_dir, ledger_lines,
+        )
+        fp = out_dir / f"research-dossier-{spec['phase'].lower()}-v1.html"
+        fp.write_text(html_out, encoding="utf-8", newline="\n")
+        written.append({
+            # canonical repo location (out_dir is an injectable test seam)
+            "id": f"research-dossier-{spec['phase'].lower()}-v1",
+            "path": f"reports/evidence/{fp.name}",
+            "bytes": fp.stat().st_size,
+            "sha256": hashlib.sha256(fp.read_bytes()).hexdigest(),
+        })
+        print(f"wrote {fp} ({fp.stat().st_size} bytes) sha256={written[-1]['sha256']}")
+    return written

@@ -70,8 +70,10 @@ def _write_fixture_tree(tmp_path: Path, ledger_sig_override: str | None = None) 
 
     art = tmp_path / "artifacts"
     art.mkdir()
-    (art / "atlas-claim-v1.html").write_text("<html>fixture-atlas</html>", encoding="utf-8")
-    (art / "research-dossier-v1.html").write_text("<html>fixture-dossier</html>", encoding="utf-8")
+    for aid in ("atlas-claim-v1", "research-dossier-v1",
+                "research-dossier-b-v1", "research-dossier-d-v1",
+                "research-dossier-e1-v1"):
+        (art / f"{aid}.html").write_text(f"<html>fixture-{aid}</html>", encoding="utf-8")
     return {
         "results_dir": results, "ledger_path": ledger,
         "metrics_path": metrics_path, "artifacts_dir": art,
@@ -96,7 +98,7 @@ def test_fixture_manifest_structure_and_byte_stability(tmp_path: Path) -> None:
     tc = m1["claims"]["track_c"]
     assert tc["verdict"] == "NULL" and tc["p_hac"] == 0.484 and tc["n_months"] == 71
 
-    assert len(m1["artifacts"]) == 2
+    assert len(m1["artifacts"]) == 5
     for a in m1["artifacts"]:
         raw = (fx["artifacts_dir"] / (a["id"] + ".html")).read_bytes()
         assert a["sha256"] == hashlib.sha256(raw).hexdigest()

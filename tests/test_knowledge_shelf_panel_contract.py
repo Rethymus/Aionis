@@ -29,8 +29,15 @@ _DATE = re.compile(r"\d{4}-\d{2}-\d{2}")
 # ellipsis may push the truncated form to 241).
 _MAX_TEASER = 241
 # Layer 3: the fixed evidence-artifact ids (pinned — a new artifact is a new
-# catalog entry + a new id, never a rename of these).
-ARTIFACT_IDS = {"atlas-claim-v1", "research-dossier-v1"}
+# catalog entry + a new id, never a rename of these). R2-full S2 added the
+# per-phase meta dossiers (B/D/E1) to the two headline artifacts.
+ARTIFACT_IDS = {
+    "atlas-claim-v1",
+    "research-dossier-v1",
+    "research-dossier-b-v1",
+    "research-dossier-d-v1",
+    "research-dossier-e1-v1",
+}
 _DICT = Path("web/src/i18n/dict.ts")
 
 
@@ -208,7 +215,7 @@ def test_export_knowledge_shelf_end_to_end(tmp_path, monkeypatch) -> None:
     assert payload["snapshot_ts"]
     # No reports/evidence/ in the fixture tree -> the artifact layer must
     # degrade honestly (null sha256/n_bytes), never fabricate a hash.
-    assert len(payload["evidence_artifacts"]) == 2
+    assert len(payload["evidence_artifacts"]) == len(ARTIFACT_IDS)
     assert {a["id"] for a in payload["evidence_artifacts"]} == ARTIFACT_IDS
     for a in payload["evidence_artifacts"]:
         assert a["sha256"] is None and a["n_bytes"] is None, a["id"]
@@ -236,7 +243,9 @@ def test_knowledge_shelf_evidence_artifacts_reconcile_to_repo() -> None:
     """
     ks = _load()
     arts = ks["evidence_artifacts"]
-    assert isinstance(arts, list) and len(arts) == 2, "exactly two evidence artifacts"
+    assert isinstance(arts, list) and len(arts) == len(ARTIFACT_IDS), (
+        "exactly the pinned evidence artifacts"
+    )
     assert {a["id"] for a in arts} == ARTIFACT_IDS, "artifact ids are pinned"
     for a in arts:
         assert a["path"].startswith("reports/evidence/"), a["id"]

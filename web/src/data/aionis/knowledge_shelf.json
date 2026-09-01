@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "as_of": "2026-08-27",
+  "as_of": "2026-08-31",
   "n_docs": 68,
   "n_categories": 5,
   "categories": {
@@ -42,7 +42,7 @@
       "title": "Phase E \u9884\u6ce8\u518c \u2014 \u56e0\u679c\u63a8\u7406 / \u4eff\u771f\u4f20\u64ad\u5c42\uff08\u300c\u900f\u8fc7\u73b0\u8c61\u6c42\u672c\u8d28\u300d\uff09",
       "path": "docs/phase-e-preregistration.md",
       "category": "preregistration",
-      "date": "2026-07-29",
+      "date": "2026-08-31",
       "n_chars": 4761,
       "summary": "\u72b6\u6001\uff1av0.1 DRAFT \u00b7 2026-07-29 \u00b7 \u7a0b\u5e8f\u7ea7\uff08\u4e09\u9636\u6bb5 E1\u2192E2\u2192E3\uff09\u00b7 \u5168\u90e8 run DEFERRED\u3002 \u8fd9\u662f\u89c4\u5212\u6587\u6863\uff0c\u4e0d\u542b\u3001\u4e0d\u8dd1\u4efb\u4f55 Phase E OOS \u7ed3\u679c\u3002 E1 build \u5728 Phase D \u843d\u5730\u540e\u542f\u52a8\u3002",
       "url": "https://github.com/Rethymus/Aionis/blob/main/docs/phase-e-preregistration.md"
@@ -51,7 +51,7 @@
       "title": "Phase E2 \u9884\u6ce8\u518c \u2014 LLM \u5b8f\u89c2\u56e0\u679c\u94fe\u5047\u8bbe\u751f\u6210\u5668\uff08cutoff \u63a7\u5236\uff0c\u7f13\u89e3\u6cc4\u6f0f\uff09",
       "path": "docs/phase-e2-preregistration.md",
       "category": "preregistration",
-      "date": "2026-07-29",
+      "date": "2026-08-31",
       "n_chars": 11589,
       "summary": "\u72b6\u6001\uff1av0.1 DRAFT \u00b7 2026-07-29 \u00b7 \u89c4\u5212\u6587\u6863 \u00b7 run DEFERRED\uff08E1 null \u5df2\u5438\u6536\uff1b\u8bbe\u8ba1\u843d\u5b9a + E1 \u88ab\u5438\u6536\u540e\u5efa E2\uff09\u3002 \u672c\u7a3f\u4e0d\u542b\u3001\u4e0d\u8dd1\u4efb\u4f55 Phase E2 OOS \u7ed3\u679c\u2014\u2014\u65e2\u4e0d\u62bd\u53d6\u56e0\u679c\u8fb9\u3001 \u4e5f\u4e0d\u8dd1 rank-IC\u3002 \u8fd9\u662f\u6cc4\u6f0f\u9677\u9631\u9636\u6bb5\uff1a\u7528\u6237\u7684\u5b8f\u89c2\u53d9\u4e8b\u613f\u666f\uff08\u75ab\u60c5\u2192\u533b\u836f\u3001AI\u2192\u7b97\u529b\u2192\u82f1\u4f1f\u8fbe\u2192\u7535\u529b\u3001\u767d\u9152\u4e0b\u8dcc\uff09 \u672c\u8d28\u662f\u300c\u4e8b\u4ef6\u2192\u53d7\u5f71\u54cd\u677f\u5757/\u8d44\u4ea7\u300d\u7684\u4e8b\u540e\u56e0\u679c\u63a8\u7406\u2014\u2014\u8fd9\u6b63\u662f LLM \u64c5\u957f\u4f46\u5fc5\u7136\u5e26\u4e8b\u540e\u8bb0\u5fc6\u6cc4\u6f0f \u7684\u80fd\u529b\u3002",
       "url": "https://github.com/Rethymus/Aionis/blob/main/docs/phase-e2-preregistration.md"
@@ -60,7 +60,7 @@
       "title": "Phase E3 \u9884\u6ce8\u518c \u2014 \u524d\u5411\u5b9e\u65f6\u7d2f\u79ef\uff08\u6295\u4ea7\u771f\u503c\uff0c\u96f6\u6cc4\u6f0f\uff09",
       "path": "docs/phase-e3-preregistration.md",
       "category": "preregistration",
-      "date": "2026-08-01",
+      "date": "2026-08-31",
       "n_chars": 13559,
       "summary": "\u72b6\u6001\uff1av0.1 DRAFT \u00b7 2026-07-30 \u00b7 \u89c4\u5212\u6587\u6863 \u00b7 run DEFERRED \u2014 E3 \u662f LIVE PROCESS\uff0c\u542f\u52a8\u800c\u975e\u56de\u6d4b\u3002 \u4fee\u8ba2 v0.2 \u00b7 2026-07-31 \u00b7 ADR-009\uff1a\u56e0\u679c\u5c42\u7531\u300cE2 LLM causal-broadcast\u300d\u6539\u4e3a\u6df7\u5408\u65b9\u6848\u2014\u2014\u5b8f\u89c2=\u51bb\u7ed3\u03b2 sign-only\uff08\u96f6-LLM\uff09\uff1b\u4e8b\u4ef6(13D/8-K)=\u6781\u7b80\u95ed\u96c6 LLM \u56e0\u679c\u8fb9\uff1b\u677f\u5757\u7edf\u4e00 FF-12\u3002 \u00a71/\u00a72.2/\u00a73 \u5df2\u540c\u6b65\u3002",
       "url": "https://github.com/Rethymus/Aionis/blob/main/docs/phase-e3-preregistration.md"
@@ -240,7 +240,7 @@
       "title": "\u6570\u636e\u63a5\u5165 7 \u95e8\uff08Data Intake Rubric\uff09\u2014 \u7b2c\u4e09\u65b9\u6570\u636e\u96c6\u8fdb Aionis \u524d\u7684\u5f3a\u5236\u6e05\u5355",
       "path": "docs/data-intake-rubric.md",
       "category": "rubric",
-      "date": "2026-07-28",
+      "date": "2026-08-31",
       "n_chars": 4517,
       "summary": "\u72b6\u6001\uff1av0.1 \u00b7 2026-07-28 \u00b7 \u6cbb\u7406\u6587\u6863\uff08durable registry \u7684\u4e00\u90e8\u5206\uff09\u3002 \u8303\u56f4\uff1a\u4efb\u4f55\u7b2c\u4e09\u65b9\u6570\u636e\u96c6\uff08\u542b exploratory / \u4e00\u6b21\u6027\u63a2\u67e5\uff09\u8fdb Aionis \u524d\uff0c\u5fc5\u987b\u5168\u90e8 7 \u95e8\u8fc7\u5173\u3002",
       "url": "https://github.com/Rethymus/Aionis/blob/main/docs/data-intake-rubric.md"
@@ -420,7 +420,7 @@
       "title": "\u6570\u636e\u63a5\u5165 7 \u95e8 \u2014 BTS \u8d27\u8fd0 TSI\uff08freight_taco / /taco \u9875 FreightProxySection\uff09",
       "path": "docs/data-intake-bts-tsi.md",
       "category": "theory",
-      "date": "2026-08-23",
+      "date": "2026-08-31",
       "n_chars": 4503,
       "summary": "\u72b6\u6001\uff1av0.1 \u00b7 2026-08-23 \u00b7 exploratory-only display module\u3002 \u8303\u56f4\uff1a\u53c2\u7167\u7ad9 TACO \u536b\u661f\u6570\u636e\uff08Trucking Activity Co. \u5546\u4e1a\u5361\u8f66\u8ba1\u6570\uff09\u5e9f\u9664\u8c41\u514d\u540e\u7684\u516c\u5171\u57df\u964d\u7ea7\u7b49\u4ef7\u7269\u2014\u2014\u7f8e\u56fd\u4ea4\u901a\u7edf\u8ba1\u5c40\uff08BTS\uff09\u8fd0\u8f93\u670d\u52a1\u6307\u6570\uff08Freight TSI\uff0c\u6708\u9891\uff09\u4e3a\u4e3b\u6e90 + FRED/BLS CES \u5361\u8f66\u8fd0\u8f93\u5c31\u4e1a\u4e3a\u8f85\u52a9\u3002",
       "url": "https://github.com/Rethymus/Aionis/blob/main/docs/data-intake-bts-tsi.md"
@@ -438,7 +438,7 @@
       "title": "\u6570\u636e\u63a5\u5165 7 \u95e8 \u2014 \u56fd\u4f1a\u653f\u5ba2\u4ea4\u6613\uff08STOCK Act \u00b7 House PTR \u7533\u62a5\u6d41\uff09",
       "path": "docs/data-intake-congress-stock-act.md",
       "category": "theory",
-      "date": "2026-08-23",
+      "date": "2026-08-31",
       "n_chars": 3410,
       "summary": "\u72b6\u6001\uff1av0.1 \u00b7 2026-08-21 \u00b7 exploratory-only display module \u00b7 \u7533\u62a5\u6d41\u7ea7\uff08filing-stream\uff09\u3002 \u8303\u56f4\uff1aSTOCK Act \u653f\u5ba2\u4ea4\u6613\u6570\u636e\u901a\u8fc7 7 \u95e8\u5f3a\u5236\u6e05\u5355\u3002 \u5f15\u7528\uff1a\u4e3b rubric \u89c1 docs/data-intake-rubric.md\u3002",
       "url": "https://github.com/Rethymus/Aionis/blob/main/docs/data-intake-congress-stock-act.md"
@@ -456,7 +456,7 @@
       "title": "\u6570\u636e\u63a5\u5165 7 \u95e8 \u2014 EDGAR 13G \u88ab\u52a8\u6301\u4ed3\u7533\u62a5\u6d41\uff08SC 13G / SC 13G/A\uff09",
       "path": "docs/data-intake-edgar-13g.md",
       "category": "theory",
-      "date": "2026-08-23",
+      "date": "2026-08-31",
       "n_chars": 5972,
       "summary": "\u72b6\u6001\uff1av0.2 \u00b7 2026-08-23 \u00b7 exploratory-only display module\u3002 v0.2 \u589e\u8865\uff1a\u6301\u80a1\u6bd4\u4f8b\u7b2c\u4e8c\u9636\u6bb5\u6709\u754c\u6587\u6863\u89e3\u6790\uff08stakes_pct\uff0c13G/13D \u4e24\u9762\u677f\u53ef\u89c1\u884c\uff09+ 13D cache \u91cd\u5efa\u8bf7\u6c42\u8d26\uff08\u89c1\u6587\u672b\"\u7b2c\u4e8c\u9636\u6bb5\"\u4e0e\"\u8bf7\u6c42\u8d26\"\uff09\u3002 \u8303\u56f4\uff1aEDGAR SC 13G \u88ab\u52a8\u6301\u4ed3\u6570\u636e\u901a\u8fc7 7 \u95e8\u5f3a\u5236\u6e05\u5355\uff0c\u6240\u6709\u7b2c\u4e09\u65b9\u6570\u636e\u96c6\u8fdb Aionis \u524d \u5fc5\u987b \u5168\u90e8\u8fc7\u5173\u3002",
       "url": "https://github.com/Rethymus/Aionis/blob/main/docs/data-intake-edgar-13g.md"
@@ -501,7 +501,7 @@
       "title": "\u6570\u636e\u63a5\u5165 7 \u95e8 \u2014 \u4e3b\u9898 ETF \u5b98\u65b9\u6301\u4ed3\uff08theme_etfs / /institutions \u677f\u5757\uff09",
       "path": "docs/data-intake-etf-holdings.md",
       "category": "theory",
-      "date": "2026-08-23",
+      "date": "2026-08-31",
       "n_chars": 5065,
       "summary": "\u72b6\u6001\uff1av0.1 \u00b7 2026-08-23 \u00b7 exploratory-only display module\u3002 \u8303\u56f4\uff1a10 \u53ea\u4e3b\u9898 ETF \u7684\u53d1\u884c\u5546\u5b98\u65b9\u65e5\u5ea6\u6301\u4ed3\u6587\u4ef6\uff08iShares/BlackRock + Global X/Mirae Asset\uff09\u901a\u8fc7 7 \u95e8\u5f3a\u5236\u6e05\u5355\uff1b\u6240\u6709\u7b2c\u4e09\u65b9\u6570\u636e\u96c6\u8fdb Aionis \u524d \u5fc5\u987b \u5168\u90e8\u8fc7\u5173\u3002",
       "url": "https://github.com/Rethymus/Aionis/blob/main/docs/data-intake-etf-holdings.md"
@@ -528,7 +528,7 @@
       "title": "\u6570\u636e\u63a5\u5165 7 \u95e8 \u2014 \u65b9\u6cd5\u4e66\u67b6\uff08knowledge_shelf / /shelf \u9762\u677f\uff09",
       "path": "docs/data-intake-knowledge-shelf.md",
       "category": "theory",
-      "date": "2026-08-23",
+      "date": "2026-08-31",
       "n_chars": 3104,
       "summary": "\u72b6\u6001\uff1av0.1 \u00b7 2026-08-23 \u00b7 reference \u663e\u793a\u6a21\u5757\uff08\u4e1a\u4e3b\u5e9f\u9664\u8c41\u514d\u540e\u7684\u53c2\u7167\u7ad9\"\u4e66\u67b6\"\u7b49\u4ef7\u7269\uff09\u3002 \u8303\u56f4\uff1a\u672c\u9762\u677f\u901a\u8fc7 7 \u95e8\u5f3a\u5236\u6e05\u5355\uff08docs/data-intake-rubric.md\uff09\u3002 \u4e0e\u5176\u5b83\u9762\u677f\u4e0d\u540c\uff0c\u672c\u9762\u677f \u81ea\u6709\u5185\u5bb9\u5c42\u96f6\u7b2c\u4e09\u65b9\u7248\u6743\u9762\uff08\u5168\u90e8\u4e3a\u4ed3\u5e93 MIT \u81ea\u6709\u6587\u6863\u7684\u76ee\u5f55\uff09\uff1b\u5916\u94fe\u5c42\u4e3a\u7f16\u8f91\u7cbe\u9009\u4e66\u7b7e \uff08\u53ea\u94fe\u51fa + \u4e00\u53e5\u9759\u6001\u63cf\u8ff0\uff0c\u4e0d\u6293\u53d6\uff09\u3002",
       "url": "https://github.com/Rethymus/Aionis/blob/main/docs/data-intake-knowledge-shelf.md"
@@ -564,7 +564,7 @@
       "title": "\u5e02\u573a\u9a71\u52a8\u56e0\u7d20\u6846\u67b6\uff08Market Driver Framework\uff09\u2014 TCR \u6f5c\u5728\u4e16\u754c\u72b6\u6001\u7684 5 \u7ebf\u7279\u5f81\u5206\u7c7b\u6cd5",
       "path": "docs/market-driver-framework.md",
       "category": "theory",
-      "date": "2026-07-28",
+      "date": "2026-08-31",
       "n_chars": 9357,
       "summary": "\u72b6\u6001\uff1av0.1 \u00b7 2026-07-28 \u00b7 \u6cbb\u7406\u6587\u6863\uff08durable taxonomy\uff0c\u975e\u4e00\u6b21\u6027\uff09\u3002 \u8303\u56f4\uff1a\u628a theory-of-computable-reality.md\uff08TCR\uff09\u00a73.1 \u91cc\u62bd\u8c61\u7684\u6f5c\u5728\u4e16\u754c\u72b6\u6001 $G_t=(V,E,\\text{attr},w)$ \u5206\u89e3\u6210 5 \u6761\u53ef\u6d4b\u3001\u53ef\u5ba1\u8ba1\u7684\"\u5e02\u573a\u9a71\u52a8\u4e3b\u7ebf\"\uff0c \u4f5c\u4e3a Aionis \u7684\u7279\u5f81\u5206\u7c7b\u6cd5\uff08feature taxonomy\uff09\uff1a\u6bcf\u4e00\u4e2a\u7279\u5f81/\u5217\u88ab\u6253\u4e0a\u6070\u597d\u4e00\u6761\u4e3b\u7ebf\u7684\u6807\u7b7e \uff08\u6216\u5d29\u76d8\u7ec4\u5408\u4ea4\u4e92\u5c42\uff09\u3002",
       "url": "https://github.com/Rethymus/Aionis/blob/main/docs/market-driver-framework.md"
@@ -704,8 +704,41 @@
       "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/research-dossier-v1.html",
       "sha256": "a1f4cd756fcce8724747c66f6b50439efc09adabe4b8eaf9b4d517643bbfd886",
       "n_bytes": 46549
+    },
+    {
+      "id": "research-dossier-b-v1",
+      "name_en": "Phase B meta dossier",
+      "name_zh": "Phase B \u5143\u6863\u6848",
+      "desc_en": "Meta-only card for the fundamental-timing claim: differential values, ledger reconciliation, IC series summary, controls.",
+      "desc_zh": "\u57fa\u672c\u9762\u65f6\u70b9\u4e3b\u5f20\u7684 meta-only \u5361\uff1a\u5dee\u5206\u503c\u3001\u8d26\u672c\u5bf9\u8d26\u3001IC \u5e8f\u5217\u6458\u8981\u3001\u63a7\u5236\u68c0\u9a8c\u3002",
+      "path": "reports/evidence/research-dossier-b-v1.html",
+      "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/research-dossier-b-v1.html",
+      "sha256": "0095d94d951e7d6cb4758fa454ca804f0fa132cba741d374310813ec66db5ea3",
+      "n_bytes": 1974
+    },
+    {
+      "id": "research-dossier-d-v1",
+      "name_en": "Phase D meta dossier",
+      "name_zh": "Phase D \u5143\u6863\u6848",
+      "desc_en": "Meta-only card for the relationship-bundle claim: differential values, ledger reconciliation, IC series summary, controls.",
+      "desc_zh": "\u5173\u7cfb\u7f51\u7edc\u4e3b\u5f20\u7684 meta-only \u5361\uff1a\u5dee\u5206\u503c\u3001\u8d26\u672c\u5bf9\u8d26\u3001IC \u5e8f\u5217\u6458\u8981\u3001\u63a7\u5236\u68c0\u9a8c\u3002",
+      "path": "reports/evidence/research-dossier-d-v1.html",
+      "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/research-dossier-d-v1.html",
+      "sha256": "2050d78f5b1fdc6415115e13caf2ebdded61ef4ab6031d29ecb2a5acb9438a76",
+      "n_bytes": 1993
+    },
+    {
+      "id": "research-dossier-e1-v1",
+      "name_en": "Phase E1 meta dossier",
+      "name_zh": "Phase E1 \u5143\u6863\u6848",
+      "desc_en": "Meta-only card for the cross-firm propagation claim: differential values, ledger reconciliation, IC series summary, controls.",
+      "desc_zh": "\u8de8\u516c\u53f8\u4f20\u64ad\u4e3b\u5f20\u7684 meta-only \u5361\uff1a\u5dee\u5206\u503c\u3001\u8d26\u672c\u5bf9\u8d26\u3001IC \u5e8f\u5217\u6458\u8981\u3001\u63a7\u5236\u68c0\u9a8c\u3002",
+      "path": "reports/evidence/research-dossier-e1-v1.html",
+      "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/research-dossier-e1-v1.html",
+      "sha256": "b548383fda07ac3e738f43d1fd0d2da6c44834302f5ab0558d30802998ca4068",
+      "n_bytes": 1995
     }
   ],
   "methodology": "Layer 1 \u2014 Aionis's OWN method library: catalog of docs/ + decisions/ markdown (repo MIT; zero third-party copyright surface). Each entry carries metadata plus a safe teaser slice (first 2-3 sentences, <=240 chars) extracted at export time; the full text stays on GitHub (link-out). Dates are last-commit dates read from the LOCAL git repository (no network). Layer 2 \u2014 a FIXED editorially-curated bookmark list of first-hand public research sources (BIS / Fed FEDS / IMF / NBER / arXiv q-fin / FRASER / FRED-ALFRED / RePEc): link-out + one static sentence each, no fetching, no scraping, no summary APIs \u2014 copyright stays with the authors, we only catalog. Categories are a fixed 5-rail whitelist (preregistration / adr / results / rubric / theory); n_docs reconciles to the sum of the rails. Layer 3 \u2014 generated evidence artifacts: self-contained HTML, byte-stable, sha256 + byte count pinned at export time from the local tracked file so a reader can verify the download against the catalog (a missing file degrades honestly to null \u2014 never fabricated). Display-only reference lane \u2014 never part of any research or OOS pipeline.",
-  "snapshot_ts": "2026-08-31T11:28:38.074545+00:00"
+  "snapshot_ts": "2026-09-01T10:52:06.917116+00:00"
 }

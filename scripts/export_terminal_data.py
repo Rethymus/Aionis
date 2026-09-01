@@ -6966,6 +6966,60 @@ _KS_EVIDENCE_ARTIFACTS: list[dict[str, str]] = [
             "reports/evidence/research-dossier-v1.html"
         ),
     },
+    {
+        "id": "research-dossier-b-v1",
+        "name_en": "Phase B meta dossier",
+        "name_zh": "Phase B 元档案",
+        "desc_en": (
+            "Meta-only card for the fundamental-timing claim: differential "
+            "values, ledger reconciliation, IC series summary, controls."
+        ),
+        "desc_zh": (
+            "基本面时点主张的 meta-only 卡：差分值、账本对账、IC 序列摘要、"
+            "控制检验。"
+        ),
+        "path": "reports/evidence/research-dossier-b-v1.html",
+        "url": (
+            "https://github.com/Rethymus/Aionis/blob/main/"
+            "reports/evidence/research-dossier-b-v1.html"
+        ),
+    },
+    {
+        "id": "research-dossier-d-v1",
+        "name_en": "Phase D meta dossier",
+        "name_zh": "Phase D 元档案",
+        "desc_en": (
+            "Meta-only card for the relationship-bundle claim: differential "
+            "values, ledger reconciliation, IC series summary, controls."
+        ),
+        "desc_zh": (
+            "关系网络主张的 meta-only 卡：差分值、账本对账、IC 序列摘要、"
+            "控制检验。"
+        ),
+        "path": "reports/evidence/research-dossier-d-v1.html",
+        "url": (
+            "https://github.com/Rethymus/Aionis/blob/main/"
+            "reports/evidence/research-dossier-d-v1.html"
+        ),
+    },
+    {
+        "id": "research-dossier-e1-v1",
+        "name_en": "Phase E1 meta dossier",
+        "name_zh": "Phase E1 元档案",
+        "desc_en": (
+            "Meta-only card for the cross-firm propagation claim: differential "
+            "values, ledger reconciliation, IC series summary, controls."
+        ),
+        "desc_zh": (
+            "跨公司传播主张的 meta-only 卡：差分值、账本对账、IC 序列摘要、"
+            "控制检验。"
+        ),
+        "path": "reports/evidence/research-dossier-e1-v1.html",
+        "url": (
+            "https://github.com/Rethymus/Aionis/blob/main/"
+            "reports/evidence/research-dossier-e1-v1.html"
+        ),
+    },
 ]
 
 # ADR-style front-matter list rows ("- **date:** 2026-07-27") are registry
@@ -7307,7 +7361,11 @@ def main() -> None:
     # form8k, before the freshness map / catalog that index it.
     _safe_export("executives", export_executives)
     # Knowledge shelf reads repo files directly (no panel deps) — anywhere
-    # before the freshness map / catalog that index it.
+    # before the freshness map / catalog that index it. The per-phase meta
+    # dossiers must exist BEFORE the shelf so its sha pinning covers them.
+    import export_research_dossier as _erd
+
+    _safe_export("phase_dossier_meta", _erd.export_phase_dossier_meta)
     _safe_export("knowledge_shelf", export_knowledge_shelf)
     # R2-full S1 evidence matrix manifest: five-claim digests over differential
     # files + the atlas/dossier artifact shas on disk. Canonical order: panels
