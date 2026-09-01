@@ -96,8 +96,11 @@ def parse_report(path):
         block = txt[start:end]
         fixed = FIXED_RE.search(block)
         loc = re.search(r"位置[：:]\s*`?([^`\n]+)", block)
-        issues.append({"level": m.group(1), "title": m.group(2).strip(),
-                       "file": loc.group(1) if loc else "", "fixed": fixed.group(1) if fixed else None})
+        issues.append({
+            "level": m.group(1), "title": m.group(2).strip(),
+            "file": loc.group(1) if loc else "",
+            "fixed": fixed.group(1) if fixed else None,
+        })
     sm = SCORE_RE.search(txt)
     score = float(sm.group(1)) if sm else None
     return {"status": "done", "score": score, "issues": issues}
@@ -190,7 +193,8 @@ def main():
             pending.append(h)
 
     prog = {"meta": {"created": "2026-08-20", "total": len(order),
-                     "note": "逐 commit 审查进度。完成标记 = docs/code-review/commits/<hash>.md 已写入（skipped 可仅有 JSON 记录）；由 _sync.py 同步。"},
+                     "note": "逐 commit 审查进度。完成标记 = docs/code-review/commits/<hash>.md "
+                             "已写入（skipped 可仅有 JSON 记录）；由 _sync.py 同步。"},
             "pending": pending, "done": done, "skipped": skipped,
             "claimed_done_without_report": missing_detail}
     with open(os.path.join(BASE, "progress.json"), "w", encoding="utf-8") as f:
@@ -201,8 +205,13 @@ def main():
     lines = []
     lines.append("# Aionis 全历史代码审查汇总（SUMMARY）")
     lines.append("")
-    lines.append(f"- 进度：**{len(done) + len(skipped)} / {len(order)}**（已审 {len(done)}，跳过 {len(skipped)}，待审 {len(pending)}）")
-    lines.append(f"- 有效问题（不含已在后续 commit 修复）：**P0={tally['p0']}，P1={tally['p1']}，P2={tally['p2']}，P3={tally['p3']}**；另已在后续 commit 修复 {tally['fixed_later']} 条")
+    lines.append(
+        f"- 进度：**{len(done) + len(skipped)} / {len(order)}**"
+        f"（已审 {len(done)}，跳过 {len(skipped)}，待审 {len(pending)}）")
+    lines.append(
+        f"- 有效问题（不含已在后续 commit 修复）："
+        f"**P0={tally['p0']}，P1={tally['p1']}，P2={tally['p2']}，P3={tally['p3']}**；"
+        f"另已在后续 commit 修复 {tally['fixed_later']} 条")
     if avg is not None:
         lines.append(f"- 平均评分：{avg}/10（{len(scores)} 个已评分 commit）")
     lines.append("")
@@ -210,11 +219,16 @@ def main():
     lines.append("")
     lines.append("| 模块 | 已审 | 跳过 | P0 | P1 | P2 | P3 | 均分 |")
     lines.append("|---|---|---|---|---|---|---|---|")
-    for m, s in sorted(mod_stats.items(), key=lambda kv: -(kv[1]["p0"] * 1000 + kv[1]["p1"] * 100 + kv[1]["p2"] * 10 + kv[1]["commits"])):
+    def _sev(kv):
+        return -(kv[1]["p0"] * 1000 + kv[1]["p1"] * 100 + kv[1]["p2"] * 10 + kv[1]["commits"])
+
+    for m, s in sorted(mod_stats.items(), key=_sev):
         if s["commits"] == 0 and s["skipped"] == 0:
             continue
         avgm = round(s["score_sum"] / s["score_n"], 1) if s["score_n"] else "-"
-        lines.append(f"| {m} | {s['commits']} | {s['skipped']} | {s['p0']} | {s['p1']} | {s['p2']} | {s['p3']} | {avgm} |")
+        lines.append(
+            f"| {m} | {s['commits']} | {s['skipped']} | {s['p0']} | {s['p1']} "
+            f"| {s['p2']} | {s['p3']} | {avgm} |")
     lines.append("")
     lines.append("## 严重问题清单（P0/P1，未修复，详见各 commit 报告）")
     lines.append("")
@@ -226,8 +240,11 @@ def main():
     lines.append("_由 _sync.py 生成；单 commit 报告见 commits/ 目录。_")
     with open(os.path.join(BASE, "SUMMARY.md"), "w", encoding="utf-8") as f:
         f.write("\n".join(lines) + "\n")
-    print(f"done={len(done)} skipped={len(skipped)} pending={len(pending)} claimed_no_report={len(missing_detail)} "
-          f"P0={tally['p0']} P1={tally['p1']} P2={tally['p2']} P3={tally['p3']} fixed={tally['fixed_later']} avg={avg}")
+    print(
+        f"done={len(done)} skipped={len(skipped)} pending={len(pending)} "
+        f"claimed_no_report={len(missing_detail)} "
+        f"P0={tally['p0']} P1={tally['p1']} P2={tally['p2']} P3={tally['p3']} "
+        f"fixed={tally['fixed_later']} avg={avg}")
 
 
 if __name__ == "__main__":

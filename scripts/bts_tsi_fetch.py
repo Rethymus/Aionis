@@ -28,7 +28,7 @@ import argparse
 import sys
 import time
 
-from aionis.ingest.bts_tsi import fetch_tsi_freight, fetch_truck_employment
+from aionis.ingest.bts_tsi import fetch_truck_employment, fetch_tsi_freight
 
 
 def main() -> int:
@@ -52,11 +52,15 @@ def main() -> int:
     try:
         emp = fetch_truck_employment(force=args.force)
     except Exception as e:  # noqa: BLE001 — auxiliary is best-effort
-        print(f"[bts-tsi-fetch] SKIP truck-employment auxiliary: {type(e).__name__}: {e}", flush=True)
+        print(
+            f"[bts-tsi-fetch] SKIP truck-employment auxiliary: {type(e).__name__}: {e}",
+            flush=True,
+        )
         return 0
     print(
         f"[bts-tsi-fetch] FRED CES4348400001: {len(emp)} months "
-        f"{emp[0]['month']} -> {emp[-1]['month']} (latest {emp[-1]['month']} = {emp[-1]['value']}k)",
+        f"{emp[0]['month']} -> {emp[-1]['month']} "
+        f"(latest {emp[-1]['month']} = {emp[-1]['value']}k)",
         flush=True,
     )
     return 0

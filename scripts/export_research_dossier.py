@@ -53,8 +53,8 @@ import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from ks_sources import RESEARCH_SOURCES
 from export_evidence_html import archive_if_changed  # R2-full M3 (move-don't-delete)
+from ks_sources import RESEARCH_SOURCES
 
 ROOT = Path(__file__).resolve().parents[1]
 PANEL_DIR = ROOT / "web/src/data/aionis"

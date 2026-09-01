@@ -1,7 +1,7 @@
 """Determinism probe: run the S1 manifest exporter in a fresh process and
 print the payload sha8 — two runs with the same fixture must agree."""
-import sys
 import hashlib
+import sys
 import tempfile
 from pathlib import Path
 

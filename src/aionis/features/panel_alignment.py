@@ -381,21 +381,20 @@ def _assert_anti_leakage_invariants(panel: pd.DataFrame, horizon: int) -> None:
 def _assert_forward_returns_boundary(
     returns: pd.Series, prices_wide: pd.DataFrame, horizon: int
 ) -> None:
-    """断言：前向收益基于未来价格（时序边界）。"""
-    # returns 的 index 应该比 prices_wide 的 index 少 horizon 个元素
-    #（最后 horizon 行无法计算 forward return）
-    expected_len = len(prices_wide) - horizon
-    actual_len = len(returns)
+    """诊断探针：前向收益基于未来价格（时序边界）。
 
-    if actual_len != expected_len * len(prices_wide.columns):
-        # 允许部分 NaN（价格缺失）
-        pass
+    NOT a hard assert: 允许部分 NaN（价格缺失）与行过滤，所以长度只能做
+    上界比较并记录 debug 日志 —— 历史上这里的 `if != expected: pass` 是一个
+    空转分支，已移除；真实的不变量由 build_design_matrix 的 PIT 对齐保证。
+    """
+    expected_max = (len(prices_wide) - horizon) * len(prices_wide.columns)
 
     log.debug(
         "forward_returns_boundary_check",
         horizon=horizon,
         n_returns=len(returns),
-        expected_max=expected_len * len(prices_wide.columns),
+        expected_max=expected_max,
+        within_bound=bool(len(returns) <= expected_max),
     )
 
 
