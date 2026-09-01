@@ -7309,6 +7309,13 @@ def main() -> None:
     # Knowledge shelf reads repo files directly (no panel deps) — anywhere
     # before the freshness map / catalog that index it.
     _safe_export("knowledge_shelf", export_knowledge_shelf)
+    # R2-full S1 evidence matrix manifest: five-claim digests over differential
+    # files + the atlas/dossier artifact shas on disk. Canonical order: panels
+    # (above) -> atlas -> dossier (standalone scripts) -> THIS -> shelf re-run
+    # if atlas/dossier changed after it. Raises on ledger/sig mismatch.
+    import export_evidence_html as _evh
+
+    _safe_export("evidence_matrix", _evh.export_evidence_matrix_manifest)
     # lineage_graph derives from the COMMITTED form13f / def14a_persons /
     # stakes_13g / smart_money JSONs written above (never from caches) — must
     # run before the freshness map / catalog that index it.

@@ -3,7 +3,7 @@
 - 编号: R2-full（roadmap §5 P2-10，2026-08-31 Planner 拆分前置完成）
 - 标题: 把"单 Track C 主张"的自包含证据工件（atlas-claim-v1 / research-dossier-v1）扩展为
   **五主张证据矩阵**（B / C / D / E1 / Track C），加版本化与 CI 自动重导钩子。
-- 状态: **READY — Planner 拆分完毕，切片可独立派发（单 agent 串行纪律）**
+- 状态: **推进中 — S1 已完成(2026-09-01:export_evidence_matrix_manifest + evidence-matrix-v1.json + 3 契约测试,接入 export_terminal_data main);S2/M3/M4/L5 待派发(单 agent 串行纪律)**
 - 优先级背景: `reports/design/2026-08-28-future-roadmap-research.md` §5 P2-10。
 - 边界: **export/display lane；runs/ 只读；0 ledger 写 / 0 frozen / 0 prereg / 0 OOS 计算**。
   真实管线禁 mock。全部切片不做任何 fetch（输入均为已 committed 面板与 runs/ 冻结产物）。

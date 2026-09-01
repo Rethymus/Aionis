@@ -634,5 +634,139 @@ def main() -> int:
     return 0
 
 
+# ---------------------------------------------------------------------------
+# R2-full S1 — evidence matrix manifest (tasks/active/TASK-R2-full-artifact-matrix.md)
+#
+# Machine-readable matrix of all five claims + self-contained artifact digests.
+# Every value is read from frozen/committed files (differential.json,
+# ledger.jsonl, metrics.json) at export time — zero hand-typed numbers, zero
+# wall clock, byte-stable double-run (contract-tested).
+
+MATRIX_ID = "evidence-matrix-v1"
+MATRIX_PATH = ROOT / "reports/evidence/evidence-matrix-v1.json"
+RESULTS_DIR = ROOT / "runs/results"
+LEDGER_PATH = ROOT / "runs/ledger.jsonl"
+
+# Frozen claim registry. Provenance: docs/RESULTS.md §2 + §6 ledger index —
+# sigs are the confirmatory results dirs, ledger_row the 1-based ledger line
+# whose config_sig must equal that sig (export-time reconciliation gate).
+_CLAIMS: tuple[dict, ...] = (
+    {
+        "phase": "B", "ledger_row": 28,
+        "sig": "17245a75d2d4cd17c68f36a9d0f4b4f7f3baf1db31b33b87be79e6e4a11400da",
+    },
+    {
+        "phase": "C", "ledger_row": 30,
+        "sig": "a7fdb48f5942fae146b151143807653fd66c4c5f1601dc7cf9d04a796c1fada1",
+    },
+    {
+        "phase": "D", "ledger_row": 34,
+        "sig": "d31580630ff35326557dda9f50832c7af3625dd6507e47e252ea01800372a12c",
+    },
+    {
+        "phase": "E1", "ledger_row": 37,
+        "sig": "ef321e9ee808804601e012818fa95522d2dc5f0fe8c53771d7f1b412c25ed49f",
+    },
+)
+_MATRIX_ARTIFACTS = ("atlas-claim-v1.html", "research-dossier-v1.html")
+
+
+def export_evidence_matrix_manifest(
+    results_dir: Path | None = None,
+    ledger_path: Path | None = None,
+    metrics_path: Path | None = None,
+    artifacts_dir: Path | None = None,
+    out_path: Path | None = None,
+) -> dict:
+    """Build and write the five-claim evidence matrix manifest.
+
+    Returns the manifest dict. Raises on any ledger/config-sig mismatch (the
+    export-time gate — same spirit as the atlas byte-stability contract).
+    """
+    results_dir = RESULTS_DIR if results_dir is None else Path(results_dir)
+    ledger_path = LEDGER_PATH if ledger_path is None else Path(ledger_path)
+    metrics_path = PANEL_DIR / "metrics.json" if metrics_path is None else Path(metrics_path)
+    artifacts_dir = ROOT / "reports/evidence" if artifacts_dir is None else Path(artifacts_dir)
+    out_path = MATRIX_PATH if out_path is None else Path(out_path)
+
+    ledger_lines = ledger_path.read_text(encoding="utf-8").splitlines()
+
+    def _ledger_sig(row: int) -> str:
+        rec = json.loads(ledger_lines[row - 1])
+        sig = rec.get("config_sig")
+        if not sig:
+            raise ValueError(f"ledger line {row} has no config_sig")
+        return str(sig)
+
+    claims: dict[str, dict] = {}
+    for c in _CLAIMS:
+        sig = _ledger_sig(c["ledger_row"])
+        if sig != c["sig"]:
+            raise ValueError(
+                f"ledger line {c['ledger_row']} config_sig {sig[:12]} != "
+                f"results dir {c['sig'][:12]}"
+            )
+        diff = json.loads(
+            (results_dir / c["sig"] / "differential.json").read_text(encoding="utf-8")
+        )
+        claims[c["phase"]] = {
+            "kind": "phase",
+            "ledger_row": c["ledger_row"],
+            "results_sig": c["sig"],
+            "mean_diff": diff["mean_diff"],
+            "ci_lo": diff["ci_lo"],
+            "ci_hi": diff["ci_hi"],
+            "dm_p_mbb": diff["dm_p_mbb"],
+            "n_months": diff["n_months"],
+            # docs/RESULTS.md §2: all four phase headlines are zero-LLM.
+            "zero_llm": True,
+        }
+
+    # Track C: no local results dir (2026-08-30 round note) — headline values
+    # from the committed metrics panel, config_sig from ledger line 49 itself.
+    tc = json.loads(metrics_path.read_text(encoding="utf-8"))
+    if int(tc.get("ledger_row", -1)) != 49:
+        raise ValueError("metrics.json ledger_row != 49")
+    claims["track_c"] = {
+        "kind": "confirmatory_oos",
+        "ledger_row": 49,
+        "config_sig": _ledger_sig(49),
+        "combined_ic": tc["combined_ic"],
+        "p_hac": tc["p"],
+        "ci_lo": tc["ci_lo"],
+        "ci_hi": tc["ci_hi"],
+        "n_months": tc["n_months"],
+        "verdict": tc["verdict"],
+        "jt_look1": tc["jt_look1"],
+        "h6": tc["h6"],
+        "sesoi": tc["sesoi"],
+    }
+
+    artifacts = []
+    for name in _MATRIX_ARTIFACTS:
+        fp = artifacts_dir / name
+        raw = fp.read_bytes()
+        artifacts.append({
+            "id": name.removesuffix(".html"),
+            "path": f"reports/evidence/{name}",
+            "sha256": hashlib.sha256(raw).hexdigest(),
+            "bytes": len(raw),
+        })
+
+    manifest = {
+        "id": MATRIX_ID,
+        "generator": "scripts/export_evidence_html.py",
+        "claims": claims,
+        "artifacts": artifacts,
+    }
+    payload = json.dumps(manifest, indent=2, sort_keys=True, ensure_ascii=False) + "\n"
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(payload, encoding="utf-8")
+    print(
+        f"[evidence-matrix] {len(claims)} claims / {len(artifacts)} artifacts -> {out_path}"
+    )
+    return manifest
+
+
 if __name__ == "__main__":
     raise SystemExit(main())

@@ -1,0 +1,78 @@
+{
+  "artifacts": [
+    {
+      "bytes": 24240,
+      "id": "atlas-claim-v1",
+      "path": "reports/evidence/atlas-claim-v1.html",
+      "sha256": "27306bba5b14fb2291b87745910dc7595371be98776a6e3058b20770b3fa0378"
+    },
+    {
+      "bytes": 46549,
+      "id": "research-dossier-v1",
+      "path": "reports/evidence/research-dossier-v1.html",
+      "sha256": "a1f4cd756fcce8724747c66f6b50439efc09adabe4b8eaf9b4d517643bbfd886"
+    }
+  ],
+  "claims": {
+    "B": {
+      "ci_hi": 0.008972245083013938,
+      "ci_lo": -0.01057295742238062,
+      "dm_p_mbb": 0.8695652173913043,
+      "kind": "phase",
+      "ledger_row": 28,
+      "mean_diff": -0.0008003561696833403,
+      "n_months": 125,
+      "results_sig": "17245a75d2d4cd17c68f36a9d0f4b4f7f3baf1db31b33b87be79e6e4a11400da",
+      "zero_llm": true
+    },
+    "C": {
+      "ci_hi": 0.006555821432304851,
+      "ci_lo": -0.019530768568940524,
+      "dm_p_mbb": 0.3553223388305847,
+      "kind": "phase",
+      "ledger_row": 30,
+      "mean_diff": -0.006487473568317837,
+      "n_months": 125,
+      "results_sig": "a7fdb48f5942fae146b151143807653fd66c4c5f1601dc7cf9d04a796c1fada1",
+      "zero_llm": true
+    },
+    "D": {
+      "ci_hi": 0.007754814491945227,
+      "ci_lo": -0.013714495699179569,
+      "dm_p_mbb": 0.5972013993003499,
+      "kind": "phase",
+      "ledger_row": 34,
+      "mean_diff": -0.0029798406036171702,
+      "n_months": 125,
+      "results_sig": "d31580630ff35326557dda9f50832c7af3625dd6507e47e252ea01800372a12c",
+      "zero_llm": true
+    },
+    "E1": {
+      "ci_hi": 0.005870802428557472,
+      "ci_lo": -0.01145659242594545,
+      "dm_p_mbb": 0.5332333833083458,
+      "kind": "phase",
+      "ledger_row": 37,
+      "mean_diff": -0.0027928949986939897,
+      "n_months": 125,
+      "results_sig": "ef321e9ee808804601e012818fa95522d2dc5f0fe8c53771d7f1b412c25ed49f",
+      "zero_llm": true
+    },
+    "track_c": {
+      "ci_hi": 0.0159,
+      "ci_lo": -0.0336,
+      "combined_ic": -0.0088,
+      "config_sig": "e14b9d445411e74cc3418af3bde1148163725875b01ab75175bdde002225e738",
+      "h6": "PASS",
+      "jt_look1": "NOT_EQUIVALENT",
+      "kind": "confirmatory_oos",
+      "ledger_row": 49,
+      "n_months": 71,
+      "p_hac": 0.484,
+      "sesoi": 0.01,
+      "verdict": "NULL"
+    }
+  },
+  "generator": "scripts/export_evidence_html.py",
+  "id": "evidence-matrix-v1"
+}
