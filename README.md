@@ -8,6 +8,10 @@
 
 **简体中文** · [English](README.en.md)
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python 3.10+](https://img.shields.io/badge/python-%E2%89%A5_3.10-blue.svg)](pyproject.toml)
+[![uv](https://img.shields.io/badge/uv-managed-%23DE5FE9.svg)](https://docs.astral.sh/uv/)
+
 </div>
 
 > **一个把"可证伪"当工程约束来实现的量化研究实验台**：先冻结主张，再让数据裁决——
@@ -15,6 +19,10 @@
 
 **一句话结论**：四个增量信息主张（B/C/D/E1）与首条时序 confirmatory OOS（Track C）
 的裁决全部为 **NULL** ——点估计不显著异于零。这不是失败，是按预注册交付的结果。
+
+> ⚠️ **免责声明**：本项目仅供研究与教育用途，**不构成任何投资建议**。它不是交易
+> 系统，也没有任何可部署的实盘业绩（E3 前向积累明确 **NO-GO**，见 ④）。请勿依据
+> 本项目输出做出资金决策；使用风险自担。
 
 <div align="center">
 
@@ -157,7 +165,8 @@ flowchart LR
     G -.-> VER
 ```
 
-- **数据面板**：55 个 committed 导出面板——EDGAR 全家桶（13D/13G · Form 4 · 8-K ·
+- **数据面板**：54 个 committed 导出面板（`/data-health` 逐项公示 `n_panels` 与
+  as-of 水位）——EDGAR 全家桶（13D/13G · Form 4 · 8-K ·
   DEF 14A · Form D · 13F · IPO 424B4 · 统一申报流）、FRED/ALFRED、Tiingo、Alpaca、
   CFTC COT、GDELT 新闻、ARK 官方持仓、ApeWisdom、Reddit、沪深 300 成分等；
   美中双区域、中英双语；模型卡按 Mitchell et al. (2019) 模型卡规范导出。
@@ -166,14 +175,14 @@ flowchart LR
   模块引入实时价格 = 前视泄漏。
 
 ```bash
-cd web && npm install && npm run dev      # http://localhost:3000
+cd web && pnpm install && pnpm dev      # http://localhost:3000
 ```
 
 <a id="dashboard"></a>
 ## ⑥ 本地量化仪表盘（Streamlit + Plotly）
 
-11 个标签：拟合 / 波动率 / 曲线演化 / 事件研究 / 不确定性 / 视界稳健性 / 覆盖 /
-策略收益 / 前向 IC / 运行史。
+11 个标签：总览 / 拟合质量 / 波动率 / 曲线演化 / 事件研究 / 不确定性 / 视界稳健性 /
+覆盖 / 策略收益 / 前向 IC / 运行史。
 
 ```bash
 uv run streamlit run dashboard/app.py
@@ -269,7 +278,8 @@ pandas-market-calendars · pydantic · structlog。终端为 Next.js 静态导�
 <a id="governance"></a>
 ## ⑫ 治理与文档
 
-- **治理锚点**：[`CLAUDE.md`](CLAUDE.md)（项目规则，`AGENTS.md` 为其 symlink）·
+- **治理锚点**：[`CLAUDE.md`](CLAUDE.md)（项目规则；[`AGENTS.md`](AGENTS.md) 为其
+  逐字节同内容镜像文件，git 中为同一 blob 的双文件，服务多工具移植）·
   [`WORKFLOW.md`](WORKFLOW.md)（11 阶段运行宪法）· [`CONTRIBUTING.md`](CONTRIBUTING.md)
   （Conventional Commits + 账本规则 + 秘密/数据政策）。
 - **运行状态**：[`state/current.md`](state/current.md)（每次会话先读）· `state/handoff.md` ·
@@ -280,6 +290,8 @@ pandas-market-calendars · pydantic · structlog。终端为 Next.js 静态导�
   （编号正典索引）· [`decisions/index.md`](decisions/index.md)（ADR 注册表）。
 - **账本**：`runs/ledger.jsonl`（append-only、**已入库**的审计日志）；`runs/results/`、
   `runs/*.log`、`runs/*.parquet` 为 gitignored 可再生工件。
+- **引用本仓库**：见 [`CITATION.cff`](CITATION.cff)。代码许可：MIT（[`LICENSE`](LICENSE)）；
+  第三方数据源许可另见 [`docs/data-license-allowlist.md`](docs/data-license-allowlist.md)。
 
 任何新阶段都走同一条抗泄漏管线：冻结配置 → `config_committed` 账本行 → PIT 数据 →
 声明验证类型 → 冻结学习器 → rank-IC 差分 → 控制检验 → H6 → 裁决。验收门见
@@ -289,6 +301,6 @@ pandas-market-calendars · pydantic · structlog。终端为 Next.js 静态导�
 
 <div align="center">
 
-[English version](README.en.md) · License: 见 [`docs/data-license-allowlist.md`](docs/data-license-allowlist.md)
+[English version](README.en.md) · 代码许可 MIT：[LICENSE](LICENSE) · 数据源许可：[docs/data-license-allowlist.md](docs/data-license-allowlist.md)
 
 </div>

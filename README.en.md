@@ -8,6 +8,10 @@
 
 [简体中文](README.md) · **English**
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python 3.10+](https://img.shields.io/badge/python-%E2%89%A5_3.10-blue.svg)](pyproject.toml)
+[![uv](https://img.shields.io/badge/uv-managed-%23DE5FE9.svg)](https://docs.astral.sh/uv/)
+
 </div>
 
 > **A quantitative research harness that treats falsifiability as an engineering
@@ -16,8 +20,14 @@
 
 **The verdict in one line**: all four incremental-information claims (B/C/D/E1)
 and the first chronological confirmatory OOS (Track C) returned **NULL** — point
-estimates not significantly different from zero. That is the pre-registered
-intended outcome, delivered as designed.
+estimates not significantly different from zero. This is not a failure: it is
+the result delivered exactly as pre-registered.
+
+> ⚠️ **Disclaimer**: this project is for research and educational purposes only
+> and is **not investment advice**. It is not a trading system and has no
+> deployable live track record (E3 forward accumulation is explicitly **NO-GO**,
+> see ④). Do not make financial decisions based on its output; use at your own
+> risk.
 
 <div align="center">
 
@@ -182,7 +192,8 @@ flowchart LR
     G -.-> VER
 ```
 
-- **Data panels**: 55 committed export panels — the EDGAR family (13D/13G ·
+- **Data panels**: 54 committed export panels (`n_panels` and per-panel as-of
+  watermarks published on `/data-health`) — the EDGAR family (13D/13G ·
   Form 4 · 8-K · DEF 14A · Form D · 13F · IPO 424B4 · unified filing stream),
   FRED/ALFRED, Tiingo, Alpaca, CFTC COT, GDELT news, official ARK holdings,
   ApeWisdom, Reddit, CSI 300 constituents, and more; dual-region (US + CN),
@@ -194,14 +205,15 @@ flowchart LR
   — any research module importing live prices = lookahead leakage.
 
 ```bash
-cd web && npm install && npm run dev      # http://localhost:3000
+cd web && pnpm install && pnpm dev      # http://localhost:3000
 ```
 
 <a id="dashboard"></a>
 ## ⑥ Quant-eval dashboard (local, Streamlit + Plotly)
 
-11 tabs: fit quality / volatility / curve evolution / event study / uncertainty /
-horizon robustness / coverage / strategy return / forward IC / run history.
+11 tabs: overview / fit quality / volatility / curve evolution / event study /
+uncertainty / horizon robustness / coverage / strategy return / forward IC /
+run history.
 
 ```bash
 uv run streamlit run dashboard/app.py
@@ -231,8 +243,8 @@ uv run ruff check             # lint must be clean
 
 Each `scripts/phase_{b,c,d,e1}_run.py` is a thin wrapper over its testable
 orchestrator (`src/aionis/eval/phase_*.py`); `scripts/strategy_eval_run.py` runs
-the secondary L-S lens; `scripts/sensitivity_horizon.py` the horizon sweep. Most
-scripts support a `PHASE_X_NO_LEDGER=1` reproducibility mode.
+the secondary L-S lens; and `scripts/sensitivity_horizon.py` runs the horizon
+sweep. Most scripts support a `PHASE_X_NO_LEDGER=1` reproducibility mode.
 
 Stack: pandas / numpy / pyarrow · scikit-learn · **LightGBM ≥4.3 (frozen
 learner)** · xgboost · statsmodels · purgedcv (PurgedGroupKFold) · arch ≥8.0
@@ -308,8 +320,9 @@ project is not affiliated with the authors.*
 <a id="governance"></a>
 ## ⑫ Governance & docs
 
-- **Governance anchors**: [`CLAUDE.md`](CLAUDE.md) (project rules; `AGENTS.md` is
-  a symlink) · [`WORKFLOW.md`](WORKFLOW.md) (the 11-stage operating constitution) ·
+- **Governance anchors**: [`CLAUDE.md`](CLAUDE.md) (project rules; [`AGENTS.md`](AGENTS.md)
+  is a byte-identical mirror file — the same git blob twice — for multi-tool
+  portability) · [`WORKFLOW.md`](WORKFLOW.md) (the 11-stage operating constitution) ·
   [`CONTRIBUTING.md`](CONTRIBUTING.md) (Conventional Commits + ledger rule +
   secrets/data policy).
 - **Operating state**: [`state/current.md`](state/current.md) (read first each
@@ -323,6 +336,9 @@ project is not affiliated with the authors.*
 - **Ledger**: `runs/ledger.jsonl` (append-only, **tracked** audit log);
   `runs/results/`, `runs/*.log`, `runs/*.parquet` are gitignored regenerable
   artifacts.
+- **Citing this repository**: see [`CITATION.cff`](CITATION.cff). Code license:
+  MIT ([`LICENSE`](LICENSE)); third-party data-source licensing separately in
+  [`docs/data-license-allowlist.md`](docs/data-license-allowlist.md).
 
 New phases run the same anti-leakage pipeline: freeze config →
 `config_committed` ledger row → PIT data → declared validation kind → frozen
@@ -333,6 +349,6 @@ learner → rank-IC differential → controls → H6 → verdict. Acceptance gat
 
 <div align="center">
 
-[中文版](README.md) · License: see [`docs/data-license-allowlist.md`](docs/data-license-allowlist.md)
+[中文版](README.md) · Code license MIT: [LICENSE](LICENSE) · Data-source licensing: [docs/data-license-allowlist.md](docs/data-license-allowlist.md)
 
 </div>
