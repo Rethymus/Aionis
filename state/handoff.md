@@ -8,6 +8,17 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-08-31/09-01 (zz18) 轮 54：八月影子窗口失守（事故如实）+ 触发器 --run-date 与新鲜度修复 + 九月窗口武装完成（单进程；全套绿）
+
+**事故如实记录**：08-31 影子窗口（北京 04:00 美股收盘后）执行时**宿主机休眠**——一次性自动化 `automation-33936da8`（05:06 触发）`runCount=0` 过期未执行，runbook 四步未跑；北京 11:41 唤醒后补执行（本条目）。八月首影失守，未伪造补跑。
+
+**补执行与三处真修复**：①display 刷新两轮（预算暂停 563 + 续跑 22 = 585/585，缓存获 08-31 会话）→ 研究面板强制重建 (3,938,585) 至 **2026-08-31**；②volume 新鲜度守卫（存在即复用→最后日期 <4 日即重抓）；③**trigger `--run-date` CLI**（`main()` 本就参数化但 CLI 未接——从 UTC+8 在收盘后执行时日历已翻日，"today"推导会静默瞄准错误月份，09-01 实测 NO-OP 证实）。**冻结面回退（测试当场拦截）**：我曾给 `_final_panel_is_complete` 加新鲜度守卫 → `test_phase_b_frozen_path_still_reuses_complete_panel` 立即 FAIL（"ticker-complete 即终态"是 H6 确定性契约，冻结面板不得从刷新缓存静默扩展）→ 回退并留注释；本地缓存现含 08-31 属 gitignored 工件事实，不入库。**教训入案**：改动前先 grep 钉该行为的契约测试。
+
+**九月窗口武装验证**：`--run-date 2026-09-30` 冒烟（NO-LEDGER）= month_end_detected 正确 → freeze(throwaway) → readiness fail-closed 于 `predict_session_not_in_panel panel_max=2026-07-31 < 2026-09-30T16:00`，零写入。**结构性发现（研究线问题，呈业主）**：组装面板网格边缘随 fund/mem 节奏推进（07-30→07-31 随刷新前移）；membership 源为 pierrebrunelle **月度快照**（现 max=2026-04-01）——若边缘推进不及月末，九月 readiness 将结构性失败；需裁决：替代 PIT 成员源 / 容差策略 / 或接受"readiness 当日如实失败"并顺延。**9-30 runbook（北京 10-01 04:00 后）**：①`uv run python scripts/track_b_fetch_volume.py`（新鲜度已自动化）②`uv run python scripts/track_b_materialize_panel.py` ③`PHASE_E3_NO_LEDGER=1 uv run python scripts/e3_forward_trigger.py --run-date 2026-09-30`。
+
+**验证**：全套 pytest exit 0（两轮）+ market 13/13 + trigger 14/14 + ruff 三脚本净。**边界**：0 ledger 写/0 frozen/0 prereg/0 OOS 计算（冻结面回退保证）；过期自动化已删。**呈业主**：headline GO；P1 三项（Track A / LLM vintage CI / R1-full）；上属结构性发现的裁决方向。
+
+
 ## 2026-08-31 (zz17) 轮 53：README 双语精修 + 站点三改造 + 站名清除 + P0-1 E3 影子推进（readiness 链全通、剩内在时钟门）+ 周期 2 续轮（单进程；全套绿）
 
 **本轮四件业主事项全落地**（README 精修→首页改造→Pages 更新→优先级快照），随后按计划继续推进零门项。**开场**：git 净 + pytest 基线 exit 0。**边界**：display/data-caches/docs lane；**0 ledger 写 / 0 frozen / 0 prereg / 0 OOS 计算**（E3 全程 NO-LEDGER 影子模式）；门控项如实不代行（headline GO、P1 三项）。
