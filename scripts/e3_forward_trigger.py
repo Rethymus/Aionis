@@ -4,7 +4,9 @@ Determines whether a given run date is the NYSE month-end session and, if so,
 triggers the forward commit with live-readiness enforcement.
 
 Uses pandas_market_calendars (XNYS calendar) to find the last NYSE trading
-day of each month. Runs in shadow mode by default (PHASE_E3_NO_LEDGER=1).
+day of each month. Shadow mode is opt-in via ``PHASE_E3_NO_LEDGER=1`` (the CI
+workflow pins it to "1"; a local run WITHOUT the env var is a real,
+readiness-gated ledger-writing run — set it explicitly for shadow bring-up).
 
 This script is deterministic and fail-closed:
 - Returns early (no-op) when run_date is NOT the month-end session

@@ -320,3 +320,46 @@ def test_runner_policy_with_real_cutoff_reaches_readiness_gate(
     assert "forward_prediction_committed" not in [
         r["event"] for r in _forward_rows(tmp_path)
     ]
+
+
+def test_runner_wires_events_df_into_gate_freeze_out(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """AUD-06 wiring (2026-09-01): the gate must see the events frame the LLM
+    edge will actually consume. Historically the gate read
+    ``freeze_out.get("events_df")`` — a key ``freeze_forward_iset`` never
+    returns — so ``llm_event_text_empty`` could never fire. The runner now
+    injects ``_events_df(freeze_out)`` before the gate call."""
+    from aionis.eval.forward_live_readiness import (
+        ProviderCutoffPolicy,
+        ReadinessCheckResult,
+    )
+
+    captured: dict = {}
+
+    def _capture_gate(**kwargs):
+        captured.update(kwargs)
+        return ReadinessCheckResult(
+            is_ready=False, reason_code="predict_session_not_in_panel",
+            manifest={},
+        )
+
+    monkeypatch.setattr(RUN, "check_forward_readiness", _capture_gate)
+    _patch_runner(monkeypatch)
+    res = RUN.main(
+        runs_dir=tmp_path,
+        today=pd.Timestamp("2026-07-15"),
+        enforce_live_readiness=True,
+        provider_cutoff_policy=ProviderCutoffPolicy(block_on_unknown=True),
+        provider_cutoff="2025-06-30T16:00:00-04:00",
+    )
+    assert res["committed"] is False
+
+    gate_freeze = captured["freeze_out"]
+    assert "events_df" in gate_freeze, "runner must wire events_df into the gate"
+    events = gate_freeze["events_df"]
+    # the synthetic freeze has one 13D + one 8-K row (both with accession) and
+    # the runner's event frame is text="" by construction — exactly the shape
+    # the gate's llm_event_text_empty check exists to catch.
+    assert len(events) == 2
+    assert events["text"].eq("").all()

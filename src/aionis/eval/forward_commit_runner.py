@@ -202,11 +202,17 @@ def main(
     fit+commit. In ``PHASE_E3_NO_LEDGER=1`` mode the freeze writes to a throwaway
     runs dir and no ledger rows are appended (the sig is still computed).
 
-    AUD-06 readiness gate: validates the commit targets the requested live session
-    with complete PIT inputs BEFORE any fit/LLM call/artifact write/ledger append.
-    Fail-closed on the cutoff too: a configured ``provider_cutoff_policy`` with no
-    ``provider_cutoff`` raises ValueError at entry (the fake predict_ts fallback
-    is only for the legacy no-policy path).
+    AUD-06 readiness gate: with ``enforce_live_readiness=True`` the gate blocks
+    the fit, the commit and any ``forward_prediction_committed`` row / OOS
+    artifact whenever the commit target session, PIT input completeness, or the
+    provider cutoff fails its contract. Two steps deliberately precede the gate
+    and are NOT undone on a readiness failure: the ``forward_iset_frozen`` row
+    (pre-registration — the freeze is committed before scoring, per the
+    config-before-result anchor) and the LLM Pass-A extra-features build (a
+    cost, not an integrity exposure: no OOS score exists on a failed gate).
+    Fail-closed on the cutoff too: a configured ``provider_cutoff_policy`` with
+    no ``provider_cutoff`` raises ValueError at entry (the fake predict_ts
+    fallback is only for the legacy no-policy path).
     """
     artifacts_only = os.environ.get("PHASE_E3_NO_LEDGER") == "1"
     runs = Path(runs_dir)
@@ -274,8 +280,13 @@ def main(
         print(f"[E3] forward_iset_frozen iset_sha256={iset_sha[:12]}", flush=True)
 
     # --- build arm_e13 extra_features (Pass A) over the freeze
-    sessions = nyse_sessions(pd.Timestamp(px.index.min()).normalize(), predict_session)
+    sessions = nyse_sessions(pd.Timestamp(px.index.min()), predict_session)
     events_df = _events_df(freeze_out)
+    # AUD-06 wiring (2026-09-01): the readiness gate reads freeze_out["events_df"];
+    # without this injection it always saw an empty frame, so llm_event_text_empty
+    # could never fire and an arm_e13 commit with the LLM edge silently skipped
+    # (text="" by construction) passed the gate undetected.
+    freeze_out["events_df"] = events_df
     client = _build_llm_client(provider)
     extra = build_forward_extra_features(
         macro_df=freeze_out["macro_df"], stakes_df=freeze_out["stakes_df"],

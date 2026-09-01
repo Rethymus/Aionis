@@ -279,6 +279,36 @@ def test_readiness_fails_when_provider_cutoff_policy_not_configured() -> None:
     assert result.reason_code == "provider_cutoff_policy_not_configured"
 
 
+def test_readiness_fails_on_cutoff_faked_to_predict_month() -> None:
+    """Cutoff in the SAME month as the predict session → provider_cutoff_faked.
+
+    The legacy fallback echoed predict_ts back as the cutoff; no vendor
+    knowledge cutoff can legitimately share the predict month. Round-54+1
+    wiring: the reason code was previously unreachable (the branch was a
+    bare ``pass``) — this test pins the now-live detection."""
+    panel = _synth_panel(end_date=PREDICT_SESSION)
+    fund = _synth_fund()
+    prices = _synth_prices()
+    membership = _synth_membership()
+    freeze_out = _synth_freeze_out()
+
+    result = check_forward_readiness(
+        requested_predict_ts=PREDICT_TS,
+        panel=panel,
+        fundamentals=fund,
+        prices=prices,
+        membership=membership,
+        freeze_out=freeze_out,
+        membership_freshness_contract=MembershipFreshnessContract(max_age_sessions=90),
+        provider_cutoff="2026-07-15",  # predict session is 2026-07-31 → same month
+        provider_cutoff_policy=ProviderCutoffPolicy(block_on_unknown=False),
+        freeze_clock=FREEZE_CLOCK,
+    )
+
+    assert result.is_ready is False
+    assert result.reason_code == "provider_cutoff_faked"
+
+
 # ---------------------------------------------------------------------------
 # Concrete non-owner checks (deterministic failures)
 # ---------------------------------------------------------------------------
@@ -873,6 +903,18 @@ def test_runner_readiness_pass_allows_fit_to_proceed(
         pd.DataFrame({"ticker": ["T0"], "sic": [7370]}), {}
     ))
     monkeypatch.setattr(RUN, "_build_llm_client", lambda p: None)
+    # AUD-06 wiring (2026-09-01): the gate now inspects the REAL events frame
+    # (freeze_out["events_df"]), so a readiness-PASS run requires non-empty
+    # primary-doc text. Simulate the implemented text-fetch slice (the runner
+    # seam) — with the default text="" frame this test would now (correctly)
+    # fail-closed on llm_event_text_empty.
+    def _events_with_text(freeze_out: dict) -> pd.DataFrame:
+        return pd.DataFrame([{
+            "ticker": "T0", "filing_date": "2026-07-10", "accession": "0001",
+            "event_id": "T0:0001", "text": "primary document text",
+        }])
+
+    monkeypatch.setattr(RUN, "_events_df", _events_with_text)
     monkeypatch.setattr(RUN, "build_forward_extra_features", lambda **kw: pd.DataFrame())
     monkeypatch.setattr(RUN, "_assemble_panels", lambda *a, **k: (
         _synth_panel(end_date=PREDICT_SESSION),

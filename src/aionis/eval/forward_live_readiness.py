@@ -1,7 +1,12 @@
 """E3 Slice 3f - live-input readiness gate (fail-closed preflight for forward commits).
 
 A fail-closed preflight that validates the E3 commit targets the requested live
-session with complete PIT inputs BEFORE any fit/LLM call/artifact write/ledger append.
+session with complete PIT inputs. When the caller (``forward_commit_runner``)
+enforces the gate, a failure blocks the fit, the commit, and any
+``forward_prediction_committed`` row / OOS artifact. Note the runner's ordering:
+the ``forward_iset_frozen`` pre-registration row and the LLM Pass-A build
+deliberately precede the gate (config-before-result anchor); the gate blocks
+everything downstream of them.
 
 This gate prevents the audit-flagged defects (AUD-06):
   * panel max labeled date used instead of requested predict_ts
@@ -252,11 +257,14 @@ def _check_membership_freshness(
 def _check_provider_cutoff(
     provider_cutoff: str,
     policy: ProviderCutoffPolicy | None,
+    predict_session: pd.Timestamp,
 ) -> None:
     """Check provider cutoff policy (owner-gated).
 
     FAILS CLOSED if the policy is not configured. The cutoff must be a real
-    verifiable knowledge cutoff, not faked to the predict timestamp.
+    verifiable knowledge cutoff, not faked to the predict timestamp: a cutoff
+    whose month equals the predict month is predict_ts echoed back (the legacy
+    fallback), which no vendor knowledge cutoff can legitimately be.
     """
     if policy is None:
         log.error("readiness_provider_cutoff_policy_not_configured")
@@ -267,8 +275,16 @@ def _check_provider_cutoff(
             log.error("readiness_provider_cutoff_unknown_not_allowed")
             raise ValueError("provider_cutoff_unknown_not_allowed")
     elif policy.block_on_unknown is not None and not policy.block_on_unknown:
-        # Owner explicitly allows unknown, but this is not unknown - verify it's not faked
-        pass
+        # Owner explicitly allows unknown; the supplied value is not "unknown",
+        # so verify it is not the predict_ts fake (reason code lives for this).
+        predict_month = predict_session.strftime("%Y-%m")
+        if provider_cutoff.startswith(predict_month):
+            log.error(
+                "readiness_provider_cutoff_faked",
+                provider_cutoff=provider_cutoff,
+                predict_month=predict_month,
+            )
+            raise ValueError("provider_cutoff_faked")
 
 
 def _check_universe_match(
@@ -452,7 +468,7 @@ def check_forward_readiness(
         manifest["membership_snapshot_date"] = membership_snapshot_date.isoformat()
 
         # 8. Check provider cutoff (owner-gated)
-        _check_provider_cutoff(provider_cutoff, provider_cutoff_policy)
+        _check_provider_cutoff(provider_cutoff, provider_cutoff_policy, predict_session)
         manifest["provider_cutoff"] = provider_cutoff
 
         # 9. Forward-specific train/test split
