@@ -47,6 +47,7 @@ from aionis.eval.two_arm import _clean_panel
 from aionis.features.alignment import nyse_sessions, session_close_ts
 from aionis.features.causal_broadcast import GLMCausalEdgeClient, build_forward_extra_features
 from aionis.features.frozen_beta import FROZEN_BETA_STATUS, FROZEN_BETA_VERSION
+from aionis.ingest.event_text import fetch_edgar_primary_text
 from aionis.schema.causal_edge import (
     CAUSAL_SCHEMA_VERSION,
     MechanismKeyword,
@@ -127,13 +128,29 @@ def _load_inputs(
 
     Returns ``(fund, px, mem, sic, ciks)``. A seam so tests inject tiny fixtures
     instead of touching the real cache.
+
+    Forward-lane extension (round 56): the FORWARD-ONLY ``phase_b_prices_e3.parquet``
+    / ``phase_d_sic_map_e3.parquet`` (built by ``scripts/e3_extend_prices.py``)
+    are preferred when present — they add CURRENT PIT constituents the frozen
+    585-ticker panel never covered. The frozen files themselves are never
+    modified (H6); the forward config pins whichever prices file was loaded.
     """
     from aionis.ingest import fundamentals
     from aionis.ingest.universe import load_pierrebrunelle_membership
 
     fund = pd.read_parquet(cache / "phase_b_fundamentals.parquet")
-    px = pd.read_parquet(cache / "phase_b_prices.parquet")
-    sic = pd.read_parquet(cache / "phase_d_sic_map.parquet")
+    px_path = (
+        cache / "phase_b_prices_e3.parquet"
+        if (cache / "phase_b_prices_e3.parquet").exists()
+        else cache / "phase_b_prices.parquet"
+    )
+    px = pd.read_parquet(px_path)
+    sic_path = (
+        cache / "phase_d_sic_map_e3.parquet"
+        if (cache / "phase_d_sic_map_e3.parquet").exists()
+        else cache / "phase_d_sic_map.parquet"
+    )
+    sic = pd.read_parquet(sic_path)
     mem = load_pierrebrunelle_membership()
     ciks = fundamentals.cik_map(cache)
     return fund, px, mem, sic, ciks
@@ -145,38 +162,84 @@ def _build_llm_client(provider) -> GLMCausalEdgeClient:
 
 
 def _events_df(freeze_out: dict) -> pd.DataFrame:
-    """Long ``[ticker, filing_date, accession, event_id, text]`` for the LLM edge step.
+    """Long ``[ticker, cik, filing_date, accession, primary_doc, event_id, text]``
+    for the LLM edge step.
 
-    13D + 8-K filings from the freeze; ``text`` is empty here (the real runner
-    fetches primary-doc text in a later slice; an empty text -> the edge is
-    skipped, so arm_e13 still carries the self/peer/macro channels signal-free).
+    13D + 8-K filings from the freeze; ``text`` starts empty (structure only) —
+    :func:`_fill_events_text` then fetches the AS-RELEASED primary-document
+    text for rows that carry a ``primary_doc`` filename. Rows without one
+    (e.g. cache rows from before the column existed) honestly keep ``text=""``
+    -> the edge is skipped for that event, so arm_e13 still carries the
+    self/peer/macro channels signal-free.
     """
+    cols = ["ticker", "filing_date", "accession"]
     parts: list[pd.DataFrame] = []
     for src in ("stakes_df", "earnings_df"):
         frame = freeze_out[src]
         if frame.empty or "accession" not in frame.columns:
             continue
-        view = frame[["ticker", "filing_date", "accession"]].copy()
+        take = cols + [c for c in ("cik", "primary_doc") if c in frame.columns]
+        view = frame[take].copy()
+        for extra in ("cik", "primary_doc"):
+            if extra not in view.columns:
+                view[extra] = "" if extra == "primary_doc" else 0
         view["event_id"] = view["ticker"].astype(str) + ":" + view["accession"].astype(str)
         view["text"] = ""
         parts.append(view)
     if not parts:
-        return pd.DataFrame(columns=["ticker", "filing_date", "accession", "event_id", "text"])
+        return pd.DataFrame(
+            columns=["ticker", "filing_date", "accession", "cik", "primary_doc",
+                     "event_id", "text"]
+        )
     return pd.concat(parts, ignore_index=True)
+
+
+def _fill_events_text(
+    events_df: pd.DataFrame, cache_dir: Path | str | None = None
+) -> pd.DataFrame:
+    """Fill EMPTY ``events_df.text`` cells with as-released EDGAR primary-doc text.
+
+    Seam for tests (monkeypatch to avoid network). Only rows with a non-empty
+    ``primary_doc`` are fetched; a row that already carries non-empty text
+    (e.g. injected via the ``_events_df`` test seam) is preserved untouched.
+    """
+    if events_df.empty:
+        return events_df
+    texts = fetch_edgar_primary_text(events_df, cache_dir=cache_dir)
+    text_by_id = dict(zip(texts["event_id"], texts["text"], strict=True))
+    fetched = events_df["event_id"].map(text_by_id)
+    events_df = events_df.copy()
+    mask = events_df["text"].astype(str).eq("") & fetched.notna() & fetched.astype(str).ne("")
+    events_df.loc[mask, "text"] = fetched[mask].astype(str)
+    return events_df
 
 
 def _assemble_panels(
     px: pd.DataFrame, fund: pd.DataFrame, mem: pd.DataFrame,
     extra_features: pd.DataFrame, tickers: list[str],  # noqa: ARG001 (tickers reserved for layout checks)
+    predict_session: pd.Timestamp | None = None,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Build the PIT-masked arm_base + arm_e13 panels (shared (date, ticker) layout).
 
     Both arms share prices / universe / fundamentals / folds; ONLY the feature set
     differs (arm_e13 adds the Pass-A extra_features). A seam so tests inject
     prebuilt tiny panels.
+
+    ``predict_session`` (E3 fix 2026-09-02): rows dated >= the predict session
+    are retained WITHOUT realized labels (the forward cross-section). The
+    historical dropna behavior kept deleting the predict session itself, so
+    the readiness gate's step 1 (predict_session_not_in_panel) failed
+    STRUCTURALLY on every month-end — the smoke run of 2026-08-31 pinned it.
     """
-    panel_base = _clean_panel(px, fund, mem, HORIZON, "end_lag", extra_features=None)
-    panel_e13 = _clean_panel(px, fund, mem, HORIZON, "end_lag", extra_features=extra_features)
+    retain = predict_session
+    panel_base = _clean_panel(
+        px, fund, mem, HORIZON, "end_lag", extra_features=None,
+        retain_unlabeled_from=retain,
+    )
+    panel_e13 = _clean_panel(
+        px, fund, mem, HORIZON, "end_lag", extra_features=extra_features,
+        retain_unlabeled_from=retain,
+    )
     return panel_base, panel_e13
 
 
@@ -287,6 +350,15 @@ def main(
     # could never fire and an arm_e13 commit with the LLM edge silently skipped
     # (text="" by construction) passed the gate undetected.
     freeze_out["events_df"] = events_df
+    # E3 text slice (2026-09-01): fetch the AS-RELEASED primary-document text for
+    # the LLM edge. Rows without primary_doc keep text="" (edge skipped, honest).
+    events_df = _fill_events_text(events_df, cache_dir=cache)
+    freeze_out["events_df"] = events_df
+    n_text = int((events_df["text"].astype(str).str.len() > 0).sum()) if len(events_df) else 0
+    print(
+        f"[E3] event text: {n_text}/{len(events_df)} events carry primary-doc text",
+        flush=True,
+    )
     client = _build_llm_client(provider)
     extra = build_forward_extra_features(
         macro_df=freeze_out["macro_df"], stakes_df=freeze_out["stakes_df"],
@@ -297,7 +369,9 @@ def main(
     print(f"[E3] extra_features rows={len(extra)}", flush=True)
 
     # --- assemble panels + frozen config + fit+commit
-    panel_base, panel_e13 = _assemble_panels(px, fund, mem, extra, tickers)
+    panel_base, panel_e13 = _assemble_panels(
+        px, fund, mem, extra, tickers, predict_session=predict_session
+    )
     print(f"[E3] panel_base={panel_base.shape} panel_e13={panel_e13.shape}", flush=True)
 
     # --- AUD-06 readiness gate (BEFORE any fit/LLM call/artifact write/ledger append)
@@ -336,10 +410,15 @@ def main(
         print("[E3] READINESS PASS - proceeding to fit/commit", flush=True)
 
     raw = freeze_out["raw_sha256s"]
+    px_sha_path = (
+        cache / "phase_b_prices_e3.parquet"
+        if (cache / "phase_b_prices_e3.parquet").exists()
+        else cache / "phase_b_prices.parquet"
+    )
     shas = {
         "iset_sha256": iset_sha,
         "uv_lock_sha256": uv_lock_sha,
-        "prices_sha256": _sha(cache / "phase_b_prices.parquet"),
+        "prices_sha256": _sha(px_sha_path),
         "fundamentals_sha256": _sha(cache / "phase_b_fundamentals.parquet"),
         "membership_sha256": _sha(cache / "universe_pierrebrunelle.parquet"),
         "sic_map_sha256": _sha(cache / "phase_d_sic_map.parquet"),

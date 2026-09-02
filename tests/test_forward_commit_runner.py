@@ -363,3 +363,31 @@ def test_runner_wires_events_df_into_gate_freeze_out(
     # the gate's llm_event_text_empty check exists to catch.
     assert len(events) == 2
     assert events["text"].eq("").all()
+
+
+def test_fill_events_text_fills_only_empty_texts(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """E3 text slice seam: empty texts get fetched text; non-empty survive."""
+    from aionis.eval import forward_commit_runner as RUN
+
+    events = pd.DataFrame([
+        {"ticker": "T0", "filing_date": "2026-07-10", "accession": "a1",
+         "cik": 1098, "primary_doc": "d.htm", "event_id": "T0:a1", "text": ""},
+        {"ticker": "T0", "filing_date": "2026-07-12", "accession": "a2",
+         "cik": 1098, "primary_doc": "e.htm", "event_id": "T0:a2",
+         "text": "already injected via the test seam"},
+    ])
+    fetched = pd.DataFrame([
+        {"event_id": "T0:a1", "text": "fetched primary doc text"},
+        {"event_id": "T0:a2", "text": "would-overwrite"},  # must NOT overwrite a2
+    ])
+    monkeypatch.setattr(
+        RUN, "fetch_edgar_primary_text", lambda df, cache_dir=None: fetched
+    )
+    out = RUN._fill_events_text(events)
+    assert out.loc[out["event_id"] == "T0:a1", "text"].iloc[0] == "fetched primary doc text"
+    assert (
+        out.loc[out["event_id"] == "T0:a2", "text"].iloc[0]
+        == "already injected via the test seam"
+    )
