@@ -69,19 +69,22 @@ def test_frozen_beta_is_a_module_literal_constant() -> None:
 
 
 def test_frozen_beta_source_version_status_documented() -> None:
-    assert "Boudt-Neely-Sercu" in FROZEN_BETA_SOURCE
-    # 2026-09-02 citation correction: the prior "Fed WP 2017-020" number was
-    # disproven first-hand (that FEDS number is Reifschneider-Tulip) — the
-    # source string must flag PENDING owner verification and may mention the
-    # old number ONLY inside the disproven context.
-    assert "PENDING owner verification" in FROZEN_BETA_SOURCE
+    # 2026-09-02 adjudication (owner-delegated, evidence-complete): the
+    # originally cited paper does not exist (fabricated citation — FEDS
+    # 2017-020 is Reifschneider-Tulip; three Crossref sweeps found no
+    # Boudt-Neely industry paper). The sign table is OFFICIALLY frozen as a
+    # project-internal qualitative prior: provenance honest, signs unchanged.
+    assert "project-internal qualitative prior" in FROZEN_BETA_SOURCE
     assert "disproven" in FROZEN_BETA_SOURCE
-    assert FROZEN_BETA_VERSION == "bn2017-sign-v1"
-    # source_status flags whether the signs came from the paper or the
-    # qualitative fallback — must be one of the two documented states.
+    assert FROZEN_BETA_VERSION == "qual-prior-v2"
+    assert FROZEN_BETA_STATUS == "frozen-qualitative-prior"
+    # status flags the provenance state — the 2026-09-02 adjudication froze
+    # the qualitative prior officially (the "sourced" state is unreachable:
+    # the cited paper does not exist).
     assert FROZEN_BETA_STATUS in {
         "boudt-neely-2017-sourced",
         "exploratory-v1-qualitative",
+        "frozen-qualitative-prior",
     }
 
 

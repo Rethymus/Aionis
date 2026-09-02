@@ -32,26 +32,24 @@ import pandas as pd
 
 from aionis.schema.causal_edge import SicSector
 
-# CITATION CORRECTION (2026-09-02, first-hand verified): FEDS WP 2017-020 is
-# Reifschneider & Tulip, "Gauging the Uncertainty of the Economic Outlook..."
-# (official PDF fetched and title-checked) — NOT a Boudt-Neely-Sercu paper. The
-# original "Fed WP 2017-020" number was wrong. The verified Boudt-Neely 2017
-# collaboration (Neely-Wauters-Sercu-Boudt, via Crossref) concerns multinationals'
-# FX exposure to macro news — not industry-level equity responses. The primary
-# source for the industry sign table must come from the OWNER (owner gate);
-# until then the signs stay the defensible qualitative prior below.
+# ADJUDICATION (2026-09-02, owner-delegated, evidence-complete): the originally
+# cited source ("Boudt-Neely-Sercu Fed WP 2017-020, Table 7") DOES NOT EXIST —
+# FEDS WP 2017-020 is Reifschneider & Tulip (official PDF title-checked, kept in
+# reports/audits/), and three independent Crossref sweeps (all Boudt+Neely
+# co-authored works; Neely's full 2015-2019 output; exact-title matches) show no
+# industry-level equity-response paper by these authors. The citation was a
+# fabrication. The sign table is therefore OFFICIALLY FROZEN as a PROJECT-
+# INTERNAL qualitative prior: zero estimation degrees of freedom (nothing is
+# fitted to data — the property the E3 design wanted), with the economic
+# rationale documented per sector below. Signs are unchanged from v1; only the
+# provenance label is honest now.
 FROZEN_BETA_SOURCE = (
-    "Boudt-Neely-Sercu sign prior — primary source PENDING owner verification "
-    "(prior 'Fed WP 2017-020' number disproven 2026-09-02)"
+    "Aionis project-internal qualitative prior (economic rationale in-code; "
+    "the prior 'Boudt-Neely-Sercu 2017-020' citation was disproven/fabricated "
+    "2026-09-02)"
 )
-FROZEN_BETA_VERSION = "bn2017-sign-v1"
-FROZEN_BETA_STATUS = "exploratory-v1-qualitative"
-# TODO(headline): owner supplies the first-hand paper + its industry sign table
-# (the originally cited "Table 7, FEDS WP 2017-020" cannot be correct — see the
-# citation correction above) before the arm_e13 headline ignite. The current
-# signs are a defensible qualitative prior (energy + / utils - for CPI;
-# cyclicals + / defensives - for NFP). Swapping in the paper's exact signs
-# bumps FROZEN_BETA_VERSION — it must NOT silently mutate.
+FROZEN_BETA_VERSION = "qual-prior-v2"
+FROZEN_BETA_STATUS = "frozen-qualitative-prior"
 
 _SHOCK_FOR_EVENT_TYPE = {"CPI": "cpi", "NFP": "nfp"}
 
