@@ -7,10 +7,10 @@
       "sha256": "27306bba5b14fb2291b87745910dc7595371be98776a6e3058b20770b3fa0378"
     },
     {
-      "bytes": 46825,
+      "bytes": 46966,
       "id": "research-dossier-v1",
       "path": "reports/evidence/research-dossier-v1.html",
-      "sha256": "0bede5006f69bf75cf0673890cc4afcbe6b37e60613befa68737e1146c72c375"
+      "sha256": "2aadc30a684b3bdbe5368a570c2c04ee91c06bea2a7872398c42446c009dea2f"
     },
     {
       "bytes": 1974,
@@ -31,7 +31,6 @@
       "sha256": "b548383fda07ac3e738f43d1fd0d2da6c44834302f5ab0558d30802998ca4068"
     }
   ],
-  "as_of": "2026-08-05",
   "claims": {
     "B": {
       "ci_hi": 0.008972245083013938,
@@ -104,6 +103,5 @@
   },
   "generator": "scripts/export_evidence_html.py",
   "id": "evidence-matrix-v1",
-  "snapshot_ts": "2026-09-02T14:43:13.973775+00:00",
   "version": "v1"
 }

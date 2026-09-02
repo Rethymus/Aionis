@@ -653,6 +653,51 @@ function ModelInventorySection() {
   );
 }
 
+function ProviderVintageSection() {
+  const { t } = useI18n();
+  const pv = aionis.providerVintage;
+  const driftStatus = pv?.latest_drift_check?.status;
+  const driftTone =
+    driftStatus == null
+      ? "text-muted-foreground"
+      : driftStatus === "stable" || driftStatus === "safe-drift"
+        ? "text-emerald-700 dark:text-emerald-400"
+        : "text-amber-700 dark:text-amber-400";
+
+  return (
+    <Card>
+      <CardHeader className="border-b">
+        <CardTitle className="flex items-center gap-2 text-base">
+          <ShieldCheckIcon className="size-4" /> {t("vintage.title")}
+        </CardTitle>
+        <CardDescription>{t("vintage.subtitle")}</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-3 p-4">
+        <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-[13px]">
+          <dt className="text-muted-foreground">{t("vintage.cutoff")}</dt>
+          <dd className="tabular-nums">{pv?.provider_cutoff ?? "—"}</dd>
+          <dt className="text-muted-foreground">{t("vintage.provenance")}</dt>
+          <dd>{pv?.cutoff_provenance ?? "—"}</dd>
+          <dt className="text-muted-foreground">{t("vintage.probe")}</dt>
+          <dd className="tabular-nums">
+            {pv?.probe_artifact?.boundary
+              ? `known ≤ ${pv.probe_artifact.boundary.latest_known} · unknown ≥ ${pv.probe_artifact.boundary.earliest_unknown}`
+              : "—"}
+          </dd>
+          <dt className="text-muted-foreground">{t("vintage.drift")}</dt>
+          <dd className={driftTone}>
+            {driftStatus ?? t("vintage.driftNone")}
+          </dd>
+        </dl>
+        <p className="flex items-start gap-1.5 text-xs text-amber-700 dark:text-amber-400">
+          <ShieldAlertIcon className="mt-0.5 size-3.5 shrink-0" />
+          {t("vintage.note")}
+        </p>
+      </CardContent>
+    </Card>
+  );
+}
+
 export function ModelHealthView() {
   const { t } = useI18n();
   const mh = aionis.modelHealth;
@@ -703,6 +748,8 @@ export function ModelHealthView() {
       <ModelCardSection />
 
       <ModelInventorySection />
+
+      <ProviderVintageSection />
 
       <Card className="border-dashed">
         <CardHeader className="border-b">

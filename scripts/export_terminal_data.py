@@ -3272,6 +3272,81 @@ def export_model_inventory() -> None:
     )
 
 
+def export_provider_vintage() -> None:
+    """Export ``provider_vintage.json`` — the LLM provider's knowledge vintage.
+
+    P1-5 (vintage discipline, CI-ized): machine-reads the FROZEN contracts
+    config (provider_cutoff + policy + its provenance note), the committed
+    probe artifact (the dual-blind boundary estimate the cutoff was derived
+    from), and the latest COMMITTED drift-check verdict (a deliberate copy at
+    reports/evidence/provider-cutoff-drift.json — absent until a conclusive
+    check is committed, honestly null then). Zero-clock: every value is read
+    verbatim from committed files, so unchanged inputs export byte-identical;
+    the panel advances only on a deliberate probe/doc commit. Output is LF.
+    """
+    import re as _re
+
+    contracts = Path("config/e3_live_contracts.yaml")
+    txt = contracts.read_text(encoding="utf-8")
+    m = _re.search(r'^\s*provider_cutoff:\s*"?(\d{4}-\d{2}-\d{2})"?', txt, _re.M)
+    cutoff = m.group(1) if m else None
+    m_block = _re.search(r'^\s*block_on_unknown:\s*(true|false)', txt, _re.M)
+    block_on_unknown = m_block.group(1) == "true" if m_block else None
+
+    probe = None
+    probe_path = Path("reports/evidence/provider-cutoff-probe.json")
+    if probe_path.exists():
+        p = json.loads(probe_path.read_text(encoding="utf-8"))
+        probe = {
+            "model": p.get("model"),
+            "boundary": p.get("boundary_estimate"),
+            "method": p.get("method"),
+        }
+
+    drift = None
+    drift_path = Path("reports/evidence/provider-cutoff-drift.json")
+    if drift_path.exists():
+        d = json.loads(drift_path.read_text(encoding="utf-8"))
+        drift = {
+            "status": d.get("status"),
+            "note": d.get("note"),
+            "frozen_cutoff_at_check": d.get("frozen_cutoff"),
+            "method": d.get("method"),
+        }
+
+    payload = {
+        "panel": "provider_vintage",
+        "provider": "glm",
+        "provider_cutoff": cutoff,
+        "cutoff_provenance": (
+            "empirical-probe-v1 (dual-blind dated-event ladder; NOT a vendor "
+            "declaration) — frozen in config/e3_live_contracts.yaml"
+            if cutoff else None
+        ),
+        "block_on_unknown": block_on_unknown,
+        "probe_artifact": probe,
+        "latest_drift_check": drift,
+        "drift_discipline": (
+            "Monthly 3-call drift alarm in .github/workflows/vintage-probe.yml "
+            "(anchor forgotten / control fabricated / inconclusive -> red; "
+            "post-cutoff learned -> green + amend note). A safe-drift result "
+            "must be followed by an EXPLICIT contracts amendment, never a "
+            "silent value change."
+        ),
+        "leakage_note": (
+            "The pinned LLM never produces signal inside frozen OOS phases "
+            "(all four claims are zero-LLM); the vintage gate exists for the "
+            "E2/E3 causal-edge lanes where provider knowledge could leak "
+            "into backtests."
+        ),
+    }
+    (WEB / "provider_vintage.json").write_text(
+        json.dumps(payload, indent=2, ensure_ascii=False),
+        encoding="utf-8",
+        newline="\n",
+    )
+
+
 def export_horizon_robustness() -> None:
     """Export the horizon-robustness sweep summary (READ-ONLY ledger projection).
 
@@ -3552,6 +3627,10 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
     # cadence (a doc commit), never on market data.
     ("knowledge_shelf", "knowledge_shelf.json", _DH_CADENCE),
     ("evidence_matrix", "evidence_matrix.json", _DH_CADENCE),
+    # P1-5 — LLM provider knowledge-vintage panel: frozen cutoff + probe
+    # boundary + drift-check verdicts. Zero-clock from committed files; moves
+    # only on a deliberate probe/contracts commit.
+    ("provider_vintage", "provider_vintage.json", _DH_CADENCE),
 ]
 
 
@@ -4040,6 +4119,10 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
     "model_inventory": (
         "Aionis research artifacts (repo MIT)",
         "SR 11-7 style model inventory over the tracked ledger and frozen run directories",
+    ),
+    "provider_vintage": (
+        "Aionis research artifacts (repo MIT)",
+        "LLM provider knowledge-vintage panel (frozen empirical cutoff + drift checks)",
     ),
     "cot": ("U.S. CFTC — public domain", "Commitments of Traders legacy futures, weekly"),
     "smart_money": ("U.S. SEC EDGAR — public domain", "13D/G filings via EFTS, filed-date PIT"),
@@ -7368,6 +7451,7 @@ def main() -> None:
     # against the frozen run directories + lists config-only commits honestly
     # (READ-ONLY) — before the freshness map / catalog that index it.
     _safe_export("model_inventory", export_model_inventory)
+    _safe_export("provider_vintage", export_provider_vintage)
     # Per-stock view joins the corroboration JSONs above — keep after them.
     _safe_export("stock_universe", export_stock_universe)
     # Executives derives from the committed form8k.json written above — after

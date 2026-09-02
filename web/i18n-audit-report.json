@@ -1,0 +1,57 @@
+{
+  "generatedAt": "2026-09-02T14:52:14.621Z",
+  "dictPath": "src\\i18n\\dict.ts",
+  "corpusRoot": "src",
+  "totals": {
+    "zhKeys": 1277,
+    "enKeys": 1277,
+    "universe": 1277
+  },
+  "confirmedOrphans": [
+    "nav.sub.atlas",
+    "shelf.matrix.verdict",
+    "shelf.matrix.zerollm"
+  ],
+  "suspiciousPrefixOnly": [
+    {
+      "key": "atlas.flow.cat.cadence",
+      "prefix": "atlas.flow.cat."
+    },
+    {
+      "key": "atlas.flow.cat.daily",
+      "prefix": "atlas.flow.cat."
+    },
+    {
+      "key": "atlas.flow.cat.frozen",
+      "prefix": "atlas.flow.cat."
+    },
+    {
+      "key": "forcecamp.legend.institution",
+      "prefix": "forcecamp.legend."
+    },
+    {
+      "key": "forcecamp.legend.person",
+      "prefix": "forcecamp.legend."
+    },
+    {
+      "key": "forcecamp.legend.staker",
+      "prefix": "forcecamp.legend."
+    },
+    {
+      "key": "forcecamp.type.co_board",
+      "prefix": "forcecamp.type."
+    },
+    {
+      "key": "forcecamp.type.co_hold",
+      "prefix": "forcecamp.type."
+    },
+    {
+      "key": "forcecamp.type.co_target",
+      "prefix": "forcecamp.type."
+    }
+  ],
+  "asymmetric": {
+    "zhOnly": [],
+    "enOnly": []
+  }
+}

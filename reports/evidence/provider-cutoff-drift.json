@@ -1,0 +1,27 @@
+{
+ "model": "glm-4.7-flash",
+ "frozen_cutoff": "2023-03-10",
+ "status": "stable",
+ "note": "matches the frozen empirical boundary",
+ "method": "3-call drift ladder (anchor / first-post-cutoff / fake control)",
+ "results": [
+  {
+   "date": "2023-03-10",
+   "kind": "anchor",
+   "verdict": "known",
+   "answer": "On March 10, 2023, the United States Department of the Treasury, the Federal Reserve, and the Federal Deposit Insurance Corporation (FDIC) announced that they had seized the assets of Silicon Valley B"
+  },
+  {
+   "date": "2024-11-06",
+   "kind": "post-cutoff",
+   "verdict": "unknown",
+   "answer": "UNKNOWN"
+  },
+  {
+   "date": "2026-12-25",
+   "kind": "fake-control",
+   "verdict": "unknown",
+   "answer": "UNKNOWN"
+  }
+ ]
+}

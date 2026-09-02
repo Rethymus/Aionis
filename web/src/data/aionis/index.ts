@@ -61,6 +61,7 @@ import executivesJson from "./executives.json";
 import newsFeedJson from "./news_feed.json";
 import knowledgeShelfJson from "./knowledge_shelf.json";
 import evidenceMatrixJson from "./evidence_matrix.json";
+import providerVintageJson from "./provider_vintage.json";
 
 export type Pick = {
   rank: number;
@@ -1335,6 +1336,37 @@ export type EvidenceMatrix = {
   snapshot_ts?: string;
 };
 
+// P1-5 — LLM provider knowledge vintage: frozen empirical cutoff + probe
+// boundary + drift-check verdicts (display-only discipline disclosure).
+export type ProviderVintageProbe = {
+  model?: string | null;
+  boundary?: {
+    latest_known?: string | null;
+    earliest_unknown?: string | null;
+    fabrication_on_control?: boolean;
+  } | null;
+  method?: string | null;
+};
+
+export type ProviderVintageDrift = {
+  status?: string | null;
+  note?: string | null;
+  frozen_cutoff_at_check?: string | null;
+  method?: string | null;
+} | null;
+
+export type ProviderVintage = {
+  panel: string;
+  provider: string;
+  provider_cutoff?: string | null;
+  cutoff_provenance?: string | null;
+  block_on_unknown?: boolean | null;
+  probe_artifact: ProviderVintageProbe;
+  latest_drift_check: ProviderVintageDrift;
+  drift_discipline: string;
+  leakage_note: string;
+};
+
 
 // TASK-DISP-R1A — score-surface diagnostics: pure descriptive statistics per
 // (month, region) over the frozen confirmatory OOS score cross-section.
@@ -1625,4 +1657,5 @@ export const aionis = {
   newsFeed: newsFeedJson as NewsFeed,
   knowledgeShelf: knowledgeShelfJson as KnowledgeShelf,
   evidenceMatrix: evidenceMatrixJson as EvidenceMatrix,
+  providerVintage: providerVintageJson as ProviderVintage,
 };

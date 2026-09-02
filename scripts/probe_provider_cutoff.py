@@ -137,6 +137,103 @@ def _classify(answer: str) -> str:
     return "known"
 
 
+# ---------------------------------------------------------------------------
+# P1-5 drift alarm (2026-09-02): a MINIMAL 3-call periodic check that the
+# frozen empirical cutoff in config/e3_live_contracts.yaml still describes
+# the pinned model. Direction-aware:
+#   * anchor event (the frozen cutoff date) UNKNOWN  -> UNSAFE drift (the
+#     model no longer knows what the frozen value assumes) -> exit 1;
+#   * first post-cutoff event becoming KNOWN         -> SAFE-direction drift
+#     (frozen value stays a conservative lower bound) -> exit 0 + amend note;
+#   * fake control fabricated                        -> probe invalid -> exit 1;
+#   * probe errors on any call                       -> inconclusive -> exit 1.
+# Verdict JSON lands in runs/provider_cutoff_drift.json (committed copies to
+# reports/evidence/ are made deliberately by the invoking session).
+# ---------------------------------------------------------------------------
+
+DRIFT_OUT = Path("runs/provider_cutoff_drift.json")
+_FROZEN_CONTRACTS = Path("config/e3_live_contracts.yaml")
+
+
+def _frozen_cutoff() -> str | None:
+    """provider_cutoff from the FROZEN contracts YAML (None if absent)."""
+    import re as _re
+
+    txt = _FROZEN_CONTRACTS.read_text(encoding="utf-8")
+    m = _re.search(r'^\s*provider_cutoff:\s*"?(\d{4}-\d{2}-\d{2})"?', txt, _re.M)
+    return m.group(1) if m else None
+
+
+def check_drift(model: str) -> int:
+    """Run the 3-call drift ladder against the frozen cutoff. Returns exit code."""
+    api_key = settings.openai_api_key
+    if not api_key:
+        print("[drift] no provider key configured — check skipped (exit 0)")
+        return 0  # CI wiring: absent secrets skip, they do not fail
+    frozen = _frozen_cutoff()
+    if frozen is None:
+        print("[drift] frozen provider_cutoff absent from contracts YAML — "
+              "cannot check drift (exit 1)")
+        return 1
+
+    anchor = PUBLIC_EVENTS[0]  # 2023-03-10 SVB == the frozen cutoff anchor
+    post = PUBLIC_EVENTS[1]    # 2024-11-06, first UNKNOWN in probe v1
+    ladder: list[tuple[str, str, str]] = [
+        (anchor[0], anchor[1], "anchor"),
+        (post[0], post[1], "post-cutoff"),
+        (FAKE_CONTROL[0], FAKE_CONTROL[1], "fake-control"),
+    ]
+    results = []
+    for d, desc, kind in ladder:
+        q = (f"What notable event happened on or around {d}? "
+             f"If you do not know of any such event, answer exactly UNKNOWN. "
+             f"Context (may or may not be true): {desc}")
+        try:
+            ans = _ask(api_key, model, q)
+        except Exception as e:  # noqa: BLE001 — probe must complete
+            ans = f"PROBE-ERROR: {e}"
+        verdict = ("PROBE-ERROR" if ans.startswith("PROBE-ERROR")
+                   else _classify(ans))
+        results.append({"date": d, "kind": kind, "verdict": verdict,
+                        "answer": ans[:200]})
+        print(f"[drift {kind} {d}] {verdict}", flush=True)
+        time.sleep(1.5)
+
+    by_kind = {r["kind"]: r["verdict"] for r in results}
+    if "PROBE-ERROR" in by_kind.values():
+        status, note = "inconclusive", "probe error — retry later (exit 1)"
+        code = 1
+    elif by_kind.get("fake-control") == "known":
+        status, note = "invalid", "fabrication on the fake control — probe invalid"
+        code = 1
+    elif by_kind.get("anchor") != "known":
+        status, note = ("unsafe-drift",
+                        "the model no longer knows the frozen-cutoff anchor "
+                        "event — the frozen empirical boundary is broken")
+        code = 1
+    elif by_kind.get("post-cutoff") == "known":
+        status, note = ("safe-drift",
+                        "the model now knows a post-cutoff event — the frozen "
+                        "value remains a conservative lower bound; amend the "
+                        "contracts YAML (explicit amendment + new ledger row)")
+        code = 0
+    else:
+        status, note = "stable", "matches the frozen empirical boundary"
+        code = 0
+
+    DRIFT_OUT.parent.mkdir(parents=True, exist_ok=True)
+    DRIFT_OUT.write_text(json.dumps({
+        "model": model,
+        "frozen_cutoff": frozen,
+        "status": status,
+        "note": note,
+        "method": "3-call drift ladder (anchor / first-post-cutoff / fake control)",
+        "results": results,
+    }, indent=1, ensure_ascii=False), encoding="utf-8")
+    print(f"[drift] {status}: {note} (exit {code}) | wrote {DRIFT_OUT}", flush=True)
+    return code
+
+
 def _panel_events(n: int = 3) -> list[tuple[str, str]]:
     """First-hand 2026 events from Aionis's OWN committed panels (dated)."""
     out: list[tuple[str, str]] = []
@@ -156,7 +253,15 @@ def _panel_events(n: int = 3) -> list[tuple[str, str]]:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", default=settings.llm_model or "glm-4-flash")
+    ap.add_argument(
+        "--check-drift", action="store_true",
+        help="P1-5 periodic drift alarm: 3-call ladder vs the frozen cutoff "
+             "(exit 1 on unsafe drift / invalid probe / inconclusive)",
+    )
     args = ap.parse_args()
+
+    if args.check_drift:
+        raise SystemExit(check_drift(args.model))
 
     api_key = settings.openai_api_key
     if not api_key:

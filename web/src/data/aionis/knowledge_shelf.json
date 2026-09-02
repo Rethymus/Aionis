@@ -702,8 +702,8 @@
       "desc_zh": "\u6eaf\u6e90\u7814\u7a76\u6863\u6848\uff1a24 \u6761\u6765\u6e90\u767b\u8bb0\u8868 \u2192 \u62a5\u544a \u2192 \u5efa\u6a21\u5206\u6790\u5168\u6d41\u7a0b\uff0c[S#] \u5f15\u7528\u95ed\u5305\u3002",
       "path": "reports/evidence/research-dossier-v1.html",
       "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/research-dossier-v1.html",
-      "sha256": "f148681d56255a98d058ed19adf03bc80740a1a6809ac54e8cd65a403d13aa4d",
-      "n_bytes": 46698
+      "sha256": "0bede5006f69bf75cf0673890cc4afcbe6b37e60613befa68737e1146c72c375",
+      "n_bytes": 46825
     },
     {
       "id": "research-dossier-b-v1",
@@ -740,5 +740,5 @@
     }
   ],
   "methodology": "Layer 1 \u2014 Aionis's OWN method library: catalog of docs/ + decisions/ markdown (repo MIT; zero third-party copyright surface). Each entry carries metadata plus a safe teaser slice (first 2-3 sentences, <=240 chars) extracted at export time; the full text stays on GitHub (link-out). Dates are last-commit dates read from the LOCAL git repository (no network). Layer 2 \u2014 a FIXED editorially-curated bookmark list of first-hand public research sources (BIS / Fed FEDS / IMF / NBER / arXiv q-fin / FRASER / FRED-ALFRED / RePEc): link-out + one static sentence each, no fetching, no scraping, no summary APIs \u2014 copyright stays with the authors, we only catalog. Categories are a fixed 5-rail whitelist (preregistration / adr / results / rubric / theory); n_docs reconciles to the sum of the rails. Layer 3 \u2014 generated evidence artifacts: self-contained HTML, byte-stable, sha256 + byte count pinned at export time from the local tracked file so a reader can verify the download against the catalog (a missing file degrades honestly to null \u2014 never fabricated). Superseded artifact versions are retained under reports/evidence/archive/ (move-don't-delete \u2014 the archive only grows). Display-only reference lane \u2014 never part of any research or OOS pipeline.",
-  "snapshot_ts": "2026-09-02T11:16:44.958550+00:00"
+  "snapshot_ts": "2026-09-02T14:43:13.961872+00:00"
 }

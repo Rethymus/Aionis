@@ -1,0 +1,24 @@
+{
+  "panel": "provider_vintage",
+  "provider": "glm",
+  "provider_cutoff": "2023-03-10",
+  "cutoff_provenance": "empirical-probe-v1 (dual-blind dated-event ladder; NOT a vendor declaration) — frozen in config/e3_live_contracts.yaml",
+  "block_on_unknown": true,
+  "probe_artifact": {
+    "model": "glm-4.7-flash",
+    "boundary": {
+      "latest_known": "2023-03-10",
+      "earliest_unknown": "2024-11-06",
+      "fabrication_on_control": false
+    },
+    "method": "dual-blind dated-event ladder; KNOWN/UNKNOWN classification; fake-control measures fabrication tendency"
+  },
+  "latest_drift_check": {
+    "status": "stable",
+    "note": "matches the frozen empirical boundary",
+    "frozen_cutoff_at_check": "2023-03-10",
+    "method": "3-call drift ladder (anchor / first-post-cutoff / fake control)"
+  },
+  "drift_discipline": "Monthly 3-call drift alarm in .github/workflows/vintage-probe.yml (anchor forgotten / control fabricated / inconclusive -> red; post-cutoff learned -> green + amend note). A safe-drift result must be followed by an EXPLICIT contracts amendment, never a silent value change.",
+  "leakage_note": "The pinned LLM never produces signal inside frozen OOS phases (all four claims are zero-LLM); the vintage gate exists for the E2/E3 causal-edge lanes where provider knowledge could leak into backtests."
+}

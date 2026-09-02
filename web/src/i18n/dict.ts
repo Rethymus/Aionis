@@ -281,6 +281,16 @@ export const dict = {
     "modelcard.disclaimer":
       "展示层档案——非投资建议，不构成任何交易信号；冻结面只在冻结工件变化时更新。",
     "inventory.title": "模型清单",
+    "vintage.title": "供应商知识年限",
+    "vintage.subtitle":
+      "LLM 知识截止的冻结经验边界与漂移告警——防 LLM 回忆泄漏的年限纪律（探针工件可核验）。",
+    "vintage.cutoff": "冻结截止",
+    "vintage.provenance": "出处",
+    "vintage.probe": "探针边界",
+    "vintage.drift": "最近漂移检查",
+    "vintage.driftNone": "尚无结论性检查（工件就位后由月度探针写入）",
+    "vintage.note":
+      "经验探针边界不是厂商声明；安全向漂移（模型学得更新）也必须走显式契约修订，绝不静默改值。钉住的 LLM 在冻结样本外管线中从不产生信号。",
     "inventory.subtitle":
       "SR 11-7 式模型清单：账本内每条 confirmatory:first 运行与冻结结果目录对账（冻结→结果行链 · H6 · 差分），config-only 提交如实列示。",
     "inventory.empty":
@@ -1629,6 +1639,16 @@ export const dict = {
     "modelcard.disclaimer":
       "Display-layer record — not investment advice, not a trading signal; the frozen surface updates only when its frozen artifacts do.",
     "inventory.title": "Model inventory",
+    "vintage.title": "Provider knowledge vintage",
+    "vintage.subtitle":
+      "The frozen empirical knowledge-cutoff boundary of the pinned LLM and its drift alarm — the vintage discipline against LLM-recall leakage (probe artifacts verifiable).",
+    "vintage.cutoff": "Frozen cutoff",
+    "vintage.provenance": "Provenance",
+    "vintage.probe": "Probe boundary",
+    "vintage.drift": "Latest drift check",
+    "vintage.driftNone": "No conclusive check yet (the monthly probe writes it once run)",
+    "vintage.note":
+      "The empirical probe boundary is not a vendor declaration; even a safe-direction drift (the model learning newer events) must go through an explicit contracts amendment, never a silent value change. The pinned LLM never produces signal inside frozen OOS phases.",
     "inventory.subtitle":
       "SR 11-7 style model inventory: every confirmatory:first run in the tracked ledger reconciled against its frozen run directory (freeze→result chain · H6 · differential), with config-only commits listed honestly.",
     "inventory.empty":

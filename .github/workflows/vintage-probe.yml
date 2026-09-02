@@ -1,0 +1,62 @@
+name: Vintage Drift Probe
+
+# P1-5 (LLM vintage discipline, CI-ized — adjudicated GO 2026-09-02): a
+# MINIMAL monthly 3-call probe that the frozen empirical provider cutoff in
+# config/e3_live_contracts.yaml still describes the pinned model.
+#
+# Direction-aware alarm (see scripts/probe_provider_cutoff.py::check_drift):
+#   unsafe-drift  (anchor event forgotten)   -> exit 1
+#   invalid       (fabrication on control)   -> exit 1
+#   inconclusive  (probe errors)             -> exit 1
+#   safe-drift    (post-cutoff now known)    -> exit 0 + amend note
+#   stable                                 -> exit 0
+#
+# Secrets: the probe needs the GLM key. Set repository secret
+# AIONIS_GLM_API_KEY (or OPENAI_API_KEY — the first that is present wins).
+# With NO key configured the step skips with an explicit notice (a missing
+# secret is an operational gap, not a test failure) — add the secret to
+# activate the probe.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 3 * *'  # monthly, the 3rd at 06:00 UTC
+
+jobs:
+  drift:
+    name: Provider cutoff drift check
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v1
+        with:
+          version: "latest"
+
+      - name: Install dependencies
+        run: uv sync --all-extras
+
+      - name: Run drift probe (skips without a configured key)
+        env:
+          AIONIS_GLM_API_KEY: ${{ secrets.AIONIS_GLM_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          if [ -n "$AIONIS_GLM_API_KEY" ]; then
+            export OPENAI_API_KEY="$AIONIS_GLM_API_KEY"
+          fi
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "::notice::No provider key configured (AIONIS_GLM_API_KEY / OPENAI_API_KEY absent) — vintage drift probe SKIPPED. Add the repository secret to activate."
+            exit 0
+          fi
+          uv run python scripts/probe_provider_cutoff.py --check-drift
+
+      - name: Upload drift verdict
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: provider-cutoff-drift
+          path: runs/provider_cutoff_drift.json
+          if-no-files-found: ignore
