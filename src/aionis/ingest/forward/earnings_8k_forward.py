@@ -174,6 +174,7 @@ def collect_8k_forward(
                     "form": fr["form"],
                     "filing_date": fr["filing_date"],
                     "accession": fr["accession"],
+                    "primary_doc": fr.get("primary_doc", ""),
                     "items": fr["items"],
                     "event_ts": fr["filing_date"],
                     "snapshot_ts": snapshot_ts,

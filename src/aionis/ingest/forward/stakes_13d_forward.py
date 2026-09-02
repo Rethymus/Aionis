@@ -141,6 +141,7 @@ def collect_13d_forward(
                     "form": fr["form"],
                     "filing_date": fr["filing_date"],
                     "accession": fr["accession"],
+                    "primary_doc": fr.get("primary_doc", ""),
                     "event_ts": fr["filing_date"],
                     "snapshot_ts": snapshot_ts,
                 }

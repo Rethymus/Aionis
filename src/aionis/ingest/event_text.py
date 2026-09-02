@@ -37,6 +37,15 @@ log = structlog.get_logger()
 _FOMC_STATEMENT = "https://www.federalreserve.gov/newsevents/pressreleases/monetary{yyyymmdd}a.htm"
 _BLS_CPI = "https://www.bls.gov/news.release/archives/cpi_{mmddyyyy}.htm"
 _BLS_NFP = "https://www.bls.gov/news.release/archives/empsit_{mmddyyyy}.htm"
+# Canonical EDGAR primary-document archive URL (the pattern used by every
+# established EDGAR tool, e.g. edgar-crawler / sec-edgar):
+# https://www.sec.gov/Archives/edgar/data/{cik}/{accession-no-dashes}/{primaryDocument}
+_EDGAR_ARCHIVE = "https://www.sec.gov/Archives/edgar/data/{cik}/{accn}/{doc}"
+# SEC fair-access: a DECLARED identity UA gets 200; a browser-masquerade UA
+# gets 403 on www.sec.gov (verified live 2026-09-01). Same convention as the
+# repo's other www.sec.gov consumers (form13f / form_ipo_price).
+_EDGAR_UA = "Aionis research event-text-edgar contact@example.com"
+_EDGAR_HEADERS = {"User-Agent": _EDGAR_UA, "Accept": "text/html,application/xhtml+xml"}
 
 # --- Cleaning / token control ----------------------------------------------
 _MAX_CHARS = 4000
@@ -76,17 +85,23 @@ def _strip_boilerplate(text: str, event_type: str) -> str:
         m = re.search(_BLS_BODY_MARKER, text, re.IGNORECASE)
         if m:
             return text[m.start() :]
-    else:  # FOMC
+    elif event_type == "FOMC":
         for marker in _FOMC_BODY_MARKERS:
             m = re.search(marker, text, re.IGNORECASE)
             if m:
                 return text[m.start() :]
+    # EDGAR (and any unknown type): no marker-based stripping — a marker string
+    # appearing mid-document would silently discard filing content.
     return text
 
 
 def _clean(html: str, event_type: str) -> str:
     """HTML -> cleaned text, hard-truncated to ``_MAX_CHARS`` for token control."""
     soup = BeautifulSoup(html, "html.parser")
+    # Modern EDGAR filings embed inline-XBRL headers (ix:header) whose tag soup
+    # crowds out the actual prose; scripts/styles are noise for every source.
+    for junk in soup(["script", "style", "ix:header"]):
+        junk.decompose()
     text = soup.get_text(" ")
     text = re.sub(r"\s+", " ", text).strip()
     text = _strip_boilerplate(text, event_type)
@@ -202,3 +217,98 @@ def fetch_event_text(events: pd.DataFrame, cache_dir: Path | None = None) -> pd.
         stubbed=stubbed,
     )
     return pd.DataFrame(rows)
+
+
+# ---------------------------------------------------------------------------
+# EDGAR primary-document text (SC 13D / 8-K) — the arm_e13 LLM-edge input.
+# Same discipline as the FOMC/BLS branch above: AS-RELEASED document only (the
+# filing as it stood on filing_date, never a post-hoc analysis), disk-cached
+# per event so re-runs make zero HTTP calls, and a failure NEVER caches
+# (text="" -> the LLM edge skips that event honestly; the readiness gate's
+# llm_event_text_empty check sees real text when fetches succeed).
+# ---------------------------------------------------------------------------
+
+
+def _edgar_cache_name(accession: str, primary_doc: str) -> str:
+    """Deterministic cache filename: ``edgar_{accession-no-dashes}__{doc}.txt``."""
+    accn = str(accession).strip().replace("-", "")
+    doc = str(primary_doc).strip()
+    return f"edgar_{accn}__{doc}.txt"
+
+
+def fetch_edgar_primary_text(
+    events: pd.DataFrame, cache_dir: Path | None = None
+) -> pd.DataFrame:
+    """Primary-document text for EDGAR filings, with cache + empty-on-failure.
+
+    ``events`` needs columns ``[event_id, cik, accession, primary_doc]`` —
+    exactly what the E3 freeze's 13D/8-K rows carry. Rows whose
+    ``primary_doc`` is empty (e.g. cached rows from before the column existed)
+    return ``text=""`` without any HTTP call: a missing document must never
+    manufacture signal, and "" is the runner's established skip-the-edge
+    marker (distinct from the FOMC textual stub, which would still spend LLM
+    tokens on structure-only text).
+
+    Returns ``[event_id, text]``; fetched text is cleaned + truncated to
+    ``_MAX_CHARS`` and cached at ``{cache_dir}/{name}.txt``; failures return
+    "" and are never cached so a later run can retry.
+    """
+    cache_dir = cache_dir or _default_cache_dir()
+    cache_dir.mkdir(parents=True, exist_ok=True)
+
+    fetched = cached = skipped = failed = 0
+    rows: list[dict[str, str]] = []
+    for ev in events.itertuples(index=False):
+        if not str(getattr(ev, "primary_doc", "") or "").strip():
+            skipped += 1
+            rows.append({"event_id": ev.event_id, "text": ""})
+            continue
+
+        cache_file = cache_dir / _edgar_cache_name(ev.accession, ev.primary_doc)
+        if cache_file.exists():
+            text = cache_file.read_text(encoding="utf-8")
+            cached += 1
+            rows.append({"event_id": ev.event_id, "text": text})
+            continue
+
+        url = _EDGAR_ARCHIVE.format(
+            cik=int(ev.cik),
+            accn=str(ev.accession).strip().replace("-", ""),
+            doc=str(ev.primary_doc).strip(),
+        )
+        # www.sec.gov: DECLARED identity UA + the shared >=2s host-spacing policy.
+        # The URL is built ONLY from this module's fixed _EDGAR_ARCHIVE template
+        # with a numeric cik and a digits-only accession — the host is pinned to
+        # www.sec.gov, so there is no user-controlled destination (SSRF-safe).
+        try:
+            resp = _policy_get(url, timeout=_TIMEOUT_S, headers=_EDGAR_HEADERS)
+        except Exception as e:  # HTTPError, Timeout, ConnectionError: fail-soft
+            log.warning("edgar_text_fetch_failed", event_id=ev.event_id, url=url, error=str(e))
+            failed += 1
+            rows.append({"event_id": ev.event_id, "text": ""})
+            continue
+        if resp.status_code == 404:
+            log.warning("edgar_text_fetch_404", event_id=ev.event_id, url=url)
+            failed += 1
+            rows.append({"event_id": ev.event_id, "text": ""})
+            continue
+        raw = resp.text
+
+        text = _clean(raw, event_type="EDGAR")[:_MAX_CHARS]
+        cache_file.write_text(text, encoding="utf-8")
+        fetched += 1
+        log.info("edgar_text_fetched", event_id=ev.event_id, chars=len(text))
+        rows.append({"event_id": ev.event_id, "text": text})
+
+    log.info(
+        "edgar_text_summary",
+        total=len(events),
+        fetched=fetched,
+        cached=cached,
+        skipped=skipped,
+        failed=failed,
+    )
+    return pd.DataFrame(rows, columns=["event_id", "text"])
+
+
+__all__ = ["fetch_event_text", "fetch_edgar_primary_text"]

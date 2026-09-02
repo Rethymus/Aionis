@@ -172,6 +172,9 @@ def test_13d_forward_emits_only_filings_le_snapshot_ts(
     assert (frame["ticker"] == "ANSS").all()
     assert (frame["form"] == "SC 13D").all()
     assert (frame["feature"] == "stake_13d_filing").all()
+    # primary_doc propagates (the E3 text slice fetches the as-released doc
+    # from the canonical archive URL built from cik+accession+primary_doc).
+    assert frame["primary_doc"].tolist() == ["d.htm"]
 
 
 def test_13d_forward_idempotent_rerun_no_dup_rows_stable_sha(

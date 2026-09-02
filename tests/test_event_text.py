@@ -232,3 +232,99 @@ def test_bls_blocked(event_type: str, monkeypatch: pytest.MonkeyPatch) -> None:
 
     with pytest.raises(RuntimeError, match="BLS is blocked"):
         event_text._fetch_text(event_type, pd.Timestamp("2024-03-12 08:30"))
+
+
+# --- EDGAR primary-document branch (arm_e13 LLM-edge input) ------------------
+
+
+def _make_edgar_events(*rows: tuple[str, int, str, str]) -> pd.DataFrame:
+    """Build an EDGAR events frame: (event_id, cik, accession, primary_doc)."""
+    return pd.DataFrame(
+        [
+            {"event_id": eid, "cik": cik, "accession": accn, "primary_doc": doc}
+            for eid, cik, accn, doc in rows
+        ]
+    )
+
+
+def test_edgar_primary_text_fetches_canonical_url_and_caches(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    """First call hits the canonical EDGAR archive URL; second call is cache-only."""
+    events = _make_edgar_events(
+        ("T0:0000001098-24-000010", 1098, "0000001098-24-000010", "d.htm"),
+    )
+    urls: list[str] = []
+
+    def fake_get(url: str, **_: Any) -> _FakeResp:
+        urls.append(url)
+        return _FakeResp("<p>Acquiror intends to acquire 6.2% of the shares.</p>")
+
+    monkeypatch.setattr(event_text, "_policy_get", fake_get)
+    cache = tmp_path / "cache"
+
+    out1 = event_text.fetch_edgar_primary_text(events, cache_dir=cache)
+    # canonical archive pattern: dashes stripped from the accession
+    assert urls == [
+        "https://www.sec.gov/Archives/edgar/data/1098/000000109824000010/d.htm"
+    ]
+    assert "6.2% of the shares" in out1["text"].iloc[0]
+    cache_name = cache / "edgar_000000109824000010__d.htm.txt"
+    assert cache_name.exists()
+
+    urls.clear()
+    out2 = event_text.fetch_edgar_primary_text(events, cache_dir=cache)
+    assert urls == []  # pure cache hit
+    assert out1["text"].tolist() == out2["text"].tolist()
+
+
+def test_edgar_primary_text_empty_doc_returns_empty_without_http(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    """Rows without a primary_doc filename (pre-column cache rows) skip HTTP."""
+    events = _make_edgar_events(
+        ("T0:old-1", 1098, "0000001098-24-000011", ""),
+    )
+    monkeypatch.setattr(
+        event_text,
+        "_policy_get",
+        lambda *_, **__: pytest.fail("empty primary_doc attempted an HTTP request"),
+    )
+    out = event_text.fetch_edgar_primary_text(events, cache_dir=tmp_path / "cache")
+    assert out["text"].tolist() == [""]
+
+
+def test_edgar_primary_text_404_returns_empty_and_never_caches(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    """A 404 (e.g. delisted/wrong doc) -> text="" so the LLM edge skips the
+    event honestly; nothing is cached so a later run can retry."""
+    events = _make_edgar_events(
+        ("T0:gone-1", 1098, "0000001098-24-000012", "missing.htm"),
+    )
+    monkeypatch.setattr(event_text, "_policy_get", lambda *_, **__: _FakeResp("", status_code=404))
+    cache = tmp_path / "cache"
+
+    out = event_text.fetch_edgar_primary_text(events, cache_dir=cache)
+    assert out["text"].tolist() == [""]
+    assert not (cache / "edgar_000000109824000012__missing.htm.txt").exists()
+
+
+def test_edgar_clean_does_not_marker_strip(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    """EDGAR cleaning must NOT apply FOMC/BLS marker stripping — a marker
+    appearing mid-filing would silently discard content."""
+    html = (
+        "<p>Item 1. Identity and Background.</p>"
+        "<p>for release to shareholders only after the record date.</p>"
+        "<p>Item 4. Purpose of Transaction.</p>"
+    )
+    events = _make_edgar_events(
+        ("T0:strip-1", 1098, "0000001098-24-000013", "doc.htm"),
+    )
+    monkeypatch.setattr(event_text, "_policy_get", lambda *_, **__: _FakeResp(html))
+    out = event_text.fetch_edgar_primary_text(events, cache_dir=tmp_path / "cache")
+    text = out["text"].iloc[0]
+    assert text.startswith("Item 1. Identity and Background.")
+    assert "Purpose of Transaction" in text
