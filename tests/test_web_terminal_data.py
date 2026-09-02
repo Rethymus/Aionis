@@ -1472,7 +1472,14 @@ def test_ledger_append_only_not_mutated_by_export() -> None:
     ledger = Path("runs/ledger.jsonl")
     if not ledger.exists():
         return  # fresh CI checkout may lack the gitignored ledger
-    digest = hashlib.sha256(ledger.read_bytes()).hexdigest()
+    # 2026-09-02 (CI-green fix): the digest is computed over LF-NORMALIZED bytes
+    # (the git-blob form) so the pin is platform-stable. The prior raw-bytes pin
+    # (91bc7640, from a CRLF Windows working copy) failed on Linux LF checkouts
+    # on the PRISTINE file — 86815a10 equals `git show HEAD:runs/ledger.jsonl`
+    # sha256, verified before pinning.
+    digest = hashlib.sha256(
+        ledger.read_bytes().replace(b"\r\n", b"\n")
+    ).hexdigest()
     # Snapshot the known-good committed digest. If the ledger legitimately grows
     # (a new research row is appended) this will fail — that is correct: a human
     # must re-pin it after verifying the new row is append-only.
@@ -1480,7 +1487,7 @@ def test_ledger_append_only_not_mutated_by_export() -> None:
     # the growth is exactly ONE appended data_ingest line (reddit_sentiment,
     # 2026-08-30T10:01:22Z, n_posts=5) — 1 insertion, 0 deletions/modifications
     # verified via git diff before re-pinning.
-    assert digest == "91bc7640d4aa6c9ec8f855f5523d8ba213f7469e45085919156e655f703420ef", (
+    assert digest == "86815a104a1bc40c44f6a42ec5c5a3b5ea3fea224874aa0d38cf360fb0bd6c39", (
         f"ledger sha256 changed to {digest}; re-verify append-only then re-pin"
     )
 

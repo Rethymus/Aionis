@@ -2,17 +2,13 @@ name: Tests
 
 # Hermetic test + lint gate for the research core.
 #
-# STATUS (2026-09-01): DORMANT-BY-BILLING — GitHub Actions on this account is
-# currently blocked (workflows fail ~4s after queueing; see state logs of the
-# 2026-08-29/31 rounds). This workflow is wired in the same dormant-tolerant
-# spirit as e3-forward.yml: once Actions is unblocked it runs automatically on
-# push/PR and turns the H6-determinism claim into externally visible evidence
-# (uv-sync from the pinned uv.lock -> full hermetic pytest -> ruff).
-#
-# Note: as of 2026-09-01 `uv run ruff check` is clean repo-wide (the last
-# mechanical E501/I001 debt in docs/code-review/_sync.py and
-# scripts/bts_tsi_fetch.py was wrapped output-preserving); the gate below runs
-# the full check so any new debt fails loudly.
+# STATUS (2026-09-02): LIVE — Actions billing was unblocked mid-2026-09-01 and
+# this workflow now runs on every push/PR. The first live runs exposed six
+# non-hermetic failures (line-ending-sensitive byte pins + local-artifact
+# contracts reading the gitignored runs/results tree); fixed in round 59 by
+# LF-normalizing every integrity hash (git-blob form, platform-stable) and by
+# explicit skip-with-reason guards on local-artifact contracts. `uv run ruff
+# check` is clean repo-wide.
 
 on:
   push:

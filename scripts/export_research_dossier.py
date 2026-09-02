@@ -447,23 +447,30 @@ def build_assembly(
 
 
 def load_payloads(panel_dir: Path | None = None) -> dict[str, tuple[object, str]]:
-    """Read the committed panels; a missing file is simply absent (honest)."""
+    """Read the committed panels; a missing file is simply absent (honest).
+
+    Integrity shas are computed over LF-NORMALIZED bytes (the git-blob form)
+    so the embedded values are platform-stable — a CRLF Windows checkout and
+    a LF CI checkout of the same commit hash identically (round-58 CI-green
+    fix; same rationale as the round-34 dossier/shelf LF normalization)."""
     base = PANEL_DIR if panel_dir is None else Path(panel_dir)
+
+    def _lf_sha(fp: Path) -> str:
+        return _sha_bytes(fp.read_bytes().replace(b"\r\n", b"\n"))
+
     payloads: dict[str, tuple[object, str]] = {}
     for key, fname in PANEL_FILES.items():
         fp = base / fname
         if fp.exists():
             b = fp.read_bytes()
-            payloads[key] = (json.loads(b.decode("utf-8")), _sha_bytes(b))
+            payloads[key] = (json.loads(b.decode("utf-8")), _sha_bytes(b.replace(b"\r\n", b"\n")))
     atlas = ROOT / ARTIFACT_ATLAS
     if atlas.exists():
-        b = atlas.read_bytes()
-        payloads["artifact_atlas"] = (None, _sha_bytes(b))
+        payloads["artifact_atlas"] = (None, _lf_sha(atlas))
     for key, rel in DOC_FILES.items():
         fp = ROOT / rel
         if fp.exists():
-            b = fp.read_bytes()
-            payloads[key] = (None, _sha_bytes(b))
+            payloads[key] = (None, _lf_sha(fp))
     return payloads
 
 

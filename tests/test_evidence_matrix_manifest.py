@@ -118,7 +118,26 @@ def test_fixture_ledger_mismatch_raises(tmp_path: Path) -> None:
 
 
 def test_real_manifest_equals_fresh_render_of_current_inputs() -> None:
-    """Byte-stable contract: committed manifest == fresh render (no drift)."""
+    """Byte-stable contract: committed manifest == fresh render (no drift).
+
+    LOCAL-ARTIFACT contract: the render reads the gitignored frozen
+    ``runs/results/<sig>/differential.json`` dirs — absent on a fresh CI
+    checkout, where this test skips (it runs on the research machine)."""
+    import pytest
+
+    results_root = Path("runs/results")
+    needed = [
+        "17245a75d2d4cd17c68f36a9d0f4b4f7f3baf1db31b33b87be79e6e4a11400da",
+    ]
+    # guard every claim sig the exporter reads (fail-safe: derive from module)
+    for c in getattr(ex, "_CLAIMS", []):
+        if isinstance(c, dict) and c.get("sig"):
+            needed.append(c["sig"])
+    if not all((results_root / s / "differential.json").exists() for s in needed):
+        pytest.skip(
+            "local-artifact contract: requires gitignored runs/results/<sig>/ "
+            "differential.json (research machine only; fresh CI checkout skips)"
+        )
     tmp_unused = Path("runs/tmp_evidence_matrix_fresh.json")
     fresh = ex.export_evidence_matrix_manifest(out_path=tmp_unused)
     try:

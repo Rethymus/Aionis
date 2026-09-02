@@ -795,6 +795,10 @@ def export_evidence_matrix_manifest(
     for name in _MATRIX_ARTIFACTS:
         fp = artifacts_dir / name
         raw = fp.read_bytes()
+        # LF-normalized (git-blob form): platform-stable integrity — a CRLF
+        # working checkout and an LF CI checkout hash identically (round-58
+        # CI-green fix, same rationale as the dossier panel-sha normalization).
+        raw = raw.replace(b"\r\n", b"\n")
         artifacts.append({
             "id": name.removesuffix(".html"),
             "path": f"reports/evidence/{name}",

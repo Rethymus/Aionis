@@ -83,6 +83,19 @@ def test_fixture_results_dir_missing_raises(tmp_path: Path) -> None:
 
 
 def test_real_phase_dossiers_equal_fresh_render(tmp_path: Path) -> None:
+    """LOCAL-ARTIFACT contract: the phase dossiers embed per-phase frozen
+    metrics read from the gitignored runs/results tree — a fresh CI checkout
+    lacks it and this test skips (it runs on the research machine)."""
+    import pytest
+
+    if not any(
+        (Path("runs/results") / s / "differential.json").exists()
+        for s in SIGS.values()
+    ):
+        pytest.skip(
+            "local-artifact contract: phase dossiers read the gitignored "
+            "frozen runs/results tree (research machine only)"
+        )
     for phase, sig in SIGS.items():
         fp = Path(f"reports/evidence/research-dossier-{phase.lower()}-v1.html")
         committed = fp.read_text(encoding="utf-8")

@@ -474,7 +474,11 @@ def test_real_sregistry_integrity_shas_match_files() -> None:
         assert len(hexes) == 1, f"integrity must carry one sha256: {s.sid}"
         want = hexes[0]
         if s.type in ("panel", "doc", "artifact"):
-            got = hashlib.sha256(Path(s.locator).read_bytes()).hexdigest()
+            # LF-normalized (git-blob form) — mirrors the exporter so the
+            # integrity check is platform-stable (round-58 CI-green fix).
+            got = hashlib.sha256(
+                Path(s.locator).read_bytes().replace(b"\r\n", b"\n")
+            ).hexdigest()
             assert got == want, f"{s.sid} {s.locator}: registry sha drifted"
         elif s.type == "ledger":
             m = re.search(r"line (\d+)", s.locator)
