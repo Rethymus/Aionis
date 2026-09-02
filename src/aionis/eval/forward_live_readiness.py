@@ -191,10 +191,16 @@ def _check_stakes_freshness(
     stakes: pd.DataFrame,
     freeze_clock: pd.Timestamp,
 ) -> None:
-    """Ensure 13D stakes are not future-dated and non-empty."""
+    """Ensure 13D stakes are not future-dated.
+
+    An EMPTY frame is a legitimate no-event window (round-56 evidence: the
+    2026-08-31 smoke found zero SC 13D filings for the universe in August —
+    plausible market state; the collector polls every universe CIK, so coverage
+    completeness is structural, not per-frame). Only future-dating fails.
+    """
     if stakes.empty:
-        log.error("readiness_stakes_13d_empty")
-        raise ValueError("stakes_13d_empty")
+        log.info("readiness_stakes_13d_empty_window", note="no 13D events this window")
+        return
 
     max_ts = stakes["event_ts"].max()
     if pd.Timestamp(max_ts) > freeze_clock:
@@ -430,28 +436,39 @@ def check_forward_readiness(
 
         # 3. Check fundamental freshness
         _check_fundamental_freshness(fundamentals, freeze_clock)
-        manifest["fundamental_max_filed"] = fundamentals["filed"].max().isoformat()
+        # filed / event_ts columns arrive as strings from the cached parquets —
+        # wrap before .isoformat() (latent TypeError path, first reached by the
+        # 2026-08-31 smoke once earlier steps finally passed).
+        manifest["fundamental_max_filed"] = pd.Timestamp(
+            fundamentals["filed"].max()
+        ).isoformat()
         manifest["fundamental_rows"] = len(fundamentals)
 
         # 4. Check macro freshness
         macro = freeze_out.get("macro_df", pd.DataFrame())
         _check_macro_freshness(macro, freeze_clock)
         if not macro.empty:
-            manifest["macro_max_event_ts"] = macro["event_ts"].max().isoformat()
+            manifest["macro_max_event_ts"] = pd.Timestamp(
+                macro["event_ts"].max()
+            ).isoformat()
             manifest["macro_rows"] = len(macro)
 
         # 5. Check 13D stakes freshness
         stakes = freeze_out.get("stakes_df", pd.DataFrame())
         _check_stakes_freshness(stakes, freeze_clock)
         if not stakes.empty:
-            manifest["stakes_13d_max_event_ts"] = stakes["event_ts"].max().isoformat()
+            manifest["stakes_13d_max_event_ts"] = pd.Timestamp(
+                stakes["event_ts"].max()
+            ).isoformat()
             manifest["stakes_13d_rows"] = len(stakes)
 
         # 6. Check 8-K earnings freshness
         earnings = freeze_out.get("earnings_df", pd.DataFrame())
         _check_earnings_freshness(earnings, freeze_clock)
         if not earnings.empty:
-            manifest["earnings_8k_max_event_ts"] = earnings["event_ts"].max().isoformat()
+            manifest["earnings_8k_max_event_ts"] = pd.Timestamp(
+                earnings["event_ts"].max()
+            ).isoformat()
             manifest["earnings_8k_rows"] = len(earnings)
 
         # 7. Check membership (required)

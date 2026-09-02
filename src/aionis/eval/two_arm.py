@@ -29,16 +29,33 @@ def _clean_panel(
     *,
     macro: pd.DataFrame | None = None,
     extra_features: pd.DataFrame | None = None,
+    retain_unlabeled_from: pd.Timestamp | None = None,
 ) -> pd.DataFrame:
-    """Build -> PIT-mask -> drop NaN-label -> canonical (date, ticker) order."""
+    """Build -> PIT-mask -> drop NaN-label -> canonical (date, ticker) order.
+
+    ``retain_unlabeled_from`` (E3 forward path): keep rows dated >= this
+    session WITHOUT realized forward labels — the forward cross-section to be
+    scored. Historical rows are still dropped on NaN labels, so training
+    semantics are unchanged; the readiness gate's
+    :func:`aionis.eval.forward_live_readiness.forward_panel_train_test_split`
+    then splits test = the predict session (NaN labels retained — the entire
+    point of forward prediction) vs train = realized-label history. Default
+    None reproduces the historical drop-everything behavior bit-for-bit (H6).
+    """
     p = build_selection_panel(
         prices, fundamentals_long, horizon, align_on=align_on,
         macro=macro, extra_features=extra_features,
     )
     p = mask_panel_to_pit(p, membership)
+    if retain_unlabeled_from is not None:
+        cutoff = pd.Timestamp(retain_unlabeled_from).normalize()
+        realized = p[p["date"] < cutoff].dropna(subset=["y_fwd_ret"])
+        forward_cs = p[p["date"] >= cutoff]
+        p = pd.concat([realized, forward_cs], ignore_index=True)
+    else:
+        p = p.dropna(subset=["y_fwd_ret"])
     return (
-        p.dropna(subset=["y_fwd_ret"])
-        .sort_values(["date", "ticker"]).reset_index(drop=True)
+        p.sort_values(["date", "ticker"]).reset_index(drop=True)
     )
 
 

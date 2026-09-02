@@ -26,8 +26,7 @@ Non-owner checks (concrete, deterministic failures):
   * fundamental_empty
   * macro_future_dated
   * macro_empty
-  * stakes_13d_future_dated
-  * stakes_13d_empty
+  * stakes_13d_future_dated (empty 13D windows are legitimate no-event months)
   * earnings_8k_future_dated
   * earnings_8k_empty
   * universe_mismatch
@@ -530,8 +529,13 @@ def test_readiness_fails_on_future_dated_stakes() -> None:
     assert result.reason_code == "stakes_13d_future_dated"
 
 
-def test_readiness_fails_on_empty_stakes() -> None:
-    """Empty 13D stakes → deterministic failure."""
+def test_readiness_passes_on_empty_stakes_window() -> None:
+    """Empty 13D stakes = a legitimate no-event window, NOT a data failure.
+
+    Round-56 evidence: the 2026-08-31 smoke found zero SC 13D filings for the
+    universe in August — plausible market state (the collector polls every
+    universe CIK, so coverage completeness is structural). Only future-dating
+    fails; the historical empty-fails semantics blocked honest month-ends."""
     panel = _synth_panel(end_date=PREDICT_SESSION)
     fund = _synth_fund()
     prices = _synth_prices()
@@ -552,8 +556,8 @@ def test_readiness_fails_on_empty_stakes() -> None:
         freeze_clock=FREEZE_CLOCK,
     )
 
-    assert result.is_ready is False
-    assert result.reason_code == "stakes_13d_empty"
+    assert result.is_ready is True
+    assert result.reason_code is None
 
 
 def test_readiness_fails_on_future_dated_earnings() -> None:

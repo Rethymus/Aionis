@@ -178,3 +178,32 @@ def test_phase_c_bundle_columns_actually_consumed_by_learner() -> None:
     assert np.array_equal(
         ign_s.loc[common2].to_numpy(), base_s.loc[common2].to_numpy()
     ), "unused extra column leaked into the learner"
+
+
+# ---------------------------------------------------------------------------
+# E3 forward path: retain_unlabeled_from (round-56 fix)
+# ---------------------------------------------------------------------------
+
+def test_clean_panel_retains_forward_cross_section() -> None:
+    """retain_unlabeled_from keeps the predict session's rows (NaN labels) —
+    the entire point of forward prediction — while historical rows keep the
+    realized-label-only drop semantics."""
+    from aionis.eval.two_arm import _clean_panel
+
+    px, mem = _fixtures(n_sess=40)
+    predict_session = px.index[-1]  # the newest session: label unrealizable
+
+    hist = _clean_panel(px, pd.DataFrame(), mem, 5, "filed")
+    assert hist["date"].max() < predict_session, "historical dropna removes tail"
+
+    fwd = _clean_panel(
+        px, pd.DataFrame(), mem, 5, "filed",
+        retain_unlabeled_from=predict_session,
+    )
+    tail = fwd[fwd["date"] == predict_session]
+    assert len(tail) == 4  # all four tickers' forward cross-section retained
+    assert tail["y_fwd_ret"].isna().all(), "forward labels are unknown by design"
+    assert fwd["date"].max() == predict_session
+    # historical section identical to the default behavior
+    hist_part = fwd[fwd["date"] < predict_session].reset_index(drop=True)
+    pd.testing.assert_frame_equal(hist_part, hist, check_exact=True)
