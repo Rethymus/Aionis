@@ -3393,11 +3393,22 @@ def export_ic_deciles() -> None:
         if not pp.exists():
             continue
         panel = pd.read_parquet(pp)
-        # Rebuild the wide close matrix on the panel's session grid, then apply
-        # the FROZEN forward-return function verbatim (alignment guarantee).
-        close = panel.pivot_table(index="date", columns="ticker",
-                                  values="close", aggfunc="last")
-        fwd_wide[region] = forward_returns(close, H)
+        if "close" in panel.columns:
+            # US research panel: rebuild the wide close matrix on the panel's
+            # session grid, then apply the FROZEN forward-return function
+            # verbatim (alignment guarantee).
+            close = panel.pivot_table(index="date", columns="ticker",
+                                      values="close", aggfunc="last")
+            fwd_wide[region] = forward_returns(close, H)
+        elif "forward_return_h" in panel.columns:
+            # CN research panel: the builder already computed the label with
+            # the SAME frozen forward_returns function (see
+            # scripts/build_cn_price_panel.py) — consuming the frozen column
+            # verbatim is the same convention with one less re-derivation.
+            fwd_wide[region] = panel.pivot_table(
+                index="date", columns="ticker",
+                values="forward_return_h", aggfunc="last",
+            )
 
     rows: list[dict] = []
     for (date, region), g in df.groupby(["date", "region"], sort=True):
