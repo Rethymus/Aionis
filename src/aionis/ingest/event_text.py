@@ -24,7 +24,6 @@ import re
 from pathlib import Path
 
 import pandas as pd
-import requests
 import structlog
 from bs4 import BeautifulSoup
 
@@ -108,33 +107,24 @@ def _clean(html: str, event_type: str) -> str:
     return text[:_MAX_CHARS]
 
 
-def _http_get(url: str, *, use_policy: bool = False) -> str | None:
-    """GET with browser UA + 30s timeout; one retry on connection errors.
+def _http_get(url: str) -> str | None:
+    """GET (30s timeout) through the shared >=2s host-spacing policy.
 
     Returns raw HTML on 2xx, None on 404 / persistent failure (fail-soft).
+    Every reachable branch is policy-routed (BLS raises before HTTP; FOMC and
+    the EDGAR primary-doc path both go through _policy_get — round 56 removed
+    the last raw-requests branch, an off-policy site flagged by audit).
     """
-    attempts = (1,) if use_policy else (1, 2)
-    for attempt in attempts:
-        try:
-            if use_policy:
-                resp = _policy_get(url, timeout=_TIMEOUT_S, headers=_HTTP_HEADERS)
-            else:
-                resp = requests.get(url, timeout=_TIMEOUT_S, headers=_HTTP_HEADERS)
-            if resp.status_code == 404:
-                log.warning("text_fetch_404", url=url)
-                return None
-            resp.raise_for_status()
-            return resp.text
-        except requests.exceptions.ConnectionError as e:
-            # Transient host issues (rate-limit, TCP reset): one retry.
-            if not use_policy and attempt == 1:
-                continue
-            log.warning("text_fetch_conn_error", url=url, error=str(e))
+    try:
+        resp = _policy_get(url, timeout=_TIMEOUT_S, headers=_HTTP_HEADERS)
+        if resp.status_code == 404:
+            log.warning("text_fetch_404", url=url)
             return None
-        except Exception as e:  # HTTPError, Timeout, SSLError, etc.
-            log.warning("text_fetch_failed", url=url, error=str(e))
-            return None
-    return None  # pragma: no cover - every loop path returns
+        resp.raise_for_status()
+        return resp.text
+    except Exception as e:  # HTTPError, Timeout, ConnectionError: fail-soft
+        log.warning("text_fetch_failed", url=url, error=str(e))
+        return None
 
 
 def _fetch_text(event_type: str, event_ts: pd.Timestamp) -> str | None:
@@ -148,7 +138,7 @@ def _fetch_text(event_type: str, event_ts: pd.Timestamp) -> str | None:
     except ValueError as e:
         log.warning("text_fetch_unknown_type", event_type=event_type, error=str(e))
         return None
-    raw = _http_get(url, use_policy=event_type == "FOMC")
+    raw = _http_get(url)
     if raw is None:
         return None
     return _clean(raw, event_type)

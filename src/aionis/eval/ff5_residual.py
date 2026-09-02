@@ -275,9 +275,9 @@ def _fallback_load_ff5(start: str, end: str) -> pd.DataFrame | None:
         Returns None if download fails.
     """
     import io
-    import time
-    import urllib.request
     import zipfile
+
+    from aionis.ingest.universe import _policy_get
 
     # Official Kenneth-French bulk ZIP (2x3 construction, post-2014)
     zip_url = "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_5_Factors_2x3_CSV.zip"
@@ -285,18 +285,11 @@ def _fallback_load_ff5(start: str, end: str) -> pd.DataFrame | None:
     log.info("ff5_fallback_attempt", url=zip_url)
 
     try:
-        # Polite: single retry with 2s delay
-        for attempt in range(2):
-            try:
-                with urllib.request.urlopen(zip_url, timeout=30) as response:
-                    raw_zip = response.read()
-                break
-            except Exception as e:
-                if attempt == 0:
-                    log.warning("ff5_fallback_retry", error=str(e))
-                    time.sleep(2.0)
-                else:
-                    raise
+        # Shared >=2s host-spacing policy (round 56: replaced the off-policy
+        # bare urlopen flagged by audit; one bounded retry is kept).
+        resp = _policy_get(zip_url, timeout=30)
+        resp.raise_for_status()
+        raw_zip = resp.content
     except Exception as e:
         log.error("ff5_fallback_failed", error=str(e))
         return None

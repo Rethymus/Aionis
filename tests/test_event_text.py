@@ -135,7 +135,6 @@ def test_cache_roundtrip_first_call_writes_second_call_reads(
         calls["n"] += 1
         return _FakeResp(f"<p>body for {url}</p>")
 
-    monkeypatch.setattr(event_text.requests, "get", fake_get)
     monkeypatch.setattr(event_text, "_policy_get", fake_get)
     cache = tmp_path / "cache"
 
@@ -167,7 +166,6 @@ def test_stub_fallback_on_connection_error_is_not_cached(
     def fake_get(url: str, **_: Any) -> _FakeResp:
         raise requests.exceptions.ConnectionError(f"blocked {url}")
 
-    monkeypatch.setattr(event_text.requests, "get", fake_get)
     monkeypatch.setattr(event_text, "_policy_get", lambda *_, **__: fake_get(""))
     cache = tmp_path / "cache"
 
@@ -189,7 +187,6 @@ def test_stub_fallback_on_404_is_not_cached(
     def fake_get(url: str, **_: Any) -> _FakeResp:
         return _FakeResp("not found", status_code=404)
 
-    monkeypatch.setattr(event_text.requests, "get", fake_get)
     monkeypatch.setattr(event_text, "_policy_get", lambda *_, **__: fake_get(""))
     cache = tmp_path / "cache"
 
@@ -211,7 +208,6 @@ def test_default_cache_dir_used_when_none(
     def fake_get(url: str, **_: Any) -> _FakeResp:
         return _FakeResp("<p>hi</p>")
 
-    monkeypatch.setattr(event_text.requests, "get", fake_get)
     monkeypatch.setattr(event_text, "_policy_get", lambda *_, **__: fake_get(""))
 
     # Act
@@ -225,8 +221,8 @@ def test_default_cache_dir_used_when_none(
 def test_bls_blocked(event_type: str, monkeypatch: pytest.MonkeyPatch) -> None:
     """Blocked BLS event types must not make a live request on a cache miss."""
     monkeypatch.setattr(
-        event_text.requests,
-        "get",
+        event_text,
+        "_policy_get",
         lambda *_, **__: pytest.fail("BLS cache miss attempted an HTTP request"),
     )
 
