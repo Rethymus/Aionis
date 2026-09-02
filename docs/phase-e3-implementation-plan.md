@@ -14,6 +14,7 @@
 > - **`arm_e13 = arm_base + E1 event propagation` (`propagate_panel`, FF-12 grouping, **zero-LLM**) `+ E2-macro` (frozen sign-only β × `surprise_z`, FF-12, CPI+NFP, **zero-LLM**) `+ E2-event` (13D/8-K minimal closed-enum LLM edge: `direction` signs the shock + `mechanism_keyword` one-hot).**
 > - **Taxonomy = FF-12 unified** — `propagate_panel(sic_map)` is sector-agnostic (`sic_map` = `ticker→group`), so feeding FF-12 grouping is a **zero-code-change** swap; frozen SIC→FF-12 concordance (Ken French).
 > - **Macro-β = Boudt–Neely–Sercu (Fed WP 2017-020), sign-only(±), CPI+NFP** — a frozen a-priori hyperparameter (zero estimation DOF → most falsifiable).
+>   *CORRECTION (2026-09-02, historical note — original text above preserved): the "Fed WP 2017-020" number is wrong — that FEDS number is Reifschneider & Tulip (official PDF title-checked). The primary source for the industry sign table is an OWNER GATE pending first-hand verification; see `src/aionis/features/frozen_beta.py` and the owner-gate decision brief.*
 > - **Event LLM edge**: closed enum `{sic_sector(FF-12), direction, mechanism_keyword, horizon_bucket}`, `extra="forbid"`, GLM-4-Flash free tier, idempotent sha256 cache. `mechanism_keyword = {earnings_signal, ownership_change, guidance, other}`; `direction = {POSITIVE+1, NEGATIVE-1, NEUTRAL→NaN}`; `horizon_bucket` reuses ERL `TemporalClass`.
 >
 > **Net effect on the §4 work-breakdown:** the "build E2-causal from scratch" assumption is gone. **3a** = close

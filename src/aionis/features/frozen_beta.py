@@ -32,13 +32,26 @@ import pandas as pd
 
 from aionis.schema.causal_edge import SicSector
 
-FROZEN_BETA_SOURCE = "Boudt-Neely-Sercu Fed WP 2017-020, sign-only"
+# CITATION CORRECTION (2026-09-02, first-hand verified): FEDS WP 2017-020 is
+# Reifschneider & Tulip, "Gauging the Uncertainty of the Economic Outlook..."
+# (official PDF fetched and title-checked) — NOT a Boudt-Neely-Sercu paper. The
+# original "Fed WP 2017-020" number was wrong. The verified Boudt-Neely 2017
+# collaboration (Neely-Wauters-Sercu-Boudt, via Crossref) concerns multinationals'
+# FX exposure to macro news — not industry-level equity responses. The primary
+# source for the industry sign table must come from the OWNER (owner gate);
+# until then the signs stay the defensible qualitative prior below.
+FROZEN_BETA_SOURCE = (
+    "Boudt-Neely-Sercu sign prior — primary source PENDING owner verification "
+    "(prior 'Fed WP 2017-020' number disproven 2026-09-02)"
+)
 FROZEN_BETA_VERSION = "bn2017-sign-v1"
 FROZEN_BETA_STATUS = "exploratory-v1-qualitative"
-# TODO(headline): finalize from Boudt-Neely Table 7 (FEDS WP 2017-020) before the
-# arm_e13 headline ignite. The current signs are a defensible qualitative prior
-# (energy + / utils - for CPI; cyclicals + / defensives - for NFP). Swapping in
-# the paper's exact signs bumps FROZEN_BETA_VERSION — it must NOT silently mutate.
+# TODO(headline): owner supplies the first-hand paper + its industry sign table
+# (the originally cited "Table 7, FEDS WP 2017-020" cannot be correct — see the
+# citation correction above) before the arm_e13 headline ignite. The current
+# signs are a defensible qualitative prior (energy + / utils - for CPI;
+# cyclicals + / defensives - for NFP). Swapping in the paper's exact signs
+# bumps FROZEN_BETA_VERSION — it must NOT silently mutate.
 
 _SHOCK_FOR_EVENT_TYPE = {"CPI": "cpi", "NFP": "nfp"}
 

@@ -70,6 +70,12 @@ def test_frozen_beta_is_a_module_literal_constant() -> None:
 
 def test_frozen_beta_source_version_status_documented() -> None:
     assert "Boudt-Neely-Sercu" in FROZEN_BETA_SOURCE
+    # 2026-09-02 citation correction: the prior "Fed WP 2017-020" number was
+    # disproven first-hand (that FEDS number is Reifschneider-Tulip) — the
+    # source string must flag PENDING owner verification and may mention the
+    # old number ONLY inside the disproven context.
+    assert "PENDING owner verification" in FROZEN_BETA_SOURCE
+    assert "disproven" in FROZEN_BETA_SOURCE
     assert FROZEN_BETA_VERSION == "bn2017-sign-v1"
     # source_status flags whether the signs came from the paper or the
     # qualitative fallback — must be one of the two documented states.
