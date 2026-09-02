@@ -8,6 +8,23 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-09-02 (zz20) 轮 56：E3 前向链全通——文本切片+membership 续造+三潜伏缺陷+覆盖缺口 → 08-31 真实烟雾 READINESS PASS（证据环环相扣）
+
+**背景**：业主 /goal 要求按轮 55 决策计划（A1 文本切片+B1 membership 续造）推进并逐一证据核查。**证据包**：`reports/audits/2026-09-02-round56-evidence-pack.md`（含门 JSON+烟雾日志副本）。
+
+**A1 文本切片**：`event_text.fetch_edgar_primary_text`——正典 URL `sec.gov/Archives/edgar/data/{cik}/{accn无横线}/{primaryDocument}`（edgar-crawler/sec-edgar 同款）；**UA 关键发现**：浏览器伪装 UA→403,声明式 UA→200（curl+policy 双实证）,对齐仓内 form13f 惯例；`ix:header/script/style` 剥离（首探针 3958 字符全是 XBRL 噪音,剥离后 3471 字符纯 filing 原文）；失败→text=""（LLM 边缘跳过语义）永不缓存。收集器 stakes/earnings 行构造补 `primary_doc`（切片早已提取,行构造丢弃）；`_events_df` 带 cik+primary_doc+event_id+空 text；`_fill_events_text` 仅填空文本行（测试接缝保非空）。真探针：AAPL（0000320193-26-000018）+MSFT（0001193125-26-323632）真实 8-K 原文,二次调用零 HTTP。
+
+**B1 membership 续造**（子代理初版+主线三处根因修复）：①解析器复合表头缺陷——真实页表头行 1 是 5 单元格（Added/Removed colspan=2）而数据行 7 列,原实现把 Removed 组头索引 2 映到数据第 2 列=新增公司名（"CITIZENS"/"HOLOGIC" 被当 ticker）,移除侧 247 行全丢——重写 `_resolve_columns`（colspan/rowspan 展开+子表头叠加+平铺回退）；②**快照语义翻转**：地面真值（parquet 逐月差分 vs 解析行）证明 pierrebrunelle 的 M-01 文件=M 月末状态（CXO 02-22 加入已在 02-01 快照）——折叠改为 change_date≤M-end；③同日同 ticker 增删对=改名/承继行 no-op（FOX/FOXA 2019-03-19、WTW 2022-01-10）。**对账门重设计**：100% 严格重建在构造上不可能（上游以现行 ticker 全程标注——EG/IQV/CPAY/DAY 自 2016 基期在册而真实加入是 2017-2021）——改为**封闭偏差清单**`_KNOWN_UPSTREAM_DEVIATIONS`（7 条目逐根因,含原始表行引证）；未列分歧仍硬失败。实测：124 月 0 未解释、281 项全分类（WLTW 71 月/RE 107/FLT 69/CDAY 29/Q 3/CASY+HOLX 各 1=末月滞后）。落盘：历史 62,655 行逐位不变（pre-copy 比对）,新增 5 月各 503 只,月差分=真实事件（HOLX 被收购移除等）。membership max=2026-09-01→距 09-30 约 20 sessions<22 契约——**轮 54 结构性阻塞解除**。
+
+**三潜伏缺陷（v1→v3 烟雾逐层暴露,全部测试钉死）**：①`_clean_panel` dropna(y_fwd_ret) 使 predict 会话结构性不可入面板——**这是历轮 readiness 卡第 1 步的真正根因**（此前误归因 membership/时钟门）；`retain_unlabeled_from` 参数保留前向截面（默认 None 逐位不变,H6）；测试证明历史段与默认行为 check_exact 相等。②manifest 对 str 型 filed/event_ts 调 .isoformat() 崩溃——4 处 pd.Timestamp 包装。③`stakes_13d_empty` 过严——8 月宇宙零 13D（合法空窗,收集器全宇宙轮询=覆盖结构完整）改 info；钉住测试翻转为 PASS 语义。
+
+**覆盖缺口**：universe_mismatch 诊断=面板截面 491⊂PIT 503,12 只缺价格（CASY/RDDT/FERG 等新加入+AEP/BK/EQR/MRVL 等历史 Tiingo 解析失败）。冻结面板不可改（H6 sha 钉死）——`e3_extend_prices.py` 写前向专用 `phase_b_prices_e3.parquet`(597 列)+`sic_map_e3`(+12 行)；runner `_load_inputs`/sha 优先 _e3 文件。**三实体 CIK 实名核证**：BK→BNY Mellon 1390777（SEC ticker 已改 BNY）；**EQR→Vivmark Residential 906107（EDGAR "formerly: EQUITY RESIDENTIAL (filings through 2026-08-12)"——2026 改名故从 ticker 快照消失）**；SATS→EchoStar 1415404（现 ECHO）。12/12 价格+12/12 SIC,残差空。
+
+**烟雾 v5 全通**（`reports/audits/2026-09-02-e3-smoke-2026-08-31-readiness-pass.log`）：223/223 事件真实文本→面板 949,294×13/22→**READINESS PASS 13/13**→fit→scores_sha f29d0496→committed=False（影子）；ledger 91bc7640 全程不变。**运维情报**：新月 GLM 突发 429（尾部）——缓存增量自愈,建议 9-30 前预热文本/边缘缓存。**视觉核查**：Streamlit Overview+Forward IC 截图经视觉模型核验——四相差分逐位匹配 README、Track C 序列渲染、无 DEMO。**验证**：pytest 全套 exit 0×2+ruff 全仓 0+universe 系 40 测试+新增钉死测试（retain/no-op/分类豁免/填充语义/收集器传播）。
+
+**边界**：forward-lane 破冰,0 ledger/0 冻结 config 改动；冻结文件零触碰（_e3 旁路）。**runbook 更新**（roadmap P0-1）：⓪extend_membership+价格覆盖检查 ①volume ②materialize ③trigger --run-date 2026-09-30（NO-LEDGER）——**结构性阻塞清零,仅剩 GLM 429 运维风险**。待业主：headline GO、P1 三项。
+
+
 ## 2026-09-01 (zz19) 轮 55：接手验收轮（业主 /goal）——三子代理审计+调研+文档分工，E3 门控四硬化、全仓 ruff 首次归零、开源要件补齐（LICENSE/CITATION/ci.yml/README 双语升级）
 
 **背景与基线**：业主指令接手核查、查漏补缺、中央指挥子代理、最终验收门、严禁 mock、对标开源。**独立验证不信任自述**：全套 pytest exit 0（显式退出码——防"管道 tail 吞退出码"病理复发）；ruff 实测 13 错（zz18 自述"ruff 三脚本净"仅限三脚本、全仓从未干净——export_research_dossier/manifest_det_check 2 新增 + bts 3 + _sync 8 存量）。

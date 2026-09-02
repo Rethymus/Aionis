@@ -1,0 +1,257 @@
+2026-09-02 11:03:43 [info     ] e3_trigger_month_end_detected  month_end_session=2026-08-31 run_date=2026-08-31
+2026-09-02 11:03:43 [info     ] e3_trigger_contracts_loaded    block_on_unknown=True max_age_sessions=22
+2026-09-02 11:03:43 [info     ] e3_trigger_shadow_mode         reason='PHASE_E3_NO_LEDGER=1 - no ledger writes'
+2026-09-02 11:03:43 [info     ] providers_loaded               n=3 names=['glm', 'siliconflow', 'modelscope']
+[E3] predict_session=2026-08-31 horizon=21 provider=glm artifacts_only=True
+[E3] fund rows=453849 prices=(3938, 597) membership=(65170, 2)
+2026-09-02 11:03:44 [info     ] alfred_cache_hit               path=data\cache\alfred_CPIAUCSL.json series_id=CPIAUCSL
+2026-09-02 11:03:44 [info     ] alfred_cache_hit               path=data\cache\alfred_PAYEMS.json series_id=PAYEMS
+2026-09-02 11:03:44 [info     ] forward_raw_sealed             dataset=macro_forward path=data\cache\macro_forward_raw_20260831T2000000000.json sha256=82abfa372f032366516358ffd8a3b66d02e2232cf80e567faa3e97953b99d3bc
+2026-09-02 11:03:44 [info     ] forward_ingest_logged          dataset=macro_forward ledger=C:\Users\92813\AppData\Local\Temp\e3_no_ledger_iz0vobxj\ledger.jsonl snapshot_ts=2026-08-31T20:00:00+00:00
+2026-09-02 11:03:44 [info     ] forward_macro_collected        n_rows=277 n_series=2 snapshot_ts=2026-08-31T20:00:00+00:00
+2026-09-02 11:03:45 [info     ] forward_raw_sealed             dataset=stakes_13d_forward path=data\cache\stakes_13d_forward_raw_20260831T2000000000.json sha256=44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a
+2026-09-02 11:03:45 [info     ] forward_ingest_logged          dataset=stakes_13d_forward ledger=C:\Users\92813\AppData\Local\Temp\e3_no_ledger_iz0vobxj\ledger.jsonl snapshot_ts=2026-08-31T20:00:00+00:00
+2026-09-02 11:03:45 [info     ] forward_13d_collected          n_rows=0 n_tickers_with_filing=0 snapshot_ts=2026-08-31T20:00:00+00:00
+2026-09-02 11:03:46 [warning  ] forward_8k_no_cik              ticker=AVB
+2026-09-02 11:03:46 [warning  ] forward_8k_no_cik              ticker=BBBY
+2026-09-02 11:03:47 [warning  ] forward_8k_no_cik              ticker=BK
+2026-09-02 11:03:47 [warning  ] forward_8k_no_cik              ticker=EQR
+2026-09-02 11:03:47 [warning  ] forward_8k_no_cik              ticker=SATS
+2026-09-02 11:03:47 [info     ] forward_raw_sealed             dataset=earnings_8k_forward path=data\cache\earnings_8k_forward_raw_20260831T2000000000.json sha256=b373677391f38c620eb0adc57f5206cb11ba53bd5ad08d2c71b01d54ca9b02f7
+2026-09-02 11:03:47 [info     ] forward_ingest_logged          dataset=earnings_8k_forward ledger=C:\Users\92813\AppData\Local\Temp\e3_no_ledger_iz0vobxj\ledger.jsonl snapshot_ts=2026-08-31T20:00:00+00:00
+2026-09-02 11:03:47 [info     ] forward_8k_collected           n_rows=223 n_tickers_with_filing=221 snapshot_ts=2026-08-31T20:00:00+00:00
+2026-09-02 11:03:47 [info     ] forward_iset_frozen_data       n_earnings=223 n_macro=277 n_stakes=0 snapshot_ts=2026-08-31T20:00:00+00:00
+[E3] freeze: macro=277 stakes=0 earnings=223
+2026-09-02 11:03:50 [info     ] edgar_text_fetched             chars=4000 event_id=FDXF:0001628280-26-054314
+2026-09-02 11:03:52 [info     ] edgar_text_fetched             chars=3449 event_id=FERG:0002011641-26-000038
+2026-09-02 11:03:54 [info     ] edgar_text_fetched             chars=4000 event_id=HONA:0002089271-26-000020
+2026-09-02 11:03:56 [info     ] edgar_text_fetched             chars=4000 event_id=MRVL:0001835632-26-000022
+2026-09-02 11:03:58 [info     ] edgar_text_fetched             chars=3950 event_id=VEEV:0001393052-26-000032
+2026-09-02 11:03:58 [info     ] edgar_text_summary             cached=218 failed=0 fetched=5 skipped=0 total=223
+[E3] event text: 223/223 events carry primary-doc text
+2026-09-02 11:04:34 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=ADM:0000007084-26-000040
+2026-09-02 11:04:34 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=ADSK:0000769397-26-000059
+2026-09-02 11:04:34 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=AFL:0001628280-26-054333
+2026-09-02 11:04:35 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=AIG:0000005272-26-000072
+2026-09-02 11:04:35 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=AIZ:0001267238-26-000039
+2026-09-02 11:04:35 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=AKAM:0001086222-26-000083
+2026-09-02 11:04:35 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=ALB:0000915913-26-000101
+2026-09-02 11:04:35 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=ALL:0000899051-26-000117
+2026-09-02 11:04:35 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=AMAT:0001628280-26-056699
+2026-09-02 11:04:35 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=AMCR:0001748790-26-000020
+2026-09-02 11:06:42 [error    ] extract_edge_failed            error='Request timed out.' event_id=AMGN:0000318154-26-000124
+2026-09-02 11:06:42 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=AMTM:0001628280-26-055294
+2026-09-02 11:06:42 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=ANET:0001596532-26-000174
+2026-09-02 11:06:42 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=APA:0001841666-26-000050
+2026-09-02 11:06:42 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=APC:0001193125-26-337979
+2026-09-02 11:06:42 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=APO:0001858681-26-000036
+2026-09-02 11:06:42 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=APP:0001751008-26-000057
+2026-09-02 11:06:43 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=APTV:0001521332-26-000057
+2026-09-02 11:06:43 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=ARE:0001035443-26-000067
+2026-09-02 11:06:43 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=ATO:0000731802-26-000100
+2026-09-02 11:06:43 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=AXON:0001628280-26-053363
+2026-09-02 11:06:43 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=BALL:0001104659-26-090074
+2026-09-02 11:06:43 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=BBWI:0000701985-26-000025
+2026-09-02 11:06:43 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=BBY:0000764478-26-000037
+2026-09-02 11:06:43 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=BDX:0001628280-26-053790
+2026-09-02 11:06:44 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=BHF:0001685040-26-000026
+2026-09-02 11:06:44 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=BIO:0000012208-26-000046
+2026-09-02 11:06:44 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=BKNG:0001075531-26-000036
+2026-09-02 11:06:44 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=BR:0001383312-26-000022
+2026-09-02 11:06:44 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=BRK-B:0001193125-26-344495
+2026-09-02 11:06:44 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=BWA:0000908255-26-000049
+2026-09-02 11:06:44 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=CAH:0000721371-26-000037
+2026-09-02 11:06:44 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=CAT:0000018230-26-000040
+2026-09-02 11:06:44 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=CDW:0001402057-26-000062
+2026-09-02 11:06:45 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=CE:0001306830-26-000113
+2026-09-02 11:06:45 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=CEG:0001868275-26-000097
+2026-09-02 11:06:45 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=CF:0001104659-26-091275
+2026-09-02 11:06:45 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=CF:0001324404-26-000017
+2026-09-02 11:06:45 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=CLX:0000021076-26-000028
+2026-09-02 11:06:45 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=CMI:0000026172-26-000026
+2026-09-02 11:06:45 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=COHR:0001193125-26-346860
+2026-09-02 11:06:45 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=COP:0001163165-26-000030
+2026-09-02 11:06:46 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=COR:0001140859-26-000032
+2026-09-02 11:06:46 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=COTY:0001024305-26-000045
+2026-09-02 11:06:46 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=CPAY:0001175454-26-000045
+2026-09-02 11:06:46 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=CPRI:0001530721-26-000078
+2026-09-02 11:06:46 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=CRL:0001100682-26-000115
+2026-09-02 11:06:46 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=CRM:0001108524-26-000187
+2026-09-02 11:06:46 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=CRWD:0001535527-26-000029
+2026-09-02 11:06:46 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=CSCO:0000858877-26-000106
+2026-09-02 11:06:46 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=CVS:0000064803-26-000097
+2026-09-02 11:06:47 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=DASH:0001792789-26-000048
+2026-09-02 11:06:47 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=DD:0001666700-26-000049
+2026-09-02 11:06:47 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=DDOG:0001628280-26-053829
+2026-09-02 11:06:47 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=DE:0001104659-26-098904
+2026-09-02 11:06:47 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=DG:0001104659-26-101918
+2026-09-02 11:06:47 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=DIS:0001744489-26-000056
+2026-09-02 11:06:47 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=DLTR:0000935703-26-000108
+2026-09-02 11:06:47 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=DOC:0001628280-26-052608
+2026-09-02 11:06:47 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=DUK:0001326160-26-000037
+2026-09-02 11:06:48 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=DVA:0000927066-26-000105
+2026-09-02 11:06:48 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=DVN:0001193125-26-332824
+2026-09-02 11:06:48 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=EBAY:0001065088-26-000174
+2026-09-02 11:06:48 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=ED:0001047862-26-000143
+2026-09-02 11:06:48 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=EL:0001001250-26-000038
+2026-09-02 11:06:48 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=EMR:0000032604-26-000042
+2026-09-02 11:06:48 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=EOG:0000821189-26-000147
+2026-09-02 11:06:48 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=EPAM:0001352010-26-000043
+2026-09-02 11:06:48 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=ETSY:0001370637-26-000079
+2026-09-02 11:06:49 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=EVRG:0001193125-26-336661
+2026-09-02 11:06:49 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=EXPD:0001193125-26-332198
+2026-09-02 11:06:49 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=EXPE:0001324424-26-000051
+2026-09-02 11:06:49 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=FANG:0001539838-26-000137
+2026-09-02 11:06:49 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=FIS:0001136893-26-000046
+2026-09-02 11:06:49 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=FISV:0000798354-26-000028
+2026-09-02 11:06:49 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=FLR:0001124198-26-000074
+2026-09-02 11:06:49 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=FOX:0001628280-26-053892
+2026-09-02 11:06:50 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=FOXA:0001628280-26-053892
+2026-09-02 11:06:50 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=GEN:0000849399-26-000028
+2026-09-02 11:06:50 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=GILD:0000882095-26-000028
+2026-09-02 11:06:50 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=GME:0001326380-26-000046
+2026-09-02 11:06:50 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=GPN:0001123360-26-000082
+2026-09-02 11:06:50 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=GT:0001628280-26-053379
+2026-09-02 11:06:50 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=GWW:0000277135-26-000076
+2026-09-02 11:06:50 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=HD:0000354950-26-000145
+2026-09-02 11:06:51 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=HP:0000046765-26-000039
+2026-09-02 11:06:51 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=HPQ:0000047217-26-000048
+2026-09-02 11:06:51 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=HRB:0000012659-26-000019
+2026-09-02 11:06:51 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=HRL:0000048465-26-000053
+2026-09-02 11:06:51 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=HSIC:0001000228-26-000043
+2026-09-02 11:06:51 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=HST:0001070750-26-000122
+2026-09-02 11:06:51 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=HWM:0001104659-26-091610
+2026-09-02 11:06:51 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=IDXX:0001104659-26-090033
+2026-09-02 11:06:52 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=IFF:0000051253-26-000028
+2026-09-02 11:06:52 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=INTU:0000896878-26-000029
+2026-09-02 11:06:52 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=IPGP:0001111928-26-000150
+2026-09-02 11:06:52 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=IRM:0001020569-26-000068
+2026-09-02 11:06:52 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=IT:0000749251-26-000243
+2026-09-02 11:06:52 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=J:0001628280-26-052563
+2026-09-02 11:06:52 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=JKHY:0000779152-26-000057
+2026-09-02 11:06:52 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=JKHY:0000779152-26-000052
+2026-09-02 11:06:52 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=KDP:0001418135-26-000048
+2026-09-02 11:06:53 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=KEYS:0001601046-26-000029
+2026-09-02 11:06:53 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=KHC:0001637459-26-000052
+2026-09-02 11:06:53 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=KIM:0001193125-26-331498
+2026-09-02 11:06:53 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=KMB:0001628280-26-052113
+2026-09-02 11:06:53 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=KSS:0001193125-26-365860
+2026-09-02 11:06:53 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=KVUE:0001944048-26-000141
+2026-09-02 11:06:53 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=L:0000060086-26-000045
+2026-09-02 11:06:53 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=LDOS:0001336920-26-000243
+2026-09-02 11:06:54 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=LEG:0001193125-26-336582
+2026-09-02 11:06:54 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=LITE:0001628280-26-055726
+2026-09-02 11:06:54 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=LLY:0000059478-26-000077
+2026-09-02 11:06:54 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=LOW:0000060667-26-000113
+2026-09-02 11:06:54 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=LUMN:0000018926-26-000058
+2026-09-02 11:06:54 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=MAC:0000912242-26-000034
+2026-09-02 11:06:54 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=MAR:0001048286-26-000033
+2026-09-02 11:06:54 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=MAT:0001628280-26-052674
+2026-09-02 11:06:54 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=MCD:0000063908-26-000067
+2026-09-02 11:06:55 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=MCHP:0000827054-26-000037
+2026-09-02 11:06:55 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=MCK:0000927653-26-000232
+2026-09-02 11:06:55 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=MET:0001099219-26-000048
+2026-09-02 11:06:55 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=MNST:0001104659-26-092046
+2026-09-02 11:06:55 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=MOS:0001285785-26-000109
+2026-09-02 11:06:55 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=MPC:0001510295-26-000060
+2026-09-02 11:06:55 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=MRK:0001104659-26-090045
+2026-09-02 11:06:55 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=MSI:0000068505-26-000027
+2026-09-02 11:06:56 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=MTCH:0000891103-26-000128
+2026-09-02 11:06:56 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=MUR:0001628280-26-053431
+2026-09-02 11:06:56 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=NAVI:0001193125-26-338039
+2026-09-02 11:06:56 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=NDSN:0000072331-26-000052
+2026-09-02 11:06:56 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=NI:0001111711-26-000087
+2026-09-02 11:06:56 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=NKTR:0001213900-26-089137
+2026-09-02 11:06:56 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=NRG:0001013871-26-000018
+2026-09-02 11:06:56 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=NVDA:0001045810-26-000073
+2026-09-02 11:06:56 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=NWS:0001564708-26-000171
+2026-09-02 11:06:57 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=NWSA:0001564708-26-000171
+2026-09-02 11:06:57 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=O:0000726728-26-000044
+2026-09-02 11:06:57 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=ON:0001140361-26-030989
+2026-09-02 11:06:57 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=OXY:0001628280-26-053377
+2026-09-02 11:06:57 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=PAYC:0001193125-26-335105
+2026-09-02 11:06:57 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=PEG:0001193125-26-331660
+2026-09-02 11:06:57 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=PENN:0000921738-26-000019
+2026-09-02 11:06:57 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=PFE:0000078003-26-000094
+2026-09-02 11:06:57 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=PH:0000076334-26-000082
+2026-09-02 11:06:58 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=PLTR:0001321655-26-000039
+2026-09-02 11:06:58 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=PNW:0000764622-26-000040
+2026-09-02 11:06:58 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=PODD:0001145197-26-000167
+2026-09-02 11:06:58 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=PPL:0000922224-26-000042
+2026-09-02 11:06:58 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=PRGO:0001585364-26-000143
+2026-09-02 11:06:58 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=PRU:0001137774-26-000170
+2026-09-02 11:06:58 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=PSKY:0002041610-26-000052
+2026-09-02 11:06:58 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=PSX:0001534701-26-000030
+2026-09-02 11:06:58 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=Q:0002058873-26-000028
+2026-09-02 11:06:59 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=RIG:0001451505-26-000058
+2026-09-02 11:06:59 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=RL:0001628280-26-053896
+2026-09-02 11:06:59 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=RMD:0001193125-26-337962
+2026-09-02 11:06:59 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=ROK:0001024478-26-000028
+2026-09-02 11:06:59 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=ROST:0000745732-26-000038
+2026-09-02 11:06:59 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=RSG:0001060391-26-000273
+2026-09-02 11:06:59 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=RVTY:0000031791-26-000022
+2026-09-02 11:06:59 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=SBAC:0001193125-26-330639
+2026-09-02 11:07:00 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=SEDG:0001178913-26-003833
+2026-09-02 11:07:00 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=SJM:0000091419-26-000079
+2026-09-02 11:07:00 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=SMCI:0001375365-26-000021
+2026-09-02 11:07:00 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=SNDK:0001628280-26-053346
+2026-09-02 11:07:00 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=SNPS:0001193125-26-368620
+2026-09-02 11:07:00 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=SOLV:0001964738-26-000045
+2026-09-02 11:07:00 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=SPG:0001104659-26-093361
+2026-09-02 11:07:00 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=SRE:0001032208-26-000043
+2026-09-02 11:07:00 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=STE:0001628280-26-053412
+2026-09-02 11:07:01 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=SYF:0001601712-26-000035
+2026-09-02 11:07:01 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=SYY:0000096021-26-000026
+2026-09-02 11:07:01 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=TAP:0000024545-26-000070
+2026-09-02 11:07:01 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=TDC:0001628280-26-052549
+2026-09-02 11:07:01 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=TDG:0001260221-26-000052
+2026-09-02 11:07:01 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=TE:0001213900-26-088022
+2026-09-02 11:07:01 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=TECH:0001104659-26-094391
+2026-09-02 11:07:01 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=TFX:0000096943-26-000091
+2026-09-02 11:07:01 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=TGT:0000027419-26-000034
+2026-09-02 11:07:02 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=TJX:0000109198-26-000045
+2026-09-02 11:07:02 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=TKO:0001193125-26-330561
+2026-09-02 11:07:02 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=TPL:0001811074-26-000056
+2026-09-02 11:07:02 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=TPR:0001140361-26-032624
+2026-09-02 11:07:02 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=TRGP:0001193125-26-336525
+2026-09-02 11:07:02 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=TRIP:0001193125-26-336666
+2026-09-02 11:07:02 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=TRMB:0000864749-26-000106
+2026-09-02 11:07:02 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=TSN:0000100493-26-000057
+2026-09-02 11:07:03 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=TTD:0001671933-26-000085
+2026-09-02 11:07:03 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=TTWO:0001628280-26-054580
+2026-09-02 11:07:03 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=UA:0001336917-26-000108
+2026-09-02 11:07:03 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=UAA:0001336917-26-000108
+2026-09-02 11:07:03 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=UBER:0001543151-26-000027
+2026-09-02 11:07:03 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=ULTA:0001104659-26-102438
+2026-09-02 11:07:03 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=VNO:0000899689-26-000048
+2026-09-02 11:07:03 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=VNT:0001628280-26-053799
+2026-09-02 11:07:03 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=VRTX:0000875320-26-000256
+2026-09-02 11:07:04 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=VST:0001692819-26-000017
+2026-09-02 11:07:04 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=VTRS:0001792044-26-000037
+2026-09-02 11:07:04 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=WAT:0001193125-26-331413
+2026-09-02 11:07:04 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=WBD:0001437107-26-000072
+2026-09-02 11:07:04 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=WDAY:0001327811-26-000042
+2026-09-02 11:07:04 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=WDC:0001628280-26-053305
+2026-09-02 11:07:04 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=WHR:0000106640-26-000056
+2026-09-02 11:07:04 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=WMB:0000107263-26-000024
+2026-09-02 11:07:05 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=WMT:0000104169-26-000145
+2026-09-02 11:07:05 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=WSM:0000719955-26-000203
+2026-09-02 11:07:05 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=WYNN:0001174922-26-000051
+2026-09-02 11:07:05 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=XYZ:0001193125-26-335117
+2026-09-02 11:07:05 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=ZBH:0001193125-26-333761
+2026-09-02 11:07:05 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=ZBRA:0001628280-26-052158
+2026-09-02 11:07:05 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=ZTS:0001555280-26-000038
+2026-09-02 11:07:05 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=FDXF:0001628280-26-054314
+2026-09-02 11:07:05 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=FERG:0002011641-26-000038
+2026-09-02 11:07:06 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=HONA:0002089271-26-000020
+2026-09-02 11:07:06 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=MRVL:0001835632-26-000022
+2026-09-02 11:07:06 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1302', 'message': '您的账户已达到速率限制，请您控制请求频率'}}" event_id=VEEV:0001393052-26-000032
+2026-09-02 11:07:06 [info     ] extract_edges_done             cache_hits=4 cached=True completion_tokens=3238 n=6 prompt_tokens=2558 total_tokens=5796
+[E3] extra_features rows=2350986
+[E3] panel_base=(949294, 13) panel_e13=(949294, 22)
+2026-09-02 11:09:04 [info     ] readiness_stakes_13d_empty_window note='no 13D events this window'
+[E3] READINESS PASS - proceeding to fit/commit
+2026-09-02 11:09:43 [info     ] forward_commit_dry_run         config_sha256=1f4ca1b666568771447eeb0eca080317d7981d501980eec60f98998d0ae316ce predict_ts=2026-08-31T16:00:00-04:00 scores_sha256=f29d049610df38a12480ece8665f0f1014f1d5103e45dc9bebe6b33bb9bcd0eb
+[E3] committed=False config_sha256=1f4ca1b66656 scores_sha256=f29d049610df
+[E3] DONE
+2026-09-02 11:09:43 [info     ] e3_trigger_commit_complete     committed=False config_sha256=1f4ca1b66656
