@@ -4,6 +4,7 @@ import { SegmentHeader } from "@/components/segment-header";
 import AtlasClaims from "@/components/atlas/atlas-claims";
 import AtlasDivergence from "@/components/atlas/atlas-divergence";
 import AtlasDiagnostics from "@/components/atlas/atlas-diagnostics";
+import AtlasDeciles from "@/components/atlas/atlas-deciles";
 import AtlasDataflow from "@/components/atlas/atlas-dataflow";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
@@ -32,6 +33,7 @@ export default function AtlasPage() {
       <AtlasClaims />
       <AtlasDivergence />
       <AtlasDiagnostics />
+      <AtlasDeciles />
       <AtlasDataflow />
     </div>
   );

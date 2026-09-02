@@ -291,6 +291,17 @@ export const dict = {
     "vintage.driftNone": "尚无结论性检查（工件就位后由月度探针写入）",
     "vintage.note":
       "经验探针边界不是厂商声明；安全向漂移（模型学得更新）也必须走显式契约修订，绝不静默改值。钉住的 LLM 在冻结样本外管线中从不产生信号。",
+    "deciles.title": "十分位单调性（R1-full）",
+    "deciles.subtitle":
+      "冻结 OOS 分数按十分位分桶后，各桶下月已实现收益的均值（D1=最低分…D10=最高分）——金标准的单调性读数，口径与训练标签完全一致。",
+    "deciles.alignmentNote":
+      "口径对齐：桶收益 = close[t+21]/close[t]−1，与训练标签 y_fwd_ret 同一冻结函数、同一研究价格面板——无新收益路径、无 next-open。",
+    "deciles.panelA": "最新已实现月：各十分位平均前向收益",
+    "deciles.panelACaption": "月份 {month}（D1=最低分…D10=最高分）",
+    "deciles.panelB": "D10 − D1 价差时间序列（按区域）",
+    "deciles.meanFwd": "平均前向收益",
+    "deciles.coverage": "已实现 {realized} / {total} 个月度截面（未实现窗口与缺失区域面板如实为 null，不裁剪不猜测）。",
+    "deciles.empty": "尚无连续两月以上的已实现价差（CN 面板就位后此线开始延伸）。",
     "inventory.subtitle":
       "SR 11-7 式模型清单：账本内每条 confirmatory:first 运行与冻结结果目录对账（冻结→结果行链 · H6 · 差分），config-only 提交如实列示。",
     "inventory.empty":
@@ -1649,6 +1660,17 @@ export const dict = {
     "vintage.driftNone": "No conclusive check yet (the monthly probe writes it once run)",
     "vintage.note":
       "The empirical probe boundary is not a vendor declaration; even a safe-direction drift (the model learning newer events) must go through an explicit contracts amendment, never a silent value change. The pinned LLM never produces signal inside frozen OOS phases.",
+    "deciles.title": "Decile monotonicity (R1-full)",
+    "deciles.subtitle":
+      "The frozen OOS scores bucketed into ten equal-count deciles; each decile's mean realized next-month forward return (D1 = lowest scores … D10 = highest) — the gold-standard monotonicity readout, in EXACTLY the label convention.",
+    "deciles.alignmentNote":
+      "Alignment: bucket returns = close[t+21]/close[t] − 1 — the SAME frozen function and the SAME research price panels as the training label y_fwd_ret. No new return path, no next-open.",
+    "deciles.panelA": "Latest realized month: mean forward return per decile",
+    "deciles.panelACaption": "Month {month} (D1 = lowest scores … D10 = highest)",
+    "deciles.panelB": "D10 − D1 spread over time (per region)",
+    "deciles.meanFwd": "Mean fwd return",
+    "deciles.coverage": "{realized} / {total} monthly cross-sections realized (unrealized windows and missing region panels are honestly null — never trimmed, never guessed).",
+    "deciles.empty": "No two-plus consecutive realized spreads yet (the CN line extends once its panel lands).",
     "inventory.subtitle":
       "SR 11-7 style model inventory: every confirmatory:first run in the tracked ledger reconciled against its frozen run directory (freeze→result chain · H6 · differential), with config-only commits listed honestly.",
     "inventory.empty":

@@ -3347,6 +3347,110 @@ def export_provider_vintage() -> None:
     )
 
 
+_DECILE_SCORES = Path("runs/track_c_confirmatory_oos_scores.parquet")
+_DECILE_PANELS: dict[str, Path] = {
+    "us": Path("data/cache/track_b_panel.parquet"),
+    "cn": Path("data/cache/cn_price_panel.parquet"),
+}
+
+
+def export_ic_deciles() -> None:
+    """Export ``ic_deciles.json`` — R1-full decile monotonicity (display-only).
+
+    P1-6 (adjudicated GO 2026-09-02). For each frozen (month, region) OOS
+    score cross-section: rank scores into ten equal-count deciles (D1 = lowest
+    scores … D10 = highest) and report each decile's mean realized forward
+    return over the NEXT h=21 sessions — the SAME frozen close-to-close
+    convention as the training label ``y_fwd_ret``
+    (``aionis.features.selection_panel.forward_returns``, close[t+21]/close[t]
+    − 1), computed from the SAME research price panels the frozen run read
+    (``data/cache/track_b_panel.parquet`` US / ``cn_price_panel.parquet`` CN).
+    This is the alignment engineering the P1-6 gate demanded: no new return
+    path, no next-open, no re-derivation — the monotonicity readout is
+    arithmetically comparable to the frozen IC the headline aggregates.
+
+    Honesty guards: a (month, region) whose forward-return window is not yet
+    fully realized at the panel's edge, or with < 30 names (deciles of < 3),
+    or a degenerate (all-equal) score cross-section, is reported with
+    ``realized: false`` and per-decile returns honestly null — never dropped
+    (the display shows the frozen surface's true extent). Per (month, region)
+    the row also carries a Spearman-style monotonicity summary: mean(D10) −
+    mean(D1) and the count of adjacent-decile increases (out of 9). Rows sort
+    by month ascending then region lexicographic; floats round to 6 decimals
+    for byte-stable output. Zero-clock; no snapshot timestamp.
+    """
+    from aionis.features.selection_panel import forward_returns
+
+    H = 21
+    MIN_NAMES = 30
+    scores_path = _DECILE_SCORES
+    df = pd.read_parquet(scores_path)
+    df["date"] = pd.to_datetime(df["date"])
+
+    region_panels = dict(_DECILE_PANELS)
+    fwd_wide: dict[str, pd.DataFrame] = {}
+    for region, pp in region_panels.items():
+        if not pp.exists():
+            continue
+        panel = pd.read_parquet(pp)
+        # Rebuild the wide close matrix on the panel's session grid, then apply
+        # the FROZEN forward-return function verbatim (alignment guarantee).
+        close = panel.pivot_table(index="date", columns="ticker",
+                                  values="close", aggfunc="last")
+        fwd_wide[region] = forward_returns(close, H)
+
+    rows: list[dict] = []
+    for (date, region), g in df.groupby(["date", "region"], sort=True):
+        scores = g.set_index("ticker")["score"].astype(float)
+        fw = fwd_wide.get(region)
+        realized = False
+        decile_rets: list[float | None] = [None] * 10
+        if fw is not None and date in fw.index:
+            session_pos = fw.index.get_loc(date)
+            # fully realized only when a session h positions AFTER the score
+            # date exists on this region's grid
+            if session_pos + H < len(fw.index):
+                fr = fw.iloc[session_pos + H]
+                joined = pd.concat(
+                    [scores.rename("score"), fr.rename("fwd")], axis=1, join="inner"
+                ).dropna()
+                if len(joined) >= MIN_NAMES and joined["score"].nunique() > 1:
+                    realized = True
+                    try:
+                        joined["decile"] = pd.qcut(
+                            joined["score"], 10, labels=False, duplicates="drop"
+                        )
+                    except ValueError:
+                        realized = False
+                    if realized:
+                        for d in range(10):
+                            sel = joined.loc[joined["decile"] == d, "fwd"]
+                            decile_rets[d] = (
+                                round(float(sel.mean()), 6) if len(sel) else None
+                            )
+        top = decile_rets[9]
+        bottom = decile_rets[0]
+        spread = (
+            round(top - bottom, 6)
+            if realized and top is not None and bottom is not None
+            else None
+        )
+        rows.append({
+            "month": str(date.date()),
+            "region": str(region),
+            "n": int(len(g)),
+            "realized": bool(realized),
+            "decile_mean_fwd_ret": decile_rets,
+            "d10_minus_d1": spread,
+        })
+
+    (WEB / "ic_deciles.json").write_text(
+        json.dumps(rows, indent=2, allow_nan=False),
+        encoding="utf-8",
+        newline="\n",
+    )
+
+
 def export_horizon_robustness() -> None:
     """Export the horizon-robustness sweep summary (READ-ONLY ledger projection).
 
@@ -3568,6 +3672,10 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
     ("picks_backtest", "picks_backtest.json", _DH_FROZEN),
     ("ic_monthly", "ic_monthly.json", _DH_FROZEN),
     ("score_diagnostics", "score_diagnostics.json", _DH_FROZEN),
+    # P1-6 R1-full — decile monotonicity over the frozen score surface; the
+    # returns come from the SAME frozen research panels (display-lane
+    # derivation, zero-clock), so it advances with the frozen artifacts.
+    ("ic_deciles", "ic_deciles.json", _DH_FROZEN),
     ("pick_conviction", "pick_conviction.json", _DH_FROZEN),
     ("model_health", "model_health.json", _DH_FROZEN),
     ("calibration_reliability", "calibration_reliability.json", _DH_FROZEN),
@@ -4009,6 +4117,10 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
     "sector_breakdown": ("Aionis research artifacts (repo MIT)", "frozen OOS scores by sector"),
     "picks_backtest": ("Aionis research artifacts (repo MIT)", "realized OOS picks vs base, 131 months"),
     "ic_monthly": ("Aionis research artifacts (repo MIT)", "confirmatory monthly rank-IC series"),
+    "ic_deciles": (
+        "Aionis research artifacts (repo MIT)",
+        "decile monotonicity of the frozen OOS score surface (label-convention forward returns)",
+    ),
     "score_diagnostics": (
         "Aionis research artifacts (repo MIT)",
         "confirmatory OOS cross-sectional score diagnostics (display-only derivation)",
@@ -7452,6 +7564,7 @@ def main() -> None:
     # (READ-ONLY) — before the freshness map / catalog that index it.
     _safe_export("model_inventory", export_model_inventory)
     _safe_export("provider_vintage", export_provider_vintage)
+    _safe_export("ic_deciles", export_ic_deciles)
     # Per-stock view joins the corroboration JSONs above — keep after them.
     _safe_export("stock_universe", export_stock_universe)
     # Executives derives from the committed form8k.json written above — after

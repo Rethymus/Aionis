@@ -62,6 +62,7 @@ import newsFeedJson from "./news_feed.json";
 import knowledgeShelfJson from "./knowledge_shelf.json";
 import evidenceMatrixJson from "./evidence_matrix.json";
 import providerVintageJson from "./provider_vintage.json";
+import icDecilesJson from "./ic_deciles.json";
 
 export type Pick = {
   rank: number;
@@ -1382,6 +1383,20 @@ export type ScoreDiagnosticsRow = {
   rank_autocorr: number | null;
 };
 
+// P1-6 R1-full — decile monotonicity of the frozen OOS score surface:
+// per (month, region), ten equal-count score deciles with each decile's mean
+// realized forward return (the SAME frozen close-to-close h=21 convention as
+// the training label); unrealized/degenerate rows carry realized:false with
+// honest nulls.
+export type IcDecilesRow = {
+  month: string;
+  region: string;
+  n: number;
+  realized: boolean;
+  decile_mean_fwd_ret: (number | null)[];
+  d10_minus_d1: number | null;
+};
+
 // TASK-H1 — horizon robustness of the frozen h=21 nulls: the latest
 // exploratory `sensitivity_horizon` ledger row projected to a panel. One
 // entry per phase per swept horizon; every field that can be absent in the
@@ -1613,6 +1628,7 @@ export const aionis = {
     combined: number;
   }[],
   scoreDiagnostics: scoreDiagnosticsJson as ScoreDiagnosticsRow[],
+  icDeciles: icDecilesJson as IcDecilesRow[],
   sigmaSurvey: sigmaSurveyJson as SigmaSurvey,
   bpsSweep: bpsSweepJson as {
     bps: number;

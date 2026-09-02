@@ -49,6 +49,9 @@ EXPECTED_PANELS: dict[str, tuple[str, str, str]] = {
     "picks_backtest": ("picksBacktest", "picks_backtest.json", "frozen"),
     "ic_monthly": ("icMonthly", "ic_monthly.json", "frozen"),
     "score_diagnostics": ("scoreDiagnostics", "score_diagnostics.json", "frozen"),
+    # P1-6 R1-full — decile monotonicity (frozen score surface + frozen panels;
+    # display-lane derivation, zero-clock).
+    "ic_deciles": ("icDeciles", "ic_deciles.json", "frozen"),
     # Round-31 H1 panel (ledger-derived horizon sweep summary; frozen — static
     # until a new sweep appends an exploratory row).
     "horizon_robustness": ("horizonRobustness", "horizon_robustness.json", "frozen"),
@@ -133,6 +136,7 @@ ATLAS_BARREL_KEYS = {
     "icMonthly",
     "calibrationReliability",
     "scoreDiagnostics",
+    "icDeciles",  # P1-6 R1-full decile monotonicity block (round 62)
     "dataHealth",
     "apiCatalog",
 }
