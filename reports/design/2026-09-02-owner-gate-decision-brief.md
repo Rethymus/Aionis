@@ -16,14 +16,21 @@
 >
 > **③ frozen_beta → 裁决：原引用为幻觉（论文不存在）；符号表正式冻结为项目
 > 内部定性先验（`qual-prior-v2`）。**
-> 取证（三路独立 + 一手）：FEDS WP 2017-020 官方 PDF 标题页 = Reifschneider &
-> Tulip（存 reports/audits/，sha 0841fc64）；Crossref 全量清查一（Boudt+Neely
-> 合著全作品）唯一宏观新闻论文是跨国公司**汇率敞口**（2017/2019）；清查二
-> （Neely 2015–2019 全作品 15 条）无行业级股票响应论文；清查三（精确标题
-> "When the Fed Speaks"）无一匹配。结论：所引"行业符号表论文"不存在，系前任
-> 编造。处置：符号数值不变（零估计自由度的设计目标不受影响），出处如实标注，
-> `FROZEN_BETA_VERSION` 升版 `qual-prior-v2`、TODO(headline) 移除、测试钉死；
-> 预注册文档无该引用（查证），零冻结文档张力。
+> 取证（**六路独立来源，穷尽级**——2026-09-02 两批完成；第一批 Crossref 三路
+> +一手 PDF，第二批针对"Crossref 不覆盖工作论文"的证据缺口补齐 Semantic
+> Scholar 两路全语料清查，其索引空间含 SSRN/Fed WP）：
+> (1) FEDS WP 2017-020 官方 PDF 标题页 = Reifschneider & Tulip（一手，存
+> reports/audits/，sha 0841fc64）；(2) Crossref Boudt+Neely 合著全作品——唯一
+> 宏观新闻论文为跨国公司**汇率敞口**（2017/2019）；(3) Crossref Neely
+> 2015–2019 全作品 15 条无行业股票响应论文；(4) Crossref 精确标题
+> "When the Fed Speaks" 匹配为空；(5) **Semantic Scholar Boudt 全语料 150 篇**
+> （含 SSRN WP）关键词过滤（industry/sector/announcement/FOMC/CPI/payroll）
+> 仅命中 FX 敞口与盈利公告媒体语调；(6) **Semantic Scholar Neely 全语料
+> 106 篇**（含 Fed WP）宏观公告相关仅 2009 FX 交易流与 2006 FOMC 期权预测，
+> 均非行业响应。结论：所引"行业符号表论文"在期刊与工作论文两个索引空间
+> 均不存在，系前任编造。处置：符号数值不变（零估计自由度的设计目标不受
+> 影响），出处如实标注，`FROZEN_BETA_VERSION` 升版 `qual-prior-v2`、
+> TODO(headline) 移除、测试钉死；预注册文档无该引用（查证），零冻结文档张力。
 
 > 本文件是三项不可代行裁决的正式请求包。每项附：现状证据、裁决将解锁什么、
 > 建议的决策时点。工程侧已就绪并全部上远程（`314a57d2..b639c3a1`，13 commits）；
