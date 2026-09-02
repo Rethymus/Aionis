@@ -64,6 +64,29 @@ provider 429s on the tail events; per-event disk caches make reruns
 incremental (self-healing). Pre-warming the text/edge caches across the month
 is recommended.
 
+## Round-57 addendum — rate-limit resilience (2026-09-02, same day)
+
+The v5 smoke lost 217/223 edges to a no-pacing 429 burst. Fix + real evidence:
+
+- `extract_event_edges` now paces live calls (1.0 s; cache hits exempt), cools
+  down 60 s on each 429 (mirroring ProviderRouter), and aborts gracefully
+  after 8 consecutive cooldowns — failures are NEVER cached, so reruns retry
+  them incrementally. Two hermetic tests pin the abort-at-cap + never-cache
+  and pace-live-not-cache semantics.
+- **v6 rerun evidence** (`2026-09-02-e3-smoke-v6-ratelimit-selfheal.log`):
+  `extract_edges_done cache_hits=6 failed=17 n=9 rate_limit_aborted=True` —
+  v5's six successes were pure cache hits (zero tokens), three more extracted
+  live, the persistent provider overload (code 1305) tripped the graceful
+  abort instead of burning ~200 doomed calls.
+- v6 final: `READINESS` unchanged → `committed=False` with
+  **config_sha256 1f4ca1b66656 and scores_sha256 f29d049610df bit-identical
+  to v5** despite the different edge count — the frozen learner's shadow
+  replay is deterministic on the unchanged predict cross-section (H6-style
+  evidence). Ledger sha `91bc7640…` unchanged across v1–v6.
+- Remaining off-policy fetch sites from the round-55 audit also closed:
+  `event_text._http_get` is now 100% policy-routed (raw-requests branch
+  removed) and the ff5 fallback ZIP download uses `_policy_get`.
+
 ## Visual + regression gates
 
 - Full `uv run pytest -q` exit 0; `uv run ruff check` repo-wide clean.

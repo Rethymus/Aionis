@@ -1,0 +1,53 @@
+2026-09-02 12:07:04 [info     ] e3_trigger_month_end_detected  month_end_session=2026-08-31 run_date=2026-08-31
+2026-09-02 12:07:04 [info     ] e3_trigger_contracts_loaded    block_on_unknown=True max_age_sessions=22
+2026-09-02 12:07:04 [info     ] e3_trigger_shadow_mode         reason='PHASE_E3_NO_LEDGER=1 - no ledger writes'
+2026-09-02 12:07:04 [info     ] providers_loaded               n=3 names=['glm', 'siliconflow', 'modelscope']
+[E3] predict_session=2026-08-31 horizon=21 provider=glm artifacts_only=True
+[E3] fund rows=453849 prices=(3938, 597) membership=(65170, 2)
+2026-09-02 12:07:04 [info     ] alfred_cache_hit               path=data\cache\alfred_CPIAUCSL.json series_id=CPIAUCSL
+2026-09-02 12:07:04 [info     ] alfred_cache_hit               path=data\cache\alfred_PAYEMS.json series_id=PAYEMS
+2026-09-02 12:07:04 [info     ] forward_raw_sealed             dataset=macro_forward path=data\cache\macro_forward_raw_20260831T2000000000.json sha256=82abfa372f032366516358ffd8a3b66d02e2232cf80e567faa3e97953b99d3bc
+2026-09-02 12:07:04 [info     ] forward_ingest_logged          dataset=macro_forward ledger=C:\Users\92813\AppData\Local\Temp\e3_no_ledger_0l_69gk7\ledger.jsonl snapshot_ts=2026-08-31T20:00:00+00:00
+2026-09-02 12:07:04 [info     ] forward_macro_collected        n_rows=277 n_series=2 snapshot_ts=2026-08-31T20:00:00+00:00
+2026-09-02 12:07:06 [info     ] forward_raw_sealed             dataset=stakes_13d_forward path=data\cache\stakes_13d_forward_raw_20260831T2000000000.json sha256=44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a
+2026-09-02 12:07:06 [info     ] forward_ingest_logged          dataset=stakes_13d_forward ledger=C:\Users\92813\AppData\Local\Temp\e3_no_ledger_0l_69gk7\ledger.jsonl snapshot_ts=2026-08-31T20:00:00+00:00
+2026-09-02 12:07:06 [info     ] forward_13d_collected          n_rows=0 n_tickers_with_filing=0 snapshot_ts=2026-08-31T20:00:00+00:00
+2026-09-02 12:07:06 [warning  ] forward_8k_no_cik              ticker=AVB
+2026-09-02 12:07:06 [warning  ] forward_8k_no_cik              ticker=BBBY
+2026-09-02 12:07:07 [warning  ] forward_8k_no_cik              ticker=BK
+2026-09-02 12:07:07 [warning  ] forward_8k_no_cik              ticker=EQR
+2026-09-02 12:07:07 [warning  ] forward_8k_no_cik              ticker=SATS
+2026-09-02 12:07:07 [info     ] forward_raw_sealed             dataset=earnings_8k_forward path=data\cache\earnings_8k_forward_raw_20260831T2000000000.json sha256=b373677391f38c620eb0adc57f5206cb11ba53bd5ad08d2c71b01d54ca9b02f7
+2026-09-02 12:07:07 [info     ] forward_ingest_logged          dataset=earnings_8k_forward ledger=C:\Users\92813\AppData\Local\Temp\e3_no_ledger_0l_69gk7\ledger.jsonl snapshot_ts=2026-08-31T20:00:00+00:00
+2026-09-02 12:07:07 [info     ] forward_8k_collected           n_rows=223 n_tickers_with_filing=221 snapshot_ts=2026-08-31T20:00:00+00:00
+2026-09-02 12:07:07 [info     ] forward_iset_frozen_data       n_earnings=223 n_macro=277 n_stakes=0 snapshot_ts=2026-08-31T20:00:00+00:00
+[E3] freeze: macro=277 stakes=0 earnings=223
+2026-09-02 12:07:07 [info     ] edgar_text_summary             cached=223 failed=0 fetched=0 skipped=0 total=223
+[E3] event text: 223/223 events carry primary-doc text
+2026-09-02 12:07:25 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=ADM:0000007084-26-000040
+2026-09-02 12:09:43 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=AIG:0000005272-26-000072
+2026-09-02 12:10:44 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=AIZ:0001267238-26-000039
+2026-09-02 12:11:44 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=AKAM:0001086222-26-000083
+2026-09-02 12:12:44 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=ALB:0000915913-26-000101
+2026-09-02 12:13:44 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=ALL:0000899051-26-000117
+2026-09-02 12:14:45 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=AMAT:0001628280-26-056699
+2026-09-02 12:15:45 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=AMCR:0001748790-26-000020
+2026-09-02 12:17:12 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=AMTM:0001628280-26-055294
+2026-09-02 12:18:13 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=ANET:0001596532-26-000174
+2026-09-02 12:19:13 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=APA:0001841666-26-000050
+2026-09-02 12:20:13 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=APC:0001193125-26-337979
+2026-09-02 12:22:13 [error    ] extract_edge_failed            error='Request timed out.' event_id=APO:0001858681-26-000036
+2026-09-02 12:22:14 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=APP:0001751008-26-000057
+2026-09-02 12:23:14 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=APTV:0001521332-26-000057
+2026-09-02 12:24:14 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=ARE:0001035443-26-000067
+2026-09-02 12:25:14 [error    ] extract_edge_failed            error="Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}" event_id=ATO:0000731802-26-000100
+2026-09-02 12:25:14 [error    ] extract_edges_rate_limit_abort consecutive_429=8 note='stopping live calls; failures stay uncached for an incremental rerun'
+2026-09-02 12:25:14 [info     ] extract_edges_done             cache_hits=6 cached=True completion_tokens=4725 failed=17 n=9 prompt_tokens=3773 rate_limit_aborted=True total_tokens=8498
+[E3] extra_features rows=2350986
+[E3] panel_base=(949294, 13) panel_e13=(949294, 22)
+2026-09-02 12:26:19 [info     ] readiness_stakes_13d_empty_window note='no 13D events this window'
+[E3] READINESS PASS - proceeding to fit/commit
+2026-09-02 12:26:48 [info     ] forward_commit_dry_run         config_sha256=1f4ca1b666568771447eeb0eca080317d7981d501980eec60f98998d0ae316ce predict_ts=2026-08-31T16:00:00-04:00 scores_sha256=f29d049610df38a12480ece8665f0f1014f1d5103e45dc9bebe6b33bb9bcd0eb
+[E3] committed=False config_sha256=1f4ca1b66656 scores_sha256=f29d049610df
+[E3] DONE
+2026-09-02 12:26:48 [info     ] e3_trigger_commit_complete     committed=False config_sha256=1f4ca1b66656

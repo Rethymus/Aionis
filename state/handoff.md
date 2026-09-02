@@ -8,6 +8,17 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-09-02 (zz21) 轮 57：429 自愈工程+烟雾 v6 双 sha 复现+礼貌性清零
+
+**v5 复盘**：217/223 边缘败于无节奏突发（GLMCausalEdgeClient 直连无路由无节奏——max_retries=0+ONE bounded retry 挡不住连发）。**修复（causal_broadcast.extract_event_edges）**：`_EDGE_CALL_PACE_S=1.0`（活调用间距,缓存命中豁免——模型 API 免 ≥2s 数据源规则,以 RPM/冷却为机制）；`_EDGE_429_COOLDOWN_S=60`（对齐 ProviderRouter.cooldown_seconds）；`_EDGE_MAX_CONSECUTIVE_429=8` 连续冷却→优雅 break（`extract_edges_rate_limit_abort` 日志+summary 带 failed/rate_limit_aborted 字段）；失败永不写缓存（键=文本 sha,仅成功写入）→跨轮增量自愈。测试：`_no_wall_sleep` autouse 夹具冻结 sleep 并记录（保 hermetic 速度）；429 突发中止于上限且 `glob("causal_edge_*")==[]`；活调用 2×pace/缓存命中 0×sleep。
+
+**v6 实证**（evidence: `2026-09-02-e3-smoke-v6-ratelimit-selfheal.log`）：1305 服务端过载持续——60s 冷却逐分推进（时间戳实证）→6 缓存命中+3 实时成功（8498 tokens）+17 失败→优雅中止；**终局 config_sha/scores_sha 与 v5 逐位一致**（部分边缘不影响冻结学习器影子重放——确定性侧证）；ledger v1–v6 六轮 91bc7640 不变。**运维结论**：9-30 窗口即使 1305 持续,readiness/scores 不受影响,边缘在后续轮次自动补齐——唯一残余风险已工程化消化。
+
+**礼貌性 P3 清零**（轮 55 审计遗留）：①`event_text._http_get` 删 raw-requests 分支（原 use_policy=False 路径本已不可达——BLS 先 raise）,全部走 `_policy_get`；4 处死测试补丁行删除+bls_blocked 测试改钉 _policy_get。②`ff5_residual` Kenneth-French ZIP 下载 urlopen→`_policy_get`（保留单次重试语义）。
+
+**验证**：全套 pytest exit 0（两轮）+ruff 全仓 0。**边界**：forward-lane 硬化+ingest 卫生；0 ledger/0 frozen/0 prereg/OOS。**给 9-30 执行者的备忘**：runbook ⓪③ 步间无需人工干预 429——触发器自带节奏/冷却/中止/自愈；若当轮 rate_limit_aborted=True,择日重跑同命令即可增量补齐边缘（scores 不变已证）。待业主：headline GO、P1 三项。
+
+
 ## 2026-09-02 (zz20) 轮 56：E3 前向链全通——文本切片+membership 续造+三潜伏缺陷+覆盖缺口 → 08-31 真实烟雾 READINESS PASS（证据环环相扣）
 
 **背景**：业主 /goal 要求按轮 55 决策计划（A1 文本切片+B1 membership 续造）推进并逐一证据核查。**证据包**：`reports/audits/2026-09-02-round56-evidence-pack.md`（含门 JSON+烟雾日志副本）。
