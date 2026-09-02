@@ -43,6 +43,10 @@ _PB_TARBALL = (
     "https://codeload.github.com/pierrebrunelle/"
     "sp500-historical-constituents/tar.gz/refs/heads/main"
 )
+# Single source of truth for the cached long-format monthly-snapshots parquet.
+# Shared with ``aionis.ingest.universe_ext`` (the Wikipedia extender APPENDS new
+# months to this same file, append-only, after a 100%-overlap reconcile gate).
+_PB_PARQUET_NAME = "universe_pierrebrunelle.parquet"
 
 _HTTP_POLICY = HttpRequestPolicy(retry_exceptions=(requests.RequestException,))
 
@@ -170,7 +174,7 @@ def load_pierrebrunelle_membership(
     Downloads the repo tarball once (one polite call) and caches it.
     """
     cdir = _cache_dir(cache_dir)
-    pq, tgz = cdir / "universe_pierrebrunelle.parquet", cdir / "pierrebrunelle.tar.gz"
+    pq, tgz = cdir / _PB_PARQUET_NAME, cdir / "pierrebrunelle.tar.gz"
     if pq.exists() and not force:
         return pd.read_parquet(pq)
     files: dict[str, str] = {}
