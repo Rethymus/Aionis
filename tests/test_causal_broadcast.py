@@ -157,6 +157,16 @@ def test_forward_self_shocks_empty_inputs_yield_all_nan() -> None:
 # ===========================================================================
 
 
+@pytest.fixture(autouse=True)
+def _no_wall_sleep(monkeypatch: pytest.MonkeyPatch) -> list[float]:
+    """Freeze wall-clock sleeps (live-call pacing + 429 cooldowns); record them."""
+    from aionis.features import causal_broadcast as cb
+
+    sleeps: list[float] = []
+    monkeypatch.setattr(cb.time, "sleep", lambda s: sleeps.append(s))
+    return sleeps
+
+
 def test_extract_event_edges_caches_and_is_idempotent(tmp_path: Path) -> None:
     events = pd.DataFrame(
         [
@@ -197,6 +207,63 @@ def test_extract_event_edges_missing_text_row_skipped(tmp_path: Path) -> None:
     client = _MockCausalClient(table)
     out = extract_event_edges(events, client, tmp_path)
     assert set(out.keys()) == {"E2"}  # E1 had no text -> skipped
+
+
+def test_extract_event_edges_429_burst_aborts_and_never_caches(tmp_path: Path) -> None:
+    """Round-56 regression: a provider-429 burst cools down between attempts and
+    aborts gracefully at the cap; failed events are NEVER cached, so a rerun
+    retries them (self-healing across runs)."""
+    from aionis.features.causal_broadcast import _EDGE_MAX_CONSECUTIVE_429
+
+    n = _EDGE_MAX_CONSECUTIVE_429 + 5
+    events = pd.DataFrame([
+        {"event_id": f"E{i}", "text": f"event {i} filing text"} for i in range(n)
+    ])
+
+    class _RateLimited:
+        def __init__(self) -> None:
+            self.calls = 0
+
+        def extract_causal(self, text: str, event_id: str) -> ForwardCausalExtraction:
+            self.calls += 1
+            raise RuntimeError(
+                "Error code: 429 - {'error': {'code': '1302', "
+                "'message': 'rate limit exceeded'}}"
+            )
+
+    client = _RateLimited()
+    out = extract_event_edges(events, client, tmp_path)
+    assert out == {}  # nothing extracted
+    # stopped at the cap, not all n events
+    assert client.calls == _EDGE_MAX_CONSECUTIVE_429
+    # nothing cached -> an incremental rerun retries them
+    assert list(tmp_path.glob("causal_edge_*.json")) == []
+
+
+def test_extract_event_edges_paces_live_calls_not_cache_hits(
+    tmp_path: Path, _no_wall_sleep: list[float]
+) -> None:
+    """Live calls are paced; cache hits spend no sleep (and no tokens)."""
+    from aionis.features.causal_broadcast import _EDGE_CALL_PACE_S
+
+    events = pd.DataFrame([
+        {"event_id": "E1", "text": "first filing text"},
+        {"event_id": "E2", "text": "second filing text"},
+    ])
+    table = {
+        eid: ForwardCausalExtraction(event_id=eid, causal_edges=[_edge()])
+        for eid in ("E1", "E2")
+    }
+    client = _MockCausalClient(table)
+
+    _no_wall_sleep.clear()
+    extract_event_edges(events, client, tmp_path)
+    assert _no_wall_sleep == [_EDGE_CALL_PACE_S, _EDGE_CALL_PACE_S]  # 2 live calls
+
+    _no_wall_sleep.clear()
+    extract_event_edges(events, client, tmp_path)  # all cache hits
+    assert _no_wall_sleep == []
+    assert client.calls == ["E1", "E2"]  # no new live calls
 
 
 # ===========================================================================

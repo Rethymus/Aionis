@@ -29,6 +29,7 @@ from __future__ import annotations
 
 import json
 import math
+import time
 from pathlib import Path
 from typing import Protocol
 
@@ -49,6 +50,14 @@ from aionis.schema.causal_edge import (
 )
 
 log = structlog.get_logger()
+
+# Rate-limit resilience for the LLM edge loop (round 56): the 2026-08-31 smoke
+# lost 217/223 edges to a provider-429 burst fired with no pacing. Model APIs
+# are exempt from the >=2s data-host rule (provider RPM/TPM is the mechanism),
+# so this is a light live-call pace + a 429 cooldown mirroring ProviderRouter.
+_EDGE_CALL_PACE_S = 1.0
+_EDGE_429_COOLDOWN_S = 60.0
+_EDGE_MAX_CONSECUTIVE_429 = 8
 
 _MECH_COLUMNS: dict[MechanismKeyword, str] = {
     MechanismKeyword.EARNINGS_SIGNAL: "mech_earnings_signal",
@@ -256,6 +265,14 @@ def extract_event_edges(
     ``cache_dir=None`` disables disk caching (in-memory only) — for tests / a
     fresh run that does not want persistence. Events with no ``text`` are skipped
     (a warning, matching ``extract_erls``). Returns ``{event_id: extraction}``.
+
+    Rate-limit resilience (round 56): the 2026-08-31 smoke lost 217/223 edges
+    to a provider-429 burst when the loop fired ~220 calls with no pacing.
+    Live calls are now spaced ``_EDGE_CALL_PACE_S``; a 429/rate-limit failure
+    cools down ``_EDGE_429_COOLDOWN_S`` (mirroring ProviderRouter) and after
+    ``_EDGE_MAX_CONSECUTIVE_429`` consecutive cooldowns the loop stops
+    gracefully — failures are NEVER cached, so a rerun retries them
+    incrementally (self-healing across runs).
     """
     use_cache = cache_dir is not None
     if use_cache:
@@ -263,6 +280,9 @@ def extract_event_edges(
         cache_dir.mkdir(parents=True, exist_ok=True)  # type: ignore[union-attr]
     out: dict[str, ForwardCausalExtraction] = {}
     hits = 0
+    failed = 0
+    consecutive_429 = 0
+    rate_limit_aborted = False
     usage_totals: dict[str, int] = {}
     text_by_id: dict[str, object] = {}
     if "text" in events_df.columns:
@@ -285,15 +305,31 @@ def extract_event_edges(
         try:
             ext = client.extract_causal(str(text), ev.event_id)
         except Exception as e:  # pragma: no cover - network/model path
+            failed += 1
             log.error("extract_edge_failed", event_id=ev.event_id, error=str(e))
+            msg = str(e).lower()
+            if "429" in msg or "rate" in msg:
+                consecutive_429 += 1
+                if consecutive_429 >= _EDGE_MAX_CONSECUTIVE_429:
+                    rate_limit_aborted = True
+                    log.error(
+                        "extract_edges_rate_limit_abort",
+                        consecutive_429=consecutive_429,
+                        note="stopping live calls; failures stay uncached for an incremental rerun",
+                    )
+                    break
+                time.sleep(_EDGE_429_COOLDOWN_S)
             continue
+        consecutive_429 = 0
         if use_cache:
             path.write_text(ext.model_dump_json(indent=2))  # type: ignore[used-before-assignment]
         _add_usage(usage_totals, getattr(client, "last_usage", None))
         out[ev.event_id] = ext
+        time.sleep(_EDGE_CALL_PACE_S)
     log.info(
         "extract_edges_done",
-        n=len(out), cache_hits=hits, cached=use_cache, **usage_totals,
+        n=len(out), cache_hits=hits, cached=use_cache, failed=failed,
+        rate_limit_aborted=rate_limit_aborted, **usage_totals,
     )
     return out
 
