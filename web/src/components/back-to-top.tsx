@@ -47,11 +47,12 @@ export function BackToTop() {
       aria-hidden={!show}
       tabIndex={show ? 0 : -1}
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className="fixed right-5 bottom-5 z-40 flex size-11 items-center justify-center rounded-full border bg-background/70 text-foreground shadow-md backdrop-blur-md transition-[opacity,transform,background-color] duration-300 ease-out hover:bg-muted motion-reduce:transition-none"
+      className="fixed right-5 bottom-5 z-40 flex size-11 items-center justify-center rounded-full border bg-background/70 text-foreground shadow-md backdrop-blur-md hover:bg-muted"
       style={{
         opacity: show ? 1 : 0,
         transform: show ? "translateY(0) scale(1)" : "translateY(10px) scale(0.9)",
         pointerEvents: show ? "auto" : "none",
+        transition: `opacity 0.3s var(--ease-apple-smooth, var(--ease-apple-smooth-fb, ease-out)), transform 0.42s var(--ease-apple-spring, var(--ease-apple-spring-fb, ease-out)), background-color 0.2s ease`,
       }}
     >
       <ArrowUpIcon className="size-4" />

@@ -55,7 +55,7 @@ export function Reveal({
       style={{
         opacity: shown ? 1 : 0,
         transform: shown ? "translateY(0)" : "translateY(10px)",
-        transition: `opacity 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) ${delay}ms, transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) ${delay}ms`,
+        transition: `opacity 0.5s var(--ease-apple-smooth, var(--ease-apple-smooth-fb, ease-out)) ${delay}ms, transform 0.6s var(--ease-apple-spring, var(--ease-apple-spring-fb, ease-out)) ${delay}ms`,
       }}
     >
       {children}

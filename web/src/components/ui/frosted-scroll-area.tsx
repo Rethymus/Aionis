@@ -192,10 +192,13 @@ export function FrostedScrollArea({
           onPointerDown={onThumbPointerDown}
           onPointerMove={onThumbPointerMove}
           onPointerUp={onThumbPointerUp}
-          className={`frost-thumb-pill absolute right-0.5 top-0 w-[7px] cursor-pointer rounded-full outline-none transition-opacity duration-300 ${
+          className={`frost-thumb-pill absolute right-0.5 top-0 w-[7px] cursor-pointer rounded-full outline-none ${
             active ? "opacity-100" : "opacity-0"
           }`}
-          style={{ willChange: "transform" }}
+          style={{
+            willChange: "transform",
+            transition: `opacity 0.24s var(--ease-apple-snappy, var(--ease-apple-snappy-fb, ease-out))`,
+          }}
         />
       ) : null}
     </div>
