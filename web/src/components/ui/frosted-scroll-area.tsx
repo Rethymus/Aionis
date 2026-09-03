@@ -122,7 +122,14 @@ export function FrostedScrollArea({
       content.style.transform = "translateY(0)";
       rubber.current = 0;
     };
-
+    // VERIFIED iOS overscroll mapping (chpwn/originell gist; Flutter
+    // BouncingScrollPhysics ports the same physics): the overscroll distance
+    // is an asymptotic function of the finger distance — inherently damped,
+    // no arbitrary cap needed. d = viewport dimension, c = 0.55.
+    const d = el.clientHeight;
+    const overscroll = (fingerPx: number) =>
+      d * (1 - 1 / ((0.55 * Math.abs(fingerPx)) / d + 1));
+    let finger = 0;
     const onWheel = (e: WheelEvent) => {
       const atTop = el.scrollTop <= 0;
       const atBottom = el.scrollTop >= el.scrollHeight - el.clientHeight - 1;
@@ -134,13 +141,10 @@ export function FrostedScrollArea({
       }
       e.preventDefault();
       wake();
-      // accumulate with resistance, capped (the damping curve)
-      rubber.current = Math.max(
-        -48,
-        Math.min(48, rubber.current + e.deltaY * 0.33),
-      );
+      finger = Math.max(-240, Math.min(240, finger + e.deltaY));
+      rubber.current = overscroll(finger) * Math.sign(finger);
       content.style.transition = "none";
-      content.style.transform = `translateY(${-rubber.current * 0.5}px)`;
+      content.style.transform = `translateY(${-rubber.current}px)`;
       if (releaseTimer) clearTimeout(releaseTimer);
       releaseTimer = setTimeout(springBack, 90); // gesture pause -> spring back
     };
