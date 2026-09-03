@@ -192,7 +192,7 @@ flowchart LR
     G -.-> VER
 ```
 
-- **Data panels**: 54 committed export panels (`n_panels` and per-panel as-of
+- **Data panels**: 56 committed export panels (`n_panels` and per-panel as-of
   watermarks published on `/data-health`) — the EDGAR family (13D/13G ·
   Form 4 · 8-K · DEF 14A · Form D · 13F · IPO 424B4 · unified filing stream),
   FRED/ALFRED, Tiingo, Alpaca, CFTC COT, GDELT news, official ARK holdings,

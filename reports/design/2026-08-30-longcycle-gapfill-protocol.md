@@ -169,7 +169,49 @@ run 覆盖全部标签代码——st.tabs 每 rerun 执行所有子块，断言 
 **方法学沉淀**（入 §4）：双主题密度对账**必须双阈值**（@60 粗 + @25 细）——单一阈值在
 alpha-tint 暗色设计上系统性偏向明色，会制造假"暗色缺失"信号（本轮两例实证）。
 
+## 2f. 轮 82 执行记录（周期 3 首轮；2026-09-04）——P1 口径错位修复 + 证据工件首次浏览器实测
+
+**通道池进度**：第 5 项（导出面板↔显示层语义审计，本轮抓到 P1）+ 证据工件视觉基线
+（新增项）+ 账实对账（README 计数）本轮完成。
+
+**发现与修复**：
+
+| # | 发现 | 通道 | 修复 |
+|---|---|---|---|
+| 1 | **P1 · ic_deciles 导出器错位一个 horizon**：`forward_returns` 行语义 = 行 t 存
+close[t+21]/close[t]−1（自 t 起），而导出代码取 `fw.iloc[session_pos + H]` = [t+21,
+t+42] 窗口——与 docstring/P1-6 门槛声称的标签窗口不符。**测试共谋**：hermetic 测试的
+"独立复算"用 `fwd.loc[score_date + BDay(21)]` 复制了同一日期偏移——只独立了代码路径、
+未独立日期算术，自洽地错。受控实验：stash 旧导出器 → 新回归测试 FAIL（证明抓得住） | B(学科语义) | 读行改 `iloc[session_pos]`；测试复算改**原始算术**（`shift(-21)/prices−1`，不经冻结函数）+ 新增确定性 off-by-H 回归测试（[t,t+21] 递增 / [t+21,t+42] 反序的价格构造，错位即全序反转） |
+| 2 | **P1 同源 · CN 位置守卫误用**：CN 快照面板的 `forward_return_h` 在**月度索引**上
+（150 行），位置式 `+21 < len` 守卫要求"21 个月后还有行"，把 CN 已实现面错误截断在
+2024-09-30（行值明明存在至 2026-06）。正确规则 = **值规则**（行 t 非空 ⇔ 窗口已覆盖：
+US 由 shift(-21) 尾部 NaN 保证、CN 由构建器日线覆盖保证） | B(数据结构) | 删位置守卫，依赖 join+dropna+MIN_NAMES 下限保诚实；CN 已实现 45→66 月（与 US 对称）；新增月度快照网格回归测试 |
+| 3 | **证据工件 E3 陈述过时**（外部可核验本质面）：atlas-claim/dossier 的 §6 均写
+"forward-live 已实现,待业主契约冻结"——契约 2026-08-03 已冻结（轮 36 实证），工件生成
+于 08-31 仍如此表述 | B(账实对账) | 两导出器改如实现状（契约已冻结+08-31 影子 readiness
+PASS+headline 待业主门）；正典次序重生成 atlas→dossier→matrix→shelf（首轮顺序错误被
+`test_real_artifact_equals_fresh_render` 漂移警报当场拦截——S14 钉到旧 atlas sha） |
+| 4 | **README 三处面板计数陈旧**：data_health 实测 56（20 frozen/25 daily/11 cadence）
+vs README 双语 "54 个" + web/README "54 (19/25/10)"——轮 61/62 新增面板未回写 | B(账实对账) | 三处改 56（20/25/11）；文件数口径（web/README "56 JSON panels"）经文件清单核验恰好成立（58 文件−api_catalog/data_health 自身） |
+| 5 | 两份自包含证据工件（atlas-claim 24KB / dossier 47KB）**首次浏览器实测**：渲染全
+正常（头条读数/森林图 SESOI 带/S# 芯片/闭包门自检/S-registry 表），零外部资源/单
+h1/零垃圾 token；一处视觉疑读（"字距嵌入"）经字节核验证伪（实为"逐字嵌入"）——协议
+"视觉主张必须字节/DOM 交叉核验"纪律再次生效 | A(视觉基线) | 无需修复（记录为基线）；RESULTS.md 增补 §4b R1-full decile 透镜小节（修正后真实数值+勘误注记） |
+
+**新病理沉淀（入 §4）**：**`assemble()` 时点现算的 integrity 测试是恒真构造**——它在
+测试时同时现算来源 sha 与"期望值"，只能验证导出器逻辑、永远抓不住"提交工件内嵌 sha
+过期"；真正守卫 = 提交字节 == 现渲染 的漂移警报（本轮实证其有效）。凡"生成时现算 X 并
+内嵌"的工件，回归验证必须走字节稳定契约而非重算逻辑。
+
+**验证**：62 项链守卫+decile 测试全绿；全套 pytest exit 0（后台）+ruff 0+漂移扫描
+NO DRIFT+面板类型契约无变化（56 面板 key 不变）。**边界**：display/export/docs lane；
+0 ledger（57 行不变）/0 frozen config/0 prereg/0 OOS 新计算（decile 重导=纯展示派生，
+scores/价格输入零触碰）。
+
 ## 3. 后续轮次的轮换建议（长周期节奏）
+
+
 
 > **周期 1 已完成**（轮 45–47：五项轮换池全部执行一遍）。周期 2 建议：① web 全路由
 > （22 页非研究页）双主题复审 + 新增面板；② Streamlit AppTest 走查脚本随每次 Streamlit
@@ -223,6 +265,11 @@ alpha-tint 暗色设计上系统性偏向明色，会制造假"暗色缺失"信�
   故一次 `at.run()` 即覆盖 11 标签；断言 uncaught exceptions/标签序/诚实标记/selectbox
   交互。依赖本机工件（runs/results、data/cache），**非 hermetic，不入 CI**——是研究者
   本机 walk 工具。浏览器像素点击在背景 UI 动画时全屏帧易 stale——内容走查一律走 AppTest。
+- **`assemble()` 时点现算的 integrity 测试是恒真构造（轮 82 实证）**：这类测试在测试时
+  同时现算"来源 sha"与"期望值"，永远抓不住**提交工件内嵌 sha 过期**——内嵌 sha 的漂移
+  只能被「提交字节 == 现渲染」字节稳定契约拦截（`test_real_artifact_equals_fresh_render`
+  实战拦截 S14 钉旧 atlas sha）。凡"生成时现算 X 并内嵌进工件"的设计，回归验证必须走
+  字节稳定契约，不要信重算逻辑的绿色。
 - **watch：`use_container_width` 已过 Streamlit 弃用截止日（2025-12-31）**，现装 1.59
   仍容忍（deprecation warning 刷屏）。未来升级 Streamlit 大版本会硬破 22 个调用点——
   届时统一迁移 `width='stretch'/'content'`；升级前每次全站走查会继续提醒。

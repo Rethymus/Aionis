@@ -90,6 +90,21 @@ SPA consistent p = 0.692；MCS 保留全部五个模型。结果是 **gross-of-c
 next-open execution、slippage/impact、borrow、delisting return 或 capacity，因此不能解释为净成本收益、
 可交易策略或资金部署证据。
 
+## 4b. R1-full decile 单调性透镜：display 派生（无账本行）
+
+P1-6（2026-09-02 裁决 GO）把冻结 OOS 截面的分数十等分（D1=最低分…D10=最高分），
+桶收益走与训练标签同一冻结函数 `forward_returns`（close[t+21]/close[t]−1）作用于同一
+研究价格面板。**这是纯展示派生读数，没有账本行、不构成 confirmatory 主张**；面板
+`ic_deciles.json`（155 截面：US/CN）逐行公示，`/atlas` 第五区块渲染，未实现月诚实 null。
+
+- 已实现：US 66 月、CN 66 月（均 2021-01-29 → 2026-06-30）。
+- 最新 US 读数 **非单调**：D1 +4.48% 为最高、D10 −0.81%，D10−D1 = −5.29%——与
+  headline NULL 一致（噪声截面不欠任何形状）。
+- 口径勘误（2026-09-04）：导出器曾把桶收益错取自 [t+21, t+42] 窗口（偏移一个
+  horizon），且 CN 快照网格的月度索引使位置式 +21 守卫错误截断 CN 已实现面
+  （45 月）；已修正为"行 t 即标签窗口 + 值规则守卫"并加确定性回归测试钉死。
+  修正前后读数均非单调，headline 结论不受影响（该面板自始无账本行）。
+
 ## 5. 证据和适用边界
 
 - `config_committed` 先于 result、H6 和 PIT contracts 是研究治理事实；它们不把 cross-fit 自动变成

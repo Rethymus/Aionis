@@ -165,7 +165,7 @@ flowchart LR
     G -.-> VER
 ```
 
-- **数据面板**：54 个 committed 导出面板（`/data-health` 逐项公示 `n_panels` 与
+- **数据面板**：56 个 committed 导出面板（`/data-health` 逐项公示 `n_panels` 与
   as-of 水位）——EDGAR 全家桶（13D/13G · Form 4 · 8-K ·
   DEF 14A · Form D · 13F · IPO 424B4 · 统一申报流）、FRED/ALFRED、Tiingo、Alpaca、
   CFTC COT、GDELT 新闻、ARK 官方持仓、ApeWisdom、Reddit、沪深 300 成分等；

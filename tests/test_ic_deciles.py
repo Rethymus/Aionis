@@ -68,8 +68,6 @@ def test_decile_alignment_uses_frozen_forward_returns(tmp_path, monkeypatch) -> 
     """The D-k decile mean equals the mean of close[t+21]/close[t]-1 over the
     decile's members — computed via the SAME forward_returns function, verified
     by an independent recomputation in the test."""
-    from aionis.features.selection_panel import forward_returns
-
     scores, panel = _synth_scores(tmp_path)
     _wire(tmp_path, scores, panel, monkeypatch)
 
@@ -80,12 +78,15 @@ def test_decile_alignment_uses_frozen_forward_returns(tmp_path, monkeypatch) -> 
     assert r["region"] == "us" and r["n"] == 40
     assert r["realized"] is True
 
-    # independent recomputation: the same frozen function, same date arithmetic
+    # independent recomputation: RAW close[t+21]/close[t]-1 arithmetic, NOT
+    # via forward_returns — so the date alignment itself is independently
+    # pinned (a recomputation through the same frozen function would share
+    # any row-indexing error with the exporter)
     prices_wide = panel.pivot_table(index="date", columns="ticker", values="close",
                                     aggfunc="last")
-    fwd = forward_returns(prices_wide, 21)
+    fwd_manual = prices_wide.shift(-21) / prices_wide - 1.0
     score_date = pd.Timestamp("2024-01-02") + pd.offsets.BDay(10)
-    fr = fwd.loc[score_date + pd.offsets.BDay(21)]
+    fr = fwd_manual.loc[score_date]
     sc = scores.set_index("ticker")["score"]
     j = pd.concat([sc.rename("s"), fr.rename("f")], axis=1, join="inner").dropna()
     j["decile"] = pd.qcut(j["s"], 10, labels=False)
@@ -150,6 +151,81 @@ def test_decile_missing_region_panel_is_honest_absence(tmp_path, monkeypatch) ->
     assert by_region["us"]["realized"] is True
     assert by_region["cn"]["realized"] is False  # no cn panel wired: honest
     assert all(x is None for x in by_region["cn"]["decile_mean_fwd_ret"])
+
+
+def test_decile_window_is_label_window_not_h_shifted(tmp_path, monkeypatch) -> None:
+    """Regression (off-by-h): the readout must pair score date t with the
+    LABEL window close[t+21]/close[t]-1. The fixture makes the [t, t+21]
+    window strictly increasing in score while the h-shifted [t+21, t+42]
+    window is strictly DEcreasing — reading row t+h (the historical defect)
+    would invert every decile mean and fail this test."""
+    sessions, n = 60, 40
+    dates = pd.bdate_range("2024-01-02", periods=sessions)
+    tickers = [f"T{i:02d}" for i in range(n)]
+    score_date = dates[10]
+    prices = pd.DataFrame(100.0, index=dates, columns=tickers)
+    # only the label-window end (t+21 sessions out) carries the ordered
+    # signal: return over [t, t+21] is exactly 0.01*(ticker_rank+1); every
+    # later close returns to 100, so the [t+21, t+42] window is anti-ordered
+    prices.loc[dates[31]] = 100.0 * (1.0 + 0.01 * np.arange(1, n + 1))
+    scores = pd.DataFrame({
+        "date": [score_date] * n,
+        "ticker": tickers,
+        "region": ["us"] * n,
+        "score": np.linspace(-2.0, 2.0, n),
+    })
+    panel = prices.stack().rename("close").reset_index()
+    panel.columns = ["date", "ticker", "close"]
+    _wire(tmp_path, scores, panel, monkeypatch)
+
+    et.export_ic_deciles()
+    r = json.loads((tmp_path / "ic_deciles.json").read_text(encoding="utf-8"))[0]
+    assert r["realized"] is True
+    means = r["decile_mean_fwd_ret"]
+    assert all(m is not None for m in means)
+    # decile d holds ticker ranks 4d..4d+3 (equal-count qcut over the exact
+    # linspace), so the label-window means must be strictly increasing
+    assert all(means[d] < means[d + 1] for d in range(9))
+    # D10 = ranks 36..39 -> exact returns 0.37/0.38/0.39/0.40
+    assert abs(means[9] - 0.385) < 1e-9
+
+
+def test_decile_snapshot_grid_uses_value_rule_not_positional_guard(
+    tmp_path, monkeypatch
+) -> None:
+    """Regression (CN-style snapshot grid): builder-precomputed forward
+    returns live on a MONTHLY index, where a positional +21 guard would
+    demand 21 future months and falsely truncate the realized surface.
+    Realizability must be the VALUE rule: row t non-null == window covered."""
+    months = pd.to_datetime(["2025-01-31", "2025-02-28", "2025-03-31"])
+    n = 40
+    tickers = [f"C{i:02d}" for i in range(n)]
+    scores = pd.DataFrame({
+        "date": [months[0]] * n,
+        "ticker": tickers,
+        "region": ["cn"] * n,
+        "score": np.linspace(-2.0, 2.0, n),
+    })
+    fwd = 0.01 * np.arange(1, n + 1)
+    panel = pd.DataFrame({
+        "date": [months[0]] * n + [months[1]] * n,
+        "ticker": tickers * 2,
+        "forward_return_h": list(fwd) + [np.nan] * n,
+    })
+    scores_path = tmp_path / "scores.parquet"
+    scores.to_parquet(scores_path)
+    panel_path = tmp_path / "cn_panel.parquet"
+    panel.to_parquet(panel_path)
+    monkeypatch.setattr(et, "_DECILE_SCORES", scores_path)
+    monkeypatch.setattr(et, "_DECILE_PANELS", {"cn": panel_path})
+    monkeypatch.setattr(et, "WEB", tmp_path)
+
+    et.export_ic_deciles()
+    r = json.loads((tmp_path / "ic_deciles.json").read_text(encoding="utf-8"))[0]
+    assert r["region"] == "cn" and r["realized"] is True
+    # decile d holds ticker ranks 4d..4d+3; row t values are 0.01*(rank+1)
+    assert r["decile_mean_fwd_ret"][0] == round(float(fwd[:4].mean()), 6)
+    assert r["decile_mean_fwd_ret"][9] == round(float(fwd[36:40].mean()), 6)
 
 
 def test_decile_committed_panel_matches_fresh_render(tmp_path, monkeypatch) -> None:

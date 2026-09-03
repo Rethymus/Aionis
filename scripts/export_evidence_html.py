@@ -530,8 +530,10 @@ def _methods_section(metrics: object, prov: object) -> list[str]:
             f"JT look1 = {_esc(m['jt_look1'])}(metrics.json 实值,不修饰)。"
             if m is not None else "metrics 面板缺失,等价性读数不可用。"
         ) + "</li>",
-        "<li><strong>E3 forward-live(P0-1):</strong>forward-live 已实现,待业主"
-        "契约冻结(按仓库现状如实表述;本页不宣称已完成的活体验证)。</li>",
+        "<li><strong>E3 forward-live(P0-1):</strong>forward-live 已实现;E3 契约"
+        "已冻结(业主 2026-08-03 裁决;provider_cutoff 为经验探针边界),2026-08-31 "
+        "月末截面影子链 READINESS PASS(证据在 reports/audits/);headline 判定待"
+        "影子样本积累(业主门)。本页不宣称已完成的活体验证。</li>",
         "<li><strong>NULL 判定立场:</strong>按预注册判定规则如实呈现——零结果 + "
         "窄 CI 是预期内且有信息量的结果;本工件仅呈现测量与设计,不给投资建议,"
         "不构成任何收益承诺。</li>",

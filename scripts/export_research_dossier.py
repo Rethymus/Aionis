@@ -1178,8 +1178,10 @@ def _sec6_limits(a: Assembly) -> list[str]:
     if "artifact_atlas" in a.sid:
         lines.append(
             "<li><strong>E3 forward-live 状态(如实):</strong>forward-live "
-            "已实现,待业主契约冻结(按仓库现状表述;本档案不宣称已完成的"
-            f'活体验证——与 G2 工件陈述一致)。{c("artifact_atlas")}</li>'
+            "已实现;E3 契约已冻结(业主 2026-08-03 裁决,provider_cutoff 为经验"
+            "探针边界),2026-08-31 月末截面影子链 READINESS PASS(证据在 "
+            "reports/audits/),headline 判定待影子样本(业主门)——本档案不宣称"
+            f'已完成的活体验证,与 G2 工件陈述一致。{c("artifact_atlas")}</li>'
         )
     if "data_health" in a.sid:
         lines.append(

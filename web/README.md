@@ -129,7 +129,7 @@ web/scripts/i18n-audit.mjs — orphan-key audit of the dictionary
 **Data layer.** The terminal reads only exported JSON panels; the export pipeline
 (`scripts/export_terminal_data.py`, repo root) is the **only** bridge from the
 research pipeline and never exports forward-looking or unfrozen OOS metrics. The
-data-health registry tracks **54 panels** (19 frozen / 25 daily / 10 cadence)
+data-health registry tracks **56 panels** (20 frozen / 25 daily / 11 cadence)
 across 56 JSON files on disk; `prebuild` re-mirrors them into a read-only static
 data API (`/api/v1/…`, OpenAPI 3.1) served from GitHub Pages, so the deployed API
 can never drift from the panels the terminal renders.

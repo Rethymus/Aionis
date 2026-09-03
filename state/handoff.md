@@ -8,6 +8,16 @@
 > 裁决作废。当前主线：web 终端展示层 + GitHub Pages 实时数据更新；并行：Track A 因子生成器
 > （新冻结面）、E3 forward-live（AUD-06 + 业主 GO）、glm-v4 key 有效性确认。
 
+## 2026-09-04 (zz22) 轮 82：长周期查漏补缺周期 3 首轮——P1 ic_deciles 双重口径错位 + 证据工件诚实化 + 首次浏览器实测
+
+**业主 /goal 续推长周期查漏补缺（协议周期 3 首轮，协议 §2f 有全记录）。** 通道 B（学科语义）抓到 **P1**：`export_ic_deciles` 把桶收益读自 `forward_returns` 宽帧的 `iloc[session_pos+H]`——而行语义是行 t 存 close[t+21]/close[t]−1，实际窗口=[t+21,t+42]，与 P1-6 门槛的"与训练标签同一窗口"承诺错位一整个 horizon。**测试共谋教训**：hermetic 测试的独立复算用 `fwd.loc[score_date+BDay(21)]` 复制了同一日期偏移（只独立代码路径、未独立日期算术）；复算已改原始算术（shift(-21)/prices−1）并新增确定性 off-by-H 回归测试（label 窗递增/h-shifted 窗反序的构造；stash 受控实验证明旧代码被抓住）。**同源第二层**：CN 快照面板 forward_return_h 在月度索引（150 行）上，位置式 +21 守卫要求 21 个月后还有行 → CN 已实现面被截断在 2024-09-30；改**值规则**（行 t 非空⇔h 窗已覆盖）后 CN 66 月=与 US 对称。修正面板重导：US 66 月+CN 66 月（至 2026-06-30），最新 US 读数 D1 +4.48%…D10 −0.81%（spread −5.29%）仍非单调=与 headline NULL 一致（两口径下结论不变，面板自始无账本行）。RESULTS.md 增 §4b（R1-full 透镜+2026-09-04 勘误注记）。
+
+**证据工件（外部可核验本质面）两项**：①§6"forward-live 已实现,待业主契约冻结"过时（契约 2026-08-03 冻结）→ export_evidence_html/export_research_dossier 两处改如实现状（冻结+08-31 影子 READINESS PASS+headline 业主门），正典次序重生成 atlas-claim→dossier→evidence-matrix（+web 镜像）→knowledge_shelf；**首轮我按 dossier→atlas 顺序错生成，dossier S14 钉了旧 atlas sha——`test_real_artifact_equals_fresh_render` 字节稳定漂移警报当场拦截**（教训：assemble 时点现算的 integrity 测试恒真，内嵌 sha 只能靠字节契约守卫；已入协议 §4）。②两份 HTML 首次真实浏览器实测（Edge+AX 树+截图）：渲染全正常（头条/森林图 SESOI 带/S# 芯片/闭包门自检/S-registry 表），零外部资源/单 h1/零垃圾 token；一处视觉疑读经字节核验证伪（协议纪律生效）。README 三处面板计数 54→56（20/25/11）账实对账。
+
+**验证**：62 项链守卫+decile 测试+全套 pytest exit 0+ruff 0+tsc 0+build-api/next build+面板漂移扫描 NO DRIFT。**边界**：display/export/docs lane；0 ledger（91bc7640/57 行不变）/0 frozen config/0 prereg/0 OOS 新计算（decile 重导=纯展示派生）。**待业主/日历节点不变**：10-01 04:05 影子 runbook 自动化（97cec742）→10-31 headline GO 评估；P1 三项预注册级 GO（Track A/LLM vintage CI/R1-full）。
+
+
+
 ## 2026-09-02 (zz21) 轮 57：429 自愈工程+烟雾 v6 双 sha 复现+礼貌性清零
 
 **v5 复盘**：217/223 边缘败于无节奏突发（GLMCausalEdgeClient 直连无路由无节奏——max_retries=0+ONE bounded retry 挡不住连发）。**修复（causal_broadcast.extract_event_edges）**：`_EDGE_CALL_PACE_S=1.0`（活调用间距,缓存命中豁免——模型 API 免 ≥2s 数据源规则,以 RPM/冷却为机制）；`_EDGE_429_COOLDOWN_S=60`（对齐 ProviderRouter.cooldown_seconds）；`_EDGE_MAX_CONSECUTIVE_429=8` 连续冷却→优雅 break（`extract_edges_rate_limit_abort` 日志+summary 带 failed/rate_limit_aborted 字段）；失败永不写缓存（键=文本 sha,仅成功写入）→跨轮增量自愈。测试：`_no_wall_sleep` autouse 夹具冻结 sleep 并记录（保 hermetic 速度）；429 突发中止于上限且 `glob("causal_edge_*")==[]`；活调用 2×pace/缓存命中 0×sleep。

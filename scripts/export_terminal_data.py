@@ -3417,28 +3417,32 @@ def export_ic_deciles() -> None:
         realized = False
         decile_rets: list[float | None] = [None] * 10
         if fw is not None and date in fw.index:
-            session_pos = fw.index.get_loc(date)
-            # fully realized only when a session h positions AFTER the score
-            # date exists on this region's grid
-            if session_pos + H < len(fw.index):
-                fr = fw.iloc[session_pos + H]
-                joined = pd.concat(
-                    [scores.rename("score"), fr.rename("fwd")], axis=1, join="inner"
-                ).dropna()
-                if len(joined) >= MIN_NAMES and joined["score"].nunique() > 1:
-                    realized = True
-                    try:
-                        joined["decile"] = pd.qcut(
-                            joined["score"], 10, labels=False, duplicates="drop"
+            # forward_returns row t IS the h-session return from t
+            # (close[t+h]/close[t]-1), so the score date's OWN row is the
+            # label-convention window. Realizability is the VALUE rule: row t
+            # is non-null exactly when the h-session window is covered — by
+            # shift(-h) tail-NaNs on the US daily grid, and by builder daily
+            # coverage on the CN snapshot grid (whose MONTHLY index makes any
+            # positional +h guard meaningless). Per-ticker gaps then drop out
+            # of the join and the MIN_NAMES floor keeps honesty.
+            fr = fw.iloc[fw.index.get_loc(date)]
+            joined = pd.concat(
+                [scores.rename("score"), fr.rename("fwd")], axis=1, join="inner"
+            ).dropna()
+            if len(joined) >= MIN_NAMES and joined["score"].nunique() > 1:
+                realized = True
+                try:
+                    joined["decile"] = pd.qcut(
+                        joined["score"], 10, labels=False, duplicates="drop"
+                    )
+                except ValueError:
+                    realized = False
+                if realized:
+                    for d in range(10):
+                        sel = joined.loc[joined["decile"] == d, "fwd"]
+                        decile_rets[d] = (
+                            round(float(sel.mean()), 6) if len(sel) else None
                         )
-                    except ValueError:
-                        realized = False
-                    if realized:
-                        for d in range(10):
-                            sel = joined.loc[joined["decile"] == d, "fwd"]
-                            decile_rets[d] = (
-                                round(float(sel.mean()), 6) if len(sel) else None
-                            )
         top = decile_rets[9]
         bottom = decile_rets[0]
         spread = (
