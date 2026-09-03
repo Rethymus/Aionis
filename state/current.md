@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-09-03) 轮 72：滚动体验迭代 5——congress/events/filers 分页流包装（业主巡视 /congress 指出的漏网模式）：**
+  DOM 巡检 20 页后定位：流页（congress/events/filers）的 shadcn Table 分页流（PAGE_SIZE=50 直铺页面）是遗漏的"大量多行"模式——atlas 校验审计当时未覆盖 app 层。**修复**：五张分页流表（congress 交易流+第二表、events 双流、filers 目录）包 FrostedScrollArea 560px 视口（≈13 行），LoadMore 分页照常（footer 在视口下方），粘性毛玻璃表头经既有 .frost-scroll CSS 自动生效;12 行小表按阈值不包。**视觉实证**（/congress 截图）：≈14 行可见+右侧毛玻璃滑条+钉住表头下首行渐隐+"加载更多 · +50 | 50 / 874"完好+右栏排行细滑条（全局 CSS 生效旁证）。**验证**：tsc 0+全套 pytest exit 0+ruff 0+构建 1504 页+CI success（33750120458）。**运维**：8935 伺服保留（业主巡视中）。**边界**：display lane;0 ledger/0 OOS。**跟进**：Mimosa 完整重扫（钩子提示）。
+
 - **active (2026-09-03) 轮 71：业主澄清纠正——/atlas 顶栏升级回滚，校验组定位恢复+副标题补齐（误解修正轮）：**
   业主澄清："没找到"指的是校验组下拉里的 atlas 项，而非要求顶栏直达——轮 70 的升级是误读，已回滚（direct 栏恢复 总览/市场新闻流,校验组恢复 四项）。**时间线实证**：atlas 项（研究图谱→/atlas）自 2026-08-28 commit 685fab8a 起就是校验组第 4 项,当前构建 DOM 枚举亦在（verifyItems 含 /Aionis/atlas）——**项一直在,业主视图未见的最可能原因是浏览器标签页为旧加载状态**（out/ 多轮重建后 chunk 指纹变化,旧标签页水合失效回落 SSR 静态态）——硬刷新即可见。**顺带增强**：该项此前缺副标题行（兄弟项均有）,已接线存量键 nav.sub.atlas（"编辑级研究叙事图：主张·分差·诊断·血缘"）使条目醒目一致;live 截图核验校验下拉四项全在墙（含毛玻璃下拉底）。**验证**：tsc 0+全套 pytest exit 0+ruff 0+构建 1504 页+CI success（33747486644）。**边界**：display lane;0 ledger/0 OOS。**跟进项**：Mimosa 完整安全扫描（钩子两次提示 library_source 超限;本轮纯导航 JSX 无新增攻击面）。
 
