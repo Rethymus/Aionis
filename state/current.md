@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-09-03) 轮 64：9-30 runbook 武装收官——一次性自动化已挂（automation-97cec742,北京 10-01 04:05 触发）：**
+  业主给出执行时点（北京 10-01 04:00 后）。**预检四项全绿**：四步脚本+冻结契约在位、provider_cutoff=2023-03-10、ledger 基线 91bc7640（57 行）、ruff 全仓 0。**自动化 automation-97cec742-531a-4cd6-9a7b-a0cb6fef03a3**（recurring=false,cron 5 4 1 10 *）任务书含：四步全命令（⓪a membership 门失败即中止/⓪b 覆盖残差即中止/①volume/②materialize/③trigger --run-date 2026-09-30 NO-LEDGER）+执行前后 ledger sha 字节级零写入核验+fail-closed 也是合格结论的诚实语义（绝不重跑到通过）+GLM 429 自愈说明+**轮 54 宿主休眠教训的迟到补救语义**（迟到仍有效——依赖的均为已收盘历史数据）+结果如实追加 state+仅提交 state 文件。**防伪造红线写入任务书**：严禁伪造/补跑捏造,ledger 不一致=重大事故如实报告不得回写。**下一人工节点**：10-31 headline GO 评估（届时影子样本满 2 个月——前提是 10-31 窗口的 runbook 也执行,其自动化届时视 9-30 执行结果再挂）。
+
 - **active (2026-09-03) 轮 63：业主批评响应——deciles 区块按项目图表语言重造 + CSS 门禁教训重演记录：**
   业主批评成立：v1 deciles 块是"能渲染的模块"非"项目适配的模块"。**重造**（对照 diagnostics/divergence 兄弟组件逐惯例重写）：CardTitle as="h2"+space-y-8;i18n 迁 `atlas.deciles.*` 命名空间（zh/en 对称 audit 1286/1286）;几何常量与兄弟一致（VB_W520/VB_H210/M_L32）;PanelFrame 式轴（niceTicks+scaleLinear+虚线栅格+mono 刻度+宽轴每 6 月标签）;逐区域子面板 grid-cols-2+区域标题+mono 元行（month·n）;对称纵轴双栏可比;图例 chips;DecileTable 子组件（house 表格样式+诚实 "(—)"）;**CN accent 改 divergingScale 冷端**（文档化蓝橙对;暖尾保留给 divergence 的 out-of-band——锈红会被误读跌向,红线邻接）。**视觉核验教训（轮 48 重演,如实记录）**：v1 的"视觉核验通过"对 SVG 部分无效——开发伺服违反轮 48 CSS 门禁铁律（basePath /Aionis 资产从裸 out/ 伺服 404→CSS 变量全空→var(--primary) 计算空→黑柱画黑底;探针实证 rectFill=rgb(0,0,0)/varPrimary=""）;按正典 junction（web/Aionis→out,伺服 web/）+门禁 page/css 200/200 后重截:US/CN 并排柱状图真实值/栅格/图例/诚实 (—) 行全部在墙,与诊断区块对照视觉一致。**验证**：tsc 0+audit 0/0+构建 1504 页+全套 pytest exit 0+ruff 0+**CI 三轮绿含 86b618db 补确认 success**（网络故障期间 push 实际成功,仅查询受阻）。**边界**：display lane;0 ledger/0 OOS。下一节点：9-30 runbook → headline 评估 10-31。
 
