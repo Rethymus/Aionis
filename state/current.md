@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-09-03) 轮 74：Apple 动效深研落地——研究代理 101 次工具调用 8 项一手溯源，两处实现偏差按证据修正：**
+  **研究文档**：`reports/design/2026-09-03-apple-motion-research.md`（8 项发现+实现映射表+UNVERIFIED 清单）。**关键一手事实**：①HIG Motion 页零时长零曲线数值（仅原则：目的性/可关闭/跟随手势/简短/可取消）——一切"Apple 用 X ms"说法无 HIG 出处;②SwiftUI 预设一手声明：默认 spring=response 0.5+**dampingFraction 0.825**、smooth bounce 0、snappy **0.15**、bouncy 0.3（duration=感知沉降时长）——与本轮 smooth/spring 令牌吻合,snappy 按文档值重生成（ζ0.85/0.5s）;③UISpring 阻尼比公式 damping/(2√(stiffness·mass)),质量/刚度默认数值官方从未文档化;④decelerationRate 0.998/0.99 系二手（RN 文档引用）;⑤**橡皮筋一手公式** `b=d·(1−1/(0.55x/d+1))`（chpwn/originell gist;Flutter 同物理移植 0.52 起始）——按此重写 frost 边缘过滚（渐近阻尼替换线性累加+±48 硬帽的近似）;⑥材质逐级 blur 半径 Apple 未文档化（CoreUI .car 封装）,逆向管线=1/4 采样+saturate 1.8——下拉 saturate 对齐 1.8;⑦linear() Baseline 2023-12（与 @supports 守卫一致）,~50 点=弹簧感（本令牌 48 点）。**边界**：display lane;0 ledger/0 OOS。**跟进**：Mimosa 完整重扫。
+
 - **active (2026-09-03) 轮 73：Apple 动效迭代 7——iOS 橡皮筋阻尼回弹落地+frost 表全链路实测（live-DOM 证据）：**
   Apple 阻尼感最标志性行为落地：frost 滚动区边缘过滚时内容**跟随手指带阻尼**（delta×0.33,上限 ±48px——iOS 过滚系数域）而非急停,手势停顿 90ms 后以 `--ease-apple-spring` 弹簧曲线回弹归零;钉住表头在拖拽期间保持其原生钉住位（随内容整体弹动）。reduced-motion 跳过;非边缘滚动零干扰（仅边缘 preventDefault）。**live 实证**（派发 WheelEvent 序列）：mid translateY(24px)+transition none（阻尼拖拽中）→ peak 24px（上限保持）→ settled translateY(0)（弹簧回弹完成）——阻力→上限→回弹全链路。**验证**：tsc 0+全套 pytest exit 0+ruff 0+构建 1504 页+CI success（33753752584）。**迭代 7 收官**：累计=轮 66 滚动条/滚动区、67 补完、68 下拉/回顶/Reveal、69 ⌘K/model-health、70 粘性表头/行hover/主题过渡、72 分页流、73 橡皮筋。**边界**：display lane;0 ledger/0 OOS。**跟进**：Apple 动效研究文档（研究代理在飞,落地后补引用）;Mimosa 完整重扫。
 
