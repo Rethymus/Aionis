@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-09-03) 轮 69：Apple 动效迭代 3——⌘K 面板毛玻璃化+model-health 入场动效（迭代收官）：**
+  ①CommandPalette（⌘K）面板 Spotlight 化：半透明卡底+backdrop-blur-2xl saturate-150（骑乘 dialog 既有 fade/scale 入场;遮罩层本就 blur-xs）;②/model-health 三区块（模型卡/清单/供应商年限）Reveal 入场（60ms 层叠,reduced-motion 即时）。**验证**：tsc 0+全套 pytest exit 0+ruff 0+构建 1504 页+CI success（33721916474）。**如实记录**：Mimosa 钩子提示完整安全扫描未完成（library_source 超限,兼容放行）——本轮改动纯显示层 CSS/React 无新增攻击面;完整重扫列为跟进项。**边界**：display lane;0 ledger/0 OOS。**Apple 动效迭代至此三轮收官**（轮 66 滚动+轮 67 补完+轮 68 下拉/回顶/入场+轮 69 ⌘K/model-health）;后续候选=卡片 hover 微抬升 opt-in 与长页 content-visibility。
+
 - **active (2026-09-03) 轮 68：Apple 动效迭代 1-2——导航下拉毛玻璃化+BackToTop 丝滑化+atlas 滚动入场（业主"多次迭代"指令执行）：**
   **迭代 1**：①导航下拉原为 display:none→block 硬切（零过渡零毛玻璃=最大操作违例）→ Apple popover 范式：color-mix 半透明卡底+backdrop-blur(16px) saturate(1.5) 毛玻璃、fade+6px 上升+0.985→1 缩放（0.22s apple-ease）、visibility 延迟关闭使退出也带动画、focus-within 键盘可达、隐藏态 pointer-events:none 不挡页面；②BackToTop 原硬挂载/卸载+每滚动事件 setState→ 常驻挂载+opacity/scale0.9/上升10px 300ms ease-out 进出动画+rAF 节流仅阈值翻转+bg/70+blur-md 磨砂+reduced-motion 降级。**迭代 2**：`ui/reveal.tsx` IntersectionObserver 滚动入场（fade+10px 上升,单次触发,rootMargin -8%,reduced-motion 即时）应用于 /atlas 五区块（60ms 层叠）。**live 实证**（junction+CSS 门禁后）：下拉中间帧毛面板在墙;Reveal opacity 0（滚动前）→1（入视口后）;BackToTop 显示态 opacity 1/恒等变换。tsc 0+全套 pytest exit 0+ruff 0+构建 1504 页+CI success（33720482420）。**边界**：display lane;0 ledger/0 OOS。**迭代 3 候选**（下轮）：Reveal 扩展至 model-health/track 区块、⌘K 面板毛玻璃化、卡片 hover 微抬升 opt-in。
 
