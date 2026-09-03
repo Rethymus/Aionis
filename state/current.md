@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-09-03) 轮 68：Apple 动效迭代 1-2——导航下拉毛玻璃化+BackToTop 丝滑化+atlas 滚动入场（业主"多次迭代"指令执行）：**
+  **迭代 1**：①导航下拉原为 display:none→block 硬切（零过渡零毛玻璃=最大操作违例）→ Apple popover 范式：color-mix 半透明卡底+backdrop-blur(16px) saturate(1.5) 毛玻璃、fade+6px 上升+0.985→1 缩放（0.22s apple-ease）、visibility 延迟关闭使退出也带动画、focus-within 键盘可达、隐藏态 pointer-events:none 不挡页面；②BackToTop 原硬挂载/卸载+每滚动事件 setState→ 常驻挂载+opacity/scale0.9/上升10px 300ms ease-out 进出动画+rAF 节流仅阈值翻转+bg/70+blur-md 磨砂+reduced-motion 降级。**迭代 2**：`ui/reveal.tsx` IntersectionObserver 滚动入场（fade+10px 上升,单次触发,rootMargin -8%,reduced-motion 即时）应用于 /atlas 五区块（60ms 层叠）。**live 实证**（junction+CSS 门禁后）：下拉中间帧毛面板在墙;Reveal opacity 0（滚动前）→1（入视口后）;BackToTop 显示态 opacity 1/恒等变换。tsc 0+全套 pytest exit 0+ruff 0+构建 1504 页+CI success（33720482420）。**边界**：display lane;0 ledger/0 OOS。**迭代 3 候选**（下轮）：Reveal 扩展至 model-health/track 区块、⌘K 面板毛玻璃化、卡片 hover 微抬升 opt-in。
+
 - **active (2026-09-03) 轮 67：滚动体验补完——业主指出仍有漏网长表，剩余三处全包装+运维巡检清隐患：**
   业主在 atlas 页实测指出仍有未包装的多行数据。**补齐**：claims IC pivot 表（71 个月行）、dataflow 全量面板溯源表（56 行,节头固定于滚动区外=表头常驻）、discipline 账本审计表（全账本行）——全部 FrostedScrollArea 包装（小表 4-16 行按设计不包）。**视觉实证**：atlas 页 8 个滚动区 DOM 审计全达标（高度 320-380 受限+可滚动+滑条就位）,dataflow 表截图核验（380px 视口约 14 行+右侧毛玻璃滑条+节头常驻+边缘渐隐）。**运维巡检**：CronList 揪出轮 54 遗留过期自动化 998a60a0（十月每日 09:00 重复跑影子+自删标记失配永不自删+过时 fail-closed 预期）→ 已删除,97cec742（10-01 04:05 单次）为唯一调度器。**验证**：tsc 0+i18n 1286/1286+构建 1504 页+全套 pytest exit 0+ruff 0+CI success（33718116111）。**边界**：display lane;0 ledger/0 OOS。
 
