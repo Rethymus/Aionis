@@ -2,254 +2,371 @@
 
 // /atlas section 5 (P1-6 R1-full, adjudicated GO 2026-09-02) — decile
 // monotonicity of the frozen OOS score surface (display lane, zero fetches):
-// for each frozen (month, region) cross-section the panel ranks scores into
-// ten equal-count deciles and reports each decile's mean realized forward
-// return over the next h=21 sessions — the SAME frozen close-to-close
-// convention as the training label y_fwd_ret, so the readout is arithmetically
-// comparable to the headline IC. Panel A: per-decile mean forward return as a
-// grouped bar pair (CN | US) for the LATEST realized month per region;
-// Panel B: the D10−D1 spread time series per region (nulls honestly break the
-// line at the panel edge / missing CN panel). All values verbatim from
-// aionis.icDeciles (web/src/data/aionis/ic_deciles.json).
+// for each frozen (month, region) cross-section the exporter ranks scores
+// into ten equal-count deciles and reports each decile's mean realized
+// forward return over the next h=21 sessions — the SAME frozen
+// close-to-close convention as the training label y_fwd_ret
+// (aionis.icDeciles → ic_deciles.json). Panel A: grouped decile-mean bars
+// for the latest realized month, ONE sub-panel per region (us | cn), side by
+// side like the diagnostics panels. Panel B: the D10 − D1 spread series for
+// both regions on ONE shared month axis. All values verbatim from the
+// committed panel; deterministic layout computed at SSG build time; full
+// data tables under every figure (headers always render — the house
+// honesty pattern).
 //
-// Red lines honored: NO direction coloring on the bars (a decile return is a
-// measurement, not advice) — bars use the region accents (ink-blue / warm
-// orange); the zero line is a dashed ink reference. No Date.now /
-// Math.random; deterministic layout from the committed panel (SSG build
-// time); full <table> fallback per figure.
+// Red lines honored: NO red/green or up/down direction encoding (a decile
+// return is a measurement, not advice) — region accents are the approved
+// ink-blue / warm-orange pair; the zero line is a solid ink reference among
+// dashed gridlines; no Date.now / Math.random.
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { DiagramFigure } from "@/components/diagram/primitives";
-import { diagram } from "@/components/diagram/tokens";
+import {
+  DiagramFigure,
+  niceTicks,
+  scaleLinear,
+} from "@/components/diagram/primitives";
+import { diagram, divergingScale } from "@/components/diagram/tokens";
 import { aionis, type IcDecilesRow } from "@/data/aionis";
 import { useI18n } from "@/i18n/provider";
 
-const REGIONS = ["cn", "us"] as const;
-const ACCENT_WARM = "#b45309"; // approved warm accent (diagram.diverging tail family)
+// Region order follows the divergence precedent (us first); labels are
+// literal locale-neutral tokens.
+const REGIONS = ["us", "cn"] as const;
+type Region = (typeof REGIONS)[number];
 
-type Row = IcDecilesRow;
+// CN category accent: the COOL end of the approved colorblind-safe diverging
+// scale — giving the documented blue/orange category pair (NOT a direction
+// semantic; the warm tail is reserved for out-of-band flags in the
+// divergence block, and a rust tone could be misread as a down-direction).
+// US keeps the primary ink; the pair stays distinguishable in both themes.
+const ACCENT: Record<Region, string> = {
+  us: diagram.primary,
+  cn: divergingScale[0],
+};
 
-const byMonthAsc = (a: Row, b: Row) => (a.month < b.month ? -1 : a.month > b.month ? 1 : 0);
+// Per-panel SVG geometry (viewBox units; ~2.5:1 aspect keeps rendered height
+// in the spec's 180–220px band at two-column widths — siblings' constants).
+const VB_W = 520;
+const VB_H = 210;
+const M_L = 32;
+const M_R = 6;
+const PLOT_TOP = 8;
+const PLOT_BOTTOM = VB_H - 24;
+const PLOT_W = VB_W - M_L - M_R;
+// Shared wide axis for the spread series (both regions, one month grid) —
+// diagnostics' inertia-panel precedent.
+const VB_WIDE = 1000;
+const PLOT_WIDE = VB_WIDE - M_L - M_R;
 
-function latestRealized(rows: Row[]): Row | undefined {
-  const realized = rows.filter((r) => r.realized);
-  return realized.length ? realized[realized.length - 1] : undefined;
+// Deterministic ascending month order (byte compare — ISO-like keys sort
+// chronologically; no locale-dependent collation).
+const byMonthAsc = (a: IcDecilesRow, b: IcDecilesRow) =>
+  a.month < b.month ? -1 : a.month > b.month ? 1 : 0;
+
+// Full data-table fallback (headers always render — PanelTable precedent).
+function DecileTable({
+  title,
+  rows,
+  monthHeader,
+}: {
+  title: string;
+  rows: IcDecilesRow[];
+  monthHeader: string;
+}) {
+  return (
+    <div className="space-y-4">
+      <p className="text-xs font-semibold">{title}</p>
+      <table className="mt-1 w-full text-left text-[12px]">
+        <thead>
+          <tr className="text-muted-foreground">
+            <th className="border-b border-border px-3 py-1.5 font-medium">
+              {monthHeader}
+            </th>
+            {Array.from({ length: 10 }, (_, d) => (
+              <th
+                key={d}
+                className="border-b border-border px-2 py-1.5 text-right font-medium"
+              >
+                D{d + 1}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr key={`${r.region}-${r.month}`} className="border-t border-border">
+              <td className="px-3 py-1 font-mono text-[11px]">
+                {r.region} · {r.month}
+                {r.realized ? "" : " (—)"}
+              </td>
+              {Array.from({ length: 10 }, (_, d) => (
+                <td
+                  key={d}
+                  className="px-2 py-1 text-right font-mono text-[11px] tabular-nums text-muted-foreground"
+                >
+                  {r.realized ? (r.decile_mean_fwd_ret[d]?.toFixed(4) ?? "—") : "—"}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
 }
 
 export default function AtlasDeciles() {
   const { t } = useI18n();
-  const rows: Row[] = aionis.icDeciles ?? [];
-  const realizedCount = rows.filter((r) => r.realized).length;
-  const byRegion: Record<string, Row[]> = { cn: [], us: [] };
-  for (const r of rows) (byRegion[r.region] ??= []).push(r);
-  for (const k of Object.keys(byRegion)) byRegion[k].sort(byMonthAsc);
+  const rows: IcDecilesRow[] = aionis.icDeciles ?? [];
 
-  const latest: Partial<Record<string, Row>> = {};
-  for (const reg of REGIONS) latest[reg] = latestRealized(byRegion[reg]);
+  const byRegion: Record<Region, IcDecilesRow[]> = { us: [], cn: [] };
+  for (const r of rows) {
+    if (r.region === "us" || r.region === "cn") byRegion[r.region].push(r);
+  }
+  for (const k of REGIONS) byRegion[k].sort(byMonthAsc);
 
-  const spreadSeries = REGIONS.map((reg) => ({
-    region: reg,
-    points: byRegion[reg]
-      .filter((r) => r.realized && r.d10_minus_d1 != null)
-      .map((r) => ({ month: r.month, v: r.d10_minus_d1 as number })),
-  })).filter((s) => s.points.length >= 2);
+  // Latest realized month per region (the frozen surface's honest extent —
+  // months past the panel edge carry realized:false and stay out of Panel A).
+  const latest: Partial<Record<Region, IcDecilesRow>> = {};
+  for (const reg of REGIONS) {
+    const realized = byRegion[reg].filter((r) => r.realized);
+    if (realized.length) latest[reg] = realized[realized.length - 1];
+  }
 
-  const allSpreads = spreadSeries.flatMap((s) => s.points.map((p) => p.v));
-  const sMin = allSpreads.length ? Math.min(...allSpreads) : -0.05;
-  const sMax = allSpreads.length ? Math.max(...allSpreads) : 0.05;
-  const pad = Math.max((sMax - sMin) * 0.1, 0.01);
-  const lo = sMin - pad;
-  const hi = sMax + pad;
-
-  // Panel A geometry: grouped decile bars for the latest realized month.
-  const VB_W = 520;
-  const VB_H = 210;
-  const M_L = 44;
-  const M_R = 8;
-  const plotW = VB_W - M_L - M_R;
-  const bandW = plotW / 10;
+  // Panel A: symmetric y domain across BOTH regions' latest months so the
+  // side-by-side bars share one comparable scale (diagnostics precedent).
   const aVals = REGIONS.flatMap((reg) =>
-    latest[reg]?.decile_mean_fwd_ret ?? [],
-  ).filter((v): v is number => v != null);
+    (latest[reg]?.decile_mean_fwd_ret ?? []).filter(
+      (v): v is number => v != null,
+    ),
+  );
   const aAbsMax = Math.max(0.01, ...aVals.map((v) => Math.abs(v)));
-  const yFor = (v: number) => {
-    const h = VB_H - 46;
-    const mid = 24 + h / 2;
-    return mid - (v / aAbsMax) * (h / 2);
-  };
-  const zeroY = yFor(0);
+  const aTicks = niceTicks(-aAbsMax, aAbsMax);
+  const ay = scaleLinear([-aAbsMax, aAbsMax], [PLOT_BOTTOM, PLOT_TOP]);
 
-  const fmtPct = (v: number | null | undefined) =>
-    v == null ? "—" : `${(v * 100).toFixed(2)}%`;
+  // Panel B: D10 − D1 spread series per region on ONE shared month grid —
+  // y domain always spans 0 (the null verdict's reference).
+  const spreadBy: Partial<Record<Region, { month: string; v: number }[]>> = {};
+  for (const reg of REGIONS) {
+    spreadBy[reg] = byRegion[reg]
+      .filter((r) => r.realized && r.d10_minus_d1 != null)
+      .map((r) => ({ month: r.month, v: r.d10_minus_d1 as number }));
+  }
+  const months = Array.from(
+    new Set(REGIONS.flatMap((reg) => (spreadBy[reg] ?? []).map((p) => p.month))),
+  ).sort();
+  const allSpreads = REGIONS.flatMap((reg) => (spreadBy[reg] ?? []).map((p) => p.v));
+  const bTicks = allSpreads.length
+    ? niceTicks(Math.min(0, ...allSpreads), Math.max(0, ...allSpreads))
+    : [];
+  const bLo = bTicks.length ? bTicks[0] : -0.05;
+  const bHi = bTicks.length ? bTicks[bTicks.length - 1] : 0.05;
+  const by = scaleLinear([bLo, bHi], [PLOT_BOTTOM, PLOT_TOP]);
+  const bStep = months.length > 0 ? PLOT_WIDE / months.length : PLOT_WIDE;
+  const bx = (m: string) => M_L + (months.indexOf(m) + 0.5) * bStep;
+
+  const realizedCount = rows.filter((r) => r.realized).length;
+  const coverageLine = (t("atlas.deciles.coverage") as string)
+    .replace("{realized}", String(realizedCount))
+    .replace("{total}", String(rows.length));
+
+  const tableBlock = (
+    <DecileTable
+      title={t("atlas.deciles.tableTitle")}
+      rows={REGIONS.flatMap((reg) => byRegion[reg].slice(-24))}
+      monthHeader={t("atlas.deciles.tableMonth")}
+    />
+  );
 
   return (
     <Card>
-      <CardHeader className="border-b">
-        <CardTitle className="text-base">{t("deciles.title")}</CardTitle>
-        <CardDescription>{t("deciles.subtitle")}</CardDescription>
+      <CardHeader>
+        <CardTitle as="h2">{t("atlas.deciles.title")}</CardTitle>
+        <CardDescription>{t("atlas.deciles.desc")}</CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4 p-4">
+      <CardContent className="space-y-8">
         <p className="text-xs text-muted-foreground">
-          {t("deciles.alignmentNote")}
+          {t("atlas.deciles.alignment")}
         </p>
 
-        <div className="grid gap-4 md:grid-cols-2">
-          {REGIONS.map((reg) => {
-            const r = latest[reg];
-            return (
-              <DiagramFigure
-                key={reg}
-                title={t("deciles.panelA")}
-                desc={t("deciles.alignmentNote")}
-                caption={(t("deciles.panelACaption") as string).replace(
-                  "{month}",
-                  r?.month ?? "—",
-                )}
-                table={
-                  <table className="w-full text-xs">
-                    <thead>
-                      <tr>
-                        <th className="text-left">D1…D10</th>
-                        <th className="text-right">{t("deciles.meanFwd")}</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {(r?.decile_mean_fwd_ret ?? []).map((v, i) => (
-                        <tr key={i}>
-                          <td>D{i + 1}</td>
-                          <td className="text-right tabular-nums">{fmtPct(v)}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                }
-              >
-                <svg viewBox={`0 0 ${VB_W} ${VB_H}`} role="img" aria-label={t("deciles.panelA")}>
-                  <line
-                    x1={M_L} x2={VB_W - M_R} y1={zeroY} y2={zeroY}
-                    stroke={diagram.border} strokeWidth={1} strokeDasharray="3 3"
+        {/* Panel A — grouped decile bars, latest realized month, US | CN. */}
+        <DiagramFigure
+          title={t("atlas.deciles.panelA")}
+          desc={t("atlas.deciles.panelADesc")}
+          caption={coverageLine}
+          table={tableBlock}
+        >
+          <div className="grid gap-6 md:grid-cols-2">
+            {REGIONS.map((reg) => {
+              const r = latest[reg];
+              const n = r?.n ?? 0;
+              return (
+                <div key={`dec-${reg}`}>
+                  <p className="text-[13px] font-semibold">
+                    {reg.toUpperCase()}
+                  </p>
+                  <p className="font-mono text-[11px] text-muted-foreground">
+                    {r
+                      ? `${r.month} · n=${n}`
+                      : t("atlas.deciles.noRealized")}
+                  </p>
+                  <svg
+                    viewBox={`0 0 ${VB_W} ${VB_H}`}
+                    className="mt-1 h-auto w-full"
+                    role="img"
+                    aria-label={`${reg} decile means`}
+                  >
+                    {aTicks.map((v) => (
+                      <g key={`ay-${v}`}>
+                        <line
+                          x1={M_L}
+                          x2={VB_W - M_R}
+                          y1={ay(v)}
+                          y2={ay(v)}
+                          stroke={diagram.border}
+                          strokeDasharray={v === 0 ? undefined : "2 4"}
+                        />
+                        <text
+                          x={M_L - 4}
+                          y={ay(v) + 3}
+                          textAnchor="end"
+                          fontSize={9}
+                          fill={diagram.muted}
+                          className="font-mono"
+                        >
+                          {(v * 100).toFixed(1)}%
+                        </text>
+                      </g>
+                    ))}
+                    {r?.decile_mean_fwd_ret.map((v, i) => {
+                      if (v == null) return null;
+                      const band = PLOT_W / 10;
+                      const bw = band * 0.6;
+                      const y0 = Math.min(ay(0), ay(v));
+                      const h = Math.max(Math.abs(ay(v) - ay(0)), 1);
+                      return (
+                        <rect
+                          key={`bar-${i}`}
+                          x={M_L + (i + 0.5) * band - bw / 2}
+                          y={y0}
+                          width={bw}
+                          height={h}
+                          fill={ACCENT[reg]}
+                          fillOpacity={0.85}
+                        />
+                      );
+                    })}
+                    {Array.from({ length: 10 }, (_, i) => (
+                      <text
+                        key={`ax-${i}`}
+                        x={M_L + (i + 0.5) * (PLOT_W / 10)}
+                        y={VB_H - 8}
+                        textAnchor="middle"
+                        fontSize={9}
+                        fill={diagram.muted}
+                        className="font-mono"
+                      >
+                        D{i + 1}
+                      </text>
+                    ))}
+                  </svg>
+                </div>
+              );
+            })}
+          </div>
+          <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-muted-foreground">
+            {REGIONS.map((reg) => (
+              <span key={`lg-${reg}`} className="inline-flex items-center gap-1.5">
+                <svg width={18} height={10} aria-hidden="true">
+                  <rect
+                    x={0}
+                    y={1}
+                    width={18}
+                    height={8}
+                    fill={ACCENT[reg]}
+                    fillOpacity={0.85}
                   />
-                  {r?.decile_mean_fwd_ret.map((v, i) => {
-                    if (v == null) return null;
-                    const y0 = Math.min(zeroY, yFor(v));
-                    const h = Math.max(Math.abs(yFor(v) - zeroY), 1);
-                    return (
-                      <rect
-                        key={i}
-                        x={M_L + i * bandW + bandW * 0.2}
-                        y={y0}
-                        width={bandW * 0.6}
-                        height={h}
-                        fill={reg === "us" ? diagram.ink : ACCENT_WARM}
-                        opacity={0.85}
-                      />
-                    );
-                  })}
-                  {Array.from({ length: 10 }, (_, i) => (
+                </svg>
+                {reg.toUpperCase()}
+              </span>
+            ))}
+          </div>
+        </DiagramFigure>
+
+        {/* Panel B — D10 − D1 spread, both regions on one shared month axis. */}
+        <DiagramFigure
+          title={t("atlas.deciles.spread.title")}
+          desc={t("atlas.deciles.spread.desc")}
+        >
+          {months.length >= 2 ? (
+            <svg
+              viewBox={`0 0 ${VB_WIDE} ${VB_H}`}
+              className="h-auto w-full"
+              role="img"
+              aria-label={t("atlas.deciles.spread.title")}
+            >
+              {bTicks.map((v) => (
+                <g key={`by-${v}`}>
+                  <line
+                    x1={M_L}
+                    x2={VB_WIDE - M_R}
+                    y1={by(v)}
+                    y2={by(v)}
+                    stroke={diagram.border}
+                    strokeDasharray={v === 0 ? undefined : "2 4"}
+                  />
+                  <text
+                    x={M_L - 4}
+                    y={by(v) + 3}
+                    textAnchor="end"
+                    fontSize={9}
+                    fill={diagram.muted}
+                    className="font-mono"
+                  >
+                    {(v * 100).toFixed(1)}%
+                  </text>
+                </g>
+              ))}
+              {REGIONS.map((reg) => {
+                const pts = (spreadBy[reg] ?? []).map(
+                  (p) => `${bx(p.month)},${by(p.v)}`,
+                );
+                if (pts.length < 2) return null;
+                return (
+                  <polyline
+                    key={`sp-${reg}`}
+                    points={pts.join(" ")}
+                    fill="none"
+                    stroke={ACCENT[reg]}
+                    strokeWidth={1.6}
+                    strokeLinejoin="round"
+                  />
+                );
+              })}
+              {months.map(
+                (mo, i) =>
+                  i % 6 === 0 ? (
                     <text
-                      key={i}
-                      x={M_L + i * bandW + bandW / 2}
+                      key={`bm-${mo}`}
+                      x={M_L + (i + 0.5) * bStep}
                       y={VB_H - 8}
                       textAnchor="middle"
                       fontSize={9}
                       fill={diagram.muted}
+                      className="font-mono"
                     >
-                      D{i + 1}
+                      {mo}
                     </text>
-                  ))}
-                  <text x={4} y={yFor(aAbsMax) + 4} fontSize={9} fill={diagram.muted}>
-                    {fmtPct(aAbsMax)}
-                  </text>
-                  <text x={4} y={zeroY - 3} fontSize={9} fill={diagram.muted}>0</text>
-                </svg>
-              </DiagramFigure>
-            );
-          })}
-        </div>
-
-        <DiagramFigure
-          title={t("deciles.panelB")}
-          desc={t("deciles.subtitle")}
-          caption={t("deciles.meanFwd")}
-          table={
-            <table className="w-full text-xs">
-              <thead>
-                <tr>
-                  <th className="text-left">region</th>
-                  <th className="text-left">month</th>
-                  <th className="text-right">D10 − D1</th>
-                </tr>
-              </thead>
-              <tbody>
-                {spreadSeries.flatMap((s) =>
-                  s.points.map((p) => (
-                    <tr key={`${s.region}-${p.month}`}>
-                      <td>{s.region}</td>
-                      <td>{p.month}</td>
-                      <td className="text-right tabular-nums">{fmtPct(p.v)}</td>
-                    </tr>
-                  )),
-                )}
-              </tbody>
-            </table>
-          }
-        >
-          {spreadSeries.length === 0 ? (
-            <div className="p-4 text-xs text-muted-foreground">{t("deciles.empty")}</div>
+                  ) : null,
+              )}
+            </svg>
           ) : (
-            (() => {
-              const VBW = 1000;
-              const H = 190;
-              const ML = 48;
-              const MR = 8;
-              const plotW2 = VBW - ML - MR;
-              const months = Array.from(
-                new Set(spreadSeries.flatMap((s) => s.points.map((p) => p.month))),
-              ).sort();
-              const xFor = (m: string) => ML + (months.indexOf(m) / (months.length - 1 || 1)) * plotW2;
-              const yS = (v: number) => 14 + (1 - (v - lo) / (hi - lo)) * (H - 40);
-              return (
-                <svg viewBox={`0 0 ${VBW} ${H}`} role="img" aria-label={t("deciles.panelB")}>
-                  <line
-                    x1={ML} x2={VBW - MR} y1={yS(0)} y2={yS(0)}
-                    stroke={diagram.border} strokeDasharray="3 3" strokeWidth={1}
-                  />
-                  {spreadSeries.map((s) => {
-                    const pts = s.points.map(
-                      (p) => `${xFor(p.month)},${yS(p.v)}`,
-                    );
-                    return (
-                      <polyline
-                        key={s.region}
-                        points={pts.join(" ")}
-                        fill="none"
-                        stroke={s.region === "us" ? diagram.ink : ACCENT_WARM}
-                        strokeWidth={1.6}
-                        strokeLinejoin="round"
-                      />
-                    );
-                  })}
-                  <text x={4} y={yS(hi) + 10} fontSize={9} fill={diagram.muted}>
-                    {fmtPct(hi)}
-                  </text>
-                  <text x={4} y={yS(lo) + 4} fontSize={9} fill={diagram.muted}>
-                    {fmtPct(lo)}
-                  </text>
-                  <text x={4} y={yS(0) - 3} fontSize={9} fill={diagram.muted}>0</text>
-                </svg>
-              );
-            })()
+            <p className="p-4 text-xs text-muted-foreground">
+              {t("atlas.deciles.spread.empty")}
+            </p>
           )}
         </DiagramFigure>
-
-        <p className="text-xs text-muted-foreground">
-          {fmtTplCount(t("deciles.coverage"), realizedCount, rows.length)}
-        </p>
       </CardContent>
     </Card>
   );
-}
-
-function fmtTplCount(tpl: string, realized: number, total: number): string {
-  return tpl.replace("{realized}", String(realized)).replace("{total}", String(total));
 }
