@@ -3,6 +3,9 @@
 - **active (2026-09-03) 轮 76：Apple 动效迭代 9a——Liquid Glass 镜面高光边+可打断性 live 实证（深研二轮 9a,研究代理二批在飞）：**
   **镜面高光边（Liquid Glass 标志性细节）**：`.frost-glass::after` + `.navi > .drop::after`——1px 内描边渐变（顶缘最亮 42% ink→38% 处 10%→72% 渐隐,light-from-above）,mask-composite 贴合圆角;应用于导航下拉/BackToTop/⌘K 面板。**可打断性 live 实证**（网页版 Apple 可重定向弹簧的等价物）：下拉淡入 110ms 中段反向移出,透明度采样 0.609→0.048→0 平滑续出——CSS transition 从当前计算值重定向,非端点突跳。**验证**：tsc 0+全套 pytest exit 0+ruff 0+构建 1504 页+推送 b41d05b1。**边界**：display lane;0 ledger/0 OOS。**待续**：研究代理二批（Liquid Glass 工程参数/WWDC Fluid Interfaces/语义材质/ProMotion）返回后迭代 9b 落地。
 
+- **active (2026-09-03) 轮 76：Apple 动效迭代 9b——Liquid Glass 透镜折射落地（研究二批发现→Chrome 路径实现）：**
+  研究二批（WWDC25-219 一手转写+kube.io 工程配方）核心落地：**导航下拉的"lensing"透镜折射**——玻璃面板边缘对背景的实时光线弯曲。实现：`liquid-glass-filter.tsx` 内联 SVG 滤镜链（feImage 置换贴图 → feDisplacementMap scale 18 → blur(7) → saturate(1.8)）+ `liquid-glass-map.png`（程序生成 256² R=X/G=Y 置换贴图,128 中性,18% 边带 1.6 幂衰减,向外采样）；CSS `@supports (backdrop-filter: url(...))` Chrome/Edge 路径启用,其余引擎保持 blur/saturate 级联回退（svgwg #1142:FF 不支持 SVG 滤镜入 backdrop-filter）。**视觉实证**：computed backdrop-filter = url(...) ✓ + 截图可见面板边缘处背景文字折射弯曲。**验证**：tsc 0+全套 pytest exit 0+ruff 0+构建 1504 页+CI success（33762726019）。**边界**：display lane;0 ledger/0 OOS。**跟进**：Mimosa 完整重扫。
+
 - **active (2026-09-03) 轮 75：研究落实终验——钉住偏移精确化（naturalOffset 测量）+ ThemeFade 组件化挂载（业主"逐项落实到位"指令）：**
   **①粘性表头精确化**：上轮 JS 钉住假定 thead 自然偏移=0,实测偏 36px（figure 内标题/描述段落于表上方）→ 首测自然偏移（scrollTop=0 且未变换时）+按 `T=scrollTop−natTop` 精确钉住——**复测实证 pinned=true、thTop=0=regTop**（深滚动 953px 下表头纹丝钉住区域顶缘）。**②ThemeFade 组件化**：观察器逻辑从概念落为组件（MutationObserver 挂 .theme-fade 400ms/reduced-motion 跳过）挂载 app layout;ThemeToggle 前置挂类（先于 next-themes 禁用过渡注入,特异性 html.theme-fade * 胜 *）——**live 中间帧实证**：翻转后 120ms 背景 oklab 0.145（暗 0.14↔亮 1.0 真实中间值）,fade 类按窗口挂/卸。**运维**：8935 伺服+junction 保留（业主巡视中）。**验证**：tsc 0+全套 pytest exit 0+ruff 0+构建 1504 页+CI success（33757640217）。**边界**：display lane;0 ledger/0 OOS。**跟进**：Mimosa 完整重扫。
 
