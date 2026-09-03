@@ -4905,6 +4905,19 @@ def export_form_ipo() -> None:
         merge_offer_prices,
     )
 
+    # On a fresh CI checkout the walk cache (form_ipo_price_cache.json) is
+    # absent — the walker never ran here, so the requests ledger is empty and
+    # the walk-derived offer prices are missing. The tracked ipo.json (with
+    # its last-committed walk data) is more complete; skip rather than
+    # overwrite with a degraded panel.
+    if not load_cache_meta():
+        print(
+            "[export-terminal] SKIP form_ipo: walk cache absent on this "
+            "machine (walker never ran; tracked JSON retains last-committed value)",
+            flush=True,
+        )
+        return
+
     df = pd.read_parquet(fp)
     by_status = {
         k: int(v) for k, v in df["status"].value_counts().sort_index().items()
@@ -4973,16 +4986,20 @@ def export_form_ipo() -> None:
             "fetch_errors": errors,
             "confidence": conf,
             "coverage_pct_of_priced": coverage_pct,
-            # Honest request ledger recorded by the bounded walk.
-            "requests": {
-                "task_budget": price_meta_src.get("task_budget_requests", 170),
-                "cumulative_walk": price_meta_src.get("requests_cumulative", 0),
-                "walk_cap": price_meta_src.get("walk_cap_requests"),
-                # The latest walk's own count (refresh rounds re-run the walk
-                # once per slide of the newest-80 window; each is bounded by
-                # walk_cap, while cumulative_walk is the lifetime ledger).
-                "last_walk": price_meta_src.get("requests_this_walk", 0),
-            },
+            # Honest request ledger recorded by the bounded walk. When the
+            # walker has never run on this machine (fresh CI checkout), the
+            # meta is empty and the whole block is honestly null — the
+            # tracked ipo.json retains its last-committed value instead.
+            "requests": (
+                {
+                    "task_budget": price_meta_src.get("task_budget_requests", 170),
+                    "cumulative_walk": price_meta_src.get("requests_cumulative", 0),
+                    "walk_cap": price_meta_src.get("walk_cap_requests"),
+                    "last_walk": price_meta_src.get("requests_this_walk", 0),
+                }
+                if price_meta_src
+                else None
+            ),
             "target_as_of": (
                 # Newest TARGETED filed_date (the same stable selection as the
                 # walker) — a DATE, not an accession.
