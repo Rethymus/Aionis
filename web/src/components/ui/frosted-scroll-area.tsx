@@ -49,6 +49,7 @@ export function FrostedScrollArea({
 }) {
   const viewportRef = useRef<HTMLDivElement>(null);
   const thumbRef = useRef<HTMLDivElement>(null);
+  const theadNatTop = useRef<number | null>(null);
   const rafRef = useRef(0);
   const idleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const drag = useRef({ active: false, startY: 0, startTop: 0 });
@@ -67,9 +68,23 @@ export function FrostedScrollArea({
     // the thumb is not mounted yet (it renders only once scrollable=true),
     // so an early return here would deadlock it out of the DOM.
     // pin the column header: JS transform instead of native position:sticky
-    // (ancestor overflow:hidden from Card clipping hijacks sticky context)
+    // (ancestor overflow:hidden from Card clipping hijacks sticky context).
+    // The thead's NATURAL offset inside the content (figure heading/desc
+    // above the table) is measured once at scrollTop=0 pre-transform; the
+    // pin is then translateY(scrollTop - naturalOffset) so the header lands
+    // exactly on the viewport's top edge.
     const thead = el.querySelector("thead");
-    if (thead) thead.style.transform = `translateY(${Math.round(scrollTop)}px)`;
+    const content = contentRef.current;
+    if (thead && content) {
+      if (theadNatTop.current == null && el.scrollTop === 0) {
+        theadNatTop.current =
+          thead.getBoundingClientRect().top - content.getBoundingClientRect().top;
+      }
+      if (theadNatTop.current != null) {
+        const t = Math.max(0, scrollTop - theadNatTop.current);
+        thead.style.transform = `translateY(${Math.round(t)}px)`;
+      }
+    }
     const thumb = thumbRef.current;
     if (!canScroll || !thumb) return;
     const track = clientHeight;
@@ -141,7 +156,9 @@ export function FrostedScrollArea({
       }
       e.preventDefault();
       wake();
-      finger = Math.max(-240, Math.min(240, finger + e.deltaY));
+      // no finger cap: the asymptote itself is the resistance (pulls grow
+      // sub-linearly and can never exceed the viewport dimension d)
+      finger = Math.max(-2000, Math.min(2000, finger + e.deltaY));
       rubber.current = overscroll(finger) * Math.sign(finger);
       content.style.transition = "none";
       content.style.transform = `translateY(${-rubber.current}px)`;
