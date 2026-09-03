@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-09-03) 轮 71：业主澄清纠正——/atlas 顶栏升级回滚，校验组定位恢复+副标题补齐（误解修正轮）：**
+  业主澄清："没找到"指的是校验组下拉里的 atlas 项，而非要求顶栏直达——轮 70 的升级是误读，已回滚（direct 栏恢复 总览/市场新闻流,校验组恢复 四项）。**时间线实证**：atlas 项（研究图谱→/atlas）自 2026-08-28 commit 685fab8a 起就是校验组第 4 项,当前构建 DOM 枚举亦在（verifyItems 含 /Aionis/atlas）——**项一直在,业主视图未见的最可能原因是浏览器标签页为旧加载状态**（out/ 多轮重建后 chunk 指纹变化,旧标签页水合失效回落 SSR 静态态）——硬刷新即可见。**顺带增强**：该项此前缺副标题行（兄弟项均有）,已接线存量键 nav.sub.atlas（"编辑级研究叙事图：主张·分差·诊断·血缘"）使条目醒目一致;live 截图核验校验下拉四项全在墙（含毛玻璃下拉底）。**验证**：tsc 0+全套 pytest exit 0+ruff 0+构建 1504 页+CI success（33747486644）。**边界**：display lane;0 ledger/0 OOS。**跟进项**：Mimosa 完整安全扫描（钩子两次提示 library_source 超限;本轮纯导航 JSX 无新增攻击面）。
+
 - **active (2026-09-03) 轮 70：Apple 动效迭代 4——粘性毛玻璃表头+行 hover+主题切换全页过渡（业主继续审阅中,8935 伺服保留）：**
   **①粘性表头**：原生 position:sticky 双重失效实证（thead 上 Chrome 不支持+Card overflow:hidden 劫持 sticky 上下文）→ FrostedScrollArea 在滑条同一 rAF 循环内对 thead 施加 `translateY(scrollTop)` JS 钉住（对祖先溢出免疫）;CSS 供毛玻璃 th 底（78% 卡底+blur）与 z 序（行从头下滑过）。**②行 hover**：frost 表 4% ink-alpha 0.15s 高亮（computed 实证 color(srgb 0.93…/0.04)）。**③主题切换全页过渡**：next-themes 的 disableTransitionOnChange 会注入 `*{transition:none!important}` 压掉普通过渡 → 双保险：ThemeToggle 前置 `html.theme-fade`（特异性胜出）+ThemeFade（MutationObserver 翻转后补挂,兼容系统偏好路径）,全页 background/color/border/fill 0.35s 滑翔——Apple 设置页开关同款;reduced-motion 保持瞬切。**验证**：tsc 0+全套 pytest exit 0+ruff 0+构建 1504 页+CI success（33744091685）。**运维**：8935 伺服+junction+out 保留（业主正以浏览器实测 /Aionis/atlas.html）。**边界**：display lane;0 ledger/0 OOS。**跟进项**：Mimosa 完整安全扫描（钩子提示 library_source 超限,兼容放行;本轮纯显示层无新增攻击面）。
 
