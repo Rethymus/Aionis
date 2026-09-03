@@ -276,7 +276,7 @@ export function CommandPalette() {
         open={open}
         onOpenChange={setOpen}
         shouldFilter={false}
-        className="border-line/70 bg-card/80 backdrop-blur-2xl backdrop-saturate-150"
+        className="frost-glass border-line/70 bg-card/80 backdrop-blur-2xl backdrop-saturate-150"
       >
         <CommandInput
           value={query}

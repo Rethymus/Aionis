@@ -262,6 +262,7 @@
   position: relative;
 }
 .navi > .drop {
+  /* frost-glass visual lives in .navi > .drop::after (see specular block) */
   background: color-mix(in srgb, var(--card) 82%, transparent);
   backdrop-filter: blur(16px) saturate(1.8);
   -webkit-backdrop-filter: blur(16px) saturate(1.8);
@@ -296,6 +297,24 @@
   left: 0;
   right: 0;
 }
+.navi > .drop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--foreground) 42%, transparent),
+    color-mix(in srgb, var(--foreground) 10%, transparent) 38%,
+    transparent 72%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
 .navi:hover > .drop,
 .navi:focus-within > .drop {
   opacity: 1;
@@ -303,6 +322,30 @@
   pointer-events: auto;
   transform: translateY(0) scale(1);
   transition-delay: 0s;
+}
+/* Liquid-Glass specular edge: a 1px inner highlight that is brightest at the
+   top (light from above) and fades out — the signature glass cue. Applied
+   via ::after with mask-composite so it hugs the border radius. */
+.frost-glass {
+  position: relative;
+}
+.frost-glass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--foreground) 42%, transparent),
+    color-mix(in srgb, var(--foreground) 10%, transparent) 38%,
+    transparent 72%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
 }
 
 /* ---- Home hero decorative layers (verbatim from the aligned site) ---- */
