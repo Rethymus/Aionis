@@ -571,3 +571,87 @@
     --ease-apple-gentle: linear(0.0058 2.08%, 0.0217 4.17%, 0.0454 6.25%, 0.0751 8.33%, 0.1092 10.42%, 0.1465 12.5%, 0.186 14.58%, 0.2266 16.67%, 0.2678 18.75%, 0.309 20.83%, 0.3497 22.92%, 0.3895 25%, 0.4282 27.08%, 0.4656 29.17%, 0.5015 31.25%, 0.5357 33.33%, 0.5683 35.42%, 0.5993 37.5%, 0.6285 39.58%, 0.656 41.67%, 0.6819 43.75%, 0.7062 45.83%, 0.7288 47.92%, 0.75 50%, 0.7698 52.08%, 0.7881 54.17%, 0.8052 56.25%, 0.821 58.33%, 0.8357 60.42%, 0.8493 62.5%, 0.8618 64.58%, 0.8734 66.67%, 0.884 68.75%, 0.8939 70.83%, 0.9029 72.92%, 0.9113 75%, 0.9189 77.08%, 0.9259 79.17%, 0.9324 81.25%, 0.9383 83.33%, 0.9437 85.42%, 0.9487 87.5%, 0.9532 89.58%, 0.9574 91.67%, 0.9612 93.75%, 0.9647 95.83%, 0.9678 97.92%, 0.9707 100%);
   }
 }
+
+/* Progressive edge blur (Apple keyboard/tab-edge treatment): three graduated
+   backdrop-blur bands tightest at the viewport edge — reads as continuous
+   ground-glass rather than a single hard blur line. Pure compositor work. */
+@layer components {
+  .frost-edge {
+    position: absolute;
+    inset-inline: 0;
+    height: 26px;
+    pointer-events: none;
+  }
+  .frost-edge-top {
+    top: 0;
+  }
+  .frost-edge-bottom {
+    bottom: 0;
+  }
+  .frost-edge i {
+    position: absolute;
+    inset-inline: 0;
+    display: block;
+  }
+  /* bands ordered edge -> content: exponential blur ramp (research: 4-8
+     stacked layers, 1/2/4/8px-exponential, ~2px overlap — devslovecoffee/
+     kennethnym progressive-blur pattern). Content-side fade tint pairs each
+     band so the glass reads continuous. */
+  .frost-edge i {
+    background: transparent;
+  }
+  .frost-edge-top i:nth-of-type(1) {
+    top: 0;
+    height: 26%;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    background: color-mix(in srgb, var(--background) 46%, transparent);
+  }
+  .frost-edge-top i:nth-of-type(2) {
+    top: 26%;
+    height: 26%;
+    backdrop-filter: blur(9px);
+    -webkit-backdrop-filter: blur(9px);
+    background: color-mix(in srgb, var(--background) 26%, transparent);
+  }
+  .frost-edge-top i:nth-of-type(3) {
+    top: 52%;
+    height: 25%;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    background: color-mix(in srgb, var(--background) 12%, transparent);
+  }
+  .frost-edge-top i:nth-of-type(4) {
+    top: 77%;
+    height: 23%;
+    backdrop-filter: blur(1.5px);
+    -webkit-backdrop-filter: blur(1.5px);
+  }
+  .frost-edge-bottom i:nth-of-type(1) {
+    bottom: 0;
+    height: 26%;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    background: color-mix(in srgb, var(--background) 46%, transparent);
+  }
+  .frost-edge-bottom i:nth-of-type(2) {
+    bottom: 26%;
+    height: 26%;
+    backdrop-filter: blur(9px);
+    -webkit-backdrop-filter: blur(9px);
+    background: color-mix(in srgb, var(--background) 26%, transparent);
+  }
+  .frost-edge-bottom i:nth-of-type(3) {
+    bottom: 52%;
+    height: 25%;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    background: color-mix(in srgb, var(--background) 12%, transparent);
+  }
+  .frost-edge-bottom i:nth-of-type(4) {
+    bottom: 77%;
+    height: 23%;
+    backdrop-filter: blur(1.5px);
+    -webkit-backdrop-filter: blur(1.5px);
+  }
+}

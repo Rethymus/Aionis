@@ -239,18 +239,21 @@ export function FrostedScrollArea({
         <div ref={contentRef}>{children}</div>
       </div>
 
-      {/* frosted edge masks — blur + fade, hidden at the extremes */}
+      {/* progressive edge blur — three graduated glass bands per edge
+          (tightest at the viewport edge), hidden at the scroll extremes */}
       {scrollable && edge.top ? (
-        <div
-          aria-hidden="true"
-          className="frost-mask pointer-events-none absolute inset-x-0 top-0 h-8 rounded-t-md"
-        />
+        <div aria-hidden="true" className="frost-edge frost-edge-top rounded-t-md">
+          <i />
+          <i />
+          <i />
+        </div>
       ) : null}
       {scrollable && edge.bottom ? (
-        <div
-          aria-hidden="true"
-          className="frost-mask frost-mask-bottom pointer-events-none absolute inset-x-0 bottom-0 h-8 rounded-b-md"
-        />
+        <div aria-hidden="true" className="frost-edge frost-edge-bottom rounded-b-md">
+          <i />
+          <i />
+          <i />
+        </div>
       ) : null}
 
       {/* overlay thumb — frosted pill, fades in on hover/scroll, draggable */}
