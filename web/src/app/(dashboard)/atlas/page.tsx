@@ -9,6 +9,7 @@ import AtlasDataflow from "@/components/atlas/atlas-dataflow";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
 import { fmtInt } from "@/lib/format";
+import { Reveal } from "@/components/ui/reveal";
 
 // /atlas — 研究图谱(编辑级确定性研究图表;display lane:全部从已提交面板
 // 派生,零新抓取、零研究面接触)。四区块各答一个可信度问题:主张说了什么
@@ -30,11 +31,21 @@ export default function AtlasPage() {
         asOf={dh.snapshot_ts?.slice(0, 10) ?? undefined}
         countHint={`${fmtInt(s.n_panels)} panels · ${fmtInt(s.n_daily)} daily / ${fmtInt(s.n_cadence)} cadence / ${fmtInt(s.n_frozen)} frozen`}
       />
-      <AtlasClaims />
-      <AtlasDivergence />
-      <AtlasDiagnostics />
-      <AtlasDeciles />
-      <AtlasDataflow />
+      <Reveal>
+        <AtlasClaims />
+      </Reveal>
+      <Reveal delay={60}>
+        <AtlasDivergence />
+      </Reveal>
+      <Reveal delay={60}>
+        <AtlasDiagnostics />
+      </Reveal>
+      <Reveal delay={60}>
+        <AtlasDeciles />
+      </Reveal>
+      <Reveal delay={60}>
+        <AtlasDataflow />
+      </Reveal>
     </div>
   );
 }
