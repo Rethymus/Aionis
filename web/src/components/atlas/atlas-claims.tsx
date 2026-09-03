@@ -21,6 +21,7 @@
 
 import { aionis } from "@/data/aionis";
 import { useI18n } from "@/i18n/provider";
+import { FrostedScrollArea } from "@/components/ui/frosted-scroll-area";
 import {
   Card,
   CardContent,
@@ -143,6 +144,7 @@ function IcPivotFigure() {
       desc={t("atlas.icpivot.desc")}
       caption={countLine}
       table={
+        <FrostedScrollArea maxHeight={360} label={t("atlas.claims.table")}>
         <div className="overflow-hidden rounded-xl border border-line">
           <table className="w-full text-left text-[12px]">
             <caption className="border-b border-line2 bg-soft px-4 py-2 text-left text-[13px] font-semibold">
@@ -180,6 +182,7 @@ function IcPivotFigure() {
             </tbody>
           </table>
         </div>
+        </FrostedScrollArea>
       }
     >
       <div className="overflow-hidden rounded-xl border border-line bg-card p-2">

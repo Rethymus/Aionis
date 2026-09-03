@@ -6,6 +6,7 @@ import { diagram } from "@/components/diagram/tokens";
 import { DiagramFigure } from "@/components/diagram/primitives";
 import { Card, CardContent } from "@/components/ui/card";
 import { fmtEmpty, fmtInt } from "@/lib/format";
+import { FrostedScrollArea } from "@/components/ui/frosted-scroll-area";
 
 // /atlas section 3 — data-lineage three-layer flow (first-hand source family →
 // panel category → freshness). Display lane, zero fetches: dataHealth.panels
@@ -337,6 +338,7 @@ export default function AtlasDataflow() {
         <h3 className="text-[13px] font-semibold">{t("atlas.flow.table")}</h3>
         <span className="font-mono text-[11px] text-mute">{fmtInt(flow.total)}</span>
       </header>
+      <FrostedScrollArea maxHeight={380} label={t("atlas.flow.table")}>
       <table className="w-full text-left text-[12px]">
         <thead>
           <tr className="text-mute">
@@ -363,6 +365,7 @@ export default function AtlasDataflow() {
           ))}
         </tbody>
       </table>
+      </FrostedScrollArea>
     </section>
   );
 

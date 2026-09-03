@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
+import { FrostedScrollArea } from "@/components/ui/frosted-scroll-area";
 import { LockIcon, CheckCircle2Icon, FlaskConicalIcon, CornerDownRightIcon } from "lucide-react";
 
 // The frozen-config audit timeline (paradigm-α guard-band display layer). This
@@ -58,6 +59,7 @@ export function AuditTimeline() {
         <CardDescription>{t("audit.intro")}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-3">
+        <FrostedScrollArea maxHeight={380} label={t("audit.title")}>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead className="border-b text-xs uppercase text-muted-foreground">
@@ -137,6 +139,7 @@ export function AuditTimeline() {
             </tbody>
           </table>
         </div>
+        </FrostedScrollArea>
         <p className="border-t pt-2 text-xs text-muted-foreground">
           {t("audit.footer")
             .replace("{n}", String(audit.n_total_rows))
