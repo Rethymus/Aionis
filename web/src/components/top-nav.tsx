@@ -106,7 +106,7 @@ export function TopNav() {
         { title: t("nav.group.track"), url: "/track", icon: <GaugeCircleIcon className={icon()} /> },
         { title: t("nav.group.discipline"), url: "/discipline", icon: <ShieldCheckIcon className={icon()} /> },
         { title: t("nav.datahealth"), url: "/data-health", icon: <ActivityIcon className={icon()} /> },
-        { title: t("nav.atlas"), url: "/atlas", icon: <MapIcon className={icon()} /> },
+        { title: t("nav.atlas"), sub: t("nav.sub.atlas"), url: "/atlas", icon: <MapIcon className={icon()} /> },
       ],
     },
     {
