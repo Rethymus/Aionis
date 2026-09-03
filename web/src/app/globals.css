@@ -655,3 +655,37 @@
     -webkit-backdrop-filter: blur(1.5px);
   }
 }
+
+/* Apple interaction micro-motion (iter 8): press compression, hover lift,
+   smooth focus glow — all transform/opacity/brightness on the compositor. */
+@layer utilities {
+  /* tactile press: compress while touched, spring back on release */
+  .press {
+    transition: transform 0.18s var(--ease-apple-snappy, cubic-bezier(0.3, 1.18, 0.4, 1));
+  }
+  .press:active {
+    transform: scale(0.96);
+  }
+  /* hover lift for interactive cards (2px rise + deepened shadow) */
+  .lift {
+    transition:
+      transform 0.3s var(--ease-apple-smooth, cubic-bezier(0.32, 0.72, 0, 1)),
+      box-shadow 0.3s ease;
+  }
+  .lift:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.05),
+      0 16px 32px -12px rgba(0, 0, 0, 0.18);
+  }
+}
+@layer base {
+  /* soft focus glow ring (keyboard users get the same silky treatment) */
+  :focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--background),
+      0 0 0 4px color-mix(in srgb, var(--primary) 55%, transparent);
+    transition: box-shadow 0.18s ease;
+  }
+}

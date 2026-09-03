@@ -70,7 +70,7 @@ export function ColorConvToggle() {
     <Button
       variant="ghost"
       size="sm"
-      className="h-8 gap-1 rounded-full px-2 text-xs font-semibold"
+      className="press h-8 gap-1 rounded-full px-2 text-xs font-semibold"
       onClick={onClick}
       aria-label={t("colorconv.aria")}
       title={t("colorconv.hint")}

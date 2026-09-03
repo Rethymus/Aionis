@@ -63,7 +63,7 @@ export function ThemeToggle() {
     <Button
       variant="ghost"
       size="icon"
-      className="size-8 rounded-full"
+      className="press size-8 rounded-full"
       onClick={toggleWithFade}
     >
       <ContrastIcon className="size-[18px]" />

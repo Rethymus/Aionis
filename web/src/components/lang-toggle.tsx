@@ -26,7 +26,7 @@ export function LangToggle() {
     <Button
       variant="ghost"
       size="sm"
-      className="h-8 gap-0 rounded-full px-2 text-xs font-semibold"
+      className="press h-8 gap-0 rounded-full px-2 text-xs font-semibold"
       onClick={() => setLang(isZh ? "en" : "zh")}
       aria-label="Toggle language"
     >
