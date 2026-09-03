@@ -289,6 +289,15 @@
     transform 0.3s var(--ease-apple-spring, var(--ease-apple-spring-fb, ease-out)),
     visibility 0s linear 0.3s;
 }
+
+/* Chrome-path Liquid Glass lensing: displacement (edge refraction) + blur +
+   saturate in ONE SVG filter referenced by url(). Engines without SVG
+   backdrop-filter keep the declaration above (cascade fallback). */
+@supports (backdrop-filter: url("#liquid-glass-lens")) {
+  .navi > .drop {
+    backdrop-filter: url("#liquid-glass-lens");
+  }
+}
 .navi > .drop:before {
   content: "";
   height: 10px;

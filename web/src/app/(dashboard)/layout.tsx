@@ -1,4 +1,5 @@
 import { BackToTop } from "@/components/back-to-top";
+import { LiquidGlassFilter } from "@/components/liquid-glass-filter";
 import { TopNav } from "@/components/top-nav";
 
 // Pre-paint application of the saved up/down color convention (same pattern
@@ -16,6 +17,10 @@ export default function DashboardLayout({
       {/* eslint-disable-next-line react/no-danger -- static pre-paint seed, no user input */}
       <script dangerouslySetInnerHTML={{ __html: colorConvScript }} />
       <TopNav />
+      {/* Chrome-path Liquid Glass lensing filter for the nav dropdown
+          (backdrop-filter: url(#liquid-glass-lens)); other browsers keep
+          the plain blur()/saturate() material from globals.css. */}
+      <LiquidGlassFilter />
       {/* Aligned-site main rail: 1320px, px-5/py-8 (md:px-6). Sticky
           descendants (hot-ticker strip) stay valid — no overflow-hidden
           ancestor. */}
