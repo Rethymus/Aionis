@@ -26,6 +26,7 @@ import { diagram, divergingScale } from "@/components/diagram/tokens";
 import { aionis, type ScoreDiagnosticsRow } from "@/data/aionis";
 import { useI18n } from "@/i18n/provider";
 import { fmtEmpty } from "@/lib/format";
+import { FrostedScrollArea } from "@/components/ui/frosted-scroll-area";
 
 // Region order follows the panel's own sort (month asc, region lexicographic);
 // labels are literal locale-neutral tokens (force-camp precedent).
@@ -511,7 +512,11 @@ export default function AtlasDiagnostics() {
           title={t("atlas.diag.disp.title")}
           desc={t("atlas.diag.disp.desc")}
           caption={countsLine}
-          table={tableDisp}
+          table={
+            <FrostedScrollArea maxHeight={340} label={t("atlas.diag.table")}>
+              {tableDisp}
+            </FrostedScrollArea>
+          }
         >
           <div className="grid gap-6 md:grid-cols-2">
             {series.map((p) => (
@@ -538,7 +543,11 @@ export default function AtlasDiagnostics() {
         <DiagramFigure
           title={t("atlas.diag.breadth.title")}
           desc={t("atlas.diag.breadth.desc")}
-          table={tableBreadth}
+          table={
+            <FrostedScrollArea maxHeight={340} label={t("atlas.diag.table")}>
+              {tableBreadth}
+            </FrostedScrollArea>
+          }
         >
           <div className="grid gap-6 md:grid-cols-2">
             {series.map((p) => (
@@ -551,7 +560,11 @@ export default function AtlasDiagnostics() {
         <DiagramFigure
           title={t("atlas.diag.ac.title")}
           desc={t("atlas.diag.ac.desc")}
-          table={tableInertia}
+          table={
+            <FrostedScrollArea maxHeight={340} label={t("atlas.diag.table")}>
+              {tableInertia}
+            </FrostedScrollArea>
+          }
         >
           <InertiaPanel series={series} months={months} />
         </DiagramFigure>

@@ -11,6 +11,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
+import { FrostedScrollArea } from "@/components/ui/frosted-scroll-area";
 import { aionis, type ModelCard, type ModelInventory, type ModelInventoryChain } from "@/data/aionis";
 import {
   ArrowRightIcon,
@@ -80,10 +81,11 @@ function KVTable({
   const { t } = useI18n();
   const empty = emptyText !== undefined;
   return (
-    <div>
-      <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-        {title}
-      </p>
+    <FrostedScrollArea maxHeight={320} label={title}>
+      <div>
+        <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+          {title}
+        </p>
       <table className="w-full border-collapse text-[13px]">
         <thead>
           <tr className="border-b text-left text-xs text-muted-foreground">
@@ -106,9 +108,10 @@ function KVTable({
               </tr>
             ))
           )}
-        </tbody>
-      </table>
-    </div>
+          </tbody>
+        </table>
+      </div>
+    </FrostedScrollArea>
   );
 }
 

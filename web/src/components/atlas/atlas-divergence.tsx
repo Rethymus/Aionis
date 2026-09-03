@@ -10,6 +10,7 @@ import { diagram, divergingScale } from "@/components/diagram/tokens";
 import { aionis, type CalibrationReliability } from "@/data/aionis";
 import { useI18n } from "@/i18n/provider";
 import { fmtEmpty } from "@/lib/format";
+import { FrostedScrollArea } from "@/components/ui/frosted-scroll-area";
 
 // /atlas section 2 (TASK-DISP-D2) — forecast-vs-realized divergence (display
 // lane, zero fetches): Block A renders each month's walk-forward calibrated
@@ -320,7 +321,7 @@ export default function AtlasDivergence() {
     )
     .join(" · ");
 
-  const tablesA = (
+  const tablesAInner = (
     <div className="space-y-4">
       {panels.map((p) => (
         <div key={`table-a-${p.label}`}>
@@ -403,7 +404,12 @@ export default function AtlasDivergence() {
     </div>
   );
 
-  const tablesB = (
+  const tablesA = (
+    <FrostedScrollArea maxHeight={360} label={t("atlas.div.table")}>
+      {tablesAInner}
+    </FrostedScrollArea>
+  );
+  const tablesBInner = (
     <div className="space-y-4">
       {panels.map((p) => (
         <div key={`table-b-${p.label}`}>
@@ -457,6 +463,11 @@ export default function AtlasDivergence() {
     </div>
   );
 
+  const tablesB = (
+    <FrostedScrollArea maxHeight={360} label={t("atlas.div.table")}>
+      {tablesBInner}
+    </FrostedScrollArea>
+  );
   return (
     <div className="flex flex-col gap-4">
       {/* Block A — forecast-vs-realized probability bands (US / CN). */}

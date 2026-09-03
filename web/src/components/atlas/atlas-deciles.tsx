@@ -28,6 +28,7 @@ import {
 import { diagram, divergingScale } from "@/components/diagram/tokens";
 import { aionis, type IcDecilesRow } from "@/data/aionis";
 import { useI18n } from "@/i18n/provider";
+import { FrostedScrollArea } from "@/components/ui/frosted-scroll-area";
 
 // Region order follows the divergence precedent (us first); labels are
 // literal locale-neutral tokens.
@@ -74,9 +75,10 @@ function DecileTable({
   monthHeader: string;
 }) {
   return (
-    <div className="space-y-4">
-      <p className="text-xs font-semibold">{title}</p>
-      <table className="mt-1 w-full text-left text-[12px]">
+    <FrostedScrollArea maxHeight={320} label={title}>
+      <div className="space-y-4">
+        <p className="text-xs font-semibold">{title}</p>
+        <table className="mt-1 w-full text-left text-[12px]">
         <thead>
           <tr className="text-muted-foreground">
             <th className="border-b border-border px-3 py-1.5 font-medium">
@@ -109,9 +111,10 @@ function DecileTable({
               ))}
             </tr>
           ))}
-        </tbody>
-      </table>
-    </div>
+          </tbody>
+        </table>
+      </div>
+    </FrostedScrollArea>
   );
 }
 
