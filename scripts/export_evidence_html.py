@@ -627,6 +627,15 @@ def render_html(panel: dict) -> str:
 
 
 def main() -> int:
+    # The atlas evidence table embeds per-claim numbers from the frozen
+    # runs/results tree (gitignored — absent on a fresh CI checkout, where
+    # the tracked HTML retains its last-committed value).
+    if not (ROOT / "runs/results").exists():
+        print(
+            "[export-evidence-html] SKIP: frozen runs/results tree absent "
+            "(fresh checkout; tracked HTML retains last-committed value)"
+        )
+        return 0
     panel = load_panel()
     out = render_html(panel)
     archive_if_changed(OUT, out.encode("utf-8"))

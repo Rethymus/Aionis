@@ -1365,6 +1365,12 @@ def render(a: Assembly) -> str:
 
 
 def main() -> int:
+    if not (ROOT / "runs/results").exists():
+        print(
+            "[export-research-dossier] SKIP: frozen runs/results tree absent "
+            "(fresh checkout; tracked HTML retains last-committed value)"
+        )
+        return 0
     a = assemble()
     out = render(a)
     archive_if_changed(OUT, out.encode("utf-8"))
@@ -1475,9 +1481,20 @@ def export_phase_dossier_meta(
     """Write research-dossier-<phase>-v1.html for B / D / E1 (meta-only).
 
     Returns the written-artifact summary list. Raises on ledger/results-dir
-    reconciliation failures (export-time gate).
+    reconciliation failures (export-time gate). Skips honestly (no-op) when
+    the frozen runs/results tree is absent — a fresh checkout has no research
+    artifacts; the tracked HTMLs retain their last-committed values.
     """
     results_dir = ROOT / "runs/results" if results_dir is None else Path(results_dir)
+    sentinel = results_dir / (
+        "17245a75d2d4cd17c68f36a9d0f4b4f7f3baf1db31b33b87be79e6e4a11400da"
+    )
+    if not sentinel.exists():
+        print(
+            "[export-research-dossier] SKIP phase dossiers: frozen runs/results "
+            "tree absent (fresh checkout; tracked HTMLs retain last-committed values)"
+        )
+        return []
     ledger_path = ROOT / "runs/ledger.jsonl" if ledger_path is None else Path(ledger_path)
     out_dir = ROOT / "reports/evidence" if out_dir is None else Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
