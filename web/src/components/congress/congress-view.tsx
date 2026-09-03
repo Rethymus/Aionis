@@ -22,6 +22,7 @@ import {
 import { cn } from "@/lib/utils";
 import { fmtDateShort } from "@/lib/format";
 import { FilterPills, LoadMoreFooter, usePaged } from "@/components/stream/stream-kit";
+import { FrostedScrollArea } from "@/components/ui/frosted-scroll-area";
 import { AvatarInitials } from "@/components/stream/avatar-initials";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
@@ -186,6 +187,7 @@ function TxSection() {
         </div>
       </CardHeader>
       <CardContent className="p-0">
+        <FrostedScrollArea maxHeight={560}>
         <Table>
           <TableHeader>
             <TableRow>
@@ -253,6 +255,7 @@ function TxSection() {
             ))}
           </TableBody>
         </Table>
+        </FrostedScrollArea>
         <LoadMoreFooter
           shown={visible.length}
           total={filtered.length}
@@ -639,7 +642,8 @@ export function CongressView() {
             </div>
           </CardHeader>
           <CardContent className="p-0">
-            <Table>
+            <FrostedScrollArea maxHeight={560}>
+        <Table>
               <TableHeader>
                 <TableRow>
                   <TableHead>{t("congress.member")}</TableHead>
@@ -690,6 +694,7 @@ export function CongressView() {
                 ))}
               </TableBody>
             </Table>
+        </FrostedScrollArea>
             <LoadMoreFooter
               shown={visible.length}
               total={filtered.length}

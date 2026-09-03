@@ -43,8 +43,8 @@ export function FrostedScrollArea({
   children: ReactNode;
   /** Viewport height cap — bounds the visible row count. */
   maxHeight?: number;
-  /** Accessible label for the scroll region. */
-  label: string;
+  /** Accessible label for the scroll region (optional). */
+  label?: string;
   className?: string;
 }) {
   const viewportRef = useRef<HTMLDivElement>(null);
@@ -159,8 +159,7 @@ export function FrostedScrollArea({
       {/* viewport: native scrollbar hidden, native scroll behavior kept */}
       <div
         ref={viewportRef}
-        role="region"
-        aria-label={label}
+        {...(label ? { role: "region", "aria-label": label } : {})}
         onScroll={schedule}
         className="frost-scroll overflow-y-auto overscroll-contain rounded-md border border-border/60"
         style={{ maxHeight }}
@@ -187,7 +186,7 @@ export function FrostedScrollArea({
         <div
           ref={thumbRef}
           role="scrollbar"
-          aria-label={label}
+          {...(label ? { "aria-label": label } : {})}
           aria-orientation="vertical"
           tabIndex={0}
           onPointerDown={onThumbPointerDown}

@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/table";
 import { fmtDateShort } from "@/lib/format";
 import { FilterPills, LoadMoreFooter, usePaged } from "@/components/stream/stream-kit";
+import { FrostedScrollArea } from "@/components/ui/frosted-scroll-area";
 import { useI18n } from "@/i18n/provider";
 import type { DictKey } from "@/i18n/dict";
 import { aionis } from "@/data/aionis";
@@ -110,6 +111,7 @@ function StreamSection() {
         </div>
       </CardHeader>
       <CardContent className="p-0">
+        <FrostedScrollArea maxHeight={560}>
         <Table>
           <TableHeader>
             <TableRow>
@@ -155,6 +157,7 @@ function StreamSection() {
             ))}
           </TableBody>
         </Table>
+        </FrostedScrollArea>
         <LoadMoreFooter
           shown={visible.length}
           total={filtered.length}
@@ -276,7 +279,8 @@ export function EventsView() {
           </div>
         </CardHeader>
         <CardContent className="p-0">
-          <Table>
+          <FrostedScrollArea maxHeight={560}>
+        <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>{t("events.date")}</TableHead>
@@ -339,6 +343,7 @@ export function EventsView() {
               ))}
             </TableBody>
           </Table>
+        </FrostedScrollArea>
           <LoadMoreFooter
             shown={visible.length}
             total={filtered.length}

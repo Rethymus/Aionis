@@ -22,6 +22,7 @@ import {
 import { cn } from "@/lib/utils";
 import { fmtDateShort } from "@/lib/format";
 import { FilterPills, LoadMoreFooter, usePaged } from "@/components/stream/stream-kit";
+import { FrostedScrollArea } from "@/components/ui/frosted-scroll-area";
 import { useI18n } from "@/i18n/provider";
 import { filers13f } from "@/data/aionis/filers13f";
 import { form13f } from "@/data/aionis/form13f";
@@ -141,7 +142,8 @@ export function FilersView() {
           <CardDescription>{t("filers.note")}</CardDescription>
         </CardHeader>
         <CardContent className="p-0">
-          <Table>
+          <FrostedScrollArea maxHeight={560}>
+        <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>{t("filers.filer")}</TableHead>
@@ -204,6 +206,7 @@ export function FilersView() {
               })}
             </TableBody>
           </Table>
+        </FrostedScrollArea>
           <LoadMoreFooter
             shown={visible.length}
             total={searched.length}
