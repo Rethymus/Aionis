@@ -100,6 +100,57 @@ export function FrostedScrollArea({
     idleTimer.current = setTimeout(() => setActive(false), IDLE_MS);
   }, []);
 
+  // --- iOS rubber-band damping at the scroll edges (2026-09 motion brief) --
+  // When a wheel gesture pushes past an edge, the content follows the finger
+  // with resistance (iOS applies ~0.33 of the delta) instead of stopping
+  // dead, and springs back on release with the damped-spring easing. Skipped
+  // under prefers-reduced-motion. The pin transform on <thead> keeps its
+  // last native value during the pull, so the header rides the bounce too.
+  const rubber = useRef(0);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = viewportRef.current;
+    const content = contentRef.current;
+    if (!el || !content) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let releaseTimer: ReturnType<typeof setTimeout> | null = null;
+    const springBack = () => {
+      if (rubber.current === 0) return;
+      content.style.transition = `transform 0.5s var(--ease-apple-spring, cubic-bezier(0.34, 1.24, 0.44, 1))`;
+      content.style.transform = "translateY(0)";
+      rubber.current = 0;
+    };
+
+    const onWheel = (e: WheelEvent) => {
+      const atTop = el.scrollTop <= 0;
+      const atBottom = el.scrollTop >= el.scrollHeight - el.clientHeight - 1;
+      const pullingUp = atTop && e.deltaY < 0;
+      const pullingDown = atBottom && e.deltaY > 0;
+      if (!pullingUp && !pullingDown) {
+        if (rubber.current !== 0) springBack();
+        return; // normal scrolling: native behavior untouched
+      }
+      e.preventDefault();
+      wake();
+      // accumulate with resistance, capped (the damping curve)
+      rubber.current = Math.max(
+        -48,
+        Math.min(48, rubber.current + e.deltaY * 0.33),
+      );
+      content.style.transition = "none";
+      content.style.transform = `translateY(${-rubber.current * 0.5}px)`;
+      if (releaseTimer) clearTimeout(releaseTimer);
+      releaseTimer = setTimeout(springBack, 90); // gesture pause -> spring back
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => {
+      el.removeEventListener("wheel", onWheel);
+      if (releaseTimer) clearTimeout(releaseTimer);
+    };
+  }, [wake]);
+
   useEffect(() => {
     const el = viewportRef.current;
     if (!el) return;
@@ -164,7 +215,7 @@ export function FrostedScrollArea({
         className="frost-scroll overflow-y-auto overscroll-contain rounded-md border border-border/60"
         style={{ maxHeight }}
       >
-        {children}
+        <div ref={contentRef}>{children}</div>
       </div>
 
       {/* frosted edge masks — blur + fade, hidden at the extremes */}
