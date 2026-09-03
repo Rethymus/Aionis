@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-09-03) 轮 67：滚动体验补完——业主指出仍有漏网长表，剩余三处全包装+运维巡检清隐患：**
+  业主在 atlas 页实测指出仍有未包装的多行数据。**补齐**：claims IC pivot 表（71 个月行）、dataflow 全量面板溯源表（56 行,节头固定于滚动区外=表头常驻）、discipline 账本审计表（全账本行）——全部 FrostedScrollArea 包装（小表 4-16 行按设计不包）。**视觉实证**：atlas 页 8 个滚动区 DOM 审计全达标（高度 320-380 受限+可滚动+滑条就位）,dataflow 表截图核验（380px 视口约 14 行+右侧毛玻璃滑条+节头常驻+边缘渐隐）。**运维巡检**：CronList 揪出轮 54 遗留过期自动化 998a60a0（十月每日 09:00 重复跑影子+自删标记失配永不自删+过时 fail-closed 预期）→ 已删除,97cec742（10-01 04:05 单次）为唯一调度器。**验证**：tsc 0+i18n 1286/1286+构建 1504 页+全套 pytest exit 0+ruff 0+CI success（33718116111）。**边界**：display lane;0 ledger/0 OOS。
+
 - **active (2026-09-03) 轮 66：Apple 式滚动体验全站落地（业主视觉整改指令）——FrostedScrollArea+全局隐藏式滚动条：**
   业主三条要求：长表限量+滚动呈现余量/全站滚动条 Apple 化默认隐藏/毛玻璃质感+丝滑动效。**全局层（globals.css）**：标准 `scrollbar-color` transparent→hover 主题滑条色（0.35s 真过渡,Chrome121+/FF;`::-webkit-scrollbar` 回退旧 WebKit）+`--frost-thumb(-strong)` 双主题令牌+`html scroll-behavior: smooth`（reduced-motion 降级）。**组件层（ui/frosted-scroll-area.tsx）**：视口帽 380px 限量可见行;原生滚动保留、原生滚动条隐藏;覆盖式毛玻璃滑条（半透明+backdrop-blur,hover/滚动淡入,900ms 闲置淡出）;可拖拽（pointer capture 1:1 无跳变）;边缘毛玻璃遮罩（渐变+3px blur,极位自隐）;全部更新 rAF 节流+transform（纯合成器,零布局抖动）。**修复死锁**：sync() 曾在滑条未挂载时早退→scrollable 永不翻正→滑条永不出现（live-DOM 探针实证 .frost-pill 缺席）;拆分守卫+scrollable 翻转再同步。**应用**：atlas diagnostics×3（每表约 250 行=最大违例）/deciles/divergence×2/model-health KVTable——小表不包。**视觉实证**（junction+CSS 门禁 200/200 后截图）：限量行/底缘毛玻璃渐隐/滑条淡入 0.53→1.0（300ms 过渡实测）/全部与诊断区块观感一致。tsc 0+全套 pytest exit 0+ruff 0+构建 1504 页+CI success（33715831326）。**边界**：display lane（web 终端;Streamlit 为运行时注入样式不可达,如实记录）;0 ledger/0 OOS。
 
