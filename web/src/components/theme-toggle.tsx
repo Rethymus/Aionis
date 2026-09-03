@@ -36,6 +36,21 @@ export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme()
   const mounted = useIsMounted()
 
+  // Apple-Settings-style crossfade: pre-enable color transitions BEFORE
+  // next-themes flips the class (its disableTransitionOnChange injects a
+  // `transition: none` style at flip time; `html.theme-fade *` out-specifies
+  // that selector, so our 0.35s glide wins the cascade) and clean up after.
+  const toggleWithFade = () => {
+    const root = document.documentElement
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setTheme(resolvedTheme === "dark" ? "light" : "dark")
+      return
+    }
+    root.classList.add("theme-fade")
+    setTheme(resolvedTheme === "dark" ? "light" : "dark")
+    window.setTimeout(() => root.classList.remove("theme-fade"), 450)
+  }
+
   if (!mounted) {
     return (
       <Button variant="ghost" size="icon" className="size-8 rounded-full">
@@ -49,7 +64,7 @@ export function ThemeToggle() {
       variant="ghost"
       size="icon"
       className="size-8 rounded-full"
-      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+      onClick={toggleWithFade}
     >
       <ContrastIcon className="size-[18px]" />
       <span className="sr-only">Toggle theme</span>

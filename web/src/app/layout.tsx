@@ -7,6 +7,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" });
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono", display: "swap" });
 import { ThemeProvider } from "next-themes";
+import { ThemeFade } from "@/components/theme-fade";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { I18nProvider } from "@/i18n/provider";
 import "./globals.css";
@@ -53,6 +54,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <I18nProvider>
+            <ThemeFade />
             <TooltipProvider>{children}</TooltipProvider>
           </I18nProvider>
         </ThemeProvider>

@@ -66,6 +66,10 @@ export function FrostedScrollArea({
     // thumb styling is guarded separately: on the first post-hydration sync
     // the thumb is not mounted yet (it renders only once scrollable=true),
     // so an early return here would deadlock it out of the DOM.
+    // pin the column header: JS transform instead of native position:sticky
+    // (ancestor overflow:hidden from Card clipping hijacks sticky context)
+    const thead = el.querySelector("thead");
+    if (thead) thead.style.transform = `translateY(${Math.round(scrollTop)}px)`;
     const thumb = thumbRef.current;
     if (!canScroll || !thumb) return;
     const track = clientHeight;
