@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-09-03) 轮 70：Apple 动效迭代 4——粘性毛玻璃表头+行 hover+主题切换全页过渡（业主继续审阅中,8935 伺服保留）：**
+  **①粘性表头**：原生 position:sticky 双重失效实证（thead 上 Chrome 不支持+Card overflow:hidden 劫持 sticky 上下文）→ FrostedScrollArea 在滑条同一 rAF 循环内对 thead 施加 `translateY(scrollTop)` JS 钉住（对祖先溢出免疫）;CSS 供毛玻璃 th 底（78% 卡底+blur）与 z 序（行从头下滑过）。**②行 hover**：frost 表 4% ink-alpha 0.15s 高亮（computed 实证 color(srgb 0.93…/0.04)）。**③主题切换全页过渡**：next-themes 的 disableTransitionOnChange 会注入 `*{transition:none!important}` 压掉普通过渡 → 双保险：ThemeToggle 前置 `html.theme-fade`（特异性胜出）+ThemeFade（MutationObserver 翻转后补挂,兼容系统偏好路径）,全页 background/color/border/fill 0.35s 滑翔——Apple 设置页开关同款;reduced-motion 保持瞬切。**验证**：tsc 0+全套 pytest exit 0+ruff 0+构建 1504 页+CI success（33744091685）。**运维**：8935 伺服+junction+out 保留（业主正以浏览器实测 /Aionis/atlas.html）。**边界**：display lane;0 ledger/0 OOS。**跟进项**：Mimosa 完整安全扫描（钩子提示 library_source 超限,兼容放行;本轮纯显示层无新增攻击面）。
+
 - **active (2026-09-03) 轮 69：Apple 动效迭代 3——⌘K 面板毛玻璃化+model-health 入场动效（迭代收官）：**
   ①CommandPalette（⌘K）面板 Spotlight 化：半透明卡底+backdrop-blur-2xl saturate-150（骑乘 dialog 既有 fade/scale 入场;遮罩层本就 blur-xs）;②/model-health 三区块（模型卡/清单/供应商年限）Reveal 入场（60ms 层叠,reduced-motion 即时）。**验证**：tsc 0+全套 pytest exit 0+ruff 0+构建 1504 页+CI success（33721916474）。**如实记录**：Mimosa 钩子提示完整安全扫描未完成（library_source 超限,兼容放行）——本轮改动纯显示层 CSS/React 无新增攻击面;完整重扫列为跟进项。**边界**：display lane;0 ledger/0 OOS。**Apple 动效迭代至此三轮收官**（轮 66 滚动+轮 67 补完+轮 68 下拉/回顶/入场+轮 69 ⌘K/model-health）;后续候选=卡片 hover 微抬升 opt-in 与长页 content-visibility。
 
