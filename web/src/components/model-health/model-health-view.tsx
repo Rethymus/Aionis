@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { FrostedScrollArea } from "@/components/ui/frosted-scroll-area";
+import { Reveal } from "@/components/ui/reveal";
 import { aionis, type ModelCard, type ModelInventory, type ModelInventoryChain } from "@/data/aionis";
 import {
   ArrowRightIcon,
@@ -748,11 +749,17 @@ export function ModelHealthView() {
         ))
       )}
 
-      <ModelCardSection />
+      <Reveal>
+        <ModelCardSection />
+      </Reveal>
 
-      <ModelInventorySection />
+      <Reveal delay={60}>
+        <ModelInventorySection />
+      </Reveal>
 
-      <ProviderVintageSection />
+      <Reveal delay={60}>
+        <ProviderVintageSection />
+      </Reveal>
 
       <Card className="border-dashed">
         <CardHeader className="border-b">

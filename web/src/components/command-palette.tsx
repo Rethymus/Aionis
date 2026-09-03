@@ -271,7 +271,13 @@ export function CommandPalette() {
         </kbd>
       </Button>
 
-      <CommandDialog open={open} onOpenChange={setOpen} shouldFilter={false}>
+      {/* Spotlight-style frosted panel: translucent card + heavy blur. */}
+      <CommandDialog
+        open={open}
+        onOpenChange={setOpen}
+        shouldFilter={false}
+        className="border-line/70 bg-card/80 backdrop-blur-2xl backdrop-saturate-150"
+      >
         <CommandInput
           value={query}
           onValueChange={(v) => setQuery(v)}
