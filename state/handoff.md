@@ -1,5 +1,14 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-09-04 (zz23) 轮 83：Refresh terminal data 三连败 CI triage（业主报告"github action失败"）
+
+**失败链与根因**：三次失败全在"Contract-test gate"（设计如此——门拦降级面板，错在导出器）：①/② form_ipo（33774486553/33789705188）：全新 CI 检出无走查缓存 → `walk_cap: null` 降级面板 → 他会话 e76e2249 修复（跳过+保留 committed）但无测试；③ 33818402659（e76e2249 之后的定时跑）**换元失败**：macro_drivers 缺 fedfunds/real_rate——alfred_DFF.json 在 runner 缺席（DFF vintage 抓取 `2>/dev/null || true` 静默失败），部分缓存写出 5/7 的"ok"面板。**教训（诚实入案）**：我上轮"同类病理已实证清零"的判断被③证伪——那次"实证"只覆盖当轮的数据状态；该病原是**数据依赖的潜伏 flaky**（FRED 抖动即现形），"门内 86 测试上轮全过"≠"无同类漏网"。
+
+**修复（三层）**：①form_ipo 跳过补回归钉：`_FORM_IPO_PARQUET` 路径常量化（`_DECILE_SCORES` 惯例）+ hermetic 测试（tmp 夹具：parquet 在+cache meta 空 → 断言 committed 面板原样+SKIP 日志），commit ef904ae6；②macro_drivers 消费方完备性守卫：`_MACRO_REQUIRED_SERIES`（7 序列）任缺→整体 SKIP+保留 committed（把杀整趟运行降为单面板退化；对齐 cot/form4/sector_breakdown 的 retain 惯例）+`_MACRO_CACHE` 常量化+部分缓存夹具钉（5 序列在场+DFF 缺席→SKIP 且 fedfunds/real_rate 入日志）；③workflow DFF 抓取去 `2>/dev/null`（仍 `|| true` best-effort，但 traceback 进 run log）。**门语义不变**（test_web_terminal_data 仍是最后防线）。
+
+**验证**：23 导出测试+86 门测试+全套 pytest exit 0+ruff 全绿。**边界**：display/ci lane；0 ledger/0 frozen/0 prereg/0 OOS。**运维提醒**：refresh workflow 周 5 跑×每跑 2h+≈月 1,300-1,700 分钟（私有仓计费炸弹，部署文档 §1.1 已列）；根治（Modal 迁移/转 Public）待业主按 `reports/design/2026-09-03-deployment-options-refresh.md` 裁决。**待验证**：下一定时刷新（周五 22:00 UTC）应过门——最坏情形 macro/ipo 面板优雅跳过而非杀运行。
+
+
 > **2026-08-15 业主裁决：发表线整体废除。** 项目不再有发表计划（无 arXiv 上传、无 venue 选择、
 > 无投稿）。所有发表工件已按 move-don't-delete 归档至 `archive/`（manuscript/、quarto-site/、
 > docs/methods-and-results-draft(-en).md、replication-availability.md、frontier_positioning.md、

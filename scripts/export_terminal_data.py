@@ -2324,7 +2324,7 @@ def export_macro_drivers() -> None:
     revised public values for context, NOT the PIT-as-of vintages the research
     pipeline uses — explicitly labeled so in the methodology.
     """
-    cache = Path("data/cache")
+    cache = _MACRO_CACHE
     series: dict[str, list] = {}
     # Retain monthly Series for the derived real_rate computation below.
     cpi_yoy_s: pd.Series | None = None
@@ -2395,6 +2395,22 @@ def export_macro_drivers() -> None:
         print(
             "[export-terminal] SKIP macro_drivers: no data/cache/alfred_*.json "
             "present (tracked JSON retains last-committed value)",
+            flush=True,
+        )
+        return
+    missing = _MACRO_REQUIRED_SERIES - set(series)
+    if missing:
+        # PARTIAL cache set (e.g. alfred_DFF.json absent because the DFF
+        # vintage fetch failed silently on the runner): shipping an "ok"
+        # panel missing consumer-required series silently hides /regime
+        # cards — refresh run 33818402659 died at the contract gate exactly
+        # there. Retain the last-committed complete panel (per-panel
+        # graceful degradation); the fresh series land on a run where the
+        # fetch succeeds.
+        print(
+            "[export-terminal] SKIP macro_drivers: ALFRED cache set "
+            f"incomplete, missing consumer-required series {sorted(missing)} "
+            "(tracked JSON retains last-committed value)",
             flush=True,
         )
         return
@@ -3353,6 +3369,13 @@ _DECILE_PANELS: dict[str, Path] = {
     "cn": Path("data/cache/cn_price_panel.parquet"),
 }
 _FORM_IPO_PARQUET = Path("data/cache/form_ipo_aggregate.parquet")
+_MACRO_CACHE = Path("data/cache")
+# The /regime cards read ALL seven series (macro-stagflation-read → fedfunds,
+# macro-mandate-tension → real_rate); a panel missing any of them silently
+# hides cards — ship complete or not at all.
+_MACRO_REQUIRED_SERIES = {
+    "cpi_yoy", "dxy", "payems_yoy", "t10y2y", "unrate", "fedfunds", "real_rate",
+}
 
 
 def export_ic_deciles() -> None:

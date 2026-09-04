@@ -199,7 +199,11 @@ jobs:
           # only DFF supply was the evictable data-cache: on eviction the export
           # silently skipped fedfunds/real_rate and committed a partial "ok" panel
           # (deployed /regime cards hid — regression caught 2026-08-15).
-          uv run python -c "from aionis.ingest.macro_display import fetch_display_series; from aionis.ingest.macro_dff import fetch_dff_vintages; from aionis.config import settings; from pathlib import Path; c=Path('data/cache'); [fetch_display_series(settings.fred_api_key, c, s, force=True) for s in ('CPIAUCSL','PAYEMS')]; fetch_dff_vintages(settings.fred_api_key, c)" 2>/dev/null || true
+          # NOTE: failures are NOT silenced (no 2>/dev/null) — the step stays
+          # best-effort (|| true) but the traceback must land in the run log:
+          # a silent DFF miss left a partial cache that killed the contract
+          # gate in run 33818402659 (exporter now skips-and-retains instead).
+          uv run python -c "from aionis.ingest.macro_display import fetch_display_series; from aionis.ingest.macro_dff import fetch_dff_vintages; from aionis.config import settings; from pathlib import Path; c=Path('data/cache'); [fetch_display_series(settings.fred_api_key, c, s, force=True) for s in ('CPIAUCSL','PAYEMS')]; fetch_dff_vintages(settings.fred_api_key, c)" || true
           uv run python scripts/phase_b_fetch.py --display --fundamentals-only
         timeout-minutes: 25
         continue-on-error: true  # SEC outage keeps the prior cache

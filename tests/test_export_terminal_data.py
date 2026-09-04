@@ -492,6 +492,47 @@ def test_form_ipo_retains_committed_when_walk_cache_absent(
     assert "SKIP form_ipo: walk cache absent" in capsys.readouterr().out
 
 
+def test_macro_drivers_retains_committed_when_cache_set_partial(
+    tmp_path, monkeypatch, capsys
+):
+    """A PARTIAL ALFRED cache (alfred_DFF.json absent — the DFF vintage fetch
+    is silent best-effort on a fresh CI runner) must not ship an "ok" panel
+    missing consumer-required series: refresh run 33818402659 failed the
+    contract gate exactly there (fedfunds/real_rate gone, 3 /regime cards
+    would silently hide). The exporter skips and the tracked JSON keeps its
+    last-committed complete panel."""
+    import pandas as pd
+
+    web = tmp_path / "web"
+    web.mkdir()
+    committed = {
+        "status": "ok",
+        "series": {"cpi_yoy": [{"month": "2026-07-01", "value": 3.0}]},
+    }
+    (web / "macro_drivers.json").write_text(json.dumps(committed))
+
+    cache = tmp_path / "cache"
+    cache.mkdir()
+    idx = pd.date_range("2024-08-01", periods=24, freq="MS")
+    for name in ("CPIAUCSL", "PAYEMS", "DTWEXBGS", "T10Y2Y", "UNRATE"):
+        (cache / f"alfred_{name}.json").write_text(json.dumps({
+            "observations": [
+                {"date": d.strftime("%Y-%m-%d"), "value": "100",
+                 "realtime_start": "2026-08-01"}
+                for d in idx
+            ],
+        }))
+    # alfred_DFF.json deliberately absent → fedfunds/real_rate unrecoverable
+    monkeypatch.setattr(etd, "WEB", web)
+    monkeypatch.setattr(etd, "_MACRO_CACHE", cache)
+
+    etd.export_macro_drivers()
+
+    assert json.loads((web / "macro_drivers.json").read_text()) == committed
+    out = capsys.readouterr().out
+    assert "SKIP macro_drivers" in out and "fedfunds" in out and "real_rate" in out
+
+
 # --- form4 retain-merge (bounded-breadth fetch, 2026-08-23) -------------------
 # A --start-bounded fetch over a WIDER issuer universe must retain the committed
 # pre-window yearly history verbatim and disclose the universe widening.
