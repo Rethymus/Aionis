@@ -3352,6 +3352,7 @@ _DECILE_PANELS: dict[str, Path] = {
     "us": Path("data/cache/track_b_panel.parquet"),
     "cn": Path("data/cache/cn_price_panel.parquet"),
 }
+_FORM_IPO_PARQUET = Path("data/cache/form_ipo_aggregate.parquet")
 
 
 def export_ic_deciles() -> None:
@@ -4890,7 +4891,7 @@ def export_form_ipo() -> None:
     ``aionis.ingest.form_ipo_price``); this exporter re-validates every value
     into a sane envelope before it ships.
     """
-    fp = Path("data/cache/form_ipo_aggregate.parquet")
+    fp = _FORM_IPO_PARQUET
     if not fp.exists():
         print(
             "[export-terminal] SKIP form_ipo: data/cache/form_ipo_aggregate.parquet "

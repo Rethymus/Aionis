@@ -454,6 +454,44 @@ def test_sector_breakdown_retains_committed_when_meta_absent(
     assert "SKIP sector_breakdown" in capsys.readouterr().out
 
 
+def test_form_ipo_retains_committed_when_walk_cache_absent(
+    tmp_path, monkeypatch, capsys
+):
+    """Fresh CI checkout (refresh lane): the aggregate parquet exists (the
+    fetch step wrote it) but the walker price cache is absent, so
+    load_cache_meta() is empty and the walk ledger (walk_cap etc.) is
+    unrecoverable. The exporter must SKIP — the tracked JSON keeps its
+    last-committed complete panel — instead of overwriting with a degraded
+    one (this exact degradation failed refresh run 33789705188's contract
+    gate)."""
+    import pandas as pd
+
+    import aionis.ingest.form_ipo_price as fip
+
+    web = tmp_path / "web"
+    web.mkdir()
+    committed = {
+        "status": "ok",
+        "requests": {"task_budget": 170, "walk_cap": 150},
+    }
+    (web / "form_ipo.json").write_text(json.dumps(committed))
+
+    fp = tmp_path / "form_ipo_aggregate.parquet"
+    pd.DataFrame({
+        "status": ["filed", "priced"],
+        "form": ["424B4", "424B4"],
+        "filed_date": ["2026-08-20", "2026-08-21"],
+    }).to_parquet(fp)
+    monkeypatch.setattr(etd, "WEB", web)
+    monkeypatch.setattr(etd, "_FORM_IPO_PARQUET", fp)
+    monkeypatch.setattr(fip, "load_cache_meta", lambda *a, **k: {})
+
+    etd.export_form_ipo()
+
+    assert json.loads((web / "form_ipo.json").read_text()) == committed
+    assert "SKIP form_ipo: walk cache absent" in capsys.readouterr().out
+
+
 # --- form4 retain-merge (bounded-breadth fetch, 2026-08-23) -------------------
 # A --start-bounded fetch over a WIDER issuer universe must retain the committed
 # pre-window yearly history verbatim and disclose the universe widening.
