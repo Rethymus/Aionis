@@ -209,9 +209,37 @@ NO DRIFT+面板类型契约无变化（56 面板 key 不变）。**边界**：di
 0 ledger（57 行不变）/0 frozen config/0 prereg/0 OOS 新计算（decile 重导=纯展示派生，
 scores/价格输入零触碰）。
 
+## 2g. 轮 83–84 执行记录（2026-09-04）——Refresh lane 三连败 CI triage + 部分缓存审计闭合
+
+**背景**：业主报告"github action失败"。Refresh terminal data workflow 三连败于 Contract-test
+gate（门按设计拦降级面板，错在导出器）：①/② form_ipo walk_cap=None（全新检出无走查
+缓存；他会话 e76e2249 修复但无测试）→ ③ macro_drivers 缺 fedfunds/real_rate（alfred_DFF
+.json 在 runner 缺席——DFF vintage 抓取 `2>/dev/null || true` 静默失败，部分缓存写出 5/7
+的"ok"面板）。
+
+**修复**：①form_ipo 跳过补 hermetic 钉（`_FORM_IPO_PARQUET` 常量化+tmp 夹具，ef904ae6）；
+②macro_drivers 消费方完备性守卫 `_MACRO_REQUIRED_SERIES`（7 序列任缺→SKIP+保留
+committed）+ `_MACRO_CACHE` 常量化+部分缓存夹具钉（8e89ea30）；③workflow DFF 抓取去
+`2>/dev/null`（仍 best-effort 但 traceback 进日志）。state current.md/handoff 有全记录（轮 83）。
+
+**审计闭合（轮 84，AST 全量分类 49 个导出器）**：按"可选输入 exists() 数 / read_parquet
+数 / SKIP 守卫"排序逐个核查——**macro_drivers 是全文件唯一的逐项可选发货者**（已修）；
+其余全部为单源全有或全无（缺文件→FileNotFoundError→`_safe_export` 干净跳过）、显式空
+守卫、可见降级（themes 的 macro 主题→needs_work+门测试钉 7 键）、或显式 retain
+（model_health/calibration 的 `_skip_retain` 退化检测）。**新不变量（新增导出器必须遵
+守）**：要么单源全有或全无（缺席=干净跳过），要么完备性守卫（必需序列缺失=跳过保留）；
+逐项可选发货属违例——它把部分数据伪装成 "ok" 静默上线，或撞门杀掉整趟 2 小时运行。
+
+**方法学沉淀**：轮 82 的"同类病原已实证清零"判断被轮 83 证伪——"门内 86 测试上轮全过"
+只覆盖**当轮的数据状态**；数据依赖的潜伏 flaky（FRED 抖动、缓存逐出）会让"过过门的导
+出器"在下一轮现形。审计"某类缺陷是否清零"必须按**代码结构**（输入依赖模式分类）而非
+按**单次运行结果**。
+
+
+
+
+
 ## 3. 后续轮次的轮换建议（长周期节奏）
-
-
 
 > **周期 1 已完成**（轮 45–47：五项轮换池全部执行一遍）。周期 2 建议：① web 全路由
 > （22 页非研究页）双主题复审 + 新增面板；② Streamlit AppTest 走查脚本随每次 Streamlit
