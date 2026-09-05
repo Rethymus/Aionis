@@ -1,6 +1,6 @@
 {
  "status": "ok",
- "as_of": "2026-09-03",
+ "as_of": "2026-09-04",
  "source_panels": [
   "form13f",
   "def14a_persons",
@@ -8,7 +8,7 @@
   "smart_money"
  ],
  "n_nodes": 164,
- "n_edges": 867,
+ "n_edges": 868,
  "nodes": [
   {
    "id": "i:0000807249",
@@ -1165,22 +1165,6 @@
    }
   },
   {
-   "id": "s:22NW, LP",
-   "type": "staker",
-   "label": "22NW, LP",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
    "id": "s:683 CAPITAL MANAGEMENT, LLC",
    "type": "staker",
    "label": "683 Capital Management, LLC",
@@ -1405,22 +1389,6 @@
    }
   },
   {
-   "id": "s:CAPTRUST FINANCIAL ADVISORS",
-   "type": "staker",
-   "label": "CAPTRUST FINANCIAL ADVISORS",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
    "id": "s:CASTLEKNIGHT MASTER FUND LP",
    "type": "staker",
    "label": "CastleKnight Master Fund LP",
@@ -1517,22 +1485,6 @@
    }
   },
   {
-   "id": "s:DC VGA LLC",
-   "type": "staker",
-   "label": "DC VGA LLC",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
    "id": "s:DEEP TRACK CAPITAL, LP",
    "type": "staker",
    "label": "Deep Track Capital, LP",
@@ -1594,6 +1546,54 @@
     "co_hold": 0,
     "co_board": 0,
     "co_target": 3
+   }
+  },
+  {
+   "id": "s:FISHER JOHN J",
+   "type": "staker",
+   "label": "FISHER JOHN J",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 2
+   }
+  },
+  {
+   "id": "s:FISHER ROBERT J",
+   "type": "staker",
+   "label": "FISHER ROBERT J",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 2
+   }
+  },
+  {
+   "id": "s:FISHER WILLIAM SYDNEY",
+   "type": "staker",
+   "label": "FISHER WILLIAM SYDNEY",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 2
    }
   },
   {
@@ -2249,7 +2249,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 2
+    "co_target": 1
    }
   },
   {
@@ -23648,20 +23648,6 @@
    "truncated": false
   },
   {
-   "a": "s:22NW, LP",
-   "b": "s:DC VGA LLC",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Turtle Beach Corp",
-     "tk": "TBCH",
-     "forms": "SC 13D/A|SC 13G"
-    }
-   ],
-   "truncated": false
-  },
-  {
    "a": "s:683 CAPITAL MANAGEMENT, LLC",
    "b": "s:MMCAP INTERNATIONAL INC. SPC",
    "type": "co_target",
@@ -23942,20 +23928,6 @@
      "target": "RedCloud Holdings plc",
      "tk": "RCT",
      "forms": "SC 13D/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:CAPTRUST FINANCIAL ADVISORS",
-   "b": "s:SABA CAPITAL MANAGEMENT, L.P.",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Bluerock Private Real Estate Fund",
-     "tk": "BPRE",
-     "forms": "SC 13D/A|SC 13G"
     }
    ],
    "truncated": false
@@ -24292,6 +24264,48 @@
      "target": "Royalty Management Holding Corp",
      "tk": "RMCO",
      "forms": "SC 13G"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:FISHER JOHN J",
+   "b": "s:FISHER ROBERT J",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "GAP INC",
+     "tk": "GAP",
+     "forms": "SC 13D/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:FISHER JOHN J",
+   "b": "s:FISHER WILLIAM SYDNEY",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "GAP INC",
+     "tk": "GAP",
+     "forms": "SC 13D/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:FISHER ROBERT J",
+   "b": "s:FISHER WILLIAM SYDNEY",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "GAP INC",
+     "tk": "GAP",
+     "forms": "SC 13D/A"
     }
    ],
    "truncated": false
@@ -25591,20 +25605,6 @@
    "stock_routable": false
   },
   {
-   "tk": "SCHL",
-   "name": "SCHOLASTIC CORP",
-   "in": [
-    "def14a",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 0,
-    "persons": 3,
-    "stakers": 1
-   },
-   "stock_routable": false
-  },
-  {
    "tk": "SHAZ",
    "name": "SharonAI Holdings Inc.",
    "in": [
@@ -25743,7 +25743,7 @@
   },
   "smart_money_visible_dates": {
    "start": "2026-08-27",
-   "end": "2026-09-03"
+   "end": "2026-09-04"
   }
  },
  "coverage": {
@@ -25762,5 +25762,5 @@
   }
  },
  "methodology": "Force-camp relationship graph DERIVED at export time from four COMMITTED panels (form13f x def14a_persons x stakes_13g union smart_money) \u2014 zero new fetches, display-only. Edges are pairwise projections over as-filed disclosure facts: co_hold = two curated managers' VISIBLE BOOKS (latest quarter, up to 50 positions each; the full books are larger) share a position key (ticker, else CUSIP); co_board = two proxy-statement top persons seat the same company (exact company-name match resolves the ticker); co_target = two different filers INDEPENDENTLY SEPARATELY FILED stakes converging on the same target issuer within the visible SC 13D/13G windows. Identity rule: a window filer merges into an institution node ONLY when its trimmed-uppercase name equals a curated manager's name exactly \u2014 no fuzzy matching, no name list. The three overlaps are factual coincidences of separate filings: joint filings stay verbatim (members NOT DECOMPOSED), no COORDINATION is implied and no consortium claim is made. Weights are integer counts of shared items (lists capped at 8, truncated flag set beyond). Coverage is bounded by construction \u2014 see the coverage.basis strings (visible books, a 50-person proxy export over the newest filings, latest filing windows only). A restatement of public SEC EDGAR disclosures only: NO PRICES, NO RETURNS, no performance claims; never part of any OOS pipeline.",
- "snapshot_ts": "2026-09-05T03:17:04.326258+00:00"
+ "snapshot_ts": "2026-09-05T07:59:40.636915+00:00"
 }

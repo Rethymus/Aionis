@@ -1,6 +1,234 @@
 {
-  "methodology": "Recent SC 13D institutional stake filings (SEC EDGAR, filed-date point-in-time). Public domain, permissive. Two sources: EFTS full-text search for 2015\u21922024-12 (filer + target + ticker), and the EDGAR daily crawler index for 2024-12\u2192today. The daily index lists a filing under EVERY covered company (subject AND filer entities), so rows are deduped per accession: the listed company is the subject (ticker backfilled OFFLINE from the cached SEC company_tickers snapshot \u2014 current-snapshot display label, not as-of-filing \u2014 plus the frozen EFTS name map), and the co-indexed names surface as the filer. Filings on unlisted targets (funds, LLCs, individuals) or with several listed candidates honestly keep an empty ticker / placeholder filer (counted in data_health.source_health). Real data; descriptive display, not an Aionis research claim. Percent-of-class fields (pct_now / pct_prev) are regex-parsed from each filing's primary document for the VISIBLE rows only (bounded second stage: structured cover-page tag first, then the 'Percent of class' label, then the 'X.X% of the ... class' narrative; amendments carry pct_prev from 'previous X%'-style sentences only) \u2014 misses stay honest nulls, counted in data_health.source_health. pct_status is DERIVED from parsed values only: exited = an explicit parsed 0, below_5 = a parsed value < 5; a null pct never yields a status. Group filings show the FIRST reporting person's cover-page percentage.",
+  "methodology": "Recent SC 13D institutional stake filings (SEC EDGAR, filed-date point-in-time). Public domain, permissive. Two sources: EFTS full-text search for 2015→2024-12 (filer + target + ticker), and the EDGAR daily crawler index for 2024-12→today. The daily index lists a filing under EVERY covered company (subject AND filer entities), so rows are deduped per accession: the listed company is the subject (ticker backfilled OFFLINE from the cached SEC company_tickers snapshot — current-snapshot display label, not as-of-filing — plus the frozen EFTS name map), and the co-indexed names surface as the filer. Filings on unlisted targets (funds, LLCs, individuals) or with several listed candidates honestly keep an empty ticker / placeholder filer (counted in data_health.source_health). Real data; descriptive display, not an Aionis research claim. Percent-of-class fields (pct_now / pct_prev) are regex-parsed from each filing's primary document for the VISIBLE rows only (bounded second stage: structured cover-page tag first, then the 'Percent of class' label, then the 'X.X% of the ... class' narrative; amendments carry pct_prev from 'previous X%'-style sentences only) — misses stay honest nulls, counted in data_health.source_health. pct_status is DERIVED from parsed values only: exited = an explicit parsed 0, below_5 = a parsed value < 5; a null pct never yields a status. Group filings show the FIRST reporting person's cover-page percentage.",
   "recent_filings": [
+    {
+      "filer": "(申报人见原文)",
+      "target": "AMG BBH Asset-Backed Credit Fund, LLC",
+      "ticker": "",
+      "date": "2026-09-04",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/2097545/0000929638-26-003464-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "(申报人见原文)",
+      "target": "BROWN BROTHERS HARRIMAN & CO",
+      "ticker": "",
+      "date": "2026-09-04",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/14661/0000929638-26-003464-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "(申报人见原文)",
+      "target": "AMG Pantheon Infrastructure Fund, LLC",
+      "ticker": "",
+      "date": "2026-09-04",
+      "form": "SC 13D",
+      "is_amendment": false,
+      "url": "http://www.sec.gov/Archives/edgar/data/2046200/0001104659-26-105535-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "(申报人见原文)",
+      "target": "BlueArc Capital Management, LLC",
+      "ticker": "",
+      "date": "2026-09-04",
+      "form": "SC 13D",
+      "is_amendment": false,
+      "url": "http://www.sec.gov/Archives/edgar/data/2097963/0001104659-26-105535-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Dyer Timothy Mark",
+      "target": "Addex Therapeutics Ltd.",
+      "ticker": "ADXN",
+      "date": "2026-09-04",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/1574232/0001104659-26-105480-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Nexus Capital Investments, Inc.",
+      "target": "BIOFORCE NANOSCIENCES HOLDINGS, INC.",
+      "ticker": "BFNH",
+      "date": "2026-09-04",
+      "form": "SC 13D",
+      "is_amendment": false,
+      "url": "http://www.sec.gov/Archives/edgar/data/1310488/0001091818-26-000141-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Comstock MultiChain Fund, L.P.",
+      "target": "BNB PLUS CORP.",
+      "ticker": "BNBX",
+      "date": "2026-09-04",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/744452/0001892613-26-000008-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Colden Investments S.A.",
+      "target": "GeoPark Ltd",
+      "ticker": "GPRK",
+      "date": "2026-09-04",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/1464591/0001193125-26-383916-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "FISHER JOHN J",
+      "target": "GAP INC",
+      "ticker": "GAP",
+      "date": "2026-09-04",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/39911/0001104659-26-105520-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "FISHER ROBERT J",
+      "target": "GAP INC",
+      "ticker": "GAP",
+      "date": "2026-09-04",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/39911/0001104659-26-105518-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "GREP GP III, LLC",
+      "target": "Granite Ridge Resources, Inc.",
+      "ticker": "GRNT",
+      "date": "2026-09-04",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/1928446/0001104659-26-105567-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Lagoda Investment Management, L.P.",
+      "target": "VOLITIONRX LTD",
+      "ticker": "VNRX",
+      "date": "2026-09-04",
+      "form": "SC 13D",
+      "is_amendment": false,
+      "url": "http://www.sec.gov/Archives/edgar/data/93314/0001493152-26-041611-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "(申报人见原文)",
+      "target": "Lantheus Holdings, Inc.",
+      "ticker": "LNTH",
+      "date": "2026-09-04",
+      "form": "SC 13D",
+      "is_amendment": false,
+      "url": "http://www.sec.gov/Archives/edgar/data/1521036/0001193125-26-383754-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "(申报人见原文)",
+      "target": "Radiopharm Theranostics Ltd",
+      "ticker": "RADX",
+      "date": "2026-09-04",
+      "form": "SC 13D",
+      "is_amendment": false,
+      "url": "http://www.sec.gov/Archives/edgar/data/1949257/0001193125-26-383754-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "(申报人见原文)",
+      "target": "Lantheus Holdings, Inc.",
+      "ticker": "LNTH",
+      "date": "2026-09-04",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/1521036/0001193125-26-383775-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "(申报人见原文)",
+      "target": "Perspective Therapeutics, Inc.",
+      "ticker": "CATX",
+      "date": "2026-09-04",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/728387/0001193125-26-383775-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Marvin Smollar Family Trust dtd 2/13/2023",
+      "target": "QHSLab, Inc.",
+      "ticker": "USAQ",
+      "date": "2026-09-04",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/856984/0002130246-26-000004-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Tether Global Investments Fund, S.I.C.A.F., S.A.",
+      "target": "RUM Group Inc.",
+      "ticker": "RUM",
+      "date": "2026-09-04",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/1830081/0001104659-26-105546-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Spark Capital II LP",
+      "target": "eToro Group Ltd.",
+      "ticker": "ETOR",
+      "date": "2026-09-04",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/1493318/0001193125-26-383845-index.htm",
+      "pct_now": null,
+      "pct_prev": null,
+      "pct_status": null
+    },
     {
       "filer": "3i, LP",
       "target": "Valion Bio, Inc.",
@@ -110,7 +338,7 @@
       "pct_status": null
     },
     {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "filer": "(申报人见原文)",
       "target": "Diamondback Energy, Inc.",
       "ticker": "FANG",
       "date": "2026-09-03",
@@ -122,7 +350,7 @@
       "pct_status": null
     },
     {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "filer": "(申报人见原文)",
       "target": "Viper Energy, Inc.",
       "ticker": "VNOM",
       "date": "2026-09-03",
@@ -170,7 +398,7 @@
       "pct_status": null
     },
     {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "filer": "(申报人见原文)",
       "target": "Invesco Commercial Real Estate Finance Trust, Inc.",
       "ticker": "",
       "date": "2026-09-03",
@@ -182,7 +410,7 @@
       "pct_status": null
     },
     {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "filer": "(申报人见原文)",
       "target": "Invesco Realty, Inc.",
       "ticker": "",
       "date": "2026-09-03",
@@ -206,7 +434,7 @@
       "pct_status": null
     },
     {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "filer": "(申报人见原文)",
       "target": "KKR Alternative Assets LLC",
       "ticker": "",
       "date": "2026-09-03",
@@ -218,7 +446,7 @@
       "pct_status": null
     },
     {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "filer": "(申报人见原文)",
       "target": "KKR Real Estate Select Trust Inc.",
       "ticker": "",
       "date": "2026-09-03",
@@ -266,7 +494,7 @@
       "pct_status": null
     },
     {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "filer": "(申报人见原文)",
       "target": "Sixth Street Lending Partners",
       "ticker": "",
       "date": "2026-09-03",
@@ -278,7 +506,7 @@
       "pct_status": null
     },
     {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "filer": "(申报人见原文)",
       "target": "Sixth Street Lending Partners Note Issuer, LLC",
       "ticker": "",
       "date": "2026-09-03",
@@ -350,7 +578,7 @@
       "pct_status": null
     },
     {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "filer": "(申报人见原文)",
       "target": "AMG Pantheon Infrastructure Fund, LLC",
       "ticker": "",
       "date": "2026-09-02",
@@ -362,7 +590,7 @@
       "pct_status": null
     },
     {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "filer": "(申报人见原文)",
       "target": "BlueArc Capital Management, LLC",
       "ticker": "",
       "date": "2026-09-02",
@@ -374,7 +602,7 @@
       "pct_status": null
     },
     {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "filer": "(申报人见原文)",
       "target": "AMG Pantheon Infrastructure Fund, LLC",
       "ticker": "",
       "date": "2026-09-02",
@@ -386,7 +614,7 @@
       "pct_status": null
     },
     {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "filer": "(申报人见原文)",
       "target": "BlueArc Capital Management, LLC",
       "ticker": "",
       "date": "2026-09-02",
@@ -398,7 +626,7 @@
       "pct_status": null
     },
     {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "filer": "(申报人见原文)",
       "target": "ARRAY DIGITAL INFRASTRUCTURE, INC.",
       "ticker": "AD",
       "date": "2026-09-02",
@@ -410,7 +638,7 @@
       "pct_status": null
     },
     {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "filer": "(申报人见原文)",
       "target": "TELEPHONE & DATA SYSTEMS INC /DE/",
       "ticker": "TDS",
       "date": "2026-09-02",
@@ -566,7 +794,7 @@
       "pct_status": null
     },
     {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "filer": "(申报人见原文)",
       "target": "Ocho Investments LLC",
       "ticker": "",
       "date": "2026-09-02",
@@ -578,7 +806,7 @@
       "pct_status": null
     },
     {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "filer": "(申报人见原文)",
       "target": "TruBridge, Inc.",
       "ticker": "",
       "date": "2026-09-02",
@@ -770,7 +998,7 @@
       "pct_status": null
     },
     {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "filer": "(申报人见原文)",
       "target": "Hyperscale Data, Inc.",
       "ticker": "GPUS",
       "date": "2026-08-31",
@@ -782,7 +1010,7 @@
       "pct_status": null
     },
     {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "filer": "(申报人见原文)",
       "target": "UNIVERSAL SAFETY PRODUCTS, INC.",
       "ticker": "UUU",
       "date": "2026-08-31",
@@ -806,7 +1034,7 @@
       "pct_status": null
     },
     {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "filer": "(申报人见原文)",
       "target": "Klaviyo, Inc.",
       "ticker": "KVYO",
       "date": "2026-08-31",
@@ -818,7 +1046,7 @@
       "pct_status": null
     },
     {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "filer": "(申报人见原文)",
       "target": "SHOPIFY INC.",
       "ticker": "SHOP",
       "date": "2026-08-31",
@@ -950,7 +1178,7 @@
       "pct_status": null
     },
     {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "filer": "(申报人见原文)",
       "target": "BIOMERICA INC",
       "ticker": "BMRA",
       "date": "2026-08-28",
@@ -962,7 +1190,7 @@
       "pct_status": null
     },
     {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "filer": "(申报人见原文)",
       "target": "BRC Group Holdings, Inc.",
       "ticker": "RILY",
       "date": "2026-08-28",
@@ -998,7 +1226,7 @@
       "pct_status": null
     },
     {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "filer": "(申报人见原文)",
       "target": "C3is Inc.",
       "ticker": "CISS",
       "date": "2026-08-28",
@@ -1010,7 +1238,7 @@
       "pct_status": null
     },
     {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "filer": "(申报人见原文)",
       "target": "Imperial Petroleum Inc./Marshall Islands",
       "ticker": "IMPP",
       "date": "2026-08-28",
@@ -1185,7 +1413,7 @@
       "form": "SC 13D/A",
       "is_amendment": true,
       "url": "http://www.sec.gov/Archives/edgar/data/1787740/0001753926-26-001647-index.htm",
-      "pct_now": 9.9,
+      "pct_now": null,
       "pct_prev": null,
       "pct_status": null
     },
@@ -1197,247 +1425,19 @@
       "form": "SC 13D/A",
       "is_amendment": true,
       "url": "http://www.sec.gov/Archives/edgar/data/897448/0000899140-26-000972-index.htm",
-      "pct_now": 6.09,
+      "pct_now": null,
       "pct_prev": null,
       "pct_status": null
     },
     {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "filer": "(申报人见原文)",
       "target": "AMG BBH Asset-Backed Credit Fund, LLC",
       "ticker": "",
       "date": "2026-08-27",
       "form": "SC 13D/A",
       "is_amendment": true,
       "url": "http://www.sec.gov/Archives/edgar/data/2097545/0000929638-26-003261-index.htm",
-      "pct_now": 60.93,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-      "target": "BROWN BROTHERS HARRIMAN & CO",
-      "ticker": "",
-      "date": "2026-08-27",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/14661/0000929638-26-003261-index.htm",
-      "pct_now": 60.93,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Dyer Timothy Mark",
-      "target": "Addex Therapeutics Ltd.",
-      "ticker": "ADXN",
-      "date": "2026-08-27",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1574232/0001104659-26-101798-index.htm",
-      "pct_now": 8.98,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Bellevue Capital Partners, LLC",
-      "target": "American Strategic Investment Co.",
-      "ticker": "NYC",
-      "date": "2026-08-27",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1595527/0000950142-26-002447-index.htm",
-      "pct_now": 62.1,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "KGPLA Holdings LLC",
-      "target": "BNB PLUS CORP.",
-      "ticker": "BNBX",
-      "date": "2026-08-27",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/744452/0001477932-26-005292-index.htm",
-      "pct_now": 19.99,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Saba Capital Management, L.P.",
-      "target": "Bluerock Private Real Estate Fund",
-      "ticker": "BPRE",
-      "date": "2026-08-27",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1551047/0001062993-26-004669-index.htm",
-      "pct_now": 5.12,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Bradley & Daytona Railway & Land Co. LLC",
-      "target": "Power REIT",
-      "ticker": "PW",
-      "date": "2026-08-27",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1532619/0002005138-26-000009-index.htm",
-      "pct_now": 4.8,
-      "pct_prev": null,
-      "pct_status": "below_5"
-    },
-    {
-      "filer": "Stilwell Joseph",
-      "target": "Catalyst Bancorp, Inc.",
-      "ticker": "CLST",
-      "date": "2026-08-27",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1849867/0000921895-26-002340-index.htm",
-      "pct_now": 9.0,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Pale Fire Capital SE",
-      "target": "Commerce.com, Inc.",
-      "ticker": "CMRC",
-      "date": "2026-08-27",
-      "form": "SC 13D",
-      "is_amendment": false,
-      "url": "http://www.sec.gov/Archives/edgar/data/1626450/0000921895-26-002350-index.htm",
-      "pct_now": 6.5,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "DC VGA LLC",
-      "target": "Turtle Beach Corp",
-      "ticker": "TBCH",
-      "date": "2026-08-27",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1493761/0001193125-26-371811-index.htm",
-      "pct_now": 3.8,
-      "pct_prev": null,
-      "pct_status": "below_5"
-    },
-    {
-      "filer": "DGB Investment, Inc.",
-      "target": "ETHAN ALLEN INTERIORS INC",
-      "ticker": "ETD",
-      "date": "2026-08-27",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/896156/0000921895-26-002351-index.htm",
-      "pct_now": 4.1,
-      "pct_prev": null,
-      "pct_status": "below_5"
-    },
-    {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-      "target": "DIANA SHIPPING INC.",
-      "ticker": "DSX",
-      "date": "2026-08-27",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1318885/0000919574-26-005792-index.htm",
-      "pct_now": 10.13,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-      "target": "GENCO SHIPPING & TRADING LTD",
-      "ticker": "GNK",
-      "date": "2026-08-27",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1326200/0000919574-26-005792-index.htm",
-      "pct_now": 10.13,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Fung & Tun Ltd",
-      "target": "Masonglory Ltd",
-      "ticker": "MSGY",
-      "date": "2026-08-27",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/2020228/0001213900-26-094111-index.htm",
-      "pct_now": 37.5,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "GNK Holdings LLC",
-      "target": "Reliance Global Group, Inc.",
-      "ticker": "EZRA",
-      "date": "2026-08-27",
-      "form": "SC 13D",
-      "is_amendment": false,
-      "url": "http://www.sec.gov/Archives/edgar/data/1812727/0001096906-26-001319-index.htm",
-      "pct_now": 9.6,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Gillman Charles M",
-      "target": "TRANSACT TECHNOLOGIES INC",
-      "ticker": "TACT",
-      "date": "2026-08-27",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1017303/0001214659-26-010987-index.htm",
-      "pct_now": 5.1,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Huang Ming-Chia",
-      "target": "MKDWELL Tech Inc.",
-      "ticker": "MKDW",
-      "date": "2026-08-27",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1991332/0001493152-26-040345-index.htm",
-      "pct_now": 76.4,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "PERCEPTIVE ADVISORS LLC",
-      "target": "Immatics N.V.",
-      "ticker": "IMTX",
-      "date": "2026-08-27",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1809196/0001193125-26-371236-index.htm",
-      "pct_now": 7.6,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Rivercrest Capital Partners LP",
-      "target": "Kimbell Royalty Partners, LP",
-      "ticker": "KRP",
-      "date": "2026-08-27",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1657788/0001493152-26-040406-index.htm",
-      "pct_now": 7.3,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Lucchese Iole",
-      "target": "SCHOLASTIC CORP",
-      "ticker": "SCHL",
-      "date": "2026-08-27",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/866729/0001193125-26-371238-index.htm",
-      "pct_now": 5.2,
+      "pct_now": null,
       "pct_prev": null,
       "pct_status": null
     }
@@ -1484,9 +1484,9 @@
       "count": 58
     }
   ],
-  "total_filings": 14104,
+  "total_filings": 14124,
   "n_filers": 3133,
-  "latest_date": "2026-09-03",
+  "latest_date": "2026-09-04",
   "yearly": [
     {
       "year": 2015,
@@ -1534,8 +1534,8 @@
     },
     {
       "year": 2026,
-      "filings": 4133
+      "filings": 4153
     }
   ],
-  "snapshot_ts": "2026-09-05T03:16:55.000618+00:00"
+  "snapshot_ts": "2026-09-05T07:59:40.211818+00:00"
 }

@@ -10,37 +10,16 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-09-04T11:31:38+00:00",
-  "n_snapshots": 5,
+  "latest_snapshot_ts": "2026-09-05T06:50:45+00:00",
+  "n_snapshots": 1,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
-      "ticker": "TTWO",
-      "mentions": 1,
-      "sentiment": 0.008,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "DELL",
-      "mentions": 1,
-      "sentiment": -0.056,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "LULU",
-      "mentions": 1,
-      "sentiment": -0.124,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
       "ticker": "TSLA",
       "mentions": 1,
-      "sentiment": -0.017,
+      "sentiment": -0.036,
       "bull_ratio": null,
       "score_sum": 0
     }
@@ -48,9 +27,9 @@
   "pressure": {
     "status": "accumulating",
     "by_ticker": {},
-    "n_snapshots": 5,
-    "latest_date": "2026-09-04",
+    "n_snapshots": 1,
+    "latest_date": "2026-09-05",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-09-05T03:16:55.383981+00:00"
+  "snapshot_ts": "2026-09-05T07:59:40.228096+00:00"
 }

@@ -421,31 +421,111 @@
     {
       "key": "news_sentiment",
       "status": "live",
-      "as_of": "2026-09",
-      "headline": "GDELT \u901a\u7528\u8bed\u8c03\uff08US \u5e02\u573a\u65b0\u95fb\uff0c2017-04\u21922026-09\uff09\uff1b\u901a\u7528\u8bcd\u5178\u975e\u91d1\u878d\u57df\u2014\u2014\u538b\u529b/\u60c5\u7eea\u4ee3\u7406\uff0c\u975e\u9009\u80a1\u4fe1\u53f7\uff08display-only, exploratory\uff09",
+      "as_of": "2025-01",
+      "headline": "GDELT \u901a\u7528\u8bed\u8c03\uff08US \u5e02\u573a\u65b0\u95fb\uff0c2019-04\u21922025-01\uff09\uff1b\u901a\u7528\u8bcd\u5178\u975e\u91d1\u878d\u57df\u2014\u2014\u538b\u529b/\u60c5\u7eea\u4ee3\u7406\uff0c\u975e\u9009\u80a1\u4fe1\u53f7\uff08display-only, exploratory\uff09",
       "signals": [
         {
           "name": "tone_latest",
-          "value": 0.21
+          "value": 0.843
         },
         {
           "name": "tone_mean",
-          "value": -0.062
+          "value": -0.079
         },
         {
           "name": "tone_min",
-          "value": -1.895
+          "value": -1.155
         },
         {
           "name": "volume_latest",
-          "value": 0.0
+          "value": 0.7
         },
         {
           "name": "n_months",
-          "value": 114
+          "value": 39
         }
       ],
       "series": [
+        {
+          "month": "2022-04",
+          "value": -0.293
+        },
+        {
+          "month": "2022-05",
+          "value": -0.4
+        },
+        {
+          "month": "2022-06",
+          "value": -0.513
+        },
+        {
+          "month": "2022-07",
+          "value": -0.635
+        },
+        {
+          "month": "2022-08",
+          "value": -0.683
+        },
+        {
+          "month": "2022-09",
+          "value": -0.921
+        },
+        {
+          "month": "2022-10",
+          "value": -0.857
+        },
+        {
+          "month": "2022-11",
+          "value": -0.492
+        },
+        {
+          "month": "2022-12",
+          "value": -0.573
+        },
+        {
+          "month": "2023-01",
+          "value": -0.175
+        },
+        {
+          "month": "2023-07",
+          "value": 0.806
+        },
+        {
+          "month": "2023-08",
+          "value": 0.557
+        },
+        {
+          "month": "2023-09",
+          "value": 0.458
+        },
+        {
+          "month": "2023-10",
+          "value": 0.346
+        },
+        {
+          "month": "2023-11",
+          "value": 0.322
+        },
+        {
+          "month": "2023-12",
+          "value": 0.375
+        },
+        {
+          "month": "2024-01",
+          "value": 0.474
+        },
+        {
+          "month": "2024-02",
+          "value": 0.639
+        },
+        {
+          "month": "2024-03",
+          "value": 0.693
+        },
+        {
+          "month": "2024-04",
+          "value": 1.022
+        },
         {
           "month": "2024-10",
           "value": 0.63
@@ -460,87 +540,7 @@
         },
         {
           "month": "2025-01",
-          "value": 0.688
-        },
-        {
-          "month": "2025-02",
-          "value": 0.782
-        },
-        {
-          "month": "2025-03",
-          "value": 0.461
-        },
-        {
-          "month": "2025-04",
-          "value": -0.373
-        },
-        {
-          "month": "2025-05",
-          "value": -0.174
-        },
-        {
-          "month": "2025-06",
-          "value": 0.152
-        },
-        {
-          "month": "2025-07",
-          "value": 0.275
-        },
-        {
-          "month": "2025-08",
-          "value": 0.038
-        },
-        {
-          "month": "2025-09",
-          "value": 0.331
-        },
-        {
-          "month": "2025-10",
-          "value": -0.017
-        },
-        {
-          "month": "2025-11",
-          "value": 0.766
-        },
-        {
-          "month": "2025-12",
-          "value": 0.755
-        },
-        {
-          "month": "2026-01",
-          "value": 0.609
-        },
-        {
-          "month": "2026-02",
-          "value": 0.649
-        },
-        {
-          "month": "2026-03",
-          "value": -0.013
-        },
-        {
-          "month": "2026-04",
-          "value": -0.024
-        },
-        {
-          "month": "2026-05",
-          "value": 0.372
-        },
-        {
-          "month": "2026-06",
-          "value": 0.479
-        },
-        {
-          "month": "2026-07",
-          "value": 0.441
-        },
-        {
-          "month": "2026-08",
-          "value": 0.403
-        },
-        {
-          "month": "2026-09",
-          "value": 0.21
+          "value": 0.843
         }
       ]
     },
@@ -706,5 +706,5 @@
       ]
     }
   ],
-  "snapshot_ts": "2026-09-05T03:16:41.838609+00:00"
+  "snapshot_ts": "2026-09-05T07:59:37.998692+00:00"
 }
