@@ -1,5 +1,10 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-09-05 (zz25) ops-hotfix：gh-pages `.nojekyll` 二次事故根因补丁（协作事故如实）
+
+轮 86 恢复的 `.nojekyll`（e1f6e054）被本会话前夜的 d7dfbdd force push 抹掉——d7dfbdd 从 `web/out/` 复制发布，而 `web/public/` 自始没有 `.nojekyll`，out/ 因此不含它 → Jekyll 再激活、`_next/` 再 404、全站再无样式。修复：gh-pages **快进**补 `.nojekyll`（7f18fd2，非 force；d7dfbdd 的站点内容本就是轮 85 会话 09-05 12:28 的构建，数据未回退）。在墙验证：.nojekyll/两个 CSS chunk/JS chunk/atlas 全 200 + 修正后 ic_deciles（0.044756）在墙。**根因保险**：`web/public/.nojekyll` 入库（Next 拷入 out/，手动通道发布自带；与轮 86 通道 rsync --exclude 兼容——该 exclude 只能保住已存在文件，若分支根无此文件则照样破损，本修复同时是其前置条件）。**协作教训（入 §4 备忘）**：同树多会话并行时，force push 共享分支前必须先 fetch 对账——d7dfbdd 覆盖 e1f6e054 而本会话不知情。边界：ops/display lane；0 ledger/0 frozen/0 prereg/0 OOS。
+
+
 ## 2026-09-05 (zz24) 轮 85：显示数据新鲜度推进 09-03/04 + 四个"缓存冻结"病原 + GDELT 缺口/volume + taco 事件 + 新闻情绪 UI 重造（业主 /goal）
 
 **业主三项**：①全部显示数据推进至 2026-09-03；②"toco"（=taco）缺失最严重；③新闻情绪 UI 大小/颜色不适配——外加视觉巡检自发现的细节。

@@ -293,6 +293,12 @@ committed）+ `_MACRO_CACHE` 常量化+部分缓存夹具钉（8e89ea30）；③
   故一次 `at.run()` 即覆盖 11 标签；断言 uncaught exceptions/标签序/诚实标记/selectbox
   交互。依赖本机工件（runs/results、data/cache），**非 hermetic，不入 CI**——是研究者
   本机 walk 工具。浏览器像素点击在背景 UI 动画时全屏帧易 stale——内容走查一律走 AppTest。
+- **同树多会话并行：force push 共享分支前必须先 fetch 对账（2026-09-05 实证）**：轮 86
+  恢复的 gh-pages `.nojekyll`（e1f6e054）被本会话的 d7dfbdd force push 静默覆盖——两次
+  发布各自正确、合并结果破损（Jekyll 激活 → `_next/` 全 404 → 全站无样式）。共享分支的
+  写入要么快进（fetch 后确认基线未动），要么 push 被拒时重新 rebase 发布内容。另：
+  **`web/public/.nojekyll` 已入库**——Next 拷入 out/，手动 out/-copy 发布从此自带标记；
+  rsync `--exclude .nojekyll` 的"保留"语义以文件在分支上存在为前提。
 - **`assemble()` 时点现算的 integrity 测试是恒真构造（轮 82 实证）**：这类测试在测试时
   同时现算"来源 sha"与"期望值"，永远抓不住**提交工件内嵌 sha 过期**——内嵌 sha 的漂移
   只能被「提交字节 == 现渲染」字节稳定契约拦截（`test_real_artifact_equals_fresh_render`

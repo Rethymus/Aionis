@@ -1,5 +1,16 @@
 # state/current.md — read first each session
 
+- **ops-hotfix (2026-09-05)：gh-pages `.nojekyll` 二次事故的根因补丁与协作事故如实记录：**
+  轮 86 恢复的 `.nojekyll`（e1f6e054）被本会话前夜的 d7dfbdd force push **抹掉**（我从
+  `web/out/` 复制发布，而 `web/public/` 自始没有 `.nojekyll`，out/ 因此不含它）→ Jekyll
+  再激活、`_next/` 再 404、全站再无样式。**修复**：gh-pages 快进补 `.nojekyll`（7f18fd2，
+  非 force；d7dfbdd 的内容本就含轮 85 会话 09-05 12:28 的构建，数据未回退）；在墙验证
+  .nojekyll/CSS×2/JS/atlas 全 200 + 修正后 ic_deciles 在墙。**根因保险**：`web/public/.nojekyll`
+  入库（Next 拷入 out/，手动通道发布自带；与轮 86 通道 rsync --exclude 兼容——该 exclude
+  只能保住已存在文件，若分支根无文件则照样破损，本修复同时是其前置）。**协作教训**：同树
+  多会话并行时，force push 共享分支前必须先 fetch 对账——d7dfbdd 覆盖了 e1f6e054 而我不知情。
+  **边界**：ops/display lane；0 ledger/0 frozen/0 prereg/0 OOS。
+
 - **active (2026-09-05) 轮 86：GitHub Actions 红灯排查——Pages 部署链修复（业主报告"action 出问题"）：**
   **三重真相（API 注解+workflow state+Pages settings 三源取证）**：①deploy-pages.yml 全部失败（8-20 09:00 起 4 秒零步骤）根因=**账户计费**（job 注解原文 "recent account payments have failed or your spending limit needs to be increased"），9-01 解冻后该 workflow 已是 **disabled_manually**——我的 push 根本不触发它；②refresh 定时跑（33929716868）的 "Trigger Pages deploy" 步骤 `gh workflow run deploy-pages.yml` 对禁用工作流必然失败→整趟绿跑标红；③仓库 Pages 实为 **legacy gh-pages 分支通道**（build_type=legacy，source=gh-pages；round 50/53 正典），deploy-pages 的 Actions 部署模式与 legacy 配置本就不兼容——禁用是合理残留，正解是让每日刷新自动发布 gh-pages。**修复**：refresh workflow 撤换 "Trigger Pages deploy" 为 gh-pages 发布链（pnpm/Node setup → `pnpm build`【**prebuild=build-api.mjs 把面板镜像进 public/api/v1——直接 `next build` 会绕过它，本地踩坑：out/api/v1 冻在 9-01**】→ checkout gh-pages 子目录 → rsync out/ → commit → push）；仅 datacommit 有变更时执行。**线上交付（真实数据核查）**：本地补 `build-api` 同步+重建后按 round 50 通道发布 gh-pages（worktree rsync 15,140 文件，db2510de）→ **Pages built 04:34 UTC**，线上实测：`/api/v1/panels/taco.json` 16 事件·VIX 15.77·2026-09，health.json 13 个 daily 面板 ≥09-03，站点 200——线上从 9-01 追平到轮 85。**第四重发现（线上实测抓出）**：首次发布后全站无样式（round 48 头号病理线上重现）——`_next/` 整目录 404 而 api/v1 200 = **Jekyll 忽略下划线目录**，rsync --delete 把 gh-pages 根的 **`.nojekyll`** 删了（旧部署有此标记文件，7a1bc96a 可证）——恢复 `.nojekyll`（e1f6e054）后 Pages 重built，CSS/JS 200，浏览器终验线上 TACO 页（16 events/VIX 15.77·2026-09/让步 7 升级 9）与 /confirmation News sentiment 卡（Risk-on 药丸/+0.21 涨色/114 月/as of 2026-09）全部带样式渲染；workflow rsync 补 `--exclude .nojekyll` 防复发。**验证**：workflow YAML 解析 37 步无嵌套违规；逻辑=本地已手动跑通的同一路径。**边界**：ci/deploy lane；0 research 面。**待验证**：下一定时刷新全链过绿（含 gh-pages 发布首跑）。
 
