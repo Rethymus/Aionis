@@ -111,7 +111,7 @@ export function MacroDollarCard() {
               <Tooltip content={<ChartTooltip />} />
               <ReferenceLine
                 y={first}
-                stroke="hsl(var(--muted-foreground))"
+                stroke="var(--muted-foreground)"
                 strokeDasharray="3 3"
                 strokeWidth={1}
               />

@@ -305,7 +305,12 @@ export function SmartMoneyView() {
                     labelFormatter={(l) => `Year: ${l}`}
                     contentStyle={{ fontSize: "12px" }}
                   />
-                  <Bar dataKey="filings" fill="hsl(var(--primary))" />
+                  {/* isAnimationActive=false: recharts v3's entry animation
+                      leaves these bars as empty `recharts-inactive-bar` layers
+                      on the static export (observed live on both the deployed
+                      site and local builds) — the axes drew, the bars never
+                      did. Display-only chart; skip the animation. */}
+                  <Bar dataKey="filings" fill="var(--primary)" isAnimationActive={false} />
                 </BarChart>
               </ResponsiveContainer>
             </div>

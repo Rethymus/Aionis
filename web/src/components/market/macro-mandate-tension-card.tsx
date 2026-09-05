@@ -140,7 +140,7 @@ export function MacroMandateTensionCard() {
               />
               <ReferenceLine
                 y={0}
-                stroke="hsl(var(--muted-foreground))"
+                stroke="var(--muted-foreground)"
                 strokeDasharray="4 4"
                 strokeWidth={1}
               />

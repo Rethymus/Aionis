@@ -144,11 +144,11 @@ function RegionCard({ region, payload }: { region: string; payload: RegionPayloa
                     { x: 0, y: 0 },
                     { x: 1, y: 1 },
                   ]}
-                  stroke="hsl(var(--primary))"
+                  stroke="var(--primary)"
                   strokeDasharray="4 4"
                   ifOverflow="extendDomain"
                 />
-                <Scatter data={relPoints} dataKey="y" fill="hsl(var(--primary))" />
+                <Scatter data={relPoints} dataKey="y" fill="var(--primary)" />
               </ScatterChart>
             </ResponsiveContainer>
           </div>
@@ -174,7 +174,7 @@ function RegionCard({ region, payload }: { region: string; payload: RegionPayloa
                   formatter={(value) => [Number(value).toFixed(4), t("calibration.eceTerm")]}
                 />
                 <ReferenceLine y={0.05} stroke="#10b981" strokeDasharray="3 3" />
-                <Line type="monotone" dataKey="ece" stroke="hsl(var(--primary))" strokeWidth={2} dot={false} />
+                <Line type="monotone" dataKey="ece" stroke="var(--primary)" strokeWidth={2} dot={false} />
               </LineChart>
             </ResponsiveContainer>
           </div>
