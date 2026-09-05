@@ -242,12 +242,14 @@ export function MarketView() {
                 yAxisId="index"
                 orientation="left"
                 tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
+                tickFormatter={(v: number) => v.toFixed(0)}
                 domain={["dataMin - 20", "dataMax + 20"]}
               />
               <YAxis
                 yAxisId="vix"
                 orientation="right"
                 tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
+                tickFormatter={(v: number) => v.toFixed(0)}
                 domain={[0, "dataMax + 10"]}
               />
               <Tooltip content={<ChartTooltip />} />
