@@ -76,7 +76,10 @@ ISSUERS: dict[int, str] = {
     50863: "INTC",
 }
 START = "2016-01-01"
-END = "2026-08-31"
+# Dynamic end: the old hardcoded "2026-08-31" froze the incremental window at
+# the month it was written — filings after that date never entered the cache
+# and the committed panel's as_of stuck at 2026-08-25.
+END = datetime.now().strftime("%Y-%m-%d")
 OUT = Path("data/cache/form4_aggregate.parquet")
 
 

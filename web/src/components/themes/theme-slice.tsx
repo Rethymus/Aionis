@@ -30,7 +30,10 @@ export function ThemeSlice({
       {showTitle ? (
         <p className="text-xs text-muted-foreground">{t("theme.slice.note")}</p>
       ) : null}
-      <div className="grid gap-4 md:grid-cols-2">
+      {/* A single-theme slice (the /confirmation news tab, the /track verdict)
+          spans full width — a lone half-width card left the other half of the
+          page empty and read as broken. */}
+      <div className={themes.length === 1 ? "" : "grid gap-4 md:grid-cols-2"}>
         {themes.map((tm) => (
           <ThemeCard key={tm.key} theme={tm} />
         ))}

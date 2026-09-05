@@ -143,6 +143,19 @@ jobs:
         # (no per-doc fetches); per root-form caches are idempotent
         continue-on-error: true
 
+      - name: Parse IPO cover prices (NEWEST <=80 priced filings, bounded walk)
+        # form_ipo_price_parse.py must run AFTER the fetch (its docstring
+        # contract): the fetch slides the newest-80 priced window forward daily,
+        # and without this walk the panel joins against a stale parse cache —
+        # rows ship values the confidence tiers don't back
+        # (offer_price_parsed != confidence.exact -> contract gate FAILS,
+        # caught locally 2026-09-04). Bounded (<=156 requests, <=170 task cap)
+        # and resumable: cached `ok` accessions are never re-fetched, so a warm
+        # run spends ~0-16 requests on just the window's slide.
+        run: uv run python scripts/form_ipo_price_parse.py
+        timeout-minutes: 10
+        continue-on-error: true  # a failed walk keeps the prior parse cache honestly
+
       - name: Fetch House PTR politician trades (STOCK Act filing stream)
         run: uv run python scripts/politician_trades_fetch.py
         timeout-minutes: 10  # 2 polite requests per year (GET token → POST index);

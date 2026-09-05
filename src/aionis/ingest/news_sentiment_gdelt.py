@@ -86,11 +86,12 @@ _CACHE_NAME = "gdelt_news_sentiment.json"
 
 
 def parse_timelinetone(payload: dict) -> list[dict]:
-    """Parse a GDELT ``timelinetone`` JSON response into ``[{date, tone?, volume?}]``.
+    """Parse a GDELT timeline JSON response into ``[{date, tone?, volume?}]``.
 
     GDELT returns ``{"timeline": [{"series": "Average Tone", "data": [{"date",
-    "value"}, ...]}, {"series": "Article Volume", "data": [...]}]}``. This
-    collapses the multi-series layout into one row per date.
+    "value"}, ...]}, ...]}`` — ``timelinetone`` mode yields "Average Tone",
+    ``timelinevol`` mode yields "Volume Intensity". This collapses the
+    multi-series layout into one row per date.
 
     Robust to: missing ``timeline`` key, empty data, missing values, either
     series arriving alone. Dates are returned as GDELT emits them
@@ -111,8 +112,8 @@ def parse_timelinetone(payload: dict) -> list[dict]:
             row = by_date.setdefault(d, {"date": d})
             if "Tone" in name:
                 row["tone"] = float(val)
-            elif "Volume" in name:
-                row["volume"] = int(val)
+            elif "Volume" in name or "Article" in name:
+                row["volume"] = float(val)
     return sorted(by_date.values(), key=lambda r: r["date"])
 
 
@@ -120,11 +121,15 @@ def aggregate_monthly(rows: list[dict]) -> list[dict]:
     """Aggregate fine-grained GDELT timeline rows into monthly tone + volume.
 
     Each input row is ``{date: "YYYYMMDDTTTT" | "YYYYMMDD", tone?, volume?}``.
-    Output: ``[{month: "YYYY-MM", tone: mean, volume: sum, n: count}, ...]`` sorted
-    ascending. Months with no tone values are dropped (volume-only months add no
-    sentiment signal). ``tone`` is the mean of daily tones that month (cross-
-    sectional aggregate of article tone); ``volume`` is the sum of daily article
-    counts (total articles that month).
+    Output: ``[{month: "YYYY-MM", tone: mean, volume: mean|None, n: count}, ...]``
+    sorted ascending. Months with no tone values are dropped (volume-only months
+    add no sentiment signal). ``tone`` is the mean of daily tones that month
+    (cross-sectional aggregate of article tone); ``volume`` is the mean of the
+    daily Volume Intensity values (GDELT's normalized 0-100 attention index — a
+    MEAN, because summing an index is meaningless). A chunk whose volume query
+    failed carries no volume observations → ``volume: None`` (NOT 0: a failed
+    query is a missing observation, not a zero-attention month — and the merge
+    must not overwrite a previously-fetched real volume with it).
     """
     if not rows:
         return []
@@ -135,14 +140,14 @@ def aggregate_monthly(rows: list[dict]) -> list[dict]:
     parts: list[dict] = []
     for month, g in df.groupby("month"):
         tones = g["tone"].dropna() if "tone" in g else pd.Series([], dtype=float)
-        vols = g["volume"].dropna() if "volume" in g else pd.Series([], dtype=int)
+        vols = g["volume"].dropna() if "volume" in g else pd.Series([], dtype=float)
         if tones.empty:
             continue
         parts.append(
             {
                 "month": f"{month[:4]}-{month[4:6]}",
                 "tone": round(float(tones.mean()), 3),
-                "volume": int(vols.sum()) if not vols.empty else 0,
+                "volume": round(float(vols.mean()), 1) if not vols.empty else None,
                 "n": int(len(tones)),
             }
         )
@@ -151,9 +156,21 @@ def aggregate_monthly(rows: list[dict]) -> list[dict]:
 
 
 def merge_series(cached: list[dict], new_rows: list[dict]) -> list[dict]:
-    """Merge cached + newly-fetched monthly rows; dedupe by month (new wins)."""
+    """Merge cached + newly-fetched monthly rows; dedupe by month (new wins).
+
+    One exception to new-wins: a new row with ``volume: None`` (its volume
+    query failed — a missing observation) inherits the cached row's volume so a
+    tone-only refresh cannot erase a previously-fetched attention reading.
+    """
     by_month: dict[str, dict] = {r["month"]: r for r in cached}
     for r in new_rows:
+        old = by_month.get(r["month"])
+        if (
+            old is not None
+            and r.get("volume") is None
+            and old.get("volume") is not None
+        ):
+            r = {**r, "volume": old["volume"]}
         by_month[r["month"]] = r
     return sorted(by_month.values(), key=lambda r: r["month"])
 
@@ -198,13 +215,13 @@ def _build_query_string(start: date, end: date) -> str:
     ).query_string
 
 
-def _gdelt_timeline_tone(query_string: str) -> dict:
-    """One GDELT Doc ``timelinetone`` GET through the ≥5s policy. Returns parsed JSON.
+def _gdelt_timeline(query_string: str, mode: str) -> dict:
+    """One GDELT Doc timeline GET through the ≥15s policy. Returns parsed JSON.
 
     No ``timelinestep`` — let GDELT pick its granularity; ``aggregate_monthly``
     collapses any granularity (daily/weekly) to monthly by YYYYMM prefix.
     """
-    url = f"{_GDELT_DOC_URL}?query={query_string}&mode=timelinetone&format=json"
+    url = f"{_GDELT_DOC_URL}?query={query_string}&mode={mode}&format=json"
     headers = {"User-Agent": _USER_AGENT}
 
     def operation() -> requests.Response:
@@ -218,7 +235,14 @@ def _gdelt_timeline_tone(query_string: str) -> dict:
 def fetch_tone_series(
     start: date, end: date, on_chunk: Callable[[list[dict]], None] | None = None
 ) -> list[dict]:
-    """Fetch monthly tone+volume via GDELT ``timelinetone``, chunked quarterly.
+    """Fetch monthly tone+attention via GDELT timelines, chunked quarterly.
+
+    Per chunk two queries are made: ``timelinetone`` (Average Tone — the
+    sentiment signal) and ``timelinevol`` (Volume Intensity — GDELT's
+    normalized 0-100 news-attention index). ``timelinetone`` alone carries NO
+    volume series, which is why the panel's volume signal sat at a meaningless
+    constant 0 for its whole history. A failed/empty volume query degrades the
+    chunk to tone-only (volume stays 0 there) — tone never blocks on volume.
 
     Resilient: per-chunk failures are logged + skipped (partial series > crash),
     mirroring the per-day-403 resilience in ``stakes_13d_daily_index``. One
@@ -245,8 +269,7 @@ def fetch_tone_series(
     for cs, ce in chunks:
         qs = _build_query_string(cs, ce)
         try:
-            payload = _gdelt_timeline_tone(qs)
-            rows = parse_timelinetone(payload)
+            payload = _gdelt_timeline(qs, "timelinetone")
         except Exception as exc:  # bounded retry already applied; skip chunk
             log.warning(
                 "gdelt_chunk_skip",
@@ -255,6 +278,20 @@ def fetch_tone_series(
                 error=str(exc)[:160],
             )
             continue
+        try:
+            vol_payload = _gdelt_timeline(qs, "timelinevol")
+        except Exception as exc:  # tone survives a volume outage — degrade honestly
+            vol_payload = {}
+            log.warning(
+                "gdelt_volume_chunk_skip",
+                start=cs.isoformat(),
+                end=ce.isoformat(),
+                error=str(exc)[:160],
+            )
+        combined = {
+            "timeline": (payload.get("timeline") or []) + (vol_payload.get("timeline") or [])
+        }
+        rows = parse_timelinetone(combined)
         # Aggregate per-chunk (quarters are calendar-aligned → months never
         # split across chunks, so per-chunk == full aggregation). Lets the
         # caller checkpoint after each chunk for timeout-safe persistence.
@@ -308,6 +345,51 @@ def _next_fetch_start(cached: list[dict], cold_start: date) -> date:
     return date(ny, nm, 1)
 
 
+def _month_add(month: str, k: int = 1) -> str:
+    """``"YYYY-MM"`` + k months (pure calendar arithmetic)."""
+    y, m = (int(x) for x in month.split("-"))
+    total = y * 12 + (m - 1) + k
+    return f"{total // 12:04d}-{total % 12 + 1:02d}"
+
+
+def _gap_backfill_windows(cached: list[dict]) -> list[tuple[date, date]]:
+    """Exact refetch windows for interior gaps in the cached monthly series.
+
+    The forward-only incremental cursor (``_next_fetch_start``) never revisits
+    history, so a chunk that failed once (GDELT 429/outage) stayed missing
+    forever — the committed panel had seven hole-runs (e.g. 2023-07→2024-01,
+    2025-06→2025-10). This finds the missing months between the first and last
+    cached months and returns one month-aligned ``[start, end)`` window per
+    contiguous missing run — exact coverage, one query per run (quarter
+    alignment would re-pull already-cached months around short holes). Pure →
+    hermetic-testable.
+    """
+    if len(cached) < 2:
+        return []
+    months = [r["month"] for r in cached]
+    present = set(months)
+    windows: list[tuple[date, date]] = []
+    run_start: str | None = None
+    cursor = months[0]
+    end_month = months[-1]
+    while cursor < end_month:
+        if cursor in present:
+            if run_start is not None:
+                windows.append((_month_to_date(run_start), _month_to_date(cursor)))
+                run_start = None
+        elif run_start is None:
+            run_start = cursor
+        cursor = _month_add(cursor)
+    if run_start is not None:
+        windows.append((_month_to_date(run_start), _month_to_date(end_month)))
+    return windows
+
+
+def _month_to_date(month: str) -> date:
+    y, m = (int(x) for x in month.split("-"))
+    return date(y, m, 1)
+
+
 def _write_cache_snapshot(
     series: list[dict], cache_path: Path, archive: str = ""
 ) -> None:
@@ -318,8 +400,12 @@ def _write_cache_snapshot(
     final write (the raw-row sha256 archive of *new* rows).
     """
     snapshot = {
-        "source": "GDELT Doc 2.0 timelinetone (theme:ECON_STOCKMARKET, country:US)",
+        "source": (
+            "GDELT Doc 2.0 timelines (timelinetone + timelinevol; "
+            "theme:ECON_STOCKMARKET, country:US)"
+        ),
         "query": f"theme:{DEFAULT_THEME} country:{DEFAULT_COUNTRY}",
+        "volume_unit": "attention_index_0_100",
         "coverage_start": series[0]["month"] if series else None,
         "coverage_end": series[-1]["month"] if series else None,
         "snapshot_ts": datetime.now(timezone.utc).isoformat(),
@@ -351,8 +437,17 @@ def collect_news_sentiment(
 
     cached = load_cached_series(cache_dir)
     fetch_start = _next_fetch_start(cached, cold_start=max(start, DOC_API_EARLIEST))
+    # Windows to fetch: the forward tail (incremental delta — fetch_tone_series
+    # quarter-chunks it internally) + exact refetches for interior gap runs (a
+    # chunk lost to a past 429/outage used to stay missing forever — the
+    # forward-only cursor never revisits history). Gap runs are interior by
+    # construction, so they never overlap the tail.
+    windows: list[tuple[date, date]] = []
+    if fetch_start < end:
+        windows.append((fetch_start, end))
+    windows.extend(_gap_backfill_windows(cached))
     new_rows: list[dict] = []
-    if fetch_start >= end:
+    if not windows:
         log.info("gdelt_cache_fresh", cached_months=len(cached))
         merged = list(cached)
     else:
@@ -375,7 +470,8 @@ def collect_news_sentiment(
                 new_in_chunk=len(chunk_rows),
             )
 
-        new_rows = fetch_tone_series(fetch_start, end, on_chunk=_on_chunk)
+        for ws, we in windows:
+            new_rows.extend(fetch_tone_series(ws, we, on_chunk=_on_chunk))
 
     # Final merge uses fetch_tone_series's full return (the checkpoint callback
     # is insurance — it fires per-chunk, but the authoritative new_rows here is

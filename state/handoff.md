@@ -1,5 +1,27 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-09-05 (zz24) 轮 85：显示数据新鲜度推进 09-03/04 + 四个"缓存冻结"病原 + GDELT 缺口/volume + taco 事件 + 新闻情绪 UI 重造（业主 /goal）
+
+**业主三项**：①全部显示数据推进至 2026-09-03；②"toco"（=taco）缺失最严重；③新闻情绪 UI 大小/颜色不适配——外加视觉巡检自发现的细节。
+
+**四个新鲜度病原（全部"命中即返回/硬编码终点"型，此后面板停 8 月的根因）**：
+1. `scripts/market_prices_fetch.py::fetch_vix_fred` — 缓存存在即 return → VIXCLS 停 08-26（taco/market_context 冻结根因）。修复：`_tail_refresh` 尾部增量（自最后缓存日重拉，去重合并；VIXCLS 无修订契约=只加日不改史）。08-26→09-02。
+2. `src/aionis/ingest/macro_dff.py::fetch_dff_vintages` — 缓存命中不刷新 → fedfunds/real_rate 卡 08-25。修复：命中时重拉当年 vintage 切片合并去重（首印 idxmin 不可变=G3 安全）；网络失败 log+降级纯缓存（不杀导出）。→09-02。
+3. `scripts/form4_fetch.py` — `END="2026-08-31"` 硬编码 → 增量窗永不过 8 月。改 `date.today()`；重跑 +32 txns → 面板 09-02。
+4. CI refresh workflow 缺 `form_ipo_price_parse.py` 步骤（其 docstring 明确 fetch 后必跑）→ 窗口滑动后 parse 缓存（08-28）陈旧 → `offer_price_parsed(63)≠exact(56)` 契约 FAIL（本地现行抓获）。本地补跑（exact 62）+ workflow 补步骤（有界 ≤156 请求）。**注意：这是 CI 潜在复发点，已堵。**
+
+**GDELT（新闻情绪数据）**：7 处内部缺口（含 2023-07→2024-01、2025-06→2025-10）+ volume 恒 0（`timelinetone` 无 volume 序列）。`src/aionis/ingest/news_sentiment_gdelt.py`：双查询/块（tone+timelinevol 0-100 注意度，volume 失败降级）；`_gap_backfill_windows`（缺失月段精确窗口）入 collect；volume 月均语义 + None=缺观察 + merge 对 None 回退缓存；`--backfill` 全量。**结果 2017-04→2026-09 共 114 月零缺口**；GDELT 当日限流重，7 月有真实注意度，其余 None（UI 诚实隐藏）。测试：聚合/合并/缺口窗口/None 回归 8 新钉。
+
+**taco**：事件表 5→16（补 2025-08→2026-09 的 11 个日验证事件；源=维基百科关税条目时间线 retrieved 2026-09-04，方法学已注记；让步 7/升级 9）；KPI 补月份锚（15.77·2026-09）；VIX 129 月。freight 卡（TSI 134.9·2026-06 / 卡车就业 1,465.1k·2026-07）为源当前最新。
+
+**新闻情绪 UI**：新 `web/src/components/themes/news-sentiment-card.tsx`（方向 KPI 带 text-up/text-down 约定安全、情绪药丸、amber 面积图 180px 零基线、attention 0/None 诚实隐藏）；ThemeCard 委托 news_sentiment；ThemeSlice 单主题全宽。i18n `themes.sentiment.*` 九键对称（1297/1297）。
+
+**数据执行**：全链 fetchers 本机跑（清单见 current.md 轮 85）；显示价格 5 轮预算收敛 593/593 → display_panel (3,942×593) → 全量重导 58 面板+证据链正典次序。**data_health 终态**：主要 daily 面板 09-02…09-04；诚实滞后（freight 06/cot 08-25/13F 季度/ptr 休会空窗/korea FRED 周滞后/headline_provenance 冻结钉）。ledger 哨兵重钉 0924ce2b（reddit +1 行 append-only，git diff 验证）。
+
+**验证**：2232 passed exit 0 + ruff 0 + tsc/eslint 0 + i18n 1297/1297 + YAML OK + 构建 + CSS 门禁 200/200 + 浏览器明暗实测（IAB 截图 rAF 冻结伪影以 DOM 探针证伪，协议 §4）。
+
+**下一会话入口**：周五 22:00 UTC 定时刷新为新增 IPO parse 步骤首跑（观察门）；若 GDELT 限流缓解可再跑 `--backfill` 补历史 volume；CN ashare_price_fetch END="2026-08-04" 硬编码同病（research 邻接面，本轮未动，留业主裁决）。
+
 ## 2026-09-04 (zz23) 轮 83：Refresh terminal data 三连败 CI triage（业主报告"github action失败"）
 
 **失败链与根因**：三次失败全在"Contract-test gate"（设计如此——门拦降级面板，错在导出器）：①/② form_ipo（33774486553/33789705188）：全新 CI 检出无走查缓存 → `walk_cap: null` 降级面板 → 他会话 e76e2249 修复（跳过+保留 committed）但无测试；③ 33818402659（e76e2249 之后的定时跑）**换元失败**：macro_drivers 缺 fedfunds/real_rate——alfred_DFF.json 在 runner 缺席（DFF vintage 抓取 `2>/dev/null || true` 静默失败），部分缓存写出 5/7 的"ok"面板。**教训（诚实入案）**：我上轮"同类病理已实证清零"的判断被③证伪——那次"实证"只覆盖当轮的数据状态；该病原是**数据依赖的潜伏 flaky**（FRED 抖动即现形），"门内 86 测试上轮全过"≠"无同类漏网"。

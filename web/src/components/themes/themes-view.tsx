@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { aionis, type Theme } from "@/data/aionis";
 import { ArgumentChainDiagram } from "./argument-chain-diagram";
+import { NewsSentimentCard } from "./news-sentiment-card";
 import { CoverageMap } from "@/components/ai/coverage-map";
 import { SegmentHeader } from "@/components/segment-header";
 import { ShieldCheckIcon } from "lucide-react";
@@ -161,6 +162,13 @@ function Sparkline({ data, className }: { data: number[]; className?: string }) 
 
 export function ThemeCard({ theme }: { theme: Theme }) {
   const { t } = useI18n();
+  // news_sentiment has its own family-anatomy card (directional KPI band +
+  // amber tone area chart) — the generic KV-list + sparkline body below renders
+  // a tone series as an unlabelled squiggle, which is what read as "not adapted
+  // to the project" on /confirmation#news and /themes.
+  if (theme.key === "news_sentiment") {
+    return <NewsSentimentCard theme={theme} />;
+  }
   const seriesVals = (theme.series ?? [])
     .map((s) => s.value)
     .filter((v): v is number => typeof v === "number");

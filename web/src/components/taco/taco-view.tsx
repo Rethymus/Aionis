@@ -61,11 +61,18 @@ export function TacoView() {
       <div className="flex items-center justify-between gap-3 rounded-xl border border-line bg-card px-5 py-4">
         {kpis.map((k, i) => (
           <span key={k.label} className="flex items-center gap-3">
-            {i > 0 ? <span className="h-4 w-px bg-line" aria-hidden="true" /> : null}
+            {i > 0 ? <span className="h-4 w-px bg-line" aria-hidden /> : null}
             <span className="text-[12px] text-mute">{t(k.label)}</span>
             <span className={cn("font-mono text-[17px] leading-none font-bold tabular-nums", toneCls[k.tone])}>
               {k.value}
             </span>
+            {k.label === "taco.latest_vix" && taco.latest_date ? (
+              // A bare VIX number reads as "right now" — anchor it to the
+              // monthly mean it actually is (panel advances monthly).
+              <span className="font-mono text-[11px] tabular-nums text-faint">
+                {taco.latest_date}
+              </span>
+            ) : null}
           </span>
         ))}
       </div>

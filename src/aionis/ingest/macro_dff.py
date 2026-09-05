@@ -49,6 +49,12 @@ _DFF_REALTIME_END_YEAR = 2026     # current year (2026-08-03)
 _DFF_PAGE_LIMIT = 100_000
 
 
+def _current_utc_year() -> int:
+    from datetime import datetime, timezone
+
+    return int(datetime.now(timezone.utc).strftime("%Y"))
+
+
 def _download_dff_vintage_year(fred_api_key: str, year: int) -> list[dict]:
     """One ALFRED observations page (or set of pages) for DFF within a year window.
 
@@ -89,7 +95,16 @@ def fetch_dff_vintages(fred_api_key: str, cache_dir: Path) -> pd.DataFrame:
     """Vintage frame [ref_date, realtime_start, value] for DFF, cached.
 
     Raw ALFRED JSON is cached at ``data/cache/alfred_DFF.json`` (the shared
-    ALFRED cache); a cache hit makes no HTTP call.
+    ALFRED cache). A cache hit previously returned verbatim — which froze the
+    fedfunds/real-rate display cards at whatever day the cache was first built
+    (observed 2026-09-04: tail stuck at 2026-08-25 while every other panel
+    advanced). On a hit the CURRENT year's slice is now re-downloaded and
+    merged, so new days/vintages accrue without re-pulling 2015+ history.
+
+    Contract-safe: FRED vintages are immutable (G3) and the analysis consumes
+    FIRST prints only (``dff_as_of_levels`` idxmin rule), so appended
+    later-realtime rows can never rewrite a historical as-of value — they only
+    add days that did not exist when the cache was written.
 
     DFF is a DAILY FRED series: a single ALFRED request for the full realtime
     window exceeds FRED's 2000-vintage hard cap (5093 vintages -> HTTP 400).
@@ -102,6 +117,41 @@ def fetch_dff_vintages(fred_api_key: str, cache_dir: Path) -> pd.DataFrame:
     cache_file = cache_dir / f"alfred_{DFF_SERIES_ID}.json"
     if cache_file.exists():
         payload = json.loads(cache_file.read_text())
+        if fred_api_key:
+            try:
+                current_year = max(_DFF_REALTIME_START_YEAR, _current_utc_year())
+                fresh = _download_dff_vintage_year(fred_api_key, current_year)
+                stale_keys = {
+                    (o["date"], o["realtime_start"], o.get("value"))
+                    for o in payload.get("observations", [])
+                }
+                added = [
+                    o
+                    for o in fresh
+                    if (o["date"], o["realtime_start"], o.get("value")) not in stale_keys
+                ]
+                if added:
+                    payload.setdefault("observations", []).extend(added)
+                    cache_file.write_text(json.dumps(payload))
+                    log.info(
+                        "dff_alfred_cache_tail_merged",
+                        year=current_year,
+                        added=len(added),
+                        path=str(cache_file),
+                    )
+                else:
+                    log.info("dff_alfred_cache_current", year=current_year, path=str(cache_file))
+            except Exception as exc:
+                # The cached panel stays authoritative on a FRED outage — a
+                # failed tail refresh degrades to the plain cache hit, it never
+                # kills the consumer (export/regime build) that called us.
+                log.warning(
+                    "dff_alfred_tail_refresh_failed",
+                    error=str(exc)[:160],
+                    path=str(cache_file),
+                )
+        else:
+            log.info("dff_alfred_cache_hit_no_key", path=str(cache_file))
         vintages = _vintages_frame(payload)
         log.info("dff_alfred_cache_hit", path=str(cache_file), n_obs=len(vintages))
         return vintages

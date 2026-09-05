@@ -7,14 +7,14 @@
       "latest_date": "2026-06-30",
       "meta": {
         "region": "us",
-        "n_pairs": 30774,
-        "base_rate": 0.5351,
-        "ece": 0.0072,
-        "brier": 0.2484,
+        "n_pairs": 30579,
+        "base_rate": 0.5353,
+        "ece": 0.0075,
+        "brier": 0.2483,
         "score_min": -3.402,
         "score_max": 2.881,
-        "prob_min": 0.4147,
-        "prob_max": 0.6096,
+        "prob_min": 0.415,
+        "prob_max": 0.6099,
         "method": "platt",
         "walk_forward": false
       }
@@ -23,18 +23,18 @@
       "latest_date": "2026-08-03",
       "meta": {
         "region": "cn",
-        "n_pairs": 58416,
-        "base_rate": 0.4751,
+        "n_pairs": 19755,
+        "base_rate": 0.4517,
         "ece": 0.0,
-        "brier": 0.2494,
-        "score_min": -2.441,
-        "score_max": 2.869,
-        "prob_min": 0.4388,
-        "prob_max": 0.4897,
+        "brier": 0.2477,
+        "score_min": -2.237,
+        "score_max": 2.513,
+        "prob_min": 0.4283,
+        "prob_max": 0.4612,
         "method": "platt",
         "walk_forward": false
       }
     }
   },
-  "disclaimer": "Model-readout probabilities (NOT investment advice). Method: platt calibration on historical OOS (score, realized forward-return) pairs; latest month predicted out-of-sample. Research verdict (ledger #49): combined rank-IC \u22120.0088, NULL \u2014 model discrimination is weak; calibrated probabilities cluster near the base rate. US: 30774-pair calibration, base rate 0.54, calibrated range [0.41, 0.61] (spread 0.19) | CN: 58416-pair calibration, base rate 0.48, calibrated range [0.44, 0.49] (spread 0.05)"
+  "disclaimer": "Model-readout probabilities (NOT investment advice). Method: platt calibration on historical OOS (score, realized forward-return) pairs; latest month predicted out-of-sample. Research verdict (ledger #49): combined rank-IC \u22120.0088, NULL \u2014 model discrimination is weak; calibrated probabilities cluster near the base rate. US: 30579-pair calibration, base rate 0.54, calibrated range [0.42, 0.61] (spread 0.19) | CN: 19755-pair calibration, base rate 0.45, calibrated range [0.43, 0.46] (spread 0.03)"
 }

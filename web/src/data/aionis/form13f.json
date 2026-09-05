@@ -2292,7 +2292,7 @@
           "value": 889363460.0,
           "shares": 4337512.0,
           "pct": 0.32,
-          "ticker": "EA"
+          "ticker": null
         },
         {
           "issuer": "ISHARES  TR",
@@ -5842,7 +5842,7 @@
           "value": 647312318.0,
           "shares": 9529108.0,
           "pct": 1.07,
-          "ticker": "EQR"
+          "ticker": null
         },
         {
           "issuer": "BXP INC",
@@ -14442,7 +14442,7 @@
           "value": 199091790.0,
           "shares": 970990.0,
           "pct": 2.44,
-          "ticker": "EA"
+          "ticker": null
         },
         {
           "issuer": "BILL HOLDINGS INC",
@@ -14974,7 +14974,7 @@
           "direction": "increased",
           "delta_pct": 0.54,
           "delta_value": 2195571.0,
-          "ticker": "EA"
+          "ticker": null
         },
         {
           "issuer": "JAZZ INVESTMENTS I LTD",
@@ -17248,7 +17248,7 @@
           "value": 10088057.0,
           "shares": 303309.0,
           "pct": 0.16,
-          "ticker": "LBRDA"
+          "ticker": null
         },
         {
           "issuer": "CREDIT ACCEP CORP MICH",
@@ -17278,7 +17278,7 @@
           "value": 2460890.0,
           "shares": 73945.0,
           "pct": 0.04,
-          "ticker": "LBRDA"
+          "ticker": null
         },
         {
           "issuer": "LIBERTY CAP CORP",
@@ -18940,7 +18940,7 @@
           "value": 46958261.0,
           "shares": 229020.0,
           "pct": 0.88,
-          "ticker": "EA"
+          "ticker": null
         },
         {
           "issuer": "TEXAS INSTRS INC",
@@ -19050,7 +19050,7 @@
           "value": 14873606.0,
           "shares": 447192.0,
           "pct": 0.28,
-          "ticker": "LBRDA"
+          "ticker": null
         },
         {
           "issuer": "MARATHON PETE CORP",
@@ -19412,7 +19412,7 @@
           "direction": "reduced",
           "delta_pct": -28.95,
           "delta_value": -18758622.0,
-          "ticker": "EA"
+          "ticker": null
         },
         {
           "issuer": "PENUMBRA INC",
@@ -25465,7 +25465,7 @@
       ]
     }
   ],
-  "ticker_coverage": "1268/1688",
+  "ticker_coverage": "1261/1688",
   "category_counts": {
     "quant": 6,
     "value": 10,
@@ -25476,5 +25476,5 @@
     "china_background": 4
   },
   "methodology": "SEC Form 13F-HR quarterly institutional holdings \u2014 the legally mandated public report (public domain, 17 U.S.C. \u00a7105) every institutional manager with >=US$100M discretion must file within 45 days of quarter-end. Panel shows a bounded curated subset of star managers (CIKs verified against EDGAR submissions JSON; registry re-verified on each admission, latest 2026-08-28; candidates not verifiable as actively filing \u2014 e.g. Scion, Greenlight, Omega Advisors, Pabrai \u2014 were honestly dropped), latest quarter top-10 holdings plus quarter-over-quarter frame diff (new/increased/reduced/exited on share counts, with a whole-USD value delta = current \u2212 prior quarter as-filed value; full position value on new/exited, and on increased/reduced the value sign may oppose the share move \u2014 price drift). Values are as filed in the EDGAR 2014+ information-table XML (whole USD \u2014 the 'expressed in thousands' note is the legacy HTML rendering); same-(CUSIP, class, option) tranches merged into one position; shares as filed (SH lines; option lines flagged PUT/CALL). Filing-date point-in-time; amendments supersede (latest filing per report quarter wins). Issuer\u2192ticker links are exact normalized-name matches (case/punctuation/apostrophes/legal suffixes) against the terminal's US stock universe and the SEC company_tickers snapshot (current, not as-of-filing; ambiguous multi-entity names dropped) \u2014 EDGAR infotables carry CUSIPs, not tickers, and as-filed abbreviations stay unmatched plain text. The value/growth/activist/macro/quant/china_background/other category tags are HUMAN-CURATED editorial metadata written in the fetch registry \u2014 they do NOT exist in any SEC data source. Display-only, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-08-31T11:26:26.028488+00:00"
+  "snapshot_ts": "2026-09-05T03:16:50.522245+00:00"
 }

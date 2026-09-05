@@ -568,13 +568,26 @@ def export_taco() -> None:
         {"date": "2025-04-09", "label": "Reciprocal tariffs suspended (TACO origin)", "type": "concession"},
         {"date": "2025-05-12", "label": "US-China Geneva truce (tariffs cut)", "type": "concession"},
         {"date": "2025-07-21", "label": "Multiple tariff deadlines delayed", "type": "concession"},
+        {"date": "2025-08-07", "label": "Modified reciprocal tariffs take effect (postponements end)", "type": "escalation"},
+        {"date": "2025-08-27", "label": "India penalty: +25% for Russian oil (50% total baseline)", "type": "escalation"},
+        {"date": "2025-10-01", "label": "100% branded pharma, 25% trucks, 25%/50% cabinets & furniture take effect", "type": "escalation"},
+        {"date": "2025-10-10", "label": "Threatens +100% on all Chinese imports (rare-earth dispute), effective Nov 1", "type": "escalation"},
+        {"date": "2025-10-30", "label": "Trump-Xi Busan truce: fentanyl tariff 20%->10%, rare-earth controls paused", "type": "concession"},
+        {"date": "2025-11-14", "label": "Agricultural exemptions from reciprocal tariffs (coffee, cocoa, beef, fruit)", "type": "concession"},
+        {"date": "2026-01-17", "label": "Threatens up to 25% on 8 European countries (Greenland crisis)", "type": "escalation"},
+        {"date": "2026-01-21", "label": "Europe threat retracted after 'framework of a future deal' with NATO", "type": "concession"},
+        {"date": "2026-02-02", "label": "India tariffs cut 50%->18% (Russian-oil purchases stop)", "type": "concession"},
+        {"date": "2026-02-20", "label": "After SCOTUS strikes IEEPA tariffs: universal 10% reimposed under Sec.122 (150 days)", "type": "escalation"},
+        {"date": "2026-07-24", "label": "Sec.122 expiry: new Sec.301 tariffs (10%/12.5%) on ~60 trading partners", "type": "escalation"},
     ]
     payload = {
         "methodology": (
             "Illustrative: VIX (FRED ALFRED, permissive) monthly mean from 2016-01 → "
-            "today as the market-stress proxy; the 2025 TACO events are shown against "
+            "today as the market-stress proxy; the 2025-26 TACO events are shown against "
             "the full Trump-era stress history. Event table hand-curated from public "
-            "news (FT, CNBC, ABC). Not an Aionis research claim — demonstrative."
+            "news (FT, CNBC, ABC) and the Wikipedia second-Trump-administration tariff "
+            "timeline (day-verified events only; retrieved 2026-09-04). Not an Aionis "
+            "research claim — demonstrative."
         ),
         "vix_series": vix_series,
         "events": events,
@@ -777,6 +790,15 @@ def _build_news_theme(cache_path: Path) -> dict:
         tones = [r["tone"] for r in gseries if r.get("tone") is not None]
         if not (gseries and tones):
             return honest
+        vol_latest = gseries[-1].get("volume")  # attention index 0-100; None = its query failed
+        signals = [
+            {"name": "tone_latest", "value": round(tones[-1], 3)},
+            {"name": "tone_mean", "value": round(sum(tones) / len(tones), 3)},
+            {"name": "tone_min", "value": round(min(tones), 3)},
+        ]
+        if vol_latest is not None:
+            signals.append({"name": "volume_latest", "value": round(float(vol_latest), 1)})
+        signals.append({"name": "n_months", "value": len(gseries)})
         return {
             "key": "news_sentiment",
             "status": "live",
@@ -786,13 +808,7 @@ def _build_news_theme(cache_path: Path) -> dict:
                 f"{gseries[-1]['month']}）；通用词典非金融域——"
                 "压力/情绪代理，非选股信号（display-only, exploratory）"
             ),
-            "signals": [
-                {"name": "tone_latest", "value": round(tones[-1], 3)},
-                {"name": "tone_mean", "value": round(sum(tones) / len(tones), 3)},
-                {"name": "tone_min", "value": round(min(tones), 3)},
-                {"name": "volume_latest", "value": int(gseries[-1].get("volume", 0))},
-                {"name": "n_months", "value": len(gseries)},
-            ],
+            "signals": signals,
             # sparkline: last 24 months (full history is summarized in signals)
             "series": [{"month": r["month"], "value": r["tone"]} for r in gseries[-24:]],
         }

@@ -4,487 +4,496 @@
   "min_train_months": 12,
   "regions": {
     "us": {
-      "n_months": 53,
+      "n_months": 54,
       "series": [
         {
           "month": "2022-01",
-          "n_train_pairs": 5399,
-          "n_pred": 453,
-          "ece_oos": 0.1801,
-          "base_rate": 0.4018,
-          "prob_min": 0.3753,
+          "n_train_pairs": 5363,
+          "n_pred": 450,
+          "ece_oos": 0.1785,
+          "base_rate": 0.4044,
+          "prob_min": 0.3739,
           "prob_max": 0.6533
         },
         {
           "month": "2022-02",
-          "n_train_pairs": 5852,
-          "n_pred": 454,
-          "ece_oos": 0.1924,
-          "base_rate": 0.7621,
-          "prob_min": 0.3732,
-          "prob_max": 0.6438
+          "n_train_pairs": 5813,
+          "n_pred": 451,
+          "ece_oos": 0.1932,
+          "base_rate": 0.7627,
+          "prob_min": 0.3735,
+          "prob_max": 0.6436
         },
         {
           "month": "2022-03",
-          "n_train_pairs": 6306,
-          "n_pred": 455,
-          "ece_oos": 0.367,
-          "base_rate": 0.1978,
-          "prob_min": 0.4089,
+          "n_train_pairs": 6264,
+          "n_pred": 452,
+          "ece_oos": 0.3656,
+          "base_rate": 0.1991,
+          "prob_min": 0.4092,
           "prob_max": 0.622
         },
         {
           "month": "2022-04",
-          "n_train_pairs": 6761,
-          "n_pred": 457,
-          "ece_oos": 0.0371,
-          "base_rate": 0.5624,
-          "prob_min": 0.3425,
+          "n_train_pairs": 6716,
+          "n_pred": 454,
+          "ece_oos": 0.0385,
+          "base_rate": 0.5639,
+          "prob_min": 0.3432,
           "prob_max": 0.6129
         },
         {
           "month": "2022-05",
-          "n_train_pairs": 7218,
-          "n_pred": 458,
-          "ece_oos": 0.4046,
-          "base_rate": 0.1179,
-          "prob_min": 0.2912,
-          "prob_max": 0.5806
+          "n_train_pairs": 7170,
+          "n_pred": 455,
+          "ece_oos": 0.4062,
+          "base_rate": 0.1165,
+          "prob_min": 0.2916,
+          "prob_max": 0.5808
         },
         {
           "month": "2022-06",
-          "n_train_pairs": 7676,
-          "n_pred": 463,
-          "ece_oos": 0.3999,
-          "base_rate": 0.8855,
-          "prob_min": 0.2789,
-          "prob_max": 0.5656
+          "n_train_pairs": 7625,
+          "n_pred": 460,
+          "ece_oos": 0.3968,
+          "base_rate": 0.8826,
+          "prob_min": 0.2792,
+          "prob_max": 0.5657
         },
         {
           "month": "2022-07",
-          "n_train_pairs": 8139,
-          "n_pred": 460,
-          "ece_oos": 0.1757,
-          "base_rate": 0.387,
-          "prob_min": 0.3939,
-          "prob_max": 0.6199
+          "n_train_pairs": 8085,
+          "n_pred": 457,
+          "ece_oos": 0.1773,
+          "base_rate": 0.3851,
+          "prob_min": 0.3937,
+          "prob_max": 0.6198
         },
         {
           "month": "2022-08",
-          "n_train_pairs": 8599,
-          "n_pred": 460,
-          "ece_oos": 0.4808,
-          "base_rate": 0.05,
-          "prob_min": 0.334,
-          "prob_max": 0.5961
+          "n_train_pairs": 8542,
+          "n_pred": 457,
+          "ece_oos": 0.4801,
+          "base_rate": 0.0503,
+          "prob_min": 0.3337,
+          "prob_max": 0.596
         },
         {
           "month": "2022-09",
-          "n_train_pairs": 9059,
-          "n_pred": 462,
-          "ece_oos": 0.3702,
-          "base_rate": 0.8528,
-          "prob_min": 0.2866,
-          "prob_max": 0.5583
+          "n_train_pairs": 8999,
+          "n_pred": 459,
+          "ece_oos": 0.3694,
+          "base_rate": 0.8519,
+          "prob_min": 0.2865,
+          "prob_max": 0.5582
         },
         {
           "month": "2022-10",
-          "n_train_pairs": 9521,
-          "n_pred": 463,
-          "ece_oos": 0.3138,
-          "base_rate": 0.851,
-          "prob_min": 0.3794,
-          "prob_max": 0.5991
+          "n_train_pairs": 9458,
+          "n_pred": 460,
+          "ece_oos": 0.3132,
+          "base_rate": 0.85,
+          "prob_min": 0.379,
+          "prob_max": 0.599
         },
         {
           "month": "2022-11",
-          "n_train_pairs": 9984,
-          "n_pred": 465,
-          "ece_oos": 0.3651,
-          "base_rate": 0.1892,
-          "prob_min": 0.3871,
-          "prob_max": 0.5971
+          "n_train_pairs": 9918,
+          "n_pred": 462,
+          "ece_oos": 0.3614,
+          "base_rate": 0.1926,
+          "prob_min": 0.3867,
+          "prob_max": 0.5969
         },
         {
           "month": "2022-12",
-          "n_train_pairs": 10449,
-          "n_pred": 467,
-          "ece_oos": 0.2749,
-          "base_rate": 0.8009,
-          "prob_min": 0.3834,
+          "n_train_pairs": 10380,
+          "n_pred": 464,
+          "ece_oos": 0.2781,
+          "base_rate": 0.8039,
+          "prob_min": 0.383,
           "prob_max": 0.5676
         },
         {
           "month": "2023-01",
-          "n_train_pairs": 10916,
-          "n_pred": 468,
-          "ece_oos": 0.2698,
-          "base_rate": 0.2821,
-          "prob_min": 0.4297,
-          "prob_max": 0.5949
+          "n_train_pairs": 10844,
+          "n_pred": 465,
+          "ece_oos": 0.268,
+          "base_rate": 0.2839,
+          "prob_min": 0.4293,
+          "prob_max": 0.5952
         },
         {
           "month": "2023-02",
-          "n_train_pairs": 11384,
-          "n_pred": 467,
-          "ece_oos": 0.1116,
-          "base_rate": 0.4218,
-          "prob_min": 0.4108,
-          "prob_max": 0.5785
+          "n_train_pairs": 11309,
+          "n_pred": 464,
+          "ece_oos": 0.1133,
+          "base_rate": 0.4203,
+          "prob_min": 0.4105,
+          "prob_max": 0.5788
         },
         {
           "month": "2023-03",
-          "n_train_pairs": 11851,
-          "n_pred": 470,
-          "ece_oos": 0.0926,
-          "base_rate": 0.4426,
-          "prob_min": 0.3813,
-          "prob_max": 0.5721
+          "n_train_pairs": 11773,
+          "n_pred": 467,
+          "ece_oos": 0.094,
+          "base_rate": 0.4411,
+          "prob_min": 0.3807,
+          "prob_max": 0.5723
         },
         {
           "month": "2023-04",
-          "n_train_pairs": 12321,
-          "n_pred": 469,
-          "ece_oos": 0.2658,
-          "base_rate": 0.29,
-          "prob_min": 0.4072,
-          "prob_max": 0.5736
+          "n_train_pairs": 12240,
+          "n_pred": 466,
+          "ece_oos": 0.264,
+          "base_rate": 0.2918,
+          "prob_min": 0.4069,
+          "prob_max": 0.5738
         },
         {
           "month": "2023-05",
-          "n_train_pairs": 12790,
-          "n_pred": 476,
-          "ece_oos": 0.3934,
-          "base_rate": 0.9013,
-          "prob_min": 0.401,
-          "prob_max": 0.5453
+          "n_train_pairs": 12706,
+          "n_pred": 473,
+          "ece_oos": 0.3928,
+          "base_rate": 0.9006,
+          "prob_min": 0.4007,
+          "prob_max": 0.5454
         },
         {
           "month": "2023-06",
-          "n_train_pairs": 13266,
-          "n_pred": 477,
-          "ece_oos": 0.1649,
-          "base_rate": 0.7002,
-          "prob_min": 0.4357,
-          "prob_max": 0.5667
+          "n_train_pairs": 13179,
+          "n_pred": 474,
+          "ece_oos": 0.1694,
+          "base_rate": 0.7046,
+          "prob_min": 0.4353,
+          "prob_max": 0.5669
         },
         {
           "month": "2023-07",
-          "n_train_pairs": 13743,
-          "n_pred": 477,
-          "ece_oos": 0.2736,
-          "base_rate": 0.2788,
+          "n_train_pairs": 13653,
+          "n_pred": 474,
+          "ece_oos": 0.2698,
+          "base_rate": 0.2827,
           "prob_min": 0.428,
-          "prob_max": 0.579
+          "prob_max": 0.5793
         },
         {
           "month": "2023-08",
-          "n_train_pairs": 14220,
-          "n_pred": 478,
-          "ece_oos": 0.4193,
-          "base_rate": 0.1109,
-          "prob_min": 0.4141,
-          "prob_max": 0.5566
+          "n_train_pairs": 14127,
+          "n_pred": 475,
+          "ece_oos": 0.4231,
+          "base_rate": 0.1074,
+          "prob_min": 0.4137,
+          "prob_max": 0.5571
         },
         {
           "month": "2023-09",
-          "n_train_pairs": 14698,
-          "n_pred": 480,
-          "ece_oos": 0.2742,
-          "base_rate": 0.2458,
-          "prob_min": 0.4311,
-          "prob_max": 0.5553
+          "n_train_pairs": 14602,
+          "n_pred": 477,
+          "ece_oos": 0.2749,
+          "base_rate": 0.2453,
+          "prob_min": 0.4309,
+          "prob_max": 0.5557
         },
         {
           "month": "2023-10",
-          "n_train_pairs": 15178,
-          "n_pred": 481,
-          "ece_oos": 0.353,
-          "base_rate": 0.8836,
-          "prob_min": 0.3874,
-          "prob_max": 0.5785
+          "n_train_pairs": 15079,
+          "n_pred": 478,
+          "ece_oos": 0.3521,
+          "base_rate": 0.8828,
+          "prob_min": 0.3872,
+          "prob_max": 0.5789
         },
         {
           "month": "2023-11",
-          "n_train_pairs": 15659,
-          "n_pred": 479,
-          "ece_oos": 0.3546,
-          "base_rate": 0.8706,
+          "n_train_pairs": 15557,
+          "n_pred": 476,
+          "ece_oos": 0.3579,
+          "base_rate": 0.8739,
           "prob_min": 0.3918,
-          "prob_max": 0.5543
+          "prob_max": 0.5545
         },
         {
           "month": "2023-12",
-          "n_train_pairs": 16138,
-          "n_pred": 482,
-          "ece_oos": 0.0723,
-          "base_rate": 0.4461,
+          "n_train_pairs": 16033,
+          "n_pred": 479,
+          "ece_oos": 0.0717,
+          "base_rate": 0.4468,
           "prob_min": 0.4023,
-          "prob_max": 0.5582
+          "prob_max": 0.5585
         },
         {
           "month": "2024-01",
-          "n_train_pairs": 16620,
-          "n_pred": 480,
-          "ece_oos": 0.1942,
-          "base_rate": 0.7146,
-          "prob_min": 0.3908,
-          "prob_max": 0.5604
+          "n_train_pairs": 16512,
+          "n_pred": 477,
+          "ece_oos": 0.1923,
+          "base_rate": 0.7128,
+          "prob_min": 0.3907,
+          "prob_max": 0.5607
         },
         {
           "month": "2024-02",
-          "n_train_pairs": 17100,
-          "n_pred": 480,
-          "ece_oos": 0.2335,
-          "base_rate": 0.7583,
+          "n_train_pairs": 16989,
+          "n_pred": 477,
+          "ece_oos": 0.2382,
+          "base_rate": 0.7631,
           "prob_min": 0.4051,
-          "prob_max": 0.5657
+          "prob_max": 0.566
         },
         {
           "month": "2024-03",
-          "n_train_pairs": 17580,
-          "n_pred": 484,
-          "ece_oos": 0.2603,
-          "base_rate": 0.2769,
-          "prob_min": 0.4467,
-          "prob_max": 0.5675
+          "n_train_pairs": 17466,
+          "n_pred": 481,
+          "ece_oos": 0.263,
+          "base_rate": 0.2744,
+          "prob_min": 0.4475,
+          "prob_max": 0.5678
         },
         {
           "month": "2024-04",
-          "n_train_pairs": 18064,
-          "n_pred": 484,
-          "ece_oos": 0.0501,
-          "base_rate": 0.5744,
-          "prob_min": 0.4082,
+          "n_train_pairs": 17947,
+          "n_pred": 481,
+          "ece_oos": 0.0513,
+          "base_rate": 0.5759,
+          "prob_min": 0.4097,
           "prob_max": 0.5623
         },
         {
           "month": "2024-05",
-          "n_train_pairs": 18548,
-          "n_pred": 483,
-          "ece_oos": 0.1483,
-          "base_rate": 0.3996,
-          "prob_min": 0.4403,
-          "prob_max": 0.5624
+          "n_train_pairs": 18428,
+          "n_pred": 480,
+          "ece_oos": 0.1502,
+          "base_rate": 0.3958,
+          "prob_min": 0.4415,
+          "prob_max": 0.5625
         },
         {
           "month": "2024-06",
-          "n_train_pairs": 19031,
-          "n_pred": 486,
-          "ece_oos": 0.1827,
-          "base_rate": 0.6996,
-          "prob_min": 0.405,
-          "prob_max": 0.5629
+          "n_train_pairs": 18908,
+          "n_pred": 483,
+          "ece_oos": 0.1829,
+          "base_rate": 0.6998,
+          "prob_min": 0.4064,
+          "prob_max": 0.5628
         },
         {
           "month": "2024-07",
-          "n_train_pairs": 19517,
-          "n_pred": 485,
-          "ece_oos": 0.1196,
-          "base_rate": 0.6474,
-          "prob_min": 0.4297,
+          "n_train_pairs": 19391,
+          "n_pred": 482,
+          "ece_oos": 0.1172,
+          "base_rate": 0.6452,
+          "prob_min": 0.4308,
           "prob_max": 0.5636
         },
         {
           "month": "2024-08",
-          "n_train_pairs": 20002,
-          "n_pred": 485,
-          "ece_oos": 0.096,
-          "base_rate": 0.6309,
-          "prob_min": 0.4137,
+          "n_train_pairs": 19873,
+          "n_pred": 482,
+          "ece_oos": 0.0977,
+          "base_rate": 0.6328,
+          "prob_min": 0.415,
           "prob_max": 0.5643
         },
         {
           "month": "2024-09",
-          "n_train_pairs": 20487,
-          "n_pred": 488,
-          "ece_oos": 0.1174,
-          "base_rate": 0.4631,
-          "prob_min": 0.4104,
+          "n_train_pairs": 20355,
+          "n_pred": 485,
+          "ece_oos": 0.1127,
+          "base_rate": 0.4639,
+          "prob_min": 0.4114,
           "prob_max": 0.5742
         },
         {
           "month": "2024-10",
-          "n_train_pairs": 20975,
-          "n_pred": 485,
-          "ece_oos": 0.2428,
-          "base_rate": 0.7732,
-          "prob_min": 0.4512,
-          "prob_max": 0.5723
+          "n_train_pairs": 20840,
+          "n_pred": 482,
+          "ece_oos": 0.2412,
+          "base_rate": 0.7718,
+          "prob_min": 0.4515,
+          "prob_max": 0.5725
         },
         {
           "month": "2024-11",
-          "n_train_pairs": 21460,
-          "n_pred": 486,
-          "ece_oos": 0.4249,
-          "base_rate": 0.1132,
-          "prob_min": 0.4506,
-          "prob_max": 0.5693
+          "n_train_pairs": 21322,
+          "n_pred": 483,
+          "ece_oos": 0.4244,
+          "base_rate": 0.1139,
+          "prob_min": 0.4508,
+          "prob_max": 0.5695
         },
         {
           "month": "2024-12",
-          "n_train_pairs": 21946,
-          "n_pred": 489,
-          "ece_oos": 0.1518,
-          "base_rate": 0.6748,
-          "prob_min": 0.4095,
-          "prob_max": 0.5571
+          "n_train_pairs": 21805,
+          "n_pred": 486,
+          "ece_oos": 0.1558,
+          "base_rate": 0.679,
+          "prob_min": 0.4097,
+          "prob_max": 0.5573
         },
         {
           "month": "2025-01",
-          "n_train_pairs": 22435,
-          "n_pred": 487,
-          "ece_oos": 0.1374,
-          "base_rate": 0.3901,
-          "prob_min": 0.4389,
-          "prob_max": 0.5586
+          "n_train_pairs": 22291,
+          "n_pred": 484,
+          "ece_oos": 0.1415,
+          "base_rate": 0.3864,
+          "prob_min": 0.439,
+          "prob_max": 0.5589
         },
         {
           "month": "2025-02",
-          "n_train_pairs": 22922,
-          "n_pred": 487,
-          "ece_oos": 0.2136,
-          "base_rate": 0.3162,
-          "prob_min": 0.4264,
-          "prob_max": 0.5638
+          "n_train_pairs": 22775,
+          "n_pred": 484,
+          "ece_oos": 0.2139,
+          "base_rate": 0.3161,
+          "prob_min": 0.4262,
+          "prob_max": 0.5641
         },
         {
           "month": "2025-03",
-          "n_train_pairs": 23409,
-          "n_pred": 491,
+          "n_train_pairs": 23259,
+          "n_pred": 488,
           "ece_oos": 0.1722,
           "base_rate": 0.3381,
-          "prob_min": 0.4186,
-          "prob_max": 0.5394
+          "prob_min": 0.4183,
+          "prob_max": 0.5396
         },
         {
           "month": "2025-04",
-          "n_train_pairs": 23900,
-          "n_pred": 487,
-          "ece_oos": 0.1873,
-          "base_rate": 0.7023,
-          "prob_min": 0.433,
-          "prob_max": 0.5382
+          "n_train_pairs": 23747,
+          "n_pred": 484,
+          "ece_oos": 0.1937,
+          "base_rate": 0.7087,
+          "prob_min": 0.4328,
+          "prob_max": 0.5385
         },
         {
           "month": "2025-05",
-          "n_train_pairs": 24387,
-          "n_pred": 488,
-          "ece_oos": 0.2306,
-          "base_rate": 0.7541,
+          "n_train_pairs": 24231,
+          "n_pred": 485,
+          "ece_oos": 0.2268,
+          "base_rate": 0.7505,
           "prob_min": 0.4427,
-          "prob_max": 0.548
+          "prob_max": 0.5484
         },
         {
           "month": "2025-06",
-          "n_train_pairs": 24875,
-          "n_pred": 488,
-          "ece_oos": 0.0863,
-          "base_rate": 0.6107,
-          "prob_min": 0.4414,
-          "prob_max": 0.5487
+          "n_train_pairs": 24716,
+          "n_pred": 485,
+          "ece_oos": 0.0857,
+          "base_rate": 0.6103,
+          "prob_min": 0.441,
+          "prob_max": 0.549
         },
         {
           "month": "2025-07",
-          "n_train_pairs": 25363,
-          "n_pred": 491,
-          "ece_oos": 0.1411,
+          "n_train_pairs": 25201,
+          "n_pred": 488,
+          "ece_oos": 0.1402,
           "base_rate": 0.668,
-          "prob_min": 0.4407,
-          "prob_max": 0.5486
+          "prob_min": 0.4401,
+          "prob_max": 0.5489
         },
         {
           "month": "2025-08",
-          "n_train_pairs": 25854,
-          "n_pred": 492,
-          "ece_oos": 0.0414,
-          "base_rate": 0.5061,
-          "prob_min": 0.4389,
-          "prob_max": 0.5634
+          "n_train_pairs": 25689,
+          "n_pred": 489,
+          "ece_oos": 0.0385,
+          "base_rate": 0.5092,
+          "prob_min": 0.4384,
+          "prob_max": 0.5638
         },
         {
           "month": "2025-09",
-          "n_train_pairs": 26346,
-          "n_pred": 492,
-          "ece_oos": 0.1543,
-          "base_rate": 0.3902,
-          "prob_min": 0.4796,
-          "prob_max": 0.5573
+          "n_train_pairs": 26178,
+          "n_pred": 489,
+          "ece_oos": 0.1522,
+          "base_rate": 0.3906,
+          "prob_min": 0.4795,
+          "prob_max": 0.5577
         },
         {
           "month": "2025-10",
-          "n_train_pairs": 26838,
-          "n_pred": 492,
-          "ece_oos": 0.0647,
-          "base_rate": 0.5976,
-          "prob_min": 0.4475,
-          "prob_max": 0.5581
+          "n_train_pairs": 26667,
+          "n_pred": 489,
+          "ece_oos": 0.0641,
+          "base_rate": 0.5971,
+          "prob_min": 0.4474,
+          "prob_max": 0.5584
         },
         {
           "month": "2025-11",
-          "n_train_pairs": 27330,
-          "n_pred": 492,
-          "ece_oos": 0.0561,
-          "base_rate": 0.5528,
+          "n_train_pairs": 27156,
+          "n_pred": 489,
+          "ece_oos": 0.0595,
+          "base_rate": 0.5542,
           "prob_min": 0.4686,
-          "prob_max": 0.5477
+          "prob_max": 0.548
         },
         {
           "month": "2025-12",
-          "n_train_pairs": 27822,
-          "n_pred": 492,
-          "ece_oos": 0.1316,
-          "base_rate": 0.6646,
-          "prob_min": 0.4588,
-          "prob_max": 0.5528
+          "n_train_pairs": 27645,
+          "n_pred": 489,
+          "ece_oos": 0.1334,
+          "base_rate": 0.6667,
+          "prob_min": 0.459,
+          "prob_max": 0.553
         },
         {
           "month": "2026-01",
-          "n_train_pairs": 28314,
-          "n_pred": 492,
-          "ece_oos": 0.0495,
-          "base_rate": 0.5874,
-          "prob_min": 0.4577,
-          "prob_max": 0.5676
+          "n_train_pairs": 28134,
+          "n_pred": 489,
+          "ece_oos": 0.0488,
+          "base_rate": 0.5869,
+          "prob_min": 0.4579,
+          "prob_max": 0.5679
         },
         {
           "month": "2026-02",
-          "n_train_pairs": 28806,
-          "n_pred": 492,
-          "ece_oos": 0.4034,
-          "base_rate": 0.128,
-          "prob_min": 0.4601,
-          "prob_max": 0.5586
+          "n_train_pairs": 28623,
+          "n_pred": 489,
+          "ece_oos": 0.4049,
+          "base_rate": 0.1268,
+          "prob_min": 0.4603,
+          "prob_max": 0.5589
         },
         {
           "month": "2026-03",
-          "n_train_pairs": 29298,
-          "n_pred": 492,
-          "ece_oos": 0.15,
-          "base_rate": 0.6728,
-          "prob_min": 0.4292,
-          "prob_max": 0.5573
+          "n_train_pairs": 29112,
+          "n_pred": 489,
+          "ece_oos": 0.154,
+          "base_rate": 0.6769,
+          "prob_min": 0.4295,
+          "prob_max": 0.5575
         },
         {
           "month": "2026-04",
-          "n_train_pairs": 29790,
-          "n_pred": 492,
-          "ece_oos": 0.0926,
-          "base_rate": 0.4309,
-          "prob_min": 0.4394,
-          "prob_max": 0.5538
+          "n_train_pairs": 29601,
+          "n_pred": 489,
+          "ece_oos": 0.0923,
+          "base_rate": 0.4315,
+          "prob_min": 0.4397,
+          "prob_max": 0.5541
         },
         {
           "month": "2026-05",
-          "n_train_pairs": 30282,
-          "n_pred": 492,
-          "ece_oos": 0.115,
-          "base_rate": 0.6362,
-          "prob_min": 0.4351,
-          "prob_max": 0.5526
+          "n_train_pairs": 30090,
+          "n_pred": 489,
+          "ece_oos": 0.1144,
+          "base_rate": 0.636,
+          "prob_min": 0.4357,
+          "prob_max": 0.5528
+        },
+        {
+          "month": "2026-06",
+          "n_train_pairs": 30579,
+          "n_pred": 489,
+          "ece_oos": 0.1215,
+          "base_rate": 0.636,
+          "prob_min": 0.4575,
+          "prob_max": 0.5501
         }
       ],
-      "pooled_ece": 0.0369,
+      "pooled_ece": 0.0348,
       "pooled_reliability": [
         {
           "bin_lo": 0.0,
@@ -503,37 +512,37 @@
         {
           "bin_lo": 0.2,
           "bin_hi": 0.3,
-          "pred_mean": 0.2856,
+          "pred_mean": 0.2858,
           "emp_freq": 0.6667,
           "n": 3
         },
         {
           "bin_lo": 0.3,
           "bin_hi": 0.4,
-          "pred_mean": 0.3687,
-          "emp_freq": 0.6328,
-          "n": 128
+          "pred_mean": 0.3689,
+          "emp_freq": 0.6357,
+          "n": 129
         },
         {
           "bin_lo": 0.4,
           "bin_hi": 0.5,
-          "pred_mean": 0.4751,
-          "emp_freq": 0.5645,
-          "n": 3566
+          "pred_mean": 0.4754,
+          "emp_freq": 0.566,
+          "n": 3673
         },
         {
           "bin_lo": 0.5,
           "bin_hi": 0.6,
-          "pred_mean": 0.5392,
-          "emp_freq": 0.5139,
-          "n": 21277
+          "pred_mean": 0.5391,
+          "emp_freq": 0.5166,
+          "n": 21505
         },
         {
           "bin_lo": 0.6,
           "bin_hi": 0.7,
           "pred_mean": 0.6135,
-          "emp_freq": 0.5037,
-          "n": 401
+          "emp_freq": 0.5038,
+          "n": 395
         },
         {
           "bin_lo": 0.7,
@@ -563,492 +572,492 @@
       "series": [
         {
           "month": "2022-01",
-          "n_train_pairs": 10538,
-          "n_pred": 888,
-          "ece_oos": 0.0717,
-          "base_rate": 0.5608,
-          "prob_min": 0.3058,
-          "prob_max": 0.5751
+          "n_train_pairs": 3588,
+          "n_pred": 300,
+          "ece_oos": 0.1133,
+          "base_rate": 0.3533,
+          "prob_min": 0.2893,
+          "prob_max": 0.4898
         },
         {
           "month": "2022-02",
-          "n_train_pairs": 11426,
-          "n_pred": 887,
-          "ece_oos": 0.2939,
-          "base_rate": 0.1995,
-          "prob_min": 0.3507,
-          "prob_max": 0.5587
+          "n_train_pairs": 3888,
+          "n_pred": 300,
+          "ece_oos": 0.2926,
+          "base_rate": 0.1333,
+          "prob_min": 0.3246,
+          "prob_max": 0.4632
         },
         {
           "month": "2022-03",
-          "n_train_pairs": 12313,
-          "n_pred": 883,
-          "ece_oos": 0.323,
-          "base_rate": 0.1506,
-          "prob_min": 0.3117,
-          "prob_max": 0.531
+          "n_train_pairs": 4188,
+          "n_pred": 299,
+          "ece_oos": 0.2018,
+          "base_rate": 0.204,
+          "prob_min": 0.3277,
+          "prob_max": 0.4387
         },
         {
           "month": "2022-04",
-          "n_train_pairs": 13196,
-          "n_pred": 887,
-          "ece_oos": 0.3293,
-          "base_rate": 0.77,
-          "prob_min": 0.284,
-          "prob_max": 0.5187
+          "n_train_pairs": 4487,
+          "n_pred": 300,
+          "ece_oos": 0.2352,
+          "base_rate": 0.6233,
+          "prob_min": 0.304,
+          "prob_max": 0.4259
         },
         {
           "month": "2022-05",
-          "n_train_pairs": 14083,
-          "n_pred": 888,
-          "ece_oos": 0.1952,
-          "base_rate": 0.67,
-          "prob_min": 0.3927,
-          "prob_max": 0.5138
+          "n_train_pairs": 4787,
+          "n_pred": 300,
+          "ece_oos": 0.3668,
+          "base_rate": 0.7733,
+          "prob_min": 0.3718,
+          "prob_max": 0.4257
         },
         {
           "month": "2022-06",
-          "n_train_pairs": 14971,
-          "n_pred": 890,
-          "ece_oos": 0.1923,
-          "base_rate": 0.2944,
-          "prob_min": 0.4054,
-          "prob_max": 0.5223
+          "n_train_pairs": 5087,
+          "n_pred": 300,
+          "ece_oos": 0.2733,
+          "base_rate": 0.1633,
+          "prob_min": 0.3899,
+          "prob_max": 0.4459
         },
         {
           "month": "2022-07",
-          "n_train_pairs": 15861,
-          "n_pred": 892,
-          "ece_oos": 0.0627,
-          "base_rate": 0.4193,
-          "prob_min": 0.404,
-          "prob_max": 0.5069
+          "n_train_pairs": 5387,
+          "n_pred": 300,
+          "ece_oos": 0.0723,
+          "base_rate": 0.3433,
+          "prob_min": 0.3794,
+          "prob_max": 0.4252
         },
         {
           "month": "2022-08",
-          "n_train_pairs": 16753,
-          "n_pred": 893,
-          "ece_oos": 0.3467,
-          "base_rate": 0.1299,
-          "prob_min": 0.3874,
-          "prob_max": 0.4935
+          "n_train_pairs": 5687,
+          "n_pred": 300,
+          "ece_oos": 0.2411,
+          "base_rate": 0.17,
+          "prob_min": 0.3669,
+          "prob_max": 0.4214
         },
         {
           "month": "2022-09",
-          "n_train_pairs": 17646,
-          "n_pred": 893,
-          "ece_oos": 0.2555,
-          "base_rate": 0.7167,
-          "prob_min": 0.4069,
-          "prob_max": 0.4759
+          "n_train_pairs": 5987,
+          "n_pred": 300,
+          "ece_oos": 0.2256,
+          "base_rate": 0.6267,
+          "prob_min": 0.3789,
+          "prob_max": 0.4092
         },
         {
           "month": "2022-10",
-          "n_train_pairs": 18539,
-          "n_pred": 894,
-          "ece_oos": 0.3911,
-          "base_rate": 0.8624,
-          "prob_min": 0.4089,
-          "prob_max": 0.4933
+          "n_train_pairs": 6287,
+          "n_pred": 300,
+          "ece_oos": 0.4092,
+          "base_rate": 0.82,
+          "prob_min": 0.3667,
+          "prob_max": 0.4247
         },
         {
           "month": "2022-11",
-          "n_train_pairs": 19433,
-          "n_pred": 895,
-          "ece_oos": 0.2565,
-          "base_rate": 0.2324,
-          "prob_min": 0.4241,
-          "prob_max": 0.5118
+          "n_train_pairs": 6587,
+          "n_pred": 300,
+          "ece_oos": 0.1018,
+          "base_rate": 0.3267,
+          "prob_min": 0.3766,
+          "prob_max": 0.445
         },
         {
           "month": "2022-12",
-          "n_train_pairs": 20328,
-          "n_pred": 896,
-          "ece_oos": 0.3488,
-          "base_rate": 0.8292,
-          "prob_min": 0.3778,
-          "prob_max": 0.5032
+          "n_train_pairs": 6887,
+          "n_pred": 300,
+          "ece_oos": 0.371,
+          "base_rate": 0.7967,
+          "prob_min": 0.3754,
+          "prob_max": 0.4401
         },
         {
           "month": "2023-01",
-          "n_train_pairs": 21224,
-          "n_pred": 897,
-          "ece_oos": 0.1651,
-          "base_rate": 0.6622,
-          "prob_min": 0.4157,
-          "prob_max": 0.5266
+          "n_train_pairs": 7187,
+          "n_pred": 300,
+          "ece_oos": 0.0902,
+          "base_rate": 0.5267,
+          "prob_min": 0.3929,
+          "prob_max": 0.4554
         },
         {
           "month": "2023-02",
-          "n_train_pairs": 22121,
-          "n_pred": 899,
-          "ece_oos": 0.1594,
-          "base_rate": 0.3448,
-          "prob_min": 0.3924,
-          "prob_max": 0.5353
+          "n_train_pairs": 7487,
+          "n_pred": 300,
+          "ece_oos": 0.1111,
+          "base_rate": 0.3533,
+          "prob_min": 0.3762,
+          "prob_max": 0.4732
         },
         {
           "month": "2023-03",
-          "n_train_pairs": 23020,
-          "n_pred": 897,
-          "ece_oos": 0.0653,
-          "base_rate": 0.4582,
-          "prob_min": 0.4136,
-          "prob_max": 0.5294
+          "n_train_pairs": 7787,
+          "n_pred": 300,
+          "ece_oos": 0.0437,
+          "base_rate": 0.4033,
+          "prob_min": 0.382,
+          "prob_max": 0.4664
         },
         {
           "month": "2023-04",
-          "n_train_pairs": 23917,
-          "n_pred": 892,
-          "ece_oos": 0.1885,
-          "base_rate": 0.3072,
-          "prob_min": 0.3992,
-          "prob_max": 0.5289
+          "n_train_pairs": 8087,
+          "n_pred": 300,
+          "ece_oos": 0.2024,
+          "base_rate": 0.2367,
+          "prob_min": 0.384,
+          "prob_max": 0.4623
         },
         {
           "month": "2023-05",
-          "n_train_pairs": 24809,
-          "n_pred": 892,
-          "ece_oos": 0.0127,
-          "base_rate": 0.4966,
-          "prob_min": 0.4025,
-          "prob_max": 0.5218
+          "n_train_pairs": 8387,
+          "n_pred": 300,
+          "ece_oos": 0.1336,
+          "base_rate": 0.56,
+          "prob_min": 0.3799,
+          "prob_max": 0.4495
         },
         {
           "month": "2023-06",
-          "n_train_pairs": 25701,
-          "n_pred": 893,
-          "ece_oos": 0.2034,
-          "base_rate": 0.6932,
-          "prob_min": 0.3959,
-          "prob_max": 0.5122
+          "n_train_pairs": 8687,
+          "n_pred": 300,
+          "ece_oos": 0.2805,
+          "base_rate": 0.72,
+          "prob_min": 0.3769,
+          "prob_max": 0.4551
         },
         {
           "month": "2023-07",
-          "n_train_pairs": 26594,
-          "n_pred": 893,
-          "ece_oos": 0.3207,
-          "base_rate": 0.1781,
-          "prob_min": 0.4034,
-          "prob_max": 0.5268
+          "n_train_pairs": 8987,
+          "n_pred": 300,
+          "ece_oos": 0.3056,
+          "base_rate": 0.15,
+          "prob_min": 0.3722,
+          "prob_max": 0.4762
         },
         {
           "month": "2023-08",
-          "n_train_pairs": 27487,
-          "n_pred": 893,
-          "ece_oos": 0.105,
-          "base_rate": 0.3796,
-          "prob_min": 0.4013,
-          "prob_max": 0.5199
+          "n_train_pairs": 9287,
+          "n_pred": 300,
+          "ece_oos": 0.0767,
+          "base_rate": 0.36,
+          "prob_min": 0.3931,
+          "prob_max": 0.458
         },
         {
           "month": "2023-09",
-          "n_train_pairs": 28380,
-          "n_pred": 892,
-          "ece_oos": 0.1329,
-          "base_rate": 0.3621,
-          "prob_min": 0.4091,
-          "prob_max": 0.5203
+          "n_train_pairs": 9587,
+          "n_pred": 300,
+          "ece_oos": 0.0674,
+          "base_rate": 0.38,
+          "prob_min": 0.3764,
+          "prob_max": 0.4623
         },
         {
           "month": "2023-10",
-          "n_train_pairs": 29272,
-          "n_pred": 894,
-          "ece_oos": 0.0281,
-          "base_rate": 0.4519,
-          "prob_min": 0.4121,
-          "prob_max": 0.5035
+          "n_train_pairs": 9887,
+          "n_pred": 300,
+          "ece_oos": 0.1479,
+          "base_rate": 0.2867,
+          "prob_min": 0.3778,
+          "prob_max": 0.4503
         },
         {
           "month": "2023-11",
-          "n_train_pairs": 30166,
-          "n_pred": 892,
-          "ece_oos": 0.1953,
-          "base_rate": 0.2814,
-          "prob_min": 0.4287,
-          "prob_max": 0.4996
+          "n_train_pairs": 10187,
+          "n_pred": 300,
+          "ece_oos": 0.1025,
+          "base_rate": 0.3267,
+          "prob_min": 0.3974,
+          "prob_max": 0.4392
         },
         {
           "month": "2023-12",
-          "n_train_pairs": 31058,
-          "n_pred": 892,
-          "ece_oos": 0.225,
-          "base_rate": 0.2478,
-          "prob_min": 0.4185,
-          "prob_max": 0.4907
+          "n_train_pairs": 10487,
+          "n_pred": 300,
+          "ece_oos": 0.114,
+          "base_rate": 0.3133,
+          "prob_min": 0.3858,
+          "prob_max": 0.4374
         },
         {
           "month": "2024-01",
-          "n_train_pairs": 31950,
-          "n_pred": 893,
-          "ece_oos": 0.3917,
-          "base_rate": 0.8499,
-          "prob_min": 0.3989,
-          "prob_max": 0.4828
+          "n_train_pairs": 10787,
+          "n_pred": 300,
+          "ece_oos": 0.52,
+          "base_rate": 0.94,
+          "prob_min": 0.364,
+          "prob_max": 0.4396
         },
         {
           "month": "2024-02",
-          "n_train_pairs": 32843,
-          "n_pred": 892,
-          "ece_oos": 0.0238,
-          "base_rate": 0.4484,
-          "prob_min": 0.4337,
-          "prob_max": 0.4877
+          "n_train_pairs": 11087,
+          "n_pred": 300,
+          "ece_oos": 0.0145,
+          "base_rate": 0.4233,
+          "prob_min": 0.3974,
+          "prob_max": 0.4462
         },
         {
           "month": "2024-03",
-          "n_train_pairs": 33735,
-          "n_pred": 890,
-          "ece_oos": 0.1651,
-          "base_rate": 0.6371,
-          "prob_min": 0.4321,
-          "prob_max": 0.4827
+          "n_train_pairs": 11387,
+          "n_pred": 300,
+          "ece_oos": 0.2225,
+          "base_rate": 0.6567,
+          "prob_min": 0.3957,
+          "prob_max": 0.4455
         },
         {
           "month": "2024-04",
-          "n_train_pairs": 34625,
-          "n_pred": 883,
-          "ece_oos": 0.1498,
-          "base_rate": 0.3239,
-          "prob_min": 0.4419,
-          "prob_max": 0.4902
+          "n_train_pairs": 11687,
+          "n_pred": 300,
+          "ece_oos": 0.0164,
+          "base_rate": 0.4233,
+          "prob_min": 0.404,
+          "prob_max": 0.451
         },
         {
           "month": "2024-05",
-          "n_train_pairs": 35508,
-          "n_pred": 888,
-          "ece_oos": 0.2905,
-          "base_rate": 0.1802,
-          "prob_min": 0.43,
-          "prob_max": 0.4891
+          "n_train_pairs": 11987,
+          "n_pred": 300,
+          "ece_oos": 0.1716,
+          "base_rate": 0.27,
+          "prob_min": 0.3999,
+          "prob_max": 0.4502
         },
         {
           "month": "2024-06",
-          "n_train_pairs": 36396,
-          "n_pred": 885,
-          "ece_oos": 0.1121,
-          "base_rate": 0.3503,
-          "prob_min": 0.408,
-          "prob_max": 0.477
+          "n_train_pairs": 12287,
+          "n_pred": 299,
+          "ece_oos": 0.0762,
+          "base_rate": 0.3612,
+          "prob_min": 0.394,
+          "prob_max": 0.4443
         },
         {
           "month": "2024-07",
-          "n_train_pairs": 37281,
-          "n_pred": 884,
-          "ece_oos": 0.3227,
-          "base_rate": 0.138,
-          "prob_min": 0.4138,
-          "prob_max": 0.4723
+          "n_train_pairs": 12586,
+          "n_pred": 298,
+          "ece_oos": 0.2814,
+          "base_rate": 0.151,
+          "prob_min": 0.4053,
+          "prob_max": 0.4406
         },
         {
           "month": "2024-08",
-          "n_train_pairs": 38165,
-          "n_pred": 883,
-          "ece_oos": 0.505,
-          "base_rate": 0.9604,
-          "prob_min": 0.3921,
-          "prob_max": 0.4675
+          "n_train_pairs": 12884,
+          "n_pred": 297,
+          "ece_oos": 0.5096,
+          "base_rate": 0.936,
+          "prob_min": 0.387,
+          "prob_max": 0.4356
         },
         {
           "month": "2024-09",
-          "n_train_pairs": 39048,
-          "n_pred": 883,
-          "ece_oos": 0.121,
-          "base_rate": 0.5798,
-          "prob_min": 0.4071,
-          "prob_max": 0.4832
+          "n_train_pairs": 13181,
+          "n_pred": 298,
+          "ece_oos": 0.007,
+          "base_rate": 0.443,
+          "prob_min": 0.4168,
+          "prob_max": 0.4455
         },
         {
           "month": "2024-10",
-          "n_train_pairs": 39931,
-          "n_pred": 883,
-          "ece_oos": 0.0489,
-          "base_rate": 0.5153,
-          "prob_min": 0.4322,
-          "prob_max": 0.4806
+          "n_train_pairs": 13479,
+          "n_pred": 300,
+          "ece_oos": 0.059,
+          "base_rate": 0.4967,
+          "prob_min": 0.4191,
+          "prob_max": 0.4468
         },
         {
           "month": "2024-11",
-          "n_train_pairs": 40814,
-          "n_pred": 883,
-          "ece_oos": 0.0369,
-          "base_rate": 0.4326,
-          "prob_min": 0.4342,
-          "prob_max": 0.4868
+          "n_train_pairs": 13779,
+          "n_pred": 299,
+          "ece_oos": 0.0687,
+          "base_rate": 0.5084,
+          "prob_min": 0.4229,
+          "prob_max": 0.4472
         },
         {
           "month": "2024-12",
-          "n_train_pairs": 41697,
-          "n_pred": 884,
-          "ece_oos": 0.1164,
-          "base_rate": 0.3518,
-          "prob_min": 0.4187,
-          "prob_max": 0.4791
+          "n_train_pairs": 14078,
+          "n_pred": 297,
+          "ece_oos": 0.0867,
+          "base_rate": 0.3535,
+          "prob_min": 0.4068,
+          "prob_max": 0.4471
         },
         {
           "month": "2025-01",
-          "n_train_pairs": 42581,
-          "n_pred": 885,
-          "ece_oos": 0.1471,
-          "base_rate": 0.6136,
-          "prob_min": 0.4097,
-          "prob_max": 0.4775
+          "n_train_pairs": 14375,
+          "n_pred": 298,
+          "ece_oos": 0.1199,
+          "base_rate": 0.5604,
+          "prob_min": 0.4061,
+          "prob_max": 0.4495
         },
         {
           "month": "2025-02",
-          "n_train_pairs": 43466,
-          "n_pred": 886,
-          "ece_oos": 0.0001,
-          "base_rate": 0.4718,
-          "prob_min": 0.4395,
-          "prob_max": 0.481
+          "n_train_pairs": 14673,
+          "n_pred": 299,
+          "ece_oos": 0.0172,
+          "base_rate": 0.4615,
+          "prob_min": 0.4137,
+          "prob_max": 0.4517
         },
         {
           "month": "2025-03",
-          "n_train_pairs": 44352,
-          "n_pred": 882,
-          "ece_oos": 0.2092,
-          "base_rate": 0.2608,
-          "prob_min": 0.4348,
-          "prob_max": 0.4768
+          "n_train_pairs": 14972,
+          "n_pred": 300,
+          "ece_oos": 0.1556,
+          "base_rate": 0.2867,
+          "prob_min": 0.4124,
+          "prob_max": 0.4483
         },
         {
           "month": "2025-04",
-          "n_train_pairs": 45234,
-          "n_pred": 879,
-          "ece_oos": 0.2327,
-          "base_rate": 0.6985,
-          "prob_min": 0.4259,
-          "prob_max": 0.4749
+          "n_train_pairs": 15272,
+          "n_pred": 298,
+          "ece_oos": 0.2116,
+          "base_rate": 0.651,
+          "prob_min": 0.4128,
+          "prob_max": 0.4449
         },
         {
           "month": "2025-05",
-          "n_train_pairs": 46113,
-          "n_pred": 880,
-          "ece_oos": 0.1507,
-          "base_rate": 0.6216,
-          "prob_min": 0.4409,
-          "prob_max": 0.4787
+          "n_train_pairs": 15570,
+          "n_pred": 298,
+          "ece_oos": 0.177,
+          "base_rate": 0.6208,
+          "prob_min": 0.4214,
+          "prob_max": 0.4489
         },
         {
           "month": "2025-06",
-          "n_train_pairs": 46993,
-          "n_pred": 882,
-          "ece_oos": 0.3491,
-          "base_rate": 0.8231,
-          "prob_min": 0.4399,
-          "prob_max": 0.4836
+          "n_train_pairs": 15868,
+          "n_pred": 300,
+          "ece_oos": 0.3027,
+          "base_rate": 0.75,
+          "prob_min": 0.4196,
+          "prob_max": 0.4535
         },
         {
           "month": "2025-07",
-          "n_train_pairs": 47875,
-          "n_pred": 880,
-          "ece_oos": 0.2916,
-          "base_rate": 0.7727,
-          "prob_min": 0.4438,
-          "prob_max": 0.4924
+          "n_train_pairs": 16168,
+          "n_pred": 299,
+          "ece_oos": 0.3227,
+          "base_rate": 0.7759,
+          "prob_min": 0.4224,
+          "prob_max": 0.4629
         },
         {
           "month": "2025-08",
-          "n_train_pairs": 48755,
-          "n_pred": 881,
-          "ece_oos": 0.1046,
-          "base_rate": 0.3802,
-          "prob_min": 0.44,
-          "prob_max": 0.4946
+          "n_train_pairs": 16467,
+          "n_pred": 300,
+          "ece_oos": 0.0508,
+          "base_rate": 0.4067,
+          "prob_min": 0.4196,
+          "prob_max": 0.4669
         },
         {
           "month": "2025-09",
-          "n_train_pairs": 49636,
-          "n_pred": 882,
-          "ece_oos": 0.0907,
-          "base_rate": 0.5748,
-          "prob_min": 0.4526,
-          "prob_max": 0.4944
+          "n_train_pairs": 16767,
+          "n_pred": 300,
+          "ece_oos": 0.0555,
+          "base_rate": 0.5133,
+          "prob_min": 0.4354,
+          "prob_max": 0.4645
         },
         {
           "month": "2025-10",
-          "n_train_pairs": 50518,
-          "n_pred": 877,
-          "ece_oos": 0.1481,
-          "base_rate": 0.3375,
-          "prob_min": 0.443,
-          "prob_max": 0.4962
+          "n_train_pairs": 17067,
+          "n_pred": 298,
+          "ece_oos": 0.1393,
+          "base_rate": 0.3188,
+          "prob_min": 0.4293,
+          "prob_max": 0.4668
         },
         {
           "month": "2025-11",
-          "n_train_pairs": 51395,
-          "n_pred": 877,
-          "ece_oos": 0.0195,
-          "base_rate": 0.5006,
-          "prob_min": 0.4384,
-          "prob_max": 0.4892
+          "n_train_pairs": 17365,
+          "n_pred": 297,
+          "ece_oos": 0.0886,
+          "base_rate": 0.5421,
+          "prob_min": 0.4209,
+          "prob_max": 0.462
         },
         {
           "month": "2025-12",
-          "n_train_pairs": 52272,
-          "n_pred": 878,
-          "ece_oos": 0.075,
-          "base_rate": 0.5569,
-          "prob_min": 0.4501,
-          "prob_max": 0.491
+          "n_train_pairs": 17662,
+          "n_pred": 298,
+          "ece_oos": 0.0693,
+          "base_rate": 0.3859,
+          "prob_min": 0.4314,
+          "prob_max": 0.4644
         },
         {
           "month": "2026-01",
-          "n_train_pairs": 53150,
-          "n_pred": 879,
-          "ece_oos": 0.069,
-          "base_rate": 0.413,
-          "prob_min": 0.438,
-          "prob_max": 0.4913
+          "n_train_pairs": 17960,
+          "n_pred": 299,
+          "ece_oos": 0.0429,
+          "base_rate": 0.4114,
+          "prob_min": 0.4156,
+          "prob_max": 0.4634
         },
         {
           "month": "2026-02",
-          "n_train_pairs": 54029,
-          "n_pred": 878,
-          "ece_oos": 0.2687,
-          "base_rate": 0.213,
-          "prob_min": 0.4485,
-          "prob_max": 0.4954
+          "n_train_pairs": 18259,
+          "n_pred": 299,
+          "ece_oos": 0.19,
+          "base_rate": 0.2642,
+          "prob_min": 0.4258,
+          "prob_max": 0.4672
         },
         {
           "month": "2026-03",
-          "n_train_pairs": 54907,
-          "n_pred": 875,
-          "ece_oos": 0.0993,
-          "base_rate": 0.5749,
-          "prob_min": 0.4396,
-          "prob_max": 0.4921
+          "n_train_pairs": 18558,
+          "n_pred": 299,
+          "ece_oos": 0.1329,
+          "base_rate": 0.5819,
+          "prob_min": 0.4199,
+          "prob_max": 0.462
         },
         {
           "month": "2026-04",
-          "n_train_pairs": 55782,
-          "n_pred": 876,
-          "ece_oos": 0.2312,
-          "base_rate": 0.2466,
-          "prob_min": 0.4484,
-          "prob_max": 0.491
+          "n_train_pairs": 18857,
+          "n_pred": 299,
+          "ece_oos": 0.1572,
+          "base_rate": 0.2943,
+          "prob_min": 0.429,
+          "prob_max": 0.4593
         },
         {
           "month": "2026-05",
-          "n_train_pairs": 56658,
-          "n_pred": 879,
-          "ece_oos": 0.2754,
-          "base_rate": 0.1991,
-          "prob_min": 0.4475,
-          "prob_max": 0.4827
+          "n_train_pairs": 19156,
+          "n_pred": 300,
+          "ece_oos": 0.2137,
+          "base_rate": 0.2367,
+          "prob_min": 0.4325,
+          "prob_max": 0.456
         },
         {
           "month": "2026-06",
-          "n_train_pairs": 57537,
-          "n_pred": 879,
-          "ece_oos": 0.1948,
-          "base_rate": 0.6633,
-          "prob_min": 0.4377,
-          "prob_max": 0.4798
+          "n_train_pairs": 19456,
+          "n_pred": 299,
+          "ece_oos": 0.1796,
+          "base_rate": 0.6254,
+          "prob_min": 0.4271,
+          "prob_max": 0.4537
         }
       ],
-      "pooled_ece": 0.0196,
+      "pooled_ece": 0.0192,
       "pooled_reliability": [
         {
           "bin_lo": 0.0,
@@ -1067,30 +1076,30 @@
         {
           "bin_lo": 0.2,
           "bin_hi": 0.3,
-          "pred_mean": 0.2926,
+          "pred_mean": 0.2893,
           "emp_freq": 1.0,
-          "n": 3
+          "n": 1
         },
         {
           "bin_lo": 0.3,
           "bin_hi": 0.4,
-          "pred_mean": 0.3757,
-          "emp_freq": 0.7067,
-          "n": 208
+          "pred_mean": 0.3855,
+          "emp_freq": 0.5429,
+          "n": 746
         },
         {
           "bin_lo": 0.4,
           "bin_hi": 0.5,
-          "pred_mean": 0.474,
-          "emp_freq": 0.4793,
-          "n": 42658
+          "pred_mean": 0.4387,
+          "emp_freq": 0.4512,
+          "n": 15420
         },
         {
           "bin_lo": 0.5,
           "bin_hi": 0.6,
-          "pred_mean": 0.5094,
-          "emp_freq": 0.3819,
-          "n": 5009
+          "pred_mean": null,
+          "emp_freq": null,
+          "n": 0
         },
         {
           "bin_lo": 0.6,

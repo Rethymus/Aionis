@@ -39,6 +39,19 @@ def test_parse_multi_series_collapses_to_one_row_per_date() -> None:
     assert rows == [{"date": "20170503", "tone": -3.5, "volume": 1200}]
 
 
+def test_parse_volume_intensity_series_maps_to_volume() -> None:
+    # timelinevol mode's series name is "Volume Intensity" — it must land in the
+    # volume field (float-valued: it is an index, not a raw count).
+    payload = {
+        "timeline": [
+            {"series": "Average Tone", "data": [{"date": "20170503", "value": 1.5}]},
+            {"series": "Volume Intensity", "data": [{"date": "20170503", "value": 12.7}]},
+        ]
+    }
+    rows = parse_timelinetone(payload)
+    assert rows == [{"date": "20170503", "tone": 1.5, "volume": 12.7}]
+
+
 def test_parse_empty_payload_returns_empty() -> None:
     assert parse_timelinetone({}) == []
     assert parse_timelinetone({"timeline": []}) == []
@@ -65,16 +78,20 @@ def test_parse_skips_missing_values_and_dateless_points() -> None:
 # --- monthly aggregator ------------------------------------------------------
 
 
-def test_aggregate_groups_by_yyyymm_tone_mean_volume_sum() -> None:
+def test_aggregate_groups_by_yyyymm_tone_mean_volume_mean() -> None:
+    # volume is GDELT's Volume Intensity (0-100 attention index): monthly
+    # aggregation is a MEAN (summing an index is meaningless). The old
+    # sum-of-counts semantics rode on a series timelinetone never returned —
+    # the panel's volume sat at a constant 0 for its whole history.
     rows = [
-        {"date": "20170503", "tone": -3.0, "volume": 100},
-        {"date": "20170510", "tone": -1.0, "volume": 200},
-        {"date": "20170601", "tone": 2.0, "volume": 50},
+        {"date": "20170503", "tone": -3.0, "volume": 10.0},
+        {"date": "20170510", "tone": -1.0, "volume": 30.0},
+        {"date": "20170601", "tone": 2.0, "volume": 50.0},
     ]
     out = aggregate_monthly(rows)
     assert out == [
-        {"month": "2017-05", "tone": -2.0, "volume": 300, "n": 2},
-        {"month": "2017-06", "tone": 2.0, "volume": 50, "n": 1},
+        {"month": "2017-05", "tone": -2.0, "volume": 20.0, "n": 2},
+        {"month": "2017-06", "tone": 2.0, "volume": 50.0, "n": 1},
     ]
 
 
@@ -96,6 +113,23 @@ def test_merge_new_wins_on_duplicate_month() -> None:
     new = [{"month": "2017-05", "tone": -2.0, "volume": 300, "n": 2}]
     merged = merge_series(cached, new)
     assert merged == [{"month": "2017-05", "tone": -2.0, "volume": 300, "n": 2}]
+
+
+def test_merge_volume_none_inherits_cached_volume() -> None:
+    # A tone-only refresh (its volume query 429'd) must NOT erase a previously
+    # fetched attention reading — missing observation ≠ zero attention.
+    cached = [{"month": "2026-08", "tone": 0.41, "volume": 37.5, "n": 28}]
+    new = [{"month": "2026-08", "tone": 0.42, "volume": None, "n": 28}]
+    merged = merge_series(cached, new)
+    assert merged == [{"month": "2026-08", "tone": 0.42, "volume": 37.5, "n": 28}]
+
+
+def test_aggregate_month_without_volume_observations_is_none() -> None:
+    # Chunk whose volume query failed: tone rows carry no volume key → the
+    # monthly row gets volume=None (the merge keeps the cached volume).
+    rows = [{"date": "20260803", "tone": 0.5}, {"date": "20260804", "tone": -0.5}]
+    out = aggregate_monthly(rows)
+    assert out == [{"month": "2026-08", "tone": 0.0, "volume": None, "n": 2}]
 
 
 def test_merge_sorts_ascending_and_unions_disjoint_months() -> None:
@@ -147,6 +181,91 @@ def test_next_fetch_start_advances_one_month() -> None:
 
 def test_next_fetch_start_year_rollover() -> None:
     assert _next_fetch_start([{"month": "2017-12"}], date(2017, 4, 1)) == date(2018, 1, 1)
+
+
+# --- interior-gap backfill ---------------------------------------------------
+
+
+def test_gap_backfill_windows_empty_without_gaps() -> None:
+    months = [
+        {"month": "2017-04"},
+        {"month": "2017-05"},
+        {"month": "2017-06"},
+    ]
+    assert nsg._gap_backfill_windows(months) == []
+    assert nsg._gap_backfill_windows([]) == []
+    assert nsg._gap_backfill_windows([{"month": "2017-04"}]) == []
+
+
+def test_gap_backfill_windows_covers_single_missing_quarter() -> None:
+    # 2025-06 → 2025-10 hole (observed in the committed panel): missing
+    # 2025-07..2025-09 = one exact month-aligned run window (quarter alignment
+    # would needlessly re-pull the cached 2025-06 and 2025-10).
+    months = [{"month": m} for m in ("2025-06", "2025-10")]
+    assert nsg._gap_backfill_windows(months) == [(date(2025, 7, 1), date(2025, 10, 1))]
+
+
+def test_gap_backfill_windows_multiple_runs_one_window_per_run() -> None:
+    # Contiguous 2018-04..2024-01 cache with exactly two holes: an isolated
+    # 2018-05 and the observed five-month 2023-08..2023-12 run → two windows.
+    def _range(lo: str, hi: str) -> list[str]:
+        out = []
+        cur = lo
+        while cur < hi:
+            out.append(cur)
+            cur = nsg._month_add(cur)
+        return out
+
+    holes = {"2018-05", *"2023-08 2023-09 2023-10 2023-11 2023-12".split()}
+    months = [{"month": m} for m in _range("2018-04", "2024-02") if m not in holes]
+    assert nsg._gap_backfill_windows(months) == [
+        (date(2018, 5, 1), date(2018, 6, 1)),
+        (date(2023, 8, 1), date(2024, 1, 1)),
+    ]
+
+
+def test_collect_refetches_interior_gap_months(tmp_path: Path, monkeypatch) -> None:
+    # A cache with 2025-06 + 2025-10 but nothing between: the collector must
+    # issue a fetch window INSIDE history (the old forward-only cursor skipped
+    # it forever), and the merged series must be contiguous after the stub
+    # returns the missing months.
+    cache_file = tmp_path / "gdelt_news_sentiment.json"
+    cache_file.write_text(
+        json.dumps(
+            {
+                "series": [
+                    {"month": "2025-06", "tone": 0.15, "volume": 0, "n": 30},
+                    {"month": "2025-10", "tone": 0.29, "volume": 0, "n": 28},
+                ],
+                "coverage_start": "2025-06",
+                "coverage_end": "2025-10",
+            }
+        )
+    )
+    captured: list[tuple] = []
+
+    def _fake_fetch(start, end, on_chunk=None):
+        captured.append((start, end))
+        return [
+            {"month": "2025-07", "tone": 0.2, "volume": 3.0, "n": 31},
+            {"month": "2025-08", "tone": 0.25, "volume": 4.0, "n": 31},
+            {"month": "2025-09", "tone": 0.27, "volume": 5.0, "n": 30},
+        ]
+
+    monkeypatch.setattr(nsg, "fetch_tone_series", _fake_fetch)
+    snap = collect_news_sentiment(
+        start=DOC_API_EARLIEST, end=date(2025, 11, 1), cache_dir=tmp_path
+    )
+    # The tail from 2025-11 would be empty (end boundary), so the ONLY window
+    # is the interior gap.
+    assert captured == [(date(2025, 7, 1), date(2025, 10, 1))]
+    assert [r["month"] for r in snap["series"]] == [
+        "2025-06",
+        "2025-07",
+        "2025-08",
+        "2025-09",
+        "2025-10",
+    ]
 
 
 # --- orchestrator (network monkeypatched) ------------------------------------

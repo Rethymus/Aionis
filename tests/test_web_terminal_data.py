@@ -1487,7 +1487,11 @@ def test_ledger_append_only_not_mutated_by_export() -> None:
     # the growth is exactly ONE appended data_ingest line (reddit_sentiment,
     # 2026-08-30T10:01:22Z, n_posts=5) — 1 insertion, 0 deletions/modifications
     # verified via git diff before re-pinning.
-    assert digest == "86815a104a1bc40c44f6a42ec5c5a3b5ea3fea224874aa0d38cf360fb0bd6c39", (
+    # Re-pinned 2026-09-04 (display freshness sweep): vs the 2026-08-30 pin
+    # (86815a10), the growth is exactly ONE appended data_ingest line
+    # (reddit_sentiment, 2026-09-04T11:31:41Z, n_posts=20) — 1 insertion,
+    # 0 deletions/modifications verified via git diff before re-pinning.
+    assert digest == "0924ce2b5468de194d67bcb841a4340af1c5f06aa95e7e0e7ff458f360059572", (
         f"ledger sha256 changed to {digest}; re-verify append-only then re-pin"
     )
 
