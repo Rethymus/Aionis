@@ -5,40 +5,76 @@
     "start": "2026-04-27",
     "end": "2026-09-04"
   },
-  "issuers": 526,
-  "total": 1141,
+  "issuers": 528,
+  "total": 1148,
   "by_status": {
-    "filed": 906,
+    "filed": 913,
     "priced": 235
   },
   "by_form": {
     "424B4": 235,
-    "S-1": 378,
-    "S-1/A": 528
+    "S-1": 381,
+    "S-1/A": 532
   },
-  "offer_price_parsed": 62,
+  "offer_price_parsed": 60,
   "offer_price_meta": {
     "target_cap_docs": 80,
     "priced_filings": 235,
     "newest_targeted": 80,
-    "attempted": 80,
+    "attempted": 78,
     "fetch_failed": 0,
     "fetch_errors": {},
     "confidence": {
-      "exact": 62,
+      "exact": 60,
       "low": 0,
       "none": 18
     },
-    "coverage_pct_of_priced": 26.4,
+    "coverage_pct_of_priced": 25.5,
     "requests": {
       "task_budget": 170,
-      "cumulative_walk": 187,
+      "cumulative_walk": 156,
       "walk_cap": 156,
-      "last_walk": 16
+      "last_walk": 156
     },
     "target_as_of": "2026-09-03"
   },
   "filings": [
+    {
+      "company": "Albatross Acquisition Corp",
+      "ticker": "ATAC",
+      "filed_date": "2026-09-04",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2135163/000182912626009779/0001829126-26-009779-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "CLEARONE INC",
+      "ticker": "CLRO",
+      "filed_date": "2026-09-04",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/840715/000175392626001724/0001753926-26-001724-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "SB Energy, Inc.",
+      "ticker": "",
+      "filed_date": "2026-09-04",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2133037/000162828026060761/0001628280-26-060761-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Laser Photonics Corp",
+      "ticker": "LASE",
+      "filed_date": "2026-09-04",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1807887/000149315226041613/0001493152-26-041613-index.htm",
+      "offer_price": null
+    },
     {
       "company": "AIxCrypto Holdings, Inc.",
       "ticker": "AIXC",
@@ -58,6 +94,15 @@
       "offer_price": null
     },
     {
+      "company": "Game Your Game Inc.",
+      "ticker": "GYGY",
+      "filed_date": "2026-09-04",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2111846/000121390026097734/0001213900-26-097734-index.htm",
+      "offer_price": null
+    },
+    {
       "company": "Legion Capital Acquisition Corp.",
       "ticker": "",
       "filed_date": "2026-09-04",
@@ -73,6 +118,24 @@
       "form": "S-1/A",
       "status": "filed",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2142855/000121390026097366/0001213900-26-097366-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "ADARx Pharmaceuticals, Inc.",
+      "ticker": "",
+      "filed_date": "2026-09-04",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1802369/000119312526383838/0001193125-26-383838-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "New Iceland Arctic Acquisition Corp.",
+      "ticker": "",
+      "filed_date": "2026-09-04",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2148245/000118518526003850/0001185185-26-003850-index.htm",
       "offer_price": null
     },
     {
@@ -3664,7 +3727,7 @@
       "form": "424B4",
       "status": "priced",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2137777/000119312526301373/0001193125-26-301373-index.htm",
-      "offer_price": 10.0
+      "offer_price": null
     },
     {
       "company": "Bravalo Corp",
@@ -3817,7 +3880,7 @@
       "form": "424B4",
       "status": "priced",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2106436/000121390026076921/0001213900-26-076921-index.htm",
-      "offer_price": 10.0
+      "offer_price": null
     },
     {
       "company": "SK hynix Inc.",
@@ -10310,5 +10373,5 @@
     }
   ],
   "methodology": "US IPO registration/pricing stream \u2014 SEC EDGAR EFTS whole-market form-level queries (public domain, 17 U.S.C. \u00a7105), fixed ~120-day window, filed-date point-in-time, one row per accession (an S-1/A amendment is a new filing, never a silent overwrite). Status is derived from the immutable form type: S-1 / S-1/A = filed (registration statement on file); 424B4 = priced (the statutory final prospectus under Securities Act Rule 424(b)(4) is filed after pricing \u2014 its appearance marks a priced offering). Offer price is a BOUNDED second-stage extraction, not full coverage: only the newest \u226480 priced (424B4) filings are walked politely (\u22652.1 s spacing, hard request budget disclosed in offer_price_meta.requests), their EDGAR index + primary document fetched, and the cover page regex-parsed with graded confidence \u2014 EXACT (single final printed price \u2192 exported), LOW (draft/range wording near the label \u2192 value withheld, counted, never guessed) and NO-MATCH; every unparsed row stays offer_price=null with its EDGAR index link. Share count, proceeds, and expected listing date are NOT extracted at any tier. Honest scope disclosures: (2) the 424B4 form-level catch includes priced follow-on offerings by already-listed issuers (e.g. S-3 shelf takedowns), not only first-day IPOs \u2014 this panel is the registration/pricing STREAM, not a curated IPO list; (3) no company-level state machine is applied (rows are filing-level). Ticker is parsed from the EDGAR display name where present; pre-symbol S-1 filers carry none (empty, never guessed). Counts are FILING counts, not company counts. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-09-05T03:24:30.163916+00:00"
+  "snapshot_ts": "2026-09-05T07:59:38.385256+00:00"
 }

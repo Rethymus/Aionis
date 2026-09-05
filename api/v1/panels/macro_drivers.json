@@ -914,11 +914,15 @@
       },
       {
         "month": "2026-06",
-        "value": 0.25
+        "value": 0.26
       },
       {
         "month": "2026-07",
-        "value": 0.2
+        "value": 0.23
+      },
+      {
+        "month": "2026-08",
+        "value": 0.38
       }
     ],
     "fedfunds": [
@@ -2975,6 +2979,10 @@
       {
         "month": "2026-07",
         "value": 4.1
+      },
+      {
+        "month": "2026-08",
+        "value": 4.1
       }
     ],
     "real_rate": [
@@ -3437,5 +3445,5 @@
     ]
   },
   "methodology": "Macro drivers (display-only context). Latest-vintage (fully revised) ALFRED series \u2014 the standard public revised values, NOT the PIT-as-of vintages used in the research pipeline. CPI YoY = headline inflation (price-stability mandate); PAYEMS YoY = nonfarm payrolls growth (max-employment mandate flow); Fed funds = DFF monthly mean (policy lever); UNRATE = unemployment (max-employment mandate stock); DXY = trade-weighted dollar index (policy\u2192dollar\u2192market channel); T10Y2Y = 10Y\u22122Y Treasury spread (yield-curve recession watch); real_rate = Fed funds \u2212 CPI YoY (the true policy stance). Visualizes the objective functions of the President\u2194Fed game. NOT a research claim.",
-  "snapshot_ts": "2026-09-05T03:16:53.623689+00:00"
+  "snapshot_ts": "2026-09-05T07:59:40.020708+00:00"
 }
