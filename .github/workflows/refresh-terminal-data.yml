@@ -315,18 +315,57 @@ jobs:
           commit_user_name: "aionis-bot"
           commit_user_email: "actions@github.com"
 
-      - name: Trigger Pages deploy for the fresh data
-        # GITHUB_TOKEN pushes do not fire on:push workflows, so historically
-        # the deployed terminal only refreshed on CODE pushes — daily data
-        # landed in the repo but stayed invisible until the next code commit
-        # (observed 2026-08-15: data commit 4b09cd8 produced no deploy run).
-        # workflow_dispatch is the documented GITHUB_TOKEN exception and DOES
-        # trigger; deploy-pages.yml builds from main HEAD including the data.
+      - name: Set up pnpm for site build
+        # pnpm build's prebuild hook (web/scripts/build-api.mjs) copies the
+        # just-committed panels into public/api/v1 — the deployable data API.
+        # Invoking `next build` directly SKIPS the hook and ships a stale API
+        # surface (local pitfall 2026-09-05: out/api/v1 was frozen at Sep 1).
         if: steps.datacommit.outputs.changes_detected == 'true'
-        run: gh workflow run deploy-pages.yml
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_REPO: ${{ github.repository }}
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Set up Node for site build
+        if: steps.datacommit.outputs.changes_detected == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: web/pnpm-lock.yaml
+
+      - name: Build static site
+        if: steps.datacommit.outputs.changes_detected == 'true'
+        working-directory: web
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm build
+
+      - name: Checkout gh-pages (publish worktree)
+        # deploy-pages.yml is disabled_manually (billing-freeze residue) AND the
+        # GitHub-Actions deploy mode is incompatible with this repo's LEGACY
+        # gh-pages Pages configuration — the canonical channel since round 50/53
+        # is the gh-pages branch. The old `gh workflow run deploy-pages.yml`
+        # step failed on every data commit once the workflow was disabled and
+        # marked whole green runs red (run 33929716868). Publish here instead:
+        # check out gh-pages, rsync the fresh build over it, commit, push — the
+        # legacy Pages build deploys it automatically.
+        if: steps.datacommit.outputs.changes_detected == 'true'
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: site
+          fetch-depth: 1
+
+      - name: Publish web/out to gh-pages
+        if: steps.datacommit.outputs.changes_detected == 'true'
+        run: |
+          rsync -a --delete --exclude .git web/out/ site/
+          cd site
+          git config user.name "aionis-bot"
+          git config user.email "actions@github.com"
+          git add -A
+          git commit -m "deploy: main@${GITHUB_SHA::7} — daily terminal data refresh"
+          git push origin gh-pages
 
       - name: Snapshot display-convergence artifacts (always, orphan-safe)
         # Mirror the converging artifacts into the dedicated snapshot dir that
