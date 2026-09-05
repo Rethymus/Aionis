@@ -1,0 +1,171 @@
+{
+  "model_card_version": "v1",
+  "identity": {
+    "phase": "B",
+    "config_sig": "17245a75d2d4cd17c68f36a9d0f4b4f7f3baf1db31b33b87be79e6e4a11400da",
+    "config_sig_short": "17245a75",
+    "results_dir": "runs/results/17245a75d2d4cd17c68f36a9d0f4b4f7f3baf1db31b33b87be79e6e4a11400da",
+    "aionis_version": "0.1.0",
+    "schema": 1,
+    "h6_deterministic": true,
+    "run_ts": "2026-07-28T04:27:39+00:00"
+  },
+  "intended_use": {
+    "primary_use": "Display-layer documentation of the frozen confirmatory model: a pre-registered, two-tailed, null-expected rank-IC claim whose config was committed to the append-only ledger before any out-of-sample metric was observed. The card exists for transparency and reproducibility inspection, not for performance advertisement.",
+    "display_only": true,
+    "not_investment_advice": true,
+    "out_of_scope": "Not a trading signal and not investment advice; null results with tight confidence intervals are the intended outcome of the protocol, and a null verdict must never be re-run toward significance.",
+    "prereg": {
+      "path": "docs/track-c-preregistration.md",
+      "sha256": "c0ecaadfc317278b1ca514528a22f4415e17727be9da0ccf48964114a30fad51",
+      "sid": "S6"
+    }
+  },
+  "data": {
+    "fund_sha256": "df1f27cecc20acb6f2b5e2d75e88618733e42cec07c48187825a53330151ad7b",
+    "prices_sha256": "c86551c35e3503b02565eada4c8a5e343ad40e008e26f47b2b99e9c36876dc46",
+    "membership_sha256": "59374fda51c515eadd4cb7565c7f896abe54d95fae4a79476b1e157434eb2bf3",
+    "end_lag_months": {
+      "10-K": 6,
+      "10-Q": 4
+    },
+    "feature_cols": [
+      "mktcap",
+      "pb_ratio",
+      "roa",
+      "fund_assets",
+      "fund_revenue",
+      "fund_net_income",
+      "fund_equity",
+      "fund_shares_out",
+      "fund_long_term_debt"
+    ],
+    "feature_cols_n": 9,
+    "universe_note": "Universe membership is point-in-time (resolved as-of each historical panel date, never a today snapshot); fundamentals enter via filing dates. The input sha256 pins identify the exact frozen data artifacts behind the feature table."
+  },
+  "model": {
+    "learner": "lightgbm",
+    "learner_version": "4.7.0",
+    "versions": {
+      "lightgbm": "4.7.0",
+      "purgedcv": "0.1.2",
+      "arch": "8.0.0"
+    },
+    "frozen_params": {
+      "objective": "regression",
+      "n_estimators": 500,
+      "learning_rate": 0.05,
+      "num_leaves": 31,
+      "min_child_samples": 20,
+      "reg_lambda": 1.0,
+      "feature_fraction": 0.8,
+      "bagging_fraction": 0.8,
+      "bagging_freq": 1,
+      "n_jobs": 1,
+      "random_state": 0,
+      "bagging_seed": 0,
+      "feature_fraction_seed": 0,
+      "drop_seed": 0,
+      "verbose": -1
+    },
+    "determinism": {
+      "random_state": 0,
+      "bagging_seed": 0,
+      "feature_fraction_seed": 0,
+      "drop_seed": 0,
+      "n_jobs": 1
+    }
+  },
+  "evaluation_protocol": {
+    "cv_scheme": "5-fold PurgedGroupKFold (group=month, embargo=21 sessions) over the 2016+ resolvable window; the explicit 2011-2016/2017-2026 split in pre-reg §8.0 is superseded because the resolvable universe is 2016+",
+    "horizon": 21,
+    "n_splits": 5,
+    "embargo_sessions": 21
+  },
+  "results": {
+    "source": "web/src/data/aionis/metrics.json",
+    "note": "Headline values embedded verbatim from metrics.json (the site's live projection of the confirmatory climax ledger row); config_sig_short and ledger_row are the embedded values' own trace labels and may reference a newer confirmatory run than this card's frozen model artifacts.",
+    "combined_ic": -0.0088,
+    "ci_lo": -0.0336,
+    "ci_hi": 0.0159,
+    "p": 0.484,
+    "n_months": 71,
+    "verdict": "NULL",
+    "sesoi": 0.01,
+    "config_sig_short": "e14b9d44",
+    "ledger_row": 49
+  },
+  "governance": {
+    "ledger_freeze_row": {
+      "row": 27,
+      "ts": "2026-07-28T04:15:16+00:00",
+      "line_sha256": "818c94fd55a03966d05e8452febbb8772db06145c171116ce8440f18003c9abb",
+      "sid": "S3"
+    },
+    "ledger_result_row": {
+      "row": 28,
+      "sid": "S4"
+    },
+    "contract_note": "The config_committed row precedes the result row sharing its sha256 — the anti-leakage ordering, verifiable against runs/ledger.jsonl.",
+    "uv_lock_sha256": "e045a023c5ea8d9a91ef41f183dc95447f61788d79c5fa974229c7b32d5b34a0",
+    "uv_lock_recomputed_sha256": "5c5cff1c84ece3e556fce275191377bca3eb2f84d97326527e3439a7e9cbc845",
+    "uv_lock_match": false,
+    "uv_lock_note": "Dependency lock drifted since the freeze (later repo lanes added dependencies); the frozen training environment stays pinned by uv_lock_sha256 and versions. The current lock hash is embedded beside it for honest comparison."
+  },
+  "provenance": {
+    "generated_by": "scripts/export_terminal_data.py::export_model_card (model_card_version v1)",
+    "regen_command": "uv run python -c \"import sys; sys.path.insert(0,'scripts'); import export_terminal_data as m; m._safe_export('model_card', m.export_model_card)\"",
+    "byte_stability": "Zero-clock panel: no snapshot timestamp and no wall-clock reads; every value is machine-read verbatim from the pinned artifacts, so consecutive exports of unchanged artifacts are byte-identical. Output is LF.",
+    "sources": [
+      {
+        "sid": "S1",
+        "type": "frozen artifact",
+        "locator": "runs/results/17245a75d2d4cd17c68f36a9d0f4b4f7f3baf1db31b33b87be79e6e4a11400da/config.json",
+        "integrity": "sha256:21da28dd91747ae5bc242867ac13850569c3109a59123c5f5c52cf21e6d363e7 (file bytes)",
+        "role": "frozen model configuration: feature table, hyperparameters, CV scheme, library versions, input hashes"
+      },
+      {
+        "sid": "S2",
+        "type": "frozen artifact",
+        "locator": "runs/results/17245a75d2d4cd17c68f36a9d0f4b4f7f3baf1db31b33b87be79e6e4a11400da/meta.json",
+        "integrity": "sha256:4eb28d84645378953392bcc51ffa9a25f0ed74dc69cbddf32c39f3ec9093f088 (file bytes)",
+        "role": "run identity (config_sig / schema / H6 / version / ts)"
+      },
+      {
+        "sid": "S3",
+        "type": "ledger row",
+        "locator": "runs/ledger.jsonl line 27",
+        "integrity": "sha256:818c94fd55a03966d05e8452febbb8772db06145c171116ce8440f18003c9abb (line text)",
+        "role": "config_committed freeze row (ts + line sha + line number)"
+      },
+      {
+        "sid": "S4",
+        "type": "ledger row",
+        "locator": "runs/ledger.jsonl line 28",
+        "integrity": "sha256:d8405c22044b2470928f901801ab27ef2d7e401cb7f5d676f0b1bfa64683b5ed (line text)",
+        "role": "confirmatory:first result row for this card's config_sig"
+      },
+      {
+        "sid": "S5",
+        "type": "panel",
+        "locator": "web/src/data/aionis/metrics.json",
+        "integrity": "verbatim value embed (results section); the source file carries a snapshot_ts clock, so no file hash is pinned",
+        "role": "headline results (IC / CI / p / n / verdict / SESOI / sig / row)"
+      },
+      {
+        "sid": "S6",
+        "type": "repo doc",
+        "locator": "docs/track-c-preregistration.md",
+        "integrity": "sha256:c0ecaadfc317278b1ca514528a22f4415e17727be9da0ccf48964114a30fad51 (LF bytes)",
+        "role": "pre-registered claim cited by intended_use"
+      },
+      {
+        "sid": "S7",
+        "type": "repo file",
+        "locator": "uv.lock",
+        "integrity": "sha256:5c5cff1c84ece3e556fce275191377bca3eb2f84d97326527e3439a7e9cbc845 (LF bytes)",
+        "role": "current dependency lock hash, compared against the frozen uv_lock_sha256"
+      }
+    ]
+  }
+}

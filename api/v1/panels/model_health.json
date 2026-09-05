@@ -1,0 +1,31 @@
+{
+  "recent_months": 6,
+  "methodology": "Leakage-safe model-drift monitor (display-only). Population Stability Index (PSI) compares the recent realized score distribution to the historical one; rolling cross-sectional rank-IC (recent mean vs full mean) is reported for context. All metrics use only realized (score, forward_return) pairs strictly before the latest unread month. PSI<0.1 stable / 0.1\u20130.25 moderate / \u22650.25 significant. NOT a research claim and NOT a retrain trigger (rerun-to-significance is forbidden).",
+  "regions": {
+    "us": {
+      "region": "us",
+      "n_history": 28134,
+      "n_recent": 2934,
+      "recent_months": 6,
+      "psi": 0.2261,
+      "ic_full": 0.0038,
+      "ic_recent": -0.0023,
+      "base_rate_full": 0.5369,
+      "base_rate_recent": 0.5157,
+      "regime": "moderate"
+    },
+    "cn": {
+      "region": "cn",
+      "n_history": 17960,
+      "n_recent": 1795,
+      "recent_months": 6,
+      "psi": 0.5423,
+      "ic_full": -0.0463,
+      "ic_recent": 0.0808,
+      "base_rate_full": 0.4517,
+      "base_rate_recent": 0.4022,
+      "regime": "significant"
+    }
+  },
+  "status": "ok"
+}

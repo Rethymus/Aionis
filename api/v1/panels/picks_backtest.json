@@ -1,0 +1,5822 @@
+{
+  "methodology": "Past 99 realized months per region, top-5 picks by model score vs their actual forward_return_h (\u224821-session forward return). Hit rate = fraction of top picks that actually went up. Excess = top-picks mean return \u2212 all-stocks mean return that month. If the model is NULL (rank-IC \u22120.0088), hit rate \u2248 base rate and excess \u2248 0. This is the honest 'prediction vs reality' audit.",
+  "months": [
+    {
+      "month": "2021-01-29",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "FTI",
+          "name": "TechnipFMC plc",
+          "score": 1.847,
+          "realized_return": 0.1286,
+          "hit": true
+        },
+        {
+          "ticker": "FCX",
+          "name": "FREEPORT-MCMORAN INC",
+          "score": 1.47,
+          "realized_return": 0.3073,
+          "hit": true
+        },
+        {
+          "ticker": "FANG",
+          "name": "Diamondback Energy, Inc.",
+          "score": 1.277,
+          "realized_return": 0.2526,
+          "hit": true
+        },
+        {
+          "ticker": "MGM",
+          "name": "MGM Resorts International",
+          "score": 1.235,
+          "realized_return": 0.3497,
+          "hit": true
+        },
+        {
+          "ticker": "HAL",
+          "name": "HALLIBURTON CO",
+          "score": 1.102,
+          "realized_return": 0.2655,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.2607,
+      "base_mean_return": 0.0794,
+      "excess": 0.1813
+    },
+    {
+      "month": "2021-02-26",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "FCX",
+          "name": "FREEPORT-MCMORAN INC",
+          "score": 1.764,
+          "realized_return": -0.0534,
+          "hit": false
+        },
+        {
+          "ticker": "APA",
+          "name": "APA Corp",
+          "score": 1.464,
+          "realized_return": -0.0897,
+          "hit": false
+        },
+        {
+          "ticker": "HAL",
+          "name": "HALLIBURTON CO",
+          "score": 1.312,
+          "realized_return": -0.0273,
+          "hit": false
+        },
+        {
+          "ticker": "VLO",
+          "name": "VALERO ENERGY CORP/TX",
+          "score": 1.206,
+          "realized_return": -0.0687,
+          "hit": false
+        },
+        {
+          "ticker": "URI",
+          "name": "UNITED RENTALS, INC.",
+          "score": 1.054,
+          "realized_return": 0.0899,
+          "hit": true
+        }
+      ],
+      "top_mean_return": -0.0298,
+      "base_mean_return": 0.0586,
+      "excess": -0.0884
+    },
+    {
+      "month": "2021-03-31",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "APA",
+          "name": "APA Corp",
+          "score": 1.909,
+          "realized_return": 0.1189,
+          "hit": true
+        },
+        {
+          "ticker": "FCX",
+          "name": "FREEPORT-MCMORAN INC",
+          "score": 1.839,
+          "realized_return": 0.1475,
+          "hit": true
+        },
+        {
+          "ticker": "TSLA",
+          "name": "Tesla, Inc.",
+          "score": 1.687,
+          "realized_return": 0.0626,
+          "hit": true
+        },
+        {
+          "ticker": "OXY",
+          "name": "OCCIDENTAL PETROLEUM CORP /DE/",
+          "score": 1.631,
+          "realized_return": -0.0473,
+          "hit": false
+        },
+        {
+          "ticker": "NCLH",
+          "name": "Norwegian Cruise Line Holdings Ltd.",
+          "score": 1.611,
+          "realized_return": 0.1254,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.0814,
+      "base_mean_return": 0.0478,
+      "excess": 0.0337
+    },
+    {
+      "month": "2021-04-30",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "NCLH",
+          "name": "Norwegian Cruise Line Holdings Ltd.",
+          "score": 2.002,
+          "realized_return": 0.0551,
+          "hit": true
+        },
+        {
+          "ticker": "FCX",
+          "name": "FREEPORT-MCMORAN INC",
+          "score": 1.593,
+          "realized_return": 0.1724,
+          "hit": true
+        },
+        {
+          "ticker": "ENPH",
+          "name": "Enphase Energy, Inc.",
+          "score": 1.412,
+          "realized_return": 0.0014,
+          "hit": true
+        },
+        {
+          "ticker": "OXY",
+          "name": "OCCIDENTAL PETROLEUM CORP /DE/",
+          "score": 1.375,
+          "realized_return": 0.1226,
+          "hit": true
+        },
+        {
+          "ticker": "HAL",
+          "name": "HALLIBURTON CO",
+          "score": 1.361,
+          "realized_return": 0.1962,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.1095,
+      "base_mean_return": 0.024,
+      "excess": 0.0855
+    },
+    {
+      "month": "2021-05-28",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "OXY",
+          "name": "OCCIDENTAL PETROLEUM CORP /DE/",
+          "score": 1.67,
+          "realized_return": 0.2061,
+          "hit": true
+        },
+        {
+          "ticker": "FCX",
+          "name": "FREEPORT-MCMORAN INC",
+          "score": 1.368,
+          "realized_return": -0.1276,
+          "hit": false
+        },
+        {
+          "ticker": "PENN",
+          "name": "PENN Entertainment, Inc.",
+          "score": 1.262,
+          "realized_return": -0.0698,
+          "hit": false
+        },
+        {
+          "ticker": "WEC",
+          "name": "WEC ENERGY GROUP, INC.",
+          "score": 1.111,
+          "realized_return": -0.0511,
+          "hit": false
+        },
+        {
+          "ticker": "SWKS",
+          "name": "SKYWORKS SOLUTIONS, INC.",
+          "score": 1.018,
+          "realized_return": 0.1228,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.0161,
+      "base_mean_return": -0.0008,
+      "excess": 0.0169
+    },
+    {
+      "month": "2021-06-30",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "ENPH",
+          "name": "Enphase Energy, Inc.",
+          "score": 1.043,
+          "realized_return": 0.0325,
+          "hit": true
+        },
+        {
+          "ticker": "TSLA",
+          "name": "Tesla, Inc.",
+          "score": 0.82,
+          "realized_return": 0.0114,
+          "hit": true
+        },
+        {
+          "ticker": "FCX",
+          "name": "FREEPORT-MCMORAN INC",
+          "score": 0.634,
+          "realized_return": 0.0289,
+          "hit": true
+        },
+        {
+          "ticker": "ETSY",
+          "name": "ETSY INC",
+          "score": 0.441,
+          "realized_return": -0.1085,
+          "hit": false
+        },
+        {
+          "ticker": "PENN",
+          "name": "PENN Entertainment, Inc.",
+          "score": 0.439,
+          "realized_return": -0.106,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0283,
+      "base_mean_return": 0.0138,
+      "excess": -0.0422
+    },
+    {
+      "month": "2021-07-30",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "FANG",
+          "name": "Diamondback Energy, Inc.",
+          "score": 2.004,
+          "realized_return": -0.0054,
+          "hit": false
+        },
+        {
+          "ticker": "APA",
+          "name": "APA Corp",
+          "score": 1.297,
+          "realized_return": -0.0048,
+          "hit": false
+        },
+        {
+          "ticker": "OXY",
+          "name": "OCCIDENTAL PETROLEUM CORP /DE/",
+          "score": 1.085,
+          "realized_return": -0.0326,
+          "hit": false
+        },
+        {
+          "ticker": "NOV",
+          "name": "NOV Inc.",
+          "score": 1.065,
+          "realized_return": -0.0397,
+          "hit": false
+        },
+        {
+          "ticker": "FCX",
+          "name": "FREEPORT-MCMORAN INC",
+          "score": 1.039,
+          "realized_return": -0.0383,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0242,
+      "base_mean_return": 0.0226,
+      "excess": -0.0468
+    },
+    {
+      "month": "2021-08-31",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "DXC",
+          "name": "DXC Technology Co",
+          "score": 1.188,
+          "realized_return": -0.0847,
+          "hit": false
+        },
+        {
+          "ticker": "HAL",
+          "name": "HALLIBURTON CO",
+          "score": 1.039,
+          "realized_return": 0.0807,
+          "hit": true
+        },
+        {
+          "ticker": "NOV",
+          "name": "NOV Inc.",
+          "score": 0.738,
+          "realized_return": -0.0033,
+          "hit": false
+        },
+        {
+          "ticker": "OGN",
+          "name": "Organon & Co.",
+          "score": 0.682,
+          "realized_return": -0.0325,
+          "hit": false
+        },
+        {
+          "ticker": "CZR",
+          "name": "Caesars Entertainment, Inc.",
+          "score": 0.639,
+          "realized_return": 0.1044,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.0129,
+      "base_mean_return": -0.0397,
+      "excess": 0.0526
+    },
+    {
+      "month": "2021-09-30",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "WDC",
+          "name": "WESTERN DIGITAL CORP",
+          "score": 2.099,
+          "realized_return": -0.0744,
+          "hit": false
+        },
+        {
+          "ticker": "FCX",
+          "name": "FREEPORT-MCMORAN INC",
+          "score": 1.558,
+          "realized_return": 0.1619,
+          "hit": true
+        },
+        {
+          "ticker": "ENPH",
+          "name": "Enphase Energy, Inc.",
+          "score": 1.365,
+          "realized_return": 0.5445,
+          "hit": true
+        },
+        {
+          "ticker": "DVN",
+          "name": "DEVON ENERGY CORP/DE",
+          "score": 1.148,
+          "realized_return": 0.1287,
+          "hit": true
+        },
+        {
+          "ticker": "OXY",
+          "name": "OCCIDENTAL PETROLEUM CORP /DE/",
+          "score": 1.064,
+          "realized_return": 0.1335,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.1788,
+      "base_mean_return": 0.055,
+      "excess": 0.1238
+    },
+    {
+      "month": "2021-10-29",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "NVDA",
+          "name": "NVIDIA CORP",
+          "score": 1.195,
+          "realized_return": 0.2801,
+          "hit": true
+        },
+        {
+          "ticker": "FCX",
+          "name": "FREEPORT-MCMORAN INC",
+          "score": 1.088,
+          "realized_return": -0.017,
+          "hit": false
+        },
+        {
+          "ticker": "TSLA",
+          "name": "Tesla, Inc.",
+          "score": 1.041,
+          "realized_return": 0.0273,
+          "hit": true
+        },
+        {
+          "ticker": "ENPH",
+          "name": "Enphase Energy, Inc.",
+          "score": 0.919,
+          "realized_return": 0.0793,
+          "hit": true
+        },
+        {
+          "ticker": "DVN",
+          "name": "DEVON ENERGY CORP/DE",
+          "score": 0.785,
+          "realized_return": 0.0494,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.0838,
+      "base_mean_return": -0.0233,
+      "excess": 0.1072
+    },
+    {
+      "month": "2021-11-30",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "PYPL",
+          "name": "PayPal Holdings, Inc.",
+          "score": 1.379,
+          "realized_return": 0.0378,
+          "hit": true
+        },
+        {
+          "ticker": "ENPH",
+          "name": "Enphase Energy, Inc.",
+          "score": 1.296,
+          "realized_return": -0.2544,
+          "hit": false
+        },
+        {
+          "ticker": "FCX",
+          "name": "FREEPORT-MCMORAN INC",
+          "score": 1.288,
+          "realized_return": 0.1224,
+          "hit": true
+        },
+        {
+          "ticker": "PENN",
+          "name": "PENN Entertainment, Inc.",
+          "score": 1.065,
+          "realized_return": 0.0014,
+          "hit": true
+        },
+        {
+          "ticker": "NCLH",
+          "name": "Norwegian Cruise Line Holdings Ltd.",
+          "score": 0.964,
+          "realized_return": 0.0785,
+          "hit": true
+        }
+      ],
+      "top_mean_return": -0.0029,
+      "base_mean_return": 0.0636,
+      "excess": -0.0665
+    },
+    {
+      "month": "2021-12-31",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "NCLH",
+          "name": "Norwegian Cruise Line Holdings Ltd.",
+          "score": 1.757,
+          "realized_return": 0.0417,
+          "hit": true
+        },
+        {
+          "ticker": "ETSY",
+          "name": "ETSY INC",
+          "score": 1.466,
+          "realized_return": -0.305,
+          "hit": false
+        },
+        {
+          "ticker": "CZR",
+          "name": "Caesars Entertainment, Inc.",
+          "score": 1.168,
+          "realized_return": -0.1359,
+          "hit": false
+        },
+        {
+          "ticker": "ENPH",
+          "name": "Enphase Energy, Inc.",
+          "score": 0.965,
+          "realized_return": -0.2201,
+          "hit": false
+        },
+        {
+          "ticker": "PTC",
+          "name": "PTC INC.",
+          "score": 0.875,
+          "realized_return": -0.0413,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.1321,
+      "base_mean_return": -0.0397,
+      "excess": -0.0924
+    },
+    {
+      "month": "2022-01-31",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "TECH",
+          "name": "BIO-TECHNE Corp",
+          "score": 1.652,
+          "realized_return": 0.1264,
+          "hit": true
+        },
+        {
+          "ticker": "ALGN",
+          "name": "ALIGN TECHNOLOGY INC",
+          "score": 1.4,
+          "realized_return": 0.0024,
+          "hit": true
+        },
+        {
+          "ticker": "WDC",
+          "name": "WESTERN DIGITAL CORP",
+          "score": 1.234,
+          "realized_return": 0.0023,
+          "hit": true
+        },
+        {
+          "ticker": "DXCM",
+          "name": "DEXCOM INC",
+          "score": 1.129,
+          "realized_return": -0.0242,
+          "hit": false
+        },
+        {
+          "ticker": "QCOM",
+          "name": "QUALCOMM INC/DE",
+          "score": 1.07,
+          "realized_return": -0.0332,
+          "hit": false
+        }
+      ],
+      "top_mean_return": 0.0148,
+      "base_mean_return": -0.0084,
+      "excess": 0.0231
+    },
+    {
+      "month": "2022-02-28",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "NCLH",
+          "name": "Norwegian Cruise Line Holdings Ltd.",
+          "score": 1.473,
+          "realized_return": 0.0873,
+          "hit": true
+        },
+        {
+          "ticker": "FCX",
+          "name": "FREEPORT-MCMORAN INC",
+          "score": 1.204,
+          "realized_return": 0.0669,
+          "hit": true
+        },
+        {
+          "ticker": "CZR",
+          "name": "Caesars Entertainment, Inc.",
+          "score": 1.143,
+          "realized_return": -0.0359,
+          "hit": false
+        },
+        {
+          "ticker": "NXPI",
+          "name": "NXP Semiconductors N.V.",
+          "score": 1.003,
+          "realized_return": 0.0298,
+          "hit": true
+        },
+        {
+          "ticker": "ALGN",
+          "name": "ALIGN TECHNOLOGY INC",
+          "score": 0.901,
+          "realized_return": -0.1144,
+          "hit": false
+        }
+      ],
+      "top_mean_return": 0.0067,
+      "base_mean_return": 0.0486,
+      "excess": -0.0419
+    },
+    {
+      "month": "2022-03-31",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "CCL",
+          "name": "Carnival Corp Ltd.",
+          "score": 1.356,
+          "realized_return": -0.1412,
+          "hit": false
+        },
+        {
+          "ticker": "PENN",
+          "name": "PENN Entertainment, Inc.",
+          "score": 1.326,
+          "realized_return": -0.1113,
+          "hit": false
+        },
+        {
+          "ticker": "MU",
+          "name": "MICRON TECHNOLOGY INC",
+          "score": 1.037,
+          "realized_return": -0.0925,
+          "hit": false
+        },
+        {
+          "ticker": "MTCH",
+          "name": "Match Group, Inc.",
+          "score": 1.017,
+          "realized_return": -0.2575,
+          "hit": false
+        },
+        {
+          "ticker": "BBWI",
+          "name": "Bath & Body Works, Inc.",
+          "score": 0.841,
+          "realized_return": 0.136,
+          "hit": true
+        }
+      ],
+      "top_mean_return": -0.0933,
+      "base_mean_return": -0.0619,
+      "excess": -0.0314
+    },
+    {
+      "month": "2022-04-29",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "NVDA",
+          "name": "NVIDIA CORP",
+          "score": 1.474,
+          "realized_return": 0.0043,
+          "hit": true
+        },
+        {
+          "ticker": "MTCH",
+          "name": "Match Group, Inc.",
+          "score": 1.356,
+          "realized_return": -0.0046,
+          "hit": false
+        },
+        {
+          "ticker": "IVZ",
+          "name": "Invesco Ltd.",
+          "score": 1.302,
+          "realized_return": 0.0634,
+          "hit": true
+        },
+        {
+          "ticker": "TPR",
+          "name": "TAPESTRY, INC.",
+          "score": 1.113,
+          "realized_return": 0.0472,
+          "hit": true
+        },
+        {
+          "ticker": "PVH",
+          "name": "PVH CORP. /DE/",
+          "score": 1.057,
+          "realized_return": -0.0262,
+          "hit": false
+        }
+      ],
+      "top_mean_return": 0.0168,
+      "base_mean_return": 0.0096,
+      "excess": 0.0072
+    },
+    {
+      "month": "2022-05-31",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "MGM",
+          "name": "MGM Resorts International",
+          "score": 2.415,
+          "realized_return": -0.1721,
+          "hit": false
+        },
+        {
+          "ticker": "BBWI",
+          "name": "Bath & Body Works, Inc.",
+          "score": 2.243,
+          "realized_return": -0.3404,
+          "hit": false
+        },
+        {
+          "ticker": "CCL",
+          "name": "Carnival Corp Ltd.",
+          "score": 1.914,
+          "realized_return": -0.3783,
+          "hit": false
+        },
+        {
+          "ticker": "CZR",
+          "name": "Caesars Entertainment, Inc.",
+          "score": 1.35,
+          "realized_return": -0.2368,
+          "hit": false
+        },
+        {
+          "ticker": "PENN",
+          "name": "PENN Entertainment, Inc.",
+          "score": 1.146,
+          "realized_return": -0.0482,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.2352,
+      "base_mean_return": -0.0924,
+      "excess": -0.1427
+    },
+    {
+      "month": "2022-06-30",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "CCL",
+          "name": "Carnival Corp Ltd.",
+          "score": 1.616,
+          "realized_return": 0.0331,
+          "hit": true
+        },
+        {
+          "ticker": "DVA",
+          "name": "DAVITA INC.",
+          "score": 1.271,
+          "realized_return": 0.0612,
+          "hit": true
+        },
+        {
+          "ticker": "MPWR",
+          "name": "MONOLITHIC POWER SYSTEMS, INC.",
+          "score": 1.224,
+          "realized_return": 0.2029,
+          "hit": true
+        },
+        {
+          "ticker": "KLAC",
+          "name": "KLA CORP",
+          "score": 1.035,
+          "realized_return": 0.2086,
+          "hit": true
+        },
+        {
+          "ticker": "ADSK",
+          "name": "Autodesk, Inc.",
+          "score": 0.962,
+          "realized_return": 0.2686,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.1548,
+      "base_mean_return": 0.0876,
+      "excess": 0.0673
+    },
+    {
+      "month": "2022-07-29",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "ENPH",
+          "name": "Enphase Energy, Inc.",
+          "score": 1.037,
+          "realized_return": 0.0023,
+          "hit": true
+        },
+        {
+          "ticker": "QCOM",
+          "name": "QUALCOMM INC/DE",
+          "score": 0.781,
+          "realized_return": -0.055,
+          "hit": false
+        },
+        {
+          "ticker": "NCLH",
+          "name": "Norwegian Cruise Line Holdings Ltd.",
+          "score": 0.586,
+          "realized_return": 0.1155,
+          "hit": true
+        },
+        {
+          "ticker": "ETSY",
+          "name": "ETSY INC",
+          "score": 0.565,
+          "realized_return": 0.0077,
+          "hit": true
+        },
+        {
+          "ticker": "META",
+          "name": "Meta Platforms, Inc.",
+          "score": 0.543,
+          "realized_return": 0.0003,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.0142,
+      "base_mean_return": -0.0172,
+      "excess": 0.0314
+    },
+    {
+      "month": "2022-08-31",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "ALGN",
+          "name": "ALIGN TECHNOLOGY INC",
+          "score": 1.778,
+          "realized_return": -0.1501,
+          "hit": false
+        },
+        {
+          "ticker": "TER",
+          "name": "TERADYNE, INC",
+          "score": 1.681,
+          "realized_return": -0.1121,
+          "hit": false
+        },
+        {
+          "ticker": "AMD",
+          "name": "ADVANCED MICRO DEVICES INC",
+          "score": 1.634,
+          "realized_return": -0.2534,
+          "hit": false
+        },
+        {
+          "ticker": "PENN",
+          "name": "PENN Entertainment, Inc.",
+          "score": 1.619,
+          "realized_return": -0.1191,
+          "hit": false
+        },
+        {
+          "ticker": "SEDG",
+          "name": "SOLAREDGE TECHNOLOGIES, INC.",
+          "score": 1.594,
+          "realized_return": -0.1612,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.1592,
+      "base_mean_return": -0.0928,
+      "excess": -0.0664
+    },
+    {
+      "month": "2022-09-30",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "FTNT",
+          "name": "Fortinet, Inc.",
+          "score": 1.874,
+          "realized_return": 0.1636,
+          "hit": true
+        },
+        {
+          "ticker": "ETSY",
+          "name": "ETSY INC",
+          "score": 1.575,
+          "realized_return": -0.0621,
+          "hit": false
+        },
+        {
+          "ticker": "NVDA",
+          "name": "NVIDIA CORP",
+          "score": 1.508,
+          "realized_return": 0.1106,
+          "hit": true
+        },
+        {
+          "ticker": "NFLX",
+          "name": "NETFLIX INC",
+          "score": 1.444,
+          "realized_return": 0.2395,
+          "hit": true
+        },
+        {
+          "ticker": "WYNN",
+          "name": "WYNN RESORTS LTD",
+          "score": 1.354,
+          "realized_return": 0.014,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.0931,
+      "base_mean_return": 0.0981,
+      "excess": -0.005
+    },
+    {
+      "month": "2022-10-31",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "DXCM",
+          "name": "DEXCOM INC",
+          "score": 1.281,
+          "realized_return": -0.0373,
+          "hit": false
+        },
+        {
+          "ticker": "ENPH",
+          "name": "Enphase Energy, Inc.",
+          "score": 1.148,
+          "realized_return": 0.0443,
+          "hit": true
+        },
+        {
+          "ticker": "ON",
+          "name": "ON SEMICONDUCTOR CORP",
+          "score": 0.85,
+          "realized_return": 0.2242,
+          "hit": true
+        },
+        {
+          "ticker": "ETSY",
+          "name": "ETSY INC",
+          "score": 0.801,
+          "realized_return": 0.4066,
+          "hit": true
+        },
+        {
+          "ticker": "NCLH",
+          "name": "Norwegian Cruise Line Holdings Ltd.",
+          "score": 0.796,
+          "realized_return": -0.0272,
+          "hit": false
+        }
+      ],
+      "top_mean_return": 0.1221,
+      "base_mean_return": 0.0695,
+      "excess": 0.0526
+    },
+    {
+      "month": "2022-11-30",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "LUMN",
+          "name": "Lumen Technologies, Inc.",
+          "score": 1.463,
+          "realized_return": -0.0457,
+          "hit": false
+        },
+        {
+          "ticker": "TSLA",
+          "name": "Tesla, Inc.",
+          "score": 1.359,
+          "realized_return": -0.3671,
+          "hit": false
+        },
+        {
+          "ticker": "META",
+          "name": "Meta Platforms, Inc.",
+          "score": 1.068,
+          "realized_return": 0.019,
+          "hit": true
+        },
+        {
+          "ticker": "BBWI",
+          "name": "Bath & Body Works, Inc.",
+          "score": 1.052,
+          "realized_return": -0.0085,
+          "hit": false
+        },
+        {
+          "ticker": "AMZN",
+          "name": "AMAZON COM INC",
+          "score": 0.845,
+          "realized_return": -0.1299,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.1064,
+      "base_mean_return": -0.0479,
+      "excess": -0.0586
+    },
+    {
+      "month": "2022-12-30",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "CZR",
+          "name": "Caesars Entertainment, Inc.",
+          "score": 1.277,
+          "realized_return": 0.2848,
+          "hit": true
+        },
+        {
+          "ticker": "NCLH",
+          "name": "Norwegian Cruise Line Holdings Ltd.",
+          "score": 1.013,
+          "realized_return": 0.3159,
+          "hit": true
+        },
+        {
+          "ticker": "BBWI",
+          "name": "Bath & Body Works, Inc.",
+          "score": 0.881,
+          "realized_return": 0.1386,
+          "hit": true
+        },
+        {
+          "ticker": "ADSK",
+          "name": "Autodesk, Inc.",
+          "score": 0.878,
+          "realized_return": 0.189,
+          "hit": true
+        },
+        {
+          "ticker": "ALB",
+          "name": "ALBEMARLE CORP",
+          "score": 0.861,
+          "realized_return": 0.3184,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.2493,
+      "base_mean_return": 0.0874,
+      "excess": 0.1619
+    },
+    {
+      "month": "2023-01-31",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "NCLH",
+          "name": "Norwegian Cruise Line Holdings Ltd.",
+          "score": 0.997,
+          "realized_return": 0.021,
+          "hit": true
+        },
+        {
+          "ticker": "MKTX",
+          "name": "MARKETAXESS HOLDINGS INC",
+          "score": 0.878,
+          "realized_return": -0.0231,
+          "hit": false
+        },
+        {
+          "ticker": "ENPH",
+          "name": "Enphase Energy, Inc.",
+          "score": 0.51,
+          "realized_return": -0.0444,
+          "hit": false
+        },
+        {
+          "ticker": "STX",
+          "name": "Seagate Technology Holdings plc",
+          "score": 0.336,
+          "realized_return": -0.0436,
+          "hit": false
+        },
+        {
+          "ticker": "ETSY",
+          "name": "ETSY INC",
+          "score": 0.203,
+          "realized_return": -0.139,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0458,
+      "base_mean_return": -0.0279,
+      "excess": -0.0179
+    },
+    {
+      "month": "2023-02-28",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "LUMN",
+          "name": "Lumen Technologies, Inc.",
+          "score": 1.187,
+          "realized_return": -0.2265,
+          "hit": false
+        },
+        {
+          "ticker": "MPWR",
+          "name": "MONOLITHIC POWER SYSTEMS, INC.",
+          "score": 0.762,
+          "realized_return": 0.0119,
+          "hit": true
+        },
+        {
+          "ticker": "MRNA",
+          "name": "Moderna, Inc.",
+          "score": 0.668,
+          "realized_return": 0.0718,
+          "hit": true
+        },
+        {
+          "ticker": "VFC",
+          "name": "V F CORP",
+          "score": 0.612,
+          "realized_return": -0.1142,
+          "hit": false
+        },
+        {
+          "ticker": "APA",
+          "name": "APA Corp",
+          "score": 0.465,
+          "realized_return": -0.0644,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0643,
+      "base_mean_return": -0.0207,
+      "excess": -0.0435
+    },
+    {
+      "month": "2023-03-31",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "CCL",
+          "name": "Carnival Corp Ltd.",
+          "score": 1.706,
+          "realized_return": -0.0694,
+          "hit": false
+        },
+        {
+          "ticker": "META",
+          "name": "Meta Platforms, Inc.",
+          "score": 1.539,
+          "realized_return": 0.1289,
+          "hit": true
+        },
+        {
+          "ticker": "CZR",
+          "name": "Caesars Entertainment, Inc.",
+          "score": 1.4,
+          "realized_return": -0.0867,
+          "hit": false
+        },
+        {
+          "ticker": "NVDA",
+          "name": "NVIDIA CORP",
+          "score": 1.182,
+          "realized_return": 0.0151,
+          "hit": true
+        },
+        {
+          "ticker": "ETSY",
+          "name": "ETSY INC",
+          "score": 1.0,
+          "realized_return": -0.109,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0242,
+      "base_mean_return": -0.0108,
+      "excess": -0.0134
+    },
+    {
+      "month": "2023-04-28",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "CCL",
+          "name": "Carnival Corp Ltd.",
+          "score": 1.057,
+          "realized_return": 0.2346,
+          "hit": true
+        },
+        {
+          "ticker": "ENPH",
+          "name": "Enphase Energy, Inc.",
+          "score": 1.014,
+          "realized_return": 0.0604,
+          "hit": true
+        },
+        {
+          "ticker": "NCLH",
+          "name": "Norwegian Cruise Line Holdings Ltd.",
+          "score": 0.839,
+          "realized_return": 0.1093,
+          "hit": true
+        },
+        {
+          "ticker": "SEDG",
+          "name": "SOLAREDGE TECHNOLOGIES, INC.",
+          "score": 0.703,
+          "realized_return": 0.035,
+          "hit": true
+        },
+        {
+          "ticker": "CZR",
+          "name": "Caesars Entertainment, Inc.",
+          "score": 0.573,
+          "realized_return": -0.0901,
+          "hit": false
+        }
+      ],
+      "top_mean_return": 0.0698,
+      "base_mean_return": -0.0266,
+      "excess": 0.0965
+    },
+    {
+      "month": "2023-05-31",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "KEY",
+          "name": "KEYCORP /NEW/",
+          "score": 1.199,
+          "realized_return": -0.0107,
+          "hit": false
+        },
+        {
+          "ticker": "CZR",
+          "name": "Caesars Entertainment, Inc.",
+          "score": 0.662,
+          "realized_return": 0.2432,
+          "hit": true
+        },
+        {
+          "ticker": "TSLA",
+          "name": "Tesla, Inc.",
+          "score": 0.552,
+          "realized_return": 0.2837,
+          "hit": true
+        },
+        {
+          "ticker": "ETSY",
+          "name": "ETSY INC",
+          "score": 0.545,
+          "realized_return": 0.0439,
+          "hit": true
+        },
+        {
+          "ticker": "NVDA",
+          "name": "NVIDIA CORP",
+          "score": 0.47,
+          "realized_return": 0.1173,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.1355,
+      "base_mean_return": 0.0795,
+      "excess": 0.056
+    },
+    {
+      "month": "2023-06-30",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "CPB",
+          "name": "CAMPBELL'S Co",
+          "score": 1.091,
+          "realized_return": 0.0034,
+          "hit": true
+        },
+        {
+          "ticker": "NVDA",
+          "name": "NVIDIA CORP",
+          "score": 0.717,
+          "realized_return": 0.0997,
+          "hit": true
+        },
+        {
+          "ticker": "TDG",
+          "name": "TransDigm Group INC",
+          "score": 0.686,
+          "realized_return": 0.0095,
+          "hit": true
+        },
+        {
+          "ticker": "NCLH",
+          "name": "Norwegian Cruise Line Holdings Ltd.",
+          "score": 0.669,
+          "realized_return": -0.1084,
+          "hit": false
+        },
+        {
+          "ticker": "ETSY",
+          "name": "ETSY INC",
+          "score": 0.633,
+          "realized_return": 0.1653,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.0339,
+      "base_mean_return": 0.0309,
+      "excess": 0.003
+    },
+    {
+      "month": "2023-07-31",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "NVDA",
+          "name": "NVIDIA CORP",
+          "score": 1.437,
+          "realized_return": 0.0437,
+          "hit": true
+        },
+        {
+          "ticker": "CZR",
+          "name": "Caesars Entertainment, Inc.",
+          "score": 1.162,
+          "realized_return": -0.1048,
+          "hit": false
+        },
+        {
+          "ticker": "META",
+          "name": "Meta Platforms, Inc.",
+          "score": 0.787,
+          "realized_return": -0.0651,
+          "hit": false
+        },
+        {
+          "ticker": "ETSY",
+          "name": "ETSY INC",
+          "score": 0.644,
+          "realized_return": -0.2681,
+          "hit": false
+        },
+        {
+          "ticker": "ZION",
+          "name": "ZIONS BANCORPORATION, NATIONAL ASSOCIATION /UT/",
+          "score": 0.545,
+          "realized_return": -0.0636,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0916,
+      "base_mean_return": -0.0304,
+      "excess": -0.0612
+    },
+    {
+      "month": "2023-08-31",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "ETSY",
+          "name": "ETSY INC",
+          "score": 1.774,
+          "realized_return": -0.1212,
+          "hit": false
+        },
+        {
+          "ticker": "DXC",
+          "name": "DXC Technology Co",
+          "score": 1.134,
+          "realized_return": 0.0198,
+          "hit": true
+        },
+        {
+          "ticker": "NCLH",
+          "name": "Norwegian Cruise Line Holdings Ltd.",
+          "score": 0.864,
+          "realized_return": -0.0078,
+          "hit": false
+        },
+        {
+          "ticker": "TSLA",
+          "name": "Tesla, Inc.",
+          "score": 0.658,
+          "realized_return": -0.025,
+          "hit": false
+        },
+        {
+          "ticker": "GNRC",
+          "name": "GENERAC HOLDINGS INC.",
+          "score": 0.614,
+          "realized_return": -0.1068,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0482,
+      "base_mean_return": -0.0614,
+      "excess": 0.0131
+    },
+    {
+      "month": "2023-09-29",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "NVDA",
+          "name": "NVIDIA CORP",
+          "score": 0.928,
+          "realized_return": -0.0541,
+          "hit": false
+        },
+        {
+          "ticker": "ZBRA",
+          "name": "ZEBRA TECHNOLOGIES CORP",
+          "score": 0.775,
+          "realized_return": -0.1121,
+          "hit": false
+        },
+        {
+          "ticker": "CZR",
+          "name": "Caesars Entertainment, Inc.",
+          "score": 0.563,
+          "realized_return": -0.1346,
+          "hit": false
+        },
+        {
+          "ticker": "KMX",
+          "name": "CARMAX INC",
+          "score": 0.525,
+          "realized_return": -0.1422,
+          "hit": false
+        },
+        {
+          "ticker": "AMGN",
+          "name": "AMGEN INC",
+          "score": 0.518,
+          "realized_return": -0.0207,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0928,
+      "base_mean_return": -0.0492,
+      "excess": -0.0435
+    },
+    {
+      "month": "2023-10-31",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "VFC",
+          "name": "V F CORP",
+          "score": 1.71,
+          "realized_return": 0.1363,
+          "hit": true
+        },
+        {
+          "ticker": "SEDG",
+          "name": "SOLAREDGE TECHNOLOGIES, INC.",
+          "score": 1.25,
+          "realized_return": 0.046,
+          "hit": true
+        },
+        {
+          "ticker": "CZR",
+          "name": "Caesars Entertainment, Inc.",
+          "score": 1.126,
+          "realized_return": 0.1232,
+          "hit": true
+        },
+        {
+          "ticker": "MCK",
+          "name": "MCKESSON CORP",
+          "score": 0.994,
+          "realized_return": 0.0349,
+          "hit": true
+        },
+        {
+          "ticker": "NVDA",
+          "name": "NVIDIA CORP",
+          "score": 0.845,
+          "realized_return": 0.1469,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.0974,
+      "base_mean_return": 0.0938,
+      "excess": 0.0036
+    },
+    {
+      "month": "2023-11-30",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "VFC",
+          "name": "V F CORP",
+          "score": 1.372,
+          "realized_return": 0.1206,
+          "hit": true
+        },
+        {
+          "ticker": "MTCH",
+          "name": "Match Group, Inc.",
+          "score": 1.13,
+          "realized_return": 0.1238,
+          "hit": true
+        },
+        {
+          "ticker": "NVDA",
+          "name": "NVIDIA CORP",
+          "score": 1.064,
+          "realized_return": 0.0306,
+          "hit": true
+        },
+        {
+          "ticker": "CZR",
+          "name": "Caesars Entertainment, Inc.",
+          "score": 1.031,
+          "realized_return": 0.067,
+          "hit": true
+        },
+        {
+          "ticker": "WBD",
+          "name": "Warner Bros. Discovery, Inc.",
+          "score": 1.014,
+          "realized_return": 0.1128,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.091,
+      "base_mean_return": 0.07,
+      "excess": 0.021
+    },
+    {
+      "month": "2023-12-29",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "CFG",
+          "name": "CITIZENS FINANCIAL GROUP INC/RI",
+          "score": 1.588,
+          "realized_return": -0.0012,
+          "hit": false
+        },
+        {
+          "ticker": "BX",
+          "name": "Blackstone Inc.",
+          "score": 1.431,
+          "realized_return": -0.0491,
+          "hit": false
+        },
+        {
+          "ticker": "IVZ",
+          "name": "Invesco Ltd.",
+          "score": 1.264,
+          "realized_return": -0.1127,
+          "hit": false
+        },
+        {
+          "ticker": "FITB",
+          "name": "FIFTH THIRD BANCORP",
+          "score": 1.235,
+          "realized_return": -0.0079,
+          "hit": false
+        },
+        {
+          "ticker": "RF",
+          "name": "REGIONS FINANCIAL CORP",
+          "score": 1.099,
+          "realized_return": -0.0373,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0416,
+      "base_mean_return": -0.008,
+      "excess": -0.0337
+    },
+    {
+      "month": "2024-01-31",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "ALB",
+          "name": "ALBEMARLE CORP",
+          "score": 1.684,
+          "realized_return": 0.2446,
+          "hit": true
+        },
+        {
+          "ticker": "ENPH",
+          "name": "Enphase Energy, Inc.",
+          "score": 1.618,
+          "realized_return": 0.2452,
+          "hit": true
+        },
+        {
+          "ticker": "VFC",
+          "name": "V F CORP",
+          "score": 1.38,
+          "realized_return": -0.0122,
+          "hit": false
+        },
+        {
+          "ticker": "CCL",
+          "name": "Carnival Corp Ltd.",
+          "score": 1.348,
+          "realized_return": -0.0343,
+          "hit": false
+        },
+        {
+          "ticker": "TSLA",
+          "name": "Tesla, Inc.",
+          "score": 1.279,
+          "realized_return": 0.082,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.105,
+      "base_mean_return": 0.0477,
+      "excess": 0.0574
+    },
+    {
+      "month": "2024-02-29",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "VFC",
+          "name": "V F CORP",
+          "score": 1.647,
+          "realized_return": -0.0576,
+          "hit": false
+        },
+        {
+          "ticker": "WBD",
+          "name": "Warner Bros. Discovery, Inc.",
+          "score": 1.463,
+          "realized_return": 0.0006,
+          "hit": true
+        },
+        {
+          "ticker": "TSLA",
+          "name": "Tesla, Inc.",
+          "score": 1.381,
+          "realized_return": -0.1316,
+          "hit": false
+        },
+        {
+          "ticker": "CCL",
+          "name": "Carnival Corp Ltd.",
+          "score": 1.26,
+          "realized_return": 0.0257,
+          "hit": true
+        },
+        {
+          "ticker": "META",
+          "name": "Meta Platforms, Inc.",
+          "score": 0.9,
+          "realized_return": 0.0032,
+          "hit": true
+        }
+      ],
+      "top_mean_return": -0.032,
+      "base_mean_return": 0.0396,
+      "excess": -0.0716
+    },
+    {
+      "month": "2024-03-28",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "NVDA",
+          "name": "NVIDIA CORP",
+          "score": 1.005,
+          "realized_return": -0.0273,
+          "hit": false
+        },
+        {
+          "ticker": "AMD",
+          "name": "ADVANCED MICRO DEVICES INC",
+          "score": 0.878,
+          "realized_return": -0.1124,
+          "hit": false
+        },
+        {
+          "ticker": "LRCX",
+          "name": "LAM RESEARCH CORP",
+          "score": 0.758,
+          "realized_return": -0.044,
+          "hit": false
+        },
+        {
+          "ticker": "TSLA",
+          "name": "Tesla, Inc.",
+          "score": 0.753,
+          "realized_return": 0.1045,
+          "hit": true
+        },
+        {
+          "ticker": "MCK",
+          "name": "MCKESSON CORP",
+          "score": 0.559,
+          "realized_return": 0.0018,
+          "hit": true
+        }
+      ],
+      "top_mean_return": -0.0155,
+      "base_mean_return": -0.0359,
+      "excess": 0.0204
+    },
+    {
+      "month": "2024-04-30",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "ANET",
+          "name": "Arista Networks, Inc.",
+          "score": 1.694,
+          "realized_return": 0.1836,
+          "hit": true
+        },
+        {
+          "ticker": "COR",
+          "name": "Cencora, Inc.",
+          "score": 1.472,
+          "realized_return": -0.0754,
+          "hit": false
+        },
+        {
+          "ticker": "CHD",
+          "name": "CHURCH & DWIGHT CO INC /DE/",
+          "score": 1.333,
+          "realized_return": -0.0301,
+          "hit": false
+        },
+        {
+          "ticker": "MRK",
+          "name": "Merck & Co., Inc.",
+          "score": 1.236,
+          "realized_return": -0.0357,
+          "hit": false
+        },
+        {
+          "ticker": "GIS",
+          "name": "GENERAL MILLS INC",
+          "score": 1.162,
+          "realized_return": -0.0546,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0024,
+      "base_mean_return": 0.0151,
+      "excess": -0.0175
+    },
+    {
+      "month": "2024-05-31",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "ENPH",
+          "name": "Enphase Energy, Inc.",
+          "score": 1.011,
+          "realized_return": -0.2512,
+          "hit": false
+        },
+        {
+          "ticker": "META",
+          "name": "Meta Platforms, Inc.",
+          "score": 0.847,
+          "realized_return": 0.0921,
+          "hit": true
+        },
+        {
+          "ticker": "SMCI",
+          "name": "Super Micro Computer, Inc.",
+          "score": 0.847,
+          "realized_return": 0.0659,
+          "hit": true
+        },
+        {
+          "ticker": "NCLH",
+          "name": "Norwegian Cruise Line Holdings Ltd.",
+          "score": 0.804,
+          "realized_return": 0.0596,
+          "hit": true
+        },
+        {
+          "ticker": "EPAM",
+          "name": "EPAM Systems, Inc.",
+          "score": 0.768,
+          "realized_return": 0.0301,
+          "hit": true
+        }
+      ],
+      "top_mean_return": -0.0007,
+      "base_mean_return": -0.0063,
+      "excess": 0.0056
+    },
+    {
+      "month": "2024-06-28",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "SMCI",
+          "name": "Super Micro Computer, Inc.",
+          "score": 1.837,
+          "realized_return": -0.1845,
+          "hit": false
+        },
+        {
+          "ticker": "META",
+          "name": "Meta Platforms, Inc.",
+          "score": 1.433,
+          "realized_return": -0.0815,
+          "hit": false
+        },
+        {
+          "ticker": "LRCX",
+          "name": "LAM RESEARCH CORP",
+          "score": 1.059,
+          "realized_return": -0.1972,
+          "hit": false
+        },
+        {
+          "ticker": "AMD",
+          "name": "ADVANCED MICRO DEVICES INC",
+          "score": 0.851,
+          "realized_return": -0.1465,
+          "hit": false
+        },
+        {
+          "ticker": "BLDR",
+          "name": "Builders FirstSource, Inc.",
+          "score": 0.585,
+          "realized_return": 0.2122,
+          "hit": true
+        }
+      ],
+      "top_mean_return": -0.0795,
+      "base_mean_return": 0.0392,
+      "excess": -0.1187
+    },
+    {
+      "month": "2024-07-31",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "NVDA",
+          "name": "NVIDIA CORP",
+          "score": 1.274,
+          "realized_return": 0.0046,
+          "hit": true
+        },
+        {
+          "ticker": "WDC",
+          "name": "WESTERN DIGITAL CORP",
+          "score": 1.209,
+          "realized_return": -0.0598,
+          "hit": false
+        },
+        {
+          "ticker": "CRWD",
+          "name": "CrowdStrike Holdings, Inc.",
+          "score": 0.949,
+          "realized_return": 0.1721,
+          "hit": true
+        },
+        {
+          "ticker": "AVGO",
+          "name": "Broadcom Inc.",
+          "score": 0.927,
+          "realized_return": -0.0225,
+          "hit": false
+        },
+        {
+          "ticker": "NCLH",
+          "name": "Norwegian Cruise Line Holdings Ltd.",
+          "score": 0.894,
+          "realized_return": -0.0309,
+          "hit": false
+        }
+      ],
+      "top_mean_return": 0.0127,
+      "base_mean_return": 0.0171,
+      "excess": -0.0044
+    },
+    {
+      "month": "2024-08-30",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "SMCI",
+          "name": "Super Micro Computer, Inc.",
+          "score": 1.708,
+          "realized_return": -0.0729,
+          "hit": false
+        },
+        {
+          "ticker": "CRWD",
+          "name": "CrowdStrike Holdings, Inc.",
+          "score": 1.385,
+          "realized_return": -0.0076,
+          "hit": false
+        },
+        {
+          "ticker": "INTC",
+          "name": "INTEL CORP",
+          "score": 1.229,
+          "realized_return": 0.0295,
+          "hit": true
+        },
+        {
+          "ticker": "NVDA",
+          "name": "NVIDIA CORP",
+          "score": 0.946,
+          "realized_return": -0.0214,
+          "hit": false
+        },
+        {
+          "ticker": "TER",
+          "name": "TERADYNE, INC",
+          "score": 0.724,
+          "realized_return": -0.0557,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0256,
+      "base_mean_return": 0.0184,
+      "excess": -0.044
+    },
+    {
+      "month": "2024-09-30",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "INTC",
+          "name": "INTEL CORP",
+          "score": 1.874,
+          "realized_return": -0.0239,
+          "hit": false
+        },
+        {
+          "ticker": "ENPH",
+          "name": "Enphase Energy, Inc.",
+          "score": 1.509,
+          "realized_return": -0.265,
+          "hit": false
+        },
+        {
+          "ticker": "AVGO",
+          "name": "Broadcom Inc.",
+          "score": 1.394,
+          "realized_return": 0.0401,
+          "hit": true
+        },
+        {
+          "ticker": "MU",
+          "name": "MICRON TECHNOLOGY INC",
+          "score": 1.283,
+          "realized_return": 0.0446,
+          "hit": true
+        },
+        {
+          "ticker": "WDC",
+          "name": "WESTERN DIGITAL CORP",
+          "score": 1.182,
+          "realized_return": -0.0011,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0411,
+      "base_mean_return": -0.0045,
+      "excess": -0.0365
+    },
+    {
+      "month": "2024-10-31",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "AVGO",
+          "name": "Broadcom Inc.",
+          "score": 1.044,
+          "realized_return": -0.0195,
+          "hit": false
+        },
+        {
+          "ticker": "FSLR",
+          "name": "FIRST SOLAR, INC.",
+          "score": 1.039,
+          "realized_return": 0.0699,
+          "hit": true
+        },
+        {
+          "ticker": "CCL",
+          "name": "Carnival Corp Ltd.",
+          "score": 0.94,
+          "realized_return": 0.1815,
+          "hit": true
+        },
+        {
+          "ticker": "INTC",
+          "name": "INTEL CORP",
+          "score": 0.929,
+          "realized_return": 0.112,
+          "hit": true
+        },
+        {
+          "ticker": "MU",
+          "name": "MICRON TECHNOLOGY INC",
+          "score": 0.925,
+          "realized_return": -0.0108,
+          "hit": false
+        }
+      ],
+      "top_mean_return": 0.0666,
+      "base_mean_return": 0.0595,
+      "excess": 0.0071
+    },
+    {
+      "month": "2024-11-29",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "AMTM",
+          "name": "Amentum Holdings, Inc.",
+          "score": 1.263,
+          "realized_return": -0.1363,
+          "hit": false
+        },
+        {
+          "ticker": "T",
+          "name": "AT&T INC.",
+          "score": 1.007,
+          "realized_return": -0.0168,
+          "hit": false
+        },
+        {
+          "ticker": "INTC",
+          "name": "INTEL CORP",
+          "score": 0.956,
+          "realized_return": -0.1663,
+          "hit": false
+        },
+        {
+          "ticker": "PLTR",
+          "name": "Palantir Technologies Inc.",
+          "score": 0.872,
+          "realized_return": 0.1275,
+          "hit": true
+        },
+        {
+          "ticker": "SMCI",
+          "name": "Super Micro Computer, Inc.",
+          "score": 0.76,
+          "realized_return": -0.0664,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0517,
+      "base_mean_return": -0.0633,
+      "excess": 0.0116
+    },
+    {
+      "month": "2024-12-31",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "PLTR",
+          "name": "Palantir Technologies Inc.",
+          "score": 1.983,
+          "realized_return": 0.1072,
+          "hit": true
+        },
+        {
+          "ticker": "CRWD",
+          "name": "CrowdStrike Holdings, Inc.",
+          "score": 1.655,
+          "realized_return": 0.1615,
+          "hit": true
+        },
+        {
+          "ticker": "TSLA",
+          "name": "Tesla, Inc.",
+          "score": 1.274,
+          "realized_return": -0.0495,
+          "hit": false
+        },
+        {
+          "ticker": "T",
+          "name": "AT&T INC.",
+          "score": 1.218,
+          "realized_return": 0.0786,
+          "hit": true
+        },
+        {
+          "ticker": "SMCI",
+          "name": "Super Micro Computer, Inc.",
+          "score": 0.997,
+          "realized_return": -0.1197,
+          "hit": false
+        }
+      ],
+      "top_mean_return": 0.0356,
+      "base_mean_return": 0.0296,
+      "excess": 0.006
+    },
+    {
+      "month": "2025-01-31",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "AVGO",
+          "name": "Broadcom Inc.",
+          "score": 1.512,
+          "realized_return": -0.1515,
+          "hit": false
+        },
+        {
+          "ticker": "PLTR",
+          "name": "Palantir Technologies Inc.",
+          "score": 1.333,
+          "realized_return": 0.0232,
+          "hit": true
+        },
+        {
+          "ticker": "EIX",
+          "name": "EDISON INTERNATIONAL",
+          "score": 1.217,
+          "realized_return": 0.0152,
+          "hit": true
+        },
+        {
+          "ticker": "SMCI",
+          "name": "Super Micro Computer, Inc.",
+          "score": 1.176,
+          "realized_return": 0.3707,
+          "hit": true
+        },
+        {
+          "ticker": "ON",
+          "name": "ON SEMICONDUCTOR CORP",
+          "score": 1.03,
+          "realized_return": -0.15,
+          "hit": false
+        }
+      ],
+      "top_mean_return": 0.0215,
+      "base_mean_return": -0.0329,
+      "excess": 0.0544
+    },
+    {
+      "month": "2025-02-28",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "CRWD",
+          "name": "CrowdStrike Holdings, Inc.",
+          "score": 1.751,
+          "realized_return": -0.0955,
+          "hit": false
+        },
+        {
+          "ticker": "ANET",
+          "name": "Arista Networks, Inc.",
+          "score": 1.375,
+          "realized_return": -0.1673,
+          "hit": false
+        },
+        {
+          "ticker": "VST",
+          "name": "Vistra Corp.",
+          "score": 1.265,
+          "realized_return": -0.1201,
+          "hit": false
+        },
+        {
+          "ticker": "KVUE",
+          "name": "Kenvue Inc.",
+          "score": 1.165,
+          "realized_return": 0.0161,
+          "hit": true
+        },
+        {
+          "ticker": "PLTR",
+          "name": "Palantir Technologies Inc.",
+          "score": 1.099,
+          "realized_return": -0.0061,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0746,
+      "base_mean_return": -0.0345,
+      "excess": -0.0401
+    },
+    {
+      "month": "2025-03-31",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "BMY",
+          "name": "BRISTOL MYERS SQUIBB CO",
+          "score": 1.976,
+          "realized_return": -0.1689,
+          "hit": false
+        },
+        {
+          "ticker": "MO",
+          "name": "ALTRIA GROUP, INC.",
+          "score": 1.459,
+          "realized_return": -0.0154,
+          "hit": false
+        },
+        {
+          "ticker": "JNJ",
+          "name": "JOHNSON & JOHNSON",
+          "score": 1.229,
+          "realized_return": -0.0575,
+          "hit": false
+        },
+        {
+          "ticker": "SMCI",
+          "name": "Super Micro Computer, Inc.",
+          "score": 0.999,
+          "realized_return": -0.0703,
+          "hit": false
+        },
+        {
+          "ticker": "PG",
+          "name": "PROCTER & GAMBLE Co",
+          "score": 0.975,
+          "realized_return": -0.04,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0704,
+      "base_mean_return": -0.0225,
+      "excess": -0.0479
+    },
+    {
+      "month": "2025-04-30",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "CCL",
+          "name": "Carnival Corp Ltd.",
+          "score": 1.31,
+          "realized_return": 0.2662,
+          "hit": true
+        },
+        {
+          "ticker": "NCLH",
+          "name": "Norwegian Cruise Line Holdings Ltd.",
+          "score": 1.303,
+          "realized_return": 0.1008,
+          "hit": true
+        },
+        {
+          "ticker": "APA",
+          "name": "APA Corp",
+          "score": 1.213,
+          "realized_return": 0.0946,
+          "hit": true
+        },
+        {
+          "ticker": "SMCI",
+          "name": "Super Micro Computer, Inc.",
+          "score": 1.128,
+          "realized_return": 0.2561,
+          "hit": true
+        },
+        {
+          "ticker": "PLTR",
+          "name": "Palantir Technologies Inc.",
+          "score": 0.955,
+          "realized_return": 0.1126,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.1661,
+      "base_mean_return": 0.0452,
+      "excess": 0.1209
+    },
+    {
+      "month": "2025-05-30",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "NVDA",
+          "name": "NVIDIA CORP",
+          "score": 1.289,
+          "realized_return": 0.1369,
+          "hit": true
+        },
+        {
+          "ticker": "AVGO",
+          "name": "Broadcom Inc.",
+          "score": 1.183,
+          "realized_return": 0.0961,
+          "hit": true
+        },
+        {
+          "ticker": "PLTR",
+          "name": "Palantir Technologies Inc.",
+          "score": 0.99,
+          "realized_return": -0.0083,
+          "hit": false
+        },
+        {
+          "ticker": "COIN",
+          "name": "Coinbase Global, Inc.",
+          "score": 0.848,
+          "realized_return": 0.3597,
+          "hit": true
+        },
+        {
+          "ticker": "CCL",
+          "name": "Carnival Corp Ltd.",
+          "score": 0.743,
+          "realized_return": 0.2348,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.1638,
+      "base_mean_return": 0.0473,
+      "excess": 0.1165
+    },
+    {
+      "month": "2025-06-30",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "NVDA",
+          "name": "NVIDIA CORP",
+          "score": 1.727,
+          "realized_return": 0.1351,
+          "hit": true
+        },
+        {
+          "ticker": "AVGO",
+          "name": "Broadcom Inc.",
+          "score": 1.475,
+          "realized_return": 0.0985,
+          "hit": true
+        },
+        {
+          "ticker": "SO",
+          "name": "SOUTHERN CO",
+          "score": 1.35,
+          "realized_return": 0.0342,
+          "hit": true
+        },
+        {
+          "ticker": "AMD",
+          "name": "ADVANCED MICRO DEVICES INC",
+          "score": 1.324,
+          "realized_return": 0.265,
+          "hit": true
+        },
+        {
+          "ticker": "LRCX",
+          "name": "LAM RESEARCH CORP",
+          "score": 1.127,
+          "realized_return": 0.018,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.1102,
+      "base_mean_return": 0.0187,
+      "excess": 0.0915
+    },
+    {
+      "month": "2025-07-31",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "SMCI",
+          "name": "Super Micro Computer, Inc.",
+          "score": 2.019,
+          "realized_return": -0.2955,
+          "hit": false
+        },
+        {
+          "ticker": "PLTR",
+          "name": "Palantir Technologies Inc.",
+          "score": 1.189,
+          "realized_return": -0.0104,
+          "hit": false
+        },
+        {
+          "ticker": "AMD",
+          "name": "ADVANCED MICRO DEVICES INC",
+          "score": 1.072,
+          "realized_return": -0.0776,
+          "hit": false
+        },
+        {
+          "ticker": "MO",
+          "name": "ALTRIA GROUP, INC.",
+          "score": 0.867,
+          "realized_return": 0.0855,
+          "hit": true
+        },
+        {
+          "ticker": "DUK",
+          "name": "Duke Energy CORP",
+          "score": 0.72,
+          "realized_return": 0.0157,
+          "hit": true
+        }
+      ],
+      "top_mean_return": -0.0564,
+      "base_mean_return": 0.0281,
+      "excess": -0.0846
+    },
+    {
+      "month": "2025-08-29",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "SMCI",
+          "name": "Super Micro Computer, Inc.",
+          "score": 2.223,
+          "realized_return": 0.1539,
+          "hit": true
+        },
+        {
+          "ticker": "COIN",
+          "name": "Coinbase Global, Inc.",
+          "score": 1.794,
+          "realized_return": 0.1082,
+          "hit": true
+        },
+        {
+          "ticker": "PLTR",
+          "name": "Palantir Technologies Inc.",
+          "score": 1.396,
+          "realized_return": 0.1641,
+          "hit": true
+        },
+        {
+          "ticker": "CEG",
+          "name": "Constellation Energy Corp",
+          "score": 0.931,
+          "realized_return": 0.0676,
+          "hit": true
+        },
+        {
+          "ticker": "AVGO",
+          "name": "Broadcom Inc.",
+          "score": 0.887,
+          "realized_return": 0.1109,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.1209,
+      "base_mean_return": 0.0086,
+      "excess": 0.1124
+    },
+    {
+      "month": "2025-09-30",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "NVDA",
+          "name": "NVIDIA CORP",
+          "score": 0.897,
+          "realized_return": 0.1099,
+          "hit": true
+        },
+        {
+          "ticker": "SMCI",
+          "name": "Super Micro Computer, Inc.",
+          "score": 0.754,
+          "realized_return": 0.098,
+          "hit": true
+        },
+        {
+          "ticker": "AVGO",
+          "name": "Broadcom Inc.",
+          "score": 0.61,
+          "realized_return": 0.1701,
+          "hit": true
+        },
+        {
+          "ticker": "PLTR",
+          "name": "Palantir Technologies Inc.",
+          "score": 0.547,
+          "realized_return": 0.0898,
+          "hit": true
+        },
+        {
+          "ticker": "PSKY",
+          "name": "Paramount Skydance Corp",
+          "score": 0.526,
+          "realized_return": -0.1607,
+          "hit": false
+        }
+      ],
+      "top_mean_return": 0.0614,
+      "base_mean_return": -0.0094,
+      "excess": 0.0708
+    },
+    {
+      "month": "2025-10-31",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "NVDA",
+          "name": "NVIDIA CORP",
+          "score": 1.946,
+          "realized_return": -0.1045,
+          "hit": false
+        },
+        {
+          "ticker": "WBD",
+          "name": "Warner Bros. Discovery, Inc.",
+          "score": 1.664,
+          "realized_return": 0.0936,
+          "hit": true
+        },
+        {
+          "ticker": "PLTR",
+          "name": "Palantir Technologies Inc.",
+          "score": 1.637,
+          "realized_return": -0.1486,
+          "hit": false
+        },
+        {
+          "ticker": "AMD",
+          "name": "ADVANCED MICRO DEVICES INC",
+          "score": 1.523,
+          "realized_return": -0.1596,
+          "hit": false
+        },
+        {
+          "ticker": "ANET",
+          "name": "Arista Networks, Inc.",
+          "score": 1.44,
+          "realized_return": -0.1932,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.1025,
+      "base_mean_return": 0.0125,
+      "excess": -0.1149
+    },
+    {
+      "month": "2025-11-28",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "PLTR",
+          "name": "Palantir Technologies Inc.",
+          "score": 1.274,
+          "realized_return": 0.0736,
+          "hit": true
+        },
+        {
+          "ticker": "KR",
+          "name": "KROGER CO",
+          "score": 1.22,
+          "realized_return": -0.0684,
+          "hit": false
+        },
+        {
+          "ticker": "ANET",
+          "name": "Arista Networks, Inc.",
+          "score": 1.162,
+          "realized_return": 0.0135,
+          "hit": true
+        },
+        {
+          "ticker": "CME",
+          "name": "CME GROUP INC.",
+          "score": 1.117,
+          "realized_return": -0.0155,
+          "hit": false
+        },
+        {
+          "ticker": "JNJ",
+          "name": "JOHNSON & JOHNSON",
+          "score": 1.041,
+          "realized_return": -0.0,
+          "hit": false
+        }
+      ],
+      "top_mean_return": 0.0006,
+      "base_mean_return": 0.0141,
+      "excess": -0.0134
+    },
+    {
+      "month": "2025-12-31",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "PLTR",
+          "name": "Palantir Technologies Inc.",
+          "score": 1.485,
+          "realized_return": -0.1687,
+          "hit": false
+        },
+        {
+          "ticker": "LW",
+          "name": "Lamb Weston Holdings, Inc.",
+          "score": 1.129,
+          "realized_return": 0.0834,
+          "hit": true
+        },
+        {
+          "ticker": "AMD",
+          "name": "ADVANCED MICRO DEVICES INC",
+          "score": 1.105,
+          "realized_return": 0.1499,
+          "hit": true
+        },
+        {
+          "ticker": "WBD",
+          "name": "Warner Bros. Discovery, Inc.",
+          "score": 0.931,
+          "realized_return": -0.046,
+          "hit": false
+        },
+        {
+          "ticker": "NCLH",
+          "name": "Norwegian Cruise Line Holdings Ltd.",
+          "score": 0.697,
+          "realized_return": 0.0582,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.0154,
+      "base_mean_return": 0.0371,
+      "excess": -0.0217
+    },
+    {
+      "month": "2026-01-30",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "SMCI",
+          "name": "Super Micro Computer, Inc.",
+          "score": 1.597,
+          "realized_return": 0.0529,
+          "hit": true
+        },
+        {
+          "ticker": "NVDA",
+          "name": "NVIDIA CORP",
+          "score": 1.132,
+          "realized_return": -0.0581,
+          "hit": false
+        },
+        {
+          "ticker": "AVGO",
+          "name": "Broadcom Inc.",
+          "score": 1.098,
+          "realized_return": -0.0529,
+          "hit": false
+        },
+        {
+          "ticker": "MU",
+          "name": "MICRON TECHNOLOGY INC",
+          "score": 1.072,
+          "realized_return": -0.0848,
+          "hit": false
+        },
+        {
+          "ticker": "LRCX",
+          "name": "LAM RESEARCH CORP",
+          "score": 0.986,
+          "realized_return": -0.0693,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0425,
+      "base_mean_return": 0.0192,
+      "excess": -0.0616
+    },
+    {
+      "month": "2026-02-27",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "CME",
+          "name": "CME GROUP INC.",
+          "score": 1.525,
+          "realized_return": -0.046,
+          "hit": false
+        },
+        {
+          "ticker": "AWK",
+          "name": "American Water Works Company, Inc.",
+          "score": 1.481,
+          "realized_return": 0.0212,
+          "hit": true
+        },
+        {
+          "ticker": "DG",
+          "name": "DOLLAR GENERAL CORP",
+          "score": 1.302,
+          "realized_return": -0.2461,
+          "hit": false
+        },
+        {
+          "ticker": "MO",
+          "name": "ALTRIA GROUP, INC.",
+          "score": 1.201,
+          "realized_return": -0.0133,
+          "hit": false
+        },
+        {
+          "ticker": "DELL",
+          "name": "Dell Technologies Inc.",
+          "score": 1.152,
+          "realized_return": 0.1127,
+          "hit": true
+        }
+      ],
+      "top_mean_return": -0.0343,
+      "base_mean_return": -0.0776,
+      "excess": 0.0433
+    },
+    {
+      "month": "2026-03-31",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "PLTR",
+          "name": "Palantir Technologies Inc.",
+          "score": 2.026,
+          "realized_return": -0.049,
+          "hit": false
+        },
+        {
+          "ticker": "MU",
+          "name": "MICRON TECHNOLOGY INC",
+          "score": 1.833,
+          "realized_return": 0.533,
+          "hit": true
+        },
+        {
+          "ticker": "NCLH",
+          "name": "Norwegian Cruise Line Holdings Ltd.",
+          "score": 1.556,
+          "realized_return": -0.0278,
+          "hit": false
+        },
+        {
+          "ticker": "LUV",
+          "name": "SOUTHWEST AIRLINES CO",
+          "score": 1.395,
+          "realized_return": 0.0085,
+          "hit": true
+        },
+        {
+          "ticker": "SWK",
+          "name": "STANLEY BLACK & DECKER, INC.",
+          "score": 1.344,
+          "realized_return": 0.1002,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.113,
+      "base_mean_return": 0.0549,
+      "excess": 0.0581
+    },
+    {
+      "month": "2026-04-30",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "ENPH",
+          "name": "Enphase Energy, Inc.",
+          "score": 2.019,
+          "realized_return": 0.9339,
+          "hit": true
+        },
+        {
+          "ticker": "FCX",
+          "name": "FREEPORT-MCMORAN INC",
+          "score": 1.377,
+          "realized_return": 0.1603,
+          "hit": true
+        },
+        {
+          "ticker": "KO",
+          "name": "COCA COLA CO",
+          "score": 1.261,
+          "realized_return": -0.0015,
+          "hit": false
+        },
+        {
+          "ticker": "MO",
+          "name": "ALTRIA GROUP, INC.",
+          "score": 1.207,
+          "realized_return": -0.0551,
+          "hit": false
+        },
+        {
+          "ticker": "CVX",
+          "name": "CHEVRON CORP",
+          "score": 1.163,
+          "realized_return": -0.0306,
+          "hit": false
+        }
+      ],
+      "top_mean_return": 0.2014,
+      "base_mean_return": 0.0243,
+      "excess": 0.1771
+    },
+    {
+      "month": "2026-05-29",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "DELL",
+          "name": "Dell Technologies Inc.",
+          "score": 2.028,
+          "realized_return": 0.0231,
+          "hit": true
+        },
+        {
+          "ticker": "PLTR",
+          "name": "Palantir Technologies Inc.",
+          "score": 1.72,
+          "realized_return": -0.2547,
+          "hit": false
+        },
+        {
+          "ticker": "ENPH",
+          "name": "Enphase Energy, Inc.",
+          "score": 1.661,
+          "realized_return": -0.2797,
+          "hit": false
+        },
+        {
+          "ticker": "VZ",
+          "name": "VERIZON COMMUNICATIONS INC",
+          "score": 1.402,
+          "realized_return": -0.1154,
+          "hit": false
+        },
+        {
+          "ticker": "MO",
+          "name": "ALTRIA GROUP, INC.",
+          "score": 1.321,
+          "realized_return": 0.0488,
+          "hit": true
+        }
+      ],
+      "top_mean_return": -0.1156,
+      "base_mean_return": 0.0204,
+      "excess": -0.136
+    },
+    {
+      "month": "2026-06-30",
+      "region": "us",
+      "picks": [
+        {
+          "ticker": "COIN",
+          "name": "Coinbase Global, Inc.",
+          "score": 1.508,
+          "realized_return": 0.119,
+          "hit": true
+        },
+        {
+          "ticker": "SO",
+          "name": "SOUTHERN CO",
+          "score": 1.415,
+          "realized_return": -0.0139,
+          "hit": false
+        },
+        {
+          "ticker": "CNP",
+          "name": "CENTERPOINT ENERGY INC",
+          "score": 1.341,
+          "realized_return": -0.0429,
+          "hit": false
+        },
+        {
+          "ticker": "LRCX",
+          "name": "LAM RESEARCH CORP",
+          "score": 1.336,
+          "realized_return": -0.3129,
+          "hit": false
+        },
+        {
+          "ticker": "INTU",
+          "name": "INTUIT INC.",
+          "score": 1.319,
+          "realized_return": 0.2141,
+          "hit": true
+        }
+      ],
+      "top_mean_return": -0.0073,
+      "base_mean_return": 0.0265,
+      "excess": -0.0339
+    },
+    {
+      "month": "2021-01-29",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.002371",
+          "name": "\u5317\u65b9\u534e\u521b",
+          "score": 1.921,
+          "realized_return": -0.1766,
+          "hit": false
+        },
+        {
+          "ticker": "sh.603501",
+          "name": "\u8c6a\u5a01\u96c6\u56e2",
+          "score": 1.919,
+          "realized_return": -0.1097,
+          "hit": false
+        },
+        {
+          "ticker": "sz.000538",
+          "name": "\u4e91\u5357\u767d\u836f",
+          "score": 0.796,
+          "realized_return": -0.0762,
+          "hit": false
+        },
+        {
+          "ticker": "sz.000625",
+          "name": "\u957f\u5b89\u6c7d\u8f66",
+          "score": 0.784,
+          "realized_return": -0.0435,
+          "hit": false
+        },
+        {
+          "ticker": "sh.688036",
+          "name": "\u4f20\u97f3\u63a7\u80a1",
+          "score": 0.632,
+          "realized_return": -0.1505,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.1113,
+      "base_mean_return": -0.0202,
+      "excess": -0.0911
+    },
+    {
+      "month": "2021-02-26",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sh.688012",
+          "name": "\u4e2d\u5fae\u516c\u53f8",
+          "score": 2.129,
+          "realized_return": -0.1663,
+          "hit": false
+        },
+        {
+          "ticker": "sz.002460",
+          "name": "\u8d63\u950b\u9502\u4e1a",
+          "score": 1.896,
+          "realized_return": -0.0146,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300059",
+          "name": "\u4e1c\u65b9\u8d22\u5bcc",
+          "score": 1.743,
+          "realized_return": -0.0859,
+          "hit": false
+        },
+        {
+          "ticker": "sh.603392",
+          "name": "\u4e07\u6cf0\u751f\u7269",
+          "score": 1.665,
+          "realized_return": -0.01,
+          "hit": false
+        },
+        {
+          "ticker": "sh.603195",
+          "name": "\u516c\u725b\u96c6\u56e2",
+          "score": 1.527,
+          "realized_return": -0.0909,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0735,
+      "base_mean_return": -0.0398,
+      "excess": -0.0338
+    },
+    {
+      "month": "2021-03-31",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.300014",
+          "name": "\u4ebf\u7eac\u9502\u80fd",
+          "score": 1.023,
+          "realized_return": 0.1799,
+          "hit": true
+        },
+        {
+          "ticker": "sh.601988",
+          "name": "\u4e2d\u56fd\u94f6\u884c",
+          "score": 0.797,
+          "realized_return": -0.0299,
+          "hit": false
+        },
+        {
+          "ticker": "sh.600900",
+          "name": "\u957f\u6c5f\u7535\u529b",
+          "score": 0.734,
+          "realized_return": -0.0686,
+          "hit": false
+        },
+        {
+          "ticker": "sz.002311",
+          "name": "\u6d77\u5927\u96c6\u56e2",
+          "score": 0.677,
+          "realized_return": 0.0692,
+          "hit": true
+        },
+        {
+          "ticker": "sh.601006",
+          "name": "\u5927\u79e6\u94c1\u8def",
+          "score": 0.543,
+          "realized_return": -0.0185,
+          "hit": false
+        }
+      ],
+      "top_mean_return": 0.0264,
+      "base_mean_return": 0.0064,
+      "excess": 0.0201
+    },
+    {
+      "month": "2021-04-30",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.300122",
+          "name": "\u667a\u98de\u751f\u7269",
+          "score": 2.044,
+          "realized_return": -0.2016,
+          "hit": false
+        },
+        {
+          "ticker": "sh.603392",
+          "name": "\u4e07\u6cf0\u751f\u7269",
+          "score": 1.869,
+          "realized_return": -0.2746,
+          "hit": false
+        },
+        {
+          "ticker": "sh.600809",
+          "name": "\u5c71\u897f\u6c7e\u9152",
+          "score": 1.76,
+          "realized_return": 0.1501,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300529",
+          "name": "\u5065\u5e06\u751f\u7269",
+          "score": 1.345,
+          "realized_return": -0.0476,
+          "hit": false
+        },
+        {
+          "ticker": "sh.600436",
+          "name": "\u7247\u4ed4\u7640",
+          "score": 1.338,
+          "realized_return": 0.1841,
+          "hit": true
+        }
+      ],
+      "top_mean_return": -0.0379,
+      "base_mean_return": 0.0176,
+      "excess": -0.0556
+    },
+    {
+      "month": "2021-05-31",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.002371",
+          "name": "\u5317\u65b9\u534e\u521b",
+          "score": 1.806,
+          "realized_return": 0.4739,
+          "hit": true
+        },
+        {
+          "ticker": "sh.603799",
+          "name": "\u534e\u53cb\u94b4\u4e1a",
+          "score": 1.432,
+          "realized_return": 0.1061,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300014",
+          "name": "\u4ebf\u7eac\u9502\u80fd",
+          "score": 1.362,
+          "realized_return": -0.0641,
+          "hit": false
+        },
+        {
+          "ticker": "sh.603658",
+          "name": "\u5b89\u56fe\u751f\u7269",
+          "score": 1.306,
+          "realized_return": -0.1458,
+          "hit": false
+        },
+        {
+          "ticker": "sh.600763",
+          "name": "\u901a\u7b56\u533b\u7597",
+          "score": 1.239,
+          "realized_return": 0.1709,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.1082,
+      "base_mean_return": -0.0257,
+      "excess": 0.1339
+    },
+    {
+      "month": "2021-06-30",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.002153",
+          "name": "\u77f3\u57fa\u4fe1\u606f",
+          "score": 1.537,
+          "realized_return": -0.1327,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300274",
+          "name": "\u9633\u5149\u7535\u6e90",
+          "score": 1.474,
+          "realized_return": 0.3638,
+          "hit": true
+        },
+        {
+          "ticker": "sh.603087",
+          "name": "\u7518\u674e\u836f\u4e1a",
+          "score": 0.899,
+          "realized_return": -0.31,
+          "hit": false
+        },
+        {
+          "ticker": "sh.603939",
+          "name": "\u76ca\u4e30\u836f\u623f",
+          "score": 0.783,
+          "realized_return": -0.1057,
+          "hit": false
+        },
+        {
+          "ticker": "sh.603195",
+          "name": "\u516c\u725b\u96c6\u56e2",
+          "score": 0.705,
+          "realized_return": -0.0784,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0526,
+      "base_mean_return": -0.0616,
+      "excess": 0.009
+    },
+    {
+      "month": "2021-07-30",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.300122",
+          "name": "\u667a\u98de\u751f\u7269",
+          "score": 2.339,
+          "realized_return": 0.1215,
+          "hit": true
+        },
+        {
+          "ticker": "sz.002460",
+          "name": "\u8d63\u950b\u9502\u4e1a",
+          "score": 1.707,
+          "realized_return": 0.1096,
+          "hit": true
+        },
+        {
+          "ticker": "sh.688363",
+          "name": "\u534e\u7199\u751f\u7269",
+          "score": 1.436,
+          "realized_return": -0.1879,
+          "hit": false
+        },
+        {
+          "ticker": "sh.688111",
+          "name": "\u91d1\u5c71\u529e\u516c",
+          "score": 1.17,
+          "realized_return": -0.2348,
+          "hit": false
+        },
+        {
+          "ticker": "sz.002594",
+          "name": "\u6bd4\u4e9a\u8fea",
+          "score": 0.962,
+          "realized_return": 0.0652,
+          "hit": true
+        }
+      ],
+      "top_mean_return": -0.0253,
+      "base_mean_return": 0.0163,
+      "excess": -0.0416
+    },
+    {
+      "month": "2021-08-31",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sh.600763",
+          "name": "\u901a\u7b56\u533b\u7597",
+          "score": 0.959,
+          "realized_return": 0.3021,
+          "hit": true
+        },
+        {
+          "ticker": "sh.688363",
+          "name": "\u534e\u7199\u751f\u7269",
+          "score": 0.855,
+          "realized_return": 0.0806,
+          "hit": true
+        },
+        {
+          "ticker": "sz.002821",
+          "name": "\u51ef\u83b1\u82f1",
+          "score": 0.59,
+          "realized_return": 0.2152,
+          "hit": true
+        },
+        {
+          "ticker": "sh.601021",
+          "name": "\u6625\u79cb\u822a\u7a7a",
+          "score": 0.587,
+          "realized_return": 0.0506,
+          "hit": true
+        },
+        {
+          "ticker": "sz.000596",
+          "name": "\u53e4\u4e95\u8d21\u9152",
+          "score": 0.471,
+          "realized_return": 0.1552,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.1607,
+      "base_mean_return": 0.0272,
+      "excess": 0.1336
+    },
+    {
+      "month": "2021-09-30",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sh.603799",
+          "name": "\u534e\u53cb\u94b4\u4e1a",
+          "score": 2.513,
+          "realized_return": 0.0756,
+          "hit": true
+        },
+        {
+          "ticker": "sz.002460",
+          "name": "\u8d63\u950b\u9502\u4e1a",
+          "score": 1.589,
+          "realized_return": -0.0033,
+          "hit": false
+        },
+        {
+          "ticker": "sh.600763",
+          "name": "\u901a\u7b56\u533b\u7597",
+          "score": 1.287,
+          "realized_return": -0.295,
+          "hit": false
+        },
+        {
+          "ticker": "sh.601633",
+          "name": "\u957f\u57ce\u6c7d\u8f66",
+          "score": 1.207,
+          "realized_return": 0.1949,
+          "hit": true
+        },
+        {
+          "ticker": "sh.688363",
+          "name": "\u534e\u7199\u751f\u7269",
+          "score": 0.967,
+          "realized_return": -0.0947,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0245,
+      "base_mean_return": -0.0085,
+      "excess": -0.016
+    },
+    {
+      "month": "2021-10-29",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sh.600763",
+          "name": "\u901a\u7b56\u533b\u7597",
+          "score": 1.803,
+          "realized_return": -0.1742,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300595",
+          "name": "\u6b27\u666e\u5eb7\u89c6",
+          "score": 1.662,
+          "realized_return": -0.149,
+          "hit": false
+        },
+        {
+          "ticker": "sh.603799",
+          "name": "\u534e\u53cb\u94b4\u4e1a",
+          "score": 1.033,
+          "realized_return": 0.1977,
+          "hit": true
+        },
+        {
+          "ticker": "sz.002460",
+          "name": "\u8d63\u950b\u9502\u4e1a",
+          "score": 0.986,
+          "realized_return": -0.0218,
+          "hit": false
+        },
+        {
+          "ticker": "sz.002594",
+          "name": "\u6bd4\u4e9a\u8fea",
+          "score": 0.732,
+          "realized_return": -0.022,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0339,
+      "base_mean_return": 0.0,
+      "excess": -0.0339
+    },
+    {
+      "month": "2021-11-30",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sh.600763",
+          "name": "\u901a\u7b56\u533b\u7597",
+          "score": 2.136,
+          "realized_return": 0.0278,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300595",
+          "name": "\u6b27\u666e\u5eb7\u89c6",
+          "score": 2.011,
+          "realized_return": 0.0312,
+          "hit": true
+        },
+        {
+          "ticker": "sz.002821",
+          "name": "\u51ef\u83b1\u82f1",
+          "score": 0.992,
+          "realized_return": -0.1367,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300014",
+          "name": "\u4ebf\u7eac\u9502\u80fd",
+          "score": 0.909,
+          "realized_return": -0.1768,
+          "hit": false
+        },
+        {
+          "ticker": "sz.002460",
+          "name": "\u8d63\u950b\u9502\u4e1a",
+          "score": 0.632,
+          "realized_return": -0.1627,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0834,
+      "base_mean_return": 0.026,
+      "excess": -0.1094
+    },
+    {
+      "month": "2021-12-31",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.002460",
+          "name": "\u8d63\u950b\u9502\u4e1a",
+          "score": 1.79,
+          "realized_return": -0.1161,
+          "hit": false
+        },
+        {
+          "ticker": "sh.603799",
+          "name": "\u534e\u53cb\u94b4\u4e1a",
+          "score": 1.42,
+          "realized_return": -0.0971,
+          "hit": false
+        },
+        {
+          "ticker": "sh.601865",
+          "name": "\u798f\u83b1\u7279",
+          "score": 1.034,
+          "realized_return": -0.1897,
+          "hit": false
+        },
+        {
+          "ticker": "sh.603259",
+          "name": "\u836f\u660e\u5eb7\u5fb7",
+          "score": 1.033,
+          "realized_return": -0.2068,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300014",
+          "name": "\u4ebf\u7eac\u9502\u80fd",
+          "score": 0.981,
+          "realized_return": -0.2435,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.1706,
+      "base_mean_return": -0.0667,
+      "excess": -0.104
+    },
+    {
+      "month": "2022-01-28",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.300274",
+          "name": "\u9633\u5149\u7535\u6e90",
+          "score": 1.845,
+          "realized_return": 0.0871,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300014",
+          "name": "\u4ebf\u7eac\u9502\u80fd",
+          "score": 1.451,
+          "realized_return": -0.1981,
+          "hit": false
+        },
+        {
+          "ticker": "sh.603799",
+          "name": "\u534e\u53cb\u94b4\u4e1a",
+          "score": 1.368,
+          "realized_return": 0.1436,
+          "hit": true
+        },
+        {
+          "ticker": "sz.002821",
+          "name": "\u51ef\u83b1\u82f1",
+          "score": 1.138,
+          "realized_return": 0.0194,
+          "hit": true
+        },
+        {
+          "ticker": "sh.601988",
+          "name": "\u4e2d\u56fd\u94f6\u884c",
+          "score": 0.94,
+          "realized_return": 0.0129,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.013,
+      "base_mean_return": -0.0289,
+      "excess": 0.0419
+    },
+    {
+      "month": "2022-02-28",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.300347",
+          "name": "\u6cf0\u683c\u533b\u836f",
+          "score": 1.514,
+          "realized_return": 0.0084,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300274",
+          "name": "\u9633\u5149\u7535\u6e90",
+          "score": 1.339,
+          "realized_return": -0.0969,
+          "hit": false
+        },
+        {
+          "ticker": "sh.603259",
+          "name": "\u836f\u660e\u5eb7\u5fb7",
+          "score": 1.111,
+          "realized_return": 0.0754,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300014",
+          "name": "\u4ebf\u7eac\u9502\u80fd",
+          "score": 0.918,
+          "realized_return": -0.1522,
+          "hit": false
+        },
+        {
+          "ticker": "sh.603799",
+          "name": "\u534e\u53cb\u94b4\u4e1a",
+          "score": 0.917,
+          "realized_return": -0.2135,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0757,
+      "base_mean_return": -0.0963,
+      "excess": 0.0206
+    },
+    {
+      "month": "2022-03-31",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sh.603799",
+          "name": "\u534e\u53cb\u94b4\u4e1a",
+          "score": 1.253,
+          "realized_return": -0.2085,
+          "hit": false
+        },
+        {
+          "ticker": "sh.603486",
+          "name": "\u79d1\u6c83\u65af",
+          "score": 0.873,
+          "realized_return": -0.1027,
+          "hit": false
+        },
+        {
+          "ticker": "sh.601288",
+          "name": "\u519c\u4e1a\u94f6\u884c",
+          "score": 0.755,
+          "realized_return": -0.0097,
+          "hit": false
+        },
+        {
+          "ticker": "sh.600763",
+          "name": "\u901a\u7b56\u533b\u7597",
+          "score": 0.661,
+          "realized_return": -0.1169,
+          "hit": false
+        },
+        {
+          "ticker": "sh.688599",
+          "name": "\u5929\u5408\u5149\u80fd",
+          "score": 0.564,
+          "realized_return": -0.1396,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.1155,
+      "base_mean_return": -0.0802,
+      "excess": -0.0353
+    },
+    {
+      "month": "2022-04-29",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sh.603799",
+          "name": "\u534e\u53cb\u94b4\u4e1a",
+          "score": 1.923,
+          "realized_return": 0.2126,
+          "hit": true
+        },
+        {
+          "ticker": "sz.002821",
+          "name": "\u51ef\u83b1\u82f1",
+          "score": 1.377,
+          "realized_return": -0.0634,
+          "hit": false
+        },
+        {
+          "ticker": "sh.603806",
+          "name": "\u798f\u65af\u7279",
+          "score": 1.214,
+          "realized_return": -0.1616,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300014",
+          "name": "\u4ebf\u7eac\u9502\u80fd",
+          "score": 1.189,
+          "realized_return": 0.3126,
+          "hit": true
+        },
+        {
+          "ticker": "sz.002371",
+          "name": "\u5317\u65b9\u534e\u521b",
+          "score": 1.087,
+          "realized_return": 0.208,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.1016,
+      "base_mean_return": 0.0328,
+      "excess": 0.0688
+    },
+    {
+      "month": "2022-05-31",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.002709",
+          "name": "\u5929\u8d50\u6750\u6599",
+          "score": 1.119,
+          "realized_return": 0.631,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300274",
+          "name": "\u9633\u5149\u7535\u6e90",
+          "score": 0.958,
+          "realized_return": 0.2287,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300595",
+          "name": "\u6b27\u666e\u5eb7\u89c6",
+          "score": 0.723,
+          "realized_return": 0.2427,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300896",
+          "name": "\u7231\u7f8e\u5ba2",
+          "score": 0.704,
+          "realized_return": 0.1093,
+          "hit": true
+        },
+        {
+          "ticker": "sz.002460",
+          "name": "\u8d63\u950b\u9502\u4e1a",
+          "score": 0.658,
+          "realized_return": 0.2496,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.2923,
+      "base_mean_return": 0.0719,
+      "excess": 0.2204
+    },
+    {
+      "month": "2022-06-30",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sh.603806",
+          "name": "\u798f\u65af\u7279",
+          "score": 1.553,
+          "realized_return": 0.0643,
+          "hit": true
+        },
+        {
+          "ticker": "sz.002812",
+          "name": "\u6069\u6377\u80a1\u4efd",
+          "score": 1.515,
+          "realized_return": -0.1456,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300496",
+          "name": "\u4e2d\u79d1\u521b\u8fbe",
+          "score": 1.366,
+          "realized_return": 0.0897,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300751",
+          "name": "\u8fc8\u4e3a\u80a1\u4efd",
+          "score": 1.283,
+          "realized_return": -0.0385,
+          "hit": false
+        },
+        {
+          "ticker": "sh.601100",
+          "name": "\u6052\u7acb\u6db2\u538b",
+          "score": 1.27,
+          "realized_return": -0.1551,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.037,
+      "base_mean_return": -0.0687,
+      "excess": 0.0317
+    },
+    {
+      "month": "2022-07-29",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sh.603659",
+          "name": "\u749e\u6cf0\u6765",
+          "score": 1.742,
+          "realized_return": -0.0741,
+          "hit": false
+        },
+        {
+          "ticker": "sh.600763",
+          "name": "\u901a\u7b56\u533b\u7597",
+          "score": 1.439,
+          "realized_return": -0.2115,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300595",
+          "name": "\u6b27\u666e\u5eb7\u89c6",
+          "score": 1.349,
+          "realized_return": -0.1165,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300919",
+          "name": "\u4e2d\u4f1f\u65b0\u6750",
+          "score": 1.1,
+          "realized_return": -0.2069,
+          "hit": false
+        },
+        {
+          "ticker": "sh.603501",
+          "name": "\u8c6a\u5a01\u96c6\u56e2",
+          "score": 0.853,
+          "realized_return": -0.129,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.1476,
+      "base_mean_return": -0.0174,
+      "excess": -0.1302
+    },
+    {
+      "month": "2022-08-31",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.002709",
+          "name": "\u5929\u8d50\u6750\u6599",
+          "score": 1.818,
+          "realized_return": -0.0734,
+          "hit": false
+        },
+        {
+          "ticker": "sh.603799",
+          "name": "\u534e\u53cb\u94b4\u4e1a",
+          "score": 1.663,
+          "realized_return": -0.1391,
+          "hit": false
+        },
+        {
+          "ticker": "sz.002074",
+          "name": "\u56fd\u8f69\u9ad8\u79d1",
+          "score": 1.514,
+          "realized_return": -0.1115,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300014",
+          "name": "\u4ebf\u7eac\u9502\u80fd",
+          "score": 1.155,
+          "realized_return": -0.1094,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300207",
+          "name": "\u6b23\u65fa\u8fbe",
+          "score": 1.038,
+          "realized_return": -0.1473,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.1161,
+      "base_mean_return": -0.0728,
+      "excess": -0.0433
+    },
+    {
+      "month": "2022-09-30",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.300595",
+          "name": "\u6b27\u666e\u5eb7\u89c6",
+          "score": 0.444,
+          "realized_return": -0.2024,
+          "hit": false
+        },
+        {
+          "ticker": "sh.600763",
+          "name": "\u901a\u7b56\u533b\u7597",
+          "score": 0.362,
+          "realized_return": 0.0493,
+          "hit": true
+        },
+        {
+          "ticker": "sh.603799",
+          "name": "\u534e\u53cb\u94b4\u4e1a",
+          "score": 0.248,
+          "realized_return": 0.0148,
+          "hit": true
+        },
+        {
+          "ticker": "sz.002920",
+          "name": "\u5fb7\u8d5b\u897f\u5a01",
+          "score": 0.236,
+          "realized_return": -0.0986,
+          "hit": false
+        },
+        {
+          "ticker": "sh.688111",
+          "name": "\u91d1\u5c71\u529e\u516c",
+          "score": 0.225,
+          "realized_return": 0.3673,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.0261,
+      "base_mean_return": 0.0307,
+      "excess": -0.0046
+    },
+    {
+      "month": "2022-10-31",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sh.688005",
+          "name": "\u5bb9\u767e\u79d1\u6280",
+          "score": 1.36,
+          "realized_return": -0.0326,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300014",
+          "name": "\u4ebf\u7eac\u9502\u80fd",
+          "score": 1.264,
+          "realized_return": -0.0155,
+          "hit": false
+        },
+        {
+          "ticker": "sz.002920",
+          "name": "\u5fb7\u8d5b\u897f\u5a01",
+          "score": 0.768,
+          "realized_return": 0.0218,
+          "hit": true
+        },
+        {
+          "ticker": "sz.002241",
+          "name": "\u6b4c\u5c14\u80a1\u4efd",
+          "score": 0.699,
+          "realized_return": -0.1734,
+          "hit": false
+        },
+        {
+          "ticker": "sz.002709",
+          "name": "\u5929\u8d50\u6750\u6599",
+          "score": 0.527,
+          "realized_return": 0.0464,
+          "hit": true
+        }
+      ],
+      "top_mean_return": -0.0307,
+      "base_mean_return": 0.0949,
+      "excess": -0.1255
+    },
+    {
+      "month": "2022-11-30",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.002241",
+          "name": "\u6b4c\u5c14\u80a1\u4efd",
+          "score": 0.969,
+          "realized_return": -0.07,
+          "hit": false
+        },
+        {
+          "ticker": "sh.603392",
+          "name": "\u4e07\u6cf0\u751f\u7269",
+          "score": 0.879,
+          "realized_return": -0.2138,
+          "hit": false
+        },
+        {
+          "ticker": "sh.601628",
+          "name": "\u4e2d\u56fd\u4eba\u5bff",
+          "score": 0.55,
+          "realized_return": 0.0158,
+          "hit": true
+        },
+        {
+          "ticker": "sh.601021",
+          "name": "\u6625\u79cb\u822a\u7a7a",
+          "score": 0.468,
+          "realized_return": 0.1152,
+          "hit": true
+        },
+        {
+          "ticker": "sh.600426",
+          "name": "\u534e\u9c81\u6052\u5347",
+          "score": 0.264,
+          "realized_return": -0.0045,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0315,
+      "base_mean_return": -0.0134,
+      "excess": -0.0181
+    },
+    {
+      "month": "2022-12-30",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sh.603833",
+          "name": "\u6b27\u6d3e\u5bb6\u5c45",
+          "score": 1.083,
+          "realized_return": 0.0166,
+          "hit": true
+        },
+        {
+          "ticker": "sh.601689",
+          "name": "\u62d3\u666e\u96c6\u56e2",
+          "score": 0.711,
+          "realized_return": 0.2125,
+          "hit": true
+        },
+        {
+          "ticker": "sh.600036",
+          "name": "\u62db\u5546\u94f6\u884c",
+          "score": 0.512,
+          "realized_return": 0.0309,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300595",
+          "name": "\u6b27\u666e\u5eb7\u89c6",
+          "score": 0.387,
+          "realized_return": 0.0171,
+          "hit": true
+        },
+        {
+          "ticker": "sh.603899",
+          "name": "\u6668\u5149\u80a1\u4efd",
+          "score": 0.32,
+          "realized_return": -0.0153,
+          "hit": false
+        }
+      ],
+      "top_mean_return": 0.0524,
+      "base_mean_return": 0.0671,
+      "excess": -0.0148
+    },
+    {
+      "month": "2023-01-31",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.300014",
+          "name": "\u4ebf\u7eac\u9502\u80fd",
+          "score": 0.722,
+          "realized_return": -0.1747,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300769",
+          "name": "\u5fb7\u65b9\u7eb3\u7c73",
+          "score": 0.589,
+          "realized_return": -0.1634,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300896",
+          "name": "\u7231\u7f8e\u5ba2",
+          "score": 0.473,
+          "realized_return": -0.0084,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300979",
+          "name": "\u534e\u5229\u96c6\u56e2",
+          "score": 0.369,
+          "realized_return": -0.0792,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300207",
+          "name": "\u6b23\u65fa\u8fbe",
+          "score": 0.358,
+          "realized_return": -0.074,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0999,
+      "base_mean_return": 0.0129,
+      "excess": -0.1128
+    },
+    {
+      "month": "2023-02-28",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sh.688169",
+          "name": "\u77f3\u5934\u79d1\u6280",
+          "score": 1.041,
+          "realized_return": 0.0147,
+          "hit": true
+        },
+        {
+          "ticker": "sh.603882",
+          "name": "\u91d1\u57df\u533b\u5b66",
+          "score": 0.626,
+          "realized_return": 0.0263,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300454",
+          "name": "\u6df1\u4fe1\u670d",
+          "score": 0.559,
+          "realized_return": 0.0412,
+          "hit": true
+        },
+        {
+          "ticker": "sh.600845",
+          "name": "\u5b9d\u4fe1\u8f6f\u4ef6",
+          "score": 0.516,
+          "realized_return": 0.1374,
+          "hit": true
+        },
+        {
+          "ticker": "sh.688561",
+          "name": "\u5947\u5b89\u4fe1-U",
+          "score": 0.255,
+          "realized_return": -0.0827,
+          "hit": false
+        }
+      ],
+      "top_mean_return": 0.0274,
+      "base_mean_return": -0.0072,
+      "excess": 0.0346
+    },
+    {
+      "month": "2023-03-31",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.300347",
+          "name": "\u6cf0\u683c\u533b\u836f",
+          "score": 1.054,
+          "realized_return": -0.0806,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300033",
+          "name": "\u540c\u82b1\u987a",
+          "score": -0.09,
+          "realized_return": -0.1437,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300628",
+          "name": "\u4ebf\u8054\u7f51\u7edc",
+          "score": -0.155,
+          "realized_return": -0.1831,
+          "hit": false
+        },
+        {
+          "ticker": "sz.000661",
+          "name": "\u957f\u6625\u9ad8\u65b0",
+          "score": -0.213,
+          "realized_return": 0.0091,
+          "hit": true
+        },
+        {
+          "ticker": "sh.605117",
+          "name": "\u5fb7\u4e1a\u80a1\u4efd",
+          "score": -0.244,
+          "realized_return": -0.0289,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0854,
+      "base_mean_return": -0.0179,
+      "excess": -0.0676
+    },
+    {
+      "month": "2023-04-28",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.300661",
+          "name": "\u5723\u90a6\u80a1\u4efd",
+          "score": 0.772,
+          "realized_return": -0.1168,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300454",
+          "name": "\u6df1\u4fe1\u670d",
+          "score": 0.753,
+          "realized_return": 0.0607,
+          "hit": true
+        },
+        {
+          "ticker": "sh.688561",
+          "name": "\u5947\u5b89\u4fe1-U",
+          "score": 0.646,
+          "realized_return": -0.0183,
+          "hit": false
+        },
+        {
+          "ticker": "sh.603185",
+          "name": "\u5f18\u5143\u7eff\u80fd",
+          "score": 0.617,
+          "realized_return": -0.1442,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300979",
+          "name": "\u534e\u5229\u96c6\u56e2",
+          "score": 0.605,
+          "realized_return": -0.1042,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0645,
+      "base_mean_return": -0.0564,
+      "excess": -0.0081
+    },
+    {
+      "month": "2023-05-31",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sh.688012",
+          "name": "\u4e2d\u5fae\u516c\u53f8",
+          "score": 0.941,
+          "realized_return": -0.1162,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300751",
+          "name": "\u8fc8\u4e3a\u80a1\u4efd",
+          "score": 0.703,
+          "realized_return": 0.0348,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300957",
+          "name": "\u8d1d\u6cf0\u59ae",
+          "score": 0.702,
+          "realized_return": -0.0039,
+          "hit": false
+        },
+        {
+          "ticker": "sz.002756",
+          "name": "\u6c38\u5174\u6750\u6599",
+          "score": 0.599,
+          "realized_return": -0.0028,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300759",
+          "name": "\u5eb7\u9f99\u5316\u6210",
+          "score": 0.273,
+          "realized_return": -0.157,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.049,
+      "base_mean_return": 0.0112,
+      "excess": -0.0603
+    },
+    {
+      "month": "2023-06-30",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.300661",
+          "name": "\u5723\u90a6\u80a1\u4efd",
+          "score": 1.253,
+          "realized_return": 0.0275,
+          "hit": true
+        },
+        {
+          "ticker": "sh.603392",
+          "name": "\u4e07\u6cf0\u751f\u7269",
+          "score": 1.052,
+          "realized_return": 0.0371,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300015",
+          "name": "\u7231\u5c14\u773c\u79d1",
+          "score": 0.879,
+          "realized_return": 0.0852,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300759",
+          "name": "\u5eb7\u9f99\u5316\u6210",
+          "score": 0.692,
+          "realized_return": -0.2607,
+          "hit": false
+        },
+        {
+          "ticker": "sh.688036",
+          "name": "\u4f20\u97f3\u63a7\u80a1",
+          "score": 0.569,
+          "realized_return": -0.1651,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0552,
+      "base_mean_return": 0.0349,
+      "excess": -0.0901
+    },
+    {
+      "month": "2023-07-31",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.002920",
+          "name": "\u5fb7\u8d5b\u897f\u5a01",
+          "score": 1.032,
+          "realized_return": -0.0692,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300759",
+          "name": "\u5eb7\u9f99\u5316\u6210",
+          "score": 0.779,
+          "realized_return": 0.0611,
+          "hit": true
+        },
+        {
+          "ticker": "sz.002236",
+          "name": "\u5927\u534e\u80a1\u4efd",
+          "score": 0.587,
+          "realized_return": -0.0246,
+          "hit": false
+        },
+        {
+          "ticker": "sh.603185",
+          "name": "\u5f18\u5143\u7eff\u80fd",
+          "score": 0.563,
+          "realized_return": -0.1662,
+          "hit": false
+        },
+        {
+          "ticker": "sh.601799",
+          "name": "\u661f\u5b87\u80a1\u4efd",
+          "score": 0.537,
+          "realized_return": 0.03,
+          "hit": true
+        }
+      ],
+      "top_mean_return": -0.0338,
+      "base_mean_return": -0.0625,
+      "excess": 0.0287
+    },
+    {
+      "month": "2023-08-31",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sh.603392",
+          "name": "\u4e07\u6cf0\u751f\u7269",
+          "score": 0.455,
+          "realized_return": -0.0415,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300759",
+          "name": "\u5eb7\u9f99\u5316\u6210",
+          "score": 0.204,
+          "realized_return": 0.0289,
+          "hit": true
+        },
+        {
+          "ticker": "sz.002236",
+          "name": "\u5927\u534e\u80a1\u4efd",
+          "score": 0.134,
+          "realized_return": 0.0477,
+          "hit": true
+        },
+        {
+          "ticker": "sh.600809",
+          "name": "\u5c71\u897f\u6c7e\u9152",
+          "score": 0.117,
+          "realized_return": 0.0041,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300223",
+          "name": "\u5317\u4eac\u541b\u6b63",
+          "score": 0.11,
+          "realized_return": 0.0156,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.011,
+      "base_mean_return": -0.0187,
+      "excess": 0.0297
+    },
+    {
+      "month": "2023-09-28",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.000977",
+          "name": "\u6d6a\u6f6e\u4fe1\u606f",
+          "score": 0.937,
+          "realized_return": -0.1787,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300033",
+          "name": "\u540c\u82b1\u987a",
+          "score": 0.65,
+          "realized_return": -0.0021,
+          "hit": false
+        },
+        {
+          "ticker": "sz.002236",
+          "name": "\u5927\u534e\u80a1\u4efd",
+          "score": 0.324,
+          "realized_return": -0.0368,
+          "hit": false
+        },
+        {
+          "ticker": "sh.603486",
+          "name": "\u79d1\u6c83\u65af",
+          "score": 0.148,
+          "realized_return": -0.0555,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300751",
+          "name": "\u8fc8\u4e3a\u80a1\u4efd",
+          "score": -0.265,
+          "realized_return": 0.0121,
+          "hit": true
+        }
+      ],
+      "top_mean_return": -0.0522,
+      "base_mean_return": -0.0164,
+      "excess": -0.0358
+    },
+    {
+      "month": "2023-10-31",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sh.603501",
+          "name": "\u8c6a\u5a01\u96c6\u56e2",
+          "score": 1.126,
+          "realized_return": -0.0189,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300122",
+          "name": "\u667a\u98de\u751f\u7269",
+          "score": 0.856,
+          "realized_return": 0.0375,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300059",
+          "name": "\u4e1c\u65b9\u8d22\u5bcc",
+          "score": 0.303,
+          "realized_return": -0.0419,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300896",
+          "name": "\u7231\u7f8e\u5ba2",
+          "score": 0.121,
+          "realized_return": -0.0548,
+          "hit": false
+        },
+        {
+          "ticker": "sz.000661",
+          "name": "\u957f\u6625\u9ad8\u65b0",
+          "score": 0.077,
+          "realized_return": 0.0429,
+          "hit": true
+        }
+      ],
+      "top_mean_return": -0.0071,
+      "base_mean_return": -0.0201,
+      "excess": 0.013
+    },
+    {
+      "month": "2023-11-30",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.000977",
+          "name": "\u6d6a\u6f6e\u4fe1\u606f",
+          "score": 0.417,
+          "realized_return": -0.0576,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300769",
+          "name": "\u5fb7\u65b9\u7eb3\u7c73",
+          "score": 0.386,
+          "realized_return": -0.0553,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300033",
+          "name": "\u540c\u82b1\u987a",
+          "score": 0.013,
+          "realized_return": 0.1167,
+          "hit": true
+        },
+        {
+          "ticker": "sh.601138",
+          "name": "\u5de5\u4e1a\u5bcc\u8054",
+          "score": 0.008,
+          "realized_return": 0.0013,
+          "hit": true
+        },
+        {
+          "ticker": "sz.002756",
+          "name": "\u6c38\u5174\u6750\u6599",
+          "score": -0.001,
+          "realized_return": 0.1871,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.0384,
+      "base_mean_return": -0.0173,
+      "excess": 0.0558
+    },
+    {
+      "month": "2023-12-29",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.300759",
+          "name": "\u5eb7\u9f99\u5316\u6210",
+          "score": 0.982,
+          "realized_return": -0.2226,
+          "hit": false
+        },
+        {
+          "ticker": "sh.605117",
+          "name": "\u5fb7\u4e1a\u80a1\u4efd",
+          "score": 0.97,
+          "realized_return": -0.1538,
+          "hit": false
+        },
+        {
+          "ticker": "sh.603986",
+          "name": "\u5146\u6613\u521b\u65b0",
+          "score": 0.479,
+          "realized_return": -0.2927,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300223",
+          "name": "\u5317\u4eac\u541b\u6b63",
+          "score": 0.146,
+          "realized_return": -0.2367,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300033",
+          "name": "\u540c\u82b1\u987a",
+          "score": 0.135,
+          "realized_return": -0.2289,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.2269,
+      "base_mean_return": -0.0661,
+      "excess": -0.1608
+    },
+    {
+      "month": "2024-01-31",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sh.603019",
+          "name": "\u4e2d\u79d1\u66d9\u5149",
+          "score": 1.77,
+          "realized_return": 0.6954,
+          "hit": true
+        },
+        {
+          "ticker": "sz.000977",
+          "name": "\u6d6a\u6f6e\u4fe1\u606f",
+          "score": 1.187,
+          "realized_return": 0.5005,
+          "hit": true
+        },
+        {
+          "ticker": "sh.601360",
+          "name": "\u4e09\u516d\u96f6",
+          "score": 1.118,
+          "realized_return": 0.3514,
+          "hit": true
+        },
+        {
+          "ticker": "sz.002230",
+          "name": "\u79d1\u5927\u8baf\u98de",
+          "score": 1.045,
+          "realized_return": 0.3232,
+          "hit": true
+        },
+        {
+          "ticker": "sh.688256",
+          "name": "\u5bd2\u6b66\u7eaa",
+          "score": 0.749,
+          "realized_return": 0.5562,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.4853,
+      "base_mean_return": 0.1201,
+      "excess": 0.3652
+    },
+    {
+      "month": "2024-02-29",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.300308",
+          "name": "\u4e2d\u9645\u65ed\u521b",
+          "score": 1.362,
+          "realized_return": 0.009,
+          "hit": true
+        },
+        {
+          "ticker": "sh.601138",
+          "name": "\u5de5\u4e1a\u5bcc\u8054",
+          "score": 1.107,
+          "realized_return": 0.2183,
+          "hit": true
+        },
+        {
+          "ticker": "sh.601360",
+          "name": "\u4e09\u516d\u96f6",
+          "score": 1.084,
+          "realized_return": -0.0057,
+          "hit": false
+        },
+        {
+          "ticker": "sz.000977",
+          "name": "\u6d6a\u6f6e\u4fe1\u606f",
+          "score": 1.084,
+          "realized_return": 0.1474,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300759",
+          "name": "\u5eb7\u9f99\u5316\u6210",
+          "score": 1.035,
+          "realized_return": -0.1276,
+          "hit": false
+        }
+      ],
+      "top_mean_return": 0.0483,
+      "base_mean_return": -0.0026,
+      "excess": 0.0509
+    },
+    {
+      "month": "2024-03-29",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.002916",
+          "name": "\u6df1\u5357\u7535\u8def",
+          "score": 1.679,
+          "realized_return": 0.041,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300759",
+          "name": "\u5eb7\u9f99\u5316\u6210",
+          "score": 1.467,
+          "realized_return": 0.0025,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300033",
+          "name": "\u540c\u82b1\u987a",
+          "score": 0.889,
+          "realized_return": -0.0515,
+          "hit": false
+        },
+        {
+          "ticker": "sh.603986",
+          "name": "\u5146\u6613\u521b\u65b0",
+          "score": 0.859,
+          "realized_return": 0.1401,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300308",
+          "name": "\u4e2d\u9645\u65ed\u521b",
+          "score": 0.682,
+          "realized_return": 0.1703,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.0605,
+      "base_mean_return": 0.0279,
+      "excess": 0.0326
+    },
+    {
+      "month": "2024-04-30",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.002459",
+          "name": "\u6676\u6fb3\u79d1\u6280",
+          "score": 1.22,
+          "realized_return": 0.0717,
+          "hit": true
+        },
+        {
+          "ticker": "sz.002466",
+          "name": "\u5929\u9f50\u9502\u4e1a",
+          "score": 0.777,
+          "realized_return": -0.083,
+          "hit": false
+        },
+        {
+          "ticker": "sh.603986",
+          "name": "\u5146\u6613\u521b\u65b0",
+          "score": 0.68,
+          "realized_return": 0.0942,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300661",
+          "name": "\u5723\u90a6\u80a1\u4efd",
+          "score": 0.434,
+          "realized_return": 0.0271,
+          "hit": true
+        },
+        {
+          "ticker": "sz.002129",
+          "name": "TCL\u4e2d\u73af",
+          "score": 0.42,
+          "realized_return": 0.0451,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.031,
+      "base_mean_return": -0.0068,
+      "excess": 0.0378
+    },
+    {
+      "month": "2024-05-31",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sh.600900",
+          "name": "\u957f\u6c5f\u7535\u529b",
+          "score": 1.495,
+          "realized_return": 0.1079,
+          "hit": true
+        },
+        {
+          "ticker": "sh.601699",
+          "name": "\u6f5e\u5b89\u73af\u80fd",
+          "score": 0.953,
+          "realized_return": -0.1834,
+          "hit": false
+        },
+        {
+          "ticker": "sh.600025",
+          "name": "\u534e\u80fd\u6c34\u7535",
+          "score": 0.933,
+          "realized_return": 0.1335,
+          "hit": true
+        },
+        {
+          "ticker": "sh.601088",
+          "name": "\u4e2d\u56fd\u795e\u534e",
+          "score": 0.875,
+          "realized_return": 0.082,
+          "hit": true
+        },
+        {
+          "ticker": "sh.601225",
+          "name": "\u9655\u897f\u7164\u4e1a",
+          "score": 0.738,
+          "realized_return": 0.0296,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.0339,
+      "base_mean_return": -0.0508,
+      "excess": 0.0847
+    },
+    {
+      "month": "2024-06-28",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sh.601398",
+          "name": "\u5de5\u5546\u94f6\u884c",
+          "score": 2.497,
+          "realized_return": 0.0491,
+          "hit": true
+        },
+        {
+          "ticker": "sh.600900",
+          "name": "\u957f\u6c5f\u7535\u529b",
+          "score": 1.875,
+          "realized_return": 0.0443,
+          "hit": true
+        },
+        {
+          "ticker": "sh.601939",
+          "name": "\u5efa\u8bbe\u94f6\u884c",
+          "score": 1.847,
+          "realized_return": 0.0216,
+          "hit": true
+        },
+        {
+          "ticker": "sh.601988",
+          "name": "\u4e2d\u56fd\u94f6\u884c",
+          "score": 1.586,
+          "realized_return": 0.026,
+          "hit": true
+        },
+        {
+          "ticker": "sh.688256",
+          "name": "\u5bd2\u6b66\u7eaa",
+          "score": 1.257,
+          "realized_return": 0.2409,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.0764,
+      "base_mean_return": -0.023,
+      "excess": 0.0994
+    },
+    {
+      "month": "2024-07-31",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.001965",
+          "name": "\u62db\u5546\u516c\u8def",
+          "score": 1.677,
+          "realized_return": -0.0065,
+          "hit": false
+        },
+        {
+          "ticker": "sh.600900",
+          "name": "\u957f\u6c5f\u7535\u529b",
+          "score": 1.062,
+          "realized_return": -0.0167,
+          "hit": false
+        },
+        {
+          "ticker": "sz.002129",
+          "name": "TCL\u4e2d\u73af",
+          "score": 0.989,
+          "realized_return": -0.0893,
+          "hit": false
+        },
+        {
+          "ticker": "sh.600674",
+          "name": "\u5ddd\u6295\u80fd\u6e90",
+          "score": 0.872,
+          "realized_return": -0.0667,
+          "hit": false
+        },
+        {
+          "ticker": "sh.601939",
+          "name": "\u5efa\u8bbe\u94f6\u884c",
+          "score": 0.758,
+          "realized_return": 0.0632,
+          "hit": true
+        }
+      ],
+      "top_mean_return": -0.0232,
+      "base_mean_return": -0.0648,
+      "excess": 0.0416
+    },
+    {
+      "month": "2024-08-30",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sh.601138",
+          "name": "\u5de5\u4e1a\u5bcc\u8054",
+          "score": 2.453,
+          "realized_return": 0.2702,
+          "hit": true
+        },
+        {
+          "ticker": "sh.603019",
+          "name": "\u4e2d\u79d1\u66d9\u5149",
+          "score": 1.254,
+          "realized_return": 0.5171,
+          "hit": true
+        },
+        {
+          "ticker": "sh.600900",
+          "name": "\u957f\u6c5f\u7535\u529b",
+          "score": 1.139,
+          "realized_return": -0.0283,
+          "hit": false
+        },
+        {
+          "ticker": "sz.000938",
+          "name": "\u7d2b\u5149\u80a1\u4efd",
+          "score": 1.027,
+          "realized_return": 0.269,
+          "hit": true
+        },
+        {
+          "ticker": "sz.000977",
+          "name": "\u6d6a\u6f6e\u4fe1\u606f",
+          "score": 0.891,
+          "realized_return": 0.3342,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.2724,
+      "base_mean_return": 0.2153,
+      "excess": 0.0571
+    },
+    {
+      "month": "2024-09-30",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.301269",
+          "name": "\u534e\u5927\u4e5d\u5929",
+          "score": 1.292,
+          "realized_return": 0.0756,
+          "hit": true
+        },
+        {
+          "ticker": "sh.688363",
+          "name": "\u534e\u7199\u751f\u7269",
+          "score": 0.928,
+          "realized_return": -0.1454,
+          "hit": false
+        },
+        {
+          "ticker": "sh.688082",
+          "name": "\u76db\u7f8e\u4e0a\u6d77",
+          "score": 0.899,
+          "realized_return": 0.0342,
+          "hit": true
+        },
+        {
+          "ticker": "sh.601288",
+          "name": "\u519c\u4e1a\u94f6\u884c",
+          "score": 0.887,
+          "realized_return": 0.0,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300957",
+          "name": "\u8d1d\u6cf0\u59ae",
+          "score": 0.826,
+          "realized_return": -0.1229,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0317,
+      "base_mean_return": 0.0096,
+      "excess": -0.0413
+    },
+    {
+      "month": "2024-10-31",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.300014",
+          "name": "\u4ebf\u7eac\u9502\u80fd",
+          "score": 1.278,
+          "realized_return": 0.0027,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300751",
+          "name": "\u8fc8\u4e3a\u80a1\u4efd",
+          "score": 1.269,
+          "realized_return": 0.0656,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300454",
+          "name": "\u6df1\u4fe1\u670d",
+          "score": 1.123,
+          "realized_return": -0.012,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300782",
+          "name": "\u5353\u80dc\u5fae",
+          "score": 1.108,
+          "realized_return": -0.0303,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300496",
+          "name": "\u4e2d\u79d1\u521b\u8fbe",
+          "score": 1.099,
+          "realized_return": -0.051,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.005,
+      "base_mean_return": 0.015,
+      "excess": -0.02
+    },
+    {
+      "month": "2024-11-29",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.300033",
+          "name": "\u540c\u82b1\u987a",
+          "score": 1.117,
+          "realized_return": -0.0821,
+          "hit": false
+        },
+        {
+          "ticker": "sh.601288",
+          "name": "\u519c\u4e1a\u94f6\u884c",
+          "score": 0.822,
+          "realized_return": 0.1164,
+          "hit": true
+        },
+        {
+          "ticker": "sh.601398",
+          "name": "\u5de5\u5546\u94f6\u884c",
+          "score": 0.703,
+          "realized_return": 0.1301,
+          "hit": true
+        },
+        {
+          "ticker": "sh.600900",
+          "name": "\u957f\u6c5f\u7535\u529b",
+          "score": 0.432,
+          "realized_return": 0.0765,
+          "hit": true
+        },
+        {
+          "ticker": "sh.688111",
+          "name": "\u91d1\u5c71\u529e\u516c",
+          "score": 0.314,
+          "realized_return": 0.0022,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.0486,
+      "base_mean_return": 0.007,
+      "excess": 0.0416
+    },
+    {
+      "month": "2024-12-31",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sh.601288",
+          "name": "\u519c\u4e1a\u94f6\u884c",
+          "score": 2.416,
+          "realized_return": -0.0599,
+          "hit": false
+        },
+        {
+          "ticker": "sh.601398",
+          "name": "\u5de5\u5546\u94f6\u884c",
+          "score": 1.892,
+          "realized_return": -0.0332,
+          "hit": false
+        },
+        {
+          "ticker": "sh.600900",
+          "name": "\u957f\u6c5f\u7535\u529b",
+          "score": 1.43,
+          "realized_return": -0.0481,
+          "hit": false
+        },
+        {
+          "ticker": "sh.601988",
+          "name": "\u4e2d\u56fd\u94f6\u884c",
+          "score": 1.247,
+          "realized_return": -0.0417,
+          "hit": false
+        },
+        {
+          "ticker": "sh.601939",
+          "name": "\u5efa\u8bbe\u94f6\u884c",
+          "score": 1.097,
+          "realized_return": -0.0557,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0477,
+      "base_mean_return": -0.0037,
+      "excess": -0.044
+    },
+    {
+      "month": "2025-01-27",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.300782",
+          "name": "\u5353\u80dc\u5fae",
+          "score": 1.67,
+          "realized_return": 0.0823,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300059",
+          "name": "\u4e1c\u65b9\u8d22\u5bcc",
+          "score": 1.447,
+          "realized_return": 0.0017,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300015",
+          "name": "\u7231\u5c14\u773c\u79d1",
+          "score": 0.855,
+          "realized_return": 0.1249,
+          "hit": true
+        },
+        {
+          "ticker": "sz.301269",
+          "name": "\u534e\u5927\u4e5d\u5929",
+          "score": 0.787,
+          "realized_return": 0.1041,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300896",
+          "name": "\u7231\u7f8e\u5ba2",
+          "score": 0.663,
+          "realized_return": -0.011,
+          "hit": false
+        }
+      ],
+      "top_mean_return": 0.0604,
+      "base_mean_return": 0.025,
+      "excess": 0.0354
+    },
+    {
+      "month": "2025-02-28",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.300394",
+          "name": "\u5929\u5b5a\u901a\u4fe1",
+          "score": 1.889,
+          "realized_return": -0.0435,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300308",
+          "name": "\u4e2d\u9645\u65ed\u521b",
+          "score": 1.534,
+          "realized_return": -0.0221,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300502",
+          "name": "\u65b0\u6613\u76db",
+          "score": 0.945,
+          "realized_return": 0.0217,
+          "hit": true
+        },
+        {
+          "ticker": "sh.688111",
+          "name": "\u91d1\u5c71\u529e\u516c",
+          "score": 0.635,
+          "realized_return": -0.136,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300450",
+          "name": "\u5148\u5bfc\u667a\u80fd",
+          "score": 0.508,
+          "realized_return": -0.0805,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0521,
+      "base_mean_return": -0.005,
+      "excess": -0.047
+    },
+    {
+      "month": "2025-03-31",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sh.601288",
+          "name": "\u519c\u4e1a\u94f6\u884c",
+          "score": 1.949,
+          "realized_return": 0.0463,
+          "hit": true
+        },
+        {
+          "ticker": "sh.601398",
+          "name": "\u5de5\u5546\u94f6\u884c",
+          "score": 1.375,
+          "realized_return": 0.0174,
+          "hit": true
+        },
+        {
+          "ticker": "sh.600900",
+          "name": "\u957f\u6c5f\u7535\u529b",
+          "score": 0.85,
+          "realized_return": 0.0608,
+          "hit": true
+        },
+        {
+          "ticker": "sh.600674",
+          "name": "\u5ddd\u6295\u80fd\u6e90",
+          "score": 0.415,
+          "realized_return": 0.0592,
+          "hit": true
+        },
+        {
+          "ticker": "sh.601988",
+          "name": "\u4e2d\u56fd\u94f6\u884c",
+          "score": 0.364,
+          "realized_return": -0.0125,
+          "hit": false
+        }
+      ],
+      "top_mean_return": 0.0342,
+      "base_mean_return": -0.0362,
+      "excess": 0.0704
+    },
+    {
+      "month": "2025-04-30",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.300442",
+          "name": "\u6da6\u6cfd\u79d1\u6280",
+          "score": 1.851,
+          "realized_return": -0.104,
+          "hit": false
+        },
+        {
+          "ticker": "sh.600900",
+          "name": "\u957f\u6c5f\u7535\u529b",
+          "score": 1.67,
+          "realized_return": 0.0132,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300308",
+          "name": "\u4e2d\u9645\u65ed\u521b",
+          "score": 1.244,
+          "realized_return": 0.1654,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300433",
+          "name": "\u84dd\u601d\u79d1\u6280",
+          "score": 1.148,
+          "realized_return": -0.0125,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300394",
+          "name": "\u5929\u5b5a\u901a\u4fe1",
+          "score": 0.976,
+          "realized_return": 0.2421,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.0609,
+      "base_mean_return": 0.0229,
+      "excess": 0.0379
+    },
+    {
+      "month": "2025-05-30",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sh.601398",
+          "name": "\u5de5\u5546\u94f6\u884c",
+          "score": 1.192,
+          "realized_return": 0.0835,
+          "hit": true
+        },
+        {
+          "ticker": "sh.600900",
+          "name": "\u957f\u6c5f\u7535\u529b",
+          "score": 1.14,
+          "realized_return": 0.0056,
+          "hit": true
+        },
+        {
+          "ticker": "sh.600941",
+          "name": "\u4e2d\u56fd\u79fb\u52a8",
+          "score": 0.927,
+          "realized_return": -0.0365,
+          "hit": false
+        },
+        {
+          "ticker": "sh.600377",
+          "name": "\u5b81\u6caa\u9ad8\u901f",
+          "score": 0.816,
+          "realized_return": -0.055,
+          "hit": false
+        },
+        {
+          "ticker": "sh.600886",
+          "name": "\u56fd\u6295\u7535\u529b",
+          "score": 0.679,
+          "realized_return": -0.0415,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0088,
+      "base_mean_return": 0.0252,
+      "excess": -0.034
+    },
+    {
+      "month": "2025-06-30",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sh.601288",
+          "name": "\u519c\u4e1a\u94f6\u884c",
+          "score": 1.602,
+          "realized_return": 0.0442,
+          "hit": true
+        },
+        {
+          "ticker": "sh.601398",
+          "name": "\u5de5\u5546\u94f6\u884c",
+          "score": 1.386,
+          "realized_return": -0.0211,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300661",
+          "name": "\u5723\u90a6\u80a1\u4efd",
+          "score": 1.235,
+          "realized_return": -0.0027,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300308",
+          "name": "\u4e2d\u9645\u65ed\u521b",
+          "score": 1.125,
+          "realized_return": 0.4393,
+          "hit": true
+        },
+        {
+          "ticker": "sh.601939",
+          "name": "\u5efa\u8bbe\u94f6\u884c",
+          "score": 0.937,
+          "realized_return": -0.0212,
+          "hit": false
+        }
+      ],
+      "top_mean_return": 0.0877,
+      "base_mean_return": 0.062,
+      "excess": 0.0257
+    },
+    {
+      "month": "2025-07-31",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.300394",
+          "name": "\u5929\u5b5a\u901a\u4fe1",
+          "score": 1.407,
+          "realized_return": 0.8795,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300308",
+          "name": "\u4e2d\u9645\u65ed\u521b",
+          "score": 1.176,
+          "realized_return": 0.631,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300759",
+          "name": "\u5eb7\u9f99\u5316\u6210",
+          "score": 1.108,
+          "realized_return": -0.027,
+          "hit": false
+        },
+        {
+          "ticker": "sh.601398",
+          "name": "\u5de5\u5546\u94f6\u884c",
+          "score": 0.609,
+          "realized_return": -0.0172,
+          "hit": false
+        },
+        {
+          "ticker": "sh.601939",
+          "name": "\u5efa\u8bbe\u94f6\u884c",
+          "score": 0.568,
+          "realized_return": -0.0436,
+          "hit": false
+        }
+      ],
+      "top_mean_return": 0.2845,
+      "base_mean_return": 0.0985,
+      "excess": 0.186
+    },
+    {
+      "month": "2025-08-29",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.300308",
+          "name": "\u4e2d\u9645\u65ed\u521b",
+          "score": 2.019,
+          "realized_return": 0.1742,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300502",
+          "name": "\u65b0\u6613\u76db",
+          "score": 1.54,
+          "realized_return": 0.0901,
+          "hit": true
+        },
+        {
+          "ticker": "sh.688008",
+          "name": "\u6f9c\u8d77\u79d1\u6280",
+          "score": 1.539,
+          "realized_return": 0.1688,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300274",
+          "name": "\u9633\u5149\u7535\u6e90",
+          "score": 1.011,
+          "realized_return": 0.6521,
+          "hit": true
+        },
+        {
+          "ticker": "sh.688041",
+          "name": "\u6d77\u5149\u4fe1\u606f",
+          "score": 0.884,
+          "realized_return": 0.3152,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.2801,
+      "base_mean_return": 0.0191,
+      "excess": 0.261
+    },
+    {
+      "month": "2025-09-30",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sh.688008",
+          "name": "\u6f9c\u8d77\u79d1\u6280",
+          "score": 1.384,
+          "realized_return": -0.1453,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300394",
+          "name": "\u5929\u5b5a\u901a\u4fe1",
+          "score": 1.29,
+          "realized_return": -0.0744,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300308",
+          "name": "\u4e2d\u9645\u65ed\u521b",
+          "score": 1.285,
+          "realized_return": 0.2309,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300014",
+          "name": "\u4ebf\u7eac\u9502\u80fd",
+          "score": 1.168,
+          "realized_return": -0.0642,
+          "hit": false
+        },
+        {
+          "ticker": "sh.688041",
+          "name": "\u6d77\u5149\u4fe1\u606f",
+          "score": 0.866,
+          "realized_return": -0.0511,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0208,
+      "base_mean_return": 0.0146,
+      "excess": -0.0354
+    },
+    {
+      "month": "2025-10-31",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.300502",
+          "name": "\u65b0\u6613\u76db",
+          "score": 1.323,
+          "realized_return": 0.0328,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300394",
+          "name": "\u5929\u5b5a\u901a\u4fe1",
+          "score": 1.181,
+          "realized_return": 0.002,
+          "hit": true
+        },
+        {
+          "ticker": "sh.688041",
+          "name": "\u6d77\u5149\u4fe1\u606f",
+          "score": 0.866,
+          "realized_return": -0.058,
+          "hit": false
+        },
+        {
+          "ticker": "sh.600377",
+          "name": "\u5b81\u6caa\u9ad8\u901f",
+          "score": 0.78,
+          "realized_return": -0.0787,
+          "hit": false
+        },
+        {
+          "ticker": "sh.601398",
+          "name": "\u5de5\u5546\u94f6\u884c",
+          "score": 0.77,
+          "realized_return": 0.0398,
+          "hit": true
+        }
+      ],
+      "top_mean_return": -0.0124,
+      "base_mean_return": -0.0208,
+      "excess": 0.0084
+    },
+    {
+      "month": "2025-11-28",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sh.600183",
+          "name": "\u751f\u76ca\u79d1\u6280",
+          "score": 1.957,
+          "realized_return": 0.2691,
+          "hit": true
+        },
+        {
+          "ticker": "sz.002938",
+          "name": "\u9e4f\u9f0e\u63a7\u80a1",
+          "score": 1.25,
+          "realized_return": 0.1378,
+          "hit": true
+        },
+        {
+          "ticker": "sh.603986",
+          "name": "\u5146\u6613\u521b\u65b0",
+          "score": 1.244,
+          "realized_return": 0.1228,
+          "hit": true
+        },
+        {
+          "ticker": "sh.600900",
+          "name": "\u957f\u6c5f\u7535\u529b",
+          "score": 1.057,
+          "realized_return": -0.0164,
+          "hit": false
+        },
+        {
+          "ticker": "sh.601398",
+          "name": "\u5de5\u5546\u94f6\u884c",
+          "score": 1.045,
+          "realized_return": -0.0296,
+          "hit": false
+        }
+      ],
+      "top_mean_return": 0.0967,
+      "base_mean_return": 0.0179,
+      "excess": 0.0789
+    },
+    {
+      "month": "2025-12-31",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.300502",
+          "name": "\u65b0\u6613\u76db",
+          "score": 1.444,
+          "realized_return": 0.0188,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300803",
+          "name": "\u6307\u5357\u9488",
+          "score": 1.386,
+          "realized_return": -0.0665,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300476",
+          "name": "\u80dc\u5b8f\u79d1\u6280",
+          "score": 1.263,
+          "realized_return": -0.0691,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300308",
+          "name": "\u4e2d\u9645\u65ed\u521b",
+          "score": 0.945,
+          "realized_return": -0.0311,
+          "hit": false
+        },
+        {
+          "ticker": "sh.601398",
+          "name": "\u5de5\u5546\u94f6\u884c",
+          "score": 0.916,
+          "realized_return": -0.0769,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.045,
+      "base_mean_return": 0.0073,
+      "excess": -0.0522
+    },
+    {
+      "month": "2026-01-30",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.300394",
+          "name": "\u5929\u5b5a\u901a\u4fe1",
+          "score": 2.06,
+          "realized_return": 0.3705,
+          "hit": true
+        },
+        {
+          "ticker": "sh.688008",
+          "name": "\u6f9c\u8d77\u79d1\u6280",
+          "score": 1.431,
+          "realized_return": -0.1588,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300308",
+          "name": "\u4e2d\u9645\u65ed\u521b",
+          "score": 0.931,
+          "realized_return": -0.1572,
+          "hit": false
+        },
+        {
+          "ticker": "sh.603986",
+          "name": "\u5146\u6613\u521b\u65b0",
+          "score": 0.839,
+          "realized_return": -0.0935,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300502",
+          "name": "\u65b0\u6613\u76db",
+          "score": 0.741,
+          "realized_return": -0.0528,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.0183,
+      "base_mean_return": 0.009,
+      "excess": -0.0274
+    },
+    {
+      "month": "2026-02-27",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sh.688082",
+          "name": "\u76db\u7f8e\u4e0a\u6d77",
+          "score": 1.311,
+          "realized_return": -0.1611,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300394",
+          "name": "\u5929\u5b5a\u901a\u4fe1",
+          "score": 1.213,
+          "realized_return": -0.1407,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300476",
+          "name": "\u80dc\u5b8f\u79d1\u6280",
+          "score": 1.05,
+          "realized_return": -0.1539,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300803",
+          "name": "\u6307\u5357\u9488",
+          "score": 0.505,
+          "realized_return": -0.1476,
+          "hit": false
+        },
+        {
+          "ticker": "sz.002916",
+          "name": "\u6df1\u5357\u7535\u8def",
+          "score": 0.425,
+          "realized_return": -0.2098,
+          "hit": false
+        }
+      ],
+      "top_mean_return": -0.1626,
+      "base_mean_return": -0.0594,
+      "excess": -0.1032
+    },
+    {
+      "month": "2026-03-31",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.300418",
+          "name": "\u6606\u4ed1\u4e07\u7ef4",
+          "score": 1.64,
+          "realized_return": -0.0029,
+          "hit": false
+        },
+        {
+          "ticker": "sh.600900",
+          "name": "\u957f\u6c5f\u7535\u529b",
+          "score": 1.533,
+          "realized_return": 0.0104,
+          "hit": true
+        },
+        {
+          "ticker": "sh.688008",
+          "name": "\u6f9c\u8d77\u79d1\u6280",
+          "score": 1.446,
+          "realized_return": 0.3833,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300433",
+          "name": "\u84dd\u601d\u79d1\u6280",
+          "score": 1.427,
+          "realized_return": -0.0818,
+          "hit": false
+        },
+        {
+          "ticker": "sh.601939",
+          "name": "\u5efa\u8bbe\u94f6\u884c",
+          "score": 1.235,
+          "realized_return": 0.0311,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.068,
+      "base_mean_return": 0.0522,
+      "excess": 0.0158
+    },
+    {
+      "month": "2026-04-30",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sh.600926",
+          "name": "\u676d\u5dde\u94f6\u884c",
+          "score": 1.792,
+          "realized_return": -0.0793,
+          "hit": false
+        },
+        {
+          "ticker": "sh.600900",
+          "name": "\u957f\u6c5f\u7535\u529b",
+          "score": 1.563,
+          "realized_return": 0.0209,
+          "hit": true
+        },
+        {
+          "ticker": "sh.601009",
+          "name": "\u5357\u4eac\u94f6\u884c",
+          "score": 1.43,
+          "realized_return": -0.0519,
+          "hit": false
+        },
+        {
+          "ticker": "sz.300394",
+          "name": "\u5929\u5b5a\u901a\u4fe1",
+          "score": 1.389,
+          "realized_return": 0.6175,
+          "hit": true
+        },
+        {
+          "ticker": "sh.601225",
+          "name": "\u9655\u897f\u7164\u4e1a",
+          "score": 1.363,
+          "realized_return": 0.0379,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.109,
+      "base_mean_return": -0.0232,
+      "excess": 0.1322
+    },
+    {
+      "month": "2026-05-29",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sz.002938",
+          "name": "\u9e4f\u9f0e\u63a7\u80a1",
+          "score": 1.91,
+          "realized_return": 0.0035,
+          "hit": true
+        },
+        {
+          "ticker": "sz.300394",
+          "name": "\u5929\u5b5a\u901a\u4fe1",
+          "score": 1.731,
+          "realized_return": -0.3351,
+          "hit": false
+        },
+        {
+          "ticker": "sh.600919",
+          "name": "\u6c5f\u82cf\u94f6\u884c",
+          "score": 1.564,
+          "realized_return": -0.0452,
+          "hit": false
+        },
+        {
+          "ticker": "sh.603986",
+          "name": "\u5146\u6613\u521b\u65b0",
+          "score": 1.513,
+          "realized_return": 0.7451,
+          "hit": true
+        },
+        {
+          "ticker": "sh.600183",
+          "name": "\u751f\u76ca\u79d1\u6280",
+          "score": 1.181,
+          "realized_return": 0.2331,
+          "hit": true
+        }
+      ],
+      "top_mean_return": 0.1203,
+      "base_mean_return": -0.034,
+      "excess": 0.1543
+    },
+    {
+      "month": "2026-06-30",
+      "region": "cn",
+      "picks": [
+        {
+          "ticker": "sh.603986",
+          "name": "\u5146\u6613\u521b\u65b0",
+          "score": 2.068,
+          "realized_return": -0.5533,
+          "hit": false
+        },
+        {
+          "ticker": "sh.688041",
+          "name": "\u6d77\u5149\u4fe1\u606f",
+          "score": 1.846,
+          "realized_return": -0.2331,
+          "hit": false
+        },
+        {
+          "ticker": "sz.301308",
+          "name": "\u6c5f\u6ce2\u9f99",
+          "score": 1.41,
+          "realized_return": -0.5316,
+          "hit": false
+        },
+        {
+          "ticker": "sh.600584",
+          "name": "\u957f\u7535\u79d1\u6280",
+          "score": 1.398,
+          "realized_return": -0.3078,
+          "hit": false
+        },
+        {
+          "ticker": "sh.600219",
+          "name": "\u5357\u5c71\u94dd\u4e1a",
+          "score": 1.394,
+          "realized_return": 0.1504,
+          "hit": true
+        }
+      ],
+      "top_mean_return": -0.2951,
+      "base_mean_return": -0.007,
+      "excess": -0.2881
+    }
+  ],
+  "summary": {
+    "n_months": 132,
+    "n_picks": 660,
+    "hit_rate": 0.4833,
+    "avg_top_return": 0.0122,
+    "avg_base_return": 0.0053,
+    "avg_excess": 0.007
+  },
+  "snapshot_ts": "2026-09-05T03:16:24.421584+00:00"
+}

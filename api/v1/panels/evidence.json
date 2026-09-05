@@ -1,0 +1,142 @@
+[
+  {
+    "n": 1,
+    "result": "Phase B differential",
+    "estimate": -0.0008,
+    "ci_lo": -0.0106,
+    "ci_hi": 0.009,
+    "p": 0.87,
+    "n_months": 125,
+    "grade": "CV-proxy"
+  },
+  {
+    "n": 2,
+    "result": "Phase C differential",
+    "estimate": -0.0065,
+    "ci_lo": -0.0195,
+    "ci_hi": 0.0066,
+    "p": 0.36,
+    "n_months": 125,
+    "grade": "CV-proxy"
+  },
+  {
+    "n": 3,
+    "result": "Phase D differential",
+    "estimate": -0.003,
+    "ci_lo": -0.0137,
+    "ci_hi": 0.0078,
+    "p": 0.6,
+    "n_months": 125,
+    "grade": "CV-proxy"
+  },
+  {
+    "n": 4,
+    "result": "Phase E1 differential",
+    "estimate": -0.0028,
+    "ci_lo": -0.0115,
+    "ci_hi": 0.0059,
+    "p": 0.53,
+    "n_months": 125,
+    "grade": "CV-proxy"
+  },
+  {
+    "n": 5,
+    "result": "Track B treatment",
+    "estimate": 0.0055,
+    "ci_lo": -0.021,
+    "ci_hi": 0.033,
+    "p": 0.69,
+    "n_months": 125,
+    "grade": "chron./explor."
+  },
+  {
+    "n": 6,
+    "result": "Track B differential",
+    "estimate": 0.0076,
+    "ci_lo": -0.004,
+    "ci_hi": 0.02,
+    "p": 0.22,
+    "n_months": 125,
+    "grade": "chron./explor."
+  },
+  {
+    "n": 7,
+    "result": "Track C joint combined IC",
+    "estimate": -0.007,
+    "ci_lo": -0.03,
+    "ci_hi": 0.016,
+    "p": 0.55,
+    "n_months": 71,
+    "grade": "chron./explor."
+  },
+  {
+    "n": 8,
+    "result": "Track C conditional-IC beta",
+    "estimate": -0.015,
+    "ci_lo": null,
+    "ci_hi": null,
+    "p": 0.2,
+    "n_months": 71,
+    "grade": "explor."
+  },
+  {
+    "n": 9,
+    "result": "Track C 3-layer cond.-IC",
+    "estimate": -0.0148,
+    "ci_lo": null,
+    "ci_hi": null,
+    "p": 0.21,
+    "n_months": 71,
+    "grade": "explor."
+  },
+  {
+    "n": 10,
+    "result": "Baseline-FF5",
+    "estimate": 0.0106,
+    "ci_lo": null,
+    "ci_hi": null,
+    "p": null,
+    "n_months": 125,
+    "grade": "CV-proxy"
+  },
+  {
+    "n": 11,
+    "result": "Baseline-RANK",
+    "estimate": 0.0154,
+    "ci_lo": null,
+    "ci_hi": null,
+    "p": 0.04,
+    "n_months": 125,
+    "grade": "CV-proxy"
+  },
+  {
+    "n": 13,
+    "result": "Track C asymmetric-35",
+    "estimate": -0.0121,
+    "ci_lo": -0.035,
+    "ci_hi": 0.011,
+    "p": 0.31,
+    "n_months": 71,
+    "grade": "explor."
+  },
+  {
+    "n": 14,
+    "result": "Track C asymmetric-41",
+    "estimate": -0.0088,
+    "ci_lo": -0.034,
+    "ci_hi": 0.016,
+    "p": 0.48,
+    "n_months": 71,
+    "grade": "explor."
+  },
+  {
+    "n": 15,
+    "result": "Track C confirmatory (climax)",
+    "estimate": -0.0088,
+    "ci_lo": -0.034,
+    "ci_hi": 0.016,
+    "p": 0.48,
+    "n_months": 71,
+    "grade": "CONFIRMATORY"
+  }
+]

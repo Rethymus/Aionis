@@ -1,0 +1,228 @@
+{
+  "status": "ok",
+  "as_of_date": "2026-09-04",
+  "groups": [
+    "price",
+    "fundamentals",
+    "market_structure"
+  ],
+  "signals": {
+    "roe": {
+      "signal": "roe",
+      "polarity": "bullish_high",
+      "direction": "bullish",
+      "strength": 0.1627,
+      "mean": 0.1638,
+      "n": 477,
+      "favored": [
+        {
+          "ticker": "GDDY",
+          "value": 35.8358,
+          "name": "GoDaddy Inc.",
+          "sector": "Services-Computer Integrated Systems Design"
+        },
+        {
+          "ticker": "MTD",
+          "value": 18.1626,
+          "name": "METTLER TOLEDO INTERNATIONAL INC/",
+          "sector": "Laboratory Analytical Instruments"
+        },
+        {
+          "ticker": "LYV",
+          "value": 3.5764,
+          "name": "Live Nation Entertainment, Inc.",
+          "sector": "Services-Amusement & Recreation Services"
+        },
+        {
+          "ticker": "CL",
+          "value": 2.9364,
+          "name": "COLGATE PALMOLIVE CO",
+          "sector": "Perfumes, Cosmetics & Other Toilet Preparations"
+        },
+        {
+          "ticker": "TPR",
+          "value": 2.2073,
+          "name": "TAPESTRY, INC.",
+          "sector": "Leather & Leather Products"
+        }
+      ],
+      "group": "fundamentals",
+      "latest_mean": 0.1638,
+      "trailing_mean": 0.0869
+    },
+    "profit_margin": {
+      "signal": "profit_margin",
+      "polarity": "bullish_high",
+      "direction": "bearish",
+      "strength": 0.3442,
+      "mean": 0.2758,
+      "n": 472,
+      "favored": [
+        {
+          "ticker": "LRCX",
+          "value": 11.0255,
+          "name": "LAM RESEARCH CORP",
+          "sector": "Special Industry Machinery, NEC"
+        },
+        {
+          "ticker": "GEN",
+          "value": 7.963,
+          "name": "Gen Digital Inc.",
+          "sector": "Services-Prepackaged Software"
+        },
+        {
+          "ticker": "MSFT",
+          "value": 6.7032,
+          "name": "MICROSOFT CORP",
+          "sector": "Services-Prepackaged Software"
+        },
+        {
+          "ticker": "KLAC",
+          "value": 6.3038,
+          "name": "KLA CORP",
+          "sector": "Optical Instruments & Lenses"
+        },
+        {
+          "ticker": "CPT",
+          "value": 6.0013,
+          "name": "CAMDEN PROPERTY TRUST",
+          "sector": "Real Estate Investment Trusts"
+        }
+      ],
+      "group": "fundamentals",
+      "latest_mean": 0.2758,
+      "trailing_mean": 0.3357
+    },
+    "revenue_growth_12m": {
+      "signal": "revenue_growth_12m",
+      "polarity": "bullish_high",
+      "direction": "bearish",
+      "strength": 0.0914,
+      "mean": 0.0065,
+      "n": 477,
+      "favored": [
+        {
+          "ticker": "SYY",
+          "value": 3.1207,
+          "name": "SYSCO CORP",
+          "sector": "Wholesale-Groceries & Related Products"
+        },
+        {
+          "ticker": "A",
+          "value": 0.0,
+          "name": "AGILENT TECHNOLOGIES, INC.",
+          "sector": "Laboratory Analytical Instruments"
+        },
+        {
+          "ticker": "AAPL",
+          "value": 0.0,
+          "name": "Apple Inc.",
+          "sector": "Electronic Computers"
+        },
+        {
+          "ticker": "ABBV",
+          "value": 0.0,
+          "name": "AbbVie Inc.",
+          "sector": "Pharmaceutical Preparations"
+        },
+        {
+          "ticker": "ABNB",
+          "value": 0.0,
+          "name": "Airbnb, Inc.",
+          "sector": "Services-To Dwellings & Other Buildings"
+        }
+      ],
+      "group": "fundamentals",
+      "latest_mean": 0.0113,
+      "trailing_mean": 0.031
+    },
+    "leverage": {
+      "signal": "leverage",
+      "polarity": "bearish_high",
+      "direction": "neutral",
+      "strength": 0.6348,
+      "mean": 0.2544,
+      "n": 448,
+      "favored": [
+        {
+          "ticker": "FICO",
+          "value": 2.74,
+          "name": "FAIR ISAAC CORP",
+          "sector": "Services-Business Services, NEC"
+        },
+        {
+          "ticker": "INCY",
+          "value": 2.6017,
+          "name": "INCYTE CORP",
+          "sector": "Services-Commercial Physical & Biological Research"
+        },
+        {
+          "ticker": "TDG",
+          "value": 1.2245,
+          "name": "TransDigm Group INC",
+          "sector": "Aircraft Parts & Auxiliary Equipment, NEC"
+        },
+        {
+          "ticker": "MSCI",
+          "value": 1.1388,
+          "name": "MSCI Inc.",
+          "sector": "Services-Business Services, NEC"
+        },
+        {
+          "ticker": "CCI",
+          "value": 1.1313,
+          "name": "CROWN CASTLE INC.",
+          "sector": "Real Estate Investment Trusts"
+        }
+      ],
+      "group": "fundamentals",
+      "latest_mean": 0.2544,
+      "trailing_mean": 0.2533
+    },
+    "debt_to_equity": {
+      "signal": "debt_to_equity",
+      "polarity": "bearish_high",
+      "direction": "bearish",
+      "strength": 0.1362,
+      "mean": 1.6875,
+      "n": 440,
+      "favored": [
+        {
+          "ticker": "GDDY",
+          "value": 561.1045,
+          "name": "GoDaddy Inc.",
+          "sector": "Services-Computer Integrated Systems Design"
+        },
+        {
+          "ticker": "MTD",
+          "value": 159.4536,
+          "name": "METTLER TOLEDO INTERNATIONAL INC/",
+          "sector": "Laboratory Analytical Instruments"
+        },
+        {
+          "ticker": "CL",
+          "value": 33.2161,
+          "name": "COLGATE PALMOLIVE CO",
+          "sector": "Perfumes, Cosmetics & Other Toilet Preparations"
+        },
+        {
+          "ticker": "LYV",
+          "value": 20.8392,
+          "name": "Live Nation Entertainment, Inc.",
+          "sector": "Services-Amusement & Recreation Services"
+        },
+        {
+          "ticker": "LVS",
+          "value": 16.3442,
+          "name": "LAS VEGAS SANDS CORP",
+          "sector": "Hotels & Motels"
+        }
+      ],
+      "group": "fundamentals",
+      "latest_mean": 1.6875,
+      "trailing_mean": 0.4926
+    }
+  },
+  "methodology": "Theme-signal operationalization (display-only, NOT a research claim). Direction from a documented polarity heuristic (e.g. momentum/ROE high = bullish; volatility/leverage high = bearish). Strength = |mean cross-sectional z-score| clipped to [0,3]. Favored = top-5 tickers by the raw signal at the latest realized month. For 'bearish_high' signals, favored = most-exposed, NOT a buy recommendation. Reads only the frozen panel's latest cross-section; the model and OOS scores are untouched.",
+  "snapshot_ts": "2026-09-05T03:16:42.280174+00:00"
+}

@@ -1,0 +1,608 @@
+{
+  "methodology": "Illustrative: VIX (FRED ALFRED, permissive) monthly mean from 2016-01 \u2192 today as the market-stress proxy; the 2025-26 TACO events are shown against the full Trump-era stress history. Event table hand-curated from public news (FT, CNBC, ABC) and the Wikipedia second-Trump-administration tariff timeline (day-verified events only; retrieved 2026-09-04). Not an Aionis research claim \u2014 demonstrative.",
+  "vix_series": [
+    {
+      "month": "2016-01",
+      "vix": 23.72
+    },
+    {
+      "month": "2016-02",
+      "vix": 22.52
+    },
+    {
+      "month": "2016-03",
+      "vix": 15.85
+    },
+    {
+      "month": "2016-04",
+      "vix": 14.3
+    },
+    {
+      "month": "2016-05",
+      "vix": 14.85
+    },
+    {
+      "month": "2016-06",
+      "vix": 17.77
+    },
+    {
+      "month": "2016-07",
+      "vix": 13.16
+    },
+    {
+      "month": "2016-08",
+      "vix": 12.4
+    },
+    {
+      "month": "2016-09",
+      "vix": 14.22
+    },
+    {
+      "month": "2016-10",
+      "vix": 14.59
+    },
+    {
+      "month": "2016-11",
+      "vix": 15.24
+    },
+    {
+      "month": "2016-12",
+      "vix": 12.47
+    },
+    {
+      "month": "2017-01",
+      "vix": 11.61
+    },
+    {
+      "month": "2017-02",
+      "vix": 11.53
+    },
+    {
+      "month": "2017-03",
+      "vix": 11.9
+    },
+    {
+      "month": "2017-04",
+      "vix": 13.14
+    },
+    {
+      "month": "2017-05",
+      "vix": 10.86
+    },
+    {
+      "month": "2017-06",
+      "vix": 10.51
+    },
+    {
+      "month": "2017-07",
+      "vix": 10.26
+    },
+    {
+      "month": "2017-08",
+      "vix": 11.98
+    },
+    {
+      "month": "2017-09",
+      "vix": 10.44
+    },
+    {
+      "month": "2017-10",
+      "vix": 10.13
+    },
+    {
+      "month": "2017-11",
+      "vix": 10.54
+    },
+    {
+      "month": "2017-12",
+      "vix": 10.26
+    },
+    {
+      "month": "2018-01",
+      "vix": 11.06
+    },
+    {
+      "month": "2018-02",
+      "vix": 22.46
+    },
+    {
+      "month": "2018-03",
+      "vix": 19.02
+    },
+    {
+      "month": "2018-04",
+      "vix": 18.27
+    },
+    {
+      "month": "2018-05",
+      "vix": 14.12
+    },
+    {
+      "month": "2018-06",
+      "vix": 13.68
+    },
+    {
+      "month": "2018-07",
+      "vix": 13.15
+    },
+    {
+      "month": "2018-08",
+      "vix": 12.55
+    },
+    {
+      "month": "2018-09",
+      "vix": 12.91
+    },
+    {
+      "month": "2018-10",
+      "vix": 19.35
+    },
+    {
+      "month": "2018-11",
+      "vix": 19.39
+    },
+    {
+      "month": "2018-12",
+      "vix": 24.95
+    },
+    {
+      "month": "2019-01",
+      "vix": 19.57
+    },
+    {
+      "month": "2019-02",
+      "vix": 15.23
+    },
+    {
+      "month": "2019-03",
+      "vix": 14.49
+    },
+    {
+      "month": "2019-04",
+      "vix": 12.95
+    },
+    {
+      "month": "2019-05",
+      "vix": 16.72
+    },
+    {
+      "month": "2019-06",
+      "vix": 15.84
+    },
+    {
+      "month": "2019-07",
+      "vix": 13.31
+    },
+    {
+      "month": "2019-08",
+      "vix": 18.98
+    },
+    {
+      "month": "2019-09",
+      "vix": 15.56
+    },
+    {
+      "month": "2019-10",
+      "vix": 15.47
+    },
+    {
+      "month": "2019-11",
+      "vix": 12.52
+    },
+    {
+      "month": "2019-12",
+      "vix": 13.76
+    },
+    {
+      "month": "2020-01",
+      "vix": 13.94
+    },
+    {
+      "month": "2020-02",
+      "vix": 19.63
+    },
+    {
+      "month": "2020-03",
+      "vix": 57.74
+    },
+    {
+      "month": "2020-04",
+      "vix": 41.45
+    },
+    {
+      "month": "2020-05",
+      "vix": 30.9
+    },
+    {
+      "month": "2020-06",
+      "vix": 31.12
+    },
+    {
+      "month": "2020-07",
+      "vix": 26.84
+    },
+    {
+      "month": "2020-08",
+      "vix": 22.89
+    },
+    {
+      "month": "2020-09",
+      "vix": 27.65
+    },
+    {
+      "month": "2020-10",
+      "vix": 29.44
+    },
+    {
+      "month": "2020-11",
+      "vix": 25.0
+    },
+    {
+      "month": "2020-12",
+      "vix": 22.37
+    },
+    {
+      "month": "2021-01",
+      "vix": 24.91
+    },
+    {
+      "month": "2021-02",
+      "vix": 23.14
+    },
+    {
+      "month": "2021-03",
+      "vix": 21.84
+    },
+    {
+      "month": "2021-04",
+      "vix": 17.42
+    },
+    {
+      "month": "2021-05",
+      "vix": 19.76
+    },
+    {
+      "month": "2021-06",
+      "vix": 16.96
+    },
+    {
+      "month": "2021-07",
+      "vix": 17.6
+    },
+    {
+      "month": "2021-08",
+      "vix": 17.47
+    },
+    {
+      "month": "2021-09",
+      "vix": 19.82
+    },
+    {
+      "month": "2021-10",
+      "vix": 17.87
+    },
+    {
+      "month": "2021-11",
+      "vix": 18.5
+    },
+    {
+      "month": "2021-12",
+      "vix": 21.35
+    },
+    {
+      "month": "2022-01",
+      "vix": 23.18
+    },
+    {
+      "month": "2022-02",
+      "vix": 25.75
+    },
+    {
+      "month": "2022-03",
+      "vix": 26.97
+    },
+    {
+      "month": "2022-04",
+      "vix": 24.37
+    },
+    {
+      "month": "2022-05",
+      "vix": 29.31
+    },
+    {
+      "month": "2022-06",
+      "vix": 28.23
+    },
+    {
+      "month": "2022-07",
+      "vix": 25.0
+    },
+    {
+      "month": "2022-08",
+      "vix": 22.17
+    },
+    {
+      "month": "2022-09",
+      "vix": 27.34
+    },
+    {
+      "month": "2022-10",
+      "vix": 30.01
+    },
+    {
+      "month": "2022-11",
+      "vix": 23.3
+    },
+    {
+      "month": "2022-12",
+      "vix": 21.78
+    },
+    {
+      "month": "2023-01",
+      "vix": 20.17
+    },
+    {
+      "month": "2023-02",
+      "vix": 20.12
+    },
+    {
+      "month": "2023-03",
+      "vix": 21.64
+    },
+    {
+      "month": "2023-04",
+      "vix": 17.82
+    },
+    {
+      "month": "2023-05",
+      "vix": 17.64
+    },
+    {
+      "month": "2023-06",
+      "vix": 14.0
+    },
+    {
+      "month": "2023-07",
+      "vix": 13.93
+    },
+    {
+      "month": "2023-08",
+      "vix": 15.85
+    },
+    {
+      "month": "2023-09",
+      "vix": 15.17
+    },
+    {
+      "month": "2023-10",
+      "vix": 18.89
+    },
+    {
+      "month": "2023-11",
+      "vix": 14.02
+    },
+    {
+      "month": "2023-12",
+      "vix": 12.72
+    },
+    {
+      "month": "2024-01",
+      "vix": 13.39
+    },
+    {
+      "month": "2024-02",
+      "vix": 13.98
+    },
+    {
+      "month": "2024-03",
+      "vix": 13.79
+    },
+    {
+      "month": "2024-04",
+      "vix": 16.14
+    },
+    {
+      "month": "2024-05",
+      "vix": 13.06
+    },
+    {
+      "month": "2024-06",
+      "vix": 12.67
+    },
+    {
+      "month": "2024-07",
+      "vix": 14.37
+    },
+    {
+      "month": "2024-08",
+      "vix": 19.31
+    },
+    {
+      "month": "2024-09",
+      "vix": 17.66
+    },
+    {
+      "month": "2024-10",
+      "vix": 19.96
+    },
+    {
+      "month": "2024-11",
+      "vix": 16.02
+    },
+    {
+      "month": "2024-12",
+      "vix": 15.87
+    },
+    {
+      "month": "2025-01",
+      "vix": 16.76
+    },
+    {
+      "month": "2025-02",
+      "vix": 16.97
+    },
+    {
+      "month": "2025-03",
+      "vix": 21.84
+    },
+    {
+      "month": "2025-04",
+      "vix": 31.97
+    },
+    {
+      "month": "2025-05",
+      "vix": 20.46
+    },
+    {
+      "month": "2025-06",
+      "vix": 18.4
+    },
+    {
+      "month": "2025-07",
+      "vix": 16.38
+    },
+    {
+      "month": "2025-08",
+      "vix": 15.75
+    },
+    {
+      "month": "2025-09",
+      "vix": 15.79
+    },
+    {
+      "month": "2025-10",
+      "vix": 18.09
+    },
+    {
+      "month": "2025-11",
+      "vix": 19.77
+    },
+    {
+      "month": "2025-12",
+      "vix": 15.55
+    },
+    {
+      "month": "2026-01",
+      "vix": 16.18
+    },
+    {
+      "month": "2026-02",
+      "vix": 19.21
+    },
+    {
+      "month": "2026-03",
+      "vix": 25.6
+    },
+    {
+      "month": "2026-04",
+      "vix": 19.81
+    },
+    {
+      "month": "2026-05",
+      "vix": 17.24
+    },
+    {
+      "month": "2026-06",
+      "vix": 17.91
+    },
+    {
+      "month": "2026-07",
+      "vix": 17.09
+    },
+    {
+      "month": "2026-08",
+      "vix": 15.23
+    },
+    {
+      "month": "2026-09",
+      "vix": 15.77
+    }
+  ],
+  "events": [
+    {
+      "date": "2025-02-01",
+      "label": "Canada/Mexico/China tariff hike",
+      "type": "escalation"
+    },
+    {
+      "date": "2025-04-02",
+      "label": "Reciprocal tariffs announced (Liberation Day)",
+      "type": "escalation"
+    },
+    {
+      "date": "2025-04-09",
+      "label": "Reciprocal tariffs suspended (TACO origin)",
+      "type": "concession"
+    },
+    {
+      "date": "2025-05-12",
+      "label": "US-China Geneva truce (tariffs cut)",
+      "type": "concession"
+    },
+    {
+      "date": "2025-07-21",
+      "label": "Multiple tariff deadlines delayed",
+      "type": "concession"
+    },
+    {
+      "date": "2025-08-07",
+      "label": "Modified reciprocal tariffs take effect (postponements end)",
+      "type": "escalation"
+    },
+    {
+      "date": "2025-08-27",
+      "label": "India penalty: +25% for Russian oil (50% total baseline)",
+      "type": "escalation"
+    },
+    {
+      "date": "2025-10-01",
+      "label": "100% branded pharma, 25% trucks, 25%/50% cabinets & furniture take effect",
+      "type": "escalation"
+    },
+    {
+      "date": "2025-10-10",
+      "label": "Threatens +100% on all Chinese imports (rare-earth dispute), effective Nov 1",
+      "type": "escalation"
+    },
+    {
+      "date": "2025-10-30",
+      "label": "Trump-Xi Busan truce: fentanyl tariff 20%->10%, rare-earth controls paused",
+      "type": "concession"
+    },
+    {
+      "date": "2025-11-14",
+      "label": "Agricultural exemptions from reciprocal tariffs (coffee, cocoa, beef, fruit)",
+      "type": "concession"
+    },
+    {
+      "date": "2026-01-17",
+      "label": "Threatens up to 25% on 8 European countries (Greenland crisis)",
+      "type": "escalation"
+    },
+    {
+      "date": "2026-01-21",
+      "label": "Europe threat retracted after 'framework of a future deal' with NATO",
+      "type": "concession"
+    },
+    {
+      "date": "2026-02-02",
+      "label": "India tariffs cut 50%->18% (Russian-oil purchases stop)",
+      "type": "concession"
+    },
+    {
+      "date": "2026-02-20",
+      "label": "After SCOTUS strikes IEEPA tariffs: universal 10% reimposed under Sec.122 (150 days)",
+      "type": "escalation"
+    },
+    {
+      "date": "2026-07-24",
+      "label": "Sec.122 expiry: new Sec.301 tariffs (10%/12.5%) on ~60 trading partners",
+      "type": "escalation"
+    }
+  ],
+  "climbdowns_count": 7,
+  "escalations_count": 9,
+  "latest_vix": 15.77,
+  "latest_date": "2026-09",
+  "snapshot_ts": "2026-09-05T03:16:24.434165+00:00"
+}

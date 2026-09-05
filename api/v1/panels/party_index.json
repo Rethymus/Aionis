@@ -1,0 +1,494 @@
+{
+  "status": "ok",
+  "as_of": "2026-08-18 00:00:00",
+  "source_panel": "politician_trades_tx",
+  "window_anchor": "2026-08-13",
+  "window_days": 90,
+  "n_source_tx": 1982,
+  "months": [
+    {
+      "month": "2023-10",
+      "d_tx": 1,
+      "r_tx": 0,
+      "d_buy": 0,
+      "r_buy": 0,
+      "n_common": 0,
+      "n_directional": 0,
+      "n_opposed": 0,
+      "opposition": null
+    },
+    {
+      "month": "2024-05",
+      "d_tx": 1,
+      "r_tx": 0,
+      "d_buy": 1,
+      "r_buy": 0,
+      "n_common": 0,
+      "n_directional": 0,
+      "n_opposed": 0,
+      "opposition": null
+    },
+    {
+      "month": "2024-08",
+      "d_tx": 1,
+      "r_tx": 0,
+      "d_buy": 1,
+      "r_buy": 0,
+      "n_common": 0,
+      "n_directional": 0,
+      "n_opposed": 0,
+      "opposition": null
+    },
+    {
+      "month": "2024-10",
+      "d_tx": 0,
+      "r_tx": 57,
+      "d_buy": 0,
+      "r_buy": 57,
+      "n_common": 0,
+      "n_directional": 0,
+      "n_opposed": 0,
+      "opposition": null
+    },
+    {
+      "month": "2024-11",
+      "d_tx": 1,
+      "r_tx": 9,
+      "d_buy": 1,
+      "r_buy": 4,
+      "n_common": 0,
+      "n_directional": 0,
+      "n_opposed": 0,
+      "opposition": null
+    },
+    {
+      "month": "2024-12",
+      "d_tx": 0,
+      "r_tx": 10,
+      "d_buy": 0,
+      "r_buy": 4,
+      "n_common": 0,
+      "n_directional": 0,
+      "n_opposed": 0,
+      "opposition": null
+    },
+    {
+      "month": "2025-01",
+      "d_tx": 1,
+      "r_tx": 18,
+      "d_buy": 1,
+      "r_buy": 9,
+      "n_common": 0,
+      "n_directional": 0,
+      "n_opposed": 0,
+      "opposition": null
+    },
+    {
+      "month": "2025-02",
+      "d_tx": 1,
+      "r_tx": 20,
+      "d_buy": 1,
+      "r_buy": 15,
+      "n_common": 1,
+      "n_directional": 1,
+      "n_opposed": 0,
+      "opposition": 0.0
+    },
+    {
+      "month": "2025-03",
+      "d_tx": 1,
+      "r_tx": 6,
+      "d_buy": 1,
+      "r_buy": 1,
+      "n_common": 0,
+      "n_directional": 0,
+      "n_opposed": 0,
+      "opposition": null
+    },
+    {
+      "month": "2025-04",
+      "d_tx": 1,
+      "r_tx": 14,
+      "d_buy": 0,
+      "r_buy": 8,
+      "n_common": 0,
+      "n_directional": 0,
+      "n_opposed": 0,
+      "opposition": null
+    },
+    {
+      "month": "2025-05",
+      "d_tx": 2,
+      "r_tx": 6,
+      "d_buy": 1,
+      "r_buy": 2,
+      "n_common": 1,
+      "n_directional": 1,
+      "n_opposed": 1,
+      "opposition": 1.0
+    },
+    {
+      "month": "2025-06",
+      "d_tx": 0,
+      "r_tx": 4,
+      "d_buy": 0,
+      "r_buy": 3,
+      "n_common": 0,
+      "n_directional": 0,
+      "n_opposed": 0,
+      "opposition": null
+    },
+    {
+      "month": "2025-07",
+      "d_tx": 0,
+      "r_tx": 27,
+      "d_buy": 0,
+      "r_buy": 10,
+      "n_common": 0,
+      "n_directional": 0,
+      "n_opposed": 0,
+      "opposition": null
+    },
+    {
+      "month": "2025-08",
+      "d_tx": 1,
+      "r_tx": 11,
+      "d_buy": 1,
+      "r_buy": 6,
+      "n_common": 1,
+      "n_directional": 1,
+      "n_opposed": 0,
+      "opposition": 0.0
+    },
+    {
+      "month": "2025-09",
+      "d_tx": 37,
+      "r_tx": 7,
+      "d_buy": 19,
+      "r_buy": 5,
+      "n_common": 0,
+      "n_directional": 0,
+      "n_opposed": 0,
+      "opposition": null
+    },
+    {
+      "month": "2025-10",
+      "d_tx": 27,
+      "r_tx": 17,
+      "d_buy": 13,
+      "r_buy": 5,
+      "n_common": 1,
+      "n_directional": 0,
+      "n_opposed": 0,
+      "opposition": null
+    },
+    {
+      "month": "2025-11",
+      "d_tx": 2,
+      "r_tx": 4,
+      "d_buy": 1,
+      "r_buy": 1,
+      "n_common": 0,
+      "n_directional": 0,
+      "n_opposed": 0,
+      "opposition": null
+    },
+    {
+      "month": "2025-12",
+      "d_tx": 221,
+      "r_tx": 53,
+      "d_buy": 63,
+      "r_buy": 24,
+      "n_common": 14,
+      "n_directional": 12,
+      "n_opposed": 5,
+      "opposition": 0.4167
+    },
+    {
+      "month": "2026-01",
+      "d_tx": 162,
+      "r_tx": 74,
+      "d_buy": 104,
+      "r_buy": 33,
+      "n_common": 13,
+      "n_directional": 11,
+      "n_opposed": 7,
+      "opposition": 0.6364
+    },
+    {
+      "month": "2026-02",
+      "d_tx": 132,
+      "r_tx": 98,
+      "d_buy": 67,
+      "r_buy": 42,
+      "n_common": 22,
+      "n_directional": 20,
+      "n_opposed": 8,
+      "opposition": 0.4
+    },
+    {
+      "month": "2026-03",
+      "d_tx": 218,
+      "r_tx": 90,
+      "d_buy": 131,
+      "r_buy": 49,
+      "n_common": 16,
+      "n_directional": 14,
+      "n_opposed": 5,
+      "opposition": 0.3571
+    },
+    {
+      "month": "2026-04",
+      "d_tx": 129,
+      "r_tx": 47,
+      "d_buy": 54,
+      "r_buy": 19,
+      "n_common": 9,
+      "n_directional": 6,
+      "n_opposed": 3,
+      "opposition": 0.5
+    },
+    {
+      "month": "2026-05",
+      "d_tx": 141,
+      "r_tx": 54,
+      "d_buy": 74,
+      "r_buy": 27,
+      "n_common": 6,
+      "n_directional": 6,
+      "n_opposed": 3,
+      "opposition": 0.5
+    },
+    {
+      "month": "2026-06",
+      "d_tx": 102,
+      "r_tx": 75,
+      "d_buy": 66,
+      "r_buy": 26,
+      "n_common": 13,
+      "n_directional": 12,
+      "n_opposed": 8,
+      "opposition": 0.6667
+    },
+    {
+      "month": "2026-07",
+      "d_tx": 23,
+      "r_tx": 65,
+      "d_buy": 11,
+      "r_buy": 29,
+      "n_common": 4,
+      "n_directional": 4,
+      "n_opposed": 1,
+      "opposition": 0.25
+    },
+    {
+      "month": "2026-08",
+      "d_tx": 1,
+      "r_tx": 10,
+      "d_buy": 1,
+      "r_buy": 0,
+      "n_common": 0,
+      "n_directional": 0,
+      "n_opposed": 0,
+      "opposition": null
+    }
+  ],
+  "latest": {
+    "month": "2026-07",
+    "opposition": 0.25,
+    "opposed": [
+      {
+        "ticker": "PANW",
+        "d_net": 1,
+        "r_net": -2,
+        "n_d": 1,
+        "n_r": 2
+      }
+    ],
+    "consensus": [
+      {
+        "ticker": "APH",
+        "d_net": 1,
+        "r_net": 1,
+        "n_d": 1,
+        "n_r": 1
+      }
+    ]
+  },
+  "portfolios": {
+    "D": {
+      "n_tx": 191,
+      "n_members": 16,
+      "holdings": [
+        {
+          "ticker": "MSFT",
+          "asset": "Microsoft Corporation - Common Stock",
+          "n_buy": 5,
+          "n_sell": 1,
+          "net_buy": 4,
+          "n_members": 3
+        },
+        {
+          "ticker": "AMAT",
+          "asset": "Applied Materials, Inc. - Common Stock",
+          "n_buy": 3,
+          "n_sell": 0,
+          "net_buy": 3,
+          "n_members": 1
+        },
+        {
+          "ticker": "LPLA",
+          "asset": "LPL Financial Holdings Inc. - Common Stock",
+          "n_buy": 3,
+          "n_sell": 0,
+          "net_buy": 3,
+          "n_members": 1
+        },
+        {
+          "ticker": "MNST",
+          "asset": "Monster Beverage Corporation - Common Stock",
+          "n_buy": 3,
+          "n_sell": 0,
+          "net_buy": 3,
+          "n_members": 2
+        },
+        {
+          "ticker": "BSX",
+          "asset": "Boston Scientific Corporation Common Stock",
+          "n_buy": 3,
+          "n_sell": 1,
+          "net_buy": 2,
+          "n_members": 1
+        },
+        {
+          "ticker": "NVDA",
+          "asset": "NVIDIA Corporation - Common Stock",
+          "n_buy": 3,
+          "n_sell": 1,
+          "net_buy": 2,
+          "n_members": 2
+        },
+        {
+          "ticker": "AAPL",
+          "asset": "Apple Inc. - Common Stock",
+          "n_buy": 2,
+          "n_sell": 0,
+          "net_buy": 2,
+          "n_members": 2
+        },
+        {
+          "ticker": "AMD",
+          "asset": "Advanced Micro Devices, Inc.",
+          "n_buy": 2,
+          "n_sell": 0,
+          "net_buy": 2,
+          "n_members": 1
+        },
+        {
+          "ticker": "COO",
+          "asset": "The Cooper Companies, Inc.",
+          "n_buy": 2,
+          "n_sell": 0,
+          "net_buy": 2,
+          "n_members": 1
+        },
+        {
+          "ticker": "CRWD",
+          "asset": "CrowdStrike Holdings, Inc. - Class A Common Stock",
+          "n_buy": 2,
+          "n_sell": 0,
+          "net_buy": 2,
+          "n_members": 2
+        }
+      ]
+    },
+    "R": {
+      "n_tx": 171,
+      "n_members": 22,
+      "holdings": [
+        {
+          "ticker": "T",
+          "asset": "AT&T Inc.",
+          "n_buy": 5,
+          "n_sell": 1,
+          "net_buy": 4,
+          "n_members": 2
+        },
+        {
+          "ticker": "EQT",
+          "asset": "EQT Corporation Common Stock",
+          "n_buy": 3,
+          "n_sell": 0,
+          "net_buy": 3,
+          "n_members": 1
+        },
+        {
+          "ticker": "ESAB",
+          "asset": "ESAB Corporation Common Stock",
+          "n_buy": 3,
+          "n_sell": 0,
+          "net_buy": 3,
+          "n_members": 1
+        },
+        {
+          "ticker": "SPCX",
+          "asset": "Space Exploration Technologies Corp. - Class A Common Stock",
+          "n_buy": 3,
+          "n_sell": 0,
+          "net_buy": 3,
+          "n_members": 3
+        },
+        {
+          "ticker": "AVGO",
+          "asset": "Broadcom Inc. - Common Stock",
+          "n_buy": 2,
+          "n_sell": 0,
+          "net_buy": 2,
+          "n_members": 2
+        },
+        {
+          "ticker": "BRK.B",
+          "asset": "Berkshire Hathaway Inc. New Common Stock",
+          "n_buy": 2,
+          "n_sell": 0,
+          "net_buy": 2,
+          "n_members": 1
+        },
+        {
+          "ticker": "CB",
+          "asset": "Chubb Limited Common Stock",
+          "n_buy": 2,
+          "n_sell": 0,
+          "net_buy": 2,
+          "n_members": 1
+        },
+        {
+          "ticker": "DDOG",
+          "asset": "Datadog, Inc. - Class A Common Stock",
+          "n_buy": 2,
+          "n_sell": 0,
+          "net_buy": 2,
+          "n_members": 1
+        },
+        {
+          "ticker": "FMAO",
+          "asset": "Farmers & Merchants Bancorp, Inc.",
+          "n_buy": 2,
+          "n_sell": 0,
+          "net_buy": 2,
+          "n_members": 1
+        },
+        {
+          "ticker": "HD",
+          "asset": "Home Depot, Inc.",
+          "n_buy": 2,
+          "n_sell": 0,
+          "net_buy": 2,
+          "n_members": 1
+        }
+      ]
+    }
+  },
+  "methodology": "Party opposition index + follow portfolios, DERIVED from the committed politician_trades_tx panel (House-only 2026 PTR PDF parses; zero new fetches). Opposition: per calendar month, for every ticker BOTH parties traded, net direction = buys \u2212 sells (count-weighted; the PTR discloses statutory $ bands, not exact amounts, so dollar-weighting would be fabricated precision); the index = share of both-directional common tickers signed opposite (D net-buy vs R net-sell or vice versa); null when no ticker carries both parties' net direction that month. Follow portfolios: trailing 90 days from the latest transaction date, top-10 tickers per party by net buy count \u2014 SIGNAL LISTS ONLY, no prices, no returns, no performance claim (display lane; live prices are display-only and never enter any pipeline). Unknown-party and un-tickered rows are excluded from the math and remain visible in the source panel.",
+  "snapshot_ts": "2026-09-05T03:16:46.412076+00:00"
+}

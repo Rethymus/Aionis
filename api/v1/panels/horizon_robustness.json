@@ -1,0 +1,104 @@
+{
+  "status": "ok",
+  "source_ts": "2026-07-30T05:29:47+00:00",
+  "frozen_confirmatory_horizon": 21,
+  "horizons": [
+    10,
+    42
+  ],
+  "phases": {
+    "B": {
+      "arm_enhanced": "arm_state",
+      "h10": {
+        "enhanced_mean_ic": 0.004607,
+        "base_mean_ic": 0.003763,
+        "mean_diff": 0.000843,
+        "ci_lo": -0.007753,
+        "ci_hi": 0.00944,
+        "dm_p_mbb": 0.855572,
+        "null_holds": true
+      },
+      "h42": {
+        "enhanced_mean_ic": 0.021344,
+        "base_mean_ic": 0.026023,
+        "mean_diff": -0.00468,
+        "ci_lo": -0.015743,
+        "ci_hi": 0.006383,
+        "dm_p_mbb": 0.407296,
+        "null_holds": true
+      },
+      "null_holds_both": true
+    },
+    "C": {
+      "arm_enhanced": "arm_macro",
+      "h10": {
+        "enhanced_mean_ic": 0.001645,
+        "base_mean_ic": 0.003763,
+        "mean_diff": -0.002118,
+        "ci_lo": -0.016175,
+        "ci_hi": 0.011939,
+        "dm_p_mbb": 0.777111,
+        "null_holds": true
+      },
+      "h42": {
+        "enhanced_mean_ic": 0.027883,
+        "base_mean_ic": 0.026023,
+        "mean_diff": 0.00186,
+        "ci_lo": -0.012094,
+        "ci_hi": 0.015814,
+        "dm_p_mbb": 0.809595,
+        "null_holds": true
+      },
+      "null_holds_both": true
+    },
+    "D": {
+      "arm_enhanced": "arm_rel",
+      "h10": {
+        "enhanced_mean_ic": 0.001974,
+        "base_mean_ic": 0.003763,
+        "mean_diff": -0.001789,
+        "ci_lo": -0.012939,
+        "ci_hi": 0.009361,
+        "dm_p_mbb": 0.770615,
+        "null_holds": true
+      },
+      "h42": {
+        "enhanced_mean_ic": 0.021223,
+        "base_mean_ic": 0.026023,
+        "mean_diff": -0.004801,
+        "ci_lo": -0.016365,
+        "ci_hi": 0.006764,
+        "dm_p_mbb": 0.418791,
+        "null_holds": true
+      },
+      "null_holds_both": true
+    },
+    "E1": {
+      "arm_enhanced": "arm_prop",
+      "arm_base": "arm_base_self",
+      "h10": {
+        "enhanced_mean_ic": 0.006153,
+        "base_mean_ic": 0.004503,
+        "mean_diff": 0.00165,
+        "ci_lo": -0.00877,
+        "ci_hi": 0.012069,
+        "dm_p_mbb": 0.778111,
+        "null_holds": true
+      },
+      "h42": {
+        "enhanced_mean_ic": 0.021235,
+        "base_mean_ic": 0.023225,
+        "mean_diff": -0.00199,
+        "ci_lo": -0.010688,
+        "ci_hi": 0.006708,
+        "dm_p_mbb": 0.628686,
+        "null_holds": true
+      },
+      "null_holds_both": true
+    }
+  },
+  "horizon_robust_all": true,
+  "null_criterion": "null_holds iff the differential's 95% HAC CI brackets zero",
+  "notes": "Horizon-robustness sweep of the frozen h=21 Phase B/C/D nulls + the E1 (propagation-beyond-self) null. B/C/D differential = enhanced arm minus the shared plain arm_base (FEATURE_COLS, end_lag); Phase E1 differential = arm_prop minus arm_base_self (NOT the shared base -- propagation beyond SELF). EXPLORATORY (h!=21 = changed config); no confirmatory rows written. arm_base is shared across B/C/D per horizon (identical by construction).",
+  "snapshot_ts": "2026-09-05T03:16:55.393424+00:00"
+}

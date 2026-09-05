@@ -1,0 +1,570 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Aionis Terminal Data API",
+    "version": "1.0.0",
+    "summary": "Read-only static JSON contract over the Aionis terminal panels, served from GitHub Pages.",
+    "description": "Static JSON contract served straight from GitHub Pages — read-only, no auth, no server. Panel files are the payload verbatim; this catalog is the meta layer.\n\nPublic static data API over the terminal's committed panels (display-only). Every endpoint carries its 7-gate intake facts: license + primary source, plus the freshness class (daily / cadence / frozen). Frozen endpoints derive from frozen OOS artifacts (ledger #49 lineage) and deliberately do NOT advance — consuming them expecting daily updates misreads the contract. Endpoints with status=planned are NOT built: the path is a reserved future location, no payload is served, as_of is null, and the license/source describe the primary source the future fetcher would use. Research ingestion of any endpoint requires the full 7-gate rubric (docs/data-intake-rubric.md); the live-prices worker is display-only and must never enter the OOS pipeline."
+  },
+  "servers": [
+    {
+      "url": "https://rethymus.github.io/Aionis",
+      "description": "GitHub Pages deployment (panels, catalog, health)"
+    },
+    {
+      "url": "https://api.aionis-prices.workers.dev",
+      "description": "Live-prices Cloudflare Worker (display-only)"
+    }
+  ],
+  "paths": {
+    "/api/v1/catalog.json": {
+      "get": {
+        "summary": "Panel catalog — license / source / freshness for every endpoint",
+        "x-aionis-status": "available",
+        "responses": {
+          "200": {
+            "description": "Catalog object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/health.json": {
+      "get": {
+        "summary": "Freshness/provenance map of all panels (daily / cadence / frozen)",
+        "x-aionis-status": "available",
+        "responses": {
+          "200": {
+            "description": "Data-health object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/panels/{panel}": {
+      "get": {
+        "summary": "Panel payload, verbatim (the same JSON the terminal renders)",
+        "x-aionis-status": "available",
+        "parameters": [
+          {
+            "name": "metrics",
+            "summary": "metrics — frozen · Aionis research artifacts (repo MIT)",
+            "x-aionis-freshness": "frozen",
+            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-source": "frozen OOS scores, ledger #49 lineage",
+            "x-aionis-as-of": "2026-08-03"
+          },
+          {
+            "name": "picks",
+            "summary": "picks — frozen · Aionis research artifacts (repo MIT)",
+            "x-aionis-freshness": "frozen",
+            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-source": "frozen OOS scores + Platt calibration",
+            "x-aionis-as-of": "2026-08-03"
+          },
+          {
+            "name": "shorts",
+            "summary": "shorts — frozen · Aionis research artifacts (repo MIT)",
+            "x-aionis-freshness": "frozen",
+            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-source": "frozen OOS scores + Platt calibration",
+            "x-aionis-as-of": "2026-08-03"
+          },
+          {
+            "name": "picks_meta",
+            "summary": "picks_meta — frozen · Aionis research artifacts (repo MIT)",
+            "x-aionis-freshness": "frozen",
+            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-source": "calibration meta on realized OOS pairs",
+            "x-aionis-as-of": "2026-08-03"
+          },
+          {
+            "name": "sector_breakdown",
+            "summary": "sector_breakdown — frozen · Aionis research artifacts (repo MIT)",
+            "x-aionis-freshness": "frozen",
+            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-source": "frozen OOS scores by sector",
+            "x-aionis-as-of": "2026-08-03"
+          },
+          {
+            "name": "picks_backtest",
+            "summary": "picks_backtest — frozen · Aionis research artifacts (repo MIT)",
+            "x-aionis-freshness": "frozen",
+            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-source": "realized OOS picks vs base, 131 months",
+            "x-aionis-as-of": "2026-06-30"
+          },
+          {
+            "name": "ic_monthly",
+            "summary": "ic_monthly — frozen · Aionis research artifacts (repo MIT)",
+            "x-aionis-freshness": "frozen",
+            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-source": "confirmatory monthly rank-IC series",
+            "x-aionis-as-of": "2026-06"
+          },
+          {
+            "name": "score_diagnostics",
+            "summary": "score_diagnostics — frozen · Aionis research artifacts (repo MIT)",
+            "x-aionis-freshness": "frozen",
+            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-source": "confirmatory OOS cross-sectional score diagnostics (display-only derivation)",
+            "x-aionis-as-of": "2026-08"
+          },
+          {
+            "name": "ic_deciles",
+            "summary": "ic_deciles — frozen · Aionis research artifacts (repo MIT)",
+            "x-aionis-freshness": "frozen",
+            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-source": "decile monotonicity of the frozen OOS score surface (label-convention forward returns)",
+            "x-aionis-as-of": null
+          },
+          {
+            "name": "pick_conviction",
+            "summary": "pick_conviction — frozen · Aionis research artifacts (repo MIT)",
+            "x-aionis-freshness": "frozen",
+            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-source": "cross-sectional score dispersion",
+            "x-aionis-as-of": "2026-08-03"
+          },
+          {
+            "name": "model_health",
+            "summary": "model_health — frozen · Aionis research artifacts (repo MIT)",
+            "x-aionis-freshness": "frozen",
+            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-source": "PSI + rolling IC on realized OOS",
+            "x-aionis-as-of": null
+          },
+          {
+            "name": "calibration_reliability",
+            "summary": "calibration_reliability — frozen · Aionis research artifacts (repo MIT)",
+            "x-aionis-freshness": "frozen",
+            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-source": "walk-forward calibration audit",
+            "x-aionis-as-of": "2026-06"
+          },
+          {
+            "name": "power_floor",
+            "summary": "power_floor — frozen · Aionis research artifacts (repo MIT)",
+            "x-aionis-freshness": "frozen",
+            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-source": "sigma survey / power analysis",
+            "x-aionis-as-of": null
+          },
+          {
+            "name": "sigma_survey",
+            "summary": "sigma_survey — frozen · Aionis research artifacts (repo MIT)",
+            "x-aionis-freshness": "frozen",
+            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-source": "observed vs pure-noise sigma",
+            "x-aionis-as-of": null
+          },
+          {
+            "name": "bps_sweep",
+            "summary": "bps_sweep — frozen · Aionis research artifacts (repo MIT)",
+            "x-aionis-freshness": "frozen",
+            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-source": "net-cost sensitivity sweep",
+            "x-aionis-as-of": null
+          },
+          {
+            "name": "evidence",
+            "summary": "evidence — frozen · Aionis research artifacts (repo MIT)",
+            "x-aionis-freshness": "frozen",
+            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-source": "research ledger evidence table",
+            "x-aionis-as-of": null
+          },
+          {
+            "name": "stock_universe",
+            "summary": "stock_universe — frozen · Aionis research artifacts (repo MIT)",
+            "x-aionis-freshness": "frozen",
+            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-source": "per-stock frozen readout over OOS scores",
+            "x-aionis-as-of": "2026-08-03"
+          },
+          {
+            "name": "themes",
+            "summary": "themes — daily · Tiingo/Alpaca free tier (vendor ToS, display-only) + GDELT open data",
+            "x-aionis-freshness": "daily",
+            "x-aionis-license": "Tiingo/Alpaca free tier (vendor ToS, display-only) + GDELT open data",
+            "x-aionis-source": "daily prices, fundamentals, GDELT news sentiment, ALFRED macro",
+            "x-aionis-as-of": "2026-09-04"
+          },
+          {
+            "name": "theme_signals",
+            "summary": "theme_signals — daily · Tiingo/Alpaca free tier (vendor ToS, display-only) + GDELT open data",
+            "x-aionis-freshness": "daily",
+            "x-aionis-license": "Tiingo/Alpaca free tier (vendor ToS, display-only) + GDELT open data",
+            "x-aionis-source": "per-theme signal aggregates on the display panel",
+            "x-aionis-as-of": "2026-09-04"
+          },
+          {
+            "name": "market_context",
+            "summary": "market_context — daily · Tiingo/Alpaca free tier (vendor ToS, display-only) + FRED (public domain)",
+            "x-aionis-freshness": "daily",
+            "x-aionis-license": "Tiingo/Alpaca free tier (vendor ToS, display-only) + FRED (public domain)",
+            "x-aionis-source": "equal-weight index monthly series + VIX + labeled events",
+            "x-aionis-as-of": "2026-09"
+          },
+          {
+            "name": "macro_drivers",
+            "summary": "macro_drivers — daily · FRED/ALFRED — U.S. Government public domain",
+            "x-aionis-freshness": "daily",
+            "x-aionis-license": "FRED/ALFRED — U.S. Government public domain",
+            "x-aionis-source": "CPI, payrolls, rates, DFF vintages",
+            "x-aionis-as-of": "2026-09"
+          },
+          {
+            "name": "taco",
+            "summary": "taco — daily · FRED (public domain) + labeled public news events",
+            "x-aionis-freshness": "daily",
+            "x-aionis-license": "FRED (public domain) + labeled public news events",
+            "x-aionis-source": "VIX monthly + Trump-policy event table",
+            "x-aionis-as-of": "2026-09"
+          },
+          {
+            "name": "freight_taco",
+            "summary": "freight_taco — cadence · U.S. Bureau of Transportation Statistics — public domain",
+            "x-aionis-freshness": "cadence",
+            "x-aionis-license": "U.S. Bureau of Transportation Statistics — public domain",
+            "x-aionis-source": "Freight TSI monthly index (data.bts.gov Socrata) + BLS CES truck employment via FRED; disclosed satellite-TACO degradation proxy",
+            "x-aionis-as-of": "2026-06"
+          },
+          {
+            "name": "companies_dir",
+            "summary": "companies_dir — cadence · SEC EDGAR public domain (17 U.S.C. §105)",
+            "x-aionis-freshness": "cadence",
+            "x-aionis-license": "SEC EDGAR public domain (17 U.S.C. §105)",
+            "x-aionis-source": "company_tickers snapshot directory",
+            "x-aionis-as-of": null
+          },
+          {
+            "name": "korea_proxy",
+            "summary": "korea_proxy — cadence · U.S. Federal Reserve (FRED DEXKOUS) — public domain",
+            "x-aionis-freshness": "cadence",
+            "x-aionis-license": "U.S. Federal Reserve (FRED DEXKOUS) — public domain",
+            "x-aionis-source": "Korea risk-appetite proxy: USD/KRW weekly + 52w stress position (NOT margin financing — the option-C degraded equivalent; evidence chain in archive/krx-probes)",
+            "x-aionis-as-of": "2026-08-14"
+          },
+          {
+            "name": "form4",
+            "summary": "form4 — daily · U.S. SEC EDGAR — public domain",
+            "x-aionis-freshness": "daily",
+            "x-aionis-license": "U.S. SEC EDGAR — public domain",
+            "x-aionis-source": "Form 4 XML, filed-date PIT",
+            "x-aionis-as-of": "2026-09-02"
+          },
+          {
+            "name": "form8k",
+            "summary": "form8k — daily · U.S. SEC EDGAR — public domain",
+            "x-aionis-freshness": "daily",
+            "x-aionis-license": "U.S. SEC EDGAR — public domain",
+            "x-aionis-source": "Form 8-K primary docs, filed-date PIT, item-classified",
+            "x-aionis-as-of": "2026-09-03"
+          },
+          {
+            "name": "news_feed",
+            "summary": "news_feed — daily · GDELT open data (facts; article copyright stays with publishers)",
+            "x-aionis-freshness": "daily",
+            "x-aionis-license": "GDELT open data (facts; article copyright stays with publishers)",
+            "x-aionis-source": "GDELT Doc 2.0 artlist market headlines, seendate PIT, link-out only",
+            "x-aionis-as-of": "2026-09-04T10:15:00Z"
+          },
+          {
+            "name": "executives",
+            "summary": "executives — daily · U.S. SEC EDGAR — public domain",
+            "x-aionis-freshness": "daily",
+            "x-aionis-license": "U.S. SEC EDGAR — public domain",
+            "x-aionis-source": "Form 8-K Item 5.02 officer-changes stream (derived from form8k, filed-date PIT; person-level extraction deferred)",
+            "x-aionis-as-of": "2026-09-01"
+          },
+          {
+            "name": "ipo",
+            "summary": "ipo — daily · U.S. SEC EDGAR — public domain",
+            "x-aionis-freshness": "daily",
+            "x-aionis-license": "U.S. SEC EDGAR — public domain",
+            "x-aionis-source": "IPO registration/pricing stream (S-1/S-1/A + 424B4) via EFTS form-level queries, filed-date PIT; offer terms not extracted",
+            "x-aionis-as-of": "2026-09-04"
+          },
+          {
+            "name": "form_d",
+            "summary": "form_d — daily · U.S. SEC EDGAR — public domain",
+            "x-aionis-freshness": "daily",
+            "x-aionis-license": "U.S. SEC EDGAR — public domain",
+            "x-aionis-source": "Form D exempt-offering notices (D + D/A) via EFTS form-level queries, filed-date PIT; offering amounts not extracted",
+            "x-aionis-as-of": "2026-09-04"
+          },
+          {
+            "name": "def14a",
+            "summary": "form_def14a — daily · U.S. SEC EDGAR — public domain",
+            "x-aionis-freshness": "daily",
+            "x-aionis-license": "U.S. SEC EDGAR — public domain",
+            "x-aionis-source": "DEF 14A proxy statements via EFTS form-level queries, filed-date PIT; director/executive names, compensation, ownership not parsed (person-level extraction deferred)",
+            "x-aionis-as-of": "2026-09-03"
+          },
+          {
+            "name": "def14a_persons",
+            "summary": "def14a_persons — daily · U.S. SEC EDGAR — public domain",
+            "x-aionis-freshness": "daily",
+            "x-aionis-license": "U.S. SEC EDGAR — public domain",
+            "x-aionis-source": "DEF 14A primary documents (newest ~150 filings), conservative tiered director/officer name+role parsing, filed-date PIT; unparsed documents yield honest nulls (never guessed)",
+            "x-aionis-as-of": "2026-09-03"
+          },
+          {
+            "name": "filing_stream",
+            "summary": "filing_stream — daily · U.S. SEC EDGAR — public domain",
+            "x-aionis-freshness": "daily",
+            "x-aionis-license": "U.S. SEC EDGAR — public domain",
+            "x-aionis-source": "unified cross-form feed (8-K / 10-K / 10-Q / S-1 family / 4 / D via direct EFTS root-form queries; SC 13D / SC 13G via the daily index lanes — EFTS froze on Schedule 13), filed-date PIT",
+            "x-aionis-as-of": "2026-09-04"
+          },
+          {
+            "name": "politician_trades",
+            "summary": "politician_trades — daily · U.S. House Clerk — public domain",
+            "x-aionis-freshness": "daily",
+            "x-aionis-license": "U.S. House Clerk — public domain",
+            "x-aionis-source": "STOCK Act PTR filing index (House-only, filing-stream level; transactions remain in the source PDFs)",
+            "x-aionis-as-of": "2026-08-18"
+          },
+          {
+            "name": "politician_trades_tx",
+            "summary": "politician_trades_tx — daily · U.S. House Clerk — public domain",
+            "x-aionis-freshness": "daily",
+            "x-aionis-license": "U.S. House Clerk — public domain",
+            "x-aionis-source": "STOCK Act PTR transactions parsed from the source PDFs (House-only; statutory amount bands; parse failures disclosed)",
+            "x-aionis-as-of": "2026-08-18 00:00:00"
+          },
+          {
+            "name": "party_index",
+            "summary": "party_index — daily · Aionis-derived from U.S. House Clerk public-domain PTR parses",
+            "x-aionis-freshness": "daily",
+            "x-aionis-license": "Aionis-derived from U.S. House Clerk public-domain PTR parses",
+            "x-aionis-source": "monthly D-vs-R net-direction opposition share + trailing-90d count-weighted follow portfolios (signal lists, no returns)",
+            "x-aionis-as-of": null
+          },
+          {
+            "name": "lineage_graph",
+            "summary": "lineage_graph — daily · Aionis-derived from U.S. SEC EDGAR public domain disclosures",
+            "x-aionis-freshness": "daily",
+            "x-aionis-license": "Aionis-derived from U.S. SEC EDGAR public domain disclosures",
+            "x-aionis-source": "force-camp relationship graph projected over four committed panels (13F-HR visible books x DEF 14A top-person seats x SC 13D/13G windows); pairwise co-occurrence counts only — no coordination or consortium claim, no prices/returns",
+            "x-aionis-as-of": "2026-09-03"
+          },
+          {
+            "name": "reddit",
+            "summary": "reddit — daily · Reddit public Atom RSS — Reddit ToS, display-only",
+            "x-aionis-freshness": "daily",
+            "x-aionis-license": "Reddit public Atom RSS — Reddit ToS, display-only",
+            "x-aionis-source": "retail mention counts, forward-only",
+            "x-aionis-as-of": null
+          },
+          {
+            "name": "reddit_trending",
+            "summary": "reddit_trending — daily · ApeWisdom free public API (apewisdom.io) — vendor ToS, display-only",
+            "x-aionis-freshness": "daily",
+            "x-aionis-license": "ApeWisdom free public API (apewisdom.io) — vendor ToS, display-only",
+            "x-aionis-source": "Reddit trending-stocks board: rank/mentions/upvotes + 24h lags, verbatim first-party fields, today-snapshot only",
+            "x-aionis-as-of": "2026-08-29"
+          },
+          {
+            "name": "headline_provenance",
+            "summary": "headline_provenance — daily · Aionis append-only ledger (repo MIT)",
+            "x-aionis-freshness": "daily",
+            "x-aionis-license": "Aionis append-only ledger (repo MIT)",
+            "x-aionis-source": "ledger.jsonl freeze→result pairing",
+            "x-aionis-as-of": "2026-08-05"
+          },
+          {
+            "name": "ledger_audit",
+            "summary": "ledger_audit — daily · Aionis append-only ledger (repo MIT)",
+            "x-aionis-freshness": "daily",
+            "x-aionis-license": "Aionis append-only ledger (repo MIT)",
+            "x-aionis-source": "ledger.jsonl claim-row timeline",
+            "x-aionis-as-of": null
+          },
+          {
+            "name": "horizon_robustness",
+            "summary": "horizon_robustness — frozen · Aionis exploratory ledger row (repo MIT)",
+            "x-aionis-freshness": "frozen",
+            "x-aionis-license": "Aionis exploratory ledger row (repo MIT)",
+            "x-aionis-source": "horizon-robustness sweep summary of the frozen h=21 nulls",
+            "x-aionis-as-of": "2026-07-30"
+          },
+          {
+            "name": "model_card",
+            "summary": "model_card — frozen · Aionis research artifacts (repo MIT)",
+            "x-aionis-freshness": "frozen",
+            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-source": "machine-readable model card of the frozen confirmatory Track C model",
+            "x-aionis-as-of": "2026-07-28"
+          },
+          {
+            "name": "model_inventory",
+            "summary": "model_inventory — frozen · Aionis research artifacts (repo MIT)",
+            "x-aionis-freshness": "frozen",
+            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-source": "SR 11-7 style model inventory over the tracked ledger and frozen run directories",
+            "x-aionis-as-of": "2026-08-08"
+          },
+          {
+            "name": "cot",
+            "summary": "cot — cadence · U.S. CFTC — public domain",
+            "x-aionis-freshness": "cadence",
+            "x-aionis-license": "U.S. CFTC — public domain",
+            "x-aionis-source": "Commitments of Traders legacy futures, weekly",
+            "x-aionis-as-of": "2026-08-25"
+          },
+          {
+            "name": "smart_money",
+            "summary": "smart_money — cadence · U.S. SEC EDGAR — public domain",
+            "x-aionis-freshness": "cadence",
+            "x-aionis-license": "U.S. SEC EDGAR — public domain",
+            "x-aionis-source": "13D/G filings via EFTS, filed-date PIT",
+            "x-aionis-as-of": "2026-09-03"
+          },
+          {
+            "name": "stakes_13g",
+            "summary": "stakes_13g — daily · U.S. SEC EDGAR — public domain",
+            "x-aionis-freshness": "daily",
+            "x-aionis-license": "U.S. SEC EDGAR — public domain",
+            "x-aionis-source": "SC 13G/G-A passive-stake stream via the daily crawler index (EFTS froze on Schedule 13 after 2024-12-17), filed-date PIT; ownership % / state machine not parsed",
+            "x-aionis-as-of": "2026-09-03"
+          },
+          {
+            "name": "ark",
+            "summary": "ark — daily · ARK Invest official fund CSVs — publicly published daily",
+            "x-aionis-freshness": "daily",
+            "x-aionis-license": "ARK Invest official fund CSVs — publicly published daily",
+            "x-aionis-source": "8-ETF Full Holdings CSVs from assets.ark-funds.com (browser-verified endpoint URLs; top-10 by weight + family overlap; skips disclosed)",
+            "x-aionis-as-of": "2026-09-04"
+          },
+          {
+            "name": "theme_etfs",
+            "summary": "theme_etfs — daily · iShares/BlackRock + Global X official fund CSVs — publicly published daily",
+            "x-aionis-freshness": "daily",
+            "x-aionis-license": "iShares/BlackRock + Global X official fund CSVs — publicly published daily",
+            "x-aionis-source": "10 theme-ETF holdings CSVs (iShares latest-holdings.csv endpoints + Global X dated full-holdings files; top-10 by weight + cross-fund resonance; skips disclosed)",
+            "x-aionis-as-of": "2026-09-03"
+          },
+          {
+            "name": "form13f",
+            "summary": "form13f — cadence · U.S. SEC EDGAR — public domain",
+            "x-aionis-freshness": "cadence",
+            "x-aionis-license": "U.S. SEC EDGAR — public domain",
+            "x-aionis-source": "13F-HR quarterly holdings XML, filed-date PIT, whole-USD values",
+            "x-aionis-as-of": "2026-06-30"
+          },
+          {
+            "name": "form13f-stars",
+            "summary": "form13f_stars — cadence · Aionis-derived from U.S. SEC EDGAR public-domain 13F parses",
+            "x-aionis-freshness": "cadence",
+            "x-aionis-license": "Aionis-derived from U.S. SEC EDGAR public-domain 13F parses",
+            "x-aionis-source": "home-card digest of the form13f panel: top-8 managers by book value (name/firm/quarter/value/top holding), count = full roster",
+            "x-aionis-as-of": null
+          },
+          {
+            "name": "filers13f",
+            "summary": "filers13f — cadence · U.S. SEC EDGAR — public domain",
+            "x-aionis-freshness": "cadence",
+            "x-aionis-license": "U.S. SEC EDGAR — public domain",
+            "x-aionis-source": "13F filer directory: every CIK filing 13F-HR(/A) over the trailing year via EFTS quarter windows (cap-split), directory facts only",
+            "x-aionis-as-of": "2026-08-21"
+          },
+          {
+            "name": "knowledge_shelf",
+            "summary": "knowledge_shelf — cadence · Aionis repo docs (repo MIT) + editorial link-out bookmarks",
+            "x-aionis-freshness": "cadence",
+            "x-aionis-license": "Aionis repo docs (repo MIT) + editorial link-out bookmarks",
+            "x-aionis-source": "docs/ + decisions/ method catalog with GitHub link-outs and a fixed curated public research-source list; teasers are safe slices of our own MIT docs, third-party content never copied",
+            "x-aionis-as-of": "2026-09-04"
+          },
+          {
+            "name": "evidence_matrix",
+            "summary": "evidence_matrix — cadence · Aionis frozen artifacts (repo MIT)",
+            "x-aionis-freshness": "cadence",
+            "x-aionis-license": "Aionis frozen artifacts (repo MIT)",
+            "x-aionis-source": "five-claim evidence matrix: machine-read differentials + ledger reconciliation + artifact sha256 pins; values are verbatim copies of the frozen confirmatory files",
+            "x-aionis-as-of": "2026-08-05"
+          },
+          {
+            "name": "provider_vintage",
+            "summary": "provider_vintage — cadence · Aionis research artifacts (repo MIT)",
+            "x-aionis-freshness": "cadence",
+            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-source": "LLM provider knowledge-vintage panel (frozen empirical cutoff + drift checks)",
+            "x-aionis-as-of": null
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Panel JSON",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unknown panel key"
+          }
+        }
+      }
+    },
+    "/api/prices/{region}": {
+      "get": {
+        "summary": "Live quotes (display-only; never enters the research pipeline)",
+        "x-aionis-status": "available",
+        "x-aionis-license": "Tiingo/Alpaca free tier (vendor ToS, display-only)",
+        "parameters": [
+          {
+            "name": "region",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "us",
+                "cn"
+              ]
+            }
+          },
+          {
+            "name": "tickers",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Comma-separated tickers"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Quote map",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
