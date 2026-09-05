@@ -10,17 +10,11 @@
       "freeze_ts": "2026-07-28T04:15:16+00:00",
       "result_row": 28,
       "result_ts": "2026-07-28T04:27:39+00:00",
-      "local_dir_present": true,
-      "h6_deterministic": true,
-      "aionis_version": "0.1.0",
-      "run_ts": "2026-07-28T04:27:39+00:00",
-      "diff": {
-        "mean_diff": -0.0008,
-        "ci_lo": -0.010573,
-        "ci_hi": 0.008972,
-        "dm_p_mbb": 0.869565,
-        "null_holds": null
-      }
+      "local_dir_present": false,
+      "h6_deterministic": null,
+      "aionis_version": null,
+      "run_ts": null,
+      "diff": null
     },
     {
       "phase": "C",
@@ -29,17 +23,11 @@
       "freeze_ts": "2026-07-28T12:01:16+00:00",
       "result_row": 30,
       "result_ts": "2026-07-28T12:21:21+00:00",
-      "local_dir_present": true,
-      "h6_deterministic": true,
-      "aionis_version": "0.1.0",
-      "run_ts": "2026-07-29T18:26:45+00:00",
-      "diff": {
-        "mean_diff": -0.006487,
-        "ci_lo": -0.019531,
-        "ci_hi": 0.006556,
-        "dm_p_mbb": 0.355322,
-        "null_holds": null
-      }
+      "local_dir_present": false,
+      "h6_deterministic": null,
+      "aionis_version": null,
+      "run_ts": null,
+      "diff": null
     },
     {
       "phase": "D",
@@ -48,17 +36,11 @@
       "freeze_ts": "2026-07-29T02:31:16+00:00",
       "result_row": 34,
       "result_ts": "2026-07-29T02:43:23+00:00",
-      "local_dir_present": true,
-      "h6_deterministic": true,
-      "aionis_version": "0.1.0",
-      "run_ts": "2026-07-29T13:04:24+00:00",
-      "diff": {
-        "mean_diff": -0.00298,
-        "ci_lo": -0.013714,
-        "ci_hi": 0.007755,
-        "dm_p_mbb": 0.597201,
-        "null_holds": null
-      }
+      "local_dir_present": false,
+      "h6_deterministic": null,
+      "aionis_version": null,
+      "run_ts": null,
+      "diff": null
     },
     {
       "phase": "E1",
@@ -67,17 +49,11 @@
       "freeze_ts": "2026-07-29T03:29:39+00:00",
       "result_row": 37,
       "result_ts": "2026-07-29T03:43:41+00:00",
-      "local_dir_present": true,
-      "h6_deterministic": true,
-      "aionis_version": "0.1.0",
-      "run_ts": "2026-07-29T18:26:58+00:00",
-      "diff": {
-        "mean_diff": -0.002793,
-        "ci_lo": -0.011457,
-        "ci_hi": 0.005871,
-        "dm_p_mbb": 0.533233,
-        "null_holds": null
-      }
+      "local_dir_present": false,
+      "h6_deterministic": null,
+      "aionis_version": null,
+      "run_ts": null,
+      "diff": null
     },
     {
       "phase": "track_c",
@@ -232,7 +208,7 @@
   ],
   "summary": {
     "n_confirmatory_runs": 5,
-    "n_local_dirs": 4,
+    "n_local_dirs": 0,
     "n_config_only": 11,
     "all_null_holds": null
   },

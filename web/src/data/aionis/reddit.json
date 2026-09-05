@@ -10,16 +10,16 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-08-29T08:09:06+00:00",
-  "n_snapshots": 4,
+  "latest_snapshot_ts": "2026-09-05T00:22:53+00:00",
+  "n_snapshots": 1,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
-      "ticker": "NVDA",
+      "ticker": "TSLA",
       "mentions": 1,
-      "sentiment": -0.295,
+      "sentiment": -0.036,
       "bull_ratio": null,
       "score_sum": 0
     }
@@ -27,9 +27,9 @@
   "pressure": {
     "status": "accumulating",
     "by_ticker": {},
-    "n_snapshots": 4,
-    "latest_date": "2026-08-29",
+    "n_snapshots": 1,
+    "latest_date": "2026-09-05",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-08-31T11:26:28.586319+00:00"
+  "snapshot_ts": "2026-09-05T01:30:42.573141+00:00"
 }

@@ -1,13 +1,13 @@
 {
   "status": "ok",
-  "as_of": "2026-08-28",
+  "as_of": "2026-09-04",
   "window": {
     "start": "2026-05-01",
-    "end": "2026-08-28"
+    "end": "2026-09-04"
   },
   "issuers": 50,
-  "total": 209,
-  "unclassified": 8,
+  "total": 215,
+  "unclassified": 9,
   "by_category": {
     "agreement_termination": 1,
     "charter_amendment": 7,
@@ -17,16 +17,88 @@
     "financial_obligation": 5,
     "major_agreement": 4,
     "merger_completion": 1,
-    "officer_changes": 44,
+    "officer_changes": 45,
     "other": 1,
     "other_events": 30,
-    "reg_fd": 14,
-    "results": 60,
+    "reg_fd": 15,
+    "results": 63,
     "security_terms": 4,
-    "unclassified": 8,
+    "unclassified": 9,
     "vote_results": 24
   },
   "events": [
+    {
+      "ticker": "CRM",
+      "company": "Salesforce, Inc.",
+      "filing_date": "2026-09-04",
+      "form": "8-K",
+      "items": [
+        "5.02"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000197/crm-20260902.htm"
+    },
+    {
+      "ticker": "NVDA",
+      "company": "NVIDIA CORP",
+      "filing_date": "2026-09-03",
+      "form": "8-K",
+      "items": [
+        "8.01",
+        "9.01"
+      ],
+      "category": "other_events",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000078/nvda-20260902.htm"
+    },
+    {
+      "ticker": "MSFT",
+      "company": "MICROSOFT CORP",
+      "filing_date": "2026-09-02",
+      "form": "8-K",
+      "items": [
+        "7.01",
+        "9.01"
+      ],
+      "category": "reg_fd",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526380280/d291965d8k.htm"
+    },
+    {
+      "ticker": "AVGO",
+      "company": "Broadcom Inc.",
+      "filing_date": "2026-09-02",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "8.01",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-20260902.htm"
+    },
+    {
+      "ticker": "AAPL",
+      "company": "Apple Inc.",
+      "filing_date": "2026-09-01",
+      "form": "8-K/A",
+      "items": [
+        "5.02"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/320193/000114036126035325/ef20081427_8ka.htm"
+    },
+    {
+      "ticker": "CAT",
+      "company": "CATERPILLAR INC",
+      "filing_date": "2026-09-01",
+      "form": "8-K",
+      "items": [
+        "1.01",
+        "2.03",
+        "9.01"
+      ],
+      "category": "financial_obligation",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/18230/000110465926104197/tm2624321d1_8k.htm"
+    },
     {
       "ticker": "XOM",
       "company": "ExxonMobil Holdings Corp",
@@ -69,18 +141,24 @@
       "company": "NVIDIA CORP",
       "filing_date": "2026-08-26",
       "form": "8-K",
-      "items": [],
-      "category": "unclassified",
-      "doc_url": ""
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/nvda-20260826.htm"
     },
     {
       "ticker": "CRM",
       "company": "Salesforce, Inc.",
       "filing_date": "2026-08-26",
       "form": "8-K",
-      "items": [],
-      "category": "unclassified",
-      "doc_url": ""
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000187/crm-20260826.htm"
     },
     {
       "ticker": "MU",
@@ -1374,12 +1452,9 @@
       "company": "NVIDIA CORP",
       "filing_date": "2026-06-18",
       "form": "8-K",
-      "items": [
-        "8.01",
-        "9.01"
-      ],
-      "category": "other_events",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1045810/000119312526275783/d48176d8k.htm"
+      "items": [],
+      "category": "unclassified",
+      "doc_url": ""
     },
     {
       "ticker": "PFE",
@@ -1555,13 +1630,9 @@
       "company": "AMAZON COM INC",
       "filing_date": "2026-06-10",
       "form": "8-K",
-      "items": [
-        "1.01",
-        "2.03",
-        "9.01"
-      ],
-      "category": "financial_obligation",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1018724/000110465926072140/tm2613616d4_8k.htm"
+      "items": [],
+      "category": "unclassified",
+      "doc_url": ""
     },
     {
       "ticker": "ORCL",
@@ -2177,13 +2248,9 @@
       "company": "ORACLE CORP",
       "filing_date": "2026-05-12",
       "form": "8-K",
-      "items": [
-        "5.02",
-        "7.01",
-        "9.01"
-      ],
-      "category": "officer_changes",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526219708/d76569d8k.htm"
+      "items": [],
+      "category": "unclassified",
+      "doc_url": ""
     },
     {
       "ticker": "GS",
@@ -2532,5 +2599,5 @@
     }
   ],
   "methodology": "SEC Form 8-K current reports \u2014 the legally mandated material-event disclosure (public domain, 17 U.S.C. \u00a7105), due within 4 business days of the event. Panel streams a bounded 50 large-cap issuer set (5 mega-cap seed + v2 20 + v3 25 across financials, payments, healthcare, staples, energy, industrials, tech/comm \u2014 breadth expansions 2026-08-22; still bounded, NOT full market; XOM carries both its pre-succession CIK and the 2026-07-01 8-K12B successor entity) since 2026-05-01; each row links the EDGAR primary document. Items are regex-extracted from the primary doc (nbsp/thin-space entities normalized) and mapped to ONE category by a rare-material-first precedence (delisting > merger completion > control change > non-reliance > officer changes > ... > exhibits); the full item list is preserved per row. Documents whose items cannot be extracted are counted as unclassified \u2014 never guessed. Filing-date point-in-time; 8-K/A amendments are new accessions (immutable). Display-only, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-08-31T11:26:21.106826+00:00"
+  "snapshot_ts": "2026-09-05T01:30:41.807515+00:00"
 }
