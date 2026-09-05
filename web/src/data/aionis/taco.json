@@ -1,5 +1,5 @@
 {
-  "methodology": "Illustrative: VIX (FRED ALFRED, permissive) monthly mean from 2016-01 \u2192 today as the market-stress proxy; the 2025 TACO events are shown against the full Trump-era stress history. Event table hand-curated from public news (FT, CNBC, ABC). Not an Aionis research claim \u2014 demonstrative.",
+  "methodology": "Illustrative: VIX (FRED ALFRED, permissive) monthly mean from 2016-01 \u2192 today as the market-stress proxy; the 2025-26 TACO events are shown against the full Trump-era stress history. Event table hand-curated from public news (FT, CNBC, ABC) and the Wikipedia second-Trump-administration tariff timeline (day-verified events only; retrieved 2026-09-04). Not an Aionis research claim \u2014 demonstrative.",
   "vix_series": [
     {
       "month": "2016-01",
@@ -515,7 +515,7 @@
     },
     {
       "month": "2026-09",
-      "vix": 15.29
+      "vix": 15.77
     }
   ],
   "events": [
@@ -543,11 +543,66 @@
       "date": "2025-07-21",
       "label": "Multiple tariff deadlines delayed",
       "type": "concession"
+    },
+    {
+      "date": "2025-08-07",
+      "label": "Modified reciprocal tariffs take effect (postponements end)",
+      "type": "escalation"
+    },
+    {
+      "date": "2025-08-27",
+      "label": "India penalty: +25% for Russian oil (50% total baseline)",
+      "type": "escalation"
+    },
+    {
+      "date": "2025-10-01",
+      "label": "100% branded pharma, 25% trucks, 25%/50% cabinets & furniture take effect",
+      "type": "escalation"
+    },
+    {
+      "date": "2025-10-10",
+      "label": "Threatens +100% on all Chinese imports (rare-earth dispute), effective Nov 1",
+      "type": "escalation"
+    },
+    {
+      "date": "2025-10-30",
+      "label": "Trump-Xi Busan truce: fentanyl tariff 20%->10%, rare-earth controls paused",
+      "type": "concession"
+    },
+    {
+      "date": "2025-11-14",
+      "label": "Agricultural exemptions from reciprocal tariffs (coffee, cocoa, beef, fruit)",
+      "type": "concession"
+    },
+    {
+      "date": "2026-01-17",
+      "label": "Threatens up to 25% on 8 European countries (Greenland crisis)",
+      "type": "escalation"
+    },
+    {
+      "date": "2026-01-21",
+      "label": "Europe threat retracted after 'framework of a future deal' with NATO",
+      "type": "concession"
+    },
+    {
+      "date": "2026-02-02",
+      "label": "India tariffs cut 50%->18% (Russian-oil purchases stop)",
+      "type": "concession"
+    },
+    {
+      "date": "2026-02-20",
+      "label": "After SCOTUS strikes IEEPA tariffs: universal 10% reimposed under Sec.122 (150 days)",
+      "type": "escalation"
+    },
+    {
+      "date": "2026-07-24",
+      "label": "Sec.122 expiry: new Sec.301 tariffs (10%/12.5%) on ~60 trading partners",
+      "type": "escalation"
     }
   ],
-  "climbdowns_count": 3,
-  "escalations_count": 2,
-  "latest_vix": 15.29,
+  "climbdowns_count": 7,
+  "escalations_count": 9,
+  "latest_vix": 15.77,
   "latest_date": "2026-09",
-  "snapshot_ts": "2026-09-05T01:30:41.621865+00:00"
+  "snapshot_ts": "2026-09-05T03:16:24.434165+00:00"
 }

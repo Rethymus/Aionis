@@ -6,7 +6,7 @@
       "file": "metrics.json",
       "category": "frozen",
       "as_of": "2026-08-03",
-      "exported_at": "2026-08-22",
+      "exported_at": "2026-09-05",
       "present": true,
       "rows": null
     },
@@ -42,18 +42,18 @@
       "file": "sector_breakdown.json",
       "category": "frozen",
       "as_of": "2026-08-03",
-      "exported_at": "2026-08-20",
+      "exported_at": "2026-09-05",
       "present": true,
-      "rows": 111
+      "rows": 64
     },
     {
       "key": "picks_backtest",
       "file": "picks_backtest.json",
       "category": "frozen",
       "as_of": "2026-06-30",
-      "exported_at": "2026-08-20",
+      "exported_at": "2026-09-05",
       "present": true,
-      "rows": 131
+      "rows": 132
     },
     {
       "key": "ic_monthly",
@@ -87,7 +87,7 @@
       "file": "pick_conviction.json",
       "category": "frozen",
       "as_of": "2026-08-03",
-      "exported_at": "2026-08-31",
+      "exported_at": "2026-09-05",
       "present": true,
       "rows": 24
     },
@@ -123,7 +123,7 @@
       "file": "sigma_survey.json",
       "category": "frozen",
       "as_of": null,
-      "exported_at": "2026-08-31",
+      "exported_at": "2026-09-05",
       "present": true,
       "rows": 18
     },
@@ -150,7 +150,7 @@
       "file": "stock_universe.json",
       "category": "frozen",
       "as_of": "2026-08-03",
-      "exported_at": "2026-08-20",
+      "exported_at": "2026-09-05",
       "present": true,
       "rows": 1421
     },
@@ -158,7 +158,7 @@
       "key": "themes",
       "file": "themes.json",
       "category": "daily",
-      "as_of": "2026-08-28",
+      "as_of": "2026-09-04",
       "exported_at": "2026-09-05",
       "present": true,
       "rows": 7
@@ -167,17 +167,17 @@
       "key": "theme_signals",
       "file": "theme_signals.json",
       "category": "daily",
-      "as_of": "2026-08-28",
-      "exported_at": "2026-08-31",
+      "as_of": "2026-09-04",
+      "exported_at": "2026-09-05",
       "present": true,
-      "rows": 9
+      "rows": 5
     },
     {
       "key": "market_context",
       "file": "market_context.json",
       "category": "daily",
-      "as_of": "2026-08",
-      "exported_at": "2026-08-31",
+      "as_of": "2026-09",
+      "exported_at": "2026-09-05",
       "present": true,
       "rows": null
     },
@@ -185,8 +185,8 @@
       "key": "macro_drivers",
       "file": "macro_drivers.json",
       "category": "daily",
-      "as_of": "2026-08",
-      "exported_at": "2026-08-31",
+      "as_of": "2026-09",
+      "exported_at": "2026-09-05",
       "present": true,
       "rows": null
     },
@@ -204,7 +204,7 @@
       "file": "freight_taco.json",
       "category": "cadence",
       "as_of": "2026-06",
-      "exported_at": "2026-08-31",
+      "exported_at": "2026-09-05",
       "present": true,
       "rows": null
     },
@@ -222,7 +222,7 @@
       "file": "korea_proxy.json",
       "category": "cadence",
       "as_of": "2026-08-14",
-      "exported_at": "2026-08-31",
+      "exported_at": "2026-09-05",
       "present": true,
       "rows": null
     },
@@ -230,7 +230,7 @@
       "key": "form4",
       "file": "form4.json",
       "category": "daily",
-      "as_of": "2026-08-25",
+      "as_of": "2026-09-02",
       "exported_at": "2026-09-05",
       "present": true,
       "rows": 200
@@ -239,17 +239,17 @@
       "key": "form8k",
       "file": "form8k.json",
       "category": "daily",
-      "as_of": "2026-09-04",
+      "as_of": "2026-09-03",
       "exported_at": "2026-09-05",
       "present": true,
-      "rows": 215
+      "rows": 214
     },
     {
       "key": "news_feed",
       "file": "news_feed.json",
       "category": "daily",
-      "as_of": "2026-08-29T07:45:00Z",
-      "exported_at": "2026-08-31",
+      "as_of": "2026-09-04T10:15:00Z",
+      "exported_at": "2026-09-05",
       "present": true,
       "rows": 150
     },
@@ -257,7 +257,7 @@
       "key": "executives",
       "file": "executives.json",
       "category": "daily",
-      "as_of": "2026-09-04",
+      "as_of": "2026-09-01",
       "exported_at": "2026-09-05",
       "present": true,
       "rows": 45
@@ -266,17 +266,17 @@
       "key": "ipo",
       "file": "ipo.json",
       "category": "daily",
-      "as_of": "2026-08-28",
-      "exported_at": "2026-08-31",
+      "as_of": "2026-09-04",
+      "exported_at": "2026-09-05",
       "present": true,
-      "rows": 1105
+      "rows": 1141
     },
     {
       "key": "form_d",
       "file": "form_d.json",
       "category": "daily",
-      "as_of": "2026-08-28",
-      "exported_at": "2026-08-31",
+      "as_of": "2026-09-04",
+      "exported_at": "2026-09-05",
       "present": true,
       "rows": 600
     },
@@ -284,8 +284,8 @@
       "key": "form_def14a",
       "file": "def14a.json",
       "category": "daily",
-      "as_of": "2026-08-28",
-      "exported_at": "2026-08-31",
+      "as_of": "2026-09-03",
+      "exported_at": "2026-09-05",
       "present": true,
       "rows": 600
     },
@@ -293,17 +293,17 @@
       "key": "def14a_persons",
       "file": "def14a_persons.json",
       "category": "daily",
-      "as_of": "2026-08-21",
-      "exported_at": "2026-08-31",
+      "as_of": "2026-09-03",
+      "exported_at": "2026-09-05",
       "present": true,
-      "rows": 104
+      "rows": 103
     },
     {
       "key": "filing_stream",
       "file": "filing_stream.json",
       "category": "daily",
-      "as_of": "2026-08-28",
-      "exported_at": "2026-08-31",
+      "as_of": "2026-09-04",
+      "exported_at": "2026-09-05",
       "present": true,
       "rows": 800
     },
@@ -311,17 +311,17 @@
       "key": "politician_trades",
       "file": "politician_trades.json",
       "category": "daily",
-      "as_of": "2026-09-03",
+      "as_of": "2026-08-18",
       "exported_at": "2026-09-05",
       "present": true,
-      "rows": 890
+      "rows": 874
     },
     {
       "key": "politician_trades_tx",
       "file": "politician_trades_tx.json",
       "category": "daily",
       "as_of": "2026-08-18 00:00:00",
-      "exported_at": "2026-08-31",
+      "exported_at": "2026-09-05",
       "present": true,
       "rows": 2811
     },
@@ -341,7 +341,7 @@
       "as_of": "2026-09-03",
       "exported_at": "2026-09-05",
       "present": true,
-      "rows": 858
+      "rows": 867
     },
     {
       "key": "reddit",
@@ -350,14 +350,14 @@
       "as_of": null,
       "exported_at": "2026-09-05",
       "present": true,
-      "rows": 1
+      "rows": 4
     },
     {
       "key": "reddit_trending",
       "file": "reddit_trending.json",
       "category": "daily",
       "as_of": "2026-08-29",
-      "exported_at": "2026-08-31",
+      "exported_at": "2026-09-05",
       "present": true,
       "rows": 100
     },
@@ -410,7 +410,7 @@
       "key": "cot",
       "file": "cot.json",
       "category": "cadence",
-      "as_of": "2026-09-01",
+      "as_of": "2026-08-25",
       "exported_at": "2026-09-05",
       "present": true,
       "rows": 10
@@ -428,8 +428,8 @@
       "key": "stakes_13g",
       "file": "stakes_13g.json",
       "category": "daily",
-      "as_of": "2026-08-28",
-      "exported_at": "2026-08-31",
+      "as_of": "2026-09-03",
+      "exported_at": "2026-09-05",
       "present": true,
       "rows": 400
     },
@@ -437,8 +437,8 @@
       "key": "ark",
       "file": "ark.json",
       "category": "daily",
-      "as_of": "2026-08-28",
-      "exported_at": "2026-08-31",
+      "as_of": "2026-09-04",
+      "exported_at": "2026-09-05",
       "present": true,
       "rows": 8
     },
@@ -446,8 +446,8 @@
       "key": "theme_etfs",
       "file": "theme_etfs.json",
       "category": "daily",
-      "as_of": "2026-08-27",
-      "exported_at": "2026-08-31",
+      "as_of": "2026-09-03",
+      "exported_at": "2026-09-05",
       "present": true,
       "rows": 10
     },
@@ -456,7 +456,7 @@
       "file": "form13f.json",
       "category": "cadence",
       "as_of": "2026-06-30",
-      "exported_at": "2026-08-31",
+      "exported_at": "2026-09-05",
       "present": true,
       "rows": 43
     },
@@ -474,7 +474,7 @@
       "file": "filers13f.json",
       "category": "cadence",
       "as_of": "2026-08-21",
-      "exported_at": "2026-08-31",
+      "exported_at": "2026-09-05",
       "present": true,
       "rows": 9385
     },
@@ -492,7 +492,7 @@
       "file": "evidence_matrix.json",
       "category": "cadence",
       "as_of": "2026-08-05",
-      "exported_at": "2026-09-03",
+      "exported_at": "2026-09-05",
       "present": true,
       "rows": null
     },
@@ -517,24 +517,24 @@
       "ticker_null": 14,
       "n_recent": 120,
       "days_since_latest": 2,
-      "pct_now_null": 120
+      "pct_now_null": 98
     },
     "stakes_13g": {
-      "ticker_null": 45,
-      "filer_unresolved": 64,
+      "ticker_null": 65,
+      "filer_unresolved": 84,
       "n_filings": 400,
-      "days_since_latest": 8,
-      "pct_now_null": 52
+      "days_since_latest": 2,
+      "pct_now_null": 162
     },
     "reddit": {
-      "bull_ratio_null": 1,
-      "n_picks": 1
+      "bull_ratio_null": 4,
+      "n_picks": 4
     },
     "cot": {
-      "weeks_since_latest": 0
+      "weeks_since_latest": 1
     }
   },
   "planned": [],
   "methodology": "Freshness/provenance map of every terminal panel. frozen = derived from frozen OOS artifacts (ledger #49 lineage): the daily lane deliberately does NOT advance these \u2014 recomputing them from newer data would be rerun-to-significance. daily = recomputed by each CI refresh from live caches. cadence = advances on its source's publication rhythm (CFTC weekly, price caches ~5-day grace, EDGAR filing rhythm). as_of is read from each panel's own timestamp fields; null = the panel carries no observation date (static research artifact). rows is the len() of the panel's exported row list \u2014 computed from the committed payload, never a declared total; null = index/series panel with no natural row table (the terminal home's directory-scale counts render from it). The only legal way frozen numbers move forward: E3 forward-live accumulation or a new pre-registered phase. source_health quantifies field-level quality on the committed JSONs (smart_money ticker nulls = filings on unlisted targets honestly left empty; reddit bull_ratio nulls = sentiment not yet gradable in the accumulating window; cot staleness in weeks vs the Friday publication rhythm). planned lists panels that are NOT built \u2014 no fetcher, no data, no endpoint payload \u2014 disclosed so the panel count is never mistaken for coverage.",
-  "snapshot_ts": "2026-09-05T01:30:43.120186+00:00"
+  "snapshot_ts": "2026-09-05T03:17:04.493684+00:00"
 }

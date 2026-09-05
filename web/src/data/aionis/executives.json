@@ -1,22 +1,13 @@
 {
   "status": "ok",
-  "as_of": "2026-09-04",
+  "as_of": "2026-09-01",
   "total": 45,
-  "issuers": 29,
+  "issuers": 30,
   "window": {
     "start": "2026-05-01",
-    "end": "2026-09-04"
+    "end": "2026-09-01"
   },
   "events": [
-    {
-      "company": "Salesforce, Inc.",
-      "ticker": "CRM",
-      "filing_date": "2026-09-04",
-      "items": [
-        "5.02"
-      ],
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000197/crm-20260902.htm"
-    },
     {
       "company": "Apple Inc.",
       "ticker": "AAPL",
@@ -376,6 +367,17 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526224155/d125909d8k.htm"
     },
     {
+      "company": "ORACLE CORP",
+      "ticker": "ORCL",
+      "filing_date": "2026-05-12",
+      "items": [
+        "5.02",
+        "7.01",
+        "9.01"
+      ],
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526219708/d76569d8k.htm"
+    },
+    {
       "company": "NVIDIA CORP",
       "ticker": "NVDA",
       "filing_date": "2026-05-08",
@@ -460,9 +462,9 @@
     }
   ],
   "by_company": {
-    "Salesforce, Inc.": 4,
     "HONEYWELL INTERNATIONAL INC": 3,
     "NIKE, Inc.": 3,
+    "Salesforce, Inc.": 3,
     "ADOBE INC.": 2,
     "ADVANCED MICRO DEVICES INC": 2,
     "Alphabet Inc.": 2,
@@ -486,10 +488,11 @@
     "MCDONALDS CORP": 1,
     "MICRON TECHNOLOGY INC": 1,
     "NETFLIX INC": 1,
+    "ORACLE CORP": 1,
     "PFIZER INC": 1,
     "PROCTER & GAMBLE Co": 1,
     "TEXAS INSTRUMENTS INC": 1
   },
-  "methodology": "SEC Form 8-K Item 5.02 officer/director-change filings \u2014 DERIVED from the committed form8k panel (category 'officer_changes'; public domain, 17 U.S.C. \u00a7105, filed-date PIT). v1 is FILING-STREAM level: one row per 8-K accession with the company, filing date, full item list and EDGAR primary-document link. Person-level extraction (who, which role, appointed vs departed) is DEFERRED: parsing names from 8-K free text is unreliable and an honest omission beats a guessed name \u2014 the same v1 boundary as the /congress PTR panel. Inherits the /events panel's bounded 50-issuer universe and its 2026-05-01..2026-09-04 window. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-09-05T01:30:42.706357+00:00"
+  "methodology": "SEC Form 8-K Item 5.02 officer/director-change filings \u2014 DERIVED from the committed form8k panel (category 'officer_changes'; public domain, 17 U.S.C. \u00a7105, filed-date PIT). v1 is FILING-STREAM level: one row per 8-K accession with the company, filing date, full item list and EDGAR primary-document link. Person-level extraction (who, which role, appointed vs departed) is DEFERRED: parsing names from 8-K free text is unreliable and an honest omission beats a guessed name \u2014 the same v1 boundary as the /congress PTR panel. Inherits the /events panel's bounded 50-issuer universe and its 2026-05-01..2026-09-01 window. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
+  "snapshot_ts": "2026-09-05T03:16:59.986279+00:00"
 }
