@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-09-05) 轮 87：新发布链路 dispatch 全链实证 + 线上十页双主题迭代（业主"先原子 commit 同步+action 无报错，再视觉/数据多轮迭代"指令）：**
+  **①同步与外部提交**：本地-远程对齐时会话外提交 d04256ed4（他会话 ops-hotfix：7f18fd2 恢复被 d7dfbdd 手动发布冲掉的 .nojekyll + public/ 加标记双保险）——与本轮修复一致，ff 对齐；web/public/.nojekyll 在库（构建产物树自此自带标记，rsync --exclude 成第二道保险）。**②dispatch 全链实证**：手动触发 refresh（33948546701，2h3m57s **全绿**）——37 步逐项 success：全部 fetchers→契约门 ✓→数据提交 ✓（ef9f073aa）→**Build static site ✓**（pnpm build 与 8-20 CI 成功路径逐字一致；本地 `pnpm build` 报 workspace 错系从 web/ 目录调用的 cwd 假象，`--dir` 语义下 CI working-directory 路径正确）→**Publish web/out to gh-pages ✓**→Pages built 61e0d8bb。**新发布通道正式投产**。**③线上十页双主题迭代**（DOM+截图双验，截图 flake 按协议 §4 重拍/DOM 探针替代）：data-health（25 daily/11 cadence/20 frozen，as_of 09-02…09-05 全在墙）/news（首条 10:15 当日头条+51 外链）/market（主图双轴+事件标记完整；**发现右轴裸浮点 "67.740000C" 刻度→补 tickFormatter，commit 6e4fafd，tsc/eslint 0+CI 绿**）/regime（宏观三卡 CPI 3.54%/FF 3.6x，7 图）/atlas（12 表 60 SVG，2026-08/09 引用 46 处）/themes（as of 09-04）/dashboard/ipo（五卡+62/235 披露+最新定价 09/03 $428.40）/congress（874 申报+党派表）/insiders（16,729 笔 09-02 流）/heatmap（US 492+CN 929 双树图）——除 market 轴外零新缺陷。**④CI 数据提交回流**：ef9f073aa ff 合入本地（ipo exact 60=parsed 60 一致，契约复验绿；CI 用上了本地已修的 form_ipo parse 链，walk_cap=None 为 fresh-checkout 诚实跳过——轮 84 语义）。**验证**：契约门/tsc/eslint/两轮 CI Tests success + dispatch success + Pages built。**边界**：display/ci lane；0 research 面。**待验证**：周五（今日）22:00 UTC 定时刷新走同链路。
+
 - **ops-hotfix (2026-09-05)：gh-pages `.nojekyll` 二次事故的根因补丁与协作事故如实记录：**
   轮 86 恢复的 `.nojekyll`（e1f6e054）被本会话前夜的 d7dfbdd force push **抹掉**（我从
   `web/out/` 复制发布，而 `web/public/` 自始没有 `.nojekyll`，out/ 因此不含它）→ Jekyll
