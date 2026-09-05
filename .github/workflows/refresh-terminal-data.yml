@@ -359,7 +359,7 @@ jobs:
       - name: Publish web/out to gh-pages
         if: steps.datacommit.outputs.changes_detected == 'true'
         run: |
-          rsync -a --delete --exclude .git web/out/ site/
+          rsync -a --delete --exclude .git --exclude .nojekyll web/out/ site/
           cd site
           git config user.name "aionis-bot"
           git config user.email "actions@github.com"
