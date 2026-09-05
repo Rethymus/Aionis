@@ -1,0 +1,89 @@
+name: Publish site (gh-pages)
+
+# Deploys the static terminal to GitHub Pages whenever committed site code
+# or workflow-visible site content changes on main. The refresh-terminal-data
+# lane publishes data-only updates itself; this lane covers CODE pushes so UI
+# fixes reach the live site without a manual gh-pages dance.
+#
+# Channel: the repo's Pages is configured LEGACY (build from the gh-pages
+# branch), so deployment = build → rsync web/out over gh-pages → commit →
+# push; the legacy build picks it up. actions/deploy-pages mode is
+# incompatible with the legacy configuration (deploy-pages.yml, disabled).
+#
+# .nojekyll safety: web/public/.nojekyll is tracked, so `next build` copies it
+# into web/out and the rsync carries it — without that marker the legacy
+# Jekyll build drops the entire _next/ asset tree (round 86 incident).
+
+on:
+  push:
+    branches:
+      - main
+      # Round 87 constraint: GITHUB_TOKEN pushes do not fire on:push workflows
+      # (recursion guard) — data commits from the refresh lane therefore do NOT
+      # retrigger this lane (by design; that lane publishes itself).
+    paths:
+      - 'web/src/**'
+      - 'web/public/**'
+      - 'web/next.config.ts'
+      - 'web/package.json'
+      - 'web/pnpm-lock.yaml'
+      - '.github/workflows/publish-site.yml'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write  # push to gh-pages
+
+concurrency:
+  group: publish-site
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: web/pnpm-lock.yaml
+
+      - name: Build (prebuild mirrors panels → public/api/v1)
+        working-directory: web
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm build
+
+      - name: Verify .nojekyll survives the build
+        run: |
+          test -f web/out/.nojekyll || {
+            echo "::error::web/out/.nojekyll missing — publishing would let Jekyll drop _next/"
+            exit 1
+          }
+
+      - name: Checkout gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: site
+          fetch-depth: 1
+
+      - name: Publish web/out to gh-pages
+        run: |
+          rsync -a --delete --exclude .git --exclude .nojekyll web/out/ site/
+          cd site
+          git config user.name "aionis-bot"
+          git config user.email "actions@github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No site changes — nothing to publish."
+            exit 0
+          fi
+          git commit -m "deploy: main@${GITHUB_SHA::7} — site publish"
+          git push origin gh-pages
