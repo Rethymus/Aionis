@@ -2459,3 +2459,11 @@ dashboard realizing `docs/dashboard-v2-design.md`'s 5 dimensions on deterministi
   - **发布链**：本地 push（业主 PAT）→publish-site.yml 自动构建+gh-pages 发布（web/src/** 路径已覆盖数据 JSON；GITHUB_TOKEN 递归护栏不适用于 PAT push）。refresh-terminal-data.yml schedule 已退役、workflow_dispatch 保留兜底（恢复 cron 的路径写在其头注+runbook）。
   - **边界（防泄漏继承）**：display-only；只提交 web/src/data/aionis+reports/evidence；ledger 的 reddit/news_feed data_ingest 追加按 CI 惰性 runner 惯例丢弃（分类器白名单外一律不碰不提交）；frozen 面板/研究面零触碰。
   - **自动化台账**：新增=晚间值班（recurring）；删除=已完成的 8-23 代理重派（automation-3684bc83，lifecycle completed）；保留=10-01 04:05 影子 runbook（automation-97cec742，runCount 0，研究协议节点勿动）。
+
+- **晚间通道二轮深化（2026-09-06，轮 90）——钩子主触发+全路由审计+月度设施：**
+  - **触发三层化**：SessionStart 钩子（`.zcode/config.json` 工作区配置+`scripts/ops_evening_hook.py`；startup|resume 即守卫→RUN 则 DETACHED 分离拉起；零 token、绝不阻塞会话）=主触发；cron 自动化 fcf3003a 降频 */30=兜底+夜间报告+10-06 满月评估载体；staleness-check.yml（周一 02:00UTC，>5 天开去重 Issue）=全离线绊网。钩子配置已入库（.zcode/ 不在 .gitignore）。
+  - **全路由审计**：41 URL（38 路由+regime×4 hash+/stock/TSLA）零异常；regime=四标签枢纽（hash 选卡）设计如此；news 视觉通过（头条 2026-09-04 10:15UTC）；首页黑帧=截图伪影。数据需求地图不变：25 daily+11 cadence 推进、20 frozen 永冻结。
+  - **遗留清理**：8935 预览伺服已停（PID 26832）；8-23 旧自动化已删；保留 10-01 影子 runbook（97cec742）。
+  - **凭证纪律**（研究附录）：细粒度 PAT+contents:write+设过期；过期时通道在 push 处 fail-closed、attempt-cap 自锁，交互 git push 一次即自愈。
+  - **测试**：tests/test_ops_local_refresh.py 14 绿（守卫全分支/ledger 分类器/步骤表/钩子三态：SKIP 静默不拉起、RUN 分离拉起、spawn 失败绝不阻塞）。
+  - **会话内限制如实记录**：本会话被系统标记"属于定时任务"无法 CronCreate 新自动化——满月评估改由 CronUpdate 并入值班自动化第 0 步（幂等：报告文件存在即跳过）。
