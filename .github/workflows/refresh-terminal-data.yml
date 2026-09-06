@@ -10,13 +10,21 @@ name: Refresh terminal data
 #   FRED_API_KEY    — for macro data (FRED/ALFRED)
 # Both are read via .env → aionis.config.settings by the fetch scripts.
 #
-# Schedule: 22:00 UTC Mon-Fri (after US market close, before Asia open).
-# Manual trigger: Actions tab → "Refresh terminal data" → Run workflow.
+# STATUS (2026-09-06): the SCHEDULE trigger is RETIRED. This lane cost
+# 1,300-1,700 Actions minutes/month on this private repo (near the whole
+# 2,000 free minutes), so the daily refresh moved to the owner's local
+# evening lane — scripts/ops_local_refresh.py, driven by a ZCode workspace
+# automation (docs/ops-local-refresh.md). The local lane pushes data JSONs
+# with the owner's PAT, which fires publish-site.yml for the gh-pages deploy,
+# so this workflow no longer needs to build/publish either.
+# workflow_dispatch is KEPT as the out-of-band fallback: if the local machine
+# is down for days, run this manually (Actions tab → "Refresh terminal data"
+# → Run workflow) to catch the terminal up in one cold pass.
+#
+# Schedule: RETIRED (was 22:00 UTC Mon-Fri). Manual trigger stays available.
 
 on:
-  schedule:
-    - cron: '0 22 * * 1-5'  # 22:00 UTC Mon-Fri
-  workflow_dispatch: {}      # manual trigger
+  workflow_dispatch: {}      # manual trigger (fallback when the local lane can't run)
 
 permissions:
   contents: write  # needed for git-auto-commit
