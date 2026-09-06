@@ -7,23 +7,23 @@
   },
   "issuers": 50,
   "total": 215,
-  "unclassified": 9,
+  "unclassified": 8,
   "by_category": {
     "agreement_termination": 1,
     "charter_amendment": 7,
     "delisting": 1,
     "exhibits": 4,
     "exit_costs": 1,
-    "financial_obligation": 5,
+    "financial_obligation": 6,
     "major_agreement": 4,
     "merger_completion": 1,
-    "officer_changes": 45,
+    "officer_changes": 46,
     "other": 1,
-    "other_events": 30,
+    "other_events": 31,
     "reg_fd": 15,
-    "results": 63,
+    "results": 61,
     "security_terms": 4,
-    "unclassified": 9,
+    "unclassified": 8,
     "vote_results": 24
   },
   "events": [
@@ -141,24 +141,18 @@
       "company": "NVIDIA CORP",
       "filing_date": "2026-08-26",
       "form": "8-K",
-      "items": [
-        "2.02",
-        "9.01"
-      ],
-      "category": "results",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/nvda-20260826.htm"
+      "items": [],
+      "category": "unclassified",
+      "doc_url": ""
     },
     {
       "ticker": "CRM",
       "company": "Salesforce, Inc.",
       "filing_date": "2026-08-26",
       "form": "8-K",
-      "items": [
-        "2.02",
-        "9.01"
-      ],
-      "category": "results",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000187/crm-20260826.htm"
+      "items": [],
+      "category": "unclassified",
+      "doc_url": ""
     },
     {
       "ticker": "MU",
@@ -1452,9 +1446,12 @@
       "company": "NVIDIA CORP",
       "filing_date": "2026-06-18",
       "form": "8-K",
-      "items": [],
-      "category": "unclassified",
-      "doc_url": ""
+      "items": [
+        "8.01",
+        "9.01"
+      ],
+      "category": "other_events",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1045810/000119312526275783/d48176d8k.htm"
     },
     {
       "ticker": "PFE",
@@ -1630,9 +1627,13 @@
       "company": "AMAZON COM INC",
       "filing_date": "2026-06-10",
       "form": "8-K",
-      "items": [],
-      "category": "unclassified",
-      "doc_url": ""
+      "items": [
+        "1.01",
+        "2.03",
+        "9.01"
+      ],
+      "category": "financial_obligation",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1018724/000110465926072140/tm2613616d4_8k.htm"
     },
     {
       "ticker": "ORCL",
@@ -2248,9 +2249,13 @@
       "company": "ORACLE CORP",
       "filing_date": "2026-05-12",
       "form": "8-K",
-      "items": [],
-      "category": "unclassified",
-      "doc_url": ""
+      "items": [
+        "5.02",
+        "7.01",
+        "9.01"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526219708/d76569d8k.htm"
     },
     {
       "ticker": "GS",
@@ -2599,5 +2604,5 @@
     }
   ],
   "methodology": "SEC Form 8-K current reports \u2014 the legally mandated material-event disclosure (public domain, 17 U.S.C. \u00a7105), due within 4 business days of the event. Panel streams a bounded 50 large-cap issuer set (5 mega-cap seed + v2 20 + v3 25 across financials, payments, healthcare, staples, energy, industrials, tech/comm \u2014 breadth expansions 2026-08-22; still bounded, NOT full market; XOM carries both its pre-succession CIK and the 2026-07-01 8-K12B successor entity) since 2026-05-01; each row links the EDGAR primary document. Items are regex-extracted from the primary doc (nbsp/thin-space entities normalized) and mapped to ONE category by a rare-material-first precedence (delisting > merger completion > control change > non-reliance > officer changes > ... > exhibits); the full item list is preserved per row. Documents whose items cannot be extracted are counted as unclassified \u2014 never guessed. Filing-date point-in-time; 8-K/A amendments are new accessions (immutable). Display-only, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-09-05T07:59:38.102153+00:00"
+  "snapshot_ts": "2026-09-06T17:12:11.806768+00:00"
 }
