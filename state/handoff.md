@@ -2474,3 +2474,4 @@ dashboard realizing `docs/dashboard-v2-design.md`'s 5 dimensions on deterministi
   - **CI 潜伏缺陷修复**：matrix manifest 导入错误（通道+refresh-terminal-data.yml 两处）+重钉提交；根因=continue-on-error 吞 ImportError，矩阵此前只靠交互重钉推进。
   - **数据实效**：smart_money pct_now 0→73/120 非空、stakes_13g→390/400；明晚续跑补完。
   - **运维事实**：marker 2026-09-06=ok_committed 97cbc1b21；今晚（周一）为首次完全无人值守运行（钩子+*/30 兜底）。
+  - **轮 91 收尾补记**：矩阵修复后 CI 仍红一轮=knowledge_shelf.json 同样钉工件 sha（其重导也在崩溃步里）→ 补导 shelf+**通道门与 CI 门双双加宽**（+test_knowledge_shelf_panel_contract.py=漂移警报入闸）→ 全量本地 exit 0→CI success 34049175797。**线上终证**：publish-site 两次 success（1m39s/1m46s）；LIVE /api/v1/panels/smart_money.json pct_now 73/120 非空+latest 2026-09-04——本地 fetch→commit→push→CI build→gh-pages→线上面板全链实证贯通。
