@@ -700,7 +700,7 @@
       "desc_zh": "\u5934\u6761\u4e3b\u5f20\u7684\u5355\u9875\u901f\u89c8\uff1aIC / CI / p / verdict / SESOI\u2014\u2014web/out/atlas.html \u7684\u53ef\u6eaf\u6e90\u5bf9\u5e94\u7269\u3002",
       "path": "reports/evidence/atlas-claim-v1.html",
       "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/atlas-claim-v1.html",
-      "sha256": "3c477b062263ab21656209b12bb16bc6d13d039db70f0bf541200588b9f41ff6",
+      "sha256": "e0df586b1bc6866a890ad4f179b68a3c95470e88a645dba0bca54b61ecac5e90",
       "n_bytes": 24397
     },
     {
@@ -711,7 +711,7 @@
       "desc_zh": "\u6eaf\u6e90\u7814\u7a76\u6863\u6848\uff1a24 \u6761\u6765\u6e90\u767b\u8bb0\u8868 \u2192 \u62a5\u544a \u2192 \u5efa\u6a21\u5206\u6790\u5168\u6d41\u7a0b\uff0c[S#] \u5f15\u7528\u95ed\u5305\u3002",
       "path": "reports/evidence/research-dossier-v1.html",
       "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/research-dossier-v1.html",
-      "sha256": "e7f133c2db4a1e9c603a6eb5932847dffb534ff2dd22192cb4935685f65ab53a",
+      "sha256": "4c2cd79cf665ee369e62f3b7dabaf276c426bb478332fade7ced529a07079dce",
       "n_bytes": 46982
     },
     {
@@ -749,5 +749,5 @@
     }
   ],
   "methodology": "Layer 1 \u2014 Aionis's OWN method library: catalog of docs/ + decisions/ markdown (repo MIT; zero third-party copyright surface). Each entry carries metadata plus a safe teaser slice (first 2-3 sentences, <=240 chars) extracted at export time; the full text stays on GitHub (link-out). Dates are last-commit dates read from the LOCAL git repository (no network). Layer 2 \u2014 a FIXED editorially-curated bookmark list of first-hand public research sources (BIS / Fed FEDS / IMF / NBER / arXiv q-fin / FRASER / FRED-ALFRED / RePEc): link-out + one static sentence each, no fetching, no scraping, no summary APIs \u2014 copyright stays with the authors, we only catalog. Categories are a fixed 5-rail whitelist (preregistration / adr / results / rubric / theory); n_docs reconciles to the sum of the rails. Layer 3 \u2014 generated evidence artifacts: self-contained HTML, byte-stable, sha256 + byte count pinned at export time from the local tracked file so a reader can verify the download against the catalog (a missing file degrades honestly to null \u2014 never fabricated). Superseded artifact versions are retained under reports/evidence/archive/ (move-don't-delete \u2014 the archive only grows). Display-only reference lane \u2014 never part of any research or OOS pipeline.",
-  "snapshot_ts": "2026-09-06T17:12:24.286546+00:00"
+  "snapshot_ts": "2026-09-06T17:21:55.851020+00:00"
 }
