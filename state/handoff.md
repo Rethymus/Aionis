@@ -2467,3 +2467,10 @@ dashboard realizing `docs/dashboard-v2-design.md`'s 5 dimensions on deterministi
   - **凭证纪律**（研究附录）：细粒度 PAT+contents:write+设过期；过期时通道在 push 处 fail-closed、attempt-cap 自锁，交互 git push 一次即自愈。
   - **测试**：tests/test_ops_local_refresh.py 14 绿（守卫全分支/ledger 分类器/步骤表/钩子三态：SKIP 静默不拉起、RUN 分离拉起、spawn 失败绝不阻塞）。
   - **会话内限制如实记录**：本会话被系统标记"属于定时任务"无法 CronCreate 新自动化——满月评估改由 CronUpdate 并入值班自动化第 0 步（幂等：报告文件存在即跳过）。
+
+- **轮 91（2026-09-07）完整性审计+实弹验证：**
+  - **三遗漏入通道**：form13f_fetch（明星经理 2 季度，热缓存 0.2m）+form13f_dir_fetch（filers 目录）+stakes_pct_parse（pct_now 第二阶段，夹在两次导出之间）+export pass 2；测试钉住三步与顺序。排除并记录：CSI300（研究面）、regime global/composite/meso（无面板消费）、tasks/ 批量挪动（AGENTS.md 禁）。
+  - **实弹验证（88 分钟）**：52 文件提交推送→publish-site success→Pages success=全链首次自动贯通。软失败处置：filing_stream 帽 10→15m、pct 解析帽 25→35m（可续跑）、Tiingo 429 跨晚收敛。
+  - **CI 潜伏缺陷修复**：matrix manifest 导入错误（通道+refresh-terminal-data.yml 两处）+重钉提交；根因=continue-on-error 吞 ImportError，矩阵此前只靠交互重钉推进。
+  - **数据实效**：smart_money pct_now 0→73/120 非空、stakes_13g→390/400；明晚续跑补完。
+  - **运维事实**：marker 2026-09-06=ok_committed 97cbc1b21；今晚（周一）为首次完全无人值守运行（钩子+*/30 兜底）。

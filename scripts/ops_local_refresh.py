@@ -84,9 +84,9 @@ DOSSIER_META = (
 )
 SHELF_MATRIX = (
     "import sys; sys.path.insert(0, 'scripts'); "
-    "from export_terminal_data import export_knowledge_shelf, "
-    "export_evidence_matrix_manifest; export_knowledge_shelf(); "
-    "export_evidence_matrix_manifest()"
+    "from export_terminal_data import export_knowledge_shelf; "
+    "from export_evidence_html import export_evidence_matrix_manifest; "
+    "export_knowledge_shelf(); export_evidence_matrix_manifest()"
 )
 
 
@@ -111,7 +111,7 @@ STEPS: list[dict] = [
     {"name": "form_d_fetch [local superset]",
      **_py("scripts/form_d_fetch.py"), "cap": 10, "soft": True},
     {"name": "filing_stream_fetch [local superset]",
-     **_py("scripts/filing_stream_fetch.py"), "cap": 10, "soft": True},
+     **_py("scripts/filing_stream_fetch.py"), "cap": 15, "soft": True},
     {"name": "news_feed_fetch [local superset]",
      **_py("scripts/news_feed_fetch.py"), "cap": 10, "soft": True},
     {"name": "ark_holdings_fetch [local superset]",
@@ -161,7 +161,7 @@ STEPS: list[dict] = [
     {"name": "export_terminal_data",
      **_py("scripts/export_terminal_data.py"), "cap": 30, "soft": False},
     {"name": "stakes_pct_parse (visible 13G/13D rows) [local superset]",
-     **_py("scripts/stakes_pct_parse.py"), "cap": 25, "soft": True},
+     **_py("scripts/stakes_pct_parse.py"), "cap": 35, "soft": True},
     {"name": "export pass 2 (pick up parsed pct)",
      **_py("scripts/export_terminal_data.py"), "cap": 30, "soft": True},
     {"name": "export_evidence_html",
