@@ -300,12 +300,15 @@ jobs:
         # contract suite instead: an incomplete export fails the run here, keeps
         # the last complete panel committed, and surfaces red instead of silently
         # degrading the deployed terminal.
+        # Widened 2026-09-07: + knowledge-shelf contract (pins evidence-artifact
+        # sha256s — the drift alarm; the narrow gate let a stale shelf pin
+        # through and CI's full suite caught it).
         # Deselected: test_ledger_append_only_not_mutated_by_export — the reddit
         # collector legitimately appends a data_ingest row to runs/ledger.jsonl
         # during this lane (discarded: the data commit's file_pattern covers only
         # web/src/data/aionis/*.json), so the pinned digest never matches here.
         # The pin guard remains a LOCAL post-export check.
-        run: uv run pytest -q tests/test_web_terminal_data.py --deselect tests/test_web_terminal_data.py::test_ledger_append_only_not_mutated_by_export
+        run: uv run pytest -q tests/test_web_terminal_data.py tests/test_knowledge_shelf_panel_contract.py --deselect tests/test_web_terminal_data.py::test_ledger_append_only_not_mutated_by_export
 
       - name: Sync with latest main (handle concurrent pushes)
         # If main advanced during this ~hour-long run (code/doc/agent commits

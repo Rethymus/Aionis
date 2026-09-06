@@ -58,6 +58,11 @@ LOG_DIR = ROOT / "runs" / "ops_local_refresh"
 LEDGER = ROOT / "runs" / "ledger.jsonl"
 ALLOWED_COMMIT_PATHS = ("web/src/data/aionis", "reports/evidence")
 GATE_TEST = "tests/test_web_terminal_data.py"
+# The knowledge-shelf contract pins evidence-artifact sha256s against the repo
+# (the drift alarm). The first live run proved the gate must cover it: the
+# shelf re-export lived in the step that crashed on the matrix ImportError,
+# the narrow gate passed, and CI's full suite correctly went red.
+GATE_TEST_2 = "tests/test_knowledge_shelf_panel_contract.py"
 GATE_DESELECT = f"{GATE_TEST}::test_ledger_append_only_not_mutated_by_export"
 
 # Guard policy (host-local time == the owner's Beijing evening).
@@ -173,7 +178,8 @@ STEPS: list[dict] = [
     {"name": "export shelf + evidence matrix",
      "uv_argv": ["python", "-c", SHELF_MATRIX], "cap": 10, "soft": True},
     {"name": "json validity + contract gate",
-     "uv_argv": ["pytest", "-q", GATE_TEST, "--deselect", GATE_DESELECT],
+     "uv_argv": ["pytest", "-q", GATE_TEST, GATE_TEST_2,
+                 "--deselect", GATE_DESELECT],
      "cap": 45, "soft": False},
 ]
 
