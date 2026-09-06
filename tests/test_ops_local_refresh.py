@@ -98,6 +98,18 @@ def test_step_table_covers_ci_lane_backbone() -> None:
                      "build_ticker_metadata", "build_regime_macro",
                      "export_terminal_data", "json validity + contract gate"):
         assert backbone in names, f"missing CI backbone step: {backbone}"
+    # Round-91 completeness audit: panels whose fetchers were in NO lane
+    # (form13f family, pct parse) must now be present — "update ALL data".
+    for completeness in ("form13f_fetch (star managers) [local superset]",
+                         "form13f_dir_fetch (filer directory) [local superset]",
+                         "stakes_pct_parse (visible 13G/13D rows) [local superset]",
+                         "export pass 2 (pick up parsed pct)"):
+        assert completeness in names, f"missing completeness step: {completeness}"
+    # pct parse MUST sit between the two export passes (it reads the just-
+    # exported visible-row set; pass 2 folds the parsed values in).
+    assert names.index("export_terminal_data") < \
+        names.index("stakes_pct_parse (visible 13G/13D rows) [local superset]") < \
+        names.index("export pass 2 (pick up parsed pct)")
 
 
 def test_step_table_hard_steps_and_script_paths() -> None:

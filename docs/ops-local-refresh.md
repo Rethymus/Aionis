@@ -167,7 +167,13 @@ deployment — zero `awaiting_fetch`, every page renders charts (36–141 SVGs)
 with dates matching the panel freshness map (daily pages at 09-03/04,
 frozen pages pinned by design, cadence pages on their sources' rhythms).
 `/regime` is a 4-tab hub (market/positioning/taco/macro) whose tabs are
-selected via URL hash — default tab is market by design.
+selected via URL hash — default tab is market by design. The audit also
+surfaced three panels whose fetchers were wired into NO lane (13F star
+managers, the 13F filer directory drifting since 08-21, and the pct_now
+parse stage — live smart_money showed 120/120 null pct); all three were
+added to the lane in round 91, with the A-share CSI300 builders and the
+regime global/composite/meso layers documented as deliberate research-
+surface exclusions.
 
 ## Boundaries (inherited anti-leakage contract)
 

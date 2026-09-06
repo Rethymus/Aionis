@@ -12,7 +12,15 @@ two local-only additions:
   1. a SUPERSET of fetchers — the warm local cache lets us also refresh the
      panels the CI runner never fetched (def14a/form_d/filing_stream/news_feed/
      ark/theme_etfs/13g/ape_wisdom/ptr_tx/bts/korea), which CI could only
-     retain from stale caches;
+     retain from stale caches. Round-91 completeness audit added three that
+     were in NO lane at all: form13f star-manager holdings + the 13F filer
+     directory (the filers13f panel had been drifting since 08-21), and
+     stakes_pct_parse — the pct_now/pct_prev second stage for the visible
+     13G/13D rows (live smart_money showed 120/120 null pct before this),
+     followed by a second export pass that folds the parsed values in.
+     Deliberately EXCLUDED (research surfaces, not display): the A-share
+     CSI300 fetch/panel builders (ic_deciles CN lineage) and the regime
+     global/composite/meso layer builders (no terminal panel reads them);
   2. a once-per-evening marker (`data/ops/local_refresh_state.json`, gitignored)
      so the recurring ZCode automation can fire every 20 minutes and no-op
      cheaply after the day's successful run.
@@ -112,6 +120,10 @@ STEPS: list[dict] = [
      **_py("scripts/theme_etfs_fetch.py"), "cap": 10, "soft": True},
     {"name": "stakes13g_fetch [local superset]",
      **_py("scripts/stakes13g_fetch.py"), "cap": 15, "soft": True},
+    {"name": "form13f_fetch (star managers) [local superset]",
+     **_py("scripts/form13f_fetch.py"), "cap": 15, "soft": True},
+    {"name": "form13f_dir_fetch (filer directory) [local superset]",
+     **_py("scripts/form13f_dir_fetch.py"), "cap": 20, "soft": True},
     {"name": "ape_wisdom_fetch [local superset]",
      **_py("scripts/ape_wisdom_fetch.py"), "cap": 5, "soft": True},
     {"name": "politician_trades_fetch",
@@ -148,6 +160,10 @@ STEPS: list[dict] = [
      **_py("scripts/build_regime_macro.py"), "cap": 10, "soft": True},
     {"name": "export_terminal_data",
      **_py("scripts/export_terminal_data.py"), "cap": 30, "soft": False},
+    {"name": "stakes_pct_parse (visible 13G/13D rows) [local superset]",
+     **_py("scripts/stakes_pct_parse.py"), "cap": 25, "soft": True},
+    {"name": "export pass 2 (pick up parsed pct)",
+     **_py("scripts/export_terminal_data.py"), "cap": 30, "soft": True},
     {"name": "export_evidence_html",
      **_py("scripts/export_evidence_html.py"), "cap": 10, "soft": True},
     {"name": "export_research_dossier",
