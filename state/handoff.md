@@ -2451,3 +2451,11 @@ dashboard realizing `docs/dashboard-v2-design.md`'s 5 dimensions on deterministi
   partial (opus fixer: opt-in flag fixed 2 regressions; fixture/timezone fixes for 8 new tests; ruff). Independent opus
   Verifier PASS (historical-preserved, `_mem_stub` change benign, spy-asserts, fail-closed) + sonnet Reviewer APPROVE.
   47 forward tests pass; ruff clean; ledger/prereg/forward_commit.py untouched. Does NOT ignite E3.
+
+- **本地晚间刷新通道（2026-09-06，轮 89）——ZCode 当"临时服务器"，承接日常数据更新：**
+  - **为什么**：私有仓 Actions 计费（Free 2,000 分钟/月；Linux $0.002/分钟超出）×旧 cron 通道 1,300-1,700 分钟/月≈配额耗尽风险（8-20 计费冻结前科）。日常刷新本地化后残余 CI≈300-600 分钟/月（ci.yml 每次 push 测试 + publish-site.yml 构建/发布）。
+  - **入口**：`scripts/ops_local_refresh.py`（--guard/--run/--status/--force；STEPS 表=CI 步骤序+本地超集 fetcher；硬步=export_terminal_data+契约门；软失败继续）。runbook=`docs/ops-local-refresh.md`（成本账/架构/失败模式/手动操作/边界）。测试=`tests/test_ops_local_refresh.py`（11 个：守卫全分支/ledger 分类器/步骤表完整性）。
+  - **调度**：ZCode workspace 自动化 recurring `*/20 18-23 * * 1-5`（宿主本地钟=北京）。守卫+marker（data/ops/local_refresh_state.json）保证每晚恰一次成功执行；错过 fire 即失（轮 54 教训）→20 分钟粒度整窗覆盖；3 次失败/晚自锁待人审。**首跑 2026-09-07 周一晚**（美国 Labor Day，多数 EOD 源 no-op=诚实空转）。
+  - **发布链**：本地 push（业主 PAT）→publish-site.yml 自动构建+gh-pages 发布（web/src/** 路径已覆盖数据 JSON；GITHUB_TOKEN 递归护栏不适用于 PAT push）。refresh-terminal-data.yml schedule 已退役、workflow_dispatch 保留兜底（恢复 cron 的路径写在其头注+runbook）。
+  - **边界（防泄漏继承）**：display-only；只提交 web/src/data/aionis+reports/evidence；ledger 的 reddit/news_feed data_ingest 追加按 CI 惰性 runner 惯例丢弃（分类器白名单外一律不碰不提交）；frozen 面板/研究面零触碰。
+  - **自动化台账**：新增=晚间值班（recurring）；删除=已完成的 8-23 代理重派（automation-3684bc83，lifecycle completed）；保留=10-01 04:05 影子 runbook（automation-97cec742，runCount 0，研究协议节点勿动）。
