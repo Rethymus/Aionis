@@ -1,28 +1,28 @@
 {
   "status": "ok",
-  "as_of": "2026-09-03",
+  "as_of": "2026-09-04",
   "n_filings_target": 150,
   "n_filings_processed": 150,
-  "n_with_persons": 103,
-  "coverage_pct": 68.7,
-  "n_persons_distinct": 660,
+  "n_with_persons": 101,
+  "coverage_pct": 67.3,
+  "n_persons_distinct": 629,
   "by_role": {
-    "ceo": 167,
-    "cfo": 80,
+    "ceo": 159,
+    "cfo": 77,
     "coo": 29,
     "cto": 5,
-    "chairman": 137,
-    "president": 123,
-    "vice_president": 115,
-    "treasurer": 11,
-    "secretary": 43,
-    "director": 504,
-    "officer": 146
+    "chairman": 128,
+    "president": 114,
+    "vice_president": 101,
+    "treasurer": 10,
+    "secretary": 38,
+    "director": 479,
+    "officer": 125
   },
   "confidence": {
-    "section_age_rows": 82,
-    "section_name_roles": 21,
-    "unparsed_no_persons": 45,
+    "section_age_rows": 79,
+    "section_name_roles": 22,
+    "unparsed_no_persons": 47,
     "fetch_or_doc_errors": 2
   },
   "boards": [
@@ -105,26 +105,6 @@
       "n_officers": 9,
       "filed_date": "2026-08-12",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/883569/000119312526347185/fosl-20260812.htm"
-    },
-    {
-      "company": "Avidia Bancorp, Inc.",
-      "ticker": "AVBC",
-      "issuer_cik": "2058758",
-      "n_persons": 14,
-      "n_directors": 10,
-      "n_officers": 8,
-      "filed_date": "2026-08-07",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2058758/000119312526340379/avbc-20260807.htm"
-    },
-    {
-      "company": "SCHOLASTIC CORP",
-      "ticker": "SCHL",
-      "issuer_cik": "866729",
-      "n_persons": 14,
-      "n_directors": 11,
-      "n_officers": 12,
-      "filed_date": "2026-08-07",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/866729/000119312526340209/schl-20260807.htm"
     },
     {
       "company": "Getty Images Holdings, Inc.",
@@ -277,16 +257,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1337298/000143774926027325/ff20260806_def14a.htm"
     },
     {
-      "company": "NEWMARK GROUP, INC.",
-      "ticker": "NMRK",
-      "issuer_cik": "1690680",
-      "n_persons": 9,
-      "n_directors": 8,
-      "n_officers": 8,
-      "filed_date": "2026-08-07",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1690680/000121390026086659/ea0299930-01.htm"
-    },
-    {
       "company": "C3.ai, Inc.",
       "ticker": "AI",
       "issuer_cik": "1577526",
@@ -345,6 +315,26 @@
       "n_officers": 3,
       "filed_date": "2026-08-13",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1706524/000121390026089210/ea0298581-01.htm"
+    },
+    {
+      "company": "Kartoon Studios, Inc.",
+      "ticker": "TOON",
+      "issuer_cik": "1355848",
+      "n_persons": 7,
+      "n_directors": 5,
+      "n_officers": 3,
+      "filed_date": "2026-09-04",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1355848/000168316826006962/toon_idef14a.htm"
+    },
+    {
+      "company": "TAYLOR DEVICES, INC.",
+      "ticker": "TAYD",
+      "issuer_cik": "96536",
+      "n_persons": 7,
+      "n_directors": 5,
+      "n_officers": 5,
+      "filed_date": "2026-09-04",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/96536/000137647426000601/tayd-20260531_def14a.htm"
     },
     {
       "company": "Acurx Pharmaceuticals, Inc.",
@@ -445,6 +435,16 @@
       "n_officers": 6,
       "filed_date": "2026-08-10",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1333986/000119312526341149/d58865ddef14a.htm"
+    },
+    {
+      "company": "CACI INTERNATIONAL INC /DE/",
+      "ticker": "CACI",
+      "issuer_cik": "16058",
+      "n_persons": 6,
+      "n_directors": 4,
+      "n_officers": 4,
+      "filed_date": "2026-09-04",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/16058/000162828026060738/caci-20260904.htm"
     },
     {
       "company": "TECHPRECISION CORP",
@@ -657,24 +657,14 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1368622/000110465926096689/tm264166-4_def14a.htm"
     },
     {
-      "company": "Trinseo PLC",
-      "ticker": "TSEOQ",
-      "issuer_cik": "1519061",
-      "n_persons": 5,
+      "company": "STANDEX INTERNATIONAL CORP/DE/",
+      "ticker": "SXI",
+      "issuer_cik": "310354",
+      "n_persons": 4,
       "n_directors": 3,
-      "n_officers": 5,
-      "filed_date": "2026-08-07",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1519061/000110465926092447/tse-20260923xdef14a.htm"
-    },
-    {
-      "company": "HEALTHY CHOICE WELLNESS CORP.",
-      "ticker": "HCWC",
-      "issuer_cik": "1948864",
-      "n_persons": 5,
-      "n_directors": 3,
-      "n_officers": 3,
-      "filed_date": "2026-08-06",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1948864/000149315226036418/formdef14a.htm"
+      "n_officers": 1,
+      "filed_date": "2026-09-04",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/310354/000143774926029660/sxi20260820_def14a.htm"
     },
     {
       "company": "Catheter Precision, Inc.",
@@ -777,24 +767,14 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1653909/000119312526342889/d174786ddef14a.htm"
     },
     {
-      "company": "KORN FERRY",
-      "ticker": "KFY",
-      "issuer_cik": "56679",
-      "n_persons": 4,
-      "n_directors": 4,
-      "n_officers": 2,
-      "filed_date": "2026-08-07",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/56679/000130817926000388/kfy015595-def14a.htm"
-    },
-    {
-      "company": "Pasithea Therapeutics Corp.",
-      "ticker": "",
-      "issuer_cik": "1841330",
-      "n_persons": 4,
-      "n_directors": 3,
+      "company": "PAYCHEX INC",
+      "ticker": "PAYX",
+      "issuer_cik": "723531",
+      "n_persons": 3,
+      "n_directors": 1,
       "n_officers": 3,
-      "filed_date": "2026-08-07",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1841330/000121390026086799/ea0300656-def14a_pasithea.htm"
+      "filed_date": "2026-09-04",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/723531/000119312526382805/d111983ddef14a.htm"
     },
     {
       "company": "Oxford Lane Capital Corp.",
@@ -837,24 +817,14 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1613103/000161310326000010/mdt-20260816.htm"
     },
     {
-      "company": "Bridgeline Digital, Inc.",
-      "ticker": "BLIN",
-      "issuer_cik": "1378590",
-      "n_persons": 3,
-      "n_directors": 3,
+      "company": "Grown Rogue International Inc.",
+      "ticker": "GRUSF",
+      "issuer_cik": "1463000",
+      "n_persons": 2,
+      "n_directors": 2,
       "n_officers": 2,
-      "filed_date": "2026-08-07",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1378590/000143774926026578/blin20251219_def14a.htm"
-    },
-    {
-      "company": "CNL Strategic Capital, LLC",
-      "ticker": "",
-      "issuer_cik": "1684682",
-      "n_persons": 3,
-      "n_directors": 3,
-      "n_officers": 1,
-      "filed_date": "2026-08-06",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1684682/000199937126017228/scap-def14a_102826.htm"
+      "filed_date": "2026-09-04",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1463000/000182912626009775/grownrogueinter_def14a.htm"
     },
     {
       "company": "Byrna Technologies Inc.",
@@ -927,14 +897,24 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/890394/000121390026086972/ea0298840-02.htm"
     },
     {
-      "company": "Canopy Growth Corp",
-      "ticker": "CGC",
-      "issuer_cik": "1737927",
-      "n_persons": 2,
-      "n_directors": 2,
+      "company": "iBio, Inc.",
+      "ticker": "IBIO",
+      "issuer_cik": "1420720",
+      "n_persons": 1,
+      "n_directors": 1,
       "n_officers": 1,
-      "filed_date": "2026-08-07",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1737927/000110465926092759/tm2620644-3_def14a.htm"
+      "filed_date": "2026-09-04",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1420720/000142072026000022/ibio-20260904xdef14a.htm"
+    },
+    {
+      "company": "Hartford Schroders Private Opportunities Fund",
+      "ticker": "",
+      "issuer_cik": "1903070",
+      "n_persons": 1,
+      "n_directors": 1,
+      "n_officers": 1,
+      "filed_date": "2026-09-04",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1903070/000110465926105526/tm2624808d1_def14a.htm"
     },
     {
       "company": "FingerMotion, Inc.",
@@ -1102,30 +1082,34 @@
       ]
     },
     {
-      "name": "Human Capital Management",
+      "name": "Christine R. Detrick",
       "roles": [
         "ceo",
-        "director",
-        "officer"
-      ],
-      "n_companies": 2,
-      "n_director_seats": 1,
-      "companies": [
-        "GENERAL MILLS INC",
-        "SCHOLASTIC CORP"
-      ]
-    },
-    {
-      "name": "Insider Participation",
-      "roles": [
+        "chairman",
         "director",
         "officer"
       ],
       "n_companies": 2,
       "n_director_seats": 2,
       "companies": [
-        "CAL-MAINE FOODS INC",
-        "KORN FERRY"
+        "Hartford Schroders Private Opportunities Fund",
+        "Hartford Funds Exchange-Traded Trust"
+      ]
+    },
+    {
+      "name": "George W. Bush",
+      "roles": [
+        "chairman",
+        "president",
+        "secretary",
+        "director",
+        "officer"
+      ],
+      "n_companies": 2,
+      "n_director_seats": 1,
+      "companies": [
+        "CACI INTERNATIONAL INC /DE/",
+        "RPM INTERNATIONAL INC/DE/"
       ]
     },
     {
@@ -1180,18 +1164,6 @@
       "companies": [
         "NEOGEN CORP",
         "RICHARDSON ELECTRONICS, LTD."
-      ]
-    },
-    {
-      "name": "Pay Versus Performance",
-      "roles": [
-        "director"
-      ],
-      "n_companies": 2,
-      "n_director_seats": 2,
-      "companies": [
-        "RPM INTERNATIONAL INC/DE/",
-        "KORN FERRY"
       ]
     },
     {
@@ -1328,6 +1300,17 @@
       "n_director_seats": 1,
       "companies": [
         "Soluna Holdings, Inc"
+      ]
+    },
+    {
+      "name": "Alan R. Klembczyk",
+      "roles": [
+        "officer"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 0,
+      "companies": [
+        "TAYLOR DEVICES, INC."
       ]
     },
     {
@@ -1483,17 +1466,6 @@
       ]
     },
     {
-      "name": "Andres A. Alonso",
-      "roles": [
-        "ceo"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 0,
-      "companies": [
-        "SCHOLASTIC CORP"
-      ]
-    },
-    {
       "name": "Andrew A. Johnson",
       "roles": [
         "director",
@@ -1553,21 +1525,6 @@
       ]
     },
     {
-      "name": "Andrew S. Hedden",
-      "roles": [
-        "ceo",
-        "chairman",
-        "president",
-        "director",
-        "officer"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "SCHOLASTIC CORP"
-      ]
-    },
-    {
       "name": "Andrew Zeinfeld",
       "roles": [
         "ceo"
@@ -1576,6 +1533,19 @@
       "n_director_seats": 0,
       "companies": [
         "OneMedNet Corp"
+      ]
+    },
+    {
+      "name": "Andy Heyward",
+      "roles": [
+        "ceo",
+        "chairman",
+        "director"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "Kartoon Studios, Inc."
       ]
     },
     {
@@ -1590,6 +1560,17 @@
       ]
     },
     {
+      "name": "Andy L. Nemeth",
+      "roles": [
+        "officer"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 0,
+      "companies": [
+        "STANDEX INTERNATIONAL CORP/DE/"
+      ]
+    },
+    {
       "name": "Angela Rossetti",
       "roles": [
         "director"
@@ -1598,19 +1579,6 @@
       "n_director_seats": 1,
       "companies": [
         "AETHLON MEDICAL INC"
-      ]
-    },
-    {
-      "name": "Angelo N. Chaclas",
-      "roles": [
-        "vice_president",
-        "secretary",
-        "officer"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 0,
-      "companies": [
-        "Trinseo PLC"
       ]
     },
     {
@@ -1671,14 +1639,28 @@
       "companies": [
         "Toppoint Holdings Inc."
       ]
+    },
+    {
+      "name": "Anthony M. Kennedy",
+      "roles": [
+        "ceo",
+        "chairman",
+        "president",
+        "vice_president"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "PROCTER & GAMBLE Co"
+      ]
     }
   ],
   "request_accounting": {
-    "n_http_requests_last_fetch": 298,
+    "n_http_requests_last_fetch": 20,
     "budget_seconds": 2700,
     "budget_hit": false,
-    "fetched_at": "2026-09-04T11:17:05.469607+00:00"
+    "fetched_at": "2026-09-06T15:59:52.523910+00:00"
   },
-  "methodology": "DEF 14A person-level panel (\u8463\u4e8b/\u9ad8\u7ba1\u4eba\u7ea7\u6863\u6848) over the NEWEST 150 proxy filings of the /executives DEF 14A stream \u2014 a bounded lane: each filing's primary document resolved from its EDGAR filing index (<= 2 GETs per filing, idempotent per-accession caches, >= 2.1s spacing, hard 45-minute wall-clock budget; the last fetch spent 298 HTTP requests and did not hit the budget). Parsing is CONSERVATIVE and TIERED: (1) section_age_rows (HIGH) \u2014 the classic 'Name (Age) Title Since' roster row in any spelling, a 2-4 token capitalized name with a standalone age bounded 30-99 and a role word witnessed on the same row, also reconstructed from word-fragmented inline-XBRL layouts by anchor-delimiting the joined stream; (2) section_name_roles (MEDIUM) \u2014 'First M. Last' (middle-initial) + a role word inside a located directors/executives section. Everything else yields persons=[] and parsed=false \u2014 an honest NULL, never a guessed name (\u5b81\u53ef null \u4e0d\u731c\u6d4b); coverage below counts only what was processed (103/150 filings with persons = 68.7%), never an extrapolation. Roles are canonical role WORDS witnessed near the person's row or bio \u2014 they may include past or external-company titles (e.g. a director who is CEO of another firm), displayed as text-witnessed hints not employment records; boards-card director/officer counts are independent sets (a CEO-director counts in both). Distinct-person identity keys on the normalized full name across filings \u2014 same-name merges may join namesakes and hyphenated/apostrophe/initials-first names (JW Roth) are conservatively MISSED, both disclosed. Display-only, exploratory, NOT a research claim.",
-  "snapshot_ts": "2026-09-05T03:16:45.286120+00:00"
+  "methodology": "DEF 14A person-level panel (\u8463\u4e8b/\u9ad8\u7ba1\u4eba\u7ea7\u6863\u6848) over the NEWEST 150 proxy filings of the /executives DEF 14A stream \u2014 a bounded lane: each filing's primary document resolved from its EDGAR filing index (<= 2 GETs per filing, idempotent per-accession caches, >= 2.1s spacing, hard 45-minute wall-clock budget; the last fetch spent 20 HTTP requests and did not hit the budget). Parsing is CONSERVATIVE and TIERED: (1) section_age_rows (HIGH) \u2014 the classic 'Name (Age) Title Since' roster row in any spelling, a 2-4 token capitalized name with a standalone age bounded 30-99 and a role word witnessed on the same row, also reconstructed from word-fragmented inline-XBRL layouts by anchor-delimiting the joined stream; (2) section_name_roles (MEDIUM) \u2014 'First M. Last' (middle-initial) + a role word inside a located directors/executives section. Everything else yields persons=[] and parsed=false \u2014 an honest NULL, never a guessed name (\u5b81\u53ef null \u4e0d\u731c\u6d4b); coverage below counts only what was processed (101/150 filings with persons = 67.3%), never an extrapolation. Roles are canonical role WORDS witnessed near the person's row or bio \u2014 they may include past or external-company titles (e.g. a director who is CEO of another firm), displayed as text-witnessed hints not employment records; boards-card director/officer counts are independent sets (a CEO-director counts in both). Distinct-person identity keys on the normalized full name across filings \u2014 same-name merges may join namesakes and hyphenated/apostrophe/initials-first names (JW Roth) are conservatively MISSED, both disclosed. Display-only, exploratory, NOT a research claim.",
+  "snapshot_ts": "2026-09-06T17:12:11.948422+00:00"
 }

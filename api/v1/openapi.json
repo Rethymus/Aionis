@@ -264,7 +264,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "U.S. SEC EDGAR — public domain",
             "x-aionis-source": "Form 4 XML, filed-date PIT",
-            "x-aionis-as-of": "2026-09-01"
+            "x-aionis-as-of": "2026-09-04"
           },
           {
             "name": "form8k",
@@ -280,7 +280,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "GDELT open data (facts; article copyright stays with publishers)",
             "x-aionis-source": "GDELT Doc 2.0 artlist market headlines, seendate PIT, link-out only",
-            "x-aionis-as-of": "2026-09-04T10:15:00Z"
+            "x-aionis-as-of": "2026-09-06T15:45:00Z"
           },
           {
             "name": "executives",
@@ -312,7 +312,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "U.S. SEC EDGAR — public domain",
             "x-aionis-source": "DEF 14A proxy statements via EFTS form-level queries, filed-date PIT; director/executive names, compensation, ownership not parsed (person-level extraction deferred)",
-            "x-aionis-as-of": "2026-09-03"
+            "x-aionis-as-of": "2026-09-04"
           },
           {
             "name": "def14a_persons",
@@ -320,7 +320,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "U.S. SEC EDGAR — public domain",
             "x-aionis-source": "DEF 14A primary documents (newest ~150 filings), conservative tiered director/officer name+role parsing, filed-date PIT; unparsed documents yield honest nulls (never guessed)",
-            "x-aionis-as-of": "2026-09-03"
+            "x-aionis-as-of": "2026-09-04"
           },
           {
             "name": "filing_stream",
@@ -336,7 +336,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "U.S. House Clerk — public domain",
             "x-aionis-source": "STOCK Act PTR filing index (House-only, filing-stream level; transactions remain in the source PDFs)",
-            "x-aionis-as-of": "2026-09-03"
+            "x-aionis-as-of": "2026-08-18"
           },
           {
             "name": "politician_trades_tx",
@@ -376,7 +376,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "ApeWisdom free public API (apewisdom.io) — vendor ToS, display-only",
             "x-aionis-source": "Reddit trending-stocks board: rank/mentions/upvotes + 24h lags, verbatim first-party fields, today-snapshot only",
-            "x-aionis-as-of": "2026-08-29"
+            "x-aionis-as-of": "2026-09-06"
           },
           {
             "name": "headline_provenance",
@@ -440,7 +440,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "U.S. SEC EDGAR — public domain",
             "x-aionis-source": "SC 13G/G-A passive-stake stream via the daily crawler index (EFTS froze on Schedule 13 after 2024-12-17), filed-date PIT; ownership % / state machine not parsed",
-            "x-aionis-as-of": "2026-09-03"
+            "x-aionis-as-of": "2026-09-04"
           },
           {
             "name": "ark",
@@ -456,7 +456,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "iShares/BlackRock + Global X official fund CSVs — publicly published daily",
             "x-aionis-source": "10 theme-ETF holdings CSVs (iShares latest-holdings.csv endpoints + Global X dated full-holdings files; top-10 by weight + cross-fund resonance; skips disclosed)",
-            "x-aionis-as-of": "2026-09-03"
+            "x-aionis-as-of": "2026-09-04"
           },
           {
             "name": "form13f",
@@ -488,7 +488,7 @@
             "x-aionis-freshness": "cadence",
             "x-aionis-license": "Aionis repo docs (repo MIT) + editorial link-out bookmarks",
             "x-aionis-source": "docs/ + decisions/ method catalog with GitHub link-outs and a fixed curated public research-source list; teasers are safe slices of our own MIT docs, third-party content never copied",
-            "x-aionis-as-of": "2026-09-05"
+            "x-aionis-as-of": "2026-09-06"
           },
           {
             "name": "evidence_matrix",

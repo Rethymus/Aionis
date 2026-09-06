@@ -5,7 +5,7 @@
     "us": "2026-06-30"
   },
   "methodology": "Sector aggregation of latest-month OOS model scores + calibrated P(up), per region's own latest PIT-aligned date (US and CN panels may end on different months). US sectors from EDGAR SIC (public domain, industry-level); A-share sectors are CSRC industry classification (\u8bc1\u76d1\u4f1a\u884c\u4e1a\u5206\u7c7b, via baostock \u2014 free anonymous API, BSD client; 7-gate: docs/data-intake-baostock-industry.md), falling back to exchange-board tier (\u79d1\u521b\u677f/\u521b\u4e1a\u677f/\u4e3b\u677f/\u5317\u4ea4\u6240) where industry is missing. Sectors with <3 stocks dropped. Display-only, NOT a research claim.",
-  "n_sectors": 64,
+  "n_sectors": 111,
   "top_favored": [
     {
       "sector": "Natural Gas Transmission",
@@ -92,6 +92,15 @@
       ]
     },
     {
+      "sector": "\u8bc1\u76d1\u4f1a: R87\u5e7f\u64ad\u3001\u7535\u89c6\u3001\u7535\u5f71\u548c\u5f55\u97f3\u5236\u4f5c\u4e1a",
+      "n_stocks": 7,
+      "mean_score": -1.118,
+      "mean_prob_up": 0.453,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
       "sector": "Life Insurance",
       "n_stocks": 3,
       "mean_score": -1.092,
@@ -110,21 +119,12 @@
       ]
     },
     {
-      "sector": "Retail-Building Materials, Hardware, Garden Supply",
-      "n_stocks": 3,
-      "mean_score": -1.05,
-      "mean_prob_up": 0.538,
+      "sector": "\u8bc1\u76d1\u4f1a: I64\u4e92\u8054\u7f51\u548c\u76f8\u5173\u670d\u52a1",
+      "n_stocks": 15,
+      "mean_score": -1.079,
+      "mean_prob_up": 0.453,
       "regions": [
-        "us"
-      ]
-    },
-    {
-      "sector": "Operative Builders",
-      "n_stocks": 3,
-      "mean_score": -0.988,
-      "mean_prob_up": 0.536,
-      "regions": [
-        "us"
+        "cn"
       ]
     }
   ],
@@ -212,6 +212,24 @@
       ]
     },
     {
+      "sector": "\u8bc1\u76d1\u4f1a: B07\u77f3\u6cb9\u548c\u5929\u7136\u6c14\u5f00\u91c7\u4e1a",
+      "n_stocks": 5,
+      "mean_score": 0.395,
+      "mean_prob_up": 0.443,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: J66\u8d27\u5e01\u91d1\u878d\u670d\u52a1",
+      "n_stocks": 30,
+      "mean_score": 0.393,
+      "mean_prob_up": 0.443,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
       "sector": "Electric Services",
       "n_stocks": 14,
       "mean_score": 0.363,
@@ -293,12 +311,39 @@
       ]
     },
     {
+      "sector": "\u8bc1\u76d1\u4f1a: C39\u8ba1\u7b97\u673a\u3001\u901a\u4fe1\u548c\u5176\u4ed6\u7535\u5b50\u8bbe\u5907\u5236\u9020\u4e1a",
+      "n_stocks": 96,
+      "mean_score": 0.123,
+      "mean_prob_up": 0.445,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: D45\u71c3\u6c14\u751f\u4ea7\u548c\u4f9b\u5e94\u4e1a",
+      "n_stocks": 4,
+      "mean_score": 0.09,
+      "mean_prob_up": 0.445,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
       "sector": "Computer Storage Devices",
       "n_stocks": 3,
       "mean_score": 0.072,
       "mean_prob_up": 0.503,
       "regions": [
         "us"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: G53\u94c1\u8def\u8fd0\u8f93\u4e1a",
+      "n_stocks": 4,
+      "mean_score": 0.061,
+      "mean_prob_up": 0.445,
+      "regions": [
+        "cn"
       ]
     },
     {
@@ -320,21 +365,21 @@
       ]
     },
     {
-      "sector": "\u79d1\u521b\u677f (STAR Market)",
-      "n_stocks": 27,
-      "mean_score": 0.024,
-      "mean_prob_up": 0.445,
-      "regions": [
-        "cn"
-      ]
-    },
-    {
       "sector": "Services-Prepackaged Software",
       "n_stocks": 18,
       "mean_score": 0.012,
       "mean_prob_up": 0.504,
       "regions": [
         "us"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: C18\u7eba\u7ec7\u670d\u88c5\u3001\u670d\u9970\u4e1a",
+      "n_stocks": 6,
+      "mean_score": 0.007,
+      "mean_prob_up": 0.446,
+      "regions": [
+        "cn"
       ]
     },
     {
@@ -353,6 +398,24 @@
       "mean_prob_up": 0.507,
       "regions": [
         "us"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: G54\u9053\u8def\u8fd0\u8f93\u4e1a",
+      "n_stocks": 16,
+      "mean_score": -0.081,
+      "mean_prob_up": 0.446,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: B06\u7164\u70ad\u5f00\u91c7\u548c\u6d17\u9009\u4e1a",
+      "n_stocks": 21,
+      "mean_score": -0.084,
+      "mean_prob_up": 0.446,
+      "regions": [
+        "cn"
       ]
     },
     {
@@ -383,12 +446,57 @@
       ]
     },
     {
+      "sector": "\u8bc1\u76d1\u4f1a: G55\u6c34\u4e0a\u8fd0\u8f93\u4e1a",
+      "n_stocks": 14,
+      "mean_score": -0.198,
+      "mean_prob_up": 0.447,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: D46\u6c34\u7684\u751f\u4ea7\u548c\u4f9b\u5e94\u4e1a",
+      "n_stocks": 5,
+      "mean_score": -0.225,
+      "mean_prob_up": 0.447,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: S91\u7efc\u5408",
+      "n_stocks": 3,
+      "mean_score": -0.23,
+      "mean_prob_up": 0.447,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
       "sector": "Retail-Eating  Places",
       "n_stocks": 4,
       "mean_score": -0.245,
       "mean_prob_up": 0.512,
       "regions": [
         "us"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: B11\u5f00\u91c7\u4e13\u4e1a\u53ca\u8f85\u52a9\u6027\u6d3b\u52a8",
+      "n_stocks": 5,
+      "mean_score": -0.245,
+      "mean_prob_up": 0.447,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: C22\u9020\u7eb8\u548c\u7eb8\u5236\u54c1\u4e1a",
+      "n_stocks": 5,
+      "mean_score": -0.253,
+      "mean_prob_up": 0.447,
+      "regions": [
+        "cn"
       ]
     },
     {
@@ -401,9 +509,36 @@
       ]
     },
     {
-      "sector": "\u521b\u4e1a\u677f (ChiNext)",
-      "n_stocks": 71,
-      "mean_score": -0.322,
+      "sector": "\u8bc1\u76d1\u4f1a: C13\u519c\u526f\u98df\u54c1\u52a0\u5de5\u4e1a",
+      "n_stocks": 10,
+      "mean_score": -0.314,
+      "mean_prob_up": 0.448,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: C15\u9152\u3001\u996e\u6599\u548c\u7cbe\u5236\u8336\u5236\u9020\u4e1a",
+      "n_stocks": 18,
+      "mean_score": -0.331,
+      "mean_prob_up": 0.448,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: C33\u91d1\u5c5e\u5236\u54c1\u4e1a",
+      "n_stocks": 5,
+      "mean_score": -0.332,
+      "mean_prob_up": 0.448,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: C14\u98df\u54c1\u5236\u9020\u4e1a",
+      "n_stocks": 9,
+      "mean_score": -0.342,
       "mean_prob_up": 0.448,
       "regions": [
         "cn"
@@ -416,6 +551,15 @@
       "mean_prob_up": 0.516,
       "regions": [
         "us"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: D44\u7535\u529b\u3001\u70ed\u529b\u751f\u4ea7\u548c\u4f9b\u5e94\u4e1a",
+      "n_stocks": 37,
+      "mean_score": -0.368,
+      "mean_prob_up": 0.448,
+      "regions": [
+        "cn"
       ]
     },
     {
@@ -437,12 +581,30 @@
       ]
     },
     {
+      "sector": "\u8bc1\u76d1\u4f1a: R86\u65b0\u95fb\u548c\u51fa\u7248\u4e1a",
+      "n_stocks": 7,
+      "mean_score": -0.379,
+      "mean_prob_up": 0.448,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
       "sector": "Services-Commercial Physical & Biological Research",
       "n_stocks": 3,
       "mean_score": -0.423,
       "mean_prob_up": 0.518,
       "regions": [
         "us"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: F52\u96f6\u552e\u4e1a",
+      "n_stocks": 13,
+      "mean_score": -0.434,
+      "mean_prob_up": 0.449,
+      "regions": [
+        "cn"
       ]
     },
     {
@@ -473,9 +635,9 @@
       ]
     },
     {
-      "sector": "\u6caa\u4e3b\u677f (SSE Main)",
-      "n_stocks": 477,
-      "mean_score": -0.477,
+      "sector": "\u8bc1\u76d1\u4f1a: C35\u4e13\u7528\u8bbe\u5907\u5236\u9020\u4e1a",
+      "n_stocks": 31,
+      "mean_score": -0.492,
       "mean_prob_up": 0.449,
       "regions": [
         "cn"
@@ -500,6 +662,24 @@
       ]
     },
     {
+      "sector": "\u8bc1\u76d1\u4f1a: G60\u90ae\u653f\u4e1a",
+      "n_stocks": 4,
+      "mean_score": -0.511,
+      "mean_prob_up": 0.449,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: C25\u77f3\u6cb9\u3001\u7164\u70ad\u53ca\u5176\u4ed6\u71c3\u6599\u52a0\u5de5\u4e1a",
+      "n_stocks": 5,
+      "mean_score": -0.512,
+      "mean_prob_up": 0.449,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
       "sector": "Retail-Variety Stores",
       "n_stocks": 5,
       "mean_score": -0.514,
@@ -509,9 +689,18 @@
       ]
     },
     {
-      "sector": "\u5176\u4ed6 (Other)",
-      "n_stocks": 6,
+      "sector": "\u8bc1\u76d1\u4f1a: C32\u6709\u8272\u91d1\u5c5e\u51b6\u70bc\u548c\u538b\u5ef6\u52a0\u5de5\u4e1a",
+      "n_stocks": 29,
       "mean_score": -0.523,
+      "mean_prob_up": 0.449,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: C27\u533b\u836f\u5236\u9020\u4e1a",
+      "n_stocks": 50,
+      "mean_score": -0.553,
       "mean_prob_up": 0.449,
       "regions": [
         "cn"
@@ -527,21 +716,21 @@
       ]
     },
     {
-      "sector": "\u6df1\u4e3b\u677f (SZSE Main)",
-      "n_stocks": 301,
-      "mean_score": -0.562,
-      "mean_prob_up": 0.45,
-      "regions": [
-        "cn"
-      ]
-    },
-    {
       "sector": "Biological Products, (No Diagnostic Substances)",
       "n_stocks": 5,
       "mean_score": -0.584,
       "mean_prob_up": 0.523,
       "regions": [
         "us"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: A03\u755c\u7267\u4e1a",
+      "n_stocks": 4,
+      "mean_score": -0.585,
+      "mean_prob_up": 0.45,
+      "regions": [
+        "cn"
       ]
     },
     {
@@ -563,6 +752,51 @@
       ]
     },
     {
+      "sector": "\u8bc1\u76d1\u4f1a: C26\u5316\u5b66\u539f\u6599\u548c\u5316\u5b66\u5236\u54c1\u5236\u9020\u4e1a",
+      "n_stocks": 34,
+      "mean_score": -0.611,
+      "mean_prob_up": 0.45,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: C30\u975e\u91d1\u5c5e\u77ff\u7269\u5236\u54c1\u4e1a",
+      "n_stocks": 15,
+      "mean_score": -0.615,
+      "mean_prob_up": 0.45,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: L72\u5546\u52a1\u670d\u52a1\u4e1a",
+      "n_stocks": 19,
+      "mean_score": -0.625,
+      "mean_prob_up": 0.45,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: C38\u7535\u6c14\u673a\u68b0\u548c\u5668\u6750\u5236\u9020\u4e1a",
+      "n_stocks": 40,
+      "mean_score": -0.633,
+      "mean_prob_up": 0.45,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: I65\u8f6f\u4ef6\u548c\u4fe1\u606f\u6280\u672f\u670d\u52a1\u4e1a",
+      "n_stocks": 31,
+      "mean_score": -0.633,
+      "mean_prob_up": 0.45,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
       "sector": "Laboratory Analytical Instruments",
       "n_stocks": 4,
       "mean_score": -0.671,
@@ -572,12 +806,120 @@
       ]
     },
     {
+      "sector": "\u8bc1\u76d1\u4f1a: F51\u6279\u53d1\u4e1a",
+      "n_stocks": 11,
+      "mean_score": -0.673,
+      "mean_prob_up": 0.45,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: J68\u4fdd\u9669\u4e1a",
+      "n_stocks": 5,
+      "mean_score": -0.71,
+      "mean_prob_up": 0.451,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: A01\u519c\u4e1a",
+      "n_stocks": 3,
+      "mean_score": -0.712,
+      "mean_prob_up": 0.451,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: I63\u7535\u4fe1\u3001\u5e7f\u64ad\u7535\u89c6\u548c\u536b\u661f\u4f20\u8f93\u670d\u52a1",
+      "n_stocks": 10,
+      "mean_score": -0.727,
+      "mean_prob_up": 0.451,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: K70\u623f\u5730\u4ea7\u4e1a",
+      "n_stocks": 36,
+      "mean_score": -0.733,
+      "mean_prob_up": 0.451,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: G56\u822a\u7a7a\u8fd0\u8f93\u4e1a",
+      "n_stocks": 11,
+      "mean_score": -0.755,
+      "mean_prob_up": 0.451,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: E48\u571f\u6728\u5de5\u7a0b\u5efa\u7b51\u4e1a",
+      "n_stocks": 18,
+      "mean_score": -0.758,
+      "mean_prob_up": 0.451,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: C37\u94c1\u8def\u3001\u8239\u8236\u3001\u822a\u7a7a\u822a\u5929\u548c\u5176\u4ed6\u8fd0\u8f93\u8bbe\u5907\u5236\u9020\u4e1a",
+      "n_stocks": 16,
+      "mean_score": -0.761,
+      "mean_prob_up": 0.451,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: M73\u7814\u7a76\u548c\u8bd5\u9a8c\u53d1\u5c55",
+      "n_stocks": 3,
+      "mean_score": -0.763,
+      "mean_prob_up": 0.451,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: B09\u6709\u8272\u91d1\u5c5e\u77ff\u91c7\u9009\u4e1a",
+      "n_stocks": 11,
+      "mean_score": -0.766,
+      "mean_prob_up": 0.451,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: C31\u9ed1\u8272\u91d1\u5c5e\u51b6\u70bc\u548c\u538b\u5ef6\u52a0\u5de5\u4e1a",
+      "n_stocks": 25,
+      "mean_score": -0.766,
+      "mean_prob_up": 0.451,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
       "sector": "Railroads, Line-Haul Operating",
       "n_stocks": 3,
       "mean_score": -0.782,
       "mean_prob_up": 0.529,
       "regions": [
         "us"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: C36\u6c7d\u8f66\u5236\u9020\u4e1a",
+      "n_stocks": 22,
+      "mean_score": -0.788,
+      "mean_prob_up": 0.451,
+      "regions": [
+        "cn"
       ]
     },
     {
@@ -617,12 +959,30 @@
       ]
     },
     {
+      "sector": "\u8bc1\u76d1\u4f1a: C29\u6a61\u80f6\u548c\u5851\u6599\u5236\u54c1\u4e1a",
+      "n_stocks": 10,
+      "mean_score": -0.836,
+      "mean_prob_up": 0.451,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
       "sector": "Investment Advice",
       "n_stocks": 7,
       "mean_score": -0.841,
       "mean_prob_up": 0.531,
       "regions": [
         "us"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: C34\u901a\u7528\u8bbe\u5907\u5236\u9020\u4e1a",
+      "n_stocks": 18,
+      "mean_score": -0.845,
+      "mean_prob_up": 0.451,
+      "regions": [
+        "cn"
       ]
     },
     {
@@ -644,12 +1004,39 @@
       ]
     },
     {
+      "sector": "\u8bc1\u76d1\u4f1a: J69\u5176\u4ed6\u91d1\u878d\u4e1a",
+      "n_stocks": 8,
+      "mean_score": -0.894,
+      "mean_prob_up": 0.452,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: C17\u7eba\u7ec7\u4e1a",
+      "n_stocks": 3,
+      "mean_score": -0.913,
+      "mean_prob_up": 0.452,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
       "sector": "Services-Consumer Credit Reporting, Collection Agencies",
       "n_stocks": 3,
       "mean_score": -0.916,
       "mean_prob_up": 0.533,
       "regions": [
         "us"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: C28\u5316\u5b66\u7ea4\u7ef4\u5236\u9020\u4e1a",
+      "n_stocks": 6,
+      "mean_score": -0.939,
+      "mean_prob_up": 0.452,
+      "regions": [
+        "cn"
       ]
     },
     {
@@ -671,12 +1058,39 @@
       ]
     },
     {
+      "sector": "\u8bc1\u76d1\u4f1a: Q84\u536b\u751f",
+      "n_stocks": 4,
+      "mean_score": -1.007,
+      "mean_prob_up": 0.453,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: J67\u8d44\u672c\u5e02\u573a\u670d\u52a1",
+      "n_stocks": 45,
+      "mean_score": -1.01,
+      "mean_prob_up": 0.453,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
       "sector": "Retail-Building Materials, Hardware, Garden Supply",
       "n_stocks": 3,
       "mean_score": -1.05,
       "mean_prob_up": 0.538,
       "regions": [
         "us"
+      ]
+    },
+    {
+      "sector": "\u8bc1\u76d1\u4f1a: I64\u4e92\u8054\u7f51\u548c\u76f8\u5173\u670d\u52a1",
+      "n_stocks": 15,
+      "mean_score": -1.079,
+      "mean_prob_up": 0.453,
+      "regions": [
+        "cn"
       ]
     },
     {
@@ -698,6 +1112,15 @@
       ]
     },
     {
+      "sector": "\u8bc1\u76d1\u4f1a: R87\u5e7f\u64ad\u3001\u7535\u89c6\u3001\u7535\u5f71\u548c\u5f55\u97f3\u5236\u4f5c\u4e1a",
+      "n_stocks": 7,
+      "mean_score": -1.118,
+      "mean_prob_up": 0.453,
+      "regions": [
+        "cn"
+      ]
+    },
+    {
       "sector": "State Commercial Banks",
       "n_stocks": 5,
       "mean_score": -1.276,
@@ -707,5 +1130,5 @@
       ]
     }
   ],
-  "snapshot_ts": "2026-09-05T03:16:23.122212+00:00"
+  "snapshot_ts": "2026-09-06T17:11:57.529738+00:00"
 }

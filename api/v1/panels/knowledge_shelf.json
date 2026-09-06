@@ -1,14 +1,14 @@
 {
   "status": "ok",
-  "as_of": "2026-09-04",
-  "n_docs": 68,
+  "as_of": "2026-09-06",
+  "n_docs": 69,
   "n_categories": 5,
   "categories": {
     "preregistration": 10,
     "adr": 13,
     "results": 2,
     "rubric": 2,
-    "theory": 41
+    "theory": 42
   },
   "docs": [
     {
@@ -579,6 +579,15 @@
       "url": "https://github.com/Rethymus/Aionis/blob/main/docs/ohclv-panel-extension-plan.md"
     },
     {
+      "title": "Ops: local evening refresh lane (the \"temporary server\")",
+      "path": "docs/ops-local-refresh.md",
+      "category": "theory",
+      "date": "2026-09-06",
+      "n_chars": 9752,
+      "summary": "Since 2026-09-06. Owner decision: no paid server \u2014 the developer machine, woken on Beijing trading-day evenings via a ZCode workspace automation, IS the cron server for the terminal's daily data refresh. Target: run unattended \u22651 month.",
+      "url": "https://github.com/Rethymus/Aionis/blob/main/docs/ops-local-refresh.md"
+    },
+    {
       "title": "Aionis Orchestration Protocol \u2014 operational spec",
       "path": "docs/orchestration-protocol.md",
       "category": "theory",
@@ -740,5 +749,5 @@
     }
   ],
   "methodology": "Layer 1 \u2014 Aionis's OWN method library: catalog of docs/ + decisions/ markdown (repo MIT; zero third-party copyright surface). Each entry carries metadata plus a safe teaser slice (first 2-3 sentences, <=240 chars) extracted at export time; the full text stays on GitHub (link-out). Dates are last-commit dates read from the LOCAL git repository (no network). Layer 2 \u2014 a FIXED editorially-curated bookmark list of first-hand public research sources (BIS / Fed FEDS / IMF / NBER / arXiv q-fin / FRASER / FRED-ALFRED / RePEc): link-out + one static sentence each, no fetching, no scraping, no summary APIs \u2014 copyright stays with the authors, we only catalog. Categories are a fixed 5-rail whitelist (preregistration / adr / results / rubric / theory); n_docs reconciles to the sum of the rails. Layer 3 \u2014 generated evidence artifacts: self-contained HTML, byte-stable, sha256 + byte count pinned at export time from the local tracked file so a reader can verify the download against the catalog (a missing file degrades honestly to null \u2014 never fabricated). Superseded artifact versions are retained under reports/evidence/archive/ (move-don't-delete \u2014 the archive only grows). Display-only reference lane \u2014 never part of any research or OOS pipeline.",
-  "snapshot_ts": "2026-09-05T08:22:35.038563+00:00"
+  "snapshot_ts": "2026-09-06T17:12:24.286546+00:00"
 }
