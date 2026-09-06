@@ -38,6 +38,7 @@ data/
 # --- Run artifacts (regenerable). The append-only ledger IS tracked. ---
 runs/results/
 runs/*.log
+runs/ops_local_refresh/	# local evening lane logs+marker state
 runs/*.json
 runs/health_*.json
 # Stray root-level operational logs (fetch/debug output) — regenerable, never tracked
