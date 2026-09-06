@@ -1,0 +1,27 @@
+{
+  "hooks": {
+    "enabled": true,
+    "events": {
+      "SessionStart": [
+        {
+          "matcher": "startup|resume",
+          "hooks": [
+            {
+              "type": "process",
+              "command": "uv",
+              "args": [
+                "run",
+                "--project",
+                "${ZCODE_PROJECT_DIR}",
+                "python",
+                "${ZCODE_PROJECT_DIR}/scripts/ops_evening_hook.py"
+              ],
+              "timeoutMs": 30000,
+              "statusMessage": "Aionis evening data lane check"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

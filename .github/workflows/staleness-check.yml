@@ -1,0 +1,81 @@
+name: Staleness check (terminal data)
+
+# The safety net for the local evening refresh lane (docs/ops-local-refresh.md).
+# The lane itself runs on the owner's machine (SessionStart hook + ZCode cron
+# automation), so its blind spot is "the machine never opens in the evening for
+# days" — the deployed terminal would silently go stale. This workflow is the
+# cheap tripwire for exactly that: once a week it reads the COMMITTED
+# data_health panel and raises an Issue when the freshest snapshot is old.
+#
+# Cost: ~1-2 Actions minutes per month (one 30s job weekly) — 0.1% of the
+# retired refresh lane's 1,300-1,700 min/month. Public-facing signal (an Issue)
+# survives even a fully offline local machine.
+#
+# Threshold: >5 days (the lane runs Mon-Fri evenings; a holiday weekend plus
+# two missed evenings should not page, but a full week must).
+
+on:
+  schedule:
+    - cron: '0 2 * * 1'  # Mondays 02:00 UTC = Mondays 10:00 Beijing
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: staleness-check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Parse committed data_health snapshot age
+        id: age
+        run: |
+          python3 - <<'EOF'
+          import json, datetime, os
+          health = json.load(open('web/src/data/aionis/data_health.json'))
+          snap = health.get('snapshot_ts') or ''
+          # snapshot_ts like "2026-09-05T07:59:40.746042+00:00"
+          ts = datetime.datetime.fromisoformat(snap)
+          age_days = (datetime.datetime.now(datetime.timezone.utc) - ts).days
+          print(f'snapshot={snap} age_days={age_days}')
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
+              out.write(f'age_days={age_days}\n')
+              out.write(f'snapshot={snap}\n')
+          EOF
+
+      - name: Open staleness issue (deduped)
+        if: steps.age.outputs.age_days > 5
+        run: |
+          TITLE="terminal data stale: data_health snapshot ${{ steps.age.outputs.snapshot }} (${{ steps.age.outputs.age_days }}d old)"
+          BODY=$(cat <<'EOF'
+          The committed terminal data (web/src/data/aionis/data_health.json) has
+          not refreshed in more than 5 days — the local evening lane has not
+          succeeded recently (machine off in the evenings, attempt-cap locked,
+          or push/credentials broken).
+
+          Recovery: open ZCode in the Aionis workspace on a weekday evening
+          (SessionStart hook fires immediately), or check
+          runs/ops_local_refresh/<date>/run.log on the owner machine, or run
+          the "Refresh terminal data" workflow_dispatch for a CI catch-up pass.
+          See docs/ops-local-refresh.md.
+          EOF
+          )
+          Existing=$(gh issue list --state open --search "terminal data stale" --json number,title --jq 'length')
+          if [ "$Existing" -eq 0 ]; then
+            gh issue create --title "$TITLE" --body "$BODY"
+          else
+            echo "An open staleness issue already exists — skipping (dedupe)."
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Fresh (no-op)
+        if: steps.age.outputs.age_days <= 5
+        run: echo "data fresh (${{ steps.age.outputs.age_days }}d old) — nothing to do."

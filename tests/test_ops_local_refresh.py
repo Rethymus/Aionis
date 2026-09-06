@@ -6,6 +6,7 @@ Pure functions only: no network, no git, no data/cache dependency.
 """
 from __future__ import annotations
 
+import subprocess
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -13,6 +14,7 @@ from pathlib import Path
 _SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 sys.path.insert(0, str(_SCRIPTS))
 
+import ops_evening_hook as hook  # noqa: E402
 import ops_local_refresh as lane  # noqa: E402
 
 
@@ -119,3 +121,53 @@ def test_lane_commits_only_allowlisted_paths() -> None:
     joined = "/".join(lane.ALLOWED_COMMIT_PATHS)
     for forbidden in ("runs/ledger", "config/", "src/aionis/eval"):
         assert forbidden not in joined
+
+
+# --- SessionStart hook launcher -----------------------------------------------
+
+
+def test_hook_silent_noop_when_guard_skips(monkeypatch, tmp_path) -> None:
+    """The launcher must exit 0 and NEVER spawn a process on a SKIP decision."""
+    spawned = []
+    monkeypatch.setattr(hook.lane, "guard_decision", lambda now, state: "SKIP:already-done")
+    monkeypatch.setattr(hook.subprocess, "Popen", lambda *a, **k: spawned.append(a))
+    monkeypatch.setattr(hook.lane, "LOG_DIR", tmp_path)
+    assert hook.main() == 0
+    assert spawned == []
+
+
+def test_hook_spawns_detached_run_when_guard_runs(monkeypatch, tmp_path) -> None:
+    """On RUN the launcher spawns exactly one detached --run process."""
+    spawned = {}
+
+    class _FakeProc:  # noqa: D401 - minimal stand-in
+        pass
+
+    monkeypatch.setattr(hook.lane, "guard_decision", lambda now, state: "RUN")
+    def _spawn(*a, **k):
+        spawned["argv"] = a
+        spawned["kwargs"] = k
+        return _FakeProc()
+
+    monkeypatch.setattr(hook.subprocess, "Popen", _spawn)
+    monkeypatch.setattr(hook.lane, "LOG_DIR", tmp_path)
+    assert hook.main() == 0
+    argv = spawned["argv"][0]
+    assert argv[0] == "uv" and argv[-1] == "--run"
+    assert "ops_local_refresh.py" in " ".join(argv)
+    # Detachment flags are platform-appropriate (survives the hook + session).
+    if hook.IS_WINDOWS:
+        assert spawned["kwargs"]["creationflags"] & subprocess.DETACHED_PROCESS
+    else:
+        assert spawned["kwargs"]["start_new_session"] is True
+
+
+def test_hook_spawn_failure_never_fails_session(monkeypatch, tmp_path) -> None:
+    """A spawn OSError is swallowed (logged) — exit 0, cron backstop retries."""
+    def _boom(*a, **k):
+        raise OSError("spawn denied")
+
+    monkeypatch.setattr(hook.lane, "guard_decision", lambda now, state: "RUN")
+    monkeypatch.setattr(hook.subprocess, "Popen", _boom)
+    monkeypatch.setattr(hook.lane, "LOG_DIR", tmp_path)
+    assert hook.main() == 0
