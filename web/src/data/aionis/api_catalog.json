@@ -196,7 +196,7 @@
       "method": "GET",
       "status": "available",
       "freshness": "daily",
-      "as_of": "2026-09-04",
+      "as_of": "2026-09-07",
       "license": "Tiingo/Alpaca free tier (vendor ToS, display-only) + GDELT open data",
       "source": "daily prices, fundamentals, GDELT news sentiment, ALFRED macro"
     },
@@ -306,7 +306,7 @@
       "method": "GET",
       "status": "available",
       "freshness": "daily",
-      "as_of": "2026-09-06T15:45:00Z",
+      "as_of": "2026-09-07T09:45:00Z",
       "license": "GDELT open data (facts; article copyright stays with publishers)",
       "source": "GDELT Doc 2.0 artlist market headlines, seendate PIT, link-out only"
     },
@@ -438,7 +438,7 @@
       "method": "GET",
       "status": "available",
       "freshness": "daily",
-      "as_of": "2026-09-06",
+      "as_of": "2026-09-07",
       "license": "ApeWisdom free public API (apewisdom.io) \u2014 vendor ToS, display-only",
       "source": "Reddit trending-stocks board: rank/mentions/upvotes + 24h lags, verbatim first-party fields, today-snapshot only"
     },
@@ -592,7 +592,7 @@
       "method": "GET",
       "status": "available",
       "freshness": "cadence",
-      "as_of": "2026-09-06",
+      "as_of": "2026-09-07",
       "license": "Aionis repo docs (repo MIT) + editorial link-out bookmarks",
       "source": "docs/ + decisions/ method catalog with GitHub link-outs and a fixed curated public research-source list; teasers are safe slices of our own MIT docs, third-party content never copied"
     },
@@ -634,5 +634,5 @@
     "server": "https://api.aionis-prices.workers.dev"
   },
   "methodology": "Public static data API over the terminal's committed panels (display-only). Every endpoint carries its 7-gate intake facts: license + primary source, plus the freshness class (daily / cadence / frozen). Frozen endpoints derive from frozen OOS artifacts (ledger #49 lineage) and deliberately do NOT advance \u2014 consuming them expecting daily updates misreads the contract. Endpoints with status=planned are NOT built: the path is a reserved future location, no payload is served, as_of is null, and the license/source describe the primary source the future fetcher would use. Research ingestion of any endpoint requires the full 7-gate rubric (docs/data-intake-rubric.md); the live-prices worker is display-only and must never enter the OOS pipeline.",
-  "snapshot_ts": "2026-09-06T17:12:24.468611+00:00"
+  "snapshot_ts": "2026-09-07T10:25:09.373964+00:00"
 }
