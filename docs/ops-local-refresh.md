@@ -125,6 +125,15 @@ uv run python scripts/ops_evening_hook.py                  # simulate the hook (
 uv run pytest -q tests/test_ops_local_refresh.py           # lane logic tests
 ```
 
+In-chat: the workspace command **/refresh-data** runs the guard and (on RUN, or
+SKIP + an explicit "force" from the owner) executes the lane — same red lines.
+
+Energy refinement (2026-09-07): on US-holiday evenings (NYSE calendar via the
+project's canonical `nyse_sessions`, fail-open) the guard SKIPs — but ONLY
+while the last run left no catch-up work (`soft_fails` in the marker state);
+holidays with pending pct-parse/price convergence still run. The calendar
+check fails OPEN (treats unknown as a trading day): freshness outranks energy.
+
 Logs: `runs/ops_local_refresh/<date>/run.log` (gitignored). Hook config
 (`.zcode/config.json`) takes effect from the NEXT session start after edits.
 The retired localhost:8935 preview server (round 70/75 leftover, PID killed
@@ -133,7 +142,11 @@ The retired localhost:8935 preview server (round 70/75 leftover, PID killed
 surface. Re-enable the CI refresh cron by restoring the `schedule:` trigger
 in `refresh-terminal-data.yml` (git history of its 2026-09-06 change).
 
-## Research appendix (2026-09-06): alternatives considered & platform rules
+## Research appendix (2026-09-06/07): alternatives considered & platform rules
+
+Full memo with sources, the six-way alternatives table (incl. the deferred
+self-hosted-runner Plan B), token/energy model and month plan:
+`reports/design/2026-09-07-evening-lane-research.md`. Summary:
 
 Alternatives for "daily refresh without a paid server", evaluated against the
 constraints (private-repo billing, token/energy budget, unattended reliability):

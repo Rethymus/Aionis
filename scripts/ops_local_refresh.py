@@ -72,6 +72,23 @@ RUNNING_STALE_MINUTES = 90
 
 IS_WINDOWS = sys.platform.startswith("win")
 
+
+def _us_holiday_today(now: datetime) -> bool:
+    """True when the NYSE calendar (canonical project wrapper) says the US
+    trading day corresponding to this Beijing evening is a holiday. In the
+    18:00-23:59 Beijing window the US calendar date equals the local date.
+    Fail-open (-> False, treat as trading day): freshness outranks energy
+    savings whenever the calendar is unavailable."""
+    try:
+        import pandas as pd
+
+        from aionis.features.alignment import nyse_sessions
+
+        day = pd.Timestamp(now.date())
+        return len(nyse_sessions(day, day)) == 0
+    except Exception:  # noqa: BLE001 — fail-open by design
+        return False
+
 # Step = dict(name, uv_argv after "uv run", cap minutes, soft=continue-on-error).
 # Order mirrors the CI lane; [local superset] steps are the warm-cache additions.
 MACRO_INLINE = (
@@ -217,6 +234,13 @@ def guard_decision(now: datetime, state: dict) -> str:
     if now.hour < WINDOW_OPEN_HOUR:
         return (f"SKIP:window-not-open (before {WINDOW_OPEN_HOUR}:00 local — "
                 "coding-plan peak hours and not post-close)")
+    # Energy-saving holiday skip — ONLY when no catch-up work is pending
+    # (soft-fails from the last run, e.g. a partially-parsed pct set or a
+    # rate-limited price convergence). On a holiday with pending catch-up the
+    # lane still runs: EDGAR archives stay reachable, GDELT/macro advance.
+    if not state.get("soft_fails") and _us_holiday_today(now):
+        return ("SKIP:holiday-us (NYSE closed and no catch-up pending — "
+                "energy-saving skip; --force overrides)")
     if state.get("date") == today:
         status = state.get("status")
         if status in ("ok_committed", "ok_nochange"):
@@ -419,7 +443,7 @@ def do_run(force: bool) -> int:
             status, sha, pushed, n_files = commit_and_push(fh)
             publish = verify_publish_triggered() if pushed else "skipped (no push)"
             state.update({"status": status, "commit": sha, "pushed": pushed,
-                          "n_files": n_files,
+                          "n_files": n_files, "soft_fails": soft_fails,
                           "finished_at": datetime.now().isoformat()})
             save_state(state)
             summary = {

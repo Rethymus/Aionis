@@ -2475,3 +2475,4 @@ dashboard realizing `docs/dashboard-v2-design.md`'s 5 dimensions on deterministi
   - **数据实效**：smart_money pct_now 0→73/120 非空、stakes_13g→390/400；明晚续跑补完。
   - **运维事实**：marker 2026-09-06=ok_committed 97cbc1b21；今晚（周一）为首次完全无人值守运行（钩子+*/30 兜底）。
   - **轮 91 收尾补记**：矩阵修复后 CI 仍红一轮=knowledge_shelf.json 同样钉工件 sha（其重导也在崩溃步里）→ 补导 shelf+**通道门与 CI 门双双加宽**（+test_knowledge_shelf_panel_contract.py=漂移警报入闸）→ 全量本地 exit 0→CI success 34049175797。**线上终证**：publish-site 两次 success（1m39s/1m46s）；LIVE /api/v1/panels/smart_money.json pct_now 73/120 非空+latest 2026-09-04——本地 fetch→commit→push→CI build→gh-pages→线上面板全链实证贯通。
+  - **轮 92（2026-09-07）**：休市感知守卫（nyse_sessions 复用+fail-open+soft_fails 条件跳过；今晚 Labor Day 因补课在身照跑）/工作区命令 /refresh-data（.zcode/commands/）/self-hosted runner 评估为 Plan B/正式研究备忘 reports/design/2026-09-07-evening-lane-research.md。测试 17 绿（真实日历 Labor Day 集成断言）。

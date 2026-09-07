@@ -19,8 +19,9 @@ import ops_local_refresh as lane  # noqa: E402
 
 
 def _monday(hour: int = 19) -> datetime:
-    # 2026-09-07 is a Monday (the lane's first scheduled evening).
-    return datetime(2026, 9, 7, hour, 5)
+    # 2026-09-14 is a REGULAR trading Monday (09-07 is Labor Day — reserved
+    # for the holiday-branch tests below).
+    return datetime(2026, 9, 14, hour, 5)
 
 
 # --- guard decisions ----------------------------------------------------------
@@ -40,7 +41,7 @@ def test_guard_skips_before_window_opens() -> None:
 
 
 def test_guard_skips_after_successful_run_same_day() -> None:
-    state = {"date": "2026-09-07", "status": "ok_committed",
+    state = {"date": "2026-09-14", "status": "ok_committed",
              "attempts": 1, "commit": "abc1234"}
     decision = lane.guard_decision(_monday(21), state)
     assert decision.startswith("SKIP:already-done")
@@ -49,22 +50,55 @@ def test_guard_skips_after_successful_run_same_day() -> None:
 
 def test_guard_skips_while_in_progress_and_recovers_stale_running() -> None:
     import time as _time
-    fresh = {"date": "2026-09-07", "status": "running",
+    fresh = {"date": "2026-09-14", "status": "running",
              "started_at_epoch": _time.time() - 10 * 60}
     assert lane.guard_decision(_monday(21), fresh).startswith("SKIP:in-progress")
-    stale = {"date": "2026-09-07", "status": "running",
+    stale = {"date": "2026-09-14", "status": "running",
              "started_at_epoch": _time.time() - 10_000 * 60}
     assert lane.guard_decision(_monday(21), stale) == "RUN"
 
 
 def test_guard_locks_after_attempt_cap() -> None:
-    state = {"date": "2026-09-07", "status": "failed", "attempts": 3}
+    state = {"date": "2026-09-14", "status": "failed", "attempts": 3}
     assert lane.guard_decision(_monday(22), state).startswith("SKIP:attempt-cap")
 
 
 def test_guard_resets_on_new_day() -> None:
     state = {"date": "2026-09-04", "status": "failed", "attempts": 3}
     assert lane.guard_decision(_monday(22), state) == "RUN"
+
+
+# --- US-holiday energy skip ----------------------------------------------------
+
+
+def test_holiday_skips_only_without_catchup(monkeypatch) -> None:
+    """2026-09-07 is Labor Day (NYSE closed). With a clean prior run the guard
+    skips (energy); with pending catch-up (soft_fails) it still runs."""
+    monkeypatch.setattr(lane, "_us_holiday_today", lambda now: True)
+    clean = {"date": "2026-09-05", "status": "ok_committed", "soft_fails": []}
+    assert lane.guard_decision(_monday(19), clean).startswith("SKIP:holiday-us")
+    pending = {"date": "2026-09-06", "status": "ok_committed",
+               "soft_fails": ["stakes_pct_parse (visible 13G/13D rows) [local superset]"]}
+    assert lane.guard_decision(_monday(19), pending) == "RUN"
+
+
+def test_holiday_check_fails_open(monkeypatch) -> None:
+    """Calendar unavailable => _us_holiday_today returns False (treat as
+    trading day — freshness outranks energy savings)."""
+    import aionis.features.alignment as align
+
+    def _boom(start, end):
+        raise RuntimeError("calendar unavailable")
+
+    monkeypatch.setattr(align, "nyse_sessions", _boom)
+    assert lane._us_holiday_today(datetime(2026, 9, 7, 19)) is False
+
+
+def test_labor_day_2026_is_really_a_holiday() -> None:
+    """Integration: the real NYSE calendar says 2026-09-07 (Labor Day) closed,
+    2026-09-08 open. Guards the guard against calendar-usage regressions."""
+    assert lane._us_holiday_today(datetime(2026, 9, 7, 19)) is True
+    assert lane._us_holiday_today(datetime(2026, 9, 8, 19)) is False
 
 
 # --- ledger append classifier -------------------------------------------------
