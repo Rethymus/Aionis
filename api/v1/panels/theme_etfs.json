@@ -78,69 +78,69 @@
       "ticker": "ICLN",
       "issuer": "iShares (BlackRock)",
       "fund": "iShares Global Clean Energy ETF",
-      "as_of": "2026-09-03",
-      "n_positions": 106,
-      "skipped_rows": 69,
+      "as_of": "2026-09-04",
+      "n_positions": 105,
+      "skipped_rows": 38,
       "top": [
         {
           "ticker": "BE",
           "company": "BLOOM ENERGY CLASS A",
-          "weight_pct": 8.0,
-          "market_value": 162977987.2
+          "weight_pct": 8.51,
+          "market_value": 173600818.14
         },
         {
           "ticker": "FSLR",
           "company": "FIRST SOLAR",
-          "weight_pct": 7.99,
-          "market_value": 162708959.64
+          "weight_pct": 7.8,
+          "market_value": 159131613.0
         },
         {
           "ticker": "600900",
           "company": "CHINA YANGTZE POWER LTD A",
-          "weight_pct": 7.76,
-          "market_value": 158049887.72
+          "weight_pct": 7.69,
+          "market_value": 156930948.99
         },
         {
           "ticker": "NXT",
           "company": "NEXTPOWER INC",
-          "weight_pct": 6.57,
-          "market_value": 133856011.0
+          "weight_pct": 6.59,
+          "market_value": 134405024.0
         },
         {
           "ticker": "VWS",
           "company": "VESTAS WIND SYSTEMS",
-          "weight_pct": 4.54,
-          "market_value": 92494961.77
+          "weight_pct": 4.46,
+          "market_value": 91067393.19
         },
         {
           "ticker": "ENPH",
           "company": "ENPHASE ENERGY",
-          "weight_pct": 4.48,
-          "market_value": 91286498.97
+          "weight_pct": 4.45,
+          "market_value": 90726056.1
         },
         {
           "ticker": "EQTL3",
           "company": "EQUATORIAL SA",
-          "weight_pct": 3.34,
-          "market_value": 67958082.81
+          "weight_pct": 3.31,
+          "market_value": 67557682.35
         },
         {
           "ticker": "EDP",
           "company": "EDP ENERGIAS DE PORTUGAL",
-          "weight_pct": 2.85,
-          "market_value": 58071986.75
-        },
-        {
-          "ticker": "9502",
-          "company": "CHUBU ELECTRIC POWER INC",
-          "weight_pct": 2.81,
-          "market_value": 57205061.61
+          "weight_pct": 2.83,
+          "market_value": 57801815.05
         },
         {
           "ticker": "PLUG",
           "company": "PLUG POWER",
-          "weight_pct": 2.76,
-          "market_value": 56153486.97
+          "weight_pct": 2.81,
+          "market_value": 57301039.53
+        },
+        {
+          "ticker": "9502",
+          "company": "CHUBU ELECTRIC POWER INC",
+          "weight_pct": 2.72,
+          "market_value": 55500858.26
         }
       ]
     },
@@ -814,7 +814,7 @@
         "ARTY",
         "BAI"
       ],
-      "max_weight_pct": 8.0
+      "max_weight_pct": 8.51
     },
     {
       "ticker": "INTC",
@@ -918,5 +918,5 @@
     }
   ],
   "methodology": "Thematic ETF daily holdings from the issuers' own official files \u2014 iShares/BlackRock latest-holdings.csv endpoints and Global X (Mirae Asset) dated full-holdings CSVs linked from each fund page (free, public, published every business day; all endpoint URLs verified live 2026-08-23 by downloading each file \u2014 Global X's date-in-filename links are re-extracted from the fund page's own HTML on every fetch, so a rename surfaces as an honest per-fund failure, never a silent gap). Rows: official weight/market value as published; iShares rows are kept for the Equity asset class only (futures/cash/FX legs skipped and counted), Global X rows with no ticker (cash/FX bookkeeping) are skipped and counted. Top-10 per fund by weight; the resonance table lists tickers held by 2+ of these theme ETFs across issuers. Candidates without a reachable free official file were honestly dropped (Amplify BLOK, Invesco, VanEck, First Trust, SPDR-XLS; see docs/data-intake-etf-holdings.md). Neither issuer keeps a CSV history \u2014 the dated local snapshots are the only time series. Display-only, exploratory; no prices, no returns, no performance claim; NOT part of any research or OOS pipeline.",
-  "snapshot_ts": "2026-09-06T17:12:18.510022+00:00"
+  "snapshot_ts": "2026-09-07T10:25:01.343644+00:00"
 }

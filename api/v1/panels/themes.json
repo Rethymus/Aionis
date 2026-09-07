@@ -3,7 +3,7 @@
   "as_of_date": "2026-09-04",
   "freshness": {
     "earliest": "2026-09",
-    "latest": "2026-09-04",
+    "latest": "2026-09-07",
     "mixed": true
   },
   "methodology": "Seven-theme signal overview (display-only, NOT a research claim). Aggregates are cross-sectional means over the S&P 500 PIT panel at the latest realized month; the macro theme uses the Track-C macro-regime composite; net cost uses the bps sweep. Themes marked forward_only / needs_work / partial have no real historical signal yet \u2014 shown honestly, never mocked. Not the frozen Track-B verdict.",
@@ -32,11 +32,11 @@
         },
         {
           "name": "rsi_21d",
-          "value": 0.4704
+          "value": 0.4842
         },
         {
           "name": "timetohigh_63d",
-          "value": 0.4642
+          "value": 0.4241
         }
       ],
       "series": [
@@ -66,7 +66,7 @@
         },
         {
           "month": "2026-01",
-          "value": 0.0288
+          "value": 0.0286
         },
         {
           "month": "2026-02",
@@ -93,7 +93,7 @@
     {
       "key": "macro",
       "status": "live",
-      "as_of": "2026-09-04",
+      "as_of": "2026-09-07",
       "signals": [
         {
           "name": "macro_regime",
@@ -101,10 +101,6 @@
         }
       ],
       "series": [
-        {
-          "date": "2026-06-15",
-          "value": 0.414
-        },
         {
           "date": "2026-06-16",
           "value": 0.27
@@ -340,6 +336,10 @@
         {
           "date": "2026-09-04",
           "value": 0.102
+        },
+        {
+          "date": "2026-09-07",
+          "value": 0.102
         }
       ],
       "headline": "macro-regime composite z (VIX+credit+term+DFF surprise)"
@@ -552,7 +552,7 @@
       "signals": [
         {
           "name": "downside_beta",
-          "value": 1.0073
+          "value": 1.0061
         },
         {
           "name": "idiosyncratic_volatility",
@@ -560,11 +560,11 @@
         },
         {
           "name": "return_skewness",
-          "value": 0.1042
+          "value": 0.1044
         },
         {
           "name": "worst_day_drawdown",
-          "value": -0.0589
+          "value": -0.059
         }
       ],
       "series": [
@@ -614,7 +614,7 @@
         },
         {
           "month": "2026-09",
-          "value": 1.0028
+          "value": 1.0016
         }
       ]
     },
@@ -706,5 +706,5 @@
       ]
     }
   ],
-  "snapshot_ts": "2026-09-06T17:12:09.660110+00:00"
+  "snapshot_ts": "2026-09-07T10:24:51.014095+00:00"
 }

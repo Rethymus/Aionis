@@ -7950,5 +7950,5 @@
     "note": "efdsearch.senate.gov serves Akamai 'Access Denied' to plain GET \u2014 no first-party access; disclosed rather than routed through third parties."
   },
   "methodology": "STOCK Act congressional trading, v1 = U.S. House Clerk PTR (Periodic Transaction Report) FILING-STREAM index \u2014 public domain. Source: the Clerk's daily bulk index (financial-pdfs/{year}FD.zip -> FD.xml), one polite request per year; FilingType 'P' rows are PTRs with the member, state-district office, and the as-filed FilingDate; each row links the source PDF by DocID. Transaction detail (asset, amount band, trade dates \u2014 the basis of the 45-day late-filing rule) lives inside those PDFs and is NOT parsed; this panel therefore shows WHO filed WHEN, never what was traded \u2014 no amounts or tickers are fabricated. The Senate eFD source is Akamai-blocked (disclosed as blocked, not circumvented through third-party APIs whose licenses fail the 7-gate). Party labels come from the house.gov current-member directory joined on district + last name (office-only, no name corroboration \u2192 null; candidates and former members never inherit the incumbent's party). Window 2025-2026. Display-only, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-09-06T17:12:12.527244+00:00"
+  "snapshot_ts": "2026-09-07T10:24:54.369934+00:00"
 }
