@@ -1,29 +1,344 @@
 {
   "status": "ok",
-  "as_of": "2026-09-04",
+  "as_of": "2026-09-08",
   "window": {
-    "start": "2026-08-25",
-    "end": "2026-09-04"
+    "start": "2026-08-26",
+    "end": "2026-09-08"
   },
-  "total_merged": 9606,
+  "total_merged": 8634,
   "n_visible": 800,
   "by_form": {
-    "4": 212,
-    "8-K": 164,
-    "D": 152,
-    "D/A": 101,
+    "8-K": 177,
+    "D": 172,
+    "4": 168,
+    "D/A": 105,
     "SC 13G/A": 75,
-    "DEFA14A": 24,
+    "DEFA14A": 27,
     "4/A": 17,
     "SC 13G": 14,
+    "DEF 14A": 11,
     "SC 13D/A": 11,
-    "DEF 14A": 10,
-    "S-1/A": 7,
-    "8-K/A": 5,
-    "SC 13D": 4,
-    "S-1": 4
+    "S-1/A": 8,
+    "8-K/A": 6,
+    "S-1": 5,
+    "SC 13D": 4
   },
   "filings": [
+    {
+      "form": "S-1/A",
+      "who": "Holtec Nuclear Corp",
+      "ticker": "HNUC",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2104277/000119312526384287/0001193125-26-384287-index.htm"
+    },
+    {
+      "form": "S-1",
+      "who": "Ocean Power Technologies, Inc.",
+      "ticker": "OPTT",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1378140/000149315226041658/0001493152-26-041658-index.htm"
+    },
+    {
+      "form": "DEFA14A",
+      "who": "WAFD INC",
+      "ticker": "WAFD",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/936528/000114036126035830/0001140361-26-035830-index.htm"
+    },
+    {
+      "form": "DEFA14A",
+      "who": "WAFD INC",
+      "ticker": "WAFD",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/936528/000114036126035829/0001140361-26-035829-index.htm"
+    },
+    {
+      "form": "DEFA14A",
+      "who": "WAFD INC",
+      "ticker": "WAFD",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/936528/000114036126035827/0001140361-26-035827-index.htm"
+    },
+    {
+      "form": "DEF 14A",
+      "who": "Cayson Acquisition Corp",
+      "ticker": "CAPN",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2024203/000149315226041667/0001493152-26-041667-index.htm"
+    },
+    {
+      "form": "D/A",
+      "who": "Equitybee 22-54239, a Series of Equitybee cFund Master LLC",
+      "ticker": "",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2082637/000208263726000004/0002082637-26-000004-index.htm"
+    },
+    {
+      "form": "D/A",
+      "who": "Equitybee 22-57092, a Series of Equitybee cFund Master LLC",
+      "ticker": "",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1963001/000196300126000001/0001963001-26-000001-index.htm"
+    },
+    {
+      "form": "D/A",
+      "who": "Oresund AlphaLife Partners, LP",
+      "ticker": "",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1612920/000161292026000003/0001612920-26-000003-index.htm"
+    },
+    {
+      "form": "D/A",
+      "who": "Three Lions Ipswich II, LP",
+      "ticker": "",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2091189/000209118926000001/0002091189-26-000001-index.htm"
+    },
+    {
+      "form": "D",
+      "who": "AVM Global Opportunity Fund",
+      "ticker": "",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2152943/000215294326000001/0002152943-26-000001-index.htm"
+    },
+    {
+      "form": "D",
+      "who": "Ashwood 2026 Private Investment III - Transom V",
+      "ticker": "",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2153165/000215316526000001/0002153165-26-000001-index.htm"
+    },
+    {
+      "form": "D",
+      "who": "Chilean Cobalt Corp.",
+      "ticker": "COBA",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1727255/000168316826006980/0001683168-26-006980-index.htm"
+    },
+    {
+      "form": "D",
+      "who": "Ellipsys Medical, Inc.",
+      "ticker": "",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2153524/000215352426000001/0002153524-26-000001-index.htm"
+    },
+    {
+      "form": "D",
+      "who": "Equitybee 22-12175 a Series of Equitybee cFund Master LLC",
+      "ticker": "",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2150748/000215074826000003/0002150748-26-000003-index.htm"
+    },
+    {
+      "form": "D",
+      "who": "Equitybee 22-32842 a Series of Equitybee cFund Master LLC",
+      "ticker": "",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2150749/000215074926000002/0002150749-26-000002-index.htm"
+    },
+    {
+      "form": "D",
+      "who": "Equitybee 22-50391 a Series of Equitybee cFund Master LLC",
+      "ticker": "",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2150800/000215080026000002/0002150800-26-000002-index.htm"
+    },
+    {
+      "form": "D",
+      "who": "Equitybee 22-71058 a Series of Equitybee cFund Master LLC",
+      "ticker": "",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2150802/000215080226000002/0002150802-26-000002-index.htm"
+    },
+    {
+      "form": "D",
+      "who": "Equitybee 22-80612 a Series of Equitybee cFund Master LLC",
+      "ticker": "",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2150801/000215080126000002/0002150801-26-000002-index.htm"
+    },
+    {
+      "form": "D",
+      "who": "Grove SV LLC",
+      "ticker": "",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2153650/000215365026000001/0002153650-26-000001-index.htm"
+    },
+    {
+      "form": "D",
+      "who": "Malcova, Inc",
+      "ticker": "",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2152940/000215294026000001/0002152940-26-000001-index.htm"
+    },
+    {
+      "form": "D",
+      "who": "Physical World AI Model Capital LLC",
+      "ticker": "",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2153809/000215380926000001/0002153809-26-000001-index.htm"
+    },
+    {
+      "form": "D",
+      "who": "Psyloutions, LLC",
+      "ticker": "",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2143535/000214353526000001/0002143535-26-000001-index.htm"
+    },
+    {
+      "form": "D",
+      "who": "S2 Portfolio Recap IRA LLC",
+      "ticker": "",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2152590/000215259026000001/0002152590-26-000001-index.htm"
+    },
+    {
+      "form": "D",
+      "who": "S2 Portfolio Recap LP",
+      "ticker": "",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2152589/000215258926000001/0002152589-26-000001-index.htm"
+    },
+    {
+      "form": "D",
+      "who": "S2C REIT HOLDCO I, LLC",
+      "ticker": "",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2104613/000210461326000002/0002104613-26-000002-index.htm"
+    },
+    {
+      "form": "D",
+      "who": "SH Apartments LLC / WA",
+      "ticker": "",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2153896/000215389626000001/0002153896-26-000001-index.htm"
+    },
+    {
+      "form": "D",
+      "who": "Timeless Omega, LP",
+      "ticker": "",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2150249/000215024926000001/0002150249-26-000001-index.htm"
+    },
+    {
+      "form": "D",
+      "who": "VECTORMAX Corp",
+      "ticker": "",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1136418/000110465926105583/0001104659-26-105583-index.htm"
+    },
+    {
+      "form": "D",
+      "who": "Wasatch East Park LLC",
+      "ticker": "",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2137363/000213736326000001/0002137363-26-000001-index.htm"
+    },
+    {
+      "form": "8-K/A",
+      "who": "Indaptus Therapeutics, Inc.",
+      "ticker": "INDP",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1857044/000149315226041636/0001493152-26-041636-index.htm"
+    },
+    {
+      "form": "8-K",
+      "who": "AMC Global Media Inc.",
+      "ticker": "AMCX",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1514991/000151499126000093/0001514991-26-000093-index.htm"
+    },
+    {
+      "form": "8-K",
+      "who": "Artificial Intelligence Technology Solutions Inc.",
+      "ticker": "AITX",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1498148/000149315226041651/0001493152-26-041651-index.htm"
+    },
+    {
+      "form": "8-K",
+      "who": "Brookfield Asset Management Ltd.",
+      "ticker": "BAM",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1937926/000117184326005900/0001171843-26-005900-index.htm"
+    },
+    {
+      "form": "8-K",
+      "who": "Circle Internet Group, Inc.",
+      "ticker": "CRCL",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000267/0001876042-26-000267-index.htm"
+    },
+    {
+      "form": "8-K",
+      "who": "Greenland Energy Co",
+      "ticker": "GLND",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2093507/000182912626009787/0001829126-26-009787-index.htm"
+    },
+    {
+      "form": "8-K",
+      "who": "Greenwave Technology Solutions, Inc.",
+      "ticker": "GWAV",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1589149/000149315226041650/0001493152-26-041650-index.htm"
+    },
+    {
+      "form": "8-K",
+      "who": "HAWAIIAN ELECTRIC INDUSTRIES INC",
+      "ticker": "HE",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/354707/000035470726000061/0000354707-26-000061-index.htm"
+    },
+    {
+      "form": "8-K",
+      "who": "Laird Superfood, Inc.",
+      "ticker": "LSF",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1650696/000143774926029721/0001437749-26-029721-index.htm"
+    },
+    {
+      "form": "8-K",
+      "who": "RBB Bancorp",
+      "ticker": "RBB",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1499422/000143774926029729/0001437749-26-029729-index.htm"
+    },
+    {
+      "form": "8-K",
+      "who": "Synergy CHC Corp.",
+      "ticker": "SNYR",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1562733/000121390026097802/0001213900-26-097802-index.htm"
+    },
+    {
+      "form": "8-K",
+      "who": "Vivos Therapeutics, Inc.",
+      "ticker": "VVOS",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1716166/000149315226041616/0001493152-26-041616-index.htm"
+    },
+    {
+      "form": "8-K",
+      "who": "WAFD INC",
+      "ticker": "WAFD",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/936528/000114036126035826/0001140361-26-035826-index.htm"
+    },
+    {
+      "form": "8-K",
+      "who": "Zoomcar Holdings, Inc.",
+      "ticker": "ZCAR",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1854275/000121390026097804/0001213900-26-097804-index.htm"
+    },
+    {
+      "form": "4",
+      "who": "Liu Chitung",
+      "ticker": "UMC",
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2120081/000119312526384273/0001193125-26-384273-index.htm"
+    },
     {
       "form": "SC 13G/A",
       "who": "3i, LP \u2192 Valion Bio, Inc.",
@@ -5308,321 +5623,6 @@
       "ticker": "LLY",
       "filed_date": "2026-09-04",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1861052/000186105226000006/0001861052-26-000006-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Hertzke Patrick Norton",
-      "ticker": "ST",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2084984/000208498426000005/0002084984-26-000005-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Hill Raymond George",
-      "ticker": "ADXN",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2123864/000110465926105484/0001104659-26-105484-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Hinchcliffe Dion",
-      "ticker": "INTZ",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1396698/000168316826006953/0001683168-26-006953-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Holland Joseph Michael",
-      "ticker": "VITL",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2035547/000119312526383788/0001193125-26-383788-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Holland Noel R.",
-      "ticker": "CLBK",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1729840/000172984026000030/0001729840-26-000030-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Holton Adam Y",
-      "ticker": "GEHC",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1657919/000165791926000009/0001657919-26-000009-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Horan Christopher",
-      "ticker": "ARTV",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1736819/000119312526383625/0001193125-26-383625-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "How Antoinette",
-      "ticker": "NXDR",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2083093/000208309326000002/0002083093-26-000002-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Hudson Scott R",
-      "ticker": "AJG",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1482241/000035419026000203/0000354190-26-000203-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Hungate Alexander Charles",
-      "ticker": "GRAB",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2026373/000202637326000008/0002026373-26-000008-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Hureau Robert Paul",
-      "ticker": "ALG",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1483898/000148389826000004/0001483898-26-000004-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Isaacs-Lowe Arlene",
-      "ticker": "EQH",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1916941/000162828026060727/0001628280-26-060727-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Islam Nayaab",
-      "ticker": "STUB",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2059741/000162828026060784/0001628280-26-060784-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Jain Ajit",
-      "ticker": "BRK-B",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1728451/000172845126000003/0001728451-26-000003-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Japan Post Holdings Co., Ltd.",
-      "ticker": "AFL",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1783464/000110465926105282/0001104659-26-105282-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Jean-Claude Carine Lamercie",
-      "ticker": "ARW",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1870985/000000753626000137/0000007536-26-000137-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Jimenez Frank R",
-      "ticker": "GEHC",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1465175/000146517526000025/0001465175-26-000025-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Jindal Piyush",
-      "ticker": "HLX",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1752056/000119312526383681/0001193125-26-383681-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "John Benneaser",
-      "ticker": "APPS",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2129279/000162828026060732/0001628280-26-060732-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "KASBAR MICHAEL J",
-      "ticker": "WKC",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1242793/000119312526383715/0001193125-26-383715-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "KIRITSY CHRISTOPHER P",
-      "ticker": "PVLA",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1261156/000110465926105494/0001104659-26-105494-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "KNOWLES MICHAEL",
-      "ticker": "OSS",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1755059/000119312526383260/0001193125-26-383260-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "KRAUSE L WILLIAM",
-      "ticker": "VISN",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1055438/000119312526383814/0001193125-26-383814-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Kalbfleisch Kurt L.",
-      "ticker": "ANY",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1409130/000106299326004839/0001062993-26-004839-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Kalinichev Mikhail",
-      "ticker": "ADXN",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2123907/000110465926105506/0001104659-26-105506-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Kam Anthony Ping Leung",
-      "ticker": "PDD",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1993262/000110465926105483/0001104659-26-105483-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Kandiah Gajakarnan Vibushanan",
-      "ticker": "RXT",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1684713/000168471326000003/0001684713-26-000003-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Kass-Hout Taha",
-      "ticker": "GEHC",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1960652/000196065226000011/0001960652-26-000011-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Katz Avi S",
-      "ticker": "HDRN",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1451693/000145169326000017/0001451693-26-000017-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Kempster Thomas",
-      "ticker": "DTST",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1688904/000173112226001197/0001731122-26-001197-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Keogh Michael Dennis",
-      "ticker": "UCTT",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2153749/000095010326013632/0000950103-26-013632-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Kgil Minchung",
-      "ticker": "FIGR",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2082547/000149315226041559/0001493152-26-041559-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Kim John Sunshin",
-      "ticker": "CTSH",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1853867/000185386726000018/0001853867-26-000018-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Kim Joyce",
-      "ticker": "QUIK",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1901839/000190183926000003/0001901839-26-000003-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Kim Matthew M.",
-      "ticker": "SO",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2082705/000119312526383300/0001193125-26-383300-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "King Michael D",
-      "ticker": "CHUC",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1982664/000089706926001766/0000897069-26-001766-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Kinsell Joshua",
-      "ticker": "APPS",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2018939/000162828026060730/0001628280-26-060730-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Knechtel Fred S.",
-      "ticker": "PFSA",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1564260/000121390026097491/0001213900-26-097491-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Knutson Jeffrey Scott",
-      "ticker": "TWIN",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1341537/000143774926029701/0001437749-26-029701-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Korn Steven T",
-      "ticker": "KE",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1620769/000160675726000050/0001606757-26-000050-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Krishnan Krish S",
-      "ticker": "KRYS",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1298709/000129870926000011/0001298709-26-000011-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Krishnan Suma",
-      "ticker": "KRYS",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1298711/000129871126000009/0001298711-26-000009-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Kunkel Raymond J.",
-      "ticker": "CWBHF",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1997340/000175015526000121/0001750155-26-000121-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "Kurtz George",
-      "ticker": "CRWD",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1778564/000177856426000155/0001778564-26-000155-index.htm"
-    },
-    {
-      "form": "4",
-      "who": "LAGOMARSINO SIMONE",
-      "ticker": "COLB",
-      "filed_date": "2026-09-04",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1084960/000108496026000007/0001084960-26-000007-index.htm"
     }
   ],
   "annual_filings": [
@@ -5989,27 +5989,6 @@
       "ticker": "UFI",
       "filed_date": "2026-08-26",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/100726/000010072626000012/0000100726-26-000012-index.htm"
-    },
-    {
-      "form": "10-K",
-      "who": "Electromed, Inc.",
-      "ticker": "ELMD",
-      "filed_date": "2026-08-25",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1488917/000143774926028914/0001437749-26-028914-index.htm"
-    },
-    {
-      "form": "10-K",
-      "who": "MARZETTI CO",
-      "ticker": "MZTI",
-      "filed_date": "2026-08-25",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/57515/000005751526000019/0000057515-26-000019-index.htm"
-    },
-    {
-      "form": "10-K",
-      "who": "SelectQuote, Inc.",
-      "ticker": "SLQT",
-      "filed_date": "2026-08-25",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1794783/000179478326000057/0001794783-26-000057-index.htm"
     }
   ],
   "quarterly_filings": [
@@ -6971,59 +6950,10 @@
       "ticker": "ZM",
       "filed_date": "2026-08-26",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1585521/000158552126000121/0001585521-26-000121-index.htm"
-    },
-    {
-      "form": "10-Q",
-      "who": "BJ's Wholesale Club Holdings, Inc.",
-      "ticker": "BJ",
-      "filed_date": "2026-08-25",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1531152/000153115226000057/0001531152-26-000057-index.htm"
-    },
-    {
-      "form": "10-Q",
-      "who": "HOME DEPOT, INC.",
-      "ticker": "HD",
-      "filed_date": "2026-08-25",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/354950/000162828026058715/0001628280-26-058715-index.htm"
-    },
-    {
-      "form": "10-Q",
-      "who": "Mercator Acquisition Corp.",
-      "ticker": "MRCO",
-      "filed_date": "2026-08-25",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2106436/000121390026093170/0001213900-26-093170-index.htm"
-    },
-    {
-      "form": "10-Q",
-      "who": "Orion Bliss Corp.",
-      "ticker": "ORIB",
-      "filed_date": "2026-08-25",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1854183/000168316826006716/0001683168-26-006716-index.htm"
-    },
-    {
-      "form": "10-Q",
-      "who": "QumulusAI, Inc.",
-      "ticker": "QMLS",
-      "filed_date": "2026-08-25",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2084026/000143774926028924/0001437749-26-028924-index.htm"
-    },
-    {
-      "form": "10-Q",
-      "who": "Radiant Strategies Corp",
-      "ticker": "RDSC",
-      "filed_date": "2026-08-25",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2056016/000149315226040007/0001493152-26-040007-index.htm"
-    },
-    {
-      "form": "10-Q",
-      "who": "nCino, Inc.",
-      "ticker": "NCNO",
-      "filed_date": "2026-08-25",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1902733/000190273326000101/0001902733-26-000101-index.htm"
     }
   ],
-  "annual_total": 55,
-  "quarterly_total": 144,
-  "methodology": "Unified cross-form SEC filing stream v2 \u2014 DIRECT EDGAR queries (public domain, 17 U.S.C. \u00a7105; filed-date PIT), one root form per EFTS query (never a comma list \u2014 efts mis-parses root+/A families): 8-K / 10-K / 10-Q / S-1 family / 4 / D / DEF 14A / DEFA14A / 424B4, each expanding to its /A amendments. v1\u2192v2 migration: v1 (2026-08-23) derived this feed by merging six committed panels \u2014 coverage was bounded by each panel's visible cap (its window spanned only the panels' newest days) and 10-K/10-Q were absent; v2 IS the source query over a trailing 14-day window, so by_form counts the EDGAR window. Form-family completion (2026-08-23): DEF 14A (definitive proxy, space %20-encoded in the EFTS query) and DEFA14A (additional proxy soliciting material \u2014 a SEPARATE root form, the proxy-amendment vehicle in practice) joined the stream alongside 424B4 (the IPO pricing prospectus); measured window volumes 80 / 166 / 21, all far under the split threshold. Request accounting (declared totals / EFTS pages, 103 pages total): 8-K: 1,673 declared / 17 page requests; 10-K: 55 declared / 1 page requests; 10-Q: 144 declared / 2 page requests; S-1: 64 declared / 1 page requests; 4: 5,383 declared / 55 page requests (split into 2 half-windows at the 7-day midpoint); D: 2,068 declared / 21 page requests; DEF 14A: 57 declared / 1 page requests; DEFA14A: 120 declared / 2 page requests; 424B4: 14 declared / 1 page requests; SC 13D: 0 declared / 1 page requests; EFTS frozen on Schedule 13 \u2014 shared SC 13D+13G daily-index lane 508 rows; SC 13G: 0 declared / 1 page requests; EFTS frozen (probed 0, same shared daily lane). Form 4 is split into two ~7-day half-windows unconditionally (busiest family \u2014 10-15k/14d in filing season would exceed EFTS's 10,000-hit cap); every other form splits adaptively when a declared window total reaches 9,500. SC 13D / SC 13G: EFTS froze on the Schedule 13 family after 2024-12-17 (machine-verified zero on each run), so those rows come from the EDGAR daily crawler index lanes (the same dissemination feed as the smart_money / stakes_13g panels), subject resolved offline by ticker. Honest limits: (1) 13F-HR is excluded (quarterly manager holdings, not company events \u2014 carried by the /filers registry); (2) DEF 14A / DEFA14A ride the stream as index-page rows \u2014 the /executives panel keeps its own DEF 14A deep-dive lane (person-level proxy parsing stays DEFERRED there); (3) Form 4 'who' is the reporting person (the first display_names entry), with the issuer carried as the ticker label from the CURRENT SEC company_tickers snapshot \u2014 a display label, never a research input; (4) the 800-newest visible cap is a payload-size cap (total_merged counts the full window); (5) the 10-K and 10-Q families each carry an OWN deep-cut list (annual_filings / quarterly_filings, newest-first, cap 400 each) sliced from the same parquet, with full-window counts in annual_total / quarterly_total. Display-only, exploratory, NOT a research claim.",
-  "snapshot_ts": "2026-09-07T10:24:54.205306+00:00"
+  "annual_total": 52,
+  "quarterly_total": 137,
+  "methodology": "Unified cross-form SEC filing stream v2 \u2014 DIRECT EDGAR queries (public domain, 17 U.S.C. \u00a7105; filed-date PIT), one root form per EFTS query (never a comma list \u2014 efts mis-parses root+/A families): 8-K / 10-K / 10-Q / S-1 family / 4 / D / DEF 14A / DEFA14A / 424B4, each expanding to its /A amendments. v1\u2192v2 migration: v1 (2026-08-23) derived this feed by merging six committed panels \u2014 coverage was bounded by each panel's visible cap (its window spanned only the panels' newest days) and 10-K/10-Q were absent; v2 IS the source query over a trailing 14-day window, so by_form counts the EDGAR window. Form-family completion (2026-08-23): DEF 14A (definitive proxy, space %20-encoded in the EFTS query) and DEFA14A (additional proxy soliciting material \u2014 a SEPARATE root form, the proxy-amendment vehicle in practice) joined the stream alongside 424B4 (the IPO pricing prospectus); measured window volumes 80 / 166 / 21, all far under the split threshold. Request accounting (declared totals / EFTS pages, 95 pages total): 8-K: 1,490 declared / 15 page requests; 10-K: 52 declared / 1 page requests; 10-Q: 137 declared / 2 page requests; S-1: 60 declared / 1 page requests; 4: 5,003 declared / 51 page requests (split into 2 half-windows at the 7-day midpoint); D: 1,870 declared / 19 page requests; DEF 14A: 50 declared / 1 page requests; DEFA14A: 109 declared / 2 page requests; 424B4: 14 declared / 1 page requests; SC 13D: 0 declared / 1 page requests; EFTS frozen on Schedule 13 \u2014 shared SC 13D+13G daily-index lane 462 rows; SC 13G: 0 declared / 1 page requests; EFTS frozen (probed 0, same shared daily lane). Form 4 is split into two ~7-day half-windows unconditionally (busiest family \u2014 10-15k/14d in filing season would exceed EFTS's 10,000-hit cap); every other form splits adaptively when a declared window total reaches 9,500. SC 13D / SC 13G: EFTS froze on the Schedule 13 family after 2024-12-17 (machine-verified zero on each run), so those rows come from the EDGAR daily crawler index lanes (the same dissemination feed as the smart_money / stakes_13g panels), subject resolved offline by ticker. Honest limits: (1) 13F-HR is excluded (quarterly manager holdings, not company events \u2014 carried by the /filers registry); (2) DEF 14A / DEFA14A ride the stream as index-page rows \u2014 the /executives panel keeps its own DEF 14A deep-dive lane (person-level proxy parsing stays DEFERRED there); (3) Form 4 'who' is the reporting person (the first display_names entry), with the issuer carried as the ticker label from the CURRENT SEC company_tickers snapshot \u2014 a display label, never a research input; (4) the 800-newest visible cap is a payload-size cap (total_merged counts the full window); (5) the 10-K and 10-Q families each carry an OWN deep-cut list (annual_filings / quarterly_filings, newest-first, cap 400 each) sliced from the same parquet, with full-window counts in annual_total / quarterly_total. Display-only, exploratory, NOT a research claim.",
+  "snapshot_ts": "2026-09-08T10:33:24.254945+00:00"
 }
