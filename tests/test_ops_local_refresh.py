@@ -217,3 +217,44 @@ def test_hook_spawn_failure_never_fails_session(monkeypatch, tmp_path) -> None:
     monkeypatch.setattr(hook.subprocess, "Popen", _boom)
     monkeypatch.setattr(hook.lane, "LOG_DIR", tmp_path)
     assert hook.main() == 0
+
+
+# --- owner design correction (2026-09-08): hook window + restart inertia -------
+
+
+def test_hook_outside_window_does_nothing_at_all(monkeypatch, tmp_path) -> None:
+    """A session start before 18:00 (or at/after midnight) must not even
+    evaluate the guard — no state reads, no spawn, no log. Restarting ZCode
+    during the day is observably inert."""
+    def _forbidden(*a, **k):  # any guard/state touch fails the test
+        raise AssertionError("guard must not run outside the evening window")
+
+    monkeypatch.setattr(hook.lane, "guard_decision", _forbidden)
+    monkeypatch.setattr(hook.lane, "load_state", _forbidden)
+    monkeypatch.setattr(hook.subprocess, "Popen", _forbidden)
+    monkeypatch.setattr(hook.lane, "LOG_DIR", tmp_path)
+    for hour in (0, 9, 12, 17):
+        monkeypatch.setattr(hook, "datetime",
+                            type("D", (), {"now": staticmethod(
+                                lambda h=hour: datetime(2026, 9, 9, h))}))
+        assert hook.main() == 0, f"hour {hour}"
+    assert list(tmp_path.rglob("*")) == []  # zero files written all day
+
+
+def test_hook_restart_same_evening_after_done_skips_with_trace(
+        monkeypatch, tmp_path) -> None:
+    """Restarting ZCode inside the window after a completed run: no spawn, and
+    one audit line proving the check happened (once-per-day held)."""
+    spawned = []
+    monkeypatch.setattr(hook.lane, "guard_decision",
+                        lambda now, state: "SKIP:already-done (ok_committed)")
+    monkeypatch.setattr(hook.subprocess, "Popen",
+                        lambda *a, **k: spawned.append(a))
+    monkeypatch.setattr(hook.lane, "LOG_DIR", tmp_path)
+    monkeypatch.setattr(hook, "datetime",
+                        type("D", (), {"now": staticmethod(
+                            lambda: datetime(2026, 9, 9, 20, 0))}))
+    assert hook.main() == 0
+    assert spawned == []  # never a second run
+    trace = (tmp_path / "2026-09-09" / "hook-spawn.log").read_text("utf-8")
+    assert "hook skip: SKIP:already-done" in trace

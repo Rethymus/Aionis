@@ -35,12 +35,34 @@ import ops_local_refresh as lane  # noqa: E402
 
 IS_WINDOWS = sys.platform.startswith("win")
 
+# The hook EXISTS only inside the owner's evening window (Beijing 18:00-23:59;
+# before 18:00 is coding-plan peak and not post-close). Outside the window a
+# session start does NOTHING AT ALL — no guard evaluation, no state reads, no
+# log lines — so restarting ZCode during the day is observably inert, not
+# merely a silent skip. (Owner design correction, 2026-09-08.)
+WINDOW_OPEN_HOUR = 18
+WINDOW_CLOSE_HOUR = 24
+
+
+def _in_evening_window(now: datetime) -> bool:
+    return WINDOW_OPEN_HOUR <= now.hour < WINDOW_CLOSE_HOUR
+
 
 def main() -> int:
-    decision = lane.guard_decision(datetime.now(), lane.load_state())
+    now = datetime.now()
+    if not _in_evening_window(now):
+        return 0  # outside 18:00-23:59: the lane does not exist for this session
+    decision = lane.guard_decision(now, lane.load_state())
     if decision != "RUN":
-        return 0  # silent: weekend / pre-window / already-done / in-progress / capped
-    day_dir = lane.LOG_DIR / datetime.now().strftime("%Y-%m-%d")
+        # In-window restart/second session: checked, skipped, nothing ran.
+        # One audit line proves the once-per-day semantics held (marker is the
+        # actual gate; this trace only makes it visible).
+        day_dir = lane.LOG_DIR / now.strftime("%Y-%m-%d")
+        day_dir.mkdir(parents=True, exist_ok=True)
+        with (day_dir / "hook-spawn.log").open("a", encoding="utf-8") as fh:
+            fh.write(f"[{now.isoformat()}] hook skip: {decision}\n")
+        return 0
+    day_dir = lane.LOG_DIR / now.strftime("%Y-%m-%d")
     day_dir.mkdir(parents=True, exist_ok=True)
     log_path = day_dir / "hook-spawn.log"
     cmd = ["uv", "run", "--project", str(ROOT), "python",

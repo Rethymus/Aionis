@@ -54,10 +54,14 @@ guard + marker): SessionStart hook (primary, `.zcode/config.json` +
 `scripts/ops_evening_hook.py`), `*/30 18-23 * * 1-5` cron automation
 (backstop + nightly report + the 2026-10-06 monthly review), weekly
 `staleness-check.yml` (Issue when the committed data_health snapshot > 5 days).
-Manual surface: `/refresh-data` workspace command. Energy refinement (2026-09-07):
-US-holiday evenings skip **only when no catch-up work is pending** (last run's
-`soft_fails` empty) — NYSE calendar via the project's canonical
-`nyse_sessions` wrapper, fail-open to freshness.
+Manual surface: `/refresh-data` workspace command. Energy refinement
+(2026-09-07): US-holiday evenings skip **only when no catch-up work is
+pending** (last run's `soft_fails` empty) — NYSE calendar via the project's
+canonical `nyse_sessions` wrapper, fail-open to freshness. Owner correction
+(2026-09-08): the hook itself now exists only 18:00–23:59 — a daytime
+session start does nothing at all (no guard, no I/O), and a same-evening
+restart after completion skips with a one-line audit trace (once-per-day
+verified: exactly one lane start per day since 2026-09-07).
 
 ## 5. Token / energy model
 

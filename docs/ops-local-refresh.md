@@ -24,14 +24,20 @@
 Three trigger layers around one idempotent lane (guard + marker decide, never
 the trigger):
 
-1. **SessionStart hook (PRIMARY, "update the moment ZCode connects")** —
-   `.zcode/config.json` (workspace scope, committed) fires
+1. **SessionStart hook (PRIMARY, "update the moment ZCode connects —
+   evenings only")** — `.zcode/config.json` (workspace scope, committed) fires
    `scripts/ops_evening_hook.py` on every session `startup|resume`. The hook
-   makes the guard decision in ~1s and, only when it says RUN, spawns
-   `ops_local_refresh.py --run` as a DETACHED process (survives the session;
-   hooks run inline, so the launcher itself must return immediately; stdout
+   EXISTS only inside the 18:00–23:59 window: outside it the launcher returns
+   immediately with zero work (no guard evaluation, no state reads, no log —
+   restarting ZCode during the day is observably inert; owner correction
+   2026-09-08). Inside the window it makes the guard decision in ~1s and, only
+   on RUN, spawns `ops_local_refresh.py --run` as a DETACHED process (survives
+   the session; hooks run inline, so the launcher returns immediately; stdout
    stays empty and exit code 0 always — a launcher failure never blocks a
-   session start). Zero LLM tokens. Requires `uv` on PATH.
+   session start). An in-window restart after a completed run skips with one
+   audit line (`hook skip: ...`) — the once-per-day semantics held on every
+   day since 2026-09-07 (exactly one `evening lane start` per day's log).
+   Zero LLM tokens. Requires `uv` on PATH.
 2. **ZCode cron automation (BACKSTOP + REPORTER)** — recurring
    `*/30 18-23 * * 1-5` host-local. Catches the hook's blind spots (ZCode
    opened before 18:00 and kept open past it; a failed first attempt while
