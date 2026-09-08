@@ -190,13 +190,17 @@ def test_hook_spawns_detached_run_when_guard_runs(monkeypatch, tmp_path) -> None
         pass
 
     monkeypatch.setattr(hook.lane, "guard_decision", lambda now, state: "RUN")
+    monkeypatch.setattr(hook.lane, "LOG_DIR", tmp_path)
+    monkeypatch.setattr(hook, "datetime",
+                        type("D", (), {"now": staticmethod(
+                            lambda: datetime(2026, 9, 9, 19, 0))}))
+
     def _spawn(*a, **k):
         spawned["argv"] = a
         spawned["kwargs"] = k
         return _FakeProc()
 
     monkeypatch.setattr(hook.subprocess, "Popen", _spawn)
-    monkeypatch.setattr(hook.lane, "LOG_DIR", tmp_path)
     assert hook.main() == 0
     argv = spawned["argv"][0]
     assert argv[0] == "uv" and argv[-1] == "--run"
@@ -216,6 +220,9 @@ def test_hook_spawn_failure_never_fails_session(monkeypatch, tmp_path) -> None:
     monkeypatch.setattr(hook.lane, "guard_decision", lambda now, state: "RUN")
     monkeypatch.setattr(hook.subprocess, "Popen", _boom)
     monkeypatch.setattr(hook.lane, "LOG_DIR", tmp_path)
+    monkeypatch.setattr(hook, "datetime",
+                        type("D", (), {"now": staticmethod(
+                            lambda: datetime(2026, 9, 9, 19, 0))}))
     assert hook.main() == 0
 
 
