@@ -60,137 +60,137 @@
         "parameters": [
           {
             "name": "metrics",
-            "summary": "metrics — frozen · Aionis research artifacts (repo MIT)",
+            "summary": "metrics — frozen · Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-freshness": "frozen",
-            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-license": "Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-source": "frozen OOS scores, ledger #49 lineage",
             "x-aionis-as-of": "2026-08-03"
           },
           {
             "name": "picks",
-            "summary": "picks — frozen · Aionis research artifacts (repo MIT)",
+            "summary": "picks — frozen · Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-freshness": "frozen",
-            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-license": "Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-source": "frozen OOS scores + Platt calibration",
             "x-aionis-as-of": "2026-08-03"
           },
           {
             "name": "shorts",
-            "summary": "shorts — frozen · Aionis research artifacts (repo MIT)",
+            "summary": "shorts — frozen · Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-freshness": "frozen",
-            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-license": "Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-source": "frozen OOS scores + Platt calibration",
             "x-aionis-as-of": "2026-08-03"
           },
           {
             "name": "picks_meta",
-            "summary": "picks_meta — frozen · Aionis research artifacts (repo MIT)",
+            "summary": "picks_meta — frozen · Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-freshness": "frozen",
-            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-license": "Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-source": "calibration meta on realized OOS pairs",
             "x-aionis-as-of": "2026-08-03"
           },
           {
             "name": "sector_breakdown",
-            "summary": "sector_breakdown — frozen · Aionis research artifacts (repo MIT)",
+            "summary": "sector_breakdown — frozen · Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-freshness": "frozen",
-            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-license": "Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-source": "frozen OOS scores by sector",
             "x-aionis-as-of": "2026-08-03"
           },
           {
             "name": "picks_backtest",
-            "summary": "picks_backtest — frozen · Aionis research artifacts (repo MIT)",
+            "summary": "picks_backtest — frozen · Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-freshness": "frozen",
-            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-license": "Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-source": "realized OOS picks vs base, 131 months",
             "x-aionis-as-of": "2026-06-30"
           },
           {
             "name": "ic_monthly",
-            "summary": "ic_monthly — frozen · Aionis research artifacts (repo MIT)",
+            "summary": "ic_monthly — frozen · Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-freshness": "frozen",
-            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-license": "Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-source": "confirmatory monthly rank-IC series",
             "x-aionis-as-of": "2026-06"
           },
           {
             "name": "score_diagnostics",
-            "summary": "score_diagnostics — frozen · Aionis research artifacts (repo MIT)",
+            "summary": "score_diagnostics — frozen · Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-freshness": "frozen",
-            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-license": "Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-source": "confirmatory OOS cross-sectional score diagnostics (display-only derivation)",
             "x-aionis-as-of": "2026-08"
           },
           {
             "name": "ic_deciles",
-            "summary": "ic_deciles — frozen · Aionis research artifacts (repo MIT)",
+            "summary": "ic_deciles — frozen · Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-freshness": "frozen",
-            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-license": "Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-source": "decile monotonicity of the frozen OOS score surface (label-convention forward returns)",
             "x-aionis-as-of": null
           },
           {
             "name": "pick_conviction",
-            "summary": "pick_conviction — frozen · Aionis research artifacts (repo MIT)",
+            "summary": "pick_conviction — frozen · Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-freshness": "frozen",
-            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-license": "Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-source": "cross-sectional score dispersion",
             "x-aionis-as-of": "2026-08-03"
           },
           {
             "name": "model_health",
-            "summary": "model_health — frozen · Aionis research artifacts (repo MIT)",
+            "summary": "model_health — frozen · Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-freshness": "frozen",
-            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-license": "Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-source": "PSI + rolling IC on realized OOS",
             "x-aionis-as-of": null
           },
           {
             "name": "calibration_reliability",
-            "summary": "calibration_reliability — frozen · Aionis research artifacts (repo MIT)",
+            "summary": "calibration_reliability — frozen · Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-freshness": "frozen",
-            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-license": "Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-source": "walk-forward calibration audit",
             "x-aionis-as-of": "2026-06"
           },
           {
             "name": "power_floor",
-            "summary": "power_floor — frozen · Aionis research artifacts (repo MIT)",
+            "summary": "power_floor — frozen · Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-freshness": "frozen",
-            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-license": "Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-source": "sigma survey / power analysis",
             "x-aionis-as-of": null
           },
           {
             "name": "sigma_survey",
-            "summary": "sigma_survey — frozen · Aionis research artifacts (repo MIT)",
+            "summary": "sigma_survey — frozen · Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-freshness": "frozen",
-            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-license": "Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-source": "observed vs pure-noise sigma",
             "x-aionis-as-of": null
           },
           {
             "name": "bps_sweep",
-            "summary": "bps_sweep — frozen · Aionis research artifacts (repo MIT)",
+            "summary": "bps_sweep — frozen · Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-freshness": "frozen",
-            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-license": "Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-source": "net-cost sensitivity sweep",
             "x-aionis-as-of": null
           },
           {
             "name": "evidence",
-            "summary": "evidence — frozen · Aionis research artifacts (repo MIT)",
+            "summary": "evidence — frozen · Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-freshness": "frozen",
-            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-license": "Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-source": "research ledger evidence table",
             "x-aionis-as-of": null
           },
           {
             "name": "stock_universe",
-            "summary": "stock_universe — frozen · Aionis research artifacts (repo MIT)",
+            "summary": "stock_universe — frozen · Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-freshness": "frozen",
-            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-license": "Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-source": "per-stock frozen readout over OOS scores",
             "x-aionis-as-of": "2026-08-03"
           },
@@ -272,7 +272,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "U.S. SEC EDGAR — public domain",
             "x-aionis-source": "Form 8-K primary docs, filed-date PIT, item-classified",
-            "x-aionis-as-of": "2026-09-04"
+            "x-aionis-as-of": "2026-09-08"
           },
           {
             "name": "news_feed",
@@ -280,7 +280,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "GDELT open data (facts; article copyright stays with publishers)",
             "x-aionis-source": "GDELT Doc 2.0 artlist market headlines, seendate PIT, link-out only",
-            "x-aionis-as-of": "2026-09-08T09:30:00Z"
+            "x-aionis-as-of": "2026-09-09T09:45:00Z"
           },
           {
             "name": "executives",
@@ -288,7 +288,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "U.S. SEC EDGAR — public domain",
             "x-aionis-source": "Form 8-K Item 5.02 officer-changes stream (derived from form8k, filed-date PIT; person-level extraction deferred)",
-            "x-aionis-as-of": "2026-09-04"
+            "x-aionis-as-of": "2026-09-08"
           },
           {
             "name": "ipo",
@@ -304,7 +304,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "U.S. SEC EDGAR — public domain",
             "x-aionis-source": "Form D exempt-offering notices (D + D/A) via EFTS form-level queries, filed-date PIT; offering amounts not extracted",
-            "x-aionis-as-of": "2026-09-08"
+            "x-aionis-as-of": "2026-09-09"
           },
           {
             "name": "def14a",
@@ -328,7 +328,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "U.S. SEC EDGAR — public domain",
             "x-aionis-source": "unified cross-form feed (8-K / 10-K / 10-Q / S-1 family / 4 / D via direct EFTS root-form queries; SC 13D / SC 13G via the daily index lanes — EFTS froze on Schedule 13), filed-date PIT",
-            "x-aionis-as-of": "2026-09-08"
+            "x-aionis-as-of": "2026-09-09"
           },
           {
             "name": "politician_trades",
@@ -360,7 +360,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "Aionis-derived from U.S. SEC EDGAR public domain disclosures",
             "x-aionis-source": "force-camp relationship graph projected over four committed panels (13F-HR visible books x DEF 14A top-person seats x SC 13D/13G windows); pairwise co-occurrence counts only — no coordination or consortium claim, no prices/returns",
-            "x-aionis-as-of": "2026-09-04"
+            "x-aionis-as-of": "2026-09-08"
           },
           {
             "name": "reddit",
@@ -376,45 +376,45 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "ApeWisdom free public API (apewisdom.io) — vendor ToS, display-only",
             "x-aionis-source": "Reddit trending-stocks board: rank/mentions/upvotes + 24h lags, verbatim first-party fields, today-snapshot only",
-            "x-aionis-as-of": "2026-09-08"
+            "x-aionis-as-of": "2026-09-09"
           },
           {
             "name": "headline_provenance",
-            "summary": "headline_provenance — daily · Aionis append-only ledger (repo MIT)",
+            "summary": "headline_provenance — daily · Aionis append-only ledger (repo PolyForm-NC)",
             "x-aionis-freshness": "daily",
-            "x-aionis-license": "Aionis append-only ledger (repo MIT)",
+            "x-aionis-license": "Aionis append-only ledger (repo PolyForm-NC)",
             "x-aionis-source": "ledger.jsonl freeze→result pairing",
             "x-aionis-as-of": "2026-08-05"
           },
           {
             "name": "ledger_audit",
-            "summary": "ledger_audit — daily · Aionis append-only ledger (repo MIT)",
+            "summary": "ledger_audit — daily · Aionis append-only ledger (repo PolyForm-NC)",
             "x-aionis-freshness": "daily",
-            "x-aionis-license": "Aionis append-only ledger (repo MIT)",
+            "x-aionis-license": "Aionis append-only ledger (repo PolyForm-NC)",
             "x-aionis-source": "ledger.jsonl claim-row timeline",
             "x-aionis-as-of": null
           },
           {
             "name": "horizon_robustness",
-            "summary": "horizon_robustness — frozen · Aionis exploratory ledger row (repo MIT)",
+            "summary": "horizon_robustness — frozen · Aionis exploratory ledger row (repo PolyForm-NC)",
             "x-aionis-freshness": "frozen",
-            "x-aionis-license": "Aionis exploratory ledger row (repo MIT)",
+            "x-aionis-license": "Aionis exploratory ledger row (repo PolyForm-NC)",
             "x-aionis-source": "horizon-robustness sweep summary of the frozen h=21 nulls",
             "x-aionis-as-of": "2026-07-30"
           },
           {
             "name": "model_card",
-            "summary": "model_card — frozen · Aionis research artifacts (repo MIT)",
+            "summary": "model_card — frozen · Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-freshness": "frozen",
-            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-license": "Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-source": "machine-readable model card of the frozen confirmatory Track C model",
             "x-aionis-as-of": "2026-07-28"
           },
           {
             "name": "model_inventory",
-            "summary": "model_inventory — frozen · Aionis research artifacts (repo MIT)",
+            "summary": "model_inventory — frozen · Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-freshness": "frozen",
-            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-license": "Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-source": "SR 11-7 style model inventory over the tracked ledger and frozen run directories",
             "x-aionis-as-of": "2026-08-08"
           },
@@ -432,7 +432,7 @@
             "x-aionis-freshness": "cadence",
             "x-aionis-license": "U.S. SEC EDGAR — public domain",
             "x-aionis-source": "13D/G filings via EFTS, filed-date PIT",
-            "x-aionis-as-of": "2026-09-04"
+            "x-aionis-as-of": "2026-09-08"
           },
           {
             "name": "stakes_13g",
@@ -440,7 +440,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "U.S. SEC EDGAR — public domain",
             "x-aionis-source": "SC 13G/G-A passive-stake stream via the daily crawler index (EFTS froze on Schedule 13 after 2024-12-17), filed-date PIT; ownership % / state machine not parsed",
-            "x-aionis-as-of": "2026-09-04"
+            "x-aionis-as-of": "2026-09-08"
           },
           {
             "name": "ark",
@@ -448,7 +448,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "ARK Invest official fund CSVs — publicly published daily",
             "x-aionis-source": "8-ETF Full Holdings CSVs from assets.ark-funds.com (browser-verified endpoint URLs; top-10 by weight + family overlap; skips disclosed)",
-            "x-aionis-as-of": "2026-09-08"
+            "x-aionis-as-of": "2026-09-09"
           },
           {
             "name": "theme_etfs",
@@ -456,7 +456,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "iShares/BlackRock + Global X official fund CSVs — publicly published daily",
             "x-aionis-source": "10 theme-ETF holdings CSVs (iShares latest-holdings.csv endpoints + Global X dated full-holdings files; top-10 by weight + cross-fund resonance; skips disclosed)",
-            "x-aionis-as-of": "2026-09-04"
+            "x-aionis-as-of": "2026-09-08"
           },
           {
             "name": "form13f",
@@ -484,25 +484,25 @@
           },
           {
             "name": "knowledge_shelf",
-            "summary": "knowledge_shelf — cadence · Aionis repo docs (repo MIT) + editorial link-out bookmarks",
+            "summary": "knowledge_shelf — cadence · Aionis repo docs (repo PolyForm-NC) + editorial link-out bookmarks",
             "x-aionis-freshness": "cadence",
-            "x-aionis-license": "Aionis repo docs (repo MIT) + editorial link-out bookmarks",
+            "x-aionis-license": "Aionis repo docs (repo PolyForm-NC) + editorial link-out bookmarks",
             "x-aionis-source": "docs/ + decisions/ method catalog with GitHub link-outs and a fixed curated public research-source list; teasers are safe slices of our own MIT docs, third-party content never copied",
-            "x-aionis-as-of": "2026-09-07"
+            "x-aionis-as-of": "2026-09-08"
           },
           {
             "name": "evidence_matrix",
-            "summary": "evidence_matrix — cadence · Aionis frozen artifacts (repo MIT)",
+            "summary": "evidence_matrix — cadence · Aionis frozen artifacts (repo PolyForm-NC)",
             "x-aionis-freshness": "cadence",
-            "x-aionis-license": "Aionis frozen artifacts (repo MIT)",
+            "x-aionis-license": "Aionis frozen artifacts (repo PolyForm-NC)",
             "x-aionis-source": "five-claim evidence matrix: machine-read differentials + ledger reconciliation + artifact sha256 pins; values are verbatim copies of the frozen confirmatory files",
             "x-aionis-as-of": "2026-08-05"
           },
           {
             "name": "provider_vintage",
-            "summary": "provider_vintage — cadence · Aionis research artifacts (repo MIT)",
+            "summary": "provider_vintage — cadence · Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-freshness": "cadence",
-            "x-aionis-license": "Aionis research artifacts (repo MIT)",
+            "x-aionis-license": "Aionis research artifacts (repo PolyForm-NC)",
             "x-aionis-source": "LLM provider knowledge-vintage panel (frozen empirical cutoff + drift checks)",
             "x-aionis-as-of": null
           }

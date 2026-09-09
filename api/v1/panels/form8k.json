@@ -1,12 +1,12 @@
 {
   "status": "ok",
-  "as_of": "2026-09-04",
+  "as_of": "2026-09-08",
   "window": {
     "start": "2026-05-01",
-    "end": "2026-09-04"
+    "end": "2026-09-08"
   },
   "issuers": 50,
-  "total": 215,
+  "total": 219,
   "unclassified": 8,
   "by_category": {
     "agreement_termination": 1,
@@ -17,16 +17,64 @@
     "financial_obligation": 6,
     "major_agreement": 4,
     "merger_completion": 1,
-    "officer_changes": 46,
-    "other": 1,
+    "officer_changes": 47,
+    "other": 2,
     "other_events": 31,
-    "reg_fd": 15,
+    "reg_fd": 17,
     "results": 61,
     "security_terms": 4,
     "unclassified": 8,
     "vote_results": 24
   },
   "events": [
+    {
+      "ticker": "UNH",
+      "company": "UNITEDHEALTH GROUP INC",
+      "filing_date": "2026-09-08",
+      "form": "8-K",
+      "items": [
+        "7.01"
+      ],
+      "category": "reg_fd",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/731766/000073176626000205/unh-20260908.htm"
+    },
+    {
+      "ticker": "QCOM",
+      "company": "QUALCOMM INC/DE",
+      "filing_date": "2026-09-08",
+      "form": "8-K",
+      "items": [
+        "3.02"
+      ],
+      "category": "other",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/804328/000110465926105718/tm2623289d1_8k.htm"
+    },
+    {
+      "ticker": "ADBE",
+      "company": "ADOBE INC.",
+      "filing_date": "2026-09-08",
+      "form": "8-K",
+      "items": [
+        "5.02",
+        "7.01",
+        "9.01"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000144/adbe-20260902.htm"
+    },
+    {
+      "ticker": "GE",
+      "company": "GENERAL ELECTRIC CO",
+      "filing_date": "2026-09-08",
+      "form": "8-K",
+      "items": [
+        "7.01",
+        "8.01",
+        "9.01"
+      ],
+      "category": "reg_fd",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/40545/000095014226002501/eh260827362_8k.htm"
+    },
     {
       "ticker": "CRM",
       "company": "Salesforce, Inc.",
@@ -2604,5 +2652,5 @@
     }
   ],
   "methodology": "SEC Form 8-K current reports \u2014 the legally mandated material-event disclosure (public domain, 17 U.S.C. \u00a7105), due within 4 business days of the event. Panel streams a bounded 50 large-cap issuer set (5 mega-cap seed + v2 20 + v3 25 across financials, payments, healthcare, staples, energy, industrials, tech/comm \u2014 breadth expansions 2026-08-22; still bounded, NOT full market; XOM carries both its pre-succession CIK and the 2026-07-01 8-K12B successor entity) since 2026-05-01; each row links the EDGAR primary document. Items are regex-extracted from the primary doc (nbsp/thin-space entities normalized) and mapped to ONE category by a rare-material-first precedence (delisting > merger completion > control change > non-reliance > officer changes > ... > exhibits); the full item list is preserved per row. Documents whose items cannot be extracted are counted as unclassified \u2014 never guessed. Filing-date point-in-time; 8-K/A amendments are new accessions (immutable). Display-only, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-09-08T10:33:22.942226+00:00"
+  "snapshot_ts": "2026-09-09T10:35:56.603658+00:00"
 }
