@@ -8,26 +8,26 @@
 
 [简体中文](README.md) · **English**
 
+[![Tests](https://github.com/Rethymus/Aionis/actions/workflows/ci.yml/badge.svg)](https://github.com/Rethymus/Aionis/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-%E2%89%A5_3.10-blue.svg)](pyproject.toml)
 [![uv](https://img.shields.io/badge/uv-managed-%23DE5FE9.svg)](https://docs.astral.sh/uv/)
+[![Terminal](https://img.shields.io/badge/web-research_terminal-00ca50.svg)](https://rethymus.github.io/Aionis/)
+
+<em>A quantitative research harness that treats falsifiability as an engineering<br>constraint: freeze the claim first, let the data render the verdict — and record an<br>honest "no increment" as a legitimate experimental outcome.</em>
 
 </div>
 
-> **A quantitative research harness that treats falsifiability as an engineering
-> constraint**: freeze the claim first, let the data render the verdict — and
-> record an honest "no increment" as a legitimate experimental outcome.
+> **The verdict in one line**: all four incremental-information claims (B/C/D/E1)
+> and the first chronological confirmatory OOS (Track C) returned **NULL** — point
+> estimates not significantly different from zero. This is not a failure: it is
+> the result delivered exactly as pre-registered.
 
-**The verdict in one line**: all four incremental-information claims (B/C/D/E1)
-and the first chronological confirmatory OOS (Track C) returned **NULL** — point
-estimates not significantly different from zero. This is not a failure: it is
-the result delivered exactly as pre-registered.
-
-> ⚠️ **Disclaimer**: this project is for research and educational purposes only
-> and is **not investment advice**. It is not a trading system and has no
-> deployable live track record (E3 forward accumulation is explicitly **NO-GO**,
-> see ④). Do not make financial decisions based on its output; use at your own
-> risk.
+> [!WARNING]
+> **This project is for research and educational purposes only and is not
+> investment advice.** It is not a trading system and has no deployable live
+> track record (E3 forward accumulation is explicitly **NO-GO**, see ④).
+> Do not make financial decisions based on its output; use at your own risk.
 
 <div align="center">
 
@@ -45,12 +45,17 @@ an **ablation** against the baseline: the claim is not "we can predict", but
 "we know *more* than what is already embedded in known information".
 
 Every claim is **pre-registered** before freezing (`docs/phase-*-preregistration.md`,
-a port of the clinical-trials preregistration culture); the frozen config's
+a port of the clinical-trial preregistration culture); the frozen config's
 sha256 is written to an append-only ledger (`runs/ledger.jsonl`) *before* any
 out-of-sample metric is observed; same-signature reruns must be bit-identical.
 A changed config is a new ledger row, never a silent overwrite — a headline
 cannot be "rerun-to-significance" rescued. Aionis is **not** a cognitive system
 and **not** a trading bot.
+
+<p align="center">
+  <img src="assets/screenshots/terminal-tour.gif" alt="Aionis research terminal tour: validity-argument landing → market panorama → US/CN heatmap → data atlas → calibration → data health → evidence matrix" width="880">
+  <br><sub><b>Research terminal tour</b> · the public face across 38 routes — every page declares its place on the validity-argument chain, every number carries provenance (as-of watermarks)</sub>
+</p>
 
 <a id="results"></a>
 ## ② Headline results
@@ -180,6 +185,27 @@ chain, every number carries provenance (as-of watermarks), and AI contributes
 
 **Live**: <https://rethymus.github.io/Aionis/> · Docs: [`web/README.md`](web/README.md)
 
+<table>
+  <tr>
+    <td width="50%" align="center"><img src="assets/screenshots/terminal-home.png" alt="Terminal landing: the validity-argument chain" width="100%"><br><sub><b>Validity-argument landing</b> · context → evidence → validity → verdict, with the guard wrapping all four</sub></td>
+    <td width="50%" align="center"><img src="assets/screenshots/terminal-market.png" alt="Market page: US equal-weight index vs VIX" width="100%"><br><sub><b>Market panorama</b> · US equal-weight index × VIX (2016→), President↔Fed event markers, model OOS overlaid from 2021</sub></td>
+  </tr>
+  <tr>
+    <td width="50%" align="center"><img src="assets/screenshots/terminal-heatmap.png" alt="Heatmap page: US and CN treemaps" width="100%"><br><sub><b>Heatmap</b> · US 492 + CN 929 treemaps, dual-region on one screen</sub></td>
+    <td width="50%" align="center"><img src="assets/screenshots/terminal-atlas.png" alt="Data atlas page: 12 tables, ~60 charts" width="100%"><br><sub><b>Data atlas</b> · 12 tables / 60 SVGs — the citation map over 56 committed data panels</sub></td>
+  </tr>
+  <tr>
+    <td width="50%" align="center"><img src="assets/screenshots/terminal-calibration.png" alt="Calibration page: reliability curves and ECE" width="100%"><br><sub><b>Calibration</b> · reliability scatter / diagonal reference / ECE — honest measurement of probabilistic predictions</sub></td>
+    <td width="50%" align="center"><img src="assets/screenshots/terminal-evidence.png" alt="Evidence page: evidence matrix with provenance" width="100%"><br><sub><b>Evidence</b> · the evidence matrix traces every claim back to its ledger row and data watermark</sub></td>
+  </tr>
+  <tr>
+    <td width="50%" align="center"><img src="assets/screenshots/terminal-data-health.png" alt="Data health page: per-panel as-of watermarks" width="100%"><br><sub><b>Data health</b> · 25 daily / 11 cadence / 20 frozen, per-panel as-of watermarks published</sub></td>
+    <td width="50%" align="center"><img src="assets/screenshots/terminal-regime.png" alt="Context page: macro regime cards" width="100%"><br><sub><b>Context</b> · CPI / fed-funds / VIX regime cards and seven charts</sub></td>
+  </tr>
+</table>
+
+<p align="center"><sub>All shots are real captures: terminal screenshots come from the static build identical to the deployed site (real committed data).</sub></p>
+
 ```mermaid
 flowchart LR
     CTX["Context<br/>market regime"] --> EV["Evidence<br/>model picks + corroboration"]
@@ -213,7 +239,26 @@ cd web && pnpm install && pnpm dev      # http://localhost:3000
 
 11 tabs: overview / fit quality / volatility / curve evolution / event study /
 uncertainty / horizon robustness / coverage / strategy return / forward IC /
-run history.
+run history. The shots below render the **real frozen runs** under
+`runs/results/` (not synthetic demos):
+
+<p align="center">
+  <img src="assets/screenshots/dashboard-tour.gif" alt="Streamlit dashboard tab tour: overview → fit quality → volatility → curve evolution → uncertainty → strategy return" width="880">
+  <br><sub><b>Dashboard tour</b> · switching across six analytical dimensions — verdict cards → cumulative IC → IC distribution/drawdown → CI band → forest plot → L-S lens</sub>
+</p>
+
+<table>
+  <tr>
+    <td width="33%" align="center"><img src="assets/screenshots/dash-overview.png" alt="Dashboard overview tab" width="100%"><br><sub><b>Overview</b> · four verdict cards</sub></td>
+    <td width="33%" align="center"><img src="assets/screenshots/dash-fit.png" alt="Fit quality tab" width="100%"><br><sub><b>Fit quality</b> · cumulative IC + KPI</sub></td>
+    <td width="33%" align="center"><img src="assets/screenshots/dash-volatility.png" alt="Volatility tab" width="100%"><br><sub><b>Volatility</b> · IC histogram + drawdown</sub></td>
+  </tr>
+  <tr>
+    <td width="33%" align="center"><img src="assets/screenshots/dash-curve.png" alt="Curve evolution tab" width="100%"><br><sub><b>Curve evolution</b> · random-walk CI band</sub></td>
+    <td width="33%" align="center"><img src="assets/screenshots/dash-uncertainty.png" alt="Uncertainty tab" width="100%"><br><sub><b>Uncertainty</b> · differential forest plot</sub></td>
+    <td width="33%" align="center"><img src="assets/screenshots/dash-strategy.png" alt="Strategy return tab" width="100%"><br><sub><b>Strategy return</b> · L-S secondary lens</sub></td>
+  </tr>
+</table>
 
 ```bash
 uv run streamlit run dashboard/app.py
@@ -302,6 +347,9 @@ experiment is meant to *justify building next* — not built speculatively.
 <a id="refs"></a>
 ## ⑪ Methodological references
 
+<details>
+<summary><b>Expand the 11 methodological anchors</b> (López de Prado · Bailey · Hansen · White · Diebold-Mariano · …)</summary>
+
 - López de Prado, M. (2018). *Advances in Financial Machine Learning*. Wiley. (Purged K-Fold + Embargo)
 - Bailey, D. H., & López de Prado, M. (2014). The Deflated Sharpe Ratio. *Journal of Portfolio Management*, 40(5).
 - Hansen, P. R. (2005). A Test for Superior Predictive Ability. *Econometrica*, 73(1).
@@ -313,6 +361,8 @@ experiment is meant to *justify building next* — not built speculatively.
 - Schuirmann, D. J. (1987). A Comparison of the Two One-Sided Tests Procedure and the Power Approach for Assessing the Equivalence of Average Bioavailability. *Journal of Pharmacokinetics and Biopharmaceutics*, 15(6). (TOST)
 - Grinold, R. C., & Kahn, R. N. (2000). *Active Portfolio Management* (2nd ed.). McGraw-Hill. (the IC / IR fundamental law)
 - Mitchell, M. et al. (2019). Model Cards for Model Reporting. *FAT\* 2019*.; Gebru, T. et al. (2021). Datasheets for Datasets. *Communications of the ACM*, 64(12).
+
+</details>
 
 *Note: citations point to the methodology itself for follow-up reading; this
 project is not affiliated with the authors.*
@@ -349,6 +399,8 @@ learner → rank-IC differential → controls → H6 → verdict. Acceptance gat
 
 <div align="center">
 
-[中文版](README.md) · Code license MIT: [LICENSE](LICENSE) · Data-source licensing: [docs/data-license-allowlist.md](docs/data-license-allowlist.md)
+[简体中文](README.md) · **English**
+
+Code license MIT: [LICENSE](LICENSE) · Data-source licensing: [docs/data-license-allowlist.md](docs/data-license-allowlist.md) · Cite: [CITATION.cff](CITATION.cff)
 
 </div>

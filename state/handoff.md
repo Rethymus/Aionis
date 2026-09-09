@@ -1,5 +1,9 @@
 # state/handoff.md — current-pass handoff
 
+## 2026-09-09 (zz26) 轮 95：README 重写 + 截图/GIF 媒体层（业主 /goal，docs/display lane）
+
+**调研→落地闭环**：WebFetch 调研 9 个热门仓库（qlib/freqtrade/vectorbt/nautilus/fastapi/gradio/mlflow/FinRL/transformers）README 排版模式 → 全部映射到 README.md/README.en.md：居中媒体、mlflow 式 2×4 与 3×2 HTML 网格（满宽无留白）、`> [!WARNING]`、`<details>` 折叠参考文献、CI+终端徽章、描述性 alt。**媒体 16 文件入 `assets/screenshots/`**（终端 8 页 @DPR2 + 仪表盘 6 标签真实冻结 run + 2 GIF）。**事实内容零改动**（契约数字/表格/链接逐字保留，无 README 解析型测试）。**截图工程经验（复用价值高）**：IAB guest 截重 SVG 页必失败；Playwright 本地伺服 `web/out` 时必须造 `/Aionis` basePath junction（`%TEMP%\site-root\Aionis` → `web/out`，`python -m http.server` 伺服 site-root），且**禁用** `screenshot(animations="disabled")`（recharts v3 入场动画被冻结在 0% → 内容全隐形）；等 SVG count 稳定 + 3-4s settle 即可。GIF 组装用 Pillow adaptive palette（无 ffmpeg 依赖）。验证：GitHub /markdown API 服务端渲染（经 `gh api -X POST markdown`，注意 Git Bash 会把 `/markdown` 改写成盘符路径——去前导斜杠）+ pytest exit=0 + ruff 0。临时资源：shots-venv/junction/两个本地服务已清理，未入仓库。
+
 ## 2026-09-05 (zz25) ops-hotfix：gh-pages `.nojekyll` 二次事故根因补丁（协作事故如实）
 
 轮 86 恢复的 `.nojekyll`（e1f6e054）被本会话前夜的 d7dfbdd force push 抹掉——d7dfbdd 从 `web/out/` 复制发布，而 `web/public/` 自始没有 `.nojekyll`，out/ 因此不含它 → Jekyll 再激活、`_next/` 再 404、全站再无样式。修复：gh-pages **快进**补 `.nojekyll`（7f18fd2，非 force；d7dfbdd 的站点内容本就是轮 85 会话 09-05 12:28 的构建，数据未回退）。在墙验证：.nojekyll/两个 CSS chunk/JS chunk/atlas 全 200 + 修正后 ic_deciles（0.044756）在墙。**根因保险**：`web/public/.nojekyll` 入库（Next 拷入 out/，手动通道发布自带；与轮 86 通道 rsync --exclude 兼容——该 exclude 只能保住已存在文件，若分支根无此文件则照样破损，本修复同时是其前置条件）。**协作教训（入 §4 备忘）**：同树多会话并行时，force push 共享分支前必须先 fetch 对账——d7dfbdd 覆盖 e1f6e054 而本会话不知情。边界：ops/display lane；0 ledger/0 frozen/0 prereg/0 OOS。

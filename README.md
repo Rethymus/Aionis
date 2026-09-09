@@ -8,21 +8,23 @@
 
 **简体中文** · [English](README.en.md)
 
+[![Tests](https://github.com/Rethymus/Aionis/actions/workflows/ci.yml/badge.svg)](https://github.com/Rethymus/Aionis/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-%E2%89%A5_3.10-blue.svg)](pyproject.toml)
 [![uv](https://img.shields.io/badge/uv-managed-%23DE5FE9.svg)](https://docs.astral.sh/uv/)
+[![Terminal](https://img.shields.io/badge/web-研究终端-00ca50.svg)](https://rethymus.github.io/Aionis/)
+
+<em>一个把"可证伪"当工程约束来实现的量化研究实验台：先冻结主张，再让数据裁决——<br>并把"无增量"这个裁决当作合格的实验产出，如实入账。</em>
 
 </div>
 
-> **一个把"可证伪"当工程约束来实现的量化研究实验台**：先冻结主张，再让数据裁决——
-> 并把"无增量"这个裁决当作合格的实验产出，如实入账。
+> **一句话结论**：四个增量信息主张（B/C/D/E1）与首条时序 confirmatory OOS（Track C）
+> 的裁决全部为 **NULL** ——点估计不显著异于零。这不是失败，是按预注册交付的结果。
 
-**一句话结论**：四个增量信息主张（B/C/D/E1）与首条时序 confirmatory OOS（Track C）
-的裁决全部为 **NULL** ——点估计不显著异于零。这不是失败，是按预注册交付的结果。
-
-> ⚠️ **免责声明**：本项目仅供研究与教育用途，**不构成任何投资建议**。它不是交易
-> 系统，也没有任何可部署的实盘业绩（E3 前向积累明确 **NO-GO**，见 ④）。请勿依据
-> 本项目输出做出资金决策；使用风险自担。
+> [!WARNING]
+> **本项目仅供研究与教育用途，不构成任何投资建议。** 它不是交易系统，也没有任何
+> 可部署的实盘业绩（E3 前向积累明确 **NO-GO**，见 ④）。请勿依据本项目输出做出
+> 资金决策；使用风险自担。
 
 <div align="center">
 
@@ -42,6 +44,11 @@ Aionis 回答的问题形如："特征集 X 相比纯基本面基线，是否带
 配置的 sha256 在观测任何样本外指标**之前**写入 append-only 账本（`runs/ledger.jsonl`）；
 之后同签名重跑必须逐位一致。换配置 = 新账本行，绝无静默覆盖——headline 无法靠
 "重跑到显著"营救。Aionis **不是**认知系统，也**不是**交易机器人。
+
+<p align="center">
+  <img src="assets/screenshots/terminal-tour.gif" alt="Aionis 研究终端漫游：效度论证链入口 → 市场全景 → 美中热力图 → 数据图集 → 校准 → 数据健康 → 证据矩阵" width="880">
+  <br><sub><b>研究终端漫游</b> · 38 个路由的公开面孔——每页声明自己在效度论证链上的位置，每个数字携带出处（as-of 水位）</sub>
+</p>
 
 <a id="results"></a>
 ## ② 当前结论（headline）
@@ -153,6 +160,27 @@ AI 只承担**解释与覆盖**——绝不产生样本外信号。
 
 **在线**：<https://rethymus.github.io/Aionis/> · 文档：[`web/README.md`](web/README.md)
 
+<table>
+  <tr>
+    <td width="50%" align="center"><img src="assets/screenshots/terminal-home.png" alt="终端首页：效度论证链入口" width="100%"><br><sub><b>效度论证链入口</b> · 语境 → 证据 → 效度 → 裁决，守卫环绕四环</sub></td>
+    <td width="50%" align="center"><img src="assets/screenshots/terminal-market.png" alt="市场全景页：美股等权指数与 VIX" width="100%"><br><sub><b>市场全景</b> · 美股等权指数 × VIX（2016→），总统↔美联储博弈事件标记，模型 OOS 自 2021 叠加</sub></td>
+  </tr>
+  <tr>
+    <td width="50%" align="center"><img src="assets/screenshots/terminal-heatmap.png" alt="热力图页：美中双市场树图" width="100%"><br><sub><b>热力图</b> · US 492 + CN 929 双树图，美中双区域同屏</sub></td>
+    <td width="50%" align="center"><img src="assets/screenshots/terminal-atlas.png" alt="数据图集页：12 张表约 60 张图" width="100%"><br><sub><b>数据图集</b> · 12 表 / 60 SVG，56 个 committed 数据面板的引用地图</sub></td>
+  </tr>
+  <tr>
+    <td width="50%" align="center"><img src="assets/screenshots/terminal-calibration.png" alt="校准页：可靠性曲线与 ECE" width="100%"><br><sub><b>校准</b> · 可靠性散点 / 对角参照 / ECE——概率预测的诚实度量</sub></td>
+    <td width="50%" align="center"><img src="assets/screenshots/terminal-evidence.png" alt="证据页：证据矩阵与溯源" width="100%"><br><sub><b>证据</b> · 证据矩阵逐项溯源：每个主张都能回到账本行与数据水位</sub></td>
+  </tr>
+  <tr>
+    <td width="50%" align="center"><img src="assets/screenshots/terminal-data-health.png" alt="数据健康页：逐面板 as-of 水位" width="100%"><br><sub><b>数据健康</b> · 25 daily / 11 cadence / 20 frozen，逐面板公示 as-of 水位</sub></td>
+    <td width="50%" align="center"><img src="assets/screenshots/terminal-regime.png" alt="语境页：宏观 regime 三卡" width="100%"><br><sub><b>语境</b> · CPI / 联邦基金利率 / VIX regime 三卡与七图</sub></td>
+  </tr>
+</table>
+
+<p align="center"><sub>以上均为实拍：终端截图来自与线上一致的静态构建（真实 committed 数据）。</sub></p>
+
 ```mermaid
 flowchart LR
     CTX["语境 Context<br/>市场制度"] --> EV["证据 Evidence<br/>模型选股 + 多源佐证"]
@@ -182,7 +210,26 @@ cd web && pnpm install && pnpm dev      # http://localhost:3000
 ## ⑥ 本地量化仪表盘（Streamlit + Plotly）
 
 11 个标签：总览 / 拟合质量 / 波动率 / 曲线演化 / 事件研究 / 不确定性 / 视界稳健性 /
-覆盖 / 策略收益 / 前向 IC / 运行史。
+覆盖 / 策略收益 / 前向 IC / 运行史。以下为对 `runs/results/` **真实冻结 run** 的渲染实拍
+（非合成演示）：
+
+<p align="center">
+  <img src="assets/screenshots/dashboard-tour.gif" alt="Streamlit 仪表盘标签漫游：总览 → 拟合质量 → 波动率 → 曲线演化 → 不确定性 → 策略收益" width="880">
+  <br><sub><b>仪表盘漫游</b> · 六个分析维度的切换——四相裁决卡 → 累计 IC → IC 分布/回撤 → CI 带 → forest plot → L-S 次级透镜</sub>
+</p>
+
+<table>
+  <tr>
+    <td width="33%" align="center"><img src="assets/screenshots/dash-overview.png" alt="仪表盘总览标签" width="100%"><br><sub><b>总览</b> · 四相裁决表</sub></td>
+    <td width="33%" align="center"><img src="assets/screenshots/dash-fit.png" alt="拟合质量标签" width="100%"><br><sub><b>拟合质量</b> · 累计 IC + KPI</sub></td>
+    <td width="33%" align="center"><img src="assets/screenshots/dash-volatility.png" alt="波动率标签" width="100%"><br><sub><b>波动率</b> · IC 直方图 + 水下回撤</sub></td>
+  </tr>
+  <tr>
+    <td width="33%" align="center"><img src="assets/screenshots/dash-curve.png" alt="曲线演化标签" width="100%"><br><sub><b>曲线演化</b> · 随机游走 CI 带</sub></td>
+    <td width="33%" align="center"><img src="assets/screenshots/dash-uncertainty.png" alt="不确定性标签" width="100%"><br><sub><b>不确定性</b> · 差分 forest plot</sub></td>
+    <td width="33%" align="center"><img src="assets/screenshots/dash-strategy.png" alt="策略收益标签" width="100%"><br><sub><b>策略收益</b> · L-S 次级透镜</sub></td>
+  </tr>
+</table>
 
 ```bash
 uv run streamlit run dashboard/app.py
@@ -261,6 +308,9 @@ pandas-market-calendars · pydantic · structlog。终端为 Next.js 静态导�
 <a id="refs"></a>
 ## ⑪ 方法学参考文献
 
+<details>
+<summary><b>展开 11 条方法学出处</b>（López de Prado · Bailey · Hansen · White · Diebold-Mariano · …）</summary>
+
 - López de Prado, M. (2018). *Advances in Financial Machine Learning*. Wiley.（Purged K-Fold + Embargo）
 - Bailey, D. H., & López de Prado, M. (2014). The Deflated Sharpe Ratio. *Journal of Portfolio Management*, 40(5).
 - Hansen, P. R. (2005). A Test for Superior Predictive Ability. *Econometrica*, 73(1).
@@ -272,6 +322,8 @@ pandas-market-calendars · pydantic · structlog。终端为 Next.js 静态导�
 - Schuirmann, D. J. (1987). A Comparison of the Two One-Sided Tests Procedure and the Power Approach for Assessing the Equivalence of Average Bioavailability. *Journal of Pharmacokinetics and Biopharmaceutics*, 15(6).（TOST）
 - Grinold, R. C., & Kahn, R. N. (2000). *Active Portfolio Management* (2nd ed.). McGraw-Hill.（IC / IR 基本定律）
 - Mitchell, M. et al. (2019). Model Cards for Model Reporting. *FAT\* 2019*.；Gebru, T. et al. (2021). Datasheets for Datasets. *Communications of the ACM*, 64(12).
+
+</details>
 
 *注：引用仅标注方法学出处，便于按图索骥；本项目未与上述作者关联。*
 
@@ -301,6 +353,8 @@ pandas-market-calendars · pydantic · structlog。终端为 Next.js 静态导�
 
 <div align="center">
 
-[English version](README.en.md) · 代码许可 MIT：[LICENSE](LICENSE) · 数据源许可：[docs/data-license-allowlist.md](docs/data-license-allowlist.md)
+**简体中文** · [English](README.en.md)
+
+代码许可 MIT：[LICENSE](LICENSE) · 数据源许可：[docs/data-license-allowlist.md](docs/data-license-allowlist.md) · 引用：[CITATION.cff](CITATION.cff)
 
 </div>
