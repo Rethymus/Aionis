@@ -304,7 +304,9 @@ Next.js static export (GitHub Pages).
   (2023-03-10, conservative lower bound).
 - **7-gate data intake** ([`docs/data-intake-rubric.md`](docs/data-intake-rubric.md)):
   license / PIT / no-revision / snapshot / exploratory-only / selection-honesty /
-  politeness; permissive licenses only (MIT/Apache/BSD,
+  politeness; licenses must fall inside the **8-class MIT-compatible allowlist**
+  (MIT · Apache-2.0 · BSD-2/3 · CC0 · CC-BY-4.0 data-only · NCSA · US-gov public
+  domain; GPL/AGPL/LGPL/Commons-Clause and friends rejected, class by class in
   [`docs/data-license-allowlist.md`](docs/data-license-allowlist.md)) — in spirit
   a cousin of Gebru et al. (2018) datasheets: every dataset registers provenance
   and limits.

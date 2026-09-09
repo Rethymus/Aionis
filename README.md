@@ -270,7 +270,9 @@ pandas-market-calendars · pydantic · structlog。终端为 Next.js 静态导�
   冻结样本外管线中**不产生信号**；E2 以经验探针实证的 provider cutoff（2023-03-10，
   保守下界）门控。
 - **7 门数据准入**（[`docs/data-intake-rubric.md`](docs/data-intake-rubric.md)）：许可 /
-  PIT / 不修订 / 快照 / 仅探索 / 选择诚实 / 爬取礼貌；仅允许宽松许可（MIT/Apache/BSD，
+  PIT / 不修订 / 快照 / 仅探索 / 选择诚实 / 爬取礼貌；许可只认白名单 **8 类 MIT-compatible
+  宽松许可**（MIT · Apache-2.0 · BSD-2/3 · CC0 · CC-BY-4.0 仅数据 · NCSA · US-gov 公共领域，
+  拒收 GPL/AGPL/LGPL/Commons-Clause 等，逐类见
   [`docs/data-license-allowlist.md`](docs/data-license-allowlist.md)）——精神上接近
   Gebru et al. (2018) 的 datasheets：每个数据集登记出处与边界。
 - **研究管线禁用 mock/合成数据**（仅限打标的单元测试夹具）；`.env`、`data/`、
