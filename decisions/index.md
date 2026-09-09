@@ -18,6 +18,7 @@ without new evidence — see `../WORKFLOW.md` §5).
 | [ADR-010](ADR-010-sesoi-tost-sequential-gate.md) | E3 statistical gate: SESOI ±0.010 / HAC-TOST 90% / O'Brien-Fleming sequential / n_trials=30 (freeze before outcome inspection) | accepted | 2026-07-31 |
 | [ADR-011](ADR-011-track-b-seven-theme-platform.md) | Adopt Track B (seven-theme selection platform) as a new isolated research line | accepted | 2026-08-02 |
 | [ADR-012](ADR-012-orchestration-protocol.md) | Aionis multi-agent orchestration protocol (supervisor + worker lanes, denoised handoff, task-file-as-issue) | accepted | 2026-08-03 |
+| [ADR-013](ADR-013-polyform-noncommercial-license.md) | Own-code license: MIT → PolyForm-Noncommercial-1.0.0 (noncommercial only; commercial use incl. repackaged resale requires separate authorization; incoming-deps policy unchanged) | accepted | 2026-09-09 |
 
 ## How to add an ADR
 Number it next (`ADR-013-…`), write it **before** the decision is reversed, never delete (supersede

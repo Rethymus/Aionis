@@ -100,5 +100,5 @@
   "horizon_robust_all": true,
   "null_criterion": "null_holds iff the differential's 95% HAC CI brackets zero",
   "notes": "Horizon-robustness sweep of the frozen h=21 Phase B/C/D nulls + the E1 (propagation-beyond-self) null. B/C/D differential = enhanced arm minus the shared plain arm_base (FEATURE_COLS, end_lag); Phase E1 differential = arm_prop minus arm_base_self (NOT the shared base -- propagation beyond SELF). EXPLORATORY (h!=21 = changed config); no confirmatory rows written. arm_base is shared across B/C/D per horizon (identical by construction).",
-  "snapshot_ts": "2026-09-08T10:33:35.311390+00:00"
+  "snapshot_ts": "2026-09-09T10:36:14.412159+00:00"
 }

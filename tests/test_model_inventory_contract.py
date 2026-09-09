@@ -910,7 +910,7 @@ def test_committed_inventory_registered_everywhere() -> None:
         "registered directly after its H4 sibling"
     )
     assert et._API_LICENSE["model_inventory"] == (
-        "Aionis research artifacts (repo MIT)",
+        "Aionis research artifacts (repo PolyForm-NC)",
         "SR 11-7 style model inventory over the tracked ledger and frozen run directories",
     )
 
@@ -927,7 +927,7 @@ def test_committed_inventory_registered_everywhere() -> None:
     ep = next((e for e in cat["endpoints"] if e["key"] == "model_inventory"), None)
     assert ep is not None and ep["status"] == "available"
     assert ep["freshness"] == "frozen"
-    assert ep["license"] == "Aionis research artifacts (repo MIT)"
+    assert ep["license"] == "Aionis research artifacts (repo PolyForm-NC)"
 
     barrel = BARREL.read_text(encoding="utf-8")
     assert 'import modelInventoryJson from "./model_inventory.json";' in barrel

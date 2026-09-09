@@ -383,7 +383,10 @@ project is not affiliated with the authors.*
   `runs/results/`, `runs/*.log`, `runs/*.parquet` are gitignored regenerable
   artifacts.
 - **Citing this repository**: see [`CITATION.cff`](CITATION.cff). Code license:
-  MIT ([`LICENSE`](LICENSE)); third-party data-source licensing separately in
+  **PolyForm Noncommercial 1.0.0** (noncommercial use only — personal study,
+  academic research, and nonprofit organizations are fine; any commercial
+  purpose, including repackaged resale, requires separate authorization, see
+  [`LICENSE`](LICENSE)); third-party data-source licensing separately in
   [`docs/data-license-allowlist.md`](docs/data-license-allowlist.md).
 
 New phases run the same anti-leakage pipeline: freeze config →
@@ -397,6 +400,6 @@ learner → rank-IC differential → controls → H6 → verdict. Acceptance gat
 
 [简体中文](README.md) · **English**
 
-Code license MIT: [LICENSE](LICENSE) · Data-source licensing: [docs/data-license-allowlist.md](docs/data-license-allowlist.md) · Cite: [CITATION.cff](CITATION.cff)
+Code license PolyForm-Noncommercial-1.0.0 (noncommercial use only): [LICENSE](LICENSE) · Data-source licensing: [docs/data-license-allowlist.md](docs/data-license-allowlist.md) · Cite: [CITATION.cff](CITATION.cff)
 
 </div>

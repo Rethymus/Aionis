@@ -1,11 +1,11 @@
 {
   "status": "ok",
-  "as_of": "2026-09-07",
-  "n_docs": 69,
+  "as_of": "2026-09-08",
+  "n_docs": 70,
   "n_categories": 5,
   "categories": {
     "preregistration": 10,
-    "adr": 13,
+    "adr": 14,
     "results": 2,
     "rubric": 2,
     "theory": 42
@@ -210,11 +210,20 @@
       "url": "https://github.com/Rethymus/Aionis/blob/main/decisions/ADR-012-orchestration-protocol.md"
     },
     {
+      "title": "ADR-013: Aionis \u81ea\u8eab\u4ee3\u7801\u8bb8\u53ef\u7531 MIT \u53d8\u66f4\u4e3a PolyForm-Noncommercial-1.0.0\uff08\u4ec5\u9650\u975e\u5546\u7528\uff09",
+      "path": "decisions/ADR-013-polyform-noncommercial-license.md",
+      "category": "adr",
+      "date": null,
+      "n_chars": 2176,
+      "summary": "Aionis \u662f\u516c\u5f00\u4ed3\u5e93\uff08GitHub Pages \u7ec8\u7aef + README \u5c55\u793a\uff09\u3002 MIT \u5141\u8bb8\u4efb\u4f55\u4eba\u5546\u7528\u3001\u8f6c\u552e\u3001 \u95ed\u6e90\u5305\u88c5\uff1b\u82e5\u88ab\u6709\u5fc3\u4eba\u5305\u88c5\u6210\"AI \u9009\u80a1\u795e\u5668\"\u5356\u7ed9\u5bf9\u91d1\u878d\u4e00\u7a8d\u4e0d\u901a\u7684\u666e\u901a\u4eba\uff0cMIT \u6388\u6743\u4e0b \u65e0\u8ffd\u8d23\u6293\u624b\u2014\u2014\u8fd9\u6b63\u662f\u4e1a\u4e3b\u660e\u786e\u8981\u9632\u7684\u573a\u666f\uff082026-09-09 \u4e1a\u4e3b\u6307\u4ee4\u539f\u8bdd\uff1a\u5f88\u53ef\u80fd\u88ab\u62ff\u51fa\u53bb \u5305\u88c5\u5356\u7ed9\u5bf9\u91d1\u878d\u4e00\u7a8d\u4e0d\u901a\u7684\u666e\u901a\u4eba\uff0c\u9020\u6210\u6781\u5176\u6076\u52a3\u7684\u5f71\u54cd\uff1b\u4e0d\u6388\u6743\u624d\u80fd\u5728\u4e8b\u540e\u8ffd\u8d23\u633d\u56de\u3001 \u907f\u514d\u66f4\u591a\u4eba\u4e0a\u5f53\uff09\u3002",
+      "url": "https://github.com/Rethymus/Aionis/blob/main/decisions/ADR-013-polyform-noncommercial-license.md"
+    },
+    {
       "title": "decisions/index.md \u2014 ADR registry",
       "path": "decisions/index.md",
       "category": "adr",
       "date": "2026-08-03",
-      "n_chars": 2308,
+      "n_chars": 2543,
       "summary": "Architecture Decision Records: point-in-time, record-once. Status: proposed / accepted / deprecated / superseded. Re-open an ADR only on its re-evaluation trigger (never re-litigate without new evidence \u2014 see ../WORKFLOW.md \u00a75).",
       "url": "https://github.com/Rethymus/Aionis/blob/main/decisions/index.md"
     },
@@ -250,8 +259,8 @@
       "path": "docs/data-license-allowlist.md",
       "category": "rubric",
       "date": "2026-07-28",
-      "n_chars": 2224,
-      "summary": "\u72b6\u6001\uff1av0.1 \u00b7 2026-07-28 \u00b7 docs/data-intake-rubric.md G1 \u7684\u914d\u5957\u6587\u6863\u3002 \u8303\u56f4\uff1aAionis \u63a5\u5165\u7684\u6bcf\u4e2a\u7b2c\u4e09\u65b9\u6570\u636e\u96c6 \u548c \u6bcf\u4e2a\u8fd0\u884c\u65f6\u4f9d\u8d56\u90fd\u5fc5\u987b\u843d\u5728 ACCEPTED \u5217\u3002 \u539f\u5219\uff1aAionis \u81ea\u8eab\u662f MIT\uff08pyproject.toml:7 license = { text = \"MIT\" }\uff09\u2014\u2014\u6240\u6709\u5165\u6808\u7269\u5fc5\u987b MIT-compatible\uff0c\u5426\u5219\u5c31\u662f\u6cd5\u5f8b\u96f7\u3002",
+      "n_chars": 2483,
+      "summary": "\u72b6\u6001\uff1av0.2 \u00b7 2026-09-09 \u00b7 docs/data-intake-rubric.md G1 \u7684\u914d\u5957\u6587\u6863\uff08v0.1 \u00b7 2026-07-28\uff09\u3002 \u8303\u56f4\uff1aAionis \u63a5\u5165\u7684\u6bcf\u4e2a\u7b2c\u4e09\u65b9\u6570\u636e\u96c6 \u548c \u6bcf\u4e2a\u8fd0\u884c\u65f6\u4f9d\u8d56\u90fd\u5fc5\u987b\u843d\u5728 ACCEPTED \u5217\u3002",
       "url": "https://github.com/Rethymus/Aionis/blob/main/docs/data-license-allowlist.md"
     },
     {
@@ -529,7 +538,7 @@
       "path": "docs/data-intake-knowledge-shelf.md",
       "category": "theory",
       "date": "2026-08-31",
-      "n_chars": 3104,
+      "n_chars": 3120,
       "summary": "\u72b6\u6001\uff1av0.1 \u00b7 2026-08-23 \u00b7 reference \u663e\u793a\u6a21\u5757\uff08\u4e1a\u4e3b\u5e9f\u9664\u8c41\u514d\u540e\u7684\u53c2\u7167\u7ad9\"\u4e66\u67b6\"\u7b49\u4ef7\u7269\uff09\u3002 \u8303\u56f4\uff1a\u672c\u9762\u677f\u901a\u8fc7 7 \u95e8\u5f3a\u5236\u6e05\u5355\uff08docs/data-intake-rubric.md\uff09\u3002 \u4e0e\u5176\u5b83\u9762\u677f\u4e0d\u540c\uff0c\u672c\u9762\u677f \u81ea\u6709\u5185\u5bb9\u5c42\u96f6\u7b2c\u4e09\u65b9\u7248\u6743\u9762\uff08\u5168\u90e8\u4e3a\u4ed3\u5e93 MIT \u81ea\u6709\u6587\u6863\u7684\u76ee\u5f55\uff09\uff1b\u5916\u94fe\u5c42\u4e3a\u7f16\u8f91\u7cbe\u9009\u4e66\u7b7e \uff08\u53ea\u94fe\u51fa + \u4e00\u53e5\u9759\u6001\u63cf\u8ff0\uff0c\u4e0d\u6293\u53d6\uff09\u3002",
       "url": "https://github.com/Rethymus/Aionis/blob/main/docs/data-intake-knowledge-shelf.md"
     },
@@ -582,8 +591,8 @@
       "title": "Ops: local evening refresh lane (the \"temporary server\")",
       "path": "docs/ops-local-refresh.md",
       "category": "theory",
-      "date": "2026-09-07",
-      "n_chars": 10396,
+      "date": "2026-09-08",
+      "n_chars": 10775,
       "summary": "Since 2026-09-06. Owner decision: no paid server \u2014 the developer machine, woken on Beijing trading-day evenings via a ZCode workspace automation, IS the cron server for the terminal's daily data refresh. Target: run unattended \u22651 month.",
       "url": "https://github.com/Rethymus/Aionis/blob/main/docs/ops-local-refresh.md"
     },
@@ -700,7 +709,7 @@
       "desc_zh": "\u5934\u6761\u4e3b\u5f20\u7684\u5355\u9875\u901f\u89c8\uff1aIC / CI / p / verdict / SESOI\u2014\u2014web/out/atlas.html \u7684\u53ef\u6eaf\u6e90\u5bf9\u5e94\u7269\u3002",
       "path": "reports/evidence/atlas-claim-v1.html",
       "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/atlas-claim-v1.html",
-      "sha256": "2ec4bfb8b6d305bbaf5ec5e011edd8afe199964d2c5ed3e015ea6e7a94bcc07f",
+      "sha256": "6510c253140324aa84409cb3db68633272a55d0f719171f1a18b295875fd1dda",
       "n_bytes": 24397
     },
     {
@@ -711,8 +720,8 @@
       "desc_zh": "\u6eaf\u6e90\u7814\u7a76\u6863\u6848\uff1a24 \u6761\u6765\u6e90\u767b\u8bb0\u8868 \u2192 \u62a5\u544a \u2192 \u5efa\u6a21\u5206\u6790\u5168\u6d41\u7a0b\uff0c[S#] \u5f15\u7528\u95ed\u5305\u3002",
       "path": "reports/evidence/research-dossier-v1.html",
       "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/research-dossier-v1.html",
-      "sha256": "5ed8537f57557bc03ca12ace2d29665d1cb8c63734b7bc38e3ad7f0f352e36a5",
-      "n_bytes": 46982
+      "sha256": "893cbd966595e21a02aa771e4b17a860d6b670ea6780b48f2e6fba24a9d7239e",
+      "n_bytes": 47134
     },
     {
       "id": "research-dossier-b-v1",
@@ -748,6 +757,6 @@
       "n_bytes": 1995
     }
   ],
-  "methodology": "Layer 1 \u2014 Aionis's OWN method library: catalog of docs/ + decisions/ markdown (repo MIT; zero third-party copyright surface). Each entry carries metadata plus a safe teaser slice (first 2-3 sentences, <=240 chars) extracted at export time; the full text stays on GitHub (link-out). Dates are last-commit dates read from the LOCAL git repository (no network). Layer 2 \u2014 a FIXED editorially-curated bookmark list of first-hand public research sources (BIS / Fed FEDS / IMF / NBER / arXiv q-fin / FRASER / FRED-ALFRED / RePEc): link-out + one static sentence each, no fetching, no scraping, no summary APIs \u2014 copyright stays with the authors, we only catalog. Categories are a fixed 5-rail whitelist (preregistration / adr / results / rubric / theory); n_docs reconciles to the sum of the rails. Layer 3 \u2014 generated evidence artifacts: self-contained HTML, byte-stable, sha256 + byte count pinned at export time from the local tracked file so a reader can verify the download against the catalog (a missing file degrades honestly to null \u2014 never fabricated). Superseded artifact versions are retained under reports/evidence/archive/ (move-don't-delete \u2014 the archive only grows). Display-only reference lane \u2014 never part of any research or OOS pipeline.",
-  "snapshot_ts": "2026-09-08T10:33:52.271937+00:00"
+  "methodology": "Layer 1 \u2014 Aionis's OWN method library: catalog of docs/ + decisions/ markdown (repo PolyForm-NC; zero third-party copyright surface). Each entry carries metadata plus a safe teaser slice (first 2-3 sentences, <=240 chars) extracted at export time; the full text stays on GitHub (link-out). Dates are last-commit dates read from the LOCAL git repository (no network). Layer 2 \u2014 a FIXED editorially-curated bookmark list of first-hand public research sources (BIS / Fed FEDS / IMF / NBER / arXiv q-fin / FRASER / FRED-ALFRED / RePEc): link-out + one static sentence each, no fetching, no scraping, no summary APIs \u2014 copyright stays with the authors, we only catalog. Categories are a fixed 5-rail whitelist (preregistration / adr / results / rubric / theory); n_docs reconciles to the sum of the rails. Layer 3 \u2014 generated evidence artifacts: self-contained HTML, byte-stable, sha256 + byte count pinned at export time from the local tracked file so a reader can verify the download against the catalog (a missing file degrades honestly to null \u2014 never fabricated). Superseded artifact versions are retained under reports/evidence/archive/ (move-don't-delete \u2014 the archive only grows). Display-only reference lane \u2014 never part of any research or OOS pipeline.",
+  "snapshot_ts": "2026-09-09T10:43:50.034513+00:00"
 }

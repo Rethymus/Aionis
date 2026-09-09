@@ -4165,29 +4165,29 @@ def export_data_health() -> None:
 
 # key → (license, primary source). Mirrors docs/data-intake-*.md; keep in sync.
 _API_LICENSE: dict[str, tuple[str, str]] = {
-    "metrics": ("Aionis research artifacts (repo MIT)", "frozen OOS scores, ledger #49 lineage"),
-    "picks": ("Aionis research artifacts (repo MIT)", "frozen OOS scores + Platt calibration"),
-    "shorts": ("Aionis research artifacts (repo MIT)", "frozen OOS scores + Platt calibration"),
-    "picks_meta": ("Aionis research artifacts (repo MIT)", "calibration meta on realized OOS pairs"),
-    "sector_breakdown": ("Aionis research artifacts (repo MIT)", "frozen OOS scores by sector"),
-    "picks_backtest": ("Aionis research artifacts (repo MIT)", "realized OOS picks vs base, 131 months"),
-    "ic_monthly": ("Aionis research artifacts (repo MIT)", "confirmatory monthly rank-IC series"),
+    "metrics": ("Aionis research artifacts (repo PolyForm-NC)", "frozen OOS scores, ledger #49 lineage"),
+    "picks": ("Aionis research artifacts (repo PolyForm-NC)", "frozen OOS scores + Platt calibration"),
+    "shorts": ("Aionis research artifacts (repo PolyForm-NC)", "frozen OOS scores + Platt calibration"),
+    "picks_meta": ("Aionis research artifacts (repo PolyForm-NC)", "calibration meta on realized OOS pairs"),
+    "sector_breakdown": ("Aionis research artifacts (repo PolyForm-NC)", "frozen OOS scores by sector"),
+    "picks_backtest": ("Aionis research artifacts (repo PolyForm-NC)", "realized OOS picks vs base, 131 months"),
+    "ic_monthly": ("Aionis research artifacts (repo PolyForm-NC)", "confirmatory monthly rank-IC series"),
     "ic_deciles": (
-        "Aionis research artifacts (repo MIT)",
+        "Aionis research artifacts (repo PolyForm-NC)",
         "decile monotonicity of the frozen OOS score surface (label-convention forward returns)",
     ),
     "score_diagnostics": (
-        "Aionis research artifacts (repo MIT)",
+        "Aionis research artifacts (repo PolyForm-NC)",
         "confirmatory OOS cross-sectional score diagnostics (display-only derivation)",
     ),
-    "pick_conviction": ("Aionis research artifacts (repo MIT)", "cross-sectional score dispersion"),
-    "model_health": ("Aionis research artifacts (repo MIT)", "PSI + rolling IC on realized OOS"),
-    "calibration_reliability": ("Aionis research artifacts (repo MIT)", "walk-forward calibration audit"),
-    "power_floor": ("Aionis research artifacts (repo MIT)", "sigma survey / power analysis"),
-    "sigma_survey": ("Aionis research artifacts (repo MIT)", "observed vs pure-noise sigma"),
-    "bps_sweep": ("Aionis research artifacts (repo MIT)", "net-cost sensitivity sweep"),
-    "evidence": ("Aionis research artifacts (repo MIT)", "research ledger evidence table"),
-    "stock_universe": ("Aionis research artifacts (repo MIT)", "per-stock frozen readout over OOS scores"),
+    "pick_conviction": ("Aionis research artifacts (repo PolyForm-NC)", "cross-sectional score dispersion"),
+    "model_health": ("Aionis research artifacts (repo PolyForm-NC)", "PSI + rolling IC on realized OOS"),
+    "calibration_reliability": ("Aionis research artifacts (repo PolyForm-NC)", "walk-forward calibration audit"),
+    "power_floor": ("Aionis research artifacts (repo PolyForm-NC)", "sigma survey / power analysis"),
+    "sigma_survey": ("Aionis research artifacts (repo PolyForm-NC)", "observed vs pure-noise sigma"),
+    "bps_sweep": ("Aionis research artifacts (repo PolyForm-NC)", "net-cost sensitivity sweep"),
+    "evidence": ("Aionis research artifacts (repo PolyForm-NC)", "research ledger evidence table"),
+    "stock_universe": ("Aionis research artifacts (repo PolyForm-NC)", "per-stock frozen readout over OOS scores"),
     "themes": (
         "Tiingo/Alpaca free tier (vendor ToS, display-only) + GDELT open data",
         "daily prices, fundamentals, GDELT news sentiment, ALFRED macro",
@@ -4273,22 +4273,22 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
         "GDELT open data (facts; article copyright stays with publishers)",
         "GDELT Doc 2.0 artlist market headlines, seendate PIT, link-out only",
     ),
-    "headline_provenance": ("Aionis append-only ledger (repo MIT)", "ledger.jsonl freeze→result pairing"),
-    "ledger_audit": ("Aionis append-only ledger (repo MIT)", "ledger.jsonl claim-row timeline"),
+    "headline_provenance": ("Aionis append-only ledger (repo PolyForm-NC)", "ledger.jsonl freeze→result pairing"),
+    "ledger_audit": ("Aionis append-only ledger (repo PolyForm-NC)", "ledger.jsonl claim-row timeline"),
     "horizon_robustness": (
-        "Aionis exploratory ledger row (repo MIT)",
+        "Aionis exploratory ledger row (repo PolyForm-NC)",
         "horizon-robustness sweep summary of the frozen h=21 nulls",
     ),
     "model_card": (
-        "Aionis research artifacts (repo MIT)",
+        "Aionis research artifacts (repo PolyForm-NC)",
         "machine-readable model card of the frozen confirmatory Track C model",
     ),
     "model_inventory": (
-        "Aionis research artifacts (repo MIT)",
+        "Aionis research artifacts (repo PolyForm-NC)",
         "SR 11-7 style model inventory over the tracked ledger and frozen run directories",
     ),
     "provider_vintage": (
-        "Aionis research artifacts (repo MIT)",
+        "Aionis research artifacts (repo PolyForm-NC)",
         "LLM provider knowledge-vintage panel (frozen empirical cutoff + drift checks)",
     ),
     "cot": ("U.S. CFTC — public domain", "Commitments of Traders legacy futures, weekly"),
@@ -4330,15 +4330,15 @@ _API_LICENSE: dict[str, tuple[str, str]] = {
         "Global X dated full-holdings files; top-10 by weight + cross-fund "
         "resonance; skips disclosed)",
     ),
-    "data_health": ("Aionis-generated (repo MIT)", "freshness/provenance map over all panels"),
+    "data_health": ("Aionis-generated (repo PolyForm-NC)", "freshness/provenance map over all panels"),
     "knowledge_shelf": (
-        "Aionis repo docs (repo MIT) + editorial link-out bookmarks",
+        "Aionis repo docs (repo PolyForm-NC) + editorial link-out bookmarks",
         "docs/ + decisions/ method catalog with GitHub link-outs and a fixed "
         "curated public research-source list; teasers are safe slices of our "
         "own MIT docs, third-party content never copied",
     ),
     "evidence_matrix": (
-        "Aionis frozen artifacts (repo MIT)",
+        "Aionis frozen artifacts (repo PolyForm-NC)",
         "five-claim evidence matrix: machine-read differentials + ledger "
         "reconciliation + artifact sha256 pins; values are verbatim copies of "
         "the frozen confirmatory files",
@@ -7183,7 +7183,7 @@ def export_executives() -> None:
 # --- knowledge shelf (browsable library over the repo's own method docs) ------
 #
 # The reference "bookshelf" equivalent, done WITHOUT content appropriation:
-# layer 1 is Aionis's OWN method library (docs/ + decisions/ — repo MIT, zero
+# layer 1 is Aionis's OWN method library (docs/ + decisions/ — repo PolyForm-NC, zero
 # third-party copyright surface): a catalog of metadata + a first-paragraph
 # teaser extracted at EXPORT time into the tracked JSON (the web build
 # environment has no repo files, so the panel must carry its own catalog),
@@ -7498,7 +7498,7 @@ def export_knowledge_shelf() -> None:
         "evidence_artifacts": artifacts,
         "methodology": (
             "Layer 1 — Aionis's OWN method library: catalog of docs/ + "
-            "decisions/ markdown (repo MIT; zero third-party copyright "
+            "decisions/ markdown (repo PolyForm-NC; zero third-party copyright "
             "surface). Each entry carries metadata plus a safe teaser slice "
             "(first 2-3 sentences, <=240 chars) extracted at export time; "
             "the full text stays on GitHub (link-out). Dates are last-commit "

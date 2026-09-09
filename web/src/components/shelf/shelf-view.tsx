@@ -21,7 +21,7 @@ import {
 } from "@/data/aionis";
 
 // Method shelf (reference "bookshelf" equivalent, no content appropriation):
-// layer 1 catalogs OUR OWN method docs (docs/ + decisions/, repo MIT) —
+// layer 1 catalogs OUR OWN method docs (docs/ + decisions/, repo PolyForm-NC) —
 // metadata + a safe teaser slice exported at build time, body on GitHub
 // (link-out). Layer 2 is a FIXED editorially-curated bookmark list of
 // first-hand public research sources — link-out + one static sentence,
@@ -350,7 +350,7 @@ export function ShelfView() {
         </CardContent>
       </Card>
 
-      {/* Methodology: own-content MIT + editorial link-out framing — part of
+      {/* Methodology: own-content PolyForm-NC + editorial link-out framing — part of
           the page, not a footnote. */}
       <Card className="border-muted">
         <CardHeader>

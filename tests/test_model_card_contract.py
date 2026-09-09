@@ -512,7 +512,7 @@ def test_committed_card_registered_everywhere() -> None:
     )
     assert entry == ("model_card", "model_card.json", et._DH_FROZEN)
     assert et._API_LICENSE["model_card"] == (
-        "Aionis research artifacts (repo MIT)",
+        "Aionis research artifacts (repo PolyForm-NC)",
         "machine-readable model card of the frozen confirmatory Track C model",
     )
     card = _load()
@@ -528,7 +528,7 @@ def test_committed_card_registered_everywhere() -> None:
     ep = next((e for e in cat["endpoints"] if e["key"] == "model_card"), None)
     assert ep is not None and ep["status"] == "available"
     assert ep["freshness"] == "frozen"
-    assert ep["license"] == "Aionis research artifacts (repo MIT)"
+    assert ep["license"] == "Aionis research artifacts (repo PolyForm-NC)"
     assert ep["source"] == (
         "machine-readable model card of the frozen confirmatory Track C model"
     )

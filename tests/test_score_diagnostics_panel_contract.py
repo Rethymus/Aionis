@@ -339,7 +339,7 @@ def test_score_diagnostics_registered_in_manifests() -> None:
     sd_idx = et._DATA_HEALTH_MANIFEST.index(entry)
     assert sd_idx == ic_idx + 1, "registered directly after ic_monthly"
     license_, source = et._API_LICENSE["score_diagnostics"]
-    assert license_ == "Aionis research artifacts (repo MIT)"
+    assert license_ == "Aionis research artifacts (repo PolyForm-NC)"
     assert "unverified" not in license_
     assert "display-only" in source
 

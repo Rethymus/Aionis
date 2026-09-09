@@ -29,10 +29,10 @@
 
 ## G1 — License allowlist（许可协议白名单）
 
-### 结论：✓ **PASS（自有内容 = repo MIT；外链层 = editorial）**
+### 结论：✓ **PASS（自有内容 = repo PolyForm-NC；外链层 = editorial）**
 
 - **规则**：仅 MIT / Apache-2.0 / BSD-2/3-Clause / CC0 / CC-BY-4.0（数据）或等价的开放数据。
-- **自有层**：`docs/` + `decisions/` 是仓库自有内容（repo MIT）——目录化自己的文档**零第三方
+- **自有层**：`docs/` + `decisions/` 是仓库自有内容（repo PolyForm-NC）——目录化自己的文档**零第三方
   版权面**；摘要 slice 是自有内容的导航片段（≤240 字符，远超 fair-use 门槛，且本来就是我们
   自己的 MIT 文本）。
 - **外链层（诚实边界）**：第三方研究内容版权在作者/机构——我们**只做目录**（名称 + 一句静态

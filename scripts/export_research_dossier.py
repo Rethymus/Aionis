@@ -233,7 +233,7 @@ def _panel_source(fname: str, sha: str, role: str) -> Source:
         type="panel",
         locator=f"web/src/data/aionis/{fname}",
         integrity=f"sha256:{sha} (file bytes)",
-        license="Aionis research artifacts (repo MIT)",
+        license="Aionis research artifacts (repo PolyForm-NC)",
         role=role,
     )
 
@@ -356,7 +356,7 @@ def build_assembly(
                     f"sha256:{a.ledger_horizon.sha} "
                     f"(line {a.ledger_horizon.lineno} JSON 行文本)"
                 ),
-                license="Aionis append-only ledger (repo MIT)",
+                license="Aionis append-only ledger (repo PolyForm-NC)",
                 role="horizon 稳健性 sweep(h=10/42)探索行",
             ))
             a.sid["ledger_horizon"] = f"S{len(a.sources)}"
@@ -376,7 +376,7 @@ def build_assembly(
                         f"sha256:{a.ledger_freeze.sha} "
                         f"(line {a.ledger_freeze.lineno} JSON 行文本)"
                     ),
-                    license="Aionis append-only ledger (repo MIT)",
+                    license="Aionis append-only ledger (repo PolyForm-NC)",
                     role="config_committed 冻结行(先于任何 OOS 观测)",
                 ))
                 a.sid["ledger_freeze"] = f"S{len(a.sources)}"
@@ -394,7 +394,7 @@ def build_assembly(
                 type="doc",
                 locator=rel,
                 integrity=f"sha256:{sha} (file bytes)",
-                license="Aionis repo docs (repo MIT)",
+                license="Aionis repo docs (repo PolyForm-NC)",
                 role=doc_roles[key],
             ))
             a.sid[key] = f"S{len(a.sources)}"
@@ -405,7 +405,7 @@ def build_assembly(
             type="artifact",
             locator=ARTIFACT_ATLAS,
             integrity=f"sha256:{sha} (file bytes)",
-            license="Aionis research artifacts (repo MIT)",
+            license="Aionis research artifacts (repo PolyForm-NC)",
             role="G2 自包含证据工件(先例;E3 forward-live 状态陈述)",
         ))
         a.sid["artifact_atlas"] = f"S{len(a.sources)}"

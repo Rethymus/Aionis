@@ -70,7 +70,7 @@ footer { color: #55555c; font-size: 0.78rem; padding: 0 4px; }
 <section>
 <h2>2 · 头条读数 / Headline reading</h2>
 <dl class="card"><div><dt>combined_ic · 月度 rank-IC 差分</dt><dd>-0.0088</dd></div><div><dt>95% CI(HAC)</dt><dd>[-0.0336, 0.0159]</dd></div><div><dt>p(HAC)</dt><dd>0.484</dd></div><div><dt>n_months · 样本外月数</dt><dd>71</dd></div><div><dt>verdict · 预注册两尾判定</dt><dd><span class="badge">NULL</span></dd></div><div><dt>SESOI · 实际显著域</dt><dd>±0.01</dd></div><div><dt>config_sig_short · 冻结配置签名</dt><dd>e14b9d44</dd></div><div><dt>ledger_row · 账本行</dt><dd>49</dd></div></dl>
-<p class="note">以上读数全部取自 metrics.json 面板实值(数字逐字嵌入,不经过任何重算或四舍五入);verdict 按预注册两尾判定规则给出。面板 snapshot_ts:2026-09-09T10:35:24.986058+00:00。</p>
+<p class="note">以上读数全部取自 metrics.json 面板实值(数字逐字嵌入,不经过任何重算或四舍五入);verdict 按预注册两尾判定规则给出。面板 snapshot_ts:2026-09-09T10:20:15.322395+00:00。</p>
 </section>
 <section>
 <h2>3 · 森林图 / Forest — 95% CI vs SESOI 带 vs 零线</h2>
@@ -229,8 +229,8 @@ footer { color: #55555c; font-size: 0.78rem; padding: 0 4px; }
 </section>
 <section>
 <h2>7 · 溯源 / Provenance</h2>
-<p class="note">metrics 面板 snapshot_ts:2026-09-09T10:35:24.986058+00:00。</p>
-<dl class="kv"><div><dt>headline_provenance.status / phase</dt><dd>ok / track_c</dd></div><div><dt>result(ledger_row / ts / event)</dt><dd>49 / 2026-08-05T10:27:13.421731+00:00 / confirmatory:first</dd></div><div><dt>freeze(config_committed)</dt><dd>row 48 / 2026-08-05T04:19:50.785179+00:00 / config_committed</dd></div><div><dt>config_sig_short / source</dt><dd>e14b9d44 / track_c_amend2.build_amendment() (#46+#47+#48 cumulative)</dd></div><div><dt>contract</dt><dd>freeze_before_result=True — freeze sha256 == result sha256, and freeze ts precedes result ts</dd></div><div><dt>headline(全精度实值)</dt><dd>combined_ic=-0.008840749458819833, p_hac=0.48377253118952823, ci=[-0.03358563149479441, 0.015904132577154742], n_months=71</dd></div><div><dt>provenance 面板 snapshot_ts</dt><dd>2026-09-09T10:36:14.419666+00:00</dd></div></dl>
+<p class="note">metrics 面板 snapshot_ts:2026-09-09T10:20:15.322395+00:00。</p>
+<dl class="kv"><div><dt>headline_provenance.status / phase</dt><dd>ok / track_c</dd></div><div><dt>result(ledger_row / ts / event)</dt><dd>49 / 2026-08-05T10:27:13.421731+00:00 / confirmatory:first</dd></div><div><dt>freeze(config_committed)</dt><dd>row 48 / 2026-08-05T04:19:50.785179+00:00 / config_committed</dd></div><div><dt>config_sig_short / source</dt><dd>e14b9d44 / track_c_amend2.build_amendment() (#46+#47+#48 cumulative)</dd></div><div><dt>contract</dt><dd>freeze_before_result=True — freeze sha256 == result sha256, and freeze ts precedes result ts</dd></div><div><dt>headline(全精度实值)</dt><dd>combined_ic=-0.008840749458819833, p_hac=0.48377253118952823, ci=[-0.03358563149479441, 0.015904132577154742], n_months=71</dd></div><div><dt>provenance 面板 snapshot_ts</dt><dd>2026-09-09T10:20:40.963967+00:00</dd></div></dl>
 <p class="note">生成器:export_evidence_html.py v1.0.0;artifact id:atlas-claim-v1。byte-stable artifact — regenerate with <code>uv run python scripts/export_evidence_html.py</code>(确定性:无运行时时钟,as_of 全部取自面板字段,排序写死,LF 换行)。</p>
 <p class="note">配色说明:本工件不依赖站点 CSS 变量,使用硬编码 hex 并与 web/src/app/globals.css 浅色 token 对应——#ffffff=--card、#171717=--ink、#0059ec=--blue-text(单蓝强调)、#e6f0ff=--blue-tint、#e4e4e7≈--line;方向编码用蓝/灰明度差(色盲安全,非红绿对)。</p>
 </section>

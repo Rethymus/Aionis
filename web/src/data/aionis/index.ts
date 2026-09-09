@@ -1241,7 +1241,7 @@ export type KnowledgeShelfDoc = {
   date: string | null;
   // Non-whitespace character count of the source file.
   n_chars: number;
-  // Safe teaser slice: first 2-3 sentences (<=240 chars) of OUR OWN MIT doc —
+  // Safe teaser slice: first 2-3 sentences (<=240 chars) of OUR OWN PolyForm-NC doc —
   // the body stays on GitHub, this is a catalog, not a copy.
   summary: string;
   // Link-out to the full text on GitHub — the only way to read the body.

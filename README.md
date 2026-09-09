@@ -338,8 +338,10 @@ pandas-market-calendars · pydantic · structlog。终端为 Next.js 静态导�
   （编号正典索引）· [`decisions/index.md`](decisions/index.md)（ADR 注册表）。
 - **账本**：`runs/ledger.jsonl`（append-only、**已入库**的审计日志）；`runs/results/`、
   `runs/*.log`、`runs/*.parquet` 为 gitignored 可再生工件。
-- **引用本仓库**：见 [`CITATION.cff`](CITATION.cff)。代码许可：MIT（[`LICENSE`](LICENSE)）；
-  第三方数据源许可另见 [`docs/data-license-allowlist.md`](docs/data-license-allowlist.md)。
+- **引用本仓库**：见 [`CITATION.cff`](CITATION.cff)。代码许可：**PolyForm Noncommercial 1.0.0**
+  （仅限非商用——个人学习 / 学术研究 / 公益组织可用；任何商业目的的使用、包装转售均需另行
+  授权，见 [`LICENSE`](LICENSE)）；第三方数据源许可另见
+  [`docs/data-license-allowlist.md`](docs/data-license-allowlist.md)。
 
 任何新阶段都走同一条抗泄漏管线：冻结配置 → `config_committed` 账本行 → PIT 数据 →
 声明验证类型 → 冻结学习器 → rank-IC 差分 → 控制检验 → H6 → 裁决。验收门见
@@ -351,6 +353,6 @@ pandas-market-calendars · pydantic · structlog。终端为 Next.js 静态导�
 
 **简体中文** · [English](README.en.md)
 
-代码许可 MIT：[LICENSE](LICENSE) · 数据源许可：[docs/data-license-allowlist.md](docs/data-license-allowlist.md) · 引用：[CITATION.cff](CITATION.cff)
+代码许可 PolyForm-Noncommercial-1.0.0（仅限非商用）：[LICENSE](LICENSE) · 数据源许可：[docs/data-license-allowlist.md](docs/data-license-allowlist.md) · 引用：[CITATION.cff](CITATION.cff)
 
 </div>

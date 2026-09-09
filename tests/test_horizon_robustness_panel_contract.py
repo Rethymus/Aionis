@@ -313,7 +313,7 @@ def test_horizon_robustness_registered_in_manifests() -> None:
         "registered directly after its ledger-neighbor"
     )
     license_, source = et._API_LICENSE["horizon_robustness"]
-    assert license_ == "Aionis exploratory ledger row (repo MIT)"
+    assert license_ == "Aionis exploratory ledger row (repo PolyForm-NC)"
     assert "unverified" not in license_
     assert source == "horizon-robustness sweep summary of the frozen h=21 nulls"
 
@@ -331,7 +331,7 @@ def test_horizon_robustness_as_of_and_committed_manifests() -> None:
     ep = next((e for e in cat["endpoints"] if e["key"] == "horizon_robustness"), None)
     assert ep is not None and ep["status"] == "available"
     assert ep["freshness"] == "frozen"
-    assert ep["license"] == "Aionis exploratory ledger row (repo MIT)"
+    assert ep["license"] == "Aionis exploratory ledger row (repo PolyForm-NC)"
 
 
 def test_horizon_robustness_registered_in_web_barrel_and_i18n() -> None:

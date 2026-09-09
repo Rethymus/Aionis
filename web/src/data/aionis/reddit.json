@@ -10,47 +10,47 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-09-07T10:16:23+00:00",
-  "n_snapshots": 7,
+  "latest_snapshot_ts": "2026-09-09T10:27:00+00:00",
+  "n_snapshots": 8,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
-      "ticker": "KEYS",
-      "mentions": 2,
-      "sentiment": 0.02,
+      "ticker": "FAST",
+      "mentions": 1,
+      "sentiment": -0.028,
       "bull_ratio": null,
       "score_sum": 0
     },
     {
       "ticker": "UBER",
       "mentions": 1,
-      "sentiment": 0.008,
+      "sentiment": -0.606,
+      "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "AVGO",
+      "mentions": 1,
+      "sentiment": -0.606,
+      "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "INTC",
+      "mentions": 1,
+      "sentiment": -0.025,
       "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "AMZN",
-      "mentions": 1,
-      "sentiment": -0.912,
-      "bull_ratio": 0.0,
-      "score_sum": 0
-    },
-    {
-      "ticker": "LULU",
-      "mentions": 1,
-      "sentiment": -0.946,
-      "bull_ratio": 0.0,
       "score_sum": 0
     }
   ],
   "pressure": {
     "status": "accumulating",
     "by_ticker": {},
-    "n_snapshots": 7,
-    "latest_date": "2026-09-07",
+    "n_snapshots": 8,
+    "latest_date": "2026-09-09",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-09-08T10:33:35.301146+00:00"
+  "snapshot_ts": "2026-09-09T10:36:14.400069+00:00"
 }
