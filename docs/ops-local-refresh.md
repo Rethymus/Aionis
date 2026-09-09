@@ -38,12 +38,27 @@ the trigger):
    audit line (`hook skip: ...`) — the once-per-day semantics held on every
    day since 2026-09-07 (exactly one `evening lane start` per day's log).
    Zero LLM tokens. Requires `uv` on PATH.
-2. **ZCode cron automation (BACKSTOP + REPORTER)** — recurring
-   `*/30 18-23 * * 1-5` host-local. Catches the hook's blind spots (ZCode
-   opened before 18:00 and kept open past it; a failed first attempt while
-   the session stays open; hook misconfiguration) and produces the nightly
-   human-readable one-line report. On 2026-10-06 it also carries the
-   once-per-month review (see below).
+2. **Windows Task Scheduler "Aionis evening data lane" (BACKSTOP, zero
+   tokens, since 2026-09-09)** — daily triggers at 18:05/19:05/…/23:05
+   (StartWhenAvailable catches up after boot) invoke the same
+   `ops_local_refresh.py --run`; the marker's guard makes every extra
+   invocation a no-op process, and failed evenings retry automatically on
+   the next hourly fire (≤3/evening). Covers the hook's blind spots (ZCode
+   opened before 18:00 and kept open; hook misconfiguration; ZCode not
+   opened at all that evening) WITHOUT any LLM session. Runs even when
+   ZCode never opens — the PAT push does not need ZCode.
+3. **ZCode cron automation (NIGHTLY REPORT ONLY, one session/evening)** —
+   `35 23 * * 1-5`. Until 2026-09-09 this was `*/30 18-23` (12 sessions per
+   evening, ≈90% pure "SKIP" no-ops ≈ 250k+ tokens/month); the owner
+   flagged the waste and the trigger/execute/retry layers were moved to
+   zero-token executors, leaving this single 23:35 session for the
+   human-readable nightly report + full-board CI verification. On
+   2026-10-06 it also carries the once-per-month review (see below).
+4. **Weekly GitHub tripwire (`staleness-check.yml`)** — Mondays 02:00 UTC,
+   ~30s of Actions time (~2 min/month). Reads the COMMITTED data_health
+   snapshot; if older than 5 days, opens a deduplicated Issue; ALSO checks
+   the last publish-site run's conclusion (a red run = deploy leg needs
+   investigation). Covers even a fully offline local machine.
 3. **Weekly GitHub tripwire (`staleness-check.yml`)** — Mondays 02:00 UTC,
    ~30s of Actions time (~2 min/month). Reads the COMMITTED data_health
    snapshot; if older than 5 days, opens a deduplicated Issue. This is the
@@ -51,7 +66,7 @@ the trigger):
    even when the local machine is fully offline.
 
 ```
-SessionStart hook OR cron automation (whichever hits first after 18:00)
+SessionStart hook OR Task Scheduler OR (report-only) cron automation
   └─ guard: uv run scripts/ops_local_refresh.py --guard
        ├─ SKIP:<reason>  → done (hook: silent; cron: one-line reply)
        └─ RUN            → ops_local_refresh.py --run (detached, 20-60 min)
@@ -82,12 +97,20 @@ SessionStart hook OR cron automation (whichever hits first after 18:00)
 
 - The cron automation is recurring (no expiry); the hook is workspace config
   committed to the repo. Both persist across ZCode restarts.
-- **2026-10-06 one-shot review** rides the nightly automation (step 0): a
+- **2026-10-06 one-shot review** rides the nightly 23:35 report session: a
   read-only monthly report (execution rate, reliability, soft-fail hotspots,
   publish-chain health, Actions-minute estimate) written to
   `reports/audits/2026-10-06-evening-lane-monthly-review.md` + a single-file
   commit, with continue/adjust recommendations for the owner.
-- The staleness tripwire keeps watching throughout.
+- The staleness + publish-chain tripwires keep watching throughout.
+
+Token economics (owner-raised concern, fixed 2026-09-09): the LLM-facing
+surface shrank from ≤12 sessions/evening to exactly 1 (23:35 report);
+trigger/execute/retry run as plain OS processes (hook + Task Scheduler) at
+zero tokens ≈ **−92%** of the duty automation's token burn. If even the
+nightly report session is unwanted, delete the ZCode automation — the
+pipeline itself keeps refreshing with zero tokens, and the weekly GitHub
+tripwire keeps the honest-failure signal.
 
 ## What the deployed site needs (freshness inventory)
 

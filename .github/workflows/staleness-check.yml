@@ -79,3 +79,20 @@ jobs:
       - name: Fresh (no-op)
         if: steps.age.outputs.age_days <= 5
         run: echo "data fresh (${{ steps.age.outputs.age_days }}d old) — nothing to do."
+
+      - name: Publish-chain health (last publish-site run)
+        # Zero-token weekly net for the deploy leg: the data freshness check
+        # above reads the committed panel, which can be fresh while the
+        # publish-site build itself failed (site stale behind the repo). A red
+        # run here is the honest signal (owner discipline: no silent failures);
+        # transient pnpm hiccups page at most weekly.
+        run: |
+          LAST=$(gh run list --workflow=publish-site.yml -L 1 \
+            --json conclusion --jq '.[0].conclusion')
+          echo "last publish-site conclusion: $LAST"
+          if [ "$LAST" != "success" ]; then
+            echo "::error::last publish-site run concluded '$LAST' — the deployed site may lag the repo (investigate Actions → Publish site)"
+            exit 1
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
