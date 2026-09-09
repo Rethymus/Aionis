@@ -8,12 +8,6 @@
 
 **简体中文** · [English](README.en.md)
 
-[![Tests](https://github.com/Rethymus/Aionis/actions/workflows/ci.yml/badge.svg)](https://github.com/Rethymus/Aionis/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Python 3.10+](https://img.shields.io/badge/python-%E2%89%A5_3.10-blue.svg)](pyproject.toml)
-[![uv](https://img.shields.io/badge/uv-managed-%23DE5FE9.svg)](https://docs.astral.sh/uv/)
-[![Terminal](https://img.shields.io/badge/web-研究终端-00ca50.svg)](https://rethymus.github.io/Aionis/)
-
 <em>一个把"可证伪"当工程约束来实现的量化研究实验台：先冻结主张，再让数据裁决——<br>并把"无增量"这个裁决当作合格的实验产出，如实入账。</em>
 
 </div>

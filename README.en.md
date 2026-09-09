@@ -8,12 +8,6 @@
 
 [简体中文](README.md) · **English**
 
-[![Tests](https://github.com/Rethymus/Aionis/actions/workflows/ci.yml/badge.svg)](https://github.com/Rethymus/Aionis/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Python 3.10+](https://img.shields.io/badge/python-%E2%89%A5_3.10-blue.svg)](pyproject.toml)
-[![uv](https://img.shields.io/badge/uv-managed-%23DE5FE9.svg)](https://docs.astral.sh/uv/)
-[![Terminal](https://img.shields.io/badge/web-research_terminal-00ca50.svg)](https://rethymus.github.io/Aionis/)
-
 <em>A quantitative research harness that treats falsifiability as an engineering<br>constraint: freeze the claim first, let the data render the verdict — and record an<br>honest "no increment" as a legitimate experimental outcome.</em>
 
 </div>
