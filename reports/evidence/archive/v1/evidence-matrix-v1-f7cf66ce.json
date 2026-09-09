@@ -4,13 +4,13 @@
       "bytes": 24397,
       "id": "atlas-claim-v1",
       "path": "reports/evidence/atlas-claim-v1.html",
-      "sha256": "ba23aa6e2a3263fc86a7f0e849c8ce71489bf24888ba111b0bfebf5f5266eaec"
+      "sha256": "6510c253140324aa84409cb3db68633272a55d0f719171f1a18b295875fd1dda"
     },
     {
       "bytes": 47134,
       "id": "research-dossier-v1",
       "path": "reports/evidence/research-dossier-v1.html",
-      "sha256": "18bee93e47dd40bb831faa3f0db95863df666d3842c1b9a0b1c2cf3c58bbe069"
+      "sha256": "893cbd966595e21a02aa771e4b17a860d6b670ea6780b48f2e6fba24a9d7239e"
     },
     {
       "bytes": 1974,
@@ -31,7 +31,6 @@
       "sha256": "b548383fda07ac3e738f43d1fd0d2da6c44834302f5ab0558d30802998ca4068"
     }
   ],
-  "as_of": "2026-08-05",
   "claims": {
     "B": {
       "ci_hi": 0.008972245083013938,
@@ -104,6 +103,5 @@
   },
   "generator": "scripts/export_evidence_html.py",
   "id": "evidence-matrix-v1",
-  "snapshot_ts": "2026-09-09T11:06:43.553171+00:00",
   "version": "v1"
 }
