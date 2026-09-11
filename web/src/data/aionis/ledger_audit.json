@@ -309,8 +309,8 @@
       "frozen_before_result": false
     }
   ],
-  "n_total_rows": 58,
+  "n_total_rows": 60,
   "n_claim_rows": 28,
   "identity_note": "config_committed rows always precede their matching result row in this timeline \u2014 that ordering is the anti-leakage contract: the frozen config's sha256 is logged before any OOS metric is observed.",
-  "snapshot_ts": "2026-09-09T11:06:29.186445+00:00"
+  "snapshot_ts": "2026-09-11T15:42:32.388141+00:00"
 }

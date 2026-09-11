@@ -1,28 +1,28 @@
 {
   "status": "ok",
-  "as_of": "2026-09-04",
+  "as_of": "2026-09-10",
   "n_filings_target": 150,
   "n_filings_processed": 150,
-  "n_with_persons": 101,
-  "coverage_pct": 67.3,
-  "n_persons_distinct": 629,
+  "n_with_persons": 103,
+  "coverage_pct": 68.7,
+  "n_persons_distinct": 654,
   "by_role": {
-    "ceo": 159,
-    "cfo": 77,
-    "coo": 29,
-    "cto": 5,
-    "chairman": 128,
-    "president": 114,
-    "vice_president": 101,
-    "treasurer": 10,
-    "secretary": 38,
-    "director": 479,
-    "officer": 125
+    "ceo": 165,
+    "cfo": 81,
+    "coo": 37,
+    "cto": 7,
+    "chairman": 132,
+    "president": 129,
+    "vice_president": 114,
+    "treasurer": 13,
+    "secretary": 35,
+    "director": 485,
+    "officer": 132
   },
   "confidence": {
     "section_age_rows": 79,
-    "section_name_roles": 22,
-    "unparsed_no_persons": 47,
+    "section_name_roles": 24,
+    "unparsed_no_persons": 45,
     "fetch_or_doc_errors": 2
   },
   "boards": [
@@ -57,14 +57,14 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/723603/000119312526348933/culp-20260811.htm"
     },
     {
-      "company": "DARDEN RESTAURANTS INC",
-      "ticker": "DRI",
-      "issuer_cik": "940944",
-      "n_persons": 17,
-      "n_directors": 9,
-      "n_officers": 10,
-      "filed_date": "2026-08-10",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/940944/000119312526342023/dri-20260804.htm"
+      "company": "CONSUMERS BANCORP INC /OH/",
+      "ticker": "CBKM",
+      "issuer_cik": "1006830",
+      "n_persons": 16,
+      "n_directors": 10,
+      "n_officers": 14,
+      "filed_date": "2026-09-10",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1006830/000143774926030041/cbkm20260909c_def14a.htm"
     },
     {
       "company": "CAL-MAINE FOODS INC",
@@ -105,6 +105,16 @@
       "n_officers": 9,
       "filed_date": "2026-08-12",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/883569/000119312526347185/fosl-20260812.htm"
+    },
+    {
+      "company": "Kearny Financial Corp.",
+      "ticker": "KRNY",
+      "issuer_cik": "1617242",
+      "n_persons": 13,
+      "n_directors": 10,
+      "n_officers": 9,
+      "filed_date": "2026-09-09",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1617242/000161724226000023/krny-20260908.htm"
     },
     {
       "company": "Getty Images Holdings, Inc.",
@@ -175,6 +185,16 @@
       "n_officers": 5,
       "filed_date": "2026-08-14",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1968487/000119312526352256/d163786ddef14a.htm"
+    },
+    {
+      "company": "AEHR TEST SYSTEMS",
+      "ticker": "AEHR",
+      "issuer_cik": "1040470",
+      "n_persons": 10,
+      "n_directors": 5,
+      "n_officers": 10,
+      "filed_date": "2026-09-09",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1040470/000165495426008222/aehr_def14a.htm"
     },
     {
       "company": "Hartford Funds Exchange-Traded Trust",
@@ -257,6 +277,16 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1337298/000143774926027325/ff20260806_def14a.htm"
     },
     {
+      "company": "Seagate Technology Holdings plc",
+      "ticker": "STX",
+      "issuer_cik": "1137789",
+      "n_persons": 8,
+      "n_directors": 3,
+      "n_officers": 8,
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1137789/000113778926000207/stx-20260908.htm"
+    },
+    {
       "company": "C3.ai, Inc.",
       "ticker": "AI",
       "issuer_cik": "1577526",
@@ -315,6 +345,26 @@
       "n_officers": 3,
       "filed_date": "2026-08-13",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1706524/000121390026089210/ea0298581-01.htm"
+    },
+    {
+      "company": "RESOURCES CONNECTION, INC.",
+      "ticker": "RGP",
+      "issuer_cik": "1084765",
+      "n_persons": 7,
+      "n_directors": 3,
+      "n_officers": 6,
+      "filed_date": "2026-09-10",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1084765/000108476526000063/rgp-20260910.htm"
+    },
+    {
+      "company": "CNL Strategic Residential Credit, Inc.",
+      "ticker": "",
+      "issuer_cik": "2066337",
+      "n_persons": 7,
+      "n_directors": 6,
+      "n_officers": 7,
+      "filed_date": "2026-09-09",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2066337/000143774926029990/cnls20260903_def14a.htm"
     },
     {
       "company": "Kartoon Studios, Inc.",
@@ -415,26 +465,6 @@
       "n_officers": 7,
       "filed_date": "2026-08-13",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/107140/000010714026000041/jwa-20260813.htm"
-    },
-    {
-      "company": "Toppoint Holdings Inc.",
-      "ticker": "TOPP",
-      "issuer_cik": "1960847",
-      "n_persons": 7,
-      "n_directors": 7,
-      "n_officers": 4,
-      "filed_date": "2026-08-10",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1960847/000121390026087344/ea0299796-03.htm"
-    },
-    {
-      "company": "Equitable Holdings, Inc.",
-      "ticker": "",
-      "issuer_cik": "1333986",
-      "n_persons": 7,
-      "n_directors": 7,
-      "n_officers": 6,
-      "filed_date": "2026-08-10",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1333986/000119312526341149/d58865ddef14a.htm"
     },
     {
       "company": "CACI INTERNATIONAL INC /DE/",
@@ -567,26 +597,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/914139/000143774926027000/prkr20260519_def14a.htm"
     },
     {
-      "company": "Arcadia Biosciences, Inc.",
-      "ticker": "RKDA",
-      "issuer_cik": "1469443",
-      "n_persons": 6,
-      "n_directors": 6,
-      "n_officers": 2,
-      "filed_date": "2026-08-10",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1469443/000119312526342437/rkda-20260810.htm"
-    },
-    {
-      "company": "AMC ENTERTAINMENT HOLDINGS, INC.",
-      "ticker": "AMC",
-      "issuer_cik": "1411579",
-      "n_persons": 6,
-      "n_directors": 6,
-      "n_officers": 6,
-      "filed_date": "2026-08-10",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1411579/000110465926093412/tm264130-4_def14a.htm"
-    },
-    {
       "company": "NATIONAL BEVERAGE CORP",
       "ticker": "FIZZ",
       "issuer_cik": "69891",
@@ -655,6 +665,36 @@
       "n_officers": 1,
       "filed_date": "2026-08-14",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1368622/000110465926096689/tm264166-4_def14a.htm"
+    },
+    {
+      "company": "TEN Holdings, Inc.",
+      "ticker": "XHLD",
+      "issuer_cik": "2030954",
+      "n_persons": 4,
+      "n_directors": 4,
+      "n_officers": 2,
+      "filed_date": "2026-09-10",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2030954/000149315226042047/formdef14a.htm"
+    },
+    {
+      "company": "APPLIED INDUSTRIAL TECHNOLOGIES INC",
+      "ticker": "AIT",
+      "issuer_cik": "109563",
+      "n_persons": 4,
+      "n_directors": 2,
+      "n_officers": 3,
+      "filed_date": "2026-09-10",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/109563/000119312526387870/d114658ddef14a.htm"
+    },
+    {
+      "company": "RICHTECH ROBOTICS INC.",
+      "ticker": "RR",
+      "issuer_cik": "1963685",
+      "n_persons": 4,
+      "n_directors": 3,
+      "n_officers": 2,
+      "filed_date": "2026-09-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1963685/000121390026098112/ea0304861-01.htm"
     },
     {
       "company": "STANDEX INTERNATIONAL CORP/DE/",
@@ -757,16 +797,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1896212/000149315226036998/formdef14a.htm"
     },
     {
-      "company": "Smartbird, Inc.",
-      "ticker": "BIRD",
-      "issuer_cik": "1653909",
-      "n_persons": 4,
-      "n_directors": 4,
-      "n_officers": 1,
-      "filed_date": "2026-08-11",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1653909/000119312526342889/d174786ddef14a.htm"
-    },
-    {
       "company": "PAYCHEX INC",
       "ticker": "PAYX",
       "issuer_cik": "723531",
@@ -815,6 +845,16 @@
       "n_officers": 1,
       "filed_date": "2026-08-17",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1613103/000161310326000010/mdt-20260816.htm"
+    },
+    {
+      "company": "Dror Ortho-Design, Inc.",
+      "ticker": "DROR",
+      "issuer_cik": "1282980",
+      "n_persons": 2,
+      "n_directors": 2,
+      "n_officers": 2,
+      "filed_date": "2026-09-09",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1282980/000121390026098221/ea0303792-02.htm"
     },
     {
       "company": "Grown Rogue International Inc.",
@@ -887,14 +927,14 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1841610/000118518526003577/bpgcacdef14a081726.htm"
     },
     {
-      "company": "Peraso Inc.",
-      "ticker": "PRSO",
-      "issuer_cik": "890394",
-      "n_persons": 2,
-      "n_directors": 2,
-      "n_officers": 2,
-      "filed_date": "2026-08-10",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/890394/000121390026086972/ea0298840-02.htm"
+      "company": "T. Rowe Price OHA Select Private Credit Fund",
+      "ticker": "",
+      "issuer_cik": "1901164",
+      "n_persons": 1,
+      "n_directors": 1,
+      "n_officers": 0,
+      "filed_date": "2026-09-09",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1901164/000114036126035994/edge20080779x1_def14a.htm"
     },
     {
       "company": "iBio, Inc.",
@@ -1015,26 +1055,6 @@
       "n_officers": 0,
       "filed_date": "2026-08-12",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1854370/000139834426014212/fp0100452-1_def14a.htm"
-    },
-    {
-      "company": "CONAGRA BRANDS INC.",
-      "ticker": "CAG",
-      "issuer_cik": "23217",
-      "n_persons": 1,
-      "n_directors": 1,
-      "n_officers": 0,
-      "filed_date": "2026-08-11",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/23217/000002321726000037/cag-20260923xdef14a.htm"
-    },
-    {
-      "company": "Future Vision II Acquisition Corp.",
-      "ticker": "",
-      "issuer_cik": "2010653",
-      "n_persons": 1,
-      "n_directors": 0,
-      "n_officers": 1,
-      "filed_date": "2026-08-07",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2010653/000182912626008464/futurevision2_def14a.htm"
     }
   ],
   "top_persons": [
@@ -1050,20 +1070,6 @@
         "ROYCE SMALL-CAP TRUST, INC.",
         "ROYCE MICRO-CAP TRUST, INC.",
         "ROYCE GLOBAL TRUST, INC."
-      ]
-    },
-    {
-      "name": "Abigail P. Johnson",
-      "roles": [
-        "ceo",
-        "chairman",
-        "director"
-      ],
-      "n_companies": 2,
-      "n_director_seats": 2,
-      "companies": [
-        "SkinHealth Systems Inc.",
-        "Smartbird, Inc."
       ]
     },
     {
@@ -1094,6 +1100,19 @@
       "companies": [
         "Hartford Schroders Private Opportunities Fund",
         "Hartford Funds Exchange-Traded Trust"
+      ]
+    },
+    {
+      "name": "Equity Awards",
+      "roles": [
+        "ceo",
+        "officer"
+      ],
+      "n_companies": 2,
+      "n_director_seats": 0,
+      "companies": [
+        "APPLIED INDUSTRIAL TECHNOLOGIES INC",
+        "Fossil Group, Inc."
       ]
     },
     {
@@ -1207,6 +1226,18 @@
       ]
     },
     {
+      "name": "Abigail P. Johnson",
+      "roles": [
+        "ceo",
+        "chairman"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "SkinHealth Systems Inc."
+      ]
+    },
+    {
       "name": "Adam B. Sefchick",
       "roles": [
         "director",
@@ -1232,19 +1263,6 @@
       ]
     },
     {
-      "name": "Adam J. Sussman",
-      "roles": [
-        "ceo",
-        "chairman",
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "AMC ENTERTAINMENT HOLDINGS, INC."
-      ]
-    },
-    {
       "name": "Adam Larson",
       "roles": [
         "cfo"
@@ -1256,19 +1274,6 @@
       ]
     },
     {
-      "name": "Adam M. Aron",
-      "roles": [
-        "ceo",
-        "chairman",
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "AMC ENTERTAINMENT HOLDINGS, INC."
-      ]
-    },
-    {
       "name": "Adam Stern",
       "roles": [
         "director"
@@ -1277,6 +1282,17 @@
       "n_director_seats": 1,
       "companies": [
         "VivoSim Labs, INC."
+      ]
+    },
+    {
+      "name": "Adil Engineer",
+      "roles": [
+        "coo"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 0,
+      "companies": [
+        "AEHR TEST SYSTEMS"
       ]
     },
     {
@@ -1300,6 +1316,17 @@
       "n_director_seats": 1,
       "companies": [
         "Soluna Holdings, Inc"
+      ]
+    },
+    {
+      "name": "Alan M. Schrager",
+      "roles": [
+        "chairman"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "T. Rowe Price OHA Select Private Credit Fund"
       ]
     },
     {
@@ -1370,6 +1397,17 @@
       ]
     },
     {
+      "name": "Alistair N. Sporck",
+      "roles": [
+        "vice_president"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 0,
+      "companies": [
+        "AEHR TEST SYSTEMS"
+      ]
+    },
+    {
       "name": "Allan Evans",
       "roles": [
         "ceo",
@@ -1427,17 +1465,6 @@
       "n_director_seats": 1,
       "companies": [
         "CNS Pharmaceuticals, Inc."
-      ]
-    },
-    {
-      "name": "Amy Yoder",
-      "roles": [
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "Arcadia Biosciences, Inc."
       ]
     },
     {
@@ -1594,6 +1621,17 @@
       ]
     },
     {
+      "name": "Ann M. Gano",
+      "roles": [
+        "director"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "CONSUMERS BANCORP INC /OH/"
+      ]
+    },
+    {
       "name": "Annmarie Gayle",
       "roles": [
         "ceo",
@@ -1617,30 +1655,6 @@
       ]
     },
     {
-      "name": "Anthony J. Saich",
-      "roles": [
-        "ceo",
-        "chairman",
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "AMC ENTERTAINMENT HOLDINGS, INC."
-      ]
-    },
-    {
-      "name": "Anthony Kwong",
-      "roles": [
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "Toppoint Holdings Inc."
-      ]
-    },
-    {
       "name": "Anthony M. Kennedy",
       "roles": [
         "ceo",
@@ -1659,8 +1673,8 @@
     "n_http_requests_last_fetch": 0,
     "budget_seconds": 2700,
     "budget_hit": false,
-    "fetched_at": "2026-09-09T10:10:22.070524+00:00"
+    "fetched_at": "2026-09-11T15:19:02.066745+00:00"
   },
-  "methodology": "DEF 14A person-level panel (\u8463\u4e8b/\u9ad8\u7ba1\u4eba\u7ea7\u6863\u6848) over the NEWEST 150 proxy filings of the /executives DEF 14A stream \u2014 a bounded lane: each filing's primary document resolved from its EDGAR filing index (<= 2 GETs per filing, idempotent per-accession caches, >= 2.1s spacing, hard 45-minute wall-clock budget; the last fetch spent 0 HTTP requests and did not hit the budget). Parsing is CONSERVATIVE and TIERED: (1) section_age_rows (HIGH) \u2014 the classic 'Name (Age) Title Since' roster row in any spelling, a 2-4 token capitalized name with a standalone age bounded 30-99 and a role word witnessed on the same row, also reconstructed from word-fragmented inline-XBRL layouts by anchor-delimiting the joined stream; (2) section_name_roles (MEDIUM) \u2014 'First M. Last' (middle-initial) + a role word inside a located directors/executives section. Everything else yields persons=[] and parsed=false \u2014 an honest NULL, never a guessed name (\u5b81\u53ef null \u4e0d\u731c\u6d4b); coverage below counts only what was processed (101/150 filings with persons = 67.3%), never an extrapolation. Roles are canonical role WORDS witnessed near the person's row or bio \u2014 they may include past or external-company titles (e.g. a director who is CEO of another firm), displayed as text-witnessed hints not employment records; boards-card director/officer counts are independent sets (a CEO-director counts in both). Distinct-person identity keys on the normalized full name across filings \u2014 same-name merges may join namesakes and hyphenated/apostrophe/initials-first names (JW Roth) are conservatively MISSED, both disclosed. Display-only, exploratory, NOT a research claim.",
-  "snapshot_ts": "2026-09-09T11:06:22.710904+00:00"
+  "methodology": "DEF 14A person-level panel (\u8463\u4e8b/\u9ad8\u7ba1\u4eba\u7ea7\u6863\u6848) over the NEWEST 150 proxy filings of the /executives DEF 14A stream \u2014 a bounded lane: each filing's primary document resolved from its EDGAR filing index (<= 2 GETs per filing, idempotent per-accession caches, >= 2.1s spacing, hard 45-minute wall-clock budget; the last fetch spent 0 HTTP requests and did not hit the budget). Parsing is CONSERVATIVE and TIERED: (1) section_age_rows (HIGH) \u2014 the classic 'Name (Age) Title Since' roster row in any spelling, a 2-4 token capitalized name with a standalone age bounded 30-99 and a role word witnessed on the same row, also reconstructed from word-fragmented inline-XBRL layouts by anchor-delimiting the joined stream; (2) section_name_roles (MEDIUM) \u2014 'First M. Last' (middle-initial) + a role word inside a located directors/executives section. Everything else yields persons=[] and parsed=false \u2014 an honest NULL, never a guessed name (\u5b81\u53ef null \u4e0d\u731c\u6d4b); coverage below counts only what was processed (103/150 filings with persons = 68.7%), never an extrapolation. Roles are canonical role WORDS witnessed near the person's row or bio \u2014 they may include past or external-company titles (e.g. a director who is CEO of another firm), displayed as text-witnessed hints not employment records; boards-card director/officer counts are independent sets (a CEO-director counts in both). Distinct-person identity keys on the normalized full name across filings \u2014 same-name merges may join namesakes and hyphenated/apostrophe/initials-first names (JW Roth) are conservatively MISSED, both disclosed. Display-only, exploratory, NOT a research claim.",
+  "snapshot_ts": "2026-09-11T15:42:15.124362+00:00"
 }
