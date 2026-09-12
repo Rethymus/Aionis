@@ -282,13 +282,15 @@ export function ThemesView() {
                             {t("themes.strength")}
                           </span>
                           <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
-                            <div
-                              className={cn("h-full rounded-full", DIR_BAR[s.direction] ?? DIR_BAR.neutral)}
-                              style={{ width: `${Math.min((s.strength / 3) * 100, 100)}%` }}
-                            />
+                            {s.strength !== null && (
+                              <div
+                                className={cn("h-full rounded-full", DIR_BAR[s.direction] ?? DIR_BAR.neutral)}
+                                style={{ width: `${Math.min((s.strength / 3) * 100, 100)}%` }}
+                              />
+                            )}
                           </div>
                           <span className="w-8 shrink-0 text-right text-xs tabular-nums text-muted-foreground">
-                            {s.strength.toFixed(2)}
+                            {s.strength === null ? "—" : s.strength.toFixed(2)}
                           </span>
                         </div>
                         {s.favored.length > 0 ? (

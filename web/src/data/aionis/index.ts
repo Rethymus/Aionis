@@ -505,7 +505,9 @@ export type ThemeSignals = {
       signal: string;
       polarity: string;
       direction: "bullish" | "bearish" | "neutral";
-      strength: number;
+      /** null = non-computable on a degenerate cross-section (exporter maps
+       * NaN -> null so the payload stays strict JSON). */
+      strength: number | null;
       mean: number;
       n: number;
       group: string;
