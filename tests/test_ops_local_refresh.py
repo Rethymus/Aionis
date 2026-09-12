@@ -265,3 +265,35 @@ def test_hook_restart_same_evening_after_done_skips_with_trace(
     assert spawned == []  # never a second run
     trace = (tmp_path / "2026-09-09" / "hook-spawn.log").read_text("utf-8")
     assert "hook skip: SKIP:already-done" in trace
+
+
+# --- GBK-outage regression (2026-09-10/11): UTF-8 forced for lane children -----
+
+
+def test_run_step_forces_utf8_env(monkeypatch, tmp_path) -> None:
+    """Every lane child must run with PYTHONUTF8=1 — the 09-10/11 outage was
+    three GBK-locale crash classes (bare read_text on a curly quote, bare
+    write_text on emoji, print() of a checkmark) fixed at once at the env
+    layer; this pins the injection so it cannot silently regress."""
+    captured = {}
+
+    class _FakeProc:
+        returncode = 0
+
+        def communicate(self, timeout=None):
+            return "ok", None
+
+    def _spawn(cmd, **kwargs):
+        captured["env"] = kwargs.get("env")
+        return _FakeProc()
+
+    monkeypatch.setattr(hook.lane.subprocess, "Popen", _spawn)
+    step = {"name": "env probe", "uv_argv": ["python", "-c", "pass"],
+            "cap": 1, "soft": True}
+    fh = open(tmp_path / "x.log", "w", encoding="utf-8")
+    try:
+        ok, _ = lane.run_step(step, fh)
+    finally:
+        fh.close()
+    assert ok
+    assert captured["env"]["PYTHONUTF8"] == "1"

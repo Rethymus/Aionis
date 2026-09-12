@@ -46,6 +46,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 import time
@@ -283,6 +284,12 @@ def run_step(step: dict, fh) -> tuple[bool, str]:
         kwargs["creationflags"] = subprocess.CREATE_NEW_PROCESS_GROUP
     else:
         kwargs["start_new_session"] = True
+    # Force UTF-8 mode for every child (PEP 540): the 2026-09-10/11 outage was
+    # GBK locale crashes on Windows — bare read_text() on a panel JSON with a
+    # curly quote (byte 0x94), a bare write_text() on Reddit posts with emoji,
+    # and print() of a ✓ checkmark; PYTHONUTF8 fixes all three classes at once
+    # for every current and future bare-I/O site in the chain.
+    kwargs["env"] = {"PYTHONUTF8": "1", **os.environ}
     log(f"STEP {name} (cap {step['cap']}m)", fh)
     t0 = time.time()
     try:

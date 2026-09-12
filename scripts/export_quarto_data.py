@@ -33,7 +33,7 @@ def _stamp(payload: dict) -> dict:
 
 
 def _load_json(path: str) -> dict | list:
-    return json.loads(Path(path).read_text())
+    return json.loads(Path(path).read_text(encoding="utf-8"))
 
 
 def export_sigma_survey() -> None:

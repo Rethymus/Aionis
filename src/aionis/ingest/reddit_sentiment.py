@@ -612,7 +612,7 @@ def collect_reddit_sentiment(
 
     # Raw archival (immutable) + sha256 — G3/G4/G10.
     raw_path = cdir / f"reddit_raw_{ts_compact}.json"
-    raw_path.write_text(json.dumps(posts, ensure_ascii=False))
+    raw_path.write_text(json.dumps(posts, ensure_ascii=False), encoding="utf-8")
     digest = _sha256(raw_path)
     log.info("reddit_raw_archived", path=str(raw_path), n_posts=len(posts), sha256=digest)
 
@@ -665,6 +665,7 @@ def collect_reddit_sentiment(
                 "lookback_hours": int(lookback_hours),
             },
             ensure_ascii=False,
-        )
+        ),
+        encoding="utf-8"
     )
     return snapshot

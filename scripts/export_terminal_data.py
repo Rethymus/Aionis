@@ -443,7 +443,7 @@ def _read_ledger_rows() -> list[tuple[int, dict]]:
     if not ledger_path.exists():
         return []
     rows: list[tuple[int, dict]] = []
-    for i, line in enumerate(ledger_path.read_text().splitlines(), start=1):
+    for i, line in enumerate(ledger_path.read_text(encoding="utf-8").splitlines(), start=1):
         line = line.strip()
         if not line:
             continue
@@ -546,7 +546,7 @@ def export_taco() -> None:
     hand-curated from public news reports (labeled, not mock). NOT an Aionis
     research claim — methodology is demonstrative.
     """
-    raw = json.loads(Path("data/cache/alfred_VIXCLS.json").read_text())
+    raw = json.loads(Path("data/cache/alfred_VIXCLS.json").read_text(encoding="utf-8"))
     by_date = {
         o["date"]: float(o["value"])
         for o in raw["observations"]
@@ -785,7 +785,7 @@ def _build_news_theme(cache_path: Path) -> dict:
     if not cache_path.exists():
         return honest
     try:
-        gd = json.loads(cache_path.read_text())
+        gd = json.loads(cache_path.read_text(encoding="utf-8"))
         gseries = gd.get("series", [])
         tones = [r["tone"] for r in gseries if r.get("tone") is not None]
         if not (gseries and tones):
@@ -828,7 +828,7 @@ def _refresh_news_sentiment_only(themes_path: Path, gdelt_cache_path: Path) -> s
     if not themes_path.exists():
         return ""
     news = _build_news_theme(gdelt_cache_path)
-    payload = json.loads(themes_path.read_text())
+    payload = json.loads(themes_path.read_text(encoding="utf-8"))
     payload["themes"] = [
         news if t.get("key") == "news_sentiment" else t
         for t in payload.get("themes", [])
@@ -965,7 +965,7 @@ def export_themes() -> None:
     bps_path = WEB / "bps_sweep.json"
     if bps_path.exists():
         try:
-            sweep = json.loads(bps_path.read_text())
+            sweep = json.loads(bps_path.read_text(encoding="utf-8"))
             rows = sweep if isinstance(sweep, list) else sweep.get("rows", [])
             row5 = next((r for r in rows if int(r.get("bps", -1)) == 5), None)
             if row5:
@@ -1488,7 +1488,7 @@ def _sm_ticker_maps() -> tuple[dict[int, str], dict[str, str]]:
     if raw_fp.exists():
         by_cik: dict[int, list[str]] = {}
         try:
-            for v in json.loads(raw_fp.read_text()).values():
+            for v in json.loads(raw_fp.read_text(encoding="utf-8")).values():
                 if isinstance(v, dict) and v.get("cik_str") and v.get("ticker"):
                     by_cik.setdefault(int(v["cik_str"]), []).append(str(v["ticker"]))
         except (json.JSONDecodeError, AttributeError):
@@ -1498,7 +1498,7 @@ def _sm_ticker_maps() -> tuple[dict[int, str], dict[str, str]]:
         by_cik = {}
         if parsed_fp.exists():
             try:
-                for tk, cik in json.loads(parsed_fp.read_text()).items():
+                for tk, cik in json.loads(parsed_fp.read_text(encoding="utf-8")).items():
                     by_cik.setdefault(int(cik), []).append(str(tk))
             except (json.JSONDecodeError, ValueError, AttributeError):
                 by_cik = {}
@@ -1509,7 +1509,7 @@ def _sm_ticker_maps() -> tuple[dict[int, str], dict[str, str]]:
     name2tk: dict[str, str] = {}
     for f in glob.glob("data/cache/efts_13d_*.json"):
         try:
-            for item in json.loads(Path(f).read_text()):
+            for item in json.loads(Path(f).read_text(encoding="utf-8")):
                 names = item.get("display_names") or []
                 if len(names) >= 2 and item.get("file_date"):
                     m = re.search(r"\(([A-Z]{1,6})\)", names[0])
@@ -1632,7 +1632,7 @@ def _rows_from_daily_aggregate(daily_path: Path) -> list[dict]:
     identical row shapes and the same ticker/filer resolution.
     """
     try:
-        raw = json.loads(daily_path.read_text())
+        raw = json.loads(daily_path.read_text(encoding="utf-8"))
     except (json.JSONDecodeError, OSError):
         return []
     if not isinstance(raw, list):
@@ -1673,7 +1673,7 @@ def _sm_committed_extra(
 
     source = committed_path or (WEB / "smart_money.json")
     try:
-        prev = json.loads(source.read_text())
+        prev = json.loads(source.read_text(encoding="utf-8"))
     except (json.JSONDecodeError, OSError):
         return [], []
     groups: dict[str, list[dict]] = {}
@@ -1733,7 +1733,7 @@ def _refresh_smart_money_recent_only(committed_path: Path, daily_path: Path) -> 
     if not committed_path.exists() or not daily_path.exists():
         return None
     try:
-        prev = json.loads(committed_path.read_text())
+        prev = json.loads(committed_path.read_text(encoding="utf-8"))
     except json.JSONDecodeError:
         return None
     daily_rows = _rows_from_daily_aggregate(daily_path)
@@ -1742,7 +1742,7 @@ def _refresh_smart_money_recent_only(committed_path: Path, daily_path: Path) -> 
     try:
         fresh_accs = {
             str(r.get("accession", "")).removesuffix("-index.htm")
-            for r in json.loads(daily_path.read_text())
+            for r in json.loads(daily_path.read_text(encoding="utf-8"))
         }
     except (json.JSONDecodeError, OSError):
         fresh_accs = set()
@@ -1820,7 +1820,7 @@ def export_smart_money() -> None:
     rows: list[dict] = []
     for f in cache_files:
         try:
-            for item in json.loads(Path(f).read_text()):
+            for item in json.loads(Path(f).read_text(encoding="utf-8")):
                 names = item.get("display_names") or []
                 if len(names) < 2 or not item.get("file_date"):
                     continue
@@ -1858,7 +1858,7 @@ def export_smart_money() -> None:
         try:
             fresh_accs = {
                 str(r.get("accession", "")).removesuffix("-index.htm")
-                for r in json.loads(daily_path.read_text())
+                for r in json.loads(daily_path.read_text(encoding="utf-8"))
             }
         except (json.JSONDecodeError, OSError):
             fresh_accs = set()
@@ -1957,7 +1957,7 @@ def export_stakes13g() -> None:
         )
         return
     try:
-        raw = json.loads(fp.read_text())
+        raw = json.loads(fp.read_text(encoding="utf-8"))
     except (json.JSONDecodeError, OSError):
         print(
             "[export-terminal] SKIP stakes_13g: malformed sc13g_daily_aggregate.json "
@@ -2117,7 +2117,7 @@ def export_reddit_meta() -> None:
         return
     else:
         df = pd.read_parquet(pq)
-        side = json.loads(status_path.read_text()) if status_path.exists() else {}
+        side = json.loads(status_path.read_text(encoding="utf-8")) if status_path.exists() else {}
         latest_ts = str(df["snapshot_ts"].max())
         latest = df[df["snapshot_ts"] == latest_ts].sort_values("mentions", ascending=False)
         picks = [
@@ -2185,7 +2185,7 @@ def export_market_context() -> None:
     data already covering 2016+ (no new fetch). Display-only, not a research claim.
     """
     # --- VIX monthly (FRED ALFRED, permissive, 2016+) ---
-    vix_raw = json.loads(Path("data/cache/alfred_VIXCLS.json").read_text())
+    vix_raw = json.loads(Path("data/cache/alfred_VIXCLS.json").read_text(encoding="utf-8"))
     vix_by_date = {
         o["date"]: float(o["value"])
         for o in vix_raw["observations"]
@@ -2307,7 +2307,7 @@ def _alfred_latest_series(path: Path) -> pd.DataFrame:
     vintage styles: works whether ``realtime_end`` is ``'9999-12-31'`` (CPI/PAYEMS)
     or a dated cutoff (DFF). DISPLAY ONLY — revised series, NOT PIT-as-of.
     """
-    d = json.loads(path.read_text())
+    d = json.loads(path.read_text(encoding="utf-8"))
     rows = [
         {"date": pd.Timestamp(o["date"]), "rts": str(o.get("realtime_start", "")), "value": float(o["value"])}
         for o in d.get("observations", [])
@@ -3800,7 +3800,7 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
 def _dh_read(fname: str):
     """Load a committed panel JSON defensively (missing/malformed → None)."""
     try:
-        return json.loads((WEB / fname).read_text())
+        return json.loads((WEB / fname).read_text(encoding="utf-8"))
     except (FileNotFoundError, json.JSONDecodeError):
         return None
 
@@ -4649,7 +4649,7 @@ def export_form13f() -> None:
     raw_fp = Path("data/cache/cik_resolver_raw.json")
     if raw_fp.exists():
         try:
-            snap = json.loads(raw_fp.read_text())
+            snap = json.loads(raw_fp.read_text(encoding="utf-8"))
             edgar_map = build_issuer_ticker_map(
                 [
                     (str(v["title"]), int(v["cik_str"]), str(v["ticker"]))
@@ -5492,7 +5492,7 @@ def export_filing_stream() -> None:
     stats_fp = Path("data/cache/filing_stream_stats.json")
     if stats_fp.exists():
         try:
-            stats = json.loads(stats_fp.read_text())
+            stats = json.loads(stats_fp.read_text(encoding="utf-8"))
         except json.JSONDecodeError:
             stats = {}
 
