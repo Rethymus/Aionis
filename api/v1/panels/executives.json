@@ -1,13 +1,33 @@
 {
   "status": "ok",
-  "as_of": "2026-09-08",
-  "total": 47,
-  "issuers": 30,
+  "as_of": "2026-09-10",
+  "total": 49,
+  "issuers": 31,
   "window": {
     "start": "2026-05-01",
-    "end": "2026-09-08"
+    "end": "2026-09-10"
   },
   "events": [
+    {
+      "company": "NIKE, Inc.",
+      "ticker": "NKE",
+      "filing_date": "2026-09-10",
+      "items": [
+        "5.02",
+        "5.07",
+        "9.01"
+      ],
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000143/nke-20260908.htm"
+    },
+    {
+      "company": "AMAZON COM INC",
+      "ticker": "AMZN",
+      "filing_date": "2026-09-09",
+      "items": [
+        "5.02"
+      ],
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000036/amzn-20260908.htm"
+    },
     {
       "company": "ADOBE INC.",
       "ticker": "ADBE",
@@ -482,10 +502,10 @@
     }
   ],
   "by_company": {
+    "NIKE, Inc.": 4,
     "Salesforce, Inc.": 4,
     "ADOBE INC.": 3,
     "HONEYWELL INTERNATIONAL INC": 3,
-    "NIKE, Inc.": 3,
     "ADVANCED MICRO DEVICES INC": 2,
     "Alphabet Inc.": 2,
     "DEERE & CO": 2,
@@ -494,6 +514,7 @@
     "MICROSOFT CORP": 2,
     "Mastercard Inc": 2,
     "NVIDIA CORP": 2,
+    "AMAZON COM INC": 1,
     "Apple Inc.": 1,
     "BERKSHIRE HATHAWAY INC": 1,
     "BOEING CO": 1,
@@ -513,6 +534,6 @@
     "PROCTER & GAMBLE Co": 1,
     "TEXAS INSTRUMENTS INC": 1
   },
-  "methodology": "SEC Form 8-K Item 5.02 officer/director-change filings \u2014 DERIVED from the committed form8k panel (category 'officer_changes'; public domain, 17 U.S.C. \u00a7105, filed-date PIT). v1 is FILING-STREAM level: one row per 8-K accession with the company, filing date, full item list and EDGAR primary-document link. Person-level extraction (who, which role, appointed vs departed) is DEFERRED: parsing names from 8-K free text is unreliable and an honest omission beats a guessed name \u2014 the same v1 boundary as the /congress PTR panel. Inherits the /events panel's bounded 50-issuer universe and its 2026-05-01..2026-09-08 window. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-09-09T11:06:31.836033+00:00"
+  "methodology": "SEC Form 8-K Item 5.02 officer/director-change filings \u2014 DERIVED from the committed form8k panel (category 'officer_changes'; public domain, 17 U.S.C. \u00a7105, filed-date PIT). v1 is FILING-STREAM level: one row per 8-K accession with the company, filing date, full item list and EDGAR primary-document link. Person-level extraction (who, which role, appointed vs departed) is DEFERRED: parsing names from 8-K free text is unreliable and an honest omission beats a guessed name \u2014 the same v1 boundary as the /congress PTR panel. Inherits the /events panel's bounded 50-issuer universe and its 2026-05-01..2026-09-10 window. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
+  "snapshot_ts": "2026-09-11T15:42:39.201111+00:00"
 }

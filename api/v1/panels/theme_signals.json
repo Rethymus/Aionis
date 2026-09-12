@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "as_of_date": "2026-09-04",
+  "as_of_date": "2026-09-10",
   "groups": [
     "price",
     "fundamentals",
@@ -97,16 +97,10 @@
       "signal": "revenue_growth_12m",
       "polarity": "bullish_high",
       "direction": "bearish",
-      "strength": 0.0914,
-      "mean": 0.0065,
+      "strength": null,
+      "mean": 0.0,
       "n": 477,
       "favored": [
-        {
-          "ticker": "SYY",
-          "value": 3.1207,
-          "name": "SYSCO CORP",
-          "sector": "Wholesale-Groceries & Related Products"
-        },
         {
           "ticker": "A",
           "value": 0.0,
@@ -130,10 +124,16 @@
           "value": 0.0,
           "name": "Airbnb, Inc.",
           "sector": "Services-To Dwellings & Other Buildings"
+        },
+        {
+          "ticker": "ABT",
+          "value": 0.0,
+          "name": "ABBOTT LABORATORIES",
+          "sector": "Pharmaceutical Preparations"
         }
       ],
       "group": "fundamentals",
-      "latest_mean": 0.0113,
+      "latest_mean": 0.0074,
       "trailing_mean": 0.031
     },
     "leverage": {
@@ -224,5 +224,5 @@
     }
   },
   "methodology": "Theme-signal operationalization (display-only, NOT a research claim). Direction from a documented polarity heuristic (e.g. momentum/ROE high = bullish; volatility/leverage high = bearish). Strength = |mean cross-sectional z-score| clipped to [0,3]. Favored = top-5 tickers by the raw signal at the latest realized month. For 'bearish_high' signals, favored = most-exposed, NOT a buy recommendation. Reads only the frozen panel's latest cross-section; the model and OOS scores are untouched.",
-  "snapshot_ts": "2026-09-09T11:06:20.719796+00:00"
+  "snapshot_ts": "2026-09-12T12:33:14.743197+00:00"
 }

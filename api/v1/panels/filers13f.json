@@ -65706,5 +65706,5 @@
     }
   ],
   "methodology": "13F filer directory \u2014 every CIK that filed a 13F-HR or 13F-HR/A over the trailing annual cycle of calendar quarters (2025-09 through today), aggregated from EDGAR EFTS form-level queries (public domain, 17 U.S.C. \u00a7105; filed-date PIT). browse-edgar cannot enumerate a form type without a company (verified 2026-08-23), so the directory rides the same EFTS machinery as the IPO/Form D streams, with quarter windows ADAPTIVELY SPLIT when a declared total nears EFTS's 10,000-hit cap (Q2-2026 observed at 9,625). Per-CIK facts only: name, filing and amendment counts (deduplicated by accession), latest filed date, and a link to the filer's EDGAR 13F history \u2014 holdings books stay in the form13f panel. 13F-NT notices are not queried (a no-holdings report is not a holdings filer row; 13F-NT filers that also filed an HR appear via their HR). Sorted latest-filed first. Display-only, exploratory, NOT a research claim.",
-  "snapshot_ts": "2026-09-09T11:06:26.620828+00:00"
+  "snapshot_ts": "2026-09-11T15:42:27.180587+00:00"
 }

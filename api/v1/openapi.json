@@ -200,7 +200,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "Tiingo/Alpaca free tier (vendor ToS, display-only) + GDELT open data",
             "x-aionis-source": "daily prices, fundamentals, GDELT news sentiment, ALFRED macro",
-            "x-aionis-as-of": "2026-09-09"
+            "x-aionis-as-of": "2026-09-11"
           },
           {
             "name": "theme_signals",
@@ -208,7 +208,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "Tiingo/Alpaca free tier (vendor ToS, display-only) + GDELT open data",
             "x-aionis-source": "per-theme signal aggregates on the display panel",
-            "x-aionis-as-of": "2026-09-04"
+            "x-aionis-as-of": "2026-09-10"
           },
           {
             "name": "market_context",
@@ -264,7 +264,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "U.S. SEC EDGAR — public domain",
             "x-aionis-source": "Form 4 XML, filed-date PIT",
-            "x-aionis-as-of": "2026-09-04"
+            "x-aionis-as-of": "2026-09-10"
           },
           {
             "name": "form8k",
@@ -272,7 +272,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "U.S. SEC EDGAR — public domain",
             "x-aionis-source": "Form 8-K primary docs, filed-date PIT, item-classified",
-            "x-aionis-as-of": "2026-09-08"
+            "x-aionis-as-of": "2026-09-10"
           },
           {
             "name": "news_feed",
@@ -280,7 +280,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "GDELT open data (facts; article copyright stays with publishers)",
             "x-aionis-source": "GDELT Doc 2.0 artlist market headlines, seendate PIT, link-out only",
-            "x-aionis-as-of": "2026-09-09T09:45:00Z"
+            "x-aionis-as-of": "2026-09-11T14:45:00Z"
           },
           {
             "name": "executives",
@@ -288,7 +288,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "U.S. SEC EDGAR — public domain",
             "x-aionis-source": "Form 8-K Item 5.02 officer-changes stream (derived from form8k, filed-date PIT; person-level extraction deferred)",
-            "x-aionis-as-of": "2026-09-08"
+            "x-aionis-as-of": "2026-09-10"
           },
           {
             "name": "ipo",
@@ -296,7 +296,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "U.S. SEC EDGAR — public domain",
             "x-aionis-source": "IPO registration/pricing stream (S-1/S-1/A + 424B4) via EFTS form-level queries, filed-date PIT; offer terms not extracted",
-            "x-aionis-as-of": "2026-09-08"
+            "x-aionis-as-of": "2026-09-10"
           },
           {
             "name": "form_d",
@@ -304,7 +304,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "U.S. SEC EDGAR — public domain",
             "x-aionis-source": "Form D exempt-offering notices (D + D/A) via EFTS form-level queries, filed-date PIT; offering amounts not extracted",
-            "x-aionis-as-of": "2026-09-09"
+            "x-aionis-as-of": "2026-09-11"
           },
           {
             "name": "def14a",
@@ -312,7 +312,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "U.S. SEC EDGAR — public domain",
             "x-aionis-source": "DEF 14A proxy statements via EFTS form-level queries, filed-date PIT; director/executive names, compensation, ownership not parsed (person-level extraction deferred)",
-            "x-aionis-as-of": "2026-09-04"
+            "x-aionis-as-of": "2026-09-10"
           },
           {
             "name": "def14a_persons",
@@ -320,7 +320,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "U.S. SEC EDGAR — public domain",
             "x-aionis-source": "DEF 14A primary documents (newest ~150 filings), conservative tiered director/officer name+role parsing, filed-date PIT; unparsed documents yield honest nulls (never guessed)",
-            "x-aionis-as-of": "2026-09-04"
+            "x-aionis-as-of": "2026-09-10"
           },
           {
             "name": "filing_stream",
@@ -328,7 +328,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "U.S. SEC EDGAR — public domain",
             "x-aionis-source": "unified cross-form feed (8-K / 10-K / 10-Q / S-1 family / 4 / D via direct EFTS root-form queries; SC 13D / SC 13G via the daily index lanes — EFTS froze on Schedule 13), filed-date PIT",
-            "x-aionis-as-of": "2026-09-09"
+            "x-aionis-as-of": "2026-09-11"
           },
           {
             "name": "politician_trades",
@@ -360,7 +360,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "Aionis-derived from U.S. SEC EDGAR public domain disclosures",
             "x-aionis-source": "force-camp relationship graph projected over four committed panels (13F-HR visible books x DEF 14A top-person seats x SC 13D/13G windows); pairwise co-occurrence counts only — no coordination or consortium claim, no prices/returns",
-            "x-aionis-as-of": "2026-09-08"
+            "x-aionis-as-of": "2026-09-10"
           },
           {
             "name": "reddit",
@@ -376,7 +376,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "ApeWisdom free public API (apewisdom.io) — vendor ToS, display-only",
             "x-aionis-source": "Reddit trending-stocks board: rank/mentions/upvotes + 24h lags, verbatim first-party fields, today-snapshot only",
-            "x-aionis-as-of": "2026-09-09"
+            "x-aionis-as-of": "2026-09-11"
           },
           {
             "name": "headline_provenance",
@@ -432,7 +432,7 @@
             "x-aionis-freshness": "cadence",
             "x-aionis-license": "U.S. SEC EDGAR — public domain",
             "x-aionis-source": "13D/G filings via EFTS, filed-date PIT",
-            "x-aionis-as-of": "2026-09-08"
+            "x-aionis-as-of": "2026-09-10"
           },
           {
             "name": "stakes_13g",
@@ -440,7 +440,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "U.S. SEC EDGAR — public domain",
             "x-aionis-source": "SC 13G/G-A passive-stake stream via the daily crawler index (EFTS froze on Schedule 13 after 2024-12-17), filed-date PIT; ownership % / state machine not parsed",
-            "x-aionis-as-of": "2026-09-08"
+            "x-aionis-as-of": "2026-09-10"
           },
           {
             "name": "ark",
@@ -448,7 +448,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "ARK Invest official fund CSVs — publicly published daily",
             "x-aionis-source": "8-ETF Full Holdings CSVs from assets.ark-funds.com (browser-verified endpoint URLs; top-10 by weight + family overlap; skips disclosed)",
-            "x-aionis-as-of": "2026-09-09"
+            "x-aionis-as-of": "2026-09-11"
           },
           {
             "name": "theme_etfs",
@@ -456,7 +456,7 @@
             "x-aionis-freshness": "daily",
             "x-aionis-license": "iShares/BlackRock + Global X official fund CSVs — publicly published daily",
             "x-aionis-source": "10 theme-ETF holdings CSVs (iShares latest-holdings.csv endpoints + Global X dated full-holdings files; top-10 by weight + cross-fund resonance; skips disclosed)",
-            "x-aionis-as-of": "2026-09-08"
+            "x-aionis-as-of": "2026-09-10"
           },
           {
             "name": "form13f",

@@ -10,37 +10,58 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-09-09T10:27:00+00:00",
-  "n_snapshots": 8,
+  "latest_snapshot_ts": "2026-09-11T15:25:58+00:00",
+  "n_snapshots": 9,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
-      "ticker": "FAST",
+      "ticker": "NVDA",
+      "mentions": 3,
+      "sentiment": 0.054,
+      "bull_ratio": 0.5,
+      "score_sum": 0
+    },
+    {
+      "ticker": "DECK",
       "mentions": 1,
-      "sentiment": -0.028,
+      "sentiment": 0.001,
       "bull_ratio": null,
       "score_sum": 0
     },
     {
-      "ticker": "UBER",
+      "ticker": "NKE",
       "mentions": 1,
-      "sentiment": -0.606,
-      "bull_ratio": 0.0,
+      "sentiment": 0.001,
+      "bull_ratio": null,
       "score_sum": 0
     },
     {
-      "ticker": "AVGO",
+      "ticker": "PLTR",
       "mentions": 1,
-      "sentiment": -0.606,
-      "bull_ratio": 0.0,
+      "sentiment": -0.002,
+      "bull_ratio": null,
       "score_sum": 0
     },
     {
-      "ticker": "INTC",
+      "ticker": "DELL",
       "mentions": 1,
-      "sentiment": -0.025,
+      "sentiment": -0.002,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "TSLA",
+      "mentions": 1,
+      "sentiment": -0.002,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "AAPL",
+      "mentions": 1,
+      "sentiment": 0.01,
       "bull_ratio": null,
       "score_sum": 0
     }
@@ -48,9 +69,9 @@
   "pressure": {
     "status": "accumulating",
     "by_ticker": {},
-    "n_snapshots": 8,
-    "latest_date": "2026-09-09",
+    "n_snapshots": 9,
+    "latest_date": "2026-09-11",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-09-09T11:06:29.181924+00:00"
+  "snapshot_ts": "2026-09-11T15:42:32.381353+00:00"
 }
