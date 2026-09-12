@@ -1115,7 +1115,9 @@ def export_theme_signals() -> None:
             "latest cross-section; the model and OOS scores are untouched."
         ),
     }
-    (WEB / "theme_signals.json").write_text(json.dumps(_stamp(payload), indent=2, default=str))
+    (WEB / "theme_signals.json").write_text(json.dumps(
+    _strict_jsonable(_stamp(payload)), indent=2, default=str,
+    allow_nan=False))  # strict: a future NaN must fail HERE, not in Turbopack
 
 
 def export_model_health() -> None:
@@ -3795,6 +3797,25 @@ _DATA_HEALTH_MANIFEST: list[tuple[str, str, str]] = [
     # only on a deliberate probe/contracts commit.
     ("provider_vintage", "provider_vintage.json", _DH_CADENCE),
 ]
+
+
+def _strict_jsonable(obj):
+    """Recursively map NaN/±Inf floats to None so the payload is STRICT JSON.
+
+    Python's json silently EMITS bare NaN (allow_nan default) and just as
+    silently reads it back — so every Python-side gate tolerated it while
+    Turbopack/browsers (strict parsers) rejected the file outright (the
+    2026-09-11 publish-site outage: theme_signals strength=NaN on a
+    degenerate cross-section). Display semantics: a non-computable strength
+    IS an honest null.
+    """
+    if isinstance(obj, float):
+        return None if (math.isnan(obj) or math.isinf(obj)) else obj
+    if isinstance(obj, dict):
+        return {k: _strict_jsonable(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [_strict_jsonable(v) for v in obj]
+    return obj
 
 
 def _dh_read(fname: str):

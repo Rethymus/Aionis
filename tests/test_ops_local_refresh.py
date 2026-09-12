@@ -297,3 +297,24 @@ def test_run_step_forces_utf8_env(monkeypatch, tmp_path) -> None:
         fh.close()
     assert ok
     assert captured["env"]["PYTHONUTF8"] == "1"
+
+
+# --- strict-JSON gate (2026-09-11 publish-site outage: bare NaN shipped) -------
+
+
+def test_strict_json_scan_flags_nan_and_passes_clean(tmp_path, monkeypatch) -> None:
+    """Python's json both writes and reads bare NaN — the gate must reject it
+    (Turbopack/browsers do) while accepting ordinary strict panels."""
+
+    data_dir = tmp_path / "aionis"
+    data_dir.mkdir()
+    (data_dir / "good.json").write_text('{"a": 1.5, "b": null}', encoding="utf-8")
+    (data_dir / "bad.json").write_text(
+        '{"strength": NaN, "mean": 0.0}', encoding="utf-8")
+    monkeypatch.setattr(lane, "ROOT", tmp_path)
+    # lane.ROOT/web/src/data/aionis must map onto the fixtures above.
+    (tmp_path / "web/src/data").mkdir(parents=True, exist_ok=True)
+    data_dir.rename(tmp_path / "web/src/data/aionis")
+    problems = lane.strict_json_scan()
+    names = [p.split(":")[0] for p in problems]
+    assert names == ["bad.json"]

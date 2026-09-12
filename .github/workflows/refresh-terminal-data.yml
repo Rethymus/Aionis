@@ -288,7 +288,10 @@ jobs:
         run: |
           set -e
           for f in web/src/data/aionis/*.json; do
-            python3 -c "import json,sys; json.load(open('$f'))" || { echo "INVALID: $f"; exit 1; }
+            # parse_constant: bare NaN/Infinity are INVALID strict JSON that
+            # Turbopack/browsers reject — Python's lenient default shipped
+            # exactly that (2026-09-11 publish-site outage). Fail closed here.
+            python3 -c "import json,sys; json.load(open('$f'), parse_constant=lambda t: (_ for _ in ()).throw(ValueError('non-strict token: '+t)))" || { echo "INVALID: $f"; exit 1; }
           done
           echo "All JSON valid."
 

@@ -202,6 +202,27 @@ STEPS: list[dict] = [
 ]
 
 
+def strict_json_scan() -> list[str]:
+    """STRICT-parse every committed panel: reject NaN/Infinity tokens.
+
+    Python's json both writes and reads bare NaN, so pytest contract tests
+    tolerate what strict consumers (Turbopack/browsers) reject — the 09-11
+    publish-site outage shipped exactly that. Returns problem descriptions;
+    empty = clean. Runs pre-commit in the gate step (hard-fail).
+    """
+    problems: list[str] = []
+
+    def _reject(tok: str):
+        raise ValueError(f"non-strict JSON token: {tok}")
+
+    for f in sorted((ROOT / "web/src/data/aionis").glob("*.json")):
+        try:
+            json.loads(f.read_text(encoding="utf-8"), parse_constant=_reject)
+        except ValueError as exc:
+            problems.append(f"{f.name}: {exc}")
+    return problems
+
+
 def log(line: str, fh=None) -> None:
     stamp = datetime.now().strftime("%H:%M:%S")
     text = f"[{stamp}] {line}"
@@ -439,6 +460,11 @@ def do_run(force: bool) -> int:
         soft_fails: list[str] = []
         try:
             for step in STEPS:
+                if step["name"].startswith("json validity"):
+                    problems = strict_json_scan()
+                    if problems:
+                        raise RuntimeError(
+                            f"strict-JSON gate: {problems[:3]}")
                 ok, detail = run_step(step, fh)
                 if not ok:
                     if step["soft"]:
