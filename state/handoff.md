@@ -2485,3 +2485,4 @@ dashboard realizing `docs/dashboard-v2-design.md`'s 5 dimensions on deterministi
   - **轮 95（2026-09-09）token 经济改造**：Windows 计划任务（6 每日触发器 18:05-23:05+StartWhenAvailable，零 token 承担触发/执行/重试，ZCode 不开也跑）+cron 瘦身 12→1 班/晚（23:35 夜报+全牌核验）+周检扩展发布链健康步。值班 token 烧 -92%。删夜报自动化即全零 token（管线不受影响）。
   - **轮 96（2026-09-09）token 经济改造**：Windows 计划任务（6 每日触发器 18:05-23:05+StartWhenAvailable，零 token 承担触发/执行/重试，ZCode 不开也跑；冒烟 LastTaskResult=0）+cron 瘦身 12→1 班/晚（23:35 夜报+全牌核验）+周检增发布链健康步。值班 token -92%。**更正**：轮 93/94 的 current.md 条目当时静默插入失败（日期锚不匹配），本条以精确锚补记合并；他会话轮 95（README）同日并行作业，已先 rebase 对账。
   - **轮 97（2026-09-12）**：GBK 停摆修复入库（064a9d885，他会话落盘+本会话认证提交）：导出链 21 处显式 utf-8+reddit emoji 写点+通道 PYTHONUTF8=1 子进程注入+回归钉。自愈实证：当晚第 4 次计划任务尝试以修复树跑通 44436619a（51 文件零软失败）。CI 绿 34693461244。
+  - **轮 98（2026-09-12）**：strict-JSON 双连红修复：NaN→null 导出净化+allow_nan=False fail-loud+通道/CI 双 strict 门+前端 strength null 类型与渲染。线上恢复：theme_signals 快照 09-12 零 NaN；smart_money 09-10、pct 119/120。publish-site+Pages 全绿。
