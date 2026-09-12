@@ -10,6 +10,7 @@ no runs/cache dependency. They also lock the schema the React views depend on
 from __future__ import annotations
 
 import json
+import math
 import re
 from datetime import datetime
 from pathlib import Path
@@ -1688,7 +1689,16 @@ def test_theme_signals_panel_contract() -> None:
     for sig in ts["signals"].values():
         assert {"signal", "direction", "strength", "mean", "n", "group"} <= set(sig)
         assert sig["direction"] in valid_dirs, f"unknown direction {sig['direction']!r}"
-        assert isinstance(sig["strength"], (int, float))
+        # strength is a finite number OR an honest null (the exporter maps a
+        # non-computable strength on a degenerate cross-section to null so the
+        # payload stays strict JSON — bare NaN shipped to Turbopack once,
+        # 2026-09-11 publish outage). NaN/bool masquerading as numbers fail.
+        strength = sig["strength"]
+        assert strength is None or (
+            isinstance(strength, (int, float))
+            and not isinstance(strength, bool)
+            and math.isfinite(strength)
+        ), f"strength must be a finite number or null, got {strength!r}"
         # Every signal's group must be one of the declared groups.
         assert sig["group"] in ts["groups"], f"signal group {sig['group']!r} not in groups"
     # Methodology must disclose display-only (anti-misrepresentation).
