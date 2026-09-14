@@ -1,20 +1,20 @@
 {
   "status": "ok",
-  "as_of": "2026-09-10",
+  "as_of": "2026-09-14",
   "window": {
     "start": "2026-04-27",
-    "end": "2026-09-10"
+    "end": "2026-09-14"
   },
-  "issuers": 540,
-  "total": 1174,
+  "issuers": 545,
+  "total": 1188,
   "by_status": {
-    "filed": 939,
+    "filed": 953,
     "priced": 235
   },
   "by_form": {
     "424B4": 235,
-    "S-1": 396,
-    "S-1/A": 543
+    "S-1": 402,
+    "S-1/A": 551
   },
   "offer_price_parsed": 62,
   "offer_price_meta": {
@@ -39,6 +39,132 @@
     "target_as_of": "2026-09-03"
   },
   "filings": [
+    {
+      "company": "Leader's Advantage Acquisition Corp.",
+      "ticker": "LEDR",
+      "filed_date": "2026-09-14",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2109823/000121390026099404/0001213900-26-099404-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Electra Therapeutics, Inc.",
+      "ticker": "ETRA",
+      "filed_date": "2026-09-14",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2088082/000119312526389755/0001193125-26-389755-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Eaglesky Acquisition Corp",
+      "ticker": "",
+      "filed_date": "2026-09-14",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2143067/000118518526003965/0001185185-26-003965-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "FutureCore Acquisition Corp",
+      "ticker": "",
+      "filed_date": "2026-09-11",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2142699/000182912626010047/0001829126-26-010047-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Accelevation Holdings Corp.",
+      "ticker": "ACCV",
+      "filed_date": "2026-09-11",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2141406/000162828026061542/0001628280-26-061542-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "DYADIC INTERNATIONAL INC",
+      "ticker": "DYAI",
+      "filed_date": "2026-09-11",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1213809/000149315226042435/0001493152-26-042435-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Gold Mountain Acquisition Corp.",
+      "ticker": "GDMT",
+      "filed_date": "2026-09-11",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2105318/000149315226042376/0001493152-26-042376-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Barrel Energy Inc.",
+      "ticker": "BRLL",
+      "filed_date": "2026-09-11",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1631463/000147793226005542/0001477932-26-005542-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Cryptex Digital Market Cap ETF",
+      "ticker": "BAGZ",
+      "filed_date": "2026-09-11",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2115027/000121390026099328/0001213900-26-099328-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "SeeQC, Inc.",
+      "ticker": "SEQC",
+      "filed_date": "2026-09-11",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1779977/000121390026099300/0001213900-26-099300-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Eloxx Pharmaceuticals, Inc.",
+      "ticker": "ELOX",
+      "filed_date": "2026-09-11",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1035354/000119312526389422/0001193125-26-389422-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Haymaker Acquisition Corp V",
+      "ticker": "HYAC",
+      "filed_date": "2026-09-11",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2111838/000119312526389409/0001193125-26-389409-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "QVC Group, Inc.",
+      "ticker": "QVCG",
+      "filed_date": "2026-09-11",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1254699/000110465926107125/0001104659-26-107125-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Rent the Runway, Inc.",
+      "ticker": "RENT",
+      "filed_date": "2026-09-11",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1468327/000095010326013811/0000950103-26-013811-index.htm",
+      "offer_price": null
+    },
     {
       "company": "Elevation Acquisition Group Inc.",
       "ticker": "",
@@ -10607,5 +10733,5 @@
     }
   ],
   "methodology": "US IPO registration/pricing stream \u2014 SEC EDGAR EFTS whole-market form-level queries (public domain, 17 U.S.C. \u00a7105), fixed ~120-day window, filed-date point-in-time, one row per accession (an S-1/A amendment is a new filing, never a silent overwrite). Status is derived from the immutable form type: S-1 / S-1/A = filed (registration statement on file); 424B4 = priced (the statutory final prospectus under Securities Act Rule 424(b)(4) is filed after pricing \u2014 its appearance marks a priced offering). Offer price is a BOUNDED second-stage extraction, not full coverage: only the newest \u226480 priced (424B4) filings are walked politely (\u22652.1 s spacing, hard request budget disclosed in offer_price_meta.requests), their EDGAR index + primary document fetched, and the cover page regex-parsed with graded confidence \u2014 EXACT (single final printed price \u2192 exported), LOW (draft/range wording near the label \u2192 value withheld, counted, never guessed) and NO-MATCH; every unparsed row stays offer_price=null with its EDGAR index link. Share count, proceeds, and expected listing date are NOT extracted at any tier. Honest scope disclosures: (2) the 424B4 form-level catch includes priced follow-on offerings by already-listed issuers (e.g. S-3 shelf takedowns), not only first-day IPOs \u2014 this panel is the registration/pricing STREAM, not a curated IPO list; (3) no company-level state machine is applied (rows are filing-level). Ticker is parsed from the EDGAR display name where present; pre-symbol S-1 filers carry none (empty, never guessed). Counts are FILING counts, not company counts. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-09-11T15:42:14.904529+00:00"
+  "snapshot_ts": "2026-09-14T11:07:22.159032+00:00"
 }
