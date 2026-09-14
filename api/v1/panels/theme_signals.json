@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "as_of_date": "2026-09-10",
+  "as_of_date": "2026-09-11",
   "groups": [
     "price",
     "fundamentals",
@@ -133,7 +133,7 @@
         }
       ],
       "group": "fundamentals",
-      "latest_mean": 0.0074,
+      "latest_mean": 0.0065,
       "trailing_mean": 0.031
     },
     "leverage": {
@@ -224,5 +224,5 @@
     }
   },
   "methodology": "Theme-signal operationalization (display-only, NOT a research claim). Direction from a documented polarity heuristic (e.g. momentum/ROE high = bullish; volatility/leverage high = bearish). Strength = |mean cross-sectional z-score| clipped to [0,3]. Favored = top-5 tickers by the raw signal at the latest realized month. For 'bearish_high' signals, favored = most-exposed, NOT a buy recommendation. Reads only the frozen panel's latest cross-section; the model and OOS scores are untouched.",
-  "snapshot_ts": "2026-09-12T12:33:14.743197+00:00"
+  "snapshot_ts": "2026-09-14T11:07:19.771171+00:00"
 }
