@@ -10,37 +10,23 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-09-14T10:30:44+00:00",
-  "n_snapshots": 10,
+  "latest_snapshot_ts": "2026-09-15T10:28:25+00:00",
+  "n_snapshots": 11,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
-      "ticker": "SNDK",
+      "ticker": "MSFT",
       "mentions": 1,
-      "sentiment": -0.756,
-      "bull_ratio": 0.0,
-      "score_sum": 0
-    },
-    {
-      "ticker": "UBER",
-      "mentions": 1,
-      "sentiment": 0.024,
+      "sentiment": -0.019,
       "bull_ratio": null,
       "score_sum": 0
     },
     {
-      "ticker": "NVDA",
+      "ticker": "LULU",
       "mentions": 1,
-      "sentiment": 0.028,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "TSLA",
-      "mentions": 1,
-      "sentiment": 0.028,
+      "sentiment": -0.004,
       "bull_ratio": null,
       "score_sum": 0
     }
@@ -48,9 +34,9 @@
   "pressure": {
     "status": "accumulating",
     "by_ticker": {},
-    "n_snapshots": 10,
-    "latest_date": "2026-09-14",
+    "n_snapshots": 11,
+    "latest_date": "2026-09-15",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-09-14T11:07:29.926341+00:00"
+  "snapshot_ts": "2026-09-15T10:58:44.042736+00:00"
 }

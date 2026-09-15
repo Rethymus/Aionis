@@ -1,16 +1,148 @@
 {
   "status": "ok",
-  "as_of": "2026-09-11",
+  "as_of": "2026-09-14",
   "window": {
-    "start": "2026-05-18",
-    "end": "2026-09-11"
+    "start": "2026-05-19",
+    "end": "2026-09-14"
   },
-  "total": 9246,
+  "total": 9175,
   "by_form": {
-    "SC 13G": 3672,
-    "SC 13G/A": 5574
+    "SC 13G": 3641,
+    "SC 13G/A": 5534
   },
   "filings": [
+    {
+      "filer": "Alta Partners LLC",
+      "target": "Envoy Medical, Inc.",
+      "ticker": "COCH",
+      "date": "2026-09-14",
+      "form": "SC 13G/A",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1840877/0001094891-26-000284-index.htm",
+      "pct_now": 2.6,
+      "pct_prev": null,
+      "pct_status": "below_5"
+    },
+    {
+      "filer": "Linden Capital L.P.",
+      "target": "Andretti Acquisition Corp. II",
+      "ticker": "POLE",
+      "date": "2026-09-14",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2025341/0001193125-26-390248-index.htm",
+      "pct_now": 7.0,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "target": "Blue Laser Fusion, Inc.",
+      "ticker": null,
+      "date": "2026-09-14",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1938570/0001193125-26-389808-index.htm",
+      "pct_now": 8.32,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "target": "SPARX Asset Management Co., Ltd.",
+      "ticker": null,
+      "date": "2026-09-14",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2151212/0001193125-26-389808-index.htm",
+      "pct_now": 8.32,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "MILLENNIUM MANAGEMENT LLC",
+      "target": "CAPRICOR THERAPEUTICS, INC.",
+      "ticker": "CAPR",
+      "date": "2026-09-14",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1133869/0001104659-26-107591-index.htm",
+      "pct_now": 5.1,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "CROSSLINK CAPITAL INC",
+      "target": "SunPower Inc.",
+      "ticker": "SPWR",
+      "date": "2026-09-14",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1838987/0001104329-26-000021-index.htm",
+      "pct_now": 6.2,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "DOERR L JOHN",
+      "target": "SunPower Inc.",
+      "ticker": "SPWR",
+      "date": "2026-09-14",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1838987/0001193125-26-390955-index.htm",
+      "pct_now": 13.6,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Duquesne Family Office LLC",
+      "target": "Guardian Metal Resources PLC",
+      "ticker": "GMTL",
+      "date": "2026-09-14",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2039972/0000899140-26-001058-index.htm",
+      "pct_now": 12.7,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Duquesne Family Office LLC",
+      "target": "Guardian Metal Resources PLC",
+      "ticker": "GMTL",
+      "date": "2026-09-14",
+      "form": "SC 13G/A",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2039972/0000899140-26-001060-index.htm",
+      "pct_now": 12.7,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "FROST PHILLIP MD ET AL",
+      "target": "Safe Pro Group Inc.",
+      "ticker": "SPAI",
+      "date": "2026-09-14",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2011208/0001493152-26-042458-index.htm",
+      "pct_now": 9.82,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "target": "Grab Holdings Ltd",
+      "ticker": "GRAB",
+      "date": "2026-09-14",
+      "form": "SC 13G/A",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1855612/0001193125-26-389761-index.htm",
+      "pct_now": 0.0,
+      "pct_prev": null,
+      "pct_status": "exited"
+    },
+    {
+      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "target": "TOYOTA MOTOR CORP/",
+      "ticker": "TM",
+      "date": "2026-09-14",
+      "form": "SC 13G/A",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1094517/0001193125-26-389761-index.htm",
+      "pct_now": 0.0,
+      "pct_prev": null,
+      "pct_status": "exited"
+    },
     {
       "filer": "Avondale Capital, LLC",
       "target": "Nuburu, Inc.",
@@ -4278,140 +4410,8 @@
       "pct_now": 9.29,
       "pct_prev": null,
       "pct_status": null
-    },
-    {
-      "filer": "Lu Shanshan",
-      "target": "Universe Pharmaceuticals INC",
-      "ticker": "UPC",
-      "date": "2026-09-01",
-      "form": "SC 13G",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1809616/0001213900-26-096336-index.htm",
-      "pct_now": 9.96,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "MMCAP International Inc. SPC",
-      "target": "Rainier Acquisition Corp",
-      "ticker": "RNAQ",
-      "date": "2026-09-01",
-      "form": "SC 13G",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2147219/0000912282-26-001193-index.htm",
-      "pct_now": 5.2,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "South32 Ltd",
-      "target": "Trilogy Metals Inc.",
-      "ticker": "TMQ",
-      "date": "2026-09-01",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1543418/0001193125-26-378359-index.htm",
-      "pct_now": 6.01,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Tang Chengming",
-      "target": "Universe Pharmaceuticals INC",
-      "ticker": "UPC",
-      "date": "2026-09-01",
-      "form": "SC 13G",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1809616/0001213900-26-096331-index.htm",
-      "pct_now": 9.97,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Zheng Chunhua",
-      "target": "Universe Pharmaceuticals INC",
-      "ticker": "UPC",
-      "date": "2026-09-01",
-      "form": "SC 13G",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1809616/0001213900-26-096332-index.htm",
-      "pct_now": 9.98,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Yang Lu (nmn)",
-      "target": "Universe Pharmaceuticals INC",
-      "ticker": "UPC",
-      "date": "2026-09-01",
-      "form": "SC 13G",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1809616/0001213900-26-096333-index.htm",
-      "pct_now": 9.96,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Ye Piao",
-      "target": "Universe Pharmaceuticals INC",
-      "ticker": "UPC",
-      "date": "2026-09-01",
-      "form": "SC 13G",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1809616/0001213900-26-096334-index.htm",
-      "pct_now": 18.3,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Xie Shan",
-      "target": "Universe Pharmaceuticals INC",
-      "ticker": "UPC",
-      "date": "2026-09-01",
-      "form": "SC 13G",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1809616/0001213900-26-096335-index.htm",
-      "pct_now": 9.97,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Advantage Insurance Inc.",
-      "target": "Katapult Holdings, Inc.",
-      "ticker": "KPLT",
-      "date": "2026-08-31",
-      "form": "SC 13G",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1785424/0001104659-26-103965-index.htm",
-      "pct_now": 5.4,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Caledonia (Private) Investments Pty Ltd",
-      "target": "Light & Wonder, Inc.",
-      "ticker": "LNWO",
-      "date": "2026-08-31",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/750004/0001172661-26-004320-index.htm",
-      "pct_now": 5.37,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Soleus Capital Master Fund, L.P.",
-      "target": "Evolus, Inc.",
-      "ticker": "EOLS",
-      "date": "2026-08-31",
-      "form": "SC 13G",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1570562/0001213900-26-095761-index.htm",
-      "pct_now": 5.3,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Stonepine Capital Management, LLC",
-      "target": "FEMASYS INC",
-      "ticker": "FEMY",
-      "date": "2026-08-31",
-      "form": "SC 13G",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1339005/0001440771-26-000024-index.htm",
-      "pct_now": 7.2,
-      "pct_prev": null,
-      "pct_status": null
     }
   ],
   "methodology": "SC 13G passive-stake filing stream \u2014 SEC EDGAR daily crawler index (public domain, 17 U.S.C. \u00a7105), trailing ~120-day window, filed-date point-in-time; a SC 13G/A amendment is a new filing, never a silent overwrite. EFTS full-text search froze on the Schedule 13 family after 2024-12-17 (live-verified: forms=SC 13G returns 0 hits for 2025+ windows), so the daily index is the source. It lists a filing under EVERY covered company, so rows are DEDUPED per accession: the one listed company is the SUBJECT (ticker backfilled OFFLINE from the cached SEC company_tickers snapshot \u2014 a current-snapshot display label, not as-of-filing) and the co-indexed names surface as the FILER; ambiguous or unlisted groups honestly keep every member (placeholder filer / null ticker, counted in data_health.source_health), so the row count can slightly exceed the distinct-accession count. Honest v1 limits, disclosed not papered over: the share count and event date live INSIDE the filing documents and are NOT parsed here. The percent-of-class second stage IS bounded-parsed for the VISIBLE top-150 rows only (EDGAR index.json + primary document, \u22642 polite requests per row; structured cover-page tag first, then the 'Percent of class' label, then the 'X.X% of the ... class' narrative; /A amendments carry pct_prev from 'previous X%'-style sentences only): rows beyond the visible window are NOT parsed, and every extraction miss stays an honest null (counted in data_health.source_health), never a guess or a default. pct_status is DERIVED from parsed values only: exited = an explicit parsed 0, below_5 = a parsed value < 5; a null pct never yields a status. Group filings show the FIRST reporting person's cover-page percentage. Each row links the filing's EDGAR index page, which lists every document and names the reporting person. Counts are FILING counts, not holder counts. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-09-14T11:07:29.866068+00:00"
+  "snapshot_ts": "2026-09-15T10:58:43.971257+00:00"
 }
