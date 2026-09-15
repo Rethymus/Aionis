@@ -1,25 +1,25 @@
 {
   "status": "ok",
-  "as_of": "2026-09-14",
+  "as_of": "2026-09-15",
   "window": {
     "start": "2026-04-27",
-    "end": "2026-09-14"
+    "end": "2026-09-15"
   },
-  "issuers": 545,
-  "total": 1188,
+  "issuers": 547,
+  "total": 1200,
   "by_status": {
-    "filed": 953,
-    "priced": 235
+    "filed": 964,
+    "priced": 236
   },
   "by_form": {
-    "424B4": 235,
-    "S-1": 402,
-    "S-1/A": 551
+    "424B4": 236,
+    "S-1": 406,
+    "S-1/A": 558
   },
   "offer_price_parsed": 62,
   "offer_price_meta": {
     "target_cap_docs": 80,
-    "priced_filings": 235,
+    "priced_filings": 236,
     "newest_targeted": 80,
     "attempted": 80,
     "fetch_failed": 0,
@@ -29,16 +29,88 @@
       "low": 0,
       "none": 18
     },
-    "coverage_pct_of_priced": 26.4,
+    "coverage_pct_of_priced": 26.3,
     "requests": {
       "task_budget": 170,
-      "cumulative_walk": 187,
+      "cumulative_walk": 189,
       "walk_cap": 156,
-      "last_walk": 0
+      "last_walk": 2
     },
-    "target_as_of": "2026-09-03"
+    "target_as_of": "2026-09-14"
   },
   "filings": [
+    {
+      "company": "Creatd, Inc.",
+      "ticker": "CRTD",
+      "filed_date": "2026-09-15",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1357671/000121390026099866/0001213900-26-099866-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "KiNRG, Inc.",
+      "ticker": "",
+      "filed_date": "2026-09-15",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/95572/000121390026099804/0001213900-26-099804-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Hyperliquid Strategies Inc",
+      "ticker": "PURR",
+      "filed_date": "2026-09-15",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2078856/000119312526391097/0001193125-26-391097-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Haymaker Acquisition Corp V",
+      "ticker": "HYAC",
+      "filed_date": "2026-09-15",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2111838/000119312526391060/0001193125-26-391060-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Bamboo Insurance Services, Inc.",
+      "ticker": "BMB",
+      "filed_date": "2026-09-14",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2125355/000162828026061664/0001628280-26-061664-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Polar Power, Inc.",
+      "ticker": "POLA",
+      "filed_date": "2026-09-14",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1622345/000149315226042616/0001493152-26-042616-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Syra Health Corp",
+      "ticker": "SYRA",
+      "filed_date": "2026-09-14",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1922335/000149315226042591/0001493152-26-042591-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Little West Holdings Inc.",
+      "ticker": "",
+      "filed_date": "2026-09-14",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2065821/000121390026099701/0001213900-26-099701-index.htm",
+      "offer_price": null
+    },
     {
       "company": "Leader's Advantage Acquisition Corp.",
       "ticker": "LEDR",
@@ -46,6 +118,15 @@
       "form": "S-1/A",
       "status": "filed",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2109823/000121390026099404/0001213900-26-099404-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "ADARx Pharmaceuticals, Inc.",
+      "ticker": "",
+      "filed_date": "2026-09-14",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1802369/000119312526390724/0001193125-26-390724-index.htm",
       "offer_price": null
     },
     {
@@ -65,6 +146,33 @@
       "status": "filed",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2143067/000118518526003965/0001185185-26-003965-index.htm",
       "offer_price": null
+    },
+    {
+      "company": "MFB Bancorp, Inc.",
+      "ticker": "",
+      "filed_date": "2026-09-14",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2152813/000110465926107563/0001104659-26-107563-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Veri MedTech Holdings, Inc.",
+      "ticker": "VRHID",
+      "filed_date": "2026-09-14",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2078149/000109690626001366/0001096906-26-001366-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Laser Photonics Corp",
+      "ticker": "LASE",
+      "filed_date": "2026-09-14",
+      "form": "424B4",
+      "status": "priced",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1807887/000149315226042518/0001493152-26-042518-index.htm",
+      "offer_price": 0.75
     },
     {
       "company": "FutureCore Acquisition Corp",
@@ -4240,7 +4348,7 @@
       "form": "424B4",
       "status": "priced",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2106436/000121390026076921/0001213900-26-076921-index.htm",
-      "offer_price": 10.0
+      "offer_price": null
     },
     {
       "company": "SK hynix Inc.",
@@ -10733,5 +10841,5 @@
     }
   ],
   "methodology": "US IPO registration/pricing stream \u2014 SEC EDGAR EFTS whole-market form-level queries (public domain, 17 U.S.C. \u00a7105), fixed ~120-day window, filed-date point-in-time, one row per accession (an S-1/A amendment is a new filing, never a silent overwrite). Status is derived from the immutable form type: S-1 / S-1/A = filed (registration statement on file); 424B4 = priced (the statutory final prospectus under Securities Act Rule 424(b)(4) is filed after pricing \u2014 its appearance marks a priced offering). Offer price is a BOUNDED second-stage extraction, not full coverage: only the newest \u226480 priced (424B4) filings are walked politely (\u22652.1 s spacing, hard request budget disclosed in offer_price_meta.requests), their EDGAR index + primary document fetched, and the cover page regex-parsed with graded confidence \u2014 EXACT (single final printed price \u2192 exported), LOW (draft/range wording near the label \u2192 value withheld, counted, never guessed) and NO-MATCH; every unparsed row stays offer_price=null with its EDGAR index link. Share count, proceeds, and expected listing date are NOT extracted at any tier. Honest scope disclosures: (2) the 424B4 form-level catch includes priced follow-on offerings by already-listed issuers (e.g. S-3 shelf takedowns), not only first-day IPOs \u2014 this panel is the registration/pricing STREAM, not a curated IPO list; (3) no company-level state machine is applied (rows are filing-level). Ticker is parsed from the EDGAR display name where present; pre-symbol S-1 filers carry none (empty, never guessed). Counts are FILING counts, not company counts. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-09-14T11:07:22.159032+00:00"
+  "snapshot_ts": "2026-09-15T10:58:30.058421+00:00"
 }
