@@ -1,5 +1,7 @@
 # ORCH-RES-08 — Rewrite RES-08: gold-set into schema/sample/annotation/adjudication/freeze tasks
 
+> **归档处置（2026-09-21 轮 99）**：rewrite 已实现——RES-08 现状 STAGE 1 COMPLETE（22 tests green，e3-causal-gold-v1 frozen，2026-08-03）→ CLOSED。
+
 - 编号: ORCH-RES-08
 - 标题: Rewrite RES-08 (LLM extraction gold set) into the 5-stage durable structure.
 - 状态: owner-authorized (2026-08-03 D5: RES restart approved). PLANNED.

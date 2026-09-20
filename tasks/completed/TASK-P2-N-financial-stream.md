@@ -1,5 +1,7 @@
 # TASK-P2-N — /quarterly + /annual 财务申报流双子模块（移交新 session 接手）
 
+> **归档处置（2026-09-21 轮 99）**：目标功能（财务申报流）已落地为 filing_stream 面板并编入轮 91 夜间通道；worktree 半成品已消失 → CLOSED as superseded-by-mainstream。
+
 - 编号: P2-N
 - 标题: 10-Q 与 10-K 近窗申报流两页（`/quarterly`、`/annual`），对标参照站同名页（其自身为空壳，本项目用真实 EDGAR 数据填上）。
 - 状态: **READY — 前一子代理被取消，worktree 有半成品未提交改动，待新 session 审查后续作**

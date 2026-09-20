@@ -2,7 +2,7 @@
 
 - 编号: AUD-00
 - 标题: Coordinate the repository-audit remediation without changing research outcomes.
-- 状态: **in progress — coordination only; DO NOT dispatch as one task**
+- 状态: **coordination nearly closed (2026-09-21 轮 99) — all child remediations COMPLETE & archived (01-05, 05A/05B, 05C-C1..C5+disposition, 07B); sole remaining child = AUD-06 (owner steer)。DO NOT dispatch as one task**
 - Priority: **P0**
 - Size: **L — MUST remain decomposed; L is forbidden from assignment to any single agent**
 - Risk: **HIGH**（涉及公开研究结论、验证语义与 E3 不可逆前向序列）

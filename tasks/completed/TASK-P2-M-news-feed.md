@@ -1,5 +1,7 @@
 # TASK-P2-M — /news 新闻流模块（移交新 session 接手）
 
+> **归档处置（2026-09-21 轮 99）**：/news 页已投产（轮 85 情绪卡重造+轮 87 线上双主题实测）；所指 worktree 半成品已随 worktree 清理消失 → CLOSED as superseded-by-mainstream。
+
 - 编号: P2-M
 - 标题: 美股/市场新闻流页面（`/news` 路由），对标参照站 /news。
 - 状态: **READY — 前一子代理被取消，worktree 有半成品未提交改动，待新 session 审查后续作**

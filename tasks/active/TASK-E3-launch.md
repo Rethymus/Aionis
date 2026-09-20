@@ -2,7 +2,7 @@
 
 - 编号: E3
 - 标题: Build + launch the E3 forward-live track (the only zero-leakage, powered path to a credible positive).
-- 状态: **IN PROGRESS — Slice 1 + Slice 2 + Slice 3 + Slice 4 + Slice 5 DONE** (spec `docs/phase-e3-implementation-plan.md`;
+- 状态: **IN PROGRESS — Slice 1-5 DONE; 08-31 影子 READINESS PASS; 9-30/10-31 影子窗日历门控 (10-01 04:05 runbook 自动化 97cec742 已武装); headline GO=业主门 (评估点 2026-10-31)** (spec `docs/phase-e3-implementation-plan.md`;
   owner decisions 2026-07-30: **GLM** pinned + **shadow 1–2 mo** + defaults adopted; **ADR-009 (2026-07-31)
   hybrid causal layer**: zero-LLM frozen-β macro + minimal closed-enum LLM event edge, FF-12 unified).
   Slice 1 = forward-ledger commit-reveal core (`7ce7f08`). Slice 2 = forward PIT-as-of-t ingest

@@ -1,5 +1,7 @@
 # ORCH-RES-03 — Rewrite RES-03: ranking label/query contract
 
+> **归档处置（2026-09-21 轮 99）**：rewrite 已实现——RES-03 规格现状戳 REWRITTEN 2026-08-03 rank-label contract defined → CLOSED。
+
 - 编号: ORCH-RES-03
 - 标题: Rewrite RES-03 (rank-objective baseline) to define the ranking label/query contract.
 - 状态: owner-authorized (2026-08-03 D5: RES restart approved). PLANNED.

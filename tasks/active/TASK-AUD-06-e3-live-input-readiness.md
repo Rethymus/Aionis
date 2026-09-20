@@ -2,7 +2,7 @@
 
 - 编号: AUD-06
 - 标题: Prove that an E3 commit targets the requested live session with complete PIT inputs before any score can be sealed.
-- 状态: **awaiting owner steer — blocks E3 Slice 6/7 launch acceptance**
+- 状态: ** substantively resolved by rounds 56/64/82 (2026-09) — text slicing (A1) + membership 续造 (B1, 封闭偏差清单) + retain_unlabeled_from + 08-31 影子 READINESS PASS 13/13 全落地; 剩余=纯日历/业主门: 9-30 与 10-31 影子窗 (10-01 04:05 自动化已武装) + headline GO。原 'blocks Slice 6/7' 陈述过时**
 - Priority: **P0**
 - Size: **M**
 - Risk: **HIGH**（E3 首次前向序列不可逆；当前 runner 可对旧 labeled date 生成伪“当前”分数）

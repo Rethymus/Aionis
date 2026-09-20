@@ -1,5 +1,7 @@
 # TASK-T: manager 页与机构目录对齐
 
+> **归档处置（2026-09-21 轮 99，业主授权方案 C）**：feat/manager-align 分支与 Aionis-wt worktree 已被前会话清除（半成品随 worktree 丢弃）；其目标功能（13F 明星经理/filers 目录面板与 manager 页）已经轮 91 通道集成、轮 87 线上核验落地 → CLOSED as superseded-by-mainstream。
+
 > 优先级：中高。worktree：`F:\ZCodeData\Aionis-wt`（分支 feat/manager-align，已建，junction 已挂）。基于 main ca3074f+。
 > 派发背景：同 TASK-S（2026-08-23 配额团灭，本文件 = 代理 T 完整规格）。
 

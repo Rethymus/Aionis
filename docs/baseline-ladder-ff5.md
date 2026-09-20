@@ -139,8 +139,8 @@ registered_at: <timestamp of owner GO>
 ## 9. References
 
 - `tasks/active/TASK-RES-02-baseline-ff5.md`（spec）、`docs/data-intake-french-ff5.md`（7-gate 落表）
-- `tasks/active/TASK-RD-13-cross-sectional-variation-guard.md`（COMPLETE）、
-  `tasks/active/TASK-RD-17-trial-intent-registry.md`（COMPLETE）
+- `tasks/completed/TASK-RD-13-cross-sectional-variation-guard.md`（COMPLETE）、
+  `tasks/completed/TASK-RD-17-trial-intent-registry.md`（COMPLETE）
 - `reports/audits/2026-07-31-quant-llm-research-audit.md` §4.2 / §8.1 / §11 P2
 - Fama-French (2015) — A Five-Factor Asset Pricing Model
 - `src/aionis/eval/ff5_residual.py`（既有 FF5 工具：fetch/parse 复用 + G3 无 vintage 注记）

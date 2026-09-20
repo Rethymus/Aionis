@@ -2,7 +2,7 @@
 
 - 编号: AUD-07
 - 标题: Define practical-equivalence and repeated-look inference before any E3 outcome-bearing metric is viewed.
-- 状态: **POLICY VALUES FROZEN; implementation-level formula is HOLD pending AUD-07B**
+- 状态: **POLICY VALUES FROZEN; formula HOLD 已解除 (AUD-07B 2026-08-01 RESOLVED: ADR-010 Amendment Jennison-Turnbull 构造, Type I ≤0.05, RCIₖ⊂[−Δ,+Δ]) — 统计门有效; 点燃仍需 AUD-06 + owner GO**
 - Priority: **P1**
 - Size: **M**
 - Risk: **HIGH**（inferential policy 不可在看到 forward outcomes 后倒订）

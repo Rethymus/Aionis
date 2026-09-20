@@ -1,5 +1,7 @@
 # TASK-DISP-R — 本地数据刷新扫荡（镜像 refresh 工作流的 display-lane 数据部分）
 
+> **归档处置（2026-09-21 轮 99）**：本任务（Actions 计费冻结期的手动扫荡补救）已被轮 89 `ops_local_refresh.py` 本地晚间通道历史性取代（每夜自动全链）；分支 feat/local-refresh-sweep 的 3 个提交经 merge-base 核验已全部在 main → CLOSED as superseded。
+
 > **状态 (2026-08-27 深夜轮)**：轮 1 已执行、部分完成、可幂等续跑。Phase 1 **4/10 成功**
 > （ark +2026-08-27 / reddit 08-27 / ape_wisdom 08-27 / news_feed 08-27 双语 / korea 周度在位），
 > 其余步骤与 Phase 2-5 被本机病理挡住：**`import pandas` 间歇性被系统层阻塞**（挂点

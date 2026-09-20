@@ -1,5 +1,7 @@
 # ORCH-RES-10 — Rewrite RES-10: LLM-eval metrics anchored to RD-04/06/07/08/11
 
+> **归档处置（2026-09-21 轮 99）**：rewrite 已实现——RES-10 规格现状戳 REWRITTEN anchored to RD-04/06/07/08/11 → CLOSED。
+
 - 编号: ORCH-RES-10
 - 标题: Rewrite RES-10 (LLM extraction eval metrics) anchored to the completed RD-04/06/07/08/11 tools.
 - 状态: owner-authorized (2026-08-03 D5: RES restart approved). PLANNED.

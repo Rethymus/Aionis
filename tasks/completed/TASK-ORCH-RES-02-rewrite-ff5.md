@@ -1,5 +1,7 @@
 # ORCH-RES-02 — Rewrite RES-02: FF5/DFF cross-sectional baseline
 
+> **归档处置（2026-09-21 轮 99）**：rewrite 已实现——RES-02 规格现状戳 REWRITTEN 2026-08-03 cross-sectional-valid → CLOSED。
+
 - 编号: ORCH-RES-02
 - 标题: Rewrite RES-02 (baseline FF5+DFF) into a cross-sectional-valid spec.
 - 状态: owner-authorized (2026-08-03 D5: RES restart approved). PLANNED.

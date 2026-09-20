@@ -1,5 +1,7 @@
 # Adopt the unified AI-workflow framework (Claude Code edition)
 
+> **归档处置（2026-09-21 轮 99）**：框架目标全部在位并已服务 99 轮（CLAUDE.md/WORKFLOW.md/AGENTS.md 同 blob 双文件[state/AGENTS.md 头注]、state/decisions/tasks/evals/reports/archive/docs 编号索引）；AGENTS.md symlink 方案经轮 55 修正为同 blob 双文件 → CLOSED as complete。
+
 - 编号: WF01
 - 标题: Adopt the unified AI-workflow framework (Claude Code edition)
 - 状态: in progress

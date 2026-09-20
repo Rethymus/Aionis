@@ -1,56 +1,39 @@
 # state/blockers.md — what is blocking and why
 
-- **【2026-08-22 处置·业主指令"先暂停相关的 GitHub Action，再重新研究"】已手动停用两个 workflow：**
-  `Deploy Static Site to GitHub Pages`（deploy-pages.yml）+ `Refresh terminal data`
-  （refresh-terminal-data.yml）→ 状态 `disabled_manually`（`gh workflow list --all` 实验证）。
-  动机：计费停摆期间每次 push 触发 3-4s 失败 run（纯噪音）；暂停 = push 照常、Pages 冻结在
-  08-20 早间最后一次成功部署（属预期，非新故障）。`E3 Forward Commit Trigger`（e3-forward.yml）
-  **保留 active**——0 runs、业主门控研究线、不产生失败噪音。恢复路径（二选一，勿双轨）：
-  ① 计费修复后按下方 08-21 条目 re-run；② 按 `reports/design/2026-08-22-realtime-deployment-architecture.md`
-  重新研究后迁移（P3 部署迁 CF Pages 后 deploy workflow 可永久退役）。恢复命令：
-  `gh workflow enable "Deploy Static Site to GitHub Pages" --repo Rethymus/Aionis`（refresh 同理）。
-- **【2026-08-21 新增·需业主动作】GitHub Actions 计费失败，全部 workflow 停摆。**
-  官方注解原文："The job was not started because recent account payments have failed or
-  your spending limit needs to be increased. Please check the 'Billing & plans' section
-  in your settings"。实证：08-20 09:00 后所有 run 5 秒内失败（deploy 32351688853、
-  scheduled refresh 32423519918、本轮 deploy 32504053179）——**日更数据刷新与 Pages
-  自动部署双双中断**。代码侧无恙（本轮 c83dd00 已推 origin/main，本地 pytest 0 失败 +
-  tsc/build 全绿）；业主在 GitHub Settings → Billing & plans 修复付款/额度后，手动
-  re-run `Deploy Static Site to GitHub Pages` 与 `Refresh terminal data` 即恢复。
-- **BLS CPI/NFP live transport remains BLOCKED by policy; C1 code is implemented but not yet accepted.**
-  Cache miss now fails closed in the local diff, but independent Verifier/Reviewer are still required before
-  commit. No BLS adapter is allowed. See `TASK-AUD-05C-C1-disable-bls-transport.md`.
-- **E3 headline is NO-GO pending live-input readiness.** Scheduler/E2E are incomplete and the current
-  runner can drop the unlabeled current cross-section, fall back to the last labeled date, skip empty
-  event text, omit the membership assertion, and record ambiguous provider cutoff metadata. Resolution
-  path = AUD-04/AUD-05 source contracts → `TASK-AUD-06` → existing E3 Slice 6/7 → AUD-07 + owner GO.
-- **E3 inferential verdict is HOLD pending AUD-07B statistical correction audit.** ADR-010 currently
-  says both TOST p-values must exceed the look-specific alpha, which appears directionally reversed;
-  the fixed 90% CI plus O'Brien-Fleming spending construction also needs a strong proof of sequential
-  equivalence error control. No low-reasoning implementation is allowed before resolution.
-- **E2 is underpowered as a backtest.** The cutoff gate collapses the 125-month OOS window to
-  ~10-18 post-cutoff months → no statistical power. Resolution path = E3 forward-live (the only
-  powered zero-leak route). This blocks the E-sequence's *primary confirmatory claim*; it does NOT
-  block E2 as a design / hypothesis-generator. **Owner decision (TASK-STRAT) required.**
-  See `../decisions/ADR-005-e2-underpowered-e3-forward-live.md`.
-- **GLM 5-hour usage limit (429, recurring).** Provider quota; resets on a rolling window.
-  Mitigation: model tiering (opus for high-stakes), bounded single retry, patience. Not a code
-  blocker.
-- **PRAW (Reddit) wrapper is authorized but not implemented.** Owner accepted the 7-gate conditions:
-  internal research only, no redistribution, permanent `mode: exploratory`, and declared selection
-  bias. Resolution = bounded C3 Engineer → independent Verifier → Reviewer; no live pull or research
-  run is authorized by that decision. See `TASK-AUD-05C-C3-praw-wrapper-7gate.md`.
-- **Kenneth French / Fama-French data intake is OWNER-HELD.** `features/selection_panel.py:fama_french_daily` uses `pandas_datareader.get_data_famafrench()` (SDK-owned HTTP, no shared policy). Resolution = owner data-intake review; until approved, cache miss BLOCKED or disable. See AUD-05C disposition table.
-- **Model API transport (≥2s rule scope) is OWNER-HELD.** GLM/SiliconFlow/ModelScope model APIs (GLMEmbedder, GLMCausalEdgeClient, OpenAICompatClient, ProviderRouter) need owner clarification: does the ≥2s host-spacing rule apply to model APIs (SDK-exempt) or all HTTP calls? Resolution = owner decision on politeness rule scope; if ≥2s applies, implementation needed. See `TASK-AUD-05C-C5-model-api-transport-disposition.md`.
-- **Phase B OOS panel blocked by `uv.lock` stranding (benign).** The A1 same-sig guard
-  fired as designed: Phase B's frozen sig `17245a75…` was computed under the pre-Phase-C
-  `uv.lock` (`e045a023…`), while C/D/E1 + the current tree use `ee985437…` (the lock was
-  updated in commit `1e57335` for the Reddit/PRAW stack). The drift is **non-load-bearing** —
-  only `praw` / `prawcore` / `websocket-client` / `update-checker` / `defusedxml` were added;
-  `lightgbm`/`pandas`/`numpy`/`pyarrow`/`scikit-learn`/`purgedcv` versions are unchanged →
-  **Phase B's IC series is still bit-identically reproducible**; only the sig string moved (the
-  blanket `uv_lock_sha256` guard caught it). `phase_b_run.py` already carries the correct
-  `PHASE_B_NO_LEDGER` gate + additive oos wiring (uncommitted, ruff/305-tests clean). Resolution
-  is an **owner decision**: DROP (cosmetic; **recommended**) · restore `e045a023…` lock for one
-  rerun · re-freeze B under current lock (2nd baseline → needs ADR) · narrow the config sig to
-  load-bearing versions only (architectural, affects all phases). Not a blocker for the 4-null headline.
+> 2026-09-21 轮 99 全量重写：逐条对照 tasks/completed/ 归档证据核验。已解决项移入文末
+> "已解除"区（保留一段史，防重复排查）；只有**当前真实阻塞**留在上方。
+
+## 当前阻塞（真实）
+
+- **E3 headline 是 NO-GO，直至影子样本 + 业主 GO。** 判据要求影子满 2 个月：9-30 与 10-31 两个
+  窗口（9-30 窗口的 runbook 自动化 97cec742 已武装，北京 10-01 04:05 触发；10-31 评估点待武装）。
+  统计门已有效（AUD-07B RESOLVED，ADR-010 Jennison-Turnbull 修正案）；点燃仍需 owner GO。
+- **E2 作为 backtest 欠功效（结构性，非新）。** cutoff 门把 125 月 OOS 压到 ~10-18 月。
+  解法=唯一有功效的零泄漏路径 E3 forward-live。不阻塞 E2 作为设计/假设发生器。
+  **业主决策（TASK-STRAT）未做。** 见 `decisions/ADR-005-e2-underpowered-e3-forward-live.md`。
+- **Phase B OOS 面板被 `uv.lock` 搁浅（良性，业主裁决待做）。** A1 同签名卫兵按设计触发：
+  B 冻结 sig 算自旧锁 `e045a023…`，现树用 `ee985437…`；差异仅 praw 系五包，lightgbm/pandas/
+  numpy/pyarrow/sklearn/purgedcv 全未动 → IC 序列仍可逐位复现，仅 sig 字符串移动。
+  处置选项（推荐 DROP，纯装饰性）：DROP · 恢复旧锁跑一次 · 按现锁重冻 B（需 ADR）·
+  收窄 config sig 至承载版本（架构性）。非 4-null headline 的阻塞。
+- **Kenneth French / FF 数据准入业主暂持。** `features/selection_panel.py:fama_french_daily`
+  走 SDK 自带 HTTP；准入评审（7-gate）未做前 cache miss BLOCKED。见
+  `docs/data-intake-french-ff5.md` + `tasks/active/TASK-RES-02-baseline-ff5.md`。
+- **GLM 5 小时限额（429，周期性）。** 供应商配额，滚动窗口重置。缓解=模型分层+单次有界重试
+  +ProviderRouter 冷却+幂等磁盘缓存。非代码阻塞。
+- **RES 基线梯全部 owner-gated（RES-01/03/04/05/06/07/09/10 等）。** 无业主显式 GO 不得启动。
+  FF5 数据准入（上条）是其子阻塞。
+
+## 已解除（历史，勿重复排查）
+
+- ~~GitHub Actions 计费失败（2026-08-21）~~ → 09-01 解冻；deploy-pages/refresh-terminal-data
+  两 workflow 保持 disabled_manually：refresh 已被轮 89 本地通道**按设计退役**（workflow_dispatch
+  保留作断线兜底），Pages 发布由 publish-site.yml（push main 触碰 web/**）承担。
+- ~~BLS CPI/NFP live transport~~ → AUD-05C-C1 COMPLETE（fail-closed，无 BLS adapter）。
+- ~~PRAW wrapper~~ → AUD-05C-C3 owner 授权 7-gate COMPLETE。
+- ~~模型 API ≥2s 规则范围~~ → AUD-05C-C5 业主裁决 Option A（数据源 ≥2s；模型 API 走 RPM/冷却）。
+- ~~E3 inferential HOLD pending AUD-07B~~ → AUD-07B RESOLVED（ADR-010 Amendment）。
+- ~~GBK 编码停摆（09-10/11）~~ → 轮 97 修复（PYTHONUTF8 注入+显式 encoding）。
+- ~~strict-JSON NaN 上线（09-11）~~ → 轮 98 三层修复。
+- ~~三晚契约门自锁（09-16/17/18）~~ → 92b088cbf 漂移免疫修钉 + da15bb70d 恢复推送（轮 99）。
+- ~~form_ipo walk_cap / macro_drivers 部分缓存 CI 病理（09-04）~~ → 轮 83 修复+回归钉。
