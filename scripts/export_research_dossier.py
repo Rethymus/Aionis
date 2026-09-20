@@ -1407,6 +1407,58 @@ _META_PHASES: tuple[dict, ...] = (
     {"phase": "E1", "ledger_row": 37, "prereg": "docs/phase-e-preregistration.md"},
 )
 
+# Ledger key aliases for the differential mean: B predates the unified
+# `mean_diff` naming and records `mean_ic_diff_state_minus_base` (its row pins
+# arm-level HAC intervals and carries no MBB CI — shown as an honest absence,
+# not a mismatch). D/E1 use `differential_rel_minus_base` /
+# `differential_prop_minus_base_self` with the unified value keys.
+_MEAN_LEDGER_KEYS = ("mean_diff", "mean_ic_diff_state_minus_base")
+
+
+def _phase_confirmatory(ledger_lines: list[str], sig: str):
+    """Locate the phase's confirmatory:first row by config_sig.
+    Returns (lineno, row, differential-dict) or None (honest absence)."""
+    for i, ln in enumerate(ledger_lines, 1):
+        try:
+            r = json.loads(ln)
+        except json.JSONDecodeError:
+            continue
+        if r.get("event") == "confirmatory:first" and r.get("config_sig") == sig:
+            dd = next(
+                (v for k, v in r.items()
+                 if k.startswith("differential_") and isinstance(v, dict)),
+                None,
+            )
+            return i, r, dd
+    return None
+
+
+def _reconcile_diff(phase, diff, conf):
+    """Export-time gate (R2-full S2): the confirmatory ledger row must agree
+    with differential.json on every field BOTH carry. Returns display rows
+    (field, ledger, manifest, ok); raises on any present-and-mismatched value
+    — a dossier whose numbers disagree with the ledger must not export."""
+    if conf is None:
+        return []
+    _lineno, _row, dd = conf
+    if dd is None:
+        return []
+    checks = []
+    mean_key = next((k for k in _MEAN_LEDGER_KEYS if k in dd), None)
+    if mean_key:
+        checks.append(("mean_diff", dd.get(mean_key), diff.get("mean_diff")))
+    checks.extend((f, dd.get(f), diff.get(f)) for f in ("dm_p_mbb", "n_months"))
+    checks.extend((f, dd.get(f), diff.get(f)) for f in ("ci_lo", "ci_hi") if f in dd)
+    out = []
+    for fname, lv, dv in checks:
+        if lv is not None and dv is not None and lv != dv:
+            raise ValueError(
+                f"{phase} ledger/manifest mismatch ({fname}): "
+                f"ledger={lv!r} differential.json={dv!r} — refusing to export"
+            )
+        out.append((fname, lv, dv, lv == dv))
+    return out
+
 
 def _phase_dossier_html(phase, ledger_row, prereg, results_dir, ledger_lines):
     import pandas as pd
@@ -1418,11 +1470,16 @@ def _phase_dossier_html(phase, ledger_row, prereg, results_dir, ledger_lines):
         raise ValueError(f"results dir missing for {phase}: {rdir}")
     diff = json.loads((rdir / "differential.json").read_text(encoding="utf-8"))
 
-    def _ic_summary(name):
+    def _read_ic(name):
         p = rdir / name
         if not p.exists():
+            return None
+        return pd.read_parquet(p)
+
+    def _ic_summary(name):
+        df = _read_ic(name)
+        if df is None:
             return {"present": False}
-        df = pd.read_parquet(p)
         out = {"present": True, "rows": int(len(df)),
                "columns": [str(c) for c in df.columns]}
         num = df.select_dtypes(include="number")
@@ -1433,6 +1490,20 @@ def _phase_dossier_html(phase, ledger_row, prereg, results_dir, ledger_lines):
             out["min"] = float(num[col].min())
             out["max"] = float(num[col].max())
         return out
+
+    def _ic_series(name):
+        """[{"month": "YYYY-MM", "combined": float}] for _bars_svg, or None."""
+        df = _read_ic(name)
+        if df is None:
+            return None
+        num = df.select_dtypes(include="number")
+        if not num.shape[1]:
+            return None
+        col = num.columns[0]
+        return [
+            {"month": str(ix)[:7], "combined": float(v)}
+            for ix, v in zip(df.index, num[col], strict=False)
+        ]
 
     meta = json.loads((rdir / "meta.json").read_text(encoding="utf-8"))
     controls = json.loads((rdir / "controls.json").read_text(encoding="utf-8"))
@@ -1455,20 +1526,135 @@ def _phase_dossier_html(phase, ledger_row, prereg, results_dir, ledger_lines):
             ("preregistration", prereg),
         )
     )
+
+    # --- R2-full S2 (2026-09-21): full path when the IC series are on disk.
+    # Degradation stays honest: without the parquets this remains exactly the
+    # meta-only card (fixture trees / fresh checkouts land here).
+    series_state = _ic_series("ic_state.parquet")
+    series_base = _ic_series("ic_base.parquet")
+    full = series_state is not None and series_base is not None
+
+    conf = _phase_confirmatory(ledger_lines, sig)
+    recon = _reconcile_diff(phase, diff, conf)  # raises on any mismatch
+
+    if not full:
+        note = (
+            '<p class="note">meta-only 卡：承载该相主张的机读数值与账本对账；'
+            "完整 [S#] 引用闭合的溯源深度在头条 Track C 档案中。"
+            "Meta-only card: claim numbers + ledger reconciliation; the full [S#] "
+            "closed provenance chain covers the headline Track C claim.</p>\n"
+        )
+        return (
+            '<!DOCTYPE html>\n<html lang="zh-CN"><head><meta charset="utf-8">'
+            f"<title>Aionis — {phase} meta dossier</title>\n"
+            "<style>body{font-family:system-ui,sans-serif;max-width:860px;margin:2rem auto;"
+            "padding:0 1rem;color:#1f2328}table{border-collapse:collapse}"
+            "th,td{border:1px solid #ccc;"
+            "padding:4px 10px;text-align:left}th{background:#f6f8fa}</style></head>\n<body>\n"
+            f"<h1>{_esc(phase)} — research dossier (meta)</h1>\n"
+            f"{note}"
+            f"<table>{rows}</table>\n"
+            "<p>byte-stable artifact — regenerate with "
+            "<code>scripts/export_research_dossier.py</code> (phase meta export).</p>\n"
+            "</body></html>\n"
+        )
+
+    # --- full dossier: ledger reconciliation + IC series + closed [S#] chain
+    parts: list[str] = []
+
+    if recon:
+        recon_rows = "".join(
+            f"<tr><td>{_esc(f)}</td><td>{_esc(repr(lv))}</td>"
+            f"<td>{_esc(repr(dv))}</td><td>{'✓' if ok else '—'}</td></tr>"
+            for f, lv, dv, ok in recon
+        )
+        conf_lineno = conf[0] if conf else "—"
+        parts.append(
+            f"<h2>账本对账 · ledger reconciliation (line {conf_lineno})</h2>\n"
+            "<table><tr><th>field</th><th>ledger (confirmatory:first)</th>"
+            "<th>differential.json</th><th>match</th></tr>"
+            f"{recon_rows}</table>\n"
+        )
+
+    sesoi = None  # per-phase SESOI is not frozen; bars render without the band
+    for label, series in (
+        ("state arm（处理臂逐月 combined IC）", series_state),
+        ("base arm（基本面只读基线逐月 IC）", series_base),
+    ):
+        svg = _bars_svg(series, sesoi)
+        if svg:
+            parts.append(f"<h2>{_esc(label)}</h2>\n{svg}\n")
+
+    def _sha_file(p: Path) -> str:
+        return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+
+    sources: list[tuple[str, str, str]] = []  # (sid, locator, integrity)
+    _sid = 0
+
+    def _add(locator: str, integrity: str) -> None:
+        nonlocal _sid
+        _sid += 1
+        sources.append((f"S{_sid}", locator, integrity))
+
+    # Locators use the CANONICAL repo-relative form (never the injected
+    # results_dir's runtime shape — absolute vs relative invocation changed
+    # the bytes) so artifacts stay invocation-independent: same discipline
+    # as the ledger-line locators.
+    _canon = f"runs/results/{sig}"
+    _add(f"{_canon}/differential.json",
+         f"sha256:{_sha_file(rdir / 'differential.json')}")
+    for nm in ("ic_state.parquet", "ic_base.parquet"):
+        p = rdir / nm
+        if p.exists():
+            _add(f"{_canon}/{nm}", f"sha256:{_sha_file(p)}")
+    _add(
+        f"runs/ledger.jsonl · line {ledger_row} · event=config_committed",
+        f"sha256:{hashlib.sha256(ledger_lines[ledger_row - 1].encode('utf-8')).hexdigest()}"
+        f" (line {ledger_row} JSON 行文本)",
+    )
+    if conf is not None:
+        _add(
+            f"runs/ledger.jsonl · line {conf[0]} · event=confirmatory:first",
+            f"sha256:{hashlib.sha256(ledger_lines[conf[0] - 1].encode('utf-8')).hexdigest()}"
+            f" (line {conf[0]} JSON 行文本)",
+        )
+    _prereg_path = ROOT / prereg
+    if _prereg_path.exists():
+        _add(f"{prereg}", f"sha256:{_sha_file(_prereg_path)} (file bytes)")
+    else:
+        _add(f"{prereg}", "absent on this machine (fresh checkout)")
+    _atlas = ROOT / "reports/evidence/atlas-claim-v1.html"
+    if _atlas.exists():
+        _add(
+            "reports/evidence/atlas-claim-v1.html",
+            f"sha256:{_sha_file(_atlas)} (file bytes)",
+        )
+    src_rows = "".join(
+        f"<tr><td>{_esc(sid_)}</td><td>{_esc(loc)}</td><td>{_esc(integ)}</td></tr>"
+        for sid_, loc, integ in sources
+    )
+    parts.append(
+        "<h2>引用闭合 · sources ([S#])</h2>\n"
+        "<table><tr><th>sid</th><th>locator</th><th>integrity</th></tr>"
+        f"{src_rows}</table>\n"
+    )
+
     return (
         '<!DOCTYPE html>\n<html lang="zh-CN"><head><meta charset="utf-8">'
-        f"<title>Aionis — {phase} meta dossier</title>\n"
+        f"<title>Aionis — {phase} research dossier</title>\n"
         "<style>body{font-family:system-ui,sans-serif;max-width:860px;margin:2rem auto;"
         "padding:0 1rem;color:#1f2328}table{border-collapse:collapse}th,td{border:1px solid #ccc;"
         "padding:4px 10px;text-align:left}th{background:#f6f8fa}</style></head>\n<body>\n"
-        f"<h1>{_esc(phase)} — research dossier (meta)</h1>\n"
-        '<p class="note">meta-only 卡：承载该相主张的机读数值与账本对账；'
-        "完整 [S#] 引用闭合的溯源深度在头条 Track C 档案中。"
-        "Meta-only card: claim numbers + ledger reconciliation; the full [S#] "
-        "closed provenance chain covers the headline Track C claim.</p>\n"
+        f"<h1>{_esc(phase)} — research dossier</h1>\n"
+        '<p class="note">分相档案：主张数值与账本 confirmatory 行精确对账'
+        "（不一致即拒导），[S#] 闭合引用，逐月 IC 序列。NULL 结果与紧致 CI 是本相的"
+        "合格结局。Full per-phase dossier: ledger-reconciled claim numbers "
+        "(export refuses on mismatch), closed [S#] citations, monthly IC series."
+        "</p>\n"
         f"<table>{rows}</table>\n"
-        "<p>byte-stable artifact — regenerate with "
-        "<code>scripts/export_research_dossier.py</code> (phase meta export).</p>\n"
+        + "".join(parts)
+        + "<p>byte-stable artifact — regenerate with "
+        "<code>scripts/export_research_dossier.py</code> (phase dossier export).</p>\n"
         "</body></html>\n"
     )
 

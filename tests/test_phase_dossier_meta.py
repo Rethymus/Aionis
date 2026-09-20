@@ -82,6 +82,76 @@ def test_fixture_results_dir_missing_raises(tmp_path: Path) -> None:
         raise AssertionError("results-dir mismatch must raise")
 
 
+def _write_full_fixture_tree(tmp_path: Path, mismatch: bool = False) -> dict:
+    """Full-path fixture (synthetic labeled unit-test data): IC parquets on
+    disk + confirmatory:first ledger rows -> the S2 full dossier path."""
+    import pandas as pd
+
+    results = tmp_path / "results"
+    ledger_lines: list[str] = []
+    for phase, sig in SIGS.items():
+        row = ROWS[phase]
+        d = results / sig
+        d.mkdir(parents=True, exist_ok=True)
+        (d / "differential.json").write_text(
+            json.dumps({"mean_diff": -0.001, "ci_lo": -0.01, "ci_hi": 0.01,
+                        "dm_p_mbb": 0.5, "n_months": 125}),
+            encoding="utf-8",
+        )
+        (d / "meta.json").write_text(
+            json.dumps({"h6_deterministic": True, "config_sig": sig}),
+            encoding="utf-8",
+        )
+        (d / "controls.json").write_text(
+            json.dumps({"placebo": {}, "lag_shift": {}}), encoding="utf-8")
+        idx = pd.period_range("2016-01", periods=6, freq="M").to_timestamp("M")
+        pd.DataFrame({"ic": [0.01, -0.02, 0.03, 0.0, 0.05, -0.01]},
+                     index=idx).to_parquet(d / "ic_state.parquet")
+        pd.DataFrame({"ic": [0.02, 0.01, -0.01, 0.02, 0.0, 0.03]},
+                     index=idx).to_parquet(d / "ic_base.parquet")
+        while len(ledger_lines) < row - 1:
+            ledger_lines.append("{}")
+        dd = {"mean_diff": -0.002 if (mismatch and phase == "B") else -0.001,
+              "ci_lo": -0.01, "ci_hi": 0.01, "dm_p_mbb": 0.5, "n_months": 125}
+        ledger_lines.append(json.dumps({
+            "event": "confirmatory:first", "phase": phase, "config_sig": sig,
+            "differential_state_minus_base": dd,
+        }))
+    ledger = tmp_path / "ledger.jsonl"
+    ledger.write_text("\n".join(ledger_lines) + "\n", encoding="utf-8")
+    return {"results_dir": results, "ledger_path": ledger}
+
+
+def test_fixture_full_dossiers_byte_stable_with_reconciliation(tmp_path: Path) -> None:
+    """S2 full path: IC parquets present -> ledger-reconciled dossier with
+    closed [S#] citations and the monthly IC bars; byte-stable double render."""
+    fx = _write_full_fixture_tree(tmp_path)
+    out = tmp_path / "out"
+    w1 = erd.export_phase_dossier_meta(out_dir=out, **fx)
+    raws1 = {w["id"]: (out / (w["id"] + ".html")).read_bytes() for w in w1}
+    w2 = erd.export_phase_dossier_meta(out_dir=out, **fx)
+    for w in w2:
+        assert (out / (w["id"] + ".html")).read_bytes() == raws1[w["id"]]
+    assert len(w1) == 3
+    b = raws1["research-dossier-b-v1"].decode("utf-8")
+    assert "ledger reconciliation" in b and "sources" in b
+    assert "<svg" in b and "confirmatory:first" in b
+    # The reconciliation table lists the compared fields with match verdicts.
+    assert "mean_diff" in b and "dm_p_mbb" in b and "✓" in b
+
+
+def test_fixture_ledger_manifest_mismatch_refuses_export(tmp_path: Path) -> None:
+    """The S2 export-time gate: a confirmatory row whose numbers disagree with
+    differential.json must refuse the export (anti-leakage closure)."""
+    fx = _write_full_fixture_tree(tmp_path, mismatch=True)
+    try:
+        erd.export_phase_dossier_meta(out_dir=tmp_path / "out", **fx)
+    except ValueError as e:
+        assert "mismatch" in str(e) and "refusing" in str(e)
+    else:
+        raise AssertionError("ledger/manifest mismatch must refuse export")
+
+
 def test_real_phase_dossiers_equal_fresh_render(tmp_path: Path) -> None:
     """LOCAL-ARTIFACT contract: the phase dossiers embed per-phase frozen
     metrics read from the gitignored runs/results tree — a fresh CI checkout
