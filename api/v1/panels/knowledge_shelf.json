@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "as_of": "2026-09-09",
+  "as_of": "2026-09-21",
   "n_docs": 70,
   "n_categories": 5,
   "categories": {
@@ -366,8 +366,8 @@
       "title": "Baseline Ladder \u2014 BASELINE-FF5-001\uff08RES-02\uff09",
       "path": "docs/baseline-ladder-ff5.md",
       "category": "theory",
-      "date": "2026-08-05",
-      "n_chars": 6215,
+      "date": "2026-09-21",
+      "n_chars": 6221,
       "summary": "\u72b6\u6001\uff1aEXECUTED 2026-08-03\uff08commit 104b21e \uff0cowner authorized \"\u5168\u90e8approved\"\uff09\u00b7 EXPLORATORY CV-proxy\uff08\u4e0d\u5199 ledger result \u884c by design\uff1b\u540c Track C joint \u6a21\u5f0f\uff09\u3002",
       "url": "https://github.com/Rethymus/Aionis/blob/main/docs/baseline-ladder-ff5.md"
     },
@@ -591,8 +591,8 @@
       "title": "Ops: local evening refresh lane (the \"temporary server\")",
       "path": "docs/ops-local-refresh.md",
       "category": "theory",
-      "date": "2026-09-09",
-      "n_chars": 12080,
+      "date": "2026-09-21",
+      "n_chars": 12786,
       "summary": "Since 2026-09-06. Owner decision: no paid server \u2014 the developer machine, woken on Beijing trading-day evenings via a ZCode workspace automation, IS the cron server for the terminal's daily data refresh. Target: run unattended \u22651 month.",
       "url": "https://github.com/Rethymus/Aionis/blob/main/docs/ops-local-refresh.md"
     },
@@ -731,8 +731,8 @@
       "desc_zh": "\u57fa\u672c\u9762\u65f6\u70b9\u4e3b\u5f20\u7684 meta-only \u5361\uff1a\u5dee\u5206\u503c\u3001\u8d26\u672c\u5bf9\u8d26\u3001IC \u5e8f\u5217\u6458\u8981\u3001\u63a7\u5236\u68c0\u9a8c\u3002",
       "path": "reports/evidence/research-dossier-b-v1.html",
       "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/research-dossier-b-v1.html",
-      "sha256": "0095d94d951e7d6cb4758fa454ca804f0fa132cba741d374310813ec66db5ea3",
-      "n_bytes": 1974
+      "sha256": "9f3744f78a90952e2fd6f2adb41f607da9b68c663c0e6d59a92b90e0d4c81ab3",
+      "n_bytes": 25101
     },
     {
       "id": "research-dossier-d-v1",
@@ -742,8 +742,8 @@
       "desc_zh": "\u5173\u7cfb\u7f51\u7edc\u4e3b\u5f20\u7684 meta-only \u5361\uff1a\u5dee\u5206\u503c\u3001\u8d26\u672c\u5bf9\u8d26\u3001IC \u5e8f\u5217\u6458\u8981\u3001\u63a7\u5236\u68c0\u9a8c\u3002",
       "path": "reports/evidence/research-dossier-d-v1.html",
       "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/research-dossier-d-v1.html",
-      "sha256": "2050d78f5b1fdc6415115e13caf2ebdded61ef4ab6031d29ecb2a5acb9438a76",
-      "n_bytes": 1993
+      "sha256": "176bdb9afa28bc4b5662919d439edaa78289f5b9596eced38fb12893947386b2",
+      "n_bytes": 25296
     },
     {
       "id": "research-dossier-e1-v1",
@@ -753,10 +753,10 @@
       "desc_zh": "\u8de8\u516c\u53f8\u4f20\u64ad\u4e3b\u5f20\u7684 meta-only \u5361\uff1a\u5dee\u5206\u503c\u3001\u8d26\u672c\u5bf9\u8d26\u3001IC \u5e8f\u5217\u6458\u8981\u3001\u63a7\u5236\u68c0\u9a8c\u3002",
       "path": "reports/evidence/research-dossier-e1-v1.html",
       "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/research-dossier-e1-v1.html",
-      "sha256": "b548383fda07ac3e738f43d1fd0d2da6c44834302f5ab0558d30802998ca4068",
-      "n_bytes": 1995
+      "sha256": "7c191a1a881e367a92c5faffb294c3072a367484ca15a66ef46dc5423170e628",
+      "n_bytes": 25295
     }
   ],
   "methodology": "Layer 1 \u2014 Aionis's OWN method library: catalog of docs/ + decisions/ markdown (repo PolyForm-NC; zero third-party copyright surface). Each entry carries metadata plus a safe teaser slice (first 2-3 sentences, <=240 chars) extracted at export time; the full text stays on GitHub (link-out). Dates are last-commit dates read from the LOCAL git repository (no network). Layer 2 \u2014 a FIXED editorially-curated bookmark list of first-hand public research sources (BIS / Fed FEDS / IMF / NBER / arXiv q-fin / FRASER / FRED-ALFRED / RePEc): link-out + one static sentence each, no fetching, no scraping, no summary APIs \u2014 copyright stays with the authors, we only catalog. Categories are a fixed 5-rail whitelist (preregistration / adr / results / rubric / theory); n_docs reconciles to the sum of the rails. Layer 3 \u2014 generated evidence artifacts: self-contained HTML, byte-stable, sha256 + byte count pinned at export time from the local tracked file so a reader can verify the download against the catalog (a missing file degrades honestly to null \u2014 never fabricated). Superseded artifact versions are retained under reports/evidence/archive/ (move-don't-delete \u2014 the archive only grows). Display-only reference lane \u2014 never part of any research or OOS pipeline.",
-  "snapshot_ts": "2026-09-20T16:56:11.685346+00:00"
+  "snapshot_ts": "2026-09-20T17:39:03.902278+00:00"
 }
