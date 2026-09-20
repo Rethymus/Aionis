@@ -3,7 +3,7 @@
 - 编号: R2-full（roadmap §5 P2-10，2026-08-31 Planner 拆分前置完成）
 - 标题: 把"单 Track C 主张"的自包含证据工件（atlas-claim-v1 / research-dossier-v1）扩展为
   **五主张证据矩阵**（B / C / D / E1 / Track C），加版本化与 CI 自动重导钩子。
-- 状态: **全切片完成（2026-09-21 轮 99 S2 落地）：S1/M3/M4/L5 + S2。S2=分相 dossier 双路径渲染（IC parquet 在场→账本 confirmatory 行精确对账[失配拒导]+[S#] 闭合引用+逐月 IC SVG；缺席→原 meta 卡诚实降级）；正典链重导三档案+shelf 重钉，fixture 3 测试+真工件契约+50 契约全绿。候选：移 tasks/completed/**
+- 状态: **全切片完成（2026-09-21 轮 99 S2 落地）：S1/M3/M4/L5 + S2。S2=分相 dossier 双路径渲染（IC parquet 在场→账本 confirmatory 行精确对账[失配拒导]+[S#] 闭合引用+逐月 IC SVG；缺席→原 meta 卡诚实降级）；正典链重导三档案+shelf 重钉，fixture 3 测试+真工件契约+50 契约全绿。**已移 tasks/completed/（2026-09-21 轮 99，业主授权方案 C）。完成定义达成：全切片验收绿，cd785c67a。****
 - 优先级背景: `reports/design/2026-08-28-future-roadmap-research.md` §5 P2-10。
 - 边界: **export/display lane；runs/ 只读；0 ledger 写 / 0 frozen / 0 prereg / 0 OOS 计算**。
   真实管线禁 mock。全部切片不做任何 fetch（输入均为已 committed 面板与 runs/ 冻结产物）。

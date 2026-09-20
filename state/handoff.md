@@ -1,5 +1,10 @@
 # state/handoff.md — current-pass handoff
 
+
+## 2026-09-21 (轮 99 addendum) 方案 C 执行轮：恢复对账+pin 审计+watchdog+S2 收官+任务卫生
+
+他会话轮 99 主条目（修钉+恢复）之外的本会话增量：①陈旧 pin 审计完成（门测试无残余定时炸弹；92b088cbf 三修钉核验为窗口相对化）；②shelf 漂移警报失败信息携带正典恢复链+runbook 手工重导规则（5e2ad97a1）；③通道守卫活性检查日期无关化——跨午夜 running 不再放进第二条通道（2ce4585c9，当日 00:56 险情的结构性闭合；marker 成功写清陈旧 error）；④10-31 影子 runbook+headline 评估证据包自动化 automation-094c3b3a 已挂（北京 10-31 04:05；headline GO 仍为业主门）；⑤9-30 前置保障：membership 对账 dry-run EXIT=0、e3_extend_prices residual 空；GLM 全量预热经论证跳过（轮 57 自愈设计已覆盖）；⑥R2-full S2 落地（cd785c67a）：分相 dossier 升级为账本对账+闭合引用+IC SVG 的完整档案（失配拒导；无 parquet 诚实降级 meta 卡），R2-full 全切片完成归档；⑦任务卫生：42 文件归档+5 状态行刷新+blockers/backlog 重写（7edb7ce28）。恢复四验+pytest 2232+ruff 0+证据链 50 契约绿。边界：ops/export/hygiene lane；0 ledger/0 frozen/0 prereg/0 OOS。
+
 ## 2026-09-09 (zz26) 轮 95：README 重写 + 截图/GIF 媒体层（业主 /goal，docs/display lane）
 
 **调研→落地闭环**：WebFetch 调研 9 个热门仓库（qlib/freqtrade/vectorbt/nautilus/fastapi/gradio/mlflow/FinRL/transformers）README 排版模式 → 全部映射到 README.md/README.en.md：居中媒体、mlflow 式 2×4 与 3×2 HTML 网格（满宽无留白）、`> [!WARNING]`、`<details>` 折叠参考文献、CI+终端徽章、描述性 alt。**媒体 16 文件入 `assets/screenshots/`**（终端 8 页 @DPR2 + 仪表盘 6 标签真实冻结 run + 2 GIF）。**事实内容零改动**（契约数字/表格/链接逐字保留，无 README 解析型测试）。**截图工程经验（复用价值高）**：IAB guest 截重 SVG 页必失败；Playwright 本地伺服 `web/out` 时必须造 `/Aionis` basePath junction（`%TEMP%\site-root\Aionis` → `web/out`，`python -m http.server` 伺服 site-root），且**禁用** `screenshot(animations="disabled")`（recharts v3 入场动画被冻结在 0% → 内容全隐形）；等 SVG count 稳定 + 3-4s settle 即可。GIF 组装用 Pillow adaptive palette（无 ffmpeg 依赖）。验证：GitHub /markdown API 服务端渲染（经 `gh api -X POST markdown`，注意 Git Bash 会把 `/markdown` 改写成盘符路径——去前导斜杠）+ pytest exit=0 + ruff 0。临时资源：shots-venv/junction/两个本地服务已清理，未入仓库。
