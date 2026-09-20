@@ -1,28 +1,28 @@
 {
   "status": "ok",
-  "as_of": "2026-09-14",
+  "as_of": "2026-09-18",
   "n_filings_target": 150,
   "n_filings_processed": 150,
-  "n_with_persons": 101,
-  "coverage_pct": 67.3,
-  "n_persons_distinct": 600,
+  "n_with_persons": 104,
+  "coverage_pct": 69.3,
+  "n_persons_distinct": 643,
   "by_role": {
-    "ceo": 142,
-    "cfo": 73,
-    "coo": 30,
-    "cto": 7,
-    "chairman": 113,
-    "president": 113,
-    "vice_president": 89,
-    "treasurer": 14,
-    "secretary": 32,
-    "director": 441,
-    "officer": 113
+    "ceo": 145,
+    "cfo": 69,
+    "coo": 37,
+    "cto": 8,
+    "chairman": 117,
+    "president": 125,
+    "vice_president": 93,
+    "treasurer": 16,
+    "secretary": 39,
+    "director": 478,
+    "officer": 122
   },
   "confidence": {
-    "section_age_rows": 76,
-    "section_name_roles": 25,
-    "unparsed_no_persons": 47,
+    "section_age_rows": 78,
+    "section_name_roles": 26,
+    "unparsed_no_persons": 44,
     "fetch_or_doc_errors": 2
   },
   "boards": [
@@ -47,6 +47,16 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1692951/000169295126000158/cci-20260825.htm"
     },
     {
+      "company": "MERCURY SYSTEMS INC",
+      "ticker": "MRCY",
+      "issuer_cik": "1049521",
+      "n_persons": 16,
+      "n_directors": 14,
+      "n_officers": 4,
+      "filed_date": "2026-09-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1049521/000104952126000077/mrcy-20260917.htm"
+    },
+    {
       "company": "CONSUMERS BANCORP INC /OH/",
       "ticker": "CBKM",
       "issuer_cik": "1006830",
@@ -57,14 +67,24 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1006830/000143774926030041/cbkm20260909c_def14a.htm"
     },
     {
-      "company": "CAL-MAINE FOODS INC",
-      "ticker": "CALM",
-      "issuer_cik": "16160",
-      "n_persons": 15,
-      "n_directors": 12,
-      "n_officers": 7,
-      "filed_date": "2026-08-18",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/16160/000114036126033569/ny20077563x1_def14a.htm"
+      "company": "CINTAS CORP",
+      "ticker": "CTAS",
+      "issuer_cik": "723254",
+      "n_persons": 14,
+      "n_directors": 11,
+      "n_officers": 11,
+      "filed_date": "2026-09-15",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/723254/000072325426000040/ctas-20260915.htm"
+    },
+    {
+      "company": "Parker-Hannifin Corp",
+      "ticker": "PH",
+      "issuer_cik": "76334",
+      "n_persons": 13,
+      "n_directors": 9,
+      "n_officers": 5,
+      "filed_date": "2026-09-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/76334/000130817926000394/ph-20260915.htm"
     },
     {
       "company": "Kearny Financial Corp.",
@@ -97,14 +117,24 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/64463/000162828026058611/slnh-20260824.htm"
     },
     {
-      "company": "RICHARDSON ELECTRONICS, LTD.",
-      "ticker": "RELL",
-      "issuer_cik": "355948",
-      "n_persons": 13,
-      "n_directors": 7,
-      "n_officers": 12,
-      "filed_date": "2026-08-21",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/355948/000035594826000010/rell-20260821.htm"
+      "company": "Fox Corp",
+      "ticker": "",
+      "issuer_cik": "1754301",
+      "n_persons": 12,
+      "n_directors": 10,
+      "n_officers": 9,
+      "filed_date": "2026-09-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1754301/000162828026062480/fox-20260917.htm"
+    },
+    {
+      "company": "QUINSTREET, INC",
+      "ticker": "QNST",
+      "issuer_cik": "1117297",
+      "n_persons": 12,
+      "n_directors": 8,
+      "n_officers": 6,
+      "filed_date": "2026-09-16",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1117297/000207709626000254/ea0305042-01.htm"
     },
     {
       "company": "UNIFI INC",
@@ -115,6 +145,26 @@
       "n_officers": 10,
       "filed_date": "2026-09-11",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/100726/000010072626000015/ufi-20260908.htm"
+    },
+    {
+      "company": "Inland Real Estate Income Trust, Inc.",
+      "ticker": "INRE",
+      "issuer_cik": "1528985",
+      "n_persons": 11,
+      "n_directors": 11,
+      "n_officers": 4,
+      "filed_date": "2026-09-16",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1528985/000119312526393009/ireit-20260916.htm"
+    },
+    {
+      "company": "Security Midwest Bancorp, Inc.",
+      "ticker": "SBMW",
+      "issuer_cik": "2036060",
+      "n_persons": 11,
+      "n_directors": 8,
+      "n_officers": 10,
+      "filed_date": "2026-09-15",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2036060/000119312526391652/d374112ddef14a.htm"
     },
     {
       "company": "WOLFSPEED, INC.",
@@ -197,24 +247,34 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1770501/000149315226039659/formdef14a.htm"
     },
     {
-      "company": "VivoSim Labs, INC.",
-      "ticker": "VIVS",
-      "issuer_cik": "1497253",
-      "n_persons": 10,
-      "n_directors": 9,
-      "n_officers": 3,
-      "filed_date": "2026-08-21",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1497253/000119312526361066/d143745ddef14a.htm"
+      "company": "EXTREME NETWORKS INC",
+      "ticker": "EXTR",
+      "issuer_cik": "1078271",
+      "n_persons": 9,
+      "n_directors": 8,
+      "n_officers": 5,
+      "filed_date": "2026-09-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1078271/000119312526395545/extr-20260918.htm"
     },
     {
-      "company": "Howard Hughes Holdings Inc.",
-      "ticker": "HHH",
-      "issuer_cik": "1981792",
-      "n_persons": 10,
-      "n_directors": 10,
-      "n_officers": 2,
-      "filed_date": "2026-08-19",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1981792/000110465926098808/tm263319-1_def14a.htm"
+      "company": "EchoStar CORP",
+      "ticker": "ECHO",
+      "issuer_cik": "1415404",
+      "n_persons": 9,
+      "n_directors": 5,
+      "n_officers": 8,
+      "filed_date": "2026-09-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1415404/000110465926108960/sats-20261030xdef14a.htm"
+    },
+    {
+      "company": "SYNAPTICS Inc",
+      "ticker": "SYNA",
+      "issuer_cik": "817720",
+      "n_persons": 9,
+      "n_directors": 8,
+      "n_officers": 3,
+      "filed_date": "2026-09-15",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/817720/000081772026000075/syna-20260915.htm"
     },
     {
       "company": "TWIN DISC INC",
@@ -237,14 +297,44 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1015383/000101538326000012/poww-20260903.htm"
     },
     {
-      "company": "MiniMed Group, Inc.",
-      "ticker": "MMED",
-      "issuer_cik": "2062583",
-      "n_persons": 9,
-      "n_directors": 3,
+      "company": "PHIBRO ANIMAL HEALTH CORP",
+      "ticker": "PAHC",
+      "issuer_cik": "1069899",
+      "n_persons": 8,
+      "n_directors": 7,
       "n_officers": 8,
-      "filed_date": "2026-08-21",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2062583/000114036126034021/ny20073045x1_def14a.htm"
+      "filed_date": "2026-09-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1069899/000110465926108939/pahc-20261103xdef14a.htm"
+    },
+    {
+      "company": "BGSF, INC.",
+      "ticker": "BGSF",
+      "issuer_cik": "1474903",
+      "n_persons": 8,
+      "n_directors": 4,
+      "n_officers": 6,
+      "filed_date": "2026-09-16",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1474903/000147490326000084/definproxy2025.htm"
+    },
+    {
+      "company": "STRATTEC SECURITY CORP",
+      "ticker": "STRT",
+      "issuer_cik": "933034",
+      "n_persons": 8,
+      "n_directors": 5,
+      "n_officers": 7,
+      "filed_date": "2026-09-16",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/933034/000119312526393209/strt-20260916.htm"
+    },
+    {
+      "company": "James River Group Holdings, Inc.",
+      "ticker": "JRVR",
+      "issuer_cik": "1620459",
+      "n_persons": 8,
+      "n_directors": 8,
+      "n_officers": 7,
+      "filed_date": "2026-09-16",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1620459/000110465926108040/tm262445-1_def14a.htm"
     },
     {
       "company": "Seagate Technology Holdings plc",
@@ -285,26 +375,6 @@
       "n_officers": 4,
       "filed_date": "2026-08-21",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1729427/000168316826006660/cns_idef14a.htm"
-    },
-    {
-      "company": "BayFirst Financial Corp.",
-      "ticker": "BAFN",
-      "issuer_cik": "1649739",
-      "n_persons": 8,
-      "n_directors": 5,
-      "n_officers": 7,
-      "filed_date": "2026-08-19",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1649739/000164973926000069/def14a-proxy2026sept2026.htm"
-    },
-    {
-      "company": "FEDEX CORP",
-      "ticker": "FDX",
-      "issuer_cik": "1048911",
-      "n_persons": 8,
-      "n_directors": 6,
-      "n_officers": 4,
-      "filed_date": "2026-08-17",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1048911/000110465926097836/tm2531093-3_def14a.htm"
     },
     {
       "company": "SANFILIPPO JOHN B & SON INC",
@@ -387,34 +457,24 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/933972/000165495426007870/scwo_def14a.htm"
     },
     {
-      "company": "BUTLER NATIONAL CORP",
-      "ticker": "BUKS",
-      "issuer_cik": "15847",
-      "n_persons": 7,
-      "n_directors": 7,
-      "n_officers": 6,
-      "filed_date": "2026-08-18",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/15847/000001584726000032/buks-20260817.htm"
-    },
-    {
-      "company": "Coda Octopus Group, Inc.",
-      "ticker": "CODA",
-      "issuer_cik": "1334325",
-      "n_persons": 7,
+      "company": "Lifevantage Corp",
+      "ticker": "LFVN",
+      "issuer_cik": "849146",
+      "n_persons": 6,
       "n_directors": 6,
-      "n_officers": 4,
-      "filed_date": "2026-08-17",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1334325/000149315226038748/formdef14a.htm"
+      "n_officers": 1,
+      "filed_date": "2026-09-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/849146/000119312526395513/lfvn-20260918.htm"
     },
     {
-      "company": "American Outdoor Brands, Inc.",
-      "ticker": "AOUT",
-      "issuer_cik": "1808997",
-      "n_persons": 7,
-      "n_directors": 7,
-      "n_officers": 7,
-      "filed_date": "2026-08-14",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1808997/000180899726000038/aout-20260814.htm"
+      "company": "Polar Power, Inc.",
+      "ticker": "POLA",
+      "issuer_cik": "1622345",
+      "n_persons": 6,
+      "n_directors": 5,
+      "n_officers": 2,
+      "filed_date": "2026-09-16",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1622345/000149315226042901/formdef14a.htm"
     },
     {
       "company": "Jaguar Uranium Corp.",
@@ -527,24 +587,34 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1956955/000168316826006678/unusual_def14a.htm"
     },
     {
-      "company": "Pelthos Therapeutics Inc.",
-      "ticker": "PTHS",
-      "issuer_cik": "1919246",
-      "n_persons": 6,
-      "n_directors": 3,
-      "n_officers": 4,
-      "filed_date": "2026-08-18",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1919246/000191924626000120/pths-20260818.htm"
+      "company": "Expion Energy, Inc.",
+      "ticker": "XPON",
+      "issuer_cik": "1894954",
+      "n_persons": 5,
+      "n_directors": 5,
+      "n_officers": 1,
+      "filed_date": "2026-09-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1894954/000190359626000356/xpon_sch14a.htm"
     },
     {
-      "company": "Inhibitor Therapeutics, Inc.",
-      "ticker": "INTI",
-      "issuer_cik": "1042418",
-      "n_persons": 6,
-      "n_directors": 6,
-      "n_officers": 0,
-      "filed_date": "2026-08-17",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1042418/000149315226038636/formdef14a.htm"
+      "company": "Legacy Housing Corp",
+      "ticker": "LEGH",
+      "issuer_cik": "1436208",
+      "n_persons": 5,
+      "n_directors": 4,
+      "n_officers": 4,
+      "filed_date": "2026-09-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1436208/000110465926108932/tm264525-2_def14a.htm"
+    },
+    {
+      "company": "COFFEE HOLDING CO INC",
+      "ticker": "JVA",
+      "issuer_cik": "1007019",
+      "n_persons": 5,
+      "n_directors": 5,
+      "n_officers": 2,
+      "filed_date": "2026-09-15",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1007019/000149315226042773/formdef14a.htm"
     },
     {
       "company": "DT Cloud Star Acquisition Corp",
@@ -617,34 +687,24 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/788611/000149315226039640/formdef14a.htm"
     },
     {
-      "company": "RiverNorth Managed Duration Municipal Income Fund II, Inc.",
-      "ticker": "RMMZ",
-      "issuer_cik": "1870833",
-      "n_persons": 5,
-      "n_directors": 5,
-      "n_officers": 0,
-      "filed_date": "2026-08-21",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1870833/000139834426015282/fp0100561-1_def14a.htm"
-    },
-    {
-      "company": "Hancock Park Corporate Income, Inc.",
-      "ticker": "",
-      "issuer_cik": "1661306",
-      "n_persons": 5,
-      "n_directors": 5,
+      "company": "REGIS CORP",
+      "ticker": "RGS",
+      "issuer_cik": "716643",
+      "n_persons": 4,
+      "n_directors": 1,
       "n_officers": 3,
-      "filed_date": "2026-08-19",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1661306/000166130626000077/hpci_proxy_statement_am_.htm"
+      "filed_date": "2026-09-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/716643/000114036126036991/ny20079436x1_def14a.htm"
     },
     {
-      "company": "OneMedNet Corp",
-      "ticker": "",
-      "issuer_cik": "1849380",
-      "n_persons": 5,
-      "n_directors": 3,
-      "n_officers": 5,
-      "filed_date": "2026-08-19",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1849380/000149315226039206/formdef14a.htm"
+      "company": "Stark Novus Financial Inc.",
+      "ticker": "SNFI",
+      "issuer_cik": "1759546",
+      "n_persons": 4,
+      "n_directors": 4,
+      "n_officers": 1,
+      "filed_date": "2026-09-16",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1759546/000149315226042910/formdef14a.htm"
     },
     {
       "company": "Zapata Quantum, Inc.",
@@ -747,24 +807,24 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1349706/000121465926010914/z825263def14a.htm"
     },
     {
-      "company": "SkyAI, Inc.",
-      "ticker": "",
-      "issuer_cik": "1737995",
-      "n_persons": 4,
-      "n_directors": 4,
-      "n_officers": 2,
-      "filed_date": "2026-08-18",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1737995/000149315226038805/formdef14a.htm"
-    },
-    {
-      "company": "SPROTT FOCUS TRUST INC.",
-      "ticker": "FUND",
-      "issuer_cik": "825202",
-      "n_persons": 4,
+      "company": "Scienture Holdings, Inc.",
+      "ticker": "SCNX",
+      "issuer_cik": "1382574",
+      "n_persons": 3,
       "n_directors": 3,
       "n_officers": 1,
-      "filed_date": "2026-08-14",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/825202/000182912626008861/sprottfocus_def14a.htm"
+      "filed_date": "2026-09-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1382574/000149315226043340/formdef14a.htm"
+    },
+    {
+      "company": "Elmet Group Co.",
+      "ticker": "ELMT",
+      "issuer_cik": "2101698",
+      "n_persons": 3,
+      "n_directors": 3,
+      "n_officers": 2,
+      "filed_date": "2026-09-16",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2101698/000121390026100530/ea0304521-01.htm"
     },
     {
       "company": "RUSSELL INVESTMENT FUNDS",
@@ -807,24 +867,24 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1058811/000119312526374299/immr-20260828.htm"
     },
     {
-      "company": "NEOGEN CORP",
-      "ticker": "NEOG",
-      "issuer_cik": "711377",
-      "n_persons": 3,
-      "n_directors": 2,
+      "company": "Trade Desk, Inc.",
+      "ticker": "TTD",
+      "issuer_cik": "1671933",
+      "n_persons": 2,
+      "n_directors": 1,
       "n_officers": 2,
-      "filed_date": "2026-08-21",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/711377/000119312526360742/neog-20260821.htm"
+      "filed_date": "2026-09-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1671933/000167193326000102/a2026specialmeetingdefinit.htm"
     },
     {
-      "company": "Medtronic plc",
-      "ticker": "MDT",
-      "issuer_cik": "1613103",
-      "n_persons": 3,
-      "n_directors": 3,
+      "company": "Gossamer Bio, Inc.",
+      "ticker": "GOSS",
+      "issuer_cik": "1728117",
+      "n_persons": 2,
+      "n_directors": 1,
       "n_officers": 1,
-      "filed_date": "2026-08-17",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1613103/000161310326000010/mdt-20260816.htm"
+      "filed_date": "2026-09-16",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1728117/000172811726000102/goss-20260916.htm"
     },
     {
       "company": "RUSSELL INVESTMENT CO",
@@ -887,34 +947,14 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1138723/000114036126034187/ny20079885x2_def14a.htm"
     },
     {
-      "company": "VALUE LINE INC",
-      "ticker": "VALU",
-      "issuer_cik": "717720",
-      "n_persons": 2,
+      "company": "Neuphoria Therapeutics Inc.",
+      "ticker": "NEUP",
+      "issuer_cik": "1191070",
+      "n_persons": 1,
       "n_directors": 1,
-      "n_officers": 1,
-      "filed_date": "2026-08-18",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/717720/000143774926028394/valu20260817_def14a.htm"
-    },
-    {
-      "company": "Twin Vee PowerCats, Co.",
-      "ticker": "VEEE",
-      "issuer_cik": "1855509",
-      "n_persons": 2,
-      "n_directors": 2,
-      "n_officers": 1,
-      "filed_date": "2026-08-17",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1855509/000173112226001085/e7853_def14a.htm"
-    },
-    {
-      "company": "BPGC Acquisition Corp.",
-      "ticker": "",
-      "issuer_cik": "1841610",
-      "n_persons": 2,
-      "n_directors": 2,
-      "n_officers": 2,
-      "filed_date": "2026-08-17",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1841610/000118518526003577/bpgcacdef14a081726.htm"
+      "n_officers": 0,
+      "filed_date": "2026-09-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1191070/000114036126037139/ny20081637x1_def14a.htm"
     },
     {
       "company": "Western Asset Mortgage Opportunity Fund Inc.",
@@ -1025,16 +1065,6 @@
       "n_officers": 1,
       "filed_date": "2026-08-28",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1859807/000121390026095087/ea0302274-02.htm"
-    },
-    {
-      "company": "ADVENT CONVERTIBLE & INCOME FUND",
-      "ticker": "AVK",
-      "issuer_cik": "1219120",
-      "n_persons": 1,
-      "n_directors": 1,
-      "n_officers": 0,
-      "filed_date": "2026-08-19",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1219120/000182126826000147/gug90109avk.htm"
     }
   ],
   "top_persons": [
@@ -1054,6 +1084,72 @@
       ]
     },
     {
+      "name": "Pay Versus Performance",
+      "roles": [
+        "director",
+        "officer"
+      ],
+      "n_companies": 5,
+      "n_director_seats": 3,
+      "companies": [
+        "Fox Corp",
+        "REGIS CORP",
+        "CINTAS CORP",
+        "All In FutureTech Alliance, Inc.",
+        "RPM INTERNATIONAL INC/DE/"
+      ]
+    },
+    {
+      "name": "George W. Bush",
+      "roles": [
+        "chairman",
+        "president",
+        "secretary",
+        "director",
+        "officer"
+      ],
+      "n_companies": 4,
+      "n_director_seats": 3,
+      "companies": [
+        "Fox Corp",
+        "MERCURY SYSTEMS INC",
+        "CACI INTERNATIONAL INC /DE/",
+        "RPM INTERNATIONAL INC/DE/"
+      ]
+    },
+    {
+      "name": "Anthony M. Kennedy",
+      "roles": [
+        "ceo",
+        "chairman",
+        "president",
+        "vice_president",
+        "secretary",
+        "director"
+      ],
+      "n_companies": 2,
+      "n_director_seats": 2,
+      "companies": [
+        "Fox Corp",
+        "PROCTER & GAMBLE Co"
+      ]
+    },
+    {
+      "name": "Arthur J. Gallagher",
+      "roles": [
+        "ceo",
+        "chairman",
+        "president",
+        "director"
+      ],
+      "n_companies": 2,
+      "n_director_seats": 2,
+      "companies": [
+        "James River Group Holdings, Inc.",
+        "Security Midwest Bancorp, Inc."
+      ]
+    },
+    {
       "name": "Christine R. Detrick",
       "roles": [
         "ceo",
@@ -1069,32 +1165,31 @@
       ]
     },
     {
-      "name": "George W. Bush",
+      "name": "Executive Officer",
       "roles": [
+        "ceo",
+        "cto",
         "chairman",
         "president",
-        "secretary",
-        "director",
-        "officer"
+        "director"
       ],
       "n_companies": 2,
-      "n_director_seats": 1,
+      "n_director_seats": 2,
       "companies": [
-        "CACI INTERNATIONAL INC /DE/",
-        "RPM INTERNATIONAL INC/DE/"
+        "Scienture Holdings, Inc.",
+        "Elastic N.V."
       ]
     },
     {
       "name": "Insider Participation",
       "roles": [
-        "director",
         "officer"
       ],
       "n_companies": 2,
-      "n_director_seats": 1,
+      "n_director_seats": 0,
       "companies": [
-        "UNIFI INC",
-        "CAL-MAINE FOODS INC"
+        "SYNAPTICS Inc",
+        "UNIFI INC"
       ]
     },
     {
@@ -1137,28 +1232,18 @@
       ]
     },
     {
-      "name": "Pay Ratio",
+      "name": "Stephen F. Austin State",
       "roles": [
-        "director",
-        "officer"
+        "ceo",
+        "cfo",
+        "coo",
+        "president"
       ],
       "n_companies": 2,
-      "n_director_seats": 1,
+      "n_director_seats": 0,
       "companies": [
-        "NEOGEN CORP",
-        "RICHARDSON ELECTRONICS, LTD."
-      ]
-    },
-    {
-      "name": "Pay Versus Performance",
-      "roles": [
-        "director"
-      ],
-      "n_companies": 2,
-      "n_director_seats": 2,
-      "companies": [
-        "All In FutureTech Alliance, Inc.",
-        "RPM INTERNATIONAL INC/DE/"
+        "BGSF, INC.",
+        "374Water Inc."
       ]
     },
     {
@@ -1177,31 +1262,32 @@
       ]
     },
     {
-      "name": "ANTHONY WILLIAMS",
+      "name": "after reaching",
       "roles": [
         "director"
       ],
-      "n_companies": 1,
-      "n_director_seats": 1,
+      "n_companies": 2,
+      "n_director_seats": 2,
       "companies": [
-        "Howard Hughes Holdings Inc."
+        "Parker-Hannifin Corp",
+        "REGIS CORP"
       ]
     },
     {
-      "name": "Aaron Green",
+      "name": "Abigail P. Johnson",
       "roles": [
         "ceo",
-        "president",
+        "chairman",
         "director"
       ],
       "n_companies": 1,
       "n_director_seats": 1,
       "companies": [
-        "OneMedNet Corp"
+        "SYNAPTICS Inc"
       ]
     },
     {
-      "name": "Adam B. Sefchick",
+      "name": "Adam G. Ciongoli",
       "roles": [
         "director",
         "officer"
@@ -1209,7 +1295,7 @@
       "n_companies": 1,
       "n_director_seats": 1,
       "companies": [
-        "BUTLER NATIONAL CORP"
+        "Fox Corp"
       ]
     },
     {
@@ -1224,17 +1310,6 @@
       ]
     },
     {
-      "name": "Adam Stern",
-      "roles": [
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "VivoSim Labs, INC."
-      ]
-    },
-    {
       "name": "Adil Engineer",
       "roles": [
         "coo"
@@ -1246,18 +1321,6 @@
       ]
     },
     {
-      "name": "Adolphus B. Baker",
-      "roles": [
-        "ceo",
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "CAL-MAINE FOODS INC"
-      ]
-    },
-    {
       "name": "Agnes Budzyn",
       "roles": [
         "director"
@@ -1266,6 +1329,17 @@
       "n_director_seats": 1,
       "companies": [
         "Soluna Holdings, Inc"
+      ]
+    },
+    {
+      "name": "Alan Feldman II",
+      "roles": [
+        "director"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "Inland Real Estate Income Trust, Inc."
       ]
     },
     {
@@ -1313,6 +1387,21 @@
       ]
     },
     {
+      "name": "Alexander C. Matina",
+      "roles": [
+        "ceo",
+        "president",
+        "treasurer",
+        "secretary",
+        "director"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "Stark Novus Financial Inc."
+      ]
+    },
+    {
       "name": "Alexander Shen",
       "roles": [
         "ceo",
@@ -1322,17 +1411,6 @@
       "n_director_seats": 1,
       "companies": [
         "TECHPRECISION CORP"
-      ]
-    },
-    {
-      "name": "Alison Tjosvold Milhous",
-      "roles": [
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "VivoSim Labs, INC."
       ]
     },
     {
@@ -1370,17 +1448,6 @@
       "n_director_seats": 1,
       "companies": [
         "TurnOnGreen, Inc."
-      ]
-    },
-    {
-      "name": "Amy B. Lane",
-      "roles": [
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "FEDEX CORP"
       ]
     },
     {
@@ -1502,27 +1569,53 @@
       ]
     },
     {
-      "name": "Andrew P. Wright",
+      "name": "Andrew D. Ross President",
+      "roles": [
+        "coo",
+        "president"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 0,
+      "companies": [
+        "Parker-Hannifin Corp"
+      ]
+    },
+    {
+      "name": "Andrew Gordon",
       "roles": [
         "ceo",
+        "cfo",
+        "president",
+        "treasurer",
+        "director"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "COFFEE HOLDING CO INC"
+      ]
+    },
+    {
+      "name": "Andrew L. Sole",
+      "roles": [
         "chairman",
         "director"
       ],
       "n_companies": 1,
       "n_director_seats": 1,
       "companies": [
-        "BayFirst Financial Corp."
+        "Stark Novus Financial Inc."
       ]
     },
     {
-      "name": "Andrew Zeinfeld",
+      "name": "Andrew Sheehan",
       "roles": [
-        "ceo"
+        "director"
       ],
       "n_companies": 1,
-      "n_director_seats": 0,
+      "n_director_seats": 1,
       "companies": [
-        "OneMedNet Corp"
+        "QUINSTREET, INC"
       ]
     },
     {
@@ -1583,15 +1676,14 @@
       ]
     },
     {
-      "name": "Annmarie Gayle",
+      "name": "Anthony Chereso II",
       "roles": [
-        "ceo",
-        "chairman"
+        "director"
       ],
       "n_companies": 1,
       "n_director_seats": 1,
       "companies": [
-        "Coda Octopus Group, Inc."
+        "Inland Real Estate Income Trust, Inc."
       ]
     },
     {
@@ -1605,53 +1697,14 @@
       "companies": [
         "WOLFSPEED, INC."
       ]
-    },
-    {
-      "name": "Anthony M. Kennedy",
-      "roles": [
-        "ceo",
-        "chairman",
-        "president",
-        "vice_president"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "PROCTER & GAMBLE Co"
-      ]
-    },
-    {
-      "name": "Anthony Saravanos",
-      "roles": [
-        "chairman",
-        "president",
-        "vice_president",
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "BayFirst Financial Corp."
-      ]
-    },
-    {
-      "name": "Anthony Thomopoulos",
-      "roles": [
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "Kartoon Studios, Inc."
-      ]
     }
   ],
   "request_accounting": {
-    "n_http_requests_last_fetch": 34,
+    "n_http_requests_last_fetch": 24,
     "budget_seconds": 2700,
     "budget_hit": false,
-    "fetched_at": "2026-09-15T10:14:21.715643+00:00"
+    "fetched_at": "2026-09-20T16:04:38.909602+00:00"
   },
-  "methodology": "DEF 14A person-level panel (\u8463\u4e8b/\u9ad8\u7ba1\u4eba\u7ea7\u6863\u6848) over the NEWEST 150 proxy filings of the /executives DEF 14A stream \u2014 a bounded lane: each filing's primary document resolved from its EDGAR filing index (<= 2 GETs per filing, idempotent per-accession caches, >= 2.1s spacing, hard 45-minute wall-clock budget; the last fetch spent 34 HTTP requests and did not hit the budget). Parsing is CONSERVATIVE and TIERED: (1) section_age_rows (HIGH) \u2014 the classic 'Name (Age) Title Since' roster row in any spelling, a 2-4 token capitalized name with a standalone age bounded 30-99 and a role word witnessed on the same row, also reconstructed from word-fragmented inline-XBRL layouts by anchor-delimiting the joined stream; (2) section_name_roles (MEDIUM) \u2014 'First M. Last' (middle-initial) + a role word inside a located directors/executives section. Everything else yields persons=[] and parsed=false \u2014 an honest NULL, never a guessed name (\u5b81\u53ef null \u4e0d\u731c\u6d4b); coverage below counts only what was processed (101/150 filings with persons = 67.3%), never an extrapolation. Roles are canonical role WORDS witnessed near the person's row or bio \u2014 they may include past or external-company titles (e.g. a director who is CEO of another firm), displayed as text-witnessed hints not employment records; boards-card director/officer counts are independent sets (a CEO-director counts in both). Distinct-person identity keys on the normalized full name across filings \u2014 same-name merges may join namesakes and hyphenated/apostrophe/initials-first names (JW Roth) are conservatively MISSED, both disclosed. Display-only, exploratory, NOT a research claim.",
-  "snapshot_ts": "2026-09-15T10:58:30.189049+00:00"
+  "methodology": "DEF 14A person-level panel (\u8463\u4e8b/\u9ad8\u7ba1\u4eba\u7ea7\u6863\u6848) over the NEWEST 150 proxy filings of the /executives DEF 14A stream \u2014 a bounded lane: each filing's primary document resolved from its EDGAR filing index (<= 2 GETs per filing, idempotent per-accession caches, >= 2.1s spacing, hard 45-minute wall-clock budget; the last fetch spent 24 HTTP requests and did not hit the budget). Parsing is CONSERVATIVE and TIERED: (1) section_age_rows (HIGH) \u2014 the classic 'Name (Age) Title Since' roster row in any spelling, a 2-4 token capitalized name with a standalone age bounded 30-99 and a role word witnessed on the same row, also reconstructed from word-fragmented inline-XBRL layouts by anchor-delimiting the joined stream; (2) section_name_roles (MEDIUM) \u2014 'First M. Last' (middle-initial) + a role word inside a located directors/executives section. Everything else yields persons=[] and parsed=false \u2014 an honest NULL, never a guessed name (\u5b81\u53ef null \u4e0d\u731c\u6d4b); coverage below counts only what was processed (104/150 filings with persons = 69.3%), never an extrapolation. Roles are canonical role WORDS witnessed near the person's row or bio \u2014 they may include past or external-company titles (e.g. a director who is CEO of another firm), displayed as text-witnessed hints not employment records; boards-card director/officer counts are independent sets (a CEO-director counts in both). Distinct-person identity keys on the normalized full name across filings \u2014 same-name merges may join namesakes and hyphenated/apostrophe/initials-first names (JW Roth) are conservatively MISSED, both disclosed. Display-only, exploratory, NOT a research claim.",
+  "snapshot_ts": "2026-09-20T16:55:50.524518+00:00"
 }

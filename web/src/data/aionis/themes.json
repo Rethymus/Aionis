@@ -1,9 +1,9 @@
 {
   "status": "ok",
-  "as_of_date": "2026-09-11",
+  "as_of_date": "2026-09-16",
   "freshness": {
     "earliest": "2026-09",
-    "latest": "2026-09-15",
+    "latest": "2026-09-18",
     "mixed": true
   },
   "methodology": "Seven-theme signal overview (display-only, NOT a research claim). Aggregates are cross-sectional means over the S&P 500 PIT panel at the latest realized month; the macro theme uses the Track-C macro-regime composite; net cost uses the bps sweep. Themes marked forward_only / needs_work / partial have no real historical signal yet \u2014 shown honestly, never mocked. Not the frozen Track-B verdict.",
@@ -11,7 +11,7 @@
     {
       "key": "price",
       "status": "live",
-      "as_of": "2026-09-11",
+      "as_of": "2026-09-16",
       "headline": "21d momentum + 63d vol + 252d \u03b2 + 21d RSI(\u4e0a\u884c\u5e7f\u5ea6) + 63d timetohigh(\u8ddd\u9ad8\u70b9) (cross-sectional mean)",
       "signals": [
         {
@@ -32,11 +32,11 @@
         },
         {
           "name": "rsi_21d",
-          "value": 0.4505
+          "value": 0.4322
         },
         {
           "name": "timetohigh_63d",
-          "value": 0.4419
+          "value": 0.4884
         }
       ],
       "series": [
@@ -46,15 +46,15 @@
         },
         {
           "month": "2025-08",
-          "value": 0.0054
+          "value": 0.0055
         },
         {
           "month": "2025-09",
-          "value": 0.0163
+          "value": 0.0162
         },
         {
           "month": "2025-10",
-          "value": 0.0059
+          "value": 0.006
         },
         {
           "month": "2025-11",
@@ -62,23 +62,23 @@
         },
         {
           "month": "2025-12",
-          "value": 0.0297
+          "value": 0.0296
         },
         {
           "month": "2026-01",
-          "value": 0.0286
+          "value": 0.0287
         },
         {
           "month": "2026-02",
-          "value": 0.0223
+          "value": 0.022
         },
         {
           "month": "2026-03",
-          "value": -0.032
+          "value": -0.0322
         },
         {
           "month": "2026-04",
-          "value": 0.0238
+          "value": 0.0239
         },
         {
           "month": "2026-05",
@@ -86,14 +86,14 @@
         },
         {
           "month": "2026-06",
-          "value": 0.0268
+          "value": 0.0269
         }
       ]
     },
     {
       "key": "macro",
       "status": "live",
-      "as_of": "2026-09-15",
+      "as_of": "2026-09-18",
       "signals": [
         {
           "name": "macro_regime",
@@ -101,18 +101,6 @@
         }
       ],
       "series": [
-        {
-          "date": "2026-06-24",
-          "value": -0.351
-        },
-        {
-          "date": "2026-06-25",
-          "value": -0.282
-        },
-        {
-          "date": "2026-06-26",
-          "value": -0.284
-        },
         {
           "date": "2026-06-29",
           "value": -0.397
@@ -335,10 +323,22 @@
         },
         {
           "date": "2026-09-14",
-          "value": 0.082
+          "value": 0.08
         },
         {
           "date": "2026-09-15",
+          "value": 0.082
+        },
+        {
+          "date": "2026-09-16",
+          "value": 0.082
+        },
+        {
+          "date": "2026-09-17",
+          "value": 0.082
+        },
+        {
+          "date": "2026-09-18",
           "value": 0.082
         }
       ],
@@ -347,7 +347,7 @@
     {
       "key": "fundamentals",
       "status": "live",
-      "as_of": "2026-09-11",
+      "as_of": "2026-09-16",
       "headline": "ROE / margin / revenue growth / leverage (cross-sectional mean)",
       "signals": [
         {
@@ -547,12 +547,12 @@
     {
       "key": "risk",
       "status": "live",
-      "as_of": "2026-09-11",
+      "as_of": "2026-09-16",
       "headline": "\u4e0b\u884c\u03b2 + \u7279\u8d28\u6ce2\u52a8 + \u504f\u5ea6 + \u6700\u5927\u5355\u65e5\u56de\u64a4\uff08\u6a2a\u622a\u9762\u5747\u503c\uff09",
       "signals": [
         {
           "name": "downside_beta",
-          "value": 1.005
+          "value": 1.0055
         },
         {
           "name": "idiosyncratic_volatility",
@@ -560,17 +560,17 @@
         },
         {
           "name": "return_skewness",
-          "value": 0.1215
+          "value": 0.1377
         },
         {
           "name": "worst_day_drawdown",
-          "value": -0.0588
+          "value": -0.0589
         }
       ],
       "series": [
         {
           "month": "2025-10",
-          "value": 1.0065
+          "value": 1.0064
         },
         {
           "month": "2025-11",
@@ -582,7 +582,7 @@
         },
         {
           "month": "2026-01",
-          "value": 1.0002
+          "value": 1.0001
         },
         {
           "month": "2026-02",
@@ -598,11 +598,11 @@
         },
         {
           "month": "2026-05",
-          "value": 1.0012
+          "value": 1.0011
         },
         {
           "month": "2026-06",
-          "value": 1.0009
+          "value": 1.0008
         },
         {
           "month": "2026-07",
@@ -614,7 +614,7 @@
         },
         {
           "month": "2026-09",
-          "value": 1.0014
+          "value": 1.0008
         }
       ]
     },
@@ -642,7 +642,7 @@
     {
       "key": "market_structure",
       "status": "live",
-      "as_of": "2026-09-11",
+      "as_of": "2026-09-16",
       "headline": "Amihud illiquidity + 252d \u03b2 (cross-sectional mean)",
       "signals": [
         {
@@ -706,5 +706,5 @@
       ]
     }
   ],
-  "snapshot_ts": "2026-09-15T10:58:26.264128+00:00"
+  "snapshot_ts": "2026-09-20T16:55:48.085292+00:00"
 }
