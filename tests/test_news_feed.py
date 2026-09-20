@@ -343,10 +343,17 @@ def test_collect_single_lane_failure_degrades_honestly(
     # Seed a cache with one old zho row, then let the zho lane fail while the
     # eng lane succeeds: the eng merge proceeds, the old zho row survives the
     # 30-day window, and no exception escapes.
+    # Seed the "old" row RELATIVE to now (now - 5 days): a hardcoded date was a
+    # time bomb — it silently aged out of the 30-day window on 2026-09-19 and
+    # the retention assertion started failing for the right collector behavior.
+    from datetime import datetime as _dt
+    from datetime import timedelta as _td
+    from datetime import timezone as _tz
+    _old = (_dt.now(_tz.utc) - _td(days=5)).strftime("%Y-%m-%dT00:00:00Z")
     pd.DataFrame(
         [
             {"url": "https://cn.example.com/old", "title": "old zho",
-             "seendate": "2026-08-20T00:00:00Z", "domain": "cn.example.com",
+             "seendate": _old, "domain": "cn.example.com",
              "language": "Chinese", "sourcecountry": "China", "lang": "zho"},
         ]
     ).to_parquet(tmp_path / "news_feed.parquet", index=False)

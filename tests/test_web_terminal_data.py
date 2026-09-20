@@ -1254,18 +1254,22 @@ def test_form_ipo_panel_contract() -> None:
         "by_status must count FILINGS (sum == total), not companies"
     )
     assert set(f["by_status"]) <= {"filed", "priced"}
-    # Full export (safety cap 1200): every filing is visible, so the visible
-    # list length equals the panel total and each status count equals by_status
-    # exactly — the old 150-row truncation made these subset checks.
-    assert len(f["filings"]) == f["total"], (
-        f"visible filings ({len(f['filings'])}) != total ({f['total']}) — "
-        "export must be full-stream (safety cap 1200)"
+    # Full export under the payload-size safety cap (1200, exporter-documented):
+    # the visible list is the FULL stream while the window fits the cap and the
+    # newest-prefix of it afterwards (filings are asserted newest-first above).
+    # The rolling IPO window grows daily, so an exact visible==total pin broke
+    # three evenings in a row (2026-09-16/17/18: 1200 != 1209) — the invariant
+    # is cap-aware visibility, not an absolute count.
+    assert len(f["filings"]) == min(f["total"], 1200), (
+        f"visible filings ({len(f['filings'])}) != min(total, cap) "
+        f"({min(f['total'], 1200)}) — truncation must keep the newest prefix"
     )
     visible: dict[str, int] = {}
     for r in f["filings"]:
         visible[r["status"]] = visible.get(r["status"], 0) + 1
-    assert visible == f["by_status"], (
-        f"visible per-status counts {visible} != by_status {f['by_status']}"
+    assert sum(visible.values()) == len(f["filings"])
+    assert all(cnt <= f["by_status"].get(st, 0) for st, cnt in visible.items()), (
+        f"visible per-status counts {visible} exceed by_status {f['by_status']}"
     )
     assert sum(f["by_form"].values()) == f["total"], "by_form must sum to total"
     for form, status in (("S-1", "filed"), ("S-1/A", "filed"), ("424B4", "priced")):
