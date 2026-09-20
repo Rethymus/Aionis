@@ -263,16 +263,22 @@ def guard_decision(now: datetime, state: dict) -> str:
     if not state.get("soft_fails") and _us_holiday_today(now):
         return ("SKIP:holiday-us (NYSE closed and no catch-up pending — "
                 "energy-saving skip; --force overrides)")
+    # Liveness is date-independent (2026-09-21 round 99): a lane started before
+    # midnight is STILL RUNNING when its marker says "yesterday" — the old
+    # date-scoped check let a second lane start next to it (the 00:56 near
+    # miss). Any running marker younger than the stale cap blocks a new run.
+    if state.get("status") == "running":
+        started = state.get("started_at_epoch", 0)
+        age_min = (time.time() - started) / 60 if started else RUNNING_STALE_MINUTES
+        if age_min < RUNNING_STALE_MINUTES:
+            return (f"SKIP:in-progress (started {age_min:.0f}min ago, "
+                    f"stale cap {RUNNING_STALE_MINUTES}min — "
+                    f"marker date {state.get('date')})")
     if state.get("date") == today:
         status = state.get("status")
         if status in ("ok_committed", "ok_nochange"):
             return f"SKIP:already-done ({status}, commit={state.get('commit')})"
         if status == "running":
-            started = state.get("started_at_epoch", 0)
-            age_min = (time.time() - started) / 60 if started else RUNNING_STALE_MINUTES
-            if age_min < RUNNING_STALE_MINUTES:
-                return (f"SKIP:in-progress (started {age_min:.0f}min ago, "
-                        f"stale cap {RUNNING_STALE_MINUTES}min)")
             return "RUN"  # stale 'running' marker = crashed run; retry allowed
         if int(state.get("attempts", 0)) >= MAX_ATTEMPTS_PER_EVENING:
             return (f"SKIP:attempt-cap ({state.get('attempts')} failures today — "
@@ -475,6 +481,7 @@ def do_run(force: bool) -> int:
             ledger_note = tidy_ledger(fh)
             status, sha, pushed, n_files = commit_and_push(fh)
             publish = verify_publish_triggered() if pushed else "skipped (no push)"
+            state.pop("error", None)  # stale failure text must not survive a success
             state.update({"status": status, "commit": sha, "pushed": pushed,
                           "n_files": n_files, "soft_fails": soft_fails,
                           "finished_at": datetime.now().isoformat()})

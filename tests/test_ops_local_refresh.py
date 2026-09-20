@@ -63,6 +63,21 @@ def test_guard_locks_after_attempt_cap() -> None:
     assert lane.guard_decision(_monday(22), state).startswith("SKIP:attempt-cap")
 
 
+def test_guard_running_is_liveness_checked_across_midnight() -> None:
+    """2026-09-21 round 99: the 09-20 23:53 lane was still running at 00:56 on
+    09-21 — a date-scoped in-progress check let a second lane start beside it.
+    A running marker younger than the stale cap blocks a new run regardless of
+    which date the marker carries; past the cap it is a crashed run (RUN)."""
+    import time as _time
+    alive_from_yesterday = {"date": "2026-09-14", "status": "running",
+                            "started_at_epoch": _time.time() - 10 * 60}
+    decision = lane.guard_decision(_monday(21), alive_from_yesterday)
+    assert decision.startswith("SKIP:in-progress"), decision
+    crashed_from_yesterday = {"date": "2026-09-14", "status": "running",
+                              "started_at_epoch": _time.time() - 10_000 * 60}
+    assert lane.guard_decision(_monday(21), crashed_from_yesterday) == "RUN"
+
+
 def test_guard_resets_on_new_day() -> None:
     state = {"date": "2026-09-04", "status": "failed", "attempts": 3}
     assert lane.guard_decision(_monday(22), state) == "RUN"
