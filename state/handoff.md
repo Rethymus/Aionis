@@ -2487,3 +2487,4 @@ dashboard realizing `docs/dashboard-v2-design.md`'s 5 dimensions on deterministi
   - **轮 97（2026-09-12）**：GBK 停摆修复入库（064a9d885，他会话落盘+本会话认证提交）：导出链 21 处显式 utf-8+reddit emoji 写点+通道 PYTHONUTF8=1 子进程注入+回归钉。自愈实证：当晚第 4 次计划任务尝试以修复树跑通 44436619a（51 文件零软失败）。CI 绿 34693461244。
   - **轮 98（2026-09-12）**：strict-JSON 双连红修复：NaN→null 导出净化+allow_nan=False fail-loud+通道/CI 双 strict 门+前端 strength null 类型与渲染。线上恢复：theme_signals 快照 09-12 零 NaN；smart_money 09-10、pct 119/120。publish-site+Pages 全绿。
   - **轮 98 补（同日）**：NaN→null 链的第三个消费者=hermetic schema 钉（test_theme_signals_panel_contract 断言 isinstance number→红）；契约更新为 null 或有限数（NaN/bool 仍拒）。本地全量 exit 0 后推送，CI 绿 34695351710。教训：改数据语义必须 grep 全部消费点（导出器/前端类型/渲染/契约测试四方）。
+  - **轮 99（2026-09-20）**：修钉授权执行——IPO 帽感知/def14a 集群条件化/news_feed 相对时间三处漂移免疫改造（92b088cb）+失败夜清创（9 reddit 追加+3 中间态渲染 restore）+--force 恢复一把过（契约门过、78 文件 da15bb70d、publish-site+Pages 绿、线上快照 09-20、IPO 1241/1200 帽感知吻合、pct 118/120）。
