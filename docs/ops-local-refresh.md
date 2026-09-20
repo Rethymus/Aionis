@@ -171,6 +171,21 @@ The retired localhost:8935 preview server (round 70/75 leftover, PID killed
 surface. Re-enable the CI refresh cron by restoring the `schedule:` trigger
 in `refresh-terminal-data.yml` (git history of its 2026-09-06 change).
 
+### Manual evidence re-exports (the 2026-09-20 near-miss rule)
+
+Re-exporting ONE evidence artifact standalone (atlas / dossier / matrix)
+leaves the COMMITTED `knowledge_shelf.json` pinning the OLD sha256 — the
+shelf drift alarm (`test_knowledge_shelf_evidence_artifacts_reconcile_to_repo`)
+then hard-fails the lane gate. Rules:
+
+1. After any standalone evidence re-export, re-run the canonical chain tail
+   (evidence_html -> dossier -> phase_meta -> shelf+matrix) or simply
+   `--run --force` the lane, and let the gate pass BEFORE committing.
+2. Never hand-edit `knowledge_shelf.json` pins — they are computed at export.
+3. The gate failure text names the recovery (round 99); follow it, don't
+   improvise. Archival copies under `reports/evidence/archive/v1/` are
+   move-don't-delete history, never restoration sources.
+
 ## Research appendix (2026-09-06/07): alternatives considered & platform rules
 
 Full memo with sources, the six-way alternatives table (incl. the deferred

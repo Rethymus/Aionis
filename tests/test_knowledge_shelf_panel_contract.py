@@ -261,9 +261,17 @@ def test_knowledge_shelf_evidence_artifacts_reconcile_to_repo() -> None:
         # LF-normalized recompute: the catalog pins the git-blob / GitHub-raw
         # form, so verification must not depend on the checkout's autocrlf.
         raw = p.read_bytes().replace(b"\r\n", b"\n")
-        assert a["n_bytes"] == len(raw), f"{a['id']} byte count stale — re-export"
+        # Failure text carries the recovery because a stale pin means a
+        # standalone artifact re-export skipped the shelf step (the 09-20
+        # near-miss). Recovery is the canonical chain, never a hand-edit of
+        # the shelf json.
+        _RECOVERY = ("re-run the canonical chain (ops_local_refresh.py "
+                     "STEPS: evidence_html -> dossier -> phase_meta -> "
+                     "shelf+matrix), then this gate")
+        assert a["n_bytes"] == len(raw), (
+            f"{a['id']} byte count stale — {_RECOVERY}")
         assert a["sha256"] == hashlib.sha256(raw).hexdigest(), (
-            f"{a['id']} sha256 stale — re-export"
+            f"{a['id']} sha256 stale — {_RECOVERY}"
         )
     assert "layer 3" in ks["methodology"].lower(), "evidence layer must be disclosed"
 
