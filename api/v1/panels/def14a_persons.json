@@ -1,28 +1,28 @@
 {
   "status": "ok",
-  "as_of": "2026-09-18",
+  "as_of": "2026-09-22",
   "n_filings_target": 150,
   "n_filings_processed": 150,
-  "n_with_persons": 104,
-  "coverage_pct": 69.3,
+  "n_with_persons": 105,
+  "coverage_pct": 70.0,
   "n_persons_distinct": 643,
   "by_role": {
-    "ceo": 145,
-    "cfo": 69,
+    "ceo": 149,
+    "cfo": 72,
     "coo": 37,
-    "cto": 8,
-    "chairman": 117,
-    "president": 125,
-    "vice_president": 93,
-    "treasurer": 16,
+    "cto": 9,
+    "chairman": 124,
+    "president": 126,
+    "vice_president": 91,
+    "treasurer": 17,
     "secretary": 39,
-    "director": 478,
+    "director": 475,
     "officer": 122
   },
   "confidence": {
-    "section_age_rows": 78,
-    "section_name_roles": 26,
-    "unparsed_no_persons": 44,
+    "section_age_rows": 80,
+    "section_name_roles": 25,
+    "unparsed_no_persons": 43,
     "fetch_or_doc_errors": 2
   },
   "boards": [
@@ -147,6 +147,16 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/100726/000010072626000015/ufi-20260908.htm"
     },
     {
+      "company": "MALIBU BOATS, INC.",
+      "ticker": "MBUU",
+      "issuer_cik": "1590976",
+      "n_persons": 11,
+      "n_directors": 6,
+      "n_officers": 7,
+      "filed_date": "2026-09-21",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1590976/000159097626000067/mbuu-20260921.htm"
+    },
+    {
       "company": "Inland Real Estate Income Trust, Inc.",
       "ticker": "INRE",
       "issuer_cik": "1528985",
@@ -197,6 +207,16 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1851484/000121390026093757/ea0302414-def14a_citius.htm"
     },
     {
+      "company": "SOUTHERN MISSOURI BANCORP, INC.",
+      "ticker": "SMBC",
+      "issuer_cik": "916907",
+      "n_persons": 10,
+      "n_directors": 9,
+      "n_officers": 5,
+      "filed_date": "2026-09-21",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/916907/000110465926109259/smbc-20261026xdef14a.htm"
+    },
+    {
       "company": "Autonomix Medical, Inc.",
       "ticker": "AMIX",
       "issuer_cik": "1617867",
@@ -225,26 +245,6 @@
       "n_officers": 10,
       "filed_date": "2026-09-09",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1040470/000165495426008222/aehr_def14a.htm"
-    },
-    {
-      "company": "Hartford Funds Exchange-Traded Trust",
-      "ticker": "",
-      "issuer_cik": "1501825",
-      "n_persons": 10,
-      "n_directors": 9,
-      "n_officers": 8,
-      "filed_date": "2026-08-24",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1501825/000110465926100214/tm2622232d3_def14a.htm"
-    },
-    {
-      "company": "Venu Holding Corp",
-      "ticker": "VENU",
-      "issuer_cik": "1770501",
-      "n_persons": 10,
-      "n_directors": 8,
-      "n_officers": 5,
-      "filed_date": "2026-08-21",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1770501/000149315226039659/formdef14a.htm"
     },
     {
       "company": "EXTREME NETWORKS INC",
@@ -295,6 +295,16 @@
       "n_officers": 4,
       "filed_date": "2026-09-03",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1015383/000101538326000012/poww-20260903.htm"
+    },
+    {
+      "company": "PIONEER POWER SOLUTIONS, INC.",
+      "ticker": "PPSI",
+      "issuer_cik": "1449792",
+      "n_persons": 8,
+      "n_directors": 7,
+      "n_officers": 3,
+      "filed_date": "2026-09-22",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1449792/000149315226043622/formdef14a.htm"
     },
     {
       "company": "PHIBRO ANIMAL HEALTH CORP",
@@ -357,24 +367,14 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1577526/000157752626000110/ai-20260827.htm"
     },
     {
-      "company": "Moleculin Biotech, Inc.",
-      "ticker": "MBRX",
-      "issuer_cik": "1659617",
-      "n_persons": 8,
-      "n_directors": 6,
-      "n_officers": 3,
-      "filed_date": "2026-08-24",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1659617/000143774926028835/mbrx20260817_def14a.htm"
-    },
-    {
-      "company": "CNS Pharmaceuticals, Inc.",
-      "ticker": "CNSP",
-      "issuer_cik": "1729427",
-      "n_persons": 8,
+      "company": "AMERICAN BATTERY TECHNOLOGY Co",
+      "ticker": "ABAT",
+      "issuer_cik": "1576873",
+      "n_persons": 7,
       "n_directors": 6,
       "n_officers": 4,
-      "filed_date": "2026-08-21",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1729427/000168316826006660/cns_idef14a.htm"
+      "filed_date": "2026-09-22",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1576873/000149315226043609/formdef14a.htm"
     },
     {
       "company": "SANFILIPPO JOHN B & SON INC",
@@ -667,24 +667,14 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/69891/000143774926029176/fizz20260820_def14a.htm"
     },
     {
-      "company": "ADIAL PHARMACEUTICALS, INC.",
-      "ticker": "ADIL",
-      "issuer_cik": "1513525",
-      "n_persons": 5,
-      "n_directors": 5,
+      "company": "CARDINAL HEALTH INC",
+      "ticker": "CAH",
+      "issuer_cik": "721371",
+      "n_persons": 4,
+      "n_directors": 3,
       "n_officers": 3,
-      "filed_date": "2026-08-24",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1513525/000121390026093019/ea0299259-03.htm"
-    },
-    {
-      "company": "NextTrip, Inc.",
-      "ticker": "NTRP",
-      "issuer_cik": "788611",
-      "n_persons": 5,
-      "n_directors": 5,
-      "n_officers": 0,
-      "filed_date": "2026-08-21",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/788611/000149315226039640/formdef14a.htm"
+      "filed_date": "2026-09-21",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/721371/000130817926000402/cah-20260921.htm"
     },
     {
       "company": "REGIS CORP",
@@ -807,6 +797,16 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1349706/000121465926010914/z825263def14a.htm"
     },
     {
+      "company": "Aldel Financial II Inc.",
+      "ticker": "",
+      "issuer_cik": "2031561",
+      "n_persons": 3,
+      "n_directors": 3,
+      "n_officers": 3,
+      "filed_date": "2026-09-21",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2031561/000110465926109149/tm2624830-4_def14a.htm"
+    },
+    {
       "company": "Scienture Holdings, Inc.",
       "ticker": "SCNX",
       "issuer_cik": "1382574",
@@ -865,6 +865,16 @@
       "n_officers": 3,
       "filed_date": "2026-08-28",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1058811/000119312526374299/immr-20260828.htm"
+    },
+    {
+      "company": "Local Bounti Corporation/DE",
+      "ticker": "",
+      "issuer_cik": "1840780",
+      "n_persons": 2,
+      "n_directors": 2,
+      "n_officers": 1,
+      "filed_date": "2026-09-21",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1840780/000114036126037241/ny20081219x2_def14a.htm"
     },
     {
       "company": "Trade Desk, Inc.",
@@ -937,14 +947,14 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1807046/000149315226040394/formdef14a.htm"
     },
     {
-      "company": "ACCURAY INC",
-      "ticker": "ARAY",
-      "issuer_cik": "1138723",
-      "n_persons": 2,
-      "n_directors": 2,
-      "n_officers": 0,
-      "filed_date": "2026-08-24",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1138723/000114036126034187/ny20079885x2_def14a.htm"
+      "company": "Cyngn Inc.",
+      "ticker": "CYN",
+      "issuer_cik": "1874097",
+      "n_persons": 1,
+      "n_directors": 1,
+      "n_officers": 1,
+      "filed_date": "2026-09-21",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1874097/000121390026101811/ea0305067-02.htm"
     },
     {
       "company": "Neuphoria Therapeutics Inc.",
@@ -1150,18 +1160,15 @@
       ]
     },
     {
-      "name": "Christine R. Detrick",
+      "name": "Equity Awards",
       "roles": [
-        "ceo",
-        "chairman",
-        "director",
-        "officer"
+        "ceo"
       ],
       "n_companies": 2,
-      "n_director_seats": 2,
+      "n_director_seats": 0,
       "companies": [
-        "Hartford Schroders Private Opportunities Fund",
-        "Hartford Funds Exchange-Traded Trust"
+        "MALIBU BOATS, INC.",
+        "APPLIED INDUSTRIAL TECHNOLOGIES INC"
       ]
     },
     {
@@ -1205,21 +1212,6 @@
       ]
     },
     {
-      "name": "Jonathan P. Foster",
-      "roles": [
-        "cfo",
-        "chairman",
-        "vice_president",
-        "director"
-      ],
-      "n_companies": 2,
-      "n_director_seats": 1,
-      "companies": [
-        "Autonomix Medical, Inc.",
-        "Moleculin Biotech, Inc."
-      ]
-    },
-    {
       "name": "Michelle L. Cahoon",
       "roles": [
         "chairman"
@@ -1244,21 +1236,6 @@
       "companies": [
         "BGSF, INC.",
         "374Water Inc."
-      ]
-    },
-    {
-      "name": "Walter V. Klemp",
-      "roles": [
-        "ceo",
-        "chairman",
-        "president",
-        "director"
-      ],
-      "n_companies": 2,
-      "n_director_seats": 2,
-      "companies": [
-        "Autonomix Medical, Inc.",
-        "Moleculin Biotech, Inc."
       ]
     },
     {
@@ -1376,6 +1353,17 @@
       ]
     },
     {
+      "name": "Alejandro Flores Arteaga",
+      "roles": [
+        "cfo"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 0,
+      "companies": [
+        "AMERICAN BATTERY TECHNOLOGY Co"
+      ]
+    },
+    {
       "name": "Alex Stuckey",
       "roles": [
         "coo"
@@ -1462,18 +1450,6 @@
       ]
     },
     {
-      "name": "Amy Mahery",
-      "roles": [
-        "ceo",
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "CNS Pharmaceuticals, Inc."
-      ]
-    },
-    {
       "name": "Anderson Chief Financial Officer",
       "roles": [
         "president"
@@ -1482,19 +1458,6 @@
       "n_director_seats": 0,
       "companies": [
         "All In FutureTech Alliance, Inc."
-      ]
-    },
-    {
-      "name": "Andra S. Bolotin",
-      "roles": [
-        "cfo",
-        "vice_president",
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "Hartford Funds Exchange-Traded Trust"
       ]
     },
     {
@@ -1520,18 +1483,6 @@
       "n_director_seats": 1,
       "companies": [
         "WOLFSPEED, INC."
-      ]
-    },
-    {
-      "name": "Andrew A. Johnson",
-      "roles": [
-        "director",
-        "officer"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "Hartford Funds Exchange-Traded Trust"
       ]
     },
     {
@@ -1632,17 +1583,6 @@
       ]
     },
     {
-      "name": "Andy Kaplan",
-      "roles": [
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "NextTrip, Inc."
-      ]
-    },
-    {
       "name": "Andy L. Nemeth",
       "roles": [
         "officer"
@@ -1687,6 +1627,18 @@
       ]
     },
     {
+      "name": "Anthony Hughes",
+      "roles": [
+        "director",
+        "officer"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "Local Bounti Corporation/DE"
+      ]
+    },
+    {
       "name": "Anthony M. Abate",
       "roles": [
         "chairman",
@@ -1697,14 +1649,60 @@
       "companies": [
         "WOLFSPEED, INC."
       ]
+    },
+    {
+      "name": "Anthony Thomopoulos",
+      "roles": [
+        "director"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "Kartoon Studios, Inc."
+      ]
+    },
+    {
+      "name": "Anthony V. Bilotta",
+      "roles": [
+        "vice_president",
+        "officer"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 0,
+      "companies": [
+        "Kearny Financial Corp."
+      ]
+    },
+    {
+      "name": "Anthony Y. Snow",
+      "roles": [
+        "president",
+        "director"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "GEE Group Inc."
+      ]
+    },
+    {
+      "name": "Approval Policies",
+      "roles": [
+        "director"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "Outdoor Holding Co"
+      ]
     }
   ],
   "request_accounting": {
-    "n_http_requests_last_fetch": 24,
+    "n_http_requests_last_fetch": 20,
     "budget_seconds": 2700,
     "budget_hit": false,
-    "fetched_at": "2026-09-20T16:04:38.909602+00:00"
+    "fetched_at": "2026-09-22T10:13:30.287816+00:00"
   },
-  "methodology": "DEF 14A person-level panel (\u8463\u4e8b/\u9ad8\u7ba1\u4eba\u7ea7\u6863\u6848) over the NEWEST 150 proxy filings of the /executives DEF 14A stream \u2014 a bounded lane: each filing's primary document resolved from its EDGAR filing index (<= 2 GETs per filing, idempotent per-accession caches, >= 2.1s spacing, hard 45-minute wall-clock budget; the last fetch spent 24 HTTP requests and did not hit the budget). Parsing is CONSERVATIVE and TIERED: (1) section_age_rows (HIGH) \u2014 the classic 'Name (Age) Title Since' roster row in any spelling, a 2-4 token capitalized name with a standalone age bounded 30-99 and a role word witnessed on the same row, also reconstructed from word-fragmented inline-XBRL layouts by anchor-delimiting the joined stream; (2) section_name_roles (MEDIUM) \u2014 'First M. Last' (middle-initial) + a role word inside a located directors/executives section. Everything else yields persons=[] and parsed=false \u2014 an honest NULL, never a guessed name (\u5b81\u53ef null \u4e0d\u731c\u6d4b); coverage below counts only what was processed (104/150 filings with persons = 69.3%), never an extrapolation. Roles are canonical role WORDS witnessed near the person's row or bio \u2014 they may include past or external-company titles (e.g. a director who is CEO of another firm), displayed as text-witnessed hints not employment records; boards-card director/officer counts are independent sets (a CEO-director counts in both). Distinct-person identity keys on the normalized full name across filings \u2014 same-name merges may join namesakes and hyphenated/apostrophe/initials-first names (JW Roth) are conservatively MISSED, both disclosed. Display-only, exploratory, NOT a research claim.",
-  "snapshot_ts": "2026-09-20T16:55:50.524518+00:00"
+  "methodology": "DEF 14A person-level panel (\u8463\u4e8b/\u9ad8\u7ba1\u4eba\u7ea7\u6863\u6848) over the NEWEST 150 proxy filings of the /executives DEF 14A stream \u2014 a bounded lane: each filing's primary document resolved from its EDGAR filing index (<= 2 GETs per filing, idempotent per-accession caches, >= 2.1s spacing, hard 45-minute wall-clock budget; the last fetch spent 20 HTTP requests and did not hit the budget). Parsing is CONSERVATIVE and TIERED: (1) section_age_rows (HIGH) \u2014 the classic 'Name (Age) Title Since' roster row in any spelling, a 2-4 token capitalized name with a standalone age bounded 30-99 and a role word witnessed on the same row, also reconstructed from word-fragmented inline-XBRL layouts by anchor-delimiting the joined stream; (2) section_name_roles (MEDIUM) \u2014 'First M. Last' (middle-initial) + a role word inside a located directors/executives section. Everything else yields persons=[] and parsed=false \u2014 an honest NULL, never a guessed name (\u5b81\u53ef null \u4e0d\u731c\u6d4b); coverage below counts only what was processed (105/150 filings with persons = 70.0%), never an extrapolation. Roles are canonical role WORDS witnessed near the person's row or bio \u2014 they may include past or external-company titles (e.g. a director who is CEO of another firm), displayed as text-witnessed hints not employment records; boards-card director/officer counts are independent sets (a CEO-director counts in both). Distinct-person identity keys on the normalized full name across filings \u2014 same-name merges may join namesakes and hyphenated/apostrophe/initials-first names (JW Roth) are conservatively MISSED, both disclosed. Display-only, exploratory, NOT a research claim.",
+  "snapshot_ts": "2026-09-22T11:05:34.356124+00:00"
 }

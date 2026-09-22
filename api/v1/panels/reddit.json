@@ -10,37 +10,44 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-09-18T12:12:42+00:00",
-  "n_snapshots": 19,
+  "latest_snapshot_ts": "2026-09-22T10:34:15+00:00",
+  "n_snapshots": 20,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
-      "ticker": "PANW",
+      "ticker": "META",
+      "mentions": 11,
+      "sentiment": -0.118,
+      "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "INTC",
       "mentions": 2,
-      "sentiment": -0.052,
+      "sentiment": 0.04,
       "bull_ratio": null,
       "score_sum": 0
     },
     {
-      "ticker": "QCOM",
+      "ticker": "MSFT",
       "mentions": 1,
-      "sentiment": 0.157,
+      "sentiment": -0.018,
       "bull_ratio": null,
       "score_sum": 0
     },
     {
-      "ticker": "NVDA",
+      "ticker": "AMAT",
       "mentions": 1,
-      "sentiment": 0.157,
+      "sentiment": -0.018,
       "bull_ratio": null,
       "score_sum": 0
     },
     {
-      "ticker": "CRWD",
+      "ticker": "TSLA",
       "mentions": 1,
-      "sentiment": 0.014,
+      "sentiment": -0.01,
       "bull_ratio": null,
       "score_sum": 0
     }
@@ -48,9 +55,9 @@
   "pressure": {
     "status": "accumulating",
     "by_ticker": {},
-    "n_snapshots": 19,
-    "latest_date": "2026-09-18",
+    "n_snapshots": 20,
+    "latest_date": "2026-09-22",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-09-20T16:55:58.309754+00:00"
+  "snapshot_ts": "2026-09-22T11:05:48.874885+00:00"
 }
