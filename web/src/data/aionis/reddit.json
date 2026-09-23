@@ -10,44 +10,30 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-09-22T10:34:15+00:00",
-  "n_snapshots": 20,
+  "latest_snapshot_ts": "2026-09-23T12:13:17+00:00",
+  "n_snapshots": 21,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
-      "ticker": "META",
-      "mentions": 11,
-      "sentiment": -0.118,
+      "ticker": "LUMN",
+      "mentions": 1,
+      "sentiment": -0.764,
       "bull_ratio": 0.0,
       "score_sum": 0
     },
     {
-      "ticker": "INTC",
-      "mentions": 2,
-      "sentiment": 0.04,
+      "ticker": "META",
+      "mentions": 1,
+      "sentiment": -0.102,
       "bull_ratio": null,
       "score_sum": 0
     },
     {
       "ticker": "MSFT",
       "mentions": 1,
-      "sentiment": -0.018,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "AMAT",
-      "mentions": 1,
-      "sentiment": -0.018,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "TSLA",
-      "mentions": 1,
-      "sentiment": -0.01,
+      "sentiment": -0.102,
       "bull_ratio": null,
       "score_sum": 0
     }
@@ -55,9 +41,9 @@
   "pressure": {
     "status": "accumulating",
     "by_ticker": {},
-    "n_snapshots": 20,
-    "latest_date": "2026-09-22",
+    "n_snapshots": 21,
+    "latest_date": "2026-09-23",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-09-22T11:05:48.874885+00:00"
+  "snapshot_ts": "2026-09-23T12:51:45.566303+00:00"
 }
