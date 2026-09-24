@@ -1,25 +1,25 @@
 {
   "status": "ok",
-  "as_of": "2026-09-23",
+  "as_of": "2026-09-24",
   "window": {
     "start": "2026-04-27",
-    "end": "2026-09-23"
+    "end": "2026-09-24"
   },
-  "issuers": 570,
-  "total": 1262,
+  "issuers": 572,
+  "total": 1268,
   "by_status": {
-    "filed": 1019,
-    "priced": 243
+    "filed": 1023,
+    "priced": 245
   },
   "by_form": {
-    "424B4": 243,
-    "S-1": 426,
-    "S-1/A": 593
+    "424B4": 245,
+    "S-1": 427,
+    "S-1/A": 596
   },
   "offer_price_parsed": 63,
   "offer_price_meta": {
     "target_cap_docs": 80,
-    "priced_filings": 243,
+    "priced_filings": 245,
     "newest_targeted": 80,
     "attempted": 80,
     "fetch_failed": 0,
@@ -29,16 +29,52 @@
       "low": 0,
       "none": 17
     },
-    "coverage_pct_of_priced": 25.9,
+    "coverage_pct_of_priced": 25.7,
     "requests": {
       "task_budget": 170,
-      "cumulative_walk": 203,
+      "cumulative_walk": 207,
       "walk_cap": 156,
-      "last_walk": 0
+      "last_walk": 4
     },
-    "target_as_of": "2026-09-22"
+    "target_as_of": "2026-09-24"
   },
   "filings": [
+    {
+      "company": "Evolution Metals & Technologies Corp.",
+      "ticker": "EMAT",
+      "filed_date": "2026-09-24",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1866226/000121390026102787/0001213900-26-102787-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Frazier Life Sciences Acquisition Corp. II",
+      "ticker": "",
+      "filed_date": "2026-09-24",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2153598/000119312526399703/0001193125-26-399703-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "InnovAge Holding Corp.",
+      "ticker": "INNV",
+      "filed_date": "2026-09-24",
+      "form": "424B4",
+      "status": "priced",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1834376/000110465926110065/0001104659-26-110065-index.htm",
+      "offer_price": 0.2775
+    },
+    {
+      "company": "Wella Co",
+      "ticker": "WELA",
+      "filed_date": "2026-09-23",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2125056/000162828026063205/0001628280-26-063205-index.htm",
+      "offer_price": null
+    },
     {
       "company": "Creatd, Inc.",
       "ticker": "CRTD",
@@ -47,6 +83,24 @@
       "status": "filed",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1357671/000121390026102334/0001213900-26-102334-index.htm",
       "offer_price": null
+    },
+    {
+      "company": "ConnectM Technology Solutions, Inc.",
+      "ticker": "CNTM",
+      "filed_date": "2026-09-23",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1895249/000110465926109830/0001104659-26-109830-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Live Oak Acquisition Corp. VI",
+      "ticker": "",
+      "filed_date": "2026-09-23",
+      "form": "424B4",
+      "status": "priced",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2115191/000121390026102498/0001213900-26-102498-index.htm",
+      "offer_price": 10.0
     },
     {
       "company": "Glow Holdings, Inc.",
@@ -4393,7 +4447,7 @@
       "form": "424B4",
       "status": "priced",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1814215/000119312526306867/0001193125-26-306867-index.htm",
-      "offer_price": 0.1555
+      "offer_price": null
     },
     {
       "company": "AMERICAN BATTERY MATERIALS, INC.",
@@ -4474,7 +4528,7 @@
       "form": "424B4",
       "status": "priced",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2086716/000121390026078747/0001213900-26-078747-index.htm",
-      "offer_price": 15.0
+      "offer_price": null
     },
     {
       "company": "Csquare, Inc.",
@@ -10784,62 +10838,8 @@
       "status": "filed",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2114044/000119312526193885/0001193125-26-193885-index.htm",
       "offer_price": null
-    },
-    {
-      "company": "SUJA LIFE, INC.",
-      "ticker": "SUJA",
-      "filed_date": "2026-04-30",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1934114/000110465926052286/0001104659-26-052286-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Mountain Crest Acquisition 6 Corp.",
-      "ticker": "MCAH",
-      "filed_date": "2026-04-30",
-      "form": "424B4",
-      "status": "priced",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2109876/000182912626004283/0001829126-26-004283-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Veradermics, Inc",
-      "ticker": "MANE",
-      "filed_date": "2026-04-30",
-      "form": "424B4",
-      "status": "priced",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1827635/000162828026029027/0001628280-26-029027-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "SILVER BOW MINING CORP.",
-      "ticker": "SBMT",
-      "filed_date": "2026-04-30",
-      "form": "424B4",
-      "status": "priced",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2067674/000153949726001250/0001539497-26-001250-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "SYNTEC OPTICS HOLDINGS, INC.",
-      "ticker": "",
-      "filed_date": "2026-04-30",
-      "form": "424B4",
-      "status": "priced",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1866816/000149315226019779/0001493152-26-019779-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "ARC Group Acquisition I Corp.",
-      "ticker": "ARCL",
-      "filed_date": "2026-04-30",
-      "form": "424B4",
-      "status": "priced",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2073515/000149315226019705/0001493152-26-019705-index.htm",
-      "offer_price": null
     }
   ],
   "methodology": "US IPO registration/pricing stream \u2014 SEC EDGAR EFTS whole-market form-level queries (public domain, 17 U.S.C. \u00a7105), fixed ~120-day window, filed-date point-in-time, one row per accession (an S-1/A amendment is a new filing, never a silent overwrite). Status is derived from the immutable form type: S-1 / S-1/A = filed (registration statement on file); 424B4 = priced (the statutory final prospectus under Securities Act Rule 424(b)(4) is filed after pricing \u2014 its appearance marks a priced offering). Offer price is a BOUNDED second-stage extraction, not full coverage: only the newest \u226480 priced (424B4) filings are walked politely (\u22652.1 s spacing, hard request budget disclosed in offer_price_meta.requests), their EDGAR index + primary document fetched, and the cover page regex-parsed with graded confidence \u2014 EXACT (single final printed price \u2192 exported), LOW (draft/range wording near the label \u2192 value withheld, counted, never guessed) and NO-MATCH; every unparsed row stays offer_price=null with its EDGAR index link. Share count, proceeds, and expected listing date are NOT extracted at any tier. Honest scope disclosures: (2) the 424B4 form-level catch includes priced follow-on offerings by already-listed issuers (e.g. S-3 shelf takedowns), not only first-day IPOs \u2014 this panel is the registration/pricing STREAM, not a curated IPO list; (3) no company-level state machine is applied (rows are filing-level). Ticker is parsed from the EDGAR display name where present; pre-symbol S-1 filers carry none (empty, never guessed). Counts are FILING counts, not company counts. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-09-23T12:51:30.727587+00:00"
+  "snapshot_ts": "2026-09-24T11:01:45.801828+00:00"
 }
