@@ -10,72 +10,23 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-09-24T10:33:46+00:00",
-  "n_snapshots": 22,
+  "latest_snapshot_ts": "2026-09-25T11:12:57+00:00",
+  "n_snapshots": 23,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
-      "ticker": "NVDA",
-      "mentions": 3,
-      "sentiment": 0.398,
-      "bull_ratio": 1.0,
-      "score_sum": 0
-    },
-    {
-      "ticker": "MSFT",
+      "ticker": "AMZN",
       "mentions": 2,
-      "sentiment": 0.138,
+      "sentiment": 0.024,
       "bull_ratio": null,
       "score_sum": 0
     },
     {
-      "ticker": "GOOGL",
-      "mentions": 2,
-      "sentiment": 0.138,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "PODD",
+      "ticker": "META",
       "mentions": 1,
-      "sentiment": 0.122,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "SNDK",
-      "mentions": 1,
-      "sentiment": 0.16,
-      "bull_ratio": 1.0,
-      "score_sum": 0
-    },
-    {
-      "ticker": "FSLR",
-      "mentions": 1,
-      "sentiment": 0.375,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "VRSN",
-      "mentions": 1,
-      "sentiment": 0.916,
-      "bull_ratio": 1.0,
-      "score_sum": 0
-    },
-    {
-      "ticker": "SEDG",
-      "mentions": 1,
-      "sentiment": 0.375,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "SPGI",
-      "mentions": 1,
-      "sentiment": 0.122,
+      "sentiment": 0.201,
       "bull_ratio": null,
       "score_sum": 0
     }
@@ -83,9 +34,9 @@
   "pressure": {
     "status": "accumulating",
     "by_ticker": {},
-    "n_snapshots": 22,
-    "latest_date": "2026-09-24",
+    "n_snapshots": 23,
+    "latest_date": "2026-09-25",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-09-25T10:56:46.629260+00:00"
+  "snapshot_ts": "2026-09-25T11:41:19.087581+00:00"
 }
