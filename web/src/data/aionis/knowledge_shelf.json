@@ -709,7 +709,7 @@
       "desc_zh": "\u5934\u6761\u4e3b\u5f20\u7684\u5355\u9875\u901f\u89c8\uff1aIC / CI / p / verdict / SESOI\u2014\u2014web/out/atlas.html \u7684\u53ef\u6eaf\u6e90\u5bf9\u5e94\u7269\u3002",
       "path": "reports/evidence/atlas-claim-v1.html",
       "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/atlas-claim-v1.html",
-      "sha256": "d635d30f7986aa39d5ed88b4b80cc3ccd45a281c1d22b9fb315f7680f3bae24f",
+      "sha256": "7b97616186668b219ac719e3c666c68f5254b31d32744dc89b3778fb2762bfb9",
       "n_bytes": 24397
     },
     {
@@ -720,7 +720,7 @@
       "desc_zh": "\u6eaf\u6e90\u7814\u7a76\u6863\u6848\uff1a24 \u6761\u6765\u6e90\u767b\u8bb0\u8868 \u2192 \u62a5\u544a \u2192 \u5efa\u6a21\u5206\u6790\u5168\u6d41\u7a0b\uff0c[S#] \u5f15\u7528\u95ed\u5305\u3002",
       "path": "reports/evidence/research-dossier-v1.html",
       "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/research-dossier-v1.html",
-      "sha256": "7140c9654d587d4b4e814b81b7bb84b542afbc1fc2e31e9695cd9c8d5d613e93",
+      "sha256": "9a8a7c73518ad5a8f388ece60dc9261c49551ab431f53251c2351b13210af1b8",
       "n_bytes": 47134
     },
     {
@@ -731,7 +731,7 @@
       "desc_zh": "\u57fa\u672c\u9762\u65f6\u70b9\u4e3b\u5f20\u7684 meta-only \u5361\uff1a\u5dee\u5206\u503c\u3001\u8d26\u672c\u5bf9\u8d26\u3001IC \u5e8f\u5217\u6458\u8981\u3001\u63a7\u5236\u68c0\u9a8c\u3002",
       "path": "reports/evidence/research-dossier-b-v1.html",
       "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/research-dossier-b-v1.html",
-      "sha256": "a9417ef6ded7fe30fcaf6a2622de9cb999d4c1d4953e94ba56ebe608621e421c",
+      "sha256": "a74a4fe990f0385643eb70f1a66ed040ca4c4e1cdde7fbe17b89bdad1b28f589",
       "n_bytes": 25101
     },
     {
@@ -742,7 +742,7 @@
       "desc_zh": "\u5173\u7cfb\u7f51\u7edc\u4e3b\u5f20\u7684 meta-only \u5361\uff1a\u5dee\u5206\u503c\u3001\u8d26\u672c\u5bf9\u8d26\u3001IC \u5e8f\u5217\u6458\u8981\u3001\u63a7\u5236\u68c0\u9a8c\u3002",
       "path": "reports/evidence/research-dossier-d-v1.html",
       "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/research-dossier-d-v1.html",
-      "sha256": "484e482c72f3d3744f555115d68006c62b0fb2c5e79df5300259d6488efc948a",
+      "sha256": "f9fc92a4fc1b1aa82be503e76f8e850c7676d15ef7715002a53d5fc0b803ab96",
       "n_bytes": 25296
     },
     {
@@ -753,10 +753,10 @@
       "desc_zh": "\u8de8\u516c\u53f8\u4f20\u64ad\u4e3b\u5f20\u7684 meta-only \u5361\uff1a\u5dee\u5206\u503c\u3001\u8d26\u672c\u5bf9\u8d26\u3001IC \u5e8f\u5217\u6458\u8981\u3001\u63a7\u5236\u68c0\u9a8c\u3002",
       "path": "reports/evidence/research-dossier-e1-v1.html",
       "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/research-dossier-e1-v1.html",
-      "sha256": "9ac507cec5c480edda077bb0bca45939785e3847f9c7393da7f79e3be23aef08",
+      "sha256": "e9e13f7147fba10f18b75fb3e1c11f4565b2a87aa35973ce058d0d130dcb41d4",
       "n_bytes": 25295
     }
   ],
   "methodology": "Layer 1 \u2014 Aionis's OWN method library: catalog of docs/ + decisions/ markdown (repo PolyForm-NC; zero third-party copyright surface). Each entry carries metadata plus a safe teaser slice (first 2-3 sentences, <=240 chars) extracted at export time; the full text stays on GitHub (link-out). Dates are last-commit dates read from the LOCAL git repository (no network). Layer 2 \u2014 a FIXED editorially-curated bookmark list of first-hand public research sources (BIS / Fed FEDS / IMF / NBER / arXiv q-fin / FRASER / FRED-ALFRED / RePEc): link-out + one static sentence each, no fetching, no scraping, no summary APIs \u2014 copyright stays with the authors, we only catalog. Categories are a fixed 5-rail whitelist (preregistration / adr / results / rubric / theory); n_docs reconciles to the sum of the rails. Layer 3 \u2014 generated evidence artifacts: self-contained HTML, byte-stable, sha256 + byte count pinned at export time from the local tracked file so a reader can verify the download against the catalog (a missing file degrades honestly to null \u2014 never fabricated). Superseded artifact versions are retained under reports/evidence/archive/ (move-don't-delete \u2014 the archive only grows). Display-only reference lane \u2014 never part of any research or OOS pipeline.",
-  "snapshot_ts": "2026-09-24T11:02:24.284849+00:00"
+  "snapshot_ts": "2026-09-25T10:57:08.998777+00:00"
 }

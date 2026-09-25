@@ -1,14 +1,14 @@
 {
  "status": "ok",
- "as_of": "2026-09-24",
+ "as_of": "2026-09-25",
  "source_panels": [
   "form13f",
   "def14a_persons",
   "stakes_13g",
   "smart_money"
  ],
- "n_nodes": 148,
- "n_edges": 816,
+ "n_nodes": 152,
+ "n_edges": 817,
  "nodes": [
   {
    "id": "i:0000807249",
@@ -701,6 +701,22 @@
    }
   },
   {
+   "id": "p:ABHIJIT Y. TALWALKAR",
+   "type": "person",
+   "label": "Abhijit Y. Talwalkar",
+   "zh_label": null,
+   "lanes": [
+    "def14a"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 1,
+    "co_target": 0
+   }
+  },
+  {
    "id": "p:ABIGAIL P. JOHNSON",
    "type": "person",
    "label": "Abigail P. Johnson",
@@ -792,7 +808,7 @@
    "manager_routable": false,
    "degree": {
     "co_hold": 0,
-    "co_board": 2,
+    "co_board": 1,
     "co_target": 0
    }
   },
@@ -861,22 +877,6 @@
    }
   },
   {
-   "id": "p:AMY L. CHANG",
-   "type": "person",
-   "label": "Amy L. Chang",
-   "zh_label": null,
-   "lanes": [
-    "def14a"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 2,
-    "co_target": 0
-   }
-  },
-  {
    "id": "p:ANDERSON CHIEF FINANCIAL OFFICER",
    "type": "person",
    "label": "Anderson Chief Financial Officer",
@@ -889,22 +889,6 @@
    "degree": {
     "co_hold": 0,
     "co_board": 1,
-    "co_target": 0
-   }
-  },
-  {
-   "id": "p:ANDRE SCHULTEN",
-   "type": "person",
-   "label": "Andre Schulten",
-   "zh_label": null,
-   "lanes": [
-    "def14a"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 2,
     "co_target": 0
    }
   },
@@ -1064,7 +1048,7 @@
    "manager_routable": false,
    "degree": {
     "co_hold": 0,
-    "co_board": 5,
+    "co_board": 3,
     "co_target": 0
    }
   },
@@ -1097,22 +1081,6 @@
    "degree": {
     "co_hold": 0,
     "co_board": 1,
-    "co_target": 0
-   }
-  },
-  {
-   "id": "p:ARON R. ENGLISH",
-   "type": "person",
-   "label": "Aron R. English",
-   "zh_label": null,
-   "lanes": [
-    "def14a"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 2,
     "co_target": 0
    }
   },
@@ -1160,7 +1128,7 @@
    "manager_routable": false,
    "degree": {
     "co_hold": 0,
-    "co_board": 3,
+    "co_board": 2,
     "co_target": 0
    }
   },
@@ -1168,6 +1136,22 @@
    "id": "p:JACK R. THOMPSON",
    "type": "person",
    "label": "Jack R. Thompson",
+   "zh_label": null,
+   "lanes": [
+    "def14a"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 1,
+    "co_target": 0
+   }
+  },
+  {
+   "id": "p:MICHAEL R. CANNON",
+   "type": "person",
+   "label": "Michael R. Cannon",
    "zh_label": null,
    "lanes": [
     "def14a"
@@ -1241,23 +1225,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 12
-   }
-  },
-  {
-   "id": "s:ABELE CHARLES ROBERT",
-   "type": "staker",
-   "label": "Abele Charles Robert",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
+    "co_target": 11
    }
   },
   {
@@ -1453,22 +1421,6 @@
    }
   },
   {
-   "id": "s:DAVIDSON CHARLES E",
-   "type": "staker",
-   "label": "DAVIDSON CHARLES E",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
    "id": "s:DENHAM MINING GP LLC",
    "type": "staker",
    "label": "Denham Mining GP LLC",
@@ -1581,6 +1533,38 @@
    }
   },
   {
+   "id": "s:GLAZER CAPITAL, LLC",
+   "type": "staker",
+   "label": "GLAZER CAPITAL, LLC",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
+   }
+  },
+  {
+   "id": "s:GRAHAM CAPITAL MANAGEMENT, L.P.",
+   "type": "staker",
+   "label": "Graham Capital Management, L.P.",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 3
+   }
+  },
+  {
    "id": "s:HEG ADVANCED MATERIALS LTD",
    "type": "staker",
    "label": "HEG Advanced Materials Ltd",
@@ -1661,6 +1645,22 @@
    }
   },
   {
+   "id": "s:ISAKOW SELWYN",
+   "type": "staker",
+   "label": "ISAKOW SELWYN",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
+   }
+  },
+  {
    "id": "s:ISHARES TRUST",
    "type": "staker",
    "label": "iSHARES TRUST",
@@ -1693,9 +1693,9 @@
    }
   },
   {
-   "id": "s:JUSTIN B. SMOLLAR IRREVOCABLE TRUST DTD 2/13/2023",
+   "id": "s:JMD CORPORATE SERVICES LTD",
    "type": "staker",
-   "label": "Justin B. Smollar Irrevocable Trust dtd 2/13/2023",
+   "label": "JMD CORPORATE SERVICES Ltd",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1705,13 +1705,13 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 1
+    "co_target": 2
    }
   },
   {
-   "id": "s:KI HOLDINGS, LTD.",
+   "id": "s:JUSTIN B. SMOLLAR IRREVOCABLE TRUST DTD 2/13/2023",
    "type": "staker",
-   "label": "KI Holdings, Ltd.",
+   "label": "Justin B. Smollar Irrevocable Trust dtd 2/13/2023",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1738,6 +1738,22 @@
     "co_hold": 0,
     "co_board": 0,
     "co_target": 1
+   }
+  },
+  {
+   "id": "s:LIANTENG LTD",
+   "type": "staker",
+   "label": "Lianteng Ltd",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 2
    }
   },
   {
@@ -1821,22 +1837,6 @@
    }
   },
   {
-   "id": "s:MIG REF II INFR, LLC",
-   "type": "staker",
-   "label": "MIG REF II INFR, LLC",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 2
-   }
-  },
-  {
    "id": "s:MILL ROAD CAPITAL III, L.P.",
    "type": "staker",
    "label": "Mill Road Capital III, L.P.",
@@ -1869,9 +1869,9 @@
    }
   },
   {
-   "id": "s:NAPOLITANO VINCENT C",
+   "id": "s:MONJE ALEXANDER",
    "type": "staker",
-   "label": "Napolitano Vincent C",
+   "label": "Monje Alexander",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1881,7 +1881,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 1
+    "co_target": 3
    }
   },
   {
@@ -2013,6 +2013,22 @@
    }
   },
   {
+   "id": "s:RADY ERNEST S",
+   "type": "staker",
+   "label": "RADY ERNEST S",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
+   }
+  },
+  {
    "id": "s:RAINFOREST PARTNERS, LLC",
    "type": "staker",
    "label": "RainForest Partners, LLC",
@@ -2061,9 +2077,9 @@
    }
   },
   {
-   "id": "s:RICKEL KENNETH",
+   "id": "s:REISS DANI",
    "type": "staker",
-   "label": "RICKEL KENNETH",
+   "label": "Reiss Dani",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -2089,7 +2105,39 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 2
+    "co_target": 1
+   }
+  },
+  {
+   "id": "s:SALUJA DIPENDER",
+   "type": "staker",
+   "label": "Saluja Dipender",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
+   }
+  },
+  {
+   "id": "s:SAMRA HARMOL",
+   "type": "staker",
+   "label": "Samra Harmol",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 3
    }
   },
   {
@@ -2137,7 +2185,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 1
+    "co_target": 2
    }
   },
   {
@@ -2154,6 +2202,22 @@
     "co_hold": 0,
     "co_board": 0,
     "co_target": 1
+   }
+  },
+  {
+   "id": "s:THOMAS HANS",
+   "type": "staker",
+   "label": "Thomas Hans",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 3
    }
   },
   {
@@ -2205,38 +2269,6 @@
    }
   },
   {
-   "id": "s:VANGUARD CAPITAL MANAGEMENT LLC",
-   "type": "staker",
-   "label": "VANGUARD CAPITAL MANAGEMENT LLC",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 2
-   }
-  },
-  {
-   "id": "s:VANGUARD GROUP INC",
-   "type": "staker",
-   "label": "VANGUARD GROUP INC",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 2
-   }
-  },
-  {
    "id": "s:VANGUARD PORTFOLIO MANAGEMENT LLC",
    "type": "staker",
    "label": "VANGUARD PORTFOLIO MANAGEMENT LLC",
@@ -2249,7 +2281,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 3
+    "co_target": 1
    }
   },
   {
@@ -2285,6 +2317,54 @@
    }
   },
   {
+   "id": "s:WANG & LEE HOLDINGS, INC.",
+   "type": "staker",
+   "label": "WANG & LEE Holdings, Inc.",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 2
+   }
+  },
+  {
+   "id": "s:WBT VALUE LTD",
+   "type": "staker",
+   "label": "WBT Value Ltd",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
+   }
+  },
+  {
+   "id": "s:WEEDBROOK CHRISTIAN",
+   "type": "staker",
+   "label": "Weedbrook Christian",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
+   }
+  },
+  {
    "id": "s:WELLINGTON BIOMEDICAL INNOVATION MASTER INVESTORS (CAYMAN) I",
    "type": "staker",
    "label": "Wellington Biomedical Innovation Master Investors (Cayman) I",
@@ -2304,22 +2384,6 @@
    "id": "s:WELLINGTON MANAGEMENT GROUP LLP",
    "type": "staker",
    "label": "WELLINGTON MANAGEMENT GROUP LLP",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:WEXFORD CAPITAL LP",
-   "type": "staker",
-   "label": "WEXFORD CAPITAL LP",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -2382,6 +2446,19 @@
   }
  ],
  "edges": [
+  {
+   "a": "p:ABHIJIT Y. TALWALKAR",
+   "b": "p:MICHAEL R. CANNON",
+   "type": "co_board",
+   "w": 1,
+   "shared": [
+    {
+     "company": "LAM RESEARCH CORP",
+     "tk": "LRCX"
+    }
+   ],
+   "truncated": false
+  },
   {
    "a": "p:ABIGAIL P. JOHNSON",
    "b": "p:INSIDER PARTICIPATION",
@@ -2488,19 +2565,6 @@
   },
   {
    "a": "p:ALBERT P. CAREY",
-   "b": "p:ARON R. ENGLISH",
-   "type": "co_board",
-   "w": 1,
-   "shared": [
-    {
-     "company": "UNIFI INC",
-     "tk": "UFI"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "p:ALBERT P. CAREY",
    "b": "p:INSIDER PARTICIPATION",
    "type": "co_board",
    "w": 1,
@@ -2552,32 +2616,6 @@
    "truncated": false
   },
   {
-   "a": "p:AMY L. CHANG",
-   "b": "p:ANDRE SCHULTEN",
-   "type": "co_board",
-   "w": 1,
-   "shared": [
-    {
-     "company": "PROCTER & GAMBLE Co",
-     "tk": "PG"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "p:AMY L. CHANG",
-   "b": "p:ANTHONY M. KENNEDY",
-   "type": "co_board",
-   "w": 1,
-   "shared": [
-    {
-     "company": "PROCTER & GAMBLE Co",
-     "tk": "PG"
-    }
-   ],
-   "truncated": false
-  },
-  {
    "a": "p:ANDERSON CHIEF FINANCIAL OFFICER",
    "b": "p:PAY VERSUS PERFORMANCE",
    "type": "co_board",
@@ -2586,19 +2624,6 @@
     {
      "company": "All In FutureTech Alliance, Inc.",
      "tk": "AIFA"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "p:ANDRE SCHULTEN",
-   "b": "p:ANTHONY M. KENNEDY",
-   "type": "co_board",
-   "w": 1,
-   "shared": [
-    {
-     "company": "PROCTER & GAMBLE Co",
-     "tk": "PG"
     }
    ],
    "truncated": false
@@ -2690,19 +2715,6 @@
     {
      "company": "Fox Corp",
      "tk": null
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "p:ARON R. ENGLISH",
-   "b": "p:INSIDER PARTICIPATION",
-   "type": "co_board",
-   "w": 1,
-   "shared": [
-    {
-     "company": "UNIFI INC",
-     "tk": "UFI"
     }
    ],
    "truncated": false
@@ -23445,20 +23457,6 @@
   },
   {
    "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:MIG REF II INFR, LLC",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Vulcan Infrastructure & Power Inc.",
-     "tk": "VIP",
-     "forms": "SC 13D|SC 13G"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
    "b": "s:OAKTREE CAPITAL HOLDINGS, LLC",
    "type": "co_target",
    "w": 1,
@@ -23523,20 +23521,6 @@
      "target": "Nuran Wireless Inc.",
      "tk": "NUR",
      "forms": "SC 13G"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:ABELE CHARLES ROBERT",
-   "b": "s:NAPOLITANO VINCENT C",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Stewards, Inc.",
-     "tk": "SWRD",
-     "forms": "SC 13D"
     }
    ],
    "truncated": false
@@ -23781,20 +23765,6 @@
    "truncated": false
   },
   {
-   "a": "s:DAVIDSON CHARLES E",
-   "b": "s:WEXFORD CAPITAL LP",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "NEPHROS INC",
-     "tk": "NEPH",
-     "forms": "SC 13D/A|SC 13G"
-    }
-   ],
-   "truncated": false
-  },
-  {
    "a": "s:DENHAM MINING GP LLC",
    "b": "s:EMG FUND V SVRE HOLDINGS, LLC",
    "type": "co_target",
@@ -23846,6 +23816,62 @@
      "target": "Korsana Biosciences, Inc.",
      "tk": "CYCN",
      "forms": "SC 13G"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:GLAZER CAPITAL, LLC",
+   "b": "s:T. ROWE PRICE INVESTMENT MANAGEMENT, INC.",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "BIOLIFE SOLUTIONS INC",
+     "tk": "BLFS",
+     "forms": "SC 13G|SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:GRAHAM CAPITAL MANAGEMENT, L.P.",
+   "b": "s:MONJE ALEXANDER",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Host Digital Inc.",
+     "tk": "HCWC",
+     "forms": "SC 13D|SC 13G"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:GRAHAM CAPITAL MANAGEMENT, L.P.",
+   "b": "s:SAMRA HARMOL",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Host Digital Inc.",
+     "tk": "HCWC",
+     "forms": "SC 13D"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:GRAHAM CAPITAL MANAGEMENT, L.P.",
+   "b": "s:THOMAS HANS",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Host Digital Inc.",
+     "tk": "HCWC",
+     "forms": "SC 13D"
     }
    ],
    "truncated": false
@@ -23949,6 +23975,20 @@
    "truncated": false
   },
   {
+   "a": "s:ISAKOW SELWYN",
+   "b": "s:RADY ERNEST S",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Private Bancorp of America, Inc.",
+     "tk": "PBAM",
+     "forms": "SC 13G"
+    }
+   ],
+   "truncated": false
+  },
+  {
    "a": "s:JEREMY L. SMOLLAR IRREVOCABLE TRUST DTD 2/13/2023",
    "b": "s:JUSTIN B. SMOLLAR IRREVOCABLE TRUST DTD 2/13/2023",
    "type": "co_target",
@@ -23963,15 +24003,29 @@
    "truncated": false
   },
   {
-   "a": "s:KI HOLDINGS, LTD.",
-   "b": "s:RICKEL KENNETH",
+   "a": "s:JMD CORPORATE SERVICES LTD",
+   "b": "s:LIANTENG LTD",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "Hepion Pharmaceuticals, Inc.",
-     "tk": "HEPA",
-     "forms": "SC 13D/A|SC 13G"
+     "target": "Troops, Inc. /Cayman Islands/",
+     "tk": "TROO",
+     "forms": "SC 13D"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:JMD CORPORATE SERVICES LTD",
+   "b": "s:WANG & LEE HOLDINGS, INC.",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Troops, Inc. /Cayman Islands/",
+     "tk": "TROO",
+     "forms": "SC 13D"
     }
    ],
    "truncated": false
@@ -23986,6 +24040,20 @@
      "target": "Swarmer, Inc",
      "tk": "SWMR",
      "forms": "SC 13D/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:LIANTENG LTD",
+   "b": "s:WANG & LEE HOLDINGS, INC.",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Troops, Inc. /Cayman Islands/",
+     "tk": "TROO",
+     "forms": "SC 13D"
     }
    ],
    "truncated": false
@@ -24047,15 +24115,29 @@
    "truncated": false
   },
   {
-   "a": "s:MIG REF II INFR, LLC",
-   "b": "s:ROGERS GEORGE TED III",
+   "a": "s:MONJE ALEXANDER",
+   "b": "s:SAMRA HARMOL",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "Vulcan Infrastructure & Power Inc.",
-     "tk": "VIP",
-     "forms": "SC 13D"
+     "target": "Host Digital Inc.",
+     "tk": "HCWC",
+     "forms": "SC 13D|SC 13G"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:MONJE ALEXANDER",
+   "b": "s:THOMAS HANS",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Host Digital Inc.",
+     "tk": "HCWC",
+     "forms": "SC 13D|SC 13G"
     }
    ],
    "truncated": false
@@ -24117,6 +24199,48 @@
    "truncated": false
   },
   {
+   "a": "s:REISS DANI",
+   "b": "s:WBT VALUE LTD",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Canada Goose Holdings Inc.",
+     "tk": "GOOS",
+     "forms": "SC 13G|SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:SALUJA DIPENDER",
+   "b": "s:WEEDBROOK CHRISTIAN",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Xanadu Quantum Technologies Ltd",
+     "tk": "XNDU",
+     "forms": "SC 13D/A|SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:SAMRA HARMOL",
+   "b": "s:THOMAS HANS",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Host Digital Inc.",
+     "tk": "HCWC",
+     "forms": "SC 13D"
+    }
+   ],
+   "truncated": false
+  },
+  {
    "a": "s:STARLINK CAPITAL LLC",
    "b": "s:WAGNER MENACHEM",
    "type": "co_target",
@@ -24140,48 +24264,6 @@
      "target": "Dominari Holdings Inc.",
      "tk": "DOMH",
      "forms": "SC 13G"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:VANGUARD CAPITAL MANAGEMENT LLC",
-   "b": "s:VANGUARD GROUP INC",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "BELLRING BRANDS, INC.",
-     "tk": "BRBR",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:VANGUARD CAPITAL MANAGEMENT LLC",
-   "b": "s:VANGUARD PORTFOLIO MANAGEMENT LLC",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "BELLRING BRANDS, INC.",
-     "tk": "BRBR",
-     "forms": "SC 13G"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:VANGUARD GROUP INC",
-   "b": "s:VANGUARD PORTFOLIO MANAGEMENT LLC",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "BELLRING BRANDS, INC.",
-     "tk": "BRBR",
-     "forms": "SC 13G|SC 13G/A"
     }
    ],
    "truncated": false
@@ -24247,20 +24329,6 @@
   {
    "tk": "BNY",
    "name": "Bank of New York Mellon Corp",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 1,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
-  },
-  {
-   "tk": "DT",
-   "name": "Dynatrace, Inc.",
    "in": [
     "13f",
     "13dg"
@@ -24441,6 +24509,34 @@
    "stock_routable": false
   },
   {
+   "tk": "LRCX",
+   "name": "LAM RESEARCH CORP",
+   "in": [
+    "13f",
+    "def14a"
+   ],
+   "counts": {
+    "managers": 8,
+    "persons": 2,
+    "stakers": 0
+   },
+   "stock_routable": true
+  },
+  {
+   "tk": "MGM",
+   "name": "MGM Resorts International",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 2,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": true
+  },
+  {
    "tk": "MS",
    "name": "MORGAN STANLEY",
    "in": [
@@ -24511,18 +24607,18 @@
    "stock_routable": true
   },
   {
-   "tk": "PG",
-   "name": "PROCTER & GAMBLE Co",
+   "tk": "PPLI",
+   "name": "People Inc",
    "in": [
     "13f",
-    "def14a"
+    "13dg"
    ],
    "counts": {
-    "managers": 1,
-    "persons": 3,
-    "stakers": 0
+    "managers": 2,
+    "persons": 0,
+    "stakers": 1
    },
-   "stock_routable": true
+   "stock_routable": false
   },
   {
    "tk": "REZI",
@@ -24820,18 +24916,18 @@
   }
  ],
  "components": {
-  "n": 37,
-  "largest": 59
+  "n": 40,
+  "largest": 56
  },
  "windows": {
   "form13f_quarter": "2026-06-30",
   "stakes_visible_dates": {
    "start": "2026-09-03",
-   "end": "2026-09-23"
+   "end": "2026-09-24"
   },
   "smart_money_visible_dates": {
-   "start": "2026-09-16",
-   "end": "2026-09-23"
+   "start": "2026-09-17",
+   "end": "2026-09-24"
   }
  },
  "coverage": {
@@ -24841,7 +24937,7 @@
    "isolated_managers": 0
   },
   "def14a": {
-   "basis": "top_persons export: 50 most-seated of 593 upstream persons; 108/150 filings with persons (72.0%)",
+   "basis": "top_persons export: 50 most-seated of 619 upstream persons; 108/150 filings with persons (72.0%)",
    "same_name_merges_possible": true
   },
   "13dg": {
@@ -24850,5 +24946,5 @@
   }
  },
  "methodology": "Force-camp relationship graph DERIVED at export time from four COMMITTED panels (form13f x def14a_persons x stakes_13g union smart_money) \u2014 zero new fetches, display-only. Edges are pairwise projections over as-filed disclosure facts: co_hold = two curated managers' VISIBLE BOOKS (latest quarter, up to 50 positions each; the full books are larger) share a position key (ticker, else CUSIP); co_board = two proxy-statement top persons seat the same company (exact company-name match resolves the ticker); co_target = two different filers INDEPENDENTLY SEPARATELY FILED stakes converging on the same target issuer within the visible SC 13D/13G windows. Identity rule: a window filer merges into an institution node ONLY when its trimmed-uppercase name equals a curated manager's name exactly \u2014 no fuzzy matching, no name list. The three overlaps are factual coincidences of separate filings: joint filings stay verbatim (members NOT DECOMPOSED), no COORDINATION is implied and no consortium claim is made. Weights are integer counts of shared items (lists capped at 8, truncated flag set beyond). Coverage is bounded by construction \u2014 see the coverage.basis strings (visible books, a 50-person proxy export over the newest filings, latest filing windows only). A restatement of public SEC EDGAR disclosures only: NO PRICES, NO RETURNS, no performance claims; never part of any OOS pipeline.",
- "snapshot_ts": "2026-09-24T11:02:14.396126+00:00"
+ "snapshot_ts": "2026-09-25T10:56:59.046128+00:00"
 }

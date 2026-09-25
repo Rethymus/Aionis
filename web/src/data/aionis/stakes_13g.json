@@ -1,16 +1,104 @@
 {
   "status": "ok",
-  "as_of": "2026-09-23",
+  "as_of": "2026-09-24",
   "window": {
-    "start": "2026-05-28",
-    "end": "2026-09-23"
+    "start": "2026-05-29",
+    "end": "2026-09-24"
   },
-  "total": 9115,
+  "total": 9107,
   "by_form": {
-    "SC 13G": 3619,
-    "SC 13G/A": 5496
+    "SC 13G": 3618,
+    "SC 13G/A": 5489
   },
   "filings": [
+    {
+      "filer": "GLAZER CAPITAL, LLC",
+      "target": "BIOLIFE SOLUTIONS INC",
+      "ticker": "BLFS",
+      "date": "2026-09-24",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/834365/0001076809-26-000101-index.htm",
+      "pct_now": 5.49,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Reiss Dani",
+      "target": "Canada Goose Holdings Inc.",
+      "ticker": "GOOS",
+      "date": "2026-09-24",
+      "form": "SC 13G/A",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1690511/0001140361-26-037590-index.htm",
+      "pct_now": 22.3,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "NEW ENTERPRISE ASSOCIATES 13 LP",
+      "target": "Coursera, Inc.",
+      "ticker": "COUR",
+      "date": "2026-09-24",
+      "form": "SC 13G/A",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1651562/0001072613-26-000805-index.htm",
+      "pct_now": 4.9,
+      "pct_prev": null,
+      "pct_status": "below_5"
+    },
+    {
+      "filer": "Monje Alexander",
+      "target": "Host Digital Inc.",
+      "ticker": "HCWC",
+      "date": "2026-09-24",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1948864/0000905148-26-004268-index.htm",
+      "pct_now": 8.6,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "JANE STREET GROUP, LLC",
+      "target": "IP STRATEGY HOLDINGS, INC.",
+      "ticker": "IPST",
+      "date": "2026-09-24",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1788230/0001595888-26-000118-index.htm",
+      "pct_now": 5.0,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Mailman Joshua",
+      "target": "Jaguar Health, Inc.",
+      "ticker": "JAGX",
+      "date": "2026-09-24",
+      "form": "SC 13G/A",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1585608/0001185185-26-004289-index.htm",
+      "pct_now": 9.99,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "RADY ERNEST S",
+      "target": "Private Bancorp of America, Inc.",
+      "ticker": "PBAM",
+      "date": "2026-09-24",
+      "form": "SC 13G",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1705284/0001193125-26-401247-index.htm",
+      "pct_now": 9.8,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Saluja Dipender",
+      "target": "Xanadu Quantum Technologies Ltd",
+      "ticker": "XNDU",
+      "date": "2026-09-24",
+      "form": "SC 13G/A",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2097163/0001834268-26-000009-index.htm",
+      "pct_now": 0.0,
+      "pct_prev": null,
+      "pct_status": "exited"
+    },
     {
       "filer": "HAWK RIDGE CAPITAL MANAGEMENT LP",
       "target": "ARRAY DIGITAL INFRASTRUCTURE, INC.",
@@ -4322,96 +4410,8 @@
       "pct_now": 8.4,
       "pct_prev": null,
       "pct_status": null
-    },
-    {
-      "filer": "MAGNOLIA CAPITAL FUND, LP",
-      "target": "AMERICAS CARMART INC",
-      "ticker": "CRMT",
-      "date": "2026-09-03",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/799850/0001398344-26-016517-index.htm",
-      "pct_now": 6.6,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Helikon Investments Ltd",
-      "target": "Allied Gold Corp",
-      "ticker": "AAUC",
-      "date": "2026-09-03",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1993344/0001172661-26-004335-index.htm",
-      "pct_now": 12.6,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "L1 Capital Pty Ltd",
-      "target": "Anteris Technologies Global Corp.",
-      "ticker": "AVR",
-      "date": "2026-09-03",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2011514/0001817646-26-000027-index.htm",
-      "pct_now": 11.64,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "VANGUARD CAPITAL MANAGEMENT LLC",
-      "target": "BELLRING BRANDS, INC.",
-      "ticker": "BRBR",
-      "date": "2026-09-03",
-      "form": "SC 13G",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1772016/0002100119-26-001529-index.htm",
-      "pct_now": 5.2,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "VANGUARD PORTFOLIO MANAGEMENT LLC",
-      "target": "BELLRING BRANDS, INC.",
-      "ticker": "BRBR",
-      "date": "2026-09-03",
-      "form": "SC 13G",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1772016/0002100121-26-001019-index.htm",
-      "pct_now": 5.11,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "VANGUARD GROUP INC",
-      "target": "BELLRING BRANDS, INC.",
-      "ticker": "BRBR",
-      "date": "2026-09-03",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1772016/0000102909-26-002719-index.htm",
-      "pct_now": 0.0,
-      "pct_prev": null,
-      "pct_status": "exited"
-    },
-    {
-      "filer": "Inflection Point Acquisition Corp. III",
-      "target": "BERKLEY W R CORP",
-      "ticker": "WRB",
-      "date": "2026-09-03",
-      "form": "SC 13G/A",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/11544/0001628280-26-060471-index.htm",
-      "pct_now": null,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "JANE STREET GROUP, LLC",
-      "target": "BIOVIE INC.",
-      "ticker": "BIVI",
-      "date": "2026-09-03",
-      "form": "SC 13G",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1580149/0001595888-26-000114-index.htm",
-      "pct_now": 5.2,
-      "pct_prev": null,
-      "pct_status": null
     }
   ],
   "methodology": "SC 13G passive-stake filing stream \u2014 SEC EDGAR daily crawler index (public domain, 17 U.S.C. \u00a7105), trailing ~120-day window, filed-date point-in-time; a SC 13G/A amendment is a new filing, never a silent overwrite. EFTS full-text search froze on the Schedule 13 family after 2024-12-17 (live-verified: forms=SC 13G returns 0 hits for 2025+ windows), so the daily index is the source. It lists a filing under EVERY covered company, so rows are DEDUPED per accession: the one listed company is the SUBJECT (ticker backfilled OFFLINE from the cached SEC company_tickers snapshot \u2014 a current-snapshot display label, not as-of-filing) and the co-indexed names surface as the FILER; ambiguous or unlisted groups honestly keep every member (placeholder filer / null ticker, counted in data_health.source_health), so the row count can slightly exceed the distinct-accession count. Honest v1 limits, disclosed not papered over: the share count and event date live INSIDE the filing documents and are NOT parsed here. The percent-of-class second stage IS bounded-parsed for the VISIBLE top-150 rows only (EDGAR index.json + primary document, \u22642 polite requests per row; structured cover-page tag first, then the 'Percent of class' label, then the 'X.X% of the ... class' narrative; /A amendments carry pct_prev from 'previous X%'-style sentences only): rows beyond the visible window are NOT parsed, and every extraction miss stays an honest null (counted in data_health.source_health), never a guess or a default. pct_status is DERIVED from parsed values only: exited = an explicit parsed 0, below_5 = a parsed value < 5; a null pct never yields a status. Group filings show the FIRST reporting person's cover-page percentage. Each row links the filing's EDGAR index page, which lists every document and names the reporting person. Counts are FILING counts, not holder counts. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-09-24T11:02:01.328003+00:00"
+  "snapshot_ts": "2026-09-25T10:56:46.518394+00:00"
 }
