@@ -286,7 +286,15 @@ def test_load_cached_feed_keeps_existing_lang(tmp_path: Path) -> None:
 # --- collect_news_feed orchestrator (network monkeypatched) ---------------------
 
 
-def _fake_rows(urls: list[str], *, lang: str, language: str, day: str) -> list[dict]:
+def _fake_rows(urls: list[str], *, lang: str, language: str,
+               day: str | None = None) -> list[dict]:
+    """day: ISO date for seendate. Default = now - 2 days, always inside the
+    collector's rolling 30-day window — hardcoded dates were time bombs that
+    aged out around 2026-09-24 and reddened CI twice (09-28)."""
+    if day is None:
+        from datetime import datetime, timedelta, timezone
+        day = (datetime.now(timezone.utc) - timedelta(days=2)).strftime(
+            "%Y-%m-%d")
     return [
         {
             "url": u,
@@ -311,11 +319,10 @@ def test_collect_fetches_both_lanes_and_writes_lang(tmp_path, monkeypatch) -> No
         if lang == "zho":
             return _fake_rows(
                 ["https://cn.example.com/z1", "https://cn.example.com/z2"],
-                lang="zho", language="Chinese", day="2026-08-25",
+                lang="zho", language="Chinese",
             )
         return _fake_rows(
             ["https://en.example.com/e1"], lang="eng", language="English",
-            day="2026-08-24",
         )
 
     monkeypatch.setattr(nf, "fetch_articles", _fake_fetch)
@@ -363,7 +370,6 @@ def test_collect_single_lane_failure_degrades_honestly(
             raise nf.HTTPStatusError(429, 3)
         return _fake_rows(
             ["https://en.example.com/e1"], lang="eng", language="English",
-            day="2026-08-25",
         )
 
     monkeypatch.setattr(nf, "fetch_articles", _fake_fetch)
