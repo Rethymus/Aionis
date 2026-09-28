@@ -1,27 +1,15 @@
 {
   "status": "ok",
-  "as_of": "2026-09-25T09:30:00Z",
+  "as_of": "2026-09-28T07:45:00Z",
   "window": {
-    "start": "2026-08-26",
-    "end": "2026-09-25"
+    "start": "2026-08-29",
+    "end": "2026-09-28"
   },
   "query": "(\"stock market\" OR \"S&P 500\" OR \"Federal Reserve\") sourcelang:eng | sourcelang:zho domainis:wallstreetcn.com",
-  "total": 3109,
-  "n_sources": 695,
-  "n_zho": 578,
+  "total": 2559,
+  "n_sources": 549,
+  "n_zho": 488,
   "by_day": [
-    {
-      "date": "2026-08-26",
-      "count": 43
-    },
-    {
-      "date": "2026-08-27",
-      "count": 359
-    },
-    {
-      "date": "2026-08-28",
-      "count": 160
-    },
     {
       "date": "2026-08-29",
       "count": 149
@@ -109,9 +97,125 @@
     {
       "date": "2026-09-25",
       "count": 218
+    },
+    {
+      "date": "2026-09-27",
+      "count": 5
+    },
+    {
+      "date": "2026-09-28",
+      "count": 7
     }
   ],
   "items": [
+    {
+      "seendate": "2026-09-28T07:45:00Z",
+      "title": "\u6bb5\u6c38\u5e73\u53c8\u4e70\u8305\u53f0\u4e86 \uff01 3\u4e07\u80a1\u8017\u8d44\u8d853690\u4e07\u5143 \uff0c \u66fe\u653e\u8a00\u62ff\u5341\u5e74\u8d4c\u4e00\u4e2a\u4ebf",
+      "url": "https://wallstreetcn.com/articles/3782639",
+      "domain": "wallstreetcn.com",
+      "language": "Chinese",
+      "lang": "zho",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-09-28T07:45:00Z",
+      "title": "AI\u9700\u6c42\u50ac\u5316\u53f0\u79ef\u7535\u52a0\u901f\u6269\u4ea7 \uff0c 2\u7eb3\u7c73\u6708\u4ea7\u80fd\u5e74\u5e95\u51b2\u523a12\u4e07\u7247",
+      "url": "https://wallstreetcn.com/articles/3782622",
+      "domain": "wallstreetcn.com",
+      "language": "Chinese",
+      "lang": "zho",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-09-28T07:45:00Z",
+      "title": "\u7279\u6717\u666e\u62d2\u7edd\u4f0a\u6717\u548c\u8c08\u5efa\u8bae \uff0c \u7f8e\u80a1\u671f\u6307\u8d70\u4f4e \uff0c \u7f8e\u503a\u627f\u538b \uff0c \u6cb9\u4ef7\u6da82 %\uff0c \u9ec4\u91d1\u8dcc\u8d853 %",
+      "url": "https://wallstreetcn.com/articles/3782633",
+      "domain": "wallstreetcn.com",
+      "language": "Chinese",
+      "lang": "zho",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-09-28T07:45:00Z",
+      "title": "\u53ea\u6709\u5c11\u6570\u80a1\u5728\u6da8 \uff01 \u9ad8\u76db\u8b66\u544a \uff1a \u7f8e\u80a1\u5e7f\u5ea6\u521b2000\u5e74\u4e92\u8054\u7f51\u6ce1\u6cab\u6765\u6700\u5dee \uff0c \u503a\u6ce2\u52a8\u7387\u7f55\u89c1\u80cc\u79bb",
+      "url": "https://wallstreetcn.com/articles/3782634",
+      "domain": "wallstreetcn.com",
+      "language": "Chinese",
+      "lang": "zho",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-09-28T07:45:00Z",
+      "title": "\u957f\u98de\u5149\u7ea4\u6e2f\u80a1\u91cd\u632b16 %\uff0c \u745e\u94f6\u9996\u6b21\u8986\u76d6\u7ed9\u4e88\u4e70\u5165 \uff1a \u4ea7\u80fd\u8fc7\u5269\u62c5\u5fe7\u88ab\u9ad8\u4f30 \uff0c \u9ad8\u7aef\u5149\u7ea4\u4f9b\u9700\u7d27\u5f20\u5c06\u5ef6\u7eed\u81f32027 - 28\u5e74",
+      "url": "https://wallstreetcn.com/articles/3782632",
+      "domain": "wallstreetcn.com",
+      "language": "Chinese",
+      "lang": "zho",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-09-28T07:45:00Z",
+      "title": "\u5546\u52a1\u90e8\u516c\u5e03\u4e2d\u7f8e\u8d38\u6613\u7406\u4e8b\u4f1a\u548c  300\u4ebf\u5bf9300\u4ebf  \u5bf9\u7b49\u964d\u7a0e\u6846\u67b6\u6709\u5173\u60c5\u51b5",
+      "url": "https://wallstreetcn.com/livenews/3171194",
+      "domain": "wallstreetcn.com",
+      "language": "Chinese",
+      "lang": "zho",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-09-28T07:45:00Z",
+      "title": "Anthropic\u9996\u5e2d\u7ecf\u6d4e\u5b66\u5bb6\u524d\u77bb  AI\u672a\u6765 \uff1a \u4e09\u5927\u5947\u70b9 \uff0c \u8d22\u5bcc\u5206\u914d  \u4e0e  Token\u548c\u8d44\u672c\u7a0e",
+      "url": "https://wallstreetcn.com/articles/3782627",
+      "domain": "wallstreetcn.com",
+      "language": "Chinese",
+      "lang": "zho",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-09-27T14:00:00Z",
+      "title": "\u7f51\u7ea2\u82af\u7247\u5206\u6790\u5e08  P Equity\u8bbf\u8c08 \uff1a \u7b97\u529b\u7f3a\u53e3 \u3001 \u5b58\u50a8\u5468\u671f \u3001 \u9690\u5f62\u74f6\u9888 \u3001 \u94dc\u9000\u5149\u8fdb\u4ee5\u53ca  10\u5e74\u9700\u6c42\u80fd\u89c1\u5ea6\u7684\u5f25\u5929\u5927\u8c0e",
+      "url": "https://wallstreetcn.com/articles/3782602",
+      "domain": "wallstreetcn.com",
+      "language": "Chinese",
+      "lang": "zho",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-09-27T14:00:00Z",
+      "title": "\u6301\u5e01\u8fc7\u8282  \u8fd8\u662f  \u6301\u80a1\u8fc7\u8282 \uff1f - \u534e\u5c14\u8857\u89c1\u95fb",
+      "url": "https://wallstreetcn.com/articles/3782601",
+      "domain": "wallstreetcn.com",
+      "language": "Chinese",
+      "lang": "zho",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-09-27T14:00:00Z",
+      "title": "\u56fd\u91d1\u7b56\u7565 \uff1a \u80fd\u6e90\u6700\u80fd\u591f\u6446\u8131\u5229\u7387\u5e72\u6270 \uff0c \u6709\u8272\u91d1\u5c5e\u53ef\u80fd\u5df2\u7ecf\u8fc7\u4e86\u6700\u60b2\u89c2\u7684\u65f6\u70b9",
+      "url": "https://wallstreetcn.com/articles/3782603",
+      "domain": "wallstreetcn.com",
+      "language": "Chinese",
+      "lang": "zho",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-09-27T14:00:00Z",
+      "title": "\u9ed1\u5ba2\u76ef\u4e0aAI  \u91d1\u77ff \uff1a \u76d7\u8d26\u53f7 \u3001 \u52ab\u4e91\u7b97\u529b \uff0c AI\u8d44\u6e90\u6b63\u6210\u4e3a\u7f51\u7edc\u72af\u7f6a\u65b0\u751f\u610f",
+      "url": "https://wallstreetcn.com/articles/3782604",
+      "domain": "wallstreetcn.com",
+      "language": "Chinese",
+      "lang": "zho",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-09-27T14:00:00Z",
+      "title": "\u4e2d\u4fe1\u8bc1\u5238 \uff1a \u6570\u636e\u4e2d\u5fc3\u7684  \u653f\u6cbb\u5316  \u6216\u662f\u77ed\u671fAI\u53d9\u4e8b\u7684\u6700\u5927\u969c\u788d",
+      "url": "https://wallstreetcn.com/articles/3782605",
+      "domain": "wallstreetcn.com",
+      "language": "Chinese",
+      "lang": "zho",
+      "sourcecountry": "China"
+    },
     {
       "seendate": "2026-09-25T09:30:00Z",
       "title": "Gold heads for weekly loss",
@@ -1353,116 +1457,8 @@
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-09-25T05:45:00Z",
-      "title": "Asian shares are mixed after global bond sell - off and drop in oil prices",
-      "url": "https://www.newsday.com/business/stocks-markets-oil-bond-us-h43337",
-      "domain": "newsday.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-09-25T05:45:00Z",
-      "title": "Welspun Corp jump 5 % as US arm wins \u20b94 , 000 cr order ; up 4 - fold from Feb low",
-      "url": "https://www.business-standard.com/markets/news/welspun-corp-jump-5-as-us-arm-wins-4-000-cr-order-up-4-fold-from-feb-low-126092500195_1.html",
-      "domain": "business-standard.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-09-25T05:45:00Z",
-      "title": "Morning Bid : When Treasuries catch Korea volatility bug , take cover",
-      "url": "https://www.aol.com/articles/morning-bid-treasuries-catch-koreas-043951000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-09-25T05:45:00Z",
-      "title": "Australian Market Maintains Early Losses In Mid - market",
-      "url": "https://www.rttnews.com/3693837/australian-market-maintains-early-losses-in-mid-market.aspx",
-      "domain": "rttnews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-09-25T05:45:00Z",
-      "title": "Gold heads for weekly loss as stronger dollar , Fed rate outlook weighs",
-      "url": "https://www.thehindubusinessline.com/markets/gold/gold-heads-for-weekly-loss-as-stronger-dollar-fed-rate-outlook-weighs/article71506987.ece",
-      "domain": "thehindubusinessline.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-09-25T05:45:00Z",
-      "title": "Gold heads for weekly loss",
-      "url": "http://www.orlandoecho.com/news/279330343/gold-heads-for-weekly-loss",
-      "domain": "orlandoecho.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-09-25T05:45:00Z",
-      "title": "Gold heads for weekly loss",
-      "url": "http://www.newyorkstatesman.com/news/279330343/gold-heads-for-weekly-loss",
-      "domain": "newyorkstatesman.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-09-25T05:45:00Z",
-      "title": "Gold , silver rebound on buying at lower levels despite rate concerns",
-      "url": "https://www.business-standard.com/markets/commodities/gold-silver-rebound-on-buying-at-lower-levels-despite-rate-concerns-126092500200_1.html",
-      "domain": "business-standard.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-09-25T05:45:00Z",
-      "title": "Meta shares surge 36 % as Muse AI fuels stock market rally",
-      "url": "https://www.thehindubusinessline.com/markets/stock-markets/meta-stock-jumps-36-in-september-as-muse-ai-fuels-rally/article71506953.ece",
-      "domain": "thehindubusinessline.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-09-25T05:45:00Z",
-      "title": "Indian Shares Seen Tad Higher At Open",
-      "url": "https://www.rttnews.com/3693834/indian-shares-seen-tad-higher-at-open.aspx",
-      "domain": "rttnews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-09-25T05:45:00Z",
-      "title": "Gold prices in Pakistan today \u2013 Check per tola rates : 25 September 2026",
-      "url": "https://pakobserver.net/gold-prices-in-pakistan-today-check-per-tola-rates-25-september-2026/",
-      "domain": "pakobserver.net",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Pakistan"
-    },
-    {
-      "seendate": "2026-09-25T05:45:00Z",
-      "title": "Exclusive - Japan SMBC in talks to increase stake in Vietnam VPBank , sources say",
-      "url": "https://www.aol.com/articles/exclusive-japans-smbc-talks-increase-041722000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
     }
   ],
   "methodology": "GDELT Doc 2.0 artlist \u2014 a machine index of worldwide news. TWO bounded requests per refresh (one per LANGUAGE LANE, the two fixed queries above, <=200 records each, >=15s host spacing; GDELT open data: URL/title/date/domain are facts, article copyright stays with the publishers), sort=datedesc (machine ordering, not editorial). The Chinese lane is domain-anchored on wallstreetcn.com (\u534e\u5c14\u8857\u89c1\u95fb \u2014 a \u8d22\u8054\u793e-style 7\u00d724 financial newswire): \u8d22\u8054\u793e itself has ZERO GDELT crawl coverage and CJK phrase queries are rejected by the API ('phrase too short'), so a domain seed is the only proven form (probe evidence in docs/data-intake-gdelt-news-feed.md). lang = the ingest-resolved lane (API language field first, request provenance fallback; never guessed from title bytes). seendate is GDELT's first-seen UTC stamp (15-min resolution) \u2014 the display freshness anchor. Rows are metadata + outbound links only: no article text is stored, summarized or fabricated; missing source fields are shown empty, never guessed. Dedup key = exact URL WITHIN a lane; the two languages are different articles and are never collapsed across lanes. Coverage = whatever GDELT's crawl saw; gaps are gaps. The payload caps the item list at 150 newest while by_day/total cover the full trailing 30-day cache window. Display-only, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-09-25T11:41:11.235554+00:00"
+  "snapshot_ts": "2026-09-28T11:03:08.169426+00:00"
 }
