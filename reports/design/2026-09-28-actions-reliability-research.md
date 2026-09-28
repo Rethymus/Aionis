@@ -28,36 +28,40 @@ multiplying exposure to every ordinary flake, (b) test/environment assumptions
 that rot with time, and (c) third-party I/O. The platform's genuine
 contribution is structural: *scheduled* workflows are best-effort.
 
-## 2. What the big repos actually do (fetched workflow files)
+## 2. What other repos actually do (12 workflow files / 10 repos, fetched raw)
 
-**None of them run cron in their core CI.**
+| Repo (file) | Cron? | Job timeout | Concurrency (cancel) | Retries | SHA pins | Notable |
+|---|---|---|---|---|---|---|
+| pandas (unit-tests.yml) | none | 90m | per-job ✓ | – | ✓ full | fail-fast:false; `not network` marker; Windows link.EXE fix; `fail_ci_if_error:false` (codecov) |
+| home-assistant (ci.yaml) | none | 60/20/10 tiered | ✓ | – | – | cache versioning (CACHE_VERSION:4); DB tests `numprocesses 1`; documented partial-run escape hatch |
+| qlib (from_source / from_pip) | none | 180m | ✓ | **✓ nick-fields/retry ×3** (15–60m step caps) | – | macOS OpenMP thread caps; on_retry deps reinstall (pip) |
+| freqtrade (ci.yml) | weekly `0 3 * * 4` (on-hour) | – | ✓ | – | ✓ full | live tests isolated job; notifications suppressed for schedule events; `permissions:{}` |
+| vectorbt (tests.yml) | none | – | ✓ | – | – | fail-fast:false only |
+| zipline-reloaded (ci_tests_quick) | none | – (90m step) | – | **✓ retry ×3 + on_retry_command** | – | codecov `fail_ci_if_error:false` |
+| alphalens (main.yml, archived) | none | – | – | – | – (checkout@v1) | decayed minimal CI; frozen py2.7-era matrix |
+| FinRL (test.yml) | **daily `0 6 * * *` (on-hour)** | **none** | **none** | **none** | – (checkout@v2) | the fragile configuration: scheduled + zero protections |
+| ccxt (js.yml) | none | 30m (build) | ✓ (conditional cancel) | git push ×5 (rebase+backoff) | – | runner-IP check `continue-on-error:true`; live-tests separate |
+| fastapi (test.yml) | weekly `0 0 * * 1` | **5/10m tiered** | – | – | **✓ full (v comments)** | the pinning+timeout exemplar |
+| scikit-learn (unit-tests.yml) | **nightly `30 2 * * *` (OFF-hour!)** | none | ✓ | – | – | the docs' "avoid the top of the hour" advice, in production |
+| scikit-learn (autoclose-schedule) | daily `0 2 * * 0`-style on-hour | none | – | – | – | auxiliary housekeeping cron; no keepalive comments |
+| *(existence proofs)* mementum/backtrader, kubernetes/kubernetes | **no `.github/workflows` at all** | — | — | — | — | huge projects routing CI elsewhere entirely (Prow/own infra) — cron-out-of-Actions taken to the extreme |
 
-- **pandas** (`unit-tests.yml`): push/PR only — **no schedule**. Job
-  `timeout-minutes: 90`; per-job concurrency groups with
-  `cancel-in-progress: true`; matrices `fail-fast: false`; actions pinned to
-  commit SHAs (`checkout # v7.0.1`); flaky isolation via
-  `not network`/`single_cpu` markers, parallel vs serial splits; explicit
-  Windows quirks handled ("Remove link.EXE for Windows"); non-critical steps
-  can't fail CI (`fail_ci_if_error: false` on codecov).
-- **Home Assistant** (`ci.yaml`): push/PR only — **no schedule**.
-  `timeout-minutes: 60/20/10` tiered per job; single top-level concurrency
-  group with cancel; cache keys versioned (`CACHE_VERSION: 4`) and
-  content-addressed ("identical content reuses the same entry"); DB-matrix
-  tests run with `numprocesses 1` + long per-test timeouts; a documented
-  escape hatch for partial runs; scheduled-adjacent jobs deliberately
-  isolated to dev pushes.
-- **qlib** (`test_qlib_from_source.yml` + `test_qlib_from_pip.yml`): push/PR
-  only — **no schedule**. `timeout-minutes: 180` job + **step-level retries**
-  via `nick-fields/retry` (`max_attempts: 3`, `retry_wait_seconds: 10`,
-  per-step `timeout_minutes: 15–60`) — their answer to network flake;
-  concurrency with cancel; macOS OpenMP thread caps to dodge segfaults.
-- **freqtrade** (`ci.yml`): the ONLY cron user among the four — one auxiliary
-  weekly job at `cron: '0 3 * * 4'`, with **notifications suppressed for
-  schedule events** ("Discord notification can't handle schedule events") —
-  i.e. they run a scheduled job but treat its unreliability as expected.
-  Otherwise: concurrency+cancel, SHA-pinned actions, `permissions: {}`,
-  uv-cache keyed to lockfiles, live-network tests isolated in a separate
-  job, an `alls-green` gate aggregating legs.
+Readings:
+1. **8 of 12 files have NO cron in CI**; every cron that exists is auxiliary
+   (nightly/weekly housekeeping or extended tests), never the release gate —
+   pandas/HA/qlib/vectorbt/zipline-reloaded/alphalens/ccxt run push/PR only.
+2. **The disciplined cron users deliberately go off the hour**: scikit-learn's
+   nightly at `30 2 * * *` is exactly GitHub's "different time of the hour"
+   advice in production; FinRL's on-hour daily with zero timeout/concurrency/
+   retry is the counter-example configuration.
+3. The network-flake answer in quant Python is **step-level retries**
+   (qlib AND zipline-reloaded: `nick-fields/retry`, 3 attempts, retry-timeout
+   caps, dependency reinstall on retry) — not bare `continue-on-error`.
+4. ccxt's automated-push loop (5 attempts, rebase + randomized backoff) is
+   the same discipline our lane's `pull --rebase` implements for its PAT push.
+5. Maturity shows in the boring fields: fastapi pins every action to a full
+   SHA with version comments and tiers timeouts at 5–10m; FinRL/alphalens
+   float major tags with nothing else — and only they carry daily crons.
 
 ## 3. The platform side (GitHub's own docs, quoted)
 
@@ -96,7 +100,8 @@ contribution is structural: *scheduled* workflows are best-effort.
 
 | Gap | Evidence pattern | Status |
 |---|---|---|
-| Action tags float (`@v4`) | pandas/freqtrade pin full SHAs; our logs already show forced Node 20→24 bumps from upstream action changes | open (low risk, private repo) |
+| Action tags float (`@v4`) | fastapi pins EVERY action to a full SHA with version comments; pandas/freqtrade likewise; our logs already show forced Node 20→24 bumps from upstream action changes | open (exemplar upgraded: fastapi) |
+| **staleness-check cron sits ON the hour (`0 2 * * 1`)** | scikit-learn's nightly deliberately runs `30 2 * * *` — GitHub's own "avoid the top of the hour" congestion advice, in production | **new gap, one-line fix** (e.g. `17 2 * * 1`) |
 | CI fallback lane masks fetch failures with bare `continue-on-error` | qlib uses `nick-fields/retry` (`max_attempts: 3`) on network steps — retry THEN degrade | open (CI fallback only; the local lane already retries hourly) |
 | news_feed fake-date time bombs (tonight's red ×2) | pandas isolates `network` marker tests; our fake rows must be relative-dated like the 09-20 fix | **prescribed, awaiting authorization** (night-session red line) |
 | Non-critical steps able to fail CI | `fail_ci_if_error: false` (pandas codecov) | partially adopted (our publish checks no-site-change exit 0) |
@@ -111,6 +116,14 @@ contribution is structural: *scheduled* workflows are best-effort.
   using-workflows/events-that-trigger-a-workflow (schedule section, fetched
   2026-09-06); billing/managing-billing-for-github-actions/about-billing…
   (2026-09-06)
+- raw workflow files (second batch, all fetched 2026-09-28): polakowo/vectorbt
+  tests.yml (master); AI4Finance-Foundation/FinRL test.yml (master);
+  stefan-jansen/zipline-reloaded ci_tests_quick.yml (master);
+  quantopian/alphalens main.yml (master, archived); ccxt/ccxt js.yml (master);
+  fastapi/fastapi test.yml (master); scikit-learn/scikit-learn
+  unit-tests.yml + autoclose-schedule.yml (main)
+- existence checks via gh api (2026-09-28): mementum/backtrader and
+  kubernetes/kubernetes have no `.github/workflows` directory at repo root
 - our own runs: gh run history + runs/ops_local_refresh/*/run.log (12 incidents
   above; every one has a cited run id or log line in state/current.md rounds
   83–99)
