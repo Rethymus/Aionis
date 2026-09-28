@@ -16,7 +16,9 @@ name: Staleness check (terminal data)
 
 on:
   schedule:
-    - cron: '0 2 * * 1'  # Mondays 02:00 UTC = Mondays 10:00 Beijing
+    - cron: '17 2 * * 1'  # Mondays 02:17 UTC — OFF the hour: GitHub docs
+      # say the top of the hour is the highest-load window (scikit-learn's
+      # nightly runs :30 for the same reason)
   workflow_dispatch: {}
 
 permissions:
@@ -32,8 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Parse committed data_health snapshot age
         id: age
         run: |

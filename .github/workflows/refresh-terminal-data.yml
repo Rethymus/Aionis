@@ -44,17 +44,15 @@ jobs:
     # once the fundamentals + prices caches land (first clean save), the job
     # shrinks back to ~60-80min of warm deltas. Same lesson as the 75→90 bump.
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: '3.13'
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v3
-
+        uses: astral-sh/setup-uv@caf0cab7a618c569241d31dcd442f54681755d39 # v3
       - name: Restore uv cache
-        uses: actions/cache@v4
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
         with:
           path: ~/.local/share/uv
           key: uv-${{ runner.os }}-${{ hashFiles('uv.lock') }}
@@ -83,7 +81,7 @@ jobs:
         # fetch steps are done → zero concurrent writers → tar always clean)
         # is the guaranteed-persistence lane for exactly what convergence
         # needs: per-ticker prices + fundamentals parquet.
-        uses: actions/cache@v4
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
         with:
           path: data/display-snapshot
           key: display-snapshot-${{ github.run_id }}
@@ -104,7 +102,7 @@ jobs:
           echo "seeded: $(ls data/cache/prices | wc -l) price tickers, fundamentals=$(test -f data/cache/phase_b_fundamentals.parquet && echo yes || echo no)"
 
       - name: Restore data/cache (fetch deltas, not a full re-pull every run)
-        uses: actions/cache@v4
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
         with:
           path: data/cache
           key: data-cache-${{ github.run_id }}
@@ -324,7 +322,7 @@ jobs:
 
       - name: Commit refreshed data
         id: datacommit
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@b863ae1933cb653a53c021fe36dbb774e1fb9403 # v5
         with:
           # NOTE: a GITHUB_TOKEN push NEVER fires on:push workflows (GitHub
           # recursion guard) — removing [skip ci] alone did not make these data
@@ -340,13 +338,13 @@ jobs:
         # Invoking `next build` directly SKIPS the hook and ships a stale API
         # surface (local pitfall 2026-09-05: out/api/v1 was frozen at Sep 1).
         if: steps.datacommit.outputs.changes_detected == 'true'
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
         with:
           version: 10
 
       - name: Set up Node for site build
         if: steps.datacommit.outputs.changes_detected == 'true'
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22
           cache: pnpm
@@ -369,7 +367,7 @@ jobs:
         # check out gh-pages, rsync the fresh build over it, commit, push — the
         # legacy Pages build deploys it automatically.
         if: steps.datacommit.outputs.changes_detected == 'true'
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           ref: gh-pages
           path: site
