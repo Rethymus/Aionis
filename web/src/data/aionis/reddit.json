@@ -10,23 +10,23 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-09-25T11:12:57+00:00",
-  "n_snapshots": 23,
+  "latest_snapshot_ts": "2026-09-28T10:30:57+00:00",
+  "n_snapshots": 24,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
-      "ticker": "AMZN",
-      "mentions": 2,
-      "sentiment": 0.024,
+      "ticker": "NVDA",
+      "mentions": 1,
+      "sentiment": 0.065,
       "bull_ratio": null,
       "score_sum": 0
     },
     {
       "ticker": "META",
       "mentions": 1,
-      "sentiment": 0.201,
+      "sentiment": 0.032,
       "bull_ratio": null,
       "score_sum": 0
     }
@@ -34,9 +34,9 @@
   "pressure": {
     "status": "accumulating",
     "by_ticker": {},
-    "n_snapshots": 23,
-    "latest_date": "2026-09-25",
+    "n_snapshots": 24,
+    "latest_date": "2026-09-28",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-09-25T11:41:19.087581+00:00"
+  "snapshot_ts": "2026-09-28T11:03:23.464190+00:00"
 }
