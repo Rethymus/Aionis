@@ -83,9 +83,12 @@ SessionStart hook OR Task Scheduler OR (report-only) cron automation
 ```
 
 - **Marker**: `data/ops/local_refresh_state.json` (gitignored). Same-evening
-  triggers after a success `SKIP:already-done`; a crash locks after 3 attempts
-  (`SKIP:attempt-cap`) until the next evening or human review; a stale
-  `running` marker (>90min) is treated as a crashed run and retried.
+  triggers after a success `SKIP:already-done` — but only if that run STARTED
+  at/after 18:00 local (round 102): a morning/midday catch-up fetches the
+  PREVIOUS session's data and must not suppress the evening lane (the 09-21
+  one-day gap). A crash locks after 3 attempts (`SKIP:attempt-cap`, failed
+  states only) until the next evening or human review; a stale `running`
+  marker (>90min, any date) is treated as a crashed run and retried.
 - **Missed fires are lost, not delayed** (host asleep at fire time — round-54
   lesson): the hook makes this near-moot (any session start in the window
   counts), and the 30-min cron covers "opened before 18:00, still open later".

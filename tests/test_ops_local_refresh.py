@@ -333,3 +333,50 @@ def test_strict_json_scan_flags_nan_and_passes_clean(tmp_path, monkeypatch) -> N
     problems = lane.strict_json_scan()
     names = [p.split(":")[0] for p in problems]
     assert names == ["bad.json"]
+
+
+# --- evening-completion rule (round 102): morning catch-up must not suppress
+#     the evening lane (the 09-21 one-day gap) -----------------------------------
+
+
+def _state_for(hour_started: int, status: str = "ok_committed",
+               attempts: int = 1) -> dict:
+    d = datetime(2026, 9, 21, hour_started, 0)
+    return {"date": "2026-09-21", "status": status, "attempts": attempts,
+            "commit": "abc", "n_files": 50, "soft_fails": [],
+            "started_at_epoch": d.timestamp()}
+
+
+def test_morning_catchup_does_not_suppress_evening_lane() -> None:
+    """The 09-21 incident: a 00:56 recovery marked the day done; the Monday
+    evening lane then skipped and the day's daytime filings went unfetched.
+    A pre-18:00 completion must fall through to RUN."""
+    evening = datetime(2026, 9, 21, 21, 0)
+    assert lane.guard_decision(evening, _state_for(0)) == "RUN"  # 00:56 start
+    assert lane.guard_decision(evening, _state_for(14)) == "RUN"  # midday
+
+
+def test_evening_start_counts_as_done() -> None:
+    evening = datetime(2026, 9, 21, 21, 0)
+    assert lane.guard_decision(evening, _state_for(18)) \
+        .startswith("SKIP:already-done")
+    assert lane.guard_decision(datetime(2026, 9, 21, 23, 59),
+                               _state_for(23)) \
+        .startswith("SKIP:already-done")  # late-evening start, same date
+
+
+def test_forced_premeighteen_start_reruns_in_evening() -> None:
+    """A 17:55 --force run predates the evening data window — the evening
+    lane must still run (its fetches supersede)."""
+    assert lane.guard_decision(datetime(2026, 9, 21, 20, 0),
+                               _state_for(17)) == "RUN"
+
+
+def test_attempt_cap_never_fires_on_successful_catchup() -> None:
+    """A catch-up that needed 4 attempts but SUCCEEDED (09-11 pattern) must
+    not trip the attempt cap when the evening falls through."""
+    state = _state_for(0, status="ok_committed", attempts=4)
+    assert lane.guard_decision(datetime(2026, 9, 21, 21, 0), state) == "RUN"
+    failed = _state_for(0, status="failed", attempts=3)
+    assert lane.guard_decision(datetime(2026, 9, 21, 21, 0),
+                               failed).startswith("SKIP:attempt-cap")

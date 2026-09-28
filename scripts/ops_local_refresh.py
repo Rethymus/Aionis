@@ -277,10 +277,25 @@ def guard_decision(now: datetime, state: dict) -> str:
     if state.get("date") == today:
         status = state.get("status")
         if status in ("ok_committed", "ok_nochange"):
-            return f"SKIP:already-done ({status}, commit={state.get('commit')})"
+            # Evening-completion rule (2026-09-28 round 102): only a run that
+            # STARTED at/after 18:00 local counts as "the evening lane ran".
+            # A morning/midday catch-up (e.g. the 09-21 00:56 recovery) fetches
+            # the PREVIOUS session's data and misses that day's daytime
+            # filings/macro/news — it must not suppress the evening run.
+            started = state.get("started_at_epoch", 0)
+            evening_started = (
+                not started  # legacy marker without epoch: keep old semantics
+                or datetime.fromtimestamp(started).hour >= WINDOW_OPEN_HOUR)
+            if evening_started:
+                return f"SKIP:already-done ({status}, commit={state.get('commit')})"
+            # Pre-18:00 completion (morning/midday catch-up): does NOT cover
+            # the evening data window — fall through to RUN so the evening
+            # Task Scheduler/hook fire refreshes the day's daytime deltas.
+            pass
         if status == "running":
             return "RUN"  # stale 'running' marker = crashed run; retry allowed
-        if int(state.get("attempts", 0)) >= MAX_ATTEMPTS_PER_EVENING:
+        if (status not in ("ok_committed", "ok_nochange")
+                and int(state.get("attempts", 0)) >= MAX_ATTEMPTS_PER_EVENING):
             return (f"SKIP:attempt-cap ({state.get('attempts')} failures today — "
                     "human review needed: runs/ops_local_refresh log")
     return "RUN"
