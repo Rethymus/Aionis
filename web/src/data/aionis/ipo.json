@@ -1,25 +1,25 @@
 {
   "status": "ok",
-  "as_of": "2026-09-25",
+  "as_of": "2026-09-29",
   "window": {
     "start": "2026-04-27",
-    "end": "2026-09-25"
+    "end": "2026-09-29"
   },
-  "issuers": 575,
-  "total": 1277,
+  "issuers": 585,
+  "total": 1298,
   "by_status": {
-    "filed": 1031,
-    "priced": 246
+    "filed": 1048,
+    "priced": 250
   },
   "by_form": {
-    "424B4": 246,
-    "S-1": 429,
-    "S-1/A": 602
+    "424B4": 250,
+    "S-1": 437,
+    "S-1/A": 611
   },
   "offer_price_parsed": 63,
   "offer_price_meta": {
     "target_cap_docs": 80,
-    "priced_filings": 246,
+    "priced_filings": 250,
     "newest_targeted": 80,
     "attempted": 80,
     "fetch_failed": 0,
@@ -29,16 +29,169 @@
       "low": 0,
       "none": 17
     },
-    "coverage_pct_of_priced": 25.6,
+    "coverage_pct_of_priced": 25.2,
     "requests": {
       "task_budget": 170,
-      "cumulative_walk": 209,
+      "cumulative_walk": 217,
       "walk_cap": 156,
-      "last_walk": 0
+      "last_walk": 8
     },
-    "target_as_of": "2026-09-24"
+    "target_as_of": "2026-09-28"
   },
   "filings": [
+    {
+      "company": "Bitari Inc",
+      "ticker": "BIAI",
+      "filed_date": "2026-09-29",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2091680/000118518526004385/0001185185-26-004385-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "MNBS Acquisition Corp.",
+      "ticker": "",
+      "filed_date": "2026-09-29",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2116517/000118518526004380/0001185185-26-004380-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Londonla Inc.",
+      "ticker": "",
+      "filed_date": "2026-09-28",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2146369/000209757026000030/0002097570-26-000030-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Sadot Group Inc.",
+      "ticker": "SDOT",
+      "filed_date": "2026-09-28",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1701756/000173112226001289/0001731122-26-001289-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "CitroTech Inc.",
+      "ticker": "CITR",
+      "filed_date": "2026-09-28",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/894556/000168316826007437/0001683168-26-007437-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Youmi Inc.",
+      "ticker": "",
+      "filed_date": "2026-09-28",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2137360/000152013826000397/0001520138-26-000397-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Orange Street Acquisition Corp",
+      "ticker": "",
+      "filed_date": "2026-09-28",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2155556/000149315226044503/0001493152-26-044503-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "SPECTRAL CAPITAL Corp",
+      "ticker": "FCCN",
+      "filed_date": "2026-09-28",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1131903/000121390026104117/0001213900-26-104117-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "HMH Holding Inc",
+      "ticker": "HMH",
+      "filed_date": "2026-09-28",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2021880/000119312526405527/0001193125-26-405527-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Calm Seas Acquisition Corp.",
+      "ticker": "",
+      "filed_date": "2026-09-28",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2154056/000119312526404122/0001193125-26-404122-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Encore Medical, Inc.",
+      "ticker": "EMI",
+      "filed_date": "2026-09-28",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1838003/000110465926111104/0001104659-26-111104-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Rent the Runway, Inc.",
+      "ticker": "RENT",
+      "filed_date": "2026-09-28",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1468327/000095010326014555/0000950103-26-014555-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "ROZE AI INC.",
+      "ticker": "ROZE",
+      "filed_date": "2026-09-28",
+      "form": "424B4",
+      "status": "priced",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2075335/000121390026104150/0001213900-26-104150-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "ADARx Pharmaceuticals, Inc.",
+      "ticker": "ADRX",
+      "filed_date": "2026-09-28",
+      "form": "424B4",
+      "status": "priced",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1802369/000119312526403094/0001193125-26-403094-index.htm",
+      "offer_price": 17.0
+    },
+    {
+      "company": "Regenlab USA Inc.",
+      "ticker": "",
+      "filed_date": "2026-09-25",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2084031/000182912626010431/0001829126-26-010431-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Elevation Acquisition Group Inc.",
+      "ticker": "ELEV",
+      "filed_date": "2026-09-25",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2131124/000149315226044388/0001493152-26-044388-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Ocean Power Technologies, Inc.",
+      "ticker": "OPTT",
+      "filed_date": "2026-09-25",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1378140/000149315226044343/0001493152-26-044343-index.htm",
+      "offer_price": null
+    },
     {
       "company": "INTERPACE BIOSCIENCES, INC.",
       "ticker": "",
@@ -47,6 +200,42 @@
       "status": "filed",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1054102/000149315226044208/0001493152-26-044208-index.htm",
       "offer_price": null
+    },
+    {
+      "company": "MED-X, INC.",
+      "ticker": "",
+      "filed_date": "2026-09-25",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1620704/000147793226005809/0001477932-26-005809-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "TCGX Acquisition Corp. II",
+      "ticker": "",
+      "filed_date": "2026-09-25",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2149916/000119312526402977/0001193125-26-402977-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Star Fashion Culture Holdings Ltd",
+      "ticker": "STFS",
+      "filed_date": "2026-09-25",
+      "form": "424B4",
+      "status": "priced",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2003061/000121390026103256/0001213900-26-103256-index.htm",
+      "offer_price": 0.8
+    },
+    {
+      "company": "Bluerock Acquisition Corp. II",
+      "ticker": "BRRK",
+      "filed_date": "2026-09-25",
+      "form": "424B4",
+      "status": "priced",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2098410/000110465926111049/0001104659-26-111049-index.htm",
+      "offer_price": 10.0
     },
     {
       "company": "Evmand Corp",
@@ -4240,7 +4429,7 @@
       "form": "424B4",
       "status": "priced",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2116230/000192998026000373/0001929980-26-000373-index.htm",
-      "offer_price": 10.0
+      "offer_price": null
     },
     {
       "company": "B&R Technology Merger Corp.",
@@ -4249,7 +4438,7 @@
       "form": "424B4",
       "status": "priced",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2131350/000119312526310471/0001193125-26-310471-index.htm",
-      "offer_price": 10.0
+      "offer_price": null
     },
     {
       "company": "PDS Biotechnology Corp",
@@ -4384,7 +4573,7 @@
       "form": "424B4",
       "status": "priced",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2060016/000121390026079442/0001213900-26-079442-index.htm",
-      "offer_price": 10.0
+      "offer_price": null
     },
     {
       "company": "Elements Ventures Group Inc.",
@@ -10649,197 +10838,8 @@
       "status": "filed",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1898718/000110465926054346/0001104659-26-054346-index.htm",
       "offer_price": null
-    },
-    {
-      "company": "Quantum Leap Acquisition Corp",
-      "ticker": "QLEP",
-      "filed_date": "2026-05-04",
-      "form": "424B4",
-      "status": "priced",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2102155/000121390026051150/0001213900-26-051150-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Quantum Leap Acquisition Corp",
-      "ticker": "QLEP",
-      "filed_date": "2026-05-04",
-      "form": "424B4",
-      "status": "priced",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2102155/000121390026051097/0001213900-26-051097-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "CH4 Natural Solutions Corp",
-      "ticker": "",
-      "filed_date": "2026-05-04",
-      "form": "424B4",
-      "status": "priced",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2044817/000119312526202944/0001193125-26-202944-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "DentonX Inc",
-      "ticker": "",
-      "filed_date": "2026-05-01",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2093375/000209337526000006/0002093375-26-000006-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Picard Medical, Inc.",
-      "ticker": "PMI",
-      "filed_date": "2026-05-01",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2030617/000182912626004376/0001829126-26-004376-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "FOCUS UNIVERSAL INC.",
-      "ticker": "FCUV",
-      "filed_date": "2026-05-01",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1590418/000168316826003417/0001683168-26-003417-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "CEL SCI CORP",
-      "ticker": "CVM",
-      "filed_date": "2026-05-01",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/725363/000165495426004295/0001654954-26-004295-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "HawkEye 360, Inc.",
-      "ticker": "HAWK",
-      "filed_date": "2026-05-01",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1750704/000162828026029373/0001628280-26-029373-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "AIAI Holdings Corp",
-      "ticker": "AIAI",
-      "filed_date": "2026-05-01",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2096362/000149315226020803/0001493152-26-020803-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "QumulusAI, Inc.",
-      "ticker": "QMLS",
-      "filed_date": "2026-05-01",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2084026/000143774926014458/0001437749-26-014458-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Lakewood-Amedex Biotherapeutics Inc.",
-      "ticker": "LABT",
-      "filed_date": "2026-05-01",
-      "form": "S-1",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2079272/000121390026050936/0001213900-26-050936-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Profusa, Inc.",
-      "ticker": "",
-      "filed_date": "2026-05-01",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1859807/000121390026050904/0001213900-26-050904-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Ealixir, Inc.",
-      "ticker": "EAXR",
-      "filed_date": "2026-05-01",
-      "form": "S-1",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/832370/000121390026050550/0001213900-26-050550-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Next Bridge Hydrocarbons, Inc.",
-      "ticker": "",
-      "filed_date": "2026-05-01",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1936756/000119983526000112/0001199835-26-000112-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Spire Global, Inc.",
-      "ticker": "SPIR",
-      "filed_date": "2026-05-01",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1816017/000119312526198662/0001193125-26-198662-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Transcode Therapeutics, Inc.",
-      "ticker": "RNAZ",
-      "filed_date": "2026-05-01",
-      "form": "S-1",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1829635/000110465926053289/0001104659-26-053289-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "SILVER BOW MINING CORP.",
-      "ticker": "SBMT",
-      "filed_date": "2026-05-01",
-      "form": "424B4",
-      "status": "priced",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2067674/000153949726001267/0001539497-26-001267-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Forefront Tech Holdings Acquisition Corp",
-      "ticker": "",
-      "filed_date": "2026-05-01",
-      "form": "424B4",
-      "status": "priced",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2097986/000121390026050604/0001213900-26-050604-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Seaport Therapeutics, Inc.",
-      "ticker": "SPTX",
-      "filed_date": "2026-05-01",
-      "form": "424B4",
-      "status": "priced",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2042347/000119312526201758/0001193125-26-201758-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Hemab Therapeutics Holdings, Inc.",
-      "ticker": "COAG",
-      "filed_date": "2026-05-01",
-      "form": "424B4",
-      "status": "priced",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2114044/000119312526201458/0001193125-26-201458-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "RRE Ventures Acquisition Corp.",
-      "ticker": "RREV",
-      "filed_date": "2026-05-01",
-      "form": "424B4",
-      "status": "priced",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2123969/000119312526199374/0001193125-26-199374-index.htm",
-      "offer_price": null
     }
   ],
   "methodology": "US IPO registration/pricing stream \u2014 SEC EDGAR EFTS whole-market form-level queries (public domain, 17 U.S.C. \u00a7105), fixed ~120-day window, filed-date point-in-time, one row per accession (an S-1/A amendment is a new filing, never a silent overwrite). Status is derived from the immutable form type: S-1 / S-1/A = filed (registration statement on file); 424B4 = priced (the statutory final prospectus under Securities Act Rule 424(b)(4) is filed after pricing \u2014 its appearance marks a priced offering). Offer price is a BOUNDED second-stage extraction, not full coverage: only the newest \u226480 priced (424B4) filings are walked politely (\u22652.1 s spacing, hard request budget disclosed in offer_price_meta.requests), their EDGAR index + primary document fetched, and the cover page regex-parsed with graded confidence \u2014 EXACT (single final printed price \u2192 exported), LOW (draft/range wording near the label \u2192 value withheld, counted, never guessed) and NO-MATCH; every unparsed row stays offer_price=null with its EDGAR index link. Share count, proceeds, and expected listing date are NOT extracted at any tier. Honest scope disclosures: (2) the 424B4 form-level catch includes priced follow-on offerings by already-listed issuers (e.g. S-3 shelf takedowns), not only first-day IPOs \u2014 this panel is the registration/pricing STREAM, not a curated IPO list; (3) no company-level state machine is applied (rows are filing-level). Ticker is parsed from the EDGAR display name where present; pre-symbol S-1 filers carry none (empty, never guessed). Counts are FILING counts, not company counts. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-09-28T11:03:08.264627+00:00"
+  "snapshot_ts": "2026-09-29T11:14:32.224453+00:00"
 }

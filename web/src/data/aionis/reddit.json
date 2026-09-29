@@ -10,23 +10,86 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-09-28T10:30:57+00:00",
-  "n_snapshots": 24,
+  "latest_snapshot_ts": "2026-09-29T10:35:34+00:00",
+  "n_snapshots": 25,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
       "ticker": "NVDA",
+      "mentions": 2,
+      "sentiment": 0.442,
+      "bull_ratio": 1.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "GOOG",
       "mentions": 1,
-      "sentiment": 0.065,
+      "sentiment": 0.815,
+      "bull_ratio": 1.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "UBER",
+      "mentions": 1,
+      "sentiment": 0.007,
       "bull_ratio": null,
       "score_sum": 0
     },
     {
-      "ticker": "META",
+      "ticker": "AVGO",
       "mentions": 1,
-      "sentiment": 0.032,
+      "sentiment": 0.815,
+      "bull_ratio": 1.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "AMZN",
+      "mentions": 1,
+      "sentiment": 0.815,
+      "bull_ratio": 1.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "MSFT",
+      "mentions": 1,
+      "sentiment": 0.815,
+      "bull_ratio": 1.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "AKAM",
+      "mentions": 1,
+      "sentiment": 0.815,
+      "bull_ratio": 1.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "CRWD",
+      "mentions": 1,
+      "sentiment": 0.013,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "FTNT",
+      "mentions": 1,
+      "sentiment": 0.013,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "PANW",
+      "mentions": 1,
+      "sentiment": 0.013,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "ORCL",
+      "mentions": 1,
+      "sentiment": -0.323,
       "bull_ratio": null,
       "score_sum": 0
     }
@@ -34,9 +97,9 @@
   "pressure": {
     "status": "accumulating",
     "by_ticker": {},
-    "n_snapshots": 24,
-    "latest_date": "2026-09-28",
+    "n_snapshots": 25,
+    "latest_date": "2026-09-29",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-09-28T11:03:23.464190+00:00"
+  "snapshot_ts": "2026-09-29T11:14:47.072591+00:00"
 }
