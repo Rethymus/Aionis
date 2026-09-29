@@ -1,12 +1,12 @@
 {
   "status": "ok",
-  "as_of": "2026-09-25",
+  "as_of": "2026-09-28",
   "window": {
     "start": "2026-05-01",
-    "end": "2026-09-25"
+    "end": "2026-09-28"
   },
   "issuers": 50,
-  "total": 237,
+  "total": 238,
   "unclassified": 9,
   "by_category": {
     "agreement_termination": 1,
@@ -18,7 +18,7 @@
     "major_agreement": 5,
     "merger_completion": 1,
     "officer_changes": 53,
-    "other": 2,
+    "other": 3,
     "other_events": 35,
     "reg_fd": 20,
     "results": 64,
@@ -27,6 +27,17 @@
     "vote_results": 24
   },
   "events": [
+    {
+      "ticker": "AMD",
+      "company": "ADVANCED MICRO DEVICES INC",
+      "filing_date": "2026-09-28",
+      "form": "8-K",
+      "items": [
+        "3.02"
+      ],
+      "category": "other",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000182/amd-20260926.htm"
+    },
     {
       "ticker": "XOM",
       "company": "ExxonMobil Holdings Corp",
@@ -2867,5 +2878,5 @@
     }
   ],
   "methodology": "SEC Form 8-K current reports \u2014 the legally mandated material-event disclosure (public domain, 17 U.S.C. \u00a7105), due within 4 business days of the event. Panel streams a bounded 50 large-cap issuer set (5 mega-cap seed + v2 20 + v3 25 across financials, payments, healthcare, staples, energy, industrials, tech/comm \u2014 breadth expansions 2026-08-22; still bounded, NOT full market; XOM carries both its pre-succession CIK and the 2026-07-01 8-K12B successor entity) since 2026-05-01; each row links the EDGAR primary document. Items are regex-extracted from the primary doc (nbsp/thin-space entities normalized) and mapped to ONE category by a rare-material-first precedence (delisting > merger completion > control change > non-reliance > officer changes > ... > exhibits); the full item list is preserved per row. Documents whose items cannot be extracted are counted as unclassified \u2014 never guessed. Filing-date point-in-time; 8-K/A amendments are new accessions (immutable). Display-only, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-09-28T11:03:08.009025+00:00"
+  "snapshot_ts": "2026-09-29T11:14:31.972661+00:00"
 }
