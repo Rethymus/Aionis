@@ -1,20 +1,20 @@
 {
   "status": "ok",
-  "as_of": "2026-09-29",
+  "as_of": "2026-09-30",
   "window": {
     "start": "2026-04-27",
-    "end": "2026-09-29"
+    "end": "2026-09-30"
   },
   "issuers": 585,
-  "total": 1298,
+  "total": 1301,
   "by_status": {
-    "filed": 1048,
+    "filed": 1051,
     "priced": 250
   },
   "by_form": {
     "424B4": 250,
     "S-1": 437,
-    "S-1/A": 611
+    "S-1/A": 614
   },
   "offer_price_parsed": 63,
   "offer_price_meta": {
@@ -34,11 +34,38 @@
       "task_budget": 170,
       "cumulative_walk": 217,
       "walk_cap": 156,
-      "last_walk": 8
+      "last_walk": 0
     },
     "target_as_of": "2026-09-28"
   },
   "filings": [
+    {
+      "company": "SPACCircle Acquisition Corp.",
+      "ticker": "SCQC",
+      "filed_date": "2026-09-30",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2131303/000118518526004412/0001185185-26-004412-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Pine Tree Acquisition Corp.",
+      "ticker": "",
+      "filed_date": "2026-09-29",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2076561/000147793226005904/0001477932-26-005904-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Velos Acquisition I Corp.",
+      "ticker": "",
+      "filed_date": "2026-09-29",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2016072/000121390026104746/0001213900-26-104746-index.htm",
+      "offer_price": null
+    },
     {
       "company": "Bitari Inc",
       "ticker": "BIAI",
@@ -10811,35 +10838,8 @@
       "status": "filed",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1736243/000110465926054887/0001104659-26-054887-index.htm",
       "offer_price": null
-    },
-    {
-      "company": "Acurx Pharmaceuticals, Inc.",
-      "ticker": "ACXP",
-      "filed_date": "2026-05-04",
-      "form": "S-1",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1736243/000110465926054884/0001104659-26-054884-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Akston Biosciences Corp",
-      "ticker": "",
-      "filed_date": "2026-05-04",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1776612/000110465926054475/0001104659-26-054475-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "GMR Solutions Inc.",
-      "ticker": "GMRS",
-      "filed_date": "2026-05-04",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1898718/000110465926054346/0001104659-26-054346-index.htm",
-      "offer_price": null
     }
   ],
   "methodology": "US IPO registration/pricing stream \u2014 SEC EDGAR EFTS whole-market form-level queries (public domain, 17 U.S.C. \u00a7105), fixed ~120-day window, filed-date point-in-time, one row per accession (an S-1/A amendment is a new filing, never a silent overwrite). Status is derived from the immutable form type: S-1 / S-1/A = filed (registration statement on file); 424B4 = priced (the statutory final prospectus under Securities Act Rule 424(b)(4) is filed after pricing \u2014 its appearance marks a priced offering). Offer price is a BOUNDED second-stage extraction, not full coverage: only the newest \u226480 priced (424B4) filings are walked politely (\u22652.1 s spacing, hard request budget disclosed in offer_price_meta.requests), their EDGAR index + primary document fetched, and the cover page regex-parsed with graded confidence \u2014 EXACT (single final printed price \u2192 exported), LOW (draft/range wording near the label \u2192 value withheld, counted, never guessed) and NO-MATCH; every unparsed row stays offer_price=null with its EDGAR index link. Share count, proceeds, and expected listing date are NOT extracted at any tier. Honest scope disclosures: (2) the 424B4 form-level catch includes priced follow-on offerings by already-listed issuers (e.g. S-3 shelf takedowns), not only first-day IPOs \u2014 this panel is the registration/pricing STREAM, not a curated IPO list; (3) no company-level state machine is applied (rows are filing-level). Ticker is parsed from the EDGAR display name where present; pre-symbol S-1 filers carry none (empty, never guessed). Counts are FILING counts, not company counts. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-09-29T11:14:32.224453+00:00"
+  "snapshot_ts": "2026-09-30T10:56:42.310134+00:00"
 }
