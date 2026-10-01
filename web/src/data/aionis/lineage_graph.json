@@ -1,14 +1,14 @@
 {
  "status": "ok",
- "as_of": "2026-09-29",
+ "as_of": "2026-10-01",
  "source_panels": [
   "form13f",
   "def14a_persons",
   "stakes_13g",
   "smart_money"
  ],
- "n_nodes": 149,
- "n_edges": 816,
+ "n_nodes": 156,
+ "n_edges": 824,
  "nodes": [
   {
    "id": "i:0000807249",
@@ -360,7 +360,7 @@
    "degree": {
     "co_hold": 41,
     "co_board": 0,
-    "co_target": 2
+    "co_target": 3
    }
   },
   {
@@ -733,9 +733,9 @@
    }
   },
   {
-   "id": "p:ADIL ENGINEER",
+   "id": "p:ADAM M. BAUMANN CHIEF",
    "type": "person",
-   "label": "Adil Engineer",
+   "label": "Adam M. Baumann Chief",
    "zh_label": null,
    "lanes": [
     "def14a"
@@ -813,22 +813,6 @@
    }
   },
   {
-   "id": "p:ALISTAIR N. SPORCK",
-   "type": "person",
-   "label": "Alistair N. Sporck",
-   "zh_label": null,
-   "lanes": [
-    "def14a"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 1,
-    "co_target": 0
-   }
-  },
-  {
    "id": "p:ANDERSON CHIEF FINANCIAL OFFICER",
    "type": "person",
    "label": "Anderson Chief Financial Officer",
@@ -873,6 +857,22 @@
    "degree": {
     "co_hold": 0,
     "co_board": 3,
+    "co_target": 0
+   }
+  },
+  {
+   "id": "p:ANDREW D. REGRUT VICE",
+   "type": "person",
+   "label": "Andrew D. Regrut Vice",
+   "zh_label": null,
+   "lanes": [
+    "def14a"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 1,
     "co_target": 0
    }
   },
@@ -1161,23 +1161,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 10
-   }
-  },
-  {
-   "id": "s:ACORN BIOVENTURES, L.P.",
-   "type": "staker",
-   "label": "ACORN BIOVENTURES, L.P.",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
+    "co_target": 11
    }
   },
   {
@@ -1389,6 +1373,22 @@
    }
   },
   {
+   "id": "s:DANIEL NISSIM",
+   "type": "staker",
+   "label": "Daniel Nissim",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 2
+   }
+  },
+  {
    "id": "s:DENHAM MINING GP LLC",
    "type": "staker",
    "label": "Denham Mining GP LLC",
@@ -1549,6 +1549,38 @@
    }
   },
   {
+   "id": "s:HERZFELD ERIK MERVIN",
+   "type": "staker",
+   "label": "Herzfeld Erik Mervin",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
+   }
+  },
+  {
+   "id": "s:HERZFELD THOMAS J",
+   "type": "staker",
+   "label": "HERZFELD THOMAS J",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
+   }
+  },
+  {
    "id": "s:HEWLETT FUND LP",
    "type": "staker",
    "label": "Hewlett Fund LP",
@@ -1613,9 +1645,9 @@
    }
   },
   {
-   "id": "s:INTEGRATED CORE STRATEGIES (US) LLC",
+   "id": "s:INVEST PRO SHUKAI HON LTD.",
    "type": "staker",
-   "label": "INTEGRATED CORE STRATEGIES (US) LLC",
+   "label": "Invest Pro Shukai Hon Ltd.",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1625,7 +1657,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 1
+    "co_target": 2
    }
   },
   {
@@ -1690,6 +1722,22 @@
     "co_hold": 0,
     "co_board": 0,
     "co_target": 1
+   }
+  },
+  {
+   "id": "s:L.I.A. PURE CAPITAL LTD",
+   "type": "staker",
+   "label": "L.I.A. Pure Capital Ltd",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 2
    }
   },
   {
@@ -1853,6 +1901,22 @@
    }
   },
   {
+   "id": "s:NEUBERGER BERMAN GROUP LLC",
+   "type": "staker",
+   "label": "Neuberger Berman Group LLC",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
+   }
+  },
+  {
    "id": "s:NEW ENTERPRISE ASSOCIATES 13 LP",
    "type": "staker",
    "label": "NEW ENTERPRISE ASSOCIATES 13 LP",
@@ -1962,6 +2026,22 @@
     "co_hold": 0,
     "co_board": 0,
     "co_target": 1
+   }
+  },
+  {
+   "id": "s:POSEN JOSEPH MICHAEL",
+   "type": "staker",
+   "label": "Posen Joseph Michael",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 3
    }
   },
   {
@@ -2169,7 +2249,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 2
+    "co_target": 3
    }
   },
   {
@@ -2202,6 +2282,22 @@
     "co_hold": 0,
     "co_board": 0,
     "co_target": 3
+   }
+  },
+  {
+   "id": "s:TRANSOM CAPITAL PUBLIC FUND, LP",
+   "type": "staker",
+   "label": "Transom Capital Public Fund, LP",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
    }
   },
   {
@@ -2253,6 +2349,22 @@
    }
   },
   {
+   "id": "s:VERADACE CAPITAL MANAGEMENT LLC",
+   "type": "staker",
+   "label": "Veradace Capital Management LLC",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
+   }
+  },
+  {
    "id": "s:WAGNER MENACHEM",
    "type": "staker",
    "label": "Wagner Menachem",
@@ -2265,7 +2377,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 2
+    "co_target": 3
    }
   },
   {
@@ -2451,14 +2563,14 @@
    "truncated": false
   },
   {
-   "a": "p:ADIL ENGINEER",
-   "b": "p:ALISTAIR N. SPORCK",
+   "a": "p:ADAM M. BAUMANN CHIEF",
+   "b": "p:ANDREW D. REGRUT VICE",
    "type": "co_board",
    "w": 1,
    "shared": [
     {
-     "company": "AEHR TEST SYSTEMS",
-     "tk": "AEHR"
+     "company": "Kimball Electronics, Inc.",
+     "tk": "KE"
     }
    ],
    "truncated": false
@@ -23377,6 +23489,20 @@
    "truncated": false
   },
   {
+   "a": "i:0001273087",
+   "b": "s:NEUBERGER BERMAN GROUP LLC",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "AMERISAFE INC",
+     "tk": "AMSF",
+     "forms": "SC 13G|SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
    "a": "i:0001697748",
    "b": "s:FMR LLC",
    "type": "co_target",
@@ -23509,6 +23635,20 @@
   },
   {
    "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+   "b": "s:POSEN JOSEPH MICHAEL",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Nuran Wireless Inc.",
+     "tk": "NUR",
+     "forms": "SC 13G"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
    "b": "s:STARLINK CAPITAL LLC",
    "type": "co_target",
    "w": 1,
@@ -23531,20 +23671,6 @@
      "target": "Nuran Wireless Inc.",
      "tk": "NUR",
      "forms": "SC 13G"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:ACORN BIOVENTURES, L.P.",
-   "b": "s:INTEGRATED CORE STRATEGIES (US) LLC",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Karyopharm Therapeutics Inc.",
-     "tk": "KPTI",
-     "forms": "SC 13G|SC 13G/A"
     }
    ],
    "truncated": false
@@ -23775,6 +23901,34 @@
    "truncated": false
   },
   {
+   "a": "s:DANIEL NISSIM",
+   "b": "s:INVEST PRO SHUKAI HON LTD.",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "IM Cannabis Corp.",
+     "tk": "IMCC",
+     "forms": "SC 13G"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:DANIEL NISSIM",
+   "b": "s:L.I.A. PURE CAPITAL LTD",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "IM Cannabis Corp.",
+     "tk": "IMCC",
+     "forms": "SC 13G"
+    }
+   ],
+   "truncated": false
+  },
+  {
    "a": "s:DENHAM MINING GP LLC",
    "b": "s:EMG FUND V SVRE HOLDINGS, LLC",
    "type": "co_target",
@@ -23873,6 +24027,20 @@
    "truncated": false
   },
   {
+   "a": "s:HERZFELD ERIK MERVIN",
+   "b": "s:HERZFELD THOMAS J",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Herzfeld Credit Income Fund, Inc",
+     "tk": "HERZ",
+     "forms": "SC 13D/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
    "a": "s:HEWLETT FUND LP",
    "b": "s:RAINFOREST PARTNERS, LLC",
    "type": "co_target",
@@ -23924,6 +24092,20 @@
      "target": "Zenas BioPharma, Inc.",
      "tk": "ZBIO",
      "forms": "SC 13G|SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:INVEST PRO SHUKAI HON LTD.",
+   "b": "s:L.I.A. PURE CAPITAL LTD",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "IM Cannabis Corp.",
+     "tk": "IMCC",
+     "forms": "SC 13G"
     }
    ],
    "truncated": false
@@ -24153,6 +24335,34 @@
    "truncated": false
   },
   {
+   "a": "s:POSEN JOSEPH MICHAEL",
+   "b": "s:STARLINK CAPITAL LLC",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Nuran Wireless Inc.",
+     "tk": "NUR",
+     "forms": "SC 13G"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:POSEN JOSEPH MICHAEL",
+   "b": "s:WAGNER MENACHEM",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Nuran Wireless Inc.",
+     "tk": "NUR",
+     "forms": "SC 13G"
+    }
+   ],
+   "truncated": false
+  },
+  {
    "a": "s:REDA JOSEPH",
    "b": "s:SEG OPPORTUNITY FUND, LLC",
    "type": "co_target",
@@ -24223,6 +24433,20 @@
    "truncated": false
   },
   {
+   "a": "s:TRANSOM CAPITAL PUBLIC FUND, LP",
+   "b": "s:VERADACE CAPITAL MANAGEMENT LLC",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "SOUNDTHINKING, INC.",
+     "tk": "SSTI",
+     "forms": "SC 13D|SC 13D/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
    "a": "s:TRUMP DONALD J. JR",
    "b": "s:TRUMP ERIC",
    "type": "co_target",
@@ -24249,6 +24473,20 @@
     "managers": 2,
     "persons": 3,
     "stakers": 0
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "ARX",
+   "name": "Accelerant Holdings",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
    },
    "stock_routable": false
   },
@@ -24307,6 +24545,20 @@
     "stakers": 1
    },
    "stock_routable": false
+  },
+  {
+   "tk": "CHTR",
+   "name": "CHARTER COMMUNICATIONS, INC. /MO/",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 2,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": true
   },
   {
    "tk": "DT",
@@ -24421,6 +24673,34 @@
    "stock_routable": false
   },
   {
+   "tk": "HUT",
+   "name": "Hut 8 Corp.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 5,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "INDV",
+   "name": "Indivior Pharmaceuticals, Inc.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
    "tk": "LAZ",
    "name": "Lazard, Inc.",
    "in": [
@@ -24505,20 +24785,6 @@
    "stock_routable": true
   },
   {
-   "tk": "NAMS",
-   "name": "NewAmsterdam Pharma Co N.V.",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 2,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
-  },
-  {
    "tk": "NVMI",
    "name": "NOVA LTD.",
    "in": [
@@ -24589,6 +24855,20 @@
    "stock_routable": false
   },
   {
+   "tk": "SLE",
+   "name": "Super League Enterprise, Inc.",
+   "in": [
+    "def14a",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 0,
+    "persons": 1,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
    "tk": "STRL",
    "name": "STERLING INFRASTRUCTURE, INC.",
    "in": [
@@ -24633,20 +24913,6 @@
   {
    "tk": "THC",
    "name": "TENET HEALTHCARE CORP",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 1,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
-  },
-  {
-   "tk": "TNC",
-   "name": "TENNANT CO",
    "in": [
     "13f",
     "13dg"
@@ -24828,18 +25094,18 @@
   }
  ],
  "components": {
-  "n": 39,
-  "largest": 57
+  "n": 41,
+  "largest": 59
  },
  "windows": {
   "form13f_quarter": "2026-06-30",
   "stakes_visible_dates": {
    "start": "2026-09-04",
-   "end": "2026-09-29"
+   "end": "2026-09-30"
   },
   "smart_money_visible_dates": {
-   "start": "2026-09-21",
-   "end": "2026-09-29"
+   "start": "2026-09-23",
+   "end": "2026-09-30"
   }
  },
  "coverage": {
@@ -24849,7 +25115,7 @@
    "isolated_managers": 0
   },
   "def14a": {
-   "basis": "top_persons export: 50 most-seated of 709 upstream persons; 114/150 filings with persons (76.0%)",
+   "basis": "top_persons export: 50 most-seated of 739 upstream persons; 115/150 filings with persons (76.7%)",
    "same_name_merges_possible": true
   },
   "13dg": {
@@ -24858,5 +25124,5 @@
   }
  },
  "methodology": "Force-camp relationship graph DERIVED at export time from four COMMITTED panels (form13f x def14a_persons x stakes_13g union smart_money) \u2014 zero new fetches, display-only. Edges are pairwise projections over as-filed disclosure facts: co_hold = two curated managers' VISIBLE BOOKS (latest quarter, up to 50 positions each; the full books are larger) share a position key (ticker, else CUSIP); co_board = two proxy-statement top persons seat the same company (exact company-name match resolves the ticker); co_target = two different filers INDEPENDENTLY SEPARATELY FILED stakes converging on the same target issuer within the visible SC 13D/13G windows. Identity rule: a window filer merges into an institution node ONLY when its trimmed-uppercase name equals a curated manager's name exactly \u2014 no fuzzy matching, no name list. The three overlaps are factual coincidences of separate filings: joint filings stay verbatim (members NOT DECOMPOSED), no COORDINATION is implied and no consortium claim is made. Weights are integer counts of shared items (lists capped at 8, truncated flag set beyond). Coverage is bounded by construction \u2014 see the coverage.basis strings (visible books, a 50-person proxy export over the newest filings, latest filing windows only). A restatement of public SEC EDGAR disclosures only: NO PRICES, NO RETURNS, no performance claims; never part of any OOS pipeline.",
- "snapshot_ts": "2026-09-30T10:57:11.106290+00:00"
+ "snapshot_ts": "2026-10-01T10:57:28.897692+00:00"
 }

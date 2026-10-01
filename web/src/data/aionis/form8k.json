@@ -1,12 +1,12 @@
 {
   "status": "ok",
-  "as_of": "2026-09-29",
+  "as_of": "2026-09-30",
   "window": {
     "start": "2026-05-01",
-    "end": "2026-09-29"
+    "end": "2026-09-30"
   },
   "issuers": 50,
-  "total": 239,
+  "total": 240,
   "unclassified": 9,
   "by_category": {
     "agreement_termination": 2,
@@ -21,12 +21,24 @@
     "other": 3,
     "other_events": 35,
     "reg_fd": 20,
-    "results": 64,
+    "results": 65,
     "security_terms": 4,
     "unclassified": 9,
     "vote_results": 24
   },
   "events": [
+    {
+      "ticker": "MU",
+      "company": "MICRON TECHNOLOGY INC",
+      "filing_date": "2026-09-30",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000018/mu-20260930.htm"
+    },
     {
       "ticker": "TSLA",
       "company": "Tesla, Inc.",
@@ -2892,5 +2904,5 @@
     }
   ],
   "methodology": "SEC Form 8-K current reports \u2014 the legally mandated material-event disclosure (public domain, 17 U.S.C. \u00a7105), due within 4 business days of the event. Panel streams a bounded 50 large-cap issuer set (5 mega-cap seed + v2 20 + v3 25 across financials, payments, healthcare, staples, energy, industrials, tech/comm \u2014 breadth expansions 2026-08-22; still bounded, NOT full market; XOM carries both its pre-succession CIK and the 2026-07-01 8-K12B successor entity) since 2026-05-01; each row links the EDGAR primary document. Items are regex-extracted from the primary doc (nbsp/thin-space entities normalized) and mapped to ONE category by a rare-material-first precedence (delisting > merger completion > control change > non-reliance > officer changes > ... > exhibits); the full item list is preserved per row. Documents whose items cannot be extracted are counted as unclassified \u2014 never guessed. Filing-date point-in-time; 8-K/A amendments are new accessions (immutable). Display-only, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-09-30T10:56:42.056384+00:00"
+  "snapshot_ts": "2026-10-01T10:57:13.536643+00:00"
 }
