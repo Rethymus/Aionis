@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-02 (轮 113) cv 扩展双 null：dashboard 无天花板、market containment 微害——技术边界入册
+
+同款 A/B 闭环：dashboard 本地 TBT 220ms（线上 2.2s 是 redirect+网络）=前置 null 不动；market 尾部宏区包裹实测 TBT +~20%（1.5-1.7s→1.9-2.1s）、主线程持平 10s=recharts 脚本密集，cv 不可及且 containment 自身加负→回滚留档。与 atlas -45% 合并划界：布局/绘制密集页适用，脚本密集页不适用。审计报告 §113 追加+证据截图归档 reports/audits/2026-10-02-lighthouse-evidence/（3ca119f85）。边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-02 (轮 112) Lighthouse+WCAG 审计四修复：atlas a11y 89→100、TBT -32%（线上）
 
 Edge headless Lighthouse 审计线上 4 页（SEO 全 100=轮 111 sitemap 生效）→ 修复：frost 滑条装饰化（aria-required-attr）/浅色对比度令牌 #555555+#6f6f6f+10 处摘 alpha（color-contrast 4.36→过 AA）/trust-ribbon 内容即名（label-content-name）/atlas 下折三区块 content-visibility（A/B 实测 TBT -45% 本地、-32% 线上 4820→3280ms；§4 全页捕获零吞内容）。线上终验 atlas a11y 100/perf 60、dashboard 100 零失败。查过不修：home LCP 5.8s=`/` redirect 壳（产品决策入 backlog）；深色未成像但令牌零改动；3 存量 lint warning 未触碰。报告：reports/audits/2026-10-02-lighthouse-wcag-audit.md。边界：display lane；0 ledger/0 frozen/0 OOS。
