@@ -2,12 +2,18 @@
 
 import { useEffect, useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import dynamic from "next/dynamic";
 import { CalibrationView } from "@/components/calibration/calibration-view";
-import { PowerFloorView } from "@/components/powerfloor/power-floor-view";
-import { ModelHealthView } from "@/components/model-health/model-health-view";
-import { DisciplineView } from "@/components/discipline/discipline-view";
-import { EvidenceView } from "@/components/evidence/evidence-view";
-import { ThemeSlice } from "@/components/themes/theme-slice";
+// Round 121: only the ACTIVE tab renders into the DOM (Radix TabsContent),
+// but every view's module graph still shipped in the initial bundle. The
+// default tab keeps its static import (SSR content intact); the rest split
+// into per-tab chunks loaded on first activation — SSR loses nothing
+// (inactive tabs never had SSR output). Same for /regime.
+const PowerFloorView = dynamic(() => import("@/components/powerfloor/power-floor-view").then(m => m.PowerFloorView));
+const ModelHealthView = dynamic(() => import("@/components/model-health/model-health-view").then(m => m.ModelHealthView));
+const DisciplineView = dynamic(() => import("@/components/discipline/discipline-view").then(m => m.DisciplineView));
+const EvidenceView = dynamic(() => import("@/components/evidence/evidence-view").then(m => m.EvidenceView));
+const ThemeSlice = dynamic(() => import("@/components/themes/theme-slice").then(m => m.ThemeSlice));
 import { SegmentHeader } from "@/components/segment-header";
 import { StickyTabs } from "@/components/sticky-tabs";
 import { AiAttributionCard } from "@/components/ai/attribution-card";

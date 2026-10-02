@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import dynamic from "next/dynamic";
 import { MarketView } from "@/components/market/market-view";
-import { PositioningView } from "@/components/positioning/positioning-view";
-import { TacoView } from "@/components/taco/taco-view";
-import { MacroRegimeChart } from "@/components/themes/macro-regime-chart";
+// Round 121 per-tab split (see /track comment): default tab stays static.
+const PositioningView = dynamic(() => import("@/components/positioning/positioning-view").then(m => m.PositioningView));
+const TacoView = dynamic(() => import("@/components/taco/taco-view").then(m => m.TacoView));
+const MacroRegimeChart = dynamic(() => import("@/components/themes/macro-regime-chart").then(m => m.MacroRegimeChart));
 import { SegmentHeader } from "@/components/segment-header";
 import { StickyTabs } from "@/components/sticky-tabs";
 import { aionis } from "@/data/aionis";
