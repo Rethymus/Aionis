@@ -380,3 +380,71 @@ def test_attempt_cap_never_fires_on_successful_catchup() -> None:
     failed = _state_for(0, status="failed", attempts=3)
     assert lane.guard_decision(datetime(2026, 9, 21, 21, 0),
                                failed).startswith("SKIP:attempt-cap")
+
+
+# --- push-only recovery (round 104; 09-25 incident evidence) ---------------------
+
+
+def test_push_only_recovery_pushes_existing_commit(monkeypatch) -> None:
+    """Previous attempt committed but its push hit a transient network error:
+    the retry must push the EXISTING commit instead of re-running the
+    pipeline (the 09-25 incident wasted a full hour re-fetching)."""
+    calls = []
+
+    def _git(args, check=True):
+        calls.append(args[0])
+        if args[:2] == ["log", "--oneline"]:
+            return subprocess.CompletedProcess(
+                args, 0,
+                "abc1234 chore(data): evening terminal refresh — 2026-10-01", "")
+        if args[0] == "rev-parse":
+            return subprocess.CompletedProcess(args, 0, "abc1234" * 8, "")
+        return subprocess.CompletedProcess(args, 0, "", "")
+
+    monkeypatch.setattr(lane, "git", _git)
+    fh = None
+    assert lane.try_push_only_recovery(
+        "failed", "push failed: RPC failed; curl 16", fh) == "ok_committed"
+    assert ["log", "pull", "push", "rev-parse"] == calls
+
+
+def test_push_only_recovery_not_applicable_variants(monkeypatch) -> None:
+    def _git(args, check=True):
+        return subprocess.CompletedProcess(args, 0, "", "")
+
+    monkeypatch.setattr(lane, "git", _git)
+    # different failure class -> full pipeline
+    assert lane.try_push_only_recovery(
+        "failed", "hard-fail step 'export_terminal_data'", None) is None
+    # no unpushed commits -> full pipeline
+    assert lane.try_push_only_recovery(
+        "failed", "push failed: whatever", None) is None
+    # unpushed commits must ALL be lane commits (mixed tree -> full pipeline)
+    mixed = "abc1 chore(data): evening terminal refresh — x\ndef2 feat(other): y"
+
+    def _git_mixed(args, check=True):
+        return subprocess.CompletedProcess(args, 0, mixed, "")
+
+    monkeypatch.setattr(lane, "git", _git_mixed)
+    assert lane.try_push_only_recovery(
+        "failed", "push failed: whatever", None) is None
+
+
+def test_push_only_recovery_push_failure_raises(monkeypatch) -> None:
+    class _R:
+        returncode = 1
+        stdout = ""
+        stderr = "boom"
+
+    def _git(args, check=True):
+        if args[0] == "push":
+            return _R()
+        if args[:2] == ["log", "--oneline"]:
+            return subprocess.CompletedProcess(
+                args, 0, "abc1234 chore(data): evening terminal refresh — d", "")
+        return subprocess.CompletedProcess(args, 0, "", "")
+
+    monkeypatch.setattr(lane, "git", _git)
+    import pytest as _pytest
+    with _pytest.raises(RuntimeError):
+        lane.try_push_only_recovery("failed", "push failed: net", None)

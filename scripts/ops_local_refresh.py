@@ -457,6 +457,49 @@ def verify_publish_triggered() -> str:
 
 # ------------------------------------------------------------------------- main
 
+LANE_COMMIT_PREFIX = "chore(data): evening terminal refresh"
+
+
+def _unpushed_lane_commits() -> list[str]:
+    """Local commits on main not on origin/main that are ALL lane commits."""
+    lines = [ln.strip() for ln in git(
+        ["log", "--oneline", "origin/main..HEAD"], check=False).stdout.splitlines()
+        if ln.strip()]
+    ok = [ln for ln in lines if ln.split(" ", 1)[-1].startswith(LANE_COMMIT_PREFIX)]
+    return ok if len(ok) == len(lines) and ok else []
+
+
+def try_push_only_recovery(prev_status: str, prev_error: str, fh):
+    """When the previous attempt failed ONLY at push (transient network, e.g.
+    the 2026-09-25 HTTP/2 disconnect) and its commit is still unpushed, a full
+    pipeline retry wastes ~an hour re-fetching what is already committed and
+    gate-verified — recover by pushing the existing commit(s).
+
+    Returns 'ok_committed' on success, 'failed' on push failure (do_run's
+    normal failure path applies), or None when not applicable (fall through
+    to the full pipeline)."""
+    if prev_status != "failed" or "push failed" not in prev_error:
+        return None
+    unpushed = _unpushed_lane_commits()
+    if not unpushed:
+        return None
+    log(f"push-only recovery: {len(unpushed)} committed-but-unpushed lane "
+        "commit(s) from the previous attempt — retrying push only", fh)
+    pull = git(["pull", "--rebase", "--autostash", "origin", "main"], check=False)
+    if pull.returncode != 0:
+        log(f"push-only recovery: pull --rebase failed "
+            f"({(pull.stdout + pull.stderr)[-200:]}) — falling back to full run",
+            fh)
+        return None
+    push = git(["push", "origin", "main"], check=False)
+    if push.returncode != 0:
+        raise RuntimeError(
+            f"push failed: {(push.stdout + push.stderr)[-500:]}")
+    sha = git(["rev-parse", "HEAD"]).stdout.strip()
+    log(f"push-only recovery: pushed {sha[:9]} — no re-fetch needed", fh)
+    return "ok_committed"
+
+
 def do_run(force: bool) -> int:
     now = datetime.now()
     state = load_state()
@@ -468,6 +511,7 @@ def do_run(force: bool) -> int:
         log(f"--force: overriding guard decision '{decision}'", None)
 
     today = now.strftime("%Y-%m-%d")
+    prev_status, prev_error = state.get("status"), str(state.get("error", ""))
     attempts = state.get("attempts", 0) + 1 if state.get("date") == today else 1
     day_dir = LOG_DIR / today
     day_dir.mkdir(parents=True, exist_ok=True)
@@ -480,6 +524,22 @@ def do_run(force: bool) -> int:
         t0 = time.time()
         soft_fails: list[str] = []
         try:
+            recovered = try_push_only_recovery(prev_status, prev_error, fh)
+            if recovered == "ok_committed":
+                sha = git(["rev-parse", "HEAD"]).stdout.strip()
+                state.update({"status": "ok_committed", "commit": sha,
+                              "pushed": True, "n_files": None,
+                              "push_only_recovery": True,
+                              "soft_fails": [],
+                              "finished_at": datetime.now().isoformat()})
+                save_state(state)
+                summary = {"date": today, "status": "ok_committed",
+                           "commit": sha, "pushed": True,
+                           "push_only_recovery": True, "soft_fails": [],
+                           "wall_minutes": round((time.time() - t0) / 60, 1)}
+                log(f"SUMMARY {json.dumps(summary, ensure_ascii=False)}", fh)
+                print(f"SUMMARY {json.dumps(summary, ensure_ascii=False)}")
+                return 0
             for step in STEPS:
                 if step["name"].startswith("json validity"):
                     problems = strict_json_scan()
