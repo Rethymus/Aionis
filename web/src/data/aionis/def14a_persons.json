@@ -1,28 +1,28 @@
 {
   "status": "ok",
-  "as_of": "2026-10-01",
+  "as_of": "2026-10-02",
   "n_filings_target": 150,
   "n_filings_processed": 150,
-  "n_with_persons": 115,
-  "coverage_pct": 76.7,
-  "n_persons_distinct": 739,
+  "n_with_persons": 117,
+  "coverage_pct": 78.0,
+  "n_persons_distinct": 726,
   "by_role": {
-    "ceo": 181,
+    "ceo": 173,
     "cfo": 93,
     "coo": 40,
     "cto": 7,
-    "chairman": 140,
-    "president": 139,
-    "vice_president": 123,
-    "treasurer": 21,
-    "secretary": 54,
-    "director": 551,
-    "officer": 161
+    "chairman": 136,
+    "president": 128,
+    "vice_president": 116,
+    "treasurer": 23,
+    "secretary": 53,
+    "director": 540,
+    "officer": 153
   },
   "confidence": {
-    "section_age_rows": 86,
-    "section_name_roles": 29,
-    "unparsed_no_persons": 35,
+    "section_age_rows": 90,
+    "section_name_roles": 27,
+    "unparsed_no_persons": 33,
     "fetch_or_doc_errors": 0
   },
   "boards": [
@@ -47,6 +47,16 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000047/lrcx-20260924.htm"
     },
     {
+      "company": "Gold.com, Inc.",
+      "ticker": "GOLD",
+      "issuer_cik": "1591588",
+      "n_persons": 16,
+      "n_directors": 13,
+      "n_officers": 9,
+      "filed_date": "2026-10-01",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1591588/000119312526410500/gold-20261001.htm"
+    },
+    {
       "company": "ORACLE CORP",
       "ticker": "",
       "issuer_cik": "1341439",
@@ -65,16 +75,6 @@
       "n_officers": 4,
       "filed_date": "2026-09-17",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1049521/000104952126000077/mrcy-20260917.htm"
-    },
-    {
-      "company": "CONSUMERS BANCORP INC /OH/",
-      "ticker": "CBKM",
-      "issuer_cik": "1006830",
-      "n_persons": 16,
-      "n_directors": 10,
-      "n_officers": 14,
-      "filed_date": "2026-09-10",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1006830/000143774926030041/cbkm20260909c_def14a.htm"
     },
     {
       "company": "CINTAS CORP",
@@ -177,16 +177,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1117297/000207709626000254/ea0305042-01.htm"
     },
     {
-      "company": "UNIFI INC",
-      "ticker": "UFI",
-      "issuer_cik": "100726",
-      "n_persons": 12,
-      "n_directors": 9,
-      "n_officers": 10,
-      "filed_date": "2026-09-11",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/100726/000010072626000015/ufi-20260908.htm"
-    },
-    {
       "company": "Winchester Bancorp, Inc./MD/",
       "ticker": "WSBK",
       "issuer_cik": "2047235",
@@ -247,16 +237,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2036060/000119312526391652/d374112ddef14a.htm"
     },
     {
-      "company": "WOLFSPEED, INC.",
-      "ticker": "WOLF",
-      "issuer_cik": "895419",
-      "n_persons": 11,
-      "n_directors": 9,
-      "n_officers": 9,
-      "filed_date": "2026-09-11",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/895419/000089541926000065/wolf-20260911.htm"
-    },
-    {
       "company": "CytoDyn Inc.",
       "ticker": "CYDY",
       "issuer_cik": "1175680",
@@ -315,16 +295,6 @@
       "n_officers": 7,
       "filed_date": "2026-09-14",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1617867/000143774926030345/amix20260905_def14a.htm"
-    },
-    {
-      "company": "CARPENTER TECHNOLOGY CORP",
-      "ticker": "CRS",
-      "issuer_cik": "17843",
-      "n_persons": 10,
-      "n_directors": 8,
-      "n_officers": 3,
-      "filed_date": "2026-09-11",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/17843/000119312526389294/crs-20260910.htm"
     },
     {
       "company": "SelectQuote, Inc.",
@@ -427,6 +397,56 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/100378/000143774926030232/twin20260903_def14a.htm"
     },
     {
+      "company": "Modular Medical, Inc.",
+      "ticker": "MODD",
+      "issuer_cik": "1074871",
+      "n_persons": 8,
+      "n_directors": 8,
+      "n_officers": 0,
+      "filed_date": "2026-10-01",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1074871/000121390026105495/ea0306587-01.htm"
+    },
+    {
+      "company": "Lightstone Value Plus REIT IV, Inc.",
+      "ticker": "LTSV",
+      "issuer_cik": "1619312",
+      "n_persons": 8,
+      "n_directors": 4,
+      "n_officers": 7,
+      "filed_date": "2026-10-01",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1619312/000118518526004498/lvvr4def14a092426.htm"
+    },
+    {
+      "company": "Lightstone Value Plus REIT III, Inc.",
+      "ticker": "",
+      "issuer_cik": "1563756",
+      "n_persons": 8,
+      "n_directors": 4,
+      "n_officers": 8,
+      "filed_date": "2026-10-01",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1563756/000118518526004497/lvvr3def14a092426.htm"
+    },
+    {
+      "company": "Lightstone Value Plus REIT II, Inc.",
+      "ticker": "",
+      "issuer_cik": "1436975",
+      "n_persons": 8,
+      "n_directors": 4,
+      "n_officers": 8,
+      "filed_date": "2026-10-01",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1436975/000118518526004496/lvpr2def14a092426.htm"
+    },
+    {
+      "company": "Lightstone Value Plus REIT I, Inc.",
+      "ticker": "",
+      "issuer_cik": "1296884",
+      "n_persons": 8,
+      "n_directors": 6,
+      "n_officers": 7,
+      "filed_date": "2026-10-01",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1296884/000118518526004495/lvvr1def14a092426.htm"
+    },
+    {
       "company": "BROADRIDGE FINANCIAL SOLUTIONS, INC.",
       "ticker": "BR",
       "issuer_cik": "1383312",
@@ -527,6 +547,16 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/880117/000119312526390588/jbss-20260914.htm"
     },
     {
+      "company": "RESMED INC",
+      "ticker": "",
+      "issuer_cik": "943819",
+      "n_persons": 6,
+      "n_directors": 1,
+      "n_officers": 5,
+      "filed_date": "2026-10-01",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/943819/000094381926000080/rmd-20261001.htm"
+    },
+    {
       "company": "ALPHA & OMEGA SEMICONDUCTOR Ltd",
       "ticker": "AOSL",
       "issuer_cik": "1387467",
@@ -575,16 +605,6 @@
       "n_officers": 2,
       "filed_date": "2026-09-16",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1622345/000149315226042901/formdef14a.htm"
-    },
-    {
-      "company": "Jaguar Uranium Corp.",
-      "ticker": "JAGU",
-      "issuer_cik": "2039273",
-      "n_persons": 6,
-      "n_directors": 6,
-      "n_officers": 1,
-      "filed_date": "2026-09-11",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2039273/000121390026099327/ea0304305-01.htm"
     },
     {
       "company": "Research Solutions, Inc.",
@@ -757,6 +777,16 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1682220/000168222026000065/sach-20260910.htm"
     },
     {
+      "company": "SYSCO CORP",
+      "ticker": "SYY",
+      "issuer_cik": "96021",
+      "n_persons": 4,
+      "n_directors": 1,
+      "n_officers": 4,
+      "filed_date": "2026-10-01",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/96021/000009602126000037/syy-20261001.htm"
+    },
+    {
       "company": "AIM ImmunoTech Inc.",
       "ticker": "AIM",
       "issuer_cik": "946644",
@@ -867,14 +897,14 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1843714/000168316826007111/zapata_def14a.htm"
     },
     {
-      "company": "TEN Holdings, Inc.",
-      "ticker": "XHLD",
-      "issuer_cik": "2030954",
-      "n_persons": 4,
-      "n_directors": 4,
+      "company": "GULF RESOURCES, INC.",
+      "ticker": "GURE",
+      "issuer_cik": "885462",
+      "n_persons": 3,
+      "n_directors": 3,
       "n_officers": 2,
-      "filed_date": "2026-09-10",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2030954/000149315226042047/formdef14a.htm"
+      "filed_date": "2026-10-02",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/885462/000149315226045416/formdef14a.htm"
     },
     {
       "company": "Aeluma, Inc.",
@@ -957,16 +987,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2101698/000121390026100530/ea0304521-01.htm"
     },
     {
-      "company": "RUSSELL INVESTMENT FUNDS",
-      "ticker": "",
-      "issuer_cik": "824036",
-      "n_persons": 3,
-      "n_directors": 2,
-      "n_officers": 1,
-      "filed_date": "2026-09-11",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/824036/000119312526389100/d535616ddef14a.htm"
-    },
-    {
       "company": "Popular High Grade Fixed-Income Fund, Inc.",
       "ticker": "",
       "issuer_cik": "1862970",
@@ -1047,14 +1067,14 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1728117/000172811726000102/goss-20260916.htm"
     },
     {
-      "company": "RUSSELL INVESTMENT CO",
+      "company": "Madison ETFs Trust",
       "ticker": "",
-      "issuer_cik": "351601",
-      "n_persons": 2,
-      "n_directors": 2,
-      "n_officers": 0,
-      "filed_date": "2026-09-11",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/351601/000119312526388904/d122745ddef14a.htm"
+      "issuer_cik": "1976877",
+      "n_persons": 1,
+      "n_directors": 0,
+      "n_officers": 1,
+      "filed_date": "2026-10-01",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1976877/000175392626001884/g217932_def14a.htm"
     },
     {
       "company": "Texas Ventures Acquisition III Corp",
@@ -1210,6 +1230,83 @@
       ]
     },
     {
+      "name": "David Lichtenstein",
+      "roles": [
+        "ceo",
+        "chairman",
+        "director"
+      ],
+      "n_companies": 4,
+      "n_director_seats": 4,
+      "companies": [
+        "Lightstone Value Plus REIT IV, Inc.",
+        "Lightstone Value Plus REIT III, Inc.",
+        "Lightstone Value Plus REIT II, Inc.",
+        "Lightstone Value Plus REIT I, Inc."
+      ]
+    },
+    {
+      "name": "David W. Lichtenstein",
+      "roles": [
+        "director",
+        "officer"
+      ],
+      "n_companies": 4,
+      "n_director_seats": 4,
+      "companies": [
+        "Lightstone Value Plus REIT IV, Inc.",
+        "Lightstone Value Plus REIT III, Inc.",
+        "Lightstone Value Plus REIT II, Inc.",
+        "Lightstone Value Plus REIT I, Inc."
+      ]
+    },
+    {
+      "name": "Joseph E. Teichman",
+      "roles": [
+        "vice_president",
+        "secretary",
+        "director"
+      ],
+      "n_companies": 4,
+      "n_director_seats": 4,
+      "companies": [
+        "Lightstone Value Plus REIT IV, Inc.",
+        "Lightstone Value Plus REIT III, Inc.",
+        "Lightstone Value Plus REIT II, Inc.",
+        "Lightstone Value Plus REIT I, Inc."
+      ]
+    },
+    {
+      "name": "Mitchell Hochberg",
+      "roles": [
+        "coo",
+        "president"
+      ],
+      "n_companies": 4,
+      "n_director_seats": 0,
+      "companies": [
+        "Lightstone Value Plus REIT IV, Inc.",
+        "Lightstone Value Plus REIT III, Inc.",
+        "Lightstone Value Plus REIT II, Inc.",
+        "Lightstone Value Plus REIT I, Inc."
+      ]
+    },
+    {
+      "name": "Seth Molod",
+      "roles": [
+        "cfo",
+        "treasurer"
+      ],
+      "n_companies": 4,
+      "n_director_seats": 0,
+      "companies": [
+        "Lightstone Value Plus REIT IV, Inc.",
+        "Lightstone Value Plus REIT III, Inc.",
+        "Lightstone Value Plus REIT II, Inc.",
+        "Lightstone Value Plus REIT I, Inc."
+      ]
+    },
+    {
       "name": "Eugene S. Stark",
       "roles": [
         "chairman",
@@ -1223,6 +1320,51 @@
         "Prospect Floating Rate & Alternative Income Fund, Inc.",
         "Priority Income Fund, Inc.",
         "PROSPECT CAPITAL CORP"
+      ]
+    },
+    {
+      "name": "George R. Whittemore",
+      "roles": [
+        "chairman",
+        "director",
+        "officer"
+      ],
+      "n_companies": 3,
+      "n_director_seats": 3,
+      "companies": [
+        "Lightstone Value Plus REIT III, Inc.",
+        "Lightstone Value Plus REIT II, Inc.",
+        "Lightstone Value Plus REIT I, Inc."
+      ]
+    },
+    {
+      "name": "Lightstone V. Mr",
+      "roles": [
+        "cfo",
+        "vice_president",
+        "treasurer"
+      ],
+      "n_companies": 3,
+      "n_director_seats": 0,
+      "companies": [
+        "Lightstone Value Plus REIT IV, Inc.",
+        "Lightstone Value Plus REIT III, Inc.",
+        "Lightstone Value Plus REIT II, Inc."
+      ]
+    },
+    {
+      "name": "Lightstone V. Prior",
+      "roles": [
+        "cfo",
+        "vice_president",
+        "treasurer"
+      ],
+      "n_companies": 3,
+      "n_director_seats": 0,
+      "companies": [
+        "Lightstone Value Plus REIT IV, Inc.",
+        "Lightstone Value Plus REIT III, Inc.",
+        "Lightstone Value Plus REIT II, Inc."
       ]
     },
     {
@@ -1248,6 +1390,21 @@
       "companies": [
         "Prospect Floating Rate & Alternative Income Fund, Inc.",
         "PROSPECT CAPITAL CORP"
+      ]
+    },
+    {
+      "name": "Arthur D. Little",
+      "roles": [
+        "ceo",
+        "president",
+        "vice_president",
+        "director"
+      ],
+      "n_companies": 2,
+      "n_director_seats": 1,
+      "companies": [
+        "RESMED INC",
+        "GRI Bio, Inc."
       ]
     },
     {
@@ -1293,42 +1450,6 @@
       "companies": [
         "Prospect Floating Rate & Alternative Income Fund, Inc.",
         "Priority Income Fund, Inc."
-      ]
-    },
-    {
-      "name": "Insider Participation",
-      "roles": [
-        "officer"
-      ],
-      "n_companies": 2,
-      "n_director_seats": 0,
-      "companies": [
-        "SYNAPTICS Inc",
-        "UNIFI INC"
-      ]
-    },
-    {
-      "name": "Jack R. Thompson",
-      "roles": [
-        "chairman"
-      ],
-      "n_companies": 2,
-      "n_director_seats": 2,
-      "companies": [
-        "RUSSELL INVESTMENT FUNDS",
-        "RUSSELL INVESTMENT CO"
-      ]
-    },
-    {
-      "name": "Michelle L. Cahoon",
-      "roles": [
-        "chairman"
-      ],
-      "n_companies": 2,
-      "n_director_seats": 2,
-      "companies": [
-        "RUSSELL INVESTMENT FUNDS",
-        "RUSSELL INVESTMENT CO"
       ]
     },
     {
@@ -1469,14 +1590,14 @@
       ]
     },
     {
-      "name": "Albert P. Carey",
+      "name": "Alan Retkinski",
       "roles": [
-        "chairman"
+        "director"
       ],
       "n_companies": 1,
       "n_director_seats": 1,
       "companies": [
-        "UNIFI INC"
+        "Lightstone Value Plus REIT I, Inc."
       ]
     },
     {
@@ -1503,6 +1624,17 @@
       "n_director_seats": 1,
       "companies": [
         "Stark Novus Financial Inc."
+      ]
+    },
+    {
+      "name": "Allergan Aesthetics",
+      "roles": [
+        "vice_president"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 0,
+      "companies": [
+        "RESMED INC"
       ]
     },
     {
@@ -1561,19 +1693,6 @@
       "n_director_seats": 1,
       "companies": [
         "Electromed, Inc."
-      ]
-    },
-    {
-      "name": "Andreas W. Mattes",
-      "roles": [
-        "ceo",
-        "president",
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "WOLFSPEED, INC."
       ]
     },
     {
@@ -1709,17 +1828,6 @@
       ]
     },
     {
-      "name": "Ann M. Gano",
-      "roles": [
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "CONSUMERS BANCORP INC /OH/"
-      ]
-    },
-    {
       "name": "Anthony Chereso II",
       "roles": [
         "director"
@@ -1741,80 +1849,14 @@
       "companies": [
         "Local Bounti Corporation/DE"
       ]
-    },
-    {
-      "name": "Anthony M. Abate",
-      "roles": [
-        "chairman",
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "WOLFSPEED, INC."
-      ]
-    },
-    {
-      "name": "Anthony M. Kennedy",
-      "roles": [
-        "president",
-        "secretary",
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "Fox Corp"
-      ]
-    },
-    {
-      "name": "Anton J. Drescher",
-      "roles": [
-        "ceo",
-        "cfo",
-        "chairman",
-        "president",
-        "secretary",
-        "director",
-        "officer"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "OCULUS INC."
-      ]
-    },
-    {
-      "name": "Antonio R. Alvarez",
-      "roles": [
-        "director",
-        "officer"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "SunPower Inc."
-      ]
-    },
-    {
-      "name": "Appointment David Kutil",
-      "roles": [
-        "cfo",
-        "secretary"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 0,
-      "companies": [
-        "Research Solutions, Inc."
-      ]
     }
   ],
   "request_accounting": {
-    "n_http_requests_last_fetch": 20,
+    "n_http_requests_last_fetch": 24,
     "budget_seconds": 2700,
     "budget_hit": false,
-    "fetched_at": "2026-10-01T10:12:56.512067+00:00"
+    "fetched_at": "2026-10-02T10:17:33.188115+00:00"
   },
-  "methodology": "DEF 14A person-level panel (\u8463\u4e8b/\u9ad8\u7ba1\u4eba\u7ea7\u6863\u6848) over the NEWEST 150 proxy filings of the /executives DEF 14A stream \u2014 a bounded lane: each filing's primary document resolved from its EDGAR filing index (<= 2 GETs per filing, idempotent per-accession caches, >= 2.1s spacing, hard 45-minute wall-clock budget; the last fetch spent 20 HTTP requests and did not hit the budget). Parsing is CONSERVATIVE and TIERED: (1) section_age_rows (HIGH) \u2014 the classic 'Name (Age) Title Since' roster row in any spelling, a 2-4 token capitalized name with a standalone age bounded 30-99 and a role word witnessed on the same row, also reconstructed from word-fragmented inline-XBRL layouts by anchor-delimiting the joined stream; (2) section_name_roles (MEDIUM) \u2014 'First M. Last' (middle-initial) + a role word inside a located directors/executives section. Everything else yields persons=[] and parsed=false \u2014 an honest NULL, never a guessed name (\u5b81\u53ef null \u4e0d\u731c\u6d4b); coverage below counts only what was processed (115/150 filings with persons = 76.7%), never an extrapolation. Roles are canonical role WORDS witnessed near the person's row or bio \u2014 they may include past or external-company titles (e.g. a director who is CEO of another firm), displayed as text-witnessed hints not employment records; boards-card director/officer counts are independent sets (a CEO-director counts in both). Distinct-person identity keys on the normalized full name across filings \u2014 same-name merges may join namesakes and hyphenated/apostrophe/initials-first names (JW Roth) are conservatively MISSED, both disclosed. Display-only, exploratory, NOT a research claim.",
-  "snapshot_ts": "2026-10-01T10:57:13.730452+00:00"
+  "methodology": "DEF 14A person-level panel (\u8463\u4e8b/\u9ad8\u7ba1\u4eba\u7ea7\u6863\u6848) over the NEWEST 150 proxy filings of the /executives DEF 14A stream \u2014 a bounded lane: each filing's primary document resolved from its EDGAR filing index (<= 2 GETs per filing, idempotent per-accession caches, >= 2.1s spacing, hard 45-minute wall-clock budget; the last fetch spent 24 HTTP requests and did not hit the budget). Parsing is CONSERVATIVE and TIERED: (1) section_age_rows (HIGH) \u2014 the classic 'Name (Age) Title Since' roster row in any spelling, a 2-4 token capitalized name with a standalone age bounded 30-99 and a role word witnessed on the same row, also reconstructed from word-fragmented inline-XBRL layouts by anchor-delimiting the joined stream; (2) section_name_roles (MEDIUM) \u2014 'First M. Last' (middle-initial) + a role word inside a located directors/executives section. Everything else yields persons=[] and parsed=false \u2014 an honest NULL, never a guessed name (\u5b81\u53ef null \u4e0d\u731c\u6d4b); coverage below counts only what was processed (117/150 filings with persons = 78.0%), never an extrapolation. Roles are canonical role WORDS witnessed near the person's row or bio \u2014 they may include past or external-company titles (e.g. a director who is CEO of another firm), displayed as text-witnessed hints not employment records; boards-card director/officer counts are independent sets (a CEO-director counts in both). Distinct-person identity keys on the normalized full name across filings \u2014 same-name merges may join namesakes and hyphenated/apostrophe/initials-first names (JW Roth) are conservatively MISSED, both disclosed. Display-only, exploratory, NOT a research claim.",
+  "snapshot_ts": "2026-10-02T11:18:20.250815+00:00"
 }
