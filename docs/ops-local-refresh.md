@@ -189,6 +189,24 @@ then hard-fails the lane gate. Rules:
    improvise. Archival copies under `reports/evidence/archive/v1/` are
    move-don't-delete history, never restoration sources.
 
+## One-shot research automations: missed-fire protection (2026-10-02)
+
+One-shot calendar automations fire exactly once; if the host is asleep at
+that instant the node is LOST (runCount stays 0, lifecycle flips completed —
+the 10-01 04:05 shadow-runbook incident). The data lane solved this class
+with hourly repetition + an idempotence marker; research nodes now reuse the
+same pattern:
+
+- the 10-31 shadow-runbook + GO-evidence automation runs hourly
+  04:05-23:05 on the day (`5 4-23 31 10 *`, recurring), gated by a
+  completion marker `data/ops/shadow_1031.done` (gitignored runtime state):
+  first live fire executes the NO-LEDGER runbook and writes the marker;
+  every later fire replies one line and stops. Late fires remain valid (the
+  prompt's frozen-history clause). A year-later recurrence is inert (marker
+  present). If a node is ever lost anyway, late manual execution is valid
+  and was proven on 10-02 (four steps EXIT 0, honest fail-closed, ledger
+  byte-identical).
+
 ## Research appendix (2026-09-06/07): alternatives considered & platform rules
 
 Full memo with sources, the six-way alternatives table (incl. the deferred

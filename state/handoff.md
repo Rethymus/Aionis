@@ -2499,3 +2499,4 @@ dashboard realizing `docs/dashboard-v2-design.md`'s 5 dimensions on deterministi
   - **轮 102（2026-09-28）**：晚间完成规则——already-done 仅当成功运行启动于当日≥18:00（凌晨/白天补跑不覆盖晚间窗口，09-21 缺日根因收口）；attempt-cap 收紧 failed-only；+4 测试（26 绿/全量 0 败）；runbook marker 语义同步。
   - **轮 103（2026-09-28）**：三周执行覆盖审计（16 交易晚逐晚账本：12 成功/主路径 11/16/四类缺失全部有实战验证的结构性修复）；09-25 双提交=push 瞬态断连后诚实重试（正确语义，push-only 重试优化记录暂缓）；三层系统体检通过；中期账本落盘 reports/audits/2026-09-28-interim-coverage-ledger.md 作 10-06 月报底稿。
   - **轮 104（2026-10-02）**：①9-30 影子 runbook 丢失节点补跑（四步 EXIT 0，③ fail-closed predict_session_not_in_panel=合格诚实结论；ledger 前后 0924ce2b 字节一致零写入；9-30 影子月无 readiness PASS——10-31 证据包将如实呈现）；②push-only 恢复路径+绊网 Tests 检查（98d008f6a CI 绿）；③uv cache prune 缓办记录。
+  - **轮 105（2026-10-02）**：①10-31 节点防丢（小时级守卫 5 4-23 31 10 * + shadow_1031.done 标记门控，复刻数据通道模式；提示词内置 9-30 fail-closed 事实）；②10-06 月报口径扩至 push-only 统计/绊网触发/节点专节/续期四选项；③防丢模式入 runbook 章节。

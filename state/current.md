@@ -1,5 +1,9 @@
 # state/current.md — read first each session
 
+- **active (2026-10-02) 轮 105（ops 线）：无限迭代第二轮——一次性研究节点"错过即失"防护+满月月报口径升级：**
+  **候选面审**（§5 deferred 项×近两周事故差分）选定两项：**①10-31 影子 runbook+GO 证据包节点防丢**（10-01 丢失同病理、29 天后重演风险真实）——CronUpdate 为小时级守卫 `5 4-23 31 10 *`（当日 20 次触发）+完成标记门控 `data/ops/shadow_1031.done`（首活火执行并写标记、后续火一行跳过、跨年复发因标记在而惰性；迟到语义保留）——复刻数据通道成熟模式；提示词同时内置 9-30 fail-closed 事实供 B 部分证据包如实呈现。**②10-06 满月月报口径**——夜报班追加任务扩至⑦项：push_only_recovery 触发统计+节省分钟估算、绊网新检查触发情况、10-01 节点专节（丢失→补跑→fail-closed 全链）、Actions 分钟 vs 预算、四选项续期建议。**模式入册**：runbook 新增"一次性研究自动化防丢"章节（含 10-02 补跑有效性实证）。**边界**：automation/docs lane；0 ledger/0 frozen/0 OOS。**
+
+
 - **active (2026-10-02) 轮 104（ops 线）：10-01 丢失节点补跑 + 无限迭代首轮（业主"自主实施无限进步"指令）：**
   **①影子 runbook 补跑（诚实执行）**：10-01 04:05 一次性自动化因宿主凌晨休眠丢失（runCount=0 即 completed——轮 54"错过即失"病理对研究节点无重复机制）；业主自主授权下按其提示词明文允许的迟到语义于 10-02 09:52 补跑四步：⓪a membership 对账门 EXIT=0、⓪b 价格覆盖 EXIT=0（residual gap 空，597 ticker 面板）、①volume EXIT=0、②materialize EXIT=0、③trigger --run-date 2026-09-30 **fail-closed 于 predict_session_not_in_panel（no fit/commit performed）**——fail-closed 是合格结论（runbook 明文：绝不重跑到通过；与轮 54 记录的结构性现象一致：9 月会话未入面板网格）。**ledger 字节级零写入核验通过**（前后 sha 均 0924ce2b…，58 行不变）。日志：runs/ops_local_refresh/2026-10-01-shadow-runbook.log（gitignored）。**10-31 前需业主知悉**：9-30 影子月实际未产出 readiness PASS——两影子月样本计划受影响，10-31 自动化的 B 部分将如实呈现此事实。**②无限迭代首轮两项改进（98d008f6a，CI 绿）**：push-only 恢复路径（09-25 事故证据：提交成功仅推送失败时，下轮只补推已过门的提交，省 ~60 分钟全链重跑；防混树守卫+3 测试，29 绿）+绊网增 Tests 结论检查（09-15/09-28"数据上线而套件红"类事故的离线周检盲区）。**③调研**：uv cache prune 周期卫生（官方文档）记录缓办（磁盘非痛点）。**边界**：ops lane+研究节点补跑（NO-LEDGER 全程、零 ledger 写入实证）；0 frozen/0 prereg/0 OOS。
 
