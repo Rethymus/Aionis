@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-02 (轮 127) activationStart 合成探针未证实（headless+headful 均 0）
+
+puppeteer-core+Edge 两轮均 activationStart=0。二候选根因（CDP 合成 hover 不触发启发式 / clean-path→301 取消预渲染）未定论；30 秒人工验证呈业主；候选修法（.html 后缀链接）挂起待证。harness 已清。边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-02 (轮 126) 战役沉淀文档：performance-campaign.md 呈业主
 
 轮 111~125 全景（12 优化/11 null/4 边界/5 方法论）入 reports/design/2026-10-02-performance-campaign.md；未竟=Interop 扫描（配额 10-03）、activationStart、业主追认。边界：docs lane；0 ledger/0 frozen/0 OOS。

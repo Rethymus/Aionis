@@ -376,3 +376,25 @@ DOM 闭环本身通过（高窗 1 surface+13 bars+零骨架）。
 
 工件：`runs/lh125_conf_{1..4}.json`、`runs/lh125_ctrl_evidence.json`。
 边界：display lane；0 ledger / 0 frozen / 0 OOS。
+
+
+## 轮 127（2026-10-02）：activationStart 预渲染命中实测——合成探针未证实（0），如实入册
+
+**方法**：puppeteer-core 驱动本机 Edge（headless+headful 各一轮）——载入线上 `/`
+→确认 speculationrules 在墙→hover 内链 700ms（moderate 阈 ~200ms）→点击→读
+`performance.getEntriesByType('navigation')[0].activationStart`。
+
+**结果（两轮）**：`activationStart=0`，type=navigate——**预渲染未激活**。
+
+**诚实归因（未定论，二候选）**：
+① CDP 合成鼠标事件可能不触发 Chrome 的 hover 启发式（headless 模式本身禁用
+speculation 是已知行为，headful 亦 0 故不能排除合成事件根因）；
+② 站内链接全部是 clean path（`/Aionis/dashboard`），GitHub Pages 301 到
+`.html`——预渲染跟随 301 的行为未证，可能取消。
+**裁决**：合成探针能力到此为止；**呈业主一项 30 秒人工验证**（真实鼠标悬停任一
+导航链接 ~0.5s 后点击，如近乎瞬时呈现即为命中）。若人工亦未命中，候选修法=
+nav 链接改 `.html` 后缀（或 trailingSlash 构建），挂起待证不盲改。
+探针脚本已按无驻留纪律清理。
+
+工件：无保留（临时 harness 已删；两轮输出如上）。边界：display lane；
+0 ledger / 0 frozen / 0 OOS。

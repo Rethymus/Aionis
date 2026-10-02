@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-10-02) 轮 127（display 线）：activationStart 实测——合成探针（headless+headful）均 0 未证实，二候选根因入册，人工验证呈业主：**
+  puppeteer-core+Edge 两轮（hover 700ms→click→读 activationStart）：均 0/type=navigate=预渲染未激活。诚实归因未定论：①CDP 合成事件可能不触发 hover 启发式（headless 禁 speculation 已知，headful 亦 0 不能排除）；②站内链接全 clean path→gh-pages 301→.html，预渲染跟随 301 行为未证。**呈业主 30 秒人工验证**（真实悬停→点击→近瞬时=命中）；若未命中候选修法=nav 链接 .html 后缀/trailingSlash，挂起待证不盲改。临时 harness 已清（无驻留）。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (2026-10-02) 轮 126（display 线）：战役沉淀——performance-campaign.md 呈业主（12 优化/11 null/4 边界/5 方法论纪律全景）：**
   轮 111~125 全战役文档化：上线优化表（atlas -72%/track -61%/market -42%/calibration -40%…）、null/否决总账（11 组全数据）、四条实测边界（cv 万级 DOM 阈值/预载天花板/本地线上分野/图表主导性）、方法论五纪律（逐字切片/复用扇出/对照页/staged 完整性/诚实报告）、未竟事项（Interop 扫描 10-03 配额恢复后/activationStart 实测/业主追认两项）。**边界**：docs lane；0 ledger/0 frozen/0 OOS。
 
