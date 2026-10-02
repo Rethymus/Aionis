@@ -23,11 +23,19 @@ import {
   YAxis,
 } from "recharts";
 import { TrendingUpIcon, ActivityIcon, CalendarIcon } from "lucide-react";
-import { MacroDriversCard } from "./macro-drivers-card";
+import dynamic from "next/dynamic";
+import { LazyMount } from "@/components/ui/lazy-mount";
+// Below-fold recharts cards mount on approach (round 114): the page's cost
+// center was react-dom hydrating five chart cards at boot (4.68s measured in
+// the framework chunk), which content-visibility cannot touch (round 113).
+// ssr:false keeps them out of the initial hydration; LazyMount's placeholder
+// holds the layout (CLS stays 0) until the card is 400px from the viewport.
+// StagflationRead stays eager — no chart, content-first.
+const MacroDriversCard = dynamic(() => import("./macro-drivers-card").then(m => m.MacroDriversCard), { ssr: false });
+const MacroDollarCard = dynamic(() => import("./macro-dollar-card").then(m => m.MacroDollarCard), { ssr: false });
+const MacroYieldCurveCard = dynamic(() => import("./macro-yield-curve-card").then(m => m.MacroYieldCurveCard), { ssr: false });
+const MacroMandateTensionCard = dynamic(() => import("./macro-mandate-tension-card").then(m => m.MacroMandateTensionCard), { ssr: false });
 import { MacroStagflationRead } from "./macro-stagflation-read";
-import { MacroDollarCard } from "./macro-dollar-card";
-import { MacroYieldCurveCard } from "./macro-yield-curve-card";
-import { MacroMandateTensionCard } from "./macro-mandate-tension-card";
 
 const EVENT_TONE: Record<string, string> = {
   political: "border-blue-400/50 text-blue-700 dark:text-blue-300",
@@ -345,15 +353,23 @@ export function MarketView() {
         </CardContent>
       </Card>
 
-      <MacroDriversCard />
+      <LazyMount minHeight={620}>
+        <MacroDriversCard />
+      </LazyMount>
       <MacroStagflationRead />
 
       {/* Deeper President↔Fed dimensions: transmission + constraint + mandate tension */}
       <div className="grid gap-4 md:grid-cols-2">
-        <MacroDollarCard />
-        <MacroYieldCurveCard />
+        <LazyMount minHeight={300}>
+          <MacroDollarCard />
+        </LazyMount>
+        <LazyMount minHeight={300}>
+          <MacroYieldCurveCard />
+        </LazyMount>
       </div>
-      <MacroMandateTensionCard />
+      <LazyMount minHeight={320}>
+        <MacroMandateTensionCard />
+      </LazyMount>
 
       <Card>
         <CardContent className="p-4 text-xs text-muted-foreground">
