@@ -2505,3 +2505,4 @@ dashboard realizing `docs/dashboard-v2-design.md`'s 5 dimensions on deterministi
   - **轮 108（2026-10-02）**：供给链候选裁决——cache-mode 不改（事件面默认最优，原文一手）/执行保护业主可选（暴露面最小+特性页 404 如实注记）；ci 字段首夜实弹待今晚；dispatch 裁决仍待业主。
   - **轮 108b（2026-10-02）**：剩余三工作流补钉 ubuntu-24.04（vintage-probe 明日触发前抢修，bef5bd0f3 CI 绿）；数据源三主源活性探针=无变更（负结果入册作已知良好基线）；ci 字段首夜计时器已挂。
   - **轮 109（2026-10-02）**：--doctor 六层预检（实测 6/6 PASS：守卫/计划任务/钩子/推送凭据/gh/API env；+1 测试）+ci 结论持久化入 marker；32 绿/全量 0。
+  - **轮 110（2026-10-02）**：夜报班升级——每晩 --doctor 六层体检（凭据/调度器/钩子失效的最早信号，PAT 过期类问题从"人工发现"变为"当晚报出"）+ marker ci 字段进一行总结（CI(own): success/success）+ 月报口径纳入 doctor 趋势。即刻于今晚 23:35 生效。
