@@ -142,10 +142,15 @@ Worker (display-only), unchanged.
 |---|---|---|
 | fetcher error/timeout | soft-fail, keep going (CI semantics) | next evening incremental |
 | export/gate hard-fail | no commit, marker `failed`, exit 1 | auto-retry next fire; ≤3/evening |
+| transient push failure (commit landed, push didn't) | **push-only recovery** (round 104): next hourly fire pushes the existing gate-verified commit — no re-fetch; mixed non-lane commits → full run | automatic; ~60 min saved per occurrence |
 | push rejected (remote ahead) | `pull --rebase --autostash` first; conflict → fail loudly | human resolves; never force |
-| PAT/credential expiry | push fails → attempt-cap locks | refresh Windows credential; `--run --force` |
+| PAT/credential expiry | push fails → attempt-cap locks; **`--doctor` layer 4 flags it**; nightly report carries doctor results (round 110) | refresh Windows credential; `--run --force` |
+| data pushed but CI red on OUR commit | lane polls its own sha's publish-site+Tests conclusions (`ci` in marker+SUMMARY, round 107); nightly one-liner shows `CI(own):` | inspect the named workflow; human review |
 | machine off all evening | fires lost | next evening catches up (increments are idempotent) |
-| multi-day outage | — | Actions tab → "Refresh terminal data" → Run workflow (workflow_dispatch kept) |
+| multi-day outage | — | Actions tab → "Refresh terminal data" → Run workflow (workflow_dispatch kept; 7 network steps retry ×3, round 106) |
+| one-shot research automation missed (host asleep) | hourly guard + done-marker (round 105 pattern) | late manual execution stays valid (proven 10-02) |
+| runner image drift (e.g. ubuntu-latest→26.04) | all 7 workflows pinned `ubuntu-24.04` (rounds 107/108b) | revisit the pin deliberately on each changelog sweep |
+| unknown "is the stack healthy?" | `--doctor` six-layer read-only preflight (round 109) | 6/6 = walk away; any FAIL → named layer + 需人审 in that night's report |
 
 ## Manual operations
 
