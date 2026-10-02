@@ -59,7 +59,24 @@
 
 - 基线 JSON：`runs/lh_{home,atlas.html,dashboard.html,market.html}.json`（gitignored）
 - A/B：`runs/lhA_atlas_{1,2}.json`（基线）/ `runs/lhB_atlas_{1,2}.json`（cv）
-- 全页捕获：`runs/lhB_fullpage.png`；浅色目检：`runs/r112_light.png`
+- 全页捕获+主题目检：`reports/audits/2026-10-02-lighthouse-evidence/`（lhB_fullpage.png /
+  r112_light.png / r112_dark.png——最后者为 force-dark 无效的同字节重复，留作方法注记）
 - 线上复测：`runs/lhLIVE_atlas.json`
 
 边界：display lane；0 ledger / 0 frozen / 0 prereg / 0 OOS。
+
+
+## 轮 113 追加（2026-10-02）：cv 扩展实验——dashboard 前置 null、market 实测 null（均如实）
+
+- **dashboard**：本地基线 TBT 仅 **220ms**（线上 2,200ms 是 redirect 链路+网络的
+  放大，直连页本身健康）——无有意义天花板，未改动（null by precondition）。
+- **market**：尾部宏区块（KoreaProxy→methodology）整段包裹 .cv-auto，同款
+  A/B 双跑（本地）：TBT 1,500~1,710ms → **1,930~2,090ms（+~20%）**、主线程
+  10.0~10.1s → 10.3~10.6s（持平）、SI 5.3~5.4 → 4.2、perf 分 41~43 → 42~43
+  （不动）。**结论：market 的成本中心是 recharts 脚本执行（cv 不可及），
+  containment 自身的布置/估值开销反而轻微加负**。改动已回滚，数据留档防止
+  重蹈。与 atlas 的对照（其重头是 7k DOM 的布局/绘制，cv 收益 -45%）精确划出
+  该技术的适用边界：**布局/绘制密集页有效，脚本密集页无效甚至微害**。
+
+工件：`runs/lhA_{dashboard,market}_{1,2}.json` / `runs/lhB_market_{1,2}.json`
+（gitignored）。边界：display lane；0 ledger / 0 frozen / 0 OOS。
