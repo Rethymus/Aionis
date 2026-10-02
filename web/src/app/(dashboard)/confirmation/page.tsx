@@ -2,10 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import dynamic from "next/dynamic";
 import { SmartMoneyView } from "@/components/smart-money/smart-money-view";
-import { InsidersView } from "@/components/insiders/insiders-view";
-import { RedditView } from "@/components/reddit/reddit-view";
-import { ThemeSlice } from "@/components/themes/theme-slice";
+// Round 124: per-tab split (round-121 recipe) — default tab stays static
+// (SSR intact); inactive tabs never had SSR output, so nothing is lost.
+const InsidersView = dynamic(() => import("@/components/insiders/insiders-view").then(m => m.InsidersView));
+const RedditView = dynamic(() => import("@/components/reddit/reddit-view").then(m => m.RedditView));
+const ThemeSlice = dynamic(() => import("@/components/themes/theme-slice").then(m => m.ThemeSlice));
 import { SegmentHeader } from "@/components/segment-header";
 import { StickyTabs } from "@/components/sticky-tabs";
 import { aionis } from "@/data/aionis";
