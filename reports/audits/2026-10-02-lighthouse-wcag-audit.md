@@ -80,3 +80,31 @@
 
 工件：`runs/lhA_{dashboard,market}_{1,2}.json` / `runs/lhB_market_{1,2}.json`
 （gitignored）。边界：display lane；0 ledger / 0 frozen / 0 OOS。
+
+
+## 轮 114（2026-10-02）：脚本侧追击——lazy-mount 四张下折 recharts 卡，TBT -42%（本地）/ -38%（线上中位）
+
+轮 113 的 profile 解剖把"脚本成本"落到实体：**4.68s 集中在 react-dom 框架 chunk
+的执行**（水合），recharts bundle 本体仅 0.31s 求值——content-visibility 管不到
+水合，正解是**延迟挂载**。实施：`ui/lazy-mount.tsx`（IO 400px once-门控 +
+minHeight 占位保 CLS）+ 四张图表卡（Drivers/Dollar/YieldCurve/MandateTension）
+改 `next/dynamic(ssr:false)`；StagflationRead 无图保持 eager（内容优先）。
+
+| 指标 | A（基线） | C（lazy） | Δ |
+|---|---|---|---|
+| 本地 TBT | 1,500~1,710ms | 900~910ms | **-42%** |
+| 本地主线程 | 10.0~10.1s | 7.5~7.8s | **-24%** |
+| 本地 perf | 41~43 | 50~51 | +8 |
+| CLS | 0 | **0** | 占位高度守住 |
+| 线上 TBT（中位 3 跑） | 1,390ms | 790~910ms | **-38%** |
+| 线上 perf | 70 | 75~77（中位） | +5~7 |
+
+协议 §4 闭环：16,000px 全视口捕获四卡全挂载、图表完整
+（r114_market_fullpage.png）；零控制台错误（无水合失配）。**方法论注记**：
+线上单跑 run1 的 perf 50/LCP 4.6s 是网络慢窗伪影（其 FCP 同步劣化至 3.3s；
+run2/3 恢复 1.3~1.7s）——跨日线上对比必须多跑取中位，TBT 才是网络无关的
+稳定指标；本地同 commit A/B 是设计上的裁决仪器。
+
+工件：`runs/lhC_market_{1,2}.json`、`runs/lhLIVE_market{,_2,_3}.json`（gitignored）。
+
+边界：display lane；0 ledger / 0 frozen / 0 OOS。

@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-02 (轮 114) lazy-mount 下折 recharts 卡：market TBT -42% 本地/-38% 线上中位
+
+轮 113 profile 落地：4.68s=react-dom 水合（非 recharts 求值 0.31s）→LazyMount(IO 400px+minHeight 占位)+四卡 dynamic ssr:false；Stagflation 保 eager。本地 A/B：TBT -42%/主线程 -24%/CLS 0；§4 全页捕获四卡完整+零控制台错误；线上 3 跑中位 TBT -38%、perf 70→75~77（run1 为网络慢窗伪影——多跑取中位方法论入册）。瑕疵如实：首提漏验 eslint 即补修 df22f7214，终态双 0。审计报告 §114+证据 PNG 入档。边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-02 (轮 113) cv 扩展双 null：dashboard 无天花板、market containment 微害——技术边界入册
 
 同款 A/B 闭环：dashboard 本地 TBT 220ms（线上 2.2s 是 redirect+网络）=前置 null 不动；market 尾部宏区包裹实测 TBT +~20%（1.5-1.7s→1.9-2.1s）、主线程持平 10s=recharts 脚本密集，cv 不可及且 containment 自身加负→回滚留档。与 atlas -45% 合并划界：布局/绘制密集页适用，脚本密集页不适用。审计报告 §113 追加+证据截图归档 reports/audits/2026-10-02-lighthouse-evidence/（3ca119f85）。边界：display lane；0 ledger/0 frozen/0 OOS。
