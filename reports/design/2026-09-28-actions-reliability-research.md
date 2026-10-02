@@ -146,6 +146,17 @@ the remaining three workflows (vintage-probe — which fires tomorrow
   set** (all cache users run on push/dispatch; the only PR workflow,
   ci.yml, has zero cache steps; no pull_request_target exists). Revisit the
   moment any low-trust-event workflow is ever added.
+- **Round-111 measured outcome (2026-10-02): setup-uv caching for ci.yml —
+  tried, measured, REVERTED. Null result, recorded so nobody re-runs it on
+  vibes.** Measured on identical commits: uncached `uv sync --all-extras` =
+  22s; with `enable-cache: true` (v3) = 21s — and the first post-save
+  restore attempt 400'd on an immediate rerun (cache-service
+  eventual-consistency window). uv's cold sync was never the cost center:
+  the Tests job is ~4m of which pytest is ~3.5m. A ~1GB venv cache buying
+  ≤1s/run against the repo's existing multi-GB cache quota pressure is
+  negative value. ci.yml keeps zero cache steps; the disposition premise
+  above stands unchanged.
+
 - **workflow execution protections** (GA 2026-09-17, supply-chain tag):
   repo-settings-level execution policy — not workflow YAML. Our exposure is
   minimal (private repo, single owner, no external contributors, all 27
