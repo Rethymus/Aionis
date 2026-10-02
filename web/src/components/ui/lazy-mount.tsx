@@ -39,8 +39,11 @@ export function LazyMount({
     const el = ref.current;
     if (!el) return;
     if (typeof IntersectionObserver === "undefined") {
-      setVisible(true); // ancient engine: mount everything, correctness first
-      return;
+      // Ancient engine: mount everything, but flip asynchronously — a sync
+      // setState in the effect body cascades renders (lint rule) and the
+      // first client render must match SSR (placeholder) for hydration.
+      const t = setTimeout(() => setVisible(true), 0);
+      return () => clearTimeout(t);
     }
     const io = new IntersectionObserver(
       (entries) => {
