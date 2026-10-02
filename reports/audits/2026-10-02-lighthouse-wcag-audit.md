@@ -130,3 +130,34 @@ run2/3 恢复 1.3~1.7s）——跨日线上对比必须多跑取中位，TBT 才
 
 工件：`runs/lhA_{heatmap,dashboard,atlas}_r115_*.json`、`runs/lhEXP_atlas_{1,2}.json`
 （gitignored）。边界：display lane；0 ledger / 0 frozen / 0 OOS。
+
+
+## 轮 116（2026-10-02）：水合构成消融（框架级=null）+ 选项 B 落地（/ 直渲，线上验证）
+
+**消融份额表**（临时空内容页 + NEXT_PUBLIC_ABLATION env 门控，测毕全撤）：
+
+| 层 | TBT | 说明 |
+|---|---|---|
+| 共享壳层（导航+⌘K+Provider 栈+BackToTop） | **230~310ms** | 全站地板 |
+| ┼ ⌘K 面板消融（nopalette 构建） | 230~310ms | **份额≈0（噪声内）** |
+| dashboard 内容（Overview 全量−壳层） | ≈0~80ms | 内容几乎免费 |
+| heatmap 内容 | ≈0~50ms | 同 |
+| atlas 内容（−壳层） | ~1,800~2,500ms | 唯一重页（已各自处置：cv 落地/LazyMount 内容优先否决） |
+
+**裁决：共享组件级优化=null**——壳层地板就是 React+导航的真实成本，⌘K 懒挂载
+无收益；~2s 残余是 atlas 专属而非"report/dashboard 类页面"通病（修正本轮前提）。
+
+**选项 B 落地**（df0729f25）：壳层自 (dashboard) 组 layout 上提至根 layout（全部
+路由含 404 获得导航），`/` 直渲 `<Overview/>`+canonical→dashboard.html，redirect
+壳退役。**线上验证**：`/` TBT 410/410ms ≡ /dashboard 390/760ms（本地 python
+http.server 对目录 URL 的双峰伪影 3.6~3.9s 在 gh-pages **不复现**——单线程伺服
+饥饿，非页面缺陷）；perf 54→66~70；线上视觉闭环（r116_root_live.png：导航+hero+
+信任带+读数卡全在墙）。
+
+**外部对照**：web.dev content-visibility 一手指南确证轮 112/113 边界结论（渲染
+优化不跳过脚本/水合；`contain-intrinsic-size: auto <px>` 记忆策略=我们所用）；
+Interop 2026 页 404（web.dev 文档重组期，如实注记）。搜索配额 2026-10-03 18:50
+UTC 恢复（今日两次尝试均 429 如实记录）。
+
+工件：`runs/lhABL_empty_*.json`、`runs/lhB_root_*.json`、`runs/lhCTRL_dash_now*.json`、
+`runs/lhLIVE116_*.json`（gitignored）。边界：display lane；0 ledger/0 frozen/0 OOS。

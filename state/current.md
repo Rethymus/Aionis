@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-10-02) 轮 116（display 线）：水合消融定界（框架级=null）+选项 B 落地（/ 直渲 dashboard，线上验证通过）：**
+  **消融实验**（临时空内容页+env 门控 palette，测毕全撤）：共享壳层 TBT 地板 230~310ms（导航+⌘K+Provider 栈）；⌘K 消融份额≈0（噪声内）；dashboard/heatmap 内容各仅 0~80ms——**共享组件级优化=null**，~2s 残余系 atlas 专属（前提修正：非 report/dashboard 类通病）。**选项 B**（df0729f25）：壳层上提根 layout（404 亦获导航）、`/` 直渲 Overview+canonical→dashboard.html、redirect 壳退役；**线上验证**：/ TBT 410ms≡dashboard（390~760ms）、perf 54→66~70、视觉闭环在墙（r116_root_live.png）；本地 python http.server 目录 URL 双峰伪影（3.6~3.9s）gh-pages 不复现=单线程伺服饥饿非页面缺陷（如实入册）。**外部对照**：web.dev content-visibility 一手指南确证轮 112/113 技术边界（渲染优化不跳水合；intrinsic-size auto 记忆策略=我们实现）；Interop 2026 页 404 文档重组期注记；搜索配额 10-03 18:50 UTC 恢复。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (2026-10-02) 轮 115（display 线）：LazyMount 三页扩展裁决——两前置 null+atlas 天花板实测后内容优先否决；`/` 落地页决策简报呈业主：**
   **heatmap**（手写 squarify 树图）：TBT 270~290ms 前置 null 不动。**dashboard**：4 跑 200/270/330/1620ms——1.6s 为一次性离群，归因宿主并发（当晚通道在本机抓取，测量窗撞 CPU 突发）；方法注记入册（跑通道的机器上测 Lighthouse 有此噪声，中位+归因报告）。**atlas 天花板实验**（测完即回滚）：下折三区块 LazyMount 替换 cv → TBT 中位仅 **-10%**（2.4→2.2s）、perf +5~6、主线程 -17%——为 -10% 把研究叙事表格移出 SSR HTML 违反内容优先，**否决**；cv 保持 atlas 终态；剩余 TBT 大头在上折区块+框架水合。**`/` 简报**（reports/design/2026-10-02-root-landing-page-brief.md）：三选项含实测（A 现状 5.8s 恒税/B `/` 直渲 dashboard 预计省 ~2.4s/C 独立落地页），建议 B 呈业主裁决。**多会话**：本会话作业期间通道完成 0b3a9a98e（57 文件）推送、他会话 stash（agent/form13f）在册未动。**验证**：实验构建 EXIT 0×2+tsc 0；终态树净（atlas 实验已 checkout 还原）。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 

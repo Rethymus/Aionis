@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-02 (轮 116) 水合消融（壳层地板 250ms/⌘K 份额 0/内容免费→框架级 null）+选项 B：/ 直渲 dashboard 线上验证
+
+消融表入审计报告 §116；共享组件优化判 null。选项 B 落地：壳层上提根 layout、/ 渲染 Overview+canonical、redirect 壳退役；线上 /≡dashboard TBT 410ms、perf 54→66~70、视觉闭环（r116_root_live.png）。本地目录 URL 双峰=python 伺服饥饿伪影（gh-pages 不复现，入册）。web.dev 一手指南确证 cv 边界。边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-02 (轮 115) LazyMount 三页扩展：heatmap/dashboard 前置 null、atlas -10% 天花板按内容优先否决；`/` 简报呈业主
 
 heatmap TBT 270-290ms null 不动；dashboard 离群 1.6s 归因宿主并发（通道 CPU 突发撞测量窗，方法注记）；atlas 实验替换 cv 仅 -10% TBT（2.4→2.2s）对 SSR 内容损失→否决回滚、cv 保持终态，剩余大头=上折区块+框架水合。`/` 落地页三选项简报（建议 B 直渲 dashboard，LCP 预计 5.8→~3.4s）呈业主。通道 0b3a9a98e 对账合流。边界：display lane；0 ledger/0 frozen/0 OOS。
