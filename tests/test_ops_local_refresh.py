@@ -461,6 +461,8 @@ def test_doctor_all_layers_pass(monkeypatch, tmp_path) -> None:
         return subprocess.CompletedProcess(args, 0, s, "")
 
     monkeypatch.setattr(lane.subprocess, "run", _ok)
+    monkeypatch.setattr(lane, "IS_WINDOWS", True)  # CI runs Linux: force the
+    # scheduler branch so the mocked powershell query is what executes
     monkeypatch.setattr(lane, "load_state",
                         lambda: {"date": "2026-10-01", "status": "ok_committed"})
     import json as _json
