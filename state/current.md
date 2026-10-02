@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-10-02) 轮 124（display 线）：/confirmation per-tab dynamic——本地 -28%、线上未复现（保留，本地/线上分野如实）：**
+  最后一个 Tabs 页套轮 121 配方（默认 smart-money 保静态+3 视图 dynamic）。本地 874→540~720（~-28%）CLS 0+DOM 闭环；**线上 699~908 中位 899 未复现**——时序型收益被网络窗方差吸收（轮 121/123 线上大收益均伴随图表级结构拆分）。裁决保留：零损失零回归+一致性；"本地有效/线上未证"分野入册。regime 的 positioning/taco 已在轮 121 结构性解决。配额/activationStart 未到窗口。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (2026-10-02) 轮 123（display 线）：/track 免费获益——轮 122 组件复用红利，线上中位 858→333ms（-61%），零新代码：**
   /track 默认 tab 静态导入的正是轮 122 拆分的 CalibrationView→图表 dynamic 拆分自动生效（发布链已在轮 122 完成）。**验证**：本地 3 跑 450~460（vs 轮 121 的 950~970=-53%）、线上 3 跑中位 **333ms**（vs 858=-61%）、CLS 0；DOM 闭环 6 tabs+2 面板+2 设计内骨架。**方法论入册**：组件级拆分的复用红利——一次改动多路由受益，先查复用面再排队新工程（原计划的增量拆分被证明已隐式完成）。配额 10-03 18:50 UTC 未到窗口；activationStart pending。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 

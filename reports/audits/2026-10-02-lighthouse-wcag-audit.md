@@ -341,3 +341,18 @@ recharts 零入 SSR。**方法论注记**：组件级拆分的复用红利——
 
 工件：`runs/lh123_track_{1,2,3}.json`、`runs/lhLIVE123_track_{1,2,3}.json`。
 边界：display lane；0 ledger / 0 frozen / 0 OOS。
+
+
+## 轮 124（2026-10-02）：/confirmation per-tab dynamic——本地 -28%、线上未复现（保留，如实分野）
+
+最后一个 Tabs 页（874ms）套轮 121 配方：默认 smart-money 保静态，insiders/
+reddit/theme-slice per-tab dynamic。**本地 A/B**：874→540~720ms（中位 ~-28%）、
+CLS 0、DOM 闭环（4 tabs+smart-money 行在墙）。**线上 3 跑：699~908ms 中位 899——
+未复现本地收益**：时序型收益（预载天花板下）被线上网络窗方差吸收（轮 121/123
+的线上大幅收益均伴随图表级结构性拆分，本页无）。**裁决：保留**——零内容损失、
+零回归（CLS 0）、与全站 Tabs 页一致性；如实记录"本地有效/线上未证"分野。
+regime 内 positioning/taco 经查已在轮 121 per-tab dynamic 中结构性解决，无需
+重复处置。配额 10-03 18:50 UTC 未到窗口；activationStart pending。
+
+工件：`runs/lh124_conf_{1,2}.json`、`runs/lhLIVE124_conf_{1,2,3}.json`。
+边界：display lane；0 ledger / 0 frozen / 0 OOS。

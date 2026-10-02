@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-02 (轮 124) /confirmation per-tab dynamic：本地 -28%、线上未复现（保留）
+
+轮 121 配方收尾最后 Tabs 页：本地 874→540~720/CLS 0/DOM 闭环；线上 699~908 中位 899 未复现（时序收益被网络窗吸收；121/123 的线上大收益均伴随图表级结构拆分）。保留（零损失零回归+一致性）。regime positioning/taco 已在轮 121 解决。边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-02 (轮 123) /track 复用红利：线上 TBT 858→333ms（-61%），零新代码
 
 轮 122 拆分的 CalibrationView 被 /track 静态复用→图表 dynamic 拆分自动生效。本地 450~460（-53%）/线上中位 333（-61%）/CLS 0；DOM 闭环齐。方法论：先查复用面再排队新工程。配额/activationStart 未到窗口。边界：display lane；0 ledger/0 frozen/0 OOS。
