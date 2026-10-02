@@ -278,3 +278,25 @@ picks 的真实杠杆=行级水合拆分（TrackRecord/浓度卡），但它们�
 
 工件：`runs/lh120_screen_*.json`、`runs/lh120_picks_cv_{1,2}.json`（gitignored）。
 边界：display lane；0 ledger / 0 frozen / 0 OOS。
+
+
+## 轮 121（2026-10-02）：/track、/regime 每 tab dynamic 拆分——两页 TBT 各 -11%（温和真实，天花板如实）
+
+**机制发现**：两页为 Radix Tabs 多标签页——仅活动 tab 进 DOM，但全部 tab 视图的
+模块图都打进首屏。**实施**：默认 tab（calibration/market）保持静态导入（SSR 内容
+零损失——非默认 tab 本无 SSR 输出）；track 其余 5 视图+regime 其余 3 视图改
+`next/dynamic` 每 tab chunk。
+
+| 页 | 基线（单跑） | 拆分后（双跑） | 线上中位（3 跑） |
+|---|---|---|---|
+| track | 1,082ms | 950~970ms（-11%） | **858ms** |
+| regime | 878ms | 740~810ms（-11%） | **753ms** |
+
+**诚实天花板注记**：transfer（~4.4MB）与主线程（6.5~6.7s）**不变**——Next 静态
+导出会预载路由全部动态 chunk，模块仍全部求值；收益纯来自执行时序移出 TBT 窗口。
+温和（-11%）但两页×两跑一致、零内容损失。**闭环**：SSR HTML 载默认 tab（48 SVG+
+6 tabs）；水合 DOM 54 SVG+4 recharts 面板。calibration 独立页（759ms，recharts
+确证）留候选——需图表级 LazyMount（下轮裁量）。配额/activationStart 仍未到窗口。
+
+工件：`runs/lh121_{track,regime}_{1,2}.json`、`runs/lhLIVE121_*.json`。
+边界：display lane；0 ledger / 0 frozen / 0 OOS。

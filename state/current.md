@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-10-02) 轮 121（display 线）：/track、/regime 每 tab dynamic 拆分——两页 TBT -11%（本地双跑一致）+线上中位 858/753ms，预载天花板如实入册：**
+  **机制**：Radix Tabs 仅活动 tab 进 DOM 但全模块图入首屏。**实施**：默认 tab 保静态（SSR 零损失），track 余 5 视图+regime 余 3 视图 per-tab dynamic。**实测**：track 1,082→950~970、regime 878→740~810（各 -11%）；线上中位 858/753。**天花板注记**：transfer/主线程不变——静态导出预载全部动态 chunk（模块仍求值），收益纯为执行时序出窗；温和但一致+零内容损失。**闭环**：SSR 48 SVG+6 tabs 在墙、水合 54 SVG+4 recharts 面板。calibration 独立页（759ms recharts）留候选。配额 10-03 18:50 UTC/activationStart 未到窗口。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (2026-10-02) 轮 120（display 线）：11 页残余水合普查入册——picks 独高 1,747ms 但 cv 实验 null 偏害回滚，cv 适用阈值收敛至万级 DOM：**
   **普查**（本地单跑降序）：picks 1,747/track 1,082/regime 878/confirmation 874/calibration 759/model-health 506/shelf~evidence 181~400（健康≈壳层地板）。**picks 解剖**：无图表纯行卡——水合脚本 1.3s+布局 1.1s；下折尾部 cv 包裹实测 1,840~2,190 vs 1,747=**null 偏害**（containment 记账＞布局节省，market 轮 113 同型）→回滚。**cv 边界再收敛**：适用阈值≈万级 DOM（atlas 7,162 有效/picks 2,345 无效）。picks 真实杠杆=行级水合拆分但属数据内容（内容优先张力，评估过不修呈后续裁量）。**下一轮候选**：track/regime/calibration（主线程 6.2~6.7s 脚本密集）图表解剖——recharts 则 LazyMount 配方。配额/activationStart 仍未到窗口如实。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 

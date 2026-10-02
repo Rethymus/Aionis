@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-02 (轮 121) /track、/regime per-tab dynamic：TBT 各 -11%，静态导出预载天花板如实
+
+机制=Tabs 仅活动 tab 进 DOM 但全模块图入首屏；默认 tab 保静态零 SSR 损失，余 8 视图 per-tab dynamic。track 1,082→950~970/regime 878→740~810；线上中位 858/753；transfer/主线程不变（预载全部动态 chunk）=天花板注记。闭环：SSR 48 SVG+水合 54 SVG/4 recharts。calibration 页留候选。边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-02 (轮 120) 11 页水合普查：picks 独高但 cv null 偏害回滚——cv 阈值收敛至万级 DOM
 
 筛选表入审计报告 §120（picks 1,747/track 1,082/regime 878/…/evidence 181）；picks（无图表、水合脚本 1.3s+布局 1.1s）cv 实验 1,840~2,190 vs 1,747=偏害回滚——cv 适用阈值≈万级 DOM（atlas ✓/picks ✗）。picks 行级拆分受内容优先张力，评估过不修。下轮：track/regime/calibration 脚本密集页图表解剖（LazyMount 配方候选）。边界：display lane；0 ledger/0 frozen/0 OOS。
