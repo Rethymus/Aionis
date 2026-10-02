@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-02 (轮 115) LazyMount 三页扩展：heatmap/dashboard 前置 null、atlas -10% 天花板按内容优先否决；`/` 简报呈业主
+
+heatmap TBT 270-290ms null 不动；dashboard 离群 1.6s 归因宿主并发（通道 CPU 突发撞测量窗，方法注记）；atlas 实验替换 cv 仅 -10% TBT（2.4→2.2s）对 SSR 内容损失→否决回滚、cv 保持终态，剩余大头=上折区块+框架水合。`/` 落地页三选项简报（建议 B 直渲 dashboard，LCP 预计 5.8→~3.4s）呈业主。通道 0b3a9a98e 对账合流。边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-02 (轮 114) lazy-mount 下折 recharts 卡：market TBT -42% 本地/-38% 线上中位
 
 轮 113 profile 落地：4.68s=react-dom 水合（非 recharts 求值 0.31s）→LazyMount(IO 400px+minHeight 占位)+四卡 dynamic ssr:false；Stagflation 保 eager。本地 A/B：TBT -42%/主线程 -24%/CLS 0；§4 全页捕获四卡完整+零控制台错误；线上 3 跑中位 TBT -38%、perf 70→75~77（run1 为网络慢窗伪影——多跑取中位方法论入册）。瑕疵如实：首提漏验 eslint 即补修 df22f7214，终态双 0。审计报告 §114+证据 PNG 入档。边界：display lane；0 ledger/0 frozen/0 OOS。

@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-10-02) 轮 115（display 线）：LazyMount 三页扩展裁决——两前置 null+atlas 天花板实测后内容优先否决；`/` 落地页决策简报呈业主：**
+  **heatmap**（手写 squarify 树图）：TBT 270~290ms 前置 null 不动。**dashboard**：4 跑 200/270/330/1620ms——1.6s 为一次性离群，归因宿主并发（当晚通道在本机抓取，测量窗撞 CPU 突发）；方法注记入册（跑通道的机器上测 Lighthouse 有此噪声，中位+归因报告）。**atlas 天花板实验**（测完即回滚）：下折三区块 LazyMount 替换 cv → TBT 中位仅 **-10%**（2.4→2.2s）、perf +5~6、主线程 -17%——为 -10% 把研究叙事表格移出 SSR HTML 违反内容优先，**否决**；cv 保持 atlas 终态；剩余 TBT 大头在上折区块+框架水合。**`/` 简报**（reports/design/2026-10-02-root-landing-page-brief.md）：三选项含实测（A 现状 5.8s 恒税/B `/` 直渲 dashboard 预计省 ~2.4s/C 独立落地页），建议 B 呈业主裁决。**多会话**：本会话作业期间通道完成 0b3a9a98e（57 文件）推送、他会话 stash（agent/form13f）在册未动。**验证**：实验构建 EXIT 0×2+tsc 0；终态树净（atlas 实验已 checkout 还原）。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (2026-10-02) 轮 114（display 线）：脚本侧追击——lazy-mount 下折 recharts 卡，market TBT -42%（本地 A/B）/-38%（线上中位），perf 70→75~77：**
   **解剖（轮 113 profile 落地）**：4.68s 集中于 react-dom chunk 的水合执行（recharts bundle 求值仅 0.31s）——cv 管不到水合，正解=延迟挂载。**实施**：`ui/lazy-mount.tsx`（IO 400px once + minHeight 占位）+ 四张图表卡（Drivers/Dollar/Yield/Mandate）`next/dynamic(ssr:false)`（SSR 只出占位→水合无失配）；Stagflation 无图保 eager。**A/B 双跑（本地同 commit）**：TBT 1,500~1,710→900~910ms（**-42%**）、主线程 -24%、perf 41~43→50~51、**CLS 保持 0**（占位高度守位）。**协议 §4**：16000px 全视口捕获四卡全挂载图表完整+零控制台错误；证据入 reports/audits/2026-10-02-lighthouse-evidence/r114_market_fullpage.png。**线上 3 跑复测**：TBT 中位 -38%（1,390→790~910ms）、perf 75~77、LCP 持平或更优——**run1 的 perf 50/LCP 4.6s 为网络慢窗伪影（FCP 同步劣化 3.3s）**，方法论入册：跨日线上对比必须多跑取中位，TBT 是网络无关稳定指标。**过程瑕疵如实**：首轮提交漏验 eslint（setState-in-effect 规则报错）后即补修（df22f7214：IO 缺失兜底改异步翻转，兼保水合一致），终态 eslint/tsc 双 0。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 

@@ -108,3 +108,25 @@ run2/3 恢复 1.3~1.7s）——跨日线上对比必须多跑取中位，TBT 才
 工件：`runs/lhC_market_{1,2}.json`、`runs/lhLIVE_market{,_2,_3}.json`（gitignored）。
 
 边界：display lane；0 ledger / 0 frozen / 0 OOS。
+
+
+## 轮 115（2026-10-02）：LazyMount 扩展三页裁决——heatmap/dashboard 前置 null、atlas 天花板实测后按内容优先否决
+
+- **heatmap**（手写 squarify 树图，US 492+CN 929 格）：本地 TBT 仅 **270~290ms**
+  ——前置 null，未改动（8s 主线程是大块非阻塞离屏工作，TBT 才是体验指标）。
+- **dashboard**：4 跑分布 200/270/330/**1,620**ms——1.6s 为**一次性离群**，归因
+  **宿主并发**（当晚数据通道正在本机抓取/解析，测量窗撞其 CPU 突发）。方法注记：
+  在跑通道的机器上做 Lighthouse 会引入此噪声；中位数报告+离群归因。
+- **atlas 天花板实验**（测完即回滚）：三个下折区块 LazyMount（替换 cv）→
+  TBT 中位 2,110~2,740→2,160~2,270ms（**仅 -10%**）、perf 34~35→40~41、主线程
+  -17%。**裁决：否决**——atlas 区块是研究叙事/表格（本仓的内容本体），为 -10%
+  把它们移出 SSR HTML 违反内容优先；cv（轮 112）保留为 atlas 的终态方案。
+  数字留档：atlas 剩余 TBT 的大头在**上折区块+页面框架**的水合，非下折三区块。
+
+### `/` 落地页决策简报
+
+见 `reports/design/2026-10-02-root-landing-page-brief.md`（三选项含实测数据，
+建议 B：`/` 直接渲染 dashboard 内容，LCP 预计 5.8→~3.4s，一个文件+canonical）。
+
+工件：`runs/lhA_{heatmap,dashboard,atlas}_r115_*.json`、`runs/lhEXP_atlas_{1,2}.json`
+（gitignored）。边界：display lane；0 ledger / 0 frozen / 0 OOS。
