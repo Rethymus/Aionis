@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-10-02) 轮 128（docs/ops 线）：Baseline 对照情报 null——`<search>` 候选拦截在已存在（role="search" 先行），Popover/:has()/inert 无痛点对映否决；值守全绿：**
+  WebFetch web.dev/baseline 一手对照（Interop 2026 页第三次 404 注记）：`<search>` 地标已由 HomeSearch 的 role="search" 等效覆盖（null-by-precondition）；Popover 重写无实测需求（98 轮验证+a11y 100，风险/收益倒置）；:has()/nesting/inert 无痛点映射。**结论：Baseline 面无可落地项，本仓能力（cv/Speculation Rules/语义地标）先行于 Baseline**——null 入册，配额恢复后全量搜索仍候选。值守：通道 ok/staleness 按期/CI 绿/零 Issue。业主三项待反馈（悬停验证/campaign 裁决/选项 B 追认）无新输入。**边界**：docs/ops lane；0 ledger/0 frozen/0 OOS。
+
 - **active (2026-10-02) 轮 127（display 线）：activationStart 实测——合成探针（headless+headful）均 0 未证实，二候选根因入册，人工验证呈业主：**
   puppeteer-core+Edge 两轮（hover 700ms→click→读 activationStart）：均 0/type=navigate=预渲染未激活。诚实归因未定论：①CDP 合成事件可能不触发 hover 启发式（headless 禁 speculation 已知，headful 亦 0 不能排除）；②站内链接全 clean path→gh-pages 301→.html，预渲染跟随 301 行为未证。**呈业主 30 秒人工验证**（真实悬停→点击→近瞬时=命中）；若未命中候选修法=nav 链接 .html 后缀/trailingSlash，挂起待证不盲改。临时 harness 已清（无驻留）。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 

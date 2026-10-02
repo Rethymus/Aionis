@@ -398,3 +398,23 @@ nav 链接改 `.html` 后缀（或 trailingSlash 构建），挂起待证不盲�
 
 工件：无保留（临时 harness 已删；两轮输出如上）。边界：display lane；
 0 ledger / 0 frozen / 0 OOS。
+
+
+## 轮 128（2026-10-02）：Baseline 外部对照（WebFetch 已知源，配额仍余 ~28h）——情报 null 如实入册
+
+**值守**：通道 ok_committed（0b3a9a98e）；staleness 周检按期（09-28 success，下次
+10-05）；CI 绿；零未决 Issue。
+
+**对照面**（web.dev/baseline 一手）：Popover/:has()/CSS nesting/inert/`<search>`/
+Subgrid 等 Baseline 状态到手；Interop 2026 页持续 404（web.dev 文档重组期，第三
+次如实注记）。逐项对本仓判定：
+- **`<search>` 地标**：候选拦截在"已存在"——HomeSearch 的 form 已带
+  `role="search"`（ARIA 地标等效，双写反而违规）。null-by-precondition。
+- **Popover API**：可替代导航下拉/⌘K 的手写 top-layer+焦点管理，但现实现经 98
+  轮验证且 a11y 100——无实测需求支撑的重写=风险/收益倒置。否决。
+- **:has()/nesting/inert**：无具体痛点对映（frost 钉头是 overflow 祖先问题非
+  选择器问题；模态焦点已由 Radix 处理）。否决。
+**结论：Baseline 面无可落地新特性**——本仓相关能力（cv/Speculation Rules/语义
+地标）反而先行于 Baseline。null 入册；配额恢复后的全量搜索扫描仍保留为候选。
+
+边界：docs/ops lane；0 ledger / 0 frozen / 0 OOS。

@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-02 (轮 128) Baseline 对照 null：search 地标已先行（role=search），Popover 等无痛点否决；值守全绿
+
+WebFetch 一手对照（Interop 2026 三次 404）：候选逐项判定后无可落地项——本仓 cv/Speculation Rules/语义地标先行于 Baseline。值守：通道/staleness/CI/Issue 全绿。业主三项待反馈无新输入。边界：docs/ops lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-02 (轮 127) activationStart 合成探针未证实（headless+headful 均 0）
 
 puppeteer-core+Edge 两轮均 activationStart=0。二候选根因（CDP 合成 hover 不触发启发式 / clean-path→301 取消预渲染）未定论；30 秒人工验证呈业主；候选修法（.html 后缀链接）挂起待证。harness 已清。边界：display lane；0 ledger/0 frozen/0 OOS。
