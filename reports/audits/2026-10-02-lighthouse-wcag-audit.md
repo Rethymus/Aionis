@@ -168,3 +168,34 @@ UTC 恢复（今日两次尝试均 429 如实记录）。
 
 工件：`runs/lhABL_empty_*.json`、`runs/lhB_root_*.json`、`runs/lhCTRL_dash_now*.json`、
 `runs/lhLIVE116_*.json`（gitignored）。边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
+## 轮 117（2026-10-02）：atlas 上折细剖（份额表）+ Speculation Rules 落地
+
+**上折消融**（env 门控，测毕还原；基线=轮 116 构建 TBT 2,110/2,740ms）：
+
+| 消融变体 | TBT | 份额推算 |
+|---|---|---|
+| −AtlasClaims | 1,410~1,620ms | claims ≈ 500~1,200ms |
+| −AtlasDivergence | 970~1,280ms | **divergence ≈ 830~1,770ms（更大）** |
+
+两区块均内容密集（18~20 表行+SVG）→ 内容优先约束下整块懒挂载不可行（轮 115
+同裁决）。**手术式出路已识别但本轮不实施**：仅图表子块 dynamic ssr:false、表格
+留 SSR（market 卡先例；divergence 的 BandPanel SVG 是干净边界）——估算可再省
+~0.8~1.7s atlas TBT，留独立一轮从容做（轮 116 staging 事故教训：勿赶工）。
+
+**Speculation Rules 落地**（f6357f665）：根 layout 内联规则块——`prerender:
+where href_matches /Aionis/*, eagerness moderate`（hover~200ms/pointerdown，
+Chrome 并发帽 2 FIFO+Save-Data/Preload-Off 自动禁用=构造性礼貌；外链模式永不
+匹配；non-Chrome 视为惰性 JSON 忽略）。**Chrome 官方原文："静态多页站是理想
+用例"**——正对 1500 页全页导航的本站。验证：三代表性页规则在墙+JSON 解析
+合法+lighthouse 控制台 0 错误+a11y 100 不变；线上在墙（初次 0 读数=CDN 边缘
+传播延迟，90 秒后 650,420 字节新版 grep=1，如实入册）。**如实注记**：
+activationStart>0 的预渲染命中实测需脚本化 UI 轮，标记 pending 不宣称。
+
+**外部对照补充**：developer.chrome.com 一手页确认 Speculation Rules 非 Baseline
+（Chrome/Edge 121+）；无 CSP 阻碍（GitHub Pages 无 CSP 头）。搜索配额
+2026-10-03 18:50 UTC 恢复（今日确认仍未到窗口）。
+
+工件：`runs/lh117_{noclaims,nodiv}_{1,2}.json`、`runs/lh117_speca_sanity.json`
+（gitignored）。边界：display lane；0 ledger / 0 frozen / 0 OOS。

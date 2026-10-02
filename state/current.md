@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-10-02) 轮 117（display 线）：atlas 上折细剖（divergence 830~1770ms>claims 500~1200ms，手术式图表拆分方案入册待独立轮）+ Speculation Rules 全站落地（hover 预渲染，线上在墙）：**
+  **消融**（env 门控测毕还原）：−divergence TBT 970~1,280ms、−claims 1,410~1,620ms（基线 2,110/2,740）——divergence 份额更大；两区块内容密集→整块懒挂载不可行（轮 115 同裁决），**手术式出路=仅 SVG 子块 dynamic ssr:false+表格留 SSR**（BandPanel 干净边界，估 ~0.8~1.7s），留独立轮（轮 116 教训：勿赶工）。**Speculation Rules**（f6357f665）：根 layout 内联 `prerender /Aionis/* moderate`（并发帽 2+Save-Data 自动禁用=构造性礼貌；外链不匹配；non-Chrome 惰性忽略）——Chrome 官方"静态多页站理想用例"原文正对本站；验证：三页规则在墙+JSON 合法+控制台 0 错误+a11y 100 不变+**线上在墙**（初读 0=CDN 边缘延迟，90s 后新版 650,420B grep=1 如实入册）；activationStart 命中实测=脚本化 UI 轮 pending 不宣称。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (2026-10-02) 轮 116 addendum（display 线）：选项 B 提交事故与两处归因更正（如实）：**df0729f25 的 git add 因陈旧 pathspec 原子失败→该提交仅含组 layout 删除，**线上约 15 分钟全站无导航且 / 仍跳转**；cadd5122a（网络瞬断重试一次后）补齐壳层上提+Overview+canonical，三路由导航探针+hero h1 全在墙。**更正**：事故窗口内的"线上验证 410ms"判为 Pages 重建延迟期旧部署读数，不作证据；"本地双峰=python 伺服目录 URL 伪影"归因撤销——修复部署上 / 与 /dashboard 双双双峰（860/3,020 vs 320/1,530ms），真实机制=TBT 对交付交错的测量敏感性（慢网窗摊薄执行→反低；快网窗叠峰→高），与轮 114 多跑取中位注记同源。结论维持：/ ≡ /dashboard、redirect 税结构性消除、视觉闭环有效。**教训入册**：多 pathspec 的 git add 出错即整条失败——分步 add 或失败后必查 staged 清单再 commit。**
 
 - **active (2026-10-02) 轮 116（display 线）：水合消融定界（框架级=null）+选项 B 落地（/ 直渲 dashboard，线上验证通过）：**

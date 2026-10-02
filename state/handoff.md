@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-02 (轮 117) atlas 上折细剖+Speculation Rules 全站落地
+
+消融：divergence 份额 830~1,770ms>claims 500~1,200ms；整块懒挂载违反内容优先，手术式（仅 SVG 拆分留表格 SSR）方案入册待独立轮。Speculation Rules（f6357f665）：全站 hover 预渲染（/Aionis/* moderate，礼貌档），三页+线上在墙（CDN 延迟 90s 现象如实），activationStart 实测 pending。边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-02 (轮 116) 水合消融（壳层地板 250ms/⌘K 份额 0/内容免费→框架级 null）+选项 B：/ 直渲 dashboard 线上验证
 
 消融表入审计报告 §116；共享组件优化判 null。选项 B 落地：壳层上提根 layout、/ 渲染 Overview+canonical、redirect 壳退役；线上 /≡dashboard TBT 410ms、perf 54→66~70、视觉闭环（r116_root_live.png）。本地目录 URL 双峰=python 伺服饥饿伪影（gh-pages 不复现，入册）。web.dev 一手指南确证 cv 边界。边界：display lane；0 ledger/0 frozen/0 OOS。
