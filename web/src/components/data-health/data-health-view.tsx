@@ -266,7 +266,7 @@ export function DataHealthView() {
                         {p.as_of ?? "—"}
                       </span>
                       <span
-                        className="w-24 text-right font-mono text-xs tabular-nums text-muted-foreground/70"
+                        className="w-24 text-right font-mono text-xs tabular-nums text-muted-foreground"
                         title={t("datahealth.col.exported")}
                       >
                         {p.exported_at ?? "—"}

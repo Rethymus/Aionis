@@ -204,7 +204,7 @@ export function ApiDocsView() {
                     ) : null}
                   </span>
                   <span className="text-xs text-muted-foreground">{e.license}</span>
-                  <span className="text-xs text-muted-foreground/80">{e.source}</span>
+                  <span className="text-xs text-muted-foreground">{e.source}</span>
                 </div>
               );
             })}

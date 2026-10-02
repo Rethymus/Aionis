@@ -35,11 +35,14 @@ const GUARDS: { key: GuardKey; short: string }[] = [
 
 export function TrustRibbon() {
   const { t } = useI18n();
+  // No aria-label (axe label-content-name-mismatch, Lighthouse round 112):
+  // the ribbon's visible text (label + guard badges + link text) IS the
+  // accessible name — any aria-label here must contain every visible word or
+  // axe flags the mismatch, so content-as-name is the self-maintaining fix.
   return (
     <Link
       href="/discipline"
       className="group flex flex-wrap items-center gap-x-3 gap-y-1.5 rounded-lg border border-emerald-500/20 bg-emerald-500/[0.04] px-3 py-2 transition-colors hover:border-emerald-500/40 hover:bg-emerald-500/[0.07]"
-      aria-label={t("trust.aria")}
     >
       <span className="flex items-center gap-1.5 text-xs font-medium text-emerald-700 dark:text-emerald-400">
         <ShieldCheckIcon className="size-3.5" />

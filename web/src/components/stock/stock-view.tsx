@@ -190,7 +190,7 @@ function InstitutionalHolders({ ticker }: { ticker: string }) {
         <CardDescription>
           {t("stock.holders.note")}
           {holders.length > 0 ? (
-            <span className="ml-1 font-mono text-[11px] text-muted-foreground/70">
+            <span className="ml-1 font-mono text-[11px] text-muted-foreground">
               {t("stock.holders.footnote")}
             </span>
           ) : null}

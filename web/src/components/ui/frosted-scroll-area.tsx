@@ -256,14 +256,16 @@ export function FrostedScrollArea({
         </div>
       ) : null}
 
-      {/* overlay thumb — frosted pill, fades in on hover/scroll, draggable */}
+      {/* overlay thumb — frosted pill, fades in on hover/scroll, draggable.
+          Purely decorative (Lighthouse WCAG round 112): the native scroller
+          stays the keyboard/wheel interface, so the pill carries no scrollbar
+          semantics — role="scrollbar" without a live aria-valuenow was the axe
+          failure, and faking values the JS never tracks would be worse than
+          hiding the ornament. Pointer drag remains a mouse-only affordance. */}
       {scrollable ? (
         <div
           ref={thumbRef}
-          role="scrollbar"
-          {...(label ? { "aria-label": label } : {})}
-          aria-orientation="vertical"
-          tabIndex={0}
+          aria-hidden="true"
           onPointerDown={onThumbPointerDown}
           onPointerMove={onThumbPointerMove}
           onPointerUp={onThumbPointerUp}

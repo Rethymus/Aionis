@@ -71,7 +71,7 @@ function DocCard({ doc }: { doc: KnowledgeShelfDoc }) {
           <span className="font-mono text-[11px] tabular-nums text-muted-foreground">
             {doc.date ?? "—"}
           </span>
-          <span className="ml-auto font-mono text-[11px] tabular-nums text-muted-foreground/70">
+          <span className="ml-auto font-mono text-[11px] tabular-nums text-muted-foreground">
             {t("shelf.chars").replace("{n}", doc.n_chars.toLocaleString())}
           </span>
         </div>
@@ -335,7 +335,7 @@ export function ShelfView() {
                 </span>
                 {/* sha256 first 12 chars + byte count — the reader-side
                     verification pair; "—" is the honest-null degradation. */}
-                <span className="flex flex-wrap items-center gap-x-3 font-mono text-[11px] tabular-nums text-muted-foreground/70">
+                <span className="flex flex-wrap items-center gap-x-3 font-mono text-[11px] tabular-nums text-muted-foreground">
                   <span>
                     {t("shelf.artifacts.sha")}{" "}
                     {a.sha256 ? a.sha256.slice(0, 12) : "—"}

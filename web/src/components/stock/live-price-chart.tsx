@@ -195,7 +195,7 @@ export function LivePriceChart({ region, quote, status, updatedAt }: {
           )}
         </div>
 
-        <p className="font-mono text-[11px] leading-relaxed text-muted-foreground/80">
+        <p className="font-mono text-[11px] leading-relaxed text-muted-foreground">
           {region === "us"
             ? t("stock.live.chart.source.us")
             : t("stock.live.chart.source.cn")}

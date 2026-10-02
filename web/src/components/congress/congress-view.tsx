@@ -262,7 +262,7 @@ function TxSection() {
           onLoadMore={loadMore}
           pageSize={TX_PAGE_SIZE}
         />
-        <div className="border-t px-4 py-2 font-mono text-[11px] leading-relaxed text-muted-foreground/80">
+        <div className="border-t px-4 py-2 font-mono text-[11px] leading-relaxed text-muted-foreground">
           {t("congress.tx.parse_note")
             .replace("{parsed}", f.parse.rows_parsed.toLocaleString("en-US"))
             .replace("{excluded}", f.parse.rows_exchanged.toLocaleString("en-US"))

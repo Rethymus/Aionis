@@ -98,9 +98,12 @@
   --secondary-foreground: #171717;
   --muted: #0000000d;
   /* Owner-reported legibility (2026-08-29): #8f8f8f on white is 2.9:1 —
-     below even the 3:1 large-text floor. #6f6f6f ≈ 5.0:1 keeps the de-emphasis
-     hierarchy (ink #171717 > sub #4d4d4d > mute/faint) while reading cleanly. */
-  --muted-foreground: #6f6f6f;
+     below even the 3:1 large-text floor. WCAG audit (2026-10-02, Lighthouse
+     round 112): #6f6f6f ≈5.0:1 passed full-opacity but every alpha-veiled
+     small-text variant (`text-muted-foreground/80`) dropped to 4.36:1 —
+     under the 4.5:1 AA floor. #555555 = 7.2:1 full and ≈4.6:1 even at /80,
+     keeping the ink > sub > mute hierarchy while every tier reads. */
+  --muted-foreground: #555555;
   --accent: #00000015;
   --accent-foreground: #171717;
   --destructive: #d8001b;
@@ -122,9 +125,12 @@
   --sidebar-ring: #107d32;
 
   --ink: #171717;
-  --mute: #757575;
+  /* WCAG AA (2026-10-02 round 112): #757575 is 4.43:1 on white / 4.15:1 on
+     #fafafa — under the 4.5 floor for the 11px mono metas these tokens carry.
+     #6f6f6f = 4.85:1 / 4.5:1; hierarchy stays (ink > sub > mute > faint). */
+  --mute: #6f6f6f;
   --sub: #4d4d4d;
-  --faint: #747474;
+  --faint: #6f6f6f;
   --line: #0000001f;
   --line2: #00000015;
   --soft: #0000000d;
@@ -688,4 +694,17 @@
       0 0 0 4px color-mix(in srgb, var(--primary) 55%, transparent);
     transition: box-shadow 0.18s ease;
   }
+}
+
+
+/* content-visibility for below-fold section blocks (Lighthouse round 112
+   experiment, /atlas diagnostics/deciles/dataflow): offscreen subtrees skip
+   layout+paint until near-viewport. `contain-intrinsic-size: auto <px>` gives
+   the scrollbar a sane first estimate, then the browser remembers the real
+   height after first render. Charts inside hydrate identically (React runs
+   regardless); only layout/paint work is deferred — the round-88/95 hidden-
+   subtree pathologies were *capture* artifacts, not paint-skipping. */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 640px;
 }

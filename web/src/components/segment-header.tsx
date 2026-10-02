@@ -48,7 +48,7 @@ export function SegmentHeader({
         {asOf ? <ProvenanceBadge ts={asOf} frozen={frozen} /> : null}
         {extra}
         {countHint ? (
-          <p className="font-mono text-xs tabular-nums text-muted-foreground/80">
+          <p className="font-mono text-xs tabular-nums text-muted-foreground">
             {countHint}
           </p>
         ) : null}

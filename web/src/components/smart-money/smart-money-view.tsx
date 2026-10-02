@@ -158,7 +158,7 @@ export function SmartMoneyView() {
       <header>
         <h1 className="text-2xl font-semibold tracking-[-0.032em]">{t("smartmoney.title")}</h1>
         <p className="mt-2 text-[13px] text-mute">{t("smartmoney.window")}</p>
-        <p className="font-mono text-xs tabular-nums text-muted-foreground/80">
+        <p className="font-mono text-xs tabular-nums text-muted-foreground">
           {sm.total_filings.toLocaleString("en-US")} · latest {sm.latest_date ?? "—"}
         </p>
       </header>
@@ -324,7 +324,7 @@ export function SmartMoneyView() {
             {t("stakes13g.title")}
           </CardTitle>
           <CardDescription>{t("stakes13g.window")}</CardDescription>
-          <p className="font-mono text-xs tabular-nums text-muted-foreground/80">
+          <p className="font-mono text-xs tabular-nums text-muted-foreground">
             {sg.total.toLocaleString("en-US")} · {sg.window.start} → {sg.window.end}
             {sg.by_form["SC 13G"] ? ` · 13G ${sg.by_form["SC 13G"].toLocaleString("en-US")}` : ""}
             {sg.by_form["SC 13G/A"] ? ` · 13G/A ${sg.by_form["SC 13G/A"].toLocaleString("en-US")}` : ""}
