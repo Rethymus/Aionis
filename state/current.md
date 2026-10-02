@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-10-02) 轮 123（display 线）：/track 免费获益——轮 122 组件复用红利，线上中位 858→333ms（-61%），零新代码：**
+  /track 默认 tab 静态导入的正是轮 122 拆分的 CalibrationView→图表 dynamic 拆分自动生效（发布链已在轮 122 完成）。**验证**：本地 3 跑 450~460（vs 轮 121 的 950~970=-53%）、线上 3 跑中位 **333ms**（vs 858=-61%）、CLS 0；DOM 闭环 6 tabs+2 面板+2 设计内骨架。**方法论入册**：组件级拆分的复用红利——一次改动多路由受益，先查复用面再排队新工程（原计划的增量拆分被证明已隐式完成）。配额 10-03 18:50 UTC 未到窗口；activationStart pending。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (2026-10-02) 轮 122（display 线）：/calibration 图表级拆分——本地 TBT -40%（759→450~480）、线上中位 425ms：**
   market 轮 114 配方应用：两 recharts 图表块逐字切片入 charts 文件（dynamic ssr:false+420 骨架）、统计/徽章留 SSR、下折 CN+horizon 卡 LazyMount。**实测**：本地双跑 -40%、线上 3 跑中位 425ms（324~563）、CLS 0；主线程 ~6s 不变=预载天花板（轮 121 同源）。DOM 闭环：US 卡 2 面板挂载+恰好 2 骨架（LazyMount 设计内）。过程如实：切片边界两次语法错被 tsc 拦截即修（孤儿 div/外层未闭合）。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 

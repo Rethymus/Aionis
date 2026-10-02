@@ -320,3 +320,24 @@ recharts 面板挂载、恰好 2 骨架残留（=LazyMount 下折占位，设计
 
 工件：`runs/lh122_calib_{1,2}.json`、`runs/lhLIVE122_calib_{1,2,3}.json`。
 边界：display lane；0 ledger / 0 frozen / 0 OOS。
+
+
+## 轮 123（2026-10-02）：/track 免费获益——组件复用使轮 122 拆分自动生效，线上中位 858→333ms（-61%）
+
+零新代码：/track 默认 calibration tab 静态导入的正是轮 122 拆分的
+`CalibrationView`——图表级 dynamic 拆分随组件复用自动惠及该路由（发布链已在
+轮 122 完成）。本轮仅验证+量化：
+
+| 指标 | 轮 121（仅 per-tab split） | +图表拆分（继承） | Δ |
+|---|---|---|---|
+| 本地 TBT（3 跑） | 950~970ms | **450~460ms** | **-53%** |
+| 线上 TBT（3 跑中位） | 858ms | **333ms**（331~375） | **-61%** |
+| CLS | 0 | **0** | — |
+
+DOM 闭环：6 tabs+2 recharts 面板+2 设计内骨架。SSR：calibration 统计网格在墙、
+recharts 零入 SSR。**方法论注记**：组件级拆分的复用红利——一次改动多路由受益，
+先查复用面再排队新工程（本轮原计划的"增量拆分"被证明已在轮 122 隐式完成）。
+搜索配额 10-03 18:50 UTC（现 13:56，未到窗口）；activationStart pending。
+
+工件：`runs/lh123_track_{1,2,3}.json`、`runs/lhLIVE123_track_{1,2,3}.json`。
+边界：display lane；0 ledger / 0 frozen / 0 OOS。

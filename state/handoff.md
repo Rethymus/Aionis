@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-02 (轮 123) /track 复用红利：线上 TBT 858→333ms（-61%），零新代码
+
+轮 122 拆分的 CalibrationView 被 /track 静态复用→图表 dynamic 拆分自动生效。本地 450~460（-53%）/线上中位 333（-61%）/CLS 0；DOM 闭环齐。方法论：先查复用面再排队新工程。配额/activationStart 未到窗口。边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-02 (轮 122) /calibration 图表级拆分：TBT -40% 本地/线上中位 425ms
 
 轮 114 配方复用：图表块逐字切片 dynamic ssr:false+骨架，统计留 SSR，CN/horizon LazyMount。本地 759→450~480、线上中位 425、CLS 0；预载天花板同源注记；DOM 闭环（2 面板+2 设计内骨架）。切片边界两次语法错被 tsc 即拦即修。边界：display lane；0 ledger/0 frozen/0 OOS。
