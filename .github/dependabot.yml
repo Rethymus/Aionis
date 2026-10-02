@@ -1,0 +1,22 @@
+# Supply-chain freshness for CI ACTIONS ONLY.
+#
+# Deliberately scoped: NO pip/uv ecosystem (uv.lock is the H6 reproducibility
+# carrier — config sigs embed uv_lock_sha256, so lockfile bumps change frozen
+# sigs and are owner decisions, never bot PRs) and NO npm (web deps need the
+# visual-regression protocol, not an auto-PR). github-actions updates are
+# workflow-only: they cannot touch research determinism.
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "chore(ci)"
+      include: "scope"
+    labels:
+      - ci
+      - dependencies
+    # Repo convention pins actions by commit SHA with a `# vX.Y` comment;
+    # reviewers re-pin manually from the dependabot notice.
+    open-pull-requests-limit: 5
