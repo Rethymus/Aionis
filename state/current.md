@@ -1,5 +1,9 @@
 # state/current.md — read first each session
 
+- **active (2026-10-02) 轮 109（ops 线）：--doctor 六层预检命令+ci 结论入 marker：**
+  **--doctor**（只读一条命令全栈体检）：①守卫/marker 合理性②Windows 计划任务在册③SessionStart 钩子配置（committed 文件校验 enabled+matcher）④git 推送凭据（ls-remote）⑤gh 认证⑥API env 键名在场（只看名不看值）——**实测 6/6 PASS**；机器变更/换凭据/续期决策前自服务诊断，+1 测试（mock 六层全过断言 exit 0）。**ci 入 marker**：own-commit 双结论现持久化进 marker state，夜报班 --status 即见红牌（此前仅日志）。lane 32 绿+全量 exit 0+ruff 0。**边界**：ops lane；0 ledger/0 frozen/0 OOS。**
+
+
 - **active (2026-10-02) 轮 108（ops 线）：供给链候选裁决（cache-mode/执行保护）+ci 字段首夜待验：**
   **cache-mode**（原文一手）：read/write/write-only/none 四模式按事件信任默认（push=write，pull_request_target 类低信任=read 防缓存投毒）——**裁决：不改**，本仓事件面（全 push/dispatch；唯一 PR 工作流 ci.yml 零 cache 步；无 pull_request_target）下默认已最优；若未来引入低信任事件工作流即复查。**workflow execution protections**：仓设置级执行策略（非 YAML）——本仓暴露面最小（私有/单人/27 uses 已全 SHA 钉），**裁决：业主可选**（Settings→Actions 顺手审一次即可，无代码变更）；诚实注记：特性页两次 404（文档重组期），裁决基于 changelog 标题+标签+自有清单。**待验**：今晚 18:05 通道将产出轮 107 `ci` 字段首夜实弹（own-commit 双结论）。**呈业主**：dispatch 兜底实弹验证 retry 的裁决仍待回复。**边界**：docs/ops lane；0 ledger/0 frozen/0 OOS。**
 

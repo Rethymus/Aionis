@@ -580,7 +580,7 @@ def do_run(force: bool) -> int:
             state.pop("error", None)  # stale failure text must not survive a success
             state.update({"status": status, "commit": sha, "pushed": pushed,
                           "n_files": n_files, "soft_fails": soft_fails,
-                          "finished_at": datetime.now().isoformat()})
+                          "ci": ci, "finished_at": datetime.now().isoformat()})
             save_state(state)
             summary = {
                 "date": today, "status": status, "commit": sha, "pushed": pushed,
@@ -600,6 +600,84 @@ def do_run(force: bool) -> int:
             return 1
 
 
+def doctor() -> int:
+    """Read-only six-layer preflight (round 109): one command the owner (or
+    any future session) runs to verify the whole lane stack after machine
+    changes, credential renewals, or before a renewal decision. Prints
+    PASS/FAIL per layer; exit 0 only if every layer passes."""
+
+    checks: list[tuple[str, bool, str]] = []
+
+    def _check(name: str, ok: bool, detail: str) -> None:
+        checks.append((name, ok, detail))
+        print(f"[{'PASS' if ok else 'FAIL'}] {name}: {detail}")
+
+    # L1 marker + guard sanity (pure logic, no side effects)
+    state = load_state()
+    decision = guard_decision(datetime.now(), state)
+    _check("1/6 guard+marker", state.get("date") is not None,
+           f"marker date={state.get('date')} status={state.get('status')} "
+           f"guard-now={decision.split(':')[0]}")
+
+    # L2 Windows Task Scheduler (the zero-token heartbeat)
+    if IS_WINDOWS:
+        out = subprocess.run(
+            ["powershell", "-NoProfile", "-Command",
+             "(Get-ScheduledTask -TaskName 'Aionis evening data lane' "
+             "-ErrorAction SilentlyContinue) -ne $null"],
+            capture_output=True, text=True, timeout=30)
+        _check("2/6 task scheduler", out.returncode == 0
+               and "True" in out.stdout,
+               "registered" if "True" in out.stdout else "NOT registered")
+    else:
+        _check("2/6 task scheduler", False, "non-Windows host (manual cron?)")
+
+    # L3 SessionStart hook config (committed file, correct event+matcher)
+    hook_cfg = ROOT / ".zcode" / "config.json"
+    try:
+        cfg = json.loads(hook_cfg.read_text(encoding="utf-8"))
+        ev = cfg.get("hooks", {}).get("events", {}).get("SessionStart", [])
+        ok = (cfg.get("hooks", {}).get("enabled") is True and bool(ev)
+              and "startup" in ev[0].get("matcher", ""))
+        _check("3/6 sessionstart hook", ok,
+               f"enabled={cfg.get('hooks', {}).get('enabled')} "
+               f"matcher={ev[0].get('matcher') if ev else 'none'}")
+    except (OSError, ValueError, IndexError) as exc:
+        _check("3/6 sessionstart hook", False, f"{exc}")
+
+    # L4 git push credential (read-only ls-remote with the stored cred)
+    out = subprocess.run(["git", "ls-remote", "--heads", "origin", "main"],
+                         cwd=ROOT, capture_output=True, text=True, timeout=30)
+    _check("4/6 push credential", out.returncode == 0
+           and out.stdout.startswith(tuple("0123456789abcdef")),
+           "ls-remote ok" if out.returncode == 0
+           else out.stderr.strip()[-80:])
+
+    # L5 gh CLI auth + repo visibility
+    out = subprocess.run(["gh", "run", "list", "--limit", "1"],
+                         cwd=ROOT, capture_output=True, text=True, timeout=30)
+    _check("5/6 gh auth", out.returncode == 0,
+           "gh ok" if out.returncode == 0 else out.stderr.strip()[-80:])
+
+    # L6 runtime env: .env keys present (names only, never values)
+    env_path = ROOT / ".env"
+    names = set()
+    try:
+        for line in env_path.read_text(encoding="utf-8").splitlines():
+            if "=" in line and not line.startswith("#"):
+                names.add(line.split("=", 1)[0].strip())
+    except OSError:
+        pass
+    need = {"TIINGO_API_KEY", "FRED_API_KEY"}
+    _check("6/6 api env", need <= names,
+           f"present={sorted(need & names)} missing={sorted(need - names)}")
+
+    failed = [n for n, ok, _ in checks if not ok]
+    print(f"doctor: {len(checks) - len(failed)}/{len(checks)} layers pass"
+          + (f" — FAILED: {failed}" if failed else ""))
+    return 1 if failed else 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     group = parser.add_mutually_exclusive_group(required=True)
@@ -607,12 +685,16 @@ def main() -> int:
                        help="print RUN or SKIP:<reason>")
     group.add_argument("--run", action="store_true", help="run the evening lane")
     group.add_argument("--status", action="store_true", help="print marker state")
+    group.add_argument("--doctor", action="store_true",
+                       help="read-only six-layer lane preflight")
     parser.add_argument("--force", action="store_true",
                         help="with --run: bypass the guard (human use only)")
     args = parser.parse_args()
     if args.guard:
         print(guard_decision(datetime.now(), load_state()))
         return 0
+    if args.doctor:
+        return doctor()
     if args.status:
         print(json.dumps(load_state(), ensure_ascii=False, indent=2))
         return 0

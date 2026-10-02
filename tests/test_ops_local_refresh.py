@@ -448,3 +448,33 @@ def test_push_only_recovery_push_failure_raises(monkeypatch) -> None:
     import pytest as _pytest
     with _pytest.raises(RuntimeError):
         lane.try_push_only_recovery("failed", "push failed: net", None)
+
+
+# --- --doctor preflight (round 109) ---------------------------------------------
+
+
+def test_doctor_all_layers_pass(monkeypatch, tmp_path) -> None:
+    """Mocked six-layer stack: exit 0 and a 6/6 summary line."""
+    def _ok(args, **k):
+        s = "True" if "ScheduledTask" in str(args) else (
+            "abc123 main" if "ls-remote" in args else "gh ok")
+        return subprocess.CompletedProcess(args, 0, s, "")
+
+    monkeypatch.setattr(lane.subprocess, "run", _ok)
+    monkeypatch.setattr(lane, "load_state",
+                        lambda: {"date": "2026-10-01", "status": "ok_committed"})
+    import json as _json
+    real_root = lane.ROOT
+    fake = tmp_path
+    (fake / ".zcode").mkdir()
+    (fake / ".zcode" / "config.json").write_text(_json.dumps({
+        "hooks": {"enabled": True, "events": {"SessionStart": [
+            {"matcher": "startup|resume", "hooks": []}]}}}), encoding="utf-8")
+    (fake / ".env").write_text(
+        "TIINGO_API_KEY=x" + chr(10) + "FRED_API_KEY=y" + chr(10),
+        encoding="utf-8")
+    monkeypatch.setattr(lane, "ROOT", fake)
+    try:
+        assert lane.doctor() == 0
+    finally:
+        monkeypatch.setattr(lane, "ROOT", real_root)

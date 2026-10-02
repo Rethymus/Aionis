@@ -155,7 +155,14 @@ uv run python scripts/ops_local_refresh.py --guard         # what triggers would
 uv run python scripts/ops_local_refresh.py --run --force   # bypass guard (human)
 uv run python scripts/ops_evening_hook.py                  # simulate the hook (silent)
 uv run pytest -q tests/test_ops_local_refresh.py           # lane logic tests
+uv run python scripts/ops_local_refresh.py --doctor       # six-layer preflight
 ```
+
+`--doctor` (round 109): one read-only command that verifies the whole stack —
+marker/guard sanity, Task Scheduler registration, SessionStart hook config,
+git push credential (ls-remote), gh auth, and the two API env keys (names
+only). Run it after any machine/credential change or before a renewal
+decision; live result at introduction: 6/6 pass.
 
 In-chat: the workspace command **/refresh-data** runs the guard and (on RUN, or
 SKIP + an explicit "force" from the owner) executes the lane — same red lines.
