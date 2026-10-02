@@ -2498,3 +2498,4 @@ dashboard realizing `docs/dashboard-v2-design.md`'s 5 dimensions on deterministi
   - **轮 101（2026-09-28）研究→实践**：news_feed 时间炸弹 helper 级修复（day 默认 now−2d，18 绿）+绊网 `17 2 * * 1` 半点+27 uses 行全 SHA 钉（8 action）+qlib 重试缓办理由入 §5。全量 exit 0 预期治愈昨晚 CI 红。两轮正则失误（丢前缀/漏 re.M）本地拦截未出海，如实入册。
   - **轮 102（2026-09-28）**：晚间完成规则——already-done 仅当成功运行启动于当日≥18:00（凌晨/白天补跑不覆盖晚间窗口，09-21 缺日根因收口）；attempt-cap 收紧 failed-only；+4 测试（26 绿/全量 0 败）；runbook marker 语义同步。
   - **轮 103（2026-09-28）**：三周执行覆盖审计（16 交易晚逐晚账本：12 成功/主路径 11/16/四类缺失全部有实战验证的结构性修复）；09-25 双提交=push 瞬态断连后诚实重试（正确语义，push-only 重试优化记录暂缓）；三层系统体检通过；中期账本落盘 reports/audits/2026-09-28-interim-coverage-ledger.md 作 10-06 月报底稿。
+  - **轮 104（2026-10-02）**：①9-30 影子 runbook 丢失节点补跑（四步 EXIT 0，③ fail-closed predict_session_not_in_panel=合格诚实结论；ledger 前后 0924ce2b 字节一致零写入；9-30 影子月无 readiness PASS——10-31 证据包将如实呈现）；②push-only 恢复路径+绊网 Tests 检查（98d008f6a CI 绿）；③uv cache prune 缓办记录。
