@@ -2503,3 +2503,4 @@ dashboard realizing `docs/dashboard-v2-design.md`'s 5 dimensions on deterministi
   - **轮 106（2026-10-02）**：兜底通道七步 qlib 式重试（SHA 钉 nick-fields/retry@v4，per-attempt 超时×2-3 次，continue-on-error 为耗尽后降级）；报告 §5 全项闭环（唯一缓办=uv cache prune）；真实重试行为待首次 dispatch 实弹验证。
   - **轮 107（2026-10-02）**：changelog 情报（Ubuntu 26 迁移/Node 20 移除）→四活跃工作流钉 ubuntu-24.04+通道 own-commit CI 核验（零 token 红牌检测下沉，SUMMARY 增 ci 字段，31 绿/全量 0）。dispatch 实弹验证 retry 待业主决策。
   - **轮 108（2026-10-02）**：供给链候选裁决——cache-mode 不改（事件面默认最优，原文一手）/执行保护业主可选（暴露面最小+特性页 404 如实注记）；ci 字段首夜实弹待今晚；dispatch 裁决仍待业主。
+  - **轮 108b（2026-10-02）**：剩余三工作流补钉 ubuntu-24.04（vintage-probe 明日触发前抢修，bef5bd0f3 CI 绿）；数据源三主源活性探针=无变更（负结果入册作已知良好基线）；ci 字段首夜计时器已挂。

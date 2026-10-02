@@ -124,6 +124,19 @@ From github.blog/changelog/label/actions (Sep–Oct 2026):
 - **"Workflow execution protections GA" (Sep 17) + "cache access with
   cache-mode" (Sep 10)** — supply-chain hardening candidates, future lanes.
 
+### Data-source intel (2026-10-02, round 108b): known-good baseline
+
+Live probes of the three primary sources (docs pages mostly unfetchable —
+403/404; endpoints probed directly instead): **FRED API** alive, auth
+contract unchanged (32-char key error shape intact); **Tiingo** alive, 403
+on invalid token as expected; **GDELT doc API** slow/timing-out from this
+egress — its documented behavior, covered by the lane's polite retries. No
+deprecations or policy changes detected on any source. Recorded as the
+"known-good as of" baseline for future incident triage. Also this round:
+the remaining three workflows (vintage-probe — which fires tomorrow
+2026-10-03 06:00 UTC, e3-forward, deploy-pages) pinned to ubuntu-24.04
+(bef5bd0f3): all seven repo workflows now deliberately pinned.
+
 ### Round-108 dispositions (2026-10-02): the two supply-chain candidates
 
 - **cache-mode** (fetched article, GA 2026-09-10): modes read/write/write-only/
