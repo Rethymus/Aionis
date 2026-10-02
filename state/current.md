@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-10-02) 轮 118（display 线）：divergence 手术式拆分落地——线上 atlas TBT 3,280→1,879ms（-43%），atlas 累计 -61%，全指标保持：**
+  执行轮 117 方案：SVG 面板→`atlas-divergence-charts.tsx`（两 dynamic ssr:false 共享异步 chunk+minHeight 骨架）；纯数据 prep 独立模块（SSR 表格不拉 SVG 入首屏包）。**PanelFrame 逐字拷贝纪律实战**：首次凭记忆重写被逐字 diff 抓出三处偏差（网格线型/刻度裁剪/x 定位），构建前替换。**实测**：本地 TBT 中位 -21%（2,425→1,930）、主线程 -14%、CLS 0/a11y 100/console 0 全保持；**线上 3 跑中位 1,879ms（vs 轮 112 基线 3,280=-43%）**；§4 全页捕获两区块全渲染。**诚实注记**：实际 ~0.5s 低于估算上限 0.8~1.7s（异步 chunk 仍在窗口内执行，估算把整个份额当可迁移量）。**atlas 战役累计（轮 112 起）：线上 TBT 4,820→1,879（-61%）+a11y 89→100**。搜索配额 10-03 18:50 UTC（未到窗口）；activationStart 实测仍 pending。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (2026-10-02) 轮 117（display 线）：atlas 上折细剖（divergence 830~1770ms>claims 500~1200ms，手术式图表拆分方案入册待独立轮）+ Speculation Rules 全站落地（hover 预渲染，线上在墙）：**
   **消融**（env 门控测毕还原）：−divergence TBT 970~1,280ms、−claims 1,410~1,620ms（基线 2,110/2,740）——divergence 份额更大；两区块内容密集→整块懒挂载不可行（轮 115 同裁决），**手术式出路=仅 SVG 子块 dynamic ssr:false+表格留 SSR**（BandPanel 干净边界，估 ~0.8~1.7s），留独立轮（轮 116 教训：勿赶工）。**Speculation Rules**（f6357f665）：根 layout 内联 `prerender /Aionis/* moderate`（并发帽 2+Save-Data 自动禁用=构造性礼貌；外链不匹配；non-Chrome 惰性忽略）——Chrome 官方"静态多页站理想用例"原文正对本站；验证：三页规则在墙+JSON 合法+控制台 0 错误+a11y 100 不变+**线上在墙**（初读 0=CDN 边缘延迟，90s 后新版 650,420B grep=1 如实入册）；activationStart 命中实测=脚本化 UI 轮 pending 不宣称。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 

@@ -199,3 +199,28 @@ activationStart>0 的预渲染命中实测需脚本化 UI 轮，标记 pending �
 
 工件：`runs/lh117_{noclaims,nodiv}_{1,2}.json`、`runs/lh117_speca_sanity.json`
 （gitignored）。边界：display lane；0 ledger / 0 frozen / 0 OOS。
+
+
+## 轮 118（2026-10-02）：divergence 手术式拆分落地——TBT 中位 -21%（本地）/ -43%（线上 vs 轮 112）
+
+执行轮 117 方案：SVG 面板（PanelFrame/BandPanel/EcePanel+几何常量）移入
+`atlas-divergence-charts.tsx`，两处 `dynamic(ssr:false)` 共享一个异步 chunk，
+minHeight 骨架占位保 CLS；纯数据 prep（prepRegion/REGIONS/fmtTpl）独立模块——
+SSR 表格计算不拉 SVG 代码入首屏包。**PanelFrame 逐字拷贝**（首次凭记忆重写被
+逐字 diff 抓出网格线型/刻度裁剪/x 定位三处偏差，构建前替换——图表字节稳定
+纪律的又一次实战拦截）。
+
+| 指标 | 基线（r117 构建） | 拆分后 | Δ |
+|---|---|---|---|
+| 本地 TBT | 2,110~2,740ms | 1,560~1,950ms | **中位 -21%** |
+| 本地主线程 | 5.3~5.5s | 4.4~4.9s | -14% |
+| CLS / a11y / console | 0 / 100 / 0 | **0 / 100 / 0** | 全保持 |
+| 线上 TBT（3 跑） | 3,280（轮 112 基线） | **1,879 中位**（1,762~2,017） | **-43%** |
+
+**诚实注记**：实际收益 ~0.5s 低于估算上限 0.8~1.7s——异步 chunk 仍在 trace 窗口
+内执行；估算上限把整个 divergence 份额当成了可迁移量。§4 闭环：16,000px 全页
+捕获两区块全渲染（r118_atlas_split.png）。atlas 累计（轮 112 起）：线上 TBT
+4,820→1,879（**-61%**）、a11y 89→100。
+
+工件：`runs/lh118_split_{1..4}.json`、`runs/lhLIVE118_atlas_{1,2,3}.json`。
+边界：display lane；0 ledger / 0 frozen / 0 OOS。

@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-02 (轮 118) divergence 手术式拆分：atlas 线上 TBT -43%（1,879 中位），累计 -61%
+
+SVG→异步 chunk（dynamic ssr:false×2 共享+骨架），prep 独立模块保 SSR 表格；PanelFrame 逐字拷贝（记忆重写三处偏差被 diff 拦截）。本地中位 -21%/线上中位 -43%（vs 3,280）；全指标保持；诚实注记：~0.5s 实收低于 0.8~1.7s 估算上限（chunk 仍在窗口执行）。§4 闭环+提交完整性验证（轮 116 教训执行）。边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-02 (轮 117) atlas 上折细剖+Speculation Rules 全站落地
 
 消融：divergence 份额 830~1,770ms>claims 500~1,200ms；整块懒挂载违反内容优先，手术式（仅 SVG 拆分留表格 SSR）方案入册待独立轮。Speculation Rules（f6357f665）：全站 hover 预渲染（/Aionis/* moderate，礼貌档），三页+线上在墙（CDN 延迟 90s 现象如实），activationStart 实测 pending。边界：display lane；0 ledger/0 frozen/0 OOS。
