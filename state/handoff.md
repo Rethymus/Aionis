@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-02 (轮 120) 11 页水合普查：picks 独高但 cv null 偏害回滚——cv 阈值收敛至万级 DOM
+
+筛选表入审计报告 §120（picks 1,747/track 1,082/regime 878/…/evidence 181）；picks（无图表、水合脚本 1.3s+布局 1.1s）cv 实验 1,840~2,190 vs 1,747=偏害回滚——cv 适用阈值≈万级 DOM（atlas ✓/picks ✗）。picks 行级拆分受内容优先张力，评估过不修。下轮：track/regime/calibration 脚本密集页图表解剖（LazyMount 配方候选）。边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-02 (轮 119) claims 手术式拆分：atlas 线上 TBT 中位 1,349，战役累计 -72%
 
 轮 118 配方复制（程序化切片零转录+prep 共享+骨架占位）：本地中位 -24%（1,930→1,470）、线上中位 1,349（-28% vs r118）；§4 用 DOM 证据闭环（198 pivot 单元格精确吻合+零骨架）；全指标保持。atlas 战役（112~119）终账：线上 4,820→1,349（-72%）+a11y 89→100。清理期两次正则断言失败即停改锚点删除（防部分写盘）。边界：display lane；0 ledger/0 frozen/0 OOS。

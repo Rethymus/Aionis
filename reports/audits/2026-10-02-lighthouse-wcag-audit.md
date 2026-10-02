@@ -250,3 +250,31 @@ a11y 89→100；本地 2,110~2,740 → 1,450~1,510。
 
 工件：`runs/lh119_claims_{1,2,3}.json`、`runs/lhLIVE119_atlas_{1,2,3}.json`、
 `runs/r119_dom.html`。边界：display lane；0 ledger / 0 frozen / 0 OOS。
+
+
+## 轮 120（2026-10-02）：其余页面残余水合普查——11 页筛选表入册；picks cv 实验 null 偏害回滚
+
+**普查（本地单跑筛选，TBT 降序）**：
+
+| 页 | TBT | DOM | 主线程 | 构成判读 |
+|---|---|---|---|---|
+| picks | **1,747ms** | 2,345 | 4.0s | 水合脚本 1.3s+布局 1.1s，无图表 |
+| track | 1,082ms | 1,057 | **6.6s** | 脚本密集（疑重图表）|
+| regime | 878ms | 825 | **6.7s** | 脚本密集（宏观卡 recharts）|
+| confirmation | 874ms | 1,136 | 4.0s | 中等 |
+| calibration | 759ms | 995 | 6.2s | 脚本密集 |
+| model-health | 506ms | 941 | 3.3s | 健康缘 |
+| shelf/power-floor/discipline/quarterly/evidence | 181~400ms | — | — | 健康（≈壳层地板）|
+
+**picks cv 实验（下折尾部包裹，测毕回滚）**：TBT 1,840~2,190 vs 基线 1,747——
+**null 偏害**（containment 记账＞布局节省；与 market 轮 113 同型）。边界再收敛：
+**cv 的适用阈值约为万级 DOM 的布局密集页**（atlas 7,162 有效；picks 2,345 无效）。
+picks 的真实杠杆=行级水合拆分（TrackRecord/浓度卡），但它们是数据内容——
+内容优先约束下收益/张力比不佳，标记为"评估过不修"呈后续轮裁量。
+
+**下一轮候选**：track/regime/calibration 三页（主线程 6.2~6.7s 脚本密集）的
+图表构成解剖——若为 recharts 则 LazyMount 配方（market 轮 114 先例）。
+搜索配额 10-03 18:50 UTC 未到窗口；activationStart pending。
+
+工件：`runs/lh120_screen_*.json`、`runs/lh120_picks_cv_{1,2}.json`（gitignored）。
+边界：display lane；0 ledger / 0 frozen / 0 OOS。
