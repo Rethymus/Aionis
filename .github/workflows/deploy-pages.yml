@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04  # pinned: ubuntu-latest migrates to 26.04 (GH changelog 2026-09-17) — pin for stability
 
     steps:
       - name: Checkout repository
@@ -51,7 +51,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04  # pinned: ubuntu-latest migrates to 26.04 (GH changelog 2026-09-17) — pin for stability
     needs: build
 
     steps:

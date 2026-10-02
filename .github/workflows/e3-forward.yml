@@ -23,7 +23,7 @@ on:
 jobs:
   e3_forward:
     name: E3 Forward Commit (NYSE Month-End)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04  # pinned: ubuntu-latest migrates to 26.04 (GH changelog 2026-09-17) — pin for stability
 
     # IMPORTANT: Shadow mode by default - no ledger writes
     # Remove PHASE_E3_NO_LEDGER=1 ONLY after owner ratifies contracts
