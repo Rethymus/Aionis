@@ -146,17 +146,6 @@ the remaining three workflows (vintage-probe — which fires tomorrow
   set** (all cache users run on push/dispatch; the only PR workflow,
   ci.yml, has zero cache steps; no pull_request_target exists). Revisit the
   moment any low-trust-event workflow is ever added.
-- **Round-111 addendum (2026-10-02): ci.yml now HAS a cache step — premise
-  update for the disposition above.** The test lane's setup-uv was upgraded
-  v1→v3 (the v1 pin predated the cache feature entirely) with
-  `enable-cache: true` keyed on `uv.lock`, so `uv sync --all-extras` restores
-  the heavy venv instead of re-downloading it every run (this repo's Actions
-  minutes are a documented cost surface). Poisoning surface: none — same-repo
-  `pull_request` is the only PR event (single owner, no external
-  contributors, no `pull_request_target`), matching the revisit rule above.
-  First-run behavior: expected "No GitHub Actions cache found" warning, then
-  a save; subsequent lockfile-identical runs restore.
-
 - **workflow execution protections** (GA 2026-09-17, supply-chain tag):
   repo-settings-level execution policy — not workflow YAML. Our exposure is
   minimal (private repo, single owner, no external contributors, all 27

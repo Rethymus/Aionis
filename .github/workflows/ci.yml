@@ -26,14 +26,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Set up uv
-        # v3 (same SHA as refresh-terminal-data.yml): the v1 pin predated the
-        # cache feature — every run re-downloaded the full heavy venv. Cache is
-        # keyed on uv.lock below, so a dependency bump invalidates it exactly.
-        uses: astral-sh/setup-uv@caf0cab7a618c569241d31dcd442f54681755d39 # v3
+        uses: astral-sh/setup-uv@162b8acf397cb069dec09a3f5a9847cf71cfa46a # v1
         with:
           version: "latest"
-          enable-cache: true
-          cache-dependency-glob: uv.lock
 
       - name: Install dependencies (pinned by uv.lock)
         run: |
