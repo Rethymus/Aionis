@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-10-02) 轮 122（display 线）：/calibration 图表级拆分——本地 TBT -40%（759→450~480）、线上中位 425ms：**
+  market 轮 114 配方应用：两 recharts 图表块逐字切片入 charts 文件（dynamic ssr:false+420 骨架）、统计/徽章留 SSR、下折 CN+horizon 卡 LazyMount。**实测**：本地双跑 -40%、线上 3 跑中位 425ms（324~563）、CLS 0；主线程 ~6s 不变=预载天花板（轮 121 同源）。DOM 闭环：US 卡 2 面板挂载+恰好 2 骨架（LazyMount 设计内）。过程如实：切片边界两次语法错被 tsc 拦截即修（孤儿 div/外层未闭合）。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (2026-10-02) 轮 121（display 线）：/track、/regime 每 tab dynamic 拆分——两页 TBT -11%（本地双跑一致）+线上中位 858/753ms，预载天花板如实入册：**
   **机制**：Radix Tabs 仅活动 tab 进 DOM 但全模块图入首屏。**实施**：默认 tab 保静态（SSR 零损失），track 余 5 视图+regime 余 3 视图 per-tab dynamic。**实测**：track 1,082→950~970、regime 878→740~810（各 -11%）；线上中位 858/753。**天花板注记**：transfer/主线程不变——静态导出预载全部动态 chunk（模块仍求值），收益纯为执行时序出窗；温和但一致+零内容损失。**闭环**：SSR 48 SVG+6 tabs 在墙、水合 54 SVG+4 recharts 面板。calibration 独立页（759ms recharts）留候选。配额 10-03 18:50 UTC/activationStart 未到窗口。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 

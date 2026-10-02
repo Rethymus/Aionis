@@ -300,3 +300,23 @@ picks 的真实杠杆=行级水合拆分（TrackRecord/浓度卡），但它们�
 
 工件：`runs/lh121_{track,regime}_{1,2}.json`、`runs/lhLIVE121_*.json`。
 边界：display lane；0 ledger / 0 frozen / 0 OOS。
+
+
+## 轮 122（2026-10-02）：/calibration 图表级拆分——TBT -40%（本地）/ 中位 425ms（线上）
+
+market 轮 114 配方应用到独立 /calibration 页（759ms，recharts 确证）：两图表块
+（可靠性散点+ECE 线）逐字切片入 `calibration-charts.tsx`（dynamic ssr:false+420px
+骨架）；统计网格/徽章留 SSR；下折 CN 卡+horizon 卡加 LazyMount。
+
+| 指标 | 基线 | 拆分后 |
+|---|---|---|
+| 本地 TBT（双跑） | 759ms | **450~480ms（-40%）** |
+| 线上 TBT（3 跑中位） | — | **425ms**（324~563） |
+| CLS | 0 | **0** |
+
+主线程 ~6s 不变（静态导出预载天花板，轮 121 注记同源）。DOM 闭环：US 卡两
+recharts 面板挂载、恰好 2 骨架残留（=LazyMount 下折占位，设计内）。过程如实：
+切片边界两次语法错（孤儿 div/外层未闭合）被 tsc 即时拦截即修。
+
+工件：`runs/lh122_calib_{1,2}.json`、`runs/lhLIVE122_calib_{1,2,3}.json`。
+边界：display lane；0 ledger / 0 frozen / 0 OOS。

@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-02 (轮 122) /calibration 图表级拆分：TBT -40% 本地/线上中位 425ms
+
+轮 114 配方复用：图表块逐字切片 dynamic ssr:false+骨架，统计留 SSR，CN/horizon LazyMount。本地 759→450~480、线上中位 425、CLS 0；预载天花板同源注记；DOM 闭环（2 面板+2 设计内骨架）。切片边界两次语法错被 tsc 即拦即修。边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-02 (轮 121) /track、/regime per-tab dynamic：TBT 各 -11%，静态导出预载天花板如实
 
 机制=Tabs 仅活动 tab 进 DOM 但全模块图入首屏；默认 tab 保静态零 SSR 损失，余 8 视图 per-tab dynamic。track 1,082→950~970/regime 878→740~810；线上中位 858/753；transfer/主线程不变（预载全部动态 chunk）=天花板注记。闭环：SSR 48 SVG+水合 54 SVG/4 recharts。calibration 页留候选。边界：display lane；0 ledger/0 frozen/0 OOS。
