@@ -1,5 +1,9 @@
 # state/current.md — read first each session
 
+- **active (2026-10-02) 轮 108（ops 线）：供给链候选裁决（cache-mode/执行保护）+ci 字段首夜待验：**
+  **cache-mode**（原文一手）：read/write/write-only/none 四模式按事件信任默认（push=write，pull_request_target 类低信任=read 防缓存投毒）——**裁决：不改**，本仓事件面（全 push/dispatch；唯一 PR 工作流 ci.yml 零 cache 步；无 pull_request_target）下默认已最优；若未来引入低信任事件工作流即复查。**workflow execution protections**：仓设置级执行策略（非 YAML）——本仓暴露面最小（私有/单人/27 uses 已全 SHA 钉），**裁决：业主可选**（Settings→Actions 顺手审一次即可，无代码变更）；诚实注记：特性页两次 404（文档重组期），裁决基于 changelog 标题+标签+自有清单。**待验**：今晚 18:05 通道将产出轮 107 `ci` 字段首夜实弹（own-commit 双结论）。**呈业主**：dispatch 兜底实弹验证 retry 的裁决仍待回复。**边界**：docs/ops lane；0 ledger/0 frozen/0 OOS。**
+
+
 - **active (2026-10-02) 轮 107（ops 线）：无限迭代第四轮——changelog 增量情报→镜像钉定+零 token 红牌检测：**
   **情报**（github.blog changelog 9-10 月）：Ubuntu 26 GA+`ubuntu-latest` 迁移（9-17，经典月中破坏源）/Node 20 移除（9-23，审计我方 action 集免疫）/workflow execution protections 与 cache-mode GA（未来候选）。**实施两项**：①**四活跃工作流 runner 钉 `ubuntu-24.04`**（迁移风险免疫，大仓纪律；有意识钉定、有意识复核）；②**通道自带 own-commit CI 核验**——推送后轮询**本 lane 所推 sha** 的 publish-site+Tests 结论（≤6 分钟有界等待，45s 间隔），红牌检测从每晚 23:35 的 LLM 会话下沉到零 token 层，且修正"看最新 run 可能误归因他会话推送"的多会话盲区；SUMMARY 增 `ci` 字段。+2 测试（双结论收敛含 failure 如实透传/gh 失败非致命），31 绿+全量 exit 0。**待业主决策呈报**：是否 dispatch 一次兜底通道实弹验证 nick-fields/retry（~60-90 分钟 Actions 用量）。**边界**：ci/ops lane；0 ledger/0 frozen/0 OOS。**
 

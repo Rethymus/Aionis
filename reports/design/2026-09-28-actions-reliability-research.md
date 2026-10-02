@@ -124,6 +124,23 @@ From github.blog/changelog/label/actions (Sep–Oct 2026):
 - **"Workflow execution protections GA" (Sep 17) + "cache access with
   cache-mode" (Sep 10)** — supply-chain hardening candidates, future lanes.
 
+### Round-108 dispositions (2026-10-02): the two supply-chain candidates
+
+- **cache-mode** (fetched article, GA 2026-09-10): modes read/write/write-only/
+  none, defaulting per event trust — `write` for push, **`read` for
+  low-trust events like pull_request_target** — to prevent cache poisoning.
+  Our disposition: **NO CHANGE — defaults are already optimal for our event
+  set** (all cache users run on push/dispatch; the only PR workflow,
+  ci.yml, has zero cache steps; no pull_request_target exists). Revisit the
+  moment any low-trust-event workflow is ever added.
+- **workflow execution protections** (GA 2026-09-17, supply-chain tag):
+  repo-settings-level execution policy — not workflow YAML. Our exposure is
+  minimal (private repo, single owner, no external contributors, all 27
+  `uses:` already SHA-pinned since round 101). Disposition: **owner-optional
+  review in Settings → Actions**; no code change. Honest caveat: the feature
+  page 404'd twice via our fetcher during docs restructure — the evaluation
+  rests on the changelog title/tag plus our inventory, not the full doc.
+
 New capability this round: **lane-side own-commit CI verification** — the
 zero-token lane now polls the CI conclusions for exactly the sha IT pushed
 (publish-site + Tests, bounded 6-min wait), putting red-card detection into

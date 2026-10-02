@@ -2502,3 +2502,4 @@ dashboard realizing `docs/dashboard-v2-design.md`'s 5 dimensions on deterministi
   - **轮 105（2026-10-02）**：①10-31 节点防丢（小时级守卫 5 4-23 31 10 * + shadow_1031.done 标记门控，复刻数据通道模式；提示词内置 9-30 fail-closed 事实）；②10-06 月报口径扩至 push-only 统计/绊网触发/节点专节/续期四选项；③防丢模式入 runbook 章节。
   - **轮 106（2026-10-02）**：兜底通道七步 qlib 式重试（SHA 钉 nick-fields/retry@v4，per-attempt 超时×2-3 次，continue-on-error 为耗尽后降级）；报告 §5 全项闭环（唯一缓办=uv cache prune）；真实重试行为待首次 dispatch 实弹验证。
   - **轮 107（2026-10-02）**：changelog 情报（Ubuntu 26 迁移/Node 20 移除）→四活跃工作流钉 ubuntu-24.04+通道 own-commit CI 核验（零 token 红牌检测下沉，SUMMARY 增 ci 字段，31 绿/全量 0）。dispatch 实弹验证 retry 待业主决策。
+  - **轮 108（2026-10-02）**：供给链候选裁决——cache-mode 不改（事件面默认最优，原文一手）/执行保护业主可选（暴露面最小+特性页 404 如实注记）；ci 字段首夜实弹待今晚；dispatch 裁决仍待业主。
