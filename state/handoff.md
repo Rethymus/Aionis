@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-02 (轮 125) smart-money 单图拆分净害回滚：图表拆分第二边界（图表须主导页成本）
+
+confirmation 默认 tab 单 13D 柱状卡切片后 TBT 540~720→800~1,040（4 跑；对照页 190 证无争用）——异步小图在窗内求值反噬。第四条边界入册（与万级 DOM cv 阈值/预载天花板/本地线上分野并列）。已回滚。通道值守健康（0b3a9a98e）。边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-02 (轮 124) /confirmation per-tab dynamic：本地 -28%、线上未复现（保留）
 
 轮 121 配方收尾最后 Tabs 页：本地 874→540~720/CLS 0/DOM 闭环；线上 699~908 中位 899 未复现（时序收益被网络窗吸收；121/123 的线上大收益均伴随图表级结构拆分）。保留（零损失零回归+一致性）。regime positioning/taco 已在轮 121 解决。边界：display lane；0 ledger/0 frozen/0 OOS。

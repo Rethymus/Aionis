@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-10-02) 轮 125（display 线）：smart-money 单图拆分实测净害回滚——图表级拆分第二边界入册（图表须为页面主导成本）：**
+  confirmation 默认 tab 的 13D 年度柱状卡（180px 单图）按轮 114 配方切片。**实测 4 跑：540~720→800~1,040ms（净害 ~+300）**；同窗对照 evidence 190ms≈基线证宿主无争用；DOM 闭环通过但性能反噬。机理：表格主导页上异步小图 chunk 在 TBT 窗内到达求值+挂载，把原被首批吸收的成本摊进窗口。**边界第四定律**：图表级拆分仅在图表为页面主导成本时获益（calibration/market ✓/本例 ✗）。已回滚。值守：今晚通道 19:23 提交 0b3a9a98e 健康（soft_fail 仅 ticker_metadata）。配额/activationStart 未到窗口。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (2026-10-02) 轮 124（display 线）：/confirmation per-tab dynamic——本地 -28%、线上未复现（保留，本地/线上分野如实）：**
   最后一个 Tabs 页套轮 121 配方（默认 smart-money 保静态+3 视图 dynamic）。本地 874→540~720（~-28%）CLS 0+DOM 闭环；**线上 699~908 中位 899 未复现**——时序型收益被网络窗方差吸收（轮 121/123 线上大收益均伴随图表级结构拆分）。裁决保留：零损失零回归+一致性；"本地有效/线上未证"分野入册。regime 的 positioning/taco 已在轮 121 结构性解决。配额/activationStart 未到窗口。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 

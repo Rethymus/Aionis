@@ -356,3 +356,23 @@ regime 内 positioning/taco 经查已在轮 121 per-tab dynamic 中结构性解�
 
 工件：`runs/lh124_conf_{1,2}.json`、`runs/lhLIVE124_conf_{1,2,3}.json`。
 边界：display lane；0 ledger / 0 frozen / 0 OOS。
+
+
+## 轮 125（2026-10-02）：smart-money 13D 图拆分——实测净害回滚；图表级拆分的第二边界入册
+
+confirmation 默认 tab 的单块 recharts 卡（13D 年度柱状，180px）按轮 114 配方切片
+（逐字+dynamic ssr:false+LazyMount）。**实测（4 跑）**：TBT 540~720 → **800~1,040ms
+（净害 ~+300ms）**；同窗对照 evidence 页 190ms≈基线（宿主无争用，测量可信）；
+DOM 闭环本身通过（高窗 1 surface+13 bars+零骨架）。
+
+**机理**：表格主导页上，异步小图 chunk 在 TBT 窗口内到达并求值+挂载 recharts，
+反而把原本被首批 bundle 一次吸收的成本摊进了窗口。**边界入册（图表级拆分第二
+定律）**：拆分仅在**图表为页面主导成本**时获益（calibration 两图+recharts 主导
+=-40%；market 四卡=-42%）；表格主导页上的单小图=净害。与 cv 阈值（万级 DOM）、
+预载天花板、本地/线上分野并列为本战役第四条实测边界。**改动已回滚**。
+
+值守：今晚通道 19:23 已提交 0b3a9a98e（soft_fail 仅 build_ticker_metadata），健康。
+配额 10-03 18:50 UTC 未到窗口；activationStart pending。
+
+工件：`runs/lh125_conf_{1..4}.json`、`runs/lh125_ctrl_evidence.json`。
+边界：display lane；0 ledger / 0 frozen / 0 OOS。
