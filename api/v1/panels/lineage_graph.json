@@ -1,14 +1,14 @@
 {
  "status": "ok",
- "as_of": "2026-10-01",
+ "as_of": "2026-10-02",
  "source_panels": [
   "form13f",
   "def14a_persons",
   "stakes_13g",
   "smart_money"
  ],
- "n_nodes": 156,
- "n_edges": 824,
+ "n_nodes": 151,
+ "n_edges": 846,
  "nodes": [
   {
    "id": "i:0000807249",
@@ -701,22 +701,6 @@
    }
   },
   {
-   "id": "p:ABIGAIL P. JOHNSON",
-   "type": "person",
-   "label": "Abigail P. Johnson",
-   "zh_label": null,
-   "lanes": [
-    "def14a"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 1,
-    "co_target": 0
-   }
-  },
-  {
    "id": "p:ADAM G. CIONGOLI",
    "type": "person",
    "label": "Adam G. Ciongoli",
@@ -728,7 +712,7 @@
    "manager_routable": false,
    "degree": {
     "co_hold": 0,
-    "co_board": 3,
+    "co_board": 2,
     "co_target": 0
    }
   },
@@ -781,9 +765,9 @@
    }
   },
   {
-   "id": "p:ALBERT P. CAREY",
+   "id": "p:ALAN RETKINSKI",
    "type": "person",
-   "label": "Albert P. Carey",
+   "label": "Alan Retkinski",
    "zh_label": null,
    "lanes": [
     "def14a"
@@ -792,7 +776,7 @@
    "manager_routable": false,
    "degree": {
     "co_hold": 0,
-    "co_board": 1,
+    "co_board": 6,
     "co_target": 0
    }
   },
@@ -813,9 +797,9 @@
    }
   },
   {
-   "id": "p:ANDERSON CHIEF FINANCIAL OFFICER",
+   "id": "p:ALLERGAN AESTHETICS",
    "type": "person",
-   "label": "Anderson Chief Financial Officer",
+   "label": "Allergan Aesthetics",
    "zh_label": null,
    "lanes": [
     "def14a"
@@ -829,9 +813,9 @@
    }
   },
   {
-   "id": "p:ANDREAS W. MATTES",
+   "id": "p:ANDERSON CHIEF FINANCIAL OFFICER",
    "type": "person",
-   "label": "Andreas W. Mattes",
+   "label": "Anderson Chief Financial Officer",
    "zh_label": null,
    "lanes": [
     "def14a"
@@ -941,9 +925,9 @@
    }
   },
   {
-   "id": "p:ANTHONY M. ABATE",
+   "id": "p:ARTHUR D. LITTLE",
    "type": "person",
-   "label": "Anthony M. Abate",
+   "label": "Arthur D. Little",
    "zh_label": null,
    "lanes": [
     "def14a"
@@ -957,9 +941,9 @@
    }
   },
   {
-   "id": "p:ANTHONY M. KENNEDY",
+   "id": "p:DAVID LICHTENSTEIN",
    "type": "person",
-   "label": "Anthony M. Kennedy",
+   "label": "David Lichtenstein",
    "zh_label": null,
    "lanes": [
     "def14a"
@@ -968,7 +952,23 @@
    "manager_routable": false,
    "degree": {
     "co_hold": 0,
-    "co_board": 3,
+    "co_board": 8,
+    "co_target": 0
+   }
+  },
+  {
+   "id": "p:DAVID W. LICHTENSTEIN",
+   "type": "person",
+   "label": "David W. Lichtenstein",
+   "zh_label": null,
+   "lanes": [
+    "def14a"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 8,
     "co_target": 0
    }
   },
@@ -989,6 +989,22 @@
    }
   },
   {
+   "id": "p:GEORGE R. WHITTEMORE",
+   "type": "person",
+   "label": "George R. Whittemore",
+   "zh_label": null,
+   "lanes": [
+    "def14a"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 8,
+    "co_target": 0
+   }
+  },
+  {
    "id": "p:GEORGE W. BUSH",
    "type": "person",
    "label": "George W. Bush",
@@ -1000,7 +1016,7 @@
    "manager_routable": false,
    "degree": {
     "co_hold": 0,
-    "co_board": 3,
+    "co_board": 2,
     "co_target": 0
    }
   },
@@ -1021,9 +1037,9 @@
    }
   },
   {
-   "id": "p:INSIDER PARTICIPATION",
+   "id": "p:JOSEPH E. TEICHMAN",
    "type": "person",
-   "label": "Insider Participation",
+   "label": "Joseph E. Teichman",
    "zh_label": null,
    "lanes": [
     "def14a"
@@ -1032,14 +1048,14 @@
    "manager_routable": false,
    "degree": {
     "co_hold": 0,
-    "co_board": 2,
+    "co_board": 8,
     "co_target": 0
    }
   },
   {
-   "id": "p:JACK R. THOMPSON",
+   "id": "p:LIGHTSTONE V. MR",
    "type": "person",
-   "label": "Jack R. Thompson",
+   "label": "Lightstone V. Mr",
    "zh_label": null,
    "lanes": [
     "def14a"
@@ -1048,14 +1064,14 @@
    "manager_routable": false,
    "degree": {
     "co_hold": 0,
-    "co_board": 1,
+    "co_board": 7,
     "co_target": 0
    }
   },
   {
-   "id": "p:MICHELLE L. CAHOON",
+   "id": "p:LIGHTSTONE V. PRIOR",
    "type": "person",
-   "label": "Michelle L. Cahoon",
+   "label": "Lightstone V. Prior",
    "zh_label": null,
    "lanes": [
     "def14a"
@@ -1064,7 +1080,23 @@
    "manager_routable": false,
    "degree": {
     "co_hold": 0,
-    "co_board": 1,
+    "co_board": 7,
+    "co_target": 0
+   }
+  },
+  {
+   "id": "p:MITCHELL HOCHBERG",
+   "type": "person",
+   "label": "Mitchell Hochberg",
+   "zh_label": null,
+   "lanes": [
+    "def14a"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 8,
     "co_target": 0
    }
   },
@@ -1080,7 +1112,7 @@
    "manager_routable": false,
    "degree": {
     "co_hold": 0,
-    "co_board": 6,
+    "co_board": 5,
     "co_target": 0
    }
   },
@@ -1129,6 +1161,22 @@
    "degree": {
     "co_hold": 0,
     "co_board": 2,
+    "co_target": 0
+   }
+  },
+  {
+   "id": "p:SETH MOLOD",
+   "type": "person",
+   "label": "Seth Molod",
+   "zh_label": null,
+   "lanes": [
+    "def14a"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 8,
     "co_target": 0
    }
   },
@@ -1241,7 +1289,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 1
+    "co_target": 2
    }
   },
   {
@@ -1273,7 +1321,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 2
+    "co_target": 1
    }
   },
   {
@@ -1325,9 +1373,9 @@
    }
   },
   {
-   "id": "s:CHEN SHENG",
+   "id": "s:CHEN CHEN CHIEN-FU",
    "type": "staker",
-   "label": "Chen Sheng",
+   "label": "Chen Chen Chien-Fu",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1392,6 +1440,22 @@
    "id": "s:DENHAM MINING GP LLC",
    "type": "staker",
    "label": "Denham Mining GP LLC",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
+   }
+  },
+  {
+   "id": "s:DINAMARCA SANTELICES YETHRO",
+   "type": "staker",
+   "label": "Dinamarca Santelices Yethro",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1597,38 +1661,6 @@
    }
   },
   {
-   "id": "s:HIGHSAGE VENTURES LLC",
-   "type": "staker",
-   "label": "HighSage Ventures LLC",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:HUDSON STEVEN KENNETH",
-   "type": "staker",
-   "label": "Hudson Steven Kenneth",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 2
-   }
-  },
-  {
    "id": "s:INNOCARE PHARMA INC.",
    "type": "staker",
    "label": "InnoCare Pharma Inc.",
@@ -1664,22 +1696,6 @@
    "id": "s:ISAKOW SELWYN",
    "type": "staker",
    "label": "ISAKOW SELWYN",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:ISHARES TRUST",
-   "type": "staker",
-   "label": "iSHARES TRUST",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1744,22 +1760,6 @@
    "id": "s:LEGION PARTNERS ASSET MANAGEMENT, LLC",
    "type": "staker",
    "label": "Legion Partners Asset Management, LLC",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:LIANTENG LTD",
-   "type": "staker",
-   "label": "Lianteng Ltd",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1933,41 +1933,9 @@
    }
   },
   {
-   "id": "s:OAKTREE CAPITAL HOLDINGS, LLC",
-   "type": "staker",
-   "label": "Oaktree Capital Holdings, LLC",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
    "id": "s:ORBIMED ADVISORS LLC",
    "type": "staker",
    "label": "ORBIMED ADVISORS LLC",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 2
-   }
-  },
-  {
-   "id": "s:PAC SPONSOR, LLC",
-   "type": "staker",
-   "label": "PAC Sponsor, LLC",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -2013,22 +1981,6 @@
    }
   },
   {
-   "id": "s:PJ MILLENNIUM LIMITED PARTNERSHIP",
-   "type": "staker",
-   "label": "PJ Millennium Limited Partnership",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
    "id": "s:POSEN JOSEPH MICHAEL",
    "type": "staker",
    "label": "Posen Joseph Michael",
@@ -2048,6 +2000,22 @@
    "id": "s:PROTEGO PARTNERS LTD",
    "type": "staker",
    "label": "PROTEGO PARTNERS LTD",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
+   }
+  },
+  {
+   "id": "s:QATAR INVESTMENT AUTHORITY",
+   "type": "staker",
+   "label": "Qatar Investment Authority",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -2090,22 +2058,6 @@
     "co_hold": 0,
     "co_board": 0,
     "co_target": 1
-   }
-  },
-  {
-   "id": "s:RECHTSCHAFFEN ANDREW",
-   "type": "staker",
-   "label": "RECHTSCHAFFEN ANDREW",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 2
    }
   },
   {
@@ -2169,7 +2121,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 2
+    "co_target": 1
    }
   },
   {
@@ -2233,7 +2185,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 1
+    "co_target": 2
    }
   },
   {
@@ -2381,22 +2333,6 @@
    }
   },
   {
-   "id": "s:WANG & LEE HOLDINGS, INC.",
-   "type": "staker",
-   "label": "WANG & LEE Holdings, Inc.",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
    "id": "s:WBT VALUE LTD",
    "type": "staker",
    "label": "WBT Value Ltd",
@@ -2410,22 +2346,6 @@
     "co_hold": 0,
     "co_board": 0,
     "co_target": 1
-   }
-  },
-  {
-   "id": "s:WEEDBROOK CHRISTIAN",
-   "type": "staker",
-   "label": "Weedbrook Christian",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 2
    }
   },
   {
@@ -2511,32 +2431,6 @@
  ],
  "edges": [
   {
-   "a": "p:ABIGAIL P. JOHNSON",
-   "b": "p:INSIDER PARTICIPATION",
-   "type": "co_board",
-   "w": 1,
-   "shared": [
-    {
-     "company": "SYNAPTICS Inc",
-     "tk": "SYNA"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "p:ADAM G. CIONGOLI",
-   "b": "p:ANTHONY M. KENNEDY",
-   "type": "co_board",
-   "w": 1,
-   "shared": [
-    {
-     "company": "Fox Corp",
-     "tk": null
-    }
-   ],
-   "truncated": false
-  },
-  {
    "a": "p:ADAM G. CIONGOLI",
    "b": "p:GEORGE W. BUSH",
    "type": "co_board",
@@ -2615,14 +2509,79 @@
    "truncated": false
   },
   {
-   "a": "p:ALBERT P. CAREY",
-   "b": "p:INSIDER PARTICIPATION",
+   "a": "p:ALAN RETKINSKI",
+   "b": "p:DAVID LICHTENSTEIN",
    "type": "co_board",
    "w": 1,
    "shared": [
     {
-     "company": "UNIFI INC",
-     "tk": "UFI"
+     "company": "Lightstone Value Plus REIT I, Inc.",
+     "tk": null
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:ALAN RETKINSKI",
+   "b": "p:DAVID W. LICHTENSTEIN",
+   "type": "co_board",
+   "w": 1,
+   "shared": [
+    {
+     "company": "Lightstone Value Plus REIT I, Inc.",
+     "tk": null
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:ALAN RETKINSKI",
+   "b": "p:GEORGE R. WHITTEMORE",
+   "type": "co_board",
+   "w": 1,
+   "shared": [
+    {
+     "company": "Lightstone Value Plus REIT I, Inc.",
+     "tk": null
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:ALAN RETKINSKI",
+   "b": "p:JOSEPH E. TEICHMAN",
+   "type": "co_board",
+   "w": 1,
+   "shared": [
+    {
+     "company": "Lightstone Value Plus REIT I, Inc.",
+     "tk": null
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:ALAN RETKINSKI",
+   "b": "p:MITCHELL HOCHBERG",
+   "type": "co_board",
+   "w": 1,
+   "shared": [
+    {
+     "company": "Lightstone Value Plus REIT I, Inc.",
+     "tk": null
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:ALAN RETKINSKI",
+   "b": "p:SETH MOLOD",
+   "type": "co_board",
+   "w": 1,
+   "shared": [
+    {
+     "company": "Lightstone Value Plus REIT I, Inc.",
+     "tk": null
     }
    ],
    "truncated": false
@@ -2641,6 +2600,19 @@
    "truncated": false
   },
   {
+   "a": "p:ALLERGAN AESTHETICS",
+   "b": "p:ARTHUR D. LITTLE",
+   "type": "co_board",
+   "w": 1,
+   "shared": [
+    {
+     "company": "RESMED INC",
+     "tk": null
+    }
+   ],
+   "truncated": false
+  },
+  {
    "a": "p:ANDERSON CHIEF FINANCIAL OFFICER",
    "b": "p:PAY VERSUS PERFORMANCE",
    "type": "co_board",
@@ -2649,19 +2621,6 @@
     {
      "company": "All In FutureTech Alliance, Inc.",
      "tk": "AIFA"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "p:ANDREAS W. MATTES",
-   "b": "p:ANTHONY M. ABATE",
-   "type": "co_board",
-   "w": 1,
-   "shared": [
-    {
-     "company": "WOLFSPEED, INC.",
-     "tk": "WOLF"
     }
    ],
    "truncated": false
@@ -2727,27 +2686,302 @@
    "truncated": false
   },
   {
-   "a": "p:ANTHONY M. KENNEDY",
-   "b": "p:GEORGE W. BUSH",
+   "a": "p:DAVID LICHTENSTEIN",
+   "b": "p:DAVID W. LICHTENSTEIN",
    "type": "co_board",
-   "w": 1,
+   "w": 4,
    "shared": [
     {
-     "company": "Fox Corp",
+     "company": "Lightstone Value Plus REIT I, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT II, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT III, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT IV, Inc.",
+     "tk": "LTSV"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:DAVID LICHTENSTEIN",
+   "b": "p:GEORGE R. WHITTEMORE",
+   "type": "co_board",
+   "w": 3,
+   "shared": [
+    {
+     "company": "Lightstone Value Plus REIT I, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT II, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT III, Inc.",
      "tk": null
     }
    ],
    "truncated": false
   },
   {
-   "a": "p:ANTHONY M. KENNEDY",
-   "b": "p:PAY VERSUS PERFORMANCE",
+   "a": "p:DAVID LICHTENSTEIN",
+   "b": "p:JOSEPH E. TEICHMAN",
    "type": "co_board",
-   "w": 1,
+   "w": 4,
    "shared": [
     {
-     "company": "Fox Corp",
+     "company": "Lightstone Value Plus REIT I, Inc.",
      "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT II, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT III, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT IV, Inc.",
+     "tk": "LTSV"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:DAVID LICHTENSTEIN",
+   "b": "p:LIGHTSTONE V. MR",
+   "type": "co_board",
+   "w": 3,
+   "shared": [
+    {
+     "company": "Lightstone Value Plus REIT II, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT III, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT IV, Inc.",
+     "tk": "LTSV"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:DAVID LICHTENSTEIN",
+   "b": "p:LIGHTSTONE V. PRIOR",
+   "type": "co_board",
+   "w": 3,
+   "shared": [
+    {
+     "company": "Lightstone Value Plus REIT II, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT III, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT IV, Inc.",
+     "tk": "LTSV"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:DAVID LICHTENSTEIN",
+   "b": "p:MITCHELL HOCHBERG",
+   "type": "co_board",
+   "w": 4,
+   "shared": [
+    {
+     "company": "Lightstone Value Plus REIT I, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT II, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT III, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT IV, Inc.",
+     "tk": "LTSV"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:DAVID LICHTENSTEIN",
+   "b": "p:SETH MOLOD",
+   "type": "co_board",
+   "w": 4,
+   "shared": [
+    {
+     "company": "Lightstone Value Plus REIT I, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT II, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT III, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT IV, Inc.",
+     "tk": "LTSV"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:DAVID W. LICHTENSTEIN",
+   "b": "p:GEORGE R. WHITTEMORE",
+   "type": "co_board",
+   "w": 3,
+   "shared": [
+    {
+     "company": "Lightstone Value Plus REIT I, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT II, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT III, Inc.",
+     "tk": null
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:DAVID W. LICHTENSTEIN",
+   "b": "p:JOSEPH E. TEICHMAN",
+   "type": "co_board",
+   "w": 4,
+   "shared": [
+    {
+     "company": "Lightstone Value Plus REIT I, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT II, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT III, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT IV, Inc.",
+     "tk": "LTSV"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:DAVID W. LICHTENSTEIN",
+   "b": "p:LIGHTSTONE V. MR",
+   "type": "co_board",
+   "w": 3,
+   "shared": [
+    {
+     "company": "Lightstone Value Plus REIT II, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT III, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT IV, Inc.",
+     "tk": "LTSV"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:DAVID W. LICHTENSTEIN",
+   "b": "p:LIGHTSTONE V. PRIOR",
+   "type": "co_board",
+   "w": 3,
+   "shared": [
+    {
+     "company": "Lightstone Value Plus REIT II, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT III, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT IV, Inc.",
+     "tk": "LTSV"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:DAVID W. LICHTENSTEIN",
+   "b": "p:MITCHELL HOCHBERG",
+   "type": "co_board",
+   "w": 4,
+   "shared": [
+    {
+     "company": "Lightstone Value Plus REIT I, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT II, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT III, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT IV, Inc.",
+     "tk": "LTSV"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:DAVID W. LICHTENSTEIN",
+   "b": "p:SETH MOLOD",
+   "type": "co_board",
+   "w": 4,
+   "shared": [
+    {
+     "company": "Lightstone Value Plus REIT I, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT II, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT III, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT IV, Inc.",
+     "tk": "LTSV"
     }
    ],
    "truncated": false
@@ -2791,6 +3025,103 @@
    "truncated": false
   },
   {
+   "a": "p:GEORGE R. WHITTEMORE",
+   "b": "p:JOSEPH E. TEICHMAN",
+   "type": "co_board",
+   "w": 3,
+   "shared": [
+    {
+     "company": "Lightstone Value Plus REIT I, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT II, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT III, Inc.",
+     "tk": null
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:GEORGE R. WHITTEMORE",
+   "b": "p:LIGHTSTONE V. MR",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "Lightstone Value Plus REIT II, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT III, Inc.",
+     "tk": null
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:GEORGE R. WHITTEMORE",
+   "b": "p:LIGHTSTONE V. PRIOR",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "Lightstone Value Plus REIT II, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT III, Inc.",
+     "tk": null
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:GEORGE R. WHITTEMORE",
+   "b": "p:MITCHELL HOCHBERG",
+   "type": "co_board",
+   "w": 3,
+   "shared": [
+    {
+     "company": "Lightstone Value Plus REIT I, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT II, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT III, Inc.",
+     "tk": null
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:GEORGE R. WHITTEMORE",
+   "b": "p:SETH MOLOD",
+   "type": "co_board",
+   "w": 3,
+   "shared": [
+    {
+     "company": "Lightstone Value Plus REIT I, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT II, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT III, Inc.",
+     "tk": null
+    }
+   ],
+   "truncated": false
+  },
+  {
    "a": "p:GEORGE W. BUSH",
    "b": "p:PAY VERSUS PERFORMANCE",
    "type": "co_board",
@@ -2821,18 +3152,223 @@
    "truncated": false
   },
   {
-   "a": "p:JACK R. THOMPSON",
-   "b": "p:MICHELLE L. CAHOON",
+   "a": "p:JOSEPH E. TEICHMAN",
+   "b": "p:LIGHTSTONE V. MR",
    "type": "co_board",
-   "w": 2,
+   "w": 3,
    "shared": [
     {
-     "company": "RUSSELL INVESTMENT CO",
+     "company": "Lightstone Value Plus REIT II, Inc.",
      "tk": null
     },
     {
-     "company": "RUSSELL INVESTMENT FUNDS",
+     "company": "Lightstone Value Plus REIT III, Inc.",
      "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT IV, Inc.",
+     "tk": "LTSV"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:JOSEPH E. TEICHMAN",
+   "b": "p:LIGHTSTONE V. PRIOR",
+   "type": "co_board",
+   "w": 3,
+   "shared": [
+    {
+     "company": "Lightstone Value Plus REIT II, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT III, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT IV, Inc.",
+     "tk": "LTSV"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:JOSEPH E. TEICHMAN",
+   "b": "p:MITCHELL HOCHBERG",
+   "type": "co_board",
+   "w": 4,
+   "shared": [
+    {
+     "company": "Lightstone Value Plus REIT I, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT II, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT III, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT IV, Inc.",
+     "tk": "LTSV"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:JOSEPH E. TEICHMAN",
+   "b": "p:SETH MOLOD",
+   "type": "co_board",
+   "w": 4,
+   "shared": [
+    {
+     "company": "Lightstone Value Plus REIT I, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT II, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT III, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT IV, Inc.",
+     "tk": "LTSV"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:LIGHTSTONE V. MR",
+   "b": "p:LIGHTSTONE V. PRIOR",
+   "type": "co_board",
+   "w": 3,
+   "shared": [
+    {
+     "company": "Lightstone Value Plus REIT II, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT III, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT IV, Inc.",
+     "tk": "LTSV"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:LIGHTSTONE V. MR",
+   "b": "p:MITCHELL HOCHBERG",
+   "type": "co_board",
+   "w": 3,
+   "shared": [
+    {
+     "company": "Lightstone Value Plus REIT II, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT III, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT IV, Inc.",
+     "tk": "LTSV"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:LIGHTSTONE V. MR",
+   "b": "p:SETH MOLOD",
+   "type": "co_board",
+   "w": 3,
+   "shared": [
+    {
+     "company": "Lightstone Value Plus REIT II, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT III, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT IV, Inc.",
+     "tk": "LTSV"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:LIGHTSTONE V. PRIOR",
+   "b": "p:MITCHELL HOCHBERG",
+   "type": "co_board",
+   "w": 3,
+   "shared": [
+    {
+     "company": "Lightstone Value Plus REIT II, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT III, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT IV, Inc.",
+     "tk": "LTSV"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:LIGHTSTONE V. PRIOR",
+   "b": "p:SETH MOLOD",
+   "type": "co_board",
+   "w": 3,
+   "shared": [
+    {
+     "company": "Lightstone Value Plus REIT II, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT III, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT IV, Inc.",
+     "tk": "LTSV"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:MITCHELL HOCHBERG",
+   "b": "p:SETH MOLOD",
+   "type": "co_board",
+   "w": 4,
+   "shared": [
+    {
+     "company": "Lightstone Value Plus REIT I, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT II, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT III, Inc.",
+     "tk": null
+    },
+    {
+     "company": "Lightstone Value Plus REIT IV, Inc.",
+     "tk": "LTSV"
     }
    ],
    "truncated": false
@@ -23532,6 +24068,20 @@
   },
   {
    "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+   "b": "s:AULT MILTON C III",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Hyperscale Data, Inc.",
+     "tk": "GPUS",
+     "forms": "SC 13D/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
    "b": "s:BLACKROCK PORTFOLIO MANAGEMENT LLC",
    "type": "co_target",
    "w": 1,
@@ -23559,34 +24109,6 @@
      "target": "TENAX THERAPEUTICS, INC.",
      "tk": "TENX",
      "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:HIGHSAGE VENTURES LLC",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "People Inc",
-     "tk": "PPLI",
-     "forms": "SC 13D|SC 13D/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:ISHARES TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "BlackRock, Inc.",
-     "tk": "BLK",
-     "forms": "SC 13G|SC 13G/A"
     }
    ],
    "truncated": false
@@ -23621,20 +24143,6 @@
   },
   {
    "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:OAKTREE CAPITAL HOLDINGS, LLC",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TORM plc",
-     "tk": "TRMD",
-     "forms": "SC 13D/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
    "b": "s:POSEN JOSEPH MICHAEL",
    "type": "co_target",
    "w": 1,
@@ -23643,6 +24151,34 @@
      "target": "Nuran Wireless Inc.",
      "tk": "NUR",
      "forms": "SC 13G"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+   "b": "s:QATAR INVESTMENT AUTHORITY",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Global Business Travel Group, Inc.",
+     "tk": "GBTG",
+     "forms": "SC 13D/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+   "b": "s:SJC LENDING LLC",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Hyperscale Data, Inc.",
+     "tk": "GPUS",
+     "forms": "SC 13D/A|SC 13G"
     }
    ],
    "truncated": false
@@ -23760,20 +24296,6 @@
    "truncated": false
   },
   {
-   "a": "s:BDC CAPITAL INC.",
-   "b": "s:WEEDBROOK CHRISTIAN",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Xanadu Quantum Technologies Ltd",
-     "tk": "XNDU",
-     "forms": "SC 13D/A|SC 13G"
-    }
-   ],
-   "truncated": false
-  },
-  {
    "a": "s:BIOTECHNOLOGY VALUE FUND L P",
    "b": "s:PARADIGM BIOCAPITAL ADVISORS LP",
    "type": "co_target",
@@ -23859,15 +24381,15 @@
    "truncated": false
   },
   {
-   "a": "s:CHEN SHENG",
-   "b": "s:PJ MILLENNIUM LIMITED PARTNERSHIP",
+   "a": "s:CHEN CHEN CHIEN-FU",
+   "b": "s:DINAMARCA SANTELICES YETHRO",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "VNET Group, Inc.",
-     "tk": "VNET",
-     "forms": "SC 13D/A"
+     "target": "Ticketplus Ltd.",
+     "tk": "TP",
+     "forms": "SC 13G"
     }
    ],
    "truncated": false
@@ -24055,34 +24577,6 @@
    "truncated": false
   },
   {
-   "a": "s:HUDSON STEVEN KENNETH",
-   "b": "s:PAC SPONSOR, LLC",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Pinnacle Acquisition Corp",
-     "tk": "PNAQ",
-     "forms": "SC 13D/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:HUDSON STEVEN KENNETH",
-   "b": "s:RECHTSCHAFFEN ANDREW",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Pinnacle Acquisition Corp",
-     "tk": "PNAQ",
-     "forms": "SC 13D/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
    "a": "s:INNOCARE PHARMA INC.",
    "b": "s:WELLINGTON MANAGEMENT GROUP LLP",
    "type": "co_target",
@@ -24148,20 +24642,6 @@
      "target": "LIFECORE BIOMEDICAL, INC. \\DE\\",
      "tk": "LFCR",
      "forms": "SC 13D/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:LIANTENG LTD",
-   "b": "s:WANG & LEE HOLDINGS, INC.",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Troops, Inc. /Cayman Islands/",
-     "tk": "TROO",
-     "forms": "SC 13D"
     }
    ],
    "truncated": false
@@ -24321,20 +24801,6 @@
    "truncated": false
   },
   {
-   "a": "s:PAC SPONSOR, LLC",
-   "b": "s:RECHTSCHAFFEN ANDREW",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Pinnacle Acquisition Corp",
-     "tk": "PNAQ",
-     "forms": "SC 13D/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
    "a": "s:POSEN JOSEPH MICHAEL",
    "b": "s:STARLINK CAPITAL LLC",
    "type": "co_target",
@@ -24386,20 +24852,6 @@
      "target": "Canada Goose Holdings Inc.",
      "tk": "GOOS",
      "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:SALUJA DIPENDER",
-   "b": "s:WEEDBROOK CHRISTIAN",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Xanadu Quantum Technologies Ltd",
-     "tk": "XNDU",
-     "forms": "SC 13D/A|SC 13G/A"
     }
    ],
    "truncated": false
@@ -24491,6 +24943,20 @@
    "stock_routable": false
   },
   {
+   "tk": "AXP",
+   "name": "AMERICAN EXPRESS CO",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 4,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": true
+  },
+  {
    "tk": "BEKE",
    "name": "KE Holdings Inc.",
    "in": [
@@ -24528,7 +24994,7 @@
    "counts": {
     "managers": 1,
     "persons": 0,
-    "stakers": 2
+    "stakers": 1
    },
    "stock_routable": true
   },
@@ -24583,20 +25049,6 @@
    ],
    "counts": {
     "managers": 3,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
-  },
-  {
-   "tk": "EROC",
-   "name": "ERock, Inc.",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 1,
     "persons": 0,
     "stakers": 1
    },
@@ -24701,18 +25153,18 @@
    "stock_routable": false
   },
   {
-   "tk": "LAZ",
-   "name": "Lazard, Inc.",
+   "tk": "JPM",
+   "name": "JPMORGAN CHASE & CO",
    "in": [
     "13f",
     "13dg"
    ],
    "counts": {
-    "managers": 1,
+    "managers": 4,
     "persons": 0,
     "stakers": 1
    },
-   "stock_routable": false
+   "stock_routable": true
   },
   {
    "tk": "LLYVA",
@@ -24755,20 +25207,6 @@
     "stakers": 1
    },
    "stock_routable": false
-  },
-  {
-   "tk": "MGM",
-   "name": "MGM Resorts International",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 2,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": true
   },
   {
    "tk": "MS",
@@ -24822,7 +25260,7 @@
    "counts": {
     "managers": 2,
     "persons": 0,
-    "stakers": 2
+    "stakers": 1
    },
    "stock_routable": false
   },
@@ -24869,20 +25307,6 @@
    "stock_routable": false
   },
   {
-   "tk": "STRL",
-   "name": "STERLING INFRASTRUCTURE, INC.",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 2,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
-  },
-  {
    "tk": "STT",
    "name": "STATE STREET CORP",
    "in": [
@@ -24911,20 +25335,6 @@
    "stock_routable": false
   },
   {
-   "tk": "THC",
-   "name": "TENET HEALTHCARE CORP",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 1,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
-  },
-  {
    "tk": "TRMD",
    "name": "TORM plc",
    "in": [
@@ -24934,7 +25344,7 @@
    "counts": {
     "managers": 1,
     "persons": 0,
-    "stakers": 2
+    "stakers": 1
    },
    "stock_routable": false
   },
@@ -24967,20 +25377,6 @@
    "stock_routable": false
   },
   {
-   "tk": "VNET",
-   "name": "VNET Group, Inc.",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 1,
-    "persons": 0,
-    "stakers": 2
-   },
-   "stock_routable": false
-  },
-  {
    "tk": "VTRS",
    "name": "Viatris Inc",
    "in": [
@@ -25009,20 +25405,6 @@
    "stock_routable": true
   },
   {
-   "tk": "WDAY",
-   "name": "Workday, Inc.",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 1,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": true
-  },
-  {
    "tk": "WFC",
    "name": "WELLS FARGO & COMPANY/MN",
    "in": [
@@ -25035,34 +25417,6 @@
     "stakers": 1
    },
    "stock_routable": true
-  },
-  {
-   "tk": "WOLF",
-   "name": "WOLFSPEED, INC.",
-   "in": [
-    "13f",
-    "def14a"
-   ],
-   "counts": {
-    "managers": 1,
-    "persons": 2,
-    "stakers": 0
-   },
-   "stock_routable": false
-  },
-  {
-   "tk": "WTS",
-   "name": "WATTS WATER TECHNOLOGIES INC",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 1,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
   },
   {
    "tk": "WULF",
@@ -25094,18 +25448,18 @@
   }
  ],
  "components": {
-  "n": 41,
+  "n": 37,
   "largest": 59
  },
  "windows": {
   "form13f_quarter": "2026-06-30",
   "stakes_visible_dates": {
    "start": "2026-09-04",
-   "end": "2026-09-30"
+   "end": "2026-10-01"
   },
   "smart_money_visible_dates": {
-   "start": "2026-09-23",
-   "end": "2026-09-30"
+   "start": "2026-09-24",
+   "end": "2026-10-01"
   }
  },
  "coverage": {
@@ -25115,7 +25469,7 @@
    "isolated_managers": 0
   },
   "def14a": {
-   "basis": "top_persons export: 50 most-seated of 739 upstream persons; 115/150 filings with persons (76.7%)",
+   "basis": "top_persons export: 50 most-seated of 726 upstream persons; 117/150 filings with persons (78.0%)",
    "same_name_merges_possible": true
   },
   "13dg": {
@@ -25124,5 +25478,5 @@
   }
  },
  "methodology": "Force-camp relationship graph DERIVED at export time from four COMMITTED panels (form13f x def14a_persons x stakes_13g union smart_money) \u2014 zero new fetches, display-only. Edges are pairwise projections over as-filed disclosure facts: co_hold = two curated managers' VISIBLE BOOKS (latest quarter, up to 50 positions each; the full books are larger) share a position key (ticker, else CUSIP); co_board = two proxy-statement top persons seat the same company (exact company-name match resolves the ticker); co_target = two different filers INDEPENDENTLY SEPARATELY FILED stakes converging on the same target issuer within the visible SC 13D/13G windows. Identity rule: a window filer merges into an institution node ONLY when its trimmed-uppercase name equals a curated manager's name exactly \u2014 no fuzzy matching, no name list. The three overlaps are factual coincidences of separate filings: joint filings stay verbatim (members NOT DECOMPOSED), no COORDINATION is implied and no consortium claim is made. Weights are integer counts of shared items (lists capped at 8, truncated flag set beyond). Coverage is bounded by construction \u2014 see the coverage.basis strings (visible books, a 50-person proxy export over the newest filings, latest filing windows only). A restatement of public SEC EDGAR disclosures only: NO PRICES, NO RETURNS, no performance claims; never part of any OOS pipeline.",
- "snapshot_ts": "2026-10-01T10:57:28.897692+00:00"
+ "snapshot_ts": "2026-10-02T11:18:50.080629+00:00"
 }

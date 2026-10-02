@@ -2,8 +2,8 @@
   "status": "ok",
   "as_of_date": "2026-09-16",
   "freshness": {
-    "earliest": "2026-09",
-    "latest": "2026-10-01",
+    "earliest": "2026-09-16",
+    "latest": "2026-10-02",
     "mixed": true
   },
   "methodology": "Seven-theme signal overview (display-only, NOT a research claim). Aggregates are cross-sectional means over the S&P 500 PIT panel at the latest realized month; the macro theme uses the Track-C macro-regime composite; net cost uses the bps sweep. Themes marked forward_only / needs_work / partial have no real historical signal yet \u2014 shown honestly, never mocked. Not the frozen Track-B verdict.",
@@ -93,7 +93,7 @@
     {
       "key": "macro",
       "status": "live",
-      "as_of": "2026-10-01",
+      "as_of": "2026-10-02",
       "signals": [
         {
           "name": "macro_regime",
@@ -101,10 +101,6 @@
         }
       ],
       "series": [
-        {
-          "date": "2026-07-10",
-          "value": -0.282
-        },
         {
           "date": "2026-07-13",
           "value": -0.101
@@ -287,7 +283,7 @@
         },
         {
           "date": "2026-09-14",
-          "value": 0.08
+          "value": 0.082
         },
         {
           "date": "2026-09-15",
@@ -339,6 +335,10 @@
         },
         {
           "date": "2026-10-01",
+          "value": 0.032
+        },
+        {
+          "date": "2026-10-02",
           "value": 0.032
         }
       ],
@@ -421,35 +421,27 @@
     {
       "key": "news_sentiment",
       "status": "live",
-      "as_of": "2026-09",
-      "headline": "GDELT \u901a\u7528\u8bed\u8c03\uff08US \u5e02\u573a\u65b0\u95fb\uff0c2017-04\u21922026-09\uff09\uff1b\u901a\u7528\u8bcd\u5178\u975e\u91d1\u878d\u57df\u2014\u2014\u538b\u529b/\u60c5\u7eea\u4ee3\u7406\uff0c\u975e\u9009\u80a1\u4fe1\u53f7\uff08display-only, exploratory\uff09",
+      "as_of": "2026-10",
+      "headline": "GDELT \u901a\u7528\u8bed\u8c03\uff08US \u5e02\u573a\u65b0\u95fb\uff0c2017-04\u21922026-10\uff09\uff1b\u901a\u7528\u8bcd\u5178\u975e\u91d1\u878d\u57df\u2014\u2014\u538b\u529b/\u60c5\u7eea\u4ee3\u7406\uff0c\u975e\u9009\u80a1\u4fe1\u53f7\uff08display-only, exploratory\uff09",
       "signals": [
         {
           "name": "tone_latest",
-          "value": 0.21
+          "value": 0.243
         },
         {
           "name": "tone_mean",
-          "value": -0.062
+          "value": -0.059
         },
         {
           "name": "tone_min",
           "value": -1.895
         },
         {
-          "name": "volume_latest",
-          "value": 0.0
-        },
-        {
           "name": "n_months",
-          "value": 114
+          "value": 115
         }
       ],
       "series": [
-        {
-          "month": "2024-10",
-          "value": 0.63
-        },
         {
           "month": "2024-11",
           "value": 0.649
@@ -541,6 +533,10 @@
         {
           "month": "2026-09",
           "value": 0.21
+        },
+        {
+          "month": "2026-10",
+          "value": 0.243
         }
       ]
     },
@@ -706,5 +702,5 @@
       ]
     }
   ],
-  "snapshot_ts": "2026-10-01T10:57:11.429961+00:00"
+  "snapshot_ts": "2026-10-02T11:18:16.093204+00:00"
 }

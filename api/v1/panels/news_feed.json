@@ -1,19 +1,15 @@
 {
   "status": "ok",
-  "as_of": "2026-10-01T10:00:00Z",
+  "as_of": "2026-10-02T10:00:00Z",
   "window": {
-    "start": "2026-09-01",
-    "end": "2026-10-01"
+    "start": "2026-09-02",
+    "end": "2026-10-02"
   },
   "query": "(\"stock market\" OR \"S&P 500\" OR \"Federal Reserve\") sourcelang:eng | sourcelang:zho domainis:wallstreetcn.com",
-  "total": 2613,
-  "n_sources": 546,
-  "n_zho": 482,
+  "total": 2797,
+  "n_sources": 611,
+  "n_zho": 466,
   "by_day": [
-    {
-      "date": "2026-09-01",
-      "count": 16
-    },
     {
       "date": "2026-09-02",
       "count": 41
@@ -101,1360 +97,1364 @@
     {
       "date": "2026-10-01",
       "count": 200
+    },
+    {
+      "date": "2026-10-02",
+      "count": 200
     }
   ],
   "items": [
     {
-      "seendate": "2026-10-01T10:00:00Z",
-      "title": "What Can We Expect From The RBA From Here ?",
-      "url": "https://thebull.com.au/news/what-can-we-expect-from-the-rba-from-here/",
-      "domain": "thebull.com.au",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Australia"
-    },
-    {
-      "seendate": "2026-10-01T10:00:00Z",
-      "title": "Bonds : 30 - year US Treasury at 5 . 65 %, sell - off in Europe and Japan \u2013 Yields at decade highs",
-      "url": "https://www.bankingnews.gr/diethni/articles/902614/bonds-30-year-us-treasury-at-5-65-sell-off-in-europe-and-japan-yields-at-decade-highs%20title=",
-      "domain": "bankingnews.gr",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Greece"
-    },
-    {
-      "seendate": "2026-10-01T10:00:00Z",
-      "title": "TXSE Group Raises $430 Million Following Third Funding Round",
-      "url": "https://www.tradersmagazine.com/am/txse-group-raises-430-million-following-third-funding-round/",
-      "domain": "tradersmagazine.com",
+      "seendate": "2026-10-02T10:00:00Z",
+      "title": "Jobs report to show whether hiring stayed resilient in September",
+      "url": "https://abcnews.com/Business/jobs-report-show-hiring-stayed-resilient-september/story?id=136915472",
+      "domain": "abcnews.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-01T10:00:00Z",
-      "title": "ASX 200 Falls Back To Lowest Level In Months : Today Movers",
-      "url": "https://thebull.com.au/news/asx-200-suffers-sharpest-start-to-q4-in-months-as-yields-bite-and-sector-sell-off-deepens/",
-      "domain": "thebull.com.au",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Australia"
-    },
-    {
-      "seendate": "2026-10-01T10:00:00Z",
-      "title": "Yancoal Shares Drop as US$1 . 85 Billion Kestrel Acquisition Closes : A Closer Look",
-      "url": "https://thebull.com.au/news/yancoal-shares-drop-as-us1-85-billion-kestrel-acquisition-closes-a-closer-look/",
-      "domain": "thebull.com.au",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Australia"
-    },
-    {
-      "seendate": "2026-10-01T10:00:00Z",
-      "title": "Bonds : 30 - year US Treasury at 5 . 65 %, sell - off in Europe and Japan \u2013 Yields at decade highs",
-      "url": "https://www.bankingnews.gr/diethni/articles/902614/bonds-30-year-us-treasury-at-5-65-sell-off-in-europe-and-japan-yields-at-decade-highs",
-      "domain": "bankingnews.gr",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Greece"
-    },
-    {
-      "seendate": "2026-10-01T10:00:00Z",
-      "title": "Cochlear Shares Pull Back After Months of Rebuilding , As Resistance Shapes Up",
-      "url": "https://thebull.com.au/news/cochlear-shares-pull-back-after-months-of-rebuilding-as-resistance-shapes-up/",
-      "domain": "thebull.com.au",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Australia"
-    },
-    {
-      "seendate": "2026-10-01T10:00:00Z",
-      "title": "FT Vest Rising Dividend Achievers Target Income ETF ( BATS : RDVI ) Sees Large Decline in Short Interest",
-      "url": "https://www.themarketsdaily.com/2026/10/01/ft-vest-rising-dividend-achievers-target-income-etf-batsrdvi-sees-large-decline-in-short-interest.html",
-      "domain": "themarketsdaily.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T10:00:00Z",
-      "title": "Why is stock market crashing today ? Rs 9 lakh crore wiped out ; Sensex , Nifty head for worst losing streak in 25 years",
-      "url": "https://timesofindia.indiatimes.com/business/india-business/why-is-sensex-crashing-rs-9-lakh-crore-wiped-out-as-dalal-street-heads-for-worst-week-in-25-years/articleshow/134613883.cms",
-      "domain": "timesofindia.indiatimes.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-10-01T10:00:00Z",
-      "title": "Global shares are trading mixed as market optimism about AI gets tempered by Iran worries",
-      "url": "http://www.dailyadvance.com/news/world/global-shares-are-trading-mixed-as-market-optimism-about-ai-gets-tempered-by-iran-worries/article_a5b93db8-125c-5e5f-9676-8fa799b8056c.html",
-      "domain": "dailyadvance.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T10:00:00Z",
-      "title": "Sensex , Nifty open lower as elevated US Treasury yields weigh on sentiment",
-      "url": "http://www.mexicostar.com/news/279344508/sensex-nifty-open-lower-as-elevated-us-treasury-yields-weigh-on-sentiment",
-      "domain": "mexicostar.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Mexico"
-    },
-    {
-      "seendate": "2026-10-01T10:00:00Z",
-      "title": "PGIM S & P 500 Buffer 20 ETF \u2013 August ( BATS : PBAU ) Stock Short Interest Declines 51 . 0 %",
-      "url": "https://www.dailypolitical.com/2026/10/01/pgim-sp-500-buffer-20-etf-august-batspbau-stock-short-interest-declines-51-0.html",
-      "domain": "dailypolitical.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T10:00:00Z",
-      "title": "Sensex , Nifty open lower as elevated US Treasury yields weigh on sentiment",
-      "url": "http://www.pakistantelegraph.com/news/279344508/sensex-nifty-open-lower-as-elevated-us-treasury-yields-weigh-on-sentiment",
-      "domain": "pakistantelegraph.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Pakistan"
-    },
-    {
-      "seendate": "2026-10-01T10:00:00Z",
-      "title": "Lynas Rare Earths Shares Down Big On Meteoric Deal : Here Why",
-      "url": "https://thebull.com.au/news/lynas-rare-earths-shares-down-big-on-meteoric-deal-heres-why/",
-      "domain": "thebull.com.au",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Australia"
-    },
-    {
-      "seendate": "2026-10-01T09:45:00Z",
-      "title": "$500 a Month in Vanguard Total Stock Market ETF Since 2001 Grew to About $876 , 000",
-      "url": "https://www.aol.com/articles/500-month-vanguards-total-stock-090301000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T09:30:00Z",
-      "title": "Remittances , investment boost Pakistan economic outlook",
-      "url": "https://www.samaa.tv/2087357727-remittances-investment-boost-pakistan-s-economic-outlook",
-      "domain": "samaa.tv",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Pakistan"
-    },
-    {
-      "seendate": "2026-10-01T09:30:00Z",
-      "title": "RBI likely to lift repo by up to 75 bps amid geopolitical uncertainty : Report",
-      "url": "https://ianslive.in/rbi-likely-to-lift-repo-by-up-to-75-bps-amid-geopolitical-uncertainty-report--20261001141005",
-      "domain": "ianslive.in",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-10-01T09:30:00Z",
-      "title": "Market crash : Sensex sinks 1 , 280 pts intraday , at 2026 low ; Nifty at 22 , 200",
-      "url": "https://www.business-standard.com/markets/news/why-are-markets-falling-today-sensex-crashes-1-000-pts-intraday-hits-2026-low-nifty-at-22-300-126100100568_1.html",
-      "domain": "business-standard.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-10-01T09:15:00Z",
-      "title": "Shein plans higher - priced clothing after Europe sales drop",
-      "url": "http://www.laosnews.net/news/279338435/shein-plans-higher-priced-clothing-after-europe-sales-drop",
-      "domain": "laosnews.net",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T09:15:00Z",
-      "title": "7 boring jobs you can hand to an AI agent tonight number 4 is my personal favorite",
-      "url": "https://www.tomsguide.com/ai/7-boring-jobs-you-can-hand-to-an-ai-agent-tonight-number-4-is-my-personal-favorite",
-      "domain": "tomsguide.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T09:15:00Z",
-      "title": "Sensex , Nifty open lower as elevated US Treasury yields weigh on sentiment",
-      "url": "http://www.japanherald.com/news/279344508/sensex-nifty-open-lower-as-elevated-us-treasury-yields-weigh-on-sentiment",
-      "domain": "japanherald.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Japan"
-    },
-    {
-      "seendate": "2026-10-01T09:00:00Z",
-      "title": "Airtel Money heading for \u00a35 . 3bn stock market debut after setting float price",
-      "url": "https://www.dissexpress.co.uk/national/airtel-money-heading-for-5-3bn-stock-market-debut-after-setting-float-price-172404/",
-      "domain": "dissexpress.co.uk",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United Kingdom"
-    },
-    {
-      "seendate": "2026-10-01T07:30:00Z",
-      "title": "KOSPI Jumps Nearly 2 % Toward 7 , 000 as Micron Blowout Revives Samsung and SK Hynix , Snapping Losing Streak",
-      "url": "https://www.ibtimes.com.au/south-korea-kospi-rally-micron-chip-results-1876122",
-      "domain": "ibtimes.com.au",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Australia"
-    },
-    {
-      "seendate": "2026-10-01T07:00:00Z",
-      "title": "Permaculture , Food Sovereignty , and the Case for Radical Self - Reliance \u2013 NaturalNews . com",
-      "url": "https://naturalnews.com/2026-09-29-permaculture-food-sovereignty-case-for-radical-self-reliance.html",
-      "domain": "naturalnews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T07:00:00Z",
-      "title": "Sensex , Nifty open lower as elevated US Treasury yields weigh on sentiment",
-      "url": "http://www.northkoreatimes.com/news/279344508/sensex-nifty-open-lower-as-elevated-us-treasury-yields-weigh-on-sentiment",
-      "domain": "northkoreatimes.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "North Korea"
-    },
-    {
-      "seendate": "2026-10-01T07:00:00Z",
-      "title": "$2 billion gone in two days ! FIIs accelerate selling as Nifty , Sensex set to fall for 8th week running . Will they make a comeback ?",
-      "url": "https://economictimes.indiatimes.com/markets/stocks/news/2-billion-gone-in-two-days-fiis-accelerate-selling-as-nifty-sensex-set-to-fall-for-8th-week-running-will-they-make-a-comeback/articleshow/134610354.cms",
-      "domain": "economictimes.indiatimes.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-10-01T06:30:00Z",
-      "title": "A - One Steels shares make strong debut , list at 14 % premium on BSE",
-      "url": "https://www.business-standard.com/markets/news/a-one-steels-shares-make-strong-debut-list-at-14-premium-on-bse-126100100190_1.html",
-      "domain": "business-standard.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-10-01T06:30:00Z",
-      "title": "NZ sharemarket flat after falling almost 1 % earlier \u2013 Market close",
-      "url": "https://www.nzherald.co.nz/business/markets/shares/nz-sharemarket-flat-after-falling-almost-1-earlier-market-close/premium/HO6TSGQCXJH35BDA4I3KS6PJRY/",
-      "domain": "nzherald.co.nz",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "New Zealand"
-    },
-    {
-      "seendate": "2026-10-01T06:30:00Z",
-      "title": "Hunger in America , SNAP Cuts and the Black Wealth Gap .",
-      "url": "https://thyblackman.com/2026/09/30/hunger-america-snap-black-wealth-gap/",
-      "domain": "thyblackman.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T06:15:00Z",
-      "title": "C . Peter McColough Series on International Economics With Neel Kashkari",
-      "url": "https://www.cfr.org/event/c-peter-mccolough-series-on-international-economics-with-neel-kashkari",
-      "domain": "cfr.org",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T06:00:00Z",
-      "title": "IPO investors strike gold with 7 multibagger stocks in 3 months . Did you miss the bus ?",
-      "url": "https://economictimes.indiatimes.com/markets/ipos/fpos/ipo-investors-strike-gold-with-7-multibagger-stocks-in-3-months-did-you-miss-the-bus/articleshow/134608026.cms",
-      "domain": "economictimes.indiatimes.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-10-01T06:00:00Z",
-      "title": "Sensex , Nifty open lower as elevated US Treasury yields weigh on sentiment",
-      "url": "http://www.tucsonpost.com/news/279344508/sensex-nifty-open-lower-as-elevated-us-treasury-yields-weigh-on-sentiment",
-      "domain": "tucsonpost.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T06:00:00Z",
-      "title": "Where will Fed tightening hit hardest in Asia ? - Academia",
-      "url": "http://www.thejakartapost.com/opinion/2026/10/01/where-will-fed-tightening-hit-hardest-in-asia",
-      "domain": "thejakartapost.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Indonesia"
-    },
-    {
-      "seendate": "2026-10-01T06:00:00Z",
-      "title": "FBM KLCI sinks deeper into the red at midday",
-      "url": "https://www.thestar.com.my/business/business-news/2026/10/01/fbm-klci-sinks-deeper-into-the-red-at-midday",
-      "domain": "thestar.com.my",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Malaysia"
-    },
-    {
-      "seendate": "2026-10-01T06:00:00Z",
-      "title": "Losing Streak May Continue For Indonesia Stock Market",
-      "url": "https://www.rttnews.com/story.aspx?Id=3695491",
-      "domain": "rttnews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T06:00:00Z",
-      "title": "Thai Stock Market Called Lower Again On Thursday",
-      "url": "https://www.rttnews.com/story.aspx?Id=3695492",
-      "domain": "rttnews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T06:00:00Z",
-      "title": "Australian Market Significantly Lower",
-      "url": "https://www.rttnews.com/story.aspx?Id=3695523",
-      "domain": "rttnews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T06:00:00Z",
-      "title": "FT Vest U . S . Equity Enhance & Moderate Buffer ETF \u2013 June ( BATS : XJUN ) Sees Large Decline in Short Interest",
-      "url": "https://www.dailypolitical.com/2026/09/30/ft-vest-u-s-equity-enhance-moderate-buffer-etf-june-batsxjun-sees-large-decline-in-short-interest.html",
-      "domain": "dailypolitical.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T06:00:00Z",
-      "title": "Sensex , Nifty open lower as elevated US Treasury yields weigh on sentiment",
-      "url": "http://www.asiabulletin.com/news/279344508/sensex-nifty-open-lower-as-elevated-us-treasury-yields-weigh-on-sentiment",
-      "domain": "asiabulletin.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-10-01T06:00:00Z",
-      "title": "Asian shares mostly rise amid market optimism about AI , despite Iran worries",
-      "url": "https://www.stcatharinesstandard.ca/business/asian-shares-mostly-rise-amid-market-optimism-about-ai-despite-iran-worries/article_aa6dcdad-13a4-5c5d-b77b-c91a29d82d1a.html",
-      "domain": "stcatharinesstandard.ca",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Canada"
-    },
-    {
-      "seendate": "2026-10-01T06:00:00Z",
-      "title": "JPMorgan Chase & Co . Cuts CocaCola ( NYSE : KO ) Price Target to $95 . 00",
-      "url": "https://www.themarketsdaily.com/2026/10/01/jpmorgan-chase-co-cuts-cocacola-nyseko-price-target-to-95-00.html",
-      "domain": "themarketsdaily.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T06:00:00Z",
-      "title": "Japanese Market Sharply Higher",
-      "url": "https://www.rttnews.com/story.aspx?Id=3695529",
-      "domain": "rttnews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T05:30:00Z",
-      "title": "Sensex , Nifty open lower as elevated US Treasury yields weigh on sentiment",
-      "url": "http://www.birminghamstar.com/news/279344508/sensex-nifty-open-lower-as-elevated-us-treasury-yields-weigh-on-sentiment",
-      "domain": "birminghamstar.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T05:30:00Z",
-      "title": "Meta reportedly calls its AI data centers  pilot model and its research tax credits jumped from $700M to $3 . 9B in 2 years . Who paying for it ?",
-      "url": "https://www.aol.com/articles/meta-reportedly-calls-ai-data-035500000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T05:30:00Z",
+      "seendate": "2026-10-02T10:00:00Z",
       "title": "newsroomamerica . com",
-      "url": "https://newsroomamerica.com/?before=111583",
+      "url": "https://newsroomamerica.com/?before=111895",
       "domain": "newsroomamerica.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-01T05:30:00Z",
-      "title": "Morning Bid : Inflation relief gives bonds little reprieve",
-      "url": "https://www.aol.com/articles/morning-bid-inflation-relief-gives-043310000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T05:30:00Z",
-      "title": "Asian shares mostly rise amid market optimism about AI , despite Iran worries",
-      "url": "https://www.wral.com/news/ap/cc56b-asian-shares-mostly-rise-amid-market-optimism-about-ai-despite-iran-worries/",
-      "domain": "wral.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T05:30:00Z",
-      "title": "Asian shares mostly rise amid market optimism about AI , despite Iran worries",
-      "url": "http://www.dailyadvance.com/news/world/asian-shares-mostly-rise-amid-market-optimism-about-ai-despite-iran-worries/article_a5b93db8-125c-5e5f-9676-8fa799b8056c.html",
-      "domain": "dailyadvance.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T05:30:00Z",
-      "title": "Tag : elon _ musk",
-      "url": "https://newsroomamerica.com/tag/elon_musk",
-      "domain": "newsroomamerica.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T05:30:00Z",
-      "title": "How Much Money Americans Keep in the Bank : Median Balances by Age , Family Type , and Education",
-      "url": "https://www.aol.com/articles/much-money-americans-keep-bank-035819000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T05:30:00Z",
-      "title": "Sensex , Nifty open lower as elevated US Treasury yields weigh on sentiment",
-      "url": "http://www.milwaukeesun.com/news/279344508/sensex-nifty-open-lower-as-elevated-us-treasury-yields-weigh-on-sentiment",
-      "domain": "milwaukeesun.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T05:30:00Z",
-      "title": "India cant take growth for granted , FinMin warns as global rates rise and investors turn cautious",
-      "url": "https://economictimes.indiatimes.com/news/economy/indicators/india-cant-take-growth-for-granted-finmin-warns-as-global-rates-rise-and-investors-turn-cautious/articleshow/134608494.cms",
-      "domain": "economictimes.indiatimes.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-10-01T05:30:00Z",
-      "title": "NSE shares in focus after SEBI nod for corporate bond index futures",
-      "url": "https://www.businesstoday.in/markets/stocks/story/nse-shares-in-focus-after-sebi-nod-for-corporate-bond-index-futures-558936-2026-10-01",
-      "domain": "businesstoday.in",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-10-01T05:30:00Z",
-      "title": "Sensex falls over 100 pts , Nifty below 22 , 550 as market heads for 8th weekly loss , overtaking COVID crash . More pain ahead ?",
-      "url": "https://economictimes.indiatimes.com/markets/stocks/news/sensex-falls-100-pts-nifty-below-22550-as-market-heads-for-8th-weekly-loss-overtaking-covid-crash-more-pain-ahead/articleshow/134608284.cms",
-      "domain": "economictimes.indiatimes.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-10-01T05:30:00Z",
-      "title": "Goldman Sachs pushes Fed rate hike forecast to December",
-      "url": "https://www.aol.com/articles/goldman-sachs-pushes-fed-rate-034843000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T05:30:00Z",
-      "title": "Meta counted Mark Zuckerberg $4 . 1B stock payout as research pay to claim a $355M tax break and the IRS wants it back",
-      "url": "https://www.aol.com/articles/meta-counted-mark-zuckerberg-4-040500000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T05:30:00Z",
-      "title": "Duff Had Enough : Abandonment of the Glass - Steagall Act makes Americans vulnerable to mega - banks",
-      "url": "https://www.thepostathens.com/article/2026/10/joselyn-duff-glass-steagall-economy-investment-commercial-banks-fdr",
-      "domain": "thepostathens.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T05:30:00Z",
-      "title": "Asian shares mostly rise amid market optimism about AI , despite Iran worries",
-      "url": "https://www.aol.com/articles/asian-shares-mostly-rise-amid-031903000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T05:30:00Z",
-      "title": "AI boom could trigger market shocks , Bank of England boss warns",
-      "url": "https://www.aol.com/articles/ai-boom-could-trigger-market-040323000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T05:15:00Z",
-      "title": "The BOOM in real wages and retail sales ? - Investment Watch Blog",
-      "url": "https://www.investmentwatchblog.com/the-boom-in-real-wages-and-retail-sales/",
-      "domain": "investmentwatchblog.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T05:15:00Z",
-      "title": "Baystreet . ca - TSX Starts Week on Down Beat",
-      "url": "http://baystreet.ca/articles/marketupdates/124181/TSX-Starts-Week-on-Down-Beat",
-      "domain": "baystreet.ca",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Canada"
-    },
-    {
-      "seendate": "2026-10-01T05:15:00Z",
-      "title": "Asian shares mostly rise amid market optimism about AI , despite Iran worries",
-      "url": "http://www.stardem.com/ap/world/asian-shares-mostly-rise-amid-market-optimism-about-ai-despite-iran-worries/article_e79b19b8-fd18-5516-ac2c-46cc777e48c8.html",
-      "domain": "stardem.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T05:15:00Z",
-      "title": "Baystreet . ca - Major Red Flag Stock Warning : Treasury Yields Soared",
-      "url": "http://baystreet.ca/articles/stockstowatch/124186/Major-Red-Flag-Stock-Warning-Treasury-Yields-Soared",
-      "domain": "baystreet.ca",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Canada"
-    },
-    {
-      "seendate": "2026-10-01T05:15:00Z",
-      "title": "Chaos in Florida . Delinquent sales spike 400 %. - Investment Watch Blog",
-      "url": "https://www.investmentwatchblog.com/chaos-in-florida-delinquent-sales-spike-400/",
-      "domain": "investmentwatchblog.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T05:15:00Z",
-      "title": "Global Market : Japanese bond yields rise as investors weigh inflation , rate - hike risks",
-      "url": "https://economictimes.indiatimes.com/markets/us-stocks/news/global-market-japanese-bond-yields-rise-as-investors-weigh-inflation-rate-hike-risks/articleshow/134608120.cms",
-      "domain": "economictimes.indiatimes.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-10-01T05:15:00Z",
-      "title": "Asian shares mostly rise amid market optimism about AI , despite Iran worries",
-      "url": "https://www.clickondetroit.com/news/2026/10/01/asian-shares-mostly-rise-amid-market-optimism-about-ai-despite-iran-worries/",
-      "domain": "clickondetroit.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T05:15:00Z",
-      "title": "Washington Examiner | Political News and Conservative Analysis About Congress , the President , and the Federal Government",
-      "url": "http://www.washingtonexaminer.com/restoring-america/equality-not-elitism/4749592/the-40-trillion-uniparty/",
-      "domain": "washingtonexaminer.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T05:00:00Z",
-      "title": "Double delight Tech Mahindra shareholders : Bonus issue and dividend amount this Diwali season - check board meeting date",
-      "url": "https://www.livemint.com/market/stock-market-news/double-delight-tech-mahindra-shareholders-bonus-issue-and-dividend-amount-this-diwali-season-check-board-meeting-date-11790824588269.html",
-      "domain": "livemint.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-10-01T05:00:00Z",
-      "title": "Stock market today LIVE : Nifty , Sensex open lower on elevated US 10 - year bond yield , crude oil price | Bank Nifty gains",
-      "url": "https://www.livemint.com/market/stock-market-news/stock-market-today-live-gift-nifty-us-bond-yields-gold-crude-oil-rates-hint-at-a-gap-down-start-for-nifty-sensex-11790823214707.html",
-      "domain": "livemint.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-10-01T05:00:00Z",
-      "title": "Lisa Cook Inflation Stance : Fed Balances Jobs and Prices",
-      "url": "https://en.shafaqna.com/481385/lisa-cook-inflation-stance/",
-      "domain": "en.shafaqna.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Saudi Arabia"
-    },
-    {
-      "seendate": "2026-10-01T05:00:00Z",
-      "title": "No criminal wrongdoing in $2 . 5Bn Federal building renovation but it was mismanaged",
-      "url": "https://www.independent.co.uk/news/world/americas/fed-reserve-no-wrongdoing-jerome-powell-b3059269.html",
-      "domain": "independent.co.uk",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United Kingdom"
-    },
-    {
-      "seendate": "2026-10-01T05:00:00Z",
-      "title": "Top stocks to buy for short term : Kotak Securitie expert suggests TCS , Axis Bank , Lodha - Check target prices",
-      "url": "https://www.livemint.com/market/stock-market-news/top-stocks-to-buy-for-short-term-kotak-securities-expert-suggests-tcs-axis-bank-lodha-check-target-prices-11790823950675.html",
-      "domain": "livemint.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-10-01T05:00:00Z",
-      "title": "Markets open lower as FII selling , high bond yields weigh on sentiment",
-      "url": "https://www.thehindubusinessline.com/markets/stock-markets/markets-open-lower-as-fii-selling-high-bond-yields-weigh-on-sentiment/article71531353.ece",
-      "domain": "thehindubusinessline.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-10-01T05:00:00Z",
-      "title": "Moneyview IPO vs A - One Steels India IPO listing : Here GMP comparison , listing share price prediction",
-      "url": "https://www.livemint.com/market/ipo/moneyview-ipo-vs-a-one-steels-india-ipo-listing-heres-gmp-comparison-share-price-prediction-11790820380664.html",
-      "domain": "livemint.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-10-01T05:00:00Z",
-      "title": "IPO Valuations Dip in India as Local Funds Flex Pricing Muscle",
-      "url": "https://www.livemint.com/market/ipo/ipo-valuations-dip-in-india-as-local-funds-flex-pricing-muscle-11790821171391.html",
-      "domain": "livemint.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-10-01T05:00:00Z",
-      "title": "Asian shares mostly rise amid market optimism about AI , despite Iran worries",
-      "url": "https://www.ksat.com/news/2026/10/01/asian-shares-mostly-rise-amid-market-optimism-about-ai-despite-iran-worries/",
-      "domain": "ksat.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T05:00:00Z",
-      "title": "Fed watchdog finds no crimes in $2 . 4B building renovation , only mismanagement",
-      "url": "https://coast1009.com/uncategorized/fed-watchdog-finds-no-crimes-in-2-4b-building-renovation-only-mismanagement/",
-      "domain": "coast1009.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T05:00:00Z",
-      "title": "Adani back at No . 1 with $112 . 7 billion ; Ambani slips to second : What changed at India billionaire club",
-      "url": "https://www.livemint.com/companies/people/adani-back-at-no-1-with-112-7-billion-ambani-slips-to-second-what-changed-at-india-s-billionaire-club-11790818304572.html",
-      "domain": "livemint.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-10-01T04:45:00Z",
-      "title": "Head - To - Head Contrast : Amylyx Pharmaceuticals ( NASDAQ : AMLX ) & Taysha Gene Therapies ( NASDAQ : TSHA )",
-      "url": "https://www.themarketsdaily.com/2026/10/01/head-to-head-contrast-amylyx-pharmaceuticals-nasdaqamlx-taysha-gene-therapies-nasdaqtsha.html",
-      "domain": "themarketsdaily.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T04:45:00Z",
-      "title": "US oil bosses say Iran war is disrupting long - term planning",
-      "url": "https://www.thenationalnews.com/business/energy/2026/09/30/us-oil-bosses-say-iran-war-is-disrupting-long-term-planning/",
-      "domain": "thenationalnews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": ""
-    },
-    {
-      "seendate": "2026-10-01T04:45:00Z",
-      "title": "Bath & Body Works ( NYSE : BBWI ) and Lowe Companies ( NYSE : LOW ) Financial Contrast",
-      "url": "https://www.themarketsdaily.com/2026/10/01/bath-body-works-nysebbwi-and-lowes-companies-nyselow-financial-contrast.html",
-      "domain": "themarketsdaily.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T04:45:00Z",
-      "title": "Head - To - Head Analysis : THK ( THKLY ) versus Its Peers",
-      "url": "https://www.themarketsdaily.com/2026/10/01/head-to-head-analysis-thk-thkly-versus-its-peers.html",
-      "domain": "themarketsdaily.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T04:45:00Z",
-      "title": "COMMUNITY DIGEST : Oct . 1 , 2026",
-      "url": "https://www.citizensvoice.com/2026/10/01/community-digest-oct-1-2026/",
-      "domain": "citizensvoice.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T04:45:00Z",
-      "title": "Asian shares mostly rise amid market optimism about AI , despite Iran worries",
-      "url": "https://www.news4jax.com/news/2026/10/01/asian-shares-mostly-rise-amid-market-optimism-about-ai-despite-iran-worries/",
-      "domain": "news4jax.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T04:45:00Z",
-      "title": "Comparing The Pennant Group ( NASDAQ : PNTG ) & Precipio ( NASDAQ : PRPO )",
-      "url": "https://www.themarketsdaily.com/2026/10/01/comparing-the-pennant-group-nasdaqpntg-precipio-nasdaqprpo.html",
-      "domain": "themarketsdaily.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T04:45:00Z",
-      "title": "Fed watchdog finds no crimes in $2 . 4B building renovation , only mismanagement",
-      "url": "https://www.kztv10.com/politics/fed-watchdog-finds-no-crimes-in-2-4b-building-renovation-only-mismanagement",
-      "domain": "kztv10.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T04:45:00Z",
-      "title": "Head - To - Head Contrast : Newsmax ( NYSE : NMAX ) vs . John Wiley & Sons ( NYSE : WLY )",
-      "url": "https://www.themarketsdaily.com/2026/10/01/head-to-head-contrast-newsmax-nysenmax-vs-john-wiley-sons-nysewly.html",
-      "domain": "themarketsdaily.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T04:45:00Z",
-      "title": "Asian Stocks Muted After Brutal September",
-      "url": "https://en.shafaqna.com/481373/asian-stocks-muted-september/",
-      "domain": "en.shafaqna.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Saudi Arabia"
-    },
-    {
-      "seendate": "2026-10-01T04:45:00Z",
-      "title": "Head - To - Head Review : Equity Bancshares ( NYSE : EQBK ) versus Mizuho Financial Group ( NYSE : MFG )",
-      "url": "https://www.dailypolitical.com/2026/09/30/head-to-head-review-equity-bancshares-nyseeqbk-versus-mizuho-financial-group-nysemfg.html",
-      "domain": "dailypolitical.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T04:45:00Z",
-      "title": "New Mountain Finance ( NASDAQ : NMFC ) and Cherry Hill Mortgage Investment ( NYSE : CHMI ) Critical Comparison",
-      "url": "https://www.dailypolitical.com/2026/09/30/new-mountain-finance-nasdaqnmfc-and-cherry-hill-mortgage-investment-nysechmi-critical-comparison.html",
-      "domain": "dailypolitical.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T04:45:00Z",
-      "title": "Contrasting GBank Financial ( GBFH ) & Its Rivals",
-      "url": "https://www.dailypolitical.com/2026/09/30/contrasting-gbank-financial-gbfh-its-rivals.html",
-      "domain": "dailypolitical.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T04:45:00Z",
-      "title": "Donald Trump New Government AI Chatbot Has Awkward Habit of Debunking the President Own False Claims",
-      "url": "https://www.ibtimes.co.uk/us-government-chatbot-trump-election-questions-1823026",
-      "domain": "ibtimes.co.uk",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United Kingdom"
-    },
-    {
-      "seendate": "2026-10-01T04:45:00Z",
-      "title": "Fed watchdog finds no crimes in $2 . 4B building renovation , only mismanagement",
-      "url": "https://www.koaa.com/politics/fed-watchdog-finds-no-crimes-in-2-4b-building-renovation-only-mismanagement",
-      "domain": "koaa.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T04:45:00Z",
-      "title": "Goldman Sachs pushes Fed rate hike forecast to December",
-      "url": "https://economictimes.indiatimes.com/markets/us-stocks/news/goldman-sachs-pushes-fed-rate-hike-forecast-to-december/articleshow/134607820.cms",
-      "domain": "economictimes.indiatimes.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-10-01T04:45:00Z",
-      "title": "Citi Wealth was looking for bigger stock - market correction",
-      "url": "https://www.cnbc.com/2026/10/01/citi-wealth-adviser-super-rich-wanted-bigger-stock-market-correctio.html",
-      "domain": "cnbc.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T04:30:00Z",
-      "title": "Asian Markets Trade Mixed",
-      "url": "https://www.finanznachrichten.de/nachrichten-2026-10/69724340-asian-markets-trade-mixed-020.htm",
-      "domain": "finanznachrichten.de",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Germany"
-    },
-    {
-      "seendate": "2026-10-01T04:30:00Z",
-      "title": "AP Business SummaryBrief at 11 : 21 p . m . EDT",
-      "url": "https://www.mankatofreepress.com/news/business/ap-business-summarybrief-at-11-21-p-m-edt/article_1b1c78cc-0a92-52e4-aedb-1a42456a24c5.html",
-      "domain": "mankatofreepress.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T04:30:00Z",
-      "title": "Asian shares mostly rise amid market optimism about AI , despite Iran worries",
-      "url": "http://www.thegazette.com/news/world/asian-shares-mostly-rise-amid-market-optimism-about-ai-despite-iran-worries/article_74fdd7da-e23b-5754-ab87-44e51b384475.html",
-      "domain": "thegazette.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T04:00:00Z",
-      "title": "CBSL holds policy rate at 8 . 75 % as inflation remains elevated due to Mideast war",
-      "url": "https://www.ft.lk/front-page/CBSL-holds-policy-rate-at-8-75-as-inflation-remains-elevated-due-to-Mideast-war/44-798006",
-      "domain": "ft.lk",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Sri Lanka"
-    },
-    {
-      "seendate": "2026-10-01T04:00:00Z",
-      "title": "Finance Column : How to Swim in Money - The Spectator",
-      "url": "https://vsuspectator.com/2026/09/30/how-to-swim-in-money/",
-      "domain": "vsuspectator.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T04:00:00Z",
-      "title": "Asian shares mostly rise amid market optimism about AI , despite Iran worries",
-      "url": "http://www.reflector.com/news/national/asian-shares-mostly-rise-amid-market-optimism-about-ai-despite-iran-worries/article_89457bac-8069-55d7-a08f-bdf8187d53cd.html",
-      "domain": "reflector.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T04:00:00Z",
-      "title": "Comparing DHI Group ( NYSE : DHX ) & Willdan Group ( NASDAQ : WLDN )",
-      "url": "https://www.tickerreport.com/banking-finance/13603527/comparing-dhi-group-nysedhx-willdan-group-nasdaqwldn.html",
+      "seendate": "2026-10-02T10:00:00Z",
+      "title": "Financial Contrast : Colony Bankcorp ( NYSE : CBAN ) versus Banco Bradesco ( NYSE : BBDO )",
+      "url": "https://www.tickerreport.com/banking-finance/13605743/financial-contrast-colony-bankcorp-nysecban-versus-banco-bradesco-nysebbdo.html",
       "domain": "tickerreport.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-01T03:45:00Z",
-      "title": "Federal Realty Investment Trust Announces Third Quarter 2026 Earnings Release Date and Conference Call Information",
-      "url": "http://www.prnewswire.com/news-releases/federal-realty-investment-trust-announces-third-quarter-2026-earnings-release-date-and-conference-call-information-302895186.html",
-      "domain": "prnewswire.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T03:45:00Z",
-      "title": "Bitcoin ETF Inflows Hit $2 . 39B in 2026 , but 3 Altcoins Slip",
-      "url": "https://memeburn.com/bitcoin-etf-inflows-altcoins/",
-      "domain": "memeburn.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "South Africa"
-    },
-    {
-      "seendate": "2026-10-01T03:45:00Z",
-      "title": "Gautam Adani overtakes Mukesh Ambani on Forbes India 100 Richest list 2026 : Check top 10 richest Indians and full list",
-      "url": "https://economictimes.indiatimes.com/news/company/corporate-trends/gautam-adani-overtakes-mukesh-ambani-on-forbes-indias-100-richest-list-2026-check-top-10-richest-indians-and-full-list/articleshow/134606814.cms",
-      "domain": "economictimes.indiatimes.com",
+      "seendate": "2026-10-02T09:45:00Z",
+      "title": "TCS , Wipro , Infosys , HCL Tech : Why experts see IT stock price jump on Monday What giving the boost ?",
+      "url": "https://www.livemint.com/market/stock-market-news/tcs-wipro-infosys-hcl-tech-why-experts-see-it-stocks-price-jump-on-monday-whats-giving-the-boost-11790927191368.html",
+      "domain": "livemint.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "India"
     },
     {
-      "seendate": "2026-10-01T03:45:00Z",
-      "title": "PYMNTS | AI Giants Sign Safety Pact With No Teeth",
-      "url": "https://www.pymnts.com/news/artificial-intelligence/2026/ai-giants-sign-white-houses-safety-pact-with-no-penalties-attached/",
-      "domain": "pymnts.com",
+      "seendate": "2026-10-02T09:30:00Z",
+      "title": "Asian Shares Mixed In Thin Holiday Trade",
+      "url": "https://www.finanznachrichten.de/nachrichten-2026-10/69739916-asian-shares-mixed-in-thin-holiday-trade-020.htm",
+      "domain": "finanznachrichten.de",
       "language": "English",
       "lang": "eng",
-      "sourcecountry": "United States"
+      "sourcecountry": "Germany"
     },
     {
-      "seendate": "2026-10-01T03:45:00Z",
-      "title": "Asian stocks dip , bonds in focus after torrid September",
-      "url": "https://www.aol.com/articles/asian-stocks-dip-bonds-focus-015645000.html",
+      "seendate": "2026-10-02T09:30:00Z",
+      "title": "Stock market today : Dow , S & P 500 , Nasdaq futures rise ahead of key jobs report as oil steadies",
+      "url": "https://www.aol.com/articles/stock-market-today-dow-p-080623000.html",
       "domain": "aol.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-01T03:45:00Z",
-      "title": "PYMNTS | Why the Fed Thinks B2B Payments Are Already Built for Agentic",
-      "url": "https://www.pymnts.com/news/b2b-payments/2026/why-the-fed-thinks-b2b-payments-are-already-built-for-agentic/",
-      "domain": "pymnts.com",
+      "seendate": "2026-10-02T09:15:00Z",
+      "title": "Prediction : Robinhood Stock Sets a New Record Before 2029",
+      "url": "https://www.fool.com/investing/2026/10/02/prediction-robinhood-stock-sets-a-new-record-before-2029/?source=iedfolrf0000001",
+      "domain": "fool.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-01T03:45:00Z",
-      "title": "Asian shares mostly rise amid market optimism about AI , despite Iran worries \u2013 Winnipeg Free Press",
-      "url": "https://www.winnipegfreepress.com/business/2026/09/30/asian-shares-mostly-rise-amid-market-optimism-about-ai-despite-iran-worries",
-      "domain": "winnipegfreepress.com",
+      "seendate": "2026-10-02T09:15:00Z",
+      "title": "FII selling keeps Indian stocks under pressure : Brokerages flag crude , global yields as key risks",
+      "url": "https://www.moneycontrol.com/news/business/markets/fii-selling-keeps-indian-stocks-under-pressure-brokerages-flag-crude-global-yields-as-key-risks-14043396.html",
+      "domain": "moneycontrol.com",
       "language": "English",
       "lang": "eng",
-      "sourcecountry": "Canada"
+      "sourcecountry": "India"
     },
     {
-      "seendate": "2026-10-01T03:45:00Z",
-      "title": "OpenAI delayed IPO means more reliance on private investment",
-      "url": "https://www.marketplace.org/story/2026/09/30/openais-delayed-ipo-means-more-reliance-on-private-investment",
-      "domain": "marketplace.org",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T03:30:00Z",
-      "title": "Report says U . S . economy grew 2 . 2 % in second quarter , upgrading previous estimate",
-      "url": "https://www.journalgazette.net/ap/business/report-says-u-s-economy-grew-2-2-in-second-quarter-upgrading-previous-estimate/article_e24998b1-501d-5464-9a75-b7170e93b784.html",
-      "domain": "journalgazette.net",
+      "seendate": "2026-10-02T09:15:00Z",
+      "title": "World shares mixed after global bond sell - off deepens and ahead of US jobs data",
+      "url": "http://www.dailyadvance.com/news/world/world-shares-mixed-after-global-bond-sell-off-deepens-and-ahead-of-us-jobs-data/article_5c800756-51f1-5015-a189-8707229d1aa7.html",
+      "domain": "dailyadvance.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-01T03:30:00Z",
-      "title": "Fed watchdog finds no crimes in $2 . 4B building renovation , only mismanagement",
-      "url": "https://wohfradio.com/national-news/fed-watchdog-finds-no-crimes-in-2-4b-building-renovation-only-mismanagement/",
-      "domain": "wohfradio.com",
+      "seendate": "2026-10-02T09:15:00Z",
+      "title": "World shares mixed after global bond sell - off deepens and ahead of US jobs data",
+      "url": "https://www.durangoherald.com/articles/associated-press/asian-shares-mixed-after-global-bond-sell-off-deepens-and-ahead-of-us-jobs-data/",
+      "domain": "durangoherald.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-01T03:30:00Z",
-      "title": "Vail Resort stock price goes down as the temperature goes up",
-      "url": "https://www.crikey.com.au/2026/10/01/vail-resorts-stock-price-global-warming-skiing-snowfall/",
-      "domain": "crikey.com.au",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Australia"
-    },
-    {
-      "seendate": "2026-10-01T03:30:00Z",
-      "title": "No criminal wrongdoing in Federal Reserve building renovation , watchdog says , but it was mismanaged \u2013 WTOP News",
-      "url": "https://wtop.com/us-politics/2026/09/no-criminal-wrongdoing-in-federal-reserve-building-renovation-watchdog-says-but-it-was-mismanaged/",
-      "domain": "wtop.com",
+      "seendate": "2026-10-02T09:15:00Z",
+      "title": "$1 , 000 Invested in Netflix ( NFLX ) at the Start of 2026 Is Worth This Much Today",
+      "url": "https://www.fool.com/investing/2026/10/02/1000-invested-netflix-nflx-start-2026-how-much/?source=iedfolrf0000001",
+      "domain": "fool.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-01T03:15:00Z",
-      "title": "Dow Jones Top Markets Headlines at 9 PM ET : A Tech - Fueled Stock Market Powers Through , but Limps Into the Fourth Quarter | Fed ...",
-      "url": "https://www.morningstar.com/news/dow-jones/202609309608/dow-jones-top-markets-headlines-at-9-pm-et-a-tech-fueled-stock-market-powers-through-but-limps-into-the-fourth-quarter-feds",
-      "domain": "morningstar.com",
+      "seendate": "2026-10-02T08:45:00Z",
+      "title": "Asian shares mixed after global bond sell - off deepens and ahead of US jobs data",
+      "url": "https://www.clickorlando.com/business/2026/10/02/asian-shares-mixed-after-global-bond-sell-off-deepens-and-ahead-of-us-jobs-data/",
+      "domain": "clickorlando.com",
       "language": "English",
       "lang": "eng",
-      "sourcecountry": "China"
+      "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-01T03:15:00Z",
-      "title": "FxWirePro : EUR / NZD eases slightly but outlook is bullish",
-      "url": "http://www.econotimes.com/FxWirePro-EUR-NZD-eases-slightly-but-outlook-is-bullish-1753601",
+      "seendate": "2026-10-02T08:45:00Z",
+      "title": "Nvidia unveils record $150 billion buyback increase",
+      "url": "http://www.texasguardian.com/news/279338424/nvidia-unveils-record-usd150-billion-buyback-increase",
+      "domain": "texasguardian.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T08:45:00Z",
+      "title": "Ted Baker returns to united kingdom high street after administration",
+      "url": "https://www.southwalesargus.co.uk/news/26600938.ted-baker-returns-uk-high-street-administration/",
+      "domain": "southwalesargus.co.uk",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United Kingdom"
+    },
+    {
+      "seendate": "2026-10-02T08:45:00Z",
+      "title": "Asian Stocks Fall as US Jobs Data and Oil Risks Rattle Markets",
+      "url": "http://www.econotimes.com/Asian-Stocks-Fall-as-US-Jobs-Data-and-Oil-Risks-Rattle-Markets-1753766",
       "domain": "econotimes.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-01T03:15:00Z",
-      "title": "Finance - Ecorazzi",
-      "url": "https://ecorazzi.com/finance/",
-      "domain": "ecorazzi.com",
+      "seendate": "2026-10-02T08:45:00Z",
+      "title": "GM Loses Ground to Toyota as High Prices Reshape US Market",
+      "url": "https://www.claimsjournal.com/news/national/2026/10/02/340510.htm",
+      "domain": "claimsjournal.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-01T03:15:00Z",
-      "title": "Federal Realty Investment Trust Announces Third Quarter 2026 Earnings Release Date and Conference Call Information",
-      "url": "https://www.prnewswire.com/news-releases/federal-realty-investment-trust-announces-third-quarter-2026-earnings-release-date-and-conference-call-information-302895186.html",
-      "domain": "prnewswire.com",
+      "seendate": "2026-10-02T08:45:00Z",
+      "title": "Gold Prices Steady as Markets Await U . S . Jobs Data",
+      "url": "http://www.econotimes.com/Gold-Prices-Steady-as-Markets-Await-US-Jobs-Data-1753764",
+      "domain": "econotimes.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-01T03:15:00Z",
-      "title": "Trump Reveals What May Be Next for Jerome Powell After Federal Reserve IG Issues Report",
-      "url": "https://redstate.com/sister-toldjah/2026/09/30/federal-reserve-inspector-generals-report-is-out-and-trump-has-something-to-say-about-its-findings-n2207602",
-      "domain": "redstate.com",
+      "seendate": "2026-10-02T08:45:00Z",
+      "title": "RBI rate hike may have limited justification amid benign core inflation , subdued growth : Nuvama",
+      "url": "http://www.afghanistansun.com/news/279346885/rbi-rate-hike-may-have-limited-justification-amid-benign-core-inflation-subdued-growth-nuvama",
+      "domain": "afghanistansun.com",
       "language": "English",
       "lang": "eng",
-      "sourcecountry": "United States"
+      "sourcecountry": "Afghanistan"
     },
     {
-      "seendate": "2026-10-01T03:15:00Z",
-      "title": "Top stocks to buy today : Stock recommendations for October 1 , 2026 - check list",
-      "url": "https://timesofindia.indiatimes.com/business/india-business/top-stock-recommendations-for-october-01-2026-dlf-adani-green-energy-pvr-inox-best-stocks-to-buy-today/articleshow/134606149.cms",
-      "domain": "timesofindia.indiatimes.com",
+      "seendate": "2026-10-02T08:45:00Z",
+      "title": "Iran war to end  very quickly : Trump | MorungExpress",
+      "url": "https://morungexpress.com/iran-war-to-end-very-quickly-trump",
+      "domain": "morungexpress.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "India"
     },
     {
-      "seendate": "2026-10-01T03:15:00Z",
-      "title": "US Economy Grew A Solid 2 . 2 % In The Second Quarter , Government Says , Upgrading Previous Estimate",
-      "url": "https://www.theyeshivaworld.com/news/general/2604383/us-economy-grew-a-solid-2-2-in-the-second-quarter-government-says-upgrading-previous-estimate.html",
-      "domain": "theyeshivaworld.com",
+      "seendate": "2026-10-02T08:45:00Z",
+      "title": "JMMB Group watching interest rates hikes , adds that Guyana market difficult to enter",
+      "url": "https://jamaica-gleaner.com/article/business/20261002/jmmb-group-watching-interest-rates-hikes-adds-guyana-market-difficult",
+      "domain": "jamaica-gleaner.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Jamaica"
+    },
+    {
+      "seendate": "2026-10-02T08:45:00Z",
+      "title": "RBI rate hike may have limited justification amid benign core inflation , subdued growth : Nuvama",
+      "url": "http://www.texasguardian.com/news/279346885/rbi-rate-hike-may-have-limited-justification-amid-benign-core-inflation-subdued-growth-nuvama",
+      "domain": "texasguardian.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-01T03:15:00Z",
-      "title": "newsroomamerica . com",
-      "url": "https://newsroomamerica.com/?before=111581",
-      "domain": "newsroomamerica.com",
+      "seendate": "2026-10-02T08:45:00Z",
+      "title": "Fed Logan Signals 50 Basis Points More in Rate Hikes",
+      "url": "http://www.econotimes.com/Feds-Logan-Signals-50-Basis-Points-More-in-Rate-Hikes-1753780",
+      "domain": "econotimes.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-01T03:15:00Z",
-      "title": "This Overlooked Asset Class Is Getting an AI Boost",
-      "url": "https://www.morningstar.com/funds/this-overlooked-asset-class-is-getting-an-ai-boost",
-      "domain": "morningstar.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-10-01T03:15:00Z",
-      "title": "Fed watchdog finds no crimes in $2 . 4B building renovation , only mismanagement",
-      "url": "https://www.10news.com/politics/fed-watchdog-finds-no-crimes-in-2-4b-building-renovation-only-mismanagement",
-      "domain": "10news.com",
+      "seendate": "2026-10-02T08:45:00Z",
+      "title": "Asian shares mixed after global bond sell - off deepens and ahead of US jobs data",
+      "url": "http://www.rockymounttelegram.com/news/world/asian-shares-mixed-after-global-bond-sell-off-deepens-and-ahead-of-us-jobs-data/article_9bd26ae5-c939-5fbb-aa06-d0f1a08768be.html",
+      "domain": "rockymounttelegram.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-01T03:15:00Z",
-      "title": "US economy grew 2 . 2 % in Q2 on rising consumer spending , investment : US govt",
-      "url": "https://www.business-standard.com/world-news/us-economy-grew-at-2-2-in-second-quarter-government-says-126100100040_1.html",
-      "domain": "business-standard.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-10-01T03:00:00Z",
-      "title": "Gold Price vs US Inflation Data : Why Did Gold Rise After Cooler PCE Inflation Reading ? Know the Impact on Indian Gold Market",
-      "url": "https://www.jagranjosh.com/general-knowledge/gold-price-vs-us-inflation-data-why-did-gold-rise-after-cooler-pce-inflation-reading-know-the-impact-on-indian-gold-market-1820012673-1",
-      "domain": "jagranjosh.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-10-01T03:00:00Z",
-      "title": "Former Vallejo police officer  Billy  Carpenter honored",
-      "url": "https://www.thereporter.com/2026/09/30/former-vallejo-police-officer-billy-carpenter-honored/",
-      "domain": "thereporter.com",
+      "seendate": "2026-10-02T08:30:00Z",
+      "title": "Mortgage rate up to highest level in nearly three years",
+      "url": "https://www.ironmountaindailynews.com/news/business/2026/10/mortgage-rate-up-to-highest-level-in-nearly-three-years/",
+      "domain": "ironmountaindailynews.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-01T03:00:00Z",
-      "title": "U . S . military forces formally left Iraq today , marking a new era",
-      "url": "https://www.wkyufm.org/2026-09-30/u-s-military-forces-formally-left-iraq-today-marking-a-new-era",
-      "domain": "wkyufm.org",
+      "seendate": "2026-10-02T08:30:00Z",
+      "title": "Nvidia unveils record $150 billion buyback increase",
+      "url": "http://www.vietnamtribune.com/news/279338424/nvidia-unveils-record-usd150-billion-buyback-increase",
+      "domain": "vietnamtribune.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Vietnam"
+    },
+    {
+      "seendate": "2026-10-02T08:30:00Z",
+      "title": "President Donald Trump Investment Team Sold Up to $25 Million in 2 Foundational AI Stocks in July",
+      "url": "https://www.fool.com/investing/2026/10/02/president-donald-trump-investment-team-sold-25-million-2-foundational-ai-stocks-in-july/",
+      "domain": "fool.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-01T03:00:00Z",
-      "title": "D - St set for a negative opening as GIFT Nifty signals weak start",
-      "url": "https://economictimes.indiatimes.com/markets/stocks/news/pre-market-action-heres-the-trade-setup-for-todays-session/articleshow/134605497.cms",
+      "seendate": "2026-10-02T08:30:00Z",
+      "title": "Nvidia unveils record $150 billion buyback increase",
+      "url": "http://www.pittsburghstar.com/news/279338424/nvidia-unveils-record-usd150-billion-buyback-increase",
+      "domain": "pittsburghstar.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T08:30:00Z",
+      "title": "Swings in the bond market shake stock markets worldwide , as AI optimism supports Wall Street",
+      "url": "http://www.greenevillesun.com/business/ap_business/swings-in-the-bond-market-shake-stock-markets-worldwide-as-ai-optimism-supports-wall-street/article_45257175-d306-5c57-9eeb-489de43da90b.html",
+      "domain": "greenevillesun.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T08:30:00Z",
+      "title": "Palantir Billionaire Peter Thiel Has 42 % of His Portfolio in These 2 Artificial Intelligence Stocks",
+      "url": "https://www.fool.com/investing/2026/10/02/palantir-billionaire-peter-thiel-has-42-of-his-por/",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T08:30:00Z",
+      "title": "Asian shares mixed after global bond sell - off deepens and ahead of US jobs data",
+      "url": "https://www.newsday.com/business/stocks-markets-bonds-us-oil-d56224",
+      "domain": "newsday.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T08:30:00Z",
+      "title": "Market crash wipes out Rs 26 lakh cr in 8 weeks ! Why soaring bond yields may hurt Sensex , Nifty more than elevated oil prices",
+      "url": "https://economictimes.indiatimes.com/markets/stocks/news/market-crash-wipes-out-rs-26-lakh-cr-in-8-weeks-why-soaring-bond-yields-may-hurt-sensex-nifty-more-than-elevated-oil-prices/articleshow/134632014.cms",
       "domain": "economictimes.indiatimes.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "India"
     },
     {
-      "seendate": "2026-10-01T03:00:00Z",
-      "title": "Gold prices flat ahead of US jobs data",
-      "url": "https://economictimes.indiatimes.com/markets/commodities/news/gold-prices-flat-ahead-of-us-jobs-data/articleshow/134606175.cms",
-      "domain": "economictimes.indiatimes.com",
+      "seendate": "2026-10-02T08:15:00Z",
+      "title": "Nvidia unveils record $150 billion buyback increase",
+      "url": "http://www.israelherald.com/news/279338424/nvidia-unveils-record-usd150-billion-buyback-increase",
+      "domain": "israelherald.com",
       "language": "English",
       "lang": "eng",
-      "sourcecountry": "India"
+      "sourcecountry": "Israel"
     },
     {
-      "seendate": "2026-10-01T03:00:00Z",
-      "title": "Japanese Market Sharply Higher",
-      "url": "https://www.finanznachrichten.de/nachrichten-2026-10/69724099-japanese-market-sharply-higher-020.htm",
-      "domain": "finanznachrichten.de",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Germany"
-    },
-    {
-      "seendate": "2026-10-01T03:00:00Z",
-      "title": "GLOBAL MARKETS - Asian Stocks Dip , Bonds in Focus After Torrid September",
-      "url": "https://english.kontan.co.id/news/global-markets-asian-stocks-dip-bonds-in-focus-after-torrid-september",
-      "domain": "english.kontan.co.id",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Indonesia"
-    },
-    {
-      "seendate": "2026-10-01T03:00:00Z",
-      "title": "Comparing HCA Healthcare ( NYSE : HCA ) & Fulgent Genetics ( NASDAQ : FLGT )",
-      "url": "https://www.themarketsdaily.com/2026/10/01/comparing-hca-healthcare-nysehca-fulgent-genetics-nasdaqflgt.html",
-      "domain": "themarketsdaily.com",
+      "seendate": "2026-10-02T08:15:00Z",
+      "title": "FinancialContent - 3 Industrials Stocks with Impressive Fundamentals",
+      "url": "https://markets.financialcontent.com/stocks/article/stockstory-2026-10-2-3-industrials-stocks-with-impressive-fundamentals",
+      "domain": "markets.financialcontent.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-01T03:00:00Z",
-      "title": "Losing Streak May Continue For Indonesia Stock Market",
-      "url": "https://www.rttnews.com/3695491/losing-streak-may-continue-for-indonesia-stock-market.aspx",
-      "domain": "rttnews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T03:00:00Z",
-      "title": "U . S . military forces formally left Iraq today , marking a new era",
-      "url": "https://www.spokanepublicradio.org/2026-09-30/u-s-military-forces-formally-left-iraq-today-marking-a-new-era",
-      "domain": "spokanepublicradio.org",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T03:00:00Z",
-      "title": "Nifty , Bank Nifty , Nifty IT : Technical analysts decode outlook for H2 FY27",
-      "url": "https://www.business-standard.com/markets/news/nifty-bank-nifty-nifty-it-technical-analysts-decode-outlook-for-h2-fy27-126100100103_1.html",
-      "domain": "business-standard.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-10-01T03:00:00Z",
-      "title": "Head - To - Head Analysis : United States Antimony ( UAMY ) and The Competition",
-      "url": "https://www.dailypolitical.com/2026/09/30/head-to-head-analysis-united-states-antimony-uamy-and-the-competition.html",
+      "seendate": "2026-10-02T08:15:00Z",
+      "title": "Reviewing Intellicheck ( NASDAQ : IDN ) & Keel Infrastructure ( NASDAQ : KEEL )",
+      "url": "https://www.dailypolitical.com/2026/10/02/reviewing-intellicheck-nasdaqidn-keel-infrastructure-nasdaqkeel.html",
       "domain": "dailypolitical.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-01T03:00:00Z",
-      "title": "Comparing Moog ( NYSE : MOG . B ) & Ondas ( NASDAQ : ONDS )",
-      "url": "https://www.themarketsdaily.com/2026/10/01/comparing-moog-nysemog-b-ondas-nasdaqonds.html",
+      "seendate": "2026-10-02T08:15:00Z",
+      "title": "Baystreet . ca - TSX to Open Flat",
+      "url": "http://baystreet.ca/articles/marketupdates/124219/TSX-to-Open-Flat",
+      "domain": "baystreet.ca",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Canada"
+    },
+    {
+      "seendate": "2026-10-02T08:15:00Z",
+      "title": "RBI rate hike may have limited justification amid benign core inflation , subdued growth : Nuvama",
+      "url": "http://www.azerbaijannews.net/news/279346885/rbi-rate-hike-may-have-limited-justification-amid-benign-core-inflation-subdued-growth-nuvama",
+      "domain": "azerbaijannews.net",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Azerbaijan"
+    },
+    {
+      "seendate": "2026-10-02T08:15:00Z",
+      "title": "Capri ( NYSE : CPRI ) and Adidas ( OTCMKTS : ADDYY ) Head to Head Analysis",
+      "url": "https://www.themarketsdaily.com/2026/10/02/capri-nysecpri-and-adidas-otcmktsaddyy-head-to-head-analysis.html",
       "domain": "themarketsdaily.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-01T03:00:00Z",
-      "title": "Stock Market LIVE : GIFT Nifty signals negative open ; most Asian markets fall ; Brent crude below $100",
-      "url": "https://www.business-standard.com/markets/news/stock-market-live-october-1-nse-bse-sensex-today-nifty50-gift-nifty-crude-oil-prices-ipo-today-126100100095_1.html",
-      "domain": "business-standard.com",
+      "seendate": "2026-10-02T08:15:00Z",
+      "title": "RTX Raytheon wins $24 . 4bn Navy contract for SM - 6 missiles",
+      "url": "https://www.financial-news.co.uk/rtxs-raytheon-wins-24-4bn-navy-contract-for-sm-6-missiles/",
+      "domain": "financial-news.co.uk",
       "language": "English",
       "lang": "eng",
-      "sourcecountry": "India"
+      "sourcecountry": "United Kingdom"
     },
     {
-      "seendate": "2026-10-01T03:00:00Z",
-      "title": "Head to Head Comparison : Research Frontiers ( NASDAQ : REFR ) vs . Hesai Group ( NASDAQ : HSAI )",
-      "url": "https://www.dailypolitical.com/2026/09/30/head-to-head-comparison-research-frontiers-nasdaqrefr-vs-hesai-group-nasdaqhsai.html",
-      "domain": "dailypolitical.com",
+      "seendate": "2026-10-02T08:15:00Z",
+      "title": "RBI rate hike may have limited justification amid benign core inflation , subdued growth : Nuvama",
+      "url": "http://www.argentinastar.com/news/279346885/rbi-rate-hike-may-have-limited-justification-amid-benign-core-inflation-subdued-growth-nuvama",
+      "domain": "argentinastar.com",
       "language": "English",
       "lang": "eng",
-      "sourcecountry": "United States"
+      "sourcecountry": "Argentina"
     },
     {
-      "seendate": "2026-10-01T03:00:00Z",
-      "title": "Australian Market Significantly Lower",
-      "url": "https://www.rttnews.com/3695523/australian-market-significantly-lower.aspx",
-      "domain": "rttnews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T03:00:00Z",
-      "title": "Reviewing Internet Initiative Japan ( OTCMKTS : IIJIY ) & BuzzFeed ( NASDAQ : BZFD )",
-      "url": "https://www.themarketsdaily.com/2026/10/01/reviewing-internet-initiative-japan-otcmktsiijiy-buzzfeed-nasdaqbzfd.html",
+      "seendate": "2026-10-02T08:15:00Z",
+      "title": "Analyzing Lineage ( NASDAQ : LINE ) and Gladstone Commercial ( NASDAQ : GOOD )",
+      "url": "https://www.themarketsdaily.com/2026/10/02/analyzing-lineage-nasdaqline-and-gladstone-commercial-nasdaqgood.html",
       "domain": "themarketsdaily.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-01T03:00:00Z",
-      "title": "Taiwan Stock Market May Spin Its Wheels On Thursday",
-      "url": "https://www.rttnews.com/3695490/taiwan-stock-market-may-spin-its-wheels-on-thursday.aspx",
-      "domain": "rttnews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T03:00:00Z",
-      "title": "Thai Stock Market Called Lower Again On Thursday",
-      "url": "https://www.rttnews.com/3695492/thai-stock-market-called-lower-again-on-thursday.aspx",
-      "domain": "rttnews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-01T03:00:00Z",
-      "title": "Contrasting Aramark ( NYSE : ARMK ) and Accel Entertainment ( NYSE : ACEL )",
-      "url": "https://www.dailypolitical.com/2026/09/30/contrasting-aramark-nysearmk-and-accel-entertainment-nyseacel.html",
+      "seendate": "2026-10-02T08:15:00Z",
+      "title": "AMN Healthcare Services Inc ( NYSE : AMN ) Stock Has Consensus Price Target of $36 . 00",
+      "url": "https://www.dailypolitical.com/2026/10/02/amn-healthcare-services-inc-nyseamn-stock-has-consensus-price-target-of-36-00.html",
       "domain": "dailypolitical.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-01T03:00:00Z",
-      "title": "Japanese Market Sharply Higher",
-      "url": "https://www.rttnews.com/3695529/japanese-market-sharply-higher.aspx",
-      "domain": "rttnews.com",
+      "seendate": "2026-10-02T08:15:00Z",
+      "title": "Children Place ( NASDAQ : PLCE ) versus Camping World ( NYSE : CWH ) Head to Head Contrast",
+      "url": "https://www.themarketsdaily.com/2026/10/02/childrens-place-nasdaqplce-versus-camping-world-nysecwh-head-to-head-contrast.html",
+      "domain": "themarketsdaily.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-01T03:00:00Z",
-      "title": "Dollar gets lift from higher yields",
-      "url": "https://economictimes.indiatimes.com/markets/forex/forex-news/dollar-gets-lift-from-higher-yields/articleshow/134606140.cms",
-      "domain": "economictimes.indiatimes.com",
+      "seendate": "2026-10-02T08:15:00Z",
+      "title": "Digital Brands Group ( NASDAQ : DBGI ) and Shoe Carnival ( NASDAQ : SHOE ) Financial Survey",
+      "url": "https://www.dailypolitical.com/2026/10/02/digital-brands-group-nasdaqdbgi-and-shoe-carnival-nasdaqshoe-financial-survey.html",
+      "domain": "dailypolitical.com",
       "language": "English",
       "lang": "eng",
-      "sourcecountry": "India"
+      "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-01T02:45:00Z",
-      "title": "Financial Analysis : Stagwell ( NASDAQ : STGW ) vs . Scholastic ( NASDAQ : SCHL )",
-      "url": "https://www.tickerreport.com/banking-finance/13603523/financial-analysis-stagwell-nasdaqstgw-vs-scholastic-nasdaqschl.html",
+      "seendate": "2026-10-02T08:15:00Z",
+      "title": "Nvidia unveils record $150 billion buyback increase",
+      "url": "http://www.argentinastar.com/news/279338424/nvidia-unveils-record-usd150-billion-buyback-increase",
+      "domain": "argentinastar.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Argentina"
+    },
+    {
+      "seendate": "2026-10-02T08:15:00Z",
+      "title": "Head to Head Survey : Sky Quarry ( SKYQ ) vs . Its Rivals",
+      "url": "https://www.themarketsdaily.com/2026/10/02/head-to-head-survey-sky-quarry-skyq-vs-its-rivals.html",
+      "domain": "themarketsdaily.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T08:15:00Z",
+      "title": "Nvidia expands buyback as AI demand drives cash generation",
+      "url": "http://www.azerbaijannews.net/news/279338424/nvidia-expands-buyback-as-ai-demand-drives-cash-generation",
+      "domain": "azerbaijannews.net",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Azerbaijan"
+    },
+    {
+      "seendate": "2026-10-02T08:15:00Z",
+      "title": "Alger launches concentrated equity SICAV | Portfolio Adviser",
+      "url": "https://portfolio-adviser.com/alger-launches-concentrated-equity-sicav/",
+      "domain": "portfolio-adviser.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United Kingdom"
+    },
+    {
+      "seendate": "2026-10-02T08:15:00Z",
+      "title": "Troubled UMNO - linked firm Zetrix owes Malaysian government over RM200mil in collections : Source",
+      "url": "https://www.thestar.com.my/business/business-news/2026/10/02/troubled-umno-linked-firm-zetrix-owes-malaysian-government-over-rm200mil-in-collections-source",
+      "domain": "thestar.com.my",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Malaysia"
+    },
+    {
+      "seendate": "2026-10-02T08:00:00Z",
+      "title": "Fed policymakers lean against October rate hike",
+      "url": "https://www.businesstimes.com.sg/companies-markets/banking-finance/fed-policymakers-lean-against-october-rate-hike",
+      "domain": "businesstimes.com.sg",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Singapore"
+    },
+    {
+      "seendate": "2026-10-02T08:00:00Z",
+      "title": "Contrasting Gogo ( NASDAQ : GOGO ) and KVH Industries ( NASDAQ : KVHI )",
+      "url": "https://www.tickerreport.com/banking-finance/13605647/contrasting-gogo-nasdaqgogo-and-kvh-industries-nasdaqkvhi.html",
       "domain": "tickerreport.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-01T02:45:00Z",
-      "title": "Ringgit opens higher against major currencies , slightly lower vs US dollar",
-      "url": "https://www.freemalaysiatoday.com/category/business/2026/10/01/ringgit-opens-higher-against-major-currencies-slightly-lower-vs-us-dollar",
-      "domain": "freemalaysiatoday.com",
+      "seendate": "2026-10-02T08:00:00Z",
+      "title": "Seoul shares end higher on bargain hunting amid uncertainties ; S . Korean won up",
+      "url": "https://www.koreaherald.com/article/10892065",
+      "domain": "koreaherald.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "South Korea"
+    },
+    {
+      "seendate": "2026-10-02T08:00:00Z",
+      "title": "Ted Baker returns to united kingdom high street after administration",
+      "url": "https://www.heraldscotland.com/news/national/uk-today/26600604.ted-baker-returns-uk-high-street-administration/",
+      "domain": "heraldscotland.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United Kingdom"
+    },
+    {
+      "seendate": "2026-10-02T08:00:00Z",
+      "title": "Fed Cook Warns AI Inflation May Persist as Supply - Shock Risks Grow",
+      "url": "https://www.actionforex.com/live-comments/656103-feds-cook-warns-ai-inflation-may-persist-as-supply-shock-risks-grow/",
+      "domain": "actionforex.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United Kingdom"
+    },
+    {
+      "seendate": "2026-10-02T08:00:00Z",
+      "title": "Nvidia unveils record $150 billion buyback increase",
+      "url": "http://www.russiaherald.com/news/279338424/nvidia-unveils-record-usd150-billion-buyback-increase",
+      "domain": "russiaherald.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Russia"
+    },
+    {
+      "seendate": "2026-10-02T08:00:00Z",
+      "title": "Analyzing Molson Coors Beverage ( NYSE : TAP ) & Vita Coco ( NASDAQ : COCO )",
+      "url": "https://www.tickerreport.com/banking-finance/13605667/analyzing-molson-coors-beverage-nysetap-vita-coco-nasdaqcoco.html",
+      "domain": "tickerreport.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T08:00:00Z",
+      "title": "Trump Touts Economy In Texas | PowerTalk 96 . 7",
+      "url": "https://powertalk967.iheart.com/content/2026-10-02-trump-touts-economy-in-texas/",
+      "domain": "powertalk967.iheart.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T08:00:00Z",
+      "title": "Gold steadies before US payrolls data , set for second weekly loss",
+      "url": "https://www.thehindubusinessline.com/markets/gold/gold-steadies-before-us-payrolls-data-set-for-second-weekly-loss/article71536094.ece",
+      "domain": "thehindubusinessline.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-10-02T08:00:00Z",
+      "title": "Nvidia unveils record $150 billion buyback increase",
+      "url": "http://www.massachusettssun.com/news/279338424/nvidia-unveils-record-usd150-billion-buyback-increase",
+      "domain": "massachusettssun.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T08:00:00Z",
+      "title": "Encore Capital Group Inc ( NASDAQ : ECPG ) Receives Consensus Rating of  Buy  from Analysts",
+      "url": "https://www.tickerreport.com/banking-finance/13605650/encore-capital-group-inc-nasdaqecpg-receives-consensus-rating-of-buy-from-analysts.html",
+      "domain": "tickerreport.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T08:00:00Z",
+      "title": "Larry Fink on the lost  bedrock of America  and  a big divide  between wages and investment wealth",
+      "url": "https://fortune.com/2026/10/02/larry-fink-on-the-lost-bedrock-of-america-and-a-big-divide-between-wages-and-investment-wealth/",
+      "domain": "fortune.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T08:00:00Z",
+      "title": "RBI rate hike may have limited justification amid benign core inflation , subdued growth : Nuvama",
+      "url": "http://www.massachusettssun.com/news/279346885/rbi-rate-hike-may-have-limited-justification-amid-benign-core-inflation-subdued-growth-nuvama",
+      "domain": "massachusettssun.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T08:00:00Z",
+      "title": "Head to Head Review : Disco ( OTCMKTS : DSCSY ) versus Mobix Labs ( NASDAQ : MOBX )",
+      "url": "https://www.tickerreport.com/banking-finance/13605660/head-to-head-review-disco-otcmktsdscsy-versus-mobix-labs-nasdaqmobx.html",
+      "domain": "tickerreport.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T08:00:00Z",
+      "title": "Crown Castle ( NYSE : CCI ) & Smartstop Self Storage REIT ( NYSE : SMA ) Critical Analysis",
+      "url": "https://www.tickerreport.com/banking-finance/13605661/crown-castle-nysecci-smartstop-self-storage-reit-nysesma-critical-analysis.html",
+      "domain": "tickerreport.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T08:00:00Z",
+      "title": "RBI rate hike may have limited justification amid benign core inflation , subdued growth : Nuvama",
+      "url": "http://www.africaleader.com/news/279346885/rbi-rate-hike-may-have-limited-justification-amid-benign-core-inflation-subdued-growth-nuvama",
+      "domain": "africaleader.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "South Africa"
+    },
+    {
+      "seendate": "2026-10-02T08:00:00Z",
+      "title": "Ted Baker returns to united kingdom high street after administration",
+      "url": "https://www.thenorthernecho.co.uk/news/26600714.ted-baker-returns-uk-high-street-administration/",
+      "domain": "thenorthernecho.co.uk",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United Kingdom"
+    },
+    {
+      "seendate": "2026-10-02T08:00:00Z",
+      "title": "Spore mortgage rates rise following Fed hike : What home owners should look out for",
+      "url": "https://www.businesstimes.com.sg/property/spore-mortgage-rates-rise-following-fed-hike-what-home-owners-should-look-out",
+      "domain": "businesstimes.com.sg",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Singapore"
+    },
+    {
+      "seendate": "2026-10-02T08:00:00Z",
+      "title": "Trump Touts Economy In Texas | 98 . 7 FM WGIG",
+      "url": "https://1440wgig.iheart.com/content/2026-10-02-trump-touts-economy-in-texas/",
+      "domain": "1440wgig.iheart.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T08:00:00Z",
+      "title": "Gyre Therapeutics ( NASDAQ : GYRE ) versus Traws Pharma ( NASDAQ : TRAW ) Critical Comparison",
+      "url": "https://www.tickerreport.com/banking-finance/13605646/gyre-therapeutics-nasdaqgyre-versus-traws-pharma-nasdaqtraw-critical-comparison.html",
+      "domain": "tickerreport.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T08:00:00Z",
+      "title": "RBI rate hike may have limited justification amid benign core inflation , subdued growth : Nuvama",
+      "url": "http://www.oklahomacitysun.com/news/279346885/rbi-rate-hike-may-have-limited-justification-amid-benign-core-inflation-subdued-growth-nuvama",
+      "domain": "oklahomacitysun.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T08:00:00Z",
+      "title": "Mortgage rates Oct . 2 , 2026",
+      "url": "https://fortune.com/article/current-mortgage-rates-10-02-2026/",
+      "domain": "fortune.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T08:00:00Z",
+      "title": "Trump Touts Economy In Texas",
+      "url": "https://wiba.iheart.com/content/2026-10-02-trump-touts-economy-in-texas/",
+      "domain": "wiba.iheart.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T08:00:00Z",
+      "title": "Nvidia unveils record $150 billion buyback increase",
+      "url": "http://www.oklahomacitysun.com/news/279338424/nvidia-unveils-record-usd150-billion-buyback-increase",
+      "domain": "oklahomacitysun.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T08:00:00Z",
+      "title": "RBI rate hike may have limited justification amid benign core inflation , subdued growth : Nuvama",
+      "url": "http://www.russiaherald.com/news/279346885/rbi-rate-hike-may-have-limited-justification-amid-benign-core-inflation-subdued-growth-nuvama",
+      "domain": "russiaherald.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Russia"
+    },
+    {
+      "seendate": "2026-10-02T08:00:00Z",
+      "title": "Nvidia unveils record $150 billion buyback increase",
+      "url": "http://www.africaleader.com/news/279338424/nvidia-unveils-record-usd150-billion-buyback-increase",
+      "domain": "africaleader.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "South Africa"
+    },
+    {
+      "seendate": "2026-10-02T08:00:00Z",
+      "title": "Fed Jefferson Says Inflation Risks Tilt Upward , Future Policy Requires More Data",
+      "url": "https://www.actionforex.com/live-comments/656109-feds-jefferson-says-inflation-risks-tilt-upward-future-policy-requires-more-data/",
+      "domain": "actionforex.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United Kingdom"
+    },
+    {
+      "seendate": "2026-10-02T08:00:00Z",
+      "title": "Current refi mortgage rates report for Oct . 2 , 2026",
+      "url": "https://fortune.com/article/current-refi-mortgage-rates-10-02-2026/",
+      "domain": "fortune.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T08:00:00Z",
+      "title": "AllianzIM U . S . Equity Buffer20 Jul ETF ( BATS : JULW ) Sees Large Drop in Short Interest",
+      "url": "https://www.tickerreport.com/banking-finance/13605656/allianzim-u-s-equity-buffer20-jul-etf-batsjulw-sees-large-drop-in-short-interest.html",
+      "domain": "tickerreport.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T07:45:00Z",
+      "title": "US job growth expected to slow in September ; unemployment rate likely steady",
+      "url": "https://lufkindailynews.com/news_reuters/business/us-job-growth-expected-to-slow-in-september-unemployment-rate-likely-steady/article_0ae2a579-b403-554f-99c5-c6dc23cbc81e.html",
+      "domain": "lufkindailynews.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T07:45:00Z",
+      "title": "RBI rate hike may have limited justification amid benign core inflation , subdued growth : Nuvama",
+      "url": "http://www.jamaicantimes.com/news/279346885/rbi-rate-hike-may-have-limited-justification-amid-benign-core-inflation-subdued-growth-nuvama",
+      "domain": "jamaicantimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Jamaica"
+    },
+    {
+      "seendate": "2026-10-02T07:45:00Z",
+      "title": "newsroomamerica . com",
+      "url": "https://newsroomamerica.com/?before=111894",
+      "domain": "newsroomamerica.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T07:45:00Z",
+      "title": "Trump Touts Economy In Texas | KNST AM 790",
+      "url": "https://knst.iheart.com/content/2026-10-02-trump-touts-economy-in-texas/",
+      "domain": "knst.iheart.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T07:45:00Z",
+      "title": "Ted Baker returns to united kingdom high street after administration",
+      "url": "https://www.hillingdontimes.co.uk/news/national/uk-today/26600604.ted-baker-returns-uk-high-street-administration/",
+      "domain": "hillingdontimes.co.uk",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United Kingdom"
+    },
+    {
+      "seendate": "2026-10-02T07:45:00Z",
+      "title": "Nvidia unveils record $150 billion buyback increase",
+      "url": "http://www.memphissun.com/news/279338424/nvidia-unveils-record-usd150-billion-buyback-increase",
+      "domain": "memphissun.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T07:45:00Z",
+      "title": "Nvidia unveils record $150 billion buyback increase",
+      "url": "http://www.jamaicantimes.com/news/279338424/nvidia-unveils-record-usd150-billion-buyback-increase",
+      "domain": "jamaicantimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Jamaica"
+    },
+    {
+      "seendate": "2026-10-02T07:45:00Z",
+      "title": "People : CRO switches at Wells and Barclays , further SG shake - ups , and more",
+      "url": "https://www.risk.net/people/7964215/people-cro-switches-at-wells-and-barclays-further-sg-shake-ups-and-more",
+      "domain": "risk.net",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United Kingdom"
+    },
+    {
+      "seendate": "2026-10-02T07:45:00Z",
+      "title": "Trump Touts Economy In Texas",
+      "url": "https://talk1200boston.iheart.com/content/2026-10-02-trump-touts-economy-in-texas/",
+      "domain": "talk1200boston.iheart.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T07:45:00Z",
+      "title": "Asian shares mixed after global bond sell - off deepens and ahead of US jobs data",
+      "url": "http://www.wdtimes.com/news/world/asian-shares-mixed-after-global-bond-sell-off-deepens-and-ahead-of-us-jobs-data/article_f6853fd8-0348-53d5-9848-7ccb6754a91e.html",
+      "domain": "wdtimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T07:45:00Z",
+      "title": "South Korea Crypto Trading Slumps as Exchange Profits Fall 78 %",
+      "url": "https://cointelegraph.com/news/south-korea-crypto-exchange-profits-fall-78-percent",
+      "domain": "cointelegraph.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-10-02T07:45:00Z",
+      "title": "Ted Baker returns to united kingdom high street after administration",
+      "url": "https://www.wandsworthguardian.co.uk/news/national/uk-today/26600604.ted-baker-returns-uk-high-street-administration/",
+      "domain": "wandsworthguardian.co.uk",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United Kingdom"
+    },
+    {
+      "seendate": "2026-10-02T07:45:00Z",
+      "title": "Tinubu Independence Speech : The pain of reform and the gain of reward",
+      "url": "https://pmnewsnigeria.com/2026/10/02/tinubus-independence-speech-the-pain-of-reform-and-the-gain-of-reward/",
+      "domain": "pmnewsnigeria.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Nigeria"
+    },
+    {
+      "seendate": "2026-10-02T07:45:00Z",
+      "title": "Ted Baker returns to united kingdom high street after administration | Harwich and Manningtree Standard",
+      "url": "https://www.harwichandmanningtreestandard.co.uk/news/national/uk-today/26600604.ted-baker-returns-uk-high-street-administration/",
+      "domain": "harwichandmanningtreestandard.co.uk",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United Kingdom"
+    },
+    {
+      "seendate": "2026-10-02T07:45:00Z",
+      "title": "U . S . Treasury Yields Steady as Buyers Resurface",
+      "url": "https://www.morningstar.com/news/dow-jones/202610021168/us-treasury-yields-steady-as-buyers-resurface",
+      "domain": "morningstar.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-10-02T07:45:00Z",
+      "title": "Trump Touts Economy In Texas | NewsTalk 600 KCOL",
+      "url": "https://600kcol.iheart.com/content/2026-10-02-trump-touts-economy-in-texas/",
+      "domain": "600kcol.iheart.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T07:45:00Z",
+      "title": "Trump Touts Economy In Texas",
+      "url": "https://wtag.iheart.com/content/2026-10-02-trump-touts-economy-in-texas/",
+      "domain": "wtag.iheart.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T07:45:00Z",
+      "title": "Trump Touts Economy In Texas | Newsradio WOOD 1300 and 106 . 9 FM",
+      "url": "https://woodradio.iheart.com/content/2026-10-02-trump-touts-economy-in-texas/",
+      "domain": "woodradio.iheart.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T07:45:00Z",
+      "title": "Trump Touts Economy In Texas | News Radio 101 . 9 Big WAAX",
+      "url": "https://1019bigwaax.iheart.com/content/2026-10-02-trump-touts-economy-in-texas/",
+      "domain": "1019bigwaax.iheart.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T07:45:00Z",
+      "title": "Trump Touts Economy In Texas",
+      "url": "https://710wor.iheart.com/content/2026-10-02-trump-touts-economy-in-texas/",
+      "domain": "710wor.iheart.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T07:30:00Z",
+      "title": "Contrasting Dollar General ( NYSE : DG ) & Maplebear ( NASDAQ : CART )",
+      "url": "https://www.themarketsdaily.com/2026/10/02/contrasting-dollar-general-nysedg-maplebear-nasdaqcart.html",
+      "domain": "themarketsdaily.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T07:30:00Z",
+      "title": "Head to Head Comparison : Trustmark ( NASDAQ : TRMK ) & CB Financial Services ( NASDAQ : CBFV )",
+      "url": "https://www.themarketsdaily.com/2026/10/02/head-to-head-comparison-trustmark-nasdaqtrmk-cb-financial-services-nasdaqcbfv.html",
+      "domain": "themarketsdaily.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T07:30:00Z",
+      "title": "Trump Touts Economy In Texas",
+      "url": "https://wjno.iheart.com/content/2026-10-02-trump-touts-economy-in-texas/",
+      "domain": "wjno.iheart.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T07:30:00Z",
+      "title": "Ted Baker returns to united kingdom high street after administration | The Westmorland Gazette",
+      "url": "https://www.thewestmorlandgazette.co.uk/news/national/uk-today/26600604.ted-baker-returns-uk-high-street-administration/",
+      "domain": "thewestmorlandgazette.co.uk",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United Kingdom"
+    },
+    {
+      "seendate": "2026-10-02T07:30:00Z",
+      "title": "Nvidia expands buyback as AI demand drives cash generation",
+      "url": "http://www.bruneinews.net/news/279338424/nvidia-expands-buyback-as-ai-demand-drives-cash-generation",
+      "domain": "bruneinews.net",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "Malaysia"
     },
     {
-      "seendate": "2026-10-01T02:45:00Z",
-      "title": "New York Governor Wants Investigation In Cornell University Rape",
-      "url": "https://wrrv.com/ixp/854/p/governor-wants-investigation-in-cornell-university-rape-case/",
-      "domain": "wrrv.com",
+      "seendate": "2026-10-02T07:30:00Z",
+      "title": "Trump Touts Economy In Texas | News Radio 920 AM & 104 . 7 FM",
+      "url": "https://newsradiori.iheart.com/content/2026-10-02-trump-touts-economy-in-texas/",
+      "domain": "newsradiori.iheart.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T07:30:00Z",
+      "title": "Nvidia unveils record $150 billion buyback increase",
+      "url": "http://www.indiagazette.com/news/279338424/nvidia-unveils-record-usd150-billion-buyback-increase",
+      "domain": "indiagazette.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-10-02T07:30:00Z",
+      "title": "RBI rate hike may have limited justification amid benign core inflation , subdued growth : Nuvama",
+      "url": "http://www.iranherald.com/news/279346885/rbi-rate-hike-may-have-limited-justification-amid-benign-core-inflation-subdued-growth-nuvama",
+      "domain": "iranherald.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Iran"
+    },
+    {
+      "seendate": "2026-10-02T07:30:00Z",
+      "title": "Critical Analysis : Sidus Space ( NASDAQ : SIDU ) vs . VirTra ( NASDAQ : VTSI )",
+      "url": "https://www.themarketsdaily.com/2026/10/02/critical-analysis-sidus-space-nasdaqsidu-vs-virtra-nasdaqvtsi.html",
+      "domain": "themarketsdaily.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T07:30:00Z",
+      "title": "Contrasting CDW ( NASDAQ : CDW ) & AmpliTech Group ( NASDAQ : AMPG )",
+      "url": "https://www.dailypolitical.com/2026/10/02/contrasting-cdw-nasdaqcdw-amplitech-group-nasdaqampg.html",
+      "domain": "dailypolitical.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T07:30:00Z",
+      "title": "AI Will Kill Us in 10 Years , but Bond Market Will Do It  Next Week , Says Strategist As Treasury Yields Hit 24 - Year Highs",
+      "url": "https://www.aol.com/articles/ai-kill-us-10-years-062844000.html",
+      "domain": "aol.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T07:30:00Z",
+      "title": "Ted Baker returns to united kingdom high street after administration | Somerset County Gazette",
+      "url": "https://www.somersetcountygazette.co.uk/news/national/uk-today/26600604.ted-baker-returns-uk-high-street-administration/",
+      "domain": "somersetcountygazette.co.uk",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United Kingdom"
+    },
+    {
+      "seendate": "2026-10-02T07:15:00Z",
+      "title": "Ted Baker returns to united kingdom high street after administration",
+      "url": "https://www.lancashiretelegraph.co.uk/news/national/uk-today/26600604.ted-baker-returns-uk-high-street-administration/",
+      "domain": "lancashiretelegraph.co.uk",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United Kingdom"
+    },
+    {
+      "seendate": "2026-10-02T07:15:00Z",
+      "title": "Trump Touts Economy In Texas | Talk Radio 105 . 9",
+      "url": "https://talkradio1059.iheart.com/content/2026-10-02-trump-touts-economy-in-texas/",
+      "domain": "talkradio1059.iheart.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T07:15:00Z",
+      "title": "Nvidia unveils record $150 billion buyback increase",
+      "url": "http://www.californiatelegraph.com/news/279338424/nvidia-unveils-record-usd150-billion-buyback-increase",
+      "domain": "californiatelegraph.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T07:15:00Z",
+      "title": "RBI rate hike may have limited justification amid benign core inflation , subdued growth : Nuvama",
+      "url": "http://www.calcuttanews.net/news/279346885/rbi-rate-hike-may-have-limited-justification-amid-benign-core-inflation-subdued-growth-nuvama",
+      "domain": "calcuttanews.net",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-10-02T07:15:00Z",
+      "title": "RBI rate hike may have limited justification amid benign core inflation , subdued growth : Nuvama",
+      "url": "http://www.hongkongherald.com/news/279346885/rbi-rate-hike-may-have-limited-justification-amid-benign-core-inflation-subdued-growth-nuvama",
+      "domain": "hongkongherald.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-10-02T07:15:00Z",
+      "title": "NGX at 65 : Nigeria\u00e2\u20ac\u2122s stock market witnessed tremendous expansion - Analysis\u00c2",
+      "url": "https://blueprint.ng/ngx-at-65-nigerias-stock-market-witnessed-tremendous-expansion-analysis/",
+      "domain": "blueprint.ng",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Nigeria"
+    },
+    {
+      "seendate": "2026-10-02T07:15:00Z",
+      "title": "Asian shares mixed after global bond sell - off deepens and ahead of US jobs data",
+      "url": "https://kdhnews.com/news/world/asian-shares-mixed-after-global-bond-sell-off-deepens-and-ahead-of-us-jobs-data/article_83eded05-b715-5b1b-9db7-59a4b3f9135f.html",
+      "domain": "kdhnews.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T07:00:00Z",
+      "title": "Ted Baker returns to united kingdom high street after administration",
+      "url": "https://www.brentwoodlive.co.uk/news/national/uk-today/26600604.ted-baker-returns-uk-high-street-administration/",
+      "domain": "brentwoodlive.co.uk",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United Kingdom"
+    },
+    {
+      "seendate": "2026-10-02T07:00:00Z",
+      "title": "Trump Touts Economy In Texas | News Radio 570 WWNC",
+      "url": "https://wwnc.iheart.com/content/2026-10-02-trump-touts-economy-in-texas/",
+      "domain": "wwnc.iheart.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T07:00:00Z",
+      "title": "Trump Touts Economy In Texas",
+      "url": "https://wonw1280.iheart.com/content/2026-10-02-trump-touts-economy-in-texas/",
+      "domain": "wonw1280.iheart.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T07:00:00Z",
+      "title": "Trump Touts Economy In Texas",
+      "url": "https://960weli.iheart.com/content/2026-10-02-trump-touts-economy-in-texas/",
+      "domain": "960weli.iheart.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T07:00:00Z",
+      "title": "Trump Touts Economy In Texas",
+      "url": "https://khow.iheart.com/content/2026-10-02-trump-touts-economy-in-texas/",
+      "domain": "khow.iheart.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T07:00:00Z",
+      "title": "Domestic investors infuse Rs 33 , 460 crore this week , FIIs remain sellers",
+      "url": "https://ianslive.in/domestic-investors-infuse-rs-33460-crore-this-week-fiis-remain-sellers--20261002113602",
+      "domain": "ianslive.in",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-10-02T07:00:00Z",
+      "title": "Trump Touts Economy In Texas",
+      "url": "https://600wrec.iheart.com/content/2026-10-02-trump-touts-economy-in-texas/",
+      "domain": "600wrec.iheart.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T07:00:00Z",
+      "title": "Nvidia unveils record $150 billion buyback increase",
+      "url": "http://www.newyorktelegraph.com/news/279338424/nvidia-unveils-record-usd150-billion-buyback-increase",
+      "domain": "newyorktelegraph.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T07:00:00Z",
+      "title": "Nvidia unveils record $150 billion buyback increase",
+      "url": "http://www.taiwansun.com/news/279338424/nvidia-unveils-record-usd150-billion-buyback-increase",
+      "domain": "taiwansun.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-10-02T07:00:00Z",
+      "title": "Desperate Donald Trump Hosts White House Dinner for People Who Keep Calling Him  Dumb",
+      "url": "https://www.thedailybeast.com/desperate-donald-trump-hosts-white-house-dinner-for-people-who-keep-calling-him-dumb/",
+      "domain": "thedailybeast.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T07:00:00Z",
+      "title": "Australian Market Maintains Early Gains In Mid - market",
+      "url": "https://www.rttnews.com/3695996/australian-market-maintains-early-gains-in-mid-market.aspx",
+      "domain": "rttnews.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T06:45:00Z",
+      "title": "Confidence about the economy is in short supply despite a relatively solid job market",
+      "url": "https://www.winchesterstar.com/associated_press/washington/confidence-about-the-economy-is-in-short-supply-despite-a-relatively-solid-job-market/article_6ee92bd3-1592-523c-91f4-63b8c0108701.html",
+      "domain": "winchesterstar.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T06:45:00Z",
+      "title": "Trump Touts Economy In Texas | Talk Radio 1080",
+      "url": "https://talkradio1080.iheart.com/content/2026-10-02-trump-touts-economy-in-texas/",
+      "domain": "talkradio1080.iheart.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T06:45:00Z",
+      "title": "Nvidia unveils record $150 billion buyback increase",
+      "url": "http://www.newzealandstar.com/news/279338424/nvidia-unveils-record-usd150-billion-buyback-increase",
+      "domain": "newzealandstar.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "New Zealand"
+    },
+    {
+      "seendate": "2026-10-02T06:45:00Z",
+      "title": "WRAP Retail Offer for up to \u00a32 million | Company Announcement",
+      "url": "https://www.investegate.co.uk/announcement/rns/eenergy-group--eaas/wrap-retail-offer-for-up-to-2-million/9803016",
+      "domain": "investegate.co.uk",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United Kingdom"
+    },
+    {
+      "seendate": "2026-10-02T06:45:00Z",
+      "title": "Gold wavers as traders weigh higher bond yields , oil prices",
+      "url": "https://financialpost.com/news/economy/gold-wavers-traders-weigh-bond-yields-oil",
+      "domain": "financialpost.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Canada"
+    },
+    {
+      "seendate": "2026-10-02T06:45:00Z",
+      "title": "Trump Touts Economy In Texas",
+      "url": "https://650keni.iheart.com/content/2026-10-02-trump-touts-economy-in-texas/",
+      "domain": "650keni.iheart.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T06:45:00Z",
+      "title": "Nvidia unveils record $150 billion buyback increase",
+      "url": "http://www.asiabulletin.com/news/279338424/nvidia-unveils-record-usd150-billion-buyback-increase",
+      "domain": "asiabulletin.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-10-02T06:45:00Z",
+      "title": "Trump Touts Economy In Texas | Talk Radio 105 . 9",
+      "url": "https://knrs.iheart.com/content/2026-10-02-trump-touts-economy-in-texas/",
+      "domain": "knrs.iheart.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T06:45:00Z",
+      "title": "Preliminary Results | Company Announcement",
+      "url": "https://www.investegate.co.uk/announcement/rns/wetherspoon-j-d---jdw/preliminary-results-/9803019",
+      "domain": "investegate.co.uk",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United Kingdom"
+    },
+    {
+      "seendate": "2026-10-02T06:45:00Z",
+      "title": "Asian shares mixed after global bond sell - off deepens and ahead of US jobs data",
+      "url": "https://www.therecord.com/business/asian-shares-mixed-after-global-bond-sell-off-deepens-and-ahead-of-us-jobs-data/article_568e19c4-7ce6-5b2d-9db8-d4d821885182.html",
+      "domain": "therecord.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Canada"
+    },
+    {
+      "seendate": "2026-10-02T06:45:00Z",
+      "title": "Ted Baker returns to united kingdom high street after administration",
+      "url": "https://www.wharfedaleobserver.co.uk/news/national/uk-today/26600604.ted-baker-returns-uk-high-street-administration/",
+      "domain": "wharfedaleobserver.co.uk",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United Kingdom"
+    },
+    {
+      "seendate": "2026-10-02T06:45:00Z",
+      "title": "RBI rate hike may have limited justification amid benign core inflation , subdued growth : Nuvama",
+      "url": "http://www.newzealandstar.com/news/279346885/rbi-rate-hike-may-have-limited-justification-amid-benign-core-inflation-subdued-growth-nuvama",
+      "domain": "newzealandstar.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "New Zealand"
+    },
+    {
+      "seendate": "2026-10-02T06:45:00Z",
+      "title": "Asian shares mixed after global bond sell - off deepens and ahead of US jobs data",
+      "url": "https://mymotherlode.com/news/national/11187287/asian-shares-mixed-after-global-bond-sell-off-deepens-and-ahead-of-us-jobs-data.html",
+      "domain": "mymotherlode.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T06:45:00Z",
+      "title": "Definity Financial Co . ( TSE : DFY ) Stock Has Average Target Price of C$83 . 40 According to Brokerages",
+      "url": "https://www.themarketsdaily.com/2026/10/02/definity-financial-co-tsedfy-stock-has-average-target-price-of-c83-40-according-to-brokerages.html",
+      "domain": "themarketsdaily.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T06:45:00Z",
+      "title": "Confidence about the economy is in short supply despite a relatively solid job market",
+      "url": "https://mymotherlode.com/news/national/11187084/confidence-about-the-economy-is-in-short-supply-despite-a-relatively-solid-job-market.html",
+      "domain": "mymotherlode.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T06:15:00Z",
+      "title": "Nvidia unveils record $150 billion buyback increase",
+      "url": "http://www.floridastatesman.com/news/279338424/nvidia-unveils-record-usd150-billion-buyback-increase",
+      "domain": "floridastatesman.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T06:15:00Z",
+      "title": "US stocks bond selloff : S & P 500 rebounds to close higher",
+      "url": "https://en.shafaqna.com/481643/us-stocks-bond-selloff-rebound/",
+      "domain": "en.shafaqna.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Saudi Arabia"
+    },
+    {
+      "seendate": "2026-10-02T06:15:00Z",
+      "title": "Nvidia unveils record $150 billion buyback increase",
+      "url": "http://www.phoenixherald.com/news/279338424/nvidia-unveils-record-usd150-billion-buyback-increase",
+      "domain": "phoenixherald.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T06:15:00Z",
+      "title": "Asian shares mixed after global bond sell - off deepens and ahead of US jobs data",
+      "url": "http://www.stardem.com/ap/world/asian-shares-mixed-after-global-bond-sell-off-deepens-and-ahead-of-us-jobs-data/article_b6f92087-2937-55b7-8c75-f2691ca7a142.html",
+      "domain": "stardem.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T06:15:00Z",
+      "title": "Trump Touts Economy In Texas | News / Talk 1130 WISN",
+      "url": "https://newstalk1130.iheart.com/content/2026-10-02-trump-touts-economy-in-texas/",
+      "domain": "newstalk1130.iheart.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T06:00:00Z",
+      "title": "Penguin Solutions , Inc . ( NASDAQ : PENG ) Stock Has Consensus Target Price of $63 . 33 According to Analysts",
+      "url": "https://www.themarketsdaily.com/2026/10/02/penguin-solutions-inc-nasdaqpeng-stock-has-consensus-target-price-of-63-33-according-to-analysts.html",
+      "domain": "themarketsdaily.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T06:00:00Z",
+      "title": "RBI rate hike may have limited justification amid benign core inflation , subdued growth : Nuvama",
+      "url": "http://www.ohiostandard.com/news/279346885/rbi-rate-hike-may-have-limited-justification-amid-benign-core-inflation-subdued-growth-nuvama",
+      "domain": "ohiostandard.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-02T06:00:00Z",
+      "title": "Trump Touts Economy In Texas | PowerTalk 1360 KFIV",
+      "url": "https://powertalk1360.iheart.com/content/2026-10-02-trump-touts-economy-in-texas/",
+      "domain": "powertalk1360.iheart.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     }
   ],
   "methodology": "GDELT Doc 2.0 artlist \u2014 a machine index of worldwide news. TWO bounded requests per refresh (one per LANGUAGE LANE, the two fixed queries above, <=200 records each, >=15s host spacing; GDELT open data: URL/title/date/domain are facts, article copyright stays with the publishers), sort=datedesc (machine ordering, not editorial). The Chinese lane is domain-anchored on wallstreetcn.com (\u534e\u5c14\u8857\u89c1\u95fb \u2014 a \u8d22\u8054\u793e-style 7\u00d724 financial newswire): \u8d22\u8054\u793e itself has ZERO GDELT crawl coverage and CJK phrase queries are rejected by the API ('phrase too short'), so a domain seed is the only proven form (probe evidence in docs/data-intake-gdelt-news-feed.md). lang = the ingest-resolved lane (API language field first, request provenance fallback; never guessed from title bytes). seendate is GDELT's first-seen UTC stamp (15-min resolution) \u2014 the display freshness anchor. Rows are metadata + outbound links only: no article text is stored, summarized or fabricated; missing source fields are shown empty, never guessed. Dedup key = exact URL WITHIN a lane; the two languages are different articles and are never collapsed across lanes. Coverage = whatever GDELT's crawl saw; gaps are gaps. The payload caps the item list at 150 newest while by_day/total cover the full trailing 30-day cache window. Display-only, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-10-01T10:57:13.625893+00:00"
+  "snapshot_ts": "2026-10-02T11:18:20.049944+00:00"
 }
