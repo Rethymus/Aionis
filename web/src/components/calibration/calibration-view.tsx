@@ -12,19 +12,20 @@ import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { aionis, type CalibrationReliability } from "@/data/aionis";
 import { HorizonRobustnessCard } from "@/components/calibration/horizon-robustness-card";
+import dynamic from "next/dynamic";
+import { LazyMount } from "@/components/ui/lazy-mount";
+// Round 122: charts async-chunk (skeleton ≈ the two fixed chart heights);
+// below-fold CN card + horizon card mount on approach.
+const RegionCharts = dynamic(
+  () => import("./calibration-charts").then(m => m.RegionCharts),
+  {
+    ssr: false,
+    loading: () => (
+      <div aria-hidden="true" style={{ minHeight: 420 }} className="w-full animate-pulse rounded-xl border border-line bg-soft/50" />
+    ),
+  },
+);
 import { ShieldAlertIcon, ShieldCheckIcon } from "lucide-react";
-import {
-  CartesianGrid,
-  Line,
-  LineChart,
-  ReferenceLine,
-  ResponsiveContainer,
-  Scatter,
-  ScatterChart,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
 
 type RegionPayload = CalibrationReliability["regions"][string];
 type ReliabilityPoint = { x: number; y: number; n: number };
@@ -100,85 +101,11 @@ function RegionCard({ region, payload }: { region: string; payload: RegionPayloa
           />
         </div>
 
-        <div>
-          <p className="mb-1 text-xs font-medium text-muted-foreground">{t("calibration.reliabilityTitle")}</p>
-          <div className="h-[220px] w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <ScatterChart margin={{ top: 8, right: 16, bottom: 20, left: 8 }}>
-                <CartesianGrid strokeDasharray="3 3" className="stroke-muted/30" />
-                <XAxis
-                  type="number"
-                  dataKey="x"
-                  domain={[0, 1]}
-                  tickCount={6}
-                  tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
-                  label={{
-                    value: t("calibration.predP"),
-                    position: "insideBottom",
-                    offset: -10,
-                    fontSize: 11,
-                  }}
-                />
-                <YAxis
-                  type="number"
-                  dataKey="y"
-                  domain={[0, 1]}
-                  tickCount={6}
-                  tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
-                  label={{
-                    value: t("calibration.empFreq"),
-                    angle: -90,
-                    position: "insideLeft",
-                    fontSize: 11,
-                  }}
-                />
-                <Tooltip
-                  cursor={{ strokeDasharray: "3 3" }}
-                  contentStyle={{ fontSize: 12, borderRadius: 8 }}
-                  formatter={(value, name) =>
-                    name === "n" ? Number(value).toLocaleString() : Number(value).toFixed(3)
-                  }
-                />
-                <ReferenceLine
-                  segment={[
-                    { x: 0, y: 0 },
-                    { x: 1, y: 1 },
-                  ]}
-                  stroke="var(--primary)"
-                  strokeDasharray="4 4"
-                  ifOverflow="extendDomain"
-                />
-                <Scatter data={relPoints} dataKey="y" fill="var(--primary)" />
-              </ScatterChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-
-        <div>
-          <p className="mb-1 text-xs font-medium text-muted-foreground">{t("calibration.eceTitle")}</p>
-          <div className="h-[160px] w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={eceSeries} margin={{ top: 8, right: 16, bottom: 4, left: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" className="stroke-muted/30" />
-                <XAxis
-                  dataKey="month"
-                  interval={xInterval}
-                  tick={{ fontSize: 11, fill: "var(--muted-foreground)" }}
-                  angle={-30}
-                  textAnchor="end"
-                  height={36}
-                />
-                <YAxis domain={[0, "auto"]} tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} width={32} />
-                <Tooltip
-                  contentStyle={{ fontSize: 12, borderRadius: 8 }}
-                  formatter={(value) => [Number(value).toFixed(4), t("calibration.eceTerm")]}
-                />
-                <ReferenceLine y={0.05} stroke="#10b981" strokeDasharray="3 3" />
-                <Line type="monotone" dataKey="ece" stroke="var(--primary)" strokeWidth={2} dot={false} />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
+        <RegionCharts
+          relPoints={relPoints}
+          eceSeries={eceSeries}
+          xInterval={xInterval}
+        />
       </CardContent>
     </Card>
   );
@@ -199,9 +126,15 @@ export function CalibrationView() {
       </header>
 
       {ok ? (
-        regions.map(([region, payload]) => (
-          <RegionCard key={region} region={region} payload={payload} />
-        ))
+        regions.map(([region, payload]) =>
+          region === "cn" ? (
+            <LazyMount minHeight={640} key={region}>
+              <RegionCard region={region} payload={payload} />
+            </LazyMount>
+          ) : (
+            <RegionCard key={region} region={region} payload={payload} />
+          ),
+        )
       ) : (
         <Card className="border-amber-500/30 bg-amber-500/5">
           <CardContent className="p-4 text-sm text-muted-foreground">{t("calibration.awaiting")}</CardContent>
@@ -228,7 +161,9 @@ export function CalibrationView() {
           the same kind of measurement self-check (does the frozen verdict
           survive a non-frozen horizon?). No new tab/route — hash behavior
           unchanged. */}
-      <HorizonRobustnessCard />
+      <LazyMount minHeight={360}>
+        <HorizonRobustnessCard />
+      </LazyMount>
     </div>
   );
 }
