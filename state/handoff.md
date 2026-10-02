@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-02 (轮 126) 战役沉淀文档：performance-campaign.md 呈业主
+
+轮 111~125 全景（12 优化/11 null/4 边界/5 方法论）入 reports/design/2026-10-02-performance-campaign.md；未竟=Interop 扫描（配额 10-03）、activationStart、业主追认。边界：docs lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-02 (轮 125) smart-money 单图拆分净害回滚：图表拆分第二边界（图表须主导页成本）
 
 confirmation 默认 tab 单 13D 柱状卡切片后 TBT 540~720→800~1,040（4 跑；对照页 190 证无争用）——异步小图在窗内求值反噬。第四条边界入册（与万级 DOM cv 阈值/预载天花板/本地线上分野并列）。已回滚。通道值守健康（0b3a9a98e）。边界：display lane；0 ledger/0 frozen/0 OOS。
