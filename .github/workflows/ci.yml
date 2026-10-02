@@ -20,7 +20,7 @@ on:
 jobs:
   tests:
     name: pytest + ruff (hermetic)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04  # pinned: ubuntu-latest migrates to 26.04 (GH changelog 2026-09-17) — pin for month-stability
     timeout-minutes: 90
     steps:
       - name: Checkout repository

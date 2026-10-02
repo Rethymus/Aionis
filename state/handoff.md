@@ -2501,3 +2501,4 @@ dashboard realizing `docs/dashboard-v2-design.md`'s 5 dimensions on deterministi
   - **轮 104（2026-10-02）**：①9-30 影子 runbook 丢失节点补跑（四步 EXIT 0，③ fail-closed predict_session_not_in_panel=合格诚实结论；ledger 前后 0924ce2b 字节一致零写入；9-30 影子月无 readiness PASS——10-31 证据包将如实呈现）；②push-only 恢复路径+绊网 Tests 检查（98d008f6a CI 绿）；③uv cache prune 缓办记录。
   - **轮 105（2026-10-02）**：①10-31 节点防丢（小时级守卫 5 4-23 31 10 * + shadow_1031.done 标记门控，复刻数据通道模式；提示词内置 9-30 fail-closed 事实）；②10-06 月报口径扩至 push-only 统计/绊网触发/节点专节/续期四选项；③防丢模式入 runbook 章节。
   - **轮 106（2026-10-02）**：兜底通道七步 qlib 式重试（SHA 钉 nick-fields/retry@v4，per-attempt 超时×2-3 次，continue-on-error 为耗尽后降级）；报告 §5 全项闭环（唯一缓办=uv cache prune）；真实重试行为待首次 dispatch 实弹验证。
+  - **轮 107（2026-10-02）**：changelog 情报（Ubuntu 26 迁移/Node 20 移除）→四活跃工作流钉 ubuntu-24.04+通道 own-commit CI 核验（零 token 红牌检测下沉，SUMMARY 增 ci 字段，31 绿/全量 0）。dispatch 实弹验证 retry 待业主决策。

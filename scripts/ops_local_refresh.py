@@ -440,19 +440,39 @@ def commit_and_push(fh) -> tuple[str, str | None, bool, int]:
     return "ok_committed", sha, True, len(staged)
 
 
-def verify_publish_triggered() -> str:
-    """Best-effort: our push (user PAT, not GITHUB_TOKEN) fires publish-site.yml,
-    which builds + publishes gh-pages. Failure here is non-fatal."""
-    try:
+def verify_own_commit_ci(sha: str, max_wait_s: int = 360) -> dict:
+    """Zero-token red-card detection (round 107): poll OUR commit's CI runs.
+
+    The nightly LLM report checks the LATEST runs, which may belong to
+    another session's push in this multi-session repo; this polls exactly
+    the runs for the sha THIS lane pushed (publish-site + Tests), bounded,
+    non-fatal on gh failure. Returns {"publish_site": ..., "tests": ...}
+    with per-workflow conclusions or a not-verified marker."""
+
+    def _runs_for(commit: str) -> dict:
         out = subprocess.run(
-            ["gh", "run", "list", "--workflow=publish-site.yml", "-L", "1",
-             "--json", "status,createdAt,conclusion"],
+            ["gh", "run", "list", "--commit", commit, "--limit", "10",
+             "--json", "workflowName,status,conclusion"],
             cwd=ROOT, capture_output=True, text=True, timeout=20)
-        if out.returncode == 0:
-            return out.stdout.strip()
-    except (OSError, subprocess.TimeoutExpired):
-        pass
-    return "not-verified (gh unavailable)"
+        if out.returncode != 0:
+            return {}
+        try:
+            return {r["workflowName"]: r for r in json.loads(out.stdout)}
+        except (ValueError, KeyError):
+            return {}
+
+    deadline = time.time() + max_wait_s
+    wanted = ("Publish site (gh-pages)", "Tests")
+    while time.time() < deadline:
+        runs = _runs_for(sha)
+        done = {k: runs[k].get("conclusion") for k in wanted if k in runs}
+        if len(done) == len(wanted) and all(
+                v in ("success", "failure") for v in done.values()):
+            return done  # both concluded
+        time.sleep(45)
+    final = _runs_for(sha)
+    return {k: (final.get(k) or {}).get("conclusion", "not-observed")
+            for k in wanted}
 
 
 # ------------------------------------------------------------------------- main
@@ -555,7 +575,8 @@ def do_run(force: bool) -> int:
                             f"hard-fail step '{step['name']}': {detail}")
             ledger_note = tidy_ledger(fh)
             status, sha, pushed, n_files = commit_and_push(fh)
-            publish = verify_publish_triggered() if pushed else "skipped (no push)"
+            ci = (verify_own_commit_ci(sha) if pushed
+                  else {"note": "no push"})
             state.pop("error", None)  # stale failure text must not survive a success
             state.update({"status": status, "commit": sha, "pushed": pushed,
                           "n_files": n_files, "soft_fails": soft_fails,
@@ -564,7 +585,7 @@ def do_run(force: bool) -> int:
             summary = {
                 "date": today, "status": status, "commit": sha, "pushed": pushed,
                 "n_files": n_files, "soft_fails": soft_fails,
-                "ledger": ledger_note, "publish_site": publish,
+                "ledger": ledger_note, "ci": ci,
                 "wall_minutes": round((time.time() - t0) / 60, 1),
             }
             log(f"SUMMARY {json.dumps(summary, ensure_ascii=False)}", fh)

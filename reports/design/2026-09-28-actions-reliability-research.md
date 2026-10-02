@@ -106,6 +106,30 @@ Readings:
 | news_feed fake-date time bombs (09-28 red ×2) | pandas isolates `network` marker tests; our fake rows must be relative-dated like the 09-20 fix | **DONE 2026-09-28: `_fake_rows` day defaults to now−2d — helper-level fix defuses the whole class** |
 | Non-critical steps able to fail CI | `fail_ci_if_error: false` (pandas codecov) | partially adopted (our publish checks no-site-change exit 0) |
 
+## 5b. Incremental intel (2026-10-02, round 107) — changelog sweep + dispositions
+
+From github.blog/changelog/label/actions (Sep–Oct 2026):
+- **"Ubuntu 26 generally available and latest migration" (Sep 17)** —
+  `ubuntu-latest` migrates to 26.04; a major-image migration is the classic
+  mid-month breakage vector. **DONE: all four ACTIVE workflows pinned to
+  `ubuntu-24.04`** (big-repo discipline; revisit the pin deliberately).
+- **"Node 20 is no longer available" (Sep 23)** — actions still targeting
+  node20 hard-fail. Audited: our pinned set (checkout v4+, setup-python v5,
+  setup-uv v1/v3, pnpm/action-setup v4, cache v4, retry v4) are all
+  node20-capable → forced-24 compatible. No action needed; recorded so a
+  future action bump checks this table.
+- "Actions retention now covers checks, runs, statuses" (Oct 1), "expired
+  artifacts no longer shown" (Sep 24), "API/UI query result changes"
+  (Sep 25) — monitoring notes only.
+- **"Workflow execution protections GA" (Sep 17) + "cache access with
+  cache-mode" (Sep 10)** — supply-chain hardening candidates, future lanes.
+
+New capability this round: **lane-side own-commit CI verification** — the
+zero-token lane now polls the CI conclusions for exactly the sha IT pushed
+(publish-site + Tests, bounded 6-min wait), putting red-card detection into
+the OS layer instead of only the nightly LLM report (which sees the LATEST
+runs — possibly another session's push in this multi-session repo).
+
 ## 6. Sources (all fetched 2026-09-28 unless noted)
 
 - raw workflow files: pandas-dev/pandas `unit-tests.yml` (main);

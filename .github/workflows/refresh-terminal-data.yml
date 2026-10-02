@@ -36,7 +36,7 @@ concurrency:
 
 jobs:
   refresh:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04  # pinned: ubuntu-latest migrates to 26.04 (GH changelog 2026-09-17) — pin for month-stability
     timeout-minutes: 150  # Run 31825889043 died at exactly 90min mid-display-fetch:
     # the pre-display chain alone (Form4 20 + 13D 15 + GDELT 20 + misc ~20) eats
     # ~75min, leaving no room for the B1 display steps (fundamentals cold ~20 +
