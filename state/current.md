@@ -1,5 +1,7 @@
 # state/current.md — read first each session
 
+- **active (2026-10-02) 轮 116 addendum（display 线）：选项 B 提交事故与两处归因更正（如实）：**df0729f25 的 git add 因陈旧 pathspec 原子失败→该提交仅含组 layout 删除，**线上约 15 分钟全站无导航且 / 仍跳转**；cadd5122a（网络瞬断重试一次后）补齐壳层上提+Overview+canonical，三路由导航探针+hero h1 全在墙。**更正**：事故窗口内的"线上验证 410ms"判为 Pages 重建延迟期旧部署读数，不作证据；"本地双峰=python 伺服目录 URL 伪影"归因撤销——修复部署上 / 与 /dashboard 双双双峰（860/3,020 vs 320/1,530ms），真实机制=TBT 对交付交错的测量敏感性（慢网窗摊薄执行→反低；快网窗叠峰→高），与轮 114 多跑取中位注记同源。结论维持：/ ≡ /dashboard、redirect 税结构性消除、视觉闭环有效。**教训入册**：多 pathspec 的 git add 出错即整条失败——分步 add 或失败后必查 staged 清单再 commit。**
+
 - **active (2026-10-02) 轮 116（display 线）：水合消融定界（框架级=null）+选项 B 落地（/ 直渲 dashboard，线上验证通过）：**
   **消融实验**（临时空内容页+env 门控 palette，测毕全撤）：共享壳层 TBT 地板 230~310ms（导航+⌘K+Provider 栈）；⌘K 消融份额≈0（噪声内）；dashboard/heatmap 内容各仅 0~80ms——**共享组件级优化=null**，~2s 残余系 atlas 专属（前提修正：非 report/dashboard 类通病）。**选项 B**（df0729f25）：壳层上提根 layout（404 亦获导航）、`/` 直渲 Overview+canonical→dashboard.html、redirect 壳退役；**线上验证**：/ TBT 410ms≡dashboard（390~760ms）、perf 54→66~70、视觉闭环在墙（r116_root_live.png）；本地 python http.server 目录 URL 双峰伪影（3.6~3.9s）gh-pages 不复现=单线程伺服饥饿非页面缺陷（如实入册）。**外部对照**：web.dev content-visibility 一手指南确证轮 112/113 技术边界（渲染优化不跳水合；intrinsic-size auto 记忆策略=我们实现）；Interop 2026 页 404 文档重组期注记；搜索配额 10-03 18:50 UTC 恢复。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 

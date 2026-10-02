@@ -149,10 +149,17 @@ run2/3 恢复 1.3~1.7s）——跨日线上对比必须多跑取中位，TBT 才
 
 **选项 B 落地**（df0729f25）：壳层自 (dashboard) 组 layout 上提至根 layout（全部
 路由含 404 获得导航），`/` 直渲 `<Overview/>`+canonical→dashboard.html，redirect
-壳退役。**线上验证**：`/` TBT 410/410ms ≡ /dashboard 390/760ms（本地 python
-http.server 对目录 URL 的双峰伪影 3.6~3.9s 在 gh-pages **不复现**——单线程伺服
-饥饿，非页面缺陷）；perf 54→66~70；线上视觉闭环（r116_root_live.png：导航+hero+
-信任带+读数卡全在墙）。
+壳退役。**线上验证（含一次事故与更正，如实）**：df0729f25 的 `git add` 因陈旧 pathspec
+整条原子失败，该提交只含组 layout 删除——**线上短暂（约 15 分钟）全站无导航且
+/ 仍跳转**；cadd5122a 补齐后三路由（//market/404）导航探针全在墙、`/` hero h1
+在墙、canonical 在墙。**更正一**：df0729f25 窗口内的"线上验证 410ms"极可能测的
+是 Pages 重建延迟期的旧部署，不作为本轮证据。**更正二**：先前"本地双峰=python
+http.server 目录 URL 伪影"的归因不成立——修复后部署上 `/` 与 /dashboard **双双
+双峰**（860/3,020 vs 320/1,530ms），真实机制是 **TBT 对交付交错的测量敏感性**
+（慢网窗脚本执行被网络等待摊薄→TBT 反低；快网窗任务叠峰→TBT 高）；与轮 114
+"跨日线上必须多跑取中位"注记同源。结论维持：`/` ≡ /dashboard（同树同字节级
+近同构），redirect 链路税结构性消除；perf 单跑波动 41~72 不作为判据。视觉闭环
+（r116_root_live.png）有效。
 
 **外部对照**：web.dev content-visibility 一手指南确证轮 112/113 边界结论（渲染
 优化不跳过脚本/水合；`contain-intrinsic-size: auto <px>` 记忆策略=我们所用）；
