@@ -56,6 +56,26 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
+        {/* Speculation Rules (round 117, Chrome/Edge 121+ — ignored as inert
+            JSON everywhere else): hover/pointerdown prerender of same-app
+            navigations. This is a 1,500-page STATIC site with full-page
+            navigations — Chrome's own docs call that the ideal use case.
+            eagerness "moderate" = ~200ms hover / pointerdown, concurrency
+            capped at 2 (FIFO) and auto-disabled under Save-Data / Preload
+            off — polite by construction. Pattern pinned to /Aionis/* so
+            outbound links never speculate. */}
+        {/* eslint-disable-next-line react/no-danger -- static rules JSON, no user input */}
+        <script
+          type="speculationrules"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              prerender: [{
+                where: { href_matches: "/Aionis/*" },
+                eagerness: "moderate",
+              }],
+            }),
+          }}
+        />
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
