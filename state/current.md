@@ -1,5 +1,9 @@
 # state/current.md — read first each session
 
+- **active (2026-10-02) 轮 106（ops 线）：无限迭代第三轮——§5 最后一个 deferred 项闭环（qlib 式步级重试入兜底通道）：**
+  **实施**：refresh-terminal-data.yml（workflow_dispatch 兜底通道）七个有事故史的网络步包裹 SHA 钉住的 `nick-fields/retry@v4`（ad984534）——cot（FRED 断供类）/13D walk（EDGAR 限流）/IPO parse（窗口滑动）/macro_display+VIX（09-03 DFF 静默丢失事故类）/GDELT（429）/phase_b prices（Tiingo 429，2 次尝试）：per-attempt timeout 5-15 分钟×2-3 次×15-30s 等待，旧的整体步帽移除（job 150m 帽兜底），continue-on-error 保留为重试耗尽后的降级路径（qlib"先重试后降级"语义）。输入契约经 README 一手核实（timeout_minutes=每次尝试）。**验证**：YAML 解析过（37 步/7 包裹）+ruff 0+lane 29 绿；注：真实重试行为需首次 dispatch 实弹验证（值不值一次 ~60-90 分钟的兜底跑由业主定）。**报告 §5 状态表更新为 DONE**——至此研究报告的全部识别项均闭环（仅 uv cache prune 仍为有意缓办）。**边界**：ci/ops lane；0 ledger/0 frozen/0 OOS。**
+
+
 - **active (2026-10-02) 轮 105（ops 线）：无限迭代第二轮——一次性研究节点"错过即失"防护+满月月报口径升级：**
   **候选面审**（§5 deferred 项×近两周事故差分）选定两项：**①10-31 影子 runbook+GO 证据包节点防丢**（10-01 丢失同病理、29 天后重演风险真实）——CronUpdate 为小时级守卫 `5 4-23 31 10 *`（当日 20 次触发）+完成标记门控 `data/ops/shadow_1031.done`（首活火执行并写标记、后续火一行跳过、跨年复发因标记在而惰性；迟到语义保留）——复刻数据通道成熟模式；提示词同时内置 9-30 fail-closed 事实供 B 部分证据包如实呈现。**②10-06 满月月报口径**——夜报班追加任务扩至⑦项：push_only_recovery 触发统计+节省分钟估算、绊网新检查触发情况、10-01 节点专节（丢失→补跑→fail-closed 全链）、Actions 分钟 vs 预算、四选项续期建议。**模式入册**：runbook 新增"一次性研究自动化防丢"章节（含 10-02 补跑有效性实证）。**边界**：automation/docs lane；0 ledger/0 frozen/0 OOS。**
 

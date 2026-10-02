@@ -115,8 +115,13 @@ jobs:
         # fetch only new filings and finish in minutes.
 
       - name: Fetch fresh positioning data (CFTC COT, weekly)
-        run: uv run python scripts/cot_fetch.py
-        continue-on-error: true  # polite/bounded; failure keeps the old cache
+        uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4
+        with:
+          timeout_minutes: 5
+          max_attempts: 3
+          retry_wait_seconds: 15
+          command: uv run python scripts/cot_fetch.py
+        continue-on-error: true  # retries exhausted -> keep prior cache (qlib: retry THEN degrade)
 
       - name: Fetch fresh insider Form 4 (SEC EDGAR, daily filings)
         run: uv run python scripts/form4_fetch.py
@@ -126,7 +131,12 @@ jobs:
         continue-on-error: true
 
       - name: Fetch recent SC 13D stakes (EDGAR daily index, unfreezes past EFTS cutoff)
-        run: uv run python scripts/stakes_13d_daily_fetch.py
+        uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4
+        with:
+          timeout_minutes: 15
+          max_attempts: 3
+          retry_wait_seconds: 15
+          command: uv run python scripts/stakes_13d_daily_fetch.py
         timeout-minutes: 40  # step cap: the window grows daily (2024-12-17 → today
         # = 619 calendar days on 2026-08-28, ≈ 19-27min wall in a good window) and
         # the script writes its aggregate ONCE at the end — no per-day checkpoint.
@@ -158,9 +168,14 @@ jobs:
         # caught locally 2026-09-04). Bounded (<=156 requests, <=170 task cap)
         # and resumable: cached `ok` accessions are never re-fetched, so a warm
         # run spends ~0-16 requests on just the window's slide.
-        run: uv run python scripts/form_ipo_price_parse.py
+        uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4
+        with:
+          timeout_minutes: 5
+          max_attempts: 3
+          retry_wait_seconds: 15
+          command: uv run python scripts/form_ipo_price_parse.py
         timeout-minutes: 10
-        continue-on-error: true  # a failed walk keeps the prior parse cache honestly
+        continue-on-error: true  # retries exhausted -> keep prior cache (qlib: retry THEN degrade)
 
       - name: Fetch House PTR politician trades (STOCK Act filing stream)
         run: uv run python scripts/politician_trades_fetch.py
@@ -173,15 +188,30 @@ jobs:
         continue-on-error: true
 
       - name: Fetch display-only macro series (ALFRED dollar/yield-curve/unemployment)
-        run: uv run python scripts/fetch_macro_display.py --force
-        continue-on-error: true  # FRED outage keeps the prior cache
+        uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4
+        with:
+          timeout_minutes: 5
+          max_attempts: 3
+          retry_wait_seconds: 15
+          command: uv run python scripts/fetch_macro_display.py --force
+        continue-on-error: true  # retries exhausted -> keep prior cache (qlib: retry THEN degrade)
 
       - name: Fetch display-only VIX for market context (FRED VIXCLS, daily)
-        run: uv run python scripts/market_prices_fetch.py
-        continue-on-error: true  # FRED outage keeps the prior cache
+        uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4
+        with:
+          timeout_minutes: 5
+          max_attempts: 3
+          retry_wait_seconds: 15
+          command: uv run python scripts/market_prices_fetch.py
+        continue-on-error: true  # retries exhausted -> keep prior cache (qlib: retry THEN degrade)
 
       - name: Fetch GDELT news sentiment (news_sentiment theme, incremental)
-        run: uv run python scripts/news_sentiment_gdelt_fetch.py
+        uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4
+        with:
+          timeout_minutes: 8
+          max_attempts: 3
+          retry_wait_seconds: 20
+          command: uv run python scripts/news_sentiment_gdelt_fetch.py
         timeout-minutes: 20  # step cap: cold pull = ~38 quarterly chunks × ≥15s ≈
         # 12-15min; same insurance as Form 4/13D caps. Incremental cache means a
         # timeout resumes on the next run without re-fetching cached months.
@@ -234,9 +264,14 @@ jobs:
         # every run restarts from 0 cached (observed on runs 31788130986 /
         # 31794374610). With the budget, per-ticker parquets persist in the
         # saved cache and each run resumes — converging over ~3-4 runs.
-        run: uv run python scripts/phase_b_fetch.py --display --budget-minutes 24
+        uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4
+        with:
+          timeout_minutes: 12
+          max_attempts: 2
+          retry_wait_seconds: 30
+          command: uv run python scripts/phase_b_fetch.py --display --budget-minutes 24
         timeout-minutes: 27
-        continue-on-error: true  # Tiingo/Alpaca outage keeps the prior cache
+        continue-on-error: true  # retries exhausted -> keep prior cache (qlib: retry THEN degrade)
 
       - name: Materialize display panel (B1)
         # Expected to fail while the price cache is still converging (the

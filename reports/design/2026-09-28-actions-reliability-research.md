@@ -102,7 +102,7 @@ Readings:
 |---|---|---|
 | Action tags float (`@v4`) | fastapi pins EVERY action to a full SHA with version comments; pandas/freqtrade likewise; our logs already show forced Node 20→24 bumps from upstream action changes | **DONE 2026-09-28 (round 101): all 27 `uses:` lines across 7 workflows pinned via peeled tag SHAs** |
 | **staleness-check cron sits ON the hour (`0 2 * * 1`)** | scikit-learn's nightly deliberately runs `30 2 * * *` — GitHub's own "avoid the top of the hour" congestion advice, in production | **DONE 2026-09-28: moved to `17 2 * * 1`** |
-| CI fallback lane masks fetch failures with bare `continue-on-error` | qlib uses `nick-fields/retry` (`max_attempts: 3`) on network steps — retry THEN degrade | deferred deliberately: the fallback lane is emergency-only; the PRIMARY lane (local) already retries hourly via the Task Scheduler + marker guard — the qlib pattern's value is where no outer retry exists |
+| CI fallback lane masks fetch failures with bare `continue-on-error` | qlib uses `nick-fields/retry` (`max_attempts: 3`) on network steps — retry THEN degrade | **DONE 2026-10-02 (round 106): 7 incident-history steps in the fallback lane wrapped with SHA-pinned nick-fields/retry@v4 (per-attempt timeouts, 2-3 attempts); continue-on-error retained as the post-retry degrade** |
 | news_feed fake-date time bombs (09-28 red ×2) | pandas isolates `network` marker tests; our fake rows must be relative-dated like the 09-20 fix | **DONE 2026-09-28: `_fake_rows` day defaults to now−2d — helper-level fix defuses the whole class** |
 | Non-critical steps able to fail CI | `fail_ci_if_error: false` (pandas codecov) | partially adopted (our publish checks no-site-change exit 0) |
 
