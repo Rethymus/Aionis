@@ -224,3 +224,29 @@ SSR 表格计算不拉 SVG 代码入首屏包。**PanelFrame 逐字拷贝**（�
 
 工件：`runs/lh118_split_{1..4}.json`、`runs/lhLIVE118_atlas_{1,2,3}.json`。
 边界：display lane；0 ledger / 0 frozen / 0 OOS。
+
+
+## 轮 119（2026-10-02）：claims 手术式拆分落地——atlas 线上 TBT 中位 1,349ms，战役累计 -59%/-68%
+
+轮 118 配方复制到 claims 区块：两 SVG 体（IC pivot 热图 66 月×3 序列、森林图）
+**程序化逐行切片**入 `atlas-claims-charts.tsx`（零转录），两处 dynamic(ssr:false)
+共享异步 chunk+骨架；isNum/fmt/tf 入共享 prep 模块（SSR 包裹器不拉 SVG 入首屏包）；
+几何常量与 tokens 导入随图表走，主文件留 SYM_MAX/P_SERIES（halves 条消费）。
+
+| 指标 | r118 终版 | claims 拆分后 | Δ |
+|---|---|---|---|
+| 本地 TBT（3 跑） | 1,910~1,950ms | **1,450~1,510ms** | **中位 -24%** |
+| 本地主线程 | 4.5~4.7s | 4.1~4.3s | -7% |
+| CLS / a11y / console | 0 / 100 / 0 | **0 / 100 / 0** | 全保持 |
+| 线上 TBT（3 跑中位） | 1,879ms | **1,349ms** | **-28%** |
+
+**§4 闭环改用 DOM 证据**（比截图更强）：水合后 DOM 含 **198 个 pivot 单元格
+（66×3 精确吻合）**、SESOI 虚线带、9 桶图例、文献语境行、**零残留骨架**。
+**atlas 战役终账（轮 112 起）**：线上 TBT 4,820 → **1,349ms（-72%）**、
+a11y 89→100；本地 2,110~2,740 → 1,450~1,510。
+
+搜索配额 10-03 18:50 UTC（本轮仍 12:50 UTC，未到窗口如实注记）；activationStart
+实测仍 pending（脚本化 UI 轮）。
+
+工件：`runs/lh119_claims_{1,2,3}.json`、`runs/lhLIVE119_atlas_{1,2,3}.json`、
+`runs/r119_dom.html`。边界：display lane；0 ledger / 0 frozen / 0 OOS。

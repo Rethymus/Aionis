@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-02 (轮 119) claims 手术式拆分：atlas 线上 TBT 中位 1,349，战役累计 -72%
+
+轮 118 配方复制（程序化切片零转录+prep 共享+骨架占位）：本地中位 -24%（1,930→1,470）、线上中位 1,349（-28% vs r118）；§4 用 DOM 证据闭环（198 pivot 单元格精确吻合+零骨架）；全指标保持。atlas 战役（112~119）终账：线上 4,820→1,349（-72%）+a11y 89→100。清理期两次正则断言失败即停改锚点删除（防部分写盘）。边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-02 (轮 118) divergence 手术式拆分：atlas 线上 TBT -43%（1,879 中位），累计 -61%
 
 SVG→异步 chunk（dynamic ssr:false×2 共享+骨架），prep 独立模块保 SSR 表格；PanelFrame 逐字拷贝（记忆重写三处偏差被 diff 拦截）。本地中位 -21%/线上中位 -43%（vs 3,280）；全指标保持；诚实注记：~0.5s 实收低于 0.8~1.7s 估算上限（chunk 仍在窗口执行）。§4 闭环+提交完整性验证（轮 116 教训执行）。边界：display lane；0 ledger/0 frozen/0 OOS。

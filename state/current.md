@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-10-02) 轮 119（display 线）：claims 手术式拆分落地——atlas 线上 TBT 中位 1,349ms，战役累计 -72%（4,820 起）：**
+  轮 118 配方复制：两 SVG 体**程序化逐行切片**（零转录）入 charts 异步 chunk+骨架；prep 共享模块保 SSR 包裹器轻量；常量/tokens 随图表走。**实测**：本地 TBT 中位 -24%（1,930→1,470，3 跑紧致 1,450~1,510）、主线程 -7%、CLS 0/a11y 100/console 0 全保持；**线上 3 跑中位 1,349ms（vs r118 1,879=-28%）**。**§4 改用 DOM 证据**（更强）：水合后 DOM 198 个 pivot 单元格（66×3 精确）、SESOI 带、9 桶图例、文献行、零残留骨架。**atlas 战役终账（轮 112~119）**：线上 TBT 4,820→1,349（**-72%**）、a11y 89→100——cv（布局）+两轮手术式拆分（水合）的完整技术路径收官。过程如实：清理残留常量时两次正则断言失败即停（防部分写盘），改 Edit 锚点精确删除。搜索配额 10-03 18:50 UTC 未到窗口；activationStart pending。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (2026-10-02) 轮 118（display 线）：divergence 手术式拆分落地——线上 atlas TBT 3,280→1,879ms（-43%），atlas 累计 -61%，全指标保持：**
   执行轮 117 方案：SVG 面板→`atlas-divergence-charts.tsx`（两 dynamic ssr:false 共享异步 chunk+minHeight 骨架）；纯数据 prep 独立模块（SSR 表格不拉 SVG 入首屏包）。**PanelFrame 逐字拷贝纪律实战**：首次凭记忆重写被逐字 diff 抓出三处偏差（网格线型/刻度裁剪/x 定位），构建前替换。**实测**：本地 TBT 中位 -21%（2,425→1,930）、主线程 -14%、CLS 0/a11y 100/console 0 全保持；**线上 3 跑中位 1,879ms（vs 轮 112 基线 3,280=-43%）**；§4 全页捕获两区块全渲染。**诚实注记**：实际 ~0.5s 低于估算上限 0.8~1.7s（异步 chunk 仍在窗口内执行，估算把整个份额当可迁移量）。**atlas 战役累计（轮 112 起）：线上 TBT 4,820→1,879（-61%）+a11y 89→100**。搜索配额 10-03 18:50 UTC（未到窗口）；activationStart 实测仍 pending。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 
