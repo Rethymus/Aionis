@@ -37,13 +37,13 @@ export default function AtlasPage() {
       <Reveal delay={60}>
         <AtlasDivergence />
       </Reveal>
-      <Reveal delay={60}>
+      <Reveal delay={60} className="cv-auto">
         <AtlasDiagnostics />
       </Reveal>
-      <Reveal delay={60}>
+      <Reveal delay={60} className="cv-auto">
         <AtlasDeciles />
       </Reveal>
-      <Reveal delay={60}>
+      <Reveal delay={60} className="cv-auto">
         <AtlasDataflow />
       </Reveal>
     </div>
