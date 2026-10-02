@@ -2542,3 +2542,4 @@ dashboard realizing `docs/dashboard-v2-design.md`'s 5 dimensions on deterministi
   - **轮 109（2026-10-02）**：--doctor 六层预检（实测 6/6 PASS：守卫/计划任务/钩子/推送凭据/gh/API env；+1 测试）+ci 结论持久化入 marker；32 绿/全量 0。
   - **轮 110（2026-10-02）**：夜报班升级——每晩 --doctor 六层体检（凭据/调度器/钩子失效的最早信号，PAT 过期类问题从"人工发现"变为"当晚报出"）+ marker ci 字段进一行总结（CI(own): success/success）+ 月报口径纳入 doctor 趋势。即刻于今晚 23:35 生效。
   - **轮 111（2026-10-02）**：runbook 失败模式表同步至轮 110 能力面（push-only 恢复/doctor/ci(own)/防丢守卫/镜像钉/重试六行新增）——第二月运维手册不再过时。
+  - **轮 111 收官（10-02 20:04 核验）**：own-commit CI 核验首夜实弹——通道 78.9 分钟完成（0b3a9a98，57 文件，软失败仅 ticker_metadata），推送后自行轮询本提交的双 CI 结论至收敛并持久化进 SUMMARY 与 marker：`ci: {publish-site: success, Tests: success}`（有界等待含 Tests ~4 分钟全程）。轮 107 特性生产验证闭环。
