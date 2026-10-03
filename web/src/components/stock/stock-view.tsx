@@ -12,6 +12,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { WatchlistStar } from "@/components/ui/watchlist-star";
+import { CopyProvenance } from "@/components/ui/copy-provenance";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
 import { form13f } from "@/data/aionis/form13f";
@@ -492,6 +493,7 @@ export function StockView({ ticker }: { ticker: string }) {
           </div>
         </div>
         <ProvenanceBadge ts={stockUniverse.as_of[stock.region]} frozen />
+        <CopyProvenance citation={`**${stock.name} (${stock.ticker})** — score ${stock.score?.toFixed(2) ?? "—"}, prob_up ${((stock.prob_up ?? 0) * 100).toFixed(1)}% · frozen OOS panel as of ${stockUniverse.as_of[stock.region]} · [audit trail](https://github.com/Rethymus/Aionis/blob/main/runs/ledger.jsonl)`} />
       </header>
 
       <NullDisclaimer />
