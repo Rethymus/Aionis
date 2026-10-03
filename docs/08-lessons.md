@@ -23,7 +23,32 @@
    underpowered 53-ERL/43-cluster pilot, not evidence of stock-selection alpha.
 9. **Economic claims need economic inputs.** The B/C strategy lens is exploratory,
    gross of costs and lacks turnover; it cannot establish net tradability.
+10. **Nested `<a>` guarantees hydration mismatch (#418).** A card-level `<Link>`
+    wrapping rows that are themselves `<Link>`s parses differently as a string
+    (browser force-closes the outer anchor) than as a vDOM — every load throws
+    React #418. Found by controlled ablation builds + targeted subtree diff,
+    not by reading the code.
+11. **content-visibility has a DOM-size threshold (~10k elements).** It paid
+    -45% TBT on a 7k-DOM page and cost +20% on a 1.5k-DOM one — containment
+    bookkeeping exceeds the layout savings below the threshold. Chart-heavy
+    pages need deferred *mounts* (dynamic ssr:false) instead: hydration is not
+    skipped by paint containment.
+12. **A chart-level async split pays only when charts dominate page cost.**
+    Same recipe: -40% on a chart-led page, +300ms net-harmful on a
+    table-led page with one small chart (measured 4 runs, control page).
+13. **TBT is sensitive to delivery interleaving.** The same build measures
+    differently across network windows (slow windows spread long tasks);
+    single live runs mislead — take medians, and treat local A/B as the
+    deciding instrument.
+14. **Never trust a saved marker's stale fields.** A marker mixing last
+    night's `finished_at` with this run's `status: running` read as "crashed";
+    it was mid-run. Verify against process liveness before acting.
+15. **Multi-pathspec `git add` fails atomically.** One stale pathspec aborts
+    the whole staging — a commit then shipped only part of the change. Check
+    `git diff --cached` after every staged add.
 
 ## See also
 
 - RESULTS.md
+- reports/design/2026-10-02-performance-campaign.md (the display-era campaign:
+  12 wins, 11 nulls, the four measured boundaries behind lessons 10-13)
