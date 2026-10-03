@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-04 凌晨 (轮 151) 仪表盘数据正确性断言 PASS：Overview 渲染 NULL 裁决词汇+零捏造正收益声明（3842 字符实采，AppTest accessor 边界入册）
+
+边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-03 深夜 (轮 150) 夜报自动化配置完整性核验：nextRunAt=周一 23:35 北京精确一致，轮 144 强化武装待触发
 
 值守循环收敛：本地零可动作项；剩余节点全外部触发。边界：值守 lane；0 ledger/0 frozen/0 OOS。

@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-04 凌晨) 轮 151（display 线）：仪表盘数据正确性断言 PASS——Overview 渲染含 NULL 裁决词汇/裁决锚（3842 字符实采），零捏造正收益声明；值守循环收敛确认：**
+  AppTest 元素级文本采集（markdown/subheader/header/caption 全 accessor）：Overview 渲染含 **null 词汇**（四相冻结裁决）、**裁决/verdict 锚**、**零 "significant positive" 捏造声明**——数据正确性断言通过（此前仅运行级 PASS）。AppTest accessor 边界教训：headings 属性不存在（与文档版本相关），仅用确认存在的 accessor。**值守循环收敛再确认**：周一 18:05 通道首跑（轮 138 修复实弹）为下一外部触发。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-03 深夜) 轮 150（值守 线）：夜报自动化配置完整性核验——nextRunAt 精确换算=周一 23:35 北京（cron 35 23 * * 1-5 语义正确），轮 144 强化已武装待触发：**
   排除双重时区偏移干扰（本地 UTC+8 机器上 fromtimestamp 双重换算的伪影）后：夜报自动化 nextRunAt=Oct 5 15:35 UTC=**周一 23:35 北京**，与 cron 表达式精确一致、enabled=true、轮 144 追补强化提示词在位——满月评估的执行器配置完整性确认。值守循环至此全部收敛：本地可动作项零残留，剩余节点（周一通道/周二月报/10-31 影子/PR #99058/业主三项）全部时间或输入触发。**边界**：值守 lane；0 ledger/0 frozen/0 OOS。
 
