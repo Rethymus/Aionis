@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-10-03) 轮 147（ci/display 线）：i18n 孤儿门入 CI——审计脚本 --ci 模式（孤儿/不对称 exit 1，双路径实证）+ Tests 工作流 ubuntu 实弹首跑 PASSED：**
+  轮 146 的手动审计升格为**持久 CI 门**：脚本加 `--ci`（confirmed orphans 或 zh/en 不对称→exit 1；9 prefix-only 动态构造键 warning-only 不误伤）；**双路径实证**（注入 bogus 孤儿→exit 1→移除→exit 0）。ci.yml 增 pnpm/Node（复用仓内既有 SHA 精确一致）+ `pnpm install --frozen-lockfile` + 审计门（纯本地扫描零网络，hermetic 与 pytest 同域）——**ubuntu 实弹首跑 PASSED**（run 37131582503）。i18n 零孤儿状态从"本轮成果"升格为"持续强制"。周一 18:05 通道首跑/10-06 月报/业主三项无新输入。**边界**：ci/display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-03 晚) 轮 149（ops 线）：轮 138 修复本地预验证 PASS——缓存模式 4.4 秒/零网络/全量元数据在墙；周一新风险入册（pypi 复核阻断→快速软失败降级，--offline 评估后否决）：**
   不等周一提前实弹：`--with baostock --offline`（强制 uv 缓存）跑通道精确命令——**4.4 秒完成**（vs 此前 10 分钟满帽）、零 fetch、15,638 行元数据全量（US 10,431/CN 5,207；CSRC 5,194+fallback 13）。**新风险如实**：`--with baostock` 每次需 pypi.org 复核，当前网络 TLS 阻断（transient）——若周一仍阻断，步骤将在解析期 ~4 秒快速软失败（不劣于现状且快 150 倍，lane 继续+导出保留 committed 面板）。`--offline` 加旗方案评估后否决（引入冷缓存新失败模式；手动 --no-cache 路径已在）。数据面写盘=display lane 常规（顺带预热周一）。**边界**：ops lane；0 ledger/0 frozen/0 OOS。
 

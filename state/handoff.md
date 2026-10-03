@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-03 (轮 147) i18n 孤儿门入 CI：--ci 双路径实证（bogus 注入 exit 1）+ ubuntu frozen-install 实弹 PASSED——零孤儿状态升格为持续强制
+
+边界：ci/display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-03 晚 (轮 149) 轮 138 修复预验证 PASS（--offline 缓存模式 4.4s/零网络/15,638 行全量）；周一 pypi 复核风险入册（降级=4s 快速软失败；--offline 否决理由在册）
 
 边界：ops lane；0 ledger/0 frozen/0 OOS。
