@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-04 (轮 159) atlas SVG 原生 hover tooltip：零 JS `<title>` 加到 pivot 热图/divergence 带/dot——交互式 IC 探索器轻量落地
+
+边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-04 (轮 158) WatchlistStrip 上线：dashboard 星标股实时价格浮层（Worker 端点复用），深度反思三提案全落地
 
 边界：display lane；0 ledger/0 frozen/0 OOS。

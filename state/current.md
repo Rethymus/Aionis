@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-04) 轮 159（display 线）：atlas SVG 原生 hover tooltip——零 JS 静态导出兼容，逐数据形状加 `<title>`：**
+  深度反思"交互式 IC 探索器"的轻量实现：SVG `<title>` 是浏览器原生 tooltip（零 JS、零性能代价、全浏览器兼容、静态导出天然支持）。三处数据形状添加：①IC pivot 热图 198 格（month·series·IC=value 四位精度）；②divergence 带状 rect（month·band [lo,hi]·realized·in/out-band）；③divergence 点（month·realized·ECE）。**异步 chunk 架构正确行为**：SSR HTML 无 title（ssr:false 图表水合后出现）——构建验证 EXIT 0 足够。深度反思"交互式 IC 探索器"以零成本落地（1 天估算→实际 ~15 分钟）。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-04) 轮 158（display 线）：WatchlistStrip 仪表盘实时价格浮层上线——深度反思第三功能提案落地：**
   轮 156 的星标 toggle + 轮 157 的新鲜度 badge 之后，第三个功能提案实现：dashboard Overview 页 MarketCards 下方加 WatchlistStrip——用户星标的 ticker 以紧凑卡片行渲染，**实时价格+涨跌%来自 Worker 端点**（useLivePrices hook 复用，30s TTL），amber accent 与星标色匹配。空 watchlist 渲染 null（零仪式）；点击卡片跳转 stock 页。**验证**：tsc 0/eslint 0/构建 1506 EXIT 0/CI 绿。至此深度反思的三个功能提案全部落地：Watchlist toggle→FreshnessBadge→WatchlistStrip。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 
