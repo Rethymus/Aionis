@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-04) 轮 157（display 线）：数据新鲜度 badge 上线——顶部导航紧凑指示器（色点+"Xh ago"），反泄漏信任承诺可视化：**
+  深度反思第二功能提案实现：`top-nav-freshness.tsx`——从 data_health.snapshot_ts 计算距上次导出的小时数，色点三级（绿<48h/琥珀 48-96h/红>96h，匹配通道节奏：交易日每夜+周末 skip），tooltip 显精确时间戳+nav.freshness i18n 键（zh"数据新鲜度"/en"Data freshness"，审计门 PASS）。**SSR 占位（52px）防 CLS，水合后 Date.now() 客户端计算实时值**——"live"指标的正确模式。接线 top-nav ColorConvToggle 前。**验证**：tsc 0/eslint 0/构建 1506 EXIT 0；组件在 JS chunk 中（SSR 无内容=mounted 门控设计内）。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-04) 轮 156（display 线）：Watchlist 自选股功能上线——localStorage 星标 toggle 接入 picks 20 行+stock ~1460 页，深度反思最高性价比提案落地：**
   轮 155 深度反思的最高性价比功能提案实现：`lib/watchlist.ts`（模块级 Set+listeners+localStorage，colorconv-toggle 同款模式）+ `ui/watchlist-star.tsx`（琥珀填充星标，嵌在 Link 卡内时 stopPropagation 防导航）。**接线**：picks 全部 PickRow 行（20 Top-10 US/CN+shorts）+ /stock/[ticker] 标题旁（~1460 页覆盖）。**水合安全**：uSES 设计内 SSR→client 转换（server snapshot=空集合→unstarred；客户端 getSnapshot 接 localStorage→starred，无 #418——round-136 教训：用静态构建探针验证而非仅 dev）。**验证**：tsc 0/eslint 0/构建 1506 EXIT 0/静态导出 aria-label 在墙（picks 20+ 处、stock AAPL 处）。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 

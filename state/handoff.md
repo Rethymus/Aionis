@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-04 (轮 157) 数据新鲜度 badge 上线：顶部导航色点+"Xh ago"（三级 freshness），反泄漏信任可视化
+
+SSR 占位防 CLS；水合后客户端计算；nav.freshness i18n 键对称；审计门 PASS。深度反思第二功能提案。边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-04 (轮 156) Watchlist 自选股上线：localStorage 星标+~1460 stock 页+picks 行全覆盖，水合安全（uSES 设计内转换），CI 绿
 
 深度反思最高性价比提案实现。lib/watchlist.ts（colorconv 同款模块 store）+ ui/watchlist-star.tsx（琥珀星标+stopPropagation）+ picks/stock 双接线。uSES 设计内 SSR→client 转换无需 mounted gate（round-136 验证纪律：静态探针验证）。验证：tsc/eslint/构建全绿+aria-label 在墙。边界：display lane；0 ledger/0 frozen/0 OOS。
