@@ -176,8 +176,15 @@ STEPS: list[dict] = [
      **_py("scripts/track_b_materialize_panel.py", "--display"), "cap": 15,
      "soft": True},
     {"name": "build_ticker_metadata",
+     # Round 138: dropped --no-cache — the nightly lane burned its full 10m
+     # cap on a whole-universe baostock refetch (query_stock_industry) that
+     # timed out EVERY night (soft-fail since at least 2026-10-01) while
+     # stock_universe is a FROZEN panel by design and CSRC industry data
+     # changes at an annual pace. Cached mode rebuilds in seconds; the
+     # manual --no-cache refetch stays available for industry-data bumps
+     # (see the script docstring).
      "uv_argv": ["--with", "baostock", "python",
-                 "scripts/build_ticker_metadata.py", "--no-cache"],
+                 "scripts/build_ticker_metadata.py"],
      "cap": 10, "soft": True},
     {"name": "build_regime_macro",
      **_py("scripts/build_regime_macro.py"), "cap": 10, "soft": True},
