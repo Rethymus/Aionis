@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-03 晚) 轮 149（ops 线）：轮 138 修复本地预验证 PASS——缓存模式 4.4 秒/零网络/全量元数据在墙；周一新风险入册（pypi 复核阻断→快速软失败降级，--offline 评估后否决）：**
+  不等周一提前实弹：`--with baostock --offline`（强制 uv 缓存）跑通道精确命令——**4.4 秒完成**（vs 此前 10 分钟满帽）、零 fetch、15,638 行元数据全量（US 10,431/CN 5,207；CSRC 5,194+fallback 13）。**新风险如实**：`--with baostock` 每次需 pypi.org 复核，当前网络 TLS 阻断（transient）——若周一仍阻断，步骤将在解析期 ~4 秒快速软失败（不劣于现状且快 150 倍，lane 继续+导出保留 committed 面板）。`--offline` 加旗方案评估后否决（引入冷缓存新失败模式；手动 --no-cache 路径已在）。数据面写盘=display lane 常规（顺带预热周一）。**边界**：ops lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-03 晚) 轮 148（值守 线）：周末 skip 实战观测——钩子 22:02 正确 SKIP:weekend（轮 92 设计运转中）；轮 138 ticker_metadata 修复首验窗口=周一 18:05：**
   今晚会话启动钩子实弹：`hook skip: SKIP:weekend (Sat)`——能耗设计按预期运转（周末无美股时段可刷）；marker 保留周五状态（soft_fails=[ticker_metadata]），下周一 18:05 北京的通道将是**轮 138 去 --no-cache 修复的首次实弹**（缓存模式秒级重建 vs 此前每晚 10 分钟满帽超时），其结果进入 10-06 满月评估的逐晚表。10-06（周二 23:35）月报自动化就绪（幂等+追补）。**边界**：值守 lane；0 ledger/0 frozen/0 OOS。
 
