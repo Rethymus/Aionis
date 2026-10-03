@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-03 (轮 139) Streamlit 仪表盘审计：AppTest 11 页 PASS；use_container_width 26 处迁移（轮 50 P3 到期——移除日已过，升级即炸）
+
+迁移后 AppTest 零警告+64 测试绿；10-06 预检三件套在位。边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-03 (轮 138) npm audit 归零（4 通告=Next 构建期传递链，overrides 钉补丁版）+ ticker_metadata 每晚 10 分钟空烧根治（去 --no-cache，CSRC 年更数据不需夜刷）
 
 边界：ci/ops/display lane；0 ledger/0 frozen/0 OOS。

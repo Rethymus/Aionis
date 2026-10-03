@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-10-03) 轮 139（display 线）：Streamlit 仪表盘首次审计——AppTest 11 页全 PASS + 轮 50 到期 P3（use_container_width 弃用，移除日 2025-12-31 已过）26 处迁移根治：**
+  审计路径：结构盘点（12 处 @st.cache_data/轻量 meta 加载/优雅降级——既有设计规整）→ **AppTest 全应用烟测**（11 tab 全 PASS）→ 抓到 ~20 条弃用警告：`use_container_width` 官方移除日已过=任何 streamlit 升级炸全部图表（轮 50 P3 watch 到期）。迁移 26 处（9 个 view 文件）→ `width="stretch"`；迁移后 AppTest 零警告 PASS + 仪表盘 8 测试文件 64 测试绿 + ruff 净。**10-06 预检**：夜报自动化在册、底稿（09-28 interim ledger）在位、月报文件未生成（节点 10-06 23:35 自动创建）、通道 ok。业主三项待反馈无新输入。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (2026-10-03) 轮 138（ci/ops/display 线）：web 依赖安全审计首跑归零（4 通告全在 Next 构建期传递链）+通道 ticker_metadata 每晚 10 分钟空烧根治：**
   **安全**（本会话首跑 npm 面审计——Mimosa 只覆盖 Python）：pnpm audit（官方 registry）发现 4 通告，全在 Next **构建期工具链传递依赖**（不进静态产物，暴露面=构建机）：browserslist≤4.28.6 双高危（内存无界增长+crash）、baseline-browser-mapping<2.11.0 中危、@babel/core≤7.29.0 低危——pnpm.overrides 钉补丁版后 **audit 归零**；回归 tsc 0/eslint 0/构建 1506 EXIT 0，线上双页 200。**ops**：build_ticker_metadata 每晚软失败于 10 分钟满帽——`--no-cache` 强制全宇宙 baostock 行业重抓（CSRC 年更数据）而 stock_universe 本就是冻结面板——去掉该旗标（缓存命中秒级重建；手动全量路径保留于脚本 docstring）；通道测试 30 绿+ruff 净。**边界**：ci/ops/display lane；0 ledger/0 frozen/0 OOS。
 
