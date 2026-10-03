@@ -46,7 +46,7 @@ def view_strategy_return() -> None:
     for nt in grid:
         fmt[f"p@n{nt}"] = _num(".3f")
     st.dataframe(df.style.format({k: v for k, v in fmt.items() if k in df.columns}),
-                 use_container_width=True, hide_index=True)
+                 width="stretch", hide_index=True)
     spa = row.get("spa", {})
     if isinstance(spa, dict) and "consistent_pvalue" in spa:
         st.caption(f"Hansen-SPA consistent_p = {spa['consistent_pvalue']:.3f} "
@@ -63,7 +63,7 @@ def view_strategy_return() -> None:
                 "(written by ``scripts/strategy_eval_run.py``); not found.")
     else:
         st.plotly_chart(_equity_curve_chart(ls_wide),
-                       use_container_width=True, key="strategy-equity")
+                       width="stretch", key="strategy-equity")
         st.caption("Cumulative sum of each strategy's monthly long-short return "
                    "(secondary/exploratory lens; gross-of-costs). Dashed grey = "
                    f"{row.get('benchmark', 'arm_base')} benchmark. The rank-IC "

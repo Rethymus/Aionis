@@ -16,4 +16,4 @@ def view_run_history() -> None:
     show = [{"ts": r.get("ts", "")[:19], "event": r.get("event"),
              "phase": r.get("phase"), "sig": str(r.get("config_sig", ""))[:12]}
             for r in rows[-30:]]
-    st.dataframe(pd.DataFrame(show[::-1]), use_container_width=True, hide_index=True)
+    st.dataframe(pd.DataFrame(show[::-1]), width="stretch", hide_index=True)

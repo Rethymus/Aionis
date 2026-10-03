@@ -18,7 +18,7 @@ def view_horizon_robustness(runs: list[dict]) -> None:
         st.info("No horizon-sensitivity sweep yet (run scripts/sensitivity_horizon.py).")
         return
     st.plotly_chart(_horizon_robustness_chart(runs, sweep),
-        use_container_width=True, key="horizon-robust")
+        width="stretch", key="horizon-robust")
     sw = sweep.get("results", {})
     n_cells = sum(
         1 for h in ("10", "42") for ph in ("B", "C", "D", "E1")

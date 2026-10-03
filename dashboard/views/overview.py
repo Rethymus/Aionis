@@ -14,10 +14,10 @@ def view_overview(runs: list[dict]) -> None:
     _headline_table_impl(runs)
     st.markdown("**Differential forest plot** — mean ± 95% CI per phase (CI brackets 0 ⇒ NULL)")
     if runs:
-        st.plotly_chart(_differential_forest(runs), use_container_width=True, key="overview-forest")
+        st.plotly_chart(_differential_forest(runs), width="stretch", key="overview-forest")
         st.markdown("**CI precision per phase** — green = null-precision gate "
                     "passed (ci_half < 0.015)")
-        st.plotly_chart(_ci_half_bar(runs), use_container_width=True, key="overview-cihalf")
+        st.plotly_chart(_ci_half_bar(runs), width="stretch", key="overview-cihalf")
 
 
 def _headline_table_impl(runs: list[dict]) -> None:
@@ -30,7 +30,7 @@ def _headline_table_impl(runs: list[dict]) -> None:
     st.dataframe(show.style.format({k: "{:+.4f}" for k in
                                     ["treat mean IC", "base mean IC", "differential",
                                      "ci_half"]} | {"DM-p": "{:.3f}"}),
-                 use_container_width=True, hide_index=True)
+                 width="stretch", hide_index=True)
     n_pub = int(df["publishable"].sum())
     # NULL = the differential 95% CI brackets 0 (the project's actual criterion),
     # NOT |mean_diff| < 0.015 (that's the precision gate on ci_half).

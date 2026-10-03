@@ -82,7 +82,7 @@ def view_forward_ic(
         monthly_se = summary.get("se_hac", 0.0)
         st.plotly_chart(
             _cumulative_ic_chart(ic_forward, "forward differential IC", monthly_se=monthly_se),
-            use_container_width=True,
+            width="stretch",
             key="fwd-cum-ic",
         )
     else:
