@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-10-03) 轮 137（display/ci 线）：Next 16.2.3→16.3.8 安全升级落地（16.3.8=安全版：Image SSRF 高危+cache-poisoning+draft-mode 泄漏）；上游 RSC 404 无修（经 16.4-canary.58 核实）入册：**
+  情报（releases 一手页）：16.4-canary.58 前无任何 RSC 预取/静态导出布局修复=轮 135 上游缺陷仍开放；**16.3.8 是安全版**而本仓停在 16.2.3——SSRF 面本仓已被 images:unoptimized 缓解，但 cache-poisoning/draft-mode 修复适用。升级（pnpm10 经 CI=true 重建 modules 目录）+全套回归：构建 1506 EXIT 0、tsc/eslint 净、**#418 四页保持 0**（轮 136 修复跨版本成立）、RSC 404 仍在（~24/页量化，16.4 观察项）、atlas TBT 1,560（单跑，噪声带内）。线上双页 200。**10-06 满月评估倒计时 3 天**（自动化就绪）；业主三项无新输入。**边界**：display/ci lane；0 ledger/0 frozen/0 OOS。
+
 - **active (2026-10-03) 轮 136（display 线）：#418 终局——八构建受控二分+错误签名解码+定向 diff 三仪器合围，根因=MiniPicks 嵌套锚点（无效 HTML 致解析器强闭外层锚），修复后本地+线上全零：**
   二分链：heroOnly 0→后半 1→ArgChain 段 1→四卡网格 1；签名 args=("HTML","")=客户端空串；网格定向 diff 抓获 SSR 兄弟结构 vs vDOM 嵌套结构——**MiniPicks 四个逐股 Link 嵌在卡级 Link 内=嵌套 <a> 无效 HTML**，解析器强制闭合外锚→结构性水合失配每次必发（/picks 段唯一含链接 detail=页面分布之谜解）。修复=行改 span（卡链 /picks）。验证：本地 4 页+线上 2 页 #418 全 0（954dfcd78）。轮 134 的 toggle 定位系良性首差异。10-06 倒计时 3 天自动化就绪；业主三项无新输入。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 
