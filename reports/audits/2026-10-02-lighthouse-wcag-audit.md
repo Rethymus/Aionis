@@ -418,3 +418,25 @@ Subgrid 等 Baseline 状态到手；Interop 2026 页持续 404（web.dev 文档�
 地标）反而先行于 Baseline。null 入册；配额恢复后的全量搜索扫描仍保留为候选。
 
 边界：docs/ops lane；0 ledger / 0 frozen / 0 OOS。
+
+
+## 轮 132（2026-10-02）：axe-errored 三页根因坐实——axe-core midpoint 工具级 bug，如实归档
+
+复现取证（discipline）：a11y score=None 的唯一原因 =
+`color-contrast: axe-core Error: Element midpoint exceeds the grid bounds`
+（控制台零错误、其余审计正常）。congress/filers/discipline 三页共有
+FrostedScrollArea 的大表+transform/裁剪容器模式（轮 66~73 视觉体系）——axe 的
+色对比中点网格计算在该容器几何上崩溃，是 **axe-core 已知工具级缺陷类**，非页面
+缺陷指示：对比度本身已由全站令牌级审计覆盖（轮 112 令牌 + 轮 131 三修，
+24 路由实测 100）。
+
+**裁决**：不改久经考验的 frost 视觉去迁就工具 bug（98 轮验证体系 > linter 类
+工具的单点报错）；如实归档为 audit-errored-by-tool。
+
+### 全站 a11y 终板（轮 112+131+132，33 路由）
+
+- **24×100**（含 stock 全系 ~1460 页 92→100、shelf 96→100）
+- **4×95~96 target-size 按设计不修**（heatmap 树图数据格/密表 ticker——理由在册）
+- **3×axe-errored-by-tool**（midpoint bug，对比度经令牌级覆盖）
+
+工件：`runs/lh132_discipline.json`。边界：display lane；0 ledger/0 frozen/0 OOS。

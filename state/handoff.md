@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-02 (轮 132) axe-errored 根因=axe-core midpoint 工具 bug，如实归档
+
+color-contrast 审计在 frost 容器几何上崩（grid bounds 错误，控制台零错）；不改视觉迁就工具；对比度由令牌级覆盖。33 路由终板：24×100+4×设计不修+3×工具错。边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-02 (轮 131) 33 路由 a11y 普查：stock 92→100（~1460 页）+shelf 96→100
 
 三真修（第三种 alpha 残留/非颜色区分下划线/opacity-70 utility）；target-size 两类按设计不修（树图格=数据编码、密表 ticker 24px=表高翻倍回归）理由入册；congress/filers/discipline axe 巨表 errored 如实记 audit-errored。10-06 命令预演过（17 ok_committed）。边界：display lane；0 ledger/0 frozen/0 OOS。

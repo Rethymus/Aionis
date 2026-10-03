@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-10-02) 轮 132（display 线）：axe-errored 三页根因坐实=axe-core midpoint 工具级 bug，如实归档；全站 a11y 终板入册（33 路由全覆盖会计）：**
+  取证（discipline 复现）：score=None 唯一原因=`color-contrast: axe-core Error: Element midpoint exceeds the grid bounds`（控制台零错、余审计正常）；三页共有 frost 大表+transform/裁剪容器模式。**裁决**：不为取悦工具改 98 轮验证的视觉体系；对比度已由令牌级审计覆盖（24 路由实测 100）。**终板**：24×100（含 stock 全系/shelf）+4×按设计不修（target-size 理由在册）+3×axe-errored-by-tool——33 路由全覆盖会计。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (2026-10-02) 轮 131（display 线）：33 路由批量 a11y 普查——stock 全系 92→100（~1460 页）+shelf 96→100，三真修+两按设计不修+三 audit-errored 如实：**
   普查（轮 112 只审过 4 页）：22 页满分；**真修三处**——stock 实时价前缀的第三种 alpha 残留（/70，轮 112 令牌清扫漏网→去 alpha 用令牌）、congress 交叉链接补非颜色区分（常显淡下划线 hover 加深）、shelf 计数 span 的 opacity-70 utility（同病异形→令牌）。**按设计不修（理由入册）**：heatmap 树图格的 target-size（尺寸=数据编码）与密表行内 ticker 链接（24px 最小=表高翻倍的真回归）。**如实**：congress/filers/discipline 的 axe 在巨表上 errored（score None）记为 audit-errored 非通过。10-06 月报命令预演过（SUMMARY 计数 17 ok_committed）。tsc/eslint/构建全绿。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 
