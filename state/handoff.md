@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-03 (轮 145) sitemap 规范对齐：根条目并入 dashboard.html（priority 1）+market 重复消除（emit 级检查拦截）；线上 1500 唯一 URL 验证
+
+边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-03 (轮 144) 满月评估丢失风险根治：夜报自动化追补强化（10-06 单班→幂等存在性门控+10-07+ 补跑，防轮 104 病理）
 
 边界：值守 lane；0 ledger/0 frozen/0 OOS。

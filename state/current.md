@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-10-03) 轮 145（display 线）：sitemap 规范对齐——根条目并入 dashboard.html（priority 1）+market 重复消除，线上 1500 唯一 URL 验证：**
+  值守巡检发现轮 116 选项 B 遗留的 SEO 不一致：/ 的 canonical 已指 dashboard.html 而 sitemap 仍列非规范根 URL 为 priority-1。修复含一次自纠：首版去重引入 market.html 重复——**emit 级重复检查在提交前拦截**（构建产物直查），终态 1500 唯一 URL 零重复、dashboard.html 居首 priority 1。线上发布后实测同构。PR #99058 仍 open；10-06 节点 3 天（幂等追补强化已挂）；业主三项无新输入。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (2026-10-03) 轮 144（值守 线）：满月评估丢失风险根治——夜报自动化追补强化（10-06 当班+10-07+ 任何一班发现缺失即补跑并注明，防轮 104 式一次性丢失）：**
   **风险识别**：10-06 月报搭在夜报自动化 23:35 单班上——若当夜宿主休眠即一次性丢失（与轮 104 的 10-01 runbook 同病理；10-31 节点已有小时守卫，10-06 原本没有）。**强化**（CronUpdate 于 automation-fcf3003a）：满月评估任务改为**幂等存在性门控**——文件在→跳过；10-06 当班执行；**10-07 及以后任何一班发现缺失同样执行并文首注明补跑**（顺带解除原提示词"禁止编辑 state"与追补提交的一处张力，显式豁免）。PR #99058 仍 open（快照无变化）。**边界**：值守 lane；0 ledger/0 frozen/0 OOS。
 
