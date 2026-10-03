@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-04 (轮 155) 深度反思呈业主：单机 SPOF/PAT 过期/membership 依赖/4.4MB 天花板+Watchlist 等 四个功能提案+交叉链接密度
+
+五问全答（疏漏/低把握/断裂点/亮眼功能/流程效率）；外部情报（Next 16.3 Instant Nav 调查项/16.4 无 RSC 修/UX 趋势）。呈业主裁决。边界：docs/情报 lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-04 凌晨 (轮 154) 404 页双语化：zh 默认站点英文-only 一行修复（server component 静态双语），线上实测在墙
 
 边界：display lane；0 ledger/0 frozen/0 OOS。
