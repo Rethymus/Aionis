@@ -21,7 +21,7 @@ without new evidence — see `../WORKFLOW.md` §5).
 | [ADR-013](ADR-013-polyform-noncommercial-license.md) | Own-code license: MIT → PolyForm-Noncommercial-1.0.0 (noncommercial only; commercial use incl. repackaged resale requires separate authorization; incoming-deps policy unchanged) | accepted | 2026-09-09 |
 
 ## How to add an ADR
-Number it next (`ADR-013-…`), write it **before** the decision is reversed, never delete (supersede
+Number it next (`ADR-014-…`; 013 is taken — license), write it **before** the decision is reversed, never delete (supersede
 with a new ADR that points back). Fields (per `../WORKFLOW.md` §1):
 
 ```
