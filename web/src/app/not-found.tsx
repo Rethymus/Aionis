@@ -12,7 +12,10 @@ export default function NotFound() {
       </div>
       <div className="space-y-2">
         <h1 className="text-4xl font-bold tabular-nums">404</h1>
-        <p className="text-muted-foreground">This page doesn&apos;t exist.</p>
+        {/* Bilingual static line (round 154): not-found is a server component
+            and cannot use the client I18nProvider — but the site is zh-default,
+            so the English-only line was inconsistent. Both locales, one line. */}
+        <p className="text-muted-foreground">This page doesn&apos;t exist. 页面不存在。</p>
       </div>
       <Button render={<Link href="/dashboard" />}>
         Back to Dashboard
