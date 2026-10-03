@@ -3,6 +3,7 @@
  * i18n orphan-key audit (static, conservative).
  *
  * Usage:  node scripts/i18n-audit.mjs            # stdout summary + writes i18n-audit-report.json
+ *         node scripts/i18n-audit.mjs --ci       # gate mode: exit 1 on confirmed orphans or asymmetry
  *
  * Method (deliberately over-preserving — fewer "confirmed orphans" beats false positives):
  *   1. Parse src/i18n/dict.ts zh/en blocks (4-space indent + double-quoted "key": "value").
@@ -171,4 +172,15 @@ console.log(`asymmetric: zhOnly=${asymExtraZh.length}, enOnly=${asymExtraEn.leng
 for (const k of asymExtraZh) console.log(`  zh-only: ${k}`);
 for (const k of asymExtraEn) console.log(`  en-only: ${k}`);
 console.log("");
+if (process.argv.includes("--ci")) {
+  const problems = [];
+  if (confirmed.length) problems.push(`${confirmed.length} confirmed orphan key(s): ${confirmed.join(", ")}`);
+  if (asymExtraZh.length) problems.push(`${asymExtraZh.length} zh-only key(s): ${asymExtraZh.join(", ")}`);
+  if (asymExtraEn.length) problems.push(`${asymExtraEn.length} en-only key(s): ${asymExtraEn.join(", ")}`);
+  if (problems.length) {
+    console.error(`i18n gate FAILED:\n  - ${problems.join("\n  - ")}`);
+    process.exit(1);
+  }
+  console.log("i18n gate PASSED (0 orphans, zh/en symmetric)");
+}
 console.log(`report written -> ${REPORT_PATH}`);
