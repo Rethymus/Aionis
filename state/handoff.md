@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-04 (轮 158) WatchlistStrip 上线：dashboard 星标股实时价格浮层（Worker 端点复用），深度反思三提案全落地
+
+边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-04 (轮 157) 数据新鲜度 badge 上线：顶部导航色点+"Xh ago"（三级 freshness），反泄漏信任可视化
 
 SSR 占位防 CLS；水合后客户端计算；nav.freshness i18n 键对称；审计门 PASS。深度反思第二功能提案。边界：display lane；0 ledger/0 frozen/0 OOS。

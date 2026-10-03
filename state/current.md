@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-04) 轮 158（display 线）：WatchlistStrip 仪表盘实时价格浮层上线——深度反思第三功能提案落地：**
+  轮 156 的星标 toggle + 轮 157 的新鲜度 badge 之后，第三个功能提案实现：dashboard Overview 页 MarketCards 下方加 WatchlistStrip——用户星标的 ticker 以紧凑卡片行渲染，**实时价格+涨跌%来自 Worker 端点**（useLivePrices hook 复用，30s TTL），amber accent 与星标色匹配。空 watchlist 渲染 null（零仪式）；点击卡片跳转 stock 页。**验证**：tsc 0/eslint 0/构建 1506 EXIT 0/CI 绿。至此深度反思的三个功能提案全部落地：Watchlist toggle→FreshnessBadge→WatchlistStrip。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-04) 轮 157（display 线）：数据新鲜度 badge 上线——顶部导航紧凑指示器（色点+"Xh ago"），反泄漏信任承诺可视化：**
   深度反思第二功能提案实现：`top-nav-freshness.tsx`——从 data_health.snapshot_ts 计算距上次导出的小时数，色点三级（绿<48h/琥珀 48-96h/红>96h，匹配通道节奏：交易日每夜+周末 skip），tooltip 显精确时间戳+nav.freshness i18n 键（zh"数据新鲜度"/en"Data freshness"，审计门 PASS）。**SSR 占位（52px）防 CLS，水合后 Date.now() 客户端计算实时值**——"live"指标的正确模式。接线 top-nav ColorConvToggle 前。**验证**：tsc 0/eslint 0/构建 1506 EXIT 0；组件在 JS chunk 中（SSR 无内容=mounted 门控设计内）。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 
