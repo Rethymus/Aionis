@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-10-02) 轮 129（ops/display 线）：双日历自动化预检通过+lint 债清零（13 处 unused 全清、exhaustive-deps 专项边界）+news_feed 自愈确认：**
+  **预检**：9-30/10-31 两自动化的五脚本存在性+CLI 逐项静态校验（--run-date 在位；materialize 的 --display 为可选旗标→裸调用合法=研究模式正解）——两个不可再生节点结构性无险。**lint**：轮 112 起累积的 13 处 unused-vars/stale-disable（layout×2/api-docs Code/claims SYM_MAX 注释更正/colorconv cn/companies Badge+Table×6+RankChange+孤儿 lucide×3/conviction+filers+institutions Badge/institutions ArrowRightIcon+categoryLabelKey/stock AnchorNav ticker）全清；**exhaustive-deps ~20 条留专项**（行为语义非机械，明确不做 drive-by）。tsc 0+eslint unused 归零+构建 1506 页 EXIT 0。**news_feed**：as_of 2026-10-02T10:00Z——轮 112 的 09-13 残留经通道多晚自愈，跟进关闭。值守：通道 ok/staleness 按期/CI 绿。配额 10-03 18:50 UTC；业主三项待反馈无新输入。**边界**：ops/display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (2026-10-02) 轮 128（docs/ops 线）：Baseline 对照情报 null——`<search>` 候选拦截在已存在（role="search" 先行），Popover/:has()/inert 无痛点对映否决；值守全绿：**
   WebFetch web.dev/baseline 一手对照（Interop 2026 页第三次 404 注记）：`<search>` 地标已由 HomeSearch 的 role="search" 等效覆盖（null-by-precondition）；Popover 重写无实测需求（98 轮验证+a11y 100，风险/收益倒置）；:has()/nesting/inert 无痛点映射。**结论：Baseline 面无可落地项，本仓能力（cv/Speculation Rules/语义地标）先行于 Baseline**——null 入册，配额恢复后全量搜索仍候选。值守：通道 ok/staleness 按期/CI 绿/零 Issue。业主三项待反馈（悬停验证/campaign 裁决/选项 B 追认）无新输入。**边界**：docs/ops lane；0 ledger/0 frozen/0 OOS。
 

@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-02 (轮 129) 自动化预检通过+lint 债清零+news_feed 自愈确认
+
+五脚本 CLI 静态校验过（--run-date 在位/materialize 裸调用合法）；13 处 unused 全清（含 118/119 拆分孤儿），exhaustive-deps ~20 条留专项不 drive-by；news_feed as_of 今日（09-13 残留自愈关闭）。tsc/eslint-unused/构建全零绿。边界：ops/display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-02 (轮 128) Baseline 对照 null：search 地标已先行（role=search），Popover 等无痛点否决；值守全绿
 
 WebFetch 一手对照（Interop 2026 三次 404）：候选逐项判定后无可落地项——本仓 cv/Speculation Rules/语义地标先行于 Baseline。值守：通道/staleness/CI/Issue 全绿。业主三项待反馈无新输入。边界：docs/ops lane；0 ledger/0 frozen/0 OOS。
