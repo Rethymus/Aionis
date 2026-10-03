@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-04 凌晨 (轮 154) 404 页双语化：zh 默认站点英文-only 一行修复（server component 静态双语），线上实测在墙
+
+边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-04 凌晨 (轮 153) evals/regression 指针核实（指向 ../../tests/ 非副本）；值守无变化确认
 
 边界：值守 lane；0 ledger/0 frozen/0 OOS。

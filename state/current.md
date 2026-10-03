@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-04 凌晨) 轮 154（display 线）：404 页双语化——zh 默认站点的英文-only 不一致一行修复，线上在墙：**
+  轮 147 审计记为"务实英文"的 404 页措辞，重新评估后升级为真修复：not-found 是 server component（无客户端 I18nProvider 访问），诚实修法=静态双语行（"This page doesn't exist. 页面不存在。"）而非 hook 重构。构建产物验证在墙+**线上 404.html 实测在墙**（64018e207 发布后）。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-04 凌晨) 轮 153（值守 线）：evals/regression 指针核实（指向 ../../tests/ 非副本，与 AGENTS 目录地图一致）；值守循环无变化确认：**
   evals/ 四子目录中唯一未检的 regression/=纯指针（README 声明套件在 ../../tests/，非副本——与 ADR-006 no-disposable 精确一致）；cases/expected/trials/results 为 E3 GO 后的预留空间。**值守快照**：PR #99058 open、10-06 节点 3 天（幂等+追补就绪）、业主三项无输入、通道 ok（周五状态）、树净——无本地可动作项。周一 18:05 通道首跑（轮 138 实弹）为下一外部触发。**边界**：值守 lane；0 ledger/0 frozen/0 OOS。
 
