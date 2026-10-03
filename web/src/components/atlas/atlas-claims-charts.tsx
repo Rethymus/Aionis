@@ -129,6 +129,7 @@ export function ClaimsPivotChart() {
                         const v = row[s.key];
                         return (
                           <g key={s.key}>
+                            <title>{`${row.month} · ${s.label} · IC = ${isNum(v) ? v.toFixed(4) : "—"}`}</title>
                             <rect
                               x={xs[si]}
                               y={y}

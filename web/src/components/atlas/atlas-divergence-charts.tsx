@@ -139,7 +139,9 @@ function BandPanel({ p }: { p: RegionPrep }) {
                 height={Math.max(1, y(s.prob_min) - top)}
                 fill={diagram.primary}
                 fillOpacity={0.22}
-              />
+              >
+                <title>{`${s.month} · band [${s.prob_min.toFixed(3)}, ${s.prob_max.toFixed(3)}] · realized ${s.base_rate.toFixed(3)} · ${p.inBand[i] ? "in-band" : "OUT-OF-BAND"}`}</title>
+              </rect>
             );
           })}
         </g>
@@ -154,7 +156,9 @@ function BandPanel({ p }: { p: RegionPrep }) {
                 fill={diagram.primary}
                 stroke={diagram.card}
                 strokeWidth={0.8}
-              />
+              >
+                <title>{`${s.month} · realized ${s.base_rate.toFixed(4)} · ECE ${s.ece_oos?.toFixed(4) ?? "—"}`}</title>
+              </circle>
             ) : (
               <circle
                 key={`dot-${s.month}`}
