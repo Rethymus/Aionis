@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-04 凌晨) 轮 152（display 线）：仪表盘全部 11 tab 数据源接线核实完成——Strategy Return（125 月×5 策略 parquet 在位）/Coverage（total/clean/jaccard/dropped 全键）/Run history（58 行账本可见）三 tab 数据源实存：**
+  11 tab 数据源盘点收官：前三轮核实 Overview/Fit/Vol/Evol/Event/Unc/Horizon/Forward IC（空态诚实）四类；本轮补核剩余三 tab——strategy_returns.parquet 在位（125 月×5 策略列，2016-01→2026-05——账本零写入与影子月纪律下为最新诚实状态）、coverage 全键、ledger 58 行可见。**结论：仪表盘 11 tab 无一空壳、无一断线、空态均设计内**。AppTest 运行级+元素级文本+数据源三层验证齐备。值守循环：周一/周二节点待触发。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-04 凌晨) 轮 151（display 线）：仪表盘数据正确性断言 PASS——Overview 渲染含 NULL 裁决词汇/裁决锚（3842 字符实采），零捏造正收益声明；值守循环收敛确认：**
   AppTest 元素级文本采集（markdown/subheader/header/caption 全 accessor）：Overview 渲染含 **null 词汇**（四相冻结裁决）、**裁决/verdict 锚**、**零 "significant positive" 捏造声明**——数据正确性断言通过（此前仅运行级 PASS）。AppTest accessor 边界教训：headings 属性不存在（与文档版本相关），仅用确认存在的 accessor。**值守循环收敛再确认**：周一 18:05 通道首跑（轮 138 修复实弹）为下一外部触发。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 
