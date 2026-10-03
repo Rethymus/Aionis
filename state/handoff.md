@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-04 (轮 162) CopyProvenance 线上验证 PASS；WatchlistStrip 空态正确；值守无变化
+
+边界：值守/display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-04 (轮 161) CopyProvenance 上线：stock 页 Cite 按钮复制含账本链接的 markdown 引用（~1460 页覆盖）
 
 深度反思第四功能提案。ui/copy-provenance.tsx（clipboard API+2s Check 反馈）；引用格式=股票名+score+prob_up+as_of+GitHub ledger 链接。验证：tsc/eslint/构建全绿+Cite 按钮在静态导出。边界：display lane；0 ledger/0 frozen/0 OOS。

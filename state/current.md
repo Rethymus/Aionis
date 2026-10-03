@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-04) 轮 162（值守/display 线）：CopyProvenance 线上验证 PASS（Cite 按钮+aria-label 在 stock 页 SSR 中）；WatchlistStrip 空态行为正确（空 watchlist 不渲染=设计内）：**
+  轮 161 的 Cite 按钮发布后线上实测：stock/AAPL.html SSR 含 "Cite" 文本+`aria-label="Copy provenance citation"`——~1460 stock 页全部覆盖。WatchlistStrip 空态（无星标=不渲染）行为符合设计。值守快照：PR #99058 open、周一 18:05 通道首跑 ~40h、10-06 满月评估 2 天、业主三项无输入。**边界**：值守/display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-04) 轮 161（display 线）：CopyProvenance 引用导出按钮上线——stock 页 "Cite" 按钮复制含账本链接的 markdown 引用：**
   深度反思第四功能提案实现：`ui/copy-provenance.tsx`——紧凑 "Cite" 按钮（Copy/Check 图标 2s 反馈），点击复制 markdown 引用到剪贴板（股票名+ticker+frozen score+prob_up+as_of+GitHub ledger.jsonl 链接）。接线 stock 页 ProvenanceBadge 旁（~1460 页覆盖）。**反泄漏信任链的社交货币化**："这是我的数据出处，你可以自己查账"。**验证**：tsc 0/eslint 0/构建 1506 EXIT 0/Cite 按钮在静态导出中渲染（a10fc1ded CI 绿）。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 
