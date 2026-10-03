@@ -21,7 +21,8 @@ const BASE = "https://rethymus.github.io/Aionis";
 // home/dashboard). changeFrequency reflects the evening lane, not each item's
 // source cadence (some sources lag honestly — the pages still rebuild daily).
 const DAILY_ROUTES = [
-  "dashboard",
+  // "dashboard" is NOT here — it is the priority-1 canonical home entry above
+  // (round 144 dedup: option B made / and /dashboard the same content).
   "market",
   "news",
   "heatmap",
@@ -65,8 +66,12 @@ const WEEKLY_ROUTES = [
 ] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  // Round 144: the root entry is folded into dashboard.html — since round
+  // 116 (option B) `/` renders the same content with canonical pointing at
+  // dashboard.html, and a sitemap should list canonical URLs only. The home
+  // page keeps priority 1 on its canonical URL.
   const entries: MetadataRoute.Sitemap = [
-    { url: `${BASE}/`, changeFrequency: "daily", priority: 1 },
+    { url: `${BASE}/dashboard.html`, changeFrequency: "daily", priority: 1 },
   ];
   for (const r of DAILY_ROUTES) {
     entries.push({ url: `${BASE}/${r}.html`, changeFrequency: "daily", priority: 0.8 });
