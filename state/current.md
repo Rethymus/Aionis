@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-10-03) 轮 147（display 线）：dict 删键的安全网确认——本地全量 pytest EXIT=0（2232）+ruff 绿+无键数测试钉（1297 仅出现在 state 历史非测试断言）；404 页审计 PASS（Link 自动 basePath，3 链接全对——null-with-evidence）：**
+  轮 146 删键的最后一道网：全量套件本地跑 EXIT=0 零失败——dict 键数无测试钉住（"1297/1297" 字样只存在于 state 历史叙事）。**404 页审计**（1500 页站点的高频着陆面）：Link 自动补 basePath（构建产物 3 处 `/Aionis/dashboard` 全对）、英文文案为 server component 的务实选择（i18n 是客户端 provider）——null-with-evidence 无需动作。业主三项/10-06/PR #99058 无新输入。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (2026-10-03) 轮 146（display 线）：i18n 审计归零——3 确认孤儿清除（trust.aria=轮 136/131 修复孤儿化+2 shelf 矩阵父键），tracked 报告同步重生成：**
   审计（正式工具 i18n-audit.mjs，配额面外）：zh=1297/en=1297 对称、9 prefix-only 可疑=动态前缀构造既有模式（不动）、**3 确认孤儿**——trust.aria（轮 136/131 trust-ribbon 改内容即名后死亡）、shelf.matrix.verdict/zerollm（子键在用父值永不渲染）。双 locale 对称删除（zh/en 1294）→复审计孤儿 0；build 1506 EXIT 0；**tracked 报告 web/i18n-audit-report.json 同步重生成**（树中原为陈旧态——如实记为顺手修正）。PR #99058/10-06/业主三项无变化。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 

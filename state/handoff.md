@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-03 (轮 147) dict 删键安全网确认（全量 2232 EXIT=0，无键数钉）+ 404 页审计 PASS（basePath 自动+英文务实）
+
+边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-03 (轮 146) i18n 审计归零：3 确认孤儿双 locale 删除（trust.aria=轮 136/131 孤儿化；2 shelf 父键），tracked 报告重生成
 
 边界：display lane；0 ledger/0 frozen/0 OOS。
