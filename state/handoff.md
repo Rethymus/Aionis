@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-03 (轮 138) npm audit 归零（4 通告=Next 构建期传递链，overrides 钉补丁版）+ ticker_metadata 每晚 10 分钟空烧根治（去 --no-cache，CSRC 年更数据不需夜刷）
+
+边界：ci/ops/display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-03 (轮 137) Next 16.2.3→16.3.8 安全升级（SSRF/cache-poisoning/draft-mode）；上游 RSC 404 经 canary.58 核实仍无修（16.4 观察项）；#418 跨版本保持 0；10-06 倒计时 3 天
 
 边界：display/ci lane；0 ledger/0 frozen/0 OOS。

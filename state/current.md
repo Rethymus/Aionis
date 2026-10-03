@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-10-03) 轮 138（ci/ops/display 线）：web 依赖安全审计首跑归零（4 通告全在 Next 构建期传递链）+通道 ticker_metadata 每晚 10 分钟空烧根治：**
+  **安全**（本会话首跑 npm 面审计——Mimosa 只覆盖 Python）：pnpm audit（官方 registry）发现 4 通告，全在 Next **构建期工具链传递依赖**（不进静态产物，暴露面=构建机）：browserslist≤4.28.6 双高危（内存无界增长+crash）、baseline-browser-mapping<2.11.0 中危、@babel/core≤7.29.0 低危——pnpm.overrides 钉补丁版后 **audit 归零**；回归 tsc 0/eslint 0/构建 1506 EXIT 0，线上双页 200。**ops**：build_ticker_metadata 每晚软失败于 10 分钟满帽——`--no-cache` 强制全宇宙 baostock 行业重抓（CSRC 年更数据）而 stock_universe 本就是冻结面板——去掉该旗标（缓存命中秒级重建；手动全量路径保留于脚本 docstring）；通道测试 30 绿+ruff 净。**边界**：ci/ops/display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (2026-10-03) 轮 137（display/ci 线）：Next 16.2.3→16.3.8 安全升级落地（16.3.8=安全版：Image SSRF 高危+cache-poisoning+draft-mode 泄漏）；上游 RSC 404 无修（经 16.4-canary.58 核实）入册：**
   情报（releases 一手页）：16.4-canary.58 前无任何 RSC 预取/静态导出布局修复=轮 135 上游缺陷仍开放；**16.3.8 是安全版**而本仓停在 16.2.3——SSRF 面本仓已被 images:unoptimized 缓解，但 cache-poisoning/draft-mode 修复适用。升级（pnpm10 经 CI=true 重建 modules 目录）+全套回归：构建 1506 EXIT 0、tsc/eslint 净、**#418 四页保持 0**（轮 136 修复跨版本成立）、RSC 404 仍在（~24/页量化，16.4 观察项）、atlas TBT 1,560（单跑，噪声带内）。线上双页 200。**10-06 满月评估倒计时 3 天**（自动化就绪）；业主三项无新输入。**边界**：display/ci lane；0 ledger/0 frozen/0 OOS。
 
