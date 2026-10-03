@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-10-02) 轮 131（display 线）：33 路由批量 a11y 普查——stock 全系 92→100（~1460 页）+shelf 96→100，三真修+两按设计不修+三 audit-errored 如实：**
+  普查（轮 112 只审过 4 页）：22 页满分；**真修三处**——stock 实时价前缀的第三种 alpha 残留（/70，轮 112 令牌清扫漏网→去 alpha 用令牌）、congress 交叉链接补非颜色区分（常显淡下划线 hover 加深）、shelf 计数 span 的 opacity-70 utility（同病异形→令牌）。**按设计不修（理由入册）**：heatmap 树图格的 target-size（尺寸=数据编码）与密表行内 ticker 链接（24px 最小=表高翻倍的真回归）。**如实**：congress/filers/discipline 的 axe 在巨表上 errored（score None）记为 audit-errored 非通过。10-06 月报命令预演过（SUMMARY 计数 17 ok_committed）。tsc/eslint/构建全绿。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (2026-10-02) 轮 130（display 线）：exhaustive-deps 专项评审收官——16 条全消（15=EMPTY 稳定恒等式+1=真漏依赖），eslint 全仓零警告：**
   分诊：15 条同型（状态回退分支的裸 [] 字面量每渲染新引用，击穿依赖该序列的全部 memo——ok 路径面板为模块常量本已稳定，回退路径微浪费+lint 报警）→模块级 `const EMPTY: never[] = []` 双分支稳定恒等（行为恒等，memo 真只算一次）；congress/events/executives/filers/insiders/ipo/smart-money 七文件。第 16 条（companies）=真漏依赖（filtered 漏列稳定的 dirRows——今日因稳定性而正确，未来加依赖即静默陈旧）→补列。**验证**：exhaustive-deps 0+tsc 0+构建 1506 页 EXIT 0+congress SSR HTML 115 行申报表在墙（dump-dom 0 为伺服竞态伪影，SSR 直查证伪）。**eslint 全仓至此零错误零警告**。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 

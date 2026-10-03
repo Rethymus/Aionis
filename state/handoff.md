@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-02 (轮 131) 33 路由 a11y 普查：stock 92→100（~1460 页）+shelf 96→100
+
+三真修（第三种 alpha 残留/非颜色区分下划线/opacity-70 utility）；target-size 两类按设计不修（树图格=数据编码、密表 ticker 24px=表高翻倍回归）理由入册；congress/filers/discipline axe 巨表 errored 如实记 audit-errored。10-06 命令预演过（17 ok_committed）。边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-02 (轮 130) exhaustive-deps 专项：16 条全消，eslint 全仓零警告
 
 15 条=回退分支裸 [] 每渲染新引用击穿 memo → 模块级 EMPTY 恒等式（七文件）；1 条=companies 真漏稳定依赖补列。行为恒等；tsc/构建/SSR 复验全绿（dump-dom 0=伺服竞态，SSR 直查证伪）。eslint 至此全仓零错误零警告。边界：display lane；0 ledger/0 frozen/0 OOS。
