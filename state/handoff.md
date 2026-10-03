@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-04 (轮 156) Watchlist 自选股上线：localStorage 星标+~1460 stock 页+picks 行全覆盖，水合安全（uSES 设计内转换），CI 绿
+
+深度反思最高性价比提案实现。lib/watchlist.ts（colorconv 同款模块 store）+ ui/watchlist-star.tsx（琥珀星标+stopPropagation）+ picks/stock 双接线。uSES 设计内 SSR→client 转换无需 mounted gate（round-136 验证纪律：静态探针验证）。验证：tsc/eslint/构建全绿+aria-label 在墙。边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-04 (轮 155) 深度反思呈业主：单机 SPOF/PAT 过期/membership 依赖/4.4MB 天花板+Watchlist 等 四个功能提案+交叉链接密度
 
 五问全答（疏漏/低把握/断裂点/亮眼功能/流程效率）；外部情报（Next 16.3 Instant Nav 调查项/16.4 无 RSC 修/UX 趋势）。呈业主裁决。边界：docs/情报 lane；0 ledger/0 frozen/0 OOS。

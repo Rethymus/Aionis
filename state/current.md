@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-04) 轮 156（display 线）：Watchlist 自选股功能上线——localStorage 星标 toggle 接入 picks 20 行+stock ~1460 页，深度反思最高性价比提案落地：**
+  轮 155 深度反思的最高性价比功能提案实现：`lib/watchlist.ts`（模块级 Set+listeners+localStorage，colorconv-toggle 同款模式）+ `ui/watchlist-star.tsx`（琥珀填充星标，嵌在 Link 卡内时 stopPropagation 防导航）。**接线**：picks 全部 PickRow 行（20 Top-10 US/CN+shorts）+ /stock/[ticker] 标题旁（~1460 页覆盖）。**水合安全**：uSES 设计内 SSR→client 转换（server snapshot=空集合→unstarred；客户端 getSnapshot 接 localStorage→starred，无 #418——round-136 教训：用静态构建探针验证而非仅 dev）。**验证**：tsc 0/eslint 0/构建 1506 EXIT 0/静态导出 aria-label 在墙（picks 20+ 处、stock AAPL 处）。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-04) 轮 155（docs/情报 线）：深度反思与前瞻分析——业主五问全答（疏漏/低把握/断裂点/亮眼功能/流程效率），reports/design/2026-10-04-deep-reflection-and-forward-analysis.md 呈业主：**
   **最大结构性疏漏**=数据管线单机 SPOF（无第二 runner）；**最先断裂**=主机不可用>PAT 过期>上游格式变更（均非代码控制范围）；**低把握**=10-31 membership 依赖 Wikipedia 更新及时性（可能连续 fail-closed）；**亮眼功能四选一**=Watchlist（localStorage+Worker 价格，最高性价比）>新鲜度 ticker>交互式 IC 探索器>引用导出；**流程效率瓶颈**=面板间交叉链接密度。外部情报：Next 16.3 Instant Navigations 调查项/16.4 RSC 404 仍未修/金融 UX 趋势（实时流已有/agentic 与反泄漏正交）。**边界**：docs/情报 lane；0 ledger/0 frozen/0 OOS。
 
