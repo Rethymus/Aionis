@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-03 晚) 轮 148（值守 线）：周末 skip 实战观测——钩子 22:02 正确 SKIP:weekend（轮 92 设计运转中）；轮 138 ticker_metadata 修复首验窗口=周一 18:05：**
+  今晚会话启动钩子实弹：`hook skip: SKIP:weekend (Sat)`——能耗设计按预期运转（周末无美股时段可刷）；marker 保留周五状态（soft_fails=[ticker_metadata]），下周一 18:05 北京的通道将是**轮 138 去 --no-cache 修复的首次实弹**（缓存模式秒级重建 vs 此前每晚 10 分钟满帽超时），其结果进入 10-06 满月评估的逐晚表。10-06（周二 23:35）月报自动化就绪（幂等+追补）。**边界**：值守 lane；0 ledger/0 frozen/0 OOS。
+
 - **active (2026-10-03) 轮 147（display 线）：dict 删键的安全网确认——本地全量 pytest EXIT=0（2232）+ruff 绿+无键数测试钉（1297 仅出现在 state 历史非测试断言）；404 页审计 PASS（Link 自动 basePath，3 链接全对——null-with-evidence）：**
   轮 146 删键的最后一道网：全量套件本地跑 EXIT=0 零失败——dict 键数无测试钉住（"1297/1297" 字样只存在于 state 历史叙事）。**404 页审计**（1500 页站点的高频着陆面）：Link 自动补 basePath（构建产物 3 处 `/Aionis/dashboard` 全对）、英文文案为 server component 的务实选择（i18n 是客户端 provider）——null-with-evidence 无需动作。业主三项/10-06/PR #99058 无新输入。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 

@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-03 晚 (轮 148) 周末 skip 实战观测：钩子正确 SKIP:weekend；周一 18:05=轮 138 修复首验窗口
+
+边界：值守 lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-03 (轮 147) dict 删键安全网确认（全量 2232 EXIT=0，无键数钉）+ 404 页审计 PASS（basePath 自动+英文务实）
 
 边界：display lane；0 ledger/0 frozen/0 OOS。
