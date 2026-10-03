@@ -43,6 +43,12 @@ type Def14aFilter = "all" | "new" | "amendment";
  *  holdings live inside the proxy HTML and are NOT parsed (disclosed);
  *  DEF 14A/A rows map to amendment (none today — amendments are DEFA14A,
  *  out of scope). Newest-first + status filter + client-side paging. */
+// Stable empty-array identity (round 130): a bare [] literal in the
+// status fallback allocated a NEW reference every render, defeating every
+// memo that depends on the series (benign in the ok-path — the committed
+// panel is a module constant — but wasteful and lint-flagged in fallback).
+const EMPTY: never[] = [];
+
 function Def14aSection() {
   const { t } = useI18n();
   const f = aionis.def14a;
@@ -383,7 +389,7 @@ export function ExecutivesView() {
   const [company, setCompany] = useState<string>("all");
   const { visibleCount, reset, loadMore } = usePaged(PAGE_SIZE);
 
-  const events = f.status === "ok" ? f.events : [];
+  const events = f.status === "ok" ? f.events : EMPTY;
   const filtered = useMemo(
     () => (company === "all" ? events : events.filter((e) => e.company === company)),
     [events, company],

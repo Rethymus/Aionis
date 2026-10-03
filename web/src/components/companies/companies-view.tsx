@@ -128,7 +128,7 @@ export function CompaniesView() {
         if (au !== bu) return au - bu;
         return a.ticker < b.ticker ? -1 : a.ticker > b.ticker ? 1 : 0;
       });
-  }, [region, initial, query]);
+  }, [dirRows, region, initial, query]);
 
   const visible = filtered.slice(0, visibleCount);
   const countLine = t("companies.count")

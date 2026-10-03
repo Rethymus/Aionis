@@ -45,6 +45,12 @@ const STOCK_PAGE_TICKERS_SET: ReadonlySet<string> = new Set(
 const FORM4_AS_OF: string | null =
   aionis.dataHealth.panels.find((p) => p.key === "form4")?.as_of ?? null;
 
+// Stable empty-array identity (round 130): a bare [] literal in the
+// status fallback allocated a NEW reference every render, defeating every
+// memo that depends on the series (benign in the ok-path — the committed
+// panel is a module constant — but wasteful and lint-flagged in fallback).
+const EMPTY: never[] = [];
+
 export function InsidersView() {
   const { t } = useI18n();
   const f = aionis.form4;
@@ -52,7 +58,7 @@ export function InsidersView() {
   const [side, setSide] = useState<SideFilter>("all");
   const { visibleCount, reset, loadMore } = usePaged(PAGE_SIZE);
 
-  const recent = f.status === "ok" ? f.recent : [];
+  const recent = f.status === "ok" ? f.recent : EMPTY;
   const filtered = useMemo(
     () => (side === "all" ? recent : recent.filter((r) => r.action === side)),
     [recent, side],

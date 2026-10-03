@@ -34,6 +34,12 @@ type SortKey = "latest" | "filings" | "name";
 // is the exhaustive machine directory: search + sort + honest counts, each
 // row linking the filer's EDGAR 13F history. No holdings here — books stay
 // in /institutions + /manager/[cik].
+// Stable empty-array identity (round 130): a bare [] literal in the
+// status fallback allocated a NEW reference every render, defeating every
+// memo that depends on the series (benign in the ok-path — the committed
+// panel is a module constant — but wasteful and lint-flagged in fallback).
+const EMPTY: never[] = [];
+
 export function FilersView() {
   const { t } = useI18n();
   const f = filers13f;
@@ -41,7 +47,7 @@ export function FilersView() {
   const [sort, setSort] = useState<SortKey>("latest");
   const { visibleCount, reset, loadMore } = usePaged(50);
 
-  const rows = f.status === "ok" ? f.filers : [];
+  const rows = f.status === "ok" ? f.filers : EMPTY;
   const searched = useMemo(() => {
     const needle = query.trim().toLowerCase();
     const base = needle

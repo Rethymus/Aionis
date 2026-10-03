@@ -63,6 +63,12 @@ export const CATEGORY_LABEL: Record<string, string> = {
  *  EDGAR (8-K / 10-K / 10-Q / S-1 family / 4 / D, /A amendments included;
  *  SC 13D / SC 13G via the daily index lanes). by_form pills are derived
  *  from the payload, so the v2 form family expands automatically. */
+// Stable empty-array identity (round 130): a bare [] literal in the
+// status fallback allocated a NEW reference every render, defeating every
+// memo that depends on the series (benign in the ok-path — the committed
+// panel is a module constant — but wasteful and lint-flagged in fallback).
+const EMPTY: never[] = [];
+
 function StreamSection() {
   const { t } = useI18n();
   const f = aionis.filingStream;
@@ -176,7 +182,7 @@ export function EventsView() {
   const [cat, setCat] = useState<string>("all");
   const { visibleCount, reset, loadMore } = usePaged(PAGE_SIZE);
 
-  const events = f.status === "ok" ? f.events : [];
+  const events = f.status === "ok" ? f.events : EMPTY;
   const filtered = useMemo(
     () => (cat === "all" ? events : events.filter((e) => e.category === cat)),
     [events, cat],

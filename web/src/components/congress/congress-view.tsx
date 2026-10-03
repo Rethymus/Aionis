@@ -92,6 +92,12 @@ function AmountBadge({ range }: { range: string }) {
 /** 交易明细 — transaction-level section (2026 PTR PDFs parsed; the filing
  *  stream above stays the index-level view). Filters: party / direction /
  *  late-only; amount bands as badges; ⚠ marks the 45-day STOCK Act breach. */
+// Stable empty-array identity (round 130): a bare [] literal in the
+// status fallback allocated a NEW reference every render, defeating every
+// memo that depends on the series (benign in the ok-path — the committed
+// panel is a module constant — but wasteful and lint-flagged in fallback).
+const EMPTY: never[] = [];
+
 function TxSection() {
   const { t } = useI18n();
   const f = aionis.politicianTradesTx;
@@ -100,7 +106,7 @@ function TxSection() {
   const [late, setLate] = useState<TxLate>("all");
   const { visibleCount, reset, loadMore } = usePaged(TX_PAGE_SIZE);
 
-  const tx = f.status === "ok" ? f.transactions : [];
+  const tx = f.status === "ok" ? f.transactions : EMPTY;
   const partyCounts = useMemo(() => {
     const c: Record<string, number> = { R: 0, D: 0, unknown: 0 };
     for (const r of tx) {
@@ -493,7 +499,7 @@ function PartyIndexSection() {
 function HotTickerStrip() {
   const { t } = useI18n();
   const f = aionis.politicianTradesTx;
-  const rows = f.status === "ok" ? f.transactions : [];
+  const rows = f.status === "ok" ? f.transactions : EMPTY;
   const top = useMemo(() => {
     const counts = new Map<string, number>();
     for (const r of rows) {
@@ -537,7 +543,7 @@ export function CongressView() {
   const [party, setParty] = useState<PartyFilter>("all");
   const { visibleCount, reset, loadMore } = usePaged(PAGE_SIZE);
 
-  const filings = f.status === "ok" ? f.house.filings : [];
+  const filings = f.status === "ok" ? f.house.filings : EMPTY;
   const partyCounts = useMemo(() => {
     const c: Record<string, number> = { R: 0, D: 0, I: 0 };
     for (const p of filings) {

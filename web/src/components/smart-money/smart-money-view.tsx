@@ -56,6 +56,12 @@ type GFormFilter = "all" | "SC 13G" | "SC 13G/A";
 
 // The /stakes-style active/passive axis — derived from the immutable form
 // type only (SC 13D* = active, SC 13G* = passive): zero parsing dependency.
+// Stable empty-array identity (round 130): a bare [] literal in the
+// status fallback allocated a NEW reference every render, defeating every
+// memo that depends on the series (benign in the ok-path — the committed
+// panel is a module constant — but wasteful and lint-flagged in fallback).
+const EMPTY: never[] = [];
+
 function StakesTypeBadge({ form }: { form: string }) {
   const { t } = useI18n();
   const active = form.startsWith("SC 13D");
@@ -126,7 +132,7 @@ export function SmartMoneyView() {
   const [gform, setGform] = useState<GFormFilter>("all");
   const gPaged = usePaged(PAGE_SIZE);
 
-  const recent = sm.recent_filings ?? [];
+  const recent = sm.recent_filings ?? EMPTY;
   const filtered = useMemo(
     () =>
       kind === "all"
@@ -136,7 +142,7 @@ export function SmartMoneyView() {
   );
   const visible = filtered.slice(0, visibleCount);
 
-  const gRecent = sg.filings ?? [];
+  const gRecent = sg.filings ?? EMPTY;
   const gFiltered = useMemo(
     () => (gform === "all" ? gRecent : gRecent.filter((r) => r.form === gform)),
     [gRecent, gform],

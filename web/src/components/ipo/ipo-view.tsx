@@ -44,6 +44,12 @@ type FormDFilter = "all" | "new" | "amendment";
  *  inside the filing XML and are NOT parsed (disclosed); filers are private
  *  companies, so no ticker links are attempted. Newest-first + form filter
  *  + client-side paging, the same stream kit as the IPO table. */
+// Stable empty-array identity (round 130): a bare [] literal in the
+// status fallback allocated a NEW reference every render, defeating every
+// memo that depends on the series (benign in the ok-path — the committed
+// panel is a module constant — but wasteful and lint-flagged in fallback).
+const EMPTY: never[] = [];
+
 function FormDSection() {
   const { t } = useI18n();
   const f = aionis.formD;
@@ -189,7 +195,7 @@ export function IpoView() {
   const [status, setStatus] = useState<StatusFilter>("all");
   const { visibleCount, reset, loadMore } = usePaged(PAGE_SIZE);
 
-  const filings = f.status === "ok" ? f.filings : [];
+  const filings = f.status === "ok" ? f.filings : EMPTY;
   const filtered = useMemo(
     () => (status === "all" ? filings : filings.filter((r) => r.status === status)),
     [filings, status],
