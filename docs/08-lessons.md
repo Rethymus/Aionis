@@ -49,6 +49,6 @@
 
 ## See also
 
-- RESULTS.md
-- reports/design/2026-10-02-performance-campaign.md (the display-era campaign:
-  12 wins, 11 nulls, the four measured boundaries behind lessons 10-13)
+- [RESULTS.md](RESULTS.md)
+- [the display-era campaign report](../reports/design/2026-10-02-performance-campaign.md)
+  (12 wins, 11 nulls, the four measured boundaries behind lessons 10-13)
