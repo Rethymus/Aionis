@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-10-03) 轮 134（display 线）：Interop 2026 全量扫描落地 VT+修复潜伏透镜 404（自部署起每页 404！）；两开放缺陷发现入册（#418 水合失配/RSC 预取 404 风暴）：**
+  扫描（配额恢复，权威 README 一手）：20 焦点区对四边界裁决——VT=唯一采纳（`@view-transition{navigation:auto}`+reduced-motion 守卫，Chrome 126+ 渐进增强）；**Speculation Rules 不在 Interop 2026**——本仓第三项先行能力。**探针意外捕获潜伏缺陷**：LiquidGlassFilter 的 `/liquid-glass-map.png` 缺 basePath=自部署起每页 404、透镜静默降级纯 blur（轮 71 仅 dev 验证的教训）——修复后线上双验（新路径 200+VT 规则在墙；首次 0 读数=CDN 延迟复现轮 117 教训）。**两开放缺陷如实入册待专门轮**：①React #418（overview 页时序依赖失配，双载 diff 指 ColorConvToggle mounted 分支但理论不应失配）；②RSC 预取 404 风暴（轮 116 误读为慢网——实为 404，预取全废导航靠全页加载）。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (2026-10-03) 轮 133（稳态复核）：本地全量 DoD 复核绿（pytest EXIT=0 2232+ruff 0）+日历自动化值守核验+配额探测（仍 429，~8h 后恢复）：**
   本会话 30+ 提交以来首次本地全量复核：pytest EXIT=0（2232 测试零失败）+ruff 全仓绿——CI 夜绿的本地镜像确认。**并发会话值守核验**：10-31 自动化已升级小时守卫（04:05-23:05）+shadow_1031.done 标记门控（防丢版，轮 105 模式）；9-30 自动化 completed 标记在案；夜报 38 跑、10-06 月报底稿（09-28 interim ledger）就绪——三条日历线全部武装到位。**配额探测**：仍 429（重置 2026-10-03 18:50 UTC，约 8h 后）——恢复后执行 Interop/Baseline 全量搜索扫描。无并发新提交（HEAD=轮 132）、外部 stash 未动。业主三项待反馈无新输入。**边界**：复核/docs lane；0 ledger/0 frozen/0 OOS。
 

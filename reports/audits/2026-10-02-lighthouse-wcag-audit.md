@@ -440,3 +440,29 @@ FrostedScrollArea 的大表+transform/裁剪容器模式（轮 66~73 视觉体�
 - **3×axe-errored-by-tool**（midpoint bug，对比度经令牌级覆盖）
 
 工件：`runs/lh132_discipline.json`。边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
+## 轮 134（2026-10-03）：Interop 2026 全量扫描（配额恢复）——VT 采纳+潜伏透镜 404 修复；两开放缺陷发现入册
+
+**情报面**（搜索配额恢复；权威源=web-platform-tests/interop 2026 README 一手）：
+20 焦点区（15 新+5 承继）+4 调研区。逐项对四边界裁决：**跨文档 View Transitions**
+=唯一可落地（多页静态站渐进增强，~10 行+reduced-motion 守卫）；scroll-driven
+animations/popover/anchor 等无痛点对映（轮 128 同判）；**Speculation Rules 不在
+Interop 2026 清单**——本仓第三项先行于生态的能力（cv/SpecRules/VT）。
+
+**落地两项**（7ad89d1d4，线上双验）：①`@view-transition{navigation:auto}`+
+reduced-motion 禁动画守卫——同源导航获平台级 cross-fade（Chrome 126+，未支持
+者零影响）；②**潜伏缺陷修复**：LiquidGlassFilter 引用 `/liquid-glass-map.png`
+缺 basePath——**自部署起每页 404**，Chrome 透镜折射静默降级为纯 blur（轮 71
+仅在 dev 验证的教训）；href 镜像 next.config 的 isProd 条件。线上：新路径 200、
+VT 规则在 CSS chunk（首次 0 读数=CDN 边缘延迟，120s 后收敛——轮 117 教训复现）。
+
+**两开放缺陷（发现即入册，留专门轮不仓促）**：
+1. **React #418 水合失配**（overview 页）：本地静态+线上间歇出现、dev 不现——
+   时序依赖；双载文本 diff 定位到 ColorConvToggle 的 mounted 分支，但
+   useSyncExternalStore 语义理论上不应失配——需 React dev 复现精修。
+2. **`__next.*.txt?_rsc=` 预取 404 风暴**：Next 客户端路由预取的 RSC payload
+   全部 404（轮 116 曾误读为慢网络——实为 404）；导航经全页加载仍工作，但全部
+   预取浪费。疑静态导出与 RSC 预取的交互缺陷，待专门诊断。
+
+边界：display lane；0 ledger / 0 frozen / 0 OOS。

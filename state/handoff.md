@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-03 (轮 134) Interop 2026 扫描：VT 采纳+透镜 404 潜伏修复（每页 404 自部署起）；#418 与 RSC 预取 404 两缺陷开放在册
+
+VT（渐进增强+reduced-motion）与透镜 basePath 修复线上双验；Speculation Rules 不在 Interop 2026=第三项先行能力；CDN 延迟教训第三次复现。开放缺陷：#418 时序依赖（diff 指 ColorConvToggle）/RSC 预取 404 风暴（轮 116 误读纠正）——留专门轮。边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-03 (轮 133) 稳态复核：本地全量 pytest 2232 EXIT=0+ruff 绿；三条日历自动化值守核验（10-31 小时守卫版/9-30 completed/夜报 38 跑+10-06 底稿）；配额仍 429（~8h 恢复）
 
 本会话 30+ 提交的 DoD 级本地镜像确认；并发会话的自动化升级（标记门控/小时守卫）全部在案健康。边界：复核/docs lane；0 ledger/0 frozen/0 OOS。
