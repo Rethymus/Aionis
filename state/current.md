@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-10-03) 轮 142（display/情报 线）：RSC 预取 404 范围重大更正——决定性对照探针证实仅 Windows 本地构建（24 次），线上 Linux CI 构建实测 0 次；上游精确定位 issue #85374+修复 PR #99058：**
+  同会话双目标对照探针（live vs 本地 win-build junction）：**线上 0 / 本地 24**。更正轮 134/135 的"全部路由预取浪费"范围高估——缺陷只在 Windows 本地构建（与上游 #85374 根因精确吻合：path.relative 反斜杠→嵌套目录；Linux CI 不受影响）；观察项升级为跟踪 **PR #99058**（已含单测待合并）。影响重估：线上用户零影响；本地仅测量环境多 24 个快速失败请求（404 不产生长任务，A/B 数据链不受污染）。10-06 节点 3 天后自动化执行；业主三项无新输入。**边界**：display/情报 lane；0 ledger/0 frozen/0 OOS。
+
 - **active (2026-10-03) 轮 141（值守/display 线）：Cloudflare Worker（实时价格源，本会话首次探测的显示面）端到端健康审计 PASS——无需动作；10-06 未到窗口（文件不存在=预期）：**
   10-06 节点：现 10-03 12:48 UTC，自动化 10-06 15:35 UTC 触发——月报文件不存在属预期（轮 140 数据链预检已绿）。**Worker 审计**（display-only 实时价格源，runs in Cloudflare）：/api/health 200；US 端点实时真值（AAPL 333.69/MSFT 517.53/NVDA 233.95）；CN 端点用 picks 面板实际 ticker（sh.688041 等带前缀格式）探测=茅台 1258.62/海光 226.8/兆易 353.9，**GBK 中文名解码正确**（"贵州茅台"在墙）；前端 hook 按 region 分流+原样传 ticker（与面板存储格式精确匹配）；无前缀的空对象回退=优雅无数据非错误。代码零 TODO/secrets 在 CF env/wrangler 配置就绪。**结论：该面健康，无需动作**（null-with-evidence）。业主三项待反馈无新输入；10-31 倒计时 28 天。**边界**：值守/display lane；0 ledger/0 frozen/0 OOS。
 

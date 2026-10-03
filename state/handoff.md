@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-03 (轮 142) RSC 404 范围更正：对照探针 live=0/本地win=24——仅 Windows 构建（上游 #85374 精确吻合，修复 PR #99058 待合并）；线上零影响
+
+边界：display/情报 lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-03 (轮 141) Cloudflare Worker 端到端健康审计 PASS（US/CN 双端点实时真值+GBK 中文解码+前端格式精确匹配）——null-with-evidence 无需动作；10-06 未到窗口（3 天后）
 
 边界：值守/display lane；0 ledger/0 frozen/0 OOS。
