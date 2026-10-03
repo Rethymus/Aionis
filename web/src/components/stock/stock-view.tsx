@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { WatchlistStar } from "@/components/ui/watchlist-star";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
 import { form13f } from "@/data/aionis/form13f";
@@ -456,6 +457,7 @@ export function StockView({ ticker }: { ticker: string }) {
             <Badge variant="outline" className="px-1.5 py-0 font-normal">
               {regionLabel}
             </Badge>
+            <WatchlistStar ticker={stock.ticker} />
           </h1>
           <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
             {stock.sector ? <span>{stock.sector}</span> : null}

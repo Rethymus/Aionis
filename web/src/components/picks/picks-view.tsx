@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { aionis, type Pick } from "@/data/aionis";
 import { ProvenanceBadge } from "@/components/provenance-badge";
+import { WatchlistStar } from "@/components/ui/watchlist-star";
 import { useLivePrices, type PriceMap } from "@/lib/live-prices";
 import Link from "next/link";
 import {
@@ -109,6 +110,7 @@ function PickRow({ p, baseRate, showChange, livePrice }: PickRowProps) {
       <span className="w-6 shrink-0 text-sm font-semibold tabular-nums text-muted-foreground">
         {p.rank}
       </span>
+      <WatchlistStar ticker={p.ticker} />
       <Link
         href={`/stock/${p.ticker}`}
         className="flex min-w-0 flex-1 flex-col rounded-sm hover:underline"
