@@ -486,3 +486,26 @@ outerHTML 双载 diff 法被序列化伪影污染（input type=源码即有；�
 （React dev bundle 对静态导出水合）拿完整 mismatch 栈——留专门轮执行。
 
 边界：display lane；0 ledger / 0 frozen / 0 OOS。
+
+
+## 轮 136（2026-10-03）：#418 终局——八构建受控二分锁定 ArgumentChain 网格，根因=嵌套锚点，修复后本地+线上四页全零
+
+**方法链**（全部消融门控构建后还原）：heroOnly=0 → noTail=0/noFirst=1（后半含源）
+→ noTailA=0/noTailB=1（TrustRibbon/Verdict/ArgChain 段）→ noArgChain=0（锁定
+ArgumentChain）→ noSegs=0/noCorrob=1（四卡网格）→ 错误签名解码
+`args=("HTML","")`=客户端空串 vs 服务端文本 → 网格子树定向 diff **当场抓获**：
+SSR 串中 `<a href=/picks></a><div card>` 是**兄弟**而客户端 vDOM 中卡在锚**内**。
+
+**根因**：MiniPicks 的四个逐股 `<Link>` 行嵌套在 ChainSegment 的卡级 `<Link>`
+内——**嵌套 `<a>` 是无效 HTML**，浏览器解析器在预渲染串上强制闭合外层锚点，
+SSR 解析 DOM 与客户端 vDOM 结构必然相撞→每次加载必发 #418（root/dashboard）；
+/picks 段是唯一 detail 含链接的 segment——精确解释页面分布（market/track 恒净）。
+轮 134 的 ColorConvToggle 定位实为良性后水合状态（首个可见差异非首处失配）。
+
+**修复**：四行改 span（卡本身链至 /picks，逐股页一跳可达）。**验证**：本地
+root/dashboard/market/track 四页 #418=0；构建 1506 EXIT 0；tsc/eslint 净；
+**线上 root/dashboard 双页 #418=0**（954dfcd78 发布后实测）。
+
+10-06 满月评估倒计时 3 天（夜报自动化捆绑就绪，统计命令已预演）；业主三项
+待反馈（悬停验证/campaign 裁决/选项 B 追认）无新输入。
+边界：display lane；0 ledger / 0 frozen / 0 OOS。

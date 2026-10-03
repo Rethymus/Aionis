@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-10-03) 轮 136（display 线）：#418 终局——八构建受控二分+错误签名解码+定向 diff 三仪器合围，根因=MiniPicks 嵌套锚点（无效 HTML 致解析器强闭外层锚），修复后本地+线上全零：**
+  二分链：heroOnly 0→后半 1→ArgChain 段 1→四卡网格 1；签名 args=("HTML","")=客户端空串；网格定向 diff 抓获 SSR 兄弟结构 vs vDOM 嵌套结构——**MiniPicks 四个逐股 Link 嵌在卡级 Link 内=嵌套 <a> 无效 HTML**，解析器强制闭合外锚→结构性水合失配每次必发（/picks 段唯一含链接 detail=页面分布之谜解）。修复=行改 span（卡链 /picks）。验证：本地 4 页+线上 2 页 #418 全 0（954dfcd78）。轮 134 的 toggle 定位系良性首差异。10-06 倒计时 3 天自动化就绪；业主三项无新输入。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (2026-10-03) 轮 135（display 线）：双缺陷专门轮——RSC 预取 404 根因坐实=Turbopack 导出路由组 payload 布局错位（上游，本地不可修入册）；#418 toggles 假设对照实验消除（补丁已回滚）：**
   RSC 404：文件在 `out/<route>/__next.*.txt` 而请求打根路径——路由组页预取全废（根页正常）；Next 16.3.8 上游缺陷，升版复查。#418：三 toggles uSES→useState 实验后 #418 依旧（market 依旧无）→非源；outerHTML diff 被序列化伪影污染；范围已锁 Overview 内容；下一仪器=非压缩客户端构建拿 mismatch 完整栈。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 

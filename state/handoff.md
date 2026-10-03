@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-03 (轮 136) #418 终局：嵌套锚点根因（MiniPicks 行在卡级 Link 内=无效 HTML）——本地+线上全零
+
+八构建二分+签名解码+定向 diff 三仪器合围；修复=行改 span；四页本地+两页线上验证 0；消融门控全部还原。10-06 倒计时 3 天。边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-03 (轮 135) 双缺陷专门：RSC 404=Turbopack 路由组 payload 布局错位（上游入册）；#418 toggles 假设消除（实验回滚），范围锁 Overview，下一仪器=dev-bundle 水合栈
 
 边界：display lane；0 ledger/0 frozen/0 OOS。
