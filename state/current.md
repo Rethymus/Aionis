@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-10-03) 轮 146（display 线）：i18n 审计归零——3 确认孤儿清除（trust.aria=轮 136/131 修复孤儿化+2 shelf 矩阵父键），tracked 报告同步重生成：**
+  审计（正式工具 i18n-audit.mjs，配额面外）：zh=1297/en=1297 对称、9 prefix-only 可疑=动态前缀构造既有模式（不动）、**3 确认孤儿**——trust.aria（轮 136/131 trust-ribbon 改内容即名后死亡）、shelf.matrix.verdict/zerollm（子键在用父值永不渲染）。双 locale 对称删除（zh/en 1294）→复审计孤儿 0；build 1506 EXIT 0；**tracked 报告 web/i18n-audit-report.json 同步重生成**（树中原为陈旧态——如实记为顺手修正）。PR #99058/10-06/业主三项无变化。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (2026-10-03) 轮 145（display 线）：sitemap 规范对齐——根条目并入 dashboard.html（priority 1）+market 重复消除，线上 1500 唯一 URL 验证：**
   值守巡检发现轮 116 选项 B 遗留的 SEO 不一致：/ 的 canonical 已指 dashboard.html 而 sitemap 仍列非规范根 URL 为 priority-1。修复含一次自纠：首版去重引入 market.html 重复——**emit 级重复检查在提交前拦截**（构建产物直查），终态 1500 唯一 URL 零重复、dashboard.html 居首 priority 1。线上发布后实测同构。PR #99058 仍 open；10-06 节点 3 天（幂等追补强化已挂）；业主三项无新输入。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 

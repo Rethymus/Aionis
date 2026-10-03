@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-03 (轮 146) i18n 审计归零：3 确认孤儿双 locale 删除（trust.aria=轮 136/131 孤儿化；2 shelf 父键），tracked 报告重生成
+
+边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-03 (轮 145) sitemap 规范对齐：根条目并入 dashboard.html（priority 1）+market 重复消除（emit 级检查拦截）；线上 1500 唯一 URL 验证
 
 边界：display lane；0 ledger/0 frozen/0 OOS。
