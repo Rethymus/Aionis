@@ -30,7 +30,7 @@ Every page carries a **SegmentHeader** breadcrumb (its place on the chain) and a
 **provenance chip** (as-of date). The chain is the spine; around it the terminal
 has grown a PIT data directory and filing/event streams that feed corroboration.
 
-## Routes (38 under `(dashboard)/`, plus `/` → redirect to `/dashboard`)
+## Routes (38 under `(dashboard)/`, plus `/` — since round 116 the root renders the same overview as `/dashboard` with a canonical pointing there; no redirect)
 
 ### 研究链 · Argument chain
 
