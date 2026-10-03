@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-10-03) 轮 140（值守/情报 线）：10-31 预热裁决=不需要（自愈+小时守卫架构已覆盖，轮 57/99 推理链成立并附缓存实态数据）；Next canary 仍无 RSC 404 修复；10-06 数据覆盖完整：**
+  **预热评估**（10-31 节点）：GLM 边缘缓存盘点=9 文件在位（9-30 run 提取）；10-31 触发器的十月事件边缘须月闭数据才能提取（freeze 输出依赖）→预热在月闭前不可行；月闭后自动化自带小时级守卫（04:05-23:05）+磁盘缓存跨轮自愈（轮 57 已证 scores 与边缘完整性解耦）→**裁决：不需要预热**（推理链与轮 99 一致，本轮附实态数据）。**情报**：Next 16.4-canary.37 仍无 route-group RSC payload 修复（issue #62228 证实相邻缺陷仍现在 canary）——观察项维持。**10-06 覆盖**：run.log 逐夜在册（09-22..10-02，周末/节假日空窗=设计内）+interim ledger 底稿（09-07..09-28）+10-03..10-05 夜间自动积累——月报数据链完整。**边界**：值守/情报 lane；0 ledger/0 frozen/0 OOS。
+
 - **active (2026-10-03) 轮 139（display 线）：Streamlit 仪表盘首次审计——AppTest 11 页全 PASS + 轮 50 到期 P3（use_container_width 弃用，移除日 2025-12-31 已过）26 处迁移根治：**
   审计路径：结构盘点（12 处 @st.cache_data/轻量 meta 加载/优雅降级——既有设计规整）→ **AppTest 全应用烟测**（11 tab 全 PASS）→ 抓到 ~20 条弃用警告：`use_container_width` 官方移除日已过=任何 streamlit 升级炸全部图表（轮 50 P3 watch 到期）。迁移 26 处（9 个 view 文件）→ `width="stretch"`；迁移后 AppTest 零警告 PASS + 仪表盘 8 测试文件 64 测试绿 + ruff 净。**10-06 预检**：夜报自动化在册、底稿（09-28 interim ledger）在位、月报文件未生成（节点 10-06 23:35 自动创建）、通道 ok。业主三项待反馈无新输入。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 

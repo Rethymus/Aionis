@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-03 (轮 140) 10-31 预热裁决=不需要（9 缓存文件实态+自愈/小时守卫架构覆盖）；canary.37 仍无 RSC 404 修复；10-06 数据链完整核对
+
+边界：值守/情报 lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-03 (轮 139) Streamlit 仪表盘审计：AppTest 11 页 PASS；use_container_width 26 处迁移（轮 50 P3 到期——移除日已过，升级即炸）
 
 迁移后 AppTest 零警告+64 测试绿；10-06 预检三件套在位。边界：display lane；0 ledger/0 frozen/0 OOS。
