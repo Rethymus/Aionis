@@ -30,8 +30,12 @@ export function LiquidGlassFilter() {
         height="100%"
         colorInterpolationFilters="sRGB"
       >
+        {/* Round 134: origin-absolute "/liquid-glass-map.png" 404s on the
+            deployed site (basePath /Aionis since forever — the lensing
+            silently degraded to plain blur/saturate in Chrome; verified in
+            dev only at round 71). Mirror next.config's isProd basePath. */}
         <feImage
-          href="/liquid-glass-map.png"
+          href={`${process.env.NODE_ENV === "production" ? "/Aionis" : ""}/liquid-glass-map.png`}
           x="0"
           y="0"
           width="100%"

@@ -708,3 +708,24 @@
   content-visibility: auto;
   contain-intrinsic-size: auto 640px;
 }
+
+/* Cross-document View Transitions (round 134, Interop-2026 scan adoption):
+   same-origin page-to-page navigations get the platform's default
+   cross-fade in supporting engines (Chrome 126+; progressive enhancement —
+   everything else navigates exactly as before). This pairs with the
+   Speculation Rules hover-prerender (round 117): prerendered + animated
+   navigations. Reduced-motion users get the navigation without the
+   animation (the pseudo-tree is still built; its animations are disabled).
+   Not in Interop 2026's focus list (Chrome-led, pre-Baseline) — adopted
+   ahead of the ecosystem like content-visibility and Speculation Rules
+   were, with the same opt-in reversibility. */
+@view-transition {
+  navigation: auto;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none;
+  }
+}
