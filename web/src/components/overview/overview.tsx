@@ -49,6 +49,7 @@ import type { DictKey } from "@/i18n/dict";
 import { ResearchGlance } from "./research-glance";
 import { ProvenanceAnchor } from "./provenance-anchor";
 import { TrustRibbon } from "./trust-ribbon";
+import { WatchlistStrip } from "./watchlist-strip";
 
 // Paradigm α — the Overview IS the validity-argument chain, not a collage with
 // a chain buried at the bottom. The composition leads with the verdict (the
@@ -1160,6 +1161,7 @@ export function Overview() {
     <div className="flex flex-col gap-10">
       <Hero />
       <MarketCards />
+      <WatchlistStrip />
       <DataCockpit />
       {/* Directory-lane module rows (deployed-terminal parity): the three
           stream cards, then institutions (star managers + ARK resonance),
