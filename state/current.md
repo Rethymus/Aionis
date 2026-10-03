@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-04) 轮 160（docs/情报 线）：Interop 2026 全量外部情报搜索扫描完成（配额恢复）——本仓已先行于生态，无可采纳新项；Interop 2027 提案已关闭：**
+  **搜索结果**（WebSearch 恢复，多查询覆盖）：Interop 2026 于 2026-02-12 发布（Mozilla Hacks/WebKit/web.dev/Igalia），**20 焦点区**（15 新+5 承继）从 150+ 提案选出。最新进度：Chrome 98/Edge 98/Firefox 96/Safari 92（experimental ~96%/stable ~62%）；Interop 2027 提案 9-23 关闭。**命名区**：View Transitions/Navigation API/CSS Anchor Positioning/WebRTC/WebTransport/Dialogs and Popovers/Container style queries/Custom highlights/@scope/getAllRecords()/CSS attr()/contrast-color()/JSPI/Scroll-driven animations/Scroll snap/CSS shape()/Web compat/Media pseudo-classes/Scoped custom element registries。**逐项对本仓判定**：View Transitions ✓（轮 134 采纳）；Dialogs/Popovers 已由 Radix 处理（轮 128 同判）；其余（Anchor/CSS shape/JSPI/WebTransport 等）均为 N/A 或无痛点映射——**本仓 cv/Speculation Rules/VT 三项均先行于 Interop 2026/Baseline**。**结论：无可采纳新项**——外部生态尚未追上本仓已实施的增强。PR #99058 仍 open；周一 18:05 通道首跑 ~41h。**边界**：docs/情报 lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-04) 轮 159（display 线）：atlas SVG 原生 hover tooltip——零 JS 静态导出兼容，逐数据形状加 `<title>`：**
   深度反思"交互式 IC 探索器"的轻量实现：SVG `<title>` 是浏览器原生 tooltip（零 JS、零性能代价、全浏览器兼容、静态导出天然支持）。三处数据形状添加：①IC pivot 热图 198 格（month·series·IC=value 四位精度）；②divergence 带状 rect（month·band [lo,hi]·realized·in/out-band）；③divergence 点（month·realized·ECE）。**异步 chunk 架构正确行为**：SSR HTML 无 title（ssr:false 图表水合后出现）——构建验证 EXIT 0 足够。深度反思"交互式 IC 探索器"以零成本落地（1 天估算→实际 ~15 分钟）。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 
