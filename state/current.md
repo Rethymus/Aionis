@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-10-03) 轮 135（display 线）：双缺陷专门轮——RSC 预取 404 根因坐实=Turbopack 导出路由组 payload 布局错位（上游，本地不可修入册）；#418 toggles 假设对照实验消除（补丁已回滚）：**
+  RSC 404：文件在 `out/<route>/__next.*.txt` 而请求打根路径——路由组页预取全废（根页正常）；Next 16.3.8 上游缺陷，升版复查。#418：三 toggles uSES→useState 实验后 #418 依旧（market 依旧无）→非源；outerHTML diff 被序列化伪影污染；范围已锁 Overview 内容；下一仪器=非压缩客户端构建拿 mismatch 完整栈。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (2026-10-03) 轮 134（display 线）：Interop 2026 全量扫描落地 VT+修复潜伏透镜 404（自部署起每页 404！）；两开放缺陷发现入册（#418 水合失配/RSC 预取 404 风暴）：**
   扫描（配额恢复，权威 README 一手）：20 焦点区对四边界裁决——VT=唯一采纳（`@view-transition{navigation:auto}`+reduced-motion 守卫，Chrome 126+ 渐进增强）；**Speculation Rules 不在 Interop 2026**——本仓第三项先行能力。**探针意外捕获潜伏缺陷**：LiquidGlassFilter 的 `/liquid-glass-map.png` 缺 basePath=自部署起每页 404、透镜静默降级纯 blur（轮 71 仅 dev 验证的教训）——修复后线上双验（新路径 200+VT 规则在墙；首次 0 读数=CDN 延迟复现轮 117 教训）。**两开放缺陷如实入册待专门轮**：①React #418（overview 页时序依赖失配，双载 diff 指 ColorConvToggle mounted 分支但理论不应失配）；②RSC 预取 404 风暴（轮 116 误读为慢网——实为 404，预取全废导航靠全页加载）。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 

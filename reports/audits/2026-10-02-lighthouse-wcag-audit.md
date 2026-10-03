@@ -466,3 +466,23 @@ VT 规则在 CSS chunk（首次 0 读数=CDN 边缘延迟，120s 后收敛——
    预取浪费。疑静态导出与 RSC 预取的交互缺陷，待专门诊断。
 
 边界：display lane；0 ledger / 0 frozen / 0 OOS。
+
+
+## 轮 135（2026-10-03）：双缺陷专门轮——RSC 预取 404 根因坐实（上游）；#418 toggles 假设经对照实验消除
+
+**RSC 预取 404（根因坐实，上游缺陷）**：payload 文件**存在**但被 Turbopack 导出
+嵌套在路由目录（`out/ipo/__next.!KGRhc2hib2FyZCk.ipo.txt`），而客户端路由按根
+路径请求（`/Aionis/__next.!KGRhc2hib2FyZCk.ipo.txt`）——路由组 `(dashboard)` 页
+的预取布局错位；根页的 `_tree.txt` 在根位置故其预取正常。**Next 16.3.8 静态导出
+上游缺陷**：本地不可修（发布期拷贝 hack/全站 prefetch=false 皆不值——导航经全页
+加载无损工作，代价仅 ~50 次/页的废请求）。入册为 upstream，升 Next 版本时复查。
+
+**#418（对照实验，假设消除）**：三个 nav toggles（ColorConv/Lang/Theme）的
+uSES-mounted 模式替换为经典 useState/useEffect → 静态构建复测：#418 在
+root/dashboard 依旧、market 依旧无——**toggles 非源**（实验补丁已回滚）。
+outerHTML 双载 diff 法被序列化伪影污染（input type=源码即有；文本分段为
+序列化差异非 DOM 差异）。**已确定范围**：真源在 Overview 内容（dashboard 页特有，
+非壳层组件）；market 无→非全局 Provider。**下一仪器明确**：非压缩客户端构建
+（React dev bundle 对静态导出水合）拿完整 mismatch 栈——留专门轮执行。
+
+边界：display lane；0 ledger / 0 frozen / 0 OOS。
