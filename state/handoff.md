@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-03 (轮 143) PR #99058 快照（open 待合并）；10-06 核验任务书成文入册（本会话平台限制无法挂一次性自动化——任务书五步+红线备妥，节点后任何会话径直执行）
+
+边界：值守/情报 lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-03 (轮 142) RSC 404 范围更正：对照探针 live=0/本地win=24——仅 Windows 构建（上游 #85374 精确吻合，修复 PR #99058 待合并）；线上零影响
 
 边界：display/情报 lane；0 ledger/0 frozen/0 OOS。
