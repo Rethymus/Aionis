@@ -121,7 +121,7 @@ function Stat({ label, children, hint }: { label: string; children: React.ReactN
  *  an anchor chip strip (holdings / politicians / insiders) that smooth-
  *  scrolls to the existing sections. Insiders anchor is honest: the Form 4
  *  stream lives on /insiders (linked), this page carries the f4 KPI only. */
-function AnchorNav({ ticker }: { ticker: string }) {
+function AnchorNav() {
   const { t } = useI18n();
   return (
     <div className="flex flex-wrap items-center gap-1.5">
@@ -494,7 +494,7 @@ export function StockView({ ticker }: { ticker: string }) {
 
       <NullDisclaimer />
 
-      <AnchorNav ticker={stock.ticker} />
+      <AnchorNav />
 
       {/* Chart module (their stock anatomy: full-width 300px chart card with
           a mono stats footer). Honest data = the frozen score series. */}

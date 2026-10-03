@@ -64,7 +64,6 @@ export default function RootLayout({
             capped at 2 (FIFO) and auto-disabled under Save-Data / Preload
             off — polite by construction. Pattern pinned to /Aionis/* so
             outbound links never speculate. */}
-        {/* eslint-disable-next-line react/no-danger -- static rules JSON, no user input */}
         <script
           type="speculationrules"
           dangerouslySetInnerHTML={{
@@ -89,7 +88,6 @@ export default function RootLayout({
                   (same pattern next-themes uses for theme): ships inside the
                   prerendered HTML and runs before hydration, so a CN-convention
                   user never sees a green-up flash. */}
-              {/* eslint-disable-next-line react/no-danger -- static pre-paint seed, no user input */}
               <script dangerouslySetInnerHTML={{ __html: colorConvScript }} />
               <div className="flex min-h-screen flex-col">
                 <TopNav />

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { ArrowRightIcon, SearchIcon } from "lucide-react";
+import { SearchIcon } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -10,7 +10,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { form13f } from "@/data/aionis/form13f";
@@ -18,7 +17,6 @@ import { aionis } from "@/data/aionis";
 import {
   CATEGORY_LABEL,
   CATEGORY_ORDER,
-  categoryLabelKey,
   fmtUsd,
   STOCK_PAGE_TICKERS,
   type Category,

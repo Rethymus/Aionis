@@ -93,12 +93,6 @@ const FRESHNESS_LABEL: Record<Freshness, FreshnessKey> = {
   planned: "apidocs.cat.planned",
 };
 
-function Code({ children }: { children: React.ReactNode }) {
-  return (
-    <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">{children}</code>
-  );
-}
-
 const ROOT_ENDPOINTS = [
   { path: "/api/v1/catalog.json", descKey: "apidocs.ep.catalog" },
   { path: "/api/v1/health.json", descKey: "apidocs.ep.health" },

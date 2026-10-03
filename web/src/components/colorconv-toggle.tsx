@@ -3,7 +3,6 @@
 import { useCallback, useSyncExternalStore } from "react";
 import { ArrowUpIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 
 // Up/down color-convention toggle. The terminal is dual-region (US + CN):

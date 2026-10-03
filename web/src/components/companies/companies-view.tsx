@@ -2,12 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import {
-  ArrowDownIcon,
-  ArrowUpIcon,
-  MinusIcon,
-  SearchIcon,
-} from "lucide-react";
+import { SearchIcon } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -15,16 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { stockUniverse, type StockRow } from "@/data/aionis/stock-universe";
@@ -54,28 +40,6 @@ function initialOfTicker(ticker: string): string {
   return c >= "A" && c <= "Z" ? c : "0-9";
 }
 
-/** Same visual contract as picks' Change: up arrow + up color when > 0. */
-function RankChange({ change }: { change: number | null }) {
-  if (change === null || change === 0) {
-    return <MinusIcon className="size-3 text-muted-foreground/50" aria-hidden />;
-  }
-  const up = change > 0;
-  return (
-    <span
-      className={cn(
-        "inline-flex items-center gap-0.5 text-[11px] font-medium tabular-nums",
-        up ? "text-up" : "text-down",
-      )}
-    >
-      {up ? (
-        <ArrowUpIcon className="size-3" aria-hidden />
-      ) : (
-        <ArrowDownIcon className="size-3" aria-hidden />
-      )}
-      {Math.abs(change)}
-    </span>
-  );
-}
 
 
 const pillCls = (active: boolean) =>

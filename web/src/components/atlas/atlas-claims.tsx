@@ -84,8 +84,6 @@ function meanOf(values: number[]): number | null {
 // Block A — monthly rank-IC pivot heatmap (two deterministic columns of rows)
 // ---------------------------------------------------------------------------
 
-const SYM_MAX = 0.3; // |IC| that maps to the strongest diverging bucket
-
 const P_SERIES: { key: "us" | "cn" | "combined"; label: string }[] = [
   { key: "us", label: "US" },
   { key: "cn", label: "CN" },
@@ -93,7 +91,7 @@ const P_SERIES: { key: "us" | "cn" | "combined"; label: string }[] = [
 ];
 
 // Pivot/forest geometry + cell-text fills live in ./atlas-claims-charts
-// (round-119 split); SYM_MAX/P_SERIES stay — the SSR wrappers consume them.
+// (round-119 split); P_SERIES stays — the SSR halves strip consumes it.
 
 function IcPivotFigure() {
   const { t } = useI18n();
