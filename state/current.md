@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-10-03) 轮 133（稳态复核）：本地全量 DoD 复核绿（pytest EXIT=0 2232+ruff 0）+日历自动化值守核验+配额探测（仍 429，~8h 后恢复）：**
+  本会话 30+ 提交以来首次本地全量复核：pytest EXIT=0（2232 测试零失败）+ruff 全仓绿——CI 夜绿的本地镜像确认。**并发会话值守核验**：10-31 自动化已升级小时守卫（04:05-23:05）+shadow_1031.done 标记门控（防丢版，轮 105 模式）；9-30 自动化 completed 标记在案；夜报 38 跑、10-06 月报底稿（09-28 interim ledger）就绪——三条日历线全部武装到位。**配额探测**：仍 429（重置 2026-10-03 18:50 UTC，约 8h 后）——恢复后执行 Interop/Baseline 全量搜索扫描。无并发新提交（HEAD=轮 132）、外部 stash 未动。业主三项待反馈无新输入。**边界**：复核/docs lane；0 ledger/0 frozen/0 OOS。
+
 - **active (2026-10-02) 轮 132（display 线）：axe-errored 三页根因坐实=axe-core midpoint 工具级 bug，如实归档；全站 a11y 终板入册（33 路由全覆盖会计）：**
   取证（discipline 复现）：score=None 唯一原因=`color-contrast: axe-core Error: Element midpoint exceeds the grid bounds`（控制台零错、余审计正常）；三页共有 frost 大表+transform/裁剪容器模式。**裁决**：不为取悦工具改 98 轮验证的视觉体系；对比度已由令牌级审计覆盖（24 路由实测 100）。**终板**：24×100（含 stock 全系/shelf）+4×按设计不修（target-size 理由在册）+3×axe-errored-by-tool——33 路由全覆盖会计。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 
