@@ -188,10 +188,15 @@ function MiniPicks() {
   return (
     <div className="space-y-1">
       {top4.map((p) => (
-        <Link
+        /* Round 136: NOT a Link — these rows sat inside the ChainSegment's
+           card-level <Link href="/picks">, and nested <a> is invalid HTML:
+           the browser's parser force-closes the outer anchor, collapsing
+           the SSR string vs the client vDOM (the React #418 hydration
+           mismatch this bisect hunted). The card itself navigates to
+           /picks; per-stock pages stay one click away there. */
+        <span
           key={`${p.region}-${p.ticker}`}
-          href={`/stock/${p.ticker}`}
-          className="flex items-center gap-2 rounded-sm text-xs hover:underline"
+          className="flex items-center gap-2 rounded-sm text-xs"
         >
           {/* Name grows to fill, truncates only if truly starved (was w-14/56px
               which chopped "CENTERPOINT ENERGY INC" to "CENTERPOIN…"). The
@@ -206,7 +211,7 @@ function MiniPicks() {
           <span className="w-6 shrink-0 text-right">
             <RankChange change={p.rank_change} />
           </span>
-        </Link>
+        </span>
       ))}
       <p className="pt-1 text-xs text-muted-foreground">{t("overview.chain.evidence.detail")}</p>
     </div>
