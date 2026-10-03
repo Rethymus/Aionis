@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-04 (轮 148) README 新鲜度审计：主双语零漂移；web/README /-redirect 陈述更正（38 路由/56 面板/11 标签均核实未变）
+
+边界：docs lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-03 (轮 147) i18n 孤儿门入 CI：--ci 双路径实证（bogus 注入 exit 1）+ ubuntu frozen-install 实弹 PASSED——零孤儿状态升格为持续强制
 
 边界：ci/display lane；0 ledger/0 frozen/0 OOS。

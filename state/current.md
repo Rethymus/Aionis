@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-04) 轮 148（docs 线）：README 事实新鲜度审计——双语主 README 数字全对（56 面板/11 标签/1500 sitemap 一致），web/README 一处陈旧（/redirect 壳描述）修正：**
+  逐数核对：data_health n_panels=56 ✓、仪表盘 11 标签 ✓（AppTest 实测同数）、sitemap 1500 ✓——双语主 README 零漂移；web/README.md 的 Routes 头仍描述 "/ → redirect to /dashboard"（轮 116 前现实）→更正为"根直渲 overview+canonical"（38 路由数经 find 核实未变）。**边界**：docs lane；0 ledger/0 frozen/0 OOS。
+
 - **active (2026-10-03) 轮 147（ci/display 线）：i18n 孤儿门入 CI——审计脚本 --ci 模式（孤儿/不对称 exit 1，双路径实证）+ Tests 工作流 ubuntu 实弹首跑 PASSED：**
   轮 146 的手动审计升格为**持久 CI 门**：脚本加 `--ci`（confirmed orphans 或 zh/en 不对称→exit 1；9 prefix-only 动态构造键 warning-only 不误伤）；**双路径实证**（注入 bogus 孤儿→exit 1→移除→exit 0）。ci.yml 增 pnpm/Node（复用仓内既有 SHA 精确一致）+ `pnpm install --frozen-lockfile` + 审计门（纯本地扫描零网络，hermetic 与 pytest 同域）——**ubuntu 实弹首跑 PASSED**（run 37131582503）。i18n 零孤儿状态从"本轮成果"升格为"持续强制"。周一 18:05 通道首跑/10-06 月报/业主三项无新输入。**边界**：ci/display lane；0 ledger/0 frozen/0 OOS。
 
