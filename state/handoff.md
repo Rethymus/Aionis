@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-02 (轮 130) exhaustive-deps 专项：16 条全消，eslint 全仓零警告
+
+15 条=回退分支裸 [] 每渲染新引用击穿 memo → 模块级 EMPTY 恒等式（七文件）；1 条=companies 真漏稳定依赖补列。行为恒等；tsc/构建/SSR 复验全绿（dump-dom 0=伺服竞态，SSR 直查证伪）。eslint 至此全仓零错误零警告。边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-02 (轮 129) 自动化预检通过+lint 债清零+news_feed 自愈确认
 
 五脚本 CLI 静态校验过（--run-date 在位/materialize 裸调用合法）；13 处 unused 全清（含 118/119 拆分孤儿），exhaustive-deps ~20 条留专项不 drive-by；news_feed as_of 今日（09-13 残留自愈关闭）。tsc/eslint-unused/构建全零绿。边界：ops/display lane；0 ledger/0 frozen/0 OOS。

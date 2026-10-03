@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (2026-10-02) 轮 130（display 线）：exhaustive-deps 专项评审收官——16 条全消（15=EMPTY 稳定恒等式+1=真漏依赖），eslint 全仓零警告：**
+  分诊：15 条同型（状态回退分支的裸 [] 字面量每渲染新引用，击穿依赖该序列的全部 memo——ok 路径面板为模块常量本已稳定，回退路径微浪费+lint 报警）→模块级 `const EMPTY: never[] = []` 双分支稳定恒等（行为恒等，memo 真只算一次）；congress/events/executives/filers/insiders/ipo/smart-money 七文件。第 16 条（companies）=真漏依赖（filtered 漏列稳定的 dirRows——今日因稳定性而正确，未来加依赖即静默陈旧）→补列。**验证**：exhaustive-deps 0+tsc 0+构建 1506 页 EXIT 0+congress SSR HTML 115 行申报表在墙（dump-dom 0 为伺服竞态伪影，SSR 直查证伪）。**eslint 全仓至此零错误零警告**。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (2026-10-02) 轮 129（ops/display 线）：双日历自动化预检通过+lint 债清零（13 处 unused 全清、exhaustive-deps 专项边界）+news_feed 自愈确认：**
   **预检**：9-30/10-31 两自动化的五脚本存在性+CLI 逐项静态校验（--run-date 在位；materialize 的 --display 为可选旗标→裸调用合法=研究模式正解）——两个不可再生节点结构性无险。**lint**：轮 112 起累积的 13 处 unused-vars/stale-disable（layout×2/api-docs Code/claims SYM_MAX 注释更正/colorconv cn/companies Badge+Table×6+RankChange+孤儿 lucide×3/conviction+filers+institutions Badge/institutions ArrowRightIcon+categoryLabelKey/stock AnchorNav ticker）全清；**exhaustive-deps ~20 条留专项**（行为语义非机械，明确不做 drive-by）。tsc 0+eslint unused 归零+构建 1506 页 EXIT 0。**news_feed**：as_of 2026-10-02T10:00Z——轮 112 的 09-13 残留经通道多晚自愈，跟进关闭。值守：通道 ok/staleness 按期/CI 绿。配额 10-03 18:50 UTC；业主三项待反馈无新输入。**边界**：ops/display lane；0 ledger/0 frozen/0 OOS。
 
