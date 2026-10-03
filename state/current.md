@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-03 深夜) 轮 149（值守 线）：Forward IC tab 空态核实——runs/forward/ 尚不存在（影子月 NO-LEDGER 不产 forward 工件），"No forward runs yet" 为设计内诚实空态；值守快照全外部待触发：**
+  仪表盘最后一个未核实的数据接线：Forward IC tab 扫 runs/forward/（I9 隔离：不触 results/）——目录尚不存在（9-30/10-31 影子 runbook 均 NO-LEDGER，forward 工件仅在 headline GO 后累积）→tab 的 "No forward runs yet" info 空态=设计内诚实行为（AppTest 已过）。**值守快照**：PR #99058 open、10-06/10-31 自动化就绪、业主三项无输入——全部外部触发，无本地可动作项。**边界**：值守 lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-04) 轮 148（docs 线）：README 事实新鲜度审计——双语主 README 数字全对（56 面板/11 标签/1500 sitemap 一致），web/README 一处陈旧（/redirect 壳描述）修正：**
   逐数核对：data_health n_panels=56 ✓、仪表盘 11 标签 ✓（AppTest 实测同数）、sitemap 1500 ✓——双语主 README 零漂移；web/README.md 的 Routes 头仍描述 "/ → redirect to /dashboard"（轮 116 前现实）→更正为"根直渲 overview+canonical"（38 路由数经 find 核实未变）。**边界**：docs lane；0 ledger/0 frozen/0 OOS。
 
