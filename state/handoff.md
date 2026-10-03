@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-03 (轮 141) Cloudflare Worker 端到端健康审计 PASS（US/CN 双端点实时真值+GBK 中文解码+前端格式精确匹配）——null-with-evidence 无需动作；10-06 未到窗口（3 天后）
+
+边界：值守/display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-03 (轮 140) 10-31 预热裁决=不需要（9 缓存文件实态+自愈/小时守卫架构覆盖）；canary.37 仍无 RSC 404 修复；10-06 数据链完整核对
 
 边界：值守/情报 lane；0 ledger/0 frozen/0 OOS。
