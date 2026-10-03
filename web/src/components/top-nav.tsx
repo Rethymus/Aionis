@@ -8,6 +8,7 @@ import { AionisMark } from "@/components/aionis-mark";
 import { ColorConvToggle } from "@/components/colorconv-toggle";
 import { CommandPalette } from "@/components/command-palette";
 import { LangToggle } from "@/components/lang-toggle";
+import { FreshnessBadge } from "@/components/top-nav-freshness";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import {
@@ -185,6 +186,7 @@ export function TopNav() {
         </nav>
         <div className="ml-auto hidden items-center gap-1 md:flex">
           <CommandPalette />
+          <FreshnessBadge />
           <ColorConvToggle />
           <LangToggle />
           <ThemeToggle />

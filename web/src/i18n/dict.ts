@@ -1307,6 +1307,7 @@ export const dict = {
     // Research atlas (/atlas — editorial deterministic research diagrams)
     "nav.atlas": "研究图谱",
     "nav.sub.atlas": "编辑级研究叙事图：主张 · 分差 · 诊断 · 血缘",
+    "nav.freshness": "数据新鲜度",
     "atlas.intro":
       "用编辑级确定性图表回答四个可信度问题：主张说了什么（IC 透视与结论区间）、预测与实现分差多大（校准带）、分数面形态如何（诊断）、每个数字从哪来（数据血缘）。全部服务端渲染、零客户端 JS、附完整数据表回退。",
     "atlas.claims.title": "核心主张透视图",
@@ -2686,6 +2687,7 @@ export const dict = {
     // Research atlas (/atlas — editorial deterministic research diagrams)
     "nav.atlas": "Research atlas",
     "nav.sub.atlas": "Editorial research diagrams: claims · divergence · diagnostics · lineage",
+    "nav.freshness": "Data freshness",
     "atlas.intro":
       "Editorial deterministic diagrams answering four credibility questions: what the claim says (IC pivots and the claim interval), how far forecasts diverge from realization (calibration bands), what the score surface looks like (diagnostics), and where every number comes from (data lineage). All server-rendered, zero client JS, with full data-table fallbacks.",
     "atlas.claims.title": "Core-claim pivots",
