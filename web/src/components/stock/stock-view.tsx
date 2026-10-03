@@ -263,7 +263,7 @@ function PoliticianTradesCard({ ticker }: { ticker: string }) {
           {rows.length > 0 ? (
             <Link
               href="/congress"
-              className="ml-1 text-primary hover:underline"
+              className="ml-1 text-primary underline decoration-primary/40 underline-offset-2 hover:decoration-primary"
             >
               {t("stock.politician.all")}
             </Link>
@@ -463,7 +463,7 @@ export function StockView({ ticker }: { ticker: string }) {
               <span className="font-mono tabular-nums" title={t("stock.live.note")}>
                 {agoSec !== null ? (
                   <span
-                    className="mr-1 text-muted-foreground/70"
+                    className="mr-1 text-muted-foreground"
                     title={live.as_of ?? undefined}
                   >
                     {t("stock.live.updated.prefix")}

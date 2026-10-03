@@ -166,7 +166,7 @@ export function ShelfView() {
               className={pillCls(category === c)}
             >
               {t(CATEGORY_LABEL[c])}
-              <span className="ml-1 font-mono tabular-nums opacity-70">
+              <span className="ml-1 font-mono tabular-nums text-muted-foreground">
                 {shelf.categories[c]}
               </span>
             </button>
