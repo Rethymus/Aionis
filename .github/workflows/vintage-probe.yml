@@ -54,7 +54,7 @@ jobs:
 
       - name: Upload drift verdict
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: provider-cutoff-drift
           path: runs/provider_cutoff_drift.json
