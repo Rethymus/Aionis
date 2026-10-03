@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-03 深夜) 轮 150（值守 线）：夜报自动化配置完整性核验——nextRunAt 精确换算=周一 23:35 北京（cron 35 23 * * 1-5 语义正确），轮 144 强化已武装待触发：**
+  排除双重时区偏移干扰（本地 UTC+8 机器上 fromtimestamp 双重换算的伪影）后：夜报自动化 nextRunAt=Oct 5 15:35 UTC=**周一 23:35 北京**，与 cron 表达式精确一致、enabled=true、轮 144 追补强化提示词在位——满月评估的执行器配置完整性确认。值守循环至此全部收敛：本地可动作项零残留，剩余节点（周一通道/周二月报/10-31 影子/PR #99058/业主三项）全部时间或输入触发。**边界**：值守 lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-03 深夜) 轮 149（值守 线）：Forward IC tab 空态核实——runs/forward/ 尚不存在（影子月 NO-LEDGER 不产 forward 工件），"No forward runs yet" 为设计内诚实空态；值守快照全外部待触发：**
   仪表盘最后一个未核实的数据接线：Forward IC tab 扫 runs/forward/（I9 隔离：不触 results/）——目录尚不存在（9-30/10-31 影子 runbook 均 NO-LEDGER，forward 工件仅在 headline GO 后累积）→tab 的 "No forward runs yet" info 空态=设计内诚实行为（AppTest 已过）。**值守快照**：PR #99058 open、10-06/10-31 自动化就绪、业主三项无输入——全部外部触发，无本地可动作项。**边界**：值守 lane；0 ledger/0 frozen/0 OOS。
 

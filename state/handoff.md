@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-03 深夜 (轮 150) 夜报自动化配置完整性核验：nextRunAt=周一 23:35 北京精确一致，轮 144 强化武装待触发
+
+值守循环收敛：本地零可动作项；剩余节点全外部触发。边界：值守 lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-03 深夜 (轮 149) Forward IC tab 空态核实（runs/forward/ 不存在=影子月 NO-LEDGER 设计内；空态诚实）；值守快照全外部待触发
 
 边界：值守 lane；0 ledger/0 frozen/0 OOS。
