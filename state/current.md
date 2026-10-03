@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-04 凌晨) 轮 153（值守 线）：evals/regression 指针核实（指向 ../../tests/ 非副本，与 AGENTS 目录地图一致）；值守循环无变化确认：**
+  evals/ 四子目录中唯一未检的 regression/=纯指针（README 声明套件在 ../../tests/，非副本——与 ADR-006 no-disposable 精确一致）；cases/expected/trials/results 为 E3 GO 后的预留空间。**值守快照**：PR #99058 open、10-06 节点 3 天（幂等+追补就绪）、业主三项无输入、通道 ok（周五状态）、树净——无本地可动作项。周一 18:05 通道首跑（轮 138 实弹）为下一外部触发。**边界**：值守 lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-04 凌晨) 轮 152（display 线）：仪表盘全部 11 tab 数据源接线核实完成——Strategy Return（125 月×5 策略 parquet 在位）/Coverage（total/clean/jaccard/dropped 全键）/Run history（58 行账本可见）三 tab 数据源实存：**
   11 tab 数据源盘点收官：前三轮核实 Overview/Fit/Vol/Evol/Event/Unc/Horizon/Forward IC（空态诚实）四类；本轮补核剩余三 tab——strategy_returns.parquet 在位（125 月×5 策略列，2016-01→2026-05——账本零写入与影子月纪律下为最新诚实状态）、coverage 全键、ledger 58 行可见。**结论：仪表盘 11 tab 无一空壳、无一断线、空态均设计内**。AppTest 运行级+元素级文本+数据源三层验证齐备。值守循环：周一/周二节点待触发。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 

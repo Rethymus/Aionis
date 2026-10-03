@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-04 凌晨 (轮 153) evals/regression 指针核实（指向 ../../tests/ 非副本）；值守无变化确认
+
+边界：值守 lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-04 凌晨 (轮 152) 仪表盘 11 tab 数据源盘点收官：三剩余 tab（Strategy Return/Coverage/Run history）数据源实存，无一空壳断线；三层验证（运行/元素/数据源）齐备
 
 边界：display lane；0 ledger/0 frozen/0 OOS。
