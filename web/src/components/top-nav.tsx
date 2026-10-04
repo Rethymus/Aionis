@@ -8,6 +8,12 @@ import { AionisMark } from "@/components/aionis-mark";
 import { ColorConvToggle } from "@/components/colorconv-toggle";
 import { CommandPalette } from "@/components/command-palette";
 import { LangToggle } from "@/components/lang-toggle";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { FreshnessBadge } from "@/components/top-nav-freshness";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -27,6 +33,7 @@ import {
   ListIcon,
   MapIcon,
   MenuIcon,
+  MoreHorizontalIcon,
   NetworkIcon,
   NewspaperIcon,
   PercentIcon,
@@ -190,6 +197,41 @@ export function TopNav() {
           <ColorConvToggle />
           <LangToggle />
           <ThemeToggle />
+        </div>
+        {/* Mobile controls (round 168): the md:flex row above disappears on
+            small screens — surface the same controls in an overflow dropdown
+            so mobile users keep search/freshness/convention/lang/theme. */}
+        <div className="ml-auto flex items-center md:hidden">
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              render={
+                <button
+                  type="button"
+                  aria-label={t("nav.more")}
+                  className="inline-flex size-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-soft hover:text-foreground"
+                />
+              }
+            >
+              <MoreHorizontalIcon className="size-4" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="frost-glass">
+              <DropdownMenuItem className="flex cursor-pointer items-center gap-2">
+                <CommandPalette />
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex items-center gap-2">
+                <FreshnessBadge />
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex cursor-pointer items-center gap-2">
+                <ColorConvToggle />
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex cursor-pointer items-center gap-2">
+                <LangToggle />
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex cursor-pointer items-center gap-2">
+                <ThemeToggle />
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
         <a
           href="https://github.com/Rethymus/Aionis/blob/main/docs/RESULTS.md"
