@@ -33,9 +33,21 @@ export function FreshnessBadge() {
   const { t } = useI18n();
   const snap = aionis.dataHealth?.snapshot_ts;
   const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  const [, setTick] = useState(0);
+  useEffect(() => {
+    setMounted(true);
+    // 60s recompute (round 164): a long-lived tab would otherwise show the
+    // "Xh ago" computed at open time, drifting stale. One tick per minute
+    // re-runs computeFreshness below via the render.
+    const id = setInterval(() => setTick((n) => n + 1), 60_000);
+    return () => clearInterval(id);
+  }, []);
 
-  const { hours, level } = useMemo(() => computeFreshness(snap), [snap]);
+  const { hours, level } = useMemo(
+    () => computeFreshness(snap),
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- tick drives the 60s recompute
+    [snap, mounted],
+  );
 
   // Static export: Date.now() differs between build and browser, so the
   // hours are computed client-side only. The SSR HTML carries a placeholder

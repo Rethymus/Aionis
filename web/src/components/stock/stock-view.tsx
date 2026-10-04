@@ -12,6 +12,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { WatchlistStar } from "@/components/ui/watchlist-star";
+import { SectorPeers } from "@/components/stock/sector-peers";
 import { CopyProvenance } from "@/components/ui/copy-provenance";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
@@ -514,6 +515,10 @@ export function StockView({ ticker }: { ticker: string }) {
 
       <NullDisclaimer />
 
+      <div className="space-y-1.5">
+        <p className="text-[11px] font-medium text-muted-foreground">{t("stock.peers")}</p>
+        <SectorPeers ticker={ticker} />
+      </div>
       <AnchorNav />
 
       {/* Chart module (their stock anatomy: full-width 300px chart card with
