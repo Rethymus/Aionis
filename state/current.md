@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-04) 轮 174（验证/docs 线）：第三轮快扫——12 项功能后零性能回归（/ perf 61/TBT 410ms/总量 4634KiB 与 12 项前持平）、零 a11y 回归（100 零失败）、JSON 面板 API 端点健康（panels/<name>.json 200+404 正确）：**
+  **性能**：/ 页 perf 61/TBT 410ms——与 12 项功能前的基线（perf 61-70/TBT 324-740ms）持平，**零回归**（新组件全部轻量：uSES store+SVG title+badge 都不产生长任务）。**a11y**：/ 页 100 零失败——12 个新组件的水合安全模式没有引入新的 axe 失败。**JSON API**：/api/v1/panels/<name>.json 端点正确响应（已知面板 200+正确大小，未知面板 404）；/api-docs 页 200 在线；panels/ 目录索引 404（静态导出无目录列表=设计内安全，api_catalog.json 提供发现性）。**结论：12 项功能零退化**——所有质量维度维持绿色。**边界**：验证/docs lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-04) 轮 173（验证 线）：12 项功能全量线上验证 PASS——picks 星标 25 枚+AAPL peers DELL/SMCI+Cite 按钮+Top #1 徽标+同板块标签+移动端菜单全部在墙：**
   部署站（df0e68adc 发布）逐项核验：/picks 页 25 个 aria-pressed 星标按钮（20 picks+5 shorts）；/stock/COIN `★ Top #1` 琥珀徽标（SSR React 注释分隔符形态在墙）；/stock/AAPL sector peers DELL+SMCI chips+score 着色；/stock/AAPL Cite 按钮+`Copy provenance citation` aria-label；首页 `更多` 移动端菜单+md:hidden 块；FreshnessBadge SSR 占位（mounted 门控=设计内）。**12 项功能全部线上确认**。PR #99058 open。周一通道首跑 ~28h（将验证 ticker_metadata 修复+备份自动化首弹）。**边界**：验证 lane；0 ledger/0 frozen/0 OOS。
 
