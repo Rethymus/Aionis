@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-04) 轮 176（display 线）：键盘快捷键可发现性 + 根错误边界——tab 条右侧 kbd 提示（1-9 [ ]）+ 全站优雅失败卡：**
+  **①kbd 提示**：StickyTabs 右缘新增淡色 `<kbd>1-9</kbd> <kbd>[</kbd> <kbd>]</kbd>`（lg+ 显示——键盘用户定义上有键盘；触屏隐藏）。轮 166 的热键从"不可见"变"可发现"。**②根 error.tsx**：全站 1500+ 页的未捕获客户端渲染错误的优雅失败卡（双语标题+错误消息+digest+重新加载+回到总览）——此前运行时错误显示 Next 默认崩溃页无恢复路径。验证：tsc 0/eslint 0/构建 1506 EXIT 0/kbd 在 track.html 4 处/error boundary 在 chunks（0d2905a48 CI 绿）。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-04) 轮 175（display/seo 线）：21 页获得独立 title+meta description——浏览器标签可区分、搜索引擎可辨页面（此前 38 路由共用同一个通用 title）：**
   (dashboard) 页面全是 client 组件（useI18n）无法自行 export metadata——为 21 个主要路由创建薄 server-layout shim（仅设 metadata+透传 children）。构建产物验证：atlas='研究图谱 · Aionis'/picks='选股决策'/dashboard='总览'/market='市场全景'/shelf='方法货架'/taco='关税博弈'——**每个标签页有独立名称**。tsc 0/eslint 0/i18n 门 PASS/构建 1506 EXIT 0（3270f795d 发布）。**边界**：display/seo lane；0 ledger/0 frozen/0 OOS。
 

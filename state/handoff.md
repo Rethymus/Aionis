@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-04 (轮 176) kbd 可发现性+根错误边界：StickyTabs 右缘提示（1-9 [ ]）+全站优雅失败卡
+
+边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-04 (轮 175) 21 页独立 title+description：server-layout shim 模式（client 页面无法自行 export metadata 的正解）；线上验证
 
 边界：display/seo lane；0 ledger/0 frozen/0 OOS。
