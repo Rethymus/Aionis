@@ -30,7 +30,7 @@ export const viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://rethymus.github.io"),
+  metadataBase: new URL("https://rethymus.github.io/Aionis"),
   title: "Aionis — 反泄漏选股研究终端",
   description:
     "Anti-leakage stock-pick research terminal: stock-pick ranking, evidence wall, and power-floor monitor. Null is the intended outcome.",
