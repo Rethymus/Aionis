@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-04 (轮 167) ⌘K ★ Watchlist 分组：星标一键直达（空查询 curated 组+查询时置顶去重）；i18n 对称；CI 绿
+
+边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-04 (轮 166) 键盘 tab 导航：1-9+[ ] 三 Tabs 页（共享 hook；输入焦点跳过）；CI 绿
 
 边界：display lane；0 ledger/0 frozen/0 OOS。

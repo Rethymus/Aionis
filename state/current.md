@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-04) 轮 167（display 线）：⌘K 面板 ★ Watchlist 分组上线——星标 ticker 从任何页面一键直达（第二轮反思倒数第二项）：**
+  空查询时 palette 在 curated hot stocks 之上显示 "★ Watchlist" 组（琥珀星标）；有查询时 watchlist 匹配置于 stocks 组顶部（前置+去重）。冷 watchlist 隐藏分组（零仪式）。i18n `palette.watchlist` zh/en 对称（审计门 PASS）。验证：tsc 0/eslint 0/构建 1506 EXIT 0/组逻辑在 emitted chunk 确认（96f06194b CI 绿）。第二轮反思递进项仅剩移动端 nav 控件可见性。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-04) 轮 166（display 线）：键盘 tab 导航上线——1-9 数字键跳转+[ ] 前后切换（/track /regime /confirmation 三页）：**
   第二轮反思效率递进项实现：共享 `useTabHotkeys` hook（web/src/lib/）——数字键 1-9 跳第 N 个 tab、`[` `]` 前后循环（wrap）；**input/textarea/select/contenteditable 焦点时跳过**（home search 与 ⌘K 面板按键不受干扰）。接线三 Tabs 页各 tab 精确顺序（track 6/regime 4/confirmation 4）。验证：tsc 0/eslint 0/构建 1506 EXIT 0/hotkey 逻辑在 emitted chunk 确认（ca7a84e2a CI 绿）。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 
