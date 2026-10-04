@@ -582,6 +582,18 @@ def do_run(force: bool) -> int:
                             f"hard-fail step '{step['name']}': {detail}")
             ledger_note = tidy_ledger(fh)
             status, sha, pushed, n_files = commit_and_push(fh)
+            # Audit-chain backup (round 172): after any lane push, snapshot
+            # the ledger + full bundle to data/backups/. Non-fatal: a backup
+            # failure must never mark the lane run as failed.
+            try:
+                r = subprocess.run(
+                    [sys.executable, str(ROOT / "scripts" / "backup_audit_chain.py")],
+                    cwd=ROOT, capture_output=True, text=True, timeout=120)
+                backup_note = ("ok" if r.returncode == 0
+                               else f"warn:{r.stderr.strip()[-60:]}")
+            except Exception as exc:  # noqa: BLE001 — non-fatal by design
+                backup_note = f"warn:{str(exc)[:60]}"
+            log(f"audit-chain backup: {backup_note}", fh)
             ci = (verify_own_commit_ci(sha) if pushed
                   else {"note": "no push"})
             state.pop("error", None)  # stale failure text must not survive a success
@@ -592,7 +604,7 @@ def do_run(force: bool) -> int:
             summary = {
                 "date": today, "status": status, "commit": sha, "pushed": pushed,
                 "n_files": n_files, "soft_fails": soft_fails,
-                "ledger": ledger_note, "ci": ci,
+                "ledger": ledger_note, "ci": ci, "backup": backup_note,
                 "wall_minutes": round((time.time() - t0) / 60, 1),
             }
             log(f"SUMMARY {json.dumps(summary, ensure_ascii=False)}", fh)
