@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-04 (轮 170) 审计链备份工具：ledger 原样拷贝（字节一致验证）+git bundle→data/backups/；轮 155 缺口闭合
+
+边界：ops lane；0 ledger 写入/0 frozen/0 OOS。
+
+
 ## 2026-10-04 (轮 169) 12 项功能后全栈 DoD 复核：pytest 2232 EXIT=0/ruff/tsc/eslint/i18n 全绿零回归；第三轮快扫无新盲区
 
 边界：验证 lane；0 ledger/0 frozen/0 OOS。

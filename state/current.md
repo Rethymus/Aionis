@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-04) 轮 170（ops 线）：审计链备份工具上线——轮 155 反思"账本无独立备份"缺口闭合：**
+  `scripts/backup_audit_chain.py`：时间戳账本原样拷贝（**字节一致验证：sha256 0924ce2b 与 runs/ledger.jsonl 完全相同**）+ 全 refs git bundle（37MB）→ `data/backups/`（gitignored）。保留最近 30 对。runbook 增操作节。**审计链从此有本地冗余副本**——GitHub 侧事故（force-push 失误/账号问题/仓库删除）不再能摧毁唯一记录。首跑验证：ledger 129KB + bundle 37MB 均成功。ruff 0+CI 绿（049bd7a63）。**边界**：ops lane；0 ledger 写入（备份=只读拷贝）/0 frozen/0 OOS。
+
 - **active (10-04) 轮 169（验证 线）：12 项功能后的全栈 DoD 复核——本地全量 pytest 2232 EXIT=0 + ruff 全仓绿 + tsc/eslint/i18n 门全 PASS，零回归：**
   12 项新功能（约 500 行新组件代码）落地后的完整回归电池：Python 侧 2232 测试零失败（web 改动与 Python 测试正交——契约确认）；web 侧 tsc 0/eslint 0/i18n 门 PASS。**第三轮反思快扫**（新功能交互盲区）：①FreshnessBadge 周末正确显示 amber（48-96h 阈值=设计内——周五 run 到周日约 50h）；②12 个新组件全部走 uSES 设计内水合安全模式（零 #418 复发）；③Base UI vs Radix 边界已入册（轮 168）。**结论：无新盲区可自主推进项**——两轮反思 12+12 提案管线清零，全栈质量门绿色。下一自然节点=周一 18:05 通道首跑实弹（~31h）。**边界**：验证 lane；0 ledger/0 frozen/0 OOS。
 
