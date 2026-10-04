@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-04 (轮 166) 键盘 tab 导航：1-9+[ ] 三 Tabs 页（共享 hook；输入焦点跳过）；CI 绿
+
+边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-04 (轮 165) Watchlist 排名变动徽标：↑N/↓N（localStorage 基线对比+TrendingUp/Down 着色）——personalized alerting 落地
 
 边界：display lane；0 ledger/0 frozen/0 OOS。

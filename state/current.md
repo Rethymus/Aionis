@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-04) 轮 166（display 线）：键盘 tab 导航上线——1-9 数字键跳转+[ ] 前后切换（/track /regime /confirmation 三页）：**
+  第二轮反思效率递进项实现：共享 `useTabHotkeys` hook（web/src/lib/）——数字键 1-9 跳第 N 个 tab、`[` `]` 前后循环（wrap）；**input/textarea/select/contenteditable 焦点时跳过**（home search 与 ⌘K 面板按键不受干扰）。接线三 Tabs 页各 tab 精确顺序（track 6/regime 4/confirmation 4）。验证：tsc 0/eslint 0/构建 1506 EXIT 0/hotkey 逻辑在 emitted chunk 确认（ca7a84e2a CI 绿）。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-04) 轮 165（display 线）：Watchlist 排名变动徽标上线——personalized alerting 留存杠杆（2026 UX 趋势研究指认）：**
   第二轮反思最高粘性递进提案实现：WatchlistStrip 每张 chip 新增 **↑N/↓N 排名徽标**（绿 TrendingUp=排名提升/红 TrendingDown=下降）——实现=第二 localStorage 键（aionis-watchlist-ranks）存上次访问的冻结 picks rank 基线；mount 时对比当前 rank，渲染徽标后持久化新基线。**冷启动无徽标**（无基线=正确语义）；SSR 不受影响（strip mounted 前渲染 null）。**"回访的理由=我的股票动了"**——2026 留存趋势研究（cohort+personalized alerting）的精准落地。验证：tsc 0/eslint 0/构建 1506 EXIT 0；rank 逻辑四件套（storage key+getLastSeenRanks+TrendingUp+Rank improved title）在 emitted chunks 确认（0293699cb CI 绿）。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 
