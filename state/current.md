@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-04) 轮 168（display 线）：移动端 nav overflow 菜单上线——第二轮反思功能清单全部闭合（12 项功能）：**
+  top-nav 的 `md:flex` 控件区在移动端整体消失的缺口修复：MoreHorizontalIcon overflow 下拉承载同五个控件（search/freshness/convention/lang/theme）。**Base UI render-prop trigger**（本仓 dropdown 是 Base UI 非 Radix——无 asChild，tsc 即时拦截一次误用后改 render 属性）。i18n `nav.more` zh/en。验证：tsc 0/eslint 0/i18n 门 PASS/构建 1506 EXIT 0（df0e68adc CI 绿）。**至此第二轮反思功能清单清零**：Watchlist 管理（strip+palette 组）、FreshnessBadge（含 60s 重算）、Top-Pick 徽标、SectorPeers、排名变动徽标、键盘 tab 导航、⌘K 组、移动端 nav——12 项功能两轮反思管线全部落地。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-04) 轮 167（display 线）：⌘K 面板 ★ Watchlist 分组上线——星标 ticker 从任何页面一键直达（第二轮反思倒数第二项）：**
   空查询时 palette 在 curated hot stocks 之上显示 "★ Watchlist" 组（琥珀星标）；有查询时 watchlist 匹配置于 stocks 组顶部（前置+去重）。冷 watchlist 隐藏分组（零仪式）。i18n `palette.watchlist` zh/en 对称（审计门 PASS）。验证：tsc 0/eslint 0/构建 1506 EXIT 0/组逻辑在 emitted chunk 确认（96f06194b CI 绿）。第二轮反思递进项仅剩移动端 nav 控件可见性。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 

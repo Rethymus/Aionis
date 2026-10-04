@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-04 (轮 168) 移动端 nav overflow 菜单（Base UI render-prop trigger）——第二轮反思功能清单清零（12 项全部落地）
+
+边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-04 (轮 167) ⌘K ★ Watchlist 分组：星标一键直达（空查询 curated 组+查询时置顶去重）；i18n 对称；CI 绿
 
 边界：display lane；0 ledger/0 frozen/0 OOS。
