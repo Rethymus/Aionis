@@ -111,6 +111,23 @@ export default function RootLayout({
           </I18nProvider>
         </ThemeProvider>
       </body>
+      {/* JSON-LD structured data (round 179): WebSite schema for search
+          engine understanding — name, description, and the project's key
+          stat (4 NULL verdicts) for rich result eligibility. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "Aionis",
+            alternateName: "Aionis 反泄漏选股研究终端",
+            description:
+              "Anti-leakage quantitative-finance research terminal: frozen OOS picks, evidence wall, power-floor monitor. 4 NULL verdicts across B/C/D/E1 phases.",
+            url: "https://rethymus.github.io/Aionis/",
+          }),
+        }}
+      />
     </html>
   );
 }
