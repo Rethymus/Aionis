@@ -437,7 +437,14 @@ export function StockView({ ticker }: { ticker: string }) {
   const histStd = hist.length > 1
     ? Math.sqrt(hist.reduce((a, b) => a + (b - (histMean ?? 0)) ** 2, 0) / (hist.length - 1))
     : null;
-  const percentile = Math.round((1 - (stock.rank - 1) / stock.n_region) * 100);
+  const pickRank = useMemo(() => {
+    const all = [...(aionis.picks ?? []), ...(aionis.shorts ?? [])];
+    const hit = all.find((x) => x.ticker === stock?.ticker);
+    return hit ? (hit as { rank: number }).rank : null;
+  }, [stock?.ticker]);
+  const percentile = stock
+    ? Math.round((1 - (stock.rank - 1) / stock.n_region) * 100)
+    : 0;
   // Sector standing within the region's sector table (frozen panel).
   const sectorRows = aionis.sectorBreakdown.all_sectors ?? aionis.sectorBreakdown.sectors ?? [];
   const sectorRow = sectorRows.find(
@@ -459,6 +466,15 @@ export function StockView({ ticker }: { ticker: string }) {
               {regionLabel}
             </Badge>
             <WatchlistStar ticker={stock.ticker} />
+            {pickRank ? (
+              <Link
+                href="/picks"
+                className="ml-1 inline-flex items-center gap-1 rounded-full border border-amber-400/30 bg-amber-400/10 px-2 py-0.5 text-[11px] font-mono text-amber-600 transition-colors hover:border-amber-400/60 dark:text-amber-400"
+                title={t("stock.toppick.hint")}
+              >
+                ★ Top {pickRank <= 10 ? `#${pickRank}` : "20"}
+              </Link>
+            ) : null}
           </h1>
           <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
             {stock.sector ? <span>{stock.sector}</span> : null}
