@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-04 (轮 165) Watchlist 排名变动徽标：↑N/↓N（localStorage 基线对比+TrendingUp/Down 着色）——personalized alerting 落地
+
+边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-04 (轮 164) FreshnessBadge 60s 重算 + SectorPeers 同板块横滑条（AAPL: DELL+SMCI 在墙；i18n 对称；CI 绿）
 
 边界：display lane；0 ledger/0 frozen/0 OOS。

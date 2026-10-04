@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-04) 轮 165（display 线）：Watchlist 排名变动徽标上线——personalized alerting 留存杠杆（2026 UX 趋势研究指认）：**
+  第二轮反思最高粘性递进提案实现：WatchlistStrip 每张 chip 新增 **↑N/↓N 排名徽标**（绿 TrendingUp=排名提升/红 TrendingDown=下降）——实现=第二 localStorage 键（aionis-watchlist-ranks）存上次访问的冻结 picks rank 基线；mount 时对比当前 rank，渲染徽标后持久化新基线。**冷启动无徽标**（无基线=正确语义）；SSR 不受影响（strip mounted 前渲染 null）。**"回访的理由=我的股票动了"**——2026 留存趋势研究（cohort+personalized alerting）的精准落地。验证：tsc 0/eslint 0/构建 1506 EXIT 0；rank 逻辑四件套（storage key+getLastSeenRanks+TrendingUp+Rank improved title）在 emitted chunks 确认（0293699cb CI 绿）。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-04) 轮 164（display 线）：FreshnessBadge 60s 定时重算 + SectorPeers 同板块横滑条——第二轮反思递进项落地：**
   **①FreshnessBadge**：60s setInterval 重算（长时间打开的标签页"Xh ago"不再过时——第二轮反思 §一.2 修复）。**②SectorPeers**：stock 页新增同板块股票横滑条（top 8 by 冻结 |score| 排除自身；~1460 页覆盖；stock_universe 已有 sector 数据零新 fetch）——**"一跳发现同板块标的"**（两轮反思交叉链接密度主题递进）。AAPL 页实测：Technology 板 DELL+SMCI peer chips 在墙+score 着色+`同板块` i18n 标签（zh/en 对称）。验证：tsc 0/eslint 0/i18n 门 PASS/构建 1506 EXIT 0/CI 绿（5d7d7f423）。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 
