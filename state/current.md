@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-04) 轮 175（display/seo 线）：21 页获得独立 title+meta description——浏览器标签可区分、搜索引擎可辨页面（此前 38 路由共用同一个通用 title）：**
+  (dashboard) 页面全是 client 组件（useI18n）无法自行 export metadata——为 21 个主要路由创建薄 server-layout shim（仅设 metadata+透传 children）。构建产物验证：atlas='研究图谱 · Aionis'/picks='选股决策'/dashboard='总览'/market='市场全景'/shelf='方法货架'/taco='关税博弈'——**每个标签页有独立名称**。tsc 0/eslint 0/i18n 门 PASS/构建 1506 EXIT 0（3270f795d 发布）。**边界**：display/seo lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-04) 轮 174（验证/docs 线）：第三轮快扫——12 项功能后零性能回归（/ perf 61/TBT 410ms/总量 4634KiB 与 12 项前持平）、零 a11y 回归（100 零失败）、JSON 面板 API 端点健康（panels/<name>.json 200+404 正确）：**
   **性能**：/ 页 perf 61/TBT 410ms——与 12 项功能前的基线（perf 61-70/TBT 324-740ms）持平，**零回归**（新组件全部轻量：uSES store+SVG title+badge 都不产生长任务）。**a11y**：/ 页 100 零失败——12 个新组件的水合安全模式没有引入新的 axe 失败。**JSON API**：/api/v1/panels/<name>.json 端点正确响应（已知面板 200+正确大小，未知面板 404）；/api-docs 页 200 在线；panels/ 目录索引 404（静态导出无目录列表=设计内安全，api_catalog.json 提供发现性）。**结论：12 项功能零退化**——所有质量维度维持绿色。**边界**：验证/docs lane；0 ledger/0 frozen/0 OOS。
 
