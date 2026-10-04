@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-04 (轮 172) 备份自动化：通道 push 后自动运行（非致命）；SUMMARY 增 backup 字段；30 绿
+
+边界：ops lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-04 (轮 171) 备份还原验证：bundle clone 1544 文件+ledger sha 逐位一致——备份可实际还原
 
 边界：ops lane；0 ledger/0 frozen/0 OOS。

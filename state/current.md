@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-04) 轮 172（ops 线）：备份自动化——通道每次 push 后自动运行审计链备份（非致命设计），SUMMARY 增 backup 字段：**
+  轮 170 备份工具集成进通道 `do_run`：commit_and_push 成功后 subprocess 调 backup_audit_chain.py（120s 帽），**失败仅 log warning 绝不标记 lane 失败**（备份=冗余非门）；SUMMARY 增 `backup` 字段（ok/warn:N）供夜报一行摘要。通道测试 30 绿+ruff 0（ee34cdec2 CI 绿）。**审计链备份从"手动工具"升格为"每次 push 自动"**。**边界**：ops lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-04) 轮 171（ops 线）：备份还原验证 PASS——git bundle 成功 clone（1544 文件），还原仓库 HEAD=c382e167e，ledger 58 行 sha256 与活仓库完全一致：**
   轮 170 的备份工具的还原面验证（Schrödinger 备份测试）：`git clone <bundle>` → 1544 文件完整检出、`runs/ledger.jsonl` 58 行、sha256 与活仓库**逐位相同**——备份不仅创建了，而且**可实际还原**。测试 clone 已清理（无驻留）。PR #99058 仍 open。周一通道首跑 ~28h。**边界**：ops lane；0 ledger/0 frozen/0 OOS。
 
