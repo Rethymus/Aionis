@@ -10,6 +10,7 @@ const TacoView = dynamic(() => import("@/components/taco/taco-view").then(m => m
 const MacroRegimeChart = dynamic(() => import("@/components/themes/macro-regime-chart").then(m => m.MacroRegimeChart));
 import { SegmentHeader } from "@/components/segment-header";
 import { StickyTabs } from "@/components/sticky-tabs";
+import { useTabHotkeys } from "@/lib/use-tab-hotkeys";
 import { aionis } from "@/data/aionis";
 import { useI18n } from "@/i18n/provider";
 
@@ -46,6 +47,8 @@ export default function RegimePage() {
     setActiveTab(tab);
     window.location.hash = tab;
   };
+
+  useTabHotkeys(["market", "positioning", "taco", "macro"], activeTab, handleTabChange);
 
   return (
     <div className="space-y-6 p-4 md:p-6">

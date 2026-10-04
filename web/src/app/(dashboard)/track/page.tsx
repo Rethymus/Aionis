@@ -16,6 +16,7 @@ const EvidenceView = dynamic(() => import("@/components/evidence/evidence-view")
 const ThemeSlice = dynamic(() => import("@/components/themes/theme-slice").then(m => m.ThemeSlice));
 import { SegmentHeader } from "@/components/segment-header";
 import { StickyTabs } from "@/components/sticky-tabs";
+import { useTabHotkeys } from "@/lib/use-tab-hotkeys";
 import { AiAttributionCard } from "@/components/ai/attribution-card";
 import { aionis } from "@/data/aionis";
 import { useI18n } from "@/i18n/provider";
@@ -55,6 +56,8 @@ export default function TrackPage() {
     setActiveTab(tab);
     window.location.hash = tab;
   };
+
+  useTabHotkeys(["calibration", "power-floor", "model-health", "cost", "discipline", "evidence"], activeTab, handleTabChange);
 
   return (
     <div className="space-y-6 p-4 md:p-6">

@@ -11,6 +11,7 @@ const RedditView = dynamic(() => import("@/components/reddit/reddit-view").then(
 const ThemeSlice = dynamic(() => import("@/components/themes/theme-slice").then(m => m.ThemeSlice));
 import { SegmentHeader } from "@/components/segment-header";
 import { StickyTabs } from "@/components/sticky-tabs";
+import { useTabHotkeys } from "@/lib/use-tab-hotkeys";
 import { aionis } from "@/data/aionis";
 import { useI18n } from "@/i18n/provider";
 
@@ -47,6 +48,8 @@ export default function ConfirmationPage() {
     setActiveTab(tab);
     window.location.hash = tab;
   };
+
+  useTabHotkeys(["smart-money", "insiders", "reddit", "news"], activeTab, handleTabChange);
 
   return (
     <div className="space-y-6 p-4 md:p-6">
