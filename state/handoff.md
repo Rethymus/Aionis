@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-04 (轮 173) 12 项功能全量线上验证 PASS（picks 25 星标/AAPL peers/Cite/Top#1/同板块/移动端菜单）
+
+边界：验证 lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-04 (轮 172) 备份自动化：通道 push 后自动运行（非致命）；SUMMARY 增 backup 字段；30 绿
 
 边界：ops lane；0 ledger/0 frozen/0 OOS。

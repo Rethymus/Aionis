@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-04) 轮 173（验证 线）：12 项功能全量线上验证 PASS——picks 星标 25 枚+AAPL peers DELL/SMCI+Cite 按钮+Top #1 徽标+同板块标签+移动端菜单全部在墙：**
+  部署站（df0e68adc 发布）逐项核验：/picks 页 25 个 aria-pressed 星标按钮（20 picks+5 shorts）；/stock/COIN `★ Top #1` 琥珀徽标（SSR React 注释分隔符形态在墙）；/stock/AAPL sector peers DELL+SMCI chips+score 着色；/stock/AAPL Cite 按钮+`Copy provenance citation` aria-label；首页 `更多` 移动端菜单+md:hidden 块；FreshnessBadge SSR 占位（mounted 门控=设计内）。**12 项功能全部线上确认**。PR #99058 open。周一通道首跑 ~28h（将验证 ticker_metadata 修复+备份自动化首弹）。**边界**：验证 lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-04) 轮 172（ops 线）：备份自动化——通道每次 push 后自动运行审计链备份（非致命设计），SUMMARY 增 backup 字段：**
   轮 170 备份工具集成进通道 `do_run`：commit_and_push 成功后 subprocess 调 backup_audit_chain.py（120s 帽），**失败仅 log warning 绝不标记 lane 失败**（备份=冗余非门）；SUMMARY 增 `backup` 字段（ok/warn:N）供夜报一行摘要。通道测试 30 绿+ruff 0（ee34cdec2 CI 绿）。**审计链备份从"手动工具"升格为"每次 push 自动"**。**边界**：ops lane；0 ledger/0 frozen/0 OOS。
 
