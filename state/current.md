@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-04) 轮 177（display/pwa 线）：Web App Manifest + theme-color——终端可安装为 PWA、移动浏览器主题色染色：**
+  `manifest.ts`（Next 原生路由，force-static 静态导出兼容）：app name/short_name、theme_color=#00ca50（主品牌绿）、background=#0a0a0a（暗色优先）、SVG icon、standalone display、start_url=/dashboard。`viewport` export 加 theme-color meta（移动浏览器 chrome 染色）。页数 1506→1507（manifest 路由）。验证：tsc 0/eslint 0/构建 EXIT 0/manifest.webmanifest 在 out/ 正确产出+theme-color meta 在墙（4a75dc765 CI 绿）。**边界**：display/pwa lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-04) 轮 176（display 线）：键盘快捷键可发现性 + 根错误边界——tab 条右侧 kbd 提示（1-9 [ ]）+ 全站优雅失败卡：**
   **①kbd 提示**：StickyTabs 右缘新增淡色 `<kbd>1-9</kbd> <kbd>[</kbd> <kbd>]</kbd>`（lg+ 显示——键盘用户定义上有键盘；触屏隐藏）。轮 166 的热键从"不可见"变"可发现"。**②根 error.tsx**：全站 1500+ 页的未捕获客户端渲染错误的优雅失败卡（双语标题+错误消息+digest+重新加载+回到总览）——此前运行时错误显示 Next 默认崩溃页无恢复路径。验证：tsc 0/eslint 0/构建 1506 EXIT 0/kbd 在 track.html 4 处/error boundary 在 chunks（0d2905a48 CI 绿）。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 
