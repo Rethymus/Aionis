@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-04) 轮 164（display 线）：FreshnessBadge 60s 定时重算 + SectorPeers 同板块横滑条——第二轮反思递进项落地：**
+  **①FreshnessBadge**：60s setInterval 重算（长时间打开的标签页"Xh ago"不再过时——第二轮反思 §一.2 修复）。**②SectorPeers**：stock 页新增同板块股票横滑条（top 8 by 冻结 |score| 排除自身；~1460 页覆盖；stock_universe 已有 sector 数据零新 fetch）——**"一跳发现同板块标的"**（两轮反思交叉链接密度主题递进）。AAPL 页实测：Technology 板 DELL+SMCI peer chips 在墙+score 着色+`同板块` i18n 标签（zh/en 对称）。验证：tsc 0/eslint 0/i18n 门 PASS/构建 1506 EXIT 0/CI 绿（5d7d7f423）。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-04) 轮 163（display/docs 线）：深度反思第二轮（覆盖第一轮盲区+新功能缺口）+ Top-Pick 排名徽标上线——stock→picks 交叉链接闭合：**
   **第二轮分析**（reports/design/2026-10-04-deep-reflection-round2.md）：第一轮盲区（Watchlist 无管理界面/FreshnessBadge 不自刷/移动端 nav 控件不可见/9 prefix-only 键=合法模式）+ 新功能断裂点（Worker 失效=graceful 设计内/隐私模式 localStorage=catch 设计内）+ 递进提案（排名变动通知/键盘 tab 导航/⌘K Watchlist 组）+ 外部情报刷新（2026 留存杠杆=cohort+personalized alerting；"Talk to Your Data"为远期）。**立即实施**：Top-Pick 徽标——stock 页 h1 旁琥珀色 `★ Top #N` badge（当前冻结 OOS picks 前 20 覆盖），点击跳 /picks——**两轮反思共同指认的交叉链接密度缺口闭合**。验证：tsc 0/eslint 0/i18n 门 PASS/构建 1506 EXIT 0/COIN 页 Top #1 在墙+AAPL（非 picks）正确无 badge（7efc42282 CI 绿）。**边界**：display/docs lane；0 ledger/0 frozen/0 OOS。
 

@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-04 (轮 164) FreshnessBadge 60s 重算 + SectorPeers 同板块横滑条（AAPL: DELL+SMCI 在墙；i18n 对称；CI 绿）
+
+边界：display lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-04 (轮 163) 深度反思第二轮 + Top-Pick 徽标上线（stock→picks 交叉链接闭合，COIN Top #1 在墙+AAPL 正确无）
 
 第一轮盲区覆盖+新功能缺口+递进提案；立即实施最高性价比项。边界：display/docs lane；0 ledger/0 frozen/0 OOS。
