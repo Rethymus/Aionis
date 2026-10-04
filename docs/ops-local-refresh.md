@@ -152,6 +152,18 @@ Worker (display-only), unchanged.
 | runner image drift (e.g. ubuntu-latest→26.04) | all 7 workflows pinned `ubuntu-24.04` (rounds 107/108b) | revisit the pin deliberately on each changelog sweep |
 | unknown "is the stack healthy?" | `--doctor` six-layer read-only preflight (round 109) | 6/6 = walk away; any FAIL → named layer + 需人审 in that night's report |
 
+### Audit-chain backup (round 170)
+
+```bash
+uv run python scripts/backup_audit_chain.py [--out D:/backups]
+```
+
+Creates a timestamped raw copy of `runs/ledger.jsonl` + a full git bundle
+(all refs) in `data/backups/` (gitignored). Retention: 30 most recent
+pairs. Addresses the round-155 reflection gap: the audit chain previously
+existed only in this repo + GitHub. Run after any ledger-touching event or
+add to a weekly schedule.
+
 ## Manual operations
 
 ```bash
