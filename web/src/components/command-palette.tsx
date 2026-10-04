@@ -4,31 +4,32 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import {
-  SearchIcon,
-  GlobeIcon,
-  FlaskConicalIcon,
-  GaugeCircleIcon,
-  ShieldCheckIcon,
-  LayoutDashboardIcon,
-  ArrowRightIcon,
-  SunMoonIcon,
-  LanguagesIcon,
-  FileTextIcon,
-  TrendingUpIcon,
-  TrendingDownIcon,
-  LayoutGridIcon,
-  LandmarkIcon,
-  ListIcon,
   ActivityIcon,
-  TerminalIcon,
+  ArrowRightIcon,
+  BookOpenIcon,
   BuildingIcon,
   CalendarDaysIcon,
   FileClockIcon,
-  NewspaperIcon,
-  NetworkIcon,
-  PercentIcon,
-  BookOpenIcon,
+  FileTextIcon,
+  FlaskConicalIcon,
+  GaugeCircleIcon,
+  GlobeIcon,
+  LandmarkIcon,
+  LanguagesIcon,
+  LayoutDashboardIcon,
+  LayoutGridIcon,
+  ListIcon,
   MapIcon,
+  NetworkIcon,
+  NewspaperIcon,
+  PercentIcon,
+  SearchIcon,
+  ShieldCheckIcon,
+  StarIcon,
+  SunMoonIcon,
+  TerminalIcon,
+  TrendingDownIcon,
+  TrendingUpIcon,
 } from "lucide-react";
 import {
   CommandDialog,
@@ -50,6 +51,7 @@ import {
   type StockNavItem,
   type UniverseStock,
 } from "@/lib/search-index";
+import { useWatchlist } from "@/lib/watchlist";
 
 // Command palette (cmdk — the same wheel GitHub/Vercel/Linear roll on; already
 // a dependency via shadcn ui/command). The terminal has 20+ routes and deep
@@ -236,6 +238,29 @@ export function CommandPalette() {
   // Empty query → the curated hot list (today's behavior); non-empty → ranked
   // universe matches.
   const stockRows: StockNavItem[] = q ? stockMatches : HOT_STOCKS;
+  // Round 167: Watchlist group — starred tickers surface in the palette on
+  // empty query (curated view). With a query, watchlist matches rank first
+  // in the stocks group (prepended, deduped).
+  const { watched } = useWatchlist();
+  const watchRows: StockNavItem[] = useMemo(() => {
+    if (watched.size === 0 || !universe) return [];
+    const out: StockNavItem[] = [];
+    for (const tk of watched) {
+      const u = universe.find((s) => s.ticker === tk);
+      if (u) {
+        out.push({ ticker: u.ticker, name: u.name, short: false });
+      }
+    }
+    return out;
+  }, [watched, universe]);
+  const stockRowsWithWatchlist = q
+    ? [
+        ...watchRows.filter((w) =>
+          w.ticker.toUpperCase().includes(q.trim().toUpperCase()) ||
+          w.name.toUpperCase().includes(q.trim().toUpperCase())),
+        ...stockMatches.filter((m) => !watched.has(m.ticker)),
+      ]
+    : stockRows;
   const settings = (
     [
       { labelKey: "command.theme" as const, action: "theme" as const },
@@ -252,7 +277,8 @@ export function CommandPalette() {
     pages.length === 0 &&
     views.length === 0 &&
     settings.length === 0 &&
-    stockRows.length === 0;
+    stockRows.length === 0 &&
+    (!q || watchRows.length === 0);
 
   return (
     <>
@@ -302,7 +328,25 @@ export function CommandPalette() {
                   <CommandSeparator />
                 </>
               ) : null}
-              {stockRows.length > 0 ? (
+              {!q && watchRows.length > 0 ? (
+                <>
+                  <CommandGroup heading={t("palette.watchlist")}>
+                    {watchRows.map((s) => (
+                      <CommandItem
+                        key={`watch-${s.ticker}`}
+                        onSelect={() => openStock(s.ticker)}
+                      >
+                        <StarIcon className="size-4 fill-amber-400 text-amber-400" />
+                        <span className="flex-1 truncate">
+                          {s.name ? `${s.name} (${s.ticker})` : s.ticker}
+                        </span>
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                  <CommandSeparator />
+                </>
+              ) : null}
+              {stockRowsWithWatchlist.length > 0 ? (
                 <>
                   <CommandGroup
                     heading={
@@ -314,7 +358,7 @@ export function CommandPalette() {
                         : t("palette.stocks")
                     }
                   >
-                    {stockRows.map((s) => (
+                    {stockRowsWithWatchlist.map((s) => (
                       <CommandItem
                         key={`${q ? "search" : "hot"}-${s.ticker}`}
                         onSelect={() => openStock(s.ticker)}
