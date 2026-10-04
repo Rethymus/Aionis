@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-04) 轮 171（ops 线）：备份还原验证 PASS——git bundle 成功 clone（1544 文件），还原仓库 HEAD=c382e167e，ledger 58 行 sha256 与活仓库完全一致：**
+  轮 170 的备份工具的还原面验证（Schrödinger 备份测试）：`git clone <bundle>` → 1544 文件完整检出、`runs/ledger.jsonl` 58 行、sha256 与活仓库**逐位相同**——备份不仅创建了，而且**可实际还原**。测试 clone 已清理（无驻留）。PR #99058 仍 open。周一通道首跑 ~28h。**边界**：ops lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-04) 轮 170（ops 线）：审计链备份工具上线——轮 155 反思"账本无独立备份"缺口闭合：**
   `scripts/backup_audit_chain.py`：时间戳账本原样拷贝（**字节一致验证：sha256 0924ce2b 与 runs/ledger.jsonl 完全相同**）+ 全 refs git bundle（37MB）→ `data/backups/`（gitignored）。保留最近 30 对。runbook 增操作节。**审计链从此有本地冗余副本**——GitHub 侧事故（force-push 失误/账号问题/仓库删除）不再能摧毁唯一记录。首跑验证：ledger 129KB + bundle 37MB 均成功。ruff 0+CI 绿（049bd7a63）。**边界**：ops lane；0 ledger 写入（备份=只读拷贝）/0 frozen/0 OOS。
 
