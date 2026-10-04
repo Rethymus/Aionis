@@ -25,6 +25,10 @@ import "./globals.css";
 // moved up from the (dashboard) group layout so `/` — now a real page, not a
 // redirect shell — gets the same chrome as every route (not-found included).
 
+export const viewport = {
+  themeColor: "#0a0a0a",
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://rethymus.github.io"),
   title: "Aionis — 反泄漏选股研究终端",
