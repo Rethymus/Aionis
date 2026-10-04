@@ -1,6 +1,11 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-04 (轮 178) 品牌 OG 图片：1200×630 社交分享卡（ImageResponse+force-static）+metadataBase basePath 修复
+
+边界：display/seo lane；0 ledger/0 frozen/0 OOS。
+
+
 ## 2026-10-04 (轮 177) PWA manifest + theme-color：终端可安装、品牌绿染色、SVG icon；构建 1507 页
 
 边界：display/pwa lane；0 ledger/0 frozen/0 OOS。

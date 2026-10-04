@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-04) 轮 178（display/seo 线）：品牌 OG 图片——1200×630 社交分享卡（暗色渐变+品牌绿 A 标+双语副标+四徽章）+metadataBase basePath 修复：**
+  `opengraph-image.tsx`（ImageResponse+force-static）：暗色渐变背景、品牌绿 #00ca50 A 标 + Aionis 标题、双语副标（反泄漏选股研究终端）、四徽章（PIT/Frozen/4 NULL/H6）。**附带修复 metadataBase**：从 `https://rethymus.github.io` 改为含 `/Aionis` basePath——此前 og:image 解析到域名根 404（项目子路径部署的 basePath 需要包含在 metadataBase 中）。页数 1507→1508（og-image 路由）。PNG 1200×630 确认+og:image meta 指向正确路径。tsc 0/eslint 0/构建 EXIT 0（ff29f9c5b CI 绿）。**边界**：display/seo lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-04) 轮 177（display/pwa 线）：Web App Manifest + theme-color——终端可安装为 PWA、移动浏览器主题色染色：**
   `manifest.ts`（Next 原生路由，force-static 静态导出兼容）：app name/short_name、theme_color=#00ca50（主品牌绿）、background=#0a0a0a（暗色优先）、SVG icon、standalone display、start_url=/dashboard。`viewport` export 加 theme-color meta（移动浏览器 chrome 染色）。页数 1506→1507（manifest 路由）。验证：tsc 0/eslint 0/构建 EXIT 0/manifest.webmanifest 在 out/ 正确产出+theme-color meta 在墙（4a75dc765 CI 绿）。**边界**：display/pwa lane；0 ledger/0 frozen/0 OOS。
 
