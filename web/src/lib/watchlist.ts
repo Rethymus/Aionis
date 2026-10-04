@@ -10,10 +10,17 @@
 // renders unstarred, and consumer components MUST gate the watched styling
 // behind a mounted check to avoid hydration mismatch (the round-136 lesson:
 // verify with a static-build probe, not just dev).
+//
+// Rank-change tracking (round 165): a separate localStorage key stores the
+// last-seen rank per watched ticker (from the frozen picks panel). On each
+// visit the strip compares current vs last-seen and shows ↑N/↓N badges —
+// the "personalized alerting" retention lever.
 
 import { useCallback, useSyncExternalStore } from "react";
 
 const STORAGE_KEY = "aionis-watchlist";
+const RANK_KEY = "aionis-watchlist-ranks";
+
 const listeners = new Set<() => void>();
 let watched: Set<string> = new Set();
 let loaded = false;
@@ -53,6 +60,25 @@ function getServerSnapshot(): string {
   return "";
 }
 
+// --- rank-change tracking ---------------------------------------------------
+
+export function getLastSeenRanks(): Record<string, number> {
+  if (typeof window === "undefined") return {};
+  try {
+    return JSON.parse(localStorage.getItem(RANK_KEY) || "{}");
+  } catch {
+    return {};
+  }
+}
+
+export function saveCurrentRanks(ranks: Record<string, number>) {
+  try {
+    localStorage.setItem(RANK_KEY, JSON.stringify(ranks));
+  } catch {
+    // silently degrade
+  }
+}
+
 export function useWatchlist() {
   const snapshot = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const set = new Set(snapshot ? snapshot.split(",") : []);
@@ -69,3 +95,4 @@ export function useWatchlist() {
 
   return { watched: set, toggle, isWatched, count: set.size };
 }
+

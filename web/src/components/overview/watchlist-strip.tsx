@@ -6,14 +6,16 @@
 // existing Worker price endpoint via useLivePrices.
 
 import Link from "next/link";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLivePrices } from "@/lib/live-prices";
-import { useWatchlist } from "@/lib/watchlist";
-import { StarIcon } from "lucide-react";
+import { getLastSeenRanks, saveCurrentRanks, useWatchlist } from "@/lib/watchlist";
+import { StarIcon, TrendingDownIcon, TrendingUpIcon } from "lucide-react";
+import { aionis } from "@/data/aionis";
 import { cn } from "@/lib/utils";
 
 export function WatchlistStrip() {
   const { watched } = useWatchlist();
+  const [rankDeltas, setRankDeltas] = useState<Record<string, number | null>>({});
 
   const tickers = useMemo(() => {
     return [...watched].map((ticker) => ({
@@ -23,6 +25,30 @@ export function WatchlistStrip() {
   }, [watched]);
 
   const { prices } = useLivePrices(tickers);
+
+  // Rank-change tracking (round 165): compare the frozen picks ranks against
+  // the last-seen snapshot in localStorage, show ↑N/↓N per watched ticker,
+  // then persist the current ranks as the new baseline. Client-only (SSR
+  // renders no badges — the strip itself renders null until mounted anyway).
+  useEffect(() => {
+    if (tickers.length === 0) return;
+    const picksMap = new Map<string, number>(
+      [...(aionis.picks ?? []), ...(aionis.shorts ?? [])].map(
+        (p) => [p.ticker, p.rank] as const,
+      ),
+    );
+    const last = getLastSeenRanks();
+    const deltas: Record<string, number | null> = {};
+    const next: Record<string, number> = {};
+    for (const { ticker } of tickers) {
+      const cur = picksMap.get(ticker);
+      if (cur != null) next[ticker] = cur;
+      const prev = last[ticker];
+      deltas[ticker] = prev != null && cur != null ? prev - cur : null; // rank improved => positive
+    }
+    setRankDeltas(deltas);
+    saveCurrentRanks(next);
+  }, [tickers]);
 
   if (tickers.length === 0) return null;
 
@@ -61,6 +87,23 @@ export function WatchlistStrip() {
                   {p.change_pct.toFixed(2)}%
                 </span>
               ) : null}
+              {(() => {
+                const d = rankDeltas[ticker];
+                if (d == null || d === 0) return null;
+                const up = d > 0;
+                return (
+                  <span
+                    className={cn(
+                      "inline-flex items-center gap-0.5 font-mono text-[10px] tabular-nums",
+                      up ? "text-up" : "text-down",
+                    )}
+                    title={up ? `Rank improved by ${d}` : `Rank dropped by ${-d}`}
+                  >
+                    {up ? <TrendingUpIcon className="size-2.5" /> : <TrendingDownIcon className="size-2.5" />}
+                    {up ? `↑${d}` : `↓${-d}`}
+                  </span>
+                );
+              })()}
             </Link>
           );
         })}
