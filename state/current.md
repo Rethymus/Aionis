@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-04) 轮 169（验证 线）：12 项功能后的全栈 DoD 复核——本地全量 pytest 2232 EXIT=0 + ruff 全仓绿 + tsc/eslint/i18n 门全 PASS，零回归：**
+  12 项新功能（约 500 行新组件代码）落地后的完整回归电池：Python 侧 2232 测试零失败（web 改动与 Python 测试正交——契约确认）；web 侧 tsc 0/eslint 0/i18n 门 PASS。**第三轮反思快扫**（新功能交互盲区）：①FreshnessBadge 周末正确显示 amber（48-96h 阈值=设计内——周五 run 到周日约 50h）；②12 个新组件全部走 uSES 设计内水合安全模式（零 #418 复发）；③Base UI vs Radix 边界已入册（轮 168）。**结论：无新盲区可自主推进项**——两轮反思 12+12 提案管线清零，全栈质量门绿色。下一自然节点=周一 18:05 通道首跑实弹（~31h）。**边界**：验证 lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-04) 轮 168（display 线）：移动端 nav overflow 菜单上线——第二轮反思功能清单全部闭合（12 项功能）：**
   top-nav 的 `md:flex` 控件区在移动端整体消失的缺口修复：MoreHorizontalIcon overflow 下拉承载同五个控件（search/freshness/convention/lang/theme）。**Base UI render-prop trigger**（本仓 dropdown 是 Base UI 非 Radix——无 asChild，tsc 即时拦截一次误用后改 render 属性）。i18n `nav.more` zh/en。验证：tsc 0/eslint 0/i18n 门 PASS/构建 1506 EXIT 0（df0e68adc CI 绿）。**至此第二轮反思功能清单清零**：Watchlist 管理（strip+palette 组）、FreshnessBadge（含 60s 重算）、Top-Pick 徽标、SectorPeers、排名变动徽标、键盘 tab 导航、⌘K 组、移动端 nav——12 项功能两轮反思管线全部落地。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 
