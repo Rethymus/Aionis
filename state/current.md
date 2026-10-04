@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-04) 轮 179（display/seo 线）：JSON-LD 结构化数据——WebSite schema 完成 SEO 三件套的最后一块：**
+  根 layout 加 `application/ld+json`（WebSite schema）：name=Aionis、alternateName（双语）、description 含 4-NULL-verdict 关键事实、canonical URL。构建产物验证 JSON-LD 正确解析+@type=WebSite。**SEO 三件套至此完整**：meta tags（21 页独立 title/desc）+ OG image（1200×630 品牌卡）+ JSON-LD（结构化数据）。OG 图线上 200 已确认。tsc 0/eslint 0/构建 1508 EXIT 0（5c078fc88 CI 绿）。**边界**：display/seo lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-04) 轮 178（display/seo 线）：品牌 OG 图片——1200×630 社交分享卡（暗色渐变+品牌绿 A 标+双语副标+四徽章）+metadataBase basePath 修复：**
   `opengraph-image.tsx`（ImageResponse+force-static）：暗色渐变背景、品牌绿 #00ca50 A 标 + Aionis 标题、双语副标（反泄漏选股研究终端）、四徽章（PIT/Frozen/4 NULL/H6）。**附带修复 metadataBase**：从 `https://rethymus.github.io` 改为含 `/Aionis` basePath——此前 og:image 解析到域名根 404（项目子路径部署的 basePath 需要包含在 metadataBase 中）。页数 1507→1508（og-image 路由）。PNG 1200×630 确认+og:image meta 指向正确路径。tsc 0/eslint 0/构建 EXIT 0（ff29f9c5b CI 绿）。**边界**：display/seo lane；0 ledger/0 frozen/0 OOS。
 
