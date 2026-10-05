@@ -633,6 +633,31 @@
     ],
     "server": "https://api.aionis-prices.workers.dev"
   },
+  "site": {
+    "note": "Site-level static resources generated at build time from the same committed panels this catalog indexes \u2014 not data panels; carried here for one-stop discovery of the public contract.",
+    "resources": [
+      {
+        "kind": "sitemap",
+        "path": "/sitemap.xml",
+        "method": "GET",
+        "status": "available",
+        "derivation": "One URL per exported page; per-entry lastModified sourced from the rendered panel's as_of (route->panel map, stock region as_of, 13F as_of), falling back to the data_health snapshot date.",
+        "freshness": "daily",
+        "license": "Aionis display layer (first-party generated)",
+        "source": "web/src/app/sitemap.ts over committed panels"
+      },
+      {
+        "kind": "atom-feed",
+        "path": "/atom.xml",
+        "method": "GET",
+        "status": "available",
+        "derivation": "Mirrors exactly what /news renders: the capped (<=150) newest-prefix of news_feed.json, entry id+link = upstream publisher URL, entry updated = GDELT seendate, feed updated = panel as_of.",
+        "freshness": "daily",
+        "license": "Aionis display layer (first-party generated); referenced article content belongs to its publishers",
+        "source": "web/src/app/atom.xml/route.ts over news_feed.json"
+      }
+    ]
+  },
   "methodology": "Public static data API over the terminal's committed panels (display-only). Every endpoint carries its 7-gate intake facts: license + primary source, plus the freshness class (daily / cadence / frozen). Frozen endpoints derive from frozen OOS artifacts (ledger #49 lineage) and deliberately do NOT advance \u2014 consuming them expecting daily updates misreads the contract. Endpoints with status=planned are NOT built: the path is a reserved future location, no payload is served, as_of is null, and the license/source describe the primary source the future fetcher would use. Research ingestion of any endpoint requires the full 7-gate rubric (docs/data-intake-rubric.md); the live-prices worker is display-only and must never enter the OOS pipeline.",
-  "snapshot_ts": "2026-10-02T11:18:50.298733+00:00"
+  "snapshot_ts": "2026-10-05T02:39:40.424302+00:00"
 }
