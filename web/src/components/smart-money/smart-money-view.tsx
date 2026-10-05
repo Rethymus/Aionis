@@ -48,6 +48,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { stakes13g } from "@/data/aionis/stakes-13g";
 
 const PAGE_SIZE = 30;
 
@@ -125,7 +126,7 @@ function StakesPctBadges({ row }: { row: StakesPct }) {
 export function SmartMoneyView() {
   const { t } = useI18n();
   const sm = aionis.smartMoney;
-  const sg = aionis.stakes13g;
+  const sg = stakes13g;
   const yearlyHeading = "年度 13D 申报趋势 / Yearly 13D filings";
   const [kind, setKind] = useState<KindFilter>("all");
   const { visibleCount, reset, loadMore } = usePaged(PAGE_SIZE);

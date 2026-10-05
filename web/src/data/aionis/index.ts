@@ -16,7 +16,6 @@ import picksJson from "./picks.json";
 import shortsJson from "./shorts.json";
 import picksMetaJson from "./picks_meta.json";
 import sectorBreakdownJson from "./sector_breakdown.json";
-import picksBacktestJson from "./picks_backtest.json";
 import marketContextJson from "./market_context.json";
 import evidenceJson from "./evidence.json";
 import powerFloorJson from "./power_floor.json";
@@ -28,7 +27,6 @@ import tacoJson from "./taco.json";
 import freightTacoJson from "./freight_taco.json";
 import redditJson from "./reddit.json";
 import smartMoneyJson from "./smart_money.json";
-import stakes13gJson from "./stakes_13g.json";
 import pickConvictionJson from "./pick_conviction.json";
 import form4Json from "./form4.json";
 import cotJson from "./cot.json";
@@ -134,36 +132,8 @@ export type SectorBreakdown = {
   snapshot_ts?: string;
 };
 
-export type BacktestPick = {
-  ticker: string;
-  name: string;
-  score: number;
-  realized_return: number;
-  hit: boolean;
-};
 
-export type BacktestMonth = {
-  month: string;
-  region: "us" | "cn";
-  picks: BacktestPick[];
-  top_mean_return: number;
-  base_mean_return: number;
-  excess: number;
-};
 
-export type PicksBacktest = {
-  methodology: string;
-  months: BacktestMonth[];
-  summary: {
-    n_months: number;
-    n_picks: number;
-    hit_rate: number;
-    avg_top_return: number;
-    avg_base_return: number;
-    avg_excess: number;
-  };
-  snapshot_ts?: string;
-};
 
 export type MarketEvent = {
   date: string;
@@ -327,14 +297,6 @@ export type RedditPanel = {
 // Percent-of-class parsed from the filing's primary document (bounded second
 // stage; visible rows only). null = honest miss (not extracted / not walked /
 // EFTS-era row without an archive url) — never a guess.
-export type StakesPct = {
-  pct_now?: number | null;
-  // Previous percent — /A amendments only ("previous X%"-style narrative).
-  pct_prev?: number | null;
-  // DERIVED from pct_now ONLY: "exited" (parsed 0) | "below_5" (parsed <5) |
-  // null. No parsed value → no status. Active/passive is the form type.
-  pct_status?: "exited" | "below_5" | null;
-};
 
 export type SmartMoney = {
   methodology?: string;
@@ -353,29 +315,7 @@ export type SmartMoney = {
   yearly: { year: number; filings: number }[];
 };
 
-export type Stakes13GFiling = {
-  filer: string;
-  target: string;
-  // Offline backfill from the cached SEC company_tickers snapshot (a
-  // CURRENT-snapshot display label, not as-of-filing); null = unresolved
-  // (unlisted target / ambiguous accession group) — honest, never guessed.
-  ticker: string | null;
-  date: string;
-  // SC 13G | SC 13G/A (immutable form type — one row per accession filing).
-  form: string;
-  doc_url: string;
-} & StakesPct;
 
-export type Stakes13G = {
-  status: string;
-  as_of: string | null;
-  window: { start: string; end: string };
-  total: number;
-  by_form: Record<string, number>;
-  filings: Stakes13GFiling[];
-  methodology: string;
-  snapshot_ts?: string;
-};
 
 export type ConvictionPoint = {
   date: string;
@@ -732,6 +672,14 @@ export type Form8k = {
 
 
 
+
+// Round 198: picks backtest + SC 13G stream moved to dedicated modules
+// (picks-backtest.ts / stakes-13g.ts) — same barrel-diet pattern; types
+// re-exported here.
+import type { StakesPct } from "./stakes-13g";
+
+export type { BacktestPick, BacktestMonth, PicksBacktest } from "./picks-backtest";
+export type { StakesPct, Stakes13GFiling, Stakes13G } from "./stakes-13g";
 
 // Round 196: the DEF 14A proxy window moved to a dedicated module
 // (def14a.ts) — same barrel-diet pattern; types re-exported here.
@@ -1432,7 +1380,6 @@ export const aionis = {
   shorts: shortsJson as Short[],
   picksMeta: picksMetaJson as PicksMeta,
   sectorBreakdown: sectorBreakdownJson as SectorBreakdown,
-  picksBacktest: picksBacktestJson as PicksBacktest,
   marketContext: marketContextJson as MarketContext,
   evidence: evidenceJson as Evidence[],
   powerFloor: powerFloorJson as PowerFloor,
@@ -1455,7 +1402,6 @@ export const aionis = {
   freightTaco: freightTacoJson as FreightTaco,
   reddit: redditJson as RedditPanel,
   smartMoney: smartMoneyJson as SmartMoney,
-  stakes13g: stakes13gJson as Stakes13G,
   pickConviction: pickConvictionJson as PickConviction,
   form4: form4Json as Form4,
   cot: cotJson as Cot,

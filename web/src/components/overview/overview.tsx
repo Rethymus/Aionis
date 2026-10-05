@@ -36,6 +36,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
+import { stakes13g } from "@/data/aionis/stakes-13g";
 import { filingStream } from "@/data/aionis/filing-stream";
 import { politicianTradesTx } from "@/data/aionis/politician-trades-tx";
 import { formIpo } from "@/data/aionis/form-ipo";
@@ -493,7 +494,7 @@ function FilingStrip() {
  *  percent-of-class (null = honest miss → "—"). */
 function StakesCard() {
   const { t } = useI18n();
-  const s = aionis.stakes13g;
+  const s = stakes13g;
   const rows = s.status === "ok" ? s.filings.slice(0, 10) : [];
   if (rows.length === 0) return null;
   return (

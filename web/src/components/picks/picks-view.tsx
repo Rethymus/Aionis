@@ -22,6 +22,7 @@ import {
   AlertTriangleIcon,
 } from "lucide-react";
 import { useMemo } from "react";
+import { picksBacktest } from "@/data/aionis/picks-backtest";
 
 /** Honest-null disclaimer banner — shown above every prob_up readout. */
 function NullDisclaimer() {
@@ -485,7 +486,7 @@ export function PicksView() {
 /** Track record: past months' top picks vs their realized forward returns. */
 function TrackRecord() {
   const { t } = useI18n();
-  const bt = aionis.picksBacktest;
+  const bt = picksBacktest;
   if (!bt?.months?.length) return null;
   const s = bt.summary;
   const hitPct = (s.hit_rate * 100).toFixed(0);

@@ -46,7 +46,7 @@ EXPECTED_PANELS: dict[str, tuple[str, str, str]] = {
     "shorts": ("shorts", "shorts.json", "frozen"),
     "picks_meta": ("picksMeta", "picks_meta.json", "frozen"),
     "sector_breakdown": ("sectorBreakdown", "sector_breakdown.json", "frozen"),
-    "picks_backtest": ("picksBacktest", "picks_backtest.json", "frozen"),
+    "picks_backtest": ("picks-backtest.ts", "picks_backtest.json", "frozen"),
     "ic_monthly": ("icMonthly", "ic_monthly.json", "frozen"),
     "score_diagnostics": ("scoreDiagnostics", "score_diagnostics.json", "frozen"),
     # P1-6 R1-full — decile monotonicity (frozen score surface + frozen panels;
@@ -105,7 +105,7 @@ EXPECTED_PANELS: dict[str, tuple[str, str, str]] = {
         "daily",
     ),
     "ledger_audit": ("ledgerAudit", "ledger_audit.json", "daily"),
-    "stakes_13g": ("stakes13g", "stakes_13g.json", "daily"),
+    "stakes_13g": ("stakes-13g.ts", "stakes_13g.json", "daily"),
     "ark": ("ark", "ark.json", "daily"),
     "theme_etfs": ("themeEtfs", "theme_etfs.json", "daily"),
     # --- cadence: advances on the source's own publication rhythm ---
