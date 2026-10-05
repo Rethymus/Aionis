@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-05) 轮 190（ops 线，18:05 首跑预检）：通道门扩容——evidence 链测试入推前门（首跑预检发现）+ 首跑预检快照：**
+  预检快照：最后通道运行 10-02（周五）ok_committed（57 文件推送+CI 绿），soft_fails=[build_ticker_metadata]——正是轮 138 缓存模式修复的目标（今晚首跑验证点）；周末无运行=设计内（工作日傍晚通道）。**缺口**：通道重渲染 evidence 链（dossier→shelf→matrix+镜像）但推前门只盖 web-terminal+shelf 两契约——部分重渲染会先推送再由 CI 全量红（轮 182 的实弹教训复现路径）。扩容：门加 dossier 字节稳定管线+manifest 契约+轮 186 镜像契约（全 hermetic 快测；扩容门本地 EXIT=0；通道套件 30 绿）。**边界**：ops lane 脚本面；0 ledger 写/0 frozen/0 OOS。
+
 - **active (10-05) 轮 189（display/pwa 线）：apple-touch-icon PNG——iOS 主屏品牌标（PWA 收官的最后缺口）：**
   iOS 添加主屏时忽略 SVG favicon 与 PWA manifest，无 PNG apple-touch-icon 则退化为页面截图。落地：180×180 committed PNG（品牌绿 A 块，与 OG 卡同源艺术）+ 显式 `icons.apple` 链接。**实施教训**：先试 app/apple-icon.tsx（ImageResponse 路由）——艺术正确但自动 `<link>` 缺 /Aionis basePath（静态导出怪癖：icon.svg 文件约定得 basePath、路由味不得）且产物无扩展名（GH Pages 会以 octet-stream 伺服）；改静态文件形态双消除，路由仅用作一次性艺术生成器后移除。线上 200 image/png + basePath 正确链接已验。**边界**：display/pwa lane；0 ledger/0 frozen/0 OOS。
 
