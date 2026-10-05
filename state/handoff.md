@@ -1,6 +1,17 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-05 (轮 180-187) 发现层三件套+文档刷新+漂移守卫：sitemap lastModified / atom.xml / api_catalog site 节；README 截图+GIF 全量重摄；两级漂移契约补防
+
+- **轮 180**：sitemap 1500 条目全带真实 lastmod（面板/区域 as_of 溯源，分布对账零捏造）；线上 200 application/xml 已验。
+- **轮 181**：/news Atom feed（atom.xml force-static，150 条目镜像页面数据；alternates.types 自动发现+FeedChip 可见入口；线上 200）。
+- **轮 182**：api_catalog 增 site 资源节（sitemap+atom 的定性元数据；夜更幂等保留）；/api-docs Site resources 卡。**级联事故与修复**：api_catalog 是 dossier 输入 → 字节稳定契约过期 CI 红 → 按正典次序重渲染 dossier→shelf→matrix manifest（旧版 M3 归档）。**教训入册：改 dossier 输入面板时 evidence 链重渲染是 DoD。**
+- **轮 183/185**：README 8 张网格截图从线上站重摄（浏览器自动化，home+atlas 目检满渲染）；英雄 GIF（7 帧幻灯同构）PIL 重建。9 月 9 日旧组先于 ~19 项 display 功能。
+- **轮 184**：backlog Slice-2 LOW×5 清账（4/5 已落地=清单陈旧；keyfn 别名化简为最后一项）。
+- **轮 186/187**：**镜像漂移守卫**——轮 182 漏提交 evidence_matrix 面板镜像穿过绿灯 CI（无测试钉它）→ 新增 test_evidence_matrix_panel_contract（镜像↔清单↔磁盘三方一致；负路径实证）→ 类别化审计全部派生面板 → 最后同类缺口（api_catalog per-endpoint as_of 等值）补钉。**派生面板守卫矩阵至此完备。**
+- **值守锚点**：周一 10-05 18:05 北京通道首跑（ticker_metadata 缓存模式+备份自动化首弹 SUMMARY backup 字段）；周二 10-06 15:35 UTC 月度回顾（轮 143 简报）；PR #99058 open 无进展（9-28 后无活动）。
+- 边界：display/seo/docs/验证 lane；0 ledger 写/0 frozen/0 OOS（api_catalog/evidence 链均为 display 导出物）。
+
 ## 2026-10-04 (轮 179) JSON-LD WebSite schema：SEO 三件套完整（meta tags+OG image+structured data）
 
 边界：display/seo lane；0 ledger/0 frozen/0 OOS。
