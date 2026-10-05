@@ -2,7 +2,7 @@
 
 import { SegmentHeader } from "@/components/segment-header";
 import { IpoView } from "@/components/ipo/ipo-view";
-import { aionis } from "@/data/aionis";
+import { formIpo } from "@/data/aionis/form-ipo";
 
 export default function IpoPage() {
   return (
@@ -10,10 +10,10 @@ export default function IpoPage() {
       <SegmentHeader
         segment="evidence"
         introKey="ipo.intro"
-        asOf={aionis.ipo.as_of ?? undefined}
+        asOf={formIpo.as_of ?? undefined}
         countHint={
-          aionis.ipo.status === "ok"
-            ? `${aionis.ipo.total} · ${aionis.ipo.window.start} → ${aionis.ipo.window.end} · ${aionis.ipo.issuers} issuers`
+          formIpo.status === "ok"
+            ? `${formIpo.total} · ${formIpo.window.start} → ${formIpo.window.end} · ${formIpo.issuers} issuers`
             : undefined
         }
       />

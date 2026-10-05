@@ -2,7 +2,7 @@
 
 import { SegmentHeader } from "@/components/segment-header";
 import { CongressView } from "@/components/congress/congress-view";
-import { aionis } from "@/data/aionis";
+import { politicianTrades } from "@/data/aionis/politician-trades";
 
 export default function CongressPage() {
   return (
@@ -10,10 +10,10 @@ export default function CongressPage() {
       <SegmentHeader
         segment="evidence"
         introKey="congress.intro"
-        asOf={aionis.politicianTrades.as_of ?? undefined}
+        asOf={politicianTrades.as_of ?? undefined}
         countHint={
-          aionis.politicianTrades.status === "ok"
-            ? `${aionis.politicianTrades.house.total} · ${aionis.politicianTrades.window_years.join("–")} · ${aionis.politicianTrades.house.members} members`
+          politicianTrades.status === "ok"
+            ? `${politicianTrades.house.total} · ${politicianTrades.window_years.join("–")} · ${politicianTrades.house.members} members`
             : undefined
         }
       />

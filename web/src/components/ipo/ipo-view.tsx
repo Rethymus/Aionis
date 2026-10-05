@@ -24,6 +24,7 @@ import { FilterPills, LoadMoreFooter, usePaged } from "@/components/stream/strea
 import { useI18n } from "@/i18n/provider";
 import type { DictKey } from "@/i18n/dict";
 import { aionis } from "@/data/aionis";
+import { formIpo } from "@/data/aionis/form-ipo";
 import { stockUniverse } from "@/data/aionis/stock-universe";
 
 // The terminal is a STATIC export: /stock/[ticker] pages exist only for the
@@ -191,7 +192,7 @@ function fmtOfferPrice(p: number | null): string {
 
 export function IpoView() {
   const { t } = useI18n();
-  const f = aionis.ipo;
+  const f = formIpo;
   const [status, setStatus] = useState<StatusFilter>("all");
   const { visibleCount, reset, loadMore } = usePaged(PAGE_SIZE);
 

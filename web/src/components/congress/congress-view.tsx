@@ -27,6 +27,7 @@ import { AvatarInitials } from "@/components/stream/avatar-initials";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
 import { politicianTradesTx } from "@/data/aionis/politician-trades-tx";
+import { politicianTrades } from "@/data/aionis/politician-trades";
 import type { PoliticianTx } from "@/data/aionis/politician-trades-tx";
 import { STOCK_PAGE_TICKERS } from "@/components/institutions/manager-book";
 import { ProvenanceBadge } from "@/components/provenance-badge";
@@ -540,7 +541,7 @@ function HotTickerStrip() {
 
 export function CongressView() {
   const { t } = useI18n();
-  const f = aionis.politicianTrades;
+  const f = politicianTrades;
   const [party, setParty] = useState<PartyFilter>("all");
   const { visibleCount, reset, loadMore } = usePaged(PAGE_SIZE);
 

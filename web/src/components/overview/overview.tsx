@@ -37,6 +37,7 @@ import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
 import { politicianTradesTx } from "@/data/aionis/politician-trades-tx";
+import { formIpo } from "@/data/aionis/form-ipo";
 import { HomeSearch } from "@/components/home-search";
 // Home star-investors digest (~2KB — top-8 managers derived at export time
 // from the committed form13f panel). The full 13F book (~650KB) stays in its
@@ -549,7 +550,7 @@ const MONTHS_EN = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP"
 
 function IpoCard() {
   const { t } = useI18n();
-  const f = aionis.ipo;
+  const f = formIpo;
   const rows = f.status === "ok" ? f.filings.slice(0, 7) : [];
   if (rows.length === 0) return null;
   return (

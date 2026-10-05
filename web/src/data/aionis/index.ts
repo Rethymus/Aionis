@@ -46,8 +46,6 @@ import modelInventoryJson from "./model_inventory.json";
 import dataHealthJson from "./data_health.json";
 import apiCatalogJson from "./api_catalog.json";
 import form8kJson from "./form8k.json";
-import ipoJson from "./ipo.json";
-import politicianTradesJson from "./politician_trades.json";
 import partyIndexJson from "./party_index.json";
 import arkJson from "./ark.json";
 import themeEtfsJson from "./theme_etfs.json";
@@ -732,101 +730,18 @@ export type Form8k = {
   snapshot_ts?: string;
 };
 
-export type FormIpoFiling = {
-  company: string;
-  // Parsed from the EDGAR display name where the filer carries a symbol;
-  // "" for pre-symbol S-1 filers (honest empty, never guessed).
-  ticker: string;
-  filed_date: string;
-  // S-1 | S-1/A | 424B4 (immutable form type — the status is derived from it).
-  form: string;
-  // filed (registration on file) | priced (statutory 424B4 final prospectus).
-  status: "filed" | "priced";
-  doc_url: string;
-  // Cover-page offer price of the 424B4 final prospectus — bounded second-
-  // stage parse (newest ≤80 priced filings only, exact-tier parses only).
-  // null everywhere else: older filings beyond the request budget,
-  // low-confidence / no-match extractions, unpriced S-1 rows (honest blank,
-  // never guessed). TASK-DISP-H3.
-  offer_price: number | null;
-};
 
-export type FormIpoOfferPriceMeta = {
-  target_cap_docs: number;
-  priced_filings: number;
-  newest_targeted: number;
-  attempted: number;
-  fetch_failed: number;
-  fetch_errors: Record<string, number>;
-  // Graded-extraction tiers (aionis.ingest.form_ipo_price): only exact ships
-  // a value; low/none are counted but stay honest nulls.
-  confidence: { exact: number; low: number; none: number };
-  coverage_pct_of_priced: number;
-  requests: {
-    task_budget: number;
-    cumulative_walk: number;
-    walk_cap: number | null;
-  };
-  target_as_of: string | null;
-};
 
-export type FormIpo = {
-  status: string;
-  as_of: string | null;
-  window: { start: string; end: string };
-  issuers: number;
-  total: number;
-  by_status: Record<string, number>;
-  by_form: Record<string, number>;
-  // Count of rows carrying an exact-tier offer_price (≤ by_status.priced ≤
-  // total); offer_price_meta carries the bounded-walk disclosure (target cap,
-  // confidence tiers, request ledger). TASK-DISP-H3.
-  offer_price_parsed: number;
-  offer_price_meta: FormIpoOfferPriceMeta;
-  filings: FormIpoFiling[];
-  methodology: string;
-  snapshot_ts?: string;
-};
 
-export type PoliticianFiling = {
-  member: string;
-  office: string;
-  filing_type: string;
-  // As-filed FilingDate from the bulk FD.xml index (YYYY-MM-DD); null only
-  // if the index row carried none.
-  filing_date: string | null;
-  filing_year: number;
-  // From the house.gov current-member directory joined on district + last
-  // name; null when the filer is a candidate/former member (office-only
-  // match would misattribute the incumbent's party).
-  party: string | null;
-  doc_url: string;
-};
 
-export type PoliticianTopMember = {
-  member: string;
-  office: string;
-  count: number;
-};
 
-export type PoliticianTrades = {
-  status: string;
-  // Latest as-filed FilingDate (bulk FD.xml carries real dates); null only
-  // if no row carried one.
-  as_of: string | null;
-  latest_filing_year: number;
-  window_years: number[];
-  house: {
-    total: number;
-    members: number;
-    filings: PoliticianFiling[];
-    by_year: Record<string, number>;
-    top_members: PoliticianTopMember[];
-  };
-  senate: { status: string; note: string };
-  methodology: string;
-  snapshot_ts?: string;
-};
+
+// Round 193: IPO window + PTR filing index moved to dedicated modules
+// (form-ipo.ts / politician-trades.ts) — their payloads no longer ride
+// the shared barrel chunk every route loads. Types re-exported for
+// existing type-importers; runtime data comes from the modules.
+export type { FormIpo, FormIpoFiling, FormIpoOfferPriceMeta } from "./form-ipo";
+export type { PoliticianFiling, PoliticianTopMember, PoliticianTrades } from "./politician-trades";
 
 // Round 192: the PTR transaction stream moved to a dedicated module
 // (politician-trades-tx.ts) — the ~1.3MB payload no longer rides the shared
@@ -1629,8 +1544,6 @@ export const aionis = {
   dataHealth: dataHealthJson as DataHealth,
   apiCatalog: apiCatalogJson as ApiCatalog,
   form8k: form8kJson as Form8k,
-  ipo: ipoJson as FormIpo,
-  politicianTrades: politicianTradesJson as PoliticianTrades,
   partyIndex: partyIndexJson as PartyIndex,
   ark: arkJson as Ark,
   themeEtfs: themeEtfsJson as ThemeEtfs,
