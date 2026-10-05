@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-06 00:41，轮 201）（perf 线）：i18n 字典按语言拆块——en 按需动态加载，每路由再 -95KB：**
+  backlog 立项落地：dict-zh.ts 静态（SSR 决定论默认语）+ dict-en.ts 动态 import（缓存 promise；首次切换短暂 zh 片刻后浏览器缓存）；dict.ts 变类型枢纽（type-only import 零运行时）。**实测**：i18n chunk 185,509→89,992 每路由；news 1.69→1.59MB；en 表自成 95.8KB chunk 仅 en 用户加载；SSR 保持 zh（导出 HTML 验证；两处 en 串=既有 OG meta 非泄漏）。适配：i18n-audit.mjs 解析双文件（块逐字节搬移，条目形态不变；报告增 dictPaths）+3 个 Python 契约改读双文件。门：1301/1301 对称 0 孤儿；全量 hermetic EXIT=0；eslint 0。**barrel diet 总账（192-201）：每路由 3.81→~1.59MB（-58%）**。过程自纠×3：TS 源不可用 Python ast（audit 首改失败）→ 行拼接 heredoc 转义碎裂 → Edit 直修；契约测试 count==2 双文件化。**边界**：display/perf lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-06 00:22，轮 200）（守卫 线）：barrel 重量天花板契约——六轮减重从此制度化：**
   覆盖契约文件新增 test_barrel_Json_import_weight_ceiling：index.ts 直载面板 JSON >100KB 即 FAIL（当前最大合法骑乘 form8k ~83KB；超限面板须走专用模块模式+契约表 .ts 形态）。无此守卫则下一个新面板会把六轮成果（共享 chunk 2.70MB→570KB）悄悄吃回去。regex 解析（TS 源，Python ast 不可用——首版试 ast 立即 SyntaxError 后改 regex）；非空洞验证（匹配全部 44 个现役导入）。文件 8 测绿+ruff 净（3c380fb8c）。**边界**：验证 lane；0 ledger/0 frozen/0 OOS。
 
