@@ -2,6 +2,7 @@
 
 import { SegmentHeader } from "@/components/segment-header";
 import { NewsView } from "@/components/news/news-view";
+import { FeedChip } from "@/components/ui/feed-chip";
 import { aionis } from "@/data/aionis";
 
 export default function NewsPage() {
@@ -17,6 +18,7 @@ export default function NewsPage() {
             ? `${f.total} · ${f.window.start} → ${f.window.end} · ${f.n_sources} sources`
             : undefined
         }
+        extra={<FeedChip />}
       />
       <NewsView />
     </div>

@@ -34,6 +34,10 @@ export const metadata: Metadata = {
   title: "Aionis — 反泄漏选股研究终端",
   description:
     "Anti-leakage stock-pick research terminal: stock-pick ranking, evidence wall, and power-floor monitor. Null is the intended outcome.",
+  // Feed auto-discovery (round 181): <link rel="alternate" type="application/atom+xml">.
+  alternates: {
+    types: { "application/atom+xml": [{ url: "/atom.xml", title: "Aionis — Market News (EN/中文)" }] },
+  },
   openGraph: {
     title: "Aionis — 反泄漏选股研究终端",
     description:
