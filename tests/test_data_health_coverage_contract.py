@@ -91,7 +91,7 @@ EXPECTED_PANELS: dict[str, tuple[str, str, str]] = {
     "filing_stream": ("filingStream", "filing_stream.json", "daily"),
     "politician_trades": ("politicianTrades", "politician_trades.json", "daily"),
     "politician_trades_tx": (
-        "politicianTradesTx",
+        "politician-trades-tx.ts",
         "politician_trades_tx.json",
         "daily",
     ),

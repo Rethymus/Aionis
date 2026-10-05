@@ -16,6 +16,7 @@ import { SectorPeers } from "@/components/stock/sector-peers";
 import { CopyProvenance } from "@/components/ui/copy-provenance";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
+import { politicianTradesTx } from "@/data/aionis/politician-trades-tx";
 import { form13f } from "@/data/aionis/form13f";
 import { stockUniverse, type StockRow } from "@/data/aionis/stock-universe";
 import { ProvenanceBadge } from "@/components/provenance-badge";
@@ -238,7 +239,7 @@ function InstitutionalHolders({ ticker }: { ticker: string }) {
  *  "全部 → /congress" 出口；金额为法定披露区间（非精确值）；⚠ = 迟报超 45 天。 */
 function PoliticianTradesCard({ ticker }: { ticker: string }) {
   const { t } = useI18n();
-  const f = aionis.politicianTradesTx;
+  const f = politicianTradesTx;
   const rows = useMemo(() => {
     if (f.status !== "ok") return [];
     return f.transactions.filter((r) => r.ticker === ticker).slice(0, 8);

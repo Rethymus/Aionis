@@ -26,7 +26,8 @@ import { FrostedScrollArea } from "@/components/ui/frosted-scroll-area";
 import { AvatarInitials } from "@/components/stream/avatar-initials";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
-import type { PoliticianTx } from "@/data/aionis";
+import { politicianTradesTx } from "@/data/aionis/politician-trades-tx";
+import type { PoliticianTx } from "@/data/aionis/politician-trades-tx";
 import { STOCK_PAGE_TICKERS } from "@/components/institutions/manager-book";
 import { ProvenanceBadge } from "@/components/provenance-badge";
 
@@ -100,7 +101,7 @@ const EMPTY: never[] = [];
 
 function TxSection() {
   const { t } = useI18n();
-  const f = aionis.politicianTradesTx;
+  const f = politicianTradesTx;
   const [party, setParty] = useState<TxParty>("all");
   const [dir, setDir] = useState<TxDirecton>("all");
   const [late, setLate] = useState<TxLate>("all");
@@ -498,7 +499,7 @@ function PartyIndexSection() {
  *  static page exists; counts are honest transaction counts. */
 function HotTickerStrip() {
   const { t } = useI18n();
-  const f = aionis.politicianTradesTx;
+  const f = politicianTradesTx;
   const rows = f.status === "ok" ? f.transactions : EMPTY;
   const top = useMemo(() => {
     const counts = new Map<string, number>();

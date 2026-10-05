@@ -36,6 +36,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
+import { politicianTradesTx } from "@/data/aionis/politician-trades-tx";
 import { HomeSearch } from "@/components/home-search";
 // Home star-investors digest (~2KB — top-8 managers derived at export time
 // from the committed form13f panel). The full 13F book (~650KB) stays in its
@@ -385,7 +386,7 @@ function StatBand() {
   const { t } = useI18n();
   const dh = (key: string) =>
     aionis.dataHealth.panels.find((p) => p.key === key)?.rows ?? null;
-  const ctx = aionis.politicianTradesTx;
+  const ctx = politicianTradesTx;
   const rt = aionis.redditTrending;
   const cells: { label: string; value: number | null; sub?: string }[] = [
     { label: t("overview.stat.companies"), value: dh("companies_dir") },
@@ -901,7 +902,7 @@ function MarketCards() {
   const prevVix = vix[vix.length - 2]?.vix ?? 0;
   const vixDelta = lastVix - prevVix;
   const lastIdx = ms[ms.length - 1];
-  const ctx = aionis.politicianTradesTx;
+  const ctx = politicianTradesTx;
   const cards: {
     label: string;
     value: string;
@@ -977,7 +978,7 @@ function DataCockpit() {
   const news = aionis.newsFeed.status === "ok" ? aionis.newsFeed.items.slice(0, 7) : [];
   const rt = aionis.redditTrending;
   const heat = rt.status === "ok" ? rt.tickers.slice(0, 10) : [];
-  const ctx = aionis.politicianTradesTx;
+  const ctx = politicianTradesTx;
   const tx = ctx.status === "ok" ? ctx.transactions : [];
   const trades = tx.slice(0, 9);
   const nBuy = tx.filter((r) => r.direction === "buy").length;
