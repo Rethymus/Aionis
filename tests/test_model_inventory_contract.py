@@ -40,6 +40,8 @@ PANEL = DATA / "model_inventory.json"
 BARREL = DATA / "index.ts"
 VIEW = Path("web/src/components/model-health/model-health-view.tsx")
 DICT = Path("web/src/i18n/dict.ts")
+DICT_ZH = Path("web/src/i18n/dict-zh.ts")
+DICT_EN = Path("web/src/i18n/dict-en.ts")
 sys.path.insert(0, str(Path("scripts").resolve()))
 import export_terminal_data as et  # noqa: E402
 
@@ -949,7 +951,7 @@ def test_committed_inventory_registered_everywhere() -> None:
         "<ModelCardSection />"
     ), "the inventory section renders after the model card section"
 
-    dict_src = DICT.read_text(encoding="utf-8")
+    dict_src = (DICT_ZH.read_text(encoding="utf-8") + DICT_EN.read_text(encoding="utf-8"))
     required = [
         "inventory.title",
         "inventory.subtitle",

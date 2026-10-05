@@ -29,38 +29,34 @@ import { fileURLToPath } from "node:url";
 
 const WEB_ROOT = join(fileURLToPath(import.meta.url), "..", "..");
 const SRC_DIR = join(WEB_ROOT, "src");
-const DICT_PATH = join(SRC_DIR, "i18n", "dict.ts");
+// Round 201: runtime dictionaries live in per-language modules; dict.ts is the types hub.
+const DICT_FILES = {
+  zh: join(SRC_DIR, "i18n", "dict-zh.ts"),
+  en: join(SRC_DIR, "i18n", "dict-en.ts"),
+};
 const REPORT_PATH = join(WEB_ROOT, "i18n-audit-report.json");
 
 // ---------- dict.ts parsing ----------
 
-/** Parse the zh and en blocks of dict.ts. Returns { zh: Map, en: Map } key -> { line }. */
-function parseDict(text) {
-  const lines = text.split("\n");
-  const blocks = { zh: new Map(), en: new Map() };
-  let current = null;
-  const blockOpen = /^  (zh|en): \{\s*$/; // 2-space indent object literal opens
-  // Inside a block, entries look like: 4-space indent, double-quoted key, colon, string value.
-  const entry = /^\s{4}"((?:[^"\\]|\\.)*)":\s*(?:"|)/;
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    const open = line.match(blockOpen);
-    if (open) {
-      current = open[1];
-      continue;
-    }
-    if (current && /^  \},?\s*$/.test(line)) {
-      current = null; // block closed
-      continue;
-    }
-    if (!current) continue;
-    const m = line.match(entry);
+/**
+ * Parse ONE per-language dictionary module (round 201 layout): a single
+ * top-level object whose entries are 4-space-indented double-quoted keys —
+ * the exact entry shape of the old dual-block dict.ts, extracted verbatim.
+ * Returns Map key -> { line }.
+ */
+function parseDictFile(text, lang) {
+  const all = text.split("\n");
+  const blocks = new Map();
+  // Key lines: 4-space indent, double-quoted key, colon (values may be
+  // strings, arrays, or line-wrapped continuations; non-key lines don't match).
+  const entry = /^\s{4}"((?:[^"\\]|\\.)*)":\s*(?:"|'|\{|\[|$)/;
+  for (let i = 0; i < all.length; i++) {
+    const m = all[i].match(entry);
     if (m) {
-      const key = m[1];
-      if (blocks[current].has(key)) {
-        console.error(`[warn] duplicate key in ${current} block: ${key} (line ${i + 1})`);
+      if (blocks.has(m[1])) {
+        console.error(`[warn] duplicate key in ${lang}: ${m[1]} (line ${i + 1})`);
       }
-      blocks[current].set(key, { line: i + 1 });
+      blocks.set(m[1], { line: i + 1 });
     }
   }
   return blocks;
@@ -130,13 +126,15 @@ function classify(keys, exact, prefixes) {
 
 // ---------- main ----------
 
-const dictText = readFileSync(DICT_PATH, "utf8");
-const { zh, en } = parseDict(dictText);
+const zh = parseDictFile(readFileSync(DICT_FILES.zh, "utf8"), "zh");
+const en = parseDictFile(readFileSync(DICT_FILES.en, "utf8"), "en");
 
 const exact = new Set();
 const prefixes = new Set();
 for (const f of listFiles(SRC_DIR, [".ts", ".tsx", ".mjs", ".json"])) {
-  if (f === DICT_PATH) continue; // never treat dict.ts as its own reference corpus
+  if (f === DICT_FILES.zh || f === DICT_FILES.en) {
+    continue; // never treat the dictionaries as their own reference corpus
+  }
   collectEvidence(readFileSync(f, "utf8"), relative(SRC_DIR, f), exact, prefixes);
 }
 void sep;
@@ -151,7 +149,7 @@ const asymExtraEn = enKeys.filter((k) => !zh.has(k));
 
 const report = {
   generatedAt: new Date().toISOString(),
-  dictPath: relative(WEB_ROOT, DICT_PATH),
+  dictPaths: [relative(WEB_ROOT, DICT_FILES.zh), relative(WEB_ROOT, DICT_FILES.en)],
   corpusRoot: relative(WEB_ROOT, SRC_DIR),
   totals: { zhKeys: zhKeys.length, enKeys: enKeys.length, universe: universe.length },
   confirmedOrphans: confirmed,

@@ -28,6 +28,8 @@ DATA = Path("web/src/data/aionis")
 PANEL = DATA / "horizon_robustness.json"
 BARREL = DATA / "index.ts"
 DICT = Path("web/src/i18n/dict.ts")
+DICT_ZH = Path("web/src/i18n/dict-zh.ts")
+DICT_EN = Path("web/src/i18n/dict-en.ts")
 sys.path.insert(0, str(Path("scripts").resolve()))
 import export_terminal_data as et  # noqa: E402
 
@@ -340,7 +342,7 @@ def test_horizon_robustness_registered_in_web_barrel_and_i18n() -> None:
     assert 'import horizonRobustnessJson from "./horizon_robustness.json";' in barrel
     assert "export type HorizonRobustness" in barrel
     assert "horizonRobustness: horizonRobustnessJson as HorizonRobustness," in barrel
-    dict_src = DICT.read_text(encoding="utf-8")
+    dict_src = (DICT_ZH.read_text(encoding="utf-8") + DICT_EN.read_text(encoding="utf-8"))
     required = [
         "track.horizon.title",
         "track.horizon.desc",

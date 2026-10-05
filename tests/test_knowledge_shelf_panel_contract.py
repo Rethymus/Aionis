@@ -39,6 +39,8 @@ ARTIFACT_IDS = {
     "research-dossier-e1-v1",
 }
 _DICT = Path("web/src/i18n/dict.ts")
+_DICT_ZH = Path("web/src/i18n/dict-zh.ts")
+_DICT_EN = Path("web/src/i18n/dict-en.ts")
 
 
 def _load() -> dict:
@@ -284,9 +286,9 @@ def test_knowledge_shelf_artifacts_barrel_and_dict_registered() -> None:
     view = Path("web/src/components/shelf/shelf-view.tsx").read_text(encoding="utf-8")
     assert "evidence_artifacts" in view, "/shelf view must render the layer"
     assert "shelf.artifacts.title" in view
-    raw = _DICT.read_text(encoding="utf-8")
-    zh = raw[raw.index("  zh: {") : raw.index("  en: {")]
-    en = raw[raw.index("  en: {") :]
+    # Round 201: per-language dict modules — each file IS one locale block.
+    zh = _DICT_ZH.read_text(encoding="utf-8")
+    en = _DICT_EN.read_text(encoding="utf-8")
     for key in ("shelf.artifacts.title", "shelf.artifacts.note", "shelf.artifacts.sha"):
         for block in (zh, en):
             m = re.search(rf'"{re.escape(key)}":\s*"([^"]*)"', block)
