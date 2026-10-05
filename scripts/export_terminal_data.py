@@ -4428,6 +4428,53 @@ def export_api_catalog() -> None:
             ],
             "server": "https://api.aionis-prices.workers.dev",
         },
+        # Site-level static resources (round 182): first-party generated
+        # index/feed artifacts, not panel payloads — documented here so the
+        # public static contract has one meta layer. Counts are deliberately
+        # qualitative (URL/entry counts drift with the export); the facts that
+        # DON'T drift are the derivations and refresh classes.
+        "site": {
+            "note": (
+                "Site-level static resources generated at build time from the "
+                "same committed panels this catalog indexes — not data panels; "
+                "carried here for one-stop discovery of the public contract."
+            ),
+            "resources": [
+                {
+                    "kind": "sitemap",
+                    "path": "/sitemap.xml",
+                    "method": "GET",
+                    "status": "available",
+                    "derivation": (
+                        "One URL per exported page; per-entry lastModified "
+                        "sourced from the rendered panel's as_of (route->panel "
+                        "map, stock region as_of, 13F as_of), falling back to "
+                        "the data_health snapshot date."
+                    ),
+                    "freshness": "daily",
+                    "license": "Aionis display layer (first-party generated)",
+                    "source": "web/src/app/sitemap.ts over committed panels",
+                },
+                {
+                    "kind": "atom-feed",
+                    "path": "/atom.xml",
+                    "method": "GET",
+                    "status": "available",
+                    "derivation": (
+                        "Mirrors exactly what /news renders: the capped "
+                        "(<=150) newest-prefix of news_feed.json, entry "
+                        "id+link = upstream publisher URL, entry updated = "
+                        "GDELT seendate, feed updated = panel as_of."
+                    ),
+                    "freshness": "daily",
+                    "license": (
+                        "Aionis display layer (first-party generated); "
+                        "referenced article content belongs to its publishers"
+                    ),
+                    "source": "web/src/app/atom.xml/route.ts over news_feed.json",
+                },
+            ],
+        },
         "methodology": (
             "Public static data API over the terminal's committed panels "
             "(display-only). Every endpoint carries its 7-gate intake facts: "

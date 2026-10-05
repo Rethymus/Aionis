@@ -672,6 +672,17 @@ export type ApiCatalogEndpoint = {
   source: string;
 };
 
+export type ApiCatalogSiteResource = {
+  kind: string;
+  path: string;
+  method: string;
+  status: string;
+  derivation: string;
+  freshness: string;
+  license: string;
+  source: string;
+};
+
 export type ApiCatalog = {
   status: string;
   base_note: string;
@@ -680,6 +691,12 @@ export type ApiCatalog = {
     note: string;
     paths: { method: string; path: string }[];
     server: string;
+  };
+  // Round 182: site-level generated resources (sitemap / atom feed) — built
+  // from the same committed panels, documented in the catalog's meta layer.
+  site?: {
+    note: string;
+    resources: ApiCatalogSiteResource[];
   };
   methodology: string;
   snapshot_ts?: string;

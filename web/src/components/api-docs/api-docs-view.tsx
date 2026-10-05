@@ -12,7 +12,13 @@ import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { aionis, type ApiCatalogEndpoint } from "@/data/aionis";
 import { ProvenanceBadge } from "@/components/provenance-badge";
-import { TerminalIcon, ExternalLinkIcon, ShieldAlertIcon } from "lucide-react";
+import {
+  TerminalIcon,
+  ExternalLinkIcon,
+  ShieldAlertIcon,
+  RssIcon,
+  NetworkIcon,
+} from "lucide-react";
 
 // Literal-keyed panel names (shared with the data-health view).
 type PanelLabelKey =
@@ -150,6 +156,43 @@ export function ApiDocsView() {
           </div>
         </CardContent>
       </Card>
+
+      {cat.site ? (
+        <Card className="py-0">
+          <CardHeader className="border-b">
+            <CardTitle className="flex items-center gap-2 text-base">
+              <RssIcon className="size-4 text-muted-foreground" />
+              {t("apidocs.site.title")}
+            </CardTitle>
+            <CardDescription>{cat.site.note}</CardDescription>
+          </CardHeader>
+          <CardContent className="p-0">
+            <div className="divide-y">
+              {cat.site.resources.map((r) => (
+                <div key={r.path} className="flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-2.5">
+                  <Badge variant="outline" className="font-mono text-xs">GET</Badge>
+                  <a
+                    href={`https://rethymus.github.io/Aionis${r.path}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1.5 font-mono text-xs text-primary hover:underline"
+                  >
+                    {r.kind === "sitemap" ? (
+                      <NetworkIcon className="size-3.5" />
+                    ) : (
+                      <RssIcon className="size-3.5" />
+                    )}
+                    {r.path}
+                  </a>
+                  <span className="min-w-0 flex-1 basis-full text-xs text-muted-foreground md:basis-auto">
+                    {r.derivation}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      ) : null}
 
       <Card className="py-0">
         <CardHeader className="border-b">
