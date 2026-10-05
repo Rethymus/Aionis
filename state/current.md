@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-05) 轮 191（ops 线，18:05 首跑预检续）：一键式首跑验证器——checkpoint 变成单命令（幂等可复用）：**
+  `scripts/verify_channel_first_run.py [--date]`：只读六查（done-marker 日期/状态、soft-fails 无 build_ticker_metadata=缓存模式生效证据、SUMMARY backup 字段 ok/warn、push、双 CI workflow、news_feed as_of 前进探针）。**判别力实证**：对 10-02 完成态 dry-run——两项当时未接线的检查正确 FAIL、其余 PASS。runbook 增"运行后一键验证"节。18:05 首跑完成后跑此命令即为完整 checkpoint。**边界**：ops lane 只读工具；0 ledger/0 frozen/0 OOS。
+
 - **active (10-05) 轮 190（ops 线，18:05 首跑预检）：通道门扩容——evidence 链测试入推前门（首跑预检发现）+ 首跑预检快照：**
   预检快照：最后通道运行 10-02（周五）ok_committed（57 文件推送+CI 绿），soft_fails=[build_ticker_metadata]——正是轮 138 缓存模式修复的目标（今晚首跑验证点）；周末无运行=设计内（工作日傍晚通道）。**缺口**：通道重渲染 evidence 链（dossier→shelf→matrix+镜像）但推前门只盖 web-terminal+shelf 两契约——部分重渲染会先推送再由 CI 全量红（轮 182 的实弹教训复现路径）。扩容：门加 dossier 字节稳定管线+manifest 契约+轮 186 镜像契约（全 hermetic 快测；扩容门本地 EXIT=0；通道套件 30 绿）。**边界**：ops lane 脚本面；0 ledger 写/0 frozen/0 OOS。
 
