@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-05) 轮 192（perf 线，外部情报驱动）：全站重量画像→PTR 交易流迁出共享 barrel——每路由 -1MB：**
+  外部扫描：2026-03 起传 CWV 改全站计分（慢页拖全站）→ 做了 1503 页全量 JS 画像：发现**共享数据 chunk 2.70MB 挂在每一个路由（含 404）**，其中 ~1.3MB 是众议院 PTR 交易流（barrel 直载）。按 stock-universe.ts 既有专用模块模式迁移（politician-trades-tx.ts）：三真实消费方（congress/overview/stock）走自有 chunk，其余 ~1497 路由不再载。**实测**：共享 chunk 2,695,464→1,701,490（-994KB）；news 3.81→2.82MB；404 3.80→2.81MB；消费方页面不变（congress SSR 仍渲 200 doc_url 行+专用 994KB chunk 在墙）。barrel 类型改从模块再导出（单一事实）；覆盖契约表行转 .ts 形态。tsc 0/构建 0 错/全量 hermetic EXIT=0/ruff 净/i18n 门对称（4e0728a39）。**边界**：display/perf lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-05) 轮 191（ops 线，18:05 首跑预检续）：一键式首跑验证器——checkpoint 变成单命令（幂等可复用）：**
   `scripts/verify_channel_first_run.py [--date]`：只读六查（done-marker 日期/状态、soft-fails 无 build_ticker_metadata=缓存模式生效证据、SUMMARY backup 字段 ok/warn、push、双 CI workflow、news_feed as_of 前进探针）。**判别力实证**：对 10-02 完成态 dry-run——两项当时未接线的检查正确 FAIL、其余 PASS。runbook 增"运行后一键验证"节。18:05 首跑完成后跑此命令即为完整 checkpoint。**边界**：ops lane 只读工具；0 ledger/0 frozen/0 OOS。
 
