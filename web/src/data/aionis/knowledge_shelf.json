@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "as_of": "2026-10-02",
+  "as_of": "2026-10-04",
   "n_docs": 70,
   "n_categories": 5,
   "categories": {
@@ -222,8 +222,8 @@
       "title": "decisions/index.md \u2014 ADR registry",
       "path": "decisions/index.md",
       "category": "adr",
-      "date": "2026-09-09",
-      "n_chars": 2543,
+      "date": "2026-10-03",
+      "n_chars": 2562,
       "summary": "Architecture Decision Records: point-in-time, record-once. Status: proposed / accepted / deprecated / superseded. Re-open an ADR only on its re-evaluation trigger (never re-litigate without new evidence \u2014 see ../WORKFLOW.md \u00a75).",
       "url": "https://github.com/Rethymus/Aionis/blob/main/decisions/index.md"
     },
@@ -339,8 +339,8 @@
       "title": "Lessons learned",
       "path": "docs/08-lessons.md",
       "category": "theory",
-      "date": "2026-07-31",
-      "n_chars": 1378,
+      "date": "2026-10-03",
+      "n_chars": 2808,
       "summary": "Distilled findings that changed how the project runs. 1. Evidence boundaries matter.",
       "url": "https://github.com/Rethymus/Aionis/blob/main/docs/08-lessons.md"
     },
@@ -591,8 +591,8 @@
       "title": "Ops: local evening refresh lane (the \"temporary server\")",
       "path": "docs/ops-local-refresh.md",
       "category": "theory",
-      "date": "2026-10-02",
-      "n_chars": 15043,
+      "date": "2026-10-04",
+      "n_chars": 15410,
       "summary": "Since 2026-09-06. Owner decision: no paid server \u2014 the developer machine, woken on Beijing trading-day evenings via a ZCode workspace automation, IS the cron server for the terminal's daily data refresh. Target: run unattended \u22651 month.",
       "url": "https://github.com/Rethymus/Aionis/blob/main/docs/ops-local-refresh.md"
     },
@@ -720,7 +720,7 @@
       "desc_zh": "\u6eaf\u6e90\u7814\u7a76\u6863\u6848\uff1a24 \u6761\u6765\u6e90\u767b\u8bb0\u8868 \u2192 \u62a5\u544a \u2192 \u5efa\u6a21\u5206\u6790\u5168\u6d41\u7a0b\uff0c[S#] \u5f15\u7528\u95ed\u5305\u3002",
       "path": "reports/evidence/research-dossier-v1.html",
       "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/research-dossier-v1.html",
-      "sha256": "b361d694bcdb95dfa2b52088b8718a4a8ae4ad9ba4517da4864cb551310b5dd8",
+      "sha256": "50a96a8710206f53828ad9901442cf8ed12fcb61e2773bef8801ce611065bb15",
       "n_bytes": 47261
     },
     {
@@ -758,5 +758,5 @@
     }
   ],
   "methodology": "Layer 1 \u2014 Aionis's OWN method library: catalog of docs/ + decisions/ markdown (repo PolyForm-NC; zero third-party copyright surface). Each entry carries metadata plus a safe teaser slice (first 2-3 sentences, <=240 chars) extracted at export time; the full text stays on GitHub (link-out). Dates are last-commit dates read from the LOCAL git repository (no network). Layer 2 \u2014 a FIXED editorially-curated bookmark list of first-hand public research sources (BIS / Fed FEDS / IMF / NBER / arXiv q-fin / FRASER / FRED-ALFRED / RePEc): link-out + one static sentence each, no fetching, no scraping, no summary APIs \u2014 copyright stays with the authors, we only catalog. Categories are a fixed 5-rail whitelist (preregistration / adr / results / rubric / theory); n_docs reconciles to the sum of the rails. Layer 3 \u2014 generated evidence artifacts: self-contained HTML, byte-stable, sha256 + byte count pinned at export time from the local tracked file so a reader can verify the download against the catalog (a missing file degrades honestly to null \u2014 never fabricated). Superseded artifact versions are retained under reports/evidence/archive/ (move-don't-delete \u2014 the archive only grows). Display-only reference lane \u2014 never part of any research or OOS pipeline.",
-  "snapshot_ts": "2026-10-02T11:19:02.971230+00:00"
+  "snapshot_ts": "2026-10-05T02:47:57.676573+00:00"
 }
