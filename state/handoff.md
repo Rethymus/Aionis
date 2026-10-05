@@ -1,6 +1,15 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-05 (轮 188-194) 奇偶门+apple-icon+通道预检+一键验证器+barrel 减重三轮（全站 -1.66MB/路由）
+
+- **轮 188**：sitemap↔导出页奇偶 CI 门（publish workflow 接线；负路径实证）。Next 16.3.8=最新 stable，无升级面。
+- **轮 189**：apple-touch-icon PNG（iOS 主屏）；记录了 ImageResponse 路由味的 basePath 缺失怪癖——静态文件形态双消除。
+- **轮 190/191**：18:05 首跑预检——通道推前门扩容（evidence 链测试入门）+ `scripts/verify_channel_first_run.py` 一键六查验证器（判别力已对 10-02 实证）。
+- **轮 192-194（barrel 减重）**：全站 JS 画像发现共享数据 chunk 2.70MB 挂全部 1503 页（含 404）。三轮迁移（stock-universe.ts 模式）：PTR 交易流 1.3MB→IPO 379KB+PTR 索引 273KB→申报流 249KB 全部转专用模块；**共享 chunk 2.70→1.03MB（-62%），非消费路由 -1.66MB（-44%），线上已确认**。消费页 SSR 数据逐页验证；覆盖契约表随迁 .ts 形态。
+- **今晚值守**：通道 18:05 首跑（ticker_metadata 缓存模式+备份自动化首弹）→ ~19:30 跑 verify_channel_first_run.py 六查。
+- 边界：display/perf/ops/docs lane；0 ledger 写/0 frozen/0 OOS。
+
 ## 2026-10-05 (轮 180-187) 发现层三件套+文档刷新+漂移守卫：sitemap lastModified / atom.xml / api_catalog site 节；README 截图+GIF 全量重摄；两级漂移契约补防
 
 - **轮 180**：sitemap 1500 条目全带真实 lastmod（面板/区域 as_of 溯源，分布对账零捏造）；线上 200 application/xml 已验。
