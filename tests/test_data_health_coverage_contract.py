@@ -366,3 +366,37 @@ def test_atlas_meta_panels_self_describing() -> None:
     cat = _load("api_catalog.json")
     assert dh["status"] == "ok" and dh["snapshot_ts"]
     assert cat["status"] == "ok" and cat["snapshot_ts"]
+
+
+def test_barrel_Json_import_weight_ceiling() -> None:
+    """Round 200 — institutionalize the barrel diet (rounds 192-198).
+
+    The shared data chunk loads on EVERY route (404 included); rounds
+    192-198 migrated the seven heavy panels (1.3MB PTR stream, 379KB IPO,
+    273/249/176/174/149KB …) to dedicated modules, cutting the shared chunk
+    2.70MB -> 570KB. Without a guard, the next panel added as a direct JSON
+    import into index.ts silently re-fattens every route. Ceiling = 100KB:
+    the heaviest legitimate barrel rider today is form8k at ~83KB; a new
+    panel over the ceiling must ship as a dedicated module
+    (see stock-universe.ts for the pattern) and update EXPECTED_PANELS's
+    consumer field to the .ts form.
+    """
+
+    import re
+
+    src = (AIONIS_DATA / "index.ts").read_text(encoding="utf-8")
+    offenders: list[tuple[str, int]] = []
+    for m in re.finditer(r'^import \w+ from "\.\/([a-z_0-9]+\.json)";', src, re.M):
+        fname = m.group(1)
+        f = AIONIS_DATA / fname
+        if not f.exists():
+            offenders.append((fname, -1))
+            continue
+        size = f.stat().st_size
+        if size > 100_000:
+            offenders.append((fname, size))
+    assert not offenders, (
+        "barrel index.ts imports JSON panel(s) over the 100KB ceiling — move "
+        "them to a dedicated module (stock-universe.ts pattern) so the "
+        f"shared every-route chunk stays lean: {offenders}"
+    )
