@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-06 00:55，轮 202）（验证 线）：轮 201 i18n 拆块的浏览器实弹功能验证——三路径全 PASS（线上）:**
+  轮 201 只验了构建产物+SSR；运行时语义经浏览器实测：①**切换** zh→en：点击 Toggle language → 动态 en chunk 加载 → 全站文本转 English（总览→Overview/市场新闻流→Market news…）+localStorage 持久化 "en"；②**重载保持**：saved=en 重载后仍 English（后挂载水合+缓存块）；③**切回** en→zh 即时（zh 表常驻）并还原默认态。**结论：i18n 拆块运行时行为与设计完全一致，轮 201 闭环。**纯验证轮零代码改动。**边界**：验证 lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-06 00:41，轮 201）（perf 线）：i18n 字典按语言拆块——en 按需动态加载，每路由再 -95KB：**
   backlog 立项落地：dict-zh.ts 静态（SSR 决定论默认语）+ dict-en.ts 动态 import（缓存 promise；首次切换短暂 zh 片刻后浏览器缓存）；dict.ts 变类型枢纽（type-only import 零运行时）。**实测**：i18n chunk 185,509→89,992 每路由；news 1.69→1.59MB；en 表自成 95.8KB chunk 仅 en 用户加载；SSR 保持 zh（导出 HTML 验证；两处 en 串=既有 OG meta 非泄漏）。适配：i18n-audit.mjs 解析双文件（块逐字节搬移，条目形态不变；报告增 dictPaths）+3 个 Python 契约改读双文件。门：1301/1301 对称 0 孤儿；全量 hermetic EXIT=0；eslint 0。**barrel diet 总账（192-201）：每路由 3.81→~1.59MB（-58%）**。过程自纠×3：TS 源不可用 Python ast（audit 首改失败）→ 行拼接 heredoc 转义碎裂 → Edit 直修；契约测试 count==2 双文件化。**边界**：display/perf lane；0 ledger/0 frozen/0 OOS。
 
