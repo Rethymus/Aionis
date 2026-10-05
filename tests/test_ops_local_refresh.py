@@ -480,3 +480,38 @@ def test_doctor_all_layers_pass(monkeypatch, tmp_path) -> None:
         assert lane.doctor() == 0
     finally:
         monkeypatch.setattr(lane, "ROOT", real_root)
+
+
+def test_do_run_state_persists_backup_field() -> None:
+    """Round 197 lesson, pinned: backup_note reached the SUMMARY log but not
+    the state.update that persists state.json — the field the post-run
+    verifier reads. do_run is not hermetically runnable (real fetches), so
+    pin the wiring at AST level: the state.update call inside do_run must
+    carry "backup" alongside "soft_fails" and "ci".
+    """
+
+    import ast
+
+    src = Path(lane.__file__).read_text(encoding="utf-8")
+    tree = ast.parse(src)
+    do_run = next(n for n in tree.body if isinstance(n, ast.FunctionDef)
+                  and n.name == "do_run")
+    updates: set[str] = set()
+    for n in ast.walk(do_run):
+        if (isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute)
+                and n.func.attr == "update"
+                and isinstance(n.func.value, ast.Name)
+                and n.func.value.id == "state"):
+            for arg in n.args:  # state.update({...}) passes the dict positionally
+                if isinstance(arg, ast.Dict):
+                    for k in arg.keys:
+                        if isinstance(k, ast.Constant):
+                            updates.add(k.value)
+            updates.update(kw.arg for kw in n.keywords)
+    assert updates, "do_run must persist its outcome via state.update(...)"
+    assert "backup" in updates, (
+        "state.update lost the 'backup' key — the post-run verifier reads "
+        "state.json, not the SUMMARY log (2026-10-05 first-run lesson)"
+    )
+    for required in ("soft_fails", "ci", "finished_at"):
+        assert required in updates, f"state.update lost '{required}'"
