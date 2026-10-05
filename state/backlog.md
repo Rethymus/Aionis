@@ -26,6 +26,8 @@
   ×3、structlog `forward_persist_real_ledger` warning、`persist_snapshot` DRY 均已在早前轮落地；
   最后一项 `keyfn = str.upper` 别名化简本轮落地（行为等价，forward 电池 EXIT=0）。
 
+- **i18n 字典按语言拆块（轮 201 候选）。** 轮 200 后的 chunk 画像：570KB barrel（已到守卫地板）+ 265KB base-ui/components + 390KB react-dom（框架地板）+ **185KB i18n dict（zh+en 双语全量，每路由必载）**。按语言拆块（动态导入非活跃语言）≈ 每路由再 -90KB；涉 I18nProvider 架构（uSES 水合安全模式 + localStorage 切换语义），需专轮谨慎处理。**M**。
+
 ## Owner-gated（预注册级 GO 才可动；权威 spec 在 tasks/active/）
 
 - **Strong-baseline ladder.** RES-01/02/03/10（momentum/FF5-cross-sectional/rank-label/LLM-eval）。
