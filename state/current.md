@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-05) 轮 195（perf 线）：barrel 减重第四轮——Form D 滚动窗（176KB）迁专用模块（限时窗内完成，17:25 树净）：**
+  form-d.ts 落地；单消费方 ipo-view 重接；barrel 去运行时导入+类型再导出；契约行转 .ts。**实测**：共享 chunk 1,027,623→891,182；news 2.15→2.01MB；404 首次破 2MB。**四轮累计：共享 chunk 2.70→0.89MB（-67%）；非消费路由 -1.81MB（-47%）**。全量 hermetic EXIT=0/ruff 净（966fadc2f）。**边界**：display/perf lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-05) 轮 194（perf 线）：barrel 减重第三轮——统一申报流（249KB）迁专用模块：**
   filing-stream.ts 落地；6 消费方重接（首轮 grep head 截断漏 overview/stakes 两处，tsc 即时拦截后补）；barrel 去运行时导入+类型再导出；契约行转 .ts。**实测**：共享 chunk 1,221,641→1,027,623；news 2.34→2.15MB；annual SSR 50 行完好。**三轮累计：共享 chunk 2.70→1.03MB（-62%）；非消费路由 -1.66MB（-44%）**。全量 hermetic EXIT=0/ruff 净；树净入 18:05 通道窗（b75f1d20a）。**边界**：display/perf lane；0 ledger/0 frozen/0 OOS。
 
