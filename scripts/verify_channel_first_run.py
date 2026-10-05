@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from datetime import date
 from pathlib import Path
@@ -66,9 +67,21 @@ def main() -> int:
         "absent from soft_fails",
         soft,
     )
+    # Backup field: state.json carries it from round 197 on; the FIRST live
+    # run (2026-10-05) predates that wiring — its backup verdict lives in the
+    # evening's log line ("audit-chain backup: ok"), so fall back to the log.
     backup = st.get("backup")
+    backup_via_log = False
+    if not isinstance(backup, str):
+        log_dir = ROOT / "runs" / "ops_local_refresh" / args.date
+        for lg in sorted(log_dir.glob("*.log")) if log_dir.exists() else []:
+            m = re.search(r"audit-chain backup: (ok|warn:\S+)", lg.read_text(
+                encoding="utf-8", errors="ignore"))
+            if m:
+                backup, backup_via_log = m.group(1), True
+                break
     check(
-        "backup automation SUMMARY field",
+        "backup automation ran" + (" (via log)" if backup_via_log else ""),
         isinstance(backup, str) and (backup == "ok" or backup.startswith("warn:")),
         "ok | warn:<note>",
         backup,
@@ -84,10 +97,23 @@ def main() -> int:
     )
 
     # Freshness probe: the news panel should carry the new evening's as_of.
+    # Honest exception: when the news_feed fetch step soft-failed (e.g. GDELT
+    # 429), the retain guard keeps the prior panel BY DESIGN and the recovery
+    # lane retries later — stale as_of + a recorded soft-fail is a pass; stale
+    # as_of with NO accounting is the real drift this probe exists to catch.
     try:
         news = json.loads(PANEL_NEWS.read_text(encoding="utf-8"))
         as_of = str(news.get("as_of", ""))
-        check("news_feed as_of advanced", as_of.startswith(args.date), args.date, as_of)
+        news_retained = any("news_feed" in s for s in soft)
+        if as_of.startswith(args.date):
+            check("news_feed as_of advanced", True, args.date, as_of)
+        elif news_retained:
+            check("news_feed as_of advanced", True,
+                  f"{args.date} OR honest retain (soft-fail recorded)",
+                  f"{as_of} (retained; soft_fails={soft})")
+        else:
+            check("news_feed as_of advanced", False, args.date,
+                  f"{as_of} and news_fetch not in soft_fails — unaccounted drift")
     except (FileNotFoundError, json.JSONDecodeError) as e:
         failures += 1
         _fail("news_feed as_of advanced", args.date, f"read error: {e}")

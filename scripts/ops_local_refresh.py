@@ -609,7 +609,8 @@ def do_run(force: bool) -> int:
             state.pop("error", None)  # stale failure text must not survive a success
             state.update({"status": status, "commit": sha, "pushed": pushed,
                           "n_files": n_files, "soft_fails": soft_fails,
-                          "ci": ci, "finished_at": datetime.now().isoformat()})
+                          "ci": ci, "backup": backup_note,
+                          "finished_at": datetime.now().isoformat()})
             save_state(state)
             summary = {
                 "date": today, "status": status, "commit": sha, "pushed": pushed,
