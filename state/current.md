@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-05) 轮 197（ops 线）：18:05 通道首跑 checkpoint 关闭——六查全 PASS + 两处实弹发现修复：**
+  **首跑战报**：ok_committed 413e41821（62 分钟，57 文件，pushed，双 CI 绿）。三项新接线全部实弹生效：①**ticker_metadata 缓存模式**——soft_fails 里 build_ticker_metadata 消失（10-02 及之前夜夜 soft-fail）；②**备份自动化首弹** 19:03:19 `audit-chain backup: ok`（账本+bundle 快照）；③**扩容推前门**在通道内通过（evidence 链测试首夜随跑）。**实弹发现两处（已修）**：(a) backup_note 进了 SUMMARY 日志但漏 state.json 持久化（verifier 读的是 state）——一行接线修复，23:53 恢复道起生效；verifier 对首跑加日志回退路径。(b) news as_of 探针比 lane 诚实契约更严——GDELT 429 双车道 3 重试后诚实跳过+retain 保旧值=设计内（23:53 恢复道重试）；探针改为"前进 OR 有记账的 soft-fail"通过、无记账陈旧仍 FAIL。verifier 终判 **ALL CHECKS PASS**；ops 套件 30 绿（0f7bcc4ee）。**边界**：ops lane；0 ledger 写/0 frozen/0 OOS。
+
 - **active (10-05) 轮 196（perf 线）：barrel 减重第五轮——DEF 14A 代理窗（174KB）迁专用模块 + 前缀碰撞教训：**
   def14a.ts 落地；单消费方 executives-view 重接；契约行转 .ts。**过程教训（tsc 即时拦截）**：裸字符串替换 `aionis.def14a` 前缀碰撞了另一 barrel 成员 `aionis.def14aPersons`（保留成员）——成员迁移的 grep/replace 必须带词边界。**实测**：共享 chunk 891,182→756,864；news 2.01→1.87MB；executives SSR 112 行完好。**五轮累计：共享 chunk 2.70MB→757KB（-72%）；非消费路由 -1.94MB（-51%）**。全量 hermetic EXIT=0/ruff 净（1a1e4c5c1）；17:39 树净，26 分钟余量入 18:05 窗。**边界**：display/perf lane；0 ledger/0 frozen/0 OOS。
 
