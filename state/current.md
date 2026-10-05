@@ -1,5 +1,11 @@
 # state/current.md — read first each session
 
+- **active (10-05) 轮 181（display/seo 线）：/news Atom feed——atom.xml 构建时生成（force-static，sitemap 同契约）：**
+  150 条目镜像 /news 页渲染的精确数据：最新在前、出版方原文 URL 为条目 id+link、seendate 为 updated、lang/domain/country 分类、feed 级 updated=面板 as_of（零捏造时间——本窗口截断的最新 150 前缀恰好全 eng，feed 如实镜像）。可发现性双通道：根 metadata `alternates.types` 发 `<link rel=alternate type=application/atom+xml>`（metadataBase 绝对解析）+ /news 头部可见 FeedChip（canonical URL，i18n `news.chip.feed` zh/en 只增）。验证：tsc 0/eslint 0/i18n 门 0 孤儿对称/构建 0 错/atom.xml ElementTree 良构/chip 在 out/news.html（ba1346d32）。**边界**：display/seo lane；0 ledger/0 frozen/0 OOS。
+
+- **active (10-05) 轮 180（display/seo 线）：sitemap lastModified 真实化——1500 条目全部携带真实 as_of 来源的 `<lastmod>`：**
+  路由→面板映射（ROUTE_PANEL 23 路由）取 data_health 面板 as_of（缺失回退 snapshot_ts）；stock drill-down 取 stock_universe 分区域 as_of（us=2026-06-30/cn=2026-08-03）；manager drill-down 取 13F as_of。**分布对账**：930=929 CN 股+1 面板、536=492 US 股+43 managers+1 面板、26=夜更面板+home——与源 JSON 逐位对上，零捏造日期。修复 barrel 导入（aionis 聚合对象属性别名，TS2724 消除）。验证：tsc 0/eslint 0/构建 EXIT 0/1500 lastmod grep/线上 200 application/xml 确认（95115e0ab CI 绿+gh-pages 发布）。**边界**：display/seo lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-04) 轮 179（display/seo 线）：JSON-LD 结构化数据——WebSite schema 完成 SEO 三件套的最后一块：**
   根 layout 加 `application/ld+json`（WebSite schema）：name=Aionis、alternateName（双语）、description 含 4-NULL-verdict 关键事实、canonical URL。构建产物验证 JSON-LD 正确解析+@type=WebSite。**SEO 三件套至此完整**：meta tags（21 页独立 title/desc）+ OG image（1200×630 品牌卡）+ JSON-LD（结构化数据）。OG 图线上 200 已确认。tsc 0/eslint 0/构建 1508 EXIT 0（5c078fc88 CI 绿）。**边界**：display/seo lane；0 ledger/0 frozen/0 OOS。
 
