@@ -50,7 +50,6 @@ import partyIndexJson from "./party_index.json";
 import arkJson from "./ark.json";
 import themeEtfsJson from "./theme_etfs.json";
 import redditTrendingJson from "./reddit_trending.json";
-import formDJson from "./form_d.json";
 import def14aJson from "./def14a.json";
 import def14aPersonsJson from "./def14a_persons.json";
 import executivesJson from "./executives.json";
@@ -735,6 +734,10 @@ export type Form8k = {
 
 
 
+// Round 195: the Form D rolling window moved to a dedicated module
+// (form-d.ts) — same barrel-diet pattern; types re-exported here.
+export type { FormD, FormDFiling } from "./form-d";
+
 // Round 194: the unified filing stream moved to a dedicated module
 // (filing-stream.ts) — same barrel-diet pattern; types re-exported here.
 export type { FilingStream, FilingStreamRow } from "./filing-stream";
@@ -909,30 +912,7 @@ export type RedditTrending = {
   snapshot_ts?: string;
 };
 
-export type FormDFiling = {
-  company: string;
-  // Almost always empty — Form D filers are private companies by definition
-  // (the EDGAR display name carries no symbol); honest, never guessed.
-  ticker: string;
-  filed_date: string;
-  // "D" (new notice) | "D/A" (amendment).
-  form: string;
-  // "new" | "amendment" — derived from the immutable form type.
-  status: string;
-  doc_url: string;
-};
 
-export type FormD = {
-  status: string;
-  as_of: string;
-  window: { start: string; end: string };
-  issuers: number;
-  total: number;
-  by_form: Record<string, number>;
-  filings: FormDFiling[];
-  methodology: string;
-  snapshot_ts?: string;
-};
 
 export type Def14aFiling = {
   company: string;
@@ -1519,7 +1499,6 @@ export const aionis = {
   ark: arkJson as Ark,
   themeEtfs: themeEtfsJson as ThemeEtfs,
   redditTrending: redditTrendingJson as RedditTrending,
-  formD: formDJson as FormD,
   def14a: def14aJson as Def14a,
   def14aPersons: def14aPersonsJson as Def14aPersons,
   executives: executivesJson as Executives,

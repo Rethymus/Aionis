@@ -25,6 +25,7 @@ import { useI18n } from "@/i18n/provider";
 import type { DictKey } from "@/i18n/dict";
 import { aionis } from "@/data/aionis";
 import { formIpo } from "@/data/aionis/form-ipo";
+import { formD } from "@/data/aionis/form-d";
 import { stockUniverse } from "@/data/aionis/stock-universe";
 
 // The terminal is a STATIC export: /stock/[ticker] pages exist only for the
@@ -53,7 +54,7 @@ const EMPTY: never[] = [];
 
 function FormDSection() {
   const { t } = useI18n();
-  const f = aionis.formD;
+  const f = formD;
   const [filter, setFilter] = useState<FormDFilter>("all");
   const { visibleCount, reset, loadMore } = usePaged(50);
 
