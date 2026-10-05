@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-05) 轮 185（docs 线）：README 英雄轮播 GIF 刷新——terminal-tour.gif 从轮 183 新截屏重建（无 ffmpeg 的 PIL 路线）：**
+  原文件即 7 帧幻灯（960×600/900ms/循环），非滚动巡礼——故 PIL 量化重建同构新 GIF（256 色 Floyd-Steinberg，646KB）：首页→市场→热力图→图集→校准→数据健康→证据矩阵，全部为当前功能态+当前数据。轮 184 记录的"无 ffmpeg 不可行"仅适用于 webm→gif 转换；幻灯重建路线成立。**边界**：docs lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-05) 轮 184（code-cleanup 线）：backlog Slice-2 LOW×5 清账——4/5 已在早前轮落地（清单陈旧），最后一项 keyfn 别名化简：**
   核实：3 collectors 首跑 `last_poll_ts=None` docstring 注记✓已有、`forward_persist_real_ledger` structlog warning✓已有（`_common.py` L269，runs_dir=None→真账本路径告警）、`persist_snapshot` DRY✓轮 f6e0536 已做——backlog 条目四分之三陈旧。剩余一项落地：`earnings_8k_forward.py` 的 `keyfn = str.upper` 中间别名改为直书 `str(t).strip().upper()`（行为等价）。forward/E3 电池 8 套件 EXIT=0 + ruff 净；backlog 条目划线清账。GIF tour 刷新不可行记录：本机无 ffmpeg（webm→gif 无法转换；PNG 全量已刷新覆盖主需求）。**边界**：forward collectors 文件面（非行为变更）；0 ledger 写/0 frozen/0 OOS。
 
