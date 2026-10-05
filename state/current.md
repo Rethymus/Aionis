@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-05) 轮 187（验证/守卫 线）：派生面板漂移守卫全仓审计——轮 186 教训的类别化推广，最后一个同类缺口闭合：**
+  审计矩阵：58 committed 面板全部有测试名引用✓；同类别风险=派生面板（从其他 committed 文件确定性导出）。逐个核查：knowledge_shelf Layer-3 sha↔磁盘✓已有（test_knowledge_shelf_panel_contract sha 重算循环——轮 182 级联必须重生成 shelf 的原因）；evidence_matrix 镜像✓轮 186 新钉；**api_catalog↔data_health**：键双向奇偶✓已有但 per-endpoint as_of 等值未钉（部分提交→键匹配而水位陈旧=同漂移类）——本轮在 test_api_catalog_shape 补 as_of 等值断言。派生面板守卫矩阵至此完备。邻域 21 测绿+ruff 净。**边界**：验证 lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-05) 轮 186（验证/守卫 线）：evidence 面板镜像漂移契约——轮 182 漏提交何以穿过绿灯 CI 的缺口闭合：**
   发现：export_evidence_matrix_manifest 双写（reports 清单 + web 面板镜像），轮 182 级联只提交了 reports 侧，镜像停在旧 dossier sha——**CI 全绿因为无任何测试钉镜像**。缺口闭合：`tests/test_evidence_matrix_panel_contract.py` 两测（①镜像.artifacts==清单.artifacts（id/sha/bytes）+版本同步；②每条 sha256==磁盘工件实测）。**负路径实证**：checkout 修复前面像→两测全 FAILED；恢复→绿。该测试从此拦住"上游工件重渲染但镜像未提交"整类漂移。漏提交残渣已补（commit 前 543566538 后）。**边界**：验证 lane（新增 hermetic 测试）；0 ledger/0 frozen/0 OOS。
 
