@@ -64,6 +64,15 @@ GATE_TEST = "tests/test_web_terminal_data.py"
 # shelf re-export lived in the step that crashed on the matrix ImportError,
 # the narrow gate passed, and CI's full suite correctly went red.
 GATE_TEST_2 = "tests/test_knowledge_shelf_panel_contract.py"
+# Round 190: the lane re-renders the evidence chain (dossier -> shelf ->
+# matrix + web mirror), so the gate must verify that chain BEFORE push —
+# otherwise a partial re-render ships and only CI's full suite goes red
+# (round 182's live lesson: the lane commits, then discovers).
+GATE_TEST_3 = "tests/test_research_dossier_pipeline.py"
+GATE_TESTS_EV = (
+    "tests/test_evidence_matrix_manifest.py",
+    "tests/test_evidence_matrix_panel_contract.py",
+)
 GATE_DESELECT = f"{GATE_TEST}::test_ledger_append_only_not_mutated_by_export"
 
 # Guard policy (host-local time == the owner's Beijing evening).
@@ -203,7 +212,8 @@ STEPS: list[dict] = [
     {"name": "export shelf + evidence matrix",
      "uv_argv": ["python", "-c", SHELF_MATRIX], "cap": 10, "soft": True},
     {"name": "json validity + contract gate",
-     "uv_argv": ["pytest", "-q", GATE_TEST, GATE_TEST_2,
+     "uv_argv": ["pytest", "-q", GATE_TEST, GATE_TEST_2, GATE_TEST_3,
+                 *GATE_TESTS_EV,
                  "--deselect", GATE_DESELECT],
      "cap": 45, "soft": False},
 ]
