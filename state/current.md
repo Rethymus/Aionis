@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-05) 轮 193（perf 线）：barrel 减重第二轮——IPO 窗口（379KB）+ PTR 申报索引（273KB）迁专用模块：**
+  轮 192 同配方次重两块：form-ipo.ts + politician-trades.ts 落地；5 消费文件重接；barrel 去运行时 JSON 导入、类型改模块再导出；覆盖契约两行转 .ts 形态。**实测**：共享 chunk 1,701,490→1,221,641（-480KB）；news 2.82→2.34MB；404 2.81→2.33MB；dashboard 4.43→4.24MB（保 IPO 自有 chunk、去 PTR 索引）；消费页 SSR 数据完好（ipo 105 sec.gov 行/congress 200 clerk 行）。全量 hermetic EXIT=0/ruff 净/i18n 门对称（2787a6a5a）。**两轮累计：非消费路由 -1.47MB（-39%）**。线上轮 192 效果已确认（news 最大 chunk 2.70MB→265KB）。**边界**：display/perf lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-05) 轮 192（perf 线，外部情报驱动）：全站重量画像→PTR 交易流迁出共享 barrel——每路由 -1MB：**
   外部扫描：2026-03 起传 CWV 改全站计分（慢页拖全站）→ 做了 1503 页全量 JS 画像：发现**共享数据 chunk 2.70MB 挂在每一个路由（含 404）**，其中 ~1.3MB 是众议院 PTR 交易流（barrel 直载）。按 stock-universe.ts 既有专用模块模式迁移（politician-trades-tx.ts）：三真实消费方（congress/overview/stock）走自有 chunk，其余 ~1497 路由不再载。**实测**：共享 chunk 2,695,464→1,701,490（-994KB）；news 3.81→2.82MB；404 3.80→2.81MB；消费方页面不变（congress SSR 仍渲 200 doc_url 行+专用 994KB chunk 在墙）。barrel 类型改从模块再导出（单一事实）；覆盖契约表行转 .ts 形态。tsc 0/构建 0 错/全量 hermetic EXIT=0/ruff 净/i18n 门对称（4e0728a39）。**边界**：display/perf lane；0 ledger/0 frozen/0 OOS。
 
