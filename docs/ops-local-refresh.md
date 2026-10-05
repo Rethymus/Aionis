@@ -287,3 +287,19 @@ surface exclusions.
   owner action per protocol.
 - No live/current prices into the research pipeline; the Worker stays
   display-only.
+
+## Post-run one-command verification (round 191)
+
+After any evening run (and especially a first run with new wiring),
+verify REAL state instead of recalling it:
+
+```bash
+uv run python scripts/verify_channel_first_run.py [--date YYYY-MM-DD]
+```
+
+Checks (read-only): done-marker date/status, the evening's soft-fail
+list, the SUMMARY `backup` field (audit-chain automation, round 172),
+push + both CI workflows, and a news_feed as_of freshness probe. Exit 0
+only when every check passes. Discriminance was proven against the
+2026-10-02 run: the two then-unwired items (ticker_metadata cache mode,
+backup field) correctly failed while the rest passed.
