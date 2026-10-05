@@ -1909,7 +1909,8 @@ def test_api_catalog_shape() -> None:
     eps = cat["endpoints"]
     assert len(eps) >= 20
     dh = _load("data_health.json")
-    dh_keys = {p["key"] for p in dh["panels"]}
+    dh_by_key = {p["key"]: p for p in dh["panels"]}
+    dh_keys = set(dh_by_key)
     valid = {"daily", "cadence", "frozen"}
     for e in eps:
         if e["status"] == "planned":
@@ -1918,6 +1919,14 @@ def test_api_catalog_shape() -> None:
         else:
             assert e["freshness"] in valid
             assert e["key"] in dh_keys, f"{e['key']} missing from data_health"
+            # Round 187 (same drift class as the evidence-mirror miss): the
+            # catalog and the health map are written by the same export run —
+            # a partial commit of one without the other must fail here, not
+            # drift through with matching keys but stale as_of values.
+            assert e["as_of"] == dh_by_key[e["key"]]["as_of"], (
+                f"{e['key']}: catalog as_of {e['as_of']!r} != data_health "
+                f"as_of {dh_by_key[e['key']]['as_of']!r} — partial commit drift"
+            )
             assert "unverified" not in e["license"], f"{e['key']} license unmapped"
         assert e["method"] == "GET" and e["status"] in {"available", "planned"}
         assert e["path"] == f"/api/v1/panels/{e['file']}"
