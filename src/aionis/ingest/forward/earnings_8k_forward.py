@@ -142,13 +142,12 @@ def collect_8k_forward(
     snapshot_ts = _common.canonical_snapshot_ts(snapshot_ts)
     cdir = _common.cache_dir(cache_dir)
 
-    keyfn = str.upper
     cmap = cik_override if cik_override is not None else fundamentals.cik_map(cdir)
 
     raw_payload: dict[str, list[dict]] = {}
     rows: list[dict] = []
     for t in tickers:
-        tkr = keyfn(str(t).strip())
+        tkr = str(t).strip().upper()
         if not tkr:
             continue
         cik = cmap.get(tkr)

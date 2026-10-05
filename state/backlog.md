@@ -22,10 +22,9 @@
 - **SIC vintage.** SIC is current-snapshot (mild lookahead for reclassifiers); low priority
   (small effect). **M** task.
 - **evals/cases golden fixtures.** Slot in once E3 forward-live produces commit/reveal fixtures.
-- **Slice 2 review LOW×5 cleanup（advisory）。** first-run `last_poll_ts=None` docstring notes（3
-  collectors）; structlog `warning` when `runs_dir is None and forward_only=True`;
-  `earnings_8k_forward.py` 冗余 `keyfn = str.upper` 分支; `_common.persist_snapshot(...)` DRY 提取。
-  一个 **S** cleanup 打包。
+- ~~**Slice 2 review LOW×5 cleanup（advisory）。**~~ **完成清账（10-05 轮 184）**：docstring 首跑注记
+  ×3、structlog `forward_persist_real_ledger` warning、`persist_snapshot` DRY 均已在早前轮落地；
+  最后一项 `keyfn = str.upper` 别名化简本轮落地（行为等价，forward 电池 EXIT=0）。
 
 ## Owner-gated（预注册级 GO 才可动；权威 spec 在 tasks/active/）
 

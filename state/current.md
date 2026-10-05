@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-05) 轮 184（code-cleanup 线）：backlog Slice-2 LOW×5 清账——4/5 已在早前轮落地（清单陈旧），最后一项 keyfn 别名化简：**
+  核实：3 collectors 首跑 `last_poll_ts=None` docstring 注记✓已有、`forward_persist_real_ledger` structlog warning✓已有（`_common.py` L269，runs_dir=None→真账本路径告警）、`persist_snapshot` DRY✓轮 f6e0536 已做——backlog 条目四分之三陈旧。剩余一项落地：`earnings_8k_forward.py` 的 `keyfn = str.upper` 中间别名改为直书 `str(t).strip().upper()`（行为等价）。forward/E3 电池 8 套件 EXIT=0 + ruff 净；backlog 条目划线清账。GIF tour 刷新不可行记录：本机无 ffmpeg（webm→gif 无法转换；PNG 全量已刷新覆盖主需求）。**边界**：forward collectors 文件面（非行为变更）；0 ledger 写/0 frozen/0 OOS。
+
 - **active (10-05) 轮 183（docs 线）：README 终端截图全量刷新——8 张网格图从线上站重摄（1440×900 水合后定影）：**
   9 月 9 日旧组先于轮 156-182（~19 项 display 功能：watchlist strip/星标/同板块 peers/Top-Pick 徽标/新鲜度徽标/kbd 提示/Atom chip）且数据水位陈旧。浏览器自动化逐页截图（goto→domcontentloaded→3.2s 定影→viewport 截屏），home+atlas 抽点目检满渲染（夜更面板 as_of 2026-10-02 在墙）。README 文本无需改动（页面描述仍准确）。8 文件替换提交（ce94450b2）。**边界**：docs lane；0 ledger/0 frozen/0 OOS。
 
