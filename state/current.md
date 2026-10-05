@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-05) 轮 186（验证/守卫 线）：evidence 面板镜像漂移契约——轮 182 漏提交何以穿过绿灯 CI 的缺口闭合：**
+  发现：export_evidence_matrix_manifest 双写（reports 清单 + web 面板镜像），轮 182 级联只提交了 reports 侧，镜像停在旧 dossier sha——**CI 全绿因为无任何测试钉镜像**。缺口闭合：`tests/test_evidence_matrix_panel_contract.py` 两测（①镜像.artifacts==清单.artifacts（id/sha/bytes）+版本同步；②每条 sha256==磁盘工件实测）。**负路径实证**：checkout 修复前面像→两测全 FAILED；恢复→绿。该测试从此拦住"上游工件重渲染但镜像未提交"整类漂移。漏提交残渣已补（commit 前 543566538 后）。**边界**：验证 lane（新增 hermetic 测试）；0 ledger/0 frozen/0 OOS。
+
 - **active (10-05) 轮 185（docs 线）：README 英雄轮播 GIF 刷新——terminal-tour.gif 从轮 183 新截屏重建（无 ffmpeg 的 PIL 路线）：**
   原文件即 7 帧幻灯（960×600/900ms/循环），非滚动巡礼——故 PIL 量化重建同构新 GIF（256 色 Floyd-Steinberg，646KB）：首页→市场→热力图→图集→校准→数据健康→证据矩阵，全部为当前功能态+当前数据。轮 184 记录的"无 ffmpeg 不可行"仅适用于 webm→gif 转换；幻灯重建路线成立。**边界**：docs lane；0 ledger/0 frozen/0 OOS。
 
