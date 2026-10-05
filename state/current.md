@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-05) 轮 189（display/pwa 线）：apple-touch-icon PNG——iOS 主屏品牌标（PWA 收官的最后缺口）：**
+  iOS 添加主屏时忽略 SVG favicon 与 PWA manifest，无 PNG apple-touch-icon 则退化为页面截图。落地：180×180 committed PNG（品牌绿 A 块，与 OG 卡同源艺术）+ 显式 `icons.apple` 链接。**实施教训**：先试 app/apple-icon.tsx（ImageResponse 路由）——艺术正确但自动 `<link>` 缺 /Aionis basePath（静态导出怪癖：icon.svg 文件约定得 basePath、路由味不得）且产物无扩展名（GH Pages 会以 octet-stream 伺服）；改静态文件形态双消除，路由仅用作一次性艺术生成器后移除。线上 200 image/png + basePath 正确链接已验。**边界**：display/pwa lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-05) 轮 188（验证/ci 线）：sitemap↔导出页奇偶守卫——轮 180 lastmod 工作的护栏闭合 + 外部情报扫描：**
   `web/scripts/sitemap-parity.mjs`：构建后 diff sitemap URL 集 vs out/*.html 集，悬空 URL（爬虫 404）即 CI 红（publish workflow 接线于 build 与 .nojekyll 验证之间；_not-found/index.html 按设计排除——轮 144 canonical fold）。现状 1500/1500 全解析；负路径实证（ghost-route 注入→EXIT 1→重建→绿）。**外部情报**：Next 16.3.8 即 16.3.x 线最新 stable（16.4 仅 canary，无升级面）；线上 api-docs Site resources 卡已确认。**边界**：验证/ci lane；0 ledger/0 frozen/0 OOS。
 
