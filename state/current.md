@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-05) 轮 194（perf 线）：barrel 减重第三轮——统一申报流（249KB）迁专用模块：**
+  filing-stream.ts 落地；6 消费方重接（首轮 grep head 截断漏 overview/stakes 两处，tsc 即时拦截后补）；barrel 去运行时导入+类型再导出；契约行转 .ts。**实测**：共享 chunk 1,221,641→1,027,623；news 2.34→2.15MB；annual SSR 50 行完好。**三轮累计：共享 chunk 2.70→1.03MB（-62%）；非消费路由 -1.66MB（-44%）**。全量 hermetic EXIT=0/ruff 净；树净入 18:05 通道窗（b75f1d20a）。**边界**：display/perf lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-05) 轮 193（perf 线）：barrel 减重第二轮——IPO 窗口（379KB）+ PTR 申报索引（273KB）迁专用模块：**
   轮 192 同配方次重两块：form-ipo.ts + politician-trades.ts 落地；5 消费文件重接；barrel 去运行时 JSON 导入、类型改模块再导出；覆盖契约两行转 .ts 形态。**实测**：共享 chunk 1,701,490→1,221,641（-480KB）；news 2.82→2.34MB；404 2.81→2.33MB；dashboard 4.43→4.24MB（保 IPO 自有 chunk、去 PTR 索引）；消费页 SSR 数据完好（ipo 105 sec.gov 行/congress 200 clerk 行）。全量 hermetic EXIT=0/ruff 净/i18n 门对称（2787a6a5a）。**两轮累计：非消费路由 -1.47MB（-39%）**。线上轮 192 效果已确认（news 最大 chunk 2.70MB→265KB）。**边界**：display/perf lane；0 ledger/0 frozen/0 OOS。
 
