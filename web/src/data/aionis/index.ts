@@ -50,7 +50,6 @@ import partyIndexJson from "./party_index.json";
 import arkJson from "./ark.json";
 import themeEtfsJson from "./theme_etfs.json";
 import redditTrendingJson from "./reddit_trending.json";
-import def14aJson from "./def14a.json";
 import def14aPersonsJson from "./def14a_persons.json";
 import executivesJson from "./executives.json";
 import newsFeedJson from "./news_feed.json";
@@ -734,6 +733,10 @@ export type Form8k = {
 
 
 
+// Round 196: the DEF 14A proxy window moved to a dedicated module
+// (def14a.ts) — same barrel-diet pattern; types re-exported here.
+export type { Def14a, Def14aFiling } from "./def14a";
+
 // Round 195: the Form D rolling window moved to a dedicated module
 // (form-d.ts) — same barrel-diet pattern; types re-exported here.
 export type { FormD, FormDFiling } from "./form-d";
@@ -914,32 +917,7 @@ export type RedditTrending = {
 
 
 
-export type Def14aFiling = {
-  company: string;
-  // Empty for ~25% of filers (no symbol in the EDGAR display name) —
-  // honest, never guessed.
-  ticker: string;
-  filed_date: string;
-  // "DEF 14A" (new definitive proxy). The "DEF 14A/A" amendment arm exists
-  // in the exporter as defense-in-depth; no such row today (amendments are
-  // filed as DEFA14A, out of scope).
-  form: string;
-  // "new" | "amendment" — derived from the immutable form type.
-  status: string;
-  doc_url: string;
-};
 
-export type Def14a = {
-  status: string;
-  as_of: string;
-  window: { start: string; end: string };
-  issuers: number;
-  total: number;
-  by_form: Record<string, number>;
-  filings: Def14aFiling[];
-  methodology: string;
-  snapshot_ts?: string;
-};
 
 // One parsed DEF 14A filing = one board card (company + director/officer
 // sets). n_directors/n_officers are INDEPENDENT sets: a CEO who sits on the
@@ -1499,7 +1477,6 @@ export const aionis = {
   ark: arkJson as Ark,
   themeEtfs: themeEtfsJson as ThemeEtfs,
   redditTrending: redditTrendingJson as RedditTrending,
-  def14a: def14aJson as Def14a,
   def14aPersons: def14aPersonsJson as Def14aPersons,
   executives: executivesJson as Executives,
   newsFeed: newsFeedJson as NewsFeed,

@@ -86,7 +86,7 @@ EXPECTED_PANELS: dict[str, tuple[str, str, str]] = {
     "ipo": ("form-ipo.ts", "ipo.json", "daily"),
     "form_d": ("form-d.ts", "form_d.json", "daily"),
     # NOTE the key mismatch: health key `form_def14a`, barrel member `def14a`.
-    "form_def14a": ("def14a", "def14a.json", "daily"),
+    "form_def14a": ("def14a.ts", "def14a.json", "daily"),
     "def14a_persons": ("def14aPersons", "def14a_persons.json", "daily"),
     "filing_stream": ("filing-stream.ts", "filing_stream.json", "daily"),
     "politician_trades": ("politician-trades.ts", "politician_trades.json", "daily"),

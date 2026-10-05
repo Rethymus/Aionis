@@ -23,6 +23,7 @@ import { fmtDateShort } from "@/lib/format";
 import { FilterPills, LoadMoreFooter, usePaged } from "@/components/stream/stream-kit";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
+import { def14a } from "@/data/aionis/def14a";
 import { stockUniverse } from "@/data/aionis/stock-universe";
 
 // The terminal is a STATIC export: /stock/[ticker] pages exist only for the
@@ -51,7 +52,7 @@ const EMPTY: never[] = [];
 
 function Def14aSection() {
   const { t } = useI18n();
-  const f = aionis.def14a;
+  const f = def14a;
   const [filter, setFilter] = useState<Def14aFilter>("all");
   const { visibleCount, reset, loadMore } = usePaged(50);
 
