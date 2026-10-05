@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-05) 轮 183（docs 线）：README 终端截图全量刷新——8 张网格图从线上站重摄（1440×900 水合后定影）：**
+  9 月 9 日旧组先于轮 156-182（~19 项 display 功能：watchlist strip/星标/同板块 peers/Top-Pick 徽标/新鲜度徽标/kbd 提示/Atom chip）且数据水位陈旧。浏览器自动化逐页截图（goto→domcontentloaded→3.2s 定影→viewport 截屏），home+atlas 抽点目检满渲染（夜更面板 as_of 2026-10-02 在墙）。README 文本无需改动（页面描述仍准确）。8 文件替换提交（ce94450b2）。**边界**：docs lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-05) 轮 182（display/api-docs 线）：api_catalog 站点级资源节——公共静态契约的元层补全（sitemap+atom 与面板端点同处一目录）：**
   export_api_catalog 增 `site` 节（两条资源：sitemap.xml 的 lastModified 溯源 + atom.xml 的 news 镜像契约；计数刻意定性——推导与刷新类是不漂移的事实）。确定性重生成（56 端点原样）；ApiCatalog 类型增可选 site；/api-docs 渲染 Site resources 卡（GET 行+外链+分kind图标 Network/Rss）。i18n `apidocs.site.title` zh/en 只增。验证：ruff 净/目录重生成/tsc 0/eslint 0/i18n 门对称/构建 0 错/两路径在导出 api-docs.html/契约测试 31 绿（30c269392）。夜更通道将幂等保留该节（生成器为单一事实源）。**级联教训（CI 首跑失败后修复）**：api_catalog.json 是 research-dossier 的输入 → 提交后 dossier 字节稳定契约即刻过期（CI 红）——按轮 51/52 正典次序补渲染 dossier→shelf→matrix manifest（旧版按 M3 移入 archive/），atlas 输入未变字节相同。全量 hermetic EXIT=0；级联提交 7b29e7687 CI 双 workflow 绿；线上 catalog.json site 节已确认。**今后改任何 dossier/shelf 输入面板时，evidence 链重渲染是 DoD 的一部分（不是可选项）。****边界**：display lane（api_catalog 为 display 导出物）；0 ledger/0 frozen/0 OOS。
 
