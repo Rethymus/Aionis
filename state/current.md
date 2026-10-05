@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-06 01:00，轮 203）（docs 线）：性能战役文档第二章节入册——轮 192-201 载荷减重的正式收官:**
+  campaign 总结（原覆盖轮 111-125）增第五章：七条迁移表（PTR 1.33MB→…→i18n 185→90KB）+ 实测总账（每路由 -58%、共享 chunk -79%）+ 三道防回胖守卫 + 四条新方法论沉淀（全站画像优先/专用模块七连复用词边界纪律/交叉类型终止符/SSR 决定论动态语言表）。未竟事项重编号第六章。**两段性能战役至此全部正式入册**（72c7dbd39）。**边界**：docs lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-06 00:55，轮 202）（验证 线）：轮 201 i18n 拆块的浏览器实弹功能验证——三路径全 PASS（线上）:**
   轮 201 只验了构建产物+SSR；运行时语义经浏览器实测：①**切换** zh→en：点击 Toggle language → 动态 en chunk 加载 → 全站文本转 English（总览→Overview/市场新闻流→Market news…）+localStorage 持久化 "en"；②**重载保持**：saved=en 重载后仍 English（后挂载水合+缓存块）；③**切回** en→zh 即时（zh 表常驻）并还原默认态。**结论：i18n 拆块运行时行为与设计完全一致，轮 201 闭环。**纯验证轮零代码改动。**边界**：验证 lane；0 ledger/0 frozen/0 OOS。
 
