@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-06 00:09，轮 199）（ops/验证 线）：23:53 恢复道验证点裁决——guard 正确 SKIP:already-done，两验证项按设计各归其位：**
+  23:35 hook 实录 `SKIP:already-done (ok_committed, 413e41821)`——恢复道策略=仅硬失败触发；news_feed GDELT 429 软败按设计等明晚通道重取（非故障）；backup 字段 state 持久化无新运行可验 → **改为 hermetic AST 契约钉**：do_run 的 state.update 必含 backup（+soft_fails/ci/finished_at）。负路径实证（去字段→FAILED→复原→31 绿）。首发现场教训的 bug 类（字段进 SUMMARY 日志漏 state）从此有永久守卫（75128e3fd）。**边界**：验证 lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-05) 轮 198（perf 线）：barrel 减重收官——picks_backtest（149KB）+ stakes_13g（147KB）迁专用模块，最后两个 >100KB 尾部大头清账：**
   picks-backtest.ts + stakes-13g.ts 落地；4 消费方词边界重接；SmartMoney 仍组合 StakesPct 类型（从模块 type-only import）；契约两行转 .ts。**过程两处自纠**：Stakes13GFiling 交叉类型终止符 `} & StakesPct;` 非 `};`（首轮脚本安全失败未写盘）；fallback 插行误入 recharts 多行 import 中间（tsc 拦截后修位）。**实测**：共享 chunk 756,864→570,397。**六轮累计（7 面板迁移）：共享 chunk 2.70MB→570KB（-79%）；非消费路由 3.81→1.69MB（-56%）**；剩余 barrel 为 <83KB 长尾——收益递减，diet 收官。全量 hermetic EXIT=0/ruff 净（c650daacd）。**边界**：display/perf lane；0 ledger/0 frozen/0 OOS。
 
