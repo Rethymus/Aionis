@@ -63,7 +63,42 @@ power-floor、discipline、quarterly、evidence、model-health。
   （轮 116 事故的教训）。
 - **诚实报告**：null 与正收益同表；估算上限与实收并列（轮 118/119）。
 
-## 五、未竟事项
+## 五、第二战役：载荷减重（轮 192-201，2026-10-05/06）
+
+> 触发：2026-03 起传 CWV 全站计分（慢页拖全站）→ 1,503 页全量 JS 画像发现
+> **共享数据 chunk 2.70MB 挂在每一个路由（含 404）**——barrel 把全部面板内联。
+
+| # | 迁出面板 | 大小 | 轮 | 消费方（专用 chunk 自担） |
+|---|---|---|---|---|
+| 1 | PTR 交易流 | 1.33MB | 192 | congress/overview/stock |
+| 2 | IPO 窗口 + PTR 申报索引 | 379+273KB | 193 | ipo/overview、congress |
+| 3 | 统一申报流 | 249KB | 194 | annual/quarterly/events/overview/stakes |
+| 4 | Form D 滚动窗 | 176KB | 195 | ipo |
+| 5 | DEF 14A 代理窗 | 174KB | 196 | executives |
+| 6 | picks 回测 + SC 13G 流 | 149+147KB | 198 | picks、stakes/smart-money/overview |
+| 7 | i18n 字典按语言拆块 | 185→90KB | 201 | 全路由（en 表 95.8KB 仅 en 用户动态加载） |
+
+**实测总账**：每路由 JS 载荷 **3.81→~1.59MB（-58%）**；共享数据 chunk
+2.70MB→570KB（-79%）；剩余为框架地板（react-dom ~390KB、base-ui/components
+265KB）+ 570KB barrel（44 面板 <100KB 长尾）。
+
+**守卫（防回胖）**：
+- `test_barrel_Json_import_weight_ceiling`——index.ts 直载 >100KB 面板 JSON 即 CI 红；
+- i18n 审计门随双文件化保持 1301/1301 对称 + 0 孤儿；
+- 3 个 Python 契约改读 dict-zh/dict-en 双文件。
+
+**方法论沉淀（本战役新增）**：
+- **全站画像优先于逐页优化**：1,503 页 × 逐 script 求和的一次性脚本找到了
+  逐页 Lighthouse 永远不会归因的"每路由隐藏税"（共享 chunk）。
+- **专用模块模式七连复用**：stock-universe.ts 模式迭代七次零设计变更；
+  词边界 grep/replace 是硬纪律（轮 196 `aionis.def14a` 前缀碰撞
+  `aionis.def14aPersons`，tsc 拦截）。
+- **交叉类型终止符**：`} & T;` 不是 `};`——AST/文本工具对交叉类型必须
+  显式终止符匹配（轮 198 首轮脚本安全失败）。
+- **动态语言表的 SSR 决定论**：默认语静态导入保持 prerender 决定论，
+  非默认语动态 import + 缓存 promise（浏览器实测三路径：切换/重载保持/切回）。
+
+## 六、未竟事项
 
 - Interop 2026 / Baseline 全量外部扫描（搜索配额 2026-10-03 18:50 UTC 恢复后）。
 - Speculation Rules activationStart>0 命中实测（需脚本化 UI 轮）。
