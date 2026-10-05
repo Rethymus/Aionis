@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-06 00:22，轮 200）（守卫 线）：barrel 重量天花板契约——六轮减重从此制度化：**
+  覆盖契约文件新增 test_barrel_Json_import_weight_ceiling：index.ts 直载面板 JSON >100KB 即 FAIL（当前最大合法骑乘 form8k ~83KB；超限面板须走专用模块模式+契约表 .ts 形态）。无此守卫则下一个新面板会把六轮成果（共享 chunk 2.70MB→570KB）悄悄吃回去。regex 解析（TS 源，Python ast 不可用——首版试 ast 立即 SyntaxError 后改 regex）；非空洞验证（匹配全部 44 个现役导入）。文件 8 测绿+ruff 净（3c380fb8c）。**边界**：验证 lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-06 00:09，轮 199）（ops/验证 线）：23:53 恢复道验证点裁决——guard 正确 SKIP:already-done，两验证项按设计各归其位：**
   23:35 hook 实录 `SKIP:already-done (ok_committed, 413e41821)`——恢复道策略=仅硬失败触发；news_feed GDELT 429 软败按设计等明晚通道重取（非故障）；backup 字段 state 持久化无新运行可验 → **改为 hermetic AST 契约钉**：do_run 的 state.update 必含 backup（+soft_fails/ci/finished_at）。负路径实证（去字段→FAILED→复原→31 绿）。首发现场教训的 bug 类（字段进 SUMMARY 日志漏 state）从此有永久守卫（75128e3fd）。**边界**：验证 lane；0 ledger/0 frozen/0 OOS。
 
