@@ -59,6 +59,14 @@ jobs:
           pnpm install --frozen-lockfile
           pnpm build
 
+      # Round 188: every sitemap URL must resolve to an exported page — a
+      # dangling sitemap entry hands crawlers a 404. _not-found.html is the
+      # error page and index.html is the round-144 canonical fold (dashboard.html
+      # is the sitemap entry); both are excluded by design.
+      - name: Sitemap ↔ exported pages parity gate
+        working-directory: web
+        run: node scripts/sitemap-parity.mjs
+
       - name: Verify .nojekyll survives the build
         run: |
           test -f web/out/.nojekyll || {
