@@ -2,7 +2,7 @@
 
 import { SegmentHeader } from "@/components/segment-header";
 import { FinDeadlineView } from "@/components/filings/fin-deadline-view";
-import { aionis } from "@/data/aionis";
+import { filingStream } from "@/data/aionis/filing-stream";
 
 export default function AnnualPage() {
   return (
@@ -10,10 +10,10 @@ export default function AnnualPage() {
       <SegmentHeader
         segment="context"
         introKey="filings.annual.intro"
-        asOf={aionis.filingStream.as_of ?? undefined}
+        asOf={filingStream.as_of ?? undefined}
         countHint={
-          aionis.filingStream.status === "ok"
-            ? `${aionis.filingStream.annual_total.toLocaleString("en-US")} 10-K · ${aionis.filingStream.window.start} → ${aionis.filingStream.window.end}`
+          filingStream.status === "ok"
+            ? `${filingStream.annual_total.toLocaleString("en-US")} 10-K · ${filingStream.window.start} → ${filingStream.window.end}`
             : undefined
         }
       />

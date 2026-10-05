@@ -7,6 +7,7 @@ import { fmtDateShort } from "@/lib/format";
 import { LoadMoreFooter, usePaged } from "@/components/stream/stream-kit";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
+import { filingStream } from "@/data/aionis/filing-stream";
 import { stockUniverse } from "@/data/aionis/stock-universe";
 import { ProvenanceBadge } from "@/components/provenance-badge";
 
@@ -47,7 +48,7 @@ export function StakesView() {
   const { visibleCount, loadMore } = usePaged(PAGE_SIZE);
 
   const g = aionis.stakes13g;
-  const fs = aionis.filingStream;
+  const fs = filingStream;
 
   const rows = useMemo<StakeRow[]>(() => {
     const out: StakeRow[] = [];

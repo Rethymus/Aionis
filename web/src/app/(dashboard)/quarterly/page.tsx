@@ -2,7 +2,7 @@
 
 import { SegmentHeader } from "@/components/segment-header";
 import { FinDeadlineView } from "@/components/filings/fin-deadline-view";
-import { aionis } from "@/data/aionis";
+import { filingStream } from "@/data/aionis/filing-stream";
 
 export default function QuarterlyPage() {
   return (
@@ -10,10 +10,10 @@ export default function QuarterlyPage() {
       <SegmentHeader
         segment="context"
         introKey="filings.quarterly.intro"
-        asOf={aionis.filingStream.as_of ?? undefined}
+        asOf={filingStream.as_of ?? undefined}
         countHint={
-          aionis.filingStream.status === "ok"
-            ? `${aionis.filingStream.quarterly_total.toLocaleString("en-US")} 10-Q · ${aionis.filingStream.window.start} → ${aionis.filingStream.window.end}`
+          filingStream.status === "ok"
+            ? `${filingStream.quarterly_total.toLocaleString("en-US")} 10-Q · ${filingStream.window.start} → ${filingStream.window.end}`
             : undefined
         }
       />

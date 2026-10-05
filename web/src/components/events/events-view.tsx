@@ -25,6 +25,7 @@ import { FrostedScrollArea } from "@/components/ui/frosted-scroll-area";
 import { useI18n } from "@/i18n/provider";
 import type { DictKey } from "@/i18n/dict";
 import { aionis } from "@/data/aionis";
+import { filingStream } from "@/data/aionis/filing-stream";
 import { stockUniverse } from "@/data/aionis/stock-universe";
 
 // Same guard as executives-view / manager-book.STOCK_PAGE_TICKERS: the terminal
@@ -71,7 +72,7 @@ const EMPTY: never[] = [];
 
 function StreamSection() {
   const { t } = useI18n();
-  const f = aionis.filingStream;
+  const f = filingStream;
   const [form, setForm] = useState<string>("all");
   const { visibleCount, reset, loadMore } = usePaged(50);
 

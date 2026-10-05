@@ -53,7 +53,6 @@ import redditTrendingJson from "./reddit_trending.json";
 import formDJson from "./form_d.json";
 import def14aJson from "./def14a.json";
 import def14aPersonsJson from "./def14a_persons.json";
-import filingStreamJson from "./filing_stream.json";
 import executivesJson from "./executives.json";
 import newsFeedJson from "./news_feed.json";
 import knowledgeShelfJson from "./knowledge_shelf.json";
@@ -736,6 +735,10 @@ export type Form8k = {
 
 
 
+// Round 194: the unified filing stream moved to a dedicated module
+// (filing-stream.ts) — same barrel-diet pattern; types re-exported here.
+export type { FilingStream, FilingStreamRow } from "./filing-stream";
+
 // Round 193: IPO window + PTR filing index moved to dedicated modules
 // (form-ipo.ts / politician-trades.ts) — their payloads no longer ride
 // the shared barrel chunk every route loads. Types re-exported for
@@ -1013,39 +1016,7 @@ export type Def14aPersons = {
   snapshot_ts?: string;
 };
 
-export type FilingStreamRow = {
-  // Source form type: 8-K(/A) / 10-K(/A) / 10-Q(/A) / S-1(/A) / 4(/A) /
-  // D(/A) / SC 13D(/A) / SC 13G(/A).
-  form: string;
-  // Company, the reporting person on Form 4, or "FILER → TARGET" on stakes.
-  who: string;
-  ticker: string;
-  filed_date: string;
-  doc_url: string;
-};
 
-export type FilingStream = {
-  status: string;
-  as_of: string;
-  window: { start: string; end: string };
-  // Full direct-query window vs the 800-newest visible cap.
-  total_merged: number;
-  n_visible: number;
-  by_form: Record<string, number>;
-  filings: FilingStreamRow[];
-  // 10-K(/A) deep cut for /annual — the 800-newest cap squeezes periodic
-  // reports out of the visible stream in filing season, so the family rides
-  // its OWN newest-first slice (cap 400) from the same parquet.
-  annual_filings: FilingStreamRow[];
-  // 10-Q(/A) deep cut for /quarterly — same contract as annual_filings.
-  quarterly_filings: FilingStreamRow[];
-  // Full-window counts for the two deep-cut families (NOT the capped visible
-  // length — the KPI shows the window, not the payload cap).
-  annual_total: number;
-  quarterly_total: number;
-  methodology: string;
-  snapshot_ts?: string;
-};
 
 export type ExecutivesEvent = {
   company: string;
@@ -1551,7 +1522,6 @@ export const aionis = {
   formD: formDJson as FormD,
   def14a: def14aJson as Def14a,
   def14aPersons: def14aPersonsJson as Def14aPersons,
-  filingStream: filingStreamJson as FilingStream,
   executives: executivesJson as Executives,
   newsFeed: newsFeedJson as NewsFeed,
   knowledgeShelf: knowledgeShelfJson as KnowledgeShelf,

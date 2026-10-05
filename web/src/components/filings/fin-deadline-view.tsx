@@ -22,7 +22,7 @@ import {
 import { fmtDateShort } from "@/lib/format";
 import { FilterPills, LoadMoreFooter, usePaged } from "@/components/stream/stream-kit";
 import { useI18n } from "@/i18n/provider";
-import { aionis } from "@/data/aionis";
+import { filingStream } from "@/data/aionis/filing-stream";
 import { stockUniverse } from "@/data/aionis/stock-universe";
 
 // The terminal is a STATIC export: /stock/[ticker] pages exist only for the
@@ -58,7 +58,7 @@ const VARIANT: Record<
  *  links are guarded against the static-export universe. */
 export function FinDeadlineView({ variant }: { variant: FinDeadlineVariant }) {
   const { t } = useI18n();
-  const f = aionis.filingStream;
+  const f = filingStream;
   const forms = VARIANT[variant];
   const [filter, setFilter] = useState<StatusFilter>("all");
   const { visibleCount, reset, loadMore } = usePaged(50);

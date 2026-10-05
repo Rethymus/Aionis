@@ -36,6 +36,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
+import { filingStream } from "@/data/aionis/filing-stream";
 import { politicianTradesTx } from "@/data/aionis/politician-trades-tx";
 import { formIpo } from "@/data/aionis/form-ipo";
 import { HomeSearch } from "@/components/home-search";
@@ -438,7 +439,7 @@ function StatBand() {
  *  the home module grid (its own <section> wrapper lives in Overview()). */
 function FilingStrip() {
   const { t } = useI18n();
-  const f = aionis.filingStream;
+  const f = filingStream;
   const rows = f.status === "ok" ? f.filings.slice(0, 10) : [];
   if (rows.length === 0) return null;
   return (
