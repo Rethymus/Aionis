@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-05) 轮 196（perf 线）：barrel 减重第五轮——DEF 14A 代理窗（174KB）迁专用模块 + 前缀碰撞教训：**
+  def14a.ts 落地；单消费方 executives-view 重接；契约行转 .ts。**过程教训（tsc 即时拦截）**：裸字符串替换 `aionis.def14a` 前缀碰撞了另一 barrel 成员 `aionis.def14aPersons`（保留成员）——成员迁移的 grep/replace 必须带词边界。**实测**：共享 chunk 891,182→756,864；news 2.01→1.87MB；executives SSR 112 行完好。**五轮累计：共享 chunk 2.70MB→757KB（-72%）；非消费路由 -1.94MB（-51%）**。全量 hermetic EXIT=0/ruff 净（1a1e4c5c1）；17:39 树净，26 分钟余量入 18:05 窗。**边界**：display/perf lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-05) 轮 195（perf 线）：barrel 减重第四轮——Form D 滚动窗（176KB）迁专用模块（限时窗内完成，17:25 树净）：**
   form-d.ts 落地；单消费方 ipo-view 重接；barrel 去运行时导入+类型再导出；契约行转 .ts。**实测**：共享 chunk 1,027,623→891,182；news 2.15→2.01MB；404 首次破 2MB。**四轮累计：共享 chunk 2.70→0.89MB（-67%）；非消费路由 -1.81MB（-47%）**。全量 hermetic EXIT=0/ruff 净（966fadc2f）。**边界**：display/perf lane；0 ledger/0 frozen/0 OOS。
 
