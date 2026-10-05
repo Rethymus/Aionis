@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-05) 轮 188（验证/ci 线）：sitemap↔导出页奇偶守卫——轮 180 lastmod 工作的护栏闭合 + 外部情报扫描：**
+  `web/scripts/sitemap-parity.mjs`：构建后 diff sitemap URL 集 vs out/*.html 集，悬空 URL（爬虫 404）即 CI 红（publish workflow 接线于 build 与 .nojekyll 验证之间；_not-found/index.html 按设计排除——轮 144 canonical fold）。现状 1500/1500 全解析；负路径实证（ghost-route 注入→EXIT 1→重建→绿）。**外部情报**：Next 16.3.8 即 16.3.x 线最新 stable（16.4 仅 canary，无升级面）；线上 api-docs Site resources 卡已确认。**边界**：验证/ci lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-05) 轮 187（验证/守卫 线）：派生面板漂移守卫全仓审计——轮 186 教训的类别化推广，最后一个同类缺口闭合：**
   审计矩阵：58 committed 面板全部有测试名引用✓；同类别风险=派生面板（从其他 committed 文件确定性导出）。逐个核查：knowledge_shelf Layer-3 sha↔磁盘✓已有（test_knowledge_shelf_panel_contract sha 重算循环——轮 182 级联必须重生成 shelf 的原因）；evidence_matrix 镜像✓轮 186 新钉；**api_catalog↔data_health**：键双向奇偶✓已有但 per-endpoint as_of 等值未钉（部分提交→键匹配而水位陈旧=同漂移类）——本轮在 test_api_catalog_shape 补 as_of 等值断言。派生面板守卫矩阵至此完备。邻域 21 测绿+ruff 净。**边界**：验证 lane；0 ledger/0 frozen/0 OOS。
 
