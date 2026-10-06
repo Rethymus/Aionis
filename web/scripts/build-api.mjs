@@ -34,13 +34,81 @@ const health = JSON.parse(await readFile(path.join(SRC, "data_health.json"), "ut
 
 await mkdir(PANELS_OUT, { recursive: true });
 
-// 1. Panel payloads, verbatim.
+// 1. Panel payloads, verbatim (+ CSV twin for tabular panels — round 207).
+//    Static-data-API convention: pre-generate multiple representations at
+//    build time. A panel gets a CSV twin only when it carries a top-level
+//    array of flat objects (dict-of-scalars rows); index/series panels are
+//    HONESTLY skipped and listed in the CSV manifest below, never mangled
+//    into a lossy shape.
 const jsonFiles = (await readdir(SRC)).filter((f) => f.endsWith(".json"));
 let n = 0;
+const csvWritten = [];
+const csvSkipped = [];
 for (const f of jsonFiles) {
   await copyFile(path.join(SRC, f), path.join(PANELS_OUT, f));
   n += 1;
+
+  // Find the panel's natural row list (top-level array, or the first
+  // top-level array-valued field with dict-of-scalar rows).
+  const payload = JSON.parse(await readFile(path.join(SRC, f), "utf8"));
+  let rows = null;
+  let rowsField = null;
+  if (Array.isArray(payload) && payload.length && typeof payload[0] === "object") {
+    rows = payload;
+  } else {
+    for (const [k, v] of Object.entries(payload)) {
+      if (Array.isArray(v) && v.length && typeof v[0] === "object"
+          && !Array.isArray(v[0])) {
+        rows = v;
+        rowsField = k;
+        break;
+      }
+    }
+  }
+  if (!rows) {
+    csvSkipped.push(f.replace(/\.json$/, ""));
+    continue;
+  }
+  // Columns = union of keys across rows, first-seen order; only scalar leafs.
+  const cols = [];
+  const seen = new Set();
+  for (const r of rows) {
+    for (const k of Object.keys(r)) {
+      if (!seen.has(k)) {
+        seen.add(k);
+        cols.push(k);
+      }
+    }
+  }
+  const esc = (v) => {
+    if (v === null || v === undefined) return "";
+    const s = typeof v === "object" ? JSON.stringify(v) : String(v);
+    return /[",\n]/.test(s) ? `"${s.replaceAll('"', '""')}"` : s;
+  };
+  const lines = [cols.join(",")];
+  for (const r of rows) {
+    lines.push(cols.map((c) => esc(r[c])).join(","));
+  }
+  await writeFile(
+    path.join(PANELS_OUT, f.replace(/\.json$/, ".csv")),
+    lines.join("\n") + "\n",
+  );
+  csvWritten.push(`${f.replace(/\.json$/, "")}${rowsField ? `:${rowsField}` : ""}`);
 }
+await writeFile(
+  path.join(OUT, "csv-manifest.json"),
+  JSON.stringify(
+    {
+      note: "CSV twins of tabular panels (top-level row arrays). Panels not " +
+            "listed in 'written' are index/series shapes with no honest row " +
+            "table — consume their JSON instead.",
+      written: csvWritten.sort(),
+      skipped: csvSkipped.sort(),
+    },
+    null,
+    2,
+  ) + "\n",
+);
 
 // 2. Health + catalog at the API root.
 await copyFile(path.join(SRC, "data_health.json"), path.join(OUT, "health.json"));
@@ -133,6 +201,7 @@ const readme = [
   `- health:       ${BASE_PATH}/api/v1/panels/data_health.json`,
   `- openapi:      ${BASE_PATH}/api/v1/openapi.json`,
   `- panel (n=${n}): ${BASE_PATH}/api/v1/panels/<key>.json`,
+  `- panel csv:    ${BASE_PATH}/api/v1/panels/<key>.csv (tabular panels only — see csv-manifest.json)`,
   `- live prices:  ${WORKER_SERVER}/api/prices/{us|cn}?tickers=...`,
   "",
   "Frozen endpoints deliberately do NOT advance (anti-leakage contract);",
