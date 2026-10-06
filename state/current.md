@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-07 00:05，轮 213）（display 线）：昨夜变更视图 v1 落地——反思三最后一个未实施项（2026 what-changed 趋势 × 诚实使命）：**
+  导出包装器（全部导出器必经的 _safe_export）逐面板捕获内容指纹前后对照——**sha256 剔除 snapshot_ts 的规范化 JSON**（仅时间戳刷新≠变更，已实证）+ as_of 前后；export_panel_changes()（main 末位注册）写 panel_changes.json（META 面板形态：逐面板 changed/as_of 迁移+n_changed/n_as_of_advanced 汇总+零变更轮如实记零）。Web：首页 PanelChangesStrip（逐面板 chips、as_of 前进高亮、零变更直陈；i18n 双语；META_BARREL 登记）。**过程**：指纹初版含时间戳→发现每面板永真→剔除重设计；api_catalog 冒烟触发轮 182 同款级联→正典次序补渲染（DoD 教训第二次自动执行）。全量 hermetic EXIT=0/tsc 0/eslint 0/i18n 门对称/strip SSR 验证（e717cd46a）。明晚通道将是首个全量实弹（~50 面板真实 delta）。**边界**：display lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-06 23:50，轮 212）（验证 线）：10-06 15:35 UTC 月度回顾五步验证完成——4 PASS + 1 事实性缺陷旗标（需人审，报告未改动）：**
   **① PASS**：月报 23:35 班次准点产出 `reports/audits/2026-10-06-evening-lane-monthly-review.md`（幂等门控首验）。**② PASS**：逐晚账 22 交易日/18 ok_committed 与轮 204 独立提取对账一致（12+6=18；含 09-20 周日强制补跑计入 interim 窗的口径差异已核对）。**③ 旗标（事实性缺陷）**：报告 §3 用 `--limit 60` 采样——实查（09-07 起全量）：Publish **75 成功/2 失败**（非 60/0；两次红=09-11/09-12 早于采样窗=strict-JSON 门的起源事故，已有结构性修复）；Tests 近百窗的 2 失败实为 **10-05 轮 182 api_catalog 级联**（报告错归因为 09-28 假日期事件）。健康结论本身成立，计数与归因不成立——按"红牌需人审"红线只旗不改。**④ PASS**：线上 56 面板（25 daily/11 cadence/20 frozen）；12 个 daily 非当日 as_of 逐个为已记录源节奏事实（news_feed=今晚 GDELT 缓存批次[轮 211 已根治检测]、politician=PTR 批量节奏、月键面板、诚实 None），披露图与实况一致。**⑤ PASS**：10-01 影子专节与独立记录链精确吻合（一次性丢失→授权补跑→③ fail-closed→ledger 0924ce2b 逐位不动[与轮 170 备份核验互证]→10-31 小时守卫）。**执行边界遵守：仅本 state 提交，报告零改动。****边界**：验证 lane；0 ledger/0 frozen/0 OOS。
 
