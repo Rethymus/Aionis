@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-06 23:50，轮 212）（验证 线）：10-06 15:35 UTC 月度回顾五步验证完成——4 PASS + 1 事实性缺陷旗标（需人审，报告未改动）：**
+  **① PASS**：月报 23:35 班次准点产出 `reports/audits/2026-10-06-evening-lane-monthly-review.md`（幂等门控首验）。**② PASS**：逐晚账 22 交易日/18 ok_committed 与轮 204 独立提取对账一致（12+6=18；含 09-20 周日强制补跑计入 interim 窗的口径差异已核对）。**③ 旗标（事实性缺陷）**：报告 §3 用 `--limit 60` 采样——实查（09-07 起全量）：Publish **75 成功/2 失败**（非 60/0；两次红=09-11/09-12 早于采样窗=strict-JSON 门的起源事故，已有结构性修复）；Tests 近百窗的 2 失败实为 **10-05 轮 182 api_catalog 级联**（报告错归因为 09-28 假日期事件）。健康结论本身成立，计数与归因不成立——按"红牌需人审"红线只旗不改。**④ PASS**：线上 56 面板（25 daily/11 cadence/20 frozen）；12 个 daily 非当日 as_of 逐个为已记录源节奏事实（news_feed=今晚 GDELT 缓存批次[轮 211 已根治检测]、politician=PTR 批量节奏、月键面板、诚实 None），披露图与实况一致。**⑤ PASS**：10-01 影子专节与独立记录链精确吻合（一次性丢失→授权补跑→③ fail-closed→ledger 0924ce2b 逐位不动[与轮 170 备份核验互证]→10-31 小时守卫）。**执行边界遵守：仅本 state 提交，报告零改动。****边界**：验证 lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-06 19:32，轮 210-211）（ops/验证 线）：10-06 通道七查复核 6/7 PASS + 一个真漂移被探针当场抓获并根治：**
   **通道战报**：ok_committed a3f36753e（75 分钟，57 文件，pushed，双 CI 绿，**零软败**）；**三项新接线全部实弹首验**：backup 字段 state 首现 "ok"（轮 197 接线）；persistent_soft_fails 首现 []（轮 208 警报，健康空表）；ticker_metadata 缓存模式第二晚稳定。**七查 6/7**：唯一 FAIL=news_feed as_of 停 10-02——**真漂移**：fetch 机械成功（双车道 "Complete"）+零软败+面板 snapshot_ts=今晚（确实重导出）但 parquet 最新 seendate=10-02T10:00Z。**根因定位**（三仪器）：parquet 本身顶 10-02 → 直查 GDELT 简单查询同分钟新鲜（今日 08:30Z 在墙）→ 结论=**GDELT 对重型多-OR 查询间歇伺服服务端缓存批次**（源侧行为，非我方解析/缓存错）。**根治（轮 211）**：fetch 脚本 merge 后最新 seendate >2 天即 exit 3（STALE-SOURCE 行）→ lane 记软败 → 面板诚实 retain → 验证器 accounted 分支适用——该漂移类从"无记账"转"有记账"，探针语义闭环。辅助单测+契约测试；news 套件 19 绿。**守卫体系实战闭环：探针抓真漂移→根因→根治→同类永不再静默。****边界**：ops/ingest(display) lane；0 ledger/0 frozen/0 OOS。
 
