@@ -1,6 +1,16 @@
 # state/handoff.md — current-pass handoff
 
 
+## 2026-10-06 (轮 195-212) 深夜+全天：性能收官两轮 + 反思三全链 + 双 checkpoint 闭门
+
+- **轮 195/198-201 性能收官**：barrel diet 六轮（2.70MB→570KB，-79%）+ i18n 按语言拆块（185→90KB/路由，en 动态加载）；浏览器三路径实弹验证；性能战役文档双章节正式入册；总账每路由 3.81→~1.59MB（-58%）。守卫：100KB 单块天花板 + 1.2MB 总预算 + i18n 审计门双文件化。
+- **轮 205-209 反思三 + 队列 4/4**：五问报告（reports/design/2026-10-06-deep-reflection-round3.md）→ stock 页 PTR 预聚合（-1.14MB×~1460 页，三态 SSR 验证）、CSV 孪生（47 面板）、persistent_soft_fails 警报（≥3/近 5 晚三达）、barrel 总预算。
+- **轮 210-211 守卫实战闭环**：七查验证器首夜抓获 GDELT 源缓存真漂移（fetch 成功但数据 4 天旧、零软败=无记账）；三仪器根因（parquet 顶 10-02 + 简单查询同分钟新鲜）；根治=STALE-SOURCE exit 3（陈旧即软败→面板诚实 retain→验证器 accounted 分支适用）。
+- **轮 212 月度回顾五步**：4 PASS + §3 采样旗标（Publish 实况 75✓/2✗ 非 60/0；Tests 失败错归因）——红牌需人审，仅提交 state。
+- **10-06 双 checkpoint 闭门**：通道 ok_committed a3f36753e（零软败；backup 字段 state 首现 "ok"、persistent_soft_fails 首现 []）；月报 23:35 班次准点产出。
+- **待业主**：月报 §3 裁定、续期 A-D（报告荐 A）、反思三审阅。
+- 边界：display/perf/ops/验证/docs lane；0 ledger 写/0 frozen/0 OOS。
+
 ## 2026-10-05 (轮 188-194) 奇偶门+apple-icon+通道预检+一键验证器+barrel 减重三轮（全站 -1.66MB/路由）
 
 - **轮 188**：sitemap↔导出页奇偶 CI 门（publish workflow 接线；负路径实证）。Next 16.3.8=最新 stable，无升级面。
