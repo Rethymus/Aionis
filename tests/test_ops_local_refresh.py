@@ -515,3 +515,42 @@ def test_do_run_state_persists_backup_field() -> None:
     )
     for required in ("soft_fails", "ci", "finished_at"):
         assert required in updates, f"state.update lost '{required}'"
+
+
+def test_do_run_state_persists_persistent_soft_fails() -> None:
+    """Round 208 companion to the round-197 AST pin: the persistent-soft-fail
+    alarm must reach BOTH the persisted state and the SUMMARY (the recovery
+    lane fires on hard failures only — a nightly soft-failing step's
+    freshness debt must be visible, not silent)."""
+
+    import ast
+
+    src = Path(lane.__file__).read_text(encoding="utf-8")
+    tree = ast.parse(src)
+    do_run = next(n for n in tree.body if isinstance(n, ast.FunctionDef)
+                  and n.name == "do_run")
+    state_keys: set[str] = set()
+    summary_keys: set[str] = set()
+    for n in ast.walk(do_run):
+        if (isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute)
+                and n.func.attr == "update"
+                and isinstance(n.func.value, ast.Name)
+                and n.func.value.id == "state"):
+            for arg in n.args:
+                if isinstance(arg, ast.Dict):
+                    for k in arg.keys:
+                        if isinstance(k, ast.Constant):
+                            state_keys.add(k.value)
+        if (isinstance(n, ast.Assign) and n.targets
+                and isinstance(n.targets[0], ast.Name)
+                and n.targets[0].id == "summary"):
+            if isinstance(n.value, ast.Dict):
+                for k in n.value.keys:
+                    if isinstance(k, ast.Constant):
+                        summary_keys.add(k.value)
+    assert "persistent_soft_fails" in state_keys, (
+        "state.update lost 'persistent_soft_fails' (round-207 lesson class)"
+    )
+    assert "persistent_soft_fails" in summary_keys, (
+        "SUMMARY lost 'persistent_soft_fails' — the alarm must reach the log"
+    )

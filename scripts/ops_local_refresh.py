@@ -47,6 +47,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import subprocess
 import sys
 import time
@@ -591,6 +592,40 @@ def do_run(force: bool) -> int:
                         raise RuntimeError(
                             f"hard-fail step '{step['name']}': {detail}")
             ledger_note = tidy_ledger(fh)
+            # Persistent soft-fail alarm (round 208, reflection-3 §一.1): the
+            # recovery lane fires on HARD failures only, so a step that soft-
+            # fails night after night (e.g. a source rate-limiting us into
+            # permanent staleness) would otherwise stay silent forever. Scan
+            # the recent run logs: a step soft-failing >= 3 of the last <= 5
+            # logged evenings is PERSISTENT and gets flagged in the SUMMARY —
+            # freshness debt made visible instead of discovered by accident.
+            persistent: list[str] = []
+            try:
+                log_dirs = sorted(
+                    (p for p in (ROOT / "runs/ops_local_refresh").iterdir()
+                     if p.is_dir()),
+                )[-5:]
+                counts: dict[str, int] = {}
+                for d in log_dirs:
+                    lg = d / "run.log"
+                    if not lg.exists():
+                        continue
+                    txt = lg.read_text(encoding="utf-8", errors="ignore")
+                    m = re.search(r"SUMMARY (\{.*\})$", txt, re.M)
+                    if not m:
+                        continue
+                    try:
+                        prev = json.loads(m.group(1))
+                    except json.JSONDecodeError:
+                        continue
+                    for name in prev.get("soft_fails") or []:
+                        counts[name] = counts.get(name, 0) + 1
+                persistent = sorted(n2 for n2, c in counts.items() if c >= 3)
+            except Exception:  # noqa: BLE001 — alarm must never break the lane
+                persistent = []
+            if persistent:
+                log(f"PERSISTENT-SOFT-FAILS (>=3 of last ~5 evenings): "
+                    f"{persistent}", fh)
             status, sha, pushed, n_files = commit_and_push(fh)
             # Audit-chain backup (round 172): after any lane push, snapshot
             # the ledger + full bundle to data/backups/. Non-fatal: a backup
@@ -610,12 +645,14 @@ def do_run(force: bool) -> int:
             state.update({"status": status, "commit": sha, "pushed": pushed,
                           "n_files": n_files, "soft_fails": soft_fails,
                           "ci": ci, "backup": backup_note,
+                          "persistent_soft_fails": persistent,
                           "finished_at": datetime.now().isoformat()})
             save_state(state)
             summary = {
                 "date": today, "status": status, "commit": sha, "pushed": pushed,
                 "n_files": n_files, "soft_fails": soft_fails,
                 "ledger": ledger_note, "ci": ci, "backup": backup_note,
+                "persistent_soft_fails": persistent,
                 "wall_minutes": round((time.time() - t0) / 60, 1),
             }
             log(f"SUMMARY {json.dumps(summary, ensure_ascii=False)}", fh)
