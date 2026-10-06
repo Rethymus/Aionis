@@ -118,6 +118,17 @@ def main() -> int:
         failures += 1
         _fail("news_feed as_of advanced", args.date, f"read error: {e}")
 
+    # Round 208's alarm field (round 210 wiring check): the persistent
+    # soft-fail list must MATERIALIZE in state.json on its first live run
+    # after the wiring (expected [] tonight — no step has soft-failed >=3 of
+    # the last ~5 evenings; a non-empty list is information, not failure).
+    check(
+        "persistent_soft_fails field materialized",
+        isinstance(st.get("persistent_soft_fails"), list),
+        "a list (empty is the healthy expectation)",
+        st.get("persistent_soft_fails"),
+    )
+
     print(f"\n{'ALL CHECKS PASS' if failures == 0 else f'{failures} CHECK(S) FAILED'}")
     return 0 if failures == 0 else 1
 
