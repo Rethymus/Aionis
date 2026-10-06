@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-07 00:35，轮 214-215）（反思四→实施 线）：第四轮反思（对最新面自审）+ 两缺口修复：**
+  **轮 214 报告**（reports/design/2026-10-07-deep-reflection-round4.md）：新外部域（可复现性 2026=每跑三标识符已具；OpenBB 类 alerts 不适配静态站理由入册）+ 对轮 206-213 新增物的未守护点自审。**轮 215 修复**：①retain-skip 导出器入变更注册表（changed=false+skipped 条目——n_tracked 不再少计、保留面板可见）；②catalog site 节增列 changes-registry（API 镜像伺服但未目录化=违反单一元层承诺，已修复）。**过程**：api_catalog 第三次触发 evidence 级联——本轮**主动**在测试前补渲染（DoD 教训第三次执行，零红 CI）。全量 hermetic EXIT=0。backlog 增：恢复道"仅重试软败步骤"策略（owner 可见，影响面大）。**边界**：display/验证 lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-07 00:05，轮 213）（display 线）：昨夜变更视图 v1 落地——反思三最后一个未实施项（2026 what-changed 趋势 × 诚实使命）：**
   导出包装器（全部导出器必经的 _safe_export）逐面板捕获内容指纹前后对照——**sha256 剔除 snapshot_ts 的规范化 JSON**（仅时间戳刷新≠变更，已实证）+ as_of 前后；export_panel_changes()（main 末位注册）写 panel_changes.json（META 面板形态：逐面板 changed/as_of 迁移+n_changed/n_as_of_advanced 汇总+零变更轮如实记零）。Web：首页 PanelChangesStrip（逐面板 chips、as_of 前进高亮、零变更直陈；i18n 双语；META_BARREL 登记）。**过程**：指纹初版含时间戳→发现每面板永真→剔除重设计；api_catalog 冒烟触发轮 182 同款级联→正典次序补渲染（DoD 教训第二次自动执行）。全量 hermetic EXIT=0/tsc 0/eslint 0/i18n 门对称/strip SSR 验证（e717cd46a）。明晚通道将是首个全量实弹（~50 面板真实 delta）。**边界**：display lane；0 ledger/0 frozen/0 OOS。
 
