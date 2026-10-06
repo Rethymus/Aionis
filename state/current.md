@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-06 19:32，轮 210-211）（ops/验证 线）：10-06 通道七查复核 6/7 PASS + 一个真漂移被探针当场抓获并根治：**
+  **通道战报**：ok_committed a3f36753e（75 分钟，57 文件，pushed，双 CI 绿，**零软败**）；**三项新接线全部实弹首验**：backup 字段 state 首现 "ok"（轮 197 接线）；persistent_soft_fails 首现 []（轮 208 警报，健康空表）；ticker_metadata 缓存模式第二晚稳定。**七查 6/7**：唯一 FAIL=news_feed as_of 停 10-02——**真漂移**：fetch 机械成功（双车道 "Complete"）+零软败+面板 snapshot_ts=今晚（确实重导出）但 parquet 最新 seendate=10-02T10:00Z。**根因定位**（三仪器）：parquet 本身顶 10-02 → 直查 GDELT 简单查询同分钟新鲜（今日 08:30Z 在墙）→ 结论=**GDELT 对重型多-OR 查询间歇伺服服务端缓存批次**（源侧行为，非我方解析/缓存错）。**根治（轮 211）**：fetch 脚本 merge 后最新 seendate >2 天即 exit 3（STALE-SOURCE 行）→ lane 记软败 → 面板诚实 retain → 验证器 accounted 分支适用——该漂移类从"无记账"转"有记账"，探针语义闭环。辅助单测+契约测试；news 套件 19 绿。**守卫体系实战闭环：探针抓真漂移→根因→根治→同类永不再静默。****边界**：ops/ingest(display) lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-06 14:15，轮 205-209）（反思三→实施 线）：深度反思第三轮五问 + 实施队列 4/4 全落地：**
   **轮 205 报告**（reports/design/2026-10-06-deep-reflection-round3.md）：外部情报（2026 主趋势=系统主动呈现 what changed；静态数据 API 多表示惯例）×当前态五问。**轮 206（最重单点）**：stock 页 PTR 预聚合——~1460 页每页载入整个 957KB PTR 流客户端过滤 8 行+计数；exporter 按 smart_money_n 既有 join 模式预聚合（politician_n/latest/≤8 行 sample+面板级 politician_year），stock-view 卸载专用模块；**每 stock 页 -1.14MB（4.50→3.36MB）**；三态 SSR 验证（AAPL 37 笔/COIN 7 笔/sh.688041 空注记）。过程：i18n 孤儿门抓住我擅自把空态卡改隐藏（语义复原）；JSX 两处结构滑落 tsc 拦截修复。**轮 207**：面板 CSV 孪生（47 表格型面板 .csv 挨着 .json；11 索引型诚实跳过并列表；form4.csv 200 行对账精确；API 根 README+csv-manifest.json）。**轮 208**：persistent_soft_fails 警报——恢复道只管硬失败，夜夜软败将永远沉默；do_run 扫近 ~5 晚 SUMMARY，≥3 次同步骤软败即 PERSISTENT（log+state+SUMMARY 三达，fail-open）；round-197 AST 钉扩展。**轮 209**：barrel 总预算 1.2MB（当前地板 868KB/44 面板；单项 100KB 天花板防块、总预算防和）。全量 hermetic EXIT=0×5、ruff 净、i18n 门对称。**边界**：display/ops/验证/docs lane；0 ledger/0 frozen/0 OOS。
 
