@@ -27,7 +27,9 @@ Usage::
 """
 from __future__ import annotations
 
+import sys
 from collections import Counter
+from datetime import date, datetime
 
 from aionis.ingest.news_feed import (
     DEFAULT_QUERY,
@@ -35,6 +37,23 @@ from aionis.ingest.news_feed import (
     collect_news_feed,
     count_by_day,
 )
+
+# Round 211: GDELT occasionally serves a server-side CACHED batch for the
+# heavy multi-OR eng query — a mechanically successful fetch whose newest
+# seendate is days old (first live catch: 2026-10-06, newest 10-02 while a
+# simple query served same-minute data). Exit nonzero when the merged feed's
+# newest item is >2 days old so the lane records a SOFT-FAIL: the panel then
+# honestly retains (verifier's accounted branch) instead of silently drifting.
+_STALE_DAYS = 2
+
+
+def _newest_seendate(rows: list[dict]) -> datetime | None:
+    # rows carry the INGEST-normalized ISO form (normalize_seendate)
+    newest = max((r.get("seendate") or "") for r in rows) if rows else ""
+    try:
+        return datetime.strptime(newest, "%Y-%m-%dT%H:%M:%SZ")
+    except ValueError:
+        return None
 
 
 def main() -> None:
@@ -68,6 +87,18 @@ def main() -> None:
             flush=True,
         )
     print("[news-feed] Complete.", flush=True)
+    newest = _newest_seendate(rows)
+    if newest is not None:
+        age_days = (date.today() - newest.date()).days
+        if age_days > _STALE_DAYS:
+            print(
+                f"[news-feed] STALE-SOURCE: fetch completed but the newest "
+                f"seendate is {newest.date()} ({age_days} days old) — GDELT "
+                f"served a cached batch for this query. Exiting nonzero so "
+                f"the lane records a soft-fail (panel retains honestly).",
+                flush=True,
+            )
+            sys.exit(3)
 
 
 if __name__ == "__main__":

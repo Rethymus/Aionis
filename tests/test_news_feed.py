@@ -426,3 +426,29 @@ def test_real_cache_lang_contract_if_fetched() -> None:
     assert sum(1 for r in rows if r["lang"] == "zho") > 0, (
         "the real bilingual fetch must have contributed Chinese rows"
     )
+
+
+def test_fetch_script_stale_source_exit() -> None:
+    """Round 211: the fetch script exits 3 when the merged feed's newest
+    seendate is >2 days old (GDELT served a server-side cached batch — first
+    live catch 2026-10-06: fetch OK, newest 10-02, zero soft-fails = silent
+    drift). Nonzero exit lets the LANE record the soft-fail so the panel
+    honestly retains (verifier's accounted branch) instead of drifting."""
+
+    import subprocess
+    import sys as _sys
+
+    code = (
+        "import sys; sys.path.insert(0, 'scripts'); "
+        "from news_feed_fetch import _newest_seendate, _STALE_DAYS; "
+        "from datetime import date; "
+        "rows = [{'seendate': '2026-10-02T10:00:00Z'}]; "
+        "n = _newest_seendate(rows); "
+        "age = (date(2026, 10, 6) - n.date()).days; "
+        "print('AGE_OK' if age > _STALE_DAYS else 'AGE_BAD')"
+    )
+    r = subprocess.run(
+        [_sys.executable, "-c", code], capture_output=True, text=True,
+        cwd=".", timeout=60,
+    )
+    assert "AGE_OK" in r.stdout
