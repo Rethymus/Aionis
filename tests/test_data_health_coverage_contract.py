@@ -368,6 +368,27 @@ def test_atlas_meta_panels_self_describing() -> None:
     assert cat["status"] == "ok" and cat["snapshot_ts"]
 
 
+def test_barrel_total_weight_budget() -> None:
+    """Round 209 — the per-panel 100KB ceiling guards ONE panel; this budget
+    guards the SUM: ten new 90KB panels would each pass the ceiling while
+    re-fattening the every-route shared chunk by ~900KB. Budget = 1.2MB raw
+    (current floor ~868KB across 44 panels after rounds 192-198's seven
+    migrations; headroom ~330KB for organic small-panel growth). Exceeding it
+    means: migrate a heavy rider to a dedicated module before adding the next
+    panel.
+    """
+
+    import re
+
+    src = (AIONIS_DATA / "index.ts").read_text(encoding="utf-8")
+    files = re.findall(r'^import \w+ from "\./([a-z_0-9]+\.json)";', src, re.M)
+    total = sum((AIONIS_DATA / f).stat().st_size for f in files)
+    assert total <= 1_200_000, (
+        f"barrel total raw JSON {total:,}B over the 1.2MB budget "
+        f"({len(files)} panels) — migrate a heavy rider to a dedicated module"
+    )
+
+
 def test_barrel_Json_import_weight_ceiling() -> None:
     """Round 200 — institutionalize the barrel diet (rounds 192-198).
 
