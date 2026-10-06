@@ -612,6 +612,8 @@ export type ApiCatalogEndpoint = {
 export type PanelChangeEntry = {
   file: string;
   changed: boolean;
+  // Round 214: retain-skipped exporters appear as honest skipped entries.
+  skipped?: boolean;
   as_of_before: string | null;
   as_of_after: string | null;
   sha_before: string | null;

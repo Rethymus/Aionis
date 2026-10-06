@@ -4456,6 +4456,21 @@ def export_api_catalog() -> None:
                     "source": "web/src/app/sitemap.ts over committed panels",
                 },
                 {
+                    "kind": "changes-registry",
+                    "path": "/api/v1/panels/panel_changes.json",
+                    "method": "GET",
+                    "status": "available",
+                    "derivation": (
+                        "Per-panel committed-transition registry captured by "
+                        "the export wrapper each run: content sha (snapshot_ts "
+                        "excluded) and as_of before/after; skipped exporters "
+                        "appear as honest skipped entries (retained, not ran)."
+                    ),
+                    "freshness": "daily",
+                    "license": "Aionis display layer (first-party generated)",
+                    "source": "web/src/data/aionis/panel_changes.json",
+                },
+                {
                     "kind": "atom-feed",
                     "path": "/atom.xml",
                     "method": "GET",
@@ -7683,6 +7698,18 @@ def _safe_export(name: str, fn, /, *args, **kwargs):
             f"JSON retains last-committed value)",
             flush=True,
         )
+        # Round 214: a skipped exporter must still appear in the what-changed
+        # registry (honest absent-entry — the panel was retained, not ran);
+        # otherwise n_tracked undercounts and retained panels are invisible.
+        _EXPORT_DELTAS.append({
+            "file": name,
+            "changed": False,
+            "skipped": True,
+            "as_of_before": before_as_of,
+            "as_of_after": before_as_of,
+            "sha_before": before_sha or None,
+            "sha_after": before_sha or None,
+        })
         return None
     after_sha, after_as_of = _panel_fingerprint(name)
     _EXPORT_DELTAS.append({
