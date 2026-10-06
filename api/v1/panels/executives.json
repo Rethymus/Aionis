@@ -1,13 +1,22 @@
 {
   "status": "ok",
-  "as_of": "2026-10-01",
-  "total": 54,
+  "as_of": "2026-10-05",
+  "total": 55,
   "issuers": 33,
   "window": {
     "start": "2026-05-01",
-    "end": "2026-10-01"
+    "end": "2026-10-05"
   },
   "events": [
+    {
+      "company": "CHEVRON CORP",
+      "ticker": "CVX",
+      "filing_date": "2026-10-05",
+      "items": [
+        "5.02"
+      ],
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000188/cvx-20260930.htm"
+    },
     {
       "company": "INTERNATIONAL BUSINESS MACHINES CORP",
       "ticker": "IBM",
@@ -561,6 +570,7 @@
     "HONEYWELL INTERNATIONAL INC": 3,
     "ADVANCED MICRO DEVICES INC": 2,
     "Alphabet Inc.": 2,
+    "CHEVRON CORP": 2,
     "DEERE & CO": 2,
     "HOME DEPOT, INC.": 2,
     "INTERNATIONAL BUSINESS MACHINES CORP": 2,
@@ -571,7 +581,6 @@
     "Apple Inc.": 1,
     "BERKSHIRE HATHAWAY INC": 1,
     "BOEING CO": 1,
-    "CHEVRON CORP": 1,
     "CISCO SYSTEMS, INC.": 1,
     "COCA COLA CO": 1,
     "EXXON MOBIL CORP": 1,
@@ -588,6 +597,6 @@
     "RTX Corp": 1,
     "TEXAS INSTRUMENTS INC": 1
   },
-  "methodology": "SEC Form 8-K Item 5.02 officer/director-change filings \u2014 DERIVED from the committed form8k panel (category 'officer_changes'; public domain, 17 U.S.C. \u00a7105, filed-date PIT). v1 is FILING-STREAM level: one row per 8-K accession with the company, filing date, full item list and EDGAR primary-document link. Person-level extraction (who, which role, appointed vs departed) is DEFERRED: parsing names from 8-K free text is unreliable and an honest omission beats a guessed name \u2014 the same v1 boundary as the /congress PTR panel. Inherits the /events panel's bounded 50-issuer universe and its 2026-05-01..2026-10-01 window. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-10-05T11:02:37.816965+00:00"
+  "methodology": "SEC Form 8-K Item 5.02 officer/director-change filings \u2014 DERIVED from the committed form8k panel (category 'officer_changes'; public domain, 17 U.S.C. \u00a7105, filed-date PIT). v1 is FILING-STREAM level: one row per 8-K accession with the company, filing date, full item list and EDGAR primary-document link. Person-level extraction (who, which role, appointed vs departed) is DEFERRED: parsing names from 8-K free text is unreliable and an honest omission beats a guessed name \u2014 the same v1 boundary as the /congress PTR panel. Inherits the /events panel's bounded 50-issuer universe and its 2026-05-01..2026-10-05 window. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
+  "snapshot_ts": "2026-10-06T11:15:02.774378+00:00"
 }

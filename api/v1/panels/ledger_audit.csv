@@ -1,0 +1,29 @@
+row,ts,event,phase,config_sig_short,verdict,metric,h6,frozen_before_result
+20,2026-07-27,phase_b_freeze,B,,,,,false
+27,2026-07-28,config_committed,B,17245a75,,,,true
+28,2026-07-28,confirmatory:first,B,17245a75,,,true,false
+29,2026-07-28,config_committed,C,a7fdb48f,,,,true
+30,2026-07-28,confirmatory:first,C,a7fdb48f,,,true,false
+31,2026-07-28,exploratory,strategy_return,,,,,false
+32,2026-07-28,exploratory,strategy_return,,,,,false
+33,2026-07-29,config_committed,D,d3158063,,,,true
+34,2026-07-29,confirmatory:first,D,d3158063,,,true,false
+35,2026-07-29,config_committed,E1,ef321e9e,,,,true
+36,2026-07-29,exploratory,sensitivity_horizon,,,,,false
+37,2026-07-29,confirmatory:first,E1,ef321e9e,,,true,false
+38,2026-07-29,exploratory,strategy_return,,,,,false
+39,2026-07-30,exploratory,sensitivity_horizon,,,,,false
+40,2026-08-02,config_committed,track_b,7a13579e,,,,true
+41,2026-08-02,config_committed,track_b,bf620bdf,,,,true
+42,2026-08-02,config_committed,track_b,9af9e8b6,,,,true
+43,2026-08-03,config_committed,baseline_ff5,0b0b9934,,,,true
+44,2026-08-03,config_committed,baseline_rank,43ff0e15,,,,true
+45,2026-08-03,config_committed,baseline_rank,22817980,,,,true
+46,2026-08-03,config_committed,track_c,758ca4d7,,,,true
+47,2026-08-03,config_committed,track_c,252cf7df,,,,true
+48,2026-08-05,config_committed,track_c,e14b9d44,,,,true
+49,2026-08-05,confirmatory:first,track_c,e14b9d44,NOT_EQUIVALENT,combined_IC=-0.0088 (p=0.484),true,false
+51,2026-08-08,config_committed,track_adaptive,892fb506,,,,true
+52,2026-08-08,config_committed,track_adaptive,ffd0c922,,,,true
+53,2026-08-08,config_committed,track_adaptive,b7621e6b,,,,true
+54,2026-08-09,oos_result,track_adaptive,b7621e6b,"NULL (IC_diff -0.0037, p=0.26, CI crosses zero; adaptive weekly refit slightly WORSE than truly-frozen, not better; expected null per power floor + GKX update-f",IC_diff=-0.0037 (p=0.2563),,false

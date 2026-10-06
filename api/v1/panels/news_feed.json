@@ -2,30 +2,14 @@
   "status": "ok",
   "as_of": "2026-10-02T10:00:00Z",
   "window": {
-    "start": "2026-09-02",
+    "start": "2026-09-06",
     "end": "2026-10-02"
   },
   "query": "(\"stock market\" OR \"S&P 500\" OR \"Federal Reserve\") sourcelang:eng | sourcelang:zho domainis:wallstreetcn.com",
-  "total": 2797,
-  "n_sources": 611,
-  "n_zho": 466,
+  "total": 2486,
+  "n_sources": 581,
+  "n_zho": 355,
   "by_day": [
-    {
-      "date": "2026-09-02",
-      "count": 41
-    },
-    {
-      "date": "2026-09-03",
-      "count": 43
-    },
-    {
-      "date": "2026-09-04",
-      "count": 247
-    },
-    {
-      "date": "2026-09-05",
-      "count": 17
-    },
     {
       "date": "2026-09-06",
       "count": 213
@@ -92,15 +76,19 @@
     },
     {
       "date": "2026-09-29",
-      "count": 25
+      "count": 30
+    },
+    {
+      "date": "2026-09-30",
+      "count": 7
     },
     {
       "date": "2026-10-01",
-      "count": 200
+      "count": 224
     },
     {
       "date": "2026-10-02",
-      "count": 200
+      "count": 201
     }
   ],
   "items": [
@@ -1149,6 +1137,15 @@
       "sourcecountry": "United States"
     },
     {
+      "seendate": "2026-10-02T07:15:00Z",
+      "title": "\u7389\u6e0a\u8c2d\u5929 \uff1a \u4e2d\u7f8e11\u6708\u4eba\u5de5\u667a\u80fd\u5bf9\u8bdd\u8c08\u4ec0\u4e48",
+      "url": "https://wallstreetcn.com/articles/3782918",
+      "domain": "wallstreetcn.com",
+      "language": "Chinese",
+      "lang": "zho",
+      "sourcecountry": "China"
+    },
+    {
       "seendate": "2026-10-02T07:00:00Z",
       "title": "Ted Baker returns to united kingdom high street after administration",
       "url": "https://www.brentwoodlive.co.uk/news/national/uk-today/26600604.ted-baker-returns-uk-high-street-administration/",
@@ -1444,17 +1441,8 @@
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-02T06:00:00Z",
-      "title": "Trump Touts Economy In Texas | PowerTalk 1360 KFIV",
-      "url": "https://powertalk1360.iheart.com/content/2026-10-02-trump-touts-economy-in-texas/",
-      "domain": "powertalk1360.iheart.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
     }
   ],
   "methodology": "GDELT Doc 2.0 artlist \u2014 a machine index of worldwide news. TWO bounded requests per refresh (one per LANGUAGE LANE, the two fixed queries above, <=200 records each, >=15s host spacing; GDELT open data: URL/title/date/domain are facts, article copyright stays with the publishers), sort=datedesc (machine ordering, not editorial). The Chinese lane is domain-anchored on wallstreetcn.com (\u534e\u5c14\u8857\u89c1\u95fb \u2014 a \u8d22\u8054\u793e-style 7\u00d724 financial newswire): \u8d22\u8054\u793e itself has ZERO GDELT crawl coverage and CJK phrase queries are rejected by the API ('phrase too short'), so a domain seed is the only proven form (probe evidence in docs/data-intake-gdelt-news-feed.md). lang = the ingest-resolved lane (API language field first, request provenance fallback; never guessed from title bytes). seendate is GDELT's first-seen UTC stamp (15-min resolution) \u2014 the display freshness anchor. Rows are metadata + outbound links only: no article text is stored, summarized or fabricated; missing source fields are shown empty, never guessed. Dedup key = exact URL WITHIN a lane; the two languages are different articles and are never collapsed across lanes. Coverage = whatever GDELT's crawl saw; gaps are gaps. The payload caps the item list at 150 newest while by_day/total cover the full trailing 30-day cache window. Display-only, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-10-05T11:02:16.521712+00:00"
+  "snapshot_ts": "2026-10-06T11:14:52.169094+00:00"
 }
