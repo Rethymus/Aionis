@@ -6,7 +6,7 @@ Static JSON contract served straight from GitHub Pages — read-only, no auth, n
 - catalog:      /Aionis/api/v1/catalog.json
 - health:       /Aionis/api/v1/panels/data_health.json
 - openapi:      /Aionis/api/v1/openapi.json
-- panel (n=58): /Aionis/api/v1/panels/<key>.json
+- panel (n=59): /Aionis/api/v1/panels/<key>.json
 - panel csv:    /Aionis/api/v1/panels/<key>.csv (tabular panels only — see csv-manifest.json)
 - live prices:  https://api.aionis-prices.workers.dev/api/prices/{us|cn}?tickers=...
 
