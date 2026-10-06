@@ -4561,6 +4561,17 @@ def export_stock_universe() -> None:
     rd_by_ticker: dict[str, dict] = {}
     for rk in rd.get("picks", []):
         rd_by_ticker[rk["ticker"]] = rk
+    # Round 205: PTR corroboration pre-aggregation — the stock pages were
+    # loading the ENTIRE ~1MB politician_trades_tx stream client-side to show
+    # 8 rows + a count. Join per-ticker aggregates here instead (same
+    # committed-panel join pattern as smart_money/form4 above), so the stock
+    # chunk can drop the dedicated PTR module entirely.
+    ptx = _dh_read("politician_trades_tx.json") or {}
+    ptx_by_ticker: dict[str, list[dict]] = {}
+    for f in ptx.get("transactions", []):
+        t = f.get("ticker")
+        if t:
+            ptx_by_ticker.setdefault(t, []).append(f)
 
     meta_idx = {}
     if not meta.empty:
@@ -4599,6 +4610,7 @@ def export_stock_universe() -> None:
             sm_hits = sm_by_ticker.get(t, [])
             f4_hits = f4_by_ticker.get(t, [])
             rd_hit = rd_by_ticker.get(t)
+            ptx_hits = ptx_by_ticker.get(t, [])
             prev = prev_rank.get(t)
             stocks.append({
                 "ticker": t,
@@ -4619,6 +4631,24 @@ def export_stock_universe() -> None:
                 "form4_n": len(f4_hits) or None,
                 "form4_latest": f4_hits[0]["date"] if f4_hits else None,
                 "reddit_mentions": int(rd_hit["mentions"]) if rd_hit else None,
+                "politician_n": len(ptx_hits) or None,
+                "politician_latest": (
+                    ptx_hits[0].get("transaction_date") if ptx_hits else None
+                ),
+                # Newest-first sample (≤8) with exactly the fields the stock
+                # card renders — the full stream stays on /congress.
+                "politician_sample": [
+                    {
+                        "member": f.get("member"),
+                        "party": f.get("party"),
+                        "direction": f.get("direction"),
+                        "amount_range": f.get("amount_range"),
+                        "transaction_date": f.get("transaction_date"),
+                        "days_late": f.get("days_late"),
+                        "doc_url": f.get("doc_url"),
+                    }
+                    for f in ptx_hits[:8]
+                ] or None,
             })
     stocks.sort(key=lambda s: (s["region"], -s["score"]))
     if not stocks:
@@ -4635,6 +4665,9 @@ def export_stock_universe() -> None:
         "as_of": {r: pd.Timestamp(d).strftime("%Y-%m-%d") for r, d in region_latest.items()},
         "n_stocks": len(stocks),
         "months": month_grid,
+        # PTR panel year the corroboration sample derives from (round 205) —
+        # carried here so stock pages never load the PTR stream for one int.
+        "politician_year": ptx.get("year") if ptx.get("status") == "ok" else None,
         "stocks": stocks,
         "methodology": (
             "Per-stock view assembled from the frozen confirmatory OOS scores "
@@ -4646,7 +4679,9 @@ def export_stock_universe() -> None:
             "−0.0088), so probabilities cluster near the base rate. The "
             "trailing series is the model's own monthly cross-sectional score "
             "for this ticker. Corroboration counts join the smart-money (13D), "
-            "insider (Form 4) and retail (Reddit) panels by ticker. This panel "
+            "insider (Form 4), retail (Reddit) and politician-PTR panels by "
+            "ticker (PTR as a ≤8-row newest sample + count, round 205 — the "
+            "full stream stays on /congress). This panel "
             "must NOT be recomputed from newer data (rerun-to-significance): it "
             "advances only with a new frozen phase or E3 forward-live."
         ),

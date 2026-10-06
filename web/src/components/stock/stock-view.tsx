@@ -16,7 +16,6 @@ import { SectorPeers } from "@/components/stock/sector-peers";
 import { CopyProvenance } from "@/components/ui/copy-provenance";
 import { useI18n } from "@/i18n/provider";
 import { aionis } from "@/data/aionis";
-import { politicianTradesTx } from "@/data/aionis/politician-trades-tx";
 import { form13f } from "@/data/aionis/form13f";
 import { stockUniverse, type StockRow } from "@/data/aionis/stock-universe";
 import { ProvenanceBadge } from "@/components/provenance-badge";
@@ -237,21 +236,21 @@ function InstitutionalHolders({ ticker }: { ticker: string }) {
 /** 国会议员交易（STOCK Act PTR 反查，与机构持有者卡同型——参照站 /stock 同位
  *  模块的政客侧）。2026 众议院 PTR PDF 逐笔解析面板按 ticker 反查，近 8 笔 +
  *  "全部 → /congress" 出口；金额为法定披露区间（非精确值）；⚠ = 迟报超 45 天。 */
-function PoliticianTradesCard({ ticker }: { ticker: string }) {
+function PoliticianTradesCard({
+  ticker,
+  n,
+  year,
+  rows,
+}: {
+  ticker: string;
+  n: number | null;
+  year: number | null;
+  rows: NonNullable<import("../../data/aionis/stock-universe").StockRow["politician_sample"]>;
+}) {
   const { t } = useI18n();
-  const f = politicianTradesTx;
-  const rows = useMemo(() => {
-    if (f.status !== "ok") return [];
-    return f.transactions.filter((r) => r.ticker === ticker).slice(0, 8);
-  }, [f, ticker]);
-  const total = useMemo(
-    () =>
-      f.status === "ok"
-        ? f.transactions.reduce((n, r) => n + (r.ticker === ticker ? 1 : 0), 0)
-        : 0,
-    [f, ticker],
-  );
-  if (f.status !== "ok") return null;
+  // Round 205: pre-aggregated by the exporter (politician_n/sample on the
+  // row) — the stock chunk no longer loads the ~1MB PTR stream client-side.
+  const total = n ?? 0;
 
   return (
     <Card className="py-0 md:col-span-2">
@@ -259,7 +258,7 @@ function PoliticianTradesCard({ ticker }: { ticker: string }) {
         <CardTitle className="flex flex-wrap items-center gap-2 text-base">
           {t("stock.politician")}
           <span className="font-mono text-xs font-normal text-muted-foreground tabular-nums">
-            {total > 0 ? `${total} · ${f.year}` : ""}
+            {total > 0 && year ? `${total} · ${year}` : ""}
           </span>
         </CardTitle>
         <CardDescription>
@@ -280,7 +279,7 @@ function PoliticianTradesCard({ ticker }: { ticker: string }) {
             {t("stock.politician.empty")}
           </p>
         ) : (
-          <div className="divide-y">
+        <div className="divide-y">
             {rows.map((r, i) => (
               <div
                 key={`${r.doc_url}-${r.transaction_date}-${i}`}
@@ -325,7 +324,7 @@ function PoliticianTradesCard({ ticker }: { ticker: string }) {
                 </span>
               </div>
             ))}
-          </div>
+        </div>
         )}
       </CardContent>
     </Card>
@@ -588,7 +587,12 @@ export function StockView({ ticker }: { ticker: string }) {
             <InstitutionalHolders ticker={stock.ticker} />
           </div>
           <div id="stock-politicians" className="scroll-mt-24">
-            <PoliticianTradesCard ticker={stock.ticker} />
+            <PoliticianTradesCard
+              ticker={stock.ticker}
+              n={stock.politician_n}
+              year={stockUniverse.politician_year ?? null}
+              rows={stock.politician_sample ?? []}
+            />
           </div>
           <TickerSwitcher current={stock.ticker} />
         </div>

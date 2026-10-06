@@ -26,6 +26,20 @@ export type StockRow = {
   form4_n: number | null;
   form4_latest: string | null;
   reddit_mentions: number | null;
+  // Round 205: pre-aggregated PTR corroboration — count + latest + a newest
+  // ≤8-row sample with exactly the card-rendered fields (the full stream
+  // stays on /congress; stock pages no longer load the ~1MB dedicated module).
+  politician_n: number | null;
+  politician_latest: string | null;
+  politician_sample: {
+    member: string;
+    party: string | null;
+    direction: "buy" | "sell_partial" | "sell_full";
+    amount_range: string;
+    transaction_date: string;
+    days_late: number | null;
+    doc_url: string;
+  }[] | null;
 };
 
 export type StockUniverse = {
@@ -33,6 +47,8 @@ export type StockUniverse = {
   as_of: { [region: string]: string };
   n_stocks: number;
   months: string[];
+  // PTR panel year the corroboration sample derives from (round 205).
+  politician_year: number | null;
   stocks: StockRow[];
   methodology: string;
   snapshot_ts?: string;
