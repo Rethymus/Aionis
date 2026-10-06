@@ -43,6 +43,7 @@ import modelCardJson from "./model_card.json";
 import modelInventoryJson from "./model_inventory.json";
 import dataHealthJson from "./data_health.json";
 import apiCatalogJson from "./api_catalog.json";
+import panelChangesJson from "./panel_changes.json";
 import form8kJson from "./form8k.json";
 import partyIndexJson from "./party_index.json";
 import arkJson from "./ark.json";
@@ -604,6 +605,28 @@ export type ApiCatalogEndpoint = {
   as_of: string | null;
   license: string;
   source: string;
+};
+
+// Round 213: the what-changed registry (panel_changes.json, META panel —
+// registry-class like data_health, deliberately no data_health row).
+export type PanelChangeEntry = {
+  file: string;
+  changed: boolean;
+  as_of_before: string | null;
+  as_of_after: string | null;
+  sha_before: string | null;
+  sha_after: string | null;
+};
+
+export type PanelChanges = {
+  status: string;
+  as_of: string;
+  n_tracked: number;
+  n_changed: number;
+  n_as_of_advanced: number;
+  changes: PanelChangeEntry[];
+  methodology: string;
+  snapshot_ts?: string;
 };
 
 export type ApiCatalogSiteResource = {
@@ -1418,6 +1441,7 @@ export const aionis = {
   modelInventory: modelInventoryJson as ModelInventory,
   dataHealth: dataHealthJson as DataHealth,
   apiCatalog: apiCatalogJson as ApiCatalog,
+  panelChanges: panelChangesJson as PanelChanges,
   form8k: form8kJson as Form8k,
   partyIndex: partyIndexJson as PartyIndex,
   ark: arkJson as Ark,

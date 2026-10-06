@@ -126,6 +126,7 @@ EXPECTED_PANELS: dict[str, tuple[str, str, str]] = {
 # deliberately NOT rows in data_health.panels (a manifest row for the manifest
 # inside the manifest would be self-referential).
 META_BARREL: dict[str, str] = {
+    "panelChanges": "panel_changes.json",
     "dataHealth": "data_health.json",
     "apiCatalog": "api_catalog.json",
 }

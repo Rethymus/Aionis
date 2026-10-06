@@ -1,0 +1,19 @@
+{
+  "status": "ok",
+  "as_of": "2026-10-06",
+  "n_tracked": 1,
+  "n_changed": 0,
+  "n_as_of_advanced": 0,
+  "changes": [
+    {
+      "file": "api_catalog",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    }
+  ],
+  "methodology": "Per-panel committed-transition registry captured by the export wrapper (sha256[:12] + as_of before/after each exporter run). changed=false means byte-identical this run (honest no-op). Display-only view over git history; the audit trail of record is runs/ + the repository itself.",
+  "snapshot_ts": "2026-10-06T15:50:59.108762+00:00"
+}

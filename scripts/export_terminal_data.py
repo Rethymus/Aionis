@@ -7634,6 +7634,34 @@ def export_knowledge_shelf() -> None:
     )
 
 
+# Round 213: per-panel OLD->NEW capture for the "what changed last night"
+# view. Every exporter funnels through _safe_export — the wrapper snapshots
+# the committed panel's (sha, as_of) before the run and the new one after,
+# so the delta strip reflects the REAL committed transition, never a guess.
+_EXPORT_DELTAS: list[dict] = []
+
+
+def _panel_fingerprint(name: str) -> tuple[str, str | None]:
+    """Content fingerprint EXCLUDING snapshot_ts (every _stamp call refreshes
+    it, so raw-byte comparison would mark every panel "changed" every run —
+    meaningless). Hash the canonical re-serialization with snapshot_ts
+    dropped; as_of still reported separately (it IS the freshness signal)."""
+    fp = WEB / name
+    if not fp.exists():
+        return ("", None)
+    raw = fp.read_bytes()
+    try:
+        payload = json.loads(raw)
+        as_of = payload.get("as_of")
+        payload.pop("snapshot_ts", None)
+        content = json.dumps(payload, sort_keys=True, ensure_ascii=False)
+        sha = hashlib.sha256(content.encode("utf-8")).hexdigest()[:12]
+        return (sha, str(as_of) if as_of is not None else None)
+    except Exception:
+        sha = hashlib.sha256(raw).hexdigest()[:12]
+        return (sha, None)
+
+
 def _safe_export(name: str, fn, /, *args, **kwargs):
     """Best-effort guard for the daily CI refresh.
 
@@ -7645,8 +7673,9 @@ def _safe_export(name: str, fn, /, *args, **kwargs):
     at its last committed value. Only ``FileNotFoundError`` is swallowed, so
     genuine bugs still surface. Returns the wrapped call's value, or ``None``.
     """
+    before_sha, before_as_of = _panel_fingerprint(name)
     try:
-        return fn(*args, **kwargs)
+        out = fn(*args, **kwargs)
     except FileNotFoundError as e:
         print(
             f"[export-terminal] SKIP {name}: {e.filename or e} not present "
@@ -7655,6 +7684,58 @@ def _safe_export(name: str, fn, /, *args, **kwargs):
             flush=True,
         )
         return None
+    after_sha, after_as_of = _panel_fingerprint(name)
+    _EXPORT_DELTAS.append({
+        "file": name,
+        "changed": before_sha != after_sha,
+        "as_of_before": before_as_of,
+        "as_of_after": after_as_of,
+        "sha_before": before_sha or None,
+        "sha_after": after_sha or None,
+    })
+    return out
+
+
+def export_panel_changes() -> None:
+    """Round 213 — the "what changed last night" registry (display-only).
+
+    Persists the per-panel OLD->NEW transitions captured by _safe_export
+    during this run: which panels changed, as_of before/after, short shas.
+    Written AFTER every exporter (registered last in main()); regenerated
+    wholesale each run (idempotent — a re-run with unchanged panels records
+    changed=false everywhere, honestly). Consumers render the delta strip;
+    the ledger-of-record stays runs/ + git history — this is the human view.
+    """
+    if not _EXPORT_DELTAS:
+        _skip_retain("panel_changes", "no exporter ran (fresh checkout?)")
+        return
+    changed = [d for d in _EXPORT_DELTAS if d["changed"]]
+    advanced = [
+        d for d in changed if d["as_of_after"] and d["as_of_after"] != d["as_of_before"]
+    ]
+    payload = {
+        "status": "ok",
+        "as_of": datetime.now().date().isoformat(),
+        "n_tracked": len(_EXPORT_DELTAS),
+        "n_changed": len(changed),
+        "n_as_of_advanced": len(advanced),
+        "changes": _EXPORT_DELTAS,
+        "methodology": (
+            "Per-panel committed-transition registry captured by the export "
+            "wrapper (sha256[:12] + as_of before/after each exporter run). "
+            "changed=false means byte-identical this run (honest no-op). "
+            "Display-only view over git history; the audit trail of record "
+            "is runs/ + the repository itself."
+        ),
+    }
+    (WEB / "panel_changes.json").write_text(
+        json.dumps(_stamp(payload), indent=2, allow_nan=False)
+    )
+    print(
+        f"[export-terminal] panel_changes: {len(changed)}/{len(_EXPORT_DELTAS)} "
+        f"panels changed this run ({len(advanced)} as_of advanced)",
+        flush=True,
+    )
 
 
 def main() -> None:
@@ -7767,6 +7848,10 @@ def main() -> None:
     _safe_export("data_health", export_data_health)
     # API catalog reads data_health — run after it.
     _safe_export("api_catalog", export_api_catalog)
+    # Round 213: the what-changed registry LAST (it summarizes this run's
+    # captured deltas; running it through _safe_export too would make the
+    # file its own last entry — call directly instead).
+    export_panel_changes()
     written = sorted(p.name for p in WEB.glob("*.json"))
     print(f"[export-terminal] wrote {len(written)} files to {WEB}/: {written}", flush=True)
 

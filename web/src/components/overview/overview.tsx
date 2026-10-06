@@ -54,6 +54,7 @@ import { ResearchGlance } from "./research-glance";
 import { ProvenanceAnchor } from "./provenance-anchor";
 import { TrustRibbon } from "./trust-ribbon";
 import { WatchlistStrip } from "./watchlist-strip";
+import { PanelChangesStrip } from "@/components/overview/panel-changes-strip";
 
 // Paradigm α — the Overview IS the validity-argument chain, not a collage with
 // a chain buried at the bottom. The composition leads with the verdict (the
@@ -1166,6 +1167,7 @@ export function Overview() {
       <Hero />
       <MarketCards />
       <WatchlistStrip />
+      <PanelChangesStrip />
       <DataCockpit />
       {/* Directory-lane module rows (deployed-terminal parity): the three
           stream cards, then institutions (star managers + ARK resonance),
