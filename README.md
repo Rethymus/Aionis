@@ -204,7 +204,9 @@ flowchart LR
 - **裁决榜与证明链**：`/verdicts` 一页尽览全部预注册主张（共享零线 CI 可视化——
   所有区间跨零一眼即见，CONFIRMATORY 行高亮）；`/proof` 把"冻结先于结果"做成
   四环链（预注册文档 → config_committed 账本行 → 冻结结果目录 → 裁决），并附
-  任何人可复跑的自行验证命令。
+  任何人可复跑的自行验证命令（CLI 孪生：`scripts/verify_claim.py`）；
+  `/claims/[claim]` 每主张一张可引用卡，`/cite` 提供项目与逐主张 BibTeX——
+  引用一个紧 CI 的 null 与引用阳性发现同样正当。
 - **个人化与发现**：Watchlist 星标（⌘K 面板直达 + 首页实时价条带 + 排名变动徽标）、
   同板块 peers、Top-Pick 徽标、逐股引用导出（含账本溯源链接）；首页"昨夜变更"条
   逐面板公示夜更通道的真实 delta。

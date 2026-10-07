@@ -30,7 +30,7 @@ Every page carries a **SegmentHeader** breadcrumb (its place on the chain) and a
 **provenance chip** (as-of date). The chain is the spine; around it the terminal
 has grown a PIT data directory and filing/event streams that feed corroboration.
 
-## Routes (40 under `(dashboard)/`, plus `/` — since round 116 the root renders the same overview as `/dashboard` with a canonical pointing there; no redirect)
+## Routes (42 under `(dashboard)/`, plus `/` — since round 116 the root renders the same overview as `/dashboard` with a canonical pointing there; no redirect)
 
 ### 研究链 · Argument chain
 
@@ -90,6 +90,8 @@ has grown a PIT data directory and filing/event streams that feed corroboration.
 | `/discipline` | Guard — anti-leakage discipline (why the argument is trustworthy) |
 | `/verdicts` | Verdict Board — every pre-registered claim on one board: estimate, shared-zero-line 95% CI, verdict badge, ledger traceability |
 | `/proof` | Pre-registration proof chain — prereg doc → config_committed ledger row → frozen results dir → verdict, with self-verification commands |
+| `/claims/[claim]` | Claim Browser — one citable card per pre-registered claim (verdict banner, chain summary, one-command verify, per-claim BibTeX) |
+| `/cite` | Cite this null — project citation (CITATION.cff mirror) + per-claim BibTeX entries + the honest publications table |
 | `/themes` | The argument-chain diagram (ECD warrants) + factor coverage map |
 
 `/track` and `/confirmation` are tabbed hubs that embed the standalone views, so
@@ -113,7 +115,7 @@ tested/exploratory/gaps, anchored to frozen ledger rows).
 
 ```
 web/src/
-  app/(dashboard)/{route}/page.tsx — thin route shells (40 routes)
+  app/(dashboard)/{route}/page.tsx — thin route shells (42 routes)
   components/
     overview/   — Overview, provenance anchor, research glance, trust ribbon
     ai/         — attribution-card (why-null), coverage-map (display-only)

@@ -30,6 +30,7 @@ const ROUTE_PANEL: Record<string, string | null> = {
   positioning: "cot", atlas: "atlas_claims", calibration: "calibration_reliability",
   discipline: "ledger_audit", evidence: "evidence", power_floor: "power_floor", verdicts: "evidence",
   proof: "evidence_matrix",
+  cite: "evidence_matrix",
   shelf: "knowledge_shelf", taco: "taco", regime: "cot",
 };
 const _panelByKey = new Map(dataHealth.panels.map((p) => [p.key, p]));
@@ -91,6 +92,7 @@ const WEEKLY_ROUTES = [
   "track",
   "verdicts",
   "proof",
+  "cite",
   "api-docs",
 ] as const;
 
@@ -128,5 +130,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: _lastMod("institutions"),
     });
   }
+  // Per-claim citable cards (mirror of /claims/[claim] generateStaticParams).
+  for (const c of ["B", "C", "D", "E1", "track_c"]) {
+    entries.push({
+      url: `${BASE}/claims/${c}.html`,
+      changeFrequency: "weekly",
+      priority: 0.5,
+      lastModified: _lastMod("evidence_matrix"),
+    });
+  }
+
   return entries;
 }

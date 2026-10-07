@@ -233,7 +233,10 @@ flowchart LR
   on one board (shared-zero-line CI visualization — all intervals crossing zero
   at a glance, CONFIRMATORY row highlighted); `/proof` turns "freeze precedes
   result" into a four-link chain (prereg doc → config_committed ledger row →
-  frozen results dir → verdict) with self-verification commands anyone can rerun.
+  frozen results dir → verdict) with self-verification commands anyone can rerun
+  (CLI twin: `scripts/verify_claim.py`); `/claims/[claim]` gives each claim a
+  citable card and `/cite` serves project- and per-claim BibTeX — citing a
+  tight-CI null is as legitimate as citing a positive.
 - **Personalization & discovery**: Watchlist stars (⌘K palette access + live
   price strip on the landing page + rank-change badges), same-sector peers,
   Top-Pick badges, per-stock citation export (with ledger-provenance links);
