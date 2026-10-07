@@ -29,6 +29,7 @@ const ROUTE_PANEL: Record<string, string | null> = {
   executives: "def14a_persons", filers: "filers13f", institutions: "form13f",
   positioning: "cot", atlas: "atlas_claims", calibration: "calibration_reliability",
   discipline: "ledger_audit", evidence: "evidence", power_floor: "power_floor", verdicts: "evidence",
+  proof: "evidence_matrix",
   shelf: "knowledge_shelf", taco: "taco", regime: "cot",
 };
 const _panelByKey = new Map(dataHealth.panels.map((p) => [p.key, p]));
@@ -89,6 +90,7 @@ const WEEKLY_ROUTES = [
   "taco",
   "track",
   "verdicts",
+  "proof",
   "api-docs",
 ] as const;
 

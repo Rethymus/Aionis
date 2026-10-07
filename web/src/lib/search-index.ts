@@ -24,6 +24,7 @@ export const SEARCH_PAGES: SearchPageItem[] = [
   { labelKey: "nav.atlas", href: "/atlas" },
   { labelKey: "nav.group.discipline", href: "/discipline" },
   { labelKey: "nav.verdicts", href: "/verdicts" },
+  { labelKey: "nav.proof", href: "/proof" },
   { labelKey: "nav.datahealth", href: "/data-health" },
   { labelKey: "nav.group.themes", href: "/themes" },
   { labelKey: "nav.market", href: "/market" },

@@ -41,7 +41,7 @@ Aionis 回答的问题形如："特征集 X 相比纯基本面基线，是否带
 
 <p align="center">
   <img src="assets/screenshots/terminal-tour.gif" alt="Aionis 研究终端漫游：效度论证链入口 → 市场全景 → 美中热力图 → 数据图集 → 校准 → 数据健康 → 证据矩阵" width="880">
-  <br><sub><b>研究终端漫游</b> · 38 个路由的公开面孔——每页声明自己在效度论证链上的位置，每个数字携带出处（as-of 水位）</sub>
+  <br><sub><b>研究终端漫游</b> · 40 个路由的公开面孔——每页声明自己在效度论证链上的位置，每个数字携带出处（as-of 水位）</sub>
 </p>
 
 <a id="results"></a>
@@ -196,6 +196,10 @@ flowchart LR
   CSV 孪生，`csv-manifest.json` 如实列明跳过者）；OpenAPI 3.1 文档 + 逐端点
   license/溯源/新鲜度元数据（`/api-docs`）；sitemap.xml 全量 lastModified 溯源 +
   `/news` Atom 订阅。
+- **裁决榜与证明链**：`/verdicts` 一页尽览全部预注册主张（共享零线 CI 可视化——
+  所有区间跨零一眼即见，CONFIRMATORY 行高亮）；`/proof` 把"冻结先于结果"做成
+  四环链（预注册文档 → config_committed 账本行 → 冻结结果目录 → 裁决），并附
+  任何人可复跑的自行验证命令。
 - **个人化与发现**：Watchlist 星标（⌘K 面板直达 + 首页实时价条带 + 排名变动徽标）、
   同板块 peers、Top-Pick 徽标、逐股引用导出（含账本溯源链接）；首页"昨夜变更"条
   逐面板公示夜更通道的真实 delta。

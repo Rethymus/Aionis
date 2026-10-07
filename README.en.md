@@ -48,7 +48,7 @@ and **not** a trading bot.
 
 <p align="center">
   <img src="assets/screenshots/terminal-tour.gif" alt="Aionis research terminal tour: validity-argument landing → market panorama → US/CN heatmap → data atlas → calibration → data health → evidence matrix" width="880">
-  <br><sub><b>Research terminal tour</b> · the public face across 38 routes — every page declares its place on the validity-argument chain, every number carries provenance (as-of watermarks)</sub>
+  <br><sub><b>Research terminal tour</b> · the public face across 40 routes — every page declares its place on the validity-argument chain, every number carries provenance (as-of watermarks)</sub>
 </p>
 
 <a id="results"></a>
@@ -219,6 +219,25 @@ flowchart LR
   ApeWisdom, Reddit, CSI 300 constituents, and more; dual-region (US + CN),
   bilingual (zh/en); model cards exported per the Mitchell et al. (2019)
   model-card convention.
+- **Public data API**: every panel's JSON is mirrored verbatim under
+  `/api/v1/panels/` (47 tabular panels also ship CSV twins, skips honestly
+  listed in `csv-manifest.json`); OpenAPI 3.1 docs with per-endpoint
+  license/provenance/freshness metadata (`/api-docs`); sitemap.xml with
+  per-URL lastModified provenance + an Atom feed on `/news`.
+- **Verdict board & proof chain**: `/verdicts` puts every pre-registered claim
+  on one board (shared-zero-line CI visualization — all intervals crossing zero
+  at a glance, CONFIRMATORY row highlighted); `/proof` turns "freeze precedes
+  result" into a four-link chain (prereg doc → config_committed ledger row →
+  frozen results dir → verdict) with self-verification commands anyone can rerun.
+- **Personalization & discovery**: Watchlist stars (⌘K palette access + live
+  price strip on the landing page + rank-change badges), same-sector peers,
+  Top-Pick badges, per-stock citation export (with ledger-provenance links);
+  the landing "overnight changes" strip shows the nightly lane's real per-panel
+  delta.
+- **Performance (protocol-level, measured)**: a cold first load transfers
+  **793KB** total (DCL 1.23s); subsequent pages pay only the increment
+  (stock pages **215KB** fresh, shared chunks cached across pages); see
+  [`reports/design/2026-10-02-performance-campaign.md`](reports/design/2026-10-02-performance-campaign.md).
 - **Honest disclosure**: per-panel as-of watermarks are published on
   `/data-health`; tickers outside the universe gate degrade to plain text (no
   links); live prices (Cloudflare Worker, `workers/prices/`) are **display-only**

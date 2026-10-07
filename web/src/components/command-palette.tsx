@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
-import { ActivityIcon, ArrowRightIcon, BookOpenIcon, BuildingIcon, CalendarDaysIcon, FileClockIcon, FileTextIcon, FlaskConicalIcon, GaugeCircleIcon, GlobeIcon, LandmarkIcon, LanguagesIcon, LayoutDashboardIcon, LayoutGridIcon, ListIcon, MapIcon, NetworkIcon, NewspaperIcon, PercentIcon, ScaleIcon, SearchIcon, ShieldCheckIcon, StarIcon, SunMoonIcon, TerminalIcon, TrendingDownIcon, TrendingUpIcon } from "lucide-react";
+import { ActivityIcon, ArrowRightIcon, BookOpenIcon, BuildingIcon, CalendarDaysIcon, FileClockIcon, FileTextIcon, FlaskConicalIcon, GaugeCircleIcon, GlobeIcon, LandmarkIcon, LanguagesIcon, LayoutDashboardIcon, LayoutGridIcon, LinkIcon, ListIcon, MapIcon, NetworkIcon, NewspaperIcon, PercentIcon, ScaleIcon, SearchIcon, ShieldCheckIcon, StarIcon, SunMoonIcon, TerminalIcon, TrendingDownIcon, TrendingUpIcon } from "lucide-react";
 import {
   CommandDialog,
   CommandGroup,
@@ -83,6 +83,7 @@ const PAGE_ICONS: Record<string, React.ReactNode> = {
   "/atlas": <MapIcon className="size-4" />,
   "/discipline": <ShieldCheckIcon className="size-4" />,
   "/verdicts": <ScaleIcon className="size-4" />,
+  "/proof": <LinkIcon className="size-4" />,
   "/data-health": <ActivityIcon className="size-4" />,
   "/themes": <FileTextIcon className="size-4" />,
   "/market": <GlobeIcon className="size-4" />,
