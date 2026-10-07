@@ -98,6 +98,19 @@ power-floor、discipline、quarterly、evidence、model-health。
 - **动态语言表的 SSR 决定论**：默认语静态导入保持 prerender 决定论，
   非默认语动态 import + 缓存 promise（浏览器实测三路径：切换/重载保持/切回）。
 
+### 第二战役的用户侧协议级实测（2026-10-07 轮 219 补录）
+
+> bundle 数学之外的真传输数字（浏览器 performance API，全新鲜加载、
+> 零缓存命中、GH Pages 真网络）：
+
+| 页 | 总传输 | 资源数 | DCL | 全 load |
+|---|---|---|---|---|
+| /dashboard.html | **793KB** | 59 | 1.23s | 3.49s（含 Worker 价格尾巴） |
+| /stock/AAPL.html（紧随其后） | **215KB 新鲜**（共享块 2.6MB 走缓存） | 70 | 0.81s | 1.93s |
+
+diet 前同页等价传输 ≈3.8-4.5MB 级 → **首页 ~5 倍传输削减 + 跨页缓存使
+后续页只付增量**。第二战役至此从 bundle 数学升级为协议级实测结论。
+
 ## 六、未竟事项
 
 - Interop 2026 / Baseline 全量外部扫描（搜索配额 2026-10-03 18:50 UTC 恢复后）。
