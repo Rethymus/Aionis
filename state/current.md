@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-07 15:30，轮 220）（docs 线）：根 README 终端能力节刷新——轮 156-219 约 30 项功能的文档滞后清账：**
+  ⑤ 研究终端节补四块：公开数据 API（JSON 镜像+47 CSV 孪生+OpenAPI+sitemap lastmod+Atom）、个人化与发现（Watchlist/⌘K/实时价条带/排名徽标/peers/Top-Pick/引用导出/昨夜变更条）、协议级性能行（793KB/215KB+战役文档链）。双语数字对照由既有审计纪律覆盖（数字逐位来自实测入册值）。**边界**：docs lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-07 13:20，轮 219）（验证 线）：性能战役用户侧协议级实测——bundle 数学升级为线上真传输数字：**
   浏览器 performance API 生产实测（全新鲜零缓存）：首页 **793KB 总传输**/59 资源/DCL 1.23s；紧随的 stock/AAPL 仅 **215KB 新鲜**（共享块 2.6MB 跨页缓存命中）/DCL 0.81s——diet 前等价 ≈3.8-4.5MB 级，**首页 ~5 倍传输削减 + 后续页只付增量**。战役文档补录实测表；第二战役（轮 192-201）至此协议级闭环。**边界**：验证 lane；0 ledger/0 frozen/0 OOS。
 
