@@ -10,61 +10,36 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-10-07T10:26:40+00:00",
-  "n_snapshots": 31,
+  "latest_snapshot_ts": "2026-10-07T12:12:03+00:00",
+  "n_snapshots": 32,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
       "ticker": "NVDA",
-      "mentions": 3,
-      "sentiment": -0.177,
+      "mentions": 2,
+      "sentiment": -0.103,
       "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "AMD",
-      "mentions": 1,
-      "sentiment": -0.003,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "META",
-      "mentions": 1,
-      "sentiment": 0.011,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "DECK",
-      "mentions": 1,
-      "sentiment": 0.018,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "LULU",
-      "mentions": 1,
-      "sentiment": 0.018,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "UBER",
-      "mentions": 1,
-      "sentiment": 0.597,
-      "bull_ratio": 1.0,
       "score_sum": 0
     }
   ],
   "pressure": {
-    "status": "accumulating",
-    "by_ticker": {},
-    "n_snapshots": 31,
+    "status": "ok",
+    "by_ticker": {
+      "NVDA": {
+        "ticker": "NVDA",
+        "latest_mentions": 2,
+        "velocity": 0.2857,
+        "crowding_z": 0.3461,
+        "bull_bear_lean": 0.0269,
+        "grade": "normal",
+        "n_days": 14
+      }
+    },
+    "n_snapshots": 32,
     "latest_date": "2026-10-07",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-10-07T11:05:09.303005+00:00"
+  "snapshot_ts": "2026-10-07T12:38:41.191446+00:00"
 }

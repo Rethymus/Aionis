@@ -1,14 +1,14 @@
 {
   "status": "ok",
   "as_of": "2026-10-07",
-  "n_docs": 70,
+  "n_docs": 72,
   "n_categories": 5,
   "categories": {
     "preregistration": 10,
     "adr": 14,
     "results": 2,
     "rubric": 2,
-    "theory": 42
+    "theory": 44
   },
   "docs": [
     {
@@ -231,9 +231,9 @@
       "title": "Aionis \u7ed3\u679c\u5feb\u7167\uff08RESULTS\uff09\u2014 \u5f53\u524d\u8bc1\u636e\u8fb9\u754c",
       "path": "docs/RESULTS.md",
       "category": "results",
-      "date": "2026-09-04",
-      "n_chars": 5962,
-      "summary": "\u72b6\u6001\uff1av0.1 \u00b7 2026-07-31 \u00b7 factual snapshot\u3002 \u672c\u9875\u53ea\u62a5\u544a\u4ed3\u5e93\u73b0\u6709 ledger\u3001\u5ba1\u8ba1\u548c\u5df2\u8bb0\u5f55\u5386\u53f2\u6750\u6599\uff1b\u6ca1\u6709\u8865\u7b97\u7f3a\u5931\u6307\u6807\u3002 \u5b8c\u6574\u9010\u9879\u5bf9\u8d26\u89c1 ../reports/audits/claim-reconciliation.md\u3002",
+      "date": "2026-10-07",
+      "n_chars": 8315,
+      "summary": "\u72b6\u6001\uff1av0.2 \u00b7 2026-10-07 \u00b7 factual snapshot\uff08v0.1 \u00b7 2026-07-31\uff09\u3002 \u672c\u9875\u53ea\u62a5\u544a\u4ed3\u5e93\u73b0\u6709 ledger\u3001\u5ba1\u8ba1\u548c\u5df2\u8bb0\u5f55\u5386\u53f2\u6750\u6599\uff1b\u6ca1\u6709\u8865\u7b97\u7f3a\u5931\u6307\u6807\u3002 v0.2 \u589e\u91cf\uff1a\u00a74c Track B \u4e03\u4e3b\u9898\u4e0e \u5f3a\u57fa\u7ebf\uff08\u9762\u677f\u9010\u4f4d\uff09\u3001\u00a74d PBO/CSCV \u8fc7\u62df\u5408\u8bca\u65ad\uff08exploratory\uff09\u3001\u00a75 E3 \u8fb9\u754c\u63aa\u8f9e\u66f4\u65b0 \uff08\u5de5\u7a0b\u5c31\u7eea+\u5f71\u5b50\u7a97\uff0cheadline NO-GO \u4e0d\u53d8\uff09\u3001\u00a76 \u7d22\u5f15\u8865\u884c\uff1b\u5916\u90e8\u9a8c\u8bc1\u6587\u732e\u8865\u6ce8\u89c1 \u00a70\u3002",
       "url": "https://github.com/Rethymus/Aionis/blob/main/docs/RESULTS.md"
     },
     {
@@ -388,6 +388,15 @@
       "n_chars": 1003,
       "summary": "\u5f3a\u57fa\u7ebf\u9636\u68af\uff08RES \u7cfb\u5217\uff09\uff1a\u5728 frozen Phase B/C/D/E1 \u4e5d\u5217\u6570\u503c\u57fa\u672c\u9762\u57fa\u7ebf\u4e4b\u4e0a\uff0c\u9010\u6b65\u589e\u52a0 \u6a2a\u622a\u9762\u53ef\u6392\u540d\u7684\u80a1\u7968\u7279\u5b9a\u7279\u5f81\u4e0e rank-aware learner\u3002 \u6240\u6709\u57fa\u7ebf\u5747\u4e3a\u65b0 config + \u65b0 ledger \u884c\uff08ADR-006\uff09\uff0c\u7edd\u4e0d\u9759\u9ed8\u4fee\u6539 B/C/D/E1 \u7ed3\u679c\u3002 \u6a2a\u622a\u9762\u53ef\u6392\u540d\uff1a\u7279\u5f81\u5fc5\u987b\u80a1\u7968\u7279\u5b9a\u3001\u6708\u5185\u53ef\u53d8\uff08RD-13 \u975e-\u5e38\u91cf\u62a4\u680f\uff1b\u539f\u59cb\u5e02\u573a-wide \u56e0\u5b50\u5217\u7981\u7528\uff09\u3002",
       "url": "https://github.com/Rethymus/Aionis/blob/main/docs/baseline-ladder.md"
+    },
+    {
+      "title": "\u65b0\u673a\u5668 Bootstrap \u2014 \u4ece\u96f6\u5230\u80fd\u8dd1\uff082026-10-07\uff0c\u8f6e 221/222 \u843d\u5730\uff09",
+      "path": "docs/bootstrap.md",
+      "category": "theory",
+      "date": "2026-10-07",
+      "n_chars": 1767,
+      "summary": "\u76ee\u6807\uff1a\u4e00\u53f0\u65b0 Windows \u673a\u5668\uff08Git Bash \u73af\u5883\uff09\u4ece clone \u5230 just check \u7eff + \u665a\u95f4\u901a\u9053\u53ef\u8fd0\u884c\u3002 \u7ea6 30-60 \u5206\u949f\uff08\u542b\u6570\u636e\u6293\u53d6\uff09\u3002",
+      "url": "https://github.com/Rethymus/Aionis/blob/main/docs/bootstrap.md"
     },
     {
       "title": "CI \u63a5\u7ebf\u8349\u6848 \u2014 CN \u884c\u4e1a\u5206\u7c7b\u5347\u7ea7\uff08baostock \u8bc1\u76d1\u4f1a\u884c\u4e1a\uff09",
@@ -597,6 +606,15 @@
       "url": "https://github.com/Rethymus/Aionis/blob/main/docs/ops-local-refresh.md"
     },
     {
+      "title": "\u5f02\u5730\u5907\u4efd Runbook \u2014 restic \u2192 Backblaze B2\uff082026-10-07\uff0c\u8f6e 221 \u5ba1\u8ba1 A.1 \u843d\u5730\uff09",
+      "path": "docs/ops-offsite-backup.md",
+      "category": "theory",
+      "date": "2026-10-07",
+      "n_chars": 2025,
+      "summary": "\u4e3a\u4ec0\u4e48\uff1adata/\uff085.7GB\uff0c\u542b GDELT \u65b0\u95fb\u60c5\u7eea\u53f2 2017\u2192\u3001provider cutoff \u63a2\u9488\u8bb0\u5f55\u3001 \u6293\u53d6\u7f13\u5b58\u53f2\uff09\u662f\u4e0d\u53ef\u91cd\u53d6\u7684\u2014\u2014GDELT \u53ea\u4f3a\u670d\u8fd1\u671f\u7a97\u53e3\uff0c\u78c1\u76d8\u635f\u5931 = \u7814\u7a76\u6570\u636e\u5386\u53f2\u6c38\u4e45 \u4e22\u5931\u3002 backup_audit_chain.py\uff08\u8f6e 172\uff09\u53ea\u505a\u540c\u673a bundle\uff08data/backups/\uff09\uff0c \u9632\u7684\u662f GitHub \u4fa7\u4e8b\u6545\uff0c\u9632\u4e0d\u4e86\u78c1\u76d8\u635f\u5931\u3002 3-2-1 \u539f\u5219\u7f3a\u7684\u6700\u540e\u4e00\u73af\u662f\u5f02\u5730\u3002",
+      "url": "https://github.com/Rethymus/Aionis/blob/main/docs/ops-offsite-backup.md"
+    },
+    {
       "title": "Aionis Orchestration Protocol \u2014 operational spec",
       "path": "docs/orchestration-protocol.md",
       "category": "theory",
@@ -709,7 +727,7 @@
       "desc_zh": "\u5934\u6761\u4e3b\u5f20\u7684\u5355\u9875\u901f\u89c8\uff1aIC / CI / p / verdict / SESOI\u2014\u2014web/out/atlas.html \u7684\u53ef\u6eaf\u6e90\u5bf9\u5e94\u7269\u3002",
       "path": "reports/evidence/atlas-claim-v1.html",
       "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/atlas-claim-v1.html",
-      "sha256": "f85b4c810300d1000f48d53d1fd5731363bbe2f91fb5e681bad33c94e35fc89f",
+      "sha256": "affb14b02c8313c257cb240e67b8bd5d70b5de8686d56d0164c6aacb3659629b",
       "n_bytes": 24397
     },
     {
@@ -720,7 +738,7 @@
       "desc_zh": "\u6eaf\u6e90\u7814\u7a76\u6863\u6848\uff1a24 \u6761\u6765\u6e90\u767b\u8bb0\u8868 \u2192 \u62a5\u544a \u2192 \u5efa\u6a21\u5206\u6790\u5168\u6d41\u7a0b\uff0c[S#] \u5f15\u7528\u95ed\u5305\u3002",
       "path": "reports/evidence/research-dossier-v1.html",
       "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/research-dossier-v1.html",
-      "sha256": "4df67e3058134bedc0f7a46aefc931183c8e478900d0ae6d81f5ca46dd1a7717",
+      "sha256": "6b1ecac6f04bceab7dbb3a90e09aadd0bafcb42306e55f85e894fe030fb1d75c",
       "n_bytes": 47261
     },
     {
@@ -731,7 +749,7 @@
       "desc_zh": "\u57fa\u672c\u9762\u65f6\u70b9\u4e3b\u5f20\u7684 meta-only \u5361\uff1a\u5dee\u5206\u503c\u3001\u8d26\u672c\u5bf9\u8d26\u3001IC \u5e8f\u5217\u6458\u8981\u3001\u63a7\u5236\u68c0\u9a8c\u3002",
       "path": "reports/evidence/research-dossier-b-v1.html",
       "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/research-dossier-b-v1.html",
-      "sha256": "a83c3a1dac1bc6f1dc92d2be3f3a8cb2d1a2e31cf97060666d17e2c2b48b4bd4",
+      "sha256": "036f9074bcbc8b8b0411161035411ea73906412e7465955eea76e8c77bc4b9c1",
       "n_bytes": 25101
     },
     {
@@ -742,7 +760,7 @@
       "desc_zh": "\u5173\u7cfb\u7f51\u7edc\u4e3b\u5f20\u7684 meta-only \u5361\uff1a\u5dee\u5206\u503c\u3001\u8d26\u672c\u5bf9\u8d26\u3001IC \u5e8f\u5217\u6458\u8981\u3001\u63a7\u5236\u68c0\u9a8c\u3002",
       "path": "reports/evidence/research-dossier-d-v1.html",
       "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/research-dossier-d-v1.html",
-      "sha256": "a63054af23f7365776406fa4a5a93fd189a6cad10903cc7efc0e2943d069f8cb",
+      "sha256": "36b9c0a531161ffc3e43f8f60151628c322fe8053dc1ede54988a3785bf2ee0a",
       "n_bytes": 25296
     },
     {
@@ -753,10 +771,10 @@
       "desc_zh": "\u8de8\u516c\u53f8\u4f20\u64ad\u4e3b\u5f20\u7684 meta-only \u5361\uff1a\u5dee\u5206\u503c\u3001\u8d26\u672c\u5bf9\u8d26\u3001IC \u5e8f\u5217\u6458\u8981\u3001\u63a7\u5236\u68c0\u9a8c\u3002",
       "path": "reports/evidence/research-dossier-e1-v1.html",
       "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/research-dossier-e1-v1.html",
-      "sha256": "91c1785fa6747a77fd4d9a70d9f097780b3afa06121dd0c96a9aa8b49fbe4a0e",
+      "sha256": "8c878d6d94ce217f3ce85f833322418bea75eaa908bfe500eeb3dd6c9bd120f9",
       "n_bytes": 25295
     }
   ],
   "methodology": "Layer 1 \u2014 Aionis's OWN method library: catalog of docs/ + decisions/ markdown (repo PolyForm-NC; zero third-party copyright surface). Each entry carries metadata plus a safe teaser slice (first 2-3 sentences, <=240 chars) extracted at export time; the full text stays on GitHub (link-out). Dates are last-commit dates read from the LOCAL git repository (no network). Layer 2 \u2014 a FIXED editorially-curated bookmark list of first-hand public research sources (BIS / Fed FEDS / IMF / NBER / arXiv q-fin / FRASER / FRED-ALFRED / RePEc): link-out + one static sentence each, no fetching, no scraping, no summary APIs \u2014 copyright stays with the authors, we only catalog. Categories are a fixed 5-rail whitelist (preregistration / adr / results / rubric / theory); n_docs reconciles to the sum of the rails. Layer 3 \u2014 generated evidence artifacts: self-contained HTML, byte-stable, sha256 + byte count pinned at export time from the local tracked file so a reader can verify the download against the catalog (a missing file degrades honestly to null \u2014 never fabricated). Superseded artifact versions are retained under reports/evidence/archive/ (move-don't-delete \u2014 the archive only grows). Display-only reference lane \u2014 never part of any research or OOS pipeline.",
-  "snapshot_ts": "2026-10-07T11:05:56.440475+00:00"
+  "snapshot_ts": "2026-10-07T12:39:10.280652+00:00"
 }

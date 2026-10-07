@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "as_of": "2026-10-07T10:25:49+00:00",
+  "as_of": "2026-10-07T12:11:08+00:00",
   "source": "ApeWisdom (apewisdom.io) free public API \u2014 filter/stocks",
   "count_declared": 235,
   "n_rows": 100,
@@ -44,7 +44,7 @@
       "name": "Microsoft",
       "mentions": 5,
       "upvotes": 49,
-      "rank_24h_ago": 10,
+      "rank_24h_ago": 9,
       "mentions_24h_ago": 3
     },
     {
@@ -53,7 +53,7 @@
       "name": "AMD",
       "mentions": 5,
       "upvotes": 15,
-      "rank_24h_ago": 12,
+      "rank_24h_ago": 11,
       "mentions_24h_ago": 3
     },
     {
@@ -143,7 +143,7 @@
       "name": "Quanta Services",
       "mentions": 2,
       "upvotes": 5,
-      "rank_24h_ago": 0,
+      "rank_24h_ago": 42,
       "mentions_24h_ago": null
     },
     {
@@ -233,7 +233,7 @@
       "name": "Tesla",
       "mentions": 1,
       "upvotes": 3,
-      "rank_24h_ago": 11,
+      "rank_24h_ago": 10,
       "mentions_24h_ago": 3
     },
     {
@@ -314,7 +314,7 @@
       "name": "Costco",
       "mentions": 1,
       "upvotes": 1,
-      "rank_24h_ago": 0,
+      "rank_24h_ago": 24,
       "mentions_24h_ago": null
     },
     {
@@ -440,7 +440,7 @@
       "name": "Illumina",
       "mentions": 1,
       "upvotes": 2,
-      "rank_24h_ago": 0,
+      "rank_24h_ago": 35,
       "mentions_24h_ago": null
     },
     {
@@ -476,7 +476,7 @@
       "name": "MSCI",
       "mentions": 1,
       "upvotes": 3,
-      "rank_24h_ago": 0,
+      "rank_24h_ago": 39,
       "mentions_24h_ago": null
     },
     {
@@ -495,7 +495,7 @@
       "mentions": 1,
       "upvotes": 1,
       "rank_24h_ago": 18,
-      "mentions_24h_ago": 2
+      "mentions_24h_ago": 1
     },
     {
       "rank": 55,
@@ -531,7 +531,7 @@
       "mentions": 1,
       "upvotes": 1,
       "rank_24h_ago": 45,
-      "mentions_24h_ago": 1
+      "mentions_24h_ago": null
     },
     {
       "rank": 59,
@@ -674,7 +674,7 @@
       "name": "Toronto Dominion Bank",
       "mentions": 1,
       "upvotes": 4,
-      "rank_24h_ago": 0,
+      "rank_24h_ago": 56,
       "mentions_24h_ago": null
     },
     {
@@ -755,7 +755,7 @@
       "name": "MercadoLibre",
       "mentions": 1,
       "upvotes": 2,
-      "rank_24h_ago": 8,
+      "rank_24h_ago": 12,
       "mentions_24h_ago": 3
     },
     {
@@ -913,5 +913,5 @@
     }
   ],
   "methodology": "Reddit trending-stocks board from ApeWisdom's free public JSON API (apewisdom.io \u2014 the .com domain does not connect; verified live via browser 2026-08-23, no key, no auth). ApeWisdom aggregates ticker mentions across subreddits (wallstreetbets & friends); peer /reddit boards disclose the same source. Fields are first-party and stored verbatim: rank, ticker, name, mentions, upvotes, and the 24h-ago rank/mentions lags (null = unranked then). Only the filter/stocks endpoint carried data on verification day \u2014 all-posts and crypto returned honest zero envelopes, recorded in sibling_filters. The free API's pagination is dead as of 2026-08-23: the envelope declares 3 pages/290 tickers but serves page 1 only (100 rows) for every pagination form (?page=N and path /N \u2014 browser-verified); the ingest trusts the envelope's own current_page echo and the board shows the honest first 100 of a declared 290, never padded. TODAY snapshot only: ApeWisdom keeps no history, so this panel is never PIT and never a research signal. Politeness: >=2s between page GETs. Display-only, NOT part of any research or OOS pipeline.",
-  "snapshot_ts": "2026-10-07T11:05:09.307002+00:00"
+  "snapshot_ts": "2026-10-07T12:38:41.194460+00:00"
 }
