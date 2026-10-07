@@ -10,30 +10,51 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-10-06T10:35:59+00:00",
-  "n_snapshots": 30,
+  "latest_snapshot_ts": "2026-10-07T10:26:40+00:00",
+  "n_snapshots": 31,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
-      "ticker": "TSLA",
-      "mentions": 4,
-      "sentiment": 0.179,
-      "bull_ratio": 1.0,
-      "score_sum": 0
-    },
-    {
       "ticker": "NVDA",
-      "mentions": 1,
-      "sentiment": -0.326,
+      "mentions": 3,
+      "sentiment": -0.177,
       "bull_ratio": null,
       "score_sum": 0
     },
     {
-      "ticker": "MCD",
+      "ticker": "AMD",
       "mentions": 1,
-      "sentiment": 0.787,
+      "sentiment": -0.003,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "META",
+      "mentions": 1,
+      "sentiment": 0.011,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "DECK",
+      "mentions": 1,
+      "sentiment": 0.018,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "LULU",
+      "mentions": 1,
+      "sentiment": 0.018,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "UBER",
+      "mentions": 1,
+      "sentiment": 0.597,
       "bull_ratio": 1.0,
       "score_sum": 0
     }
@@ -41,9 +62,9 @@
   "pressure": {
     "status": "accumulating",
     "by_ticker": {},
-    "n_snapshots": 30,
-    "latest_date": "2026-10-06",
+    "n_snapshots": 31,
+    "latest_date": "2026-10-07",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-10-06T11:14:59.764580+00:00"
+  "snapshot_ts": "2026-10-07T11:05:09.303005+00:00"
 }
