@@ -1502,7 +1502,15 @@ def test_ledger_append_only_not_mutated_by_export() -> None:
     # frozen claim arms) — 1 insertion, 0 deletions/modifications verified
     # via git diff before re-pinning; payload in
     # reports/exploratory/pbo-diagnostic.json.
-    assert digest == "6092919b49495de18e5b8fb606b4a89f2c09ec412b7ec16dbf95dd0127171495", (
+    # Re-pinned 2026-10-07 (round 225, wave 5): vs the round-224 pin
+    # (6092919b), the growth is exactly TWO appended exploratory rows
+    # (data_snapshot_baseline — 8 research-history cache hashes; and
+    # mintrl_diagnostic — minTRL=infinity corroboration) — 2 insertions,
+    # 0 deletions/modifications verified via git diff before re-pinning;
+    # payloads under reports/exploratory/. Rows were replayed from
+    # runs/exploratory_rows_pending.jsonl after the evening lane's gate
+    # window, per the concurrency procedure in state round 225.
+    assert digest == "75c906ccfac531b6d777eabebe98f0e07faef1bdd5340a1f1e40b6c2bff915f1", (
         f"ledger sha256 changed to {digest}; re-verify append-only then re-pin"
     )
 
