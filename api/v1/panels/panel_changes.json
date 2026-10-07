@@ -1,10 +1,458 @@
 {
   "status": "ok",
-  "as_of": "2026-10-06",
-  "n_tracked": 1,
+  "as_of": "2026-10-07",
+  "n_tracked": 57,
   "n_changed": 0,
   "n_as_of_advanced": 0,
   "changes": [
+    {
+      "file": "sigma_survey",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "bps_sweep",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "power_floor",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "evidence",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "ic_monthly",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "score_diagnostics",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "picks",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "metrics",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "sector_breakdown",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "picks_backtest",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "taco",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "freight_taco",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "companies_dir",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "korea_proxy",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "pick_conviction",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "themes",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "theme_signals",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "model_health",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "calibration_reliability",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "cot",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "form4",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "form8k",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "news_feed",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "form_ipo",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "form_d",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "form_def14a",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "def14a_persons",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "filing_stream",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "politician_trades",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "politician_trades_tx",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "party_index",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "form13f",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "form13f_stars",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "filers13f",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "market_context",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "macro_drivers",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "smart_money",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "stakes_13g",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "ark",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "theme_etfs",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "reddit_meta",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "reddit_trending",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "ledger_audit",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "horizon_robustness",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "headline_provenance",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "model_card",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "model_inventory",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "provider_vintage",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "ic_deciles",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "stock_universe",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "executives",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "phase_dossier_meta",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "knowledge_shelf",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "evidence_matrix",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "lineage_graph",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
+    {
+      "file": "data_health",
+      "changed": false,
+      "as_of_before": null,
+      "as_of_after": null,
+      "sha_before": null,
+      "sha_after": null
+    },
     {
       "file": "api_catalog",
       "changed": false,
@@ -15,5 +463,5 @@
     }
   ],
   "methodology": "Per-panel committed-transition registry captured by the export wrapper (sha256[:12] + as_of before/after each exporter run). changed=false means byte-identical this run (honest no-op). Display-only view over git history; the audit trail of record is runs/ + the repository itself.",
-  "snapshot_ts": "2026-10-06T15:50:59.108762+00:00"
+  "snapshot_ts": "2026-10-07T11:05:34.990061+00:00"
 }
