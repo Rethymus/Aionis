@@ -8,4 +8,4 @@ sed -n '28p' runs/ledger.jsonl | python -m json.tool
 ls runs/results/ | grep 17245a75
 
 # ④ evidence artifact hashes are pinned in the committed matrix
-python -c "import json;print(json.load(open('web/src/data/aionis/evidence_matrix.json'))['artifacts'][0])"`}),(0,t.jsx)("p",{className:"mt-2 text-[11px] text-muted-foreground",children:e("proof.verify.note")})]}),(0,t.jsx)("p",{className:"text-xs text-muted-foreground",children:e("proof.footer")})]})}])}]);
+python -c "import json;print(json.load(open('web/src/data/aionis/evidence_matrix.json'))['artifacts'][0])"`}),(0,t.jsx)("p",{className:"mt-2 text-[11px] text-muted-foreground",children:e("proof.verify.note")}),(0,t.jsxs)("p",{className:"mt-1 text-[11px] text-muted-foreground",children:["one command: ",(0,t.jsx)("code",{className:"rounded bg-background px-1",children:"uv run python scripts/verify_claim.py"})]})]}),(0,t.jsx)("p",{className:"text-xs text-muted-foreground",children:e("proof.footer")})]})}])}]);
