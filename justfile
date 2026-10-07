@@ -37,6 +37,17 @@ evidence *args:
 guard:
     uv run python scripts/precommit_guard.py
 
+# Re-verify the four-link proof chain of every frozen claim (the CLI twin
+# of the /proof terminal page).
+verify *args:
+    uv run python scripts/verify_claim.py {{args}}
+
+# Data-snapshot audit: verify no upstream source rewrote history since the
+# committed baseline (CRSP-tape tripwire). --baseline re-anchors (owner note:
+# only after intentional data-format changes).
+snapshot *args:
+    uv run python scripts/data_snapshot_audit.py {{args}}
+
 # The nightly refresh lane (evening window guard applies — usually you want
 # the automation, not this manual call). See docs/ops-local-refresh.md.
 lane:

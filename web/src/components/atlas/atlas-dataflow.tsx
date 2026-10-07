@@ -379,7 +379,12 @@ export default function AtlasDataflow() {
           table={table}
         >
           <div className="overflow-hidden rounded-xl border border-line bg-card p-2">
-            <svg viewBox={`0 0 ${VB_W} ${VB_H}`} className="h-auto w-full">
+            <svg
+              viewBox={`0 0 ${VB_W} ${VB_H}`}
+              className="h-auto w-full"
+              role="img"
+              aria-label={t("atlas.flow.title")}
+            >
               {/* Layer headers */}
               {(
                 [
