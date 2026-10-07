@@ -152,6 +152,19 @@ Worker (display-only), unchanged.
 | runner image drift (e.g. ubuntu-latest→26.04) | all 7 workflows pinned `ubuntu-24.04` (rounds 107/108b) | revisit the pin deliberately on each changelog sweep |
 | unknown "is the stack healthy?" | `--doctor` six-layer read-only preflight (round 109) | 6/6 = walk away; any FAIL → named layer + 需人审 in that night's report |
 
+### Data snapshot audit step (round 225, soft)
+
+After the shelf/matrix re-pin, the lane runs `scripts/data_snapshot_audit.py`
+(soft, 5-min cap): it re-hashes the 8 research-history caches against the
+committed baseline (`reports/exploratory/data-snapshot-baseline.json`) —
+appends are tolerated; a changed historical prefix = HISTORY REWRITTEN alarm
+(exit 1 → soft-fail recorded, lane continues). This is the CRSP-tape lesson
+(JFQA 2026-03) wired as a nightly tripwire: an upstream source silently
+rewriting history surfaces in the next morning's soft-fail list instead of
+going unnoticed. Baseline refresh (after intentional schema/format changes
+only): `uv run python scripts/data_snapshot_audit.py --baseline` + an
+exploratory ledger row.
+
 ### Audit-chain backup (round 170)
 
 ```bash

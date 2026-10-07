@@ -125,6 +125,13 @@ export function VerdictBoardView() {
         </table>
       </div>
 
+      <div className="rounded-lg border bg-muted/30 p-3">
+        <p className="text-xs font-semibold">{t("verdicts.diag.title")}</p>
+        <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+          {t("verdicts.diag.body")}
+        </p>
+      </div>
+
       <p className="text-xs text-muted-foreground">{t("verdicts.footer")}</p>
     </div>
   );

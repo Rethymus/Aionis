@@ -229,6 +229,8 @@ export const zh = {
     "verdicts.badge.point": "点估计 · 无 CI",
     "verdicts.noCi": "—（无 CI）",
     "verdicts.grade.hint": "CV-proxy=shared-fold purged 交叉拟合；chron./explor.=时序但探索性；CONFIRMATORY=预注册时序确认",
+    "verdicts.diag.title": "诊断（探索性 · 2026-10-07）",
+    "verdicts.diag.body": "CSCV 过拟合诊断 PBO = 0.872（8 冻结臂 × 125 月）：样本内挑最优臂在样本外落入中位以下的概率 87%——无稳定选拔边际；Bailey-LdP 最短成绩单长度 minTRL = ∞：观测 IC-IR 低于零目标，任何有限时长都不足以区分于零。两个探索性诊断均与全部 NULL 一致，详见 RESULTS §4d。",
     "verdicts.footer": "溯源：逐行对应 runs/ledger.jsonl 账本行与 runs/results/<sig>/ 差分工件；非显著 ≠ 等价（等价需 SESOI/TOST，见 /power-floor）。负点估计 ≠ 特征有害——与零统计不可区分。",
     "nav.modelhealth": "模型健康",
     "modelhealth.title": "模型健康 / 漂移监测",

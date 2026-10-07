@@ -212,6 +212,8 @@ STEPS: list[dict] = [
      "uv_argv": ["python", "-c", DOSSIER_META], "cap": 10, "soft": True},
     {"name": "export shelf + evidence matrix",
      "uv_argv": ["python", "-c", SHELF_MATRIX], "cap": 10, "soft": True},
+    {"name": "data snapshot audit (history-rewrite tripwire, round 225)",
+     **_py("scripts/data_snapshot_audit.py"), "cap": 5, "soft": True},
     {"name": "json validity + contract gate",
      "uv_argv": ["pytest", "-q", GATE_TEST, GATE_TEST_2, GATE_TEST_3,
                  *GATE_TESTS_EV,

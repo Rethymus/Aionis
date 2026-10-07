@@ -130,6 +130,9 @@ ls runs/results/ | grep 17245a75
 python -c "import json;print(json.load(open('web/src/data/aionis/evidence_matrix.json'))['artifacts'][0])"`}
         </pre>
         <p className="mt-2 text-[11px] text-muted-foreground">{t("proof.verify.note")}</p>
+        <p className="mt-1 text-[11px] text-muted-foreground">
+          one command: <code className="rounded bg-background px-1">uv run python scripts/verify_claim.py</code>
+        </p>
       </div>
 
       <p className="text-xs text-muted-foreground">{t("proof.footer")}</p>

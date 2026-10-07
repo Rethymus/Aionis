@@ -231,6 +231,8 @@ export const en = {
     "verdicts.badge.point": "Point estimate · no CI",
     "verdicts.noCi": "— (no CI)",
     "verdicts.grade.hint": "CV-proxy=shared-fold purged cross-fitting; chron./explor.=chronological but exploratory; CONFIRMATORY=pre-registered chronological confirmation",
+    "verdicts.diag.title": "Diagnostics (exploratory · 2026-10-07)",
+    "verdicts.diag.body": "CSCV overfitting diagnostic PBO = 0.872 (8 frozen arms × 125 months): an in-sample best-arm pick lands below median out-of-sample 87% of the time — no stable selection edge; Bailey-LdP minimum track-record length minTRL = ∞: the observed IC-IR sits below the zero target, so no finite horizon distinguishes it from zero. Both exploratory diagnostics agree with the NULLs — see RESULTS §4d.",
     "verdicts.footer": "Provenance: each row maps to a runs/ledger.jsonl row and a runs/results/<sig>/ differential artifact; non-significance ≠ equivalence (equivalence requires SESOI/TOST, see /power-floor). A negative estimate ≠ harmful — statistically indistinguishable from zero.",
     "nav.modelhealth": "Model health",
     "modelhealth.title": "Model health / drift monitor",
