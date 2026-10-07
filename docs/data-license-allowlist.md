@@ -1,6 +1,6 @@
 # 数据 / 依赖许可白名单（License Allowlist）— G1 的可审计落表
 
-> 状态：**v0.2 · 2026-09-09 · `docs/data-intake-rubric.md` G1 的配套文档**（v0.1 · 2026-07-28）。
+> 状态：**v0.3 · 2026-10-07 · `docs/data-intake-rubric.md` G1 的配套文档**（v0.2 · 2026-09-09；v0.1 · 2026-07-28）。
 > 范围：Aionis 接入的**每个**第三方数据集 **和** 每个运行时依赖都必须落在 ACCEPTED 列。
 > 原则：Aionis 自身代码是 **PolyForm-Noncommercial-1.0.0**（2026-09-09 起由 MIT 变更，
 > 见 [`decisions/ADR-013-polyform-noncommercial-license.md`](decisions/ADR-013-polyform-noncommercial-license.md)；
@@ -18,6 +18,8 @@
 | **Apache-2.0** | ≈ MIT + 显式专利授权 + 贡献者条款；带专利的项目首选。 |
 | **BSD-2-Clause** | MIT 级宽松，两条款（版权声明 + 免责）。 |
 | **BSD-3-Clause** | MIT 级宽松，三条款（额外「不得用名字背书」）。 |
+| **ISC** | MIT 等效宽松（版权 + 免责两句）；OSI 认证。v0.3 补录：`lucide-react`（web 终端图标库，ISC）在用但此前未列——本行即补正（2026-09-09 审计旗标，2026-10-07 落表）。 |
+| **Matplotlib / PSF 系**（等价认定） | matplotlib ≥1.3 自有许可 = PSF 派生（保留版权 + 不用名字背书），**≈ BSD-3 等价**（同 NCSA 先例）。v0.3 补录：`matplotlib` 在用但此前未列——本行即补正。 |
 | **CC0-1.0** | 公共领域弃权；数据 / 代码皆可，无任何限制。 |
 | **CC-BY-4.0**（数据） | 署名即可商用 / 改编——**数据**首选（EPU 用此）。注：仅限数据；代码用 CC-BY 另议。 |
 | **NCSA / University of Illinois** | `arch` 用的许可，**法律上 ≈ BSD-3 等价**（保留版权声明 + 不用名字背书）；MIT-compatible。 |

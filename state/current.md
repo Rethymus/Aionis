@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-07 19:15，轮 221）（研究/审计 线）：业主 /goal 重接手深度审计——疏漏/失效预演/功能/提效四题 + 外部三代理情报 + 四项落地：**
+  **审计报告全文**：`reports/design/2026-10-07-retakeover-audit.md`（§A 疏漏 8 项 / §B 不确定登记 6 项 / §C 失效预演 7 模式排序 / §D 功能提案含已有雏形核查 / §E 提效 / §F 外部情报带源 / §G 行动清单）。要点：**最高风险**=data/ 5.7GB 不可重取历史（GDELT 2017→）零异地备份（backup_audit_chain 仅同机 bundle）→ restic→B2 业主门；**外部情报两枚零成本重弹**=已装 purgedcv 内含 CPCV/PBO 未用（零新依赖加 PBO 诊断）、CRSP 重写事件（JFQA 2026）支持账本行加数据快照哈希（不修订契约→可验证契约）；近零 IC 大盘股外部佐证（SSRN 6742700）；LLM 记忆探针（Glasserman-Lin/Didisheim）可作 E3 泄漏诊断；轮 92 Plan B self-hosted runner 正式否决（2026 起收费+本仓公共仓无限）。**本日落地四项**（定向 7 测试绿+ruff 0，全量由 CI Tests 门）：①`scripts/evidence_refresh.py`（证据级联正典顺序交互单入口——9-09/轮182/轮215 三次顺序事故的类级修复，进程内直调+--check 同款证据门+4 hermetic 测试钉顺序不变式）；②`SECURITY.md`（漏洞私密报告通道+PolyForm-NC 滥用举报通道——业主防包装转售的执行入口）；③`scripts/precommit_guard.py`+`.pre-commit-config.yaml`（纯本地钩子：data/、*.parquet、.env（.env.example 豁免）、>5MB 四规则；业主激活=`uv tool install pre-commit && pre-commit install`）；④白名单 v0.3 补 ISC（lucide-react）与 Matplotlib≈BSD-3（同 NCSA 先例）两行——9-09 旗标清账，等价判定业主可否决。**并发说明**：提交时晚间通道 running（18:05 起），路径不相交+通道自带 rebase，按多会话惯例并行。**边界**：docs/审计/工具 lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-07 15:30，轮 220）（docs 线）：根 README 终端能力节刷新——轮 156-219 约 30 项功能的文档滞后清账：**
   ⑤ 研究终端节补四块：公开数据 API（JSON 镜像+47 CSV 孪生+OpenAPI+sitemap lastmod+Atom）、个人化与发现（Watchlist/⌘K/实时价条带/排名徽标/peers/Top-Pick/引用导出/昨夜变更条）、协议级性能行（793KB/215KB+战役文档链）。双语数字对照由既有审计纪律覆盖（数字逐位来自实测入册值）。**边界**：docs lane；0 ledger/0 frozen/0 OOS。
 

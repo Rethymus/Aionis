@@ -1,0 +1,20 @@
+# Local-only hooks (no remote hook repos — hermetic, Windows/Git-Bash safe).
+# Activate once per clone:  uv tool install pre-commit && pre-commit install
+# Manual run:               pre-commit run --all-files
+# Bypassing is a Forbidden act (CLAUDE.md) — the hooks exist to make it hard.
+repos:
+  - repo: local
+    hooks:
+      - id: aionis-ruff
+        name: ruff check (must be clean)
+        entry: uv run ruff check
+        language: system
+        pass_filenames: true
+        types: [python]
+      - id: aionis-guard
+        name: staged-artifact guard (data/ · parquet · .env · >5MB)
+        entry: uv run python scripts/precommit_guard.py
+        language: system
+        pass_filenames: false
+        always_run: true
+        stages: [pre-commit]
