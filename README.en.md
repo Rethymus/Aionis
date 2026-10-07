@@ -228,7 +228,10 @@ flowchart LR
   `/api/v1/panels/` (47 tabular panels also ship CSV twins, skips honestly
   listed in `csv-manifest.json`); OpenAPI 3.1 docs with per-endpoint
   license/provenance/freshness metadata (`/api-docs`); sitemap.xml with
-  per-URL lastModified provenance + an Atom feed on `/news`.
+  per-URL lastModified provenance + an Atom feed on `/news`; plus the
+  in-repo Python client [`clients/aionis-data`](clients/aionis-data/README.md)
+  (zero-dependency reader over this API — claims / IC series / any panel;
+  **PyPI publishing is owner-gated**, distribution not authorized).
 - **Verdict board & proof chain**: `/verdicts` puts every pre-registered claim
   on one board (shared-zero-line CI visualization — all intervals crossing zero
   at a glance, CONFIRMATORY row highlighted); `/proof` turns "freeze precedes

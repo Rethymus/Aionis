@@ -1,0 +1,25 @@
+[project]
+name = "aionis-data"
+version = "0.1.0"
+description = "Read-only Python client for the Aionis public data API (committed panel JSON mirrors: pre-registered claims, realized IC series, 56 panels)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "PolyForm-Noncommercial-1.0.0" }
+authors = [{ name = "The Aionis Authors" }]
+dependencies = []
+
+[project.urls]
+Repository = "https://github.com/Rethymus/Aionis"
+"Data API" = "https://rethymus.github.io/Aionis/api-docs"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/aionis_data"]
+
+# OWNER GATE: `uv build` + PyPI publishing are explicitly owner-gated
+# (naming + release policy decision, audit round 221 / wave 8). Nothing in
+# this repository publishes anything; building locally for inspection is
+# fine, distributing is not authorized yet.

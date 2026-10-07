@@ -200,7 +200,9 @@ flowchart LR
 - **公开数据 API**：面板 JSON 逐字镜像于 `/api/v1/panels/`（47 个表格型面板另附
   CSV 孪生，`csv-manifest.json` 如实列明跳过者）；OpenAPI 3.1 文档 + 逐端点
   license/溯源/新鲜度元数据（`/api-docs`）；sitemap.xml 全量 lastModified 溯源 +
-  `/news` Atom 订阅。
+  `/news` Atom 订阅；仓库内 Python 客户端
+  [`clients/aionis-data`](clients/aionis-data/README.md)（零依赖直读本 API——
+  claims/IC 序列/任意面板；**PyPI 发布为业主门**，未授权分发）。
 - **裁决榜与证明链**：`/verdicts` 一页尽览全部预注册主张（共享零线 CI 可视化——
   所有区间跨零一眼即见，CONFIRMATORY 行高亮）；`/proof` 把"冻结先于结果"做成
   四环链（预注册文档 → config_committed 账本行 → 冻结结果目录 → 裁决），并附
