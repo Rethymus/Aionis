@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-07 11:10，轮 216）（ci/deps 线）：双侧依赖审计复跑——轮 138 归零后新进 1 条 high 已钉：**
+  source-map-js <1.2.2（GHSA-68fv-2mgg-jv7q 事件循环 DoS，next>postcss 构建期传递链=轮 138 同类暴露面）→ pnpm.overrides 钉 >=1.2.2 → 重装+复审=**零已知漏洞**；tsc 0/构建 0 错/抽测绿。**环境实录**（runbook 价值）：本机全局 pnpm 报 packages-field 错（v10 lockfile 不兼容）、npmmirror 无 audit 端点——可用调用式=`npm_config_registry=https://registry.npmjs.org npx pnpm@10 audit --prod`。Python 侧 outdated 清单在册（alphalens-reloaded 0.4.6 等均次版本，无安全通告驱动，不升级——版本钉=H6 纪律）。**边界**：ci/deps lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-07 00:35，轮 214-215）（反思四→实施 线）：第四轮反思（对最新面自审）+ 两缺口修复：**
   **轮 214 报告**（reports/design/2026-10-07-deep-reflection-round4.md）：新外部域（可复现性 2026=每跑三标识符已具；OpenBB 类 alerts 不适配静态站理由入册）+ 对轮 206-213 新增物的未守护点自审。**轮 215 修复**：①retain-skip 导出器入变更注册表（changed=false+skipped 条目——n_tracked 不再少计、保留面板可见）；②catalog site 节增列 changes-registry（API 镜像伺服但未目录化=违反单一元层承诺，已修复）。**过程**：api_catalog 第三次触发 evidence 级联——本轮**主动**在测试前补渲染（DoD 教训第三次执行，零红 CI）。全量 hermetic EXIT=0。backlog 增：恢复道"仅重试软败步骤"策略（owner 可见，影响面大）。**边界**：display/验证 lane；0 ledger/0 frozen/0 OOS。
 
