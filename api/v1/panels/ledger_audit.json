@@ -307,10 +307,21 @@
       "metric": "IC_diff=-0.0037 (p=0.2563)",
       "h6": null,
       "frozen_before_result": false
+    },
+    {
+      "row": 59,
+      "ts": "2026-10-07",
+      "event": "exploratory",
+      "phase": "pbo_diagnostic",
+      "config_sig_short": "",
+      "verdict": "",
+      "metric": "",
+      "h6": null,
+      "frozen_before_result": false
     }
   ],
   "n_total_rows": 59,
-  "n_claim_rows": 28,
+  "n_claim_rows": 29,
   "identity_note": "config_committed rows always precede their matching result row in this timeline \u2014 that ordering is the anti-leakage contract: the frozen config's sha256 is logged before any OOS metric is observed.",
-  "snapshot_ts": "2026-10-07T11:05:09.314013+00:00"
+  "snapshot_ts": "2026-10-07T12:38:41.196462+00:00"
 }
