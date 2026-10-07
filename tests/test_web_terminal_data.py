@@ -1496,7 +1496,13 @@ def test_ledger_append_only_not_mutated_by_export() -> None:
     # (86815a10), the growth is exactly ONE appended data_ingest line
     # (reddit_sentiment, 2026-09-04T11:31:41Z, n_posts=20) — 1 insertion,
     # 0 deletions/modifications verified via git diff before re-pinning.
-    assert digest == "0924ce2b5468de194d67bcb841a4340af1c5f06aa95e7e0e7ff458f360059572", (
+    # Re-pinned 2026-10-07 (PBO diagnostic, round 224): vs the 2026-09-04 pin
+    # (0924ce2b), the growth is exactly ONE appended exploratory row
+    # (event=exploratory, phase=pbo_diagnostic, pbo=0.872, CSCV over the 8
+    # frozen claim arms) — 1 insertion, 0 deletions/modifications verified
+    # via git diff before re-pinning; payload in
+    # reports/exploratory/pbo-diagnostic.json.
+    assert digest == "6092919b49495de18e5b8fb606b4a89f2c09ec412b7ec16dbf95dd0127171495", (
         f"ledger sha256 changed to {digest}; re-verify append-only then re-pin"
     )
 

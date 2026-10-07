@@ -1,7 +1,10 @@
 # Aionis 结果快照（RESULTS）— 当前证据边界
 
-> 状态：**v0.1 · 2026-07-31 · factual snapshot**。本页只报告仓库现有
-> ledger、审计和已记录历史材料；没有补算缺失指标。完整逐项对账见
+> 状态：**v0.2 · 2026-10-07 · factual snapshot**（v0.1 · 2026-07-31）。本页只报告仓库现有
+> ledger、审计和已记录历史材料；没有补算缺失指标。v0.2 增量：§4c Track B 七主题与
+> 强基线（面板逐位）、§4d PBO/CSCV 过拟合诊断（exploratory）、§5 E3 边界措辞更新
+> （工程就绪+影子窗，headline NO-GO 不变）、§6 索引补行；外部验证文献补注见 §0。
+> 完整逐项对账见
 > [`../reports/audits/claim-reconciliation.md`](../reports/audits/claim-reconciliation.md)。
 
 ## 0. 结论与术语
@@ -10,6 +13,11 @@ Aionis 是可证伪、PIT-aware、anti-leakage 的研究 harness，不是已验�
 B/C/D/E1 的历史结果来自 shared-fold `PurgedGroupKFold(5, embargo=21)`：它们是
 **purged cross-fitted/OOF differential**，不是 train 严格早于 test 的 chronological OOS，
 也不是 live track record。purge/embargo 防止标签区间重叠，但候选训练补集可包含测试块之后的月份。
+
+外部参照（2026-10 补注）：独立研究对大盘股截面可达成 IC 的实证上界亦接近零
+（SSRN 6742700, 2025）；Jensen-Kelly-Pedersen（*Journal of Finance*, 2023）的复制率
+~82%、收敛于 ~13 主题界定了因子研究多重检验的现实区间——本项目的"紧 CI null"落在这两支
+文献的预期之内，而非 harness 失效的信号。
 
 **Track C 联合 confirmatory（ledger #49，2026-08-05 climax）**是项目首条 chronological
 confirmatory OOS：双区域（US S&P500 + CN CSI300）联合 walk-forward，41 特征 + regime 条件化，
@@ -105,13 +113,52 @@ P1-6（2026-09-02 裁决 GO）把冻结 OOS 截面的分数十等分（D1=最低
   （45 月）；已修正为"行 t 即标签窗口 + 值规则守卫"并加确定性回归测试钉死。
   修正前后读数均非单调，headline 结论不受影响（该面板自始无账本行）。
 
+## 4c. Track B 七主题平台与强基线：面板逐位（v0.2 增补）
+
+以下读数逐位来自 committed 面板 `web/src/data/aionis/evidence.json`（裁决榜
+`/verdicts` 同源渲染），均为 **chron./explor. 或 CV-proxy 级**，无新的
+confirmatory 账本行——不是本页 §2 那族预注册 confirmatory 主张的成员。
+
+| 检验 | 点估计 | 95% CI | p | n（月） | 证据等级 |
+|---|---:|---|---:|---:|---|
+| Track B treatment（A 股七主题平台） | +0.0055 | [-0.021, +0.033] | 0.69 | 125 | chron./explor. |
+| Track B treatment − baseline 差分 | +0.0076 | [-0.004, +0.020] | 0.22 | 125 | chron./explor. |
+| 强基线 FF5（横截面五因子） | +0.0106 | —（无 CI） | — | 125 | CV-proxy |
+| 强基线 RANK（rank-aware 学习器） | +0.0154 | —（无 CI） | 0.04 | 125 | CV-proxy |
+
+判读纪律：两行 Track B 均跨零——七主题平台未显示超出基线的增量（与 §2 四相
+NULL 同向）。强基线两行是 RES-01..03 基线族 ladder 的中间读数，**仅点估计无 CI**：
+RANK 基线 p=0.04 是未做多重性校正的裸 p，且基线不是"treatment 增量"主张——
+不得当作"找到了显著因子"引用；其完整预注册路径见
+[`../tasks/active/TASK-RES-03-baseline-rank.md`](../tasks/active/TASK-RES-03-baseline-rank.md)。
+
+## 4d. PBO / CSCV 过拟合诊断：exploratory（v0.2 增补，ledger #59）
+
+对 8 个冻结主张臂（B/C/D/E1 × {treatment, base}，125 个月度 OOS rank-IC，逐位读自
+`runs/results/<sig>/ic_*.parquet`）运行 CSCV 概率回测过拟合估计
+（`purgedcv 0.1.2 probability_of_backtest_overfitting`，n_splits=16）：
+
+**PBO = 0.872**（12,870 个 CSCV 组合）。读法：若有人在样本内从 8 臂中挑"最优"，
+该选择在样本外落入中位以下的概率为 87%——不存在任何稳定的选拔边际，与 §2 的
+四相 NULL 差分完全一致。低 PBO 才会指示"有值得主张的稳定样本内赢家"。
+
+三条诚实告示（与结果一同入册 `reports/exploratory/pbo-diagnostic.json`）：
+① n_configs=8 属小试验域，CSCV/PBO 估计器自身噪声大（Witzany 2021, *Risks*；
+Arian et al. 2024, SSRN 4686376）——这是诊断，不是门；② 逐期表现映射为月度 OOS
+rank-IC（本项目的主张量纲），非交易收益；③ 输入序列已是 purged-CV 的 OOS 产物，
+CSCV 块切分复用已清洗点。**EXPLORATORY——不是 claim，不是 gate。**
+
 ## 5. 证据和适用边界
 
 - `config_committed` 先于 result、H6 和 PIT contracts 是研究治理事实；它们不把 cross-fit 自动变成
   chronological OOS，也不替代经济等价检验。
 - universe 是 2016+ 的 588/705 可解析 ticker；免费重建和未解析公司限制外部有效性。
 - SIC 是当前 SEC snapshot，不是 historical vintage；13D self-report filtering 和历史分页仍有残余误差。
-- E3 仍是 headline **NO-GO**：没有 scheduler、真实 E2E、shadow/headline result 或 live track record。
+- E3 headline 仍 **NO-GO**：没有 shadow/headline 结果、没有 live track record。v0.2
+  措辞更新：工程已就绪（`scripts/forward_score.py` / `forward_commit.py` /
+  `e3_forward_trigger.py` 在库），前向影子窗已启动——10-01 首窗完成（月报五步核验
+  PASS，见 [`../reports/audits/2026-10-06-evening-lane-monthly-review.md`](../reports/audits/2026-10-06-evening-lane-monthly-review.md)
+  专节），10-31 为第二窗；点火（headline 评估开始）是业主 GO 门（ADR-010）。
 - 当前结论只覆盖 frozen universe/features/learner/validation。严格 chronological re-analysis、强基线、
   rank-aware learner、净成本回测和 LLM ablation 都是尚未执行的新研究问题。
 
@@ -126,5 +173,9 @@ P1-6（2026-09-02 裁决 GO）把冻结 OOS 截面的分数十等分（D1=最低
 | strategy lens | #38 | `exploratory` |
 | h=10/42 sensitivity | #39 | `exploratory` |
 | **Track C 联合 confirmatory（climax）** | **#49** | **`confirmatory:first`** |
+| PBO/CSCV 过拟合诊断 | #59 | `exploratory` |
+
+Track B 七主题与强基线读数（§4c）来源于 committed 面板 `evidence.json` 而非独立
+confirmatory 账本行——见该节的证据等级标注。
 
 历史 pre-registration/ADR/ledger 不因本次术语校正而改写；冲突的旧措辞只代表历史状态。

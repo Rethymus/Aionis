@@ -40,7 +40,7 @@ Aionis 回答的问题形如："特征集 X 相比纯基本面基线，是否带
 "重跑到显著"营救。Aionis **不是**认知系统，也**不是**交易机器人。
 
 <p align="center">
-  <img src="assets/screenshots/terminal-tour.gif" alt="Aionis 研究终端漫游：效度论证链入口 → 市场全景 → 美中热力图 → 数据图集 → 校准 → 数据健康 → 证据矩阵" width="880">
+  <img src="assets/screenshots/terminal-tour.gif" alt="Aionis 研究终端漫游：效度论证链入口 → 市场全景 → 美中热力图 → 数据图集 → 校准 → 数据健康 → 证据矩阵 → 裁决榜 → 证明链" width="880">
   <br><sub><b>研究终端漫游</b> · 40 个路由的公开面孔——每页声明自己在效度论证链上的位置，每个数字携带出处（as-of 水位）</sub>
 </p>
 
@@ -171,7 +171,12 @@ AI 只承担**解释与覆盖**——绝不产生样本外信号。
     <td width="50%" align="center"><img src="assets/screenshots/terminal-data-health.png" alt="数据健康页：逐面板 as-of 水位" width="100%"><br><sub><b>数据健康</b> · 25 daily / 11 cadence / 20 frozen，逐面板公示 as-of 水位</sub></td>
     <td width="50%" align="center"><img src="assets/screenshots/terminal-regime.png" alt="语境页：宏观 regime 三卡" width="100%"><br><sub><b>语境</b> · CPI / 联邦基金利率 / VIX regime 三卡与七图</sub></td>
   </tr>
+  <tr>
+    <td width="50%" align="center"><img src="assets/screenshots/terminal-verdicts.png" alt="裁决榜页：全部预注册主张一页尽览" width="100%"><br><sub><b>裁决榜</b> · 全部主张一页榜：共享零线 CI 可视化——所有区间跨零一眼即见，CONFIRMATORY 行高亮</sub></td>
+    <td width="50%" align="center"><img src="assets/screenshots/terminal-proof.png" alt="证明链页：预注册→账本→冻结结果→裁决" width="100%"><br><sub><b>证明链</b> · 冻结先于结果的四环链，附任何人可复跑的自行验证命令</sub></td>
+  </tr>
 </table>
+
 
 <p align="center"><sub>以上均为实拍：终端截图来自与线上一致的静态构建（真实 committed 数据）。</sub></p>
 

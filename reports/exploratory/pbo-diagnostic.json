@@ -1,0 +1,59 @@
+{
+ "as_of": "2026-10-07T11:42:40+00:00",
+ "kind": "pbo-cscv-diagnostic",
+ "exploratory": true,
+ "n_configs": 8,
+ "n_obs": 125,
+ "n_splits": 16,
+ "pbo": 0.8722610722610723,
+ "n_combos": 12870,
+ "per_arm": [
+  {
+   "arm": "B:treatment",
+   "mean_ic": 0.014504971827172386,
+   "std_ic": 0.09206398904800024
+  },
+  {
+   "arm": "B:base",
+   "mean_ic": 0.015305327996855729,
+   "std_ic": 0.09465441338415403
+  },
+  {
+   "arm": "C:treatment",
+   "mean_ic": 0.008817854428537894,
+   "std_ic": 0.09593680273542815
+  },
+  {
+   "arm": "C:base",
+   "mean_ic": 0.015305327996855729,
+   "std_ic": 0.09465441338415403
+  },
+  {
+   "arm": "D:treatment",
+   "mean_ic": 0.01232548739323856,
+   "std_ic": 0.1143062859365593
+  },
+  {
+   "arm": "D:base",
+   "mean_ic": 0.015305327996855729,
+   "std_ic": 0.09465441338415403
+  },
+  {
+   "arm": "E1:treatment",
+   "mean_ic": 0.012647343544845025,
+   "std_ic": 0.09902161616196402
+  },
+  {
+   "arm": "E1:base",
+   "mean_ic": 0.015440238543539018,
+   "std_ic": 0.09473316833047052
+  }
+ ],
+ "interpretation": "PBO≈0.5 = picking the in-sample best arm is a coin flip out-of-sample; PBO well above 0.5 (as observed here) = in-sample picks systematically UNDERPERFORM out-of-sample — no selection edge at all, consistent with the four frozen NULL differentials. Low PBO would have indicated a stable in-sample winner worth claiming.",
+ "caveats": [
+  "n_configs=8 is small: CSCV/PBO estimators are themselves noisy in the small-trial regime (Witzany 2021, Risks; Arian et al. 2024, SSRN 4686376) — diagnostic, not a gate.",
+  "Per-period performance = monthly OOS rank-IC (the project's claim metric), not trading returns.",
+  "Inputs are already purged-CV OOS series; label overlap was purged upstream, CSCV block splits re-use cleaned points."
+ ],
+ "tool": "purgedcv 0.1.2 probability_of_backtest_overfitting (CSCV)"
+}

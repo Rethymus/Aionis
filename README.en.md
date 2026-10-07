@@ -47,7 +47,7 @@ cannot be "rerun-to-significance" rescued. Aionis is **not** a cognitive system
 and **not** a trading bot.
 
 <p align="center">
-  <img src="assets/screenshots/terminal-tour.gif" alt="Aionis research terminal tour: validity-argument landing → market panorama → US/CN heatmap → data atlas → calibration → data health → evidence matrix" width="880">
+  <img src="assets/screenshots/terminal-tour.gif" alt="Aionis research terminal tour: validity-argument landing → market panorama → US/CN heatmap → data atlas → calibration → data health → evidence matrix → verdict board → proof chain" width="880">
   <br><sub><b>Research terminal tour</b> · the public face across 40 routes — every page declares its place on the validity-argument chain, every number carries provenance (as-of watermarks)</sub>
 </p>
 
@@ -196,7 +196,12 @@ chain, every number carries provenance (as-of watermarks), and AI contributes
     <td width="50%" align="center"><img src="assets/screenshots/terminal-data-health.png" alt="Data health page: per-panel as-of watermarks" width="100%"><br><sub><b>Data health</b> · 25 daily / 11 cadence / 20 frozen, per-panel as-of watermarks published</sub></td>
     <td width="50%" align="center"><img src="assets/screenshots/terminal-regime.png" alt="Context page: macro regime cards" width="100%"><br><sub><b>Context</b> · CPI / fed-funds / VIX regime cards and seven charts</sub></td>
   </tr>
+  <tr>
+    <td width="50%" align="center"><img src="assets/screenshots/terminal-verdicts.png" alt="Verdict Board: every pre-registered claim on one board" width="100%"><br><sub><b>Verdict Board</b> · every claim on one board — shared-zero-line CIs, all intervals crossing zero at a glance, CONFIRMATORY row highlighted</sub></td>
+    <td width="50%" align="center"><img src="assets/screenshots/terminal-proof.png" alt="Proof chain: prereg → ledger → frozen results → verdict" width="100%"><br><sub><b>Proof chain</b> · freeze precedes result as a four-link chain, with self-verification commands anyone can rerun</sub></td>
+  </tr>
 </table>
+
 
 <p align="center"><sub>All shots are real captures: terminal screenshots come from the static build identical to the deployed site (real committed data).</sub></p>
 
