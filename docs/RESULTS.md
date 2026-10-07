@@ -155,6 +155,19 @@ IC-IR 低于目标 0，任何有限时长都不足以把该序列与零区分开
 "~36+ 年才能宣告等价"从第二个估计器独立佐证：诚实的交付物就是 null。
 payload：`reports/exploratory/mintrl-diagnostic.json`。
 
+**LLM 记忆探针（同族，探索行）**：以 Glasserman-Lin (arXiv 2309.17322) 的两种污染
+形态与 Didisheim 等（Econ. Letters 2025）的记忆测量法为方法锚，对 extraction 池
+（glm-4-flash / Qwen2.5-7B / Qwen3-Next-80B）提 4 个**截止前**（≤2023-02）"该月
+S&P 500 最大月收益成分股是谁"的 JSON 模式问句（温度 0.1，地面真值=展示面板月末
+收盘收益）。结果：**top-1 回忆 0 命中**——siliconflow 4/4 自信作答但全错（恰为
+"事后叙事"型污染的形态学证据：模型会编造貌似合理的历史赢家）；glm 2 答全错、
+2 空；modelscope 全程 HTTP 400（上游模型目录变化，计 no_answer 非拒答）。
+严格 top-1 口径的告示：低命中**不能**证明无记忆（更宽召回口径未测）；且本池为
+刻意的廉价小模型档（token 纪律），前沿模型的记忆面（Didisheim 文档化对象）不在
+本探针范围。对 E3 的语境价值：本项目 frozen OOS 全程 zero-LLM 特征 + 该池 top-1
+无记忆的实证，双保险地支撑"LLM 不进冻结 OOS"的纪律。payload：
+`reports/exploratory/llm-memory-probe.json`。
+
 ## 5. 证据和适用边界
 
 - `config_committed` 先于 result、H6 和 PIT contracts 是研究治理事实；它们不把 cross-fit 自动变成

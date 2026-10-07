@@ -1510,7 +1510,13 @@ def test_ledger_append_only_not_mutated_by_export() -> None:
     # payloads under reports/exploratory/. Rows were replayed from
     # runs/exploratory_rows_pending.jsonl after the evening lane's gate
     # window, per the concurrency procedure in state round 225.
-    assert digest == "75c906ccfac531b6d777eabebe98f0e07faef1bdd5340a1f1e40b6c2bff915f1", (
+    # Re-pinned 2026-10-08 (LLM memory probe, round 230): vs the round-225
+    # pin (75c906cc), the growth is exactly ONE appended exploratory row
+    # (llm_memory_probe — pre-cutoff top-1 winner recall over the extraction
+    # pool, 0 hits; three-state scoring) — 1 insertion, 0 deletions verified
+    # via git diff before re-pinning; payload in
+    # reports/exploratory/llm-memory-probe.json.
+    assert digest == "b8b64677478ad83dc6f467de63837460f4279215fac81b41011e9e50c8b70983", (
         f"ledger sha256 changed to {digest}; re-verify append-only then re-pin"
     )
 
