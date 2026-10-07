@@ -1,0 +1,19 @@
+{
+ "as_of": "2026-10-07T12:20:14+00:00",
+ "kind": "mintrl-diagnostic",
+ "exploratory": true,
+ "series": "ic_monthly.json combined (realized Track C monthly IC)",
+ "n_months_realized": 66,
+ "mean_ic": -0.006447799232599374,
+ "sd_ic": 0.10628802741683188,
+ "skew": -0.037443516482771756,
+ "kurtosis": 3.5330251541958297,
+ "sharpe_annualized_ic_ir": -0.2101443810612515,
+ "alpha": 0.05,
+ "target_sharpe": 0.0,
+ "min_track_record_months": null,
+ "min_track_record_years": null,
+ "interpretation": "minTRL is the record length at which the observed IC-IR would first become statistically distinguishable from zero at 95%. An astronomically large or undefined n* corroborates, from a second estimator (Bailey & Lopez de Prado 2012), the J-T look analysis conclusion: no practical horizon makes this series claim-worthy — the honest deliverable is the null.",
+ "note": "minTRL is INFINITE: the observed annualized IC-IR is below the target (0), so PSR never reaches 1-alpha at any finite record length — no horizon makes this series claim-worthy.",
+ "tool": "purgedcv 0.1.2 min_track_record_length (Bailey-LdP 2012 Eq. 11)"
+}

@@ -1,0 +1,74 @@
+{
+ "as_of": "2026-10-07T12:20:45+00:00",
+ "kind": "data-snapshot-baseline",
+ "exploratory": true,
+ "caveats": [
+  "prefix hashes are comparable only within the pinned pandas/pyarrow environment (uv.lock)",
+  "append-tolerant history check; display-only aggregates out of scope",
+  "NOT wired into any gate — owner-gated integration"
+ ],
+ "files": [
+  {
+   "name": "phase_b_fundamentals",
+   "n_rows": 453849,
+   "max_date": "2026-08-21",
+   "sha_full": "73b0e23a6e376945c5fa59bffa663928fa966c9f8859a2e49ffca698d303c13c",
+   "sha_prefix": "73b0e23a6e376945c5fa59bffa663928fa966c9f8859a2e49ffca698d303c13c"
+  },
+  {
+   "name": "phase_d_13d_events",
+   "n_rows": 2877,
+   "max_date": "2024-12-16 00:00:00",
+   "sha_full": "3f23d9b0137c09b2ca3857d37806655fcc2261fc8d6971ac020c23b888d3d131",
+   "sha_prefix": "3f23d9b0137c09b2ca3857d37806655fcc2261fc8d6971ac020c23b888d3d131"
+  },
+  {
+   "name": "phase_d_sic_map",
+   "n_rows": 585,
+   "max_date": null,
+   "sha_full": "ced2387faf9d3fa064a7d45b630c49bf2b7478325fb3a4fa34bcb992a4262766",
+   "sha_prefix": null,
+   "note": "static map — full-hash only"
+  },
+  {
+   "name": "cot_aggregate",
+   "n_rows": 5610,
+   "max_date": "2026-09-29 00:00:00",
+   "sha_full": "8e5f3f9c9c323282e2673c44c62fcf3e2f52037ae7d3e92c26725cc00c88254a",
+   "sha_prefix": "8e5f3f9c9c323282e2673c44c62fcf3e2f52037ae7d3e92c26725cc00c88254a"
+  },
+  {
+   "name": "earnings_8k_forward",
+   "n_rows": 443,
+   "max_date": "2026-08-31",
+   "sha_full": "65ac6ce60c57bb6ff82ff05da2fec49025c8c037919a965196db999664a4c5e3",
+   "sha_prefix": "65ac6ce60c57bb6ff82ff05da2fec49025c8c037919a965196db999664a4c5e3"
+  },
+  {
+   "name": "form8k_aggregate",
+   "n_rows": 245,
+   "max_date": "2026-10-06",
+   "sha_full": "91241ab20cb4c4e3f9e600d61f1950a01a658490dd7fdce2ea8772097d3e68f3",
+   "sha_prefix": "91241ab20cb4c4e3f9e600d61f1950a01a658490dd7fdce2ea8772097d3e68f3"
+  },
+  {
+   "name": "ashare_prices_csi300",
+   "n_rows": 2579664,
+   "max_date": "2026-08-04 00:00:00",
+   "sha_full": "06d2e47e4ed848edaf535b3690ba168764d5e33d384915b448c3db2aa2ed4a89",
+   "sha_prefix": "06d2e47e4ed848edaf535b3690ba168764d5e33d384915b448c3db2aa2ed4a89"
+  },
+  {
+   "name": "gdelt_news_sentiment",
+   "n_rows": null,
+   "max_date": null,
+   "sha_full": "06e86826c7cd6ffb7df21adb041ac8fe848ac7148996b698e82f02dc0b4c8f9a",
+   "sha_prefix": null,
+   "note": "full-hash only (dict-shaped source)",
+   "coverage": [
+    "2017-04",
+    "2026-10"
+   ]
+  }
+ ]
+}

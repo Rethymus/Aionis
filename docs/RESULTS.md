@@ -148,6 +148,13 @@ Arian et al. 2024, SSRN 4686376）——这是诊断，不是门；② 逐期表
 rank-IC（本项目的主张量纲），非交易收益；③ 输入序列已是 purged-CV 的 OOS 产物，
 CSCV 块切分复用已清洗点。**EXPLORATORY——不是 claim，不是 gate。**
 
+同族补强（同日，ledger 探索行）：以 Bailey-López de Prado (2012) 最短成绩单长度
+（`purgedcv.min_track_record_length`）对同一已实现序列（66 个非空月，年化 IC-IR
+= −0.21）反推"多长的 track record 才能让 PSR(0)≥95%"——**minTRL = ∞**：观测
+IC-IR 低于目标 0，任何有限时长都不足以把该序列与零区分开。这与 J-T look 分析的
+"~36+ 年才能宣告等价"从第二个估计器独立佐证：诚实的交付物就是 null。
+payload：`reports/exploratory/mintrl-diagnostic.json`。
+
 ## 5. 证据和适用边界
 
 - `config_committed` 先于 result、H6 和 PIT contracts 是研究治理事实；它们不把 cross-fit 自动变成

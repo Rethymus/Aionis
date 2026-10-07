@@ -116,6 +116,24 @@ diet 前同页等价传输 ≈3.8-4.5MB 级 → **首页 ~5 倍传输削减 + �
 - Interop 2026 / Baseline 全量外部扫描（搜索配额 2026-10-03 18:50 UTC 恢复后）。
 - Speculation Rules activationStart>0 命中实测（需脚本化 UI 轮）。
 - `/` 落地页简报的业主裁决追认（选项 B 已按建议落地，可回退）。
-- license 白名单 ISC/matplotlib 两行（轮 95 遗留业主裁决）。
+- ~~license 白名单 ISC/matplotlib 两行（轮 95 遗留业主裁决）。~~ **已落表（10-07 轮 221）：白名单 v0.3 等价认定两行入册。**
 
 边界：display lane 全程；0 ledger / 0 frozen / 0 prereg / 0 OOS。
+
+## 七、附录（2026-10-07 轮 225）：双旗舰页协议级实测
+
+`/verdicts`（裁决榜）与 `/proof`（证明链）上线后的同方法补测（浏览器
+performance API、全新鲜零缓存上下文、GH Pages 真网络；首页同场复测
+805KB 与五节基准 793KB 同量级=方法自洽）：
+
+| 页 | 总传输（冷加载） | 资源数 | DCL |
+|---|---|---|---|
+| /verdicts.html | **516KB** | 21 | 1.50s |
+| /proof.html | **517KB** | 21 | 1.89s |
+| /dashboard.html（复测锚） | 805KB | 27 | 1.33s |
+
+两页均**轻于首页**（只消费 evidence/evidence_matrix 小面板 + 共享块，
+不载 56 面板大 JSON）——旗舰页与性能战役结论一致：新路由不回退 diet 成果。
+DCL 含本机代理 RTT 抖动，传输 KB 为稳健口径。
+
+边界：display lane；0 ledger / 0 frozen / 0 OOS。
