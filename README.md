@@ -192,6 +192,16 @@ flowchart LR
   DEF 14A · Form D · 13F · IPO 424B4 · 统一申报流）、FRED/ALFRED、Tiingo、Alpaca、
   CFTC COT、GDELT 新闻、ARK 官方持仓、ApeWisdom、Reddit、沪深 300 成分等；
   美中双区域、中英双语；模型卡按 Mitchell et al. (2019) 模型卡规范导出。
+- **公开数据 API**：面板 JSON 逐字镜像于 `/api/v1/panels/`（47 个表格型面板另附
+  CSV 孪生，`csv-manifest.json` 如实列明跳过者）；OpenAPI 3.1 文档 + 逐端点
+  license/溯源/新鲜度元数据（`/api-docs`）；sitemap.xml 全量 lastModified 溯源 +
+  `/news` Atom 订阅。
+- **个人化与发现**：Watchlist 星标（⌘K 面板直达 + 首页实时价条带 + 排名变动徽标）、
+  同板块 peers、Top-Pick 徽标、逐股引用导出（含账本溯源链接）；首页"昨夜变更"条
+  逐面板公示夜更通道的真实 delta。
+- **性能（协议级实测）**：首页全新鲜加载 **793KB** 总传输（DCL 1.23s）；后续页仅付
+  增量（stock 页 **215KB**，共享块跨页缓存）；对照性能战役详见
+  [`reports/design/2026-10-02-performance-campaign.md`](reports/design/2026-10-02-performance-campaign.md)。
 - **诚实披露**：每面板 as-of 水位在 `/data-health` 逐项公示；宇宙门外 ticker 降级纯文本
   不发链；实时价格（Cloudflare Worker，`workers/prices/`）**仅限展示层**——任何研究
   模块引入实时价格 = 前视泄漏。
