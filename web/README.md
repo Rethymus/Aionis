@@ -30,7 +30,7 @@ Every page carries a **SegmentHeader** breadcrumb (its place on the chain) and a
 **provenance chip** (as-of date). The chain is the spine; around it the terminal
 has grown a PIT data directory and filing/event streams that feed corroboration.
 
-## Routes (38 under `(dashboard)/`, plus `/` — since round 116 the root renders the same overview as `/dashboard` with a canonical pointing there; no redirect)
+## Routes (39 under `(dashboard)/`, plus `/` — since round 116 the root renders the same overview as `/dashboard` with a canonical pointing there; no redirect)
 
 ### 研究链 · Argument chain
 
@@ -88,6 +88,7 @@ has grown a PIT data directory and filing/event streams that feed corroboration.
 | `/data-health` | Data health — freshness/provenance of every panel |
 | `/api-docs` | The static data API catalog |
 | `/discipline` | Guard — anti-leakage discipline (why the argument is trustworthy) |
+| `/verdicts` | Verdict Board — every pre-registered claim on one board: estimate, shared-zero-line 95% CI, verdict badge, ledger traceability |
 | `/themes` | The argument-chain diagram (ECD warrants) + factor coverage map |
 
 `/track` and `/confirmation` are tabbed hubs that embed the standalone views, so
@@ -111,7 +112,7 @@ tested/exploratory/gaps, anchored to frozen ledger rows).
 
 ```
 web/src/
-  app/(dashboard)/{route}/page.tsx — thin route shells (38 routes)
+  app/(dashboard)/{route}/page.tsx — thin route shells (39 routes)
   components/
     overview/   — Overview, provenance anchor, research glance, trust ribbon
     ai/         — attribution-card (why-null), coverage-map (display-only)

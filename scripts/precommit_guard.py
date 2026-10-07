@@ -29,7 +29,8 @@ MAX_STAGED_BYTES = 5 * 1024 * 1024  # 5 MB — evidence HTMLs are far below this
 
 def _staged_files() -> list[str]:
     proc = subprocess.run(
-        ["git", "diff", "--cached", "--name-only", "--diff-filter=ACR"],
+        # ACMR = added/copied/renamed/modified (deletes carry no content to leak)
+        ["git", "diff", "--cached", "--name-only", "--diff-filter=ACMR"],
         cwd=str(ROOT),
         capture_output=True,
         text=True,

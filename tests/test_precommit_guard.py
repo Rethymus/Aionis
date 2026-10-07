@@ -50,3 +50,25 @@ def test_env_example_template_is_allowed(tmp_path, monkeypatch) -> None:
     monkeypatch.setattr(g, "ROOT", tmp_path)
     problems = g._violations([".env.example", ".env.production"])
     assert problems == [".env.production: env file — secrets — never commit"]
+
+
+def test_staged_filter_includes_modified(tmp_path, monkeypatch) -> None:
+    """--diff-filter must keep M: modifications (e.g. un-ignoring data/,
+    editing a tracked large file) are as dangerous as additions."""
+    g = _load()
+    captured: dict[str, list[str]] = {}
+
+    class _FakeRun:
+        def __init__(self, stdout=""): self.stdout = stdout
+        def run(self, cmd, **k):
+            captured["cmd"] = cmd
+            return _FakeRun(stdout="src/aionis/cli.py\n")
+
+    fake = _FakeRun()
+    monkeypatch.setattr(g.subprocess, "run", fake.run)
+    files = g._staged_files()
+    assert files == ["src/aionis/cli.py"]
+    assert "--diff-filter=ACMR" in captured["cmd"], (
+        "staged filter must include M (modified) — the ACR variant silently "
+        "skips edits to tracked files"
+    )

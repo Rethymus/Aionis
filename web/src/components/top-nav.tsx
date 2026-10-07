@@ -17,33 +17,7 @@ import {
 import { FreshnessBadge } from "@/components/top-nav-freshness";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import {
-  ActivityIcon,
-  BookOpenIcon,
-  BuildingIcon,
-  CalendarDaysIcon,
-  ChevronDownIcon,
-  FileClockIcon,
-  FileTextIcon,
-  FlaskConicalIcon,
-  GaugeCircleIcon,
-  LandmarkIcon,
-  LayoutDashboardIcon,
-  LayoutGridIcon,
-  ListIcon,
-  MapIcon,
-  MenuIcon,
-  MoreHorizontalIcon,
-  NetworkIcon,
-  NewspaperIcon,
-  PercentIcon,
-  RocketIcon,
-  ShieldCheckIcon,
-  TerminalIcon,
-  UserRoundIcon,
-  UsersIcon,
-  ZapIcon,
-} from "lucide-react";
+import { ActivityIcon, BookOpenIcon, BuildingIcon, CalendarDaysIcon, ChevronDownIcon, FileClockIcon, FileTextIcon, FlaskConicalIcon, GaugeCircleIcon, LandmarkIcon, LayoutDashboardIcon, LayoutGridIcon, ListIcon, MapIcon, MenuIcon, MoreHorizontalIcon, NetworkIcon, NewspaperIcon, PercentIcon, RocketIcon, ScaleIcon, ShieldCheckIcon, TerminalIcon, UserRoundIcon, UsersIcon, ZapIcon } from "lucide-react";
 
 // Top navbar shell (aligned-site structure 2026-08-24): sticky h-14 frosted
 // header over the 1320px rail, grouped hover dropdowns (.navi/.drop from
@@ -113,6 +87,7 @@ export function TopNav() {
       items: [
         { title: t("nav.group.track"), url: "/track", icon: <GaugeCircleIcon className={icon()} /> },
         { title: t("nav.group.discipline"), url: "/discipline", icon: <ShieldCheckIcon className={icon()} /> },
+        { title: t("nav.verdicts"), url: "/verdicts", icon: <ScaleIcon className={icon()} /> },
         { title: t("nav.datahealth"), url: "/data-health", icon: <ActivityIcon className={icon()} /> },
         { title: t("nav.atlas"), sub: t("nav.sub.atlas"), url: "/atlas", icon: <MapIcon className={icon()} /> },
       ],
