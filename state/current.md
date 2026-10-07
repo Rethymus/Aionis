@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-07 13:15，轮 218）（守卫 线）：web/README 路由奇偶守卫——2026-09 审计的"7/38 路由腐烂"类永久钉死：**
+  该审计发现后 README 全量重写，但"每课一守卫"在此缺席——同类腐烂可静默复发。新 hermetic 三断言：README 表内路由⊆(dashboard) 实际路由（无幽灵）、实际路由⊆已文档化（无遗漏，动态下钻按首段归一）、标题计数==目录计数。现状 38=38 零差集（非空洞）；负路径实证（注入幽灵行→FAILED→复原→绿）。**边界**：验证 lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-07 11:15，轮 217）（验证 线）：反思五周期收尾——Streamlit 仪表盘五问小审计=null-with-evidence 无动作：**
   反思系列唯一未覆盖的产品面。实测：AppTest 全应用 11 tab 零异常、dashboard 套件 57 测试全绿、14 视图 72KB 结构规整（轮 139 大修后）。五问速答均无超出既有 watch 机制（P3 弃用节奏监控=轮 139 的捕获先例）的新发现——**null-with-evidence 入册（报告附录），零动作**。**反思五周期至此完整覆盖：web 终端（1-3 轮）、新增面自审（4 轮）、研究仪表盘（5 轮）。****边界**：验证 lane；0 ledger/0 frozen/0 OOS。
 
