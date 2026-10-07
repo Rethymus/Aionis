@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-07 11:15，轮 217）（验证 线）：反思五周期收尾——Streamlit 仪表盘五问小审计=null-with-evidence 无动作：**
+  反思系列唯一未覆盖的产品面。实测：AppTest 全应用 11 tab 零异常、dashboard 套件 57 测试全绿、14 视图 72KB 结构规整（轮 139 大修后）。五问速答均无超出既有 watch 机制（P3 弃用节奏监控=轮 139 的捕获先例）的新发现——**null-with-evidence 入册（报告附录），零动作**。**反思五周期至此完整覆盖：web 终端（1-3 轮）、新增面自审（4 轮）、研究仪表盘（5 轮）。****边界**：验证 lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-07 11:10，轮 216）（ci/deps 线）：双侧依赖审计复跑——轮 138 归零后新进 1 条 high 已钉：**
   source-map-js <1.2.2（GHSA-68fv-2mgg-jv7q 事件循环 DoS，next>postcss 构建期传递链=轮 138 同类暴露面）→ pnpm.overrides 钉 >=1.2.2 → 重装+复审=**零已知漏洞**；tsc 0/构建 0 错/抽测绿。**环境实录**（runbook 价值）：本机全局 pnpm 报 packages-field 错（v10 lockfile 不兼容）、npmmirror 无 audit 端点——可用调用式=`npm_config_registry=https://registry.npmjs.org npx pnpm@10 audit --prod`。Python 侧 outdated 清单在册（alphalens-reloaded 0.4.6 等均次版本，无安全通告驱动，不升级——版本钉=H6 纪律）。**边界**：ci/deps lane；0 ledger/0 frozen/0 OOS。
 
