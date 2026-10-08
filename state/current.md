@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-09 00:40，轮 242）（研究/docs 线）：第二十二波——业主解锁 E3 点火 GO 路径：预审简报 + 结构性发现（10-31 确定性 fail-closed 风险，提前 23 天抓获）：**
+  **核心发现**：9-30 影子 fail-closed 根因=`predict_session_not_in_panel`（面板边 07-31<要求 09-30），而**整条 runbook 链没有时间轴推进器**——`e3_extend_prices.py` 只补 ticker 列到现有边（代码证实 `predict_session=px.index.max()` 从不延长行）；E3 面板现停在 08-31（实测）。**推论：无干预则 10-31 确定性同类 fail-closed → 零 readiness-PASS 影子月 → GO 只能 NO-GO/延后**。08-31 当时 PASS 系历史一次性对齐。**修复提案入简报**（`--through` 延长 `_e3` 面板行，冻结基础面板字节不动=H6 无涉，预注册 §8 LIVE PROCESS 明文允许；runbook ⓪b 带 `--through 2026-10-30`；修后以 9-30 干跑重放验证越过该门——重放须在证据包前+业主授权+如实标注）。**业主预审简报**：`reports/design/2026-10-09-e3-go-prebrief.md`（§1 结构性发现+修复提案；§2 六判据全集表[锚点/现状预填/10-31 将变什么]；§3 9-30 fail-closed 的 GO 含义[门按设计工作=防泄漏胜利；字面"跑满 2 月"≠实质"2 个 PASS"]；§4 GO/NO-GO 骨架+GO≠有信号）。简报零 outcome-bearing 观测（ADR-010 边界）。**下一轮**：实施 `--through` 修复+测试+9-30 干跑重放请示。**边界**：docs/研究 lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-09 00:05，轮 241）（核验 线）：23:50 复核项闭环——自动化触发成功但未持久化（轮 104 式观察，如实入册）：**
   预约自动化 automation-08055995 **准时触发并完成运行**（runCount=1，lastRunAt=23:50:13，lifecycle=completed）——触发链验证 ✓；但**未留下任何 state 工件**（state mtime 停在 19:45 本会话编辑、无新提交）——自动化执行体只回复未落盘，与项目史"轮 104 式一次性丢失"同类（触发≠持久化）。**核验项按替代证据闭合**：通道日志记录在案且不变（`STEP data snapshot audit …: OK`，16/16，form8k +2 appended 容忍）；本会话第三次手工等效自审 exit=0 与通道一致；首实弹 PASS 的权威记录=**轮 238**（18ea78069，已提交）。**双记录设计如实降级为单权威记录+触发链验证**；对未来一次性自动化的启示（建议完成标记文件化而非依赖执行体自觉）记入观察，是否改造属 ops lane 后续轮次。**边界**：核验 lane；0 ledger/0 frozen/0 OOS。**业主门清单（7 项，建议 B2 异地备份）继续候解锁。**
 
