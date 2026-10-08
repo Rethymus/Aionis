@@ -310,6 +310,12 @@ uv run pytest -q              # hermetic test suite
 uv run ruff check             # lint must be clean
 ```
 
+All of the above have justfile aliases (`just check` / `just evidence` /
+`just verify` / `just snapshot` / `just guard` …, see
+[`CONTRIBUTING.md`](CONTRIBUTING.md) section 6; `just evidence` is the
+**only supported** way to refresh the evidence cascade — the exporters
+are sha-interlocked, never run them by hand).
+
 Each `scripts/phase_{b,c,d,e1}_run.py` is a thin wrapper over its testable
 orchestrator (`src/aionis/eval/phase_*.py`); `scripts/strategy_eval_run.py` runs
 the secondary L-S lens; and `scripts/sensitivity_horizon.py` runs the horizon

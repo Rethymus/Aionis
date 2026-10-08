@@ -274,6 +274,10 @@ uv run pytest -q              # 封闭（hermetic）测试套件
 uv run ruff check             # lint 必须干净
 ```
 
+上述命令均有 justfile 别名（`just check` / `just evidence` / `just verify` / `just snapshot` /
+`just guard`…，见 [`CONTRIBUTING.md`](CONTRIBUTING.md) §6；其中 `just evidence` 是**唯一受支持的**
+证据级联刷新方式——导出器顺序 sha 咬合，绝不手跑）。
+
 `scripts/phase_{b,c,d,e1}_run.py` 是各可测试编排器（`src/aionis/eval/phase_*.py`）的薄封装；
 `scripts/strategy_eval_run.py` 跑次级 L-S 透镜；`scripts/sensitivity_horizon.py` 跑视界扫描。
 多数脚本支持 `PHASE_X_NO_LEDGER=1` 复现模式（不写账本）。

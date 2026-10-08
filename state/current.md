@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-08 19:47，轮 240）（docs 线）：第二十波——README ⑦ justfile 指针（波 19 CONTRIBUTING 同步的收尾半边）：**
+  双语 README ⑦ 安装节在命令块后补一段：justfile 五别名 + 指向 CONTRIBUTING §6 + **`just evidence` 唯一受支持证据刷新方式**的加粗警示（三次顺序事故的教训在贡献者文档与 README 双处落地）；tag-balance 复核绿。**边界**：docs lane。**双等待态不变**：23:50 自动化复核补记（~4h）+ 业主门（建议 B2）。
+
 - **active (10-08 19:40，轮 239）（docs 线）：第十九波——CONTRIBUTING 工作流工具节（验证器指派的"按既定模式自查下一增量"产出）：**
   自查发现贡献者文档与本会话新增的六件工作流工具脱节（贡献者仍只会手跑原始命令）→ CONTRIBUTING.md 新 **§6 工作流工具表**：just 六命令（check/evidence[注明"唯一受支持的证据刷新方式，绝不手跑导出器——顺序 sha 咬合"/verify/snapshot/guard/lane[注明正常留给自动化]）+ pre-commit 激活一句 + bootstrap/source-redundancy 两个新文档链接；原 §6 清单顺延 §7。链接逐一核存在。**边界**：docs lane；0 ledger/0 frozen/0 OOS。**双等待态不变**：23:50 预约自动化复核补记（4 小时后）+ 业主门清单（建议 B2）。
 
