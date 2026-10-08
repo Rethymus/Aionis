@@ -102,7 +102,25 @@ Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
   feature branches only.
 - Stash dirty work before rebasing.
 
-## 6. Pre-commit checklist
+## 6. Workflow tooling (2026-10: the supported entrypoints)
+
+One-command entrypoints live in the `justfile` (`uv tool install just`):
+
+| Command | What it does |
+|---|---|
+| `just check` | ruff + full hermetic test suite (what CI runs) |
+| `just evidence` | re-render the evidence cascade in the CANONICAL order + contract gate — the ONLY supported way to refresh evidence interactively (never run the exporters by hand; the order is sha-interlocked) |
+| `just verify` | re-verify every frozen claim's four-link proof chain (prereg → ledger → frozen results → matrix) |
+| `just snapshot` | data-snapshot audit: has any upstream source rewritten history since the committed baseline? |
+| `just guard` | refuse staged `data/` · `*.parquet` · `.env` · >5MB (same checks as the pre-commit hook) |
+| `just lane` | manual evening-lane trigger (normally leave it to the automation) |
+
+Hooks (activate once per clone): `uv tool install pre-commit && pre-commit install` —
+ruff + the staged-artifact guard run on every commit. New machine? Start at
+[`docs/bootstrap.md`](docs/bootstrap.md). Data-source outage playbooks:
+[`docs/source-redundancy.md`](docs/source-redundancy.md).
+
+## 7. Pre-commit checklist
 
 - [ ] No secrets staged (`git status --porcelain | grep -E '\.env|secret|key'` is empty).
 - [ ] No `data/` or `*.parquet` staged.

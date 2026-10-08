@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-08 19:40，轮 239）（docs 线）：第十九波——CONTRIBUTING 工作流工具节（验证器指派的"按既定模式自查下一增量"产出）：**
+  自查发现贡献者文档与本会话新增的六件工作流工具脱节（贡献者仍只会手跑原始命令）→ CONTRIBUTING.md 新 **§6 工作流工具表**：just 六命令（check/evidence[注明"唯一受支持的证据刷新方式，绝不手跑导出器——顺序 sha 咬合"/verify/snapshot/guard/lane[注明正常留给自动化]）+ pre-commit 激活一句 + bootstrap/source-redundancy 两个新文档链接；原 §6 清单顺延 §7。链接逐一核存在。**边界**：docs lane；0 ledger/0 frozen/0 OOS。**双等待态不变**：23:50 预约自动化复核补记（4 小时后）+ 业主门清单（建议 B2）。
+
 - **active (10-08 19:35，轮 238）（核验 线）：快照绊网首实弹判定——PASS（时间门任务闭合）：**
   今晚通道（18:00 SessionStart 触发）**首次实弹运行 data snapshot audit soft 步骤**：`[19:16:11] STEP data snapshot audit (history-rewrite tripwire, round 225): OK (0.1m)`——**16 文件逐项全 OK**，其中 `form8k_aggregate OK (+2 appended)` 证明**追加容忍语义在真实数据上正确开火**（当日 fetcher 的 +2 行追加被容忍而非误报改史）；全通道 `ok_committed` 推送 `23e9cbebf`（58 文件，backup ok，唯一软败=filing_stream 已知 10m 帽类）。**手工对照自审**：同命令独立重跑 exit=0，与通道记录一致（16/16 OK，无改史）。观察方式：本会话逐段跟踪通道日志（18:07/18:32/19:01/19:29 四次轮询）实时捕获步骤落笔，先于 23:50 预约自动化完成判定——该自动化今晚仍将按其提示词复核一遍并补记（双记录均如实）。**三情形分类：情形 (a) PASS。** 轮 221 审计 A.1 对策链至此全闭环：CRSP 教训 → v0 机制（波 5）→ 通道接线（波 6）→ 基线 v1.1 扩覆盖（波 11）→ **首实弹验证（本轮）**。**边界**：核验 lane；0 ledger/0 frozen/0 OOS。**业主门清单（7 项，建议 B2 异地备份）继续候解锁。**
 
