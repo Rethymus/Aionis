@@ -194,6 +194,10 @@ S&P 500 最大月收益成分股是谁"的 JSON 模式问句（温度 0.1，地�
 | h=10/42 sensitivity | #39 | `exploratory` |
 | **Track C 联合 confirmatory（climax）** | **#49** | **`confirmatory:first`** |
 | PBO/CSCV 过拟合诊断 | #59 | `exploratory` |
+| minTRL 功效诊断（∞ 佐证） | #60 | `exploratory` |
+| 数据快照基线 v0（8 研究史缓存） | #61 | `exploratory` |
+| LLM 记忆探针（top-1 回忆 0 命中） | #62 | `exploratory` |
+| 数据快照基线 v1.1（扩 8 冻结 IC 序列，16 文件） | #63 | `exploratory` |
 
 Track B 七主题与强基线读数（§4c）来源于 committed 面板 `evidence.json` 而非独立
 confirmatory 账本行——见该节的证据等级标注。

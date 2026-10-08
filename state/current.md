@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-08 12:00，轮 232）（docs/维护 线）：第十二波——账本索引补齐 + extraction 池 modelscope 目录修复（验证器指派）：**
+  ①**RESULTS §6 账本索引**补 #60（minTRL ∞）/#61（快照基线 v0）/#62（LLM 记忆探针）/#63（基线 v1.1）四行——行号与账本逐一对账核验（波 4 建索引后新增四枚探索行的索引滞后清账）。②**modelscope 目录项修复**：波 10 探针实测发现 `Qwen/Qwen3-Next-80B-A3B-Instruct` 已被上游下架（HTTP 400 Model id unavailable）——列 `/v1/models` 现役清单（35 个，Qwen 系 9 个）→ 换**同档继任者 `Qwen/Qwen3.5-35B-A3B`**（同为 A3B 稀疏 MoE 小激活参数档，token 纪律内），providers.py 目录+注记更新（含退役原因与日期）。**验证历程如实**：全池探针复跑遇瞬态双阻（glm 429 限流+modelscope 超时——非模型 id 问题：坏 id 是秒回 400 而非超时）→ 对新模型单调用终验 **PASS**（即答 `{"ticker":"NVDA"}`，JSON 模式正常）；瞬态跑覆盖的 payload 已从 git 恢复为已入册版本。测试核验：test_reproducibility_capsule 57 绿（provider 引用按名不按 model id，无破坏）。**边界**：docs/维护 lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-08 11:50，轮 231）（ops/守卫 线）：第十一波——6 天积压的 dependabot CI 依赖清账 + 图注计数守卫 + 快照基线 v1.1：**
   ①**CI Actions 依赖升级清账**（5 个 10-02 起开放的 dependabot PR）：#2/#3/#4/#6 各自分支 Tests pass 后 squash 合入（upload-artifact 4→7、upload-pages-artifact 3→5、setup-python 5→7、git-auto-commit 5.2→7.2）；#5（checkout 4→7）分支与兄弟 PR 冲突无法自动重定→关闭后**手动按钉定纪律升级**（全仓 9 处 `@11d5960a…#v4` → `@3d3c42e5…#v7.0.1`，tag 为轻量级已核实即 commit SHA）——本波提交即触发 Tests+publish-site 在 main 上对新 action 版本的端到端验证（工作流文件自触路径）。②**根 README 图注路由数漂移修复+结构性守卫**：图注停在 40（实际 42，波 7 漏更——同类漂移已两次手工咬人）→修为 42 并新增 `test_root_readme_caption_matches_actual_route_count`（zh/en 图注计数==实际 (dashboard) 路由数，4/4 绿）。③**快照基线 v1.1**：TRACKED 扩 8 条冻结 IC 序列（runs/results/<sig>/ic_{state,base}——PBO 诊断的输入、契约测试钉死物）→ spec 增 rel 路径字段；重基线 16 文件+自审全 OK；按 runbook"有意扩覆盖"条款记探索行 #63+哨兵重钉 d983fe3c（0 删 1 增验证）。**值守核验**：昨夜（10-07）通道 ok_committed a7c68ae19 ✓；夜报自动化 runCount=40 健康 ✓。**边界**：ops/守卫/docs lane；0 frozen/0 OOS。
 

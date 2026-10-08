@@ -43,8 +43,11 @@ _CATALOG: list[dict] = [
     },
     {
         "name": "modelscope", "base_url": "https://api-inference.modelscope.cn/v1",
-        "api_key": settings.modelscope_api_key, "model": "Qwen/Qwen3-Next-80B-A3B-Instruct",
-        "priority": 3, "daily_quota": 2000, "note": "2000 calls/day (dynamic per-model)",
+        "api_key": settings.modelscope_api_key, "model": "Qwen/Qwen3.5-35B-A3B",
+        "priority": 3, "daily_quota": 2000,
+        "note": ("2000 calls/day (dynamic per-model); 2026-10-08: "
+                 "Qwen3-Next-80B-A3B retired upstream (HTTP 400) -> "
+                 "same-tier A3B successor Qwen3.5-35B-A3B"),
     },
 ]
 
