@@ -105,8 +105,22 @@ def sample_months(
     return picked[:n]
 
 
-def build_question(ym: str) -> tuple[str, str]:
+def build_question(ym: str, mode: str = "top1") -> tuple[str, str]:
     year, month = int(ym[:4]), int(ym[5:7])
+    if mode == "top5":
+        system = (
+            "You answer factual market-history questions from memory only, "
+            "without tools. Reply with a single JSON object "
+            '{\"tickers\": [...]} listing EXACTLY 5 candidate US stock '
+            "tickers, most-likely first, or {\"tickers\": []} if you are "
+            "not confident at all. No explanations."
+        )
+        user = (
+            f"From memory: list 5 candidates for the S&P 500 constituent "
+            f"company with the LARGEST single-month stock return in "
+            f"{year}-{month:02d}."
+        )
+        return system, user
     system = (
         "You answer factual market-history questions from memory only, "
         "without tools. Reply with a single JSON object {\"ticker\": ...} "
@@ -153,20 +167,55 @@ def score_answer(raw: str, truth_ticker: str, error: str | None = None) -> dict[
             "refusal": refusal, "hit": hit, "error": None}
 
 
+def score_answer_top5(raw: str, truth_ticker: str,
+                      error: str | None = None) -> dict[str, Any]:
+    """v1.2 wide-recall scoring: {"tickers": [...]} — top-5 hit iff the truth
+    ticker appears among the nominations (case-insensitive, order-free)."""
+    answer = (raw or "").strip()
+    if error or not answer:
+        return {"raw": answer[:300], "nominated": [], "status": "no_answer",
+                "refusal": False, "top5_hit": False, "top1_hit": False,
+                "error": error}
+    ticks: list[str] = []
+    try:
+        obj = json.loads(answer)
+        if isinstance(obj, dict):
+            val = obj.get("tickers")
+            if isinstance(val, list):
+                ticks = [str(x).strip() for x in val if str(x).strip()]
+    except (json.JSONDecodeError, ValueError):
+        ticks = []
+    refusal = not ticks
+    upper = [x.upper() for x in ticks]
+    truth = truth_ticker.upper()
+    top5 = truth in upper
+    top1 = bool(upper) and upper[0] == truth
+    return {"raw": answer[:300], "nominated": ticks,
+            "status": "refusal" if refusal else "answered",
+            "refusal": refusal, "top5_hit": top5, "top1_hit": top1,
+            "error": None}
+
+
 def summarize(per_provider: dict[str, list[dict[str, Any]]]) -> dict[str, Any]:
     out: dict[str, Any] = {}
     for provider, rows in per_provider.items():
         refusals = sum(1 for r in rows if r.get("status") == "refusal")
         no_answer = sum(1 for r in rows if r.get("status") == "no_answer")
-        hits = sum(1 for r in rows if r["hit"])
+        hits = sum(1 for r in rows
+                  if r.get("hit", r.get("top1_hit", False)))
         answered = len(rows) - refusals - no_answer
-        out[provider] = {
+        entry = {
             "n_questions": len(rows),
             "refusals": refusals,
             "no_answer_api": no_answer,
             "top1_hits": hits,
             "hit_rate_answered": (hits / answered) if answered else None,
         }
+        if any("top5_hit" in r for r in rows):
+            t5 = sum(1 for r in rows if r.get("top5_hit"))
+            entry["top5_hits"] = t5
+            entry["top5_rate_answered"] = (t5 / answered) if answered else None
+        out[provider] = entry
     return out
 
 
@@ -175,6 +224,7 @@ def summarize(per_provider: dict[str, list[dict[str, Any]]]) -> dict[str, Any]:
 # ---------------------------------------------------------------------------
 
 def _run_pool(months: list[str], winners: dict[str, dict[str, Any]],
+              mode: str = "top1",
               ) -> tuple[dict[str, list[dict[str, Any]]], dict[str, Any]]:
     import sys
     sys.path.insert(0, str(ROOT))
@@ -195,7 +245,7 @@ def _run_pool(months: list[str], winners: dict[str, dict[str, Any]],
         rows: list[dict[str, Any]] = []
         for ym in months:
             truth = winners[ym]["ticker"]
-            system, user = build_question(ym)
+            system, user = build_question(ym, mode=mode)
             raw, err = "", None
             for _attempt in (1, 2):  # bounded single retry (token discipline)
                 try:
@@ -209,7 +259,10 @@ def _run_pool(months: list[str], winners: dict[str, dict[str, Any]],
             usage = getattr(client, "last_usage", {})
             tokens[p.name]["prompt"] += int(usage.get("prompt_tokens", 0) or 0)
             tokens[p.name]["completion"] += int(usage.get("completion_tokens", 0) or 0)
-            row = score_answer(raw, truth, error=err)
+            if mode == "top5":
+                row = score_answer_top5(raw, truth, error=err)
+            else:
+                row = score_answer(raw, truth, error=err)
             row.update({"month": ym, "truth_ticker": truth,
                         "truth_ret": round(winners[ym]["ret"], 4)})
             rows.append(row)
@@ -222,7 +275,14 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     parser.add_argument("--no-run", action="store_true",
                         help="compute ground truth + print plan; no LLM calls")
+    parser.add_argument("--top5", action="store_true",
+                        help="v1.2 wide-recall mode: ask for 5 candidate "
+                             "tickers; top-5 hit iff truth is among them "
+                             "(separate payload file)")
     args = parser.parse_args()
+    mode = "top5" if args.top5 else "top1"
+    out_path = OUT if mode == "top1" else OUT.with_name(
+        OUT.stem + "-top5" + OUT.suffix)
 
     if not PANEL.exists():
         print("[probe] display panel absent on this machine — nothing to do")
@@ -237,7 +297,7 @@ def main() -> int:
     if args.no_run:
         return 0
 
-    per_provider, meta = _run_pool(months, winners)
+    per_provider, meta = _run_pool(months, winners, mode=mode)
     if not per_provider:
         print(f"[probe] no provider available (skipped: {meta.get('skipped_providers')})")
         return 0
@@ -246,6 +306,7 @@ def main() -> int:
     payload = {
         "as_of": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "kind": "llm-memory-probe",
+        "mode": mode,
         "exploratory": True,
         "method": (
             "Top-1 nomination recall: per pre-cutoff month (<=2023-02), each "
@@ -272,20 +333,22 @@ def main() -> int:
             "output and are logged verbatim (first 200 chars)",
         ],
     }
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=1),
-                   encoding="utf-8")
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(json.dumps(payload, ensure_ascii=False, indent=1),
+                        encoding="utf-8")
     for prov, s in summary.items():
-        print(f"[probe] {prov}: hits {s['top1_hits']}/{s['n_questions']} "
+        t5 = (f" top5 {s['top5_hits']}" if "top5_hits" in s else "")
+        print(f"[probe] {prov}: hits {s['top1_hits']}/{s['n_questions']}{t5} "
               f"(refusals {s['refusals']}, api-no-answer {s['no_answer_api']}, "
               f"hit-rate-on-answered {s['hit_rate_answered']})")
-    print(f"[probe] wrote {OUT}")
+    print(f"[probe] wrote {out_path}")
 
     if not os.environ.get("PROBE_NO_LEDGER"):
         entry = {
             "ts": payload["as_of"],
             "event": "exploratory",
             "phase": "llm_memory_probe",
+            "mode": mode,
             "n_months": len(months),
             "summary": summary,
             "notes": (

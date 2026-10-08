@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-08 14:30，轮 234）（研究-探索/docs 线）：第十四波——记忆探针 v1.2 宽召回口径（验证器指派，"低 top-1≠无记忆"告示缺口封死）：**
+  问句改"列出 5 个候选 ticker"（{"tickers":[…]} JSON 模式），真值入集即 top-5 hit（大小写不敏感、序无关）；CLI `--top5` 独立 payload（top1 文件保留不动）。**线上实跑（账本 #65，三 provider 全应答）：全池 top-5 = 0/12**——即便给足五个名额，无任何模型把真值月度赢家（LEN/TPR/PAYC/ALB 非家喻户晓型）列入；modelscope 提名呈"时期刻板篮子"形态（2020-10= TDOC/PTON/ROKU/ZM 居家概念股）=时期先验非月份记忆；siliconflow 未守 5 条指令（单条提名）但计分不受影响。zero-LLM 纪律的实证支撑从 top-1 单点升级为宽召回面。hermetic 测试 8（新增 top5 变体四路+问句模式+汇总兼容）；途中自修 summarize 键名 bug（top5 行无 "hit" 键→取 top1_hit 回退，首跑调用耗损如实入档）；哨兵重钉 eba3b438（0 删 1 增）。RESULTS §4d v1.2 段+注册表 §4 补 #65 行（#62 注记升 v1.1/#64）。**边界**：探索（0 冻结/0 OOS 主张）+docs lane。
+
 - **active (10-08 12:45，轮 233）（研究-探索/docs 线）：第十三波——注册表普查补齐 + 池修复后探针干净全跑（结论更强）+ 评分 bug 自修：**
   ①多重性注册表 §4 诊断普查补 #62（记忆探针）/#63（基线 v1.1）两行（与轮 232 修的 RESULTS §6 同型索引债，自查发现）。②**池修复后干净全跑（账本 #64）**：240s 客户端超时（思考型继任模型冷启动超默认 60s）让三腿首次齐全——**全池（含 Qwen3.5-35B-A3B）top-1 回忆仍 0 命中，结论更强**；modelscope 两问同一自信错答 TSLA（不同月同一提名=先验驱动非记忆）+两问显式 unknown。③**探针评分 bug 自修**（复跑原始记录抓获）：重试成功后 err 标志未清零→成功应答被误判 no_answer（modelscope 一问 raw 明明 {"ticker":"unknown"}）；修为成功重试即清 err+离线重评+账本行换正（误计行未入任何 pin 即丢弃，如实入注记）；修正后 summary：glm 3答0中+1无应答/siliconflow 4答0中/modelscope 2答0中+2拒答。哨兵按流程重钉 6962aa81（0 删 1 增验证）。RESULTS §4d 补复跑段（含 bug 修复披露）。验证：探针 5 测试+哨兵 1 测试绿、ruff 0。**边界**：探索（0 冻结/0 OOS 主张）+docs lane。
 

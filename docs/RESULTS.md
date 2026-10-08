@@ -175,6 +175,14 @@ Qwen3.5-35B-A3B 后三 provider 全部应答——**结论不变且更强：全�
 评分 bug（重试成功后错误标志未清零，导致成功应答被误判 no_answer——已加
 回归语义并重评）。
 
+**v1.2 宽召回口径（同日，探索行 #65）**：问句改为"列出 5 个候选 ticker"，真值落入
+候选集即记 top-5 命中——**全池 0/12**（三 provider 全应答）。这封死了"低 top-1
+命中≠无记忆"告示的主要缺口：即便给足五个名额，任何模型都没把真值月度赢家
+（LEN/TPR/PAYC/ALB——非家喻户晓型）列进去；modelscope 的提名呈"时期刻板篮子"
+形态（2020-10 提 TDOC/PTON/ROKU/ZM 居家概念股），是时期先验而非月份记忆。
+对 E3 语境：zero-LLM 纪律的实证支撑从 top-1 单点升级为宽召回面。payload：
+`reports/exploratory/llm-memory-probe-top5.json`。
+
 ## 5. 证据和适用边界
 
 - `config_committed` 先于 result、H6 和 PIT contracts 是研究治理事实；它们不把 cross-fit 自动变成

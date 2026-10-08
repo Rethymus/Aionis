@@ -1,0 +1,267 @@
+{
+ "as_of": "2026-10-08T05:03:37+00:00",
+ "kind": "llm-memory-probe",
+ "mode": "top5",
+ "exploratory": true,
+ "method": "Top-1 nomination recall: per pre-cutoff month (<=2023-02), each extraction-pool provider is asked (JSON mode, temperature 0.1) to name the S&P 500 constituent with the largest monthly return; ground truth = last-close returns over the display panel. Glasserman-Lin (arXiv 2309.17322) contamination forms; Didisheim et al. (Econ. Letters 2025) memory-measurement idea.",
+ "months": [
+  "2020-01",
+  "2020-10",
+  "2021-08",
+  "2022-05"
+ ],
+ "n_months": 4,
+ "results": {
+  "glm": [
+   {
+    "raw": "",
+    "nominated": [],
+    "status": "no_answer",
+    "refusal": false,
+    "top5_hit": false,
+    "top1_hit": false,
+    "error": "Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}",
+    "month": "2020-01",
+    "truth_ticker": "LEN",
+    "truth_ret": 0.1917
+   },
+   {
+    "raw": "{\"tickers\":[\"TSLA\",\"NVDA\",\"ZM\",\"MRNA\",\"AMD\"]}",
+    "nominated": [
+     "TSLA",
+     "NVDA",
+     "ZM",
+     "MRNA",
+     "AMD"
+    ],
+    "status": "answered",
+    "refusal": false,
+    "top5_hit": false,
+    "top1_hit": false,
+    "error": null,
+    "month": "2020-10",
+    "truth_ticker": "TPR",
+    "truth_ret": 0.4223
+   },
+   {
+    "raw": "{\"tickers\":[\"NIO\",\"COIN\",\"TSLA\",\"AMD\",\"HOOD\"]}",
+    "nominated": [
+     "NIO",
+     "COIN",
+     "TSLA",
+     "AMD",
+     "HOOD"
+    ],
+    "status": "answered",
+    "refusal": false,
+    "top5_hit": false,
+    "top1_hit": false,
+    "error": null,
+    "month": "2021-08",
+    "truth_ticker": "PAYC",
+    "truth_ret": 0.2223
+   },
+   {
+    "raw": "",
+    "nominated": [],
+    "status": "no_answer",
+    "refusal": false,
+    "top5_hit": false,
+    "top1_hit": false,
+    "error": "Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}",
+    "month": "2022-05",
+    "truth_ticker": "ALB",
+    "truth_ret": 0.3505
+   }
+  ],
+  "siliconflow": [
+   {
+    "raw": "{\"tickers\": [\"AMZN\"]}",
+    "nominated": [
+     "AMZN"
+    ],
+    "status": "answered",
+    "refusal": false,
+    "top5_hit": false,
+    "top1_hit": false,
+    "error": null,
+    "month": "2020-01",
+    "truth_ticker": "LEN",
+    "truth_ret": 0.1917
+   },
+   {
+    "raw": "{\"tickers\": [\"AMC\"]}",
+    "nominated": [
+     "AMC"
+    ],
+    "status": "answered",
+    "refusal": false,
+    "top5_hit": false,
+    "top1_hit": false,
+    "error": null,
+    "month": "2020-10",
+    "truth_ticker": "TPR",
+    "truth_ret": 0.4223
+   },
+   {
+    "raw": "{\"tickers\": [\"SQ\", \"AMC\", \"BB\", \"NOK\", \"BBBY\"]}",
+    "nominated": [
+     "SQ",
+     "AMC",
+     "BB",
+     "NOK",
+     "BBBY"
+    ],
+    "status": "answered",
+    "refusal": false,
+    "top5_hit": false,
+    "top1_hit": false,
+    "error": null,
+    "month": "2021-08",
+    "truth_ticker": "PAYC",
+    "truth_ret": 0.2223
+   },
+   {
+    "raw": "{\"tickers\": [\"MSFT\", \"AAPL\", \"AMZN\", \"META\", \"NFLX\"]}",
+    "nominated": [
+     "MSFT",
+     "AAPL",
+     "AMZN",
+     "META",
+     "NFLX"
+    ],
+    "status": "answered",
+    "refusal": false,
+    "top5_hit": false,
+    "top1_hit": false,
+    "error": null,
+    "month": "2022-05",
+    "truth_ticker": "ALB",
+    "truth_ret": 0.3505
+   }
+  ],
+  "modelscope": [
+   {
+    "raw": "{\"tickers\": [\"TSLA\", \"AMZN\", \"NFLX\", \"PYPL\", \"SHOP\"]}",
+    "nominated": [
+     "TSLA",
+     "AMZN",
+     "NFLX",
+     "PYPL",
+     "SHOP"
+    ],
+    "status": "answered",
+    "refusal": false,
+    "top5_hit": false,
+    "top1_hit": false,
+    "error": null,
+    "month": "2020-01",
+    "truth_ticker": "LEN",
+    "truth_ret": 0.1917
+   },
+   {
+    "raw": "{\"tickers\": [\"TDOC\", \"PTON\", \"ROKU\", \"ZM\", \"SHOP\"]}",
+    "nominated": [
+     "TDOC",
+     "PTON",
+     "ROKU",
+     "ZM",
+     "SHOP"
+    ],
+    "status": "answered",
+    "refusal": false,
+    "top5_hit": false,
+    "top1_hit": false,
+    "error": null,
+    "month": "2020-10",
+    "truth_ticker": "TPR",
+    "truth_ret": 0.4223
+   },
+   {
+    "raw": "{\"tickers\": [\"COIN\", \"RIVN\", \"LCID\", \"PLTR\", \"HOOD\"]}",
+    "nominated": [
+     "COIN",
+     "RIVN",
+     "LCID",
+     "PLTR",
+     "HOOD"
+    ],
+    "status": "answered",
+    "refusal": false,
+    "top5_hit": false,
+    "top1_hit": false,
+    "error": null,
+    "month": "2021-08",
+    "truth_ticker": "PAYC",
+    "truth_ret": 0.2223
+   },
+   {
+    "raw": "{\"tickers\": [\"TDOC\", \"RIVN\", \"COIN\", \"PLTR\", \"SNAP\"]}",
+    "nominated": [
+     "TDOC",
+     "RIVN",
+     "COIN",
+     "PLTR",
+     "SNAP"
+    ],
+    "status": "answered",
+    "refusal": false,
+    "top5_hit": false,
+    "top1_hit": false,
+    "error": null,
+    "month": "2022-05",
+    "truth_ticker": "ALB",
+    "truth_ret": 0.3505
+   }
+  ]
+ },
+ "summary": {
+  "glm": {
+   "n_questions": 4,
+   "refusals": 0,
+   "no_answer_api": 2,
+   "top1_hits": 0,
+   "hit_rate_answered": 0.0,
+   "top5_hits": 0,
+   "top5_rate_answered": 0.0
+  },
+  "siliconflow": {
+   "n_questions": 4,
+   "refusals": 0,
+   "no_answer_api": 0,
+   "top1_hits": 0,
+   "hit_rate_answered": 0.0,
+   "top5_hits": 0,
+   "top5_rate_answered": 0.0
+  },
+  "modelscope": {
+   "n_questions": 4,
+   "refusals": 0,
+   "no_answer_api": 0,
+   "top1_hits": 0,
+   "hit_rate_answered": 0.0,
+   "top5_hits": 0,
+   "top5_rate_answered": 0.0
+  }
+ },
+ "token_usage": {
+  "glm": {
+   "prompt": 447,
+   "completion": 3099
+  },
+  "siliconflow": {
+   "prompt": 436,
+   "completion": 61
+  },
+  "modelscope": {
+   "prompt": 452,
+   "completion": 45823
+  }
+ },
+ "skipped_providers": {},
+ "caveats": [
+  "top-1 nomination is a STRICT recall measure — a low hit rate does not prove absence of memorization (broader recall metrics per Didisheim et al. are future work)",
+  "ground truth covers the display panel's ticker set for that month (winner among listed names with consecutive month-ends)",
+  "EXPLORATORY diagnostic for E3 forward-live context; not a claim, not a gate; provider answers are themselves model output and are logged verbatim (first 200 chars)"
+ ]
+}

@@ -89,3 +89,40 @@ def test_summarize_math_three_states(probe) -> None:
     assert s["glm"]["no_answer_api"] == 1
     assert s["glm"]["top1_hits"] == 1
     assert s["glm"]["hit_rate_answered"] == pytest.approx(0.5)
+
+
+def test_score_answer_top5_variants(probe) -> None:
+    good = probe.score_answer_top5(
+        json.dumps({"tickers": ["AAPL", "TPR", "MSFT", "NVDA", "TSLA"]}), "TPR")
+    assert good["status"] == "answered" and good["top5_hit"]
+    assert not good["top1_hit"]  # truth present but not first
+    first = probe.score_answer_top5(
+        json.dumps({"tickers": ["TPR", "AAPL", "MSFT", "NVDA", "TSLA"]}), "TPR")
+    assert first["top1_hit"] and first["top5_hit"]
+    lower = probe.score_answer_top5(
+        json.dumps({"tickers": ["aapl", "tpr"]}), "TPR")
+    assert lower["top5_hit"]  # case-insensitive
+    miss = probe.score_answer_top5(
+        json.dumps({"tickers": ["AAPL", "MSFT", "NVDA"]}), "TPR")
+    assert not miss["top5_hit"] and miss["status"] == "answered"
+    refuse = probe.score_answer_top5(json.dumps({"tickers": []}), "TPR")
+    assert refuse["status"] == "refusal" and not refuse["top5_hit"]
+    noans = probe.score_answer_top5("", "TPR", error="Error 400")
+    assert noans["status"] == "no_answer"
+
+
+def test_build_question_top5_mode(probe) -> None:
+    system, user = probe.build_question("2020-10", mode="top5")
+    assert "5 candidate" in user.lower() and "tickers" in system
+    system1, _ = probe.build_question("2020-10", mode="top1")
+    assert "ticker" in system1 and "JSON" in system1
+
+
+def test_summarize_includes_top5_when_present(probe) -> None:
+    rows = [
+        {"refusal": False, "hit": False, "top5_hit": True},
+        {"refusal": False, "hit": False, "top5_hit": False},
+        {"refusal": False, "hit": False},  # legacy top1-only row
+    ]
+    s = probe.summarize({"glm": rows})
+    assert s["glm"]["top5_hits"] == 1
