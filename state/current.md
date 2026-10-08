@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-08 16:05，轮 236）（docs/守卫 线）：第十六波——§6 索引 #64/#65 补齐 + 索引滞后守卫（漂移类结构性天亡，验证器指派）：**
+  ①RESULTS §6 补 #64（记忆探针池修复后干净复跑）/#65（v1.2 top-5 宽召回 0/12）两行——行号对账核验；顺手把 h=10/42 行的历史口径修正为 **#36/#39**（账本实有两行 sensitivity_horizon，旧表只引 #39）。②**新守卫 `tests/test_results_ledger_index.py`**（该漂移类本会话已咬两次——轮 232 补到 #63 后轮 233/234 的 #64/#65 又漏）：双断言——BOUND（§6 索引最大号 ≥ 账本 exploratory 最大行号：新探索行不可能落索引之外，无历史误报）+ MODERN（≥#59 逐行入索引：现代"一诊断一行"约定精确覆盖）；正则处理单元格空白/粗体/#N/#N/#M 组合。正路径验证：15 个索引号含 #36 修正后与 12 个 exploratory 行对账全过；负路径即漂移场景断言必假（守卫存在的意义）。ruff 0、2 测试绿。**边界**：docs/守卫 lane；0 ledger/0 frozen/0 OOS。**业主门清单（7 项，建议 B2）继续候解锁。**
+
 - **active (10-08 15:20，轮 235）（docs 线）：第十五波——数据源冗余映射与切换 Runbook（审计 §C 预演第 3 项对策兑现，验证器指派）：**
   `docs/source-redundancy.md` v1.0：**逐条以内建代码路径为准**（非愿望清单）——§0 代码级备役三件（美股价格 Tiingo→Alpaca 逐符号自动兜底[market.py::fetch_price_series 实读确认]、LLM 池 router cooldown 故障转移、面板 retain+双绊网）；§1 逐源备役清单表（11 源×真实备役性质分级：✅自动/⚠️同机构双端点/❌无备役但低风险/❌不可重取）；§2 六个断供剧本（Tiingo key/FRED key/GDELT 长停[轮 211 检测联动]/EDGAR 改版/LLM 模型退役[轮 232 实战复盘为标准剧本]/baostock 断供[E3 fail-closed 语义]）；§4 诚实边界三则——**修正审计预演原文的过度乐观**（"FRED↔ALFRED 双通道"同机构非独立冗余，如实降级）+ 新备役源必须先过 7 门准入不在断供现场临时接（反泄漏纪律延伸）。注册：ops-local-refresh.md 失败模式节+bootstrap.md §7 双链接；引用文件路径逐一核存在。**边界**：docs lane；0 ledger/0 frozen/0 OOS。**业主门清单（7 项，建议 B2 异地备份）继续候解锁。**
 

@@ -206,13 +206,15 @@ Qwen3.5-35B-A3B 后三 provider 全部应答——**结论不变且更强：全�
 | Phase D | #34 | `confirmatory:first` |
 | Phase E1 | #37 | `confirmatory:first` |
 | strategy lens | #38 | `exploratory` |
-| h=10/42 sensitivity | #39 | `exploratory` |
+| h=10/42 sensitivity（两行：首跑+复算） | #36/#39 | `exploratory` |
 | **Track C 联合 confirmatory（climax）** | **#49** | **`confirmatory:first`** |
 | PBO/CSCV 过拟合诊断 | #59 | `exploratory` |
 | minTRL 功效诊断（∞ 佐证） | #60 | `exploratory` |
 | 数据快照基线 v0（8 研究史缓存） | #61 | `exploratory` |
-| LLM 记忆探针（top-1 回忆 0 命中） | #62 | `exploratory` |
+| LLM 记忆探针 v1.1（top-1 回忆 0 命中） | #62 | `exploratory` |
 | 数据快照基线 v1.1（扩 8 冻结 IC 序列，16 文件） | #63 | `exploratory` |
+| LLM 记忆探针池修复后干净复跑（三腿齐全，结论更强） | #64 | `exploratory` |
+| LLM 记忆探针 v1.2（top-5 宽召回，全池 0/12） | #65 | `exploratory` |
 
 Track B 七主题与强基线读数（§4c）来源于 committed 面板 `evidence.json` 而非独立
 confirmatory 账本行——见该节的证据等级标注。
