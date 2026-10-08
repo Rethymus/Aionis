@@ -138,6 +138,10 @@ Worker (display-only), unchanged.
 
 ## Failure modes & recovery
 
+> 逐源备役与断供切换剧本（Tiingo↔Alpaca、FRED/ALFRED、GDELT、EDGAR、baostock、
+> LLM 模型退役等）见 [`source-redundancy.md`](source-redundancy.md)——本节管通道级
+> 失败模式，那份管源级断供。
+
 | Symptom | Behavior | Recovery |
 |---|---|---|
 | fetcher error/timeout | soft-fail, keep going (CI semantics) | next evening incremental |

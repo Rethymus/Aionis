@@ -67,6 +67,6 @@ just fetch               # 一次性抓取 588 只 PIT 宇宙（可断点续跑�
 
 ## 7. 晚间通道（可选，接手运维时）
 
-见 `docs/ops-local-refresh.md`（架构/失败模式/手动操作）与
+见 `docs/ops-local-refresh.md`（架构/失败模式/手动操作）、`docs/source-redundancy.md`（数据源备役与断供切换剧本）与
 `docs/ops-offsite-backup.md`（异地备份——**新机器接手后第一件事是确认备份
 仓库可写**）。

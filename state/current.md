@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-08 15:20，轮 235）（docs 线）：第十五波——数据源冗余映射与切换 Runbook（审计 §C 预演第 3 项对策兑现，验证器指派）：**
+  `docs/source-redundancy.md` v1.0：**逐条以内建代码路径为准**（非愿望清单）——§0 代码级备役三件（美股价格 Tiingo→Alpaca 逐符号自动兜底[market.py::fetch_price_series 实读确认]、LLM 池 router cooldown 故障转移、面板 retain+双绊网）；§1 逐源备役清单表（11 源×真实备役性质分级：✅自动/⚠️同机构双端点/❌无备役但低风险/❌不可重取）；§2 六个断供剧本（Tiingo key/FRED key/GDELT 长停[轮 211 检测联动]/EDGAR 改版/LLM 模型退役[轮 232 实战复盘为标准剧本]/baostock 断供[E3 fail-closed 语义]）；§4 诚实边界三则——**修正审计预演原文的过度乐观**（"FRED↔ALFRED 双通道"同机构非独立冗余，如实降级）+ 新备役源必须先过 7 门准入不在断供现场临时接（反泄漏纪律延伸）。注册：ops-local-refresh.md 失败模式节+bootstrap.md §7 双链接；引用文件路径逐一核存在。**边界**：docs lane；0 ledger/0 frozen/0 OOS。**业主门清单（7 项，建议 B2 异地备份）继续候解锁。**
+
 - **active (10-08 14:30，轮 234）（研究-探索/docs 线）：第十四波——记忆探针 v1.2 宽召回口径（验证器指派，"低 top-1≠无记忆"告示缺口封死）：**
   问句改"列出 5 个候选 ticker"（{"tickers":[…]} JSON 模式），真值入集即 top-5 hit（大小写不敏感、序无关）；CLI `--top5` 独立 payload（top1 文件保留不动）。**线上实跑（账本 #65，三 provider 全应答）：全池 top-5 = 0/12**——即便给足五个名额，无任何模型把真值月度赢家（LEN/TPR/PAYC/ALB 非家喻户晓型）列入；modelscope 提名呈"时期刻板篮子"形态（2020-10= TDOC/PTON/ROKU/ZM 居家概念股）=时期先验非月份记忆；siliconflow 未守 5 条指令（单条提名）但计分不受影响。zero-LLM 纪律的实证支撑从 top-1 单点升级为宽召回面。hermetic 测试 8（新增 top5 变体四路+问句模式+汇总兼容）；途中自修 summarize 键名 bug（top5 行无 "hit" 键→取 top1_hit 回退，首跑调用耗损如实入档）；哨兵重钉 eba3b438（0 删 1 增）。RESULTS §4d v1.2 段+注册表 §4 补 #65 行（#62 注记升 v1.1/#64）。**边界**：探索（0 冻结/0 OOS 主张）+docs lane。
 
