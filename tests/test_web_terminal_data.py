@@ -1521,7 +1521,13 @@ def test_ledger_append_only_not_mutated_by_export() -> None:
     # exploratory row (data_snapshot_baseline v1.1 re-baseline — coverage
     # extended to the 8 frozen IC series) — 1 insertion, 0 deletions
     # verified via git diff before re-pinning.
-    assert digest == "d983fe3c8be520558c74deb08c426d2fb602c76d5ccdc15d9d5c9427d277774b", (
+    # Re-pinned 2026-10-08 (LLM memory probe clean rerun, round 233): vs the
+    # round-231 pin (d983fe3c), the growth is exactly ONE appended
+    # exploratory row (llm_memory_probe clean rerun with the fixed pool —
+    # 0 top-1 hits pool-wide incl. Qwen3.5-35B; the interim miscounted run
+    # was dropped before commit, never landing in any pin) — 1 insertion,
+    # 0 deletions verified via git diff before re-pinning.
+    assert digest == "6962aa8140faa0d9b79f6a80f46169eef6523f233338b44b6044a07f7c258e17", (
         f"ledger sha256 changed to {digest}; re-verify append-only then re-pin"
     )
 

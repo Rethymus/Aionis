@@ -1,5 +1,5 @@
 {
- "as_of": "2026-10-07T14:32:23+00:00",
+ "as_of": "2026-10-08T04:22:54+00:00",
  "kind": "llm-memory-probe",
  "exploratory": true,
  "method": "Top-1 nomination recall: per pre-cutoff month (<=2023-02), each extraction-pool provider is asked (JSON mode, temperature 0.1) to name the S&P 500 constituent with the largest monthly return; ground truth = last-close returns over the display panel. Glasserman-Lin (arXiv 2309.17322) contamination forms; Didisheim et al. (Econ. Letters 2025) memory-measurement idea.",
@@ -13,41 +13,41 @@
  "results": {
   "glm": [
    {
-    "raw": "{\"ticker\":\"SAVE\"}",
-    "parsed_ticker": "SAVE",
-    "status": "answered",
+    "raw": "",
+    "parsed_ticker": null,
+    "status": "no_answer",
     "refusal": false,
     "hit": false,
-    "error": null,
+    "error": "Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}",
     "month": "2020-01",
     "truth_ticker": "LEN",
     "truth_ret": 0.1917
    },
    {
-    "raw": "",
-    "parsed_ticker": null,
-    "status": "no_answer",
+    "raw": "{\"ticker\":\"CCL\"}",
+    "parsed_ticker": "CCL",
+    "status": "answered",
     "refusal": false,
     "hit": false,
-    "error": "Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}",
+    "error": null,
     "month": "2020-10",
     "truth_ticker": "TPR",
     "truth_ret": 0.4223
    },
    {
-    "raw": "",
-    "parsed_ticker": null,
-    "status": "no_answer",
+    "raw": "{\"ticker\":\"NVDA\"}",
+    "parsed_ticker": "NVDA",
+    "status": "answered",
     "refusal": false,
     "hit": false,
-    "error": "Error code: 429 - {'error': {'code': '1305', 'message': '该模型当前访问量过大，请您稍后再试'}}",
+    "error": null,
     "month": "2021-08",
     "truth_ticker": "PAYC",
     "truth_ret": 0.2223
    },
    {
-    "raw": "{\"ticker\":\"NVDA\"}",
-    "parsed_ticker": "NVDA",
+    "raw": "{\"ticker\":\"TSLA\"}",
+    "parsed_ticker": "TSLA",
     "status": "answered",
     "refusal": false,
     "hit": false,
@@ -59,8 +59,8 @@
   ],
   "siliconflow": [
    {
-    "raw": "{\"ticker\": \"PLTR\"}",
-    "parsed_ticker": "PLTR",
+    "raw": "{\"ticker\": \"AMZN\"}",
+    "parsed_ticker": "AMZN",
     "status": "answered",
     "refusal": false,
     "hit": false,
@@ -70,8 +70,8 @@
     "truth_ret": 0.1917
    },
    {
-    "raw": "{\n  \"ticker\": \"BBY\"\n}",
-    "parsed_ticker": "BBY",
+    "raw": "{\n  \"ticker\": \"PLTR\"\n}",
+    "parsed_ticker": "PLTR",
     "status": "answered",
     "refusal": false,
     "hit": false,
@@ -92,8 +92,8 @@
     "truth_ret": 0.2223
    },
    {
-    "raw": "{\"ticker\": \"AMC\"}",
-    "parsed_ticker": "AMC",
+    "raw": "{\"ticker\": \"AAPL\"}",
+    "parsed_ticker": "AAPL",
     "status": "answered",
     "refusal": false,
     "hit": false,
@@ -105,45 +105,45 @@
   ],
   "modelscope": [
    {
-    "raw": "",
-    "parsed_ticker": null,
-    "status": "no_answer",
+    "raw": "{\"ticker\": \"TSLA\"}",
+    "parsed_ticker": "TSLA",
+    "status": "answered",
     "refusal": false,
     "hit": false,
-    "error": "Error code: 400 - {'error': {'message': 'Model id : Qwen/Qwen3-Next-80B-A3B-Instruct , has no provider supported', 'requ",
+    "error": null,
     "month": "2020-01",
     "truth_ticker": "LEN",
     "truth_ret": 0.1917
    },
    {
-    "raw": "",
-    "parsed_ticker": null,
-    "status": "no_answer",
+    "raw": "{\"ticker\": \"TSLA\"}",
+    "parsed_ticker": "TSLA",
+    "status": "answered",
     "refusal": false,
     "hit": false,
-    "error": "Error code: 400 - {'error': {'message': 'Model id : Qwen/Qwen3-Next-80B-A3B-Instruct , has no provider supported', 'requ",
+    "error": null,
     "month": "2020-10",
     "truth_ticker": "TPR",
     "truth_ret": 0.4223
    },
    {
-    "raw": "",
-    "parsed_ticker": null,
-    "status": "no_answer",
-    "refusal": false,
+    "raw": "{\"ticker\": \"unknown\"}",
+    "parsed_ticker": "unknown",
+    "status": "refusal",
+    "refusal": true,
     "hit": false,
-    "error": "Error code: 400 - {'error': {'message': 'Model id : Qwen/Qwen3-Next-80B-A3B-Instruct , has no provider supported', 'requ",
+    "error": null,
     "month": "2021-08",
     "truth_ticker": "PAYC",
     "truth_ret": 0.2223
    },
    {
-    "raw": "",
-    "parsed_ticker": null,
-    "status": "no_answer",
-    "refusal": false,
+    "raw": "{\"ticker\": \"unknown\"}",
+    "parsed_ticker": "unknown",
+    "status": "refusal",
+    "refusal": true,
     "hit": false,
-    "error": "Error code: 400 - {'error': {'message': 'Model id : Qwen/Qwen3-Next-80B-A3B-Instruct , has no provider supported', 'requ",
+    "error": null,
     "month": "2022-05",
     "truth_ticker": "ALB",
     "truth_ret": 0.3505
@@ -154,7 +154,7 @@
   "glm": {
    "n_questions": 4,
    "refusals": 0,
-   "no_answer_api": 2,
+   "no_answer_api": 1,
    "top1_hits": 0,
    "hit_rate_answered": 0.0
   },
@@ -167,24 +167,24 @@
   },
   "modelscope": {
    "n_questions": 4,
-   "refusals": 0,
-   "no_answer_api": 4,
+   "refusals": 2,
+   "no_answer_api": 0,
    "top1_hits": 0,
-   "hit_rate_answered": null
+   "hit_rate_answered": 0.0
   }
  },
  "token_usage": {
   "glm": {
-   "prompt": 544,
-   "completion": 2507
+   "prompt": 408,
+   "completion": 2630
   },
   "siliconflow": {
    "prompt": 384,
    "completion": 30
   },
   "modelscope": {
-   "prompt": 0,
-   "completion": 0
+   "prompt": 400,
+   "completion": 26303
   }
  },
  "skipped_providers": {},
@@ -192,8 +192,8 @@
   "top-1 nomination is a STRICT recall measure — a low hit rate does not prove absence of memorization (broader recall metrics per Didisheim et al. are future work)",
   "ground truth covers the display panel's ticker set for that month (winner among listed names with consecutive month-ends)",
   "EXPLORATORY diagnostic for E3 forward-live context; not a claim, not a gate; provider answers are themselves model output and are logged verbatim (first 200 chars)",
-  "run note (2026-10-08): modelscope returned HTTP 400 (model id unavailable upstream) for all 4 calls — those rows are no_answer, not refusals; the recall read rests on glm + siliconflow."
+  "run note (2026-10-08 clean rerun, pool fixed): modelscope leg now live (Qwen3.5-35B-A3B) — 2 confident wrong 'TSLA' nominations for different months (prior-driven, not memory), 1-2 explicit unknown, 1 timeout. Conclusion unchanged: 0 top-1 hits across the whole pool incl. the larger successor model."
  ],
- "rescored_as_of": "2026-10-07T14:34:15+00:00",
- "scoring_semantics": "three-state: answered / refusal (explicit unknown) / no_answer (api error or empty)"
+ "rescored_as_of": "2026-10-08T04:23:33+00:00",
+ "scoring_semantics": "three-state: answered / refusal (explicit unknown) / no_answer (api error with no raw; a successful retry clears the error flag)"
 }

@@ -168,6 +168,13 @@ S&P 500 最大月收益成分股是谁"的 JSON 模式问句（温度 0.1，地�
 无记忆的实证，双保险地支撑"LLM 不进冻结 OOS"的纪律。payload：
 `reports/exploratory/llm-memory-probe.json`。
 
+**池修复后干净复跑（2026-10-08，探索行 #64）**：modelscope 换入现役继任者
+Qwen3.5-35B-A3B 后三 provider 全部应答——**结论不变且更强：全池（含更大的
+继任模型）top-1 回忆仍 0 命中**；modelscope 两问给出同一自信错答 TSLA
+（不同月份同一提名=先验驱动而非记忆）、两问显式 unknown。途中修复探针一处
+评分 bug（重试成功后错误标志未清零，导致成功应答被误判 no_answer——已加
+回归语义并重评）。
+
 ## 5. 证据和适用边界
 
 - `config_committed` 先于 result、H6 和 PIT contracts 是研究治理事实；它们不把 cross-fit 自动变成

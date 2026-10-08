@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-08 12:45，轮 233）（研究-探索/docs 线）：第十三波——注册表普查补齐 + 池修复后探针干净全跑（结论更强）+ 评分 bug 自修：**
+  ①多重性注册表 §4 诊断普查补 #62（记忆探针）/#63（基线 v1.1）两行（与轮 232 修的 RESULTS §6 同型索引债，自查发现）。②**池修复后干净全跑（账本 #64）**：240s 客户端超时（思考型继任模型冷启动超默认 60s）让三腿首次齐全——**全池（含 Qwen3.5-35B-A3B）top-1 回忆仍 0 命中，结论更强**；modelscope 两问同一自信错答 TSLA（不同月同一提名=先验驱动非记忆）+两问显式 unknown。③**探针评分 bug 自修**（复跑原始记录抓获）：重试成功后 err 标志未清零→成功应答被误判 no_answer（modelscope 一问 raw 明明 {"ticker":"unknown"}）；修为成功重试即清 err+离线重评+账本行换正（误计行未入任何 pin 即丢弃，如实入注记）；修正后 summary：glm 3答0中+1无应答/siliconflow 4答0中/modelscope 2答0中+2拒答。哨兵按流程重钉 6962aa81（0 删 1 增验证）。RESULTS §4d 补复跑段（含 bug 修复披露）。验证：探针 5 测试+哨兵 1 测试绿、ruff 0。**边界**：探索（0 冻结/0 OOS 主张）+docs lane。
+
 - **active (10-08 12:00，轮 232）（docs/维护 线）：第十二波——账本索引补齐 + extraction 池 modelscope 目录修复（验证器指派）：**
   ①**RESULTS §6 账本索引**补 #60（minTRL ∞）/#61（快照基线 v0）/#62（LLM 记忆探针）/#63（基线 v1.1）四行——行号与账本逐一对账核验（波 4 建索引后新增四枚探索行的索引滞后清账）。②**modelscope 目录项修复**：波 10 探针实测发现 `Qwen/Qwen3-Next-80B-A3B-Instruct` 已被上游下架（HTTP 400 Model id unavailable）——列 `/v1/models` 现役清单（35 个，Qwen 系 9 个）→ 换**同档继任者 `Qwen/Qwen3.5-35B-A3B`**（同为 A3B 稀疏 MoE 小激活参数档，token 纪律内），providers.py 目录+注记更新（含退役原因与日期）。**验证历程如实**：全池探针复跑遇瞬态双阻（glm 429 限流+modelscope 超时——非模型 id 问题：坏 id 是秒回 400 而非超时）→ 对新模型单调用终验 **PASS**（即答 `{"ticker":"NVDA"}`，JSON 模式正常）；瞬态跑覆盖的 payload 已从 git 恢复为已入册版本。测试核验：test_reproducibility_capsule 57 绿（provider 引用按名不按 model id，无破坏）。**边界**：docs/维护 lane；0 ledger/0 frozen/0 OOS。
 

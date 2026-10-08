@@ -188,7 +188,9 @@ def _run_pool(months: list[str], winners: dict[str, dict[str, Any]],
         if not p.api_key:
             skipped[p.name] = "no api key in settings"
             continue
-        client = OpenAICompatClient(p)
+        # thinking-heavy successors (e.g. Qwen3.5) can exceed the
+        # 60s default on cold starts — the probe is rare, give it room.
+        client = OpenAICompatClient(p, timeout=240.0)
         tokens[p.name] = {"prompt": 0, "completion": 0}
         rows: list[dict[str, Any]] = []
         for ym in months:
@@ -199,6 +201,7 @@ def _run_pool(months: list[str], winners: dict[str, dict[str, Any]],
                 try:
                     raw = client._chat(system, user)  # noqa: SLF001 — probe is
                     # deliberately thin over the client's JSON-mode chat.
+                    err = None  # a successful retry clears the earlier error
                     break
                 except Exception as exc:  # noqa: BLE001 — log & bounded retry
                     err = str(exc)[:120]
