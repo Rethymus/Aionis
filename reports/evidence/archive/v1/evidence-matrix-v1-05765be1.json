@@ -4,34 +4,33 @@
       "bytes": 24397,
       "id": "atlas-claim-v1",
       "path": "reports/evidence/atlas-claim-v1.html",
-      "sha256": "202e85bc3898434758d2134287d63480a7b978b8858262c293934364457b721f"
+      "sha256": "affb14b02c8313c257cb240e67b8bd5d70b5de8686d56d0164c6aacb3659629b"
     },
     {
       "bytes": 47261,
       "id": "research-dossier-v1",
       "path": "reports/evidence/research-dossier-v1.html",
-      "sha256": "36b23278171c7ac1339b16537cf0ba3decf61098e8ab43c4e2b689496910f5d0"
+      "sha256": "6b1ecac6f04bceab7dbb3a90e09aadd0bafcb42306e55f85e894fe030fb1d75c"
     },
     {
       "bytes": 25101,
       "id": "research-dossier-b-v1",
       "path": "reports/evidence/research-dossier-b-v1.html",
-      "sha256": "980ac064a70aa4ffbcedec0d61780e428a5829df49fa4b8618ef9f9b9f1ebc44"
+      "sha256": "036f9074bcbc8b8b0411161035411ea73906412e7465955eea76e8c77bc4b9c1"
     },
     {
       "bytes": 25296,
       "id": "research-dossier-d-v1",
       "path": "reports/evidence/research-dossier-d-v1.html",
-      "sha256": "eb6fe3ef84cfae4964c5de34937a681baf942b1229949f4a154b50f13783c9a7"
+      "sha256": "36b9c0a531161ffc3e43f8f60151628c322fe8053dc1ede54988a3785bf2ee0a"
     },
     {
       "bytes": 25295,
       "id": "research-dossier-e1-v1",
       "path": "reports/evidence/research-dossier-e1-v1.html",
-      "sha256": "e540165fe7a9742605836eaa3da7f32ffd4339756158c7534068277bb47d8af0"
+      "sha256": "8c878d6d94ce217f3ce85f833322418bea75eaa908bfe500eeb3dd6c9bd120f9"
     }
   ],
-  "as_of": "2026-08-05",
   "claims": {
     "B": {
       "ci_hi": 0.008972245083013938,
@@ -104,6 +103,5 @@
   },
   "generator": "scripts/export_evidence_html.py",
   "id": "evidence-matrix-v1",
-  "snapshot_ts": "2026-10-08T11:16:11.276757+00:00",
   "version": "v1"
 }

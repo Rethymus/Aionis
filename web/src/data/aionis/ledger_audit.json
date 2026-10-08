@@ -318,10 +318,76 @@
       "metric": "",
       "h6": null,
       "frozen_before_result": false
+    },
+    {
+      "row": 60,
+      "ts": "2026-10-07",
+      "event": "exploratory",
+      "phase": "mintrl_diagnostic",
+      "config_sig_short": "",
+      "verdict": "",
+      "metric": "",
+      "h6": null,
+      "frozen_before_result": false
+    },
+    {
+      "row": 61,
+      "ts": "2026-10-07",
+      "event": "exploratory",
+      "phase": "data_snapshot_baseline",
+      "config_sig_short": "",
+      "verdict": "",
+      "metric": "",
+      "h6": null,
+      "frozen_before_result": false
+    },
+    {
+      "row": 62,
+      "ts": "2026-10-07",
+      "event": "exploratory",
+      "phase": "llm_memory_probe",
+      "config_sig_short": "",
+      "verdict": "",
+      "metric": "",
+      "h6": null,
+      "frozen_before_result": false
+    },
+    {
+      "row": 63,
+      "ts": "2026-10-08",
+      "event": "exploratory",
+      "phase": "data_snapshot_baseline",
+      "config_sig_short": "",
+      "verdict": "",
+      "metric": "",
+      "h6": null,
+      "frozen_before_result": false
+    },
+    {
+      "row": 64,
+      "ts": "2026-10-08",
+      "event": "exploratory",
+      "phase": "llm_memory_probe",
+      "config_sig_short": "",
+      "verdict": "",
+      "metric": "",
+      "h6": null,
+      "frozen_before_result": false
+    },
+    {
+      "row": 65,
+      "ts": "2026-10-08",
+      "event": "exploratory",
+      "phase": "llm_memory_probe",
+      "config_sig_short": "",
+      "verdict": "",
+      "metric": "",
+      "h6": null,
+      "frozen_before_result": false
     }
   ],
-  "n_total_rows": 59,
-  "n_claim_rows": 29,
+  "n_total_rows": 66,
+  "n_claim_rows": 35,
   "identity_note": "config_committed rows always precede their matching result row in this timeline \u2014 that ordering is the anti-leakage contract: the frozen config's sha256 is logged before any OOS metric is observed.",
-  "snapshot_ts": "2026-10-07T12:38:41.196462+00:00"
+  "snapshot_ts": "2026-10-08T11:15:34.241054+00:00"
 }

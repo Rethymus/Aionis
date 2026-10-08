@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "as_of": "2026-10-07",
+  "as_of": "2026-10-08",
   "n_tracked": 57,
   "n_changed": 0,
   "n_as_of_advanced": 0,
@@ -463,5 +463,5 @@
     }
   ],
   "methodology": "Per-panel committed-transition registry captured by the export wrapper (sha256[:12] + as_of before/after each exporter run). changed=false means byte-identical this run (honest no-op). Display-only view over git history; the audit trail of record is runs/ + the repository itself.",
-  "snapshot_ts": "2026-10-07T12:38:56.498353+00:00"
+  "snapshot_ts": "2026-10-08T11:15:55.322624+00:00"
 }

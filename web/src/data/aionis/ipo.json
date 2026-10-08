@@ -1,20 +1,20 @@
 {
   "status": "ok",
-  "as_of": "2026-10-06",
+  "as_of": "2026-10-08",
   "window": {
     "start": "2026-04-27",
-    "end": "2026-10-06"
+    "end": "2026-10-08"
   },
-  "issuers": 600,
-  "total": 1345,
+  "issuers": 602,
+  "total": 1354,
   "by_status": {
-    "filed": 1091,
+    "filed": 1100,
     "priced": 254
   },
   "by_form": {
     "424B4": 254,
-    "S-1": 458,
-    "S-1/A": 633
+    "S-1": 462,
+    "S-1/A": 638
   },
   "offer_price_parsed": 64,
   "offer_price_meta": {
@@ -39,6 +39,87 @@
     "target_as_of": "2026-10-06"
   },
   "filings": [
+    {
+      "company": "CYABRA, INC.",
+      "ticker": "CYAB",
+      "filed_date": "2026-10-08",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2032341/000121390026107694/0001213900-26-107694-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Gravity Acquisition Corp.",
+      "ticker": "GVAC",
+      "filed_date": "2026-10-08",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2123380/000118518526004642/0001185185-26-004642-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "FireFly Robotics, Inc.",
+      "ticker": "",
+      "filed_date": "2026-10-07",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1660851/000149315226046104/0001493152-26-046104-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Elements Ventures Group Inc.",
+      "ticker": "",
+      "filed_date": "2026-10-07",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1954227/000147793226006096/0001477932-26-006096-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Harbour Island Acquisition Corp. I",
+      "ticker": "HRIA",
+      "filed_date": "2026-10-07",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2131072/000121390026107627/0001213900-26-107627-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "VS Trust",
+      "ticker": "",
+      "filed_date": "2026-10-07",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1793497/000121390026107622/0001213900-26-107622-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Retension Pharmaceuticals, Inc.",
+      "ticker": "",
+      "filed_date": "2026-10-07",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2002988/000121390026107572/0001213900-26-107572-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Decoy Therapeutics Inc.",
+      "ticker": "DCOY",
+      "filed_date": "2026-10-07",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1615219/000119312526417053/0001193125-26-417053-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Centinel Spine Holdco, Inc.",
+      "ticker": "",
+      "filed_date": "2026-10-07",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2132065/000110465926114375/0001104659-26-114375-index.htm",
+      "offer_price": null
+    },
     {
       "company": "ACTUATE THERAPEUTICS, INC.",
       "ticker": "ACTU",
@@ -10757,89 +10838,8 @@
       "status": "filed",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1840317/000121390026053967/0001213900-26-053967-index.htm",
       "offer_price": null
-    },
-    {
-      "company": "Tribeca Strategic Acquisition Corp.",
-      "ticker": "BID",
-      "filed_date": "2026-05-08",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2094919/000121390026053696/0001213900-26-053696-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Suncrete, Inc.",
-      "ticker": "RMIX",
-      "filed_date": "2026-05-08",
-      "form": "S-1",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2094433/000119312526214997/0001193125-26-214997-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Safepoint Holdings, Inc.",
-      "ticker": "",
-      "filed_date": "2026-05-08",
-      "form": "S-1",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1653827/000119312526214953/0001193125-26-214953-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "First Tracks Biotherapeutics, Inc.",
-      "ticker": "TRAX",
-      "filed_date": "2026-05-08",
-      "form": "S-1",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2091349/000119312526214778/0001193125-26-214778-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Applied Aerospace & Defense, Inc.",
-      "ticker": "",
-      "filed_date": "2026-05-08",
-      "form": "S-1",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2118195/000119312526214254/0001193125-26-214254-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "GMR Solutions Inc.",
-      "ticker": "GMRS",
-      "filed_date": "2026-05-08",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1898718/000110465926058050/0001104659-26-058050-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "CSB Financial Inc.",
-      "ticker": "",
-      "filed_date": "2026-05-08",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2114521/000110465926057923/0001104659-26-057923-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "1st FRANKLIN FINANCIAL CORP",
-      "ticker": "",
-      "filed_date": "2026-05-08",
-      "form": "S-1",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/38723/000003872326000018/0000038723-26-000018-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "1st FRANKLIN FINANCIAL CORP",
-      "ticker": "",
-      "filed_date": "2026-05-08",
-      "form": "S-1",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/38723/000003872326000017/0000038723-26-000017-index.htm",
-      "offer_price": null
     }
   ],
   "methodology": "US IPO registration/pricing stream \u2014 SEC EDGAR EFTS whole-market form-level queries (public domain, 17 U.S.C. \u00a7105), fixed ~120-day window, filed-date point-in-time, one row per accession (an S-1/A amendment is a new filing, never a silent overwrite). Status is derived from the immutable form type: S-1 / S-1/A = filed (registration statement on file); 424B4 = priced (the statutory final prospectus under Securities Act Rule 424(b)(4) is filed after pricing \u2014 its appearance marks a priced offering). Offer price is a BOUNDED second-stage extraction, not full coverage: only the newest \u226480 priced (424B4) filings are walked politely (\u22652.1 s spacing, hard request budget disclosed in offer_price_meta.requests), their EDGAR index + primary document fetched, and the cover page regex-parsed with graded confidence \u2014 EXACT (single final printed price \u2192 exported), LOW (draft/range wording near the label \u2192 value withheld, counted, never guessed) and NO-MATCH; every unparsed row stays offer_price=null with its EDGAR index link. Share count, proceeds, and expected listing date are NOT extracted at any tier. Honest scope disclosures: (2) the 424B4 form-level catch includes priced follow-on offerings by already-listed issuers (e.g. S-3 shelf takedowns), not only first-day IPOs \u2014 this panel is the registration/pricing STREAM, not a curated IPO list; (3) no company-level state machine is applied (rows are filing-level). Ticker is parsed from the EDGAR display name where present; pre-symbol S-1 filers carry none (empty, never guessed). Counts are FILING counts, not company counts. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-10-07T12:38:33.742260+00:00"
+  "snapshot_ts": "2026-10-08T11:15:18.446608+00:00"
 }
