@@ -28,3 +28,9 @@ row,ts,event,phase,config_sig_short,verdict,metric,h6,frozen_before_result
 53,2026-08-08,config_committed,track_adaptive,b7621e6b,,,,true
 54,2026-08-09,oos_result,track_adaptive,b7621e6b,"NULL (IC_diff -0.0037, p=0.26, CI crosses zero; adaptive weekly refit slightly WORSE than truly-frozen, not better; expected null per power floor + GKX update-f",IC_diff=-0.0037 (p=0.2563),,false
 59,2026-10-07,exploratory,pbo_diagnostic,,,,,false
+60,2026-10-07,exploratory,mintrl_diagnostic,,,,,false
+61,2026-10-07,exploratory,data_snapshot_baseline,,,,,false
+62,2026-10-07,exploratory,llm_memory_probe,,,,,false
+63,2026-10-08,exploratory,data_snapshot_baseline,,,,,false
+64,2026-10-08,exploratory,llm_memory_probe,,,,,false
+65,2026-10-08,exploratory,llm_memory_probe,,,,,false
