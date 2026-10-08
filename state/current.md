@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-09 00:05，轮 241）（核验 线）：23:50 复核项闭环——自动化触发成功但未持久化（轮 104 式观察，如实入册）：**
+  预约自动化 automation-08055995 **准时触发并完成运行**（runCount=1，lastRunAt=23:50:13，lifecycle=completed）——触发链验证 ✓；但**未留下任何 state 工件**（state mtime 停在 19:45 本会话编辑、无新提交）——自动化执行体只回复未落盘，与项目史"轮 104 式一次性丢失"同类（触发≠持久化）。**核验项按替代证据闭合**：通道日志记录在案且不变（`STEP data snapshot audit …: OK`，16/16，form8k +2 appended 容忍）；本会话第三次手工等效自审 exit=0 与通道一致；首实弹 PASS 的权威记录=**轮 238**（18ea78069，已提交）。**双记录设计如实降级为单权威记录+触发链验证**；对未来一次性自动化的启示（建议完成标记文件化而非依赖执行体自觉）记入观察，是否改造属 ops lane 后续轮次。**边界**：核验 lane；0 ledger/0 frozen/0 OOS。**业主门清单（7 项，建议 B2 异地备份）继续候解锁。**
+
 - **active (10-08 19:47，轮 240）（docs 线）：第二十波——README ⑦ justfile 指针（波 19 CONTRIBUTING 同步的收尾半边）：**
   双语 README ⑦ 安装节在命令块后补一段：justfile 五别名 + 指向 CONTRIBUTING §6 + **`just evidence` 唯一受支持证据刷新方式**的加粗警示（三次顺序事故的教训在贡献者文档与 README 双处落地）；tag-balance 复核绿。**边界**：docs lane。**双等待态不变**：23:50 自动化复核补记（~4h）+ 业主门（建议 B2）。
 
