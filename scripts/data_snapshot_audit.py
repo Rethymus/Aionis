@@ -52,6 +52,8 @@ LEDGER = ROOT / "runs" / "ledger.jsonl"
 
 # Research-history caches (display-only aggregates deliberately excluded).
 # date_col None -> full-hash-only (no append tolerance; static maps).
+# v1.1 (round 231): the frozen per-phase IC series join the set — they are
+# what the PBO diagnostic reads and what the contract tests pin.
 TRACKED: list[dict] = [
     {"name": "phase_b_fundamentals", "date_col": "filed", "kind": "parquet"},
     {"name": "phase_d_13d_events", "date_col": "filing_date", "kind": "parquet"},
@@ -62,6 +64,22 @@ TRACKED: list[dict] = [
     {"name": "ashare_prices_csi300", "date_col": "date", "kind": "parquet"},
     {"name": "gdelt_news_sentiment", "date_col": None, "kind": "json"},
 ]
+
+# Frozen confirmatory IC series (runs/results/<sig>/ic_{state,base}.parquet).
+# sigs mirror scripts/pbo_diagnostic.py PHASES; kind includes the run dir.
+_FROZEN_SIGS = {
+    "B": "17245a75d2d4cd17c68f36a9d0f4b4f7f3baf1db31b33b87be79e6e4a11400da",
+    "C": "a7fdb48f5942fae146b151143807653fd66c4c5f1601dc7cf9d04a796c1fada1",
+    "D": "d31580630ff35326557dda9f50832c7af3625dd6507e47e252ea01800372a12c",
+    "E1": "ef321e9ee808804601e012818fa95522d2dc5f0fe8c53771d7f1b412c25ed49f",
+}
+for _ph, _sig in _FROZEN_SIGS.items():
+    for _arm in ("ic_state", "ic_base"):
+        TRACKED.append({
+            "name": f"results_{_ph}_{_arm}",
+            "date_col": None, "kind": "parquet",
+            "rel": f"runs/results/{_sig}/{_arm}.parquet",
+        })
 
 
 def _sha(b: bytes) -> str:
@@ -75,8 +93,10 @@ def _parquet_bytes(df: pd.DataFrame) -> bytes:
 
 
 def _snapshot_one(spec: dict) -> dict:
+    path = (ROOT / spec["rel"]) if spec.get("rel") else (
+        CACHE / f"{spec['name']}.{spec['kind']}")
     if spec["kind"] == "json":
-        raw = (CACHE / f"{spec['name']}.json").read_bytes()
+        raw = path.read_bytes()
         rec = {
             "name": spec["name"], "n_rows": None, "max_date": None,
             "sha_full": _sha(raw),
@@ -91,7 +111,7 @@ def _snapshot_one(spec: dict) -> dict:
             pass
         return rec
 
-    df = pd.read_parquet(CACHE / f"{spec['name']}.parquet")
+    df = pd.read_parquet(path)
     rec: dict = {
         "name": spec["name"], "n_rows": int(len(df)),
         "max_date": None, "sha_full": None, "sha_prefix": None,
@@ -113,7 +133,8 @@ def _prefix_now(spec: dict, max_date: str) -> str | None:
     """Hash today's rows dated <= the baseline's max date (None -> n/a)."""
     if spec["date_col"] is None or spec["kind"] != "parquet":
         return None
-    df = pd.read_parquet(CACHE / f"{spec['name']}.parquet")
+    df = pd.read_parquet((ROOT / spec["rel"]) if spec.get("rel") else (
+        CACHE / f"{spec['name']}.parquet"))
     dc = spec["date_col"]
     df = df[df[dc] <= max_date].sort_values(dc, kind="mergesort")
     return _sha(_parquet_bytes(df))

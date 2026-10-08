@@ -32,6 +32,16 @@ def _documented_routes() -> set[str]:
     return routes
 
 
+def _root_readme_caption_counts() -> tuple[int, int]:
+    """Route counts claimed in the ROOT README hero captions (zh, en)."""
+    zh = (ROOT / "README.md").read_text(encoding="utf-8")
+    en = (ROOT / "README.en.md").read_text(encoding="utf-8")
+    m_zh = re.search(r"研究终端漫游</b> · (\d+) 个路由", zh)
+    m_en = re.search(r"the public face across (\d+) routes", en)
+    assert m_zh and m_en, "root README hero caption pattern rotted"
+    return int(m_zh.group(1)), int(m_en.group(1))
+
+
 def _actual_routes() -> set[str]:
     routes = {
         p.parent.name
@@ -73,3 +83,13 @@ def test_readme_heading_count_matches() -> None:
     assert claimed == actual, (
         f"README heading claims {claimed} routes, app has {actual}"
     )
+
+
+def test_root_readme_caption_matches_actual_route_count() -> None:
+    """The hero-caption route count must equal the actual (dashboard) route
+    count — the caption drifted 38->40->42 by hand twice (rounds 220/223
+    missed it); this guard kills the class."""
+    zh_n, en_n = _root_readme_caption_counts()
+    actual = len(_actual_routes())
+    assert zh_n == actual, f"zh caption says {zh_n} routes, actual {actual}"
+    assert en_n == actual, f"en caption says {en_n} routes, actual {actual}"

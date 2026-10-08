@@ -48,7 +48,7 @@ and **not** a trading bot.
 
 <p align="center">
   <img src="assets/screenshots/terminal-tour.gif" alt="Aionis research terminal tour: validity-argument landing → market panorama → US/CN heatmap → data atlas → calibration → data health → evidence matrix → verdict board → proof chain" width="880">
-  <br><sub><b>Research terminal tour</b> · the public face across 40 routes — every page declares its place on the validity-argument chain, every number carries provenance (as-of watermarks)</sub>
+  <br><sub><b>Research terminal tour</b> · the public face across 42 routes — every page declares its place on the validity-argument chain, every number carries provenance (as-of watermarks)</sub>
 </p>
 
 <a id="results"></a>

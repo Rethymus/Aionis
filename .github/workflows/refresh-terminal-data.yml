@@ -44,7 +44,7 @@ jobs:
     # once the fundamentals + prices caches land (first clean save), the job
     # shrinks back to ~60-80min of warm deltas. Same lesson as the 75→90 bump.
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.13'
@@ -402,7 +402,7 @@ jobs:
         # check out gh-pages, rsync the fresh build over it, commit, push — the
         # legacy Pages build deploys it automatically.
         if: steps.datacommit.outputs.changes_detected == 'true'
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: gh-pages
           path: site

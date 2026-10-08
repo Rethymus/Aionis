@@ -41,7 +41,7 @@ Aionis 回答的问题形如："特征集 X 相比纯基本面基线，是否带
 
 <p align="center">
   <img src="assets/screenshots/terminal-tour.gif" alt="Aionis 研究终端漫游：效度论证链入口 → 市场全景 → 美中热力图 → 数据图集 → 校准 → 数据健康 → 证据矩阵 → 裁决榜 → 证明链" width="880">
-  <br><sub><b>研究终端漫游</b> · 40 个路由的公开面孔——每页声明自己在效度论证链上的位置，每个数字携带出处（as-of 水位）</sub>
+  <br><sub><b>研究终端漫游</b> · 42 个路由的公开面孔——每页声明自己在效度论证链上的位置，每个数字携带出处（as-of 水位）</sub>
 </p>
 
 <a id="results"></a>
