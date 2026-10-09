@@ -3,26 +3,26 @@
   "as_of": "2026-10-08",
   "n_filings_target": 150,
   "n_filings_processed": 150,
-  "n_with_persons": 112,
-  "coverage_pct": 74.7,
-  "n_persons_distinct": 720,
+  "n_with_persons": 111,
+  "coverage_pct": 74.0,
+  "n_persons_distinct": 725,
   "by_role": {
-    "ceo": 175,
-    "cfo": 95,
+    "ceo": 174,
+    "cfo": 91,
     "coo": 42,
     "cto": 7,
-    "chairman": 113,
-    "president": 106,
-    "vice_president": 111,
-    "treasurer": 21,
-    "secretary": 42,
-    "director": 525,
-    "officer": 140
+    "chairman": 117,
+    "president": 104,
+    "vice_president": 115,
+    "treasurer": 19,
+    "secretary": 45,
+    "director": 532,
+    "officer": 148
   },
   "confidence": {
-    "section_age_rows": 95,
+    "section_age_rows": 94,
     "section_name_roles": 17,
-    "unparsed_no_persons": 38,
+    "unparsed_no_persons": 39,
     "fetch_or_doc_errors": 0
   },
   "boards": [
@@ -75,6 +75,16 @@
       "n_officers": 14,
       "filed_date": "2026-09-25",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526402816/orcl-20260925.htm"
+    },
+    {
+      "company": "BGC Group, Inc.",
+      "ticker": "BGC",
+      "issuer_cik": "1094831",
+      "n_persons": 14,
+      "n_directors": 14,
+      "n_officers": 11,
+      "filed_date": "2026-10-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1094831/000121390026107974/ea0307609-01.htm"
     },
     {
       "company": "FLEX LTD.",
@@ -207,14 +217,14 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/866273/000114036126037426/ny20077601x1_def14a.htm"
     },
     {
-      "company": "MALIBU BOATS, INC.",
-      "ticker": "MBUU",
-      "issuer_cik": "1590976",
-      "n_persons": 11,
-      "n_directors": 6,
-      "n_officers": 7,
-      "filed_date": "2026-09-21",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1590976/000159097626000067/mbuu-20260921.htm"
+      "company": "SIEBERT FINANCIAL CORP",
+      "ticker": "SIEB",
+      "issuer_cik": "65596",
+      "n_persons": 10,
+      "n_directors": 9,
+      "n_officers": 5,
+      "filed_date": "2026-10-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/65596/000114036126039143/ny20075747x1_def14a.htm"
     },
     {
       "company": "DONALDSON Co INC",
@@ -275,16 +285,6 @@
       "n_officers": 4,
       "filed_date": "2026-09-24",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1823584/000149315226044108/formdef14a.htm"
-    },
-    {
-      "company": "SOUTHERN MISSOURI BANCORP, INC.",
-      "ticker": "SMBC",
-      "issuer_cik": "916907",
-      "n_persons": 10,
-      "n_directors": 9,
-      "n_officers": 5,
-      "filed_date": "2026-09-21",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/916907/000110465926109259/smbc-20261026xdef14a.htm"
     },
     {
       "company": "Intapp, Inc.",
@@ -647,6 +647,26 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1114925/000114036126037329/ny20079716x1_def14a.htm"
     },
     {
+      "company": "Leatt Corp",
+      "ticker": "LEAT",
+      "issuer_cik": "1456189",
+      "n_persons": 5,
+      "n_directors": 5,
+      "n_officers": 1,
+      "filed_date": "2026-10-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1456189/000121390026107995/ea0306425-03.htm"
+    },
+    {
+      "company": "ANGIODYNAMICS INC",
+      "ticker": "ANGO",
+      "issuer_cik": "1275187",
+      "n_persons": 5,
+      "n_directors": 4,
+      "n_officers": 1,
+      "filed_date": "2026-10-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1275187/000114036126039022/ny20083274x1_def14a.htm"
+    },
+    {
       "company": "FLEXIBLE SOLUTIONS INTERNATIONAL INC",
       "ticker": "FSI",
       "issuer_cik": "1069394",
@@ -877,24 +897,14 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1756761/000119312526398608/d139199ddef14a.htm"
     },
     {
-      "company": "PROCACCIANTI HOTEL REIT, INC.",
-      "ticker": "PRXA",
-      "issuer_cik": "1692345",
-      "n_persons": 4,
-      "n_directors": 3,
-      "n_officers": 4,
-      "filed_date": "2026-09-22",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1692345/000110465926109561/tm2625738-1_def14a.htm"
-    },
-    {
-      "company": "CARDINAL HEALTH INC",
-      "ticker": "CAH",
-      "issuer_cik": "721371",
-      "n_persons": 4,
+      "company": "NANOVIRICIDES, INC.",
+      "ticker": "NNVC",
+      "issuer_cik": "1379006",
+      "n_persons": 3,
       "n_directors": 3,
       "n_officers": 3,
-      "filed_date": "2026-09-21",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/721371/000130817926000402/cah-20260921.htm"
+      "filed_date": "2026-10-08",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1379006/000110465926114606/tm2626953d1_def14a.htm"
     },
     {
       "company": "REGIONAL HEALTH PROPERTIES, INC",
@@ -1037,16 +1047,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/319201/000119312526397898/d83268ddef14a.htm"
     },
     {
-      "company": "Local Bounti Corporation/DE",
-      "ticker": "",
-      "issuer_cik": "1840780",
-      "n_persons": 2,
-      "n_directors": 2,
-      "n_officers": 1,
-      "filed_date": "2026-09-21",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1840780/000114036126037241/ny20081219x2_def14a.htm"
-    },
-    {
       "company": "Sandisk Corp",
       "ticker": "SNDK",
       "issuer_cik": "2023554",
@@ -1135,16 +1135,6 @@
       "n_officers": 1,
       "filed_date": "2026-09-22",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1107280/000143774926030923/ovtz20260915_def14a.htm"
-    },
-    {
-      "company": "Cyngn Inc.",
-      "ticker": "CYN",
-      "issuer_cik": "1874097",
-      "n_persons": 1,
-      "n_directors": 1,
-      "n_officers": 1,
-      "filed_date": "2026-09-21",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1874097/000121390026101811/ea0305067-02.htm"
     }
   ],
   "top_persons": [
@@ -1663,6 +1653,22 @@
       ]
     },
     {
+      "name": "Andrew H. Reich",
+      "roles": [
+        "ceo",
+        "cfo",
+        "coo",
+        "vice_president",
+        "secretary",
+        "director"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "SIEBERT FINANCIAL CORP"
+      ]
+    },
+    {
       "name": "Andrew Hancox",
       "roles": [
         "director"
@@ -1734,6 +1740,19 @@
       ]
     },
     {
+      "name": "Anil Diwan",
+      "roles": [
+        "chairman",
+        "president",
+        "director"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "NANOVIRICIDES, INC."
+      ]
+    },
+    {
       "name": "Ann Hand",
       "roles": [
         "director"
@@ -1754,43 +1773,14 @@
       "companies": [
         "CytoDyn Inc."
       ]
-    },
-    {
-      "name": "Anthony Hughes",
-      "roles": [
-        "director",
-        "officer"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "Local Bounti Corporation/DE"
-      ]
-    },
-    {
-      "name": "Anton J. Drescher",
-      "roles": [
-        "ceo",
-        "cfo",
-        "chairman",
-        "president",
-        "secretary",
-        "director",
-        "officer"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "OCULUS INC."
-      ]
     }
   ],
   "request_accounting": {
-    "n_http_requests_last_fetch": 18,
+    "n_http_requests_last_fetch": 16,
     "budget_seconds": 2700,
     "budget_hit": false,
-    "fetched_at": "2026-10-08T10:15:04.907372+00:00"
+    "fetched_at": "2026-10-09T10:15:40.799316+00:00"
   },
-  "methodology": "DEF 14A person-level panel (\u8463\u4e8b/\u9ad8\u7ba1\u4eba\u7ea7\u6863\u6848) over the NEWEST 150 proxy filings of the /executives DEF 14A stream \u2014 a bounded lane: each filing's primary document resolved from its EDGAR filing index (<= 2 GETs per filing, idempotent per-accession caches, >= 2.1s spacing, hard 45-minute wall-clock budget; the last fetch spent 18 HTTP requests and did not hit the budget). Parsing is CONSERVATIVE and TIERED: (1) section_age_rows (HIGH) \u2014 the classic 'Name (Age) Title Since' roster row in any spelling, a 2-4 token capitalized name with a standalone age bounded 30-99 and a role word witnessed on the same row, also reconstructed from word-fragmented inline-XBRL layouts by anchor-delimiting the joined stream; (2) section_name_roles (MEDIUM) \u2014 'First M. Last' (middle-initial) + a role word inside a located directors/executives section. Everything else yields persons=[] and parsed=false \u2014 an honest NULL, never a guessed name (\u5b81\u53ef null \u4e0d\u731c\u6d4b); coverage below counts only what was processed (112/150 filings with persons = 74.7%), never an extrapolation. Roles are canonical role WORDS witnessed near the person's row or bio \u2014 they may include past or external-company titles (e.g. a director who is CEO of another firm), displayed as text-witnessed hints not employment records; boards-card director/officer counts are independent sets (a CEO-director counts in both). Distinct-person identity keys on the normalized full name across filings \u2014 same-name merges may join namesakes and hyphenated/apostrophe/initials-first names (JW Roth) are conservatively MISSED, both disclosed. Display-only, exploratory, NOT a research claim.",
-  "snapshot_ts": "2026-10-08T11:15:18.592800+00:00"
+  "methodology": "DEF 14A person-level panel (\u8463\u4e8b/\u9ad8\u7ba1\u4eba\u7ea7\u6863\u6848) over the NEWEST 150 proxy filings of the /executives DEF 14A stream \u2014 a bounded lane: each filing's primary document resolved from its EDGAR filing index (<= 2 GETs per filing, idempotent per-accession caches, >= 2.1s spacing, hard 45-minute wall-clock budget; the last fetch spent 16 HTTP requests and did not hit the budget). Parsing is CONSERVATIVE and TIERED: (1) section_age_rows (HIGH) \u2014 the classic 'Name (Age) Title Since' roster row in any spelling, a 2-4 token capitalized name with a standalone age bounded 30-99 and a role word witnessed on the same row, also reconstructed from word-fragmented inline-XBRL layouts by anchor-delimiting the joined stream; (2) section_name_roles (MEDIUM) \u2014 'First M. Last' (middle-initial) + a role word inside a located directors/executives section. Everything else yields persons=[] and parsed=false \u2014 an honest NULL, never a guessed name (\u5b81\u53ef null \u4e0d\u731c\u6d4b); coverage below counts only what was processed (111/150 filings with persons = 74.0%), never an extrapolation. Roles are canonical role WORDS witnessed near the person's row or bio \u2014 they may include past or external-company titles (e.g. a director who is CEO of another firm), displayed as text-witnessed hints not employment records; boards-card director/officer counts are independent sets (a CEO-director counts in both). Distinct-person identity keys on the normalized full name across filings \u2014 same-name merges may join namesakes and hyphenated/apostrophe/initials-first names (JW Roth) are conservatively MISSED, both disclosed. Display-only, exploratory, NOT a research claim.",
+  "snapshot_ts": "2026-10-09T11:13:59.966366+00:00"
 }

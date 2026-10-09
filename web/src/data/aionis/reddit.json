@@ -10,16 +10,30 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-10-07T12:12:03+00:00",
-  "n_snapshots": 32,
+  "latest_snapshot_ts": "2026-10-09T10:34:12+00:00",
+  "n_snapshots": 33,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
-      "ticker": "NVDA",
-      "mentions": 2,
-      "sentiment": -0.103,
+      "ticker": "GOOGL",
+      "mentions": 1,
+      "sentiment": -0.051,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "TSLA",
+      "mentions": 1,
+      "sentiment": -0.008,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "WYNN",
+      "mentions": 1,
+      "sentiment": -0.012,
       "bull_ratio": null,
       "score_sum": 0
     }
@@ -30,16 +44,16 @@
       "NVDA": {
         "ticker": "NVDA",
         "latest_mentions": 2,
-        "velocity": 0.2857,
+        "velocity": 0.1667,
         "crowding_z": 0.3461,
         "bull_bear_lean": 0.0269,
         "grade": "normal",
         "n_days": 14
       }
     },
-    "n_snapshots": 32,
-    "latest_date": "2026-10-07",
+    "n_snapshots": 33,
+    "latest_date": "2026-10-09",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-10-08T11:15:34.232068+00:00"
+  "snapshot_ts": "2026-10-09T11:14:07.742125+00:00"
 }
