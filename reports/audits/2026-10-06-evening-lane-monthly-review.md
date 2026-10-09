@@ -32,12 +32,21 @@ last 6** — every miss class has a battle-tested structural fix (rounds
   production exercise green on night one (`ci: success/success` in
   0b3a9a98's SUMMARY).
 
-## 3. Publish chain & full-suite health (gh, limit 60 — the whole month)
+## 3. Publish chain & full-suite health
+
+> **Correction (2026-10-09, owner-authorized post-publication edit; original
+> defect flagged by the round-212 five-step verification):** the original
+> table was sampled at `--limit 60`, missing the month's early runs. Full
+> re-query since 09-07 (round-212 evidence):
 
 | Workflow | success | failure | Notes |
 |---|---|---|---|
-| Publish site (gh-pages) | 60 | 0 | every data push deployed; zero deploy-leg reds this month |
-| Tests | 58 | 2 | both 09-28, same cause (news_feed fake-date time bombs), fixed same evening (relative dates) |
+| Publish site (gh-pages) | 75 | 2 | the 2 reds are 09-11/09-12 — the bare-NaN shipping incident that BECAME the strict-JSON gate (structural fix in place since); zero deploy-leg reds after 09-13 |
+| Tests | 98 | 2 (in last-100 window) | the window's 2 reds are 10-05 (api_catalog→dossier cascade, fixed same hour, evidence-chain DoD hardened); the 09-28 fake-date pair sits just outside this window and is real history too — 4 total known reds across the month, each with a same-day structural fix |
+
+The original "zero deploy reds / 09-28 pair" claims reflected the sampling
+window, not the month; the health conclusion (all reds have structural,
+battle-tested fixes) survives the correction.
 
 ## 4. Actions minutes vs budget
 
