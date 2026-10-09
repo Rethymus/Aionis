@@ -1527,14 +1527,15 @@ def test_ledger_append_only_not_mutated_by_export() -> None:
     # 0 top-1 hits pool-wide incl. Qwen3.5-35B; the interim miscounted run
     # was dropped before commit, never landing in any pin) — 1 insertion,
     # 0 deletions verified via git diff before re-pinning.
-    # Re-pinned 2026-10-10 (owner-authorized 9-30 replay, round 247): vs
-    # the 10-08 pin (eba3b438), the growth is exactly TWO designed
-    # forward-lane rows (data_ingest stakes_13d_forward + earnings_8k_
-    # forward, then forward_iset_frozen — snapshot-keyed idempotent),
-    # appended by the replay's freeze step. 2 insertions, 0 deletions
-    # verified via git diff at commit 43b8db78e; replay honestly labeled
-    # in state (feeds the 10-31 evidence pack as a marked re-run).
-    assert digest == "71cdc8d20820ea2e3633f772d8a6de33b2fb78dfda0abd18dd32800a1c6fa6ed", (
+    # Re-pinned 2026-10-10 (authorized re-replay AFTER the round-248
+    # freshness fix, round 248b): vs the round-247 pin, +2 designed rows —
+    # the 9-30 re-run's iset_frozen (snapshot-keyed idempotent re-freeze)
+    # and forward_prediction_committed (config a2d3a4a9, scores sealed
+    # 44d1543f — UNREVEALED per ADR-010; the 10-31 evidence pack reads
+    # them). The September shadow month now has readiness-PASS + commit:
+    # criterion-1 arithmetic becomes 8/31 PASS + 9/30 PASS (marked re-run)
+    # + 10/31 live. 2 insertions, 0 deletions verified via git diff.
+    assert digest == "ec6d28921a68f377d79f8f78151311b9382bf69abc75e5d58b5cb706516cca10", (
         f"ledger sha256 changed to {digest}; re-verify append-only then re-pin"
     )
 
