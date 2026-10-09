@@ -540,6 +540,84 @@ def try_push_only_recovery(prev_status: str, prev_error: str, fh):
     return "ok_committed"
 
 
+# Round 246 (owner-authorized): selective soft-fail retry. The recovery hook
+# SKIPs when the evening is ok_committed, so a soft-failed fetch's data stays
+# stale until the NEXT evening (~24h worst case; the 10-05..09 GDELT episodes
+# demonstrated it). --retry-soft reruns ONLY the soft-failed steps plus the
+# export/gate/commit tail — a small pass, never a second full lane.
+RETRY_SOFT_AFTER_HOUR = 20  # never before the main lane's window closes in
+
+
+def do_retry_soft() -> int:
+    state = load_state()
+    now = datetime.now()
+    soft = [x for x in (state.get("soft_fails") or [])
+            if not str(x).startswith("push_only")]
+    if state.get("date") != now.strftime("%Y-%m-%d") or state.get("status") != "ok_committed":
+        print("RETRY-SOFT-SKIP: no same-day ok_committed evening run")
+        return 0
+    if not soft:
+        print("RETRY-SOFT-SKIP: evening had zero soft fails")
+        return 0
+    if now.hour < RETRY_SOFT_AFTER_HOUR:
+        print(f"RETRY-SOFT-SKIP: before {RETRY_SOFT_AFTER_HOUR}:00 (main-lane window)")
+        return 0
+    # Map soft-failed names to their STEPS entries; keep every export/gate/
+    # commit tail step so the retry's commit passes the same guards.
+    names = set(soft)
+    head = [st for st in STEPS if st["name"] in names]
+    tail_names = ("export_terminal_data", "stakes_pct_parse",
+                  "export pass 2", "export_evidence_html",
+                  "export_research_dossier", "export_phase_dossier_meta",
+                  "export shelf + evidence matrix", "json validity")
+    tail = [st for st in STEPS if st["name"].startswith(tail_names)]
+    pipeline = head + tail
+    if not head:
+        print(f"RETRY-SOFT-SKIP: soft-failed steps not in STEPS: {sorted(names)}")
+        return 0
+    print(f"RETRY-SOFT: rerunning {len(head)} soft-failed step(s) "
+          f"{sorted(names)} + {len(tail)} export/gate/commit tail", flush=True)
+    day_dir = LOG_DIR / now.strftime("%Y-%m-%d")
+    day_dir.mkdir(parents=True, exist_ok=True)
+    with (day_dir / "run.log").open("a", encoding="utf-8") as fh:
+        log(f"=== retry-soft pass {datetime.now().isoformat()} ===", fh)
+        soft_fails: list[str] = []
+        for step in pipeline:
+            if step["name"].startswith("json validity"):
+                problems = strict_json_scan()
+                if problems:
+                    raise RuntimeError(f"strict-JSON gate: {problems[:3]}")
+            ok, detail = run_step(step, fh)
+            if not ok:
+                if step["soft"]:
+                    soft_fails.append(step["name"])
+                else:
+                    raise RuntimeError(
+                        f"hard-fail step '{step['name']}': {detail}")
+        ledger_note = tidy_ledger(fh)
+        status, sha, pushed, n_files = commit_and_push(fh)
+        try:
+            r = subprocess.run(
+                [sys.executable, str(ROOT / "scripts" / "backup_audit_chain.py")],
+                cwd=ROOT, capture_output=True, text=True, timeout=120)
+            backup_note = "ok" if r.returncode == 0 else f"warn:{r.stderr.strip()[-60:]}"
+        except Exception as exc:  # noqa: BLE001 — non-fatal by design
+            backup_note = f"warn:{str(exc)[:60]}"
+        ci = (verify_own_commit_ci(sha) if pushed else {"note": "no push"})
+        state.update({"retry_soft": {"at": now.isoformat(), "steps": sorted(names),
+                                     "residual_soft_fails": soft_fails,
+                                     "commit": sha, "pushed": pushed,
+                                     "n_files": n_files, "backup": backup_note}})
+        save_state(state)
+        summary = {"retry_soft": True, "steps": sorted(names),
+                   "status": status, "commit": sha, "pushed": pushed,
+                   "n_files": n_files, "soft_fails": soft_fails,
+                   "ledger": ledger_note, "ci": ci, "backup": backup_note}
+        log(f"SUMMARY {json.dumps(summary, ensure_ascii=False)}", fh)
+        print(f"SUMMARY {json.dumps(summary, ensure_ascii=False)}")
+        return 0
+
+
 def do_run(force: bool) -> int:
     now = datetime.now()
     state = load_state()
@@ -749,7 +827,11 @@ def doctor() -> int:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    group = parser.add_mutually_exclusive_group(required=True)
+    parser.add_argument("--retry-soft", action="store_true",
+                        help="selective soft-fail retry: rerun only today's "
+                             "soft-failed steps + export/gate/commit tail "
+                             "(owner-authorized round 246)")
+    group = parser.add_mutually_exclusive_group(required=False)
     group.add_argument("--guard", action="store_true",
                        help="print RUN or SKIP:<reason>")
     group.add_argument("--run", action="store_true", help="run the evening lane")
@@ -759,6 +841,11 @@ def main() -> int:
     parser.add_argument("--force", action="store_true",
                         help="with --run: bypass the guard (human use only)")
     args = parser.parse_args()
+    if args.retry_soft:
+        return do_retry_soft()
+    if not (args.guard or args.run or args.status or args.doctor):
+        parser.error("one of the arguments --guard --run --status --doctor "
+                     "is required (or --retry-soft)")
     if args.guard:
         print(guard_decision(datetime.now(), load_state()))
         return 0

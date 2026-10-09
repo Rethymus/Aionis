@@ -92,5 +92,8 @@ synced.
 | C. Batch code pushes to cut Tests minutes | ~-150 min/month; costs multi-session immediacy |
 | D. Re-enable any retired CI step | e.g. old refresh lane — NOT recommended (1,300–1,700 min/month returns) |
 
+**Owner decision (2026-10-09, 全部授权 batch): A — continue as-is.** Option B
+remains a documented one-command walk-away.
+
 **Recommendation: A**, with the note that option B remains a documented
 one-command walk-away whenever the nightly one-liner stops earning its keep.
