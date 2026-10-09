@@ -2,7 +2,7 @@
   "status": "ok",
   "as_of": "2026-10-09",
   "n_tracked": 57,
-  "n_changed": 0,
+  "n_changed": 9,
   "n_as_of_advanced": 0,
   "changes": [
     {
@@ -10,184 +10,184 @@
       "changed": false,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "sha_before": "79fb4b7a5d30",
+      "sha_after": "79fb4b7a5d30"
     },
     {
       "file": "bps_sweep",
-      "changed": false,
+      "changed": true,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "sha_before": "0282e2f92e96",
+      "sha_after": "f20e8c83ecfe"
     },
     {
       "file": "power_floor",
       "changed": false,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "sha_before": "016d056b2f0f",
+      "sha_after": "016d056b2f0f"
     },
     {
       "file": "evidence",
-      "changed": false,
+      "changed": true,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "sha_before": "e898bd304053",
+      "sha_after": "edcf7c8dc08d"
     },
     {
       "file": "ic_monthly",
-      "changed": false,
+      "changed": true,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "sha_before": "69c91b82bfe3",
+      "sha_after": "a76b61a3dd02"
     },
     {
       "file": "score_diagnostics",
-      "changed": false,
+      "changed": true,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "sha_before": "d273e90574af",
+      "sha_after": "668f147b480c"
     },
     {
       "file": "picks",
-      "changed": false,
+      "changed": true,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "sha_before": "c27b2eaad5ac",
+      "sha_after": "9d46dd0f1987"
     },
     {
       "file": "metrics",
       "changed": false,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "sha_before": "f252d0e92936",
+      "sha_after": "f252d0e92936"
     },
     {
       "file": "sector_breakdown",
       "changed": false,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "sha_before": "6d2690fe0fe8",
+      "sha_after": "6d2690fe0fe8"
     },
     {
       "file": "picks_backtest",
       "changed": false,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "sha_before": "a8cc7d203982",
+      "sha_after": "a8cc7d203982"
     },
     {
       "file": "taco",
       "changed": false,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "sha_before": "d09cf71161af",
+      "sha_after": "d09cf71161af"
     },
     {
       "file": "freight_taco",
       "changed": false,
-      "as_of_before": null,
-      "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "as_of_before": "2026-06",
+      "as_of_after": "2026-06",
+      "sha_before": "07f1636f4d17",
+      "sha_after": "07f1636f4d17"
     },
     {
       "file": "companies_dir",
       "changed": false,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "sha_before": "f9ec616e868f",
+      "sha_after": "f9ec616e868f"
     },
     {
       "file": "korea_proxy",
       "changed": false,
-      "as_of_before": null,
-      "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "as_of_before": "2026-08-14",
+      "as_of_after": "2026-08-14",
+      "sha_before": "b8ffdf005031",
+      "sha_after": "b8ffdf005031"
     },
     {
       "file": "pick_conviction",
       "changed": false,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "sha_before": "1b76f3e39b6d",
+      "sha_after": "1b76f3e39b6d"
     },
     {
       "file": "themes",
       "changed": false,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "sha_before": "11f026314204",
+      "sha_after": "11f026314204"
     },
     {
       "file": "theme_signals",
       "changed": false,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "sha_before": "6c6e0fd5c3b1",
+      "sha_after": "6c6e0fd5c3b1"
     },
     {
       "file": "model_health",
       "changed": false,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "sha_before": "76e66b2c26fb",
+      "sha_after": "76e66b2c26fb"
     },
     {
       "file": "calibration_reliability",
       "changed": false,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "sha_before": "59b6dda22b76",
+      "sha_after": "59b6dda22b76"
     },
     {
       "file": "cot",
       "changed": false,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "sha_before": "58d3d2de4b4a",
+      "sha_after": "58d3d2de4b4a"
     },
     {
       "file": "form4",
       "changed": false,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "sha_before": "890e83ea209b",
+      "sha_after": "890e83ea209b"
     },
     {
       "file": "form8k",
       "changed": false,
-      "as_of_before": null,
-      "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "as_of_before": "2026-10-08",
+      "as_of_after": "2026-10-08",
+      "sha_before": "ba3894593892",
+      "sha_after": "ba3894593892"
     },
     {
       "file": "news_feed",
-      "changed": false,
-      "as_of_before": null,
-      "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "changed": true,
+      "as_of_before": "2026-10-08T05:30:00Z",
+      "as_of_after": "2026-10-08T05:30:00Z",
+      "sha_before": "323259fb0cb5",
+      "sha_after": "60a92bae7fed"
     },
     {
       "file": "form_ipo",
@@ -200,10 +200,10 @@
     {
       "file": "form_d",
       "changed": false,
-      "as_of_before": null,
-      "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "as_of_before": "2026-10-09",
+      "as_of_after": "2026-10-09",
+      "sha_before": "1edac3432c32",
+      "sha_after": "1edac3432c32"
     },
     {
       "file": "form_def14a",
@@ -216,50 +216,50 @@
     {
       "file": "def14a_persons",
       "changed": false,
-      "as_of_before": null,
-      "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "as_of_before": "2026-10-08",
+      "as_of_after": "2026-10-08",
+      "sha_before": "2cb9b241d099",
+      "sha_after": "2cb9b241d099"
     },
     {
       "file": "filing_stream",
       "changed": false,
-      "as_of_before": null,
-      "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "as_of_before": "2026-10-09",
+      "as_of_after": "2026-10-09",
+      "sha_before": "0fdfcd41be9a",
+      "sha_after": "0fdfcd41be9a"
     },
     {
       "file": "politician_trades",
       "changed": false,
-      "as_of_before": null,
-      "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "as_of_before": "2026-08-18",
+      "as_of_after": "2026-08-18",
+      "sha_before": "016fa73ec8d1",
+      "sha_after": "016fa73ec8d1"
     },
     {
       "file": "politician_trades_tx",
       "changed": false,
-      "as_of_before": null,
-      "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "as_of_before": "2026-08-18 00:00:00",
+      "as_of_after": "2026-08-18 00:00:00",
+      "sha_before": "0da71eee322a",
+      "sha_after": "0da71eee322a"
     },
     {
       "file": "party_index",
       "changed": false,
-      "as_of_before": null,
-      "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "as_of_before": "2026-08-18 00:00:00",
+      "as_of_after": "2026-08-18 00:00:00",
+      "sha_before": "1d35f92c9535",
+      "sha_after": "1d35f92c9535"
     },
     {
       "file": "form13f",
       "changed": false,
-      "as_of_before": null,
-      "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "as_of_before": "2026-06-30",
+      "as_of_after": "2026-06-30",
+      "sha_before": "cf3036c87b54",
+      "sha_after": "cf3036c87b54"
     },
     {
       "file": "form13f_stars",
@@ -272,58 +272,58 @@
     {
       "file": "filers13f",
       "changed": false,
-      "as_of_before": null,
-      "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "as_of_before": "2026-08-21",
+      "as_of_after": "2026-08-21",
+      "sha_before": "f88468433e81",
+      "sha_after": "f88468433e81"
     },
     {
       "file": "market_context",
       "changed": false,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "sha_before": "082f03a8a5a9",
+      "sha_after": "082f03a8a5a9"
     },
     {
       "file": "macro_drivers",
       "changed": false,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "sha_before": "0ff0c40977ea",
+      "sha_after": "0ff0c40977ea"
     },
     {
       "file": "smart_money",
       "changed": false,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "sha_before": "19380a0f06cb",
+      "sha_after": "19380a0f06cb"
     },
     {
       "file": "stakes_13g",
-      "changed": false,
-      "as_of_before": null,
-      "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "changed": true,
+      "as_of_before": "2026-10-08",
+      "as_of_after": "2026-10-08",
+      "sha_before": "fb7fe898617f",
+      "sha_after": "1f7b7fdd18e3"
     },
     {
       "file": "ark",
       "changed": false,
-      "as_of_before": null,
-      "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "as_of_before": "2026-10-09",
+      "as_of_after": "2026-10-09",
+      "sha_before": "6bb2fe3157ee",
+      "sha_after": "6bb2fe3157ee"
     },
     {
       "file": "theme_etfs",
       "changed": false,
-      "as_of_before": null,
-      "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "as_of_before": "2026-10-08",
+      "as_of_after": "2026-10-08",
+      "sha_before": "907b5155b003",
+      "sha_after": "907b5155b003"
     },
     {
       "file": "reddit_meta",
@@ -336,82 +336,82 @@
     {
       "file": "reddit_trending",
       "changed": false,
-      "as_of_before": null,
-      "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "as_of_before": "2026-10-09T10:32:50+00:00",
+      "as_of_after": "2026-10-09T10:32:50+00:00",
+      "sha_before": "c0b9dbed3e36",
+      "sha_after": "c0b9dbed3e36"
     },
     {
       "file": "ledger_audit",
-      "changed": false,
+      "changed": true,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "sha_before": "6e45ba99abb3",
+      "sha_after": "195eab6dcd15"
     },
     {
       "file": "horizon_robustness",
       "changed": false,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "sha_before": "624018a0b809",
+      "sha_after": "624018a0b809"
     },
     {
       "file": "headline_provenance",
       "changed": false,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "sha_before": "610d225f6094",
+      "sha_after": "610d225f6094"
     },
     {
       "file": "model_card",
       "changed": false,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "sha_before": "b1e13fdfbff8",
+      "sha_after": "b1e13fdfbff8"
     },
     {
       "file": "model_inventory",
       "changed": false,
-      "as_of_before": null,
-      "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "as_of_before": "2026-08-08T19:23:40.669658+00:00",
+      "as_of_after": "2026-08-08T19:23:40.669658+00:00",
+      "sha_before": "edd5a91b7e87",
+      "sha_after": "edd5a91b7e87"
     },
     {
       "file": "provider_vintage",
       "changed": false,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "sha_before": "23bae92a5814",
+      "sha_after": "23bae92a5814"
     },
     {
       "file": "ic_deciles",
       "changed": false,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "sha_before": "d8179ca9ab46",
+      "sha_after": "d8179ca9ab46"
     },
     {
       "file": "stock_universe",
       "changed": false,
-      "as_of_before": null,
-      "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "as_of_before": "{'us': '2026-06-30', 'cn': '2026-08-03'}",
+      "as_of_after": "{'us': '2026-06-30', 'cn': '2026-08-03'}",
+      "sha_before": "00acc92db76c",
+      "sha_after": "00acc92db76c"
     },
     {
       "file": "executives",
       "changed": false,
-      "as_of_before": null,
-      "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "as_of_before": "2026-10-08",
+      "as_of_after": "2026-10-08",
+      "sha_before": "b718d391dbad",
+      "sha_after": "b718d391dbad"
     },
     {
       "file": "phase_dossier_meta",
@@ -424,44 +424,44 @@
     {
       "file": "knowledge_shelf",
       "changed": false,
-      "as_of_before": null,
-      "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "as_of_before": "2026-10-08",
+      "as_of_after": "2026-10-08",
+      "sha_before": "eedfad39e75b",
+      "sha_after": "eedfad39e75b"
     },
     {
       "file": "evidence_matrix",
       "changed": false,
-      "as_of_before": null,
-      "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "as_of_before": "2026-08-05",
+      "as_of_after": "2026-08-05",
+      "sha_before": "933110f5fbf7",
+      "sha_after": "933110f5fbf7"
     },
     {
       "file": "lineage_graph",
       "changed": false,
-      "as_of_before": null,
-      "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "as_of_before": "2026-10-08",
+      "as_of_after": "2026-10-08",
+      "sha_before": "3c2c99e5cc8c",
+      "sha_after": "3c2c99e5cc8c"
     },
     {
       "file": "data_health",
-      "changed": false,
+      "changed": true,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "sha_before": "d0a74e938f94",
+      "sha_after": "ff592cc9a5e4"
     },
     {
       "file": "api_catalog",
       "changed": false,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": null,
-      "sha_after": null
+      "sha_before": "4ca4ec569e8f",
+      "sha_after": "4ca4ec569e8f"
     }
   ],
   "methodology": "Per-panel committed-transition registry captured by the export wrapper (sha256[:12] + as_of before/after each exporter run). changed=false means byte-identical this run (honest no-op). Display-only view over git history; the audit trail of record is runs/ + the repository itself.",
-  "snapshot_ts": "2026-10-09T11:14:22.676588+00:00"
+  "snapshot_ts": "2026-10-09T15:09:58.020487+00:00"
 }
