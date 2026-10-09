@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-09 22:20，轮 245）（守卫/调试 线）：昨夜变更注册表自轮 213 起从未工作——三层洋葱根因全剥（今晚实弹+本地复现闭环）：**
+  **发现链**：今晚通道七查全 PASS（22bf194c5，news_feed 软败但 retain 分支正确）→ 但注册表首跑仍 changed=0/57，而同提交里 ark 实测 10-08→10-09 前进=矛盾 → 本地复现抓到**地板 bug**：注册名是裸键（'ark'），两个指纹读法都是 `WEB/name` 无 .json 后缀→文件永不存在→每条 ('',None)==('',None)→恒 changed=False——**注册表自诞生即空洞**（轮 243 的 pass-2 修是在修一个从未工作过的机制）。**修复**：`_panel_fname()` 归一化（顺带消掉磁盘读法 except 分支的潜伏 NameError）；机制端到端验证（HEAD 前置 vs 磁盘后置真内容）。明晚通道=首个真实注册表。测试副作用已还原；全量 hermetic EXIT=0（b4cd138a0）。**教训**：机制类功能的首跑必须对照已知真相（ark 前进）验收，而非只看"跑通了"。**边界**：display/守卫 lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-09 20:45，轮 244）（研究-ops 线）：Tiingo 小时配额确证 + 可断点续传爬取落地（被杀即丢 6h 进度的教训工程化）：**
   裸 curl 定案："run over your **hourly** request allocation"——免费档按小时配给，597 符号≈10h 滴流；每符号 3 重试放大消耗；旧爬取内存持有=杀掉全丢（当日 6h 配额学费）。**修复**：部分序列每 10 符号落盘（e3_extend_partial.parquet + fetched/no-data 清单）→ 重启跳过已抓；连续 5 空/429 即睡眠至下一小时界（不再烧重试）；完成写盘后清残留。**10-31 runbook ⓪b 同性质需求**（小时墙下跨窗存活）。全量 hermetic EXIT=0（08c7a4926）。夜间滴流作业重启在跑（可续传版，完成通知带回五项判定）。**边界**：研究-ops lane；冻结基底未动/0 ledger/0 outcome。**待业主**：Alpaca 401 凭证（后备源修复可把小时墙变双源轮转——双钥匙价值量化在册）。
 
