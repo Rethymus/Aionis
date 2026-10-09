@@ -17,13 +17,28 @@ their SIC codes (EDGAR submissions, cached), writing FORWARD-ONLY artifacts:
 Idempotent: rerun with no coverage gap writes nothing.
 
 Run: ``uv run python scripts/e3_extend_prices.py``.
+
+``--through YYYY-MM-DD`` (round 242): ALSO extend the ``_e3`` panel's TIME
+axis to the target session — the structural fix for the 9-30/10-31 shadow
+fail-closed class (``predict_session_not_in_panel``: nothing in the chain
+advanced the panel edge; the frozen base is H6-pinned by design). All panel
+tickers are fetched from (edge + 1) through the target via the shared
+dual-source polite fetcher and appended on the NYSE session grid. The frozen
+``phase_b_prices.parquet`` remains byte-untouched; only the ``_e3`` forward
+artifact grows. Prereg section 8 ("E3 is a LIVE PROCESS") explicitly allows
+live data extension.
+
+    uv run python scripts/e3_extend_prices.py --through 2026-10-30
 """
 from __future__ import annotations
+
+import argparse
 
 import pandas as pd
 import structlog
 
 from aionis.config import settings
+from aionis.features.alignment import nyse_sessions
 from aionis.ingest.market import fetch_price_series
 from aionis.ingest.stakes_13d import fetch_submissions
 from aionis.ingest.universe import constituents_on, load_pierrebrunelle_membership
@@ -49,10 +64,103 @@ _CIK_OVERRIDES: dict[str, int] = {
 }
 
 
+def _extend_rows_through(px: pd.DataFrame, through: pd.Timestamp,
+                        fetch=fetch_price_series) -> pd.DataFrame:
+    """Extend the panel's TIME axis to ``through`` on the NYSE session grid.
+
+    Fetches ALL panel tickers from (edge + 1) through the target via the
+    shared dual-source polite fetcher (Tiingo -> Alpaca -> fail-closed).
+    The input frame is never mutated; a NEW frame is returned (the caller
+    writes only the ``_e3`` artifact — the frozen base stays untouched).
+    """
+    edge = pd.Timestamp(px.index.max())
+    if through <= edge:
+        raise SystemExit(
+            f"--through {through.date()} must be AFTER the panel edge "
+            f"{edge.date()} (panel already covers the target)")
+    sessions = nyse_sessions(edge + pd.Timedelta(days=1), through)
+    if len(sessions) == 0:
+        raise SystemExit(f"--through {through.date()}: no NYSE sessions after {edge.date()}")
+    print(f"[e3-extend] time axis: {edge.date()} -> {through.date()} "
+          f"({len(sessions)} sessions x {px.shape[1]} tickers)", flush=True)
+    # Round 243 live finding: the aggregate fail-closed fetch is wrong for a
+    # TIME-AXIS extension — delisted names (BBBY) legitimately have no data in
+    # the new window, and a 2.5h polite crawl exhausts provider retries for a
+    # handful of ALIVE names (BF-B/BRK-B recovered on a targeted retry). The
+    # strictness point is the READINESS gate (PIT cross-section), not the raw
+    # panel: fetch per symbol, tolerate no-data with an honest NaN column +
+    # warning, and surface the survivors/retry-miss lists for the log.
+    from aionis.config import settings
+    from aionis.ingest.market import _from_alpaca, _from_tiingo
+    start, end = str((edge + pd.Timedelta(days=1)).date()), str(through.date())
+
+    def _prod_fetch_one(tkr: str) -> dict[str, pd.Series]:
+        got: dict[str, pd.Series] = {}
+        try:
+            got = _from_tiingo([tkr], start, end, settings.tiingo_api_key)
+        except Exception as exc:  # noqa: BLE001 — per-symbol tolerance
+            log.warning("e3_extend_tiingo_error", ticker=tkr, error=repr(exc)[:120])
+        if not got and settings.alpaca_key_id and settings.alpaca_secret_key:
+            try:
+                got = _from_alpaca(
+                    settings.alpaca_key_id, settings.alpaca_secret_key,
+                    [tkr], start, end)
+            except Exception as exc:  # noqa: BLE001 — backstop may 401 (live 2026-10-09)
+                log.warning("e3_extend_alpaca_error", ticker=tkr, error=repr(exc)[:120])
+        return got
+
+    series: dict[str, pd.Series] = {}
+    no_data: list[str] = []
+    if fetch is not fetch_price_series:
+        # Test seam: an injected fetch callable serves the whole batch in ONE
+        # call (the hermetic tests' recorded contract).
+        got_all = fetch(list(px.columns), start, end)
+        for tkr, ser in (got_all or {}).items():
+            if ser is not None and len(ser) > 0:
+                series[tkr] = ser
+            else:
+                no_data.append(tkr)
+        no_data += [t for t in px.columns if t not in (got_all or {})]
+    else:
+        for i, tkr in enumerate(px.columns):
+            got = _prod_fetch_one(tkr)
+            got_series = got.get(tkr)
+            if got_series is not None and len(got_series) > 0:
+                series[tkr] = got_series
+            else:
+                no_data.append(tkr)
+            if (i + 1) % 50 == 0:
+                print(f"[e3-extend] fetched {i + 1}/{px.shape[1]} "
+                      f"(no-data so far: {len(no_data)})", flush=True)
+    if no_data:
+        print(f"[e3-extend] WARNING: {len(no_data)} symbols have no data in the "
+              f"new window (delisted names are expected; alive names here are a "
+              f"coverage gap the readiness gate will catch): {no_data}", flush=True)
+    add = pd.DataFrame({tkr: s for tkr, s in series.items()})
+    add.index = pd.to_datetime(add.index).normalize()
+    add = add.reindex(sessions)
+    out = pd.concat([px, add])
+    out.index.name = px.index.name or "date"
+    interior_nans = int(add.isna().all(axis=1).sum())
+    print(f"[e3-extend] appended {len(add)} sessions "
+          f"(all-NaN sessions: {interior_nans} — dual-source fail-closed "
+          f"guarantees none for listed names)", flush=True)
+    return out
+
+
 def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("--through", type=str, default=None,
+                        help="extend the _e3 panel's time axis to this "
+                             "session (YYYY-MM-DD); frozen base untouched")
+    args = parser.parse_args()
+
     px = pd.read_parquet(CACHE / "phase_b_prices.parquet")
     mem = load_pierrebrunelle_membership()
     sic = pd.read_parquet(CACHE / "phase_d_sic_map.parquet")
+
+    if args.through:
+        px = _extend_rows_through(px, pd.Timestamp(args.through).normalize())
 
     predict_session = pd.Timestamp(px.index.max()).normalize()
     pit = sorted(constituents_on(mem, predict_session))

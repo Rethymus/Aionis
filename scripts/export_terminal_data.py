@@ -7656,6 +7656,38 @@ def export_knowledge_shelf() -> None:
 _EXPORT_DELTAS: list[dict] = []
 
 
+def _committed_fingerprint(name: str) -> tuple[str, str | None]:
+    """Fingerprint of the file AS LAST COMMITTED (git HEAD).
+
+    Round 243 bug fix: the lane runs export_terminal_data TWICE per evening
+    (pass 2 picks up the pct parse). The intra-process before/after capture
+    made pass 2 record changed=0 for everything (its "before" was pass 1's
+    fresh output), erasing the evening's true delta story from the registry.
+    Comparing against HEAD instead makes the registry mean "vs last commit"
+    — stable across passes. Untracked files have no HEAD version (new panel
+    = empty before, honestly "changed" once written)."""
+    import subprocess
+    try:
+        out = subprocess.run(
+            ["git", "show", f"HEAD:web/src/data/aionis/{name}"],
+            capture_output=True, cwd=WEB.parent.parent, timeout=15,
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        return ("", None)
+    if out.returncode != 0:
+        return ("", None)
+    raw = out.stdout
+    try:
+        payload = json.loads(raw)
+        as_of = payload.get("as_of")
+        payload.pop("snapshot_ts", None)
+        content = json.dumps(payload, sort_keys=True, ensure_ascii=False)
+        sha = hashlib.sha256(content.encode("utf-8")).hexdigest()[:12]
+        return (sha, str(as_of) if as_of is not None else None)
+    except Exception:
+        return (hashlib.sha256(raw).hexdigest()[:12], None)
+
+
 def _panel_fingerprint(name: str) -> tuple[str, str | None]:
     """Content fingerprint EXCLUDING snapshot_ts (every _stamp call refreshes
     it, so raw-byte comparison would mark every panel "changed" every run —
@@ -7688,7 +7720,7 @@ def _safe_export(name: str, fn, /, *args, **kwargs):
     at its last committed value. Only ``FileNotFoundError`` is swallowed, so
     genuine bugs still surface. Returns the wrapped call's value, or ``None``.
     """
-    before_sha, before_as_of = _panel_fingerprint(name)
+    before_sha, before_as_of = _committed_fingerprint(name)
     try:
         out = fn(*args, **kwargs)
     except FileNotFoundError as e:
