@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-09 20:45，轮 244）（研究-ops 线）：Tiingo 小时配额确证 + 可断点续传爬取落地（被杀即丢 6h 进度的教训工程化）：**
+  裸 curl 定案："run over your **hourly** request allocation"——免费档按小时配给，597 符号≈10h 滴流；每符号 3 重试放大消耗；旧爬取内存持有=杀掉全丢（当日 6h 配额学费）。**修复**：部分序列每 10 符号落盘（e3_extend_partial.parquet + fetched/no-data 清单）→ 重启跳过已抓；连续 5 空/429 即睡眠至下一小时界（不再烧重试）；完成写盘后清残留。**10-31 runbook ⓪b 同性质需求**（小时墙下跨窗存活）。全量 hermetic EXIT=0（08c7a4926）。夜间滴流作业重启在跑（可续传版，完成通知带回五项判定）。**边界**：研究-ops lane；冻结基底未动/0 ledger/0 outcome。**待业主**：Alpaca 401 凭证（后备源修复可把小时墙变双源轮转——双钥匙价值量化在册）。
+
 - **active (10-09 13:35，轮 243）（研究-ops 线）：--through 首次实弹三发现全修 + 配额现实入册（9-30 扩展改期配额新鲜窗）：**
   **实弹发现**：①聚合 fail-closed 对时间轴扩展是错误严格点——BBBY（退市死名）新窗合法无数据 + 2.5h 礼貌爬取耗尽 provider 重试（BF-B/BRK-B 定点重试即恢复）；严格性属于 readiness 门（PIT 横截面）而非原始面板——改为逐符号容错（NaN+如实 no-data 清单），测试缝保留（注入 fetch=单批）。②**Alpaca 后备 401**（定点探针实录）=双源实为单源——环境发现呈业主 .env，不静默绕过。③panel_changes pass-2 抹除（回填核验抓到）：lane 每晚两遍 export，第二遍进程内 before/after 恒等→changed=0 覆盖真故事——before 指纹改锚 **git HEAD**（注册表语义="vs 上次提交"，跨遍稳定）。**配额现实**：重跑即刻撞 Tiingo 429（当日配额已被首爬耗尽）→ 止损终止（零写入验证：e3 面板仍 08-31、冻结基底 sha 不变）——**9-30 扩展改至配额新鲜窗执行**；10-31 runbook 排程教训：⓪b 须窗口早段跑+预留整日配额。全量 hermetic EXIT=0（2b73f8fc0）。**边界**：研究-ops lane；冻结基底字节未动/0 ledger 写/0 outcome 观测。**待业主**：Alpaca 401 凭证 + 9-30 干跑重放授权。
 
