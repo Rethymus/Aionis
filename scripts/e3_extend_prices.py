@@ -33,6 +33,7 @@ live data extension.
 from __future__ import annotations
 
 import argparse
+import time
 
 import pandas as pd
 import structlog
@@ -122,21 +123,63 @@ def _extend_rows_through(px: pd.DataFrame, through: pd.Timestamp,
                 no_data.append(tkr)
         no_data += [t for t in px.columns if t not in (got_all or {})]
     else:
-        for i, tkr in enumerate(px.columns):
+        # Round 244: Tiingo free tier is HOURLY-allocation limited (live
+        # 2026-10-09: "run over your hourly request allocation") — 597 symbols
+        # trickle over ~10h. Make the crawl RESUMABLE (partial store reloaded
+        # on restart, fetched symbols skipped) and hour-aware (after 5
+        # consecutive 429/empty responses, sleep to the next hour boundary
+        # instead of burning retries that triple consumption).
+        partial_path = CACHE / "e3_extend_partial.parquet"
+        done_path = CACHE / "e3_extend_fetched.json"
+        if partial_path.exists():
+            partial = pd.read_parquet(partial_path)
+            series = {c: partial[c].dropna() for c in partial.columns}
+            print(f"[e3-extend] resumed {len(series)} symbols from partial store",
+                  flush=True)
+        done_no_data: list[str] = []
+        if done_path.exists():
+            import json as _json
+            done_no_data = _json.loads(done_path.read_text())
+        done = set(series) | set(done_no_data)
+        no_data = list(done_no_data)
+        consecutive_bad = 0
+        todo = [t for t in px.columns if t not in done]
+        for i, tkr in enumerate(todo):
             got = _prod_fetch_one(tkr)
             got_series = got.get(tkr)
             if got_series is not None and len(got_series) > 0:
                 series[tkr] = got_series
+                consecutive_bad = 0
             else:
                 no_data.append(tkr)
-            if (i + 1) % 50 == 0:
-                print(f"[e3-extend] fetched {i + 1}/{px.shape[1]} "
-                      f"(no-data so far: {len(no_data)})", flush=True)
+                consecutive_bad += 1
+            if (i + 1) % 10 == 0 or i + 1 == len(todo):
+                pd.DataFrame({t: series[t] for t in series}).to_parquet(
+                    partial_path)
+                import json as _json
+                done_path.write_text(_json.dumps(
+                    [t for t in no_data]))
+                print(f"[e3-extend] fetched {i + 1}/{len(todo)} todo "
+                      f"({len(series)} series, no-data {len(no_data)}) — "
+                      f"partial store saved", flush=True)
+            if consecutive_bad >= 5:
+                now = pd.Timestamp.now()
+                next_hour = (now.floor("h") + pd.Timedelta(hours=1))
+                wait_s = int((next_hour - now).total_seconds()) + 30
+                print(f"[e3-extend] {consecutive_bad} consecutive empty/429 — "
+                      f"hourly allocation exhausted; sleeping {wait_s}s to the "
+                      f"next hour boundary (progress is saved)", flush=True)
+                time.sleep(wait_s)
+                consecutive_bad = 0
     if no_data:
         print(f"[e3-extend] WARNING: {len(no_data)} symbols have no data in the "
               f"new window (delisted names are expected; alive names here are a "
               f"coverage gap the readiness gate will catch): {no_data}", flush=True)
     add = pd.DataFrame({tkr: s for tkr, s in series.items()})
+    # crawl complete — drop the resume store so the next run starts clean
+    for stale in (CACHE / "e3_extend_partial.parquet", CACHE / "e3_extend_fetched.json"):
+        if stale.exists():
+            stale.unlink()
     add.index = pd.to_datetime(add.index).normalize()
     add = add.reindex(sessions)
     out = pd.concat([px, add])
