@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-10 03:15，轮 247）（研究 线）：授权 9-30 重放实弹——原门闭环 PASS，梯子揭示下一门（earnings_8k_empty）：**
+  **爬取完胜**（03:08 五项判定全 PASS：exit=0/冻结 sha 27c63577 不变/**e3 边=2026-09-30**/PIT 503/503 零残差/578 系列+7 诚实 no-data[BBBY 退市+6 缺口类 NaN]）。**重放**（03:10，--run-date 2026-09-30）：predict_session_not_in_panel **PASS**（9-30 与 10-31 同类 fail-closed 的结构性修复端到端闭环）→ stakes 空窗=NOTE（可接受）→ **earnings_8k_empty FAIL-CLOSED**（9 月窗 8-K 2.02 采集=0，与 10-02 原跑同值=真实结构项而非重放伪影）——**下一诊断项**。账本 +2 设计内 forward 行（ingest+iset_frozen，幂等；69 行）；重放按预审简报 §3 如实标注补跑，入 10-31 证据包。轮 243 测试文件补交（曾漏跟踪）。**边界**：研究 lane（授权内）；冻结基底/预注册/OOS 界零触碰；账本=forward 车道设计内追加。
+
 - **active (10-10 01:30，轮 246b）（调试 线）：Alpaca "401" 破案——是自己的参数序错误，包装器与钥匙无恙（10-09"环境发现"撤回）：**
   签名 `(symbols, start, end, key_id, secret_key)`；轮 243 容错路径传成 `(key_id, secret, symbols, …)`→循环逐字符迭代**钥匙字符串**→`symbol=P`（P=钥首字符——所有探针日志的谜之符号）→真 401（错钥当 ticker）。修复=关键字传参；包装器实测恢复（AAPL 21 bars）。**双源真通**：爬取第五跑 ~3/分钟（vs Tiingo 单源 ~0.8/分）——每小时窗 Tiingo 前 ~40+Alpaca 无墙余量，预计 04:00 完成。**教训**：日志里"不可能的值"（单字符 ticker）是参数错位的指纹；10-09 归因"环境/凭证"过早——撤回并如实记录（6072fd 之外以 7f0d6b363 序列推送）。**边界**：调试 lane；0 ledger/0 frozen/0 OOS。
 
