@@ -103,10 +103,16 @@ def _extend_rows_through(px: pd.DataFrame, through: pd.Timestamp,
             log.warning("e3_extend_tiingo_error", ticker=tkr, error=repr(exc)[:120])
         if not got and settings.alpaca_key_id and settings.alpaca_secret_key:
             try:
+                # Round 246b: keyword args — the earlier positional call had
+                # (key_id, secret, symbols, ...) against the signature
+                # (symbols, start, end, key_id, secret_key): the loop iterated
+                # the KEY STRING char-by-char (the mysterious 'symbol=P' 401s)
+                # and the backstop never actually ran.
                 got = _from_alpaca(
-                    settings.alpaca_key_id, settings.alpaca_secret_key,
-                    [tkr], start, end)
-            except Exception as exc:  # noqa: BLE001 — backstop may 401 (live 2026-10-09)
+                    symbols=[tkr], start=start, end=end,
+                    key_id=settings.alpaca_key_id,
+                    secret_key=settings.alpaca_secret_key)
+            except Exception as exc:  # noqa: BLE001 — per-symbol tolerance
                 log.warning("e3_extend_alpaca_error", ticker=tkr, error=repr(exc)[:120])
         return got
 
