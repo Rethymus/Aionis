@@ -7656,6 +7656,13 @@ def export_knowledge_shelf() -> None:
 _EXPORT_DELTAS: list[dict] = []
 
 
+def _panel_fname(name: str) -> str:
+    """Registration names are bare keys ('ark'), files are '<key>.json'
+    (round-245 bug: both fingerprint readers did WEB/name and found NOTHING
+    for every panel — the registry has been vacuous since round 213)."""
+    return name if name.endswith(".json") else f"{name}.json"
+
+
 def _committed_fingerprint(name: str) -> tuple[str, str | None]:
     """Fingerprint of the file AS LAST COMMITTED (git HEAD).
 
@@ -7669,7 +7676,7 @@ def _committed_fingerprint(name: str) -> tuple[str, str | None]:
     import subprocess
     try:
         out = subprocess.run(
-            ["git", "show", f"HEAD:web/src/data/aionis/{name}"],
+            ["git", "show", f"HEAD:web/src/data/aionis/{_panel_fname(name)}"],
             capture_output=True, cwd=WEB.parent.parent, timeout=15,
         )
     except (OSError, subprocess.TimeoutExpired):
@@ -7693,7 +7700,7 @@ def _panel_fingerprint(name: str) -> tuple[str, str | None]:
     it, so raw-byte comparison would mark every panel "changed" every run —
     meaningless). Hash the canonical re-serialization with snapshot_ts
     dropped; as_of still reported separately (it IS the freshness signal)."""
-    fp = WEB / name
+    fp = WEB / _panel_fname(name)
     if not fp.exists():
         return ("", None)
     raw = fp.read_bytes()
