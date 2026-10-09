@@ -155,7 +155,11 @@ def collect_8k_forward(
             log.warning("forward_8k_no_cik", ticker=tkr)
             continue
         try:
-            sub = stakes_13d.fetch_submissions(int(cik), cdir)
+            sub = stakes_13d.fetch_submissions(
+                int(cik), cdir,
+                window_start=(
+                    str(_common.to_utc_dt(last_poll_ts).date())
+                    if last_poll_ts else None))
         except Exception as e:  # a stubborn CIK must not abort the whole snapshot
             log.warning("forward_8k_cik_skip", ticker=tkr, cik=cik, error=str(e))
             continue

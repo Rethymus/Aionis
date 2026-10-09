@@ -1527,12 +1527,14 @@ def test_ledger_append_only_not_mutated_by_export() -> None:
     # 0 top-1 hits pool-wide incl. Qwen3.5-35B; the interim miscounted run
     # was dropped before commit, never landing in any pin) — 1 insertion,
     # 0 deletions verified via git diff before re-pinning.
-    # Re-pinned 2026-10-08 (memory probe v1.2 top-5, round 234): vs the
-    # round-233 pin (6962aa81), the growth is exactly ONE appended
-    # exploratory row (llm_memory_probe mode=top5 — 0/12 top-5 hits pool-
-    # wide) — 1 insertion, 0 deletions verified via git diff before
-    # re-pinning; payload reports/exploratory/llm-memory-probe-top5.json.
-    assert digest == "eba3b4388eff6722912b255f79554232ac227d632eecbc42a01b516a65c9fd9e", (
+    # Re-pinned 2026-10-10 (owner-authorized 9-30 replay, round 247): vs
+    # the 10-08 pin (eba3b438), the growth is exactly TWO designed
+    # forward-lane rows (data_ingest stakes_13d_forward + earnings_8k_
+    # forward, then forward_iset_frozen — snapshot-keyed idempotent),
+    # appended by the replay's freeze step. 2 insertions, 0 deletions
+    # verified via git diff at commit 43b8db78e; replay honestly labeled
+    # in state (feeds the 10-31 evidence pack as a marked re-run).
+    assert digest == "71cdc8d20820ea2e3633f772d8a6de33b2fb78dfda0abd18dd32800a1c6fa6ed", (
         f"ledger sha256 changed to {digest}; re-verify append-only then re-pin"
     )
 

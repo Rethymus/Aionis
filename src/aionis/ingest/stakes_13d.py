@@ -79,13 +79,32 @@ def _get_json(url: str, fp: Path, *, retries: int = 4, backoff: int = 4) -> dict
 
 def fetch_submissions(
     cik: int, cache_dir: Path | None = None, *, retries: int = 4, backoff: int = 4,
+    window_start: str | None = None,
 ) -> dict:
     """Full submissions JSON for one issuer CIK (the filings index + SIC), cached.
 
     The top-level response carries ``filings.recent`` (the latest ~1000 filings as
     parallel arrays) and ``filings.files`` (archive-block filenames covering ALL
-    older filings). :func:`filings_13d` paginates the blocks for full history."""
+    older filings). :func:`filings_13d` paginates the blocks for full history.
+
+    ``window_start`` (ISO date, round 248): the FORWARD collectors' half-open
+    window lower bound — when the cached recent block's NEWEST filing predates
+    it, the cache cannot answer the query and is refreshed (the live 2026-10-10
+    diagnosis: pure exists-caching left submissions at 2026-08-27, so every
+    later window collected an honest-looking zero — the September replay's
+    earnings_8k_empty root cause)."""
     fp = _cache_dir(cache_dir) / f"submissions_{cik:010d}.json"
+    if window_start and fp.exists():
+        try:
+            cached = json.loads(fp.read_text(encoding="utf-8"))
+            newest = max(
+                cached.get("filings", {}).get("recent", {}).get("filingDate", [])
+                or [""],
+            )
+            if newest < window_start:
+                fp.unlink()  # stale for this query — refetch below
+        except (json.JSONDecodeError, OSError, ValueError):
+            pass  # unreadable cache: fall through to the normal fetch path
     return _get_json(_SUBMISSIONS_URL.format(cik=cik), fp, retries=retries, backoff=backoff)
 
 

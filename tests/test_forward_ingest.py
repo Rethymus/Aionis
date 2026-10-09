@@ -586,3 +586,51 @@ def test_real_ledger_jsonl_untouched(tmp_path: Path, monkeypatch: pytest.MonkeyP
         len(real_ledger.read_text(encoding="utf-8").splitlines()) if real_ledger.exists() else 0
     )
     assert before == after  # forward freeze must not append to the real ledger
+
+
+def test_fetch_submissions_window_start_refresh(tmp_path, monkeypatch):
+    """Round 248: a cached submissions block whose NEWEST filing predates the
+    forward window's lower bound cannot answer the query — fetch_submissions
+    must refresh it (the September replay's earnings_8k_empty root cause:
+    pure exists-caching left submissions at 2026-08-27)."""
+
+    from aionis.ingest import stakes_13d
+
+    cik = 12345
+    fp = tmp_path / f"submissions_{cik:010d}.json"
+    stale = {
+        "cik": f"{cik:010d}",
+        "filings": {"recent": {"form": ["8-K"], "filingDate": ["2026-08-27"],
+                               "accessionNumber": ["x"], "primaryDocument": ["d"]}},
+    }
+    fp.write_text(__import__("json").dumps(stale), encoding="utf-8")
+    fresh = {
+        "cik": f"{cik:010d}",
+        "filings": {"recent": {"form": ["8-K"], "filingDate": ["2026-09-25"],
+                               "accessionNumber": ["y"], "primaryDocument": ["d"]}},
+    }
+
+    fetched = {"n": 0}
+
+    def fake_get_json(url, cache_fp, *, retries=4, backoff=4):
+        if cache_fp.exists():  # mirror the real exists-cache semantics
+            return __import__("json").loads(cache_fp.read_text(encoding="utf-8"))
+        fetched["n"] += 1
+        cache_fp.write_text(__import__("json").dumps(fresh), encoding="utf-8")
+        return fresh
+
+    monkeypatch.setattr(stakes_13d, "_get_json", fake_get_json)
+
+    # window AFTER the cache's newest -> refresh happens
+    out = stakes_13d.fetch_submissions(cik, tmp_path, window_start="2026-09-01")
+    assert fetched["n"] == 1
+    assert out["filings"]["recent"]["filingDate"] == ["2026-09-25"]
+
+    # window ALREADY covered by the (now fresh) cache -> no extra fetch
+    out2 = stakes_13d.fetch_submissions(cik, tmp_path, window_start="2026-09-01")
+    assert fetched["n"] == 1
+    assert out2 == out
+
+    # no window_start -> classic exists-cache behavior
+    stakes_13d.fetch_submissions(cik, tmp_path)
+    assert fetched["n"] == 1
