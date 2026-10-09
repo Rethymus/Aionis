@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-10 04:15，轮 248-248b）（研究 线）：earnings_8k_empty 根因闭环 + 授权重重放——9 月影子月 READINESS PASS + 预测已提交（密封未揭）：**
+  **诊断**（验证器指派）：窗口语义正确；根因=`_get_json` 纯存在性缓存——submissions 停 2026-08-27，9 月窗必然 0 行（10-02 原跑与 10-10 重放同因；非数据真缺，9 月有 NKE 类财报 8-K）。**修复**：`fetch_submissions(window_start=)` 缓存最新申报早于窗下界即重取；8-K 采集器接线 last_poll 下界；契约测试钉三态。**重重放实弹**（04:08，授权范围内）：全梯 READINESS **PASS**→fit→**commit**（config a2d3a4a9，scores 密封 44d1543f——**按 ADR-010 不揭盲**，10-31 证据包读取）。**判据 1 算术变为：8/31 PASS + 9/30 PASS（标注补跑）+ 10/31 live=双 PASS 可达**。账本 +2 设计行（幂等重冻+提交行；71 行）；append-only 钉按协议重钉（LF 归一形式 ec6d2892，出处入注释）。全量 hermetic EXIT=0（6caa56792+本轮）。**9-30 fail-closed 全剧终**：面板时间轴（242-246b）→submissions 新鲜度（248）→重放（247+248b）。**边界**：研究 lane（业主授权内）；冻结基底/预注册零触碰；**未观察任何 outcome**。
+
 - **active (10-10 03:15，轮 247）（研究 线）：授权 9-30 重放实弹——原门闭环 PASS，梯子揭示下一门（earnings_8k_empty）：**
   **爬取完胜**（03:08 五项判定全 PASS：exit=0/冻结 sha 27c63577 不变/**e3 边=2026-09-30**/PIT 503/503 零残差/578 系列+7 诚实 no-data[BBBY 退市+6 缺口类 NaN]）。**重放**（03:10，--run-date 2026-09-30）：predict_session_not_in_panel **PASS**（9-30 与 10-31 同类 fail-closed 的结构性修复端到端闭环）→ stakes 空窗=NOTE（可接受）→ **earnings_8k_empty FAIL-CLOSED**（9 月窗 8-K 2.02 采集=0，与 10-02 原跑同值=真实结构项而非重放伪影）——**下一诊断项**。账本 +2 设计内 forward 行（ingest+iset_frozen，幂等；69 行）；重放按预审简报 §3 如实标注补跑，入 10-31 证据包。轮 243 测试文件补交（曾漏跟踪）。**边界**：研究 lane（授权内）；冻结基底/预注册/OOS 界零触碰；账本=forward 车道设计内追加。
 
