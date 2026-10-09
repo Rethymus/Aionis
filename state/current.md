@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-09 13:35，轮 243）（研究-ops 线）：--through 首次实弹三发现全修 + 配额现实入册（9-30 扩展改期配额新鲜窗）：**
+  **实弹发现**：①聚合 fail-closed 对时间轴扩展是错误严格点——BBBY（退市死名）新窗合法无数据 + 2.5h 礼貌爬取耗尽 provider 重试（BF-B/BRK-B 定点重试即恢复）；严格性属于 readiness 门（PIT 横截面）而非原始面板——改为逐符号容错（NaN+如实 no-data 清单），测试缝保留（注入 fetch=单批）。②**Alpaca 后备 401**（定点探针实录）=双源实为单源——环境发现呈业主 .env，不静默绕过。③panel_changes pass-2 抹除（回填核验抓到）：lane 每晚两遍 export，第二遍进程内 before/after 恒等→changed=0 覆盖真故事——before 指纹改锚 **git HEAD**（注册表语义="vs 上次提交"，跨遍稳定）。**配额现实**：重跑即刻撞 Tiingo 429（当日配额已被首爬耗尽）→ 止损终止（零写入验证：e3 面板仍 08-31、冻结基底 sha 不变）——**9-30 扩展改至配额新鲜窗执行**；10-31 runbook 排程教训：⓪b 须窗口早段跑+预留整日配额。全量 hermetic EXIT=0（2b73f8fc0）。**边界**：研究-ops lane；冻结基底字节未动/0 ledger 写/0 outcome 观测。**待业主**：Alpaca 401 凭证 + 9-30 干跑重放授权。
+
 - **active (10-09 00:40，轮 242）（研究/docs 线）：第二十二波——业主解锁 E3 点火 GO 路径：预审简报 + 结构性发现（10-31 确定性 fail-closed 风险，提前 23 天抓获）：**
   **核心发现**：9-30 影子 fail-closed 根因=`predict_session_not_in_panel`（面板边 07-31<要求 09-30），而**整条 runbook 链没有时间轴推进器**——`e3_extend_prices.py` 只补 ticker 列到现有边（代码证实 `predict_session=px.index.max()` 从不延长行）；E3 面板现停在 08-31（实测）。**推论：无干预则 10-31 确定性同类 fail-closed → 零 readiness-PASS 影子月 → GO 只能 NO-GO/延后**。08-31 当时 PASS 系历史一次性对齐。**修复提案入简报**（`--through` 延长 `_e3` 面板行，冻结基础面板字节不动=H6 无涉，预注册 §8 LIVE PROCESS 明文允许；runbook ⓪b 带 `--through 2026-10-30`；修后以 9-30 干跑重放验证越过该门——重放须在证据包前+业主授权+如实标注）。**业主预审简报**：`reports/design/2026-10-09-e3-go-prebrief.md`（§1 结构性发现+修复提案；§2 六判据全集表[锚点/现状预填/10-31 将变什么]；§3 9-30 fail-closed 的 GO 含义[门按设计工作=防泄漏胜利；字面"跑满 2 月"≠实质"2 个 PASS"]；§4 GO/NO-GO 骨架+GO≠有信号）。简报零 outcome-bearing 观测（ADR-010 边界）。**下一轮**：实施 `--through` 修复+测试+9-30 干跑重放请示。**边界**：docs/研究 lane；0 ledger/0 frozen/0 OOS。
 
