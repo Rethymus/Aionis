@@ -204,6 +204,14 @@ def main() -> int:
 
     if args.through:
         px = _extend_rows_through(px, pd.Timestamp(args.through).normalize())
+        # Round 245b: the time-extended frame must ALWAYS be persisted — the
+        # coverage-gap branch below used to be the only PX_E3 writer, so with
+        # complete column coverage (the common case after the first run) the
+        # extension was computed and then silently discarded (live 2026-10-09:
+        # crawl finished, partial store dropped, panel edge still 08-31).
+        px.to_parquet(PX_E3)
+        print(f"[e3-extend] wrote {PX_E3.name} time axis through "
+              f"{pd.Timestamp(px.index.max()).date()} ({px.shape})", flush=True)
 
     predict_session = pd.Timestamp(px.index.max()).normalize()
     pit = sorted(constituents_on(mem, predict_session))
