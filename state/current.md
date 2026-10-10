@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-10 09:25，轮 249）（docs/备战 线）：10-31 runbook 修订版成文——9-30 全剧教训的执行面收口：**
+  `docs/e3-1031-runbook.md`：⓪b 带 `--through 2026-10-30`（时间轴推进=结构修复落进执行图）；**窗口早段排程**（小时配额实证+断点续传+完成标记门控）；Alpaca 双源真实可用注记；submissions 新鲜度内建；判据 1 算术（8/31+9/30 补跑+10/31=双 PASS）；已知剩余缺口如实（5 CIK 兜底+6 活名 NaN 列）。任何执行会话/自动化按图施工。**边界**：docs lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-10 04:15，轮 248-248b）（研究 线）：earnings_8k_empty 根因闭环 + 授权重重放——9 月影子月 READINESS PASS + 预测已提交（密封未揭）：**
   **诊断**（验证器指派）：窗口语义正确；根因=`_get_json` 纯存在性缓存——submissions 停 2026-08-27，9 月窗必然 0 行（10-02 原跑与 10-10 重放同因；非数据真缺，9 月有 NKE 类财报 8-K）。**修复**：`fetch_submissions(window_start=)` 缓存最新申报早于窗下界即重取；8-K 采集器接线 last_poll 下界；契约测试钉三态。**重重放实弹**（04:08，授权范围内）：全梯 READINESS **PASS**→fit→**commit**（config a2d3a4a9，scores 密封 44d1543f——**按 ADR-010 不揭盲**，10-31 证据包读取）。**判据 1 算术变为：8/31 PASS + 9/30 PASS（标注补跑）+ 10/31 live=双 PASS 可达**。账本 +2 设计行（幂等重冻+提交行；71 行）；append-only 钉按协议重钉（LF 归一形式 ec6d2892，出处入注释）。全量 hermetic EXIT=0（6caa56792+本轮）。**9-30 fail-closed 全剧终**：面板时间轴（242-246b）→submissions 新鲜度（248）→重放（247+248b）。**边界**：研究 lane（业主授权内）；冻结基底/预注册零触碰；**未观察任何 outcome**。
 
