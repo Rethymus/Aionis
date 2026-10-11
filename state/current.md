@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-11 10:55，轮 250）（核验 线）：周五通道七查补验 ALL PASS（--date 10-09）+ 周末 SKIP 设计确认 + 注册表第二天合法读：**
+  周五 22bf194c5（主道+retry-soft 双提交）七查全 PASS（backup/persistent/缓存模式/双 CI/news as_of 前进=已自愈至 10-08 后继续前进）。10-10/10-11 无 attempt=guard 周末条款设计内（SKIP:weekend）。retry-soft 提交的注册表 changed=0=合法（该次仅重跑 news_feed 且面板内容与主道相同——非空洞复发，7972fd1d2 的 9-changed 仍为真实注册表实证）。**探针用法注记**：verify 需 --date 对齐最后运行日（无参数默认今天=周末误报）。**边界**：核验 lane；0 ledger/0 frozen/0 OOS。
+
 - **active (10-10 09:25，轮 249）（docs/备战 线）：10-31 runbook 修订版成文——9-30 全剧教训的执行面收口：**
   `docs/e3-1031-runbook.md`：⓪b 带 `--through 2026-10-30`（时间轴推进=结构修复落进执行图）；**窗口早段排程**（小时配额实证+断点续传+完成标记门控）；Alpaca 双源真实可用注记；submissions 新鲜度内建；判据 1 算术（8/31+9/30 补跑+10/31=双 PASS）；已知剩余缺口如实（5 CIK 兜底+6 活名 NaN 列）。任何执行会话/自动化按图施工。**边界**：docs lane；0 ledger/0 frozen/0 OOS。
 
