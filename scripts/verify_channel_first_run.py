@@ -129,6 +129,22 @@ def main() -> int:
         st.get("persistent_soft_fails"),
     )
 
+    # Round 251: the retry-soft pass record (owner-authorized strategy,
+    # round 246). ABSENT is fine (only materializes when the retry actually
+    # runs); PRESENT must be well-formed — the info the owner needs (which
+    # steps, residual fails) can't silently rot.
+    retry = st.get("retry_soft")
+    if retry is None:
+        print("CHECK-PASS retry_soft record (absent — retry did not run; OK)")
+    elif isinstance(retry, dict) and retry.get("at") and "residual_soft_fails" in retry:
+        residual = retry.get("residual_soft_fails") or []
+        verdict = "RESOLVED" if not residual else f"STILL FAILING: {residual}"
+        print(f"CHECK-PASS retry_soft record ({retry.get('steps')} at "
+              f"{str(retry.get('at'))[:19]} -> {verdict})")
+    else:
+        failures += 1
+        _fail("retry_soft record", "dict with at+residual_soft_fails", retry)
+
     print(f"\n{'ALL CHECKS PASS' if failures == 0 else f'{failures} CHECK(S) FAILED'}")
     return 0 if failures == 0 else 1
 
