@@ -1,31 +1,15 @@
 {
   "status": "ok",
-  "as_of": "2026-10-08T05:30:00Z",
+  "as_of": "2026-10-10T06:45:00Z",
   "window": {
-    "start": "2026-09-09",
-    "end": "2026-10-08"
+    "start": "2026-09-13",
+    "end": "2026-10-10"
   },
   "query": "(\"stock market\" OR \"S&P 500\" OR \"Federal Reserve\") sourcelang:eng | sourcelang:zho domainis:wallstreetcn.com",
-  "total": 1880,
-  "n_sources": 513,
-  "n_zho": 315,
+  "total": 1199,
+  "n_sources": 416,
+  "n_zho": 221,
   "by_day": [
-    {
-      "date": "2026-09-09",
-      "count": 230
-    },
-    {
-      "date": "2026-09-10",
-      "count": 27
-    },
-    {
-      "date": "2026-09-11",
-      "count": 352
-    },
-    {
-      "date": "2026-09-12",
-      "count": 77
-    },
     {
       "date": "2026-09-13",
       "count": 144
@@ -85,9 +69,58 @@
     {
       "date": "2026-10-08",
       "count": 2
+    },
+    {
+      "date": "2026-10-10",
+      "count": 5
     }
   ],
   "items": [
+    {
+      "seendate": "2026-10-10T06:45:00Z",
+      "title": "AP News in Brief at 12 : 04 a . m . EDT",
+      "url": "http://www.gazettextra.com/news/nation_world/ap-news-in-brief-at-12-04-a-m-edt/article_f833cdbb-ff2e-5f42-965b-9b371c884967.html",
+      "domain": "gazettextra.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-10T06:45:00Z",
+      "title": "AP News in Brief at 12 : 04 a . m . EDT",
+      "url": "https://www.woonsocketcall.com/news/national_and_world_news/ap-news-in-brief-at-12-04-a-m-edt/article_e52b742b-83ac-53a0-80bc-a4829bcbc907.html",
+      "domain": "woonsocketcall.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-10T06:45:00Z",
+      "title": "Definity Financial ( TSE : DFY ) Stock Gets Price Target Trim from Scotia",
+      "url": "https://www.themarketsdaily.com/2026/10/10/definity-financial-tsedfy-stock-gets-price-target-trim-from-scotia.html",
+      "domain": "themarketsdaily.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-10-10T06:45:00Z",
+      "title": "BSR forecast to post record profit in 2026",
+      "url": "https://vietnamnews.vn/economy/1801682/bsr-forecast-to-post-record-profit-in-2026.html",
+      "domain": "vietnamnews.vn",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Vietnam"
+    },
+    {
+      "seendate": "2026-10-10T06:45:00Z",
+      "title": "Mid - Ohio Valley Climate Corner : Vote not just for climate , but affordability",
+      "url": "https://www.newsandsentinel.com/opinion/local-columns/2026/10/mid-ohio-valley-climate-corner-vote-not-just-for-climate-but-affordability/",
+      "domain": "newsandsentinel.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
     {
       "seendate": "2026-10-08T05:30:00Z",
       "title": "Biotech and Pharma Industry News | BioPharma Dive",
@@ -1392,53 +1425,8 @@
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-02T07:15:00Z",
-      "title": "Nvidia unveils record $150 billion buyback increase",
-      "url": "http://www.californiatelegraph.com/news/279338424/nvidia-unveils-record-usd150-billion-buyback-increase",
-      "domain": "californiatelegraph.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-02T07:15:00Z",
-      "title": "RBI rate hike may have limited justification amid benign core inflation , subdued growth : Nuvama",
-      "url": "http://www.calcuttanews.net/news/279346885/rbi-rate-hike-may-have-limited-justification-amid-benign-core-inflation-subdued-growth-nuvama",
-      "domain": "calcuttanews.net",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-10-02T07:15:00Z",
-      "title": "RBI rate hike may have limited justification amid benign core inflation , subdued growth : Nuvama",
-      "url": "http://www.hongkongherald.com/news/279346885/rbi-rate-hike-may-have-limited-justification-amid-benign-core-inflation-subdued-growth-nuvama",
-      "domain": "hongkongherald.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-10-02T07:15:00Z",
-      "title": "NGX at 65 : Nigeria\u00e2\u20ac\u2122s stock market witnessed tremendous expansion - Analysis\u00c2",
-      "url": "https://blueprint.ng/ngx-at-65-nigerias-stock-market-witnessed-tremendous-expansion-analysis/",
-      "domain": "blueprint.ng",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Nigeria"
-    },
-    {
-      "seendate": "2026-10-02T07:15:00Z",
-      "title": "Asian shares mixed after global bond sell - off deepens and ahead of US jobs data",
-      "url": "https://kdhnews.com/news/world/asian-shares-mixed-after-global-bond-sell-off-deepens-and-ahead-of-us-jobs-data/article_83eded05-b715-5b1b-9db7-59a4b3f9135f.html",
-      "domain": "kdhnews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
     }
   ],
   "methodology": "GDELT Doc 2.0 artlist \u2014 a machine index of worldwide news. TWO bounded requests per refresh (one per LANGUAGE LANE, the two fixed queries above, <=200 records each, >=15s host spacing; GDELT open data: URL/title/date/domain are facts, article copyright stays with the publishers), sort=datedesc (machine ordering, not editorial). The Chinese lane is domain-anchored on wallstreetcn.com (\u534e\u5c14\u8857\u89c1\u95fb \u2014 a \u8d22\u8054\u793e-style 7\u00d724 financial newswire): \u8d22\u8054\u793e itself has ZERO GDELT crawl coverage and CJK phrase queries are rejected by the API ('phrase too short'), so a domain seed is the only proven form (probe evidence in docs/data-intake-gdelt-news-feed.md). lang = the ingest-resolved lane (API language field first, request provenance fallback; never guessed from title bytes). seendate is GDELT's first-seen UTC stamp (15-min resolution) \u2014 the display freshness anchor. Rows are metadata + outbound links only: no article text is stored, summarized or fabricated; missing source fields are shown empty, never guessed. Dedup key = exact URL WITHIN a lane; the two languages are different articles and are never collapsed across lanes. Coverage = whatever GDELT's crawl saw; gaps are gaps. The payload caps the item list at 150 newest while by_day/total cover the full trailing 30-day cache window. Display-only, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-10-12T10:59:17.489425+00:00"
+  "snapshot_ts": "2026-10-13T11:01:33.481928+00:00"
 }
