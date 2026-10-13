@@ -1,4 +1,5 @@
 company,ticker,issuer_cik,n_persons,n_directors,n_officers,filed_date,doc_url
+Performance Food Group Co,PFGC,1618673,24,18,7,2026-10-09,https://www.sec.gov/Archives/edgar/data/1618673/000119312526419150/pfgc-20261008.htm
 "CONSUMER PORTFOLIO SERVICES, INC.",CPSS,889609,22,9,13,2026-09-30,https://www.sec.gov/Archives/edgar/data/889609/000168316826007507/cps_idef14a.htm
 VIAVI SOLUTIONS INC.,VIAV,912093,21,15,12,2026-10-02,https://www.sec.gov/Archives/edgar/data/912093/000162828026064524/viav-20261002.htm
 LAM RESEARCH CORP,LRCX,707549,17,15,7,2026-09-24,https://www.sec.gov/Archives/edgar/data/707549/000070754926000047/lrcx-20260924.htm
@@ -17,7 +18,6 @@ WESTERN DIGITAL CORP,WDC,106040,11,3,10,2026-10-05,https://www.sec.gov/Archives/
 JACK HENRY & ASSOCIATES INC,JKHY,779152,11,7,9,2026-10-02,https://www.sec.gov/Archives/edgar/data/779152/000077915226000088/jkhy-20261001.htm
 "Winchester Bancorp, Inc./MD/",WSBK,2047235,11,10,7,2026-09-28,https://www.sec.gov/Archives/edgar/data/2047235/000119312526403439/wsbk-20260928.htm
 "Super League Enterprise, Inc.",SLE,1621672,11,11,8,2026-09-25,https://www.sec.gov/Archives/edgar/data/1621672/000143774926031210/slgg20260924_def14a.htm
-MATRIX SERVICE CO,MTRX,866273,11,5,11,2026-09-23,https://www.sec.gov/Archives/edgar/data/866273/000114036126037426/ny20077601x1_def14a.htm
 SIEBERT FINANCIAL CORP,SIEB,65596,10,9,5,2026-10-08,https://www.sec.gov/Archives/edgar/data/65596/000114036126039143/ny20075747x1_def14a.htm
 DONALDSON Co INC,DCI,29644,10,8,5,2026-10-06,https://www.sec.gov/Archives/edgar/data/29644/000002964426000115/dci-20261002.htm
 LESAKA TECHNOLOGIES INC,LSAK,1041514,10,10,0,2026-10-02,https://www.sec.gov/Archives/edgar/data/1041514/000156276226000119/lsak-2026proxy.htm
@@ -25,6 +25,7 @@ CytoDyn Inc.,CYDY,1175680,10,9,9,2026-09-28,https://www.sec.gov/Archives/edgar/d
 CVD EQUIPMENT CORP,CVV,766792,10,8,6,2026-09-25,https://www.sec.gov/Archives/edgar/data/766792/000149315226044302/formdef14a.htm
 Texas Pacific Land Corp,TPL,1811074,10,8,5,2026-09-25,https://www.sec.gov/Archives/edgar/data/1811074/000110465926110963/tm264934-6_def14a.htm
 ALLIANCE ENTERTAINMENT HOLDING CORP,,1823584,10,6,4,2026-09-24,https://www.sec.gov/Archives/edgar/data/1823584/000149315226044108/formdef14a.htm
+"BLOOMIA HOLDINGS, INC.",TULP,875355,9,7,7,2026-10-09,https://www.sec.gov/Archives/edgar/data/875355/000110465926114837/tulp-20261123xdef14a.htm
 "Intapp, Inc.",INTA,1565687,9,9,2,2026-10-06,https://www.sec.gov/Archives/edgar/data/1565687/000114036126038804/ny20077997x1_def14a.htm
 "CRACKER BARREL OLD COUNTRY STORE, INC",CBRL,1067294,9,8,9,2026-10-06,https://www.sec.gov/Archives/edgar/data/1067294/000110465926114062/tm2625024-1_def14a.htm
 "SelectQuote, Inc.",SLQT,1794783,9,8,6,2026-09-30,https://www.sec.gov/Archives/edgar/data/1794783/000179478326000065/slqt-20260930.htm
@@ -33,6 +34,9 @@ BIOVIE INC.,,1580149,9,6,4,2026-09-28,https://www.sec.gov/Archives/edgar/data/15
 Applied Digital Corp.,APLD,1144879,9,7,4,2026-09-25,https://www.sec.gov/Archives/edgar/data/1144879/000149315226044325/formdef14a.htm
 Lifeward Ltd.,LFWD,1607962,9,6,6,2026-09-25,https://www.sec.gov/Archives/edgar/data/1607962/000117891326004614/zk2636146.htm
 GREENE COUNTY BANCORP INC,GCBC,1070524,9,7,5,2026-09-25,https://www.sec.gov/Archives/edgar/data/1070524/000114036126037649/ef20082732_def14a.htm
+FG Communities Holdings Inc.,,1591890,8,8,1,2026-10-09,https://www.sec.gov/Archives/edgar/data/1591890/000149315226046532/formdef14a.htm
+LSI INDUSTRIES INC,LYTS,763532,8,7,8,2026-10-09,https://www.sec.gov/Archives/edgar/data/763532/000143774926032435/lyts20261006_def14a.htm
+"Microvast Holdings, Inc.",MVST,1760689,8,5,5,2026-10-09,https://www.sec.gov/Archives/edgar/data/1760689/000110465926115103/ss6929102_def14a.htm
 ONCOLYTICS BIOTECH INC,ONCY,1129928,8,4,4,2026-10-06,https://www.sec.gov/Archives/edgar/data/1129928/000112992826000066/oncy-20261002.htm
 "DYNARESOURCE, INC.",DYNR,1111741,8,6,4,2026-10-05,https://www.sec.gov/Archives/edgar/data/1111741/000119312526414342/def_14a_-_2026_agm_proxy.htm
 "ReposiTrak, Inc.",TRAK,50471,8,6,7,2026-10-02,https://www.sec.gov/Archives/edgar/data/50471/000143774926031870/trak20260917_def14a.htm
@@ -42,13 +46,15 @@ ONCOLYTICS BIOTECH INC,ONCY,1129928,8,4,4,2026-10-06,https://www.sec.gov/Archive
 "Lightstone Value Plus REIT II, Inc.",,1436975,8,4,8,2026-10-01,https://www.sec.gov/Archives/edgar/data/1436975/000118518526004496/lvpr2def14a092426.htm
 "Lightstone Value Plus REIT I, Inc.",,1296884,8,6,7,2026-10-01,https://www.sec.gov/Archives/edgar/data/1296884/000118518526004495/lvvr1def14a092426.htm
 "BROADRIDGE FINANCIAL SOLUTIONS, INC.",BR,1383312,8,6,6,2026-09-29,https://www.sec.gov/Archives/edgar/data/1383312/000114036126037937/ny20075597x1_def14a.htm
-"PIONEER POWER SOLUTIONS, INC.",PPSI,1449792,8,7,3,2026-09-22,https://www.sec.gov/Archives/edgar/data/1449792/000149315226043622/formdef14a.htm
 "CISO Global, Inc.",CISO,1777319,7,5,3,2026-10-07,https://www.sec.gov/Archives/edgar/data/1777319/000149315226046148/formdef14a.htm
 CAMPBELL'S Co,CPB,16732,7,5,5,2026-10-07,https://www.sec.gov/Archives/edgar/data/16732/000001673226000031/cpb-20261007.htm
 "AVIAT NETWORKS, INC.",AVNW,1377789,7,6,6,2026-10-02,https://www.sec.gov/Archives/edgar/data/1377789/000162828026064519/avnw-20261002.htm
 OFA Group,OFAL,2036307,7,6,4,2026-09-25,https://www.sec.gov/Archives/edgar/data/2036307/000149315226044304/formdef14a.htm
 KEY TRONIC CORP,KTCC,719733,7,7,7,2026-09-24,https://www.sec.gov/Archives/edgar/data/719733/000071973326000034/ktcc-20260923.htm
-AMERICAN BATTERY TECHNOLOGY Co,ABAT,1576873,7,6,4,2026-09-22,https://www.sec.gov/Archives/edgar/data/1576873/000149315226043609/formdef14a.htm
+INTERNATIONAL BATTERY METALS LTD.,IBATF,1786318,6,3,4,2026-10-09,https://www.sec.gov/Archives/edgar/data/1786318/000119312526419215/ibat_2026_def14a.htm
+"RADIANT LOGISTICS, INC",RLGT,1171155,6,4,5,2026-10-09,https://www.sec.gov/Archives/edgar/data/1171155/000119312526419052/rlgt-20261006.htm
+PROVIDENT FINANCIAL HOLDINGS INC,PROV,1010470,6,5,3,2026-10-09,https://www.sec.gov/Archives/edgar/data/1010470/000110465926114953/tm2626891d1_def14a.htm
+"Home Federal Bancorp, Inc. of Louisiana",HFBL,1500375,6,4,5,2026-10-09,https://www.sec.gov/Archives/edgar/data/1500375/000092708926000169/hfbil20261006f_def14a.htm
 Solidion Technology Inc.,STI,1881551,6,6,5,2026-10-08,https://www.sec.gov/Archives/edgar/data/1881551/000121390026107695/ea0306171-03.htm
 "Onconetix, Inc.",ONCO,1782107,6,4,4,2026-10-07,https://www.sec.gov/Archives/edgar/data/1782107/000121390026107480/ea0307907-def14a_onconetix.htm
 Tessera Defense & Homeland Security Inc.,HLSQ,1739174,6,4,2,2026-10-06,https://www.sec.gov/Archives/edgar/data/1739174/000121390026107281/ea0307822-def14a_tessera.htm
@@ -59,8 +65,8 @@ Innovative Eyewear Inc,,1808377,6,4,4,2026-10-05,https://www.sec.gov/Archives/ed
 Covista Inc.,CVSA,730464,6,6,0,2026-10-02,https://www.sec.gov/Archives/edgar/data/730464/000110465926113316/cvsa-20261111xdef14a.htm
 RESMED INC,,943819,6,1,5,2026-10-01,https://www.sec.gov/Archives/edgar/data/943819/000094381926000080/rmd-20261001.htm
 ALPHA & OMEGA SEMICONDUCTOR Ltd,AOSL,1387467,6,5,2,2026-09-30,https://www.sec.gov/Archives/edgar/data/1387467/000162828026063962/aosl-20260930.htm
-"KBS Real Estate Investment Trust III, Inc.",KBSR,1482430,6,5,4,2026-09-22,https://www.sec.gov/Archives/edgar/data/1482430/000148243026000037/kbsriii-20260922.htm
-LANTRONIX INC,LTRX,1114925,6,6,1,2026-09-22,https://www.sec.gov/Archives/edgar/data/1114925/000114036126037329/ny20079716x1_def14a.htm
+"AmpliTech Group, Inc.",,1518461,5,5,4,2026-10-13,https://www.sec.gov/Archives/edgar/data/1518461/000149315226046670/formdef14a.htm
+Sezzle Inc.,SEZL,1662991,5,5,2,2026-10-09,https://www.sec.gov/Archives/edgar/data/1662991/000166299126000167/sezl-20261009.htm
 Leatt Corp,LEAT,1456189,5,5,1,2026-10-08,https://www.sec.gov/Archives/edgar/data/1456189/000121390026107995/ea0306425-03.htm
 ANGIODYNAMICS INC,ANGO,1275187,5,4,1,2026-10-08,https://www.sec.gov/Archives/edgar/data/1275187/000114036126039022/ny20083274x1_def14a.htm
 FLEXIBLE SOLUTIONS INTERNATIONAL INC,FSI,1069394,5,5,0,2026-10-07,https://www.sec.gov/Archives/edgar/data/1069394/000149315226046034/formdef14a.htm
@@ -74,7 +80,7 @@ EXOZYMES INC.,EXOZ,2010788,5,5,2,2026-09-28,https://www.sec.gov/Archives/edgar/d
 "Tilray Brands, Inc.",TLRY,1731348,5,4,4,2026-09-28,https://www.sec.gov/Archives/edgar/data/1731348/000114036126037827/ny20076749x2_def14a.htm
 "KALA BIO, Inc.",KALA,1479419,5,5,1,2026-09-24,https://www.sec.gov/Archives/edgar/data/1479419/000182912626010384/kalabio_def14a.htm
 COTY INC.,COTY,1024305,5,3,4,2026-09-24,https://www.sec.gov/Archives/edgar/data/1024305/000102430526000060/coty-20260924.htm
-"KUSTOM ENTERTAINMENT, INC.",KUST,1342958,5,5,2,2026-09-22,https://www.sec.gov/Archives/edgar/data/1342958/000149315226043692/formdef14a.htm
+"Elicio Therapeutics, Inc.",ELTX,1601485,4,3,4,2026-10-09,https://www.sec.gov/Archives/edgar/data/1601485/000160148526000061/eltx-20261008.htm
 SLR Investment Corp.,SLRC,1418076,4,3,4,2026-10-07,https://www.sec.gov/Archives/edgar/data/1418076/000119312526416961/d103699ddef14a.htm
 Lumentum Holdings Inc.,LITE,1633978,4,4,0,2026-10-06,https://www.sec.gov/Archives/edgar/data/1633978/000130817926000420/lite2026-def14a.htm
 Meridian Holdings Inc./NV,MRDN,1437925,4,4,1,2026-10-02,https://www.sec.gov/Archives/edgar/data/1437925/000147793226006023/meridian_def14a.htm
@@ -84,8 +90,8 @@ AIM ImmunoTech Inc.,AIM,946644,4,4,2,2026-09-30,https://www.sec.gov/Archives/edg
 "Prospect Floating Rate & Alternative Income Fund, Inc.",,1521945,4,4,2,2026-09-28,https://www.sec.gov/Archives/edgar/data/1521945/000152194526000099/a2026pfloatdefinitiveproxy.htm
 "Rare Earths Americas, Inc.",REA,2095743,4,3,3,2026-09-28,https://www.sec.gov/Archives/edgar/data/2095743/000119312526405295/rea-20260928.htm
 "Axos Financial, Inc.",AX,1299709,4,2,2,2026-09-24,https://www.sec.gov/Archives/edgar/data/1299709/000129970926000073/ax-20260924.htm
-Flag Ship Acquisition Corp,,1850059,4,4,0,2026-09-23,https://www.sec.gov/Archives/edgar/data/1850059/000182912626010353/flagshipacq_def14a.htm
-Invesco Real Estate Income Trust Inc.,,1756761,4,4,1,2026-09-23,https://www.sec.gov/Archives/edgar/data/1756761/000119312526398608/d139199ddef14a.htm
+COHERENT CORP.,COHR,820318,3,3,2,2026-10-09,https://www.sec.gov/Archives/edgar/data/820318/000110465926114847/tm264288-6_def14a.htm
+ALLIANCEBERNSTEIN HOLDING L.P.,AB,825313,3,2,3,2026-10-09,https://www.sec.gov/Archives/edgar/data/825313/000082531326000067/ab-20261009.htm
 "NANOVIRICIDES, INC.",NNVC,1379006,3,3,3,2026-10-08,https://www.sec.gov/Archives/edgar/data/1379006/000110465926114606/tm2626953d1_def14a.htm
 "REGIONAL HEALTH PROPERTIES, INC",,1004724,3,2,3,2026-10-02,https://www.sec.gov/Archives/edgar/data/1004724/000149315226045479/formdef14a.htm
 "GULF RESOURCES, INC.",GURE,885462,3,3,2,2026-10-02,https://www.sec.gov/Archives/edgar/data/885462/000149315226045416/formdef14a.htm
@@ -94,13 +100,9 @@ Hyperliquid Strategies Inc,PURR,2078856,3,3,2,2026-10-02,https://www.sec.gov/Arc
 "Aeluma, Inc.",ALMU,1828805,3,3,1,2026-09-30,https://www.sec.gov/Archives/edgar/data/1828805/000121390026105227/ea0306962-01.htm
 SunPower Inc.,,1838987,3,3,3,2026-09-28,https://www.sec.gov/Archives/edgar/data/1838987/000121390026104038/ea0305623-03.htm
 reAlpha Tech Corp.,AIRE,1859199,3,3,2,2026-09-25,https://www.sec.gov/Archives/edgar/data/1859199/000121390026103529/ea0305215-03.htm
-"Priority Income Fund, Inc.",,1554625,3,3,2,2026-09-22,https://www.sec.gov/Archives/edgar/data/1554625/000155462526000031/a2026prisdefinitiveproxyst.htm
-PROSPECT CAPITAL CORP,,1287032,3,3,1,2026-09-22,https://www.sec.gov/Archives/edgar/data/1287032/000128703226000288/a20260922-definitivepsec20.htm
+"AZIO AI HOLDINGS, INC.",AZIO,1563568,2,2,1,2026-10-09,https://www.sec.gov/Archives/edgar/data/1563568/000143774926032450/adom20261009_def14a.htm
 "Popular High Grade Fixed-Income Fund, Inc.",,1862970,2,2,0,2026-09-24,https://www.sec.gov/Archives/edgar/data/1862970/000121390026102970/ea0306102-01_def14a.htm
-"Marygold Companies, Inc.",MGLD,1005101,2,2,2,2026-09-23,https://www.sec.gov/Archives/edgar/data/1005101/000149315226043868/formdef14a.htm
-Power REIT,,1532619,2,1,2,2026-09-23,https://www.sec.gov/Archives/edgar/data/1532619/000149315226043850/formdef14a.htm
-NEWS CORP,,1564708,2,1,1,2026-09-23,https://www.sec.gov/Archives/edgar/data/1564708/000110465926109969/tm2624691-1_def14a.htm
-KLA CORP,KLAC,319201,2,1,2,2026-09-22,https://www.sec.gov/Archives/edgar/data/319201/000119312526397898/d83268ddef14a.htm
+BCB BANCORP INC,BCBP,1228454,1,0,1,2026-10-09,https://www.sec.gov/Archives/edgar/data/1228454/000117494726000915/bcb_bancorp-def14a.htm
 Sandisk Corp,SNDK,2023554,1,1,1,2026-10-06,https://www.sec.gov/Archives/edgar/data/2023554/000130817926000423/sndk-20261005.htm
 "MacKenzie Realty Capital, Inc.",MKZR,1550913,1,1,1,2026-10-02,https://www.sec.gov/Archives/edgar/data/1550913/000155091326000036/mrcproxy100826.htm
 "GameSquare Holdings, Inc.",GAME,1714562,1,0,1,2026-10-02,https://www.sec.gov/Archives/edgar/data/1714562/000149315226045510/formdef14a.htm
@@ -109,4 +111,3 @@ Madison ETFs Trust,,1976877,1,0,1,2026-10-01,https://www.sec.gov/Archives/edgar/
 Texas Ventures Acquisition III Corp,,2033991,1,1,1,2026-09-28,https://www.sec.gov/Archives/edgar/data/2033991/000110465926111418/tm2625539-2_def14a.htm
 Karman Line Acquisition Corp.,,2134856,1,1,1,2026-09-25,https://www.sec.gov/Archives/edgar/data/2134856/000182912626010430/karmanlineacq_def14a.htm
 "TAPESTRY, INC.",TPR,1116132,1,0,1,2026-09-25,https://www.sec.gov/Archives/edgar/data/1116132/000111613226000024/tpr-20260924.htm
-OCULUS INC.,OVTZ,1107280,1,1,1,2026-09-22,https://www.sec.gov/Archives/edgar/data/1107280/000143774926030923/ovtz20260915_def14a.htm

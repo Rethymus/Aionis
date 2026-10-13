@@ -1,9 +1,9 @@
 {
   "status": "ok",
-  "as_of": "2026-10-12",
+  "as_of": "2026-10-13",
   "n_tracked": 57,
-  "n_changed": 24,
-  "n_as_of_advanced": 8,
+  "n_changed": 22,
+  "n_as_of_advanced": 7,
   "changes": [
     {
       "file": "sigma_survey",
@@ -90,8 +90,8 @@
       "changed": true,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": "d09cf71161af",
-      "sha_after": "2a613df3034b"
+      "sha_before": "2a613df3034b",
+      "sha_after": "de8e1f7e3978"
     },
     {
       "file": "freight_taco",
@@ -130,8 +130,8 @@
       "changed": true,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": "11f026314204",
-      "sha_after": "e3995dc93c9c"
+      "sha_before": "e3995dc93c9c",
+      "sha_after": "169b73376487"
     },
     {
       "file": "theme_signals",
@@ -159,10 +159,10 @@
     },
     {
       "file": "cot",
-      "changed": true,
+      "changed": false,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": "58d3d2de4b4a",
+      "sha_before": "2dc4ce82c24a",
       "sha_after": "2dc4ce82c24a"
     },
     {
@@ -176,18 +176,18 @@
     {
       "file": "form8k",
       "changed": true,
-      "as_of_before": "2026-10-08",
+      "as_of_before": "2026-10-09",
       "as_of_after": "2026-10-09",
-      "sha_before": "ba3894593892",
-      "sha_after": "12a99a002592"
+      "sha_before": "12a99a002592",
+      "sha_after": "54324b5e6b36"
     },
     {
       "file": "news_feed",
-      "changed": false,
+      "changed": true,
       "as_of_before": "2026-10-08T05:30:00Z",
-      "as_of_after": "2026-10-08T05:30:00Z",
+      "as_of_after": "2026-10-10T06:45:00Z",
       "sha_before": "60a92bae7fed",
-      "sha_after": "60a92bae7fed"
+      "sha_after": "1c90984abf54"
     },
     {
       "file": "form_ipo",
@@ -201,9 +201,9 @@
       "file": "form_d",
       "changed": true,
       "as_of_before": "2026-10-09",
-      "as_of_after": "2026-10-09",
-      "sha_before": "1edac3432c32",
-      "sha_after": "4e051149bb36"
+      "as_of_after": "2026-10-13",
+      "sha_before": "4e051149bb36",
+      "sha_after": "f499913c4ce2"
     },
     {
       "file": "form_def14a",
@@ -217,17 +217,17 @@
       "file": "def14a_persons",
       "changed": true,
       "as_of_before": "2026-10-08",
-      "as_of_after": "2026-10-08",
-      "sha_before": "2cb9b241d099",
-      "sha_after": "32cf8dfdbfa9"
+      "as_of_after": "2026-10-13",
+      "sha_before": "32cf8dfdbfa9",
+      "sha_after": "98cf22f3b291"
     },
     {
       "file": "filing_stream",
-      "changed": false,
+      "changed": true,
       "as_of_before": "2026-10-09",
-      "as_of_after": "2026-10-09",
+      "as_of_after": "2026-10-13",
       "sha_before": "0fdfcd41be9a",
-      "sha_after": "0fdfcd41be9a"
+      "sha_after": "54937caba251"
     },
     {
       "file": "politician_trades",
@@ -282,8 +282,8 @@
       "changed": true,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": "082f03a8a5a9",
-      "sha_after": "e2af96e1eecb"
+      "sha_before": "e2af96e1eecb",
+      "sha_after": "bd04971235c5"
     },
     {
       "file": "macro_drivers",
@@ -298,32 +298,32 @@
       "changed": true,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": "19380a0f06cb",
-      "sha_after": "1356fbb40701"
+      "sha_before": "1356fbb40701",
+      "sha_after": "177ce019ff11"
     },
     {
       "file": "stakes_13g",
       "changed": true,
-      "as_of_before": "2026-10-08",
+      "as_of_before": "2026-10-09",
       "as_of_after": "2026-10-09",
-      "sha_before": "1f7b7fdd18e3",
-      "sha_after": "f1053004ed0e"
+      "sha_before": "f1053004ed0e",
+      "sha_after": "829779773c59"
     },
     {
       "file": "ark",
       "changed": true,
-      "as_of_before": "2026-10-09",
-      "as_of_after": "2026-10-12",
-      "sha_before": "6bb2fe3157ee",
-      "sha_after": "d90ecec0d8d0"
+      "as_of_before": "2026-10-12",
+      "as_of_after": "2026-10-13",
+      "sha_before": "d90ecec0d8d0",
+      "sha_after": "52d56eb1ec9f"
     },
     {
       "file": "theme_etfs",
       "changed": true,
-      "as_of_before": "2026-10-08",
-      "as_of_after": "2026-10-09",
-      "sha_before": "907b5155b003",
-      "sha_after": "a97928a8216f"
+      "as_of_before": "2026-10-09",
+      "as_of_after": "2026-10-12",
+      "sha_before": "a97928a8216f",
+      "sha_after": "e6a41c014763"
     },
     {
       "file": "reddit_meta",
@@ -335,18 +335,18 @@
     },
     {
       "file": "reddit_trending",
-      "changed": true,
-      "as_of_before": "2026-10-09T10:32:50+00:00",
+      "changed": false,
+      "as_of_before": "2026-10-12T10:23:17+00:00",
       "as_of_after": "2026-10-12T10:23:17+00:00",
-      "sha_before": "c0b9dbed3e36",
+      "sha_before": "c47ef88bb0eb",
       "sha_after": "c47ef88bb0eb"
     },
     {
       "file": "ledger_audit",
-      "changed": true,
+      "changed": false,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": "195eab6dcd15",
+      "sha_before": "69a18cfc20ad",
       "sha_after": "69a18cfc20ad"
     },
     {
@@ -402,16 +402,16 @@
       "changed": true,
       "as_of_before": "{'us': '2026-06-30', 'cn': '2026-08-03'}",
       "as_of_after": "{'us': '2026-06-30', 'cn': '2026-08-03'}",
-      "sha_before": "00acc92db76c",
-      "sha_after": "54803506b344"
+      "sha_before": "54803506b344",
+      "sha_after": "85e396564e9d"
     },
     {
       "file": "executives",
       "changed": true,
-      "as_of_before": "2026-10-08",
+      "as_of_before": "2026-10-09",
       "as_of_after": "2026-10-09",
-      "sha_before": "b718d391dbad",
-      "sha_after": "da83363f2ea3"
+      "sha_before": "da83363f2ea3",
+      "sha_after": "d7760eb6655d"
     },
     {
       "file": "phase_dossier_meta",
@@ -423,45 +423,45 @@
     },
     {
       "file": "knowledge_shelf",
-      "changed": true,
-      "as_of_before": "2026-10-08",
+      "changed": false,
+      "as_of_before": "2026-10-10",
       "as_of_after": "2026-10-10",
-      "sha_before": "99fbf6669584",
-      "sha_after": "3eea4954a5f7"
+      "sha_before": "0f5edc8661f0",
+      "sha_after": "0f5edc8661f0"
     },
     {
       "file": "evidence_matrix",
       "changed": false,
       "as_of_before": "2026-08-05",
       "as_of_after": "2026-08-05",
-      "sha_before": "29ae3bf0dd81",
-      "sha_after": "29ae3bf0dd81"
+      "sha_before": "75bcc7c648e0",
+      "sha_after": "75bcc7c648e0"
     },
     {
       "file": "lineage_graph",
       "changed": true,
-      "as_of_before": "2026-10-08",
-      "as_of_after": "2026-10-09",
-      "sha_before": "3c2c99e5cc8c",
-      "sha_after": "faa5e1678c78"
+      "as_of_before": "2026-10-09",
+      "as_of_after": "2026-10-13",
+      "sha_before": "faa5e1678c78",
+      "sha_after": "0ff76f47e393"
     },
     {
       "file": "data_health",
       "changed": true,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": "ff592cc9a5e4",
-      "sha_after": "ec37867ba991"
+      "sha_before": "ec37867ba991",
+      "sha_after": "db9863ffcecb"
     },
     {
       "file": "api_catalog",
       "changed": true,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": "4ca4ec569e8f",
-      "sha_after": "4445b4c5a840"
+      "sha_before": "4445b4c5a840",
+      "sha_after": "f783bae3e4ec"
     }
   ],
   "methodology": "Per-panel committed-transition registry captured by the export wrapper (sha256[:12] + as_of before/after each exporter run). changed=false means byte-identical this run (honest no-op). Display-only view over git history; the audit trail of record is runs/ + the repository itself.",
-  "snapshot_ts": "2026-10-12T10:59:40.654874+00:00"
+  "snapshot_ts": "2026-10-13T11:02:12.535350+00:00"
 }
