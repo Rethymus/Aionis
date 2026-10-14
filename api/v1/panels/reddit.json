@@ -10,26 +10,40 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-10-13T10:30:56+00:00",
-  "n_snapshots": 34,
+  "latest_snapshot_ts": "2026-10-14T11:14:03+00:00",
+  "n_snapshots": 36,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
-      "ticker": "META",
+      "ticker": "STLD",
       "mentions": 1,
-      "sentiment": 0.551,
-      "bull_ratio": 1.0,
+      "sentiment": -0.006,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "PLTR",
+      "mentions": 1,
+      "sentiment": -0.006,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "TTWO",
+      "mentions": 1,
+      "sentiment": -0.002,
+      "bull_ratio": null,
       "score_sum": 0
     }
   ],
   "pressure": {
     "status": "accumulating",
     "by_ticker": {},
-    "n_snapshots": 34,
-    "latest_date": "2026-10-13",
+    "n_snapshots": 36,
+    "latest_date": "2026-10-14",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-10-13T11:01:49.459646+00:00"
+  "snapshot_ts": "2026-10-14T11:43:54.152326+00:00"
 }

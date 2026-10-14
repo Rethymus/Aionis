@@ -3,6 +3,33 @@
   "methodology": "Form 4 insider transactions (SEC EDGAR EFTS, filed-date PIT, public domain). Non-derivative pure buy (A) / sell (D) only \u2014 exercises and options excluded. Window spans 2016\u2192today (Trump Era). Recent rows link the EDGAR filing-index page (built from the row's accession + reporting-owner CIK \u2014 empty, never guessed, on pre-accession aggregates). Display-only, exploratory, not a research claim. Universe unchanged at 30 issuers from 2025 (pre-2025 yearly aggregates retained verbatim).",
   "recent": [
     {
+      "filer": "GENACHOWSKI JULIUS",
+      "ticker": "MA",
+      "date": "2026-10-12",
+      "action": "sell",
+      "shares": 370,
+      "price": 590.21,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1184231/000114139126000116/0001141391-26-000116-index.htm"
+    },
+    {
+      "filer": "GENACHOWSKI JULIUS",
+      "ticker": "MA",
+      "date": "2026-10-09",
+      "action": "sell",
+      "shares": 1,
+      "price": 590.0,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1184231/000114139126000116/0001141391-26-000116-index.htm"
+    },
+    {
+      "filer": "GENACHOWSKI JULIUS",
+      "ticker": "MA",
+      "date": "2026-10-09",
+      "action": "sell",
+      "shares": 370,
+      "price": 585.0,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1184231/000114139126000116/0001141391-26-000116-index.htm"
+    },
+    {
       "filer": "Newstead Jennifer",
       "ticker": "AAPL",
       "date": "2026-10-06",
@@ -39,24 +66,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1564475/000095010326015324/0000950103-26-015324-index.htm"
     },
     {
-      "filer": "Olivan Javier",
-      "ticker": "META",
-      "date": "2026-10-05",
-      "action": "sell",
-      "shares": 946,
-      "price": 728.08,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1564475/000095010326015324/0000950103-26-015324-index.htm"
-    },
-    {
-      "filer": "Schulten Andre",
-      "ticker": "PG",
-      "date": "2026-10-05",
-      "action": "sell",
-      "shares": 3914,
-      "price": 145.34,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1844763/000008042426000200/0000080424-26-000200-index.htm"
-    },
-    {
       "filer": "Gama Paul",
       "ticker": "PG",
       "date": "2026-10-05",
@@ -75,22 +84,40 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1929158/000008042426000198/0000080424-26-000198-index.htm"
     },
     {
+      "filer": "Schulten Andre",
+      "ticker": "PG",
+      "date": "2026-10-05",
+      "action": "sell",
+      "shares": 3914,
+      "price": 145.34,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1844763/000008042426000200/0000080424-26-000200-index.htm"
+    },
+    {
+      "filer": "Olivan Javier",
+      "ticker": "META",
+      "date": "2026-10-05",
+      "action": "sell",
+      "shares": 946,
+      "price": 728.08,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1564475/000095010326015324/0000950103-26-015324-index.htm"
+    },
+    {
       "filer": "BERKSHIRE HATHAWAY INC",
       "ticker": "BRK-B",
       "date": "2026-10-02",
       "action": "buy",
-      "shares": 20200,
-      "price": 81.9,
+      "shares": 2452,
+      "price": 77.93,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526414744/0001193125-26-414744-index.htm"
     },
     {
-      "filer": "O'BRIEN DEIRDRE",
-      "ticker": "AAPL",
+      "filer": "BERKSHIRE HATHAWAY INC",
+      "ticker": "BRK-B",
       "date": "2026-10-02",
-      "action": "sell",
-      "shares": 5625,
-      "price": 333.91,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1767094/000114036126038672/0001140361-26-038672-index.htm"
+      "action": "buy",
+      "shares": 299,
+      "price": 79.74,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526414744/0001193125-26-414744-index.htm"
     },
     {
       "filer": "BERKSHIRE HATHAWAY INC",
@@ -106,8 +133,8 @@
       "ticker": "BRK-B",
       "date": "2026-10-02",
       "action": "buy",
-      "shares": 2452,
-      "price": 77.93,
+      "shares": 44300,
+      "price": 81.14,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526414744/0001193125-26-414744-index.htm"
     },
     {
@@ -124,18 +151,18 @@
       "ticker": "BRK-B",
       "date": "2026-10-02",
       "action": "buy",
-      "shares": 448113,
-      "price": 78.37,
+      "shares": 20200,
+      "price": 81.9,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526414744/0001193125-26-414744-index.htm"
     },
     {
-      "filer": "BERKSHIRE HATHAWAY INC",
-      "ticker": "BRK-B",
+      "filer": "Ternus John",
+      "ticker": "AAPL",
       "date": "2026-10-02",
-      "action": "buy",
-      "shares": 44300,
-      "price": 81.14,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526414744/0001193125-26-414744-index.htm"
+      "action": "sell",
+      "shares": 12746,
+      "price": 333.34,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2148403/000114036126038669/0001140361-26-038669-index.htm"
     },
     {
       "filer": "BERKSHIRE HATHAWAY INC",
@@ -156,13 +183,13 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526414744/0001193125-26-414744-index.htm"
     },
     {
-      "filer": "Ternus John",
-      "ticker": "AAPL",
+      "filer": "BERKSHIRE HATHAWAY INC",
+      "ticker": "BRK-B",
       "date": "2026-10-02",
-      "action": "sell",
-      "shares": 3564,
-      "price": 331.38,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2148403/000114036126038669/0001140361-26-038669-index.htm"
+      "action": "buy",
+      "shares": 448113,
+      "price": 78.37,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526414744/0001193125-26-414744-index.htm"
     },
     {
       "filer": "Ternus John",
@@ -178,9 +205,27 @@
       "ticker": "AAPL",
       "date": "2026-10-02",
       "action": "sell",
-      "shares": 12746,
-      "price": 333.34,
+      "shares": 3564,
+      "price": 331.38,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2148403/000114036126038669/0001140361-26-038669-index.htm"
+    },
+    {
+      "filer": "Ternus John",
+      "ticker": "AAPL",
+      "date": "2026-10-02",
+      "action": "sell",
+      "shares": 5348,
+      "price": 332.26,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2148403/000114036126038669/0001140361-26-038669-index.htm"
+    },
+    {
+      "filer": "O'BRIEN DEIRDRE",
+      "ticker": "AAPL",
+      "date": "2026-10-02",
+      "action": "sell",
+      "shares": 5625,
+      "price": 333.91,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1767094/000114036126038672/0001140361-26-038672-index.htm"
     },
     {
       "filer": "O'BRIEN DEIRDRE",
@@ -210,15 +255,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1214156/000114036126038674/0001140361-26-038674-index.htm"
     },
     {
-      "filer": "BERKSHIRE HATHAWAY INC",
-      "ticker": "BRK-B",
-      "date": "2026-10-02",
-      "action": "buy",
-      "shares": 299,
-      "price": 79.74,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526414744/0001193125-26-414744-index.htm"
-    },
-    {
       "filer": "COOK TIMOTHY D",
       "ticker": "AAPL",
       "date": "2026-10-02",
@@ -226,15 +262,6 @@
       "shares": 39492,
       "price": 332.16,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1214156/000114036126038674/0001140361-26-038674-index.htm"
-    },
-    {
-      "filer": "Ternus John",
-      "ticker": "AAPL",
-      "date": "2026-10-02",
-      "action": "sell",
-      "shares": 5348,
-      "price": 332.26,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2148403/000114036126038669/0001140361-26-038669-index.htm"
     },
     {
       "filer": "COOK TIMOTHY D",
@@ -246,48 +273,12 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1214156/000114036126038674/0001140361-26-038674-index.htm"
     },
     {
-      "filer": "Bartlett Daniel J",
-      "ticker": "WMT",
-      "date": "2026-10-01",
-      "action": "sell",
-      "shares": 3990,
-      "price": 104.41,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1579299/000157929926000026/0001579299-26-000026-index.htm"
-    },
-    {
-      "filer": "MCINERNEY RYAN",
-      "ticker": "V",
-      "date": "2026-10-01",
-      "action": "sell",
-      "shares": 5875,
-      "price": 358.81,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1578261/000140316126000123/0001403161-26-000123-index.htm"
-    },
-    {
       "filer": "BERKSHIRE HATHAWAY INC",
       "ticker": "BRK-B",
       "date": "2026-10-01",
       "action": "buy",
-      "shares": 950,
-      "price": 79.51,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526414744/0001193125-26-414744-index.htm"
-    },
-    {
-      "filer": "BERKSHIRE HATHAWAY INC",
-      "ticker": "BRK-B",
-      "date": "2026-10-01",
-      "action": "buy",
-      "shares": 3802,
-      "price": 78.26,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526414744/0001193125-26-414744-index.htm"
-    },
-    {
-      "filer": "BERKSHIRE HATHAWAY INC",
-      "ticker": "BRK-B",
-      "date": "2026-10-01",
-      "action": "buy",
-      "shares": 186991,
-      "price": 81.46,
+      "shares": 100,
+      "price": 80.0,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526414744/0001193125-26-414744-index.htm"
     },
     {
@@ -304,9 +295,36 @@
       "ticker": "BRK-B",
       "date": "2026-10-01",
       "action": "buy",
-      "shares": 425869,
-      "price": 79.49,
+      "shares": 186991,
+      "price": 81.46,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526414744/0001193125-26-414744-index.htm"
+    },
+    {
+      "filer": "BERKSHIRE HATHAWAY INC",
+      "ticker": "BRK-B",
+      "date": "2026-10-01",
+      "action": "buy",
+      "shares": 3802,
+      "price": 78.26,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526414744/0001193125-26-414744-index.htm"
+    },
+    {
+      "filer": "BERKSHIRE HATHAWAY INC",
+      "ticker": "BRK-B",
+      "date": "2026-10-01",
+      "action": "buy",
+      "shares": 950,
+      "price": 79.51,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526414744/0001193125-26-414744-index.htm"
+    },
+    {
+      "filer": "MCINERNEY RYAN",
+      "ticker": "V",
+      "date": "2026-10-01",
+      "action": "sell",
+      "shares": 5875,
+      "price": 358.81,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1578261/000140316126000123/0001403161-26-000123-index.htm"
     },
     {
       "filer": "Herrington Douglas J",
@@ -318,13 +336,31 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1936006/000193600626000026/0001936006-26-000026-index.htm"
     },
     {
+      "filer": "Bartlett Daniel J",
+      "ticker": "WMT",
+      "date": "2026-10-01",
+      "action": "sell",
+      "shares": 3990,
+      "price": 104.41,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1579299/000157929926000026/0001579299-26-000026-index.htm"
+    },
+    {
       "filer": "BERKSHIRE HATHAWAY INC",
       "ticker": "BRK-B",
       "date": "2026-10-01",
       "action": "buy",
-      "shares": 100,
-      "price": 80.0,
+      "shares": 425869,
+      "price": 79.49,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526414744/0001193125-26-414744-index.htm"
+    },
+    {
+      "filer": "BERKSHIRE HATHAWAY INC",
+      "ticker": "BRK-B",
+      "date": "2026-09-30",
+      "action": "buy",
+      "shares": 4008,
+      "price": 79.98,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526409451/0001193125-26-409451-index.htm"
     },
     {
       "filer": "ARNOLD FRANCES",
@@ -340,44 +376,8 @@
       "ticker": "BRK-B",
       "date": "2026-09-30",
       "action": "buy",
-      "shares": 4008,
-      "price": 79.98,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526409451/0001193125-26-409451-index.htm"
-    },
-    {
-      "filer": "BERKSHIRE HATHAWAY INC",
-      "ticker": "BRK-B",
-      "date": "2026-09-30",
-      "action": "buy",
       "shares": 638813,
       "price": 81.59,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526409451/0001193125-26-409451-index.htm"
-    },
-    {
-      "filer": "RUSCKOWSKI STEPHEN H",
-      "ticker": "ORCL",
-      "date": "2026-09-29",
-      "action": "buy",
-      "shares": 25000,
-      "price": 139.35,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1142624/000134143926000099/0001341439-26-000099-index.htm"
-    },
-    {
-      "filer": "Newstead Jennifer",
-      "ticker": "AAPL",
-      "date": "2026-09-29",
-      "action": "sell",
-      "shares": 2399,
-      "price": 336.18,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1780525/000114036126038307/0001140361-26-038307-index.htm"
-    },
-    {
-      "filer": "BERKSHIRE HATHAWAY INC",
-      "ticker": "BRK-B",
-      "date": "2026-09-29",
-      "action": "buy",
-      "shares": 12289,
-      "price": 81.95,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526409451/0001193125-26-409451-index.htm"
     },
     {
@@ -390,12 +390,39 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526409451/0001193125-26-409451-index.htm"
     },
     {
+      "filer": "Newstead Jennifer",
+      "ticker": "AAPL",
+      "date": "2026-09-29",
+      "action": "sell",
+      "shares": 2399,
+      "price": 336.18,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1780525/000114036126038307/0001140361-26-038307-index.htm"
+    },
+    {
+      "filer": "RUSCKOWSKI STEPHEN H",
+      "ticker": "ORCL",
+      "date": "2026-09-29",
+      "action": "buy",
+      "shares": 25000,
+      "price": 139.35,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1142624/000134143926000099/0001341439-26-000099-index.htm"
+    },
+    {
+      "filer": "BERKSHIRE HATHAWAY INC",
+      "ticker": "BRK-B",
+      "date": "2026-09-29",
+      "action": "buy",
+      "shares": 12289,
+      "price": 81.95,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526409451/0001193125-26-409451-index.htm"
+    },
+    {
       "filer": "Olivan Javier",
       "ticker": "META",
       "date": "2026-09-28",
       "action": "sell",
-      "shares": 946,
-      "price": 750.42,
+      "shares": 408,
+      "price": 748.91,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1564475/000095010326014886/0000950103-26-014886-index.htm"
     },
     {
@@ -406,15 +433,6 @@
       "shares": 5200,
       "price": 81.96,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526409451/0001193125-26-409451-index.htm"
-    },
-    {
-      "filer": "Jain Ajit",
-      "ticker": "BRK-B",
-      "date": "2026-09-28",
-      "action": "sell",
-      "shares": 39700,
-      "price": 503.09,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1728451/000172845126000004/0001728451-26-000004-index.htm"
     },
     {
       "filer": "Olivan Javier",
@@ -439,18 +457,18 @@
       "ticker": "META",
       "date": "2026-09-28",
       "action": "sell",
-      "shares": 408,
-      "price": 748.91,
+      "shares": 946,
+      "price": 750.42,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1564475/000095010326014886/0000950103-26-014886-index.htm"
     },
     {
-      "filer": "BERKSHIRE HATHAWAY INC",
+      "filer": "Jain Ajit",
       "ticker": "BRK-B",
-      "date": "2026-09-25",
-      "action": "buy",
-      "shares": 171723,
-      "price": 81.6,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526403089/0001193125-26-403089-index.htm"
+      "date": "2026-09-28",
+      "action": "sell",
+      "shares": 39700,
+      "price": 503.09,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1728451/000172845126000004/0001728451-26-000004-index.htm"
     },
     {
       "filer": "BERKSHIRE HATHAWAY INC",
@@ -471,12 +489,21 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526403089/0001193125-26-403089-index.htm"
     },
     {
+      "filer": "BERKSHIRE HATHAWAY INC",
+      "ticker": "BRK-B",
+      "date": "2026-09-25",
+      "action": "buy",
+      "shares": 171723,
+      "price": 81.6,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526403089/0001193125-26-403089-index.htm"
+    },
+    {
       "filer": "Zuckerberg Mark",
       "ticker": "META",
       "date": "2026-09-24",
       "action": "sell",
-      "shares": 2093,
-      "price": 775.39,
+      "shares": 7607,
+      "price": 777.63,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1548760/000095010326014647/0000950103-26-014647-index.htm"
     },
     {
@@ -529,15 +556,6 @@
       "ticker": "META",
       "date": "2026-09-24",
       "action": "sell",
-      "shares": 600,
-      "price": 779.33,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1548760/000095010326014647/0000950103-26-014647-index.htm"
-    },
-    {
-      "filer": "Zuckerberg Mark",
-      "ticker": "META",
-      "date": "2026-09-24",
-      "action": "sell",
       "shares": 2516,
       "price": 776.56,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1548760/000095010326014647/0000950103-26-014647-index.htm"
@@ -556,8 +574,8 @@
       "ticker": "META",
       "date": "2026-09-24",
       "action": "sell",
-      "shares": 7607,
-      "price": 777.63,
+      "shares": 2093,
+      "price": 775.39,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1548760/000095010326014647/0000950103-26-014647-index.htm"
     },
     {
@@ -597,6 +615,15 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526403089/0001193125-26-403089-index.htm"
     },
     {
+      "filer": "Zuckerberg Mark",
+      "ticker": "META",
+      "date": "2026-09-24",
+      "action": "sell",
+      "shares": 600,
+      "price": 779.33,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1548760/000095010326014647/0000950103-26-014647-index.htm"
+    },
+    {
       "filer": "SAMUELI HENRY",
       "ticker": "AVGO",
       "date": "2026-09-23",
@@ -628,8 +655,8 @@
       "ticker": "AVGO",
       "date": "2026-09-23",
       "action": "sell",
-      "shares": 186809,
-      "price": 354.71,
+      "shares": 512,
+      "price": 361.48,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1201633/000110465926110983/0001104659-26-110983-index.htm"
     },
     {
@@ -637,8 +664,8 @@
       "ticker": "AVGO",
       "date": "2026-09-23",
       "action": "sell",
-      "shares": 512,
-      "price": 361.48,
+      "shares": 10058,
+      "price": 356.59,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1201633/000110465926110983/0001104659-26-110983-index.htm"
     },
     {
@@ -657,15 +684,6 @@
       "action": "sell",
       "shares": 85221,
       "price": 356.58,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1201633/000110465926110983/0001104659-26-110983-index.htm"
-    },
-    {
-      "filer": "SAMUELI HENRY",
-      "ticker": "AVGO",
-      "date": "2026-09-23",
-      "action": "sell",
-      "shares": 10058,
-      "price": 356.59,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1201633/000110465926110983/0001104659-26-110983-index.htm"
     },
     {
@@ -709,8 +727,8 @@
       "ticker": "AVGO",
       "date": "2026-09-23",
       "action": "sell",
-      "shares": 230031,
-      "price": 355.5,
+      "shares": 186809,
+      "price": 354.71,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1201633/000110465926110983/0001104659-26-110983-index.htm"
     },
     {
@@ -718,8 +736,8 @@
       "ticker": "AVGO",
       "date": "2026-09-23",
       "action": "sell",
-      "shares": 11309,
-      "price": 361.79,
+      "shares": 230031,
+      "price": 355.5,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1201633/000110465926110983/0001104659-26-110983-index.htm"
     },
     {
@@ -759,6 +777,15 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1201633/000110465926110983/0001104659-26-110983-index.htm"
     },
     {
+      "filer": "SAMUELI HENRY",
+      "ticker": "AVGO",
+      "date": "2026-09-23",
+      "action": "sell",
+      "shares": 11309,
+      "price": 361.79,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1201633/000110465926110983/0001104659-26-110983-index.htm"
+    },
+    {
       "filer": "Smith Maria",
       "ticker": "ORCL",
       "date": "2026-09-22",
@@ -784,6 +811,15 @@
       "shares": 2399,
       "price": 340.06,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1780525/000114036126037584/0001140361-26-037584-index.htm"
+    },
+    {
+      "filer": "Teter Timothy S.",
+      "ticker": "NVDA",
+      "date": "2026-09-21",
+      "action": "sell",
+      "shares": 4499,
+      "price": 223.75,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1696841/000169684126000014/0001696841-26-000014-index.htm"
     },
     {
       "filer": "Olivan Javier",
@@ -822,6 +858,15 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1696841/000169684126000014/0001696841-26-000014-index.htm"
     },
     {
+      "filer": "Teter Timothy S.",
+      "ticker": "NVDA",
+      "date": "2026-09-21",
+      "action": "sell",
+      "shares": 13478,
+      "price": 223.05,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1696841/000169684126000014/0001696841-26-000014-index.htm"
+    },
+    {
       "filer": "BERKSHIRE HATHAWAY INC",
       "ticker": "BRK-B",
       "date": "2026-09-21",
@@ -829,6 +874,15 @@
       "shares": 4888,
       "price": 75.76,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526397059/0001193125-26-397059-index.htm"
+    },
+    {
+      "filer": "Cox Christopher K",
+      "ticker": "META",
+      "date": "2026-09-21",
+      "action": "sell",
+      "shares": 20000,
+      "price": 700.5,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1607459/000095010326014403/0000950103-26-014403-index.htm"
     },
     {
       "filer": "BERKSHIRE HATHAWAY INC",
@@ -849,15 +903,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526397059/0001193125-26-397059-index.htm"
     },
     {
-      "filer": "Teter Timothy S.",
-      "ticker": "NVDA",
-      "date": "2026-09-21",
-      "action": "sell",
-      "shares": 13478,
-      "price": 223.05,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1696841/000169684126000014/0001696841-26-000014-index.htm"
-    },
-    {
       "filer": "BERKSHIRE HATHAWAY INC",
       "ticker": "BRK-B",
       "date": "2026-09-21",
@@ -865,15 +910,6 @@
       "shares": 18146,
       "price": 76.62,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526397059/0001193125-26-397059-index.htm"
-    },
-    {
-      "filer": "Teter Timothy S.",
-      "ticker": "NVDA",
-      "date": "2026-09-21",
-      "action": "sell",
-      "shares": 4499,
-      "price": 223.75,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1696841/000169684126000014/0001696841-26-000014-index.htm"
     },
     {
       "filer": "Cox Christopher K",
@@ -885,15 +921,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1607459/000095010326014403/0000950103-26-014403-index.htm"
     },
     {
-      "filer": "Cox Christopher K",
-      "ticker": "META",
-      "date": "2026-09-21",
-      "action": "sell",
-      "shares": 20000,
-      "price": 700.5,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1607459/000095010326014403/0000950103-26-014403-index.htm"
-    },
-    {
       "filer": "Olivan Javier",
       "ticker": "META",
       "date": "2026-09-21",
@@ -901,6 +928,33 @@
       "shares": 946,
       "price": 680.27,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1564475/000095010326014402/0000950103-26-014402-index.htm"
+    },
+    {
+      "filer": "BERKSHIRE HATHAWAY INC",
+      "ticker": "BRK-B",
+      "date": "2026-09-18",
+      "action": "buy",
+      "shares": 33122,
+      "price": 74.8,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526397059/0001193125-26-397059-index.htm"
+    },
+    {
+      "filer": "STEVENS MARK A",
+      "ticker": "NVDA",
+      "date": "2026-09-18",
+      "action": "sell",
+      "shares": 10000,
+      "price": 220.42,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1199039/000119903926000016/0001199039-26-000016-index.htm"
+    },
+    {
+      "filer": "STEVENS MARK A",
+      "ticker": "NVDA",
+      "date": "2026-09-18",
+      "action": "sell",
+      "shares": 1356000,
+      "price": 219.72,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1199039/000119903926000016/0001199039-26-000016-index.htm"
     },
     {
       "filer": "BERKSHIRE HATHAWAY INC",
@@ -927,33 +981,6 @@
       "action": "buy",
       "shares": 390,
       "price": 75.76,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526397059/0001193125-26-397059-index.htm"
-    },
-    {
-      "filer": "STEVENS MARK A",
-      "ticker": "NVDA",
-      "date": "2026-09-18",
-      "action": "sell",
-      "shares": 10000,
-      "price": 220.42,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1199039/000119903926000016/0001199039-26-000016-index.htm"
-    },
-    {
-      "filer": "STEVENS MARK A",
-      "ticker": "NVDA",
-      "date": "2026-09-18",
-      "action": "sell",
-      "shares": 1356000,
-      "price": 219.72,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1199039/000119903926000016/0001199039-26-000016-index.htm"
-    },
-    {
-      "filer": "BERKSHIRE HATHAWAY INC",
-      "ticker": "BRK-B",
-      "date": "2026-09-18",
-      "action": "buy",
-      "shares": 33122,
-      "price": 74.8,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526397059/0001193125-26-397059-index.htm"
     },
     {
@@ -1006,8 +1033,8 @@
       "ticker": "NVDA",
       "date": "2026-09-17",
       "action": "sell",
-      "shares": 20369,
-      "price": 219.02,
+      "shares": 4681,
+      "price": 218.01,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1588670/000158867026000014/0001588670-26-000014-index.htm"
     },
     {
@@ -1096,8 +1123,8 @@
       "ticker": "NVDA",
       "date": "2026-09-17",
       "action": "sell",
-      "shares": 4681,
-      "price": 218.01,
+      "shares": 20369,
+      "price": 219.02,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1588670/000158867026000014/0001588670-26-000014-index.htm"
     },
     {
@@ -1717,8 +1744,8 @@
       "ticker": "META",
       "date": "2026-09-08",
       "action": "sell",
-      "shares": 258,
-      "price": 612.99,
+      "shares": 555,
+      "price": 617.28,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1564475/000095010326013794/0000950103-26-013794-index.htm"
     },
     {
@@ -1762,8 +1789,8 @@
       "ticker": "META",
       "date": "2026-09-08",
       "action": "sell",
-      "shares": 78,
-      "price": 620.37,
+      "shares": 258,
+      "price": 612.99,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1564475/000095010326013794/0000950103-26-013794-index.htm"
     },
     {
@@ -1774,38 +1801,11 @@
       "shares": 117,
       "price": 614.22,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1564475/000095010326013794/0000950103-26-013794-index.htm"
-    },
-    {
-      "filer": "Olivan Javier",
-      "ticker": "META",
-      "date": "2026-09-08",
-      "action": "sell",
-      "shares": 262,
-      "price": 615.23,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1564475/000095010326013794/0000950103-26-013794-index.htm"
-    },
-    {
-      "filer": "Olivan Javier",
-      "ticker": "META",
-      "date": "2026-09-08",
-      "action": "sell",
-      "shares": 855,
-      "price": 616.32,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1564475/000095010326013794/0000950103-26-013794-index.htm"
-    },
-    {
-      "filer": "Olivan Javier",
-      "ticker": "META",
-      "date": "2026-09-08",
-      "action": "sell",
-      "shares": 555,
-      "price": 617.28,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1564475/000095010326013794/0000950103-26-013794-index.htm"
     }
   ],
   "buys": 76,
-  "sells": 2117,
-  "n_filers": 211,
+  "sells": 2120,
+  "n_filers": 212,
   "top_insiders": [
     {
       "filer": "Olivan Javier",
@@ -1848,7 +1848,7 @@
       "count": 38
     }
   ],
-  "window": "2013-03..2026-10 (2193 txns; 30 issuers current)",
+  "window": "2013-03..2026-10 (2196 txns; 30 issuers current)",
   "n_issuers": 30,
   "yearly": [
     {
@@ -1919,8 +1919,8 @@
     {
       "year": 2026,
       "buys": 64,
-      "sells": 1699
+      "sells": 1702
     }
   ],
-  "snapshot_ts": "2026-10-13T11:01:33.217211+00:00"
+  "snapshot_ts": "2026-10-14T11:43:39.550400+00:00"
 }
