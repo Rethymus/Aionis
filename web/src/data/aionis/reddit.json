@@ -10,44 +10,23 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-10-14T10:24:31+00:00",
-  "n_snapshots": 35,
+  "latest_snapshot_ts": "2026-10-14T11:14:03+00:00",
+  "n_snapshots": 36,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
+      "ticker": "STLD",
+      "mentions": 1,
+      "sentiment": -0.006,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
       "ticker": "PLTR",
-      "mentions": 3,
-      "sentiment": 0.017,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "MSFT",
-      "mentions": 2,
-      "sentiment": 0.001,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "NVDA",
-      "mentions": 2,
-      "sentiment": 0.001,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "AMZN",
-      "mentions": 2,
-      "sentiment": 0.001,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "GOOGL",
-      "mentions": 2,
-      "sentiment": 0.001,
+      "mentions": 1,
+      "sentiment": -0.006,
       "bull_ratio": null,
       "score_sum": 0
     },
@@ -57,77 +36,14 @@
       "sentiment": -0.002,
       "bull_ratio": null,
       "score_sum": 0
-    },
-    {
-      "ticker": "STLD",
-      "mentions": 1,
-      "sentiment": -0.006,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "ADBE",
-      "mentions": 1,
-      "sentiment": -0.236,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "AAPL",
-      "mentions": 1,
-      "sentiment": -0.001,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "ABBV",
-      "mentions": 1,
-      "sentiment": -0.001,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "AVGO",
-      "mentions": 1,
-      "sentiment": -0.001,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "META",
-      "mentions": 1,
-      "sentiment": -0.001,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "ORCL",
-      "mentions": 1,
-      "sentiment": -0.001,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "TSLA",
-      "mentions": 1,
-      "sentiment": -0.001,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "WDAY",
-      "mentions": 1,
-      "sentiment": 0.067,
-      "bull_ratio": null,
-      "score_sum": 0
     }
   ],
   "pressure": {
     "status": "accumulating",
     "by_ticker": {},
-    "n_snapshots": 35,
+    "n_snapshots": 36,
     "latest_date": "2026-10-14",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-10-14T11:00:54.651270+00:00"
+  "snapshot_ts": "2026-10-14T11:43:54.152326+00:00"
 }
