@@ -359,17 +359,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000080/hon-20260615.htm"
     },
     {
-      "company": "Alphabet Inc.",
-      "ticker": "GOOGL",
-      "filing_date": "2026-06-11",
-      "items": [
-        "5.02",
-        "5.07",
-        "9.01"
-      ],
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1652044/000119312526267578/d57679d8k.htm"
-    },
-    {
       "company": "ADOBE INC.",
       "ticker": "ADBE",
       "filing_date": "2026-06-11",
@@ -379,6 +368,17 @@
         "9.01"
       ],
       "doc_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000109/adbe-20260608.htm"
+    },
+    {
+      "company": "Alphabet Inc.",
+      "ticker": "GOOGL",
+      "filing_date": "2026-06-11",
+      "items": [
+        "5.02",
+        "5.07",
+        "9.01"
+      ],
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1652044/000119312526267578/d57679d8k.htm"
     },
     {
       "company": "GENERAL ELECTRIC CO",
@@ -628,5 +628,5 @@
     "TEXAS INSTRUMENTS INC": 1
   },
   "methodology": "SEC Form 8-K Item 5.02 officer/director-change filings \u2014 DERIVED from the committed form8k panel (category 'officer_changes'; public domain, 17 U.S.C. \u00a7105, filed-date PIT). v1 is FILING-STREAM level: one row per 8-K accession with the company, filing date, full item list and EDGAR primary-document link. Person-level extraction (who, which role, appointed vs departed) is DEFERRED: parsing names from 8-K free text is unreliable and an honest omission beats a guessed name \u2014 the same v1 boundary as the /congress PTR panel. Inherits the /events panel's bounded 50-issuer universe and its 2026-05-01..2026-10-13 window. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-10-14T11:43:59.739658+00:00"
+  "snapshot_ts": "2026-10-15T11:06:45.154808+00:00"
 }

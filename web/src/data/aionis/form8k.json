@@ -1,12 +1,12 @@
 {
   "status": "ok",
-  "as_of": "2026-10-13",
+  "as_of": "2026-10-14",
   "window": {
     "start": "2026-05-01",
-    "end": "2026-10-13"
+    "end": "2026-10-14"
   },
   "issuers": 50,
-  "total": 255,
+  "total": 257,
   "unclassified": 10,
   "by_category": {
     "agreement_termination": 2,
@@ -19,14 +19,26 @@
     "merger_completion": 1,
     "officer_changes": 58,
     "other": 3,
-    "other_events": 35,
-    "reg_fd": 22,
+    "other_events": 36,
+    "reg_fd": 23,
     "results": 71,
     "security_terms": 4,
     "unclassified": 10,
     "vote_results": 24
   },
   "events": [
+    {
+      "ticker": "COST",
+      "company": "COSTCO WHOLESALE CORP /NEW",
+      "filing_date": "2026-10-14",
+      "form": "8-K",
+      "items": [
+        "8.01",
+        "9.01"
+      ],
+      "category": "other_events",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/909832/000090983226000096/cost-20261014.htm"
+    },
     {
       "ticker": "JPM",
       "company": "JPMORGAN CHASE & CO",
@@ -86,6 +98,18 @@
       ],
       "category": "officer_changes",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/310158/000031015826000237/mrk-20261009.htm"
+    },
+    {
+      "ticker": "PG",
+      "company": "PROCTER & GAMBLE Co",
+      "filing_date": "2026-10-13",
+      "form": "8-K",
+      "items": [
+        "7.01",
+        "9.01"
+      ],
+      "category": "reg_fd",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/80424/000008042426000214/pg-20261013.htm"
     },
     {
       "ticker": "GS",
@@ -397,6 +421,18 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526389753/d20034d8k.htm"
     },
     {
+      "ticker": "ADBE",
+      "company": "ADOBE INC.",
+      "filing_date": "2026-09-10",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000147/adbe-20260910.htm"
+    },
+    {
       "ticker": "ORCL",
       "company": "ORACLE CORP",
       "filing_date": "2026-09-10",
@@ -408,18 +444,6 @@
       ],
       "category": "results",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526387905/orcl-20260910.htm"
-    },
-    {
-      "ticker": "ADBE",
-      "company": "ADOBE INC.",
-      "filing_date": "2026-09-10",
-      "form": "8-K",
-      "items": [
-        "2.02",
-        "9.01"
-      ],
-      "category": "results",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000147/adbe-20260910.htm"
     },
     {
       "ticker": "NKE",
@@ -459,6 +483,19 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000036/amzn-20260908.htm"
     },
     {
+      "ticker": "ADBE",
+      "company": "ADOBE INC.",
+      "filing_date": "2026-09-08",
+      "form": "8-K",
+      "items": [
+        "5.02",
+        "7.01",
+        "9.01"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000144/adbe-20260902.htm"
+    },
+    {
       "ticker": "UNH",
       "company": "UNITEDHEALTH GROUP INC",
       "filing_date": "2026-09-08",
@@ -479,19 +516,6 @@
       ],
       "category": "other",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/804328/000110465926105718/tm2623289d1_8k.htm"
-    },
-    {
-      "ticker": "ADBE",
-      "company": "ADOBE INC.",
-      "filing_date": "2026-09-08",
-      "form": "8-K",
-      "items": [
-        "5.02",
-        "7.01",
-        "9.01"
-      ],
-      "category": "officer_changes",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000144/adbe-20260902.htm"
     },
     {
       "ticker": "GE",
@@ -579,6 +603,18 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/18230/000110465926104197/tm2624321d1_8k.htm"
     },
     {
+      "ticker": "LMT",
+      "company": "LOCKHEED MARTIN CORP",
+      "filing_date": "2026-08-28",
+      "form": "8-K",
+      "items": [
+        "1.01",
+        "9.01"
+      ],
+      "category": "major_agreement",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/936468/000119312526371750/d177255d8k.htm"
+    },
+    {
       "ticker": "XOM",
       "company": "ExxonMobil Holdings Corp",
       "filing_date": "2026-08-28",
@@ -602,18 +638,6 @@
       ],
       "category": "financial_obligation",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/12927/000162828026059427/ba-20260824.htm"
-    },
-    {
-      "ticker": "LMT",
-      "company": "LOCKHEED MARTIN CORP",
-      "filing_date": "2026-08-28",
-      "form": "8-K",
-      "items": [
-        "1.01",
-        "9.01"
-      ],
-      "category": "major_agreement",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/936468/000119312526371750/d177255d8k.htm"
     },
     {
       "ticker": "NVDA",
@@ -919,18 +943,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000327/axp-20260805.htm"
     },
     {
-      "ticker": "PFE",
-      "company": "PFIZER INC",
-      "filing_date": "2026-08-04",
-      "form": "8-K",
-      "items": [
-        "2.02",
-        "9.01"
-      ],
-      "category": "results",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000094/pfe-20260804.htm"
-    },
-    {
       "ticker": "JNJ",
       "company": "JOHNSON & JOHNSON",
       "filing_date": "2026-08-04",
@@ -941,6 +953,18 @@
       ],
       "category": "officer_changes",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/200406/000020040626000167/jnj-20260804.htm"
+    },
+    {
+      "ticker": "PFE",
+      "company": "PFIZER INC",
+      "filing_date": "2026-08-04",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000094/pfe-20260804.htm"
     },
     {
       "ticker": "MRK",
@@ -1066,6 +1090,17 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/804328/000110465926089234/tm2621612d2_8k.htm"
     },
     {
+      "ticker": "NFLX",
+      "company": "NETFLIX INC",
+      "filing_date": "2026-07-30",
+      "form": "8-K",
+      "items": [
+        "5.02"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1065280/000106528026000214/nflx-20260726.htm"
+    },
+    {
       "ticker": "AAPL",
       "company": "Apple Inc.",
       "filing_date": "2026-07-30",
@@ -1102,15 +1137,28 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1141391/000114139126000081/ma-20260730.htm"
     },
     {
-      "ticker": "NFLX",
-      "company": "NETFLIX INC",
-      "filing_date": "2026-07-30",
+      "ticker": "MSFT",
+      "company": "MICROSOFT CORP",
+      "filing_date": "2026-07-29",
       "form": "8-K",
       "items": [
-        "5.02"
+        "2.02",
+        "9.01"
       ],
-      "category": "officer_changes",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1065280/000106528026000214/nflx-20260726.htm"
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323632/msft-20260729.htm"
+    },
+    {
+      "ticker": "JNJ",
+      "company": "JOHNSON & JOHNSON",
+      "filing_date": "2026-07-29",
+      "form": "8-K",
+      "items": [
+        "7.01",
+        "9.01"
+      ],
+      "category": "reg_fd",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/200406/000020040626000163/jnj-20260729.htm"
     },
     {
       "ticker": "PG",
@@ -1148,30 +1196,6 @@
       ],
       "category": "results",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/80424/000008042426000093/pg-20260729.htm"
-    },
-    {
-      "ticker": "MSFT",
-      "company": "MICROSOFT CORP",
-      "filing_date": "2026-07-29",
-      "form": "8-K",
-      "items": [
-        "2.02",
-        "9.01"
-      ],
-      "category": "results",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323632/msft-20260729.htm"
-    },
-    {
-      "ticker": "JNJ",
-      "company": "JOHNSON & JOHNSON",
-      "filing_date": "2026-07-29",
-      "form": "8-K",
-      "items": [
-        "7.01",
-        "9.01"
-      ],
-      "category": "reg_fd",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/200406/000020040626000163/jnj-20260729.htm"
     },
     {
       "ticker": "META",
@@ -1285,6 +1309,18 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000318/axp-20260724.htm"
     },
     {
+      "ticker": "LMT",
+      "company": "LOCKHEED MARTIN CORP",
+      "filing_date": "2026-07-23",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/936468/000162828026049277/lmt-20260723.htm"
+    },
+    {
       "ticker": "JPM",
       "company": "JPMORGAN CHASE & CO",
       "filing_date": "2026-07-23",
@@ -1345,18 +1381,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/100885/000010088526000249/unp-20260723.htm"
     },
     {
-      "ticker": "LMT",
-      "company": "LOCKHEED MARTIN CORP",
-      "filing_date": "2026-07-23",
-      "form": "8-K",
-      "items": [
-        "2.02",
-        "9.01"
-      ],
-      "category": "results",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/936468/000162828026049277/lmt-20260723.htm"
-    },
-    {
       "ticker": "RTX",
       "company": "RTX Corp",
       "filing_date": "2026-07-23",
@@ -1367,6 +1391,18 @@
       ],
       "category": "results",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/101829/000010182926000025/rtx-20260723.htm"
+    },
+    {
+      "ticker": "NFLX",
+      "company": "NETFLIX INC",
+      "filing_date": "2026-07-22",
+      "form": "8-K",
+      "items": [
+        "8.01",
+        "9.01"
+      ],
+      "category": "other_events",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1065280/000119312526312575/d171951d8k.htm"
     },
     {
       "ticker": "GOOGL",
@@ -1391,18 +1427,6 @@
       ],
       "category": "results",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026049213/tsla-20260722.htm"
-    },
-    {
-      "ticker": "NFLX",
-      "company": "NETFLIX INC",
-      "filing_date": "2026-07-22",
-      "form": "8-K",
-      "items": [
-        "8.01",
-        "9.01"
-      ],
-      "category": "other_events",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1065280/000119312526312575/d171951d8k.htm"
     },
     {
       "ticker": "TXN",
@@ -1462,6 +1486,18 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000120/adbe-20260714.htm"
     },
     {
+      "ticker": "NFLX",
+      "company": "NETFLIX INC",
+      "filing_date": "2026-07-16",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1065280/000106528026000211/nflx-20260716.htm"
+    },
+    {
       "ticker": "UNH",
       "company": "UNITEDHEALTH GROUP INC",
       "filing_date": "2026-07-16",
@@ -1483,18 +1519,6 @@
       ],
       "category": "other_events",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/21344/000162828026048466/ko-20260716.htm"
-    },
-    {
-      "ticker": "NFLX",
-      "company": "NETFLIX INC",
-      "filing_date": "2026-07-16",
-      "form": "8-K",
-      "items": [
-        "2.02",
-        "9.01"
-      ],
-      "category": "results",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1065280/000106528026000211/nflx-20260716.htm"
     },
     {
       "ticker": "GE",
@@ -1554,18 +1578,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000302/axp-20260715.htm"
     },
     {
-      "ticker": "PG",
-      "company": "PROCTER & GAMBLE Co",
-      "filing_date": "2026-07-14",
-      "form": "8-K",
-      "items": [
-        "7.01",
-        "9.01"
-      ],
-      "category": "reg_fd",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/80424/000008042426000082/pg-20260714.htm"
-    },
-    {
       "ticker": "JPM",
       "company": "JPMORGAN CHASE & CO",
       "filing_date": "2026-07-14",
@@ -1588,6 +1600,18 @@
       ],
       "category": "results",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026048078/jpm-20260714.htm"
+    },
+    {
+      "ticker": "PG",
+      "company": "PROCTER & GAMBLE Co",
+      "filing_date": "2026-07-14",
+      "form": "8-K",
+      "items": [
+        "7.01",
+        "9.01"
+      ],
+      "category": "reg_fd",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/80424/000008042426000082/pg-20260714.htm"
     },
     {
       "ticker": "IBM",
@@ -1921,6 +1945,18 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000070/nke-20260616.htm"
     },
     {
+      "ticker": "NVDA",
+      "company": "NVIDIA CORP",
+      "filing_date": "2026-06-18",
+      "form": "8-K",
+      "items": [
+        "8.01",
+        "9.01"
+      ],
+      "category": "other_events",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1045810/000119312526275783/d48176d8k.htm"
+    },
+    {
       "ticker": "PFE",
       "company": "PFIZER INC",
       "filing_date": "2026-06-18",
@@ -1943,18 +1979,6 @@
       ],
       "category": "officer_changes",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000085/pfe-20260618.htm"
-    },
-    {
-      "ticker": "NVDA",
-      "company": "NVIDIA CORP",
-      "filing_date": "2026-06-18",
-      "form": "8-K",
-      "items": [
-        "8.01",
-        "9.01"
-      ],
-      "category": "other_events",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1045810/000119312526275783/d48176d8k.htm"
     },
     {
       "ticker": "AVGO",
@@ -2039,6 +2063,19 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1018724/000110465926073562/tm2613616d5_8k.htm"
     },
     {
+      "ticker": "ADBE",
+      "company": "ADOBE INC.",
+      "filing_date": "2026-06-11",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "5.02",
+        "9.01"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000109/adbe-20260608.htm"
+    },
+    {
       "ticker": "GOOGL",
       "company": "Alphabet Inc.",
       "filing_date": "2026-06-11",
@@ -2062,19 +2099,6 @@
       ],
       "category": "other_events",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1730168/000119312526266777/d152717d8k.htm"
-    },
-    {
-      "ticker": "ADBE",
-      "company": "ADOBE INC.",
-      "filing_date": "2026-06-11",
-      "form": "8-K",
-      "items": [
-        "2.02",
-        "5.02",
-        "9.01"
-      ],
-      "category": "officer_changes",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000109/adbe-20260608.htm"
     },
     {
       "ticker": "GE",
@@ -2152,6 +2176,18 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1141391/000119312526261669/d128075d8k.htm"
     },
     {
+      "ticker": "NFLX",
+      "company": "NETFLIX INC",
+      "filing_date": "2026-06-05",
+      "form": "8-K",
+      "items": [
+        "5.07",
+        "8.01"
+      ],
+      "category": "vote_results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1065280/000106528026000189/nflx-20260604.htm"
+    },
+    {
       "ticker": "MSFT",
       "company": "MICROSOFT CORP",
       "filing_date": "2026-06-05",
@@ -2210,18 +2246,6 @@
       ],
       "category": "charter_amendment",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/104169/000010416926000111/wmt-20260604.htm"
-    },
-    {
-      "ticker": "NFLX",
-      "company": "NETFLIX INC",
-      "filing_date": "2026-06-05",
-      "form": "8-K",
-      "items": [
-        "5.07",
-        "8.01"
-      ],
-      "category": "vote_results",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1065280/000106528026000189/nflx-20260604.htm"
     },
     {
       "ticker": "HON",
@@ -2687,6 +2711,17 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526224155/d125909d8k.htm"
     },
     {
+      "ticker": "LMT",
+      "company": "LOCKHEED MARTIN CORP",
+      "filing_date": "2026-05-13",
+      "form": "8-K",
+      "items": [
+        "5.07"
+      ],
+      "category": "vote_results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/936468/000093646826000011/lmt-20260512.htm"
+    },
+    {
       "ticker": "CSCO",
       "company": "CISCO SYSTEMS, INC.",
       "filing_date": "2026-05-13",
@@ -2698,17 +2733,6 @@
       ],
       "category": "exit_costs",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000075/csco-20260513.htm"
-    },
-    {
-      "ticker": "LMT",
-      "company": "LOCKHEED MARTIN CORP",
-      "filing_date": "2026-05-13",
-      "form": "8-K",
-      "items": [
-        "5.07"
-      ],
-      "category": "vote_results",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/936468/000093646826000011/lmt-20260512.htm"
     },
     {
       "ticker": "V",
@@ -3083,5 +3107,5 @@
     }
   ],
   "methodology": "SEC Form 8-K current reports \u2014 the legally mandated material-event disclosure (public domain, 17 U.S.C. \u00a7105), due within 4 business days of the event. Panel streams a bounded 50 large-cap issuer set (5 mega-cap seed + v2 20 + v3 25 across financials, payments, healthcare, staples, energy, industrials, tech/comm \u2014 breadth expansions 2026-08-22; still bounded, NOT full market; XOM carries both its pre-succession CIK and the 2026-07-01 8-K12B successor entity) since 2026-05-01; each row links the EDGAR primary document. Items are regex-extracted from the primary doc (nbsp/thin-space entities normalized) and mapped to ONE category by a rare-material-first precedence (delisting > merger completion > control change > non-reliance > officer changes > ... > exhibits); the full item list is preserved per row. Documents whose items cannot be extracted are counted as unclassified \u2014 never guessed. Filing-date point-in-time; 8-K/A amendments are new accessions (immutable). Display-only, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-10-14T11:43:39.710219+00:00"
+  "snapshot_ts": "2026-10-15T11:06:20.986498+00:00"
 }

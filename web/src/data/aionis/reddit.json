@@ -10,40 +10,47 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-10-14T11:14:03+00:00",
-  "n_snapshots": 36,
+  "latest_snapshot_ts": "2026-10-15T10:30:05+00:00",
+  "n_snapshots": 37,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
-      "ticker": "STLD",
-      "mentions": 1,
-      "sentiment": -0.006,
+      "ticker": "SNDK",
+      "mentions": 2,
+      "sentiment": 0.009,
       "bull_ratio": null,
       "score_sum": 0
     },
     {
-      "ticker": "PLTR",
+      "ticker": "AAPL",
       "mentions": 1,
-      "sentiment": -0.006,
+      "sentiment": 0.017,
       "bull_ratio": null,
       "score_sum": 0
     },
     {
-      "ticker": "TTWO",
+      "ticker": "NOW",
       "mentions": 1,
-      "sentiment": -0.002,
+      "sentiment": -0.037,
       "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "MS",
+      "mentions": 1,
+      "sentiment": -0.926,
+      "bull_ratio": 0.0,
       "score_sum": 0
     }
   ],
   "pressure": {
     "status": "accumulating",
     "by_ticker": {},
-    "n_snapshots": 36,
-    "latest_date": "2026-10-14",
+    "n_snapshots": 37,
+    "latest_date": "2026-10-15",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-10-14T11:43:54.152326+00:00"
+  "snapshot_ts": "2026-10-15T11:06:38.157530+00:00"
 }
