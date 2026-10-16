@@ -3,7 +3,7 @@
   "as_of_date": "2026-09-16",
   "freshness": {
     "earliest": "2026-09-16",
-    "latest": "2026-10-15",
+    "latest": "2026-10-16",
     "mixed": true
   },
   "methodology": "Seven-theme signal overview (display-only, NOT a research claim). Aggregates are cross-sectional means over the S&P 500 PIT panel at the latest realized month; the macro theme uses the Track-C macro-regime composite; net cost uses the bps sweep. Themes marked forward_only / needs_work / partial have no real historical signal yet \u2014 shown honestly, never mocked. Not the frozen Track-B verdict.",
@@ -93,7 +93,7 @@
     {
       "key": "macro",
       "status": "live",
-      "as_of": "2026-10-15",
+      "as_of": "2026-10-16",
       "signals": [
         {
           "name": "macro_regime",
@@ -101,10 +101,6 @@
         }
       ],
       "series": [
-        {
-          "date": "2026-07-24",
-          "value": 0.06
-        },
         {
           "date": "2026-07-27",
           "value": -0.106
@@ -339,6 +335,10 @@
         },
         {
           "date": "2026-10-15",
+          "value": 0.033
+        },
+        {
+          "date": "2026-10-16",
           "value": 0.033
         }
       ],
@@ -702,5 +702,5 @@
       ]
     }
   ],
-  "snapshot_ts": "2026-10-15T11:06:16.611546+00:00"
+  "snapshot_ts": "2026-10-16T11:01:40.919253+00:00"
 }
