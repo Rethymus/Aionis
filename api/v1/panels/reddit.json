@@ -10,47 +10,54 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-10-15T10:30:05+00:00",
-  "n_snapshots": 37,
+  "latest_snapshot_ts": "2026-10-16T10:32:38+00:00",
+  "n_snapshots": 38,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
-      "ticker": "SNDK",
-      "mentions": 2,
-      "sentiment": 0.009,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "AAPL",
+      "ticker": "MSFT",
       "mentions": 1,
-      "sentiment": 0.017,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "NOW",
-      "mentions": 1,
-      "sentiment": -0.037,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "MS",
-      "mentions": 1,
-      "sentiment": -0.926,
+      "sentiment": -0.829,
       "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "GOOGL",
+      "mentions": 1,
+      "sentiment": -0.829,
+      "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "META",
+      "mentions": 1,
+      "sentiment": -0.829,
+      "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "AMZN",
+      "mentions": 1,
+      "sentiment": -0.829,
+      "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "ORCL",
+      "mentions": 1,
+      "sentiment": 0.1,
+      "bull_ratio": null,
       "score_sum": 0
     }
   ],
   "pressure": {
     "status": "accumulating",
     "by_ticker": {},
-    "n_snapshots": 37,
-    "latest_date": "2026-10-15",
+    "n_snapshots": 38,
+    "latest_date": "2026-10-16",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-10-15T11:06:38.157530+00:00"
+  "snapshot_ts": "2026-10-16T11:01:55.168220+00:00"
 }

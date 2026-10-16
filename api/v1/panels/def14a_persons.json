@@ -1,28 +1,28 @@
 {
   "status": "ok",
-  "as_of": "2026-10-14",
+  "as_of": "2026-10-15",
   "n_filings_target": 150,
   "n_filings_processed": 150,
-  "n_with_persons": 107,
-  "coverage_pct": 71.3,
-  "n_persons_distinct": 692,
+  "n_with_persons": 105,
+  "coverage_pct": 70.0,
+  "n_persons_distinct": 664,
   "by_role": {
-    "ceo": 158,
-    "cfo": 81,
-    "coo": 39,
+    "ceo": 151,
+    "cfo": 78,
+    "coo": 36,
     "cto": 6,
-    "chairman": 117,
-    "president": 99,
-    "vice_president": 125,
-    "treasurer": 14,
-    "secretary": 45,
-    "director": 514,
-    "officer": 134
+    "chairman": 113,
+    "president": 91,
+    "vice_president": 116,
+    "treasurer": 13,
+    "secretary": 43,
+    "director": 489,
+    "officer": 124
   },
   "confidence": {
-    "section_age_rows": 83,
+    "section_age_rows": 81,
     "section_name_roles": 24,
-    "unparsed_no_persons": 43,
+    "unparsed_no_persons": 45,
     "fetch_or_doc_errors": 0
   },
   "boards": [
@@ -157,16 +157,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/779152/000077915226000088/jkhy-20261001.htm"
     },
     {
-      "company": "Winchester Bancorp, Inc./MD/",
-      "ticker": "WSBK",
-      "issuer_cik": "2047235",
-      "n_persons": 11,
-      "n_directors": 10,
-      "n_officers": 7,
-      "filed_date": "2026-09-28",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2047235/000119312526403439/wsbk-20260928.htm"
-    },
-    {
       "company": "Kentucky First Federal Bancorp",
       "ticker": "KFFB",
       "issuer_cik": "1297341",
@@ -215,16 +205,6 @@
       "n_officers": 0,
       "filed_date": "2026-10-02",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1041514/000156276226000119/lsak-2026proxy.htm"
-    },
-    {
-      "company": "CytoDyn Inc.",
-      "ticker": "CYDY",
-      "issuer_cik": "1175680",
-      "n_persons": 10,
-      "n_directors": 9,
-      "n_officers": 9,
-      "filed_date": "2026-09-28",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1175680/000117568026000026/ck0001175680-20260928.htm"
     },
     {
       "company": "BLOOMIA HOLDINGS, INC.",
@@ -657,6 +637,26 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1387467/000162828026063962/aosl-20260930.htm"
     },
     {
+      "company": "FRANKLIN WIRELESS CORP",
+      "ticker": "FKWL",
+      "issuer_cik": "722572",
+      "n_persons": 5,
+      "n_directors": 5,
+      "n_officers": 2,
+      "filed_date": "2026-10-15",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/722572/000168316826007904/franklin_def14a.htm"
+    },
+    {
+      "company": "Datacentrex, Inc.",
+      "ticker": "DTCX",
+      "issuer_cik": "1853825",
+      "n_persons": 5,
+      "n_directors": 5,
+      "n_officers": 3,
+      "filed_date": "2026-10-15",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1853825/000149315226047170/formdef14a.htm"
+    },
+    {
       "company": "Atlassian Corp",
       "ticker": "TEAM",
       "issuer_cik": "1650372",
@@ -777,24 +777,14 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1389545/000143774926031344/sdev20260921_def14a.htm"
     },
     {
-      "company": "Planet Green Holdings Corp.",
-      "ticker": "PLAG",
-      "issuer_cik": "1117057",
-      "n_persons": 5,
-      "n_directors": 5,
-      "n_officers": 2,
-      "filed_date": "2026-09-28",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1117057/000121390026104104/ea0304850-03.htm"
-    },
-    {
-      "company": "EXOZYMES INC.",
-      "ticker": "EXOZ",
-      "issuer_cik": "2010788",
-      "n_persons": 5,
-      "n_directors": 5,
-      "n_officers": 2,
-      "filed_date": "2026-09-28",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2010788/000114036126037859/ny20078206x1_def14a.htm"
+      "company": "INCOME OPPORTUNITY REALTY INVESTORS INC /TX/",
+      "ticker": "IOR",
+      "issuer_cik": "949961",
+      "n_persons": 4,
+      "n_directors": 4,
+      "n_officers": 0,
+      "filed_date": "2026-10-15",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/949961/000199937126022826/ior-def14a_111126.htm"
     },
     {
       "company": "AMERICAN REALTY INVESTORS INC",
@@ -887,16 +877,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1521945/000152194526000099/a2026pfloatdefinitiveproxy.htm"
     },
     {
-      "company": "Rare Earths Americas, Inc.",
-      "ticker": "REA",
-      "issuer_cik": "2095743",
-      "n_persons": 4,
-      "n_directors": 3,
-      "n_officers": 3,
-      "filed_date": "2026-09-28",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2095743/000119312526405295/rea-20260928.htm"
-    },
-    {
       "company": "Marathon Bancorp, Inc. /MD/",
       "ticker": "MBBC",
       "issuer_cik": "1835385",
@@ -987,16 +967,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1828805/000121390026105227/ea0306962-01.htm"
     },
     {
-      "company": "SunPower Inc.",
-      "ticker": "",
-      "issuer_cik": "1838987",
-      "n_persons": 3,
-      "n_directors": 3,
-      "n_officers": 3,
-      "filed_date": "2026-09-28",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1838987/000121390026104038/ea0305623-03.htm"
-    },
-    {
       "company": "Amesite Inc.",
       "ticker": "AMST",
       "issuer_cik": "1807166",
@@ -1015,6 +985,16 @@
       "n_officers": 1,
       "filed_date": "2026-10-09",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1563568/000143774926032450/adom20261009_def14a.htm"
+    },
+    {
+      "company": "Korsana Biosciences, Inc.",
+      "ticker": "KRSA",
+      "issuer_cik": "1755237",
+      "n_persons": 1,
+      "n_directors": 1,
+      "n_officers": 1,
+      "filed_date": "2026-10-15",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1755237/000119312526422893/d36079ddef14a.htm"
     },
     {
       "company": "Entera Bio Ltd.",
@@ -1191,6 +1171,20 @@
       ]
     },
     {
+      "name": "Henry A. Butler",
+      "roles": [
+        "chairman",
+        "director"
+      ],
+      "n_companies": 3,
+      "n_director_seats": 3,
+      "companies": [
+        "INCOME OPPORTUNITY REALTY INVESTORS INC /TX/",
+        "TRANSCONTINENTAL REALTY INVESTORS INC",
+        "AMERICAN REALTY INVESTORS INC"
+      ]
+    },
+    {
       "name": "Lightstone V. Mr",
       "roles": [
         "cfo",
@@ -1218,6 +1212,46 @@
         "Lightstone Value Plus REIT IV, Inc.",
         "Lightstone Value Plus REIT III, Inc.",
         "Lightstone Value Plus REIT II, Inc."
+      ]
+    },
+    {
+      "name": "Raymond D. Roberts",
+      "roles": [
+        "director"
+      ],
+      "n_companies": 3,
+      "n_director_seats": 3,
+      "companies": [
+        "INCOME OPPORTUNITY REALTY INVESTORS INC /TX/",
+        "TRANSCONTINENTAL REALTY INVESTORS INC",
+        "AMERICAN REALTY INVESTORS INC"
+      ]
+    },
+    {
+      "name": "Ted R. Munselle",
+      "roles": [
+        "director"
+      ],
+      "n_companies": 3,
+      "n_director_seats": 3,
+      "companies": [
+        "INCOME OPPORTUNITY REALTY INVESTORS INC /TX/",
+        "TRANSCONTINENTAL REALTY INVESTORS INC",
+        "AMERICAN REALTY INVESTORS INC"
+      ]
+    },
+    {
+      "name": "Abigail P. Johnson",
+      "roles": [
+        "ceo",
+        "chairman",
+        "director"
+      ],
+      "n_companies": 2,
+      "n_director_seats": 2,
+      "companies": [
+        "Korsana Biosciences, Inc.",
+        "Intapp, Inc."
       ]
     },
     {
@@ -1264,19 +1298,6 @@
       ]
     },
     {
-      "name": "Henry A. Butler",
-      "roles": [
-        "chairman",
-        "director"
-      ],
-      "n_companies": 2,
-      "n_director_seats": 2,
-      "companies": [
-        "TRANSCONTINENTAL REALTY INVESTORS INC",
-        "AMERICAN REALTY INVESTORS INC"
-      ]
-    },
-    {
       "name": "Nicholas J. Swenson",
       "roles": [
         "ceo",
@@ -1307,27 +1328,15 @@
       ]
     },
     {
-      "name": "Raymond D. Roberts",
+      "name": "Robert A. Jakuszewski",
       "roles": [
         "director"
       ],
       "n_companies": 2,
       "n_director_seats": 2,
       "companies": [
-        "TRANSCONTINENTAL REALTY INVESTORS INC",
-        "AMERICAN REALTY INVESTORS INC"
-      ]
-    },
-    {
-      "name": "Ted R. Munselle",
-      "roles": [
-        "director"
-      ],
-      "n_companies": 2,
-      "n_director_seats": 2,
-      "companies": [
-        "TRANSCONTINENTAL REALTY INVESTORS INC",
-        "AMERICAN REALTY INVESTORS INC"
+        "INCOME OPPORTUNITY REALTY INVESTORS INC /TX/",
+        "TRANSCONTINENTAL REALTY INVESTORS INC"
       ]
     },
     {
@@ -1340,19 +1349,6 @@
       "n_director_seats": 0,
       "companies": [
         "Performance Food Group Co"
-      ]
-    },
-    {
-      "name": "Abigail P. Johnson",
-      "roles": [
-        "ceo",
-        "chairman",
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "Intapp, Inc."
       ]
     },
     {
@@ -1475,21 +1471,6 @@
       ]
     },
     {
-      "name": "Alan G. Macdonald",
-      "roles": [
-        "ceo",
-        "chairman",
-        "president",
-        "treasurer",
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "Winchester Bancorp, Inc./MD/"
-      ]
-    },
-    {
       "name": "Alan Retkinski",
       "roles": [
         "director"
@@ -1533,6 +1514,17 @@
       "n_director_seats": 1,
       "companies": [
         "CAMPBELL'S Co"
+      ]
+    },
+    {
+      "name": "Allan Evans",
+      "roles": [
+        "director"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "Datacentrex, Inc."
       ]
     },
     {
@@ -1728,25 +1720,14 @@
       "companies": [
         "XBiotech Inc."
       ]
-    },
-    {
-      "name": "Angelita R. Domingo",
-      "roles": [
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "PRO DEX INC"
-      ]
     }
   ],
   "request_accounting": {
-    "n_http_requests_last_fetch": 18,
+    "n_http_requests_last_fetch": 14,
     "budget_seconds": 2700,
     "budget_hit": false,
-    "fetched_at": "2026-10-15T10:15:04.162249+00:00"
+    "fetched_at": "2026-10-16T10:18:10.060045+00:00"
   },
-  "methodology": "DEF 14A person-level panel (\u8463\u4e8b/\u9ad8\u7ba1\u4eba\u7ea7\u6863\u6848) over the NEWEST 150 proxy filings of the /executives DEF 14A stream \u2014 a bounded lane: each filing's primary document resolved from its EDGAR filing index (<= 2 GETs per filing, idempotent per-accession caches, >= 2.1s spacing, hard 45-minute wall-clock budget; the last fetch spent 18 HTTP requests and did not hit the budget). Parsing is CONSERVATIVE and TIERED: (1) section_age_rows (HIGH) \u2014 the classic 'Name (Age) Title Since' roster row in any spelling, a 2-4 token capitalized name with a standalone age bounded 30-99 and a role word witnessed on the same row, also reconstructed from word-fragmented inline-XBRL layouts by anchor-delimiting the joined stream; (2) section_name_roles (MEDIUM) \u2014 'First M. Last' (middle-initial) + a role word inside a located directors/executives section. Everything else yields persons=[] and parsed=false \u2014 an honest NULL, never a guessed name (\u5b81\u53ef null \u4e0d\u731c\u6d4b); coverage below counts only what was processed (107/150 filings with persons = 71.3%), never an extrapolation. Roles are canonical role WORDS witnessed near the person's row or bio \u2014 they may include past or external-company titles (e.g. a director who is CEO of another firm), displayed as text-witnessed hints not employment records; boards-card director/officer counts are independent sets (a CEO-director counts in both). Distinct-person identity keys on the normalized full name across filings \u2014 same-name merges may join namesakes and hyphenated/apostrophe/initials-first names (JW Roth) are conservatively MISSED, both disclosed. Display-only, exploratory, NOT a research claim.",
-  "snapshot_ts": "2026-10-15T11:06:21.638310+00:00"
+  "methodology": "DEF 14A person-level panel (\u8463\u4e8b/\u9ad8\u7ba1\u4eba\u7ea7\u6863\u6848) over the NEWEST 150 proxy filings of the /executives DEF 14A stream \u2014 a bounded lane: each filing's primary document resolved from its EDGAR filing index (<= 2 GETs per filing, idempotent per-accession caches, >= 2.1s spacing, hard 45-minute wall-clock budget; the last fetch spent 14 HTTP requests and did not hit the budget). Parsing is CONSERVATIVE and TIERED: (1) section_age_rows (HIGH) \u2014 the classic 'Name (Age) Title Since' roster row in any spelling, a 2-4 token capitalized name with a standalone age bounded 30-99 and a role word witnessed on the same row, also reconstructed from word-fragmented inline-XBRL layouts by anchor-delimiting the joined stream; (2) section_name_roles (MEDIUM) \u2014 'First M. Last' (middle-initial) + a role word inside a located directors/executives section. Everything else yields persons=[] and parsed=false \u2014 an honest NULL, never a guessed name (\u5b81\u53ef null \u4e0d\u731c\u6d4b); coverage below counts only what was processed (105/150 filings with persons = 70.0%), never an extrapolation. Roles are canonical role WORDS witnessed near the person's row or bio \u2014 they may include past or external-company titles (e.g. a director who is CEO of another firm), displayed as text-witnessed hints not employment records; boards-card director/officer counts are independent sets (a CEO-director counts in both). Distinct-person identity keys on the normalized full name across filings \u2014 same-name merges may join namesakes and hyphenated/apostrophe/initials-first names (JW Roth) are conservatively MISSED, both disclosed. Display-only, exploratory, NOT a research claim.",
+  "snapshot_ts": "2026-10-16T11:01:44.656537+00:00"
 }
