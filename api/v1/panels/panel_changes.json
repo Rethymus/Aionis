@@ -1,9 +1,9 @@
 {
   "status": "ok",
-  "as_of": "2026-10-16",
+  "as_of": "2026-10-19",
   "n_tracked": 57,
-  "n_changed": 24,
-  "n_as_of_advanced": 10,
+  "n_changed": 26,
+  "n_as_of_advanced": 11,
   "changes": [
     {
       "file": "sigma_survey",
@@ -90,8 +90,8 @@
       "changed": true,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": "959044b6421e",
-      "sha_after": "13c0ac75f991"
+      "sha_before": "13c0ac75f991",
+      "sha_after": "a8842f9e05ce"
     },
     {
       "file": "freight_taco",
@@ -130,8 +130,8 @@
       "changed": true,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": "0d776fa2c81a",
-      "sha_after": "6314d83c421b"
+      "sha_before": "6314d83c421b",
+      "sha_after": "edd4ea56deeb"
     },
     {
       "file": "theme_signals",
@@ -159,35 +159,35 @@
     },
     {
       "file": "cot",
-      "changed": false,
+      "changed": true,
       "as_of_before": null,
       "as_of_after": null,
       "sha_before": "2dc4ce82c24a",
-      "sha_after": "2dc4ce82c24a"
+      "sha_after": "15344cf899fd"
     },
     {
       "file": "form4",
       "changed": true,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": "3dc35543ed55",
-      "sha_after": "4971bf76225e"
+      "sha_before": "4971bf76225e",
+      "sha_after": "9aa7d9a942b6"
     },
     {
       "file": "form8k",
       "changed": true,
-      "as_of_before": "2026-10-14",
-      "as_of_after": "2026-10-15",
-      "sha_before": "a47afb3c6f4e",
-      "sha_after": "f6b95ec702ef"
+      "as_of_before": "2026-10-15",
+      "as_of_after": "2026-10-16",
+      "sha_before": "f6b95ec702ef",
+      "sha_after": "a4446c2ec31a"
     },
     {
       "file": "news_feed",
-      "changed": false,
+      "changed": true,
       "as_of_before": "2026-10-15T10:00:00Z",
-      "as_of_after": "2026-10-15T10:00:00Z",
+      "as_of_after": "2026-10-19T06:15:00Z",
       "sha_before": "38f86de362c3",
-      "sha_after": "38f86de362c3"
+      "sha_after": "7148a242e612"
     },
     {
       "file": "form_ipo",
@@ -200,10 +200,10 @@
     {
       "file": "form_d",
       "changed": true,
-      "as_of_before": "2026-10-15",
-      "as_of_after": "2026-10-16",
-      "sha_before": "fa16ebec8abb",
-      "sha_after": "6a539e359a82"
+      "as_of_before": "2026-10-16",
+      "as_of_after": "2026-10-19",
+      "sha_before": "6a539e359a82",
+      "sha_after": "5a200bc5bb8a"
     },
     {
       "file": "form_def14a",
@@ -216,18 +216,18 @@
     {
       "file": "def14a_persons",
       "changed": true,
-      "as_of_before": "2026-10-14",
-      "as_of_after": "2026-10-15",
-      "sha_before": "5b74a6611b43",
-      "sha_after": "8936da570a7a"
+      "as_of_before": "2026-10-15",
+      "as_of_after": "2026-10-19",
+      "sha_before": "8936da570a7a",
+      "sha_after": "6a5149fcafe4"
     },
     {
       "file": "filing_stream",
       "changed": true,
-      "as_of_before": "2026-10-15",
-      "as_of_after": "2026-10-16",
-      "sha_before": "1b4ba79d721d",
-      "sha_after": "056c64f81a40"
+      "as_of_before": "2026-10-16",
+      "as_of_after": "2026-10-19",
+      "sha_before": "056c64f81a40",
+      "sha_after": "f0e7bead4714"
     },
     {
       "file": "politician_trades",
@@ -282,48 +282,48 @@
       "changed": true,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": "3c9e6f43f681",
-      "sha_after": "68fb36b76da9"
+      "sha_before": "68fb36b76da9",
+      "sha_after": "30751fa364db"
     },
     {
       "file": "macro_drivers",
       "changed": true,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": "2611f250e4ee",
-      "sha_after": "b9f7aa6e9f3c"
+      "sha_before": "b9f7aa6e9f3c",
+      "sha_after": "8ec735aff3bb"
     },
     {
       "file": "smart_money",
       "changed": true,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": "6a3d4a710377",
-      "sha_after": "252810ef256b"
+      "sha_before": "252810ef256b",
+      "sha_after": "0a6a572d1e2b"
     },
     {
       "file": "stakes_13g",
       "changed": true,
-      "as_of_before": "2026-10-14",
-      "as_of_after": "2026-10-15",
-      "sha_before": "6413516dba25",
-      "sha_after": "656ad1e55378"
+      "as_of_before": "2026-10-15",
+      "as_of_after": "2026-10-16",
+      "sha_before": "656ad1e55378",
+      "sha_after": "bc1ed91747ef"
     },
     {
       "file": "ark",
       "changed": true,
-      "as_of_before": "2026-10-15",
-      "as_of_after": "2026-10-16",
-      "sha_before": "9dd6b5a55bc0",
-      "sha_after": "5b4a807f35ea"
+      "as_of_before": "2026-10-16",
+      "as_of_after": "2026-10-19",
+      "sha_before": "5b4a807f35ea",
+      "sha_after": "04bff4a8b67e"
     },
     {
       "file": "theme_etfs",
       "changed": true,
-      "as_of_before": "2026-10-14",
-      "as_of_after": "2026-10-15",
-      "sha_before": "406f2495e17d",
-      "sha_after": "51071a7abc98"
+      "as_of_before": "2026-10-15",
+      "as_of_after": "2026-10-16",
+      "sha_before": "51071a7abc98",
+      "sha_after": "ebd2148ad491"
     },
     {
       "file": "reddit_meta",
@@ -336,10 +336,10 @@
     {
       "file": "reddit_trending",
       "changed": true,
-      "as_of_before": "2026-10-15T10:28:52+00:00",
-      "as_of_after": "2026-10-16T10:31:30+00:00",
-      "sha_before": "acb2ff72c7ad",
-      "sha_after": "c9a9f8eff6fc"
+      "as_of_before": "2026-10-16T10:31:30+00:00",
+      "as_of_after": "2026-10-19T10:28:24+00:00",
+      "sha_before": "c9a9f8eff6fc",
+      "sha_after": "678da4b6031b"
     },
     {
       "file": "ledger_audit",
@@ -402,16 +402,16 @@
       "changed": true,
       "as_of_before": "{'us': '2026-06-30', 'cn': '2026-08-03'}",
       "as_of_after": "{'us': '2026-06-30', 'cn': '2026-08-03'}",
-      "sha_before": "e0865c196cfe",
-      "sha_after": "76588e6896f4"
+      "sha_before": "76588e6896f4",
+      "sha_after": "ca62517d5c65"
     },
     {
       "file": "executives",
       "changed": true,
-      "as_of_before": "2026-10-13",
-      "as_of_after": "2026-10-15",
-      "sha_before": "059a3d346695",
-      "sha_after": "bfb2d02ebc9f"
+      "as_of_before": "2026-10-15",
+      "as_of_after": "2026-10-16",
+      "sha_before": "bfb2d02ebc9f",
+      "sha_after": "a25de24ee087"
     },
     {
       "file": "phase_dossier_meta",
@@ -426,42 +426,42 @@
       "changed": false,
       "as_of_before": "2026-10-10",
       "as_of_after": "2026-10-10",
-      "sha_before": "6275f04b1f19",
-      "sha_after": "6275f04b1f19"
+      "sha_before": "cd1a68ee962d",
+      "sha_after": "cd1a68ee962d"
     },
     {
       "file": "evidence_matrix",
       "changed": false,
       "as_of_before": "2026-08-05",
       "as_of_after": "2026-08-05",
-      "sha_before": "445eaae40f57",
-      "sha_after": "445eaae40f57"
+      "sha_before": "0cd56d544a25",
+      "sha_after": "0cd56d544a25"
     },
     {
       "file": "lineage_graph",
       "changed": true,
-      "as_of_before": "2026-10-14",
-      "as_of_after": "2026-10-15",
-      "sha_before": "686ae7f9eb94",
-      "sha_after": "f1fd7c803ba6"
+      "as_of_before": "2026-10-15",
+      "as_of_after": "2026-10-19",
+      "sha_before": "f1fd7c803ba6",
+      "sha_after": "fc3af38f75c7"
     },
     {
       "file": "data_health",
       "changed": true,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": "ffc974da29b9",
-      "sha_after": "4adf2efa9822"
+      "sha_before": "4adf2efa9822",
+      "sha_after": "70599e6aefd2"
     },
     {
       "file": "api_catalog",
       "changed": true,
       "as_of_before": null,
       "as_of_after": null,
-      "sha_before": "1cdf6942ad7a",
-      "sha_after": "ed1c1fab5109"
+      "sha_before": "ed1c1fab5109",
+      "sha_after": "aae6ce8b0a0e"
     }
   ],
   "methodology": "Per-panel committed-transition registry captured by the export wrapper (sha256[:12] + as_of before/after each exporter run). changed=false means byte-identical this run (honest no-op). Display-only view over git history; the audit trail of record is runs/ + the repository itself.",
-  "snapshot_ts": "2026-10-16T11:02:12.021165+00:00"
+  "snapshot_ts": "2026-10-19T11:00:34.154940+00:00"
 }
