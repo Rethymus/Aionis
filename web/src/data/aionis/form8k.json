@@ -1,12 +1,12 @@
 {
   "status": "ok",
-  "as_of": "2026-10-15",
+  "as_of": "2026-10-16",
   "window": {
     "start": "2026-05-01",
-    "end": "2026-10-15"
+    "end": "2026-10-16"
   },
   "issuers": 50,
-  "total": 259,
+  "total": 264,
   "unclassified": 11,
   "by_category": {
     "agreement_termination": 2,
@@ -17,16 +17,75 @@
     "financial_obligation": 6,
     "major_agreement": 5,
     "merger_completion": 1,
-    "officer_changes": 59,
+    "officer_changes": 61,
     "other": 3,
-    "other_events": 36,
-    "reg_fd": 23,
+    "other_events": 37,
+    "reg_fd": 24,
     "results": 71,
     "security_terms": 4,
     "unclassified": 11,
-    "vote_results": 24
+    "vote_results": 25
   },
   "events": [
+    {
+      "ticker": "PG",
+      "company": "PROCTER & GAMBLE Co",
+      "filing_date": "2026-10-16",
+      "form": "8-K",
+      "items": [
+        "5.07"
+      ],
+      "category": "vote_results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/80424/000008042426000245/pg-20261016.htm"
+    },
+    {
+      "ticker": "XOM",
+      "company": "ExxonMobil Holdings Corp",
+      "filing_date": "2026-10-16",
+      "form": "8-K",
+      "items": [
+        "7.01"
+      ],
+      "category": "reg_fd",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2115436/000211543626000013/xom-20261016.htm"
+    },
+    {
+      "ticker": "PEP",
+      "company": "PEPSICO INC",
+      "filing_date": "2026-10-16",
+      "form": "8-K",
+      "items": [
+        "8.01",
+        "9.01"
+      ],
+      "category": "other_events",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/77476/000110465926116626/tm2627433d2_8k.htm"
+    },
+    {
+      "ticker": "COST",
+      "company": "COSTCO WHOLESALE CORP /NEW",
+      "filing_date": "2026-10-16",
+      "form": "8-K",
+      "items": [
+        "5.02",
+        "9.01"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/909832/000090983226000100/cost-20261013.htm"
+    },
+    {
+      "ticker": "UNP",
+      "company": "UNION PACIFIC CORP",
+      "filing_date": "2026-10-16",
+      "form": "8-K",
+      "items": [
+        "5.02",
+        "7.01",
+        "9.01"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/100885/000010088526000305/unp-20261016.htm"
+    },
     {
       "ticker": "CAT",
       "company": "CATERPILLAR INC",
@@ -3129,5 +3188,5 @@
     }
   ],
   "methodology": "SEC Form 8-K current reports \u2014 the legally mandated material-event disclosure (public domain, 17 U.S.C. \u00a7105), due within 4 business days of the event. Panel streams a bounded 50 large-cap issuer set (5 mega-cap seed + v2 20 + v3 25 across financials, payments, healthcare, staples, energy, industrials, tech/comm \u2014 breadth expansions 2026-08-22; still bounded, NOT full market; XOM carries both its pre-succession CIK and the 2026-07-01 8-K12B successor entity) since 2026-05-01; each row links the EDGAR primary document. Items are regex-extracted from the primary doc (nbsp/thin-space entities normalized) and mapped to ONE category by a rare-material-first precedence (delisting > merger completion > control change > non-reliance > officer changes > ... > exhibits); the full item list is preserved per row. Documents whose items cannot be extracted are counted as unclassified \u2014 never guessed. Filing-date point-in-time; 8-K/A amendments are new accessions (immutable). Display-only, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-10-16T11:01:44.119174+00:00"
+  "snapshot_ts": "2026-10-19T11:00:08.098163+00:00"
 }

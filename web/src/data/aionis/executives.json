@@ -1,13 +1,34 @@
 {
   "status": "ok",
-  "as_of": "2026-10-15",
-  "total": 59,
-  "issuers": 35,
+  "as_of": "2026-10-16",
+  "total": 61,
+  "issuers": 37,
   "window": {
     "start": "2026-05-01",
-    "end": "2026-10-15"
+    "end": "2026-10-16"
   },
   "events": [
+    {
+      "company": "COSTCO WHOLESALE CORP /NEW",
+      "ticker": "COST",
+      "filing_date": "2026-10-16",
+      "items": [
+        "5.02",
+        "9.01"
+      ],
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/909832/000090983226000100/cost-20261013.htm"
+    },
+    {
+      "company": "UNION PACIFIC CORP",
+      "ticker": "UNP",
+      "filing_date": "2026-10-16",
+      "items": [
+        "5.02",
+        "7.01",
+        "9.01"
+      ],
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/100885/000010088526000305/unp-20261016.htm"
+    },
     {
       "company": "CATERPILLAR INC",
       "ticker": "CAT",
@@ -625,6 +646,7 @@
     "BOEING CO": 1,
     "CATERPILLAR INC": 1,
     "COCA COLA CO": 1,
+    "COSTCO WHOLESALE CORP /NEW": 1,
     "EXXON MOBIL CORP": 1,
     "JOHNSON & JOHNSON": 1,
     "JPMORGAN CHASE & CO": 1,
@@ -637,8 +659,9 @@
     "PFIZER INC": 1,
     "PROCTER & GAMBLE Co": 1,
     "RTX Corp": 1,
-    "TEXAS INSTRUMENTS INC": 1
+    "TEXAS INSTRUMENTS INC": 1,
+    "UNION PACIFIC CORP": 1
   },
-  "methodology": "SEC Form 8-K Item 5.02 officer/director-change filings \u2014 DERIVED from the committed form8k panel (category 'officer_changes'; public domain, 17 U.S.C. \u00a7105, filed-date PIT). v1 is FILING-STREAM level: one row per 8-K accession with the company, filing date, full item list and EDGAR primary-document link. Person-level extraction (who, which role, appointed vs departed) is DEFERRED: parsing names from 8-K free text is unreliable and an honest omission beats a guessed name \u2014 the same v1 boundary as the /congress PTR panel. Inherits the /events panel's bounded 50-issuer universe and its 2026-05-01..2026-10-15 window. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-10-16T11:01:59.742029+00:00"
+  "methodology": "SEC Form 8-K Item 5.02 officer/director-change filings \u2014 DERIVED from the committed form8k panel (category 'officer_changes'; public domain, 17 U.S.C. \u00a7105, filed-date PIT). v1 is FILING-STREAM level: one row per 8-K accession with the company, filing date, full item list and EDGAR primary-document link. Person-level extraction (who, which role, appointed vs departed) is DEFERRED: parsing names from 8-K free text is unreliable and an honest omission beats a guessed name \u2014 the same v1 boundary as the /congress PTR panel. Inherits the /events panel's bounded 50-issuer universe and its 2026-05-01..2026-10-16 window. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
+  "snapshot_ts": "2026-10-19T11:00:22.193624+00:00"
 }
