@@ -10,44 +10,37 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-10-16T10:32:38+00:00",
-  "n_snapshots": 38,
+  "latest_snapshot_ts": "2026-10-20T10:24:30+00:00",
+  "n_snapshots": 39,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
-      "ticker": "MSFT",
+      "ticker": "SNDK",
       "mentions": 1,
-      "sentiment": -0.829,
-      "bull_ratio": 0.0,
+      "sentiment": 0.023,
+      "bull_ratio": null,
       "score_sum": 0
     },
     {
-      "ticker": "GOOGL",
+      "ticker": "STX",
       "mentions": 1,
-      "sentiment": -0.829,
-      "bull_ratio": 0.0,
+      "sentiment": 0.127,
+      "bull_ratio": null,
       "score_sum": 0
     },
     {
-      "ticker": "META",
+      "ticker": "MU",
       "mentions": 1,
-      "sentiment": -0.829,
-      "bull_ratio": 0.0,
+      "sentiment": -0.113,
+      "bull_ratio": null,
       "score_sum": 0
     },
     {
       "ticker": "AMZN",
       "mentions": 1,
-      "sentiment": -0.829,
-      "bull_ratio": 0.0,
-      "score_sum": 0
-    },
-    {
-      "ticker": "ORCL",
-      "mentions": 1,
-      "sentiment": 0.1,
+      "sentiment": 0.071,
       "bull_ratio": null,
       "score_sum": 0
     }
@@ -55,9 +48,9 @@
   "pressure": {
     "status": "accumulating",
     "by_ticker": {},
-    "n_snapshots": 38,
-    "latest_date": "2026-10-16",
+    "n_snapshots": 39,
+    "latest_date": "2026-10-20",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-10-19T11:00:18.076341+00:00"
+  "snapshot_ts": "2026-10-20T10:58:29.068670+00:00"
 }

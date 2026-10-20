@@ -2,6 +2,174 @@
   "methodology": "Recent SC 13D institutional stake filings (SEC EDGAR, filed-date point-in-time). Public domain, permissive. Two sources: EFTS full-text search for 2015\u21922024-12 (filer + target + ticker), and the EDGAR daily crawler index for 2024-12\u2192today. The daily index lists a filing under EVERY covered company (subject AND filer entities), so rows are deduped per accession: the listed company is the subject (ticker backfilled OFFLINE from the cached SEC company_tickers snapshot \u2014 current-snapshot display label, not as-of-filing \u2014 plus the frozen EFTS name map), and the co-indexed names surface as the filer. Filings on unlisted targets (funds, LLCs, individuals) or with several listed candidates honestly keep an empty ticker / placeholder filer (counted in data_health.source_health). Real data; descriptive display, not an Aionis research claim. Percent-of-class fields (pct_now / pct_prev) are regex-parsed from each filing's primary document for the VISIBLE rows only (bounded second stage: structured cover-page tag first, then the 'Percent of class' label, then the 'X.X% of the ... class' narrative; amendments carry pct_prev from 'previous X%'-style sentences only) \u2014 misses stay honest nulls, counted in data_health.source_health. pct_status is DERIVED from parsed values only: exited = an explicit parsed 0, below_5 = a parsed value < 5; a null pct never yields a status. Group filings show the FIRST reporting person's cover-page percentage.",
   "recent_filings": [
     {
+      "filer": "Catsimatidis John A. Jr",
+      "target": "1stdibs.com, Inc.",
+      "ticker": "DIBS",
+      "date": "2026-10-19",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/1600641/0001104659-26-116935-index.htm",
+      "pct_now": 7.8,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Ascent Capital Partners LLC",
+      "target": "Innventure, Inc.",
+      "ticker": "INV",
+      "date": "2026-10-19",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/2001557/0002041777-26-000005-index.htm",
+      "pct_now": 10.7,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "BW Group Ltd",
+      "target": "Navigator Holdings Ltd.",
+      "ticker": "NVGS",
+      "date": "2026-10-19",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/1581804/0001213900-26-110664-index.htm",
+      "pct_now": 4.99,
+      "pct_prev": null,
+      "pct_status": "below_5"
+    },
+    {
+      "filer": "LEHMAN KENNETH R",
+      "target": "BayFirst Financial Corp.",
+      "ticker": "BAFN",
+      "date": "2026-10-19",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/1649739/0001649739-26-000139-index.htm",
+      "pct_now": 39.19,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "GRAHAM DONALD",
+      "target": "Cable One, Inc.",
+      "ticker": "CABO",
+      "date": "2026-10-19",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/1632127/0000950157-26-001110-index.htm",
+      "pct_now": 4.99,
+      "pct_prev": null,
+      "pct_status": "below_5"
+    },
+    {
+      "filer": "Rosalind Advisors, Inc.",
+      "target": "DELCATH SYSTEMS, INC.",
+      "ticker": "DCTH",
+      "date": "2026-10-19",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/872912/0001622627-26-000027-index.htm",
+      "pct_now": 9.9,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Infinite Acquisitions Partners LLC",
+      "target": "Falcon's Beyond Global, Inc.",
+      "ticker": "FBYD",
+      "date": "2026-10-19",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/1937987/0001193125-26-424703-index.htm",
+      "pct_now": 12.55,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "GLENBROOK CAPITAL MANAGEMENT",
+      "target": "SenesTech, Inc.",
+      "ticker": "SNES",
+      "date": "2026-10-19",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/1680378/0000902664-26-004214-index.htm",
+      "pct_now": 38.04,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Sun Lei",
+      "target": "JX Luxventure Group Inc.",
+      "ticker": "JXG",
+      "date": "2026-10-19",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/1546383/0001213900-26-110576-index.htm",
+      "pct_now": 25.61,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Li Huidan",
+      "target": "JX Luxventure Group Inc.",
+      "ticker": "JXG",
+      "date": "2026-10-19",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/1546383/0001213900-26-110578-index.htm",
+      "pct_now": 6.66,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Morsevo Trade, Inc.",
+      "target": "Karbon-X Corp.",
+      "ticker": "KARX",
+      "date": "2026-10-19",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/1729637/0001477932-26-006330-index.htm",
+      "pct_now": 6.7,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "target": "Lincoln Bain Capital Total Credit Fund",
+      "ticker": "",
+      "date": "2026-10-19",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/2054992/0001193125-26-425017-index.htm",
+      "pct_now": 13.07,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "target": "Lincoln Financial Investments Corp",
+      "ticker": "",
+      "date": "2026-10-19",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/1464867/0001193125-26-425017-index.htm",
+      "pct_now": 13.07,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "OLDRIDGE PHILLIP",
+      "target": "Rantizo",
+      "ticker": "SKK",
+      "date": "2026-10-19",
+      "form": "SC 13D",
+      "is_amendment": false,
+      "url": "http://www.sec.gov/Archives/edgar/data/1991261/0000919574-26-007073-index.htm",
+      "pct_now": 9.02,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
       "filer": "Huang Jack Jiajia",
       "target": "51Talk Online Education Group",
       "ticker": "COE",
@@ -1272,174 +1440,6 @@
       "pct_now": 15.1,
       "pct_prev": null,
       "pct_status": null
-    },
-    {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-      "target": "ENDRA Life Sciences Inc.",
-      "ticker": "NDRA",
-      "date": "2026-10-08",
-      "form": "SC 13D",
-      "is_amendment": false,
-      "url": "http://www.sec.gov/Archives/edgar/data/1681682/0001477932-26-006128-index.htm",
-      "pct_now": 15.1,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Al Shams Investments LTD",
-      "target": "Braemar Hotels & Resorts Inc.",
-      "ticker": "BHR",
-      "date": "2026-10-08",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1574085/0001398344-26-018042-index.htm",
-      "pct_now": 9.48,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-      "target": "Anghami Inc",
-      "ticker": "ANGH",
-      "date": "2026-10-08",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1871983/0001193125-26-418066-index.htm",
-      "pct_now": 71.3,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-      "target": "Skydance Corp",
-      "ticker": "PSKY",
-      "date": "2026-10-08",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/2041610/0001193125-26-418066-index.htm",
-      "pct_now": 71.3,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "ORBIMED ADVISORS LLC",
-      "target": "ArriVent BioPharma, Inc.",
-      "ticker": "AVBP",
-      "date": "2026-10-08",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1868279/0000947871-26-000931-index.htm",
-      "pct_now": 5.8,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "CANYON CAPITAL ADVISORS LLC",
-      "target": "CBL & ASSOCIATES PROPERTIES INC",
-      "ticker": "CBL",
-      "date": "2026-10-08",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/910612/0001193125-26-418126-index.htm",
-      "pct_now": 19.7,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Tene Growth Capital III (G.P.) Co Ltd.",
-      "target": "Caesarstone Ltd.",
-      "ticker": "CSTE",
-      "date": "2026-10-08",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1504379/0001493152-26-046339-index.htm",
-      "pct_now": 10.4,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Sagy Ami",
-      "target": "CollPlant Biotechnologies Ltd",
-      "ticker": "CLGN",
-      "date": "2026-10-08",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1631487/0001213900-26-107784-index.htm",
-      "pct_now": 5.7,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "D. E. SHAW & CO, L.P.",
-      "target": "Gossamer Bio, Inc.",
-      "ticker": "GOSS",
-      "date": "2026-10-08",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1728117/0001104659-26-114792-index.htm",
-      "pct_now": 5.9,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "TBG AG",
-      "target": "ESCO TECHNOLOGIES INC",
-      "ticker": "ESE",
-      "date": "2026-10-08",
-      "form": "SC 13D",
-      "is_amendment": false,
-      "url": "http://www.sec.gov/Archives/edgar/data/866706/0001193125-26-418042-index.htm",
-      "pct_now": 16.4,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Elliott Investment Management L.P.",
-      "target": "SEADRILL Ltd",
-      "ticker": "SDRL",
-      "date": "2026-10-08",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1737706/0000919574-26-006770-index.htm",
-      "pct_now": 4.9,
-      "pct_prev": null,
-      "pct_status": "below_5"
-    },
-    {
-      "filer": "FISHER WILLIAM SYDNEY",
-      "target": "GAP INC",
-      "ticker": "GAP",
-      "date": "2026-10-08",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/39911/0001104659-26-114753-index.htm",
-      "pct_now": 13.5,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Famatown Finance Ltd",
-      "target": "International Seaways, Inc.",
-      "ticker": "INSW",
-      "date": "2026-10-08",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1679049/0000919574-26-006769-index.htm",
-      "pct_now": 13.54,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Fox Andrew Scott",
-      "target": "Powerus Corp",
-      "ticker": "PUSA",
-      "date": "2026-10-08",
-      "form": "SC 13D",
-      "is_amendment": false,
-      "url": "http://www.sec.gov/Archives/edgar/data/2009312/0001104659-26-114800-index.htm",
-      "pct_now": 14.2,
-      "pct_prev": null,
-      "pct_status": null
     }
   ],
   "active_filers": [
@@ -1484,9 +1484,9 @@
       "count": 58
     }
   ],
-  "total_filings": 14741,
-  "n_filers": 3264,
-  "latest_date": "2026-10-16",
+  "total_filings": 14755,
+  "n_filers": 3265,
+  "latest_date": "2026-10-19",
   "yearly": [
     {
       "year": 2015,
@@ -1534,8 +1534,8 @@
     },
     {
       "year": 2026,
-      "filings": 4770
+      "filings": 4784
     }
   ],
-  "snapshot_ts": "2026-10-19T11:00:17.476218+00:00"
+  "snapshot_ts": "2026-10-20T10:58:28.493943+00:00"
 }
