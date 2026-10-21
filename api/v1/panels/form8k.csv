@@ -1,11 +1,16 @@
 ticker,company,filing_date,form,items,category,doc_url
+JPM,JPMORGAN CHASE & CO,2026-10-20,8-K,"[""8.01"",""9.01""]",other_events,https://www.sec.gov/Archives/edgar/data/19617/000119312526426704/d351999d8k.htm
+CRM,"Salesforce, Inc.",2026-10-20,8-K,"[""7.01"",""9.01""]",reg_fd,https://www.sec.gov/Archives/edgar/data/1108524/000119312526425881/d516983d8k.htm
+NFLX,NETFLIX INC,2026-10-20,8-K,"[""2.02"",""9.01""]",results,https://www.sec.gov/Archives/edgar/data/1065280/000106528026000290/nflx-20261020.htm
+GE,GENERAL ELECTRIC CO,2026-10-20,8-K,"[""2.02"",""9.01""]",results,https://www.sec.gov/Archives/edgar/data/40545/000004054526000063/ge-20261020.htm
+RTX,RTX Corp,2026-10-20,8-K,"[""2.02"",""9.01""]",results,https://www.sec.gov/Archives/edgar/data/101829/000010182926000030/rtx-20261020.htm
 PG,PROCTER & GAMBLE Co,2026-10-16,8-K,"[""5.07""]",vote_results,https://www.sec.gov/Archives/edgar/data/80424/000008042426000245/pg-20261016.htm
 XOM,ExxonMobil Holdings Corp,2026-10-16,8-K,"[""7.01""]",reg_fd,https://www.sec.gov/Archives/edgar/data/2115436/000211543626000013/xom-20261016.htm
 PEP,PEPSICO INC,2026-10-16,8-K,"[""8.01"",""9.01""]",other_events,https://www.sec.gov/Archives/edgar/data/77476/000110465926116626/tm2627433d2_8k.htm
 COST,COSTCO WHOLESALE CORP /NEW,2026-10-16,8-K,"[""5.02"",""9.01""]",officer_changes,https://www.sec.gov/Archives/edgar/data/909832/000090983226000100/cost-20261013.htm
 UNP,UNION PACIFIC CORP,2026-10-16,8-K,"[""5.02"",""7.01"",""9.01""]",officer_changes,https://www.sec.gov/Archives/edgar/data/100885/000010088526000305/unp-20261016.htm
-CAT,CATERPILLAR INC,2026-10-15,8-K,"[""5.02"",""8.01"",""9.01""]",officer_changes,https://www.sec.gov/Archives/edgar/data/18230/000110465926116198/tm2627668d1_8k.htm
 AXP,AMERICAN EXPRESS CO,2026-10-15,8-K,[],unclassified,https://www.sec.gov/Archives/edgar/data/4962/000000496226000383/axp-20261015.htm
+CAT,CATERPILLAR INC,2026-10-15,8-K,"[""5.02"",""8.01"",""9.01""]",officer_changes,https://www.sec.gov/Archives/edgar/data/18230/000110465926116198/tm2627668d1_8k.htm
 COST,COSTCO WHOLESALE CORP /NEW,2026-10-14,8-K,"[""8.01"",""9.01""]",other_events,https://www.sec.gov/Archives/edgar/data/909832/000090983226000096/cost-20261014.htm
 JPM,JPMORGAN CHASE & CO,2026-10-13,8-K,"[""7.01"",""9.01""]",reg_fd,https://www.sec.gov/Archives/edgar/data/19617/000162828026065616/jpm-20261013.htm
 JPM,JPMORGAN CHASE & CO,2026-10-13,8-K,"[""2.02"",""9.01""]",results,https://www.sec.gov/Archives/edgar/data/19617/000162828026065582/jpm-20261013.htm
@@ -15,9 +20,9 @@ MRK,"Merck & Co., Inc.",2026-10-13,8-K,"[""5.02"",""9.01""]",officer_changes,htt
 PG,PROCTER & GAMBLE Co,2026-10-13,8-K,"[""7.01"",""9.01""]",reg_fd,https://www.sec.gov/Archives/edgar/data/80424/000008042426000214/pg-20261013.htm
 GS,GOLDMAN SACHS GROUP INC,2026-10-13,8-K,"[""2.02"",""7.01"",""9.01""]",results,https://www.sec.gov/Archives/edgar/data/886982/000088698226000529/gs-20261013.htm
 CSCO,"CISCO SYSTEMS, INC.",2026-10-09,8-K,"[""5.02""]",officer_changes,https://www.sec.gov/Archives/edgar/data/858877/000085887726000156/csco-20261007.htm
+AXP,AMERICAN EXPRESS CO,2026-10-08,8-K,[],unclassified,https://www.sec.gov/Archives/edgar/data/4962/000000496226000376/axp-20261008.htm
 PEP,PEPSICO INC,2026-10-08,8-K,"[""2.02"",""9.01""]",results,https://www.sec.gov/Archives/edgar/data/77476/000007747626000050/pep-20261008.htm
 GD,GENERAL DYNAMICS CORP,2026-10-08,8-K,"[""5.02"",""9.01""]",officer_changes,https://www.sec.gov/Archives/edgar/data/40533/000119312526417188/d122892d8k.htm
-AXP,AMERICAN EXPRESS CO,2026-10-08,8-K,[],unclassified,https://www.sec.gov/Archives/edgar/data/4962/000000496226000376/axp-20261008.htm
 CVX,CHEVRON CORP,2026-10-06,8-K,"[""7.01"",""8.01"",""9.01""]",reg_fd,https://www.sec.gov/Archives/edgar/data/93410/000009341026000192/cvx-20261006.htm
 CVX,CHEVRON CORP,2026-10-05,8-K,"[""5.02""]",officer_changes,https://www.sec.gov/Archives/edgar/data/93410/000009341026000188/cvx-20260930.htm
 TSLA,"Tesla, Inc.",2026-10-02,8-K,"[""2.02"",""9.01""]",results,https://www.sec.gov/Archives/edgar/data/1318605/000162828026064366/tsla-20261002.htm
@@ -35,8 +40,8 @@ CRM,"Salesforce, Inc.",2026-09-17,8-K,"[""7.01"",""9.01""]",reg_fd,https://www.s
 TXN,TEXAS INSTRUMENTS INC,2026-09-17,8-K,"[""7.01"",""9.01""]",reg_fd,https://www.sec.gov/Archives/edgar/data/97476/000095010326014118/dp253473_8k.htm
 PEP,PEPSICO INC,2026-09-17,8-K,"[""5.02""]",officer_changes,https://www.sec.gov/Archives/edgar/data/77476/000007747626000042/pep-20260917.htm
 NKE,"NIKE, Inc.",2026-09-16,8-K,"[""5.02"",""7.01"",""9.01""]",officer_changes,https://www.sec.gov/Archives/edgar/data/320187/000032018726000170/nke-20260915.htm
-RTX,RTX Corp,2026-09-15,8-K,"[""5.02"",""9.01""]",officer_changes,https://www.sec.gov/Archives/edgar/data/101829/000114036126036662/ef20082011_8k.htm
 AXP,AMERICAN EXPRESS CO,2026-09-15,8-K,[],unclassified,https://www.sec.gov/Archives/edgar/data/4962/000000496226000353/axp-20260915.htm
+RTX,RTX Corp,2026-09-15,8-K,"[""5.02"",""9.01""]",officer_changes,https://www.sec.gov/Archives/edgar/data/101829/000114036126036662/ef20082011_8k.htm
 AMZN,AMAZON COM INC,2026-09-14,8-K,"[""8.01"",""9.01""]",other_events,https://www.sec.gov/Archives/edgar/data/1018724/000110465926107526/tm2624614d5_8k.htm
 ORCL,ORACLE CORP,2026-09-14,8-K,"[""8.01"",""9.01""]",other_events,https://www.sec.gov/Archives/edgar/data/1341439/000119312526389753/d20034d8k.htm
 ORCL,ORACLE CORP,2026-09-10,8-K,"[""2.02"",""8.01"",""9.01""]",results,https://www.sec.gov/Archives/edgar/data/1341439/000119312526387905/orcl-20260910.htm
@@ -67,22 +72,22 @@ DE,DEERE & CO,2026-08-20,8-K,"[""2.02"",""7.01"",""9.01""]",results,https://www.
 AMD,ADVANCED MICRO DEVICES INC,2026-08-19,8-K,"[""5.02"",""9.01""]",officer_changes,https://www.sec.gov/Archives/edgar/data/2488/000000248826000163/amd-20260817.htm
 HON,HONEYWELL INTERNATIONAL INC,2026-08-19,8-K,"[""5.02"",""7.01"",""9.01""]",officer_changes,https://www.sec.gov/Archives/edgar/data/773840/000077384026000130/hon-20260819.htm
 HD,"HOME DEPOT, INC.",2026-08-18,8-K,"[""2.02"",""9.01""]",results,https://www.sec.gov/Archives/edgar/data/354950/000035495026000145/hd-20260818.htm
+AXP,AMERICAN EXPRESS CO,2026-08-17,8-K,[],unclassified,https://www.sec.gov/Archives/edgar/data/4962/000000496226000345/axp-20260817.htm
 NVDA,NVIDIA CORP,2026-08-17,8-K,"[""1.01"",""2.03"",""7.01"",""9.01""]",financial_obligation,https://www.sec.gov/Archives/edgar/data/1045810/000104581026000069/nvda-20260817.htm
 AMD,ADVANCED MICRO DEVICES INC,2026-08-17,8-K,"[""1.01"",""2.03"",""9.01""]",financial_obligation,https://www.sec.gov/Archives/edgar/data/2488/000119312526354029/d142696d8k.htm
-AXP,AMERICAN EXPRESS CO,2026-08-17,8-K,[],unclassified,https://www.sec.gov/Archives/edgar/data/4962/000000496226000345/axp-20260817.htm
 IBM,INTERNATIONAL BUSINESS MACHINES CORP,2026-08-14,8-K,"[""9.01""]",exhibits,https://www.sec.gov/Archives/edgar/data/51143/000110465926097089/tm2623193d1_8k.htm
+AXP,AMERICAN EXPRESS CO,2026-08-12,8-K,"[""3.03"",""5.03"",""8.01"",""9.01""]",security_terms,https://www.sec.gov/Archives/edgar/data/4962/000000496226000338/axp-20260812.htm
 HD,"HOME DEPOT, INC.",2026-08-12,8-K,"[""5.02"",""7.01"",""9.01""]",officer_changes,https://www.sec.gov/Archives/edgar/data/354950/000035495026000141/hd-20260811.htm
 CSCO,"CISCO SYSTEMS, INC.",2026-08-12,8-K,"[""2.02"",""9.01""]",results,https://www.sec.gov/Archives/edgar/data/858877/000085887726000106/csco-20260812.htm
 INTC,INTEL CORP,2026-08-12,8-K,"[""7.01"",""8.01"",""9.01""]",reg_fd,https://www.sec.gov/Archives/edgar/data/50863/000119312526346806/d117670d8k.htm
-AXP,AMERICAN EXPRESS CO,2026-08-12,8-K,"[""3.03"",""5.03"",""8.01"",""9.01""]",security_terms,https://www.sec.gov/Archives/edgar/data/4962/000000496226000338/axp-20260812.htm
 BRK-B,BERKSHIRE HATHAWAY INC,2026-08-11,8-K,"[""2.02"",""9.01""]",results,https://www.sec.gov/Archives/edgar/data/1067983/000119312526344495/d159922d8k.htm
 GS,GOLDMAN SACHS GROUP INC,2026-08-11,8-K,"[""5.03"",""9.01""]",charter_amendment,https://www.sec.gov/Archives/edgar/data/886982/000119312526344912/d179572d8k.htm
 GOOGL,Alphabet Inc.,2026-08-10,8-K,"[""8.01"",""9.01""]",other_events,https://www.sec.gov/Archives/edgar/data/1652044/000119312526342390/d171253d8k.htm
 NKE,"NIKE, Inc.",2026-08-10,8-K,"[""5.02""]",officer_changes,https://www.sec.gov/Archives/edgar/data/320187/000032018726000112/nke-20260804.htm
 GD,GENERAL DYNAMICS CORP,2026-08-07,8-K,"[""5.02"",""9.01""]",officer_changes,https://www.sec.gov/Archives/edgar/data/40533/000119312526340490/d129075d8k.htm
+AXP,AMERICAN EXPRESS CO,2026-08-05,8-K,"[""8.01""]",other_events,https://www.sec.gov/Archives/edgar/data/4962/000000496226000327/axp-20260805.htm
 LLY,ELI LILLY & Co,2026-08-05,8-K,"[""2.02"",""9.01""]",results,https://www.sec.gov/Archives/edgar/data/59478/000005947826000077/lly-20260805.htm
 CRM,"Salesforce, Inc.",2026-08-05,8-K,"[""5.02""]",officer_changes,https://www.sec.gov/Archives/edgar/data/1108524/000110852426000160/crm-20260805.htm
-AXP,AMERICAN EXPRESS CO,2026-08-05,8-K,"[""8.01""]",other_events,https://www.sec.gov/Archives/edgar/data/4962/000000496226000327/axp-20260805.htm
 JNJ,JOHNSON & JOHNSON,2026-08-04,8-K,"[""5.02"",""9.01""]",officer_changes,https://www.sec.gov/Archives/edgar/data/200406/000020040626000167/jnj-20260804.htm
 PFE,PFIZER INC,2026-08-04,8-K,"[""2.02"",""9.01""]",results,https://www.sec.gov/Archives/edgar/data/78003/000007800326000094/pfe-20260804.htm
 MRK,"Merck & Co., Inc.",2026-08-04,8-K,"[""2.02"",""9.01""]",results,https://www.sec.gov/Archives/edgar/data/310158/000110465926090045/tm2621496d1_8k.htm
@@ -132,10 +137,10 @@ UNH,UNITEDHEALTH GROUP INC,2026-07-16,8-K,"[""2.02"",""9.01""]",results,https://
 KO,COCA COLA CO,2026-07-16,8-K,"[""8.01""]",other_events,https://www.sec.gov/Archives/edgar/data/21344/000162828026048466/ko-20260716.htm
 NFLX,NETFLIX INC,2026-07-16,8-K,"[""2.02"",""9.01""]",results,https://www.sec.gov/Archives/edgar/data/1065280/000106528026000211/nflx-20260716.htm
 GE,GENERAL ELECTRIC CO,2026-07-16,8-K,"[""2.02"",""9.01""]",results,https://www.sec.gov/Archives/edgar/data/40545/000004054526000047/ge-20260716.htm
+AXP,AMERICAN EXPRESS CO,2026-07-15,8-K,[],unclassified,https://www.sec.gov/Archives/edgar/data/4962/000000496226000302/axp-20260715.htm
 V,VISA INC.,2026-07-15,8-K,"[""5.03"",""9.01""]",charter_amendment,https://www.sec.gov/Archives/edgar/data/1403161/000140316126000096/v-20260714.htm
 JNJ,JOHNSON & JOHNSON,2026-07-15,8-K,"[""2.02"",""9.01""]",results,https://www.sec.gov/Archives/edgar/data/200406/000020040626000146/jnj-20260715.htm
 DE,DEERE & CO,2026-07-15,8-K,"[""8.01"",""9.01""]",other_events,https://www.sec.gov/Archives/edgar/data/315189/000110465926083910/de-20260710x8k.htm
-AXP,AMERICAN EXPRESS CO,2026-07-15,8-K,[],unclassified,https://www.sec.gov/Archives/edgar/data/4962/000000496226000302/axp-20260715.htm
 JPM,JPMORGAN CHASE & CO,2026-07-14,8-K,"[""7.01"",""9.01""]",reg_fd,https://www.sec.gov/Archives/edgar/data/19617/000162828026048086/jpm-20260714.htm
 JPM,JPMORGAN CHASE & CO,2026-07-14,8-K,"[""2.02"",""9.01""]",results,https://www.sec.gov/Archives/edgar/data/19617/000162828026048078/jpm-20260714.htm
 PG,PROCTER & GAMBLE Co,2026-07-14,8-K,"[""7.01"",""9.01""]",reg_fd,https://www.sec.gov/Archives/edgar/data/80424/000008042426000082/pg-20260714.htm
@@ -154,10 +159,10 @@ NVDA,NVIDIA CORP,2026-06-30,8-K,"[""5.07""]",vote_results,https://www.sec.gov/Ar
 NKE,"NIKE, Inc.",2026-06-30,8-K,"[""2.02"",""9.01""]",results,https://www.sec.gov/Archives/edgar/data/320187/000032018726000076/nke-20260630.htm
 HON,HONEYWELL INTERNATIONAL INC,2026-06-29,8-K,"[""1.01"",""2.01"",""2.02"",""3.03"",""5.02"",""5.03"",""7.01"",""9.01""]",merger_completion,https://www.sec.gov/Archives/edgar/data/773840/000077384026000084/hon-20260625.htm
 V,VISA INC.,2026-06-26,8-K,"[""8.01""]",other_events,https://www.sec.gov/Archives/edgar/data/1403161/000140316126000086/v-20260624.htm
+AXP,AMERICAN EXPRESS CO,2026-06-25,8-K,[],unclassified,https://www.sec.gov/Archives/edgar/data/4962/000000496226000281/axp-20260625.htm
 JPM,JPMORGAN CHASE & CO,2026-06-25,8-K,"[""5.02"",""9.01""]",officer_changes,https://www.sec.gov/Archives/edgar/data/19617/000001961726000241/jpm-20260624.htm
 KO,COCA COLA CO,2026-06-25,8-K,"[""5.02"",""9.01""]",officer_changes,https://www.sec.gov/Archives/edgar/data/21344/000155278126000366/e26287_ko-8k.htm
 GE,GENERAL ELECTRIC CO,2026-06-25,8-K,"[""5.03"",""9.01""]",charter_amendment,https://www.sec.gov/Archives/edgar/data/40545/000004054526000042/ge-20260625.htm
-AXP,AMERICAN EXPRESS CO,2026-06-25,8-K,[],unclassified,https://www.sec.gov/Archives/edgar/data/4962/000000496226000281/axp-20260625.htm
 JPM,JPMORGAN CHASE & CO,2026-06-24,8-K,"[""7.01"",""9.01""]",reg_fd,https://www.sec.gov/Archives/edgar/data/19617/000162828026045169/jpm-20260624.htm
 JPM,JPMORGAN CHASE & CO,2026-06-24,8-K,"[""8.01"",""9.01""]",other_events,https://www.sec.gov/Archives/edgar/data/19617/000162828026045167/jpm-20260624.htm
 QCOM,QUALCOMM INC/DE,2026-06-24,8-K,"[""3.02""]",other,https://www.sec.gov/Archives/edgar/data/804328/000110465926077071/tm2618522d1_8k.htm
@@ -171,10 +176,10 @@ PFE,PFIZER INC,2026-06-18,8-K,"[""7.01"",""9.01""]",reg_fd,https://www.sec.gov/A
 PFE,PFIZER INC,2026-06-18,8-K,"[""5.02"",""9.01""]",officer_changes,https://www.sec.gov/Archives/edgar/data/78003/000007800326000085/pfe-20260618.htm
 AVGO,Broadcom Inc.,2026-06-18,8-K,"[""8.01"",""9.01""]",other_events,https://www.sec.gov/Archives/edgar/data/1730168/000119312526275077/d149683d8k.htm
 NKE,"NIKE, Inc.",2026-06-18,8-K,"[""5.02"",""7.01"",""9.01""]",officer_changes,https://www.sec.gov/Archives/edgar/data/320187/000032018726000068/nke-20260615.htm
-MA,Mastercard Inc,2026-06-17,8-K,"[""5.07""]",vote_results,https://www.sec.gov/Archives/edgar/data/1141391/000114139126000041/ma-20260616.htm
 AXP,AMERICAN EXPRESS CO,2026-06-17,8-K,"[""9.01""]",exhibits,https://www.sec.gov/Archives/edgar/data/4962/000000496226000270/axp-20260617.htm
-HON,HONEYWELL INTERNATIONAL INC,2026-06-15,8-K,"[""5.02"",""7.01"",""8.01"",""9.01""]",officer_changes,https://www.sec.gov/Archives/edgar/data/773840/000077384026000080/hon-20260615.htm
+MA,Mastercard Inc,2026-06-17,8-K,"[""5.07""]",vote_results,https://www.sec.gov/Archives/edgar/data/1141391/000114139126000041/ma-20260616.htm
 AXP,AMERICAN EXPRESS CO,2026-06-15,8-K,[],unclassified,https://www.sec.gov/Archives/edgar/data/4962/000000496226000263/axp-20260615.htm
+HON,HONEYWELL INTERNATIONAL INC,2026-06-15,8-K,"[""5.02"",""7.01"",""8.01"",""9.01""]",officer_changes,https://www.sec.gov/Archives/edgar/data/773840/000077384026000080/hon-20260615.htm
 AMZN,AMAZON COM INC,2026-06-12,8-K,"[""8.01"",""9.01""]",other_events,https://www.sec.gov/Archives/edgar/data/1018724/000110465926073562/tm2613616d5_8k.htm
 GOOGL,Alphabet Inc.,2026-06-11,8-K,"[""5.02"",""5.07"",""9.01""]",officer_changes,https://www.sec.gov/Archives/edgar/data/1652044/000119312526267578/d57679d8k.htm
 AVGO,Broadcom Inc.,2026-06-11,8-K,"[""8.01"",""9.01""]",other_events,https://www.sec.gov/Archives/edgar/data/1730168/000119312526266777/d152717d8k.htm
@@ -226,9 +231,9 @@ NVDA,NVIDIA CORP,2026-05-20,8-K,"[""2.02"",""9.01""]",results,https://www.sec.go
 LLY,ELI LILLY & Co,2026-05-20,8-K,"[""8.01"",""9.01""]",other_events,https://www.sec.gov/Archives/edgar/data/59478/000119312526232707/d148580d8k.htm
 HD,"HOME DEPOT, INC.",2026-05-19,8-K,"[""2.02"",""9.01""]",results,https://www.sec.gov/Archives/edgar/data/354950/000035495026000101/hd-20260519.htm
 UNP,UNION PACIFIC CORP,2026-05-18,8-K,"[""5.07""]",vote_results,https://www.sec.gov/Archives/edgar/data/100885/000010088526000174/unp-20260514.htm
+AXP,AMERICAN EXPRESS CO,2026-05-15,8-K,[],unclassified,https://www.sec.gov/Archives/edgar/data/4962/000000496226000249/axp-20260515.htm
 AMD,ADVANCED MICRO DEVICES INC,2026-05-15,8-K,"[""1.01"",""1.02"",""2.03"",""5.02"",""5.07"",""9.01""]",agreement_termination,https://www.sec.gov/Archives/edgar/data/2488/000119312526226746/d118163d8k.htm
 INTC,INTEL CORP,2026-05-15,8-K,"[""5.07""]",vote_results,https://www.sec.gov/Archives/edgar/data/50863/000005086326000118/intc-20260513.htm
-AXP,AMERICAN EXPRESS CO,2026-05-15,8-K,[],unclassified,https://www.sec.gov/Archives/edgar/data/4962/000000496226000249/axp-20260515.htm
 MSFT,MICROSOFT CORP,2026-05-14,8-K,"[""5.02"",""9.01""]",officer_changes,https://www.sec.gov/Archives/edgar/data/789019/000119312526224155/d125909d8k.htm
 CSCO,"CISCO SYSTEMS, INC.",2026-05-13,8-K,"[""2.02"",""2.05"",""9.01""]",exit_costs,https://www.sec.gov/Archives/edgar/data/858877/000085887726000075/csco-20260513.htm
 LMT,LOCKHEED MARTIN CORP,2026-05-13,8-K,"[""5.07""]",vote_results,https://www.sec.gov/Archives/edgar/data/936468/000093646826000011/lmt-20260512.htm
@@ -241,21 +246,21 @@ UNH,UNITEDHEALTH GROUP INC,2026-05-11,8-K,"[""7.01""]",reg_fd,https://www.sec.go
 GD,GENERAL DYNAMICS CORP,2026-05-11,8-K,"[""5.07""]",vote_results,https://www.sec.gov/Archives/edgar/data/40533/000004053326000014/gd-20260511.htm
 NVDA,NVIDIA CORP,2026-05-08,8-K,"[""5.02""]",officer_changes,https://www.sec.gov/Archives/edgar/data/1045810/000104581026000028/nvda-20260507.htm
 PEP,PEPSICO INC,2026-05-08,8-K,"[""5.07""]",vote_results,https://www.sec.gov/Archives/edgar/data/77476/000007747626000024/pep-20260506.htm
+AXP,AMERICAN EXPRESS CO,2026-05-07,8-K,"[""5.07""]",vote_results,https://www.sec.gov/Archives/edgar/data/4962/000000496226000231/axp-20260505.htm
 JPM,JPMORGAN CHASE & CO,2026-05-07,8-K,"[""3.03"",""5.03"",""8.01"",""9.01""]",security_terms,https://www.sec.gov/Archives/edgar/data/19617/000119312526211978/d903351d8k.htm
 BRK-B,BERKSHIRE HATHAWAY INC,2026-05-07,8-K,"[""2.02"",""5.02"",""5.03"",""5.07"",""9.01""]",officer_changes,https://www.sec.gov/Archives/edgar/data/1067983/000119312526212148/d74313d8k.htm
 MA,Mastercard Inc,2026-05-07,8-K,"[""5.02"",""9.01""]",officer_changes,https://www.sec.gov/Archives/edgar/data/1141391/000114139126000034/ma-20260505.htm
 LLY,ELI LILLY & Co,2026-05-07,8-K,"[""5.07""]",vote_results,https://www.sec.gov/Archives/edgar/data/59478/000005947826000048/lly-20260504.htm
 MCD,MCDONALDS CORP,2026-05-07,8-K,"[""2.02"",""9.01""]",results,https://www.sec.gov/Archives/edgar/data/63908/000006390826000048/mcd-20260507.htm
 GE,GENERAL ELECTRIC CO,2026-05-07,8-K,"[""5.02"",""5.07""]",officer_changes,https://www.sec.gov/Archives/edgar/data/40545/000004054526000032/ge-20260505.htm
-AXP,AMERICAN EXPRESS CO,2026-05-07,8-K,"[""5.07""]",vote_results,https://www.sec.gov/Archives/edgar/data/4962/000000496226000231/axp-20260505.htm
 PFE,PFIZER INC,2026-05-05,8-K,"[""2.02"",""9.01""]",results,https://www.sec.gov/Archives/edgar/data/78003/000007800326000053/pfe-20260505.htm
 AMD,ADVANCED MICRO DEVICES INC,2026-05-05,8-K,"[""2.02"",""7.01"",""9.01""]",results,https://www.sec.gov/Archives/edgar/data/2488/000000248826000072/amd-20260505.htm
 DD,"DuPont de Nemours, Inc.",2026-05-05,8-K,"[""2.02"",""9.01""]",results,https://www.sec.gov/Archives/edgar/data/1666700/000166670026000029/dd-20260505.htm
+AXP,AMERICAN EXPRESS CO,2026-05-04,8-K,"[""8.01"",""9.01""]",other_events,https://www.sec.gov/Archives/edgar/data/4962/000000496226000207/axp-20260504.htm
+AXP,AMERICAN EXPRESS CO,2026-05-04,8-K,"[""7.01""]",reg_fd,https://www.sec.gov/Archives/edgar/data/4962/000000496226000203/axp-20260504.htm
 XOM,EXXON MOBIL CORP,2026-05-04,8-K,"[""5.02""]",officer_changes,https://www.sec.gov/Archives/edgar/data/34088/000003408826000069/xom-20260428.htm
 META,"Meta Platforms, Inc.",2026-05-04,8-K,"[""8.01"",""9.01""]",other_events,https://www.sec.gov/Archives/edgar/data/1326801/000119312526204128/d134616d8k.htm
 RTX,RTX Corp,2026-05-04,8-K,"[""5.07""]",vote_results,https://www.sec.gov/Archives/edgar/data/101829/000114036126018932/ef20072402_8k.htm
-AXP,AMERICAN EXPRESS CO,2026-05-04,8-K,"[""8.01"",""9.01""]",other_events,https://www.sec.gov/Archives/edgar/data/4962/000000496226000207/axp-20260504.htm
-AXP,AMERICAN EXPRESS CO,2026-05-04,8-K,"[""7.01""]",reg_fd,https://www.sec.gov/Archives/edgar/data/4962/000000496226000203/axp-20260504.htm
 KO,COCA COLA CO,2026-05-01,8-K,"[""5.07""]",vote_results,https://www.sec.gov/Archives/edgar/data/21344/000162828026029230/ko-20260429.htm
 CVX,CHEVRON CORP,2026-05-01,8-K,"[""2.02"",""9.01""]",results,https://www.sec.gov/Archives/edgar/data/93410/000009341026000110/cvx-20260501.htm
 XOM,EXXON MOBIL CORP,2026-05-01,8-K,"[""2.02"",""7.01""]",results,https://www.sec.gov/Archives/edgar/data/34088/000003408826000065/xom-20260501.htm
