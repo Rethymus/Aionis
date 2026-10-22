@@ -10,26 +10,12 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-10-22T10:31:07+00:00",
-  "n_snapshots": 41,
+  "latest_snapshot_ts": "2026-10-22T12:19:13+00:00",
+  "n_snapshots": 42,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
-    {
-      "ticker": "NFLX",
-      "mentions": 2,
-      "sentiment": -0.406,
-      "bull_ratio": 0.0,
-      "score_sum": 0
-    },
-    {
-      "ticker": "ORCL",
-      "mentions": 1,
-      "sentiment": -0.116,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
     {
       "ticker": "META",
       "mentions": 1,
@@ -43,14 +29,21 @@
       "sentiment": -0.007,
       "bull_ratio": null,
       "score_sum": 0
+    },
+    {
+      "ticker": "NFLX",
+      "mentions": 1,
+      "sentiment": -0.024,
+      "bull_ratio": null,
+      "score_sum": 0
     }
   ],
   "pressure": {
     "status": "accumulating",
     "by_ticker": {},
-    "n_snapshots": 41,
+    "n_snapshots": 42,
     "latest_date": "2026-10-22",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-10-22T11:07:19.364703+00:00"
+  "snapshot_ts": "2026-10-22T12:48:21.939871+00:00"
 }
