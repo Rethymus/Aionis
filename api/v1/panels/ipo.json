@@ -1,20 +1,20 @@
 {
   "status": "ok",
-  "as_of": "2026-10-21",
+  "as_of": "2026-10-22",
   "window": {
     "start": "2026-04-27",
-    "end": "2026-10-21"
+    "end": "2026-10-22"
   },
-  "issuers": 621,
-  "total": 1430,
+  "issuers": 622,
+  "total": 1434,
   "by_status": {
-    "filed": 1163,
+    "filed": 1167,
     "priced": 267
   },
   "by_form": {
     "424B4": 267,
-    "S-1": 484,
-    "S-1/A": 679
+    "S-1": 486,
+    "S-1/A": 681
   },
   "offer_price_parsed": 66,
   "offer_price_meta": {
@@ -40,6 +40,15 @@
   },
   "filings": [
     {
+      "company": "Aspen Neuroscience, Inc.",
+      "ticker": "",
+      "filed_date": "2026-10-22",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2124080/000119312526428300/0001193125-26-428300-index.htm",
+      "offer_price": null
+    },
+    {
       "company": "FuturePeak Acquisition Corp",
       "ticker": "",
       "filed_date": "2026-10-21",
@@ -58,12 +67,39 @@
       "offer_price": null
     },
     {
+      "company": "Our Bond, Inc.",
+      "ticker": "OBAI",
+      "filed_date": "2026-10-21",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1756064/000149315226047889/0001493152-26-047889-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "PBT Land & Minerals, Inc.",
+      "ticker": "",
+      "filed_date": "2026-10-21",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2142855/000121390026111162/0001213900-26-111162-index.htm",
+      "offer_price": null
+    },
+    {
       "company": "Ealixir, Inc.",
       "ticker": "EAXR",
       "filed_date": "2026-10-21",
       "form": "S-1/A",
       "status": "filed",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/832370/000121390026111109/0001213900-26-111109-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Rezera Inc.",
+      "ticker": "",
+      "filed_date": "2026-10-21",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2141583/000110465926117853/0001104659-26-117853-index.htm",
       "offer_price": null
     },
     {
@@ -10802,44 +10838,8 @@
       "status": "filed",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1925062/000162828026035713/0001628280-26-035713-index.htm",
       "offer_price": null
-    },
-    {
-      "company": "BIOVENTRIX, INC.",
-      "ticker": "",
-      "filed_date": "2026-05-15",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1283259/000149315226023752/0001493152-26-023752-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Ambitious Entertainment, Inc.",
-      "ticker": "",
-      "filed_date": "2026-05-15",
-      "form": "S-1",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1900851/000149315226023581/0001493152-26-023581-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Freedom Metals Acquisition Corp.",
-      "ticker": "",
-      "filed_date": "2026-05-15",
-      "form": "S-1",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2129659/000121390026057976/0001213900-26-057976-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Synergy CHC Corp.",
-      "ticker": "SNYR",
-      "filed_date": "2026-05-15",
-      "form": "S-1",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1562733/000121390026057939/0001213900-26-057939-index.htm",
-      "offer_price": null
     }
   ],
   "methodology": "US IPO registration/pricing stream \u2014 SEC EDGAR EFTS whole-market form-level queries (public domain, 17 U.S.C. \u00a7105), fixed ~120-day window, filed-date point-in-time, one row per accession (an S-1/A amendment is a new filing, never a silent overwrite). Status is derived from the immutable form type: S-1 / S-1/A = filed (registration statement on file); 424B4 = priced (the statutory final prospectus under Securities Act Rule 424(b)(4) is filed after pricing \u2014 its appearance marks a priced offering). Offer price is a BOUNDED second-stage extraction, not full coverage: only the newest \u226480 priced (424B4) filings are walked politely (\u22652.1 s spacing, hard request budget disclosed in offer_price_meta.requests), their EDGAR index + primary document fetched, and the cover page regex-parsed with graded confidence \u2014 EXACT (single final printed price \u2192 exported), LOW (draft/range wording near the label \u2192 value withheld, counted, never guessed) and NO-MATCH; every unparsed row stays offer_price=null with its EDGAR index link. Share count, proceeds, and expected listing date are NOT extracted at any tier. Honest scope disclosures: (2) the 424B4 form-level catch includes priced follow-on offerings by already-listed issuers (e.g. S-3 shelf takedowns), not only first-day IPOs \u2014 this panel is the registration/pricing STREAM, not a curated IPO list; (3) no company-level state machine is applied (rows are filing-level). Ticker is parsed from the EDGAR display name where present; pre-symbol S-1 filers carry none (empty, never guessed). Counts are FILING counts, not company counts. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-10-21T10:55:54.853794+00:00"
+  "snapshot_ts": "2026-10-22T12:48:12.152616+00:00"
 }

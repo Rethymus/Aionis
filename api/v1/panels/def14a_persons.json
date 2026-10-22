@@ -1,27 +1,27 @@
 {
   "status": "ok",
-  "as_of": "2026-10-20",
+  "as_of": "2026-10-22",
   "n_filings_target": 150,
   "n_filings_processed": 150,
   "n_with_persons": 101,
   "coverage_pct": 67.3,
-  "n_persons_distinct": 591,
+  "n_persons_distinct": 590,
   "by_role": {
-    "ceo": 153,
-    "cfo": 80,
-    "coo": 29,
-    "cto": 7,
-    "chairman": 114,
-    "president": 87,
-    "vice_president": 100,
+    "ceo": 156,
+    "cfo": 78,
+    "coo": 26,
+    "cto": 8,
+    "chairman": 110,
+    "president": 86,
+    "vice_president": 99,
     "treasurer": 11,
-    "secretary": 45,
-    "director": 452,
-    "officer": 109
+    "secretary": 42,
+    "director": 448,
+    "officer": 110
   },
   "confidence": {
-    "section_age_rows": 78,
-    "section_name_roles": 23,
+    "section_age_rows": 77,
+    "section_name_roles": 24,
     "unparsed_no_persons": 49,
     "fetch_or_doc_errors": 0
   },
@@ -227,6 +227,16 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1067294/000110465926114062/tm2625024-1_def14a.htm"
     },
     {
+      "company": "MICROSOFT CORP",
+      "ticker": "MSFT",
+      "issuer_cik": "789019",
+      "n_persons": 8,
+      "n_directors": 8,
+      "n_officers": 8,
+      "filed_date": "2026-10-21",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526427849/d61756ddef14a.htm"
+    },
+    {
       "company": "Crexendo, Inc.",
       "ticker": "CXDO",
       "issuer_cik": "1075736",
@@ -287,14 +297,14 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1111741/000119312526414342/def_14a_-_2026_agm_proxy.htm"
     },
     {
-      "company": "ReposiTrak, Inc.",
-      "ticker": "TRAK",
-      "issuer_cik": "50471",
-      "n_persons": 8,
-      "n_directors": 6,
-      "n_officers": 7,
-      "filed_date": "2026-10-02",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/50471/000143774926031870/trak20260917_def14a.htm"
+      "company": "Rezolute, Inc.",
+      "ticker": "RZLT",
+      "issuer_cik": "1509261",
+      "n_persons": 7,
+      "n_directors": 5,
+      "n_officers": 4,
+      "filed_date": "2026-10-21",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1509261/000110465926117868/rzlt-20261202xdef14a.htm"
     },
     {
       "company": "Nutanix, Inc.",
@@ -607,16 +617,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/102109/000110465926117433/tm2627349d3_def14a.htm"
     },
     {
-      "company": "Actinium Pharmaceuticals, Inc.",
-      "ticker": "ATNM",
-      "issuer_cik": "1388320",
-      "n_persons": 5,
-      "n_directors": 5,
-      "n_officers": 5,
-      "filed_date": "2026-10-16",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1388320/000121390026110022/ea0306048-01.htm"
-    },
-    {
       "company": "FRANKLIN WIRELESS CORP",
       "ticker": "FKWL",
       "issuer_cik": "722572",
@@ -635,6 +635,16 @@
       "n_officers": 3,
       "filed_date": "2026-10-15",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1853825/000149315226047170/formdef14a.htm"
+    },
+    {
+      "company": "Actinium Pharmaceuticals, Inc.",
+      "ticker": "ATNM",
+      "issuer_cik": "1388320",
+      "n_persons": 5,
+      "n_directors": 5,
+      "n_officers": 5,
+      "filed_date": "2026-10-15",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1388320/000121390026110022/ea0306048-01.htm"
     },
     {
       "company": "Atlassian Corp",
@@ -717,6 +727,16 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1553788/000173112226001316/e7987_def14a.htm"
     },
     {
+      "company": "WhiteFiber, Inc.",
+      "ticker": "WYFI",
+      "issuer_cik": "2042022",
+      "n_persons": 4,
+      "n_directors": 1,
+      "n_officers": 4,
+      "filed_date": "2026-10-21",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2042022/000121390026111410/ea0308982-01.htm"
+    },
+    {
       "company": "Stellar V Capital Corp.",
       "ticker": "",
       "issuer_cik": "2033593",
@@ -787,16 +807,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1633978/000130817926000420/lite2026-def14a.htm"
     },
     {
-      "company": "Meridian Holdings Inc./NV",
-      "ticker": "MRDN",
-      "issuer_cik": "1437925",
-      "n_persons": 4,
-      "n_directors": 4,
-      "n_officers": 1,
-      "filed_date": "2026-10-02",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1437925/000147793226006023/meridian_def14a.htm"
-    },
-    {
       "company": "Lantern Pharma Inc.",
       "ticker": "LTRN",
       "issuer_cik": "1763950",
@@ -847,36 +857,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1379006/000110465926114606/tm2626953d1_def14a.htm"
     },
     {
-      "company": "REGIONAL HEALTH PROPERTIES, INC",
-      "ticker": "",
-      "issuer_cik": "1004724",
-      "n_persons": 3,
-      "n_directors": 2,
-      "n_officers": 3,
-      "filed_date": "2026-10-02",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1004724/000149315226045479/formdef14a.htm"
-    },
-    {
-      "company": "GULF RESOURCES, INC.",
-      "ticker": "GURE",
-      "issuer_cik": "885462",
-      "n_persons": 3,
-      "n_directors": 3,
-      "n_officers": 2,
-      "filed_date": "2026-10-02",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/885462/000149315226045416/formdef14a.htm"
-    },
-    {
-      "company": "Fermi Inc.",
-      "ticker": "FRMI",
-      "issuer_cik": "2071778",
-      "n_persons": 3,
-      "n_directors": 3,
-      "n_officers": 1,
-      "filed_date": "2026-10-02",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2071778/000121390026106378/ea0307100-02.htm"
-    },
-    {
       "company": "Amesite Inc.",
       "ticker": "AMST",
       "issuer_cik": "1807166",
@@ -895,6 +875,36 @@
       "n_officers": 1,
       "filed_date": "2026-10-09",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1563568/000143774926032450/adom20261009_def14a.htm"
+    },
+    {
+      "company": "IGC Pharma, Inc.",
+      "ticker": "IGC",
+      "issuer_cik": "1326205",
+      "n_persons": 1,
+      "n_directors": 1,
+      "n_officers": 1,
+      "filed_date": "2026-10-22",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1326205/000118518526004896/igcdef14a102126.htm"
+    },
+    {
+      "company": "Pyxis Oncology, Inc.",
+      "ticker": "PYXS",
+      "issuer_cik": "1782223",
+      "n_persons": 1,
+      "n_directors": 1,
+      "n_officers": 1,
+      "filed_date": "2026-10-21",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1782223/000119312526427882/def_14a_oct_26.htm"
+    },
+    {
+      "company": "POWERCOMPUTE, INC.",
+      "ticker": "PWCM",
+      "issuer_cik": "1640384",
+      "n_persons": 1,
+      "n_directors": 0,
+      "n_officers": 1,
+      "filed_date": "2026-10-21",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1640384/000119312526427798/lmfa-20261021.htm"
     },
     {
       "company": "GIFTIFY, INC.",
@@ -953,7 +963,7 @@
       "n_persons": 1,
       "n_directors": 1,
       "n_officers": 1,
-      "filed_date": "2026-10-16",
+      "filed_date": "2026-10-15",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2032341/000121390026110049/ea0307606-03.htm"
     },
     {
@@ -1025,16 +1035,6 @@
       "n_officers": 1,
       "filed_date": "2026-10-02",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1714562/000149315226045510/formdef14a.htm"
-    },
-    {
-      "company": "Oaktree Acquisition Corp. III Life Sciences",
-      "ticker": "",
-      "issuer_cik": "2029769",
-      "n_persons": 1,
-      "n_directors": 1,
-      "n_officers": 0,
-      "filed_date": "2026-10-02",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2029769/000119312526412601/d57016ddef14a.htm"
     }
   ],
   "top_persons": [
@@ -1154,6 +1154,19 @@
       "companies": [
         "DSS, INC.",
         "Alset Inc."
+      ]
+    },
+    {
+      "name": "Mark N. Lampert",
+      "roles": [
+        "director",
+        "officer"
+      ],
+      "n_companies": 2,
+      "n_director_seats": 2,
+      "companies": [
+        "Pyxis Oncology, Inc.",
+        "Entera Bio Ltd."
       ]
     },
     {
@@ -1475,6 +1488,20 @@
       ]
     },
     {
+      "name": "Amy L. Coleman",
+      "roles": [
+        "president",
+        "vice_president",
+        "director",
+        "officer"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "MICROSOFT CORP"
+      ]
+    },
+    {
       "name": "Amy L. Hanson",
       "roles": [
         "ceo",
@@ -1621,46 +1648,25 @@
       ]
     },
     {
-      "name": "Approval Policies",
+      "name": "Appointed Nevan Charles Elam",
       "roles": [
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "Meridian Holdings Inc./NV"
-      ]
-    },
-    {
-      "name": "Aromondo Chief Business Officer",
-      "roles": [
-        "officer"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 0,
-      "companies": [
-        "ONCOLYTICS BIOTECH INC"
-      ]
-    },
-    {
-      "name": "Arthur B. Laby",
-      "roles": [
+        "ceo",
         "chairman",
         "director"
       ],
       "n_companies": 1,
       "n_director_seats": 1,
       "companies": [
-        "JAPAN SMALLER CAPITALIZATION FUND INC"
+        "Rezolute, Inc."
       ]
     }
   ],
   "request_accounting": {
-    "n_http_requests_last_fetch": 24,
+    "n_http_requests_last_fetch": 0,
     "budget_seconds": 2700,
     "budget_hit": false,
-    "fetched_at": "2026-10-21T10:14:04.844373+00:00"
+    "fetched_at": "2026-10-22T12:12:38.028683+00:00"
   },
-  "methodology": "DEF 14A person-level panel (\u8463\u4e8b/\u9ad8\u7ba1\u4eba\u7ea7\u6863\u6848) over the NEWEST 150 proxy filings of the /executives DEF 14A stream \u2014 a bounded lane: each filing's primary document resolved from its EDGAR filing index (<= 2 GETs per filing, idempotent per-accession caches, >= 2.1s spacing, hard 45-minute wall-clock budget; the last fetch spent 24 HTTP requests and did not hit the budget). Parsing is CONSERVATIVE and TIERED: (1) section_age_rows (HIGH) \u2014 the classic 'Name (Age) Title Since' roster row in any spelling, a 2-4 token capitalized name with a standalone age bounded 30-99 and a role word witnessed on the same row, also reconstructed from word-fragmented inline-XBRL layouts by anchor-delimiting the joined stream; (2) section_name_roles (MEDIUM) \u2014 'First M. Last' (middle-initial) + a role word inside a located directors/executives section. Everything else yields persons=[] and parsed=false \u2014 an honest NULL, never a guessed name (\u5b81\u53ef null \u4e0d\u731c\u6d4b); coverage below counts only what was processed (101/150 filings with persons = 67.3%), never an extrapolation. Roles are canonical role WORDS witnessed near the person's row or bio \u2014 they may include past or external-company titles (e.g. a director who is CEO of another firm), displayed as text-witnessed hints not employment records; boards-card director/officer counts are independent sets (a CEO-director counts in both). Distinct-person identity keys on the normalized full name across filings \u2014 same-name merges may join namesakes and hyphenated/apostrophe/initials-first names (JW Roth) are conservatively MISSED, both disclosed. Display-only, exploratory, NOT a research claim.",
-  "snapshot_ts": "2026-10-21T10:55:55.152115+00:00"
+  "methodology": "DEF 14A person-level panel (\u8463\u4e8b/\u9ad8\u7ba1\u4eba\u7ea7\u6863\u6848) over the NEWEST 150 proxy filings of the /executives DEF 14A stream \u2014 a bounded lane: each filing's primary document resolved from its EDGAR filing index (<= 2 GETs per filing, idempotent per-accession caches, >= 2.1s spacing, hard 45-minute wall-clock budget; the last fetch spent 0 HTTP requests and did not hit the budget). Parsing is CONSERVATIVE and TIERED: (1) section_age_rows (HIGH) \u2014 the classic 'Name (Age) Title Since' roster row in any spelling, a 2-4 token capitalized name with a standalone age bounded 30-99 and a role word witnessed on the same row, also reconstructed from word-fragmented inline-XBRL layouts by anchor-delimiting the joined stream; (2) section_name_roles (MEDIUM) \u2014 'First M. Last' (middle-initial) + a role word inside a located directors/executives section. Everything else yields persons=[] and parsed=false \u2014 an honest NULL, never a guessed name (\u5b81\u53ef null \u4e0d\u731c\u6d4b); coverage below counts only what was processed (101/150 filings with persons = 67.3%), never an extrapolation. Roles are canonical role WORDS witnessed near the person's row or bio \u2014 they may include past or external-company titles (e.g. a director who is CEO of another firm), displayed as text-witnessed hints not employment records; boards-card director/officer counts are independent sets (a CEO-director counts in both). Distinct-person identity keys on the normalized full name across filings \u2014 same-name merges may join namesakes and hyphenated/apostrophe/initials-first names (JW Roth) are conservatively MISSED, both disclosed. Display-only, exploratory, NOT a research claim.",
+  "snapshot_ts": "2026-10-22T12:48:12.393281+00:00"
 }

@@ -1,12 +1,12 @@
 {
   "status": "ok",
-  "as_of": "2026-10-20",
+  "as_of": "2026-10-22",
   "window": {
     "start": "2026-05-01",
-    "end": "2026-10-20"
+    "end": "2026-10-22"
   },
   "issuers": 50,
-  "total": 269,
+  "total": 276,
   "unclassified": 11,
   "by_category": {
     "agreement_termination": 2,
@@ -15,18 +15,104 @@
     "exhibits": 4,
     "exit_costs": 2,
     "financial_obligation": 6,
-    "major_agreement": 5,
+    "major_agreement": 6,
     "merger_completion": 1,
     "officer_changes": 61,
     "other": 3,
     "other_events": 38,
     "reg_fd": 25,
-    "results": 74,
+    "results": 80,
     "security_terms": 4,
     "unclassified": 11,
     "vote_results": 25
   },
   "events": [
+    {
+      "ticker": "HON",
+      "company": "HONEYWELL INTERNATIONAL INC",
+      "filing_date": "2026-10-22",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000141/hon-20261022.htm"
+    },
+    {
+      "ticker": "UNP",
+      "company": "UNION PACIFIC CORP",
+      "filing_date": "2026-10-22",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/100885/000010088526000319/unp-20261022.htm"
+    },
+    {
+      "ticker": "LMT",
+      "company": "LOCKHEED MARTIN CORP",
+      "filing_date": "2026-10-22",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/936468/000162828026066780/lmt-20261022.htm"
+    },
+    {
+      "ticker": "META",
+      "company": "Meta Platforms, Inc.",
+      "filing_date": "2026-10-21",
+      "form": "8-K",
+      "items": [
+        "1.01",
+        "2.02",
+        "8.01",
+        "9.01"
+      ],
+      "category": "major_agreement",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026066700/meta-20261019.htm"
+    },
+    {
+      "ticker": "TSLA",
+      "company": "Tesla, Inc.",
+      "filing_date": "2026-10-21",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026066738/tsla-20261021.htm"
+    },
+    {
+      "ticker": "TXN",
+      "company": "TEXAS INSTRUMENTS INC",
+      "filing_date": "2026-10-21",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/97476/000009747626000165/txn-20261021.htm"
+    },
+    {
+      "ticker": "IBM",
+      "company": "INTERNATIONAL BUSINESS MACHINES CORP",
+      "filing_date": "2026-10-21",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000093/ibm-20261021.htm"
+    },
     {
       "ticker": "JPM",
       "company": "JPMORGAN CHASE & CO",
@@ -147,15 +233,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/100885/000010088526000305/unp-20261016.htm"
     },
     {
-      "ticker": "AXP",
-      "company": "AMERICAN EXPRESS CO",
-      "filing_date": "2026-10-15",
-      "form": "8-K",
-      "items": [],
-      "category": "unclassified",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000383/axp-20261015.htm"
-    },
-    {
       "ticker": "CAT",
       "company": "CATERPILLAR INC",
       "filing_date": "2026-10-15",
@@ -167,6 +244,15 @@
       ],
       "category": "officer_changes",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/18230/000110465926116198/tm2627668d1_8k.htm"
+    },
+    {
+      "ticker": "AXP",
+      "company": "AMERICAN EXPRESS CO",
+      "filing_date": "2026-10-15",
+      "form": "8-K",
+      "items": [],
+      "category": "unclassified",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000383/axp-20261015.htm"
     },
     {
       "ticker": "COST",
@@ -277,15 +363,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000156/csco-20261007.htm"
     },
     {
-      "ticker": "AXP",
-      "company": "AMERICAN EXPRESS CO",
-      "filing_date": "2026-10-08",
-      "form": "8-K",
-      "items": [],
-      "category": "unclassified",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000376/axp-20261008.htm"
-    },
-    {
       "ticker": "PEP",
       "company": "PEPSICO INC",
       "filing_date": "2026-10-08",
@@ -308,6 +385,15 @@
       ],
       "category": "officer_changes",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/40533/000119312526417188/d122892d8k.htm"
+    },
+    {
+      "ticker": "AXP",
+      "company": "AMERICAN EXPRESS CO",
+      "filing_date": "2026-10-08",
+      "form": "8-K",
+      "items": [],
+      "category": "unclassified",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000376/axp-20261008.htm"
     },
     {
       "ticker": "CVX",
@@ -517,15 +603,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000170/nke-20260915.htm"
     },
     {
-      "ticker": "AXP",
-      "company": "AMERICAN EXPRESS CO",
-      "filing_date": "2026-09-15",
-      "form": "8-K",
-      "items": [],
-      "category": "unclassified",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000353/axp-20260915.htm"
-    },
-    {
       "ticker": "RTX",
       "company": "RTX Corp",
       "filing_date": "2026-09-15",
@@ -536,6 +613,15 @@
       ],
       "category": "officer_changes",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/101829/000114036126036662/ef20082011_8k.htm"
+    },
+    {
+      "ticker": "AXP",
+      "company": "AMERICAN EXPRESS CO",
+      "filing_date": "2026-09-15",
+      "form": "8-K",
+      "items": [],
+      "category": "unclassified",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000353/axp-20260915.htm"
     },
     {
       "ticker": "AMZN",
@@ -892,15 +978,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/354950/000035495026000145/hd-20260818.htm"
     },
     {
-      "ticker": "AXP",
-      "company": "AMERICAN EXPRESS CO",
-      "filing_date": "2026-08-17",
-      "form": "8-K",
-      "items": [],
-      "category": "unclassified",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000345/axp-20260817.htm"
-    },
-    {
       "ticker": "NVDA",
       "company": "NVIDIA CORP",
       "filing_date": "2026-08-17",
@@ -928,6 +1005,15 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2488/000119312526354029/d142696d8k.htm"
     },
     {
+      "ticker": "AXP",
+      "company": "AMERICAN EXPRESS CO",
+      "filing_date": "2026-08-17",
+      "form": "8-K",
+      "items": [],
+      "category": "unclassified",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000345/axp-20260817.htm"
+    },
+    {
       "ticker": "IBM",
       "company": "INTERNATIONAL BUSINESS MACHINES CORP",
       "filing_date": "2026-08-14",
@@ -937,20 +1023,6 @@
       ],
       "category": "exhibits",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/51143/000110465926097089/tm2623193d1_8k.htm"
-    },
-    {
-      "ticker": "AXP",
-      "company": "AMERICAN EXPRESS CO",
-      "filing_date": "2026-08-12",
-      "form": "8-K",
-      "items": [
-        "3.03",
-        "5.03",
-        "8.01",
-        "9.01"
-      ],
-      "category": "security_terms",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000338/axp-20260812.htm"
     },
     {
       "ticker": "HD",
@@ -989,6 +1061,20 @@
       ],
       "category": "reg_fd",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/50863/000119312526346806/d117670d8k.htm"
+    },
+    {
+      "ticker": "AXP",
+      "company": "AMERICAN EXPRESS CO",
+      "filing_date": "2026-08-12",
+      "form": "8-K",
+      "items": [
+        "3.03",
+        "5.03",
+        "8.01",
+        "9.01"
+      ],
+      "category": "security_terms",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000338/axp-20260812.htm"
     },
     {
       "ticker": "BRK-B",
@@ -1050,17 +1136,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/40533/000119312526340490/d129075d8k.htm"
     },
     {
-      "ticker": "AXP",
-      "company": "AMERICAN EXPRESS CO",
-      "filing_date": "2026-08-05",
-      "form": "8-K",
-      "items": [
-        "8.01"
-      ],
-      "category": "other_events",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000327/axp-20260805.htm"
-    },
-    {
       "ticker": "LLY",
       "company": "ELI LILLY & Co",
       "filing_date": "2026-08-05",
@@ -1082,6 +1157,17 @@
       ],
       "category": "officer_changes",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000160/crm-20260805.htm"
+    },
+    {
+      "ticker": "AXP",
+      "company": "AMERICAN EXPRESS CO",
+      "filing_date": "2026-08-05",
+      "form": "8-K",
+      "items": [
+        "8.01"
+      ],
+      "category": "other_events",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000327/axp-20260805.htm"
     },
     {
       "ticker": "JNJ",
@@ -1674,15 +1760,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/40545/000004054526000047/ge-20260716.htm"
     },
     {
-      "ticker": "AXP",
-      "company": "AMERICAN EXPRESS CO",
-      "filing_date": "2026-07-15",
-      "form": "8-K",
-      "items": [],
-      "category": "unclassified",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000302/axp-20260715.htm"
-    },
-    {
       "ticker": "V",
       "company": "VISA INC.",
       "filing_date": "2026-07-15",
@@ -1717,6 +1794,15 @@
       ],
       "category": "other_events",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/315189/000110465926083910/de-20260710x8k.htm"
+    },
+    {
+      "ticker": "AXP",
+      "company": "AMERICAN EXPRESS CO",
+      "filing_date": "2026-07-15",
+      "form": "8-K",
+      "items": [],
+      "category": "unclassified",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000302/axp-20260715.htm"
     },
     {
       "ticker": "JPM",
@@ -1942,15 +2028,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1403161/000140316126000086/v-20260624.htm"
     },
     {
-      "ticker": "AXP",
-      "company": "AMERICAN EXPRESS CO",
-      "filing_date": "2026-06-25",
-      "form": "8-K",
-      "items": [],
-      "category": "unclassified",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000281/axp-20260625.htm"
-    },
-    {
       "ticker": "JPM",
       "company": "JPMORGAN CHASE & CO",
       "filing_date": "2026-06-25",
@@ -1985,6 +2062,15 @@
       ],
       "category": "charter_amendment",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/40545/000004054526000042/ge-20260625.htm"
+    },
+    {
+      "ticker": "AXP",
+      "company": "AMERICAN EXPRESS CO",
+      "filing_date": "2026-06-25",
+      "form": "8-K",
+      "items": [],
+      "category": "unclassified",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000281/axp-20260625.htm"
     },
     {
       "ticker": "JPM",
@@ -2147,17 +2233,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000068/nke-20260615.htm"
     },
     {
-      "ticker": "AXP",
-      "company": "AMERICAN EXPRESS CO",
-      "filing_date": "2026-06-17",
-      "form": "8-K",
-      "items": [
-        "9.01"
-      ],
-      "category": "exhibits",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000270/axp-20260617.htm"
-    },
-    {
       "ticker": "MA",
       "company": "Mastercard Inc",
       "filing_date": "2026-06-17",
@@ -2171,11 +2246,13 @@
     {
       "ticker": "AXP",
       "company": "AMERICAN EXPRESS CO",
-      "filing_date": "2026-06-15",
+      "filing_date": "2026-06-17",
       "form": "8-K",
-      "items": [],
-      "category": "unclassified",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000263/axp-20260615.htm"
+      "items": [
+        "9.01"
+      ],
+      "category": "exhibits",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000270/axp-20260617.htm"
     },
     {
       "ticker": "HON",
@@ -2190,6 +2267,15 @@
       ],
       "category": "officer_changes",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000080/hon-20260615.htm"
+    },
+    {
+      "ticker": "AXP",
+      "company": "AMERICAN EXPRESS CO",
+      "filing_date": "2026-06-15",
+      "form": "8-K",
+      "items": [],
+      "category": "unclassified",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000263/axp-20260615.htm"
     },
     {
       "ticker": "AMZN",
@@ -2804,15 +2890,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/100885/000010088526000174/unp-20260514.htm"
     },
     {
-      "ticker": "AXP",
-      "company": "AMERICAN EXPRESS CO",
-      "filing_date": "2026-05-15",
-      "form": "8-K",
-      "items": [],
-      "category": "unclassified",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000249/axp-20260515.htm"
-    },
-    {
       "ticker": "AMD",
       "company": "ADVANCED MICRO DEVICES INC",
       "filing_date": "2026-05-15",
@@ -2838,6 +2915,15 @@
       ],
       "category": "vote_results",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000118/intc-20260513.htm"
+    },
+    {
+      "ticker": "AXP",
+      "company": "AMERICAN EXPRESS CO",
+      "filing_date": "2026-05-15",
+      "form": "8-K",
+      "items": [],
+      "category": "unclassified",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000249/axp-20260515.htm"
     },
     {
       "ticker": "MSFT",
@@ -2982,17 +3068,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000024/pep-20260506.htm"
     },
     {
-      "ticker": "AXP",
-      "company": "AMERICAN EXPRESS CO",
-      "filing_date": "2026-05-07",
-      "form": "8-K",
-      "items": [
-        "5.07"
-      ],
-      "category": "vote_results",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000231/axp-20260505.htm"
-    },
-    {
       "ticker": "JPM",
       "company": "JPMORGAN CHASE & CO",
       "filing_date": "2026-05-07",
@@ -3069,6 +3144,17 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/40545/000004054526000032/ge-20260505.htm"
     },
     {
+      "ticker": "AXP",
+      "company": "AMERICAN EXPRESS CO",
+      "filing_date": "2026-05-07",
+      "form": "8-K",
+      "items": [
+        "5.07"
+      ],
+      "category": "vote_results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000231/axp-20260505.htm"
+    },
+    {
       "ticker": "PFE",
       "company": "PFIZER INC",
       "filing_date": "2026-05-05",
@@ -3106,29 +3192,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1666700/000166670026000029/dd-20260505.htm"
     },
     {
-      "ticker": "AXP",
-      "company": "AMERICAN EXPRESS CO",
-      "filing_date": "2026-05-04",
-      "form": "8-K",
-      "items": [
-        "8.01",
-        "9.01"
-      ],
-      "category": "other_events",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000207/axp-20260504.htm"
-    },
-    {
-      "ticker": "AXP",
-      "company": "AMERICAN EXPRESS CO",
-      "filing_date": "2026-05-04",
-      "form": "8-K",
-      "items": [
-        "7.01"
-      ],
-      "category": "reg_fd",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000203/axp-20260504.htm"
-    },
-    {
       "ticker": "XOM",
       "company": "EXXON MOBIL CORP",
       "filing_date": "2026-05-04",
@@ -3161,6 +3224,29 @@
       ],
       "category": "vote_results",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/101829/000114036126018932/ef20072402_8k.htm"
+    },
+    {
+      "ticker": "AXP",
+      "company": "AMERICAN EXPRESS CO",
+      "filing_date": "2026-05-04",
+      "form": "8-K",
+      "items": [
+        "8.01",
+        "9.01"
+      ],
+      "category": "other_events",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000207/axp-20260504.htm"
+    },
+    {
+      "ticker": "AXP",
+      "company": "AMERICAN EXPRESS CO",
+      "filing_date": "2026-05-04",
+      "form": "8-K",
+      "items": [
+        "7.01"
+      ],
+      "category": "reg_fd",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000203/axp-20260504.htm"
     },
     {
       "ticker": "KO",
@@ -3248,5 +3334,5 @@
     }
   ],
   "methodology": "SEC Form 8-K current reports \u2014 the legally mandated material-event disclosure (public domain, 17 U.S.C. \u00a7105), due within 4 business days of the event. Panel streams a bounded 50 large-cap issuer set (5 mega-cap seed + v2 20 + v3 25 across financials, payments, healthcare, staples, energy, industrials, tech/comm \u2014 breadth expansions 2026-08-22; still bounded, NOT full market; XOM carries both its pre-succession CIK and the 2026-07-01 8-K12B successor entity) since 2026-05-01; each row links the EDGAR primary document. Items are regex-extracted from the primary doc (nbsp/thin-space entities normalized) and mapped to ONE category by a rare-material-first precedence (delisting > merger completion > control change > non-reliance > officer changes > ... > exhibits); the full item list is preserved per row. Documents whose items cannot be extracted are counted as unclassified \u2014 never guessed. Filing-date point-in-time; 8-K/A amendments are new accessions (immutable). Display-only, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-10-21T10:55:54.612924+00:00"
+  "snapshot_ts": "2026-10-22T12:48:11.923871+00:00"
 }

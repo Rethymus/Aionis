@@ -1,16 +1,80 @@
 {
   "status": "ok",
-  "as_of": "2026-10-20",
+  "as_of": "2026-10-22",
   "window": {
     "start": "2026-04-27",
-    "end": "2026-10-20"
+    "end": "2026-10-22"
   },
-  "issuers": 1700,
-  "total": 1788,
+  "issuers": 1705,
+  "total": 1796,
   "by_form": {
-    "DEF 14A": 1788
+    "DEF 14A": 1796
   },
   "filings": [
+    {
+      "company": "IGC Pharma, Inc.",
+      "ticker": "IGC",
+      "filed_date": "2026-10-22",
+      "form": "DEF 14A",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1326205/000118518526004896/0001185185-26-004896-index.htm"
+    },
+    {
+      "company": "WhiteFiber, Inc.",
+      "ticker": "WYFI",
+      "filed_date": "2026-10-21",
+      "form": "DEF 14A",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2042022/000121390026111410/0001213900-26-111410-index.htm"
+    },
+    {
+      "company": "20/20 Biolabs, Inc.",
+      "ticker": "AIDX",
+      "filed_date": "2026-10-21",
+      "form": "DEF 14A",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1139685/000121390026111346/0001213900-26-111346-index.htm"
+    },
+    {
+      "company": "Pyxis Oncology, Inc.",
+      "ticker": "PYXS",
+      "filed_date": "2026-10-21",
+      "form": "DEF 14A",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1782223/000119312526427882/0001193125-26-427882-index.htm"
+    },
+    {
+      "company": "MICROSOFT CORP",
+      "ticker": "MSFT",
+      "filed_date": "2026-10-21",
+      "form": "DEF 14A",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526427849/0001193125-26-427849-index.htm"
+    },
+    {
+      "company": "POWERCOMPUTE, INC.",
+      "ticker": "PWCM",
+      "filed_date": "2026-10-21",
+      "form": "DEF 14A",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1640384/000119312526427798/0001193125-26-427798-index.htm"
+    },
+    {
+      "company": "iM Global Partner Funds",
+      "ticker": "",
+      "filed_date": "2026-10-21",
+      "form": "DEF 14A",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1020425/000119312526427757/0001193125-26-427757-index.htm"
+    },
+    {
+      "company": "Rezolute, Inc.",
+      "ticker": "RZLT",
+      "filed_date": "2026-10-21",
+      "form": "DEF 14A",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1509261/000110465926117868/0001104659-26-117868-index.htm"
+    },
     {
       "company": "Copley Acquisition Corp",
       "ticker": "",
@@ -292,22 +356,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1690996/000139834426018339/0001398344-26-018339-index.htm"
     },
     {
-      "company": "CYABRA, INC.",
-      "ticker": "CYAB",
-      "filed_date": "2026-10-16",
-      "form": "DEF 14A",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2032341/000121390026110049/0001213900-26-110049-index.htm"
-    },
-    {
-      "company": "Actinium Pharmaceuticals, Inc.",
-      "ticker": "ATNM",
-      "filed_date": "2026-10-16",
-      "form": "DEF 14A",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1388320/000121390026110022/0001213900-26-110022-index.htm"
-    },
-    {
       "company": "Apollo Realty Income Solutions, Inc.",
       "ticker": "",
       "filed_date": "2026-10-16",
@@ -362,6 +410,22 @@
       "form": "DEF 14A",
       "status": "new",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1865861/000149315226047146/0001493152-26-047146-index.htm"
+    },
+    {
+      "company": "CYABRA, INC.",
+      "ticker": "CYAB",
+      "filed_date": "2026-10-15",
+      "form": "DEF 14A",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2032341/000121390026110049/0001213900-26-110049-index.htm"
+    },
+    {
+      "company": "Actinium Pharmaceuticals, Inc.",
+      "ticker": "ATNM",
+      "filed_date": "2026-10-15",
+      "form": "DEF 14A",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1388320/000121390026110022/0001213900-26-110022-index.htm"
     },
     {
       "company": "Boxlight Corp",
@@ -4004,6 +4068,14 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1812447/000109690626001164/0001096906-26-001164-index.htm"
     },
     {
+      "company": "Bowhead Specialty Holdings Inc.",
+      "ticker": "BOW",
+      "filed_date": "2026-08-05",
+      "form": "DEF 14A",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2002473/000200247326000017/0002002473-26-000017-index.htm"
+    },
+    {
       "company": "NORTHERN LIGHTS FUND TRUST III",
       "ticker": "",
       "filed_date": "2026-08-05",
@@ -4042,14 +4114,6 @@
       "form": "DEF 14A",
       "status": "new",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1870144/000107997326001003/0001079973-26-001003-index.htm"
-    },
-    {
-      "company": "Bowhead Specialty Holdings Inc.",
-      "ticker": "BOW",
-      "filed_date": "2026-08-05",
-      "form": "DEF 14A",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2002473/000200247326000017/0002002473-26-000017-index.htm"
     },
     {
       "company": "SUI Group Holdings Ltd.",
@@ -4746,72 +4810,8 @@
       "form": "DEF 14A",
       "status": "new",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2024899/000110465926086337/0001104659-26-086337-index.htm"
-    },
-    {
-      "company": "NETWORK-1 TECHNOLOGIES, INC.",
-      "ticker": "NTIP",
-      "filed_date": "2026-07-23",
-      "form": "DEF 14A",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1065078/000107261326000590/0001072613-26-000590-index.htm"
-    },
-    {
-      "company": "LOGITECH INTERNATIONAL S.A.",
-      "ticker": "LOGI",
-      "filed_date": "2026-07-23",
-      "form": "DEF 14A",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1032975/000103297526000037/0001032975-26-000037-index.htm"
-    },
-    {
-      "company": "Immunovant, Inc.",
-      "ticker": "IMVT",
-      "filed_date": "2026-07-22",
-      "form": "DEF 14A",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1764013/000176401326000092/0001764013-26-000092-index.htm"
-    },
-    {
-      "company": "SONO TEK CORP",
-      "ticker": "SOTK",
-      "filed_date": "2026-07-22",
-      "form": "DEF 14A",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/806172/000117152026000185/0001171520-26-000185-index.htm"
-    },
-    {
-      "company": "CASEYS GENERAL STORES INC",
-      "ticker": "CASY",
-      "filed_date": "2026-07-22",
-      "form": "DEF 14A",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/726958/000114036126029280/0001140361-26-029280-index.htm"
-    },
-    {
-      "company": "ADVISORS SERIES TRUST",
-      "ticker": "",
-      "filed_date": "2026-07-22",
-      "form": "DEF 14A",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1027596/000089418926021296/0000894189-26-021296-index.htm"
-    },
-    {
-      "company": "MESA LABORATORIES INC /CO/",
-      "ticker": "MLAB",
-      "filed_date": "2026-07-22",
-      "form": "DEF 14A",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/724004/000072400426000071/0000724004-26-000071-index.htm"
-    },
-    {
-      "company": "WORLD ACCEPTANCE CORP",
-      "ticker": "WRLD",
-      "filed_date": "2026-07-22",
-      "form": "DEF 14A",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/108385/000010838526000029/0000108385-26-000029-index.htm"
     }
   ],
   "methodology": "US DEF 14A definitive proxy statements (\u4ee3\u7406\u59d4\u6258\u4e66 \u2014 the board/executive governance stream) \u2014 SEC EDGAR EFTS whole-market form-level queries (public domain, 17 U.S.C. \u00a7105), fixed ~120-day window, filed-date point-in-time, one row per accession (an amendment would be a new filing, never a silent overwrite). forms=DEF%2014A (live-probed 2026-08-23: 1,387 filings, every row form DEF 14A; proxy amendments are in practice filed as DEFA14A additional materials \u2014 a separate root form outside this panel's scope, and the DEF 14A/A -> amendment arm is kept as defense-in-depth). Status from the immutable form type: DEF 14A = new definitive proxy statement. Honest v1 limits, disclosed not papered over: (1) director/executive names, compensation, and beneficial ownership live INSIDE the proxy statement's primary HTML document and are not parsed \u2014 person-level extraction is deferred (each filing is thousands of lines of HTML; resolving + parsing one per filing would cost ~1,400 extra requests for the window); the amounts are not extracted either \u2014 each row links the filing's EDGAR index page, which lists every document; (2) the ticker is parsed from the EDGAR display name and is empty for ~25% of filers (honest, never guessed); (3) DEF 14A volume is strongly seasonal (Jan-Apr proxy season), so the growing fixed-anchor window will eventually approach EFTS's 10,000-hit cap \u2014 the fetch splits adaptively near it (not triggered at the 2026-08-23 probe). Visible rows capped at 600 newest for payload size (total/by_form count the full aggregate). Display-only, exploratory, NOT a research claim.",
-  "snapshot_ts": "2026-10-21T10:55:55.064256+00:00"
+  "snapshot_ts": "2026-10-22T12:48:12.313391+00:00"
 }
