@@ -1,14 +1,14 @@
 {
  "status": "ok",
- "as_of": "2026-10-22",
+ "as_of": "2026-10-23",
  "source_panels": [
   "form13f",
   "def14a_persons",
   "stakes_13g",
   "smart_money"
  ],
- "n_nodes": 114,
- "n_edges": 828,
+ "n_nodes": 127,
+ "n_edges": 863,
  "nodes": [
   {
    "id": "i:0000807249",
@@ -352,15 +352,14 @@
    "label": "MILLENNIUM MANAGEMENT LLC",
    "zh_label": "\u5343\u79a7\u7ba1\u7406\uff08\u82f1\u683c\u5170\uff09",
    "lanes": [
-    "13f",
-    "13dg"
+    "13f"
    ],
    "cik": "0001273087",
    "manager_routable": true,
    "degree": {
     "co_hold": 41,
     "co_board": 0,
-    "co_target": 2
+    "co_target": 0
    }
   },
   {
@@ -940,6 +939,22 @@
    }
   },
   {
+   "id": "p:PAY RATIO",
+   "type": "person",
+   "label": "Pay Ratio",
+   "zh_label": null,
+   "lanes": [
+    "def14a"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 1,
+    "co_target": 0
+   }
+  },
+  {
    "id": "p:PAY VERSUS PERFORMANCE",
    "type": "person",
    "label": "Pay Versus Performance",
@@ -951,7 +966,7 @@
    "manager_routable": false,
    "degree": {
     "co_hold": 0,
-    "co_board": 1,
+    "co_board": 2,
     "co_target": 0
    }
   },
@@ -1016,29 +1031,13 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 10
+    "co_target": 15
    }
   },
   {
    "id": "s:ABDUVAKHITOVA IRODAKHON",
    "type": "staker",
    "label": "Abduvakhitova Irodakhon",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:ALLIANCEBERNSTEIN L.P.",
-   "type": "staker",
-   "label": "ALLIANCEBERNSTEIN L.P.",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1064,7 +1063,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 9
+    "co_target": 11
    }
   },
   {
@@ -1160,7 +1159,23 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 9
+    "co_target": 11
+   }
+  },
+  {
+   "id": "s:CAPITAL VENTURES INTERNATIONAL",
+   "type": "staker",
+   "label": "CAPITAL VENTURES INTERNATIONAL",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
    }
   },
   {
@@ -1177,6 +1192,22 @@
     "co_hold": 0,
     "co_board": 0,
     "co_target": 1
+   }
+  },
+  {
+   "id": "s:CSS LLC/IL",
+   "type": "staker",
+   "label": "CSS LLC/IL",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 2
    }
   },
   {
@@ -1212,9 +1243,9 @@
    }
   },
   {
-   "id": "s:DELLORA INVESTMENTS LP",
+   "id": "s:DAI JUNYI",
    "type": "staker",
-   "label": "Dellora Investments LP",
+   "label": "Dai Junyi",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1224,7 +1255,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 2
+    "co_target": 3
    }
   },
   {
@@ -1272,7 +1303,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 9
+    "co_target": 11
    }
   },
   {
@@ -1292,6 +1323,38 @@
    }
   },
   {
+   "id": "s:FIRST TRUST EXCHANGE-TRADED FUND",
+   "type": "staker",
+   "label": "FIRST TRUST EXCHANGE-TRADED FUND",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 11
+   }
+  },
+  {
+   "id": "s:FIRST TRUST EXCHANGE-TRADED FUND III",
+   "type": "staker",
+   "label": "FIRST TRUST EXCHANGE-TRADED FUND III",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 11
+   }
+  },
+  {
    "id": "s:FIRST TRUST EXCHANGE-TRADED FUND IV",
    "type": "staker",
    "label": "FIRST TRUST EXCHANGE-TRADED FUND IV",
@@ -1304,7 +1367,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 9
+    "co_target": 11
    }
   },
   {
@@ -1320,7 +1383,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 9
+    "co_target": 11
    }
   },
   {
@@ -1336,7 +1399,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 9
+    "co_target": 11
    }
   },
   {
@@ -1400,7 +1463,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 9
+    "co_target": 11
    }
   },
   {
@@ -1420,6 +1483,38 @@
    }
   },
   {
+   "id": "s:HERZFELD ERIK MERVIN",
+   "type": "staker",
+   "label": "Herzfeld Erik Mervin",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 2
+   }
+  },
+  {
+   "id": "s:HERZFELD THOMAS J",
+   "type": "staker",
+   "label": "HERZFELD THOMAS J",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 2
+   }
+  },
+  {
    "id": "s:INVESCO EXCHANGE-TRADED FUND TRUST",
    "type": "staker",
    "label": "INVESCO EXCHANGE-TRADED FUND TRUST",
@@ -1432,7 +1527,23 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 9
+    "co_target": 11
+   }
+  },
+  {
+   "id": "s:INVESCO EXCHANGE-TRADED FUND TRUST II",
+   "type": "staker",
+   "label": "Invesco Exchange-Traded Fund Trust II",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 3
    }
   },
   {
@@ -1596,6 +1707,22 @@
    }
   },
   {
+   "id": "s:NUSHARES ETF TRUST",
+   "type": "staker",
+   "label": "Nushares ETF Trust",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 3
+   }
+  },
+  {
    "id": "s:OLDRIDGE PHILLIP",
    "type": "staker",
    "label": "OLDRIDGE PHILLIP",
@@ -1640,7 +1767,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 9
+    "co_target": 11
    }
   },
   {
@@ -1708,6 +1835,22 @@
    }
   },
   {
+   "id": "s:PZENA INVESTMENT MANAGEMENT LLC",
+   "type": "staker",
+   "label": "PZENA INVESTMENT MANAGEMENT LLC",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
+   }
+  },
+  {
    "id": "s:S.H.N. FINANCIAL INVESTMENTS LTD.",
    "type": "staker",
    "label": "S.H.N. Financial Investments Ltd.",
@@ -1740,6 +1883,22 @@
    }
   },
   {
+   "id": "s:SIMCOE CAPITAL MANAGEMENT, LLC",
+   "type": "staker",
+   "label": "Simcoe Capital Management, LLC",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
+   }
+  },
+  {
    "id": "s:SIMON FIDUCIARIA S.P.A.",
    "type": "staker",
    "label": "Simon Fiduciaria S.p.A.",
@@ -1756,9 +1915,9 @@
    }
   },
   {
-   "id": "s:SPHERA FUNDS MANAGEMENT LTD.",
+   "id": "s:SINO LION VENTURES LTD",
    "type": "staker",
-   "label": "SPHERA FUNDS MANAGEMENT LTD.",
+   "label": "SINO LION VENTURES Ltd",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1768,7 +1927,23 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 2
+    "co_target": 3
+   }
+  },
+  {
+   "id": "s:SPINNAKER ETF SERIES",
+   "type": "staker",
+   "label": "Spinnaker ETF Series",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 3
    }
   },
   {
@@ -1817,6 +1992,38 @@
     "co_hold": 0,
     "co_board": 0,
     "co_target": 1
+   }
+  },
+  {
+   "id": "s:YANG TING",
+   "type": "staker",
+   "label": "Yang Ting",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 3
+   }
+  },
+  {
+   "id": "s:YAO YUN",
+   "type": "staker",
+   "label": "Yao Yun",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 3
    }
   },
   {
@@ -2116,6 +2323,19 @@
     {
      "company": "DSS, INC.",
      "tk": "DSS"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:PAY RATIO",
+   "b": "p:PAY VERSUS PERFORMANCE",
+   "type": "co_board",
+   "w": 1,
+   "shared": [
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
     }
    ],
    "truncated": false
@@ -22748,48 +22968,6 @@
    "truncated": false
   },
   {
-   "a": "i:0001273087",
-   "b": "s:DELLORA INVESTMENTS LP",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TENAX THERAPEUTICS, INC.",
-     "tk": "TENX",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "i:0001273087",
-   "b": "s:SPHERA FUNDS MANAGEMENT LTD.",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TENAX THERAPEUTICS, INC.",
-     "tk": "TENX",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:ALLIANCEBERNSTEIN L.P.",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "RIVERNORTH OPPORTUNITIES FUND, INC.",
-     "tk": "RIV",
-     "forms": "SC 13G"
-    }
-   ],
-   "truncated": false
-  },
-  {
    "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
    "b": "s:ALPS ETF TRUST",
    "type": "co_target",
@@ -22819,7 +22997,49 @@
   },
   {
    "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+   "b": "s:CAPITAL VENTURES INTERNATIONAL",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "MiniMed Group, Inc.",
+     "tk": "MMED",
+     "forms": "SC 13G|SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
    "b": "s:FEDERATED HERMES ETF TRUST",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "TRUIST FINANCIAL CORP",
+     "tk": "TFC",
+     "forms": "SC 13G|SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "TRUIST FINANCIAL CORP",
+     "tk": "TFC",
+     "forms": "SC 13G|SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND III",
    "type": "co_target",
    "w": 1,
    "shared": [
@@ -22903,6 +23123,34 @@
   },
   {
    "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+   "b": "s:INVESCO EXCHANGE-TRADED FUND TRUST II",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Bank of New York Mellon Corp",
+     "tk": "BNY",
+     "forms": "SC 13G|SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+   "b": "s:NUSHARES ETF TRUST",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Bank of New York Mellon Corp",
+     "tk": "BNY",
+     "forms": "SC 13G|SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
    "b": "s:PACER FUNDS TRUST",
    "type": "co_target",
    "w": 1,
@@ -22910,6 +23158,20 @@
     {
      "target": "TRUIST FINANCIAL CORP",
      "tk": "TFC",
+     "forms": "SC 13G|SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+   "b": "s:SPINNAKER ETF SERIES",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Bank of New York Mellon Corp",
+     "tk": "BNY",
      "forms": "SC 13G|SC 13G/A"
     }
    ],
@@ -22946,6 +23208,34 @@
   {
    "a": "s:ALPS ETF TRUST",
    "b": "s:FEDERATED HERMES ETF TRUST",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "TRUIST FINANCIAL CORP",
+     "tk": "TFC",
+     "forms": "SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:ALPS ETF TRUST",
+   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "TRUIST FINANCIAL CORP",
+     "tk": "TFC",
+     "forms": "SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:ALPS ETF TRUST",
+   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND III",
    "type": "co_target",
    "w": 1,
    "shared": [
@@ -23141,6 +23431,34 @@
   },
   {
    "a": "s:CALAMOS ETF TRUST",
+   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "TRUIST FINANCIAL CORP",
+     "tk": "TFC",
+     "forms": "SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:CALAMOS ETF TRUST",
+   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND III",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "TRUIST FINANCIAL CORP",
+     "tk": "TFC",
+     "forms": "SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:CALAMOS ETF TRUST",
    "b": "s:FIRST TRUST EXCHANGE-TRADED FUND IV",
    "type": "co_target",
    "w": 1,
@@ -23238,15 +23556,71 @@
    "truncated": false
   },
   {
-   "a": "s:DELLORA INVESTMENTS LP",
-   "b": "s:SPHERA FUNDS MANAGEMENT LTD.",
+   "a": "s:CSS LLC/IL",
+   "b": "s:HERZFELD ERIK MERVIN",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "TENAX THERAPEUTICS, INC.",
-     "tk": "TENX",
-     "forms": "SC 13G/A"
+     "target": "Herzfeld Credit Income Fund, Inc",
+     "tk": "HERZ",
+     "forms": "SC 13D/A|SC 13G"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:CSS LLC/IL",
+   "b": "s:HERZFELD THOMAS J",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Herzfeld Credit Income Fund, Inc",
+     "tk": "HERZ",
+     "forms": "SC 13D/A|SC 13G"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:DAI JUNYI",
+   "b": "s:SINO LION VENTURES LTD",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Indaptus Therapeutics, Inc.",
+     "tk": "INDP",
+     "forms": "SC 13D/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:DAI JUNYI",
+   "b": "s:YANG TING",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Indaptus Therapeutics, Inc.",
+     "tk": "INDP",
+     "forms": "SC 13D/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:DAI JUNYI",
+   "b": "s:YAO YUN",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Indaptus Therapeutics, Inc.",
+     "tk": "INDP",
+     "forms": "SC 13D/A"
     }
    ],
    "truncated": false
@@ -23275,6 +23649,34 @@
      "target": "Alaunos Therapeutics, Inc.",
      "tk": "TCRT",
      "forms": "SC 13D|SC 13D/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:FEDERATED HERMES ETF TRUST",
+   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "TRUIST FINANCIAL CORP",
+     "tk": "TFC",
+     "forms": "SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:FEDERATED HERMES ETF TRUST",
+   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND III",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "TRUIST FINANCIAL CORP",
+     "tk": "TFC",
+     "forms": "SC 13G/A"
     }
    ],
    "truncated": false
@@ -23372,6 +23774,188 @@
     {
      "target": "RISKIFIED LTD.",
      "tk": "RSKD",
+     "forms": "SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND",
+   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND III",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "TRUIST FINANCIAL CORP",
+     "tk": "TFC",
+     "forms": "SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND",
+   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND IV",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "TRUIST FINANCIAL CORP",
+     "tk": "TFC",
+     "forms": "SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND",
+   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND VI",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "TRUIST FINANCIAL CORP",
+     "tk": "TFC",
+     "forms": "SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND",
+   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND VIII",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "TRUIST FINANCIAL CORP",
+     "tk": "TFC",
+     "forms": "SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND",
+   "b": "s:HARTFORD FUNDS EXCHANGE-TRADED TRUST",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "TRUIST FINANCIAL CORP",
+     "tk": "TFC",
+     "forms": "SC 13G|SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND",
+   "b": "s:INVESCO EXCHANGE-TRADED FUND TRUST",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "TRUIST FINANCIAL CORP",
+     "tk": "TFC",
+     "forms": "SC 13G|SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND",
+   "b": "s:PACER FUNDS TRUST",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "TRUIST FINANCIAL CORP",
+     "tk": "TFC",
+     "forms": "SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND III",
+   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND IV",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "TRUIST FINANCIAL CORP",
+     "tk": "TFC",
+     "forms": "SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND III",
+   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND VI",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "TRUIST FINANCIAL CORP",
+     "tk": "TFC",
+     "forms": "SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND III",
+   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND VIII",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "TRUIST FINANCIAL CORP",
+     "tk": "TFC",
+     "forms": "SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND III",
+   "b": "s:HARTFORD FUNDS EXCHANGE-TRADED TRUST",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "TRUIST FINANCIAL CORP",
+     "tk": "TFC",
+     "forms": "SC 13G|SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND III",
+   "b": "s:INVESCO EXCHANGE-TRADED FUND TRUST",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "TRUIST FINANCIAL CORP",
+     "tk": "TFC",
+     "forms": "SC 13G|SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND III",
+   "b": "s:PACER FUNDS TRUST",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "TRUIST FINANCIAL CORP",
+     "tk": "TFC",
      "forms": "SC 13G/A"
     }
    ],
@@ -23630,6 +24214,20 @@
    "truncated": false
   },
   {
+   "a": "s:HERZFELD ERIK MERVIN",
+   "b": "s:HERZFELD THOMAS J",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Herzfeld Credit Income Fund, Inc",
+     "tk": "HERZ",
+     "forms": "SC 13D/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
    "a": "s:INVESCO EXCHANGE-TRADED FUND TRUST",
    "b": "s:PACER FUNDS TRUST",
    "type": "co_target",
@@ -23639,6 +24237,34 @@
      "target": "TRUIST FINANCIAL CORP",
      "tk": "TFC",
      "forms": "SC 13G|SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:INVESCO EXCHANGE-TRADED FUND TRUST II",
+   "b": "s:NUSHARES ETF TRUST",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Bank of New York Mellon Corp",
+     "tk": "BNY",
+     "forms": "SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:INVESCO EXCHANGE-TRADED FUND TRUST II",
+   "b": "s:SPINNAKER ETF SERIES",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Bank of New York Mellon Corp",
+     "tk": "BNY",
+     "forms": "SC 13G/A"
     }
    ],
    "truncated": false
@@ -23661,11 +24287,16 @@
    "a": "s:L1 CAPITAL GLOBAL OPPORTUNITIES MASTER FUND, LTD.",
    "b": "s:S.H.N. FINANCIAL INVESTMENTS LTD.",
    "type": "co_target",
-   "w": 1,
+   "w": 2,
    "shared": [
     {
      "target": "DarkIris Inc.",
      "tk": "DKI",
+     "forms": "SC 13G"
+    },
+    {
+     "target": "INLIF Ltd",
+     "tk": "INLF",
      "forms": "SC 13G"
     }
    ],
@@ -23812,6 +24443,20 @@
    "truncated": false
   },
   {
+   "a": "s:NUSHARES ETF TRUST",
+   "b": "s:SPINNAKER ETF SERIES",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Bank of New York Mellon Corp",
+     "tk": "BNY",
+     "forms": "SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
    "a": "s:OLDRIDGE PHILLIP",
    "b": "s:SWEDER TARA",
    "type": "co_target",
@@ -23835,6 +24480,62 @@
      "target": "DarkIris Inc.",
      "tk": "DKI",
      "forms": "SC 13G|SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:PZENA INVESTMENT MANAGEMENT LLC",
+   "b": "s:SIMCOE CAPITAL MANAGEMENT, LLC",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Koppers Holdings Inc.",
+     "tk": "KOP",
+     "forms": "SC 13D/A|SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:SINO LION VENTURES LTD",
+   "b": "s:YANG TING",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Indaptus Therapeutics, Inc.",
+     "tk": "INDP",
+     "forms": "SC 13D/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:SINO LION VENTURES LTD",
+   "b": "s:YAO YUN",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Indaptus Therapeutics, Inc.",
+     "tk": "INDP",
+     "forms": "SC 13D/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:YANG TING",
+   "b": "s:YAO YUN",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Indaptus Therapeutics, Inc.",
+     "tk": "INDP",
+     "forms": "SC 13D/A"
     }
    ],
    "truncated": false
@@ -23898,6 +24599,20 @@
    "stock_routable": true
   },
   {
+   "tk": "BNY",
+   "name": "Bank of New York Mellon Corp",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 4
+   },
+   "stock_routable": false
+  },
+  {
    "tk": "CIFR",
    "name": "Cipher Digital Inc.",
    "in": [
@@ -23940,6 +24655,20 @@
    "stock_routable": true
   },
   {
+   "tk": "CTNM",
+   "name": "Contineum Therapeutics, Inc.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
    "tk": "DOCN",
    "name": "DigitalOcean Holdings, Inc.",
    "in": [
@@ -23968,20 +24697,6 @@
    "stock_routable": false
   },
   {
-   "tk": "EQH",
-   "name": "Equitable Holdings, Inc.",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 3,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
-  },
-  {
    "tk": "FIVN",
    "name": "Five9, Inc.",
    "in": [
@@ -23990,34 +24705,6 @@
    ],
    "counts": {
     "managers": 1,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
-  },
-  {
-   "tk": "FLEX",
-   "name": "FLEX LTD.",
-   "in": [
-    "13f",
-    "def14a"
-   ],
-   "counts": {
-    "managers": 2,
-    "persons": 1,
-    "stakers": 0
-   },
-   "stock_routable": false
-  },
-  {
-   "tk": "HTHT",
-   "name": "H World Group Ltd",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 2,
     "persons": 0,
     "stakers": 1
    },
@@ -24047,6 +24734,20 @@
    "counts": {
     "managers": 1,
     "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "JOF",
+   "name": "JAPAN SMALLER CAPITALIZATION FUND INC",
+   "in": [
+    "def14a",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 0,
+    "persons": 1,
     "stakers": 1
    },
    "stock_routable": false
@@ -24108,8 +24809,8 @@
    "stock_routable": true
   },
   {
-   "tk": "MANE",
-   "name": "Veradermics, Inc",
+   "tk": "MAT",
+   "name": "MATTEL INC /DE/",
    "in": [
     "13f",
     "13dg"
@@ -24158,20 +24859,6 @@
    ],
    "counts": {
     "managers": 1,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": true
-  },
-  {
-   "tk": "MS",
-   "name": "MORGAN STANLEY",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 2,
     "persons": 0,
     "stakers": 1
    },
@@ -24290,34 +24977,6 @@
    "stock_routable": false
   },
   {
-   "tk": "RYTM",
-   "name": "RHYTHM PHARMACEUTICALS, INC.",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 1,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
-  },
-  {
-   "tk": "SDHC",
-   "name": "Smith Douglas Homes Corp.",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 1,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
-  },
-  {
    "tk": "SE",
    "name": "Sea Ltd",
    "in": [
@@ -24332,14 +24991,14 @@
    "stock_routable": false
   },
   {
-   "tk": "SKY",
-   "name": "Champion Homes, Inc.",
+   "tk": "SPHR",
+   "name": "Sphere Entertainment Co.",
    "in": [
     "13f",
     "13dg"
    ],
    "counts": {
-    "managers": 1,
+    "managers": 2,
     "persons": 0,
     "stakers": 1
    },
@@ -24348,20 +25007,6 @@
   {
    "tk": "SRTA",
    "name": "Strata Critical Medical, Inc.",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 1,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
-  },
-  {
-   "tk": "TBBB",
-   "name": "BBB FOODS INC",
    "in": [
     "13f",
     "13dg"
@@ -24445,18 +25090,18 @@
   }
  ],
  "components": {
-  "n": 25,
-  "largest": 45
+  "n": 28,
+  "largest": 43
  },
  "windows": {
   "form13f_quarter": "2026-06-30",
   "stakes_visible_dates": {
-   "start": "2026-10-09",
-   "end": "2026-10-21"
+   "start": "2026-10-13",
+   "end": "2026-10-22"
   },
   "smart_money_visible_dates": {
-   "start": "2026-10-13",
-   "end": "2026-10-21"
+   "start": "2026-10-14",
+   "end": "2026-10-22"
   }
  },
  "coverage": {
@@ -24466,7 +25111,7 @@
    "isolated_managers": 0
   },
   "def14a": {
-   "basis": "top_persons export: 50 most-seated of 590 upstream persons; 101/150 filings with persons (67.3%)",
+   "basis": "top_persons export: 50 most-seated of 641 upstream persons; 104/150 filings with persons (69.3%)",
    "same_name_merges_possible": true
   },
   "13dg": {
@@ -24475,5 +25120,5 @@
   }
  },
  "methodology": "Force-camp relationship graph DERIVED at export time from four COMMITTED panels (form13f x def14a_persons x stakes_13g union smart_money) \u2014 zero new fetches, display-only. Edges are pairwise projections over as-filed disclosure facts: co_hold = two curated managers' VISIBLE BOOKS (latest quarter, up to 50 positions each; the full books are larger) share a position key (ticker, else CUSIP); co_board = two proxy-statement top persons seat the same company (exact company-name match resolves the ticker); co_target = two different filers INDEPENDENTLY SEPARATELY FILED stakes converging on the same target issuer within the visible SC 13D/13G windows. Identity rule: a window filer merges into an institution node ONLY when its trimmed-uppercase name equals a curated manager's name exactly \u2014 no fuzzy matching, no name list. The three overlaps are factual coincidences of separate filings: joint filings stay verbatim (members NOT DECOMPOSED), no COORDINATION is implied and no consortium claim is made. Weights are integer counts of shared items (lists capped at 8, truncated flag set beyond). Coverage is bounded by construction \u2014 see the coverage.basis strings (visible books, a 50-person proxy export over the newest filings, latest filing windows only). A restatement of public SEC EDGAR disclosures only: NO PRICES, NO RETURNS, no performance claims; never part of any OOS pipeline.",
- "snapshot_ts": "2026-10-22T12:48:37.562625+00:00"
+ "snapshot_ts": "2026-10-23T13:34:05.943522+00:00"
 }
