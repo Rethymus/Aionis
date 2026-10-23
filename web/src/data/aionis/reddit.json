@@ -10,30 +10,65 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-10-22T12:19:13+00:00",
-  "n_snapshots": 42,
+  "latest_snapshot_ts": "2026-10-23T12:46:43+00:00",
+  "n_snapshots": 43,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
-      "ticker": "META",
+      "ticker": "TMUS",
       "mentions": 1,
-      "sentiment": -0.047,
+      "sentiment": -0.927,
+      "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "AMZN",
+      "mentions": 1,
+      "sentiment": 0.106,
       "bull_ratio": null,
       "score_sum": 0
     },
     {
-      "ticker": "TSLA",
+      "ticker": "LULU",
       "mentions": 1,
-      "sentiment": -0.007,
-      "bull_ratio": null,
+      "sentiment": -0.947,
+      "bull_ratio": 0.0,
       "score_sum": 0
     },
     {
-      "ticker": "NFLX",
+      "ticker": "DECK",
       "mentions": 1,
-      "sentiment": -0.024,
+      "sentiment": -0.947,
+      "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "AMAT",
+      "mentions": 1,
+      "sentiment": -0.959,
+      "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "KLAC",
+      "mentions": 1,
+      "sentiment": -0.959,
+      "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "LRCX",
+      "mentions": 1,
+      "sentiment": -0.959,
+      "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "LMT",
+      "mentions": 1,
+      "sentiment": 0.043,
       "bull_ratio": null,
       "score_sum": 0
     }
@@ -41,9 +76,9 @@
   "pressure": {
     "status": "accumulating",
     "by_ticker": {},
-    "n_snapshots": 42,
-    "latest_date": "2026-10-22",
+    "n_snapshots": 43,
+    "latest_date": "2026-10-23",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-10-22T12:48:21.939871+00:00"
+  "snapshot_ts": "2026-10-23T13:33:49.724463+00:00"
 }

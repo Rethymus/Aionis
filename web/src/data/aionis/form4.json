@@ -3,6 +3,15 @@
   "methodology": "Form 4 insider transactions (SEC EDGAR EFTS, filed-date PIT, public domain). Non-derivative pure buy (A) / sell (D) only \u2014 exercises and options excluded. Window spans 2016\u2192today (Trump Era). Recent rows link the EDGAR filing-index page (built from the row's accession + reporting-owner CIK \u2014 empty, never guessed, on pre-accession aggregates). Display-only, exploratory, not a research claim. Universe unchanged at 30 issuers from 2025 (pre-2025 yearly aggregates retained verbatim).",
   "recent": [
     {
+      "filer": "Newstead Jennifer",
+      "ticker": "AAPL",
+      "date": "2026-10-20",
+      "action": "sell",
+      "shares": 2399,
+      "price": 339.62,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1780525/000114036126040540/0001140361-26-040540-index.htm"
+    },
+    {
       "filer": "Pate R. Hewitt",
       "ticker": "CVX",
       "date": "2026-10-20",
@@ -57,51 +66,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1469419/000009341026000194/0000093410-26-000194-index.htm"
     },
     {
-      "filer": "Ling Hai",
-      "ticker": "MA",
-      "date": "2026-10-16",
-      "action": "sell",
-      "shares": 4317,
-      "price": 620.0,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1923565/000114139126000118/0001141391-26-000118-index.htm"
-    },
-    {
-      "filer": "Borders Ben",
-      "ticker": "AAPL",
-      "date": "2026-10-16",
-      "action": "sell",
-      "shares": 80,
-      "price": 344.18,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2100523/000114036126040127/0001140361-26-040127-index.htm"
-    },
-    {
-      "filer": "Borders Ben",
-      "ticker": "AAPL",
-      "date": "2026-10-16",
-      "action": "sell",
-      "shares": 969,
-      "price": 345.74,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2100523/000114036126040127/0001140361-26-040127-index.htm"
-    },
-    {
-      "filer": "Borders Ben",
-      "ticker": "AAPL",
-      "date": "2026-10-16",
-      "action": "sell",
-      "shares": 40,
-      "price": 346.22,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2100523/000114036126040127/0001140361-26-040127-index.htm"
-    },
-    {
-      "filer": "Borders Ben",
-      "ticker": "AAPL",
-      "date": "2026-10-16",
-      "action": "sell",
-      "shares": 40,
-      "price": 347.43,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2100523/000114036126040127/0001140361-26-040127-index.htm"
-    },
-    {
       "filer": "Parekh Kevan",
       "ticker": "AAPL",
       "date": "2026-10-16",
@@ -115,8 +79,8 @@
       "ticker": "AAPL",
       "date": "2026-10-16",
       "action": "sell",
-      "shares": 192,
-      "price": 343.68,
+      "shares": 80,
+      "price": 346.47,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2050912/000114036126040126/0001140361-26-040126-index.htm"
     },
     {
@@ -133,9 +97,54 @@
       "ticker": "AAPL",
       "date": "2026-10-16",
       "action": "sell",
-      "shares": 80,
-      "price": 346.47,
+      "shares": 192,
+      "price": 343.68,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2050912/000114036126040126/0001140361-26-040126-index.htm"
+    },
+    {
+      "filer": "Borders Ben",
+      "ticker": "AAPL",
+      "date": "2026-10-16",
+      "action": "sell",
+      "shares": 80,
+      "price": 344.18,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2100523/000114036126040127/0001140361-26-040127-index.htm"
+    },
+    {
+      "filer": "Borders Ben",
+      "ticker": "AAPL",
+      "date": "2026-10-16",
+      "action": "sell",
+      "shares": 40,
+      "price": 347.43,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2100523/000114036126040127/0001140361-26-040127-index.htm"
+    },
+    {
+      "filer": "Borders Ben",
+      "ticker": "AAPL",
+      "date": "2026-10-16",
+      "action": "sell",
+      "shares": 40,
+      "price": 346.22,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2100523/000114036126040127/0001140361-26-040127-index.htm"
+    },
+    {
+      "filer": "Borders Ben",
+      "ticker": "AAPL",
+      "date": "2026-10-16",
+      "action": "sell",
+      "shares": 969,
+      "price": 345.74,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2100523/000114036126040127/0001140361-26-040127-index.htm"
+    },
+    {
+      "filer": "Ling Hai",
+      "ticker": "MA",
+      "date": "2026-10-16",
+      "action": "sell",
+      "shares": 4317,
+      "price": 620.0,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1923565/000114139126000118/0001141391-26-000118-index.htm"
     },
     {
       "filer": "Parekh Kevan",
@@ -475,15 +484,6 @@
       "ticker": "AAPL",
       "date": "2026-10-02",
       "action": "sell",
-      "shares": 23143,
-      "price": 331.44,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1214156/000114036126038674/0001140361-26-038674-index.htm"
-    },
-    {
-      "filer": "COOK TIMOTHY D",
-      "ticker": "AAPL",
-      "date": "2026-10-02",
-      "action": "sell",
       "shares": 88239,
       "price": 333.26,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1214156/000114036126038674/0001140361-26-038674-index.htm"
@@ -495,6 +495,15 @@
       "action": "sell",
       "shares": 40879,
       "price": 333.94,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1214156/000114036126038674/0001140361-26-038674-index.htm"
+    },
+    {
+      "filer": "COOK TIMOTHY D",
+      "ticker": "AAPL",
+      "date": "2026-10-02",
+      "action": "sell",
+      "shares": 23143,
+      "price": 331.44,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1214156/000114036126038674/0001140361-26-038674-index.htm"
     },
     {
@@ -1087,15 +1096,6 @@
       "ticker": "AVGO",
       "date": "2026-09-23",
       "action": "sell",
-      "shares": 512,
-      "price": 361.48,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1201633/000110465926110983/0001104659-26-110983-index.htm"
-    },
-    {
-      "filer": "SAMUELI HENRY",
-      "ticker": "AVGO",
-      "date": "2026-09-23",
-      "action": "sell",
       "shares": 186809,
       "price": 354.71,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1201633/000110465926110983/0001104659-26-110983-index.htm"
@@ -1125,6 +1125,15 @@
       "action": "sell",
       "shares": 50998,
       "price": 357.52,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1201633/000110465926110983/0001104659-26-110983-index.htm"
+    },
+    {
+      "filer": "SAMUELI HENRY",
+      "ticker": "AVGO",
+      "date": "2026-09-23",
+      "action": "sell",
+      "shares": 512,
+      "price": 361.48,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1201633/000110465926110983/0001104659-26-110983-index.htm"
     },
     {
@@ -1200,15 +1209,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1696841/000169684126000014/0001696841-26-000014-index.htm"
     },
     {
-      "filer": "BERKSHIRE HATHAWAY INC",
-      "ticker": "BRK-B",
-      "date": "2026-09-21",
-      "action": "buy",
-      "shares": 160275,
-      "price": 77.23,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526397059/0001193125-26-397059-index.htm"
-    },
-    {
       "filer": "Teter Timothy S.",
       "ticker": "NVDA",
       "date": "2026-09-21",
@@ -1233,6 +1233,15 @@
       "action": "buy",
       "shares": 483809,
       "price": 77.97,
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526397059/0001193125-26-397059-index.htm"
+    },
+    {
+      "filer": "BERKSHIRE HATHAWAY INC",
+      "ticker": "BRK-B",
+      "date": "2026-09-21",
+      "action": "buy",
+      "shares": 160275,
+      "price": 77.23,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526397059/0001193125-26-397059-index.htm"
     },
     {
@@ -1312,8 +1321,8 @@
       "ticker": "BRK-B",
       "date": "2026-09-18",
       "action": "buy",
-      "shares": 500,
-      "price": 78.38,
+      "shares": 710,
+      "price": 76.98,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526397059/0001193125-26-397059-index.htm"
     },
     {
@@ -1348,8 +1357,8 @@
       "ticker": "BRK-B",
       "date": "2026-09-18",
       "action": "buy",
-      "shares": 710,
-      "price": 76.98,
+      "shares": 500,
+      "price": 78.38,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526397059/0001193125-26-397059-index.htm"
     },
     {
@@ -1366,8 +1375,8 @@
       "ticker": "NVDA",
       "date": "2026-09-18",
       "action": "sell",
-      "shares": 10000,
-      "price": 220.42,
+      "shares": 1356000,
+      "price": 219.72,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1199039/000119903926000016/0001199039-26-000016-index.htm"
     },
     {
@@ -1375,8 +1384,8 @@
       "ticker": "NVDA",
       "date": "2026-09-18",
       "action": "sell",
-      "shares": 1356000,
-      "price": 219.72,
+      "shares": 10000,
+      "price": 220.42,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1199039/000119903926000016/0001199039-26-000016-index.htm"
     },
     {
@@ -1792,19 +1801,10 @@
       "shares": 2100,
       "price": 510.74,
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1405109/000000248826000178/0000002488-26-000178-index.htm"
-    },
-    {
-      "filer": "Su Lisa T",
-      "ticker": "AMD",
-      "date": "2026-09-10",
-      "action": "sell",
-      "shares": 300,
-      "price": 511.39,
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1405109/000000248826000178/0000002488-26-000178-index.htm"
     }
   ],
   "buys": 76,
-  "sells": 2159,
+  "sells": 2160,
   "n_filers": 212,
   "top_insiders": [
     {
@@ -1848,7 +1848,7 @@
       "count": 44
     }
   ],
-  "window": "2013-03..2026-10 (2235 txns; 30 issuers current)",
+  "window": "2013-03..2026-10 (2236 txns; 30 issuers current)",
   "n_issuers": 30,
   "yearly": [
     {
@@ -1919,8 +1919,8 @@
     {
       "year": 2026,
       "buys": 64,
-      "sells": 1741
+      "sells": 1742
     }
   ],
-  "snapshot_ts": "2026-10-22T12:48:11.830173+00:00"
+  "snapshot_ts": "2026-10-23T13:33:41.660858+00:00"
 }
