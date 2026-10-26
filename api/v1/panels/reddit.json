@@ -10,65 +10,23 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-10-23T12:46:43+00:00",
-  "n_snapshots": 43,
+  "latest_snapshot_ts": "2026-10-26T10:48:40+00:00",
+  "n_snapshots": 44,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
-      "ticker": "TMUS",
+      "ticker": "WELL",
       "mentions": 1,
-      "sentiment": -0.927,
-      "bull_ratio": 0.0,
-      "score_sum": 0
-    },
-    {
-      "ticker": "AMZN",
-      "mentions": 1,
-      "sentiment": 0.106,
+      "sentiment": -0.141,
       "bull_ratio": null,
       "score_sum": 0
     },
     {
-      "ticker": "LULU",
+      "ticker": "TMUS",
       "mentions": 1,
-      "sentiment": -0.947,
-      "bull_ratio": 0.0,
-      "score_sum": 0
-    },
-    {
-      "ticker": "DECK",
-      "mentions": 1,
-      "sentiment": -0.947,
-      "bull_ratio": 0.0,
-      "score_sum": 0
-    },
-    {
-      "ticker": "AMAT",
-      "mentions": 1,
-      "sentiment": -0.959,
-      "bull_ratio": 0.0,
-      "score_sum": 0
-    },
-    {
-      "ticker": "KLAC",
-      "mentions": 1,
-      "sentiment": -0.959,
-      "bull_ratio": 0.0,
-      "score_sum": 0
-    },
-    {
-      "ticker": "LRCX",
-      "mentions": 1,
-      "sentiment": -0.959,
-      "bull_ratio": 0.0,
-      "score_sum": 0
-    },
-    {
-      "ticker": "LMT",
-      "mentions": 1,
-      "sentiment": 0.043,
+      "sentiment": 0.101,
       "bull_ratio": null,
       "score_sum": 0
     }
@@ -76,9 +34,9 @@
   "pressure": {
     "status": "accumulating",
     "by_ticker": {},
-    "n_snapshots": 43,
-    "latest_date": "2026-10-23",
+    "n_snapshots": 44,
+    "latest_date": "2026-10-26",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-10-23T13:33:49.724463+00:00"
+  "snapshot_ts": "2026-10-26T11:26:19.173451+00:00"
 }
