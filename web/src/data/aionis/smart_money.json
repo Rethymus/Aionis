@@ -2,6 +2,186 @@
   "methodology": "Recent SC 13D institutional stake filings (SEC EDGAR, filed-date point-in-time). Public domain, permissive. Two sources: EFTS full-text search for 2015\u21922024-12 (filer + target + ticker), and the EDGAR daily crawler index for 2024-12\u2192today. The daily index lists a filing under EVERY covered company (subject AND filer entities), so rows are deduped per accession: the listed company is the subject (ticker backfilled OFFLINE from the cached SEC company_tickers snapshot \u2014 current-snapshot display label, not as-of-filing \u2014 plus the frozen EFTS name map), and the co-indexed names surface as the filer. Filings on unlisted targets (funds, LLCs, individuals) or with several listed candidates honestly keep an empty ticker / placeholder filer (counted in data_health.source_health). Real data; descriptive display, not an Aionis research claim. Percent-of-class fields (pct_now / pct_prev) are regex-parsed from each filing's primary document for the VISIBLE rows only (bounded second stage: structured cover-page tag first, then the 'Percent of class' label, then the 'X.X% of the ... class' narrative; amendments carry pct_prev from 'previous X%'-style sentences only) \u2014 misses stay honest nulls, counted in data_health.source_health. pct_status is DERIVED from parsed values only: exited = an explicit parsed 0, below_5 = a parsed value < 5; a null pct never yields a status. Group filings show the FIRST reporting person's cover-page percentage.",
   "recent_filings": [
     {
+      "filer": "James Russell Revocable Trust",
+      "target": "ABEONA THERAPEUTICS INC.",
+      "ticker": "ABEO",
+      "date": "2026-10-23",
+      "form": "SC 13D",
+      "is_amendment": false,
+      "url": "http://www.sec.gov/Archives/edgar/data/318306/0001477932-26-006433-index.htm",
+      "pct_now": 6.1,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Alford Tony L",
+      "target": "Lion Copper Corp.",
+      "ticker": "LCGMF",
+      "date": "2026-10-23",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/1339688/0001062993-26-005540-index.htm",
+      "pct_now": 45.84,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "target": "Bradbury Capital Inc.",
+      "ticker": "",
+      "date": "2026-10-23",
+      "form": "SC 13D",
+      "is_amendment": false,
+      "url": "http://www.sec.gov/Archives/edgar/data/1986694/0001493152-26-048185-index.htm",
+      "pct_now": 7.15,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "target": "ONG MEI YOONG",
+      "ticker": "",
+      "date": "2026-10-23",
+      "form": "SC 13D",
+      "is_amendment": false,
+      "url": "http://www.sec.gov/Archives/edgar/data/2131755/0001493152-26-048185-index.htm",
+      "pct_now": 7.15,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "CHS US Investments LLC",
+      "target": "Rent the Runway, Inc.",
+      "ticker": "RENT",
+      "date": "2026-10-23",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/1468327/0001193125-26-430417-index.htm",
+      "pct_now": 60.4,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Chang Alice Hua-Jen",
+      "target": "Perfect Corp.",
+      "ticker": "PERF",
+      "date": "2026-10-23",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/1899830/0001104659-26-118332-index.htm",
+      "pct_now": 0.0,
+      "pct_prev": null,
+      "pct_status": "exited"
+    },
+    {
+      "filer": "Clarion Partners Real Estate Income Fund Inc.",
+      "target": "FRANKLIN TEMPLETON INC",
+      "ticker": "BEN",
+      "date": "2026-10-23",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/38777/0000038777-26-000271-index.htm",
+      "pct_now": 23.6,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "CyberLink International Technology Corp.",
+      "target": "Perfect Corp.",
+      "ticker": "PERF",
+      "date": "2026-10-23",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/1899830/0001104659-26-118333-index.htm",
+      "pct_now": 0.0,
+      "pct_prev": null,
+      "pct_status": "exited"
+    },
+    {
+      "filer": "Simpson Andrew",
+      "target": "HeartSciences Inc.",
+      "ticker": "HSCS",
+      "date": "2026-10-23",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/1468492/0001213900-26-112224-index.htm",
+      "pct_now": 7.5,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Radoff Bradley Louis",
+      "target": "INVE Technologies, Inc.",
+      "ticker": "INVE",
+      "date": "2026-10-23",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/1036044/0000921895-26-002848-index.htm",
+      "pct_now": 0.0,
+      "pct_prev": null,
+      "pct_status": "exited"
+    },
+    {
+      "filer": "Nexus Capital Management LP",
+      "target": "Rent the Runway, Inc.",
+      "ticker": "RENT",
+      "date": "2026-10-23",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/1468327/0001193125-26-430418-index.htm",
+      "pct_now": 12.9,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "target": "Oxford Gate Management, LLC",
+      "ticker": "",
+      "date": "2026-10-23",
+      "form": "SC 13D",
+      "is_amendment": false,
+      "url": "http://www.sec.gov/Archives/edgar/data/2038913/0001213900-26-112195-index.htm",
+      "pct_now": 22.9,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+      "target": "Oxford Park Income Fund, Inc.",
+      "ticker": "",
+      "date": "2026-10-23",
+      "form": "SC 13D",
+      "is_amendment": false,
+      "url": "http://www.sec.gov/Archives/edgar/data/1959353/0001213900-26-112195-index.htm",
+      "pct_now": 22.9,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
+      "filer": "Pompliano Anthony John III",
+      "target": "Silvia, Inc.",
+      "ticker": "BRR",
+      "date": "2026-10-23",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/2076163/0001493152-26-048300-index.htm",
+      "pct_now": 19.5,
+      "pct_prev": 18.45,
+      "pct_status": null
+    },
+    {
+      "filer": "STORY3 Capital Partners, LLC",
+      "target": "Rent the Runway, Inc.",
+      "ticker": "RENT",
+      "date": "2026-10-23",
+      "form": "SC 13D/A",
+      "is_amendment": true,
+      "url": "http://www.sec.gov/Archives/edgar/data/1468327/0001193125-26-430413-index.htm",
+      "pct_now": 12.9,
+      "pct_prev": null,
+      "pct_status": null
+    },
+    {
       "filer": "EVERRISE HOLDINGS LLC",
       "target": "ATA Creativity Global",
       "ticker": "AACG",
@@ -33,7 +213,7 @@
       "form": "SC 13D",
       "is_amendment": false,
       "url": "http://www.sec.gov/Archives/edgar/data/1986694/0001493152-26-048056-index.htm",
-      "pct_now": null,
+      "pct_now": 10.37,
       "pct_prev": null,
       "pct_status": null
     },
@@ -45,7 +225,7 @@
       "form": "SC 13D",
       "is_amendment": false,
       "url": "http://www.sec.gov/Archives/edgar/data/2161440/0001493152-26-048056-index.htm",
-      "pct_now": null,
+      "pct_now": 10.37,
       "pct_prev": null,
       "pct_status": null
     },
@@ -1260,186 +1440,6 @@
       "pct_now": 5.0,
       "pct_prev": null,
       "pct_status": null
-    },
-    {
-      "filer": "Simmons Chia-Lin",
-      "target": "LogicMark, Inc.",
-      "ticker": "LGMK",
-      "date": "2026-10-15",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1566826/0001213900-26-109818-index.htm",
-      "pct_now": 0.0,
-      "pct_prev": null,
-      "pct_status": "exited"
-    },
-    {
-      "filer": "William Anderson Wittekind",
-      "target": "Lunai Bioworks Inc.",
-      "ticker": "LNAI",
-      "date": "2026-10-15",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1527728/0001214659-26-012970-index.htm",
-      "pct_now": 4.5,
-      "pct_prev": null,
-      "pct_status": "below_5"
-    },
-    {
-      "filer": "MITSUI & CO LTD",
-      "target": "PENSKE AUTOMOTIVE GROUP, INC.",
-      "ticker": "PAG",
-      "date": "2026-10-15",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1019849/0001193125-26-422269-index.htm",
-      "pct_now": 20.3,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "PENSKE ROGER S",
-      "target": "PENSKE AUTOMOTIVE GROUP, INC.",
-      "ticker": "PAG",
-      "date": "2026-10-15",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1019849/0001193125-26-422280-index.htm",
-      "pct_now": 52.3,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Psyence Labs Ltd",
-      "target": "PSYENCE BIOMEDICAL LTD.",
-      "ticker": "PBM",
-      "date": "2026-10-15",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1985062/0001213900-26-109613-index.htm",
-      "pct_now": 49.75,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Third Point LLC",
-      "target": "Strata Critical Medical, Inc.",
-      "ticker": "SRTA",
-      "date": "2026-10-15",
-      "form": "SC 13D",
-      "is_amendment": false,
-      "url": "http://www.sec.gov/Archives/edgar/data/1779128/0000899140-26-001108-index.htm",
-      "pct_now": 5.8,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Liu Yif",
-      "target": "AIFU Inc.",
-      "ticker": "AIFU",
-      "date": "2026-10-14",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1413855/0001213900-26-109228-index.htm",
-      "pct_now": 7.89,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "ZHAO ILEANA",
-      "target": "AIFU Inc.",
-      "ticker": "AIFU",
-      "date": "2026-10-14",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1413855/0001213900-26-109229-index.htm",
-      "pct_now": 16.76,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "BW Group Ltd",
-      "target": "Navigator Holdings Ltd.",
-      "ticker": "NVGS",
-      "date": "2026-10-14",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1581804/0001213900-26-109418-index.htm",
-      "pct_now": 5.5,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Barta Jan",
-      "target": "Dole plc",
-      "ticker": "DOLE",
-      "date": "2026-10-14",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1857475/0000921895-26-002794-index.htm",
-      "pct_now": 10.2,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Saba Capital Management, L.P.",
-      "target": "BlackRock TCP Capital Corp.",
-      "ticker": "TCPC",
-      "date": "2026-10-14",
-      "form": "SC 13D",
-      "is_amendment": false,
-      "url": "http://www.sec.gov/Archives/edgar/data/1370755/0001062993-26-005324-index.htm",
-      "pct_now": 5.11,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Blackstone Holdings III L.P.",
-      "target": "Bumble Inc.",
-      "ticker": "BMBL",
-      "date": "2026-10-14",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1830043/0001193125-26-421973-index.htm",
-      "pct_now": 0.3,
-      "pct_prev": null,
-      "pct_status": "below_5"
-    },
-    {
-      "filer": "Herd Whitney Wolfe",
-      "target": "Bumble Inc.",
-      "ticker": "BMBL",
-      "date": "2026-10-14",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1830043/0001104659-26-115924-index.htm",
-      "pct_now": 14.7,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "GRAHAM DONALD",
-      "target": "Cable One, Inc.",
-      "ticker": "CABO",
-      "date": "2026-10-14",
-      "form": "SC 13D/A",
-      "is_amendment": true,
-      "url": "http://www.sec.gov/Archives/edgar/data/1632127/0000950157-26-001101-index.htm",
-      "pct_now": 6.88,
-      "pct_prev": null,
-      "pct_status": null
-    },
-    {
-      "filer": "Seto Wai Yue",
-      "target": "Dreamland Ltd",
-      "ticker": "TDIC",
-      "date": "2026-10-14",
-      "form": "SC 13D",
-      "is_amendment": false,
-      "url": "http://www.sec.gov/Archives/edgar/data/2041338/0001493152-26-046947-index.htm",
-      "pct_now": 53.15,
-      "pct_prev": null,
-      "pct_status": null
     }
   ],
   "active_filers": [
@@ -1484,9 +1484,9 @@
       "count": 58
     }
   ],
-  "total_filings": 14805,
-  "n_filers": 3271,
-  "latest_date": "2026-10-22",
+  "total_filings": 14820,
+  "n_filers": 3273,
+  "latest_date": "2026-10-23",
   "yearly": [
     {
       "year": 2015,
@@ -1534,8 +1534,8 @@
     },
     {
       "year": 2026,
-      "filings": 4834
+      "filings": 4849
     }
   ],
-  "snapshot_ts": "2026-10-23T13:33:49.213492+00:00"
+  "snapshot_ts": "2026-10-26T11:26:18.337393+00:00"
 }
