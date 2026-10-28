@@ -1,14 +1,14 @@
 {
  "status": "ok",
- "as_of": "2026-10-27",
+ "as_of": "2026-10-28",
  "source_panels": [
   "form13f",
   "def14a_persons",
   "stakes_13g",
   "smart_money"
  ],
- "n_nodes": 123,
- "n_edges": 855,
+ "n_nodes": 99,
+ "n_edges": 833,
  "nodes": [
   {
    "id": "i:0000807249",
@@ -747,6 +747,22 @@
    }
   },
   {
+   "id": "p:AIDA M. ALVAREZ",
+   "type": "person",
+   "label": "Aida M. Alvarez",
+   "zh_label": null,
+   "lanes": [
+    "def14a"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 1,
+    "co_target": 0
+   }
+  },
+  {
    "id": "p:AIK NA TAN",
    "type": "person",
    "label": "Aik Na Tan",
@@ -759,6 +775,22 @@
    "degree": {
     "co_hold": 0,
     "co_board": 1,
+    "co_target": 0
+   }
+  },
+  {
+   "id": "p:ALAN D. SCHWARTZ",
+   "type": "person",
+   "label": "Alan D. Schwartz",
+   "zh_label": null,
+   "lanes": [
+    "def14a"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 9,
     "co_target": 0
    }
   },
@@ -795,22 +827,6 @@
    }
   },
   {
-   "id": "p:ALINA DULIMOF",
-   "type": "person",
-   "label": "Alina Dulimof",
-   "zh_label": null,
-   "lanes": [
-    "def14a"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 1,
-    "co_target": 0
-   }
-  },
-  {
    "id": "p:AMBROSE CHAN HENG FAI",
    "type": "person",
    "label": "Ambrose Chan Heng Fai",
@@ -827,9 +843,9 @@
    }
   },
   {
-   "id": "p:AMIR STERNHELL",
+   "id": "p:BRIAN G. SWEENEY",
    "type": "person",
-   "label": "Amir Sternhell",
+   "label": "Brian G. Sweeney",
    "zh_label": null,
    "lanes": [
     "def14a"
@@ -838,7 +854,23 @@
    "manager_routable": false,
    "degree": {
     "co_hold": 0,
-    "co_board": 1,
+    "co_board": 9,
+    "co_target": 0
+   }
+  },
+  {
+   "id": "p:CHARLES P. DOLAN",
+   "type": "person",
+   "label": "Charles P. Dolan",
+   "zh_label": null,
+   "lanes": [
+    "def14a"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 9,
     "co_target": 0
    }
   },
@@ -859,6 +891,22 @@
    }
   },
   {
+   "id": "p:GEORGE W. BUSH",
+   "type": "person",
+   "label": "George W. Bush",
+   "zh_label": null,
+   "lanes": [
+    "def14a"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 1,
+    "co_target": 0
+   }
+  },
+  {
    "id": "p:HENRY A. BUTLER",
    "type": "person",
    "label": "Henry A. Butler",
@@ -875,6 +923,22 @@
    }
   },
   {
+   "id": "p:JAMES L. DOLAN",
+   "type": "person",
+   "label": "James L. Dolan",
+   "zh_label": null,
+   "lanes": [
+    "def14a"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 9,
+    "co_target": 0
+   }
+  },
+  {
    "id": "p:JOANNE WONG HIU PAN",
    "type": "person",
    "label": "Joanne Wong Hiu Pan",
@@ -886,7 +950,7 @@
    "manager_routable": false,
    "degree": {
     "co_hold": 0,
-    "co_board": 2,
+    "co_board": 5,
     "co_target": 0
    }
   },
@@ -902,7 +966,39 @@
    "manager_routable": false,
    "degree": {
     "co_hold": 0,
-    "co_board": 2,
+    "co_board": 5,
+    "co_target": 0
+   }
+  },
+  {
+   "id": "p:PAUL J. DOLAN",
+   "type": "person",
+   "label": "Paul J. Dolan",
+   "zh_label": null,
+   "lanes": [
+    "def14a"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 9,
+    "co_target": 0
+   }
+  },
+  {
+   "id": "p:PAY RATIO",
+   "type": "person",
+   "label": "Pay Ratio",
+   "zh_label": null,
+   "lanes": [
+    "def14a"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 9,
     "co_target": 0
    }
   },
@@ -918,7 +1014,23 @@
    "manager_routable": false,
    "degree": {
     "co_hold": 0,
-    "co_board": 1,
+    "co_board": 10,
+    "co_target": 0
+   }
+  },
+  {
+   "id": "p:QUENTIN F. DOLAN",
+   "type": "person",
+   "label": "Quentin F. Dolan",
+   "zh_label": null,
+   "lanes": [
+    "def14a"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 9,
     "co_target": 0
    }
   },
@@ -955,9 +1067,89 @@
    }
   },
   {
+   "id": "p:RONGGUO WEI",
+   "type": "person",
+   "label": "Rongguo Wei",
+   "zh_label": null,
+   "lanes": [
+    "def14a"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 4,
+    "co_target": 0
+   }
+  },
+  {
+   "id": "p:RYAN T. DOLAN",
+   "type": "person",
+   "label": "Ryan T. Dolan",
+   "zh_label": null,
+   "lanes": [
+    "def14a"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 9,
+    "co_target": 0
+   }
+  },
+  {
    "id": "p:TED R. MUNSELLE",
    "type": "person",
    "label": "Ted R. Munselle",
+   "zh_label": null,
+   "lanes": [
+    "def14a"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 4,
+    "co_target": 0
+   }
+  },
+  {
+   "id": "p:THOMAS C. DOLAN",
+   "type": "person",
+   "label": "Thomas C. Dolan",
+   "zh_label": null,
+   "lanes": [
+    "def14a"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 9,
+    "co_target": 0
+   }
+  },
+  {
+   "id": "p:WILLIAM WU",
+   "type": "person",
+   "label": "William Wu",
+   "zh_label": null,
+   "lanes": [
+    "def14a"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 4,
+    "co_target": 0
+   }
+  },
+  {
+   "id": "p:WONG SHUI YEUNG",
+   "type": "person",
+   "label": "Wong Shui Yeung",
    "zh_label": null,
    "lanes": [
     "def14a"
@@ -983,13 +1175,13 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 16
+    "co_target": 7
    }
   },
   {
-   "id": "s:ALFORD TONY L",
+   "id": "s:ASCENT PARTNERS FUND LLC",
    "type": "staker",
-   "label": "Alford Tony L",
+   "label": "Ascent Partners Fund LLC",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1003,73 +1195,9 @@
    }
   },
   {
-   "id": "s:ALPS ETF TRUST",
+   "id": "s:BLACKROCK PORTFOLIO MANAGEMENT LLC",
    "type": "staker",
-   "label": "ALPS ETF Trust",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 11
-   }
-  },
-  {
-   "id": "s:ARES MANAGEMENT LLC",
-   "type": "staker",
-   "label": "ARES MANAGEMENT LLC",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:BAILLIE GIFFORD & CO",
-   "type": "staker",
-   "label": "BAILLIE GIFFORD & CO",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:CALAMOS ETF TRUST",
-   "type": "staker",
-   "label": "Calamos ETF Trust",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 11
-   }
-  },
-  {
-   "id": "s:CAPITAL VENTURES INTERNATIONAL",
-   "type": "staker",
-   "label": "CAPITAL VENTURES INTERNATIONAL",
+   "label": "BlackRock Portfolio Management LLC",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1099,22 +1227,6 @@
    }
   },
   {
-   "id": "s:CHOO CHEE KONG",
-   "type": "staker",
-   "label": "Choo Chee Kong",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
    "id": "s:CHS US INVESTMENTS LLC",
    "type": "staker",
    "label": "CHS US Investments LLC",
@@ -1131,9 +1243,9 @@
    }
   },
   {
-   "id": "s:CITADEL SECURITIES GP LLC",
+   "id": "s:CK AMARILLO LP",
    "type": "staker",
-   "label": "Citadel Securities GP LLC",
+   "label": "CK Amarillo LP",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1147,9 +1259,9 @@
    }
   },
   {
-   "id": "s:CSS LLC/IL",
+   "id": "s:CORVUS CAPITAL LTD.",
    "type": "staker",
-   "label": "CSS LLC/IL",
+   "label": "Corvus Capital Ltd.",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1159,29 +1271,13 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 2
+    "co_target": 1
    }
   },
   {
    "id": "s:CYBERLINK INTERNATIONAL TECHNOLOGY CORP.",
    "type": "staker",
    "label": "CyberLink International Technology Corp.",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:D. E. SHAW & CO, L.P.",
-   "type": "staker",
-   "label": "D. E. SHAW & CO, L.P.",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1211,9 +1307,9 @@
    }
   },
   {
-   "id": "s:DEEP TRACK CAPITAL, LP",
+   "id": "s:EXPRO GROUP HOLDINGS N.V.",
    "type": "staker",
-   "label": "Deep Track Capital, LP",
+   "label": "EXPRO GROUP HOLDINGS N.V.",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1223,13 +1319,13 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 1
+    "co_target": 5
    }
   },
   {
-   "id": "s:ELYSIA CAPITAL I SCSP",
+   "id": "s:EXXON MOBIL CORP",
    "type": "staker",
-   "label": "Elysia Capital I SCSp",
+   "label": "EXXON MOBIL CORP",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1239,151 +1335,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:FEDERATED HERMES ETF TRUST",
-   "type": "staker",
-   "label": "Federated Hermes ETF Trust",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 11
-   }
-  },
-  {
-   "id": "s:FELDMAN ASSAF",
-   "type": "staker",
-   "label": "Feldman Assaf",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:FIRST TRUST EXCHANGE-TRADED FUND",
-   "type": "staker",
-   "label": "FIRST TRUST EXCHANGE-TRADED FUND",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 11
-   }
-  },
-  {
-   "id": "s:FIRST TRUST EXCHANGE-TRADED FUND III",
-   "type": "staker",
-   "label": "FIRST TRUST EXCHANGE-TRADED FUND III",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 11
-   }
-  },
-  {
-   "id": "s:FIRST TRUST EXCHANGE-TRADED FUND IV",
-   "type": "staker",
-   "label": "FIRST TRUST EXCHANGE-TRADED FUND IV",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 11
-   }
-  },
-  {
-   "id": "s:FIRST TRUST EXCHANGE-TRADED FUND VI",
-   "type": "staker",
-   "label": "FIRST TRUST EXCHANGE-TRADED FUND VI",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 11
-   }
-  },
-  {
-   "id": "s:FIRST TRUST EXCHANGE-TRADED FUND VIII",
-   "type": "staker",
-   "label": "FIRST TRUST EXCHANGE-TRADED FUND VIII",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 11
-   }
-  },
-  {
-   "id": "s:GAL EIDO",
-   "type": "staker",
-   "label": "Gal Eido",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:GLAZER CAPITAL, LLC",
-   "type": "staker",
-   "label": "GLAZER CAPITAL, LLC",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
+    "co_target": 5
    }
   },
   {
@@ -1403,9 +1355,9 @@
    }
   },
   {
-   "id": "s:GRAVITAS COLLECTIVE CORP.",
+   "id": "s:GOLD RESOURCE CORP",
    "type": "staker",
-   "label": "Gravitas Collective Corp.",
+   "label": "GOLD RESOURCE CORP",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1415,23 +1367,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:HARTFORD FUNDS EXCHANGE-TRADED TRUST",
-   "type": "staker",
-   "label": "Hartford Funds Exchange-Traded Trust",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 11
+    "co_target": 5
    }
   },
   {
@@ -1447,7 +1383,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 2
+    "co_target": 1
    }
   },
   {
@@ -1463,61 +1399,13 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 2
-   }
-  },
-  {
-   "id": "s:INVESCO EXCHANGE-TRADED FUND TRUST",
-   "type": "staker",
-   "label": "INVESCO EXCHANGE-TRADED FUND TRUST",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 11
-   }
-  },
-  {
-   "id": "s:INVESCO EXCHANGE-TRADED FUND TRUST II",
-   "type": "staker",
-   "label": "Invesco Exchange-Traded Fund Trust II",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 3
-   }
-  },
-  {
-   "id": "s:JANE STREET GROUP, LLC",
-   "type": "staker",
-   "label": "JANE STREET GROUP, LLC",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
     "co_target": 1
    }
   },
   {
-   "id": "s:L1 CAPITAL GLOBAL OPPORTUNITIES MASTER FUND, LTD.",
+   "id": "s:ISHARES TRUST",
    "type": "staker",
-   "label": "L1 Capital Global Opportunities Master Fund, Ltd.",
+   "label": "iSHARES TRUST",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1527,7 +1415,23 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 1
+    "co_target": 5
+   }
+  },
+  {
+   "id": "s:ISHARES, INC.",
+   "type": "staker",
+   "label": "iShares, Inc.",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 5
    }
   },
   {
@@ -1563,86 +1467,6 @@
    }
   },
   {
-   "id": "s:LIAO XIAOYAN",
-   "type": "staker",
-   "label": "Liao Xiaoyan",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 3
-   }
-  },
-  {
-   "id": "s:LILLY ENDOWMENT INC",
-   "type": "staker",
-   "label": "LILLY ENDOWMENT INC",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:MDR LTD",
-   "type": "staker",
-   "label": "mDR Ltd",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:MENORA MIVTACHIM HOLDINGS LTD.",
-   "type": "staker",
-   "label": "MENORA MIVTACHIM HOLDINGS LTD.",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:MIGDAL INSURANCE & FINANCIAL HOLDINGS LTD.",
-   "type": "staker",
-   "label": "Migdal Insurance & Financial Holdings Ltd.",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
    "id": "s:NEXUS CAPITAL MANAGEMENT LP",
    "type": "staker",
    "label": "Nexus Capital Management LP",
@@ -1659,73 +1483,9 @@
    }
   },
   {
-   "id": "s:NG CHUN SEONG",
+   "id": "s:POMPLIANO ANTHONY JOHN III",
    "type": "staker",
-   "label": "Ng Chun Seong",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 3
-   }
-  },
-  {
-   "id": "s:NUSHARES ETF TRUST",
-   "type": "staker",
-   "label": "Nushares ETF Trust",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 3
-   }
-  },
-  {
-   "id": "s:OLDRIDGE PHILLIP",
-   "type": "staker",
-   "label": "OLDRIDGE PHILLIP",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 3
-   }
-  },
-  {
-   "id": "s:PACER FUNDS TRUST",
-   "type": "staker",
-   "label": "Pacer Funds Trust",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 11
-   }
-  },
-  {
-   "id": "s:PACIFIC INVESTMENT MANAGEMENT CO LLC",
-   "type": "staker",
-   "label": "PACIFIC INVESTMENT MANAGEMENT CO LLC",
+   "label": "Pompliano Anthony John III",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1739,105 +1499,9 @@
    }
   },
   {
-   "id": "s:PZENA INVESTMENT MANAGEMENT LLC",
+   "id": "s:ROSALIND ADVISORS, INC.",
    "type": "staker",
-   "label": "PZENA INVESTMENT MANAGEMENT LLC",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:RA CAPITAL MANAGEMENT, L.P.",
-   "type": "staker",
-   "label": "RA CAPITAL MANAGEMENT, L.P.",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:RICKEL KENNETH",
-   "type": "staker",
-   "label": "RICKEL KENNETH",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:S.H.N. FINANCIAL INVESTMENTS LTD.",
-   "type": "staker",
-   "label": "S.H.N. Financial Investments Ltd.",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:SHANE HILARY",
-   "type": "staker",
-   "label": "shane hilary",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:SIMCOE CAPITAL MANAGEMENT, LLC",
-   "type": "staker",
-   "label": "Simcoe Capital Management, LLC",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:SIMON FIDUCIARIA S.P.A.",
-   "type": "staker",
-   "label": "Simon Fiduciaria S.p.A.",
+   "label": "Rosalind Advisors, Inc.",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1854,22 +1518,6 @@
    "id": "s:SINO LION VENTURES LTD",
    "type": "staker",
    "label": "SINO LION VENTURES Ltd",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 3
-   }
-  },
-  {
-   "id": "s:SPINNAKER ETF SERIES",
-   "type": "staker",
-   "label": "Spinnaker ETF Series",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1902,38 +1550,6 @@
    "id": "s:SUN LEI",
    "type": "staker",
    "label": "Sun Lei",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:SWEDER TARA",
-   "type": "staker",
-   "label": "Sweder Tara",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 3
-   }
-  },
-  {
-   "id": "s:TREX BIO, INC.",
-   "type": "staker",
-   "label": "TRex Bio, Inc.",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -2033,6 +1649,136 @@
    "truncated": false
   },
   {
+   "a": "p:AIDA M. ALVAREZ",
+   "b": "p:GEORGE W. BUSH",
+   "type": "co_board",
+   "w": 1,
+   "shared": [
+    {
+     "company": "Stride, Inc.",
+     "tk": "LRN"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:ALAN D. SCHWARTZ",
+   "b": "p:BRIAN G. SWEENEY",
+   "type": "co_board",
+   "w": 1,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:ALAN D. SCHWARTZ",
+   "b": "p:CHARLES P. DOLAN",
+   "type": "co_board",
+   "w": 1,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:ALAN D. SCHWARTZ",
+   "b": "p:JAMES L. DOLAN",
+   "type": "co_board",
+   "w": 1,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:ALAN D. SCHWARTZ",
+   "b": "p:PAUL J. DOLAN",
+   "type": "co_board",
+   "w": 1,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:ALAN D. SCHWARTZ",
+   "b": "p:PAY RATIO",
+   "type": "co_board",
+   "w": 1,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:ALAN D. SCHWARTZ",
+   "b": "p:PAY VERSUS PERFORMANCE",
+   "type": "co_board",
+   "w": 1,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:ALAN D. SCHWARTZ",
+   "b": "p:QUENTIN F. DOLAN",
+   "type": "co_board",
+   "w": 1,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:ALAN D. SCHWARTZ",
+   "b": "p:RYAN T. DOLAN",
+   "type": "co_board",
+   "w": 1,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:ALAN D. SCHWARTZ",
+   "b": "p:THOMAS C. DOLAN",
+   "type": "co_board",
+   "w": 1,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    }
+   ],
+   "truncated": false
+  },
+  {
    "a": "p:ALI PERVAIZ",
    "b": "p:PAY VERSUS PERFORMANCE",
    "type": "co_board",
@@ -2041,19 +1787,6 @@
     {
      "company": "ACCURAY INC",
      "tk": "ARAY"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "p:ALINA DULIMOF",
-   "b": "p:AMIR STERNHELL",
-   "type": "co_board",
-   "w": 1,
-   "shared": [
-    {
-     "company": "OLB GROUP, INC.",
-     "tk": "OLB"
     }
    ],
    "truncated": false
@@ -2080,6 +1813,261 @@
     {
      "company": "DSS, INC.",
      "tk": "DSS"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:BRIAN G. SWEENEY",
+   "b": "p:CHARLES P. DOLAN",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:BRIAN G. SWEENEY",
+   "b": "p:JAMES L. DOLAN",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:BRIAN G. SWEENEY",
+   "b": "p:PAUL J. DOLAN",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:BRIAN G. SWEENEY",
+   "b": "p:PAY RATIO",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:BRIAN G. SWEENEY",
+   "b": "p:PAY VERSUS PERFORMANCE",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:BRIAN G. SWEENEY",
+   "b": "p:QUENTIN F. DOLAN",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:BRIAN G. SWEENEY",
+   "b": "p:RYAN T. DOLAN",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:BRIAN G. SWEENEY",
+   "b": "p:THOMAS C. DOLAN",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:CHARLES P. DOLAN",
+   "b": "p:JAMES L. DOLAN",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:CHARLES P. DOLAN",
+   "b": "p:PAUL J. DOLAN",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:CHARLES P. DOLAN",
+   "b": "p:PAY RATIO",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:CHARLES P. DOLAN",
+   "b": "p:PAY VERSUS PERFORMANCE",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:CHARLES P. DOLAN",
+   "b": "p:QUENTIN F. DOLAN",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:CHARLES P. DOLAN",
+   "b": "p:RYAN T. DOLAN",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:CHARLES P. DOLAN",
+   "b": "p:THOMAS C. DOLAN",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
     }
    ],
    "truncated": false
@@ -2208,6 +2196,108 @@
    "truncated": false
   },
   {
+   "a": "p:JAMES L. DOLAN",
+   "b": "p:PAUL J. DOLAN",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:JAMES L. DOLAN",
+   "b": "p:PAY RATIO",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:JAMES L. DOLAN",
+   "b": "p:PAY VERSUS PERFORMANCE",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:JAMES L. DOLAN",
+   "b": "p:QUENTIN F. DOLAN",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:JAMES L. DOLAN",
+   "b": "p:RYAN T. DOLAN",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:JAMES L. DOLAN",
+   "b": "p:THOMAS C. DOLAN",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
    "a": "p:JOANNE WONG HIU PAN",
    "b": "p:LIM SHENG HON DANNY",
    "type": "co_board",
@@ -2220,6 +2310,322 @@
     {
      "company": "DSS, INC.",
      "tk": "DSS"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:JOANNE WONG HIU PAN",
+   "b": "p:RONGGUO WEI",
+   "type": "co_board",
+   "w": 1,
+   "shared": [
+    {
+     "company": "Alset Inc.",
+     "tk": "AEI"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:JOANNE WONG HIU PAN",
+   "b": "p:WILLIAM WU",
+   "type": "co_board",
+   "w": 1,
+   "shared": [
+    {
+     "company": "Alset Inc.",
+     "tk": "AEI"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:JOANNE WONG HIU PAN",
+   "b": "p:WONG SHUI YEUNG",
+   "type": "co_board",
+   "w": 1,
+   "shared": [
+    {
+     "company": "Alset Inc.",
+     "tk": "AEI"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:LIM SHENG HON DANNY",
+   "b": "p:RONGGUO WEI",
+   "type": "co_board",
+   "w": 1,
+   "shared": [
+    {
+     "company": "Alset Inc.",
+     "tk": "AEI"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:LIM SHENG HON DANNY",
+   "b": "p:WILLIAM WU",
+   "type": "co_board",
+   "w": 1,
+   "shared": [
+    {
+     "company": "Alset Inc.",
+     "tk": "AEI"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:LIM SHENG HON DANNY",
+   "b": "p:WONG SHUI YEUNG",
+   "type": "co_board",
+   "w": 1,
+   "shared": [
+    {
+     "company": "Alset Inc.",
+     "tk": "AEI"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:PAUL J. DOLAN",
+   "b": "p:PAY RATIO",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:PAUL J. DOLAN",
+   "b": "p:PAY VERSUS PERFORMANCE",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:PAUL J. DOLAN",
+   "b": "p:QUENTIN F. DOLAN",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:PAUL J. DOLAN",
+   "b": "p:RYAN T. DOLAN",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:PAUL J. DOLAN",
+   "b": "p:THOMAS C. DOLAN",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:PAY RATIO",
+   "b": "p:PAY VERSUS PERFORMANCE",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:PAY RATIO",
+   "b": "p:QUENTIN F. DOLAN",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:PAY RATIO",
+   "b": "p:RYAN T. DOLAN",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:PAY RATIO",
+   "b": "p:THOMAS C. DOLAN",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:PAY VERSUS PERFORMANCE",
+   "b": "p:QUENTIN F. DOLAN",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:PAY VERSUS PERFORMANCE",
+   "b": "p:RYAN T. DOLAN",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:PAY VERSUS PERFORMANCE",
+   "b": "p:THOMAS C. DOLAN",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:QUENTIN F. DOLAN",
+   "b": "p:RYAN T. DOLAN",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:QUENTIN F. DOLAN",
+   "b": "p:THOMAS C. DOLAN",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
     }
    ],
    "truncated": false
@@ -2275,6 +2681,74 @@
     {
      "company": "TRANSCONTINENTAL REALTY INVESTORS INC",
      "tk": "TCI"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:RONGGUO WEI",
+   "b": "p:WILLIAM WU",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "Alset Inc.",
+     "tk": "AEI"
+    },
+    {
+     "company": "EnerSyn Global Inc.",
+     "tk": "ESYN"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:RONGGUO WEI",
+   "b": "p:WONG SHUI YEUNG",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "Alset Inc.",
+     "tk": "AEI"
+    },
+    {
+     "company": "EnerSyn Global Inc.",
+     "tk": "ESYN"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:RYAN T. DOLAN",
+   "b": "p:THOMAS C. DOLAN",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "MSG Knickerbockers Corp.",
+     "tk": null
+    },
+    {
+     "company": "Madison Square Garden Entertainment Corp.",
+     "tk": "MSGE"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:WILLIAM WU",
+   "b": "p:WONG SHUI YEUNG",
+   "type": "co_board",
+   "w": 2,
+   "shared": [
+    {
+     "company": "Alset Inc.",
+     "tk": "AEI"
+    },
+    {
+     "company": "EnerSyn Global Inc.",
+     "tk": "ESYN"
     }
    ],
    "truncated": false
@@ -22853,41 +23327,27 @@
   },
   {
    "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:ALFORD TONY L",
+   "b": "s:CK AMARILLO LP",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "Lion Copper Corp.",
-     "tk": "LCGMF",
-     "forms": "SC 13D/A|SC 13G|SC 13G/A"
+     "target": "HERTZ GLOBAL HOLDINGS, INC",
+     "tk": "HTZ",
+     "forms": "SC 13D/A|SC 13G/A"
     }
    ],
    "truncated": false
   },
   {
    "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:ALPS ETF TRUST",
+   "b": "s:EXPRO GROUP HOLDINGS N.V.",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:CALAMOS ETF TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
+     "target": "BlackRock, Inc.",
+     "tk": "BLK",
      "forms": "SC 13G|SC 13G/A"
     }
    ],
@@ -22895,13 +23355,13 @@
   },
   {
    "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:CAPITAL VENTURES INTERNATIONAL",
+   "b": "s:EXXON MOBIL CORP",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "MiniMed Group, Inc.",
-     "tk": "MMED",
+     "target": "BlackRock, Inc.",
+     "tk": "BLK",
      "forms": "SC 13G|SC 13G/A"
     }
    ],
@@ -22909,13 +23369,13 @@
   },
   {
    "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:FEDERATED HERMES ETF TRUST",
+   "b": "s:GOLD RESOURCE CORP",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
+     "target": "BlackRock, Inc.",
+     "tk": "BLK",
      "forms": "SC 13G|SC 13G/A"
     }
    ],
@@ -22923,13 +23383,13 @@
   },
   {
    "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND",
+   "b": "s:ISHARES TRUST",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
+     "target": "BlackRock, Inc.",
+     "tk": "BLK",
      "forms": "SC 13G|SC 13G/A"
     }
    ],
@@ -22937,13 +23397,13 @@
   },
   {
    "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND III",
+   "b": "s:ISHARES, INC.",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
+     "target": "BlackRock, Inc.",
+     "tk": "BLK",
      "forms": "SC 13G|SC 13G/A"
     }
    ],
@@ -22951,420 +23411,42 @@
   },
   {
    "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND IV",
+   "b": "s:POMPLIANO ANTHONY JOHN III",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G|SC 13G/A"
+     "target": "Silvia, Inc.",
+     "tk": "BRR",
+     "forms": "SC 13D/A|SC 13G"
     }
    ],
    "truncated": false
   },
   {
-   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND VI",
+   "a": "s:ASCENT PARTNERS FUND LLC",
+   "b": "s:CORVUS CAPITAL LTD.",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G|SC 13G/A"
+     "target": "CDT Equity Inc.",
+     "tk": "CDT",
+     "forms": "SC 13D/A|SC 13G/A"
     }
    ],
    "truncated": false
   },
   {
-   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND VIII",
+   "a": "s:BLACKROCK PORTFOLIO MANAGEMENT LLC",
+   "b": "s:ROSALIND ADVISORS, INC.",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:HARTFORD FUNDS EXCHANGE-TRADED TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:INVESCO EXCHANGE-TRADED FUND TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:INVESCO EXCHANGE-TRADED FUND TRUST II",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Bank of New York Mellon Corp",
-     "tk": "BNY",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:NUSHARES ETF TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Bank of New York Mellon Corp",
-     "tk": "BNY",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:PACER FUNDS TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:SPINNAKER ETF SERIES",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Bank of New York Mellon Corp",
-     "tk": "BNY",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:ALPS ETF TRUST",
-   "b": "s:CALAMOS ETF TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:ALPS ETF TRUST",
-   "b": "s:FEDERATED HERMES ETF TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:ALPS ETF TRUST",
-   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:ALPS ETF TRUST",
-   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND III",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:ALPS ETF TRUST",
-   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND IV",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:ALPS ETF TRUST",
-   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND VI",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:ALPS ETF TRUST",
-   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND VIII",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:ALPS ETF TRUST",
-   "b": "s:HARTFORD FUNDS EXCHANGE-TRADED TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:ALPS ETF TRUST",
-   "b": "s:INVESCO EXCHANGE-TRADED FUND TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:ALPS ETF TRUST",
-   "b": "s:PACER FUNDS TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:ARES MANAGEMENT LLC",
-   "b": "s:PACIFIC INVESTMENT MANAGEMENT CO LLC",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Clear Channel Outdoor Holdings, Inc.",
-     "tk": "CCO",
-     "forms": "SC 13D/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:BAILLIE GIFFORD & CO",
-   "b": "s:D. E. SHAW & CO, L.P.",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Sweetgreen, Inc.",
-     "tk": "SG",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:CALAMOS ETF TRUST",
-   "b": "s:FEDERATED HERMES ETF TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:CALAMOS ETF TRUST",
-   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:CALAMOS ETF TRUST",
-   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND III",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:CALAMOS ETF TRUST",
-   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND IV",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:CALAMOS ETF TRUST",
-   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND VI",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:CALAMOS ETF TRUST",
-   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND VIII",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:CALAMOS ETF TRUST",
-   "b": "s:HARTFORD FUNDS EXCHANGE-TRADED TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:CALAMOS ETF TRUST",
-   "b": "s:INVESCO EXCHANGE-TRADED FUND TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:CALAMOS ETF TRUST",
-   "b": "s:PACER FUNDS TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
+     "target": "DELCATH SYSTEMS, INC.",
+     "tk": "DCTH",
+     "forms": "SC 13D/A|SC 13G"
     }
    ],
    "truncated": false
@@ -23379,20 +23461,6 @@
      "target": "Perfect Corp.",
      "tk": "PERF",
      "forms": "SC 13D/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:CHOO CHEE KONG",
-   "b": "s:MDR LTD",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "CytoMed Therapeutics Ltd",
-     "tk": "GDTC",
-     "forms": "SC 13D/A|SC 13G/A"
     }
    ],
    "truncated": false
@@ -23421,48 +23489,6 @@
      "target": "Rent the Runway, Inc.",
      "tk": "RENT",
      "forms": "SC 13D/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:CITADEL SECURITIES GP LLC",
-   "b": "s:JANE STREET GROUP, LLC",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Cipher Digital Inc.",
-     "tk": "CIFR",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:CSS LLC/IL",
-   "b": "s:HERZFELD ERIK MERVIN",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Herzfeld Credit Income Fund, Inc",
-     "tk": "HERZ",
-     "forms": "SC 13D/A|SC 13G"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:CSS LLC/IL",
-   "b": "s:HERZFELD THOMAS J",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Herzfeld Credit Income Fund, Inc",
-     "tk": "HERZ",
-     "forms": "SC 13D/A|SC 13G"
     }
    ],
    "truncated": false
@@ -23510,519 +23536,99 @@
    "truncated": false
   },
   {
-   "a": "s:DEEP TRACK CAPITAL, LP",
-   "b": "s:RA CAPITAL MANAGEMENT, L.P.",
+   "a": "s:EXPRO GROUP HOLDINGS N.V.",
+   "b": "s:EXXON MOBIL CORP",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "Alector, Inc.",
-     "tk": "ALEC",
-     "forms": "SC 13G"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:ELYSIA CAPITAL I SCSP",
-   "b": "s:SIMON FIDUCIARIA S.P.A.",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "newcleo plc",
-     "tk": "NWCL",
-     "forms": "SC 13G"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:FEDERATED HERMES ETF TRUST",
-   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
+     "target": "BlackRock, Inc.",
+     "tk": "BLK",
      "forms": "SC 13G/A"
     }
    ],
    "truncated": false
   },
   {
-   "a": "s:FEDERATED HERMES ETF TRUST",
-   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND III",
+   "a": "s:EXPRO GROUP HOLDINGS N.V.",
+   "b": "s:GOLD RESOURCE CORP",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
+     "target": "BlackRock, Inc.",
+     "tk": "BLK",
      "forms": "SC 13G/A"
     }
    ],
    "truncated": false
   },
   {
-   "a": "s:FEDERATED HERMES ETF TRUST",
-   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND IV",
+   "a": "s:EXPRO GROUP HOLDINGS N.V.",
+   "b": "s:ISHARES TRUST",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:FEDERATED HERMES ETF TRUST",
-   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND VI",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:FEDERATED HERMES ETF TRUST",
-   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND VIII",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:FEDERATED HERMES ETF TRUST",
-   "b": "s:HARTFORD FUNDS EXCHANGE-TRADED TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
+     "target": "BlackRock, Inc.",
+     "tk": "BLK",
      "forms": "SC 13G|SC 13G/A"
     }
    ],
    "truncated": false
   },
   {
-   "a": "s:FEDERATED HERMES ETF TRUST",
-   "b": "s:INVESCO EXCHANGE-TRADED FUND TRUST",
+   "a": "s:EXPRO GROUP HOLDINGS N.V.",
+   "b": "s:ISHARES, INC.",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
+     "target": "BlackRock, Inc.",
+     "tk": "BLK",
      "forms": "SC 13G|SC 13G/A"
     }
    ],
    "truncated": false
   },
   {
-   "a": "s:FEDERATED HERMES ETF TRUST",
-   "b": "s:PACER FUNDS TRUST",
+   "a": "s:EXXON MOBIL CORP",
+   "b": "s:GOLD RESOURCE CORP",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
+     "target": "BlackRock, Inc.",
+     "tk": "BLK",
      "forms": "SC 13G/A"
     }
    ],
    "truncated": false
   },
   {
-   "a": "s:FELDMAN ASSAF",
-   "b": "s:GAL EIDO",
+   "a": "s:EXXON MOBIL CORP",
+   "b": "s:ISHARES TRUST",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "RISKIFIED LTD.",
-     "tk": "RSKD",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND",
-   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND III",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND",
-   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND IV",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND",
-   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND VI",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND",
-   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND VIII",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND",
-   "b": "s:HARTFORD FUNDS EXCHANGE-TRADED TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
+     "target": "BlackRock, Inc.",
+     "tk": "BLK",
      "forms": "SC 13G|SC 13G/A"
     }
    ],
    "truncated": false
   },
   {
-   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND",
-   "b": "s:INVESCO EXCHANGE-TRADED FUND TRUST",
+   "a": "s:EXXON MOBIL CORP",
+   "b": "s:ISHARES, INC.",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
+     "target": "BlackRock, Inc.",
+     "tk": "BLK",
      "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND",
-   "b": "s:PACER FUNDS TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND III",
-   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND IV",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND III",
-   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND VI",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND III",
-   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND VIII",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND III",
-   "b": "s:HARTFORD FUNDS EXCHANGE-TRADED TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND III",
-   "b": "s:INVESCO EXCHANGE-TRADED FUND TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND III",
-   "b": "s:PACER FUNDS TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND IV",
-   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND VI",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND IV",
-   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND VIII",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND IV",
-   "b": "s:HARTFORD FUNDS EXCHANGE-TRADED TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND IV",
-   "b": "s:INVESCO EXCHANGE-TRADED FUND TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND IV",
-   "b": "s:PACER FUNDS TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND VI",
-   "b": "s:FIRST TRUST EXCHANGE-TRADED FUND VIII",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND VI",
-   "b": "s:HARTFORD FUNDS EXCHANGE-TRADED TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND VI",
-   "b": "s:INVESCO EXCHANGE-TRADED FUND TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND VI",
-   "b": "s:PACER FUNDS TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND VIII",
-   "b": "s:HARTFORD FUNDS EXCHANGE-TRADED TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND VIII",
-   "b": "s:INVESCO EXCHANGE-TRADED FUND TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:FIRST TRUST EXCHANGE-TRADED FUND VIII",
-   "b": "s:PACER FUNDS TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:GLAZER CAPITAL, LLC",
-   "b": "s:SHANE HILARY",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Bumble Inc.",
-     "tk": "BMBL",
-     "forms": "SC 13G"
     }
    ],
    "truncated": false
@@ -24042,42 +23648,28 @@
    "truncated": false
   },
   {
-   "a": "s:GRAVITAS COLLECTIVE CORP.",
-   "b": "s:RICKEL KENNETH",
+   "a": "s:GOLD RESOURCE CORP",
+   "b": "s:ISHARES TRUST",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "Hepion Pharmaceuticals, Inc.",
-     "tk": "HEPA",
-     "forms": "SC 13D|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:HARTFORD FUNDS EXCHANGE-TRADED TRUST",
-   "b": "s:INVESCO EXCHANGE-TRADED FUND TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
+     "target": "BlackRock, Inc.",
+     "tk": "BLK",
      "forms": "SC 13G|SC 13G/A"
     }
    ],
    "truncated": false
   },
   {
-   "a": "s:HARTFORD FUNDS EXCHANGE-TRADED TRUST",
-   "b": "s:PACER FUNDS TRUST",
+   "a": "s:GOLD RESOURCE CORP",
+   "b": "s:ISHARES, INC.",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
+     "target": "BlackRock, Inc.",
+     "tk": "BLK",
      "forms": "SC 13G|SC 13G/A"
     }
    ],
@@ -24098,57 +23690,15 @@
    "truncated": false
   },
   {
-   "a": "s:INVESCO EXCHANGE-TRADED FUND TRUST",
-   "b": "s:PACER FUNDS TRUST",
+   "a": "s:ISHARES TRUST",
+   "b": "s:ISHARES, INC.",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "TRUIST FINANCIAL CORP",
-     "tk": "TFC",
+     "target": "BlackRock, Inc.",
+     "tk": "BLK",
      "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:INVESCO EXCHANGE-TRADED FUND TRUST II",
-   "b": "s:NUSHARES ETF TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Bank of New York Mellon Corp",
-     "tk": "BNY",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:INVESCO EXCHANGE-TRADED FUND TRUST II",
-   "b": "s:SPINNAKER ETF SERIES",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Bank of New York Mellon Corp",
-     "tk": "BNY",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:L1 CAPITAL GLOBAL OPPORTUNITIES MASTER FUND, LTD.",
-   "b": "s:S.H.N. FINANCIAL INVESTMENTS LTD.",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "INLIF Ltd",
-     "tk": "INLF",
-     "forms": "SC 13G"
     }
    ],
    "truncated": false
@@ -24168,76 +23718,6 @@
    "truncated": false
   },
   {
-   "a": "s:LIAO XIAOYAN",
-   "b": "s:NG CHUN SEONG",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Rantizo",
-     "tk": "SKK",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:LIAO XIAOYAN",
-   "b": "s:OLDRIDGE PHILLIP",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Rantizo",
-     "tk": "SKK",
-     "forms": "SC 13D|SC 13D/A|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:LIAO XIAOYAN",
-   "b": "s:SWEDER TARA",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Rantizo",
-     "tk": "SKK",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:LILLY ENDOWMENT INC",
-   "b": "s:TREX BIO, INC.",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "ELI LILLY & Co",
-     "tk": "LLY",
-     "forms": "SC 13D|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:MENORA MIVTACHIM HOLDINGS LTD.",
-   "b": "s:MIGDAL INSURANCE & FINANCIAL HOLDINGS LTD.",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "CAMTEK LTD",
-     "tk": "CAMT",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
    "a": "s:NEXUS CAPITAL MANAGEMENT LP",
    "b": "s:STORY3 CAPITAL PARTNERS, LLC",
    "type": "co_target",
@@ -24247,76 +23727,6 @@
      "target": "Rent the Runway, Inc.",
      "tk": "RENT",
      "forms": "SC 13D/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:NG CHUN SEONG",
-   "b": "s:OLDRIDGE PHILLIP",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Rantizo",
-     "tk": "SKK",
-     "forms": "SC 13D|SC 13D/A|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:NG CHUN SEONG",
-   "b": "s:SWEDER TARA",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Rantizo",
-     "tk": "SKK",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:NUSHARES ETF TRUST",
-   "b": "s:SPINNAKER ETF SERIES",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Bank of New York Mellon Corp",
-     "tk": "BNY",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:OLDRIDGE PHILLIP",
-   "b": "s:SWEDER TARA",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Rantizo",
-     "tk": "SKK",
-     "forms": "SC 13D|SC 13D/A|SC 13G"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:PZENA INVESTMENT MANAGEMENT LLC",
-   "b": "s:SIMCOE CAPITAL MANAGEMENT, LLC",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Koppers Holdings Inc.",
-     "tk": "KOP",
-     "forms": "SC 13D/A|SC 13G/A"
     }
    ],
    "truncated": false
@@ -24380,22 +23790,8 @@
    "stock_routable": false
   },
   {
-   "tk": "AON",
-   "name": "Aon plc",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 2,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": true
-  },
-  {
-   "tk": "ATAT",
-   "name": "Atour Lifestyle Holdings Ltd",
+   "tk": "AAOI",
+   "name": "APPLIED OPTOELECTRONICS, INC.",
    "in": [
     "13f",
     "13dg"
@@ -24408,8 +23804,8 @@
    "stock_routable": false
   },
   {
-   "tk": "BNY",
-   "name": "Bank of New York Mellon Corp",
+   "tk": "ABSI",
+   "name": "Absci Corp",
    "in": [
     "13f",
     "13dg"
@@ -24417,27 +23813,13 @@
    "counts": {
     "managers": 1,
     "persons": 0,
-    "stakers": 4
+    "stakers": 1
    },
    "stock_routable": false
   },
   {
-   "tk": "CIFR",
-   "name": "Cipher Digital Inc.",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 2,
-    "persons": 0,
-    "stakers": 2
-   },
-   "stock_routable": false
-  },
-  {
-   "tk": "CPAY",
-   "name": "CORPAY, INC.",
+   "tk": "ADI",
+   "name": "ANALOG DEVICES INC",
    "in": [
     "13f",
     "13dg"
@@ -24450,8 +23832,8 @@
    "stock_routable": true
   },
   {
-   "tk": "CTNM",
-   "name": "Contineum Therapeutics, Inc.",
+   "tk": "ALSN",
+   "name": "Allison Transmission Holdings Inc",
    "in": [
     "13f",
     "13dg"
@@ -24464,8 +23846,8 @@
    "stock_routable": false
   },
   {
-   "tk": "DOCN",
-   "name": "DigitalOcean Holdings, Inc.",
+   "tk": "AN",
+   "name": "AUTONATION, INC.",
    "in": [
     "13f",
     "13dg"
@@ -24478,8 +23860,232 @@
    "stock_routable": false
   },
   {
-   "tk": "FIVN",
-   "name": "Five9, Inc.",
+   "tk": "APTV",
+   "name": "Aptiv PLC",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": true
+  },
+  {
+   "tk": "ATI",
+   "name": "ATI INC",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 2,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "BBIO",
+   "name": "BridgeBio Pharma, Inc.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 2,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "BILL",
+   "name": "BILL Holdings, Inc.",
+   "in": [
+    "13f",
+    "def14a"
+   ],
+   "counts": {
+    "managers": 2,
+    "persons": 1,
+    "stakers": 0
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "BLK",
+   "name": "BlackRock, Inc.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 6
+   },
+   "stock_routable": true
+  },
+  {
+   "tk": "BTDR",
+   "name": "Bitdeer Technologies Group",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 2,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "CDW",
+   "name": "CDW Corp",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": true
+  },
+  {
+   "tk": "CHTR",
+   "name": "CHARTER COMMUNICATIONS, INC. /MO/",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 2,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": true
+  },
+  {
+   "tk": "CNH",
+   "name": "CNH Industrial N.V.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "CP",
+   "name": "CANADIAN PACIFIC KANSAS CITY LTD/CN",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "CRGY",
+   "name": "Crescent Energy Co",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "CTRN",
+   "name": "Citi Trends Inc",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "DCO",
+   "name": "DUCOMMUN INC /DE/",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 2,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "ESTC",
+   "name": "Elastic N.V.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "FER",
+   "name": "Ferrovial N.V.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "FERG",
+   "name": "Ferguson Enterprises Inc. /DE/",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 4,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "GPI",
+   "name": "GROUP 1 AUTOMOTIVE INC",
    "in": [
     "13f",
     "13dg"
@@ -24501,51 +24107,9 @@
    "counts": {
     "managers": 2,
     "persons": 0,
-    "stakers": 1
+    "stakers": 2
    },
    "stock_routable": false
-  },
-  {
-   "tk": "IOT",
-   "name": "Samsara Inc.",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 1,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
-  },
-  {
-   "tk": "JOF",
-   "name": "JAPAN SMALLER CAPITALIZATION FUND INC",
-   "in": [
-    "def14a",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 0,
-    "persons": 1,
-    "stakers": 1
-   },
-   "stock_routable": false
-  },
-  {
-   "tk": "JPM",
-   "name": "JPMORGAN CHASE & CO",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 4,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": true
   },
   {
    "tk": "LBTYA",
@@ -24556,34 +24120,6 @@
    ],
    "counts": {
     "managers": 2,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
-  },
-  {
-   "tk": "LLY",
-   "name": "ELI LILLY & Co",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 5,
-    "persons": 0,
-    "stakers": 2
-   },
-   "stock_routable": true
-  },
-  {
-   "tk": "LLYVA",
-   "name": "Liberty Live Holdings, Inc.",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 3,
     "persons": 0,
     "stakers": 1
    },
@@ -24604,8 +24140,22 @@
    "stock_routable": false
   },
   {
-   "tk": "MATW",
-   "name": "MATTHEWS INTERNATIONAL CORP",
+   "tk": "NEE",
+   "name": "NEXTERA ENERGY INC",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": true
+  },
+  {
+   "tk": "NVMI",
+   "name": "NOVA LTD.",
    "in": [
     "13f",
     "13dg"
@@ -24618,22 +24168,8 @@
    "stock_routable": false
   },
   {
-   "tk": "MDT",
-   "name": "Medtronic plc",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 3,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": true
-  },
-  {
-   "tk": "MMM",
-   "name": "3M CO",
+   "tk": "NVS",
+   "name": "NOVARTIS AG",
    "in": [
     "13f",
     "13dg"
@@ -24643,25 +24179,25 @@
     "persons": 0,
     "stakers": 1
    },
-   "stock_routable": true
+   "stock_routable": false
   },
   {
-   "tk": "MSFT",
-   "name": "MICROSOFT CORP",
+   "tk": "ODC",
+   "name": "Oil-Dri Corp of America",
    "in": [
     "13f",
     "def14a"
    ],
    "counts": {
-    "managers": 20,
+    "managers": 1,
     "persons": 1,
     "stakers": 0
    },
-   "stock_routable": true
+   "stock_routable": false
   },
   {
-   "tk": "NBIX",
-   "name": "NEUROCRINE BIOSCIENCES INC",
+   "tk": "OR",
+   "name": "OR Royalties Inc.",
    "in": [
     "13f",
     "13dg"
@@ -24674,8 +24210,8 @@
    "stock_routable": false
   },
   {
-   "tk": "NVAX",
-   "name": "NOVAVAX INC",
+   "tk": "PURR",
+   "name": "Hyperliquid Strategies Inc",
    "in": [
     "13f",
     "13dg"
@@ -24688,22 +24224,8 @@
    "stock_routable": false
   },
   {
-   "tk": "PFE",
-   "name": "PFIZER INC",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 2,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": true
-  },
-  {
-   "tk": "QURE",
-   "name": "uniQure N.V.",
+   "tk": "QNT",
+   "name": "Quantinuum Inc.",
    "in": [
     "13f",
     "13dg"
@@ -24716,28 +24238,28 @@
    "stock_routable": false
   },
   {
-   "tk": "RDDT",
-   "name": "Reddit, Inc.",
+   "tk": "ROIV",
+   "name": "Roivant Sciences Ltd.",
    "in": [
     "13f",
     "13dg"
    ],
    "counts": {
-    "managers": 4,
+    "managers": 1,
     "persons": 0,
     "stakers": 1
    },
    "stock_routable": false
   },
   {
-   "tk": "SE",
-   "name": "Sea Ltd",
+   "tk": "SAM",
+   "name": "BOSTON BEER CO INC",
    "in": [
     "13f",
     "13dg"
    ],
    "counts": {
-    "managers": 9,
+    "managers": 1,
     "persons": 0,
     "stakers": 1
    },
@@ -24758,8 +24280,8 @@
    "stock_routable": false
   },
   {
-   "tk": "WHR",
-   "name": "WHIRLPOOL CORP /DE/",
+   "tk": "TSM",
+   "name": "TAIWAN SEMICONDUCTOR MANUFACTURING CO LTD",
    "in": [
     "13f",
     "13dg"
@@ -24772,22 +24294,8 @@
    "stock_routable": false
   },
   {
-   "tk": "WTS",
-   "name": "WATTS WATER TECHNOLOGIES INC",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 1,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
-  },
-  {
-   "tk": "WULF",
-   "name": "TERAWULF INC.",
+   "tk": "VSTS",
+   "name": "Vestis Corp",
    "in": [
     "13f",
     "13dg"
@@ -24804,29 +24312,44 @@
    "name": "Wave Life Sciences, Inc.",
    "in": [
     "13f",
-    "def14a"
+    "def14a",
+    "13dg"
    ],
    "counts": {
     "managers": 1,
     "persons": 2,
-    "stakers": 0
+    "stakers": 1
    },
    "stock_routable": false
+  },
+  {
+   "tk": "WY",
+   "name": "WEYERHAEUSER CO",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": true
   }
  ],
  "components": {
-  "n": 28,
+  "n": 16,
   "largest": 43
  },
  "windows": {
   "form13f_quarter": "2026-06-30",
   "stakes_visible_dates": {
-   "start": "2026-10-14",
-   "end": "2026-10-26"
+   "start": "2026-10-27",
+   "end": "2026-10-27"
   },
   "smart_money_visible_dates": {
    "start": "2026-10-16",
-   "end": "2026-10-26"
+   "end": "2026-10-27"
   }
  },
  "coverage": {
@@ -24836,7 +24359,7 @@
    "isolated_managers": 0
   },
   "def14a": {
-   "basis": "top_persons export: 50 most-seated of 630 upstream persons; 107/150 filings with persons (71.3%)",
+   "basis": "top_persons export: 50 most-seated of 657 upstream persons; 109/150 filings with persons (72.7%)",
    "same_name_merges_possible": true
   },
   "13dg": {
@@ -24845,5 +24368,5 @@
   }
  },
  "methodology": "Force-camp relationship graph DERIVED at export time from four COMMITTED panels (form13f x def14a_persons x stakes_13g union smart_money) \u2014 zero new fetches, display-only. Edges are pairwise projections over as-filed disclosure facts: co_hold = two curated managers' VISIBLE BOOKS (latest quarter, up to 50 positions each; the full books are larger) share a position key (ticker, else CUSIP); co_board = two proxy-statement top persons seat the same company (exact company-name match resolves the ticker); co_target = two different filers INDEPENDENTLY SEPARATELY FILED stakes converging on the same target issuer within the visible SC 13D/13G windows. Identity rule: a window filer merges into an institution node ONLY when its trimmed-uppercase name equals a curated manager's name exactly \u2014 no fuzzy matching, no name list. The three overlaps are factual coincidences of separate filings: joint filings stay verbatim (members NOT DECOMPOSED), no COORDINATION is implied and no consortium claim is made. Weights are integer counts of shared items (lists capped at 8, truncated flag set beyond). Coverage is bounded by construction \u2014 see the coverage.basis strings (visible books, a 50-person proxy export over the newest filings, latest filing windows only). A restatement of public SEC EDGAR disclosures only: NO PRICES, NO RETURNS, no performance claims; never part of any OOS pipeline.",
- "snapshot_ts": "2026-10-27T11:32:08.760273+00:00"
+ "snapshot_ts": "2026-10-28T12:07:59.206984+00:00"
 }

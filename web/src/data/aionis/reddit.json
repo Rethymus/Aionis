@@ -10,37 +10,37 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-10-27T10:51:40+00:00",
-  "n_snapshots": 45,
+  "latest_snapshot_ts": "2026-10-28T11:00:30+00:00",
+  "n_snapshots": 46,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
-      "ticker": "META",
-      "mentions": 2,
-      "sentiment": -0.187,
-      "bull_ratio": 0.0,
-      "score_sum": 0
-    },
-    {
-      "ticker": "CHTR",
+      "ticker": "AAPL",
       "mentions": 1,
-      "sentiment": -0.21,
+      "sentiment": 0.369,
       "bull_ratio": null,
       "score_sum": 0
     },
     {
-      "ticker": "DASH",
+      "ticker": "NVDA",
       "mentions": 1,
-      "sentiment": 0.331,
-      "bull_ratio": 1.0,
+      "sentiment": 0.369,
+      "bull_ratio": null,
       "score_sum": 0
     },
     {
       "ticker": "TSLA",
       "mentions": 1,
-      "sentiment": -0.013,
+      "sentiment": 0.369,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "LMT",
+      "mentions": 1,
+      "sentiment": 0.374,
       "bull_ratio": null,
       "score_sum": 0
     }
@@ -48,9 +48,9 @@
   "pressure": {
     "status": "accumulating",
     "by_ticker": {},
-    "n_snapshots": 45,
-    "latest_date": "2026-10-27",
+    "n_snapshots": 46,
+    "latest_date": "2026-10-28",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-10-27T11:31:49.216845+00:00"
+  "snapshot_ts": "2026-10-28T12:07:27.510639+00:00"
 }
