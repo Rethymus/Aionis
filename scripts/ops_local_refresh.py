@@ -38,6 +38,8 @@ Usage:
   uv run python scripts/ops_local_refresh.py --run     # full evening lane
   uv run python scripts/ops_local_refresh.py --run --force   # bypass guard (human)
   uv run python scripts/ops_local_refresh.py --status  # print marker state
+  uv run python scripts/ops_local_refresh.py --status --json  # marker as machine JSON
+  uv run python scripts/ops_local_refresh.py --doctor --json  # preflight as machine JSON
 
 Exit codes: 0 = done (committed / no-change / clean skip), 1 = failed this
 attempt (cron retries on the next fire; 3 failures per evening self-lock).
@@ -747,24 +749,37 @@ def do_run(force: bool) -> int:
             return 1
 
 
-def doctor() -> int:
-    """Read-only six-layer preflight (round 109): one command the owner (or
-    any future session) runs to verify the whole lane stack after machine
-    changes, credential renewals, or before a renewal decision. Prints
-    PASS/FAIL per layer; exit 0 only if every layer passes."""
+def _emit_json(payload: object) -> None:
+    """Machine-readable stdout contract (--status --json / --doctor --json):
+    exactly one JSON document on stdout, UTF-8 bytes, ensure_ascii=False.
+    The bytes go to sys.stdout.buffer directly — a GBK Windows text layer
+    would mojibake/raise on non-ASCII marker content (the 2026-09-10/11
+    outage class); captured stdout without .buffer (pytest capsys) falls
+    back to print()."""
+    text = json.dumps(payload, ensure_ascii=False, indent=2)
+    buf = getattr(sys.stdout, "buffer", None)
+    if buf is not None:
+        buf.write(text.encode("utf-8") + b"\n")
+        buf.flush()
+    else:
+        print(text)
 
+
+def collect_layers() -> list[tuple[str, bool, str]]:
+    """The six read-only preflight checks (round 109) as data — one
+    (name, ok, detail) tuple per layer, in order. Pure collection, no
+    printing: doctor() renders the human PASS/FAIL text from these tuples
+    and --doctor --json renders the machine document from the same source,
+    so the two surfaces can never disagree."""
     checks: list[tuple[str, bool, str]] = []
-
-    def _check(name: str, ok: bool, detail: str) -> None:
-        checks.append((name, ok, detail))
-        print(f"[{'PASS' if ok else 'FAIL'}] {name}: {detail}")
 
     # L1 marker + guard sanity (pure logic, no side effects)
     state = load_state()
     decision = guard_decision(datetime.now(), state)
-    _check("1/6 guard+marker", state.get("date") is not None,
-           f"marker date={state.get('date')} status={state.get('status')} "
-           f"guard-now={decision.split(':')[0]}")
+    checks.append((
+        "1/6 guard+marker", state.get("date") is not None,
+        f"marker date={state.get('date')} status={state.get('status')} "
+        f"guard-now={decision.split(':')[0]}"))
 
     # L2 Windows Task Scheduler (the zero-token heartbeat)
     if IS_WINDOWS:
@@ -773,42 +788,46 @@ def doctor() -> int:
              "(Get-ScheduledTask -TaskName 'Aionis evening data lane' "
              "-ErrorAction SilentlyContinue) -ne $null"],
             capture_output=True, text=True, timeout=30)
-        _check("2/6 task scheduler", out.returncode == 0
-               and "True" in out.stdout,
-               "registered" if "True" in out.stdout else "NOT registered")
+        ok2 = out.returncode == 0 and "True" in out.stdout
+        checks.append(("2/6 task scheduler", ok2,
+                       "registered" if ok2 else "NOT registered"))
     else:
-        _check("2/6 task scheduler", False, "non-Windows host (manual cron?)")
+        checks.append(
+            ("2/6 task scheduler", False, "non-Windows host (manual cron?)"))
 
     # L3 SessionStart hook config (committed file, correct event+matcher)
-    hook_cfg = ROOT / ".zcode" / "config.json"
     try:
+        hook_cfg = ROOT / ".zcode" / "config.json"
         cfg = json.loads(hook_cfg.read_text(encoding="utf-8"))
         ev = cfg.get("hooks", {}).get("events", {}).get("SessionStart", [])
-        ok = (cfg.get("hooks", {}).get("enabled") is True and bool(ev)
-              and "startup" in ev[0].get("matcher", ""))
-        _check("3/6 sessionstart hook", ok,
-               f"enabled={cfg.get('hooks', {}).get('enabled')} "
-               f"matcher={ev[0].get('matcher') if ev else 'none'}")
+        ok3 = (cfg.get("hooks", {}).get("enabled") is True and bool(ev)
+               and "startup" in ev[0].get("matcher", ""))
+        checks.append((
+            "3/6 sessionstart hook", ok3,
+            f"enabled={cfg.get('hooks', {}).get('enabled')} "
+            f"matcher={ev[0].get('matcher') if ev else 'none'}"))
     except (OSError, ValueError, IndexError) as exc:
-        _check("3/6 sessionstart hook", False, f"{exc}")
+        checks.append(("3/6 sessionstart hook", False, f"{exc}"))
 
     # L4 git push credential (read-only ls-remote with the stored cred)
     out = subprocess.run(["git", "ls-remote", "--heads", "origin", "main"],
                          cwd=ROOT, capture_output=True, text=True, timeout=30)
-    _check("4/6 push credential", out.returncode == 0
-           and out.stdout.startswith(tuple("0123456789abcdef")),
-           "ls-remote ok" if out.returncode == 0
-           else out.stderr.strip()[-80:])
+    ok4 = out.returncode == 0
+    checks.append((
+        "4/6 push credential",
+        ok4 and out.stdout.startswith(tuple("0123456789abcdef")),
+        "ls-remote ok" if ok4 else out.stderr.strip()[-80:]))
 
     # L5 gh CLI auth + repo visibility
     out = subprocess.run(["gh", "run", "list", "--limit", "1"],
                          cwd=ROOT, capture_output=True, text=True, timeout=30)
-    _check("5/6 gh auth", out.returncode == 0,
-           "gh ok" if out.returncode == 0 else out.stderr.strip()[-80:])
+    ok5 = out.returncode == 0
+    checks.append(("5/6 gh auth", ok5,
+                   "gh ok" if ok5 else out.stderr.strip()[-80:]))
 
     # L6 runtime env: .env keys present (names only, never values)
     env_path = ROOT / ".env"
-    names = set()
+    names: set[str] = set()
     try:
         for line in env_path.read_text(encoding="utf-8").splitlines():
             if "=" in line and not line.startswith("#"):
@@ -816,12 +835,33 @@ def doctor() -> int:
     except OSError:
         pass
     need = {"TIINGO_API_KEY", "FRED_API_KEY"}
-    _check("6/6 api env", need <= names,
-           f"present={sorted(need & names)} missing={sorted(need - names)}")
+    checks.append(("6/6 api env", need <= names,
+                   f"present={sorted(need & names)} "
+                   f"missing={sorted(need - names)}"))
+    return checks
 
+
+def doctor(as_json: bool = False) -> int:
+    """Read-only six-layer preflight (round 109): one command the owner (or
+    any future session) runs to verify the whole lane stack after machine
+    changes, credential renewals, or before a renewal decision. Human mode
+    prints PASS/FAIL per layer; --json emits exactly one machine document
+    ({"layers": [{name, ok, detail}...], "passed": N, "total": 6}) instead.
+    Exit 0 only if every layer passes (both modes)."""
+    checks = collect_layers()
     failed = [n for n, ok, _ in checks if not ok]
-    print(f"doctor: {len(checks) - len(failed)}/{len(checks)} layers pass"
-          + (f" — FAILED: {failed}" if failed else ""))
+    if as_json:
+        _emit_json({
+            "layers": [{"name": name, "ok": ok, "detail": detail}
+                       for name, ok, detail in checks],
+            "passed": len(checks) - len(failed),
+            "total": len(checks),
+        })
+    else:
+        for name, ok, detail in checks:
+            print(f"[{'PASS' if ok else 'FAIL'}] {name}: {detail}")
+        print(f"doctor: {len(checks) - len(failed)}/{len(checks)} layers pass"
+              + (f" — FAILED: {failed}" if failed else ""))
     return 1 if failed else 0
 
 
@@ -838,6 +878,9 @@ def main() -> int:
     group.add_argument("--status", action="store_true", help="print marker state")
     group.add_argument("--doctor", action="store_true",
                        help="read-only six-layer lane preflight")
+    parser.add_argument("--json", action="store_true",
+                        help="with --status/--doctor: emit machine-readable "
+                             "JSON (UTF-8, ensure_ascii=False) to stdout")
     parser.add_argument("--force", action="store_true",
                         help="with --run: bypass the guard (human use only)")
     args = parser.parse_args()
@@ -846,13 +889,18 @@ def main() -> int:
     if not (args.guard or args.run or args.status or args.doctor):
         parser.error("one of the arguments --guard --run --status --doctor "
                      "is required (or --retry-soft)")
+    if args.json and not (args.status or args.doctor):
+        parser.error("--json is only meaningful with --status or --doctor")
     if args.guard:
         print(guard_decision(datetime.now(), load_state()))
         return 0
     if args.doctor:
-        return doctor()
+        return doctor(as_json=args.json)
     if args.status:
-        print(json.dumps(load_state(), ensure_ascii=False, indent=2))
+        if args.json:
+            _emit_json(load_state())
+        else:
+            print(json.dumps(load_state(), ensure_ascii=False, indent=2))
         return 0
     return do_run(args.force)
 

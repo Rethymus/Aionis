@@ -554,3 +554,110 @@ def test_do_run_state_persists_persistent_soft_fails() -> None:
     assert "persistent_soft_fails" in summary_keys, (
         "SUMMARY lost 'persistent_soft_fails' — the alarm must reach the log"
     )
+
+
+# --- machine-readable output: --status --json / --doctor --json (2026-10-29) ----
+
+
+def _fake_marker(tmp_path: Path) -> dict:
+    """A realistic once-per-evening marker in tmp, with a non-ASCII field —
+    that byte proves the ensure_ascii=False contract end-to-end. STATE_FILE
+    is bound from ROOT at import time, so the fixture patches STATE_FILE
+    itself (same module-global seam the other tests use for ROOT/LOG_DIR)."""
+    import json as _json
+
+    state = {"date": "2026-10-28", "status": "ok_committed", "attempts": 1,
+             "commit": "abc1234", "n_files": 7, "soft_fails": [],
+             "ci": {"Publish site (gh-pages)": "success", "Tests": "success"},
+             "note": "晚间 lane ✓"}
+    path = tmp_path / "data" / "ops" / "local_refresh_state.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(_json.dumps(state, ensure_ascii=False, indent=2) + "\n",
+                    encoding="utf-8")
+    return state
+
+
+def _mock_preflight_stack(monkeypatch, tmp_path) -> None:
+    """All-pass six-layer stack: mocked subprocesses, forced Windows branch,
+    tmp ROOT carrying a valid hook config + the two required .env keys."""
+    import json as _json
+
+    def _ok(args, **k):
+        s = "True" if "ScheduledTask" in str(args) else (
+            "abc123 main" if "ls-remote" in args else "gh ok")
+        return subprocess.CompletedProcess(args, 0, s, "")
+
+    monkeypatch.setattr(lane.subprocess, "run", _ok)
+    monkeypatch.setattr(lane, "IS_WINDOWS", True)  # CI runs Linux: force the
+    # scheduler branch so the mocked powershell query is what executes
+    monkeypatch.setattr(lane, "load_state",
+                        lambda: {"date": "2026-10-01", "status": "ok_committed"})
+    (tmp_path / ".zcode").mkdir()
+    (tmp_path / ".zcode" / "config.json").write_text(_json.dumps({
+        "hooks": {"enabled": True, "events": {"SessionStart": [
+            {"matcher": "startup|resume", "hooks": []}]}}}), encoding="utf-8")
+    (tmp_path / ".env").write_text(
+        "TIINGO_API_KEY=x" + chr(10) + "FRED_API_KEY=y" + chr(10),
+        encoding="utf-8")
+    monkeypatch.setattr(lane, "ROOT", tmp_path)
+
+
+def test_status_json_stdout_parses_and_carries_marker_keys(
+        monkeypatch, tmp_path, capsys) -> None:
+    """--status --json prints exactly one JSON document (the whole marker
+    dict) on stdout: json.loads-able, carrying the ci/date keys the post-run
+    verifier reads, with non-ASCII emitted raw (ensure_ascii=False)."""
+    import json as _json
+
+    state = _fake_marker(tmp_path)
+    monkeypatch.setattr(
+        lane, "STATE_FILE",
+        tmp_path / "data" / "ops" / "local_refresh_state.json")
+    monkeypatch.setattr(sys, "argv",
+                        ["ops_local_refresh.py", "--status", "--json"])
+    assert lane.main() == 0
+    out = capsys.readouterr().out
+    payload = _json.loads(out)  # any stray non-JSON line would fail here
+    assert payload["date"] == state["date"]
+    assert payload["ci"] == state["ci"]
+    assert "✓" in out  # ensure_ascii=False — not \uXXXX-escaped
+
+
+def test_collect_layers_six_json_serializable_layers(monkeypatch, tmp_path) -> None:
+    """collect_layers (the doctor() refactor seam) returns the six preflight
+    layers as (name, ok, detail) tuples under mocked subprocesses, and the
+    tuples survive a JSON round-trip."""
+    import json as _json
+
+    _mock_preflight_stack(monkeypatch, tmp_path)
+    layers = lane.collect_layers()
+    assert len(layers) == 6
+    for name, ok, detail in layers:
+        assert isinstance(name, str)
+        assert isinstance(ok, bool)
+        assert isinstance(detail, str)
+    doc = _json.loads(_json.dumps(
+        [{"name": n, "ok": o, "detail": d} for n, o, d in layers],
+        ensure_ascii=False))
+    assert [row["name"] for row in doc] == [n for n, _, _ in layers]
+
+
+def test_doctor_json_stdout_shape(monkeypatch, tmp_path, capsys) -> None:
+    """--doctor --json prints ONLY the machine document {"layers":
+    [{name, ok, detail}...], "passed": N, "total": 6} — no human [PASS]/
+    [FAIL] lines interleaved, so stdout stays json.loads-able; exit code is
+    still 0 only when every layer passes."""
+    import json as _json
+
+    _mock_preflight_stack(monkeypatch, tmp_path)
+    monkeypatch.setattr(sys, "argv",
+                        ["ops_local_refresh.py", "--doctor", "--json"])
+    assert lane.main() == 0
+    out = capsys.readouterr().out
+    payload = _json.loads(out)
+    assert payload["total"] == 6
+    assert payload["passed"] == 6
+    assert len(payload["layers"]) == 6
+    for layer in payload["layers"]:
+        assert set(layer) == {"name", "ok", "detail"}
+        assert layer["ok"] is True
