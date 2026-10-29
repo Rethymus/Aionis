@@ -1,12 +1,12 @@
 {
   "status": "ok",
-  "as_of": "2026-10-27",
+  "as_of": "2026-10-28",
   "window": {
     "start": "2026-05-01",
-    "end": "2026-10-27"
+    "end": "2026-10-28"
   },
   "issuers": 50,
-  "total": 284,
+  "total": 288,
   "unclassified": 11,
   "by_category": {
     "agreement_termination": 2,
@@ -19,14 +19,73 @@
     "merger_completion": 1,
     "officer_changes": 61,
     "other": 3,
-    "other_events": 39,
-    "reg_fd": 26,
-    "results": 85,
+    "other_events": 40,
+    "reg_fd": 27,
+    "results": 87,
     "security_terms": 4,
     "unclassified": 11,
     "vote_results": 25
   },
   "events": [
+    {
+      "ticker": "MSFT",
+      "company": "MICROSOFT CORP",
+      "filing_date": "2026-10-28",
+      "form": "8-K",
+      "items": [
+        "8.01",
+        "9.01"
+      ],
+      "category": "other_events",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436149/msft-20261028.htm"
+    },
+    {
+      "ticker": "MSFT",
+      "company": "MICROSOFT CORP",
+      "filing_date": "2026-10-28",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436122/msft-20261028.htm"
+    },
+    {
+      "ticker": "GOOGL",
+      "company": "Alphabet Inc.",
+      "filing_date": "2026-10-28",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/goog-20261028.htm"
+    },
+    {
+      "ticker": "ORCL",
+      "company": "ORACLE CORP",
+      "filing_date": "2026-10-28",
+      "form": "8-K",
+      "items": [
+        "7.01",
+        "9.01"
+      ],
+      "category": "reg_fd",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526435853/d75538d8k.htm"
+    },
+    {
+      "ticker": "AVGO",
+      "company": "Broadcom Inc.",
+      "filing_date": "2026-10-27",
+      "form": "8-K",
+      "items": [
+        "2.03"
+      ],
+      "category": "financial_obligation",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1730168/000119312526434271/d148323d8k.htm"
+    },
     {
       "ticker": "V",
       "company": "VISA INC.",
@@ -63,17 +122,6 @@
       ],
       "category": "results",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/12927/000162828026067411/ba-20261027.htm"
-    },
-    {
-      "ticker": "AVGO",
-      "company": "Broadcom Inc.",
-      "filing_date": "2026-10-27",
-      "form": "8-K",
-      "items": [
-        "2.03"
-      ],
-      "category": "financial_obligation",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1730168/000119312526434271/d148323d8k.htm"
     },
     {
       "ticker": "WMT",
@@ -211,6 +259,18 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000093/ibm-20261021.htm"
     },
     {
+      "ticker": "RTX",
+      "company": "RTX Corp",
+      "filing_date": "2026-10-20",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/101829/000010182926000030/rtx-20261020.htm"
+    },
+    {
       "ticker": "JPM",
       "company": "JPMORGAN CHASE & CO",
       "filing_date": "2026-10-20",
@@ -259,16 +319,15 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/40545/000004054526000063/ge-20261020.htm"
     },
     {
-      "ticker": "RTX",
-      "company": "RTX Corp",
-      "filing_date": "2026-10-20",
+      "ticker": "XOM",
+      "company": "ExxonMobil Holdings Corp",
+      "filing_date": "2026-10-16",
       "form": "8-K",
       "items": [
-        "2.02",
-        "9.01"
+        "7.01"
       ],
-      "category": "results",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/101829/000010182926000030/rtx-20261020.htm"
+      "category": "reg_fd",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2115436/000211543626000013/xom-20261016.htm"
     },
     {
       "ticker": "PG",
@@ -280,17 +339,6 @@
       ],
       "category": "vote_results",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/80424/000008042426000245/pg-20261016.htm"
-    },
-    {
-      "ticker": "XOM",
-      "company": "ExxonMobil Holdings Corp",
-      "filing_date": "2026-10-16",
-      "form": "8-K",
-      "items": [
-        "7.01"
-      ],
-      "category": "reg_fd",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2115436/000211543626000013/xom-20261016.htm"
     },
     {
       "ticker": "PEP",
@@ -878,18 +926,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000078/nvda-20260902.htm"
     },
     {
-      "ticker": "MSFT",
-      "company": "MICROSOFT CORP",
-      "filing_date": "2026-09-02",
-      "form": "8-K",
-      "items": [
-        "7.01",
-        "9.01"
-      ],
-      "category": "reg_fd",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526380280/d291965d8k.htm"
-    },
-    {
       "ticker": "AVGO",
       "company": "Broadcom Inc.",
       "filing_date": "2026-09-02",
@@ -901,6 +937,18 @@
       ],
       "category": "results",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-20260902.htm"
+    },
+    {
+      "ticker": "MSFT",
+      "company": "MICROSOFT CORP",
+      "filing_date": "2026-09-02",
+      "form": "8-K",
+      "items": [
+        "7.01",
+        "9.01"
+      ],
+      "category": "reg_fd",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526380280/d291965d8k.htm"
     },
     {
       "ticker": "AAPL",
@@ -1378,18 +1426,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/40533/000119312526332899/d122083d8k.htm"
     },
     {
-      "ticker": "CVX",
-      "company": "CHEVRON CORP",
-      "filing_date": "2026-07-31",
-      "form": "8-K",
-      "items": [
-        "2.02",
-        "9.01"
-      ],
-      "category": "results",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000162/cvx-20260731.htm"
-    },
-    {
       "ticker": "XOM",
       "company": "ExxonMobil Holdings Corp",
       "filing_date": "2026-07-31",
@@ -1400,6 +1436,18 @@
       ],
       "category": "results",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2115436/000211543626000006/xom-20260731.htm"
+    },
+    {
+      "ticker": "CVX",
+      "company": "CHEVRON CORP",
+      "filing_date": "2026-07-31",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341026000162/cvx-20260731.htm"
     },
     {
       "ticker": "QCOM",
@@ -1633,6 +1681,18 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/4962/000000496226000318/axp-20260724.htm"
     },
     {
+      "ticker": "RTX",
+      "company": "RTX Corp",
+      "filing_date": "2026-07-23",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/101829/000010182926000025/rtx-20260723.htm"
+    },
+    {
       "ticker": "JPM",
       "company": "JPMORGAN CHASE & CO",
       "filing_date": "2026-07-23",
@@ -1703,18 +1763,6 @@
       ],
       "category": "results",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/936468/000162828026049277/lmt-20260723.htm"
-    },
-    {
-      "ticker": "RTX",
-      "company": "RTX Corp",
-      "filing_date": "2026-07-23",
-      "form": "8-K",
-      "items": [
-        "2.02",
-        "9.01"
-      ],
-      "category": "results",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/101829/000010182926000025/rtx-20260723.htm"
     },
     {
       "ticker": "GOOGL",
@@ -2269,6 +2317,18 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000070/nke-20260616.htm"
     },
     {
+      "ticker": "AVGO",
+      "company": "Broadcom Inc.",
+      "filing_date": "2026-06-18",
+      "form": "8-K",
+      "items": [
+        "8.01",
+        "9.01"
+      ],
+      "category": "other_events",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1730168/000119312526275077/d149683d8k.htm"
+    },
+    {
       "ticker": "NVDA",
       "company": "NVIDIA CORP",
       "filing_date": "2026-06-18",
@@ -2303,18 +2363,6 @@
       ],
       "category": "officer_changes",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000085/pfe-20260618.htm"
-    },
-    {
-      "ticker": "AVGO",
-      "company": "Broadcom Inc.",
-      "filing_date": "2026-06-18",
-      "form": "8-K",
-      "items": [
-        "8.01",
-        "9.01"
-      ],
-      "category": "other_events",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1730168/000119312526275077/d149683d8k.htm"
     },
     {
       "ticker": "NKE",
@@ -2387,6 +2435,18 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1018724/000110465926073562/tm2613616d5_8k.htm"
     },
     {
+      "ticker": "AVGO",
+      "company": "Broadcom Inc.",
+      "filing_date": "2026-06-11",
+      "form": "8-K",
+      "items": [
+        "8.01",
+        "9.01"
+      ],
+      "category": "other_events",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1730168/000119312526266777/d152717d8k.htm"
+    },
+    {
       "ticker": "GOOGL",
       "company": "Alphabet Inc.",
       "filing_date": "2026-06-11",
@@ -2398,18 +2458,6 @@
       ],
       "category": "officer_changes",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1652044/000119312526267578/d57679d8k.htm"
-    },
-    {
-      "ticker": "AVGO",
-      "company": "Broadcom Inc.",
-      "filing_date": "2026-06-11",
-      "form": "8-K",
-      "items": [
-        "8.01",
-        "9.01"
-      ],
-      "category": "other_events",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1730168/000119312526266777/d152717d8k.htm"
     },
     {
       "ticker": "ADBE",
@@ -3289,6 +3337,17 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1666700/000166670026000029/dd-20260505.htm"
     },
     {
+      "ticker": "RTX",
+      "company": "RTX Corp",
+      "filing_date": "2026-05-04",
+      "form": "8-K",
+      "items": [
+        "5.07"
+      ],
+      "category": "vote_results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/101829/000114036126018932/ef20072402_8k.htm"
+    },
+    {
       "ticker": "XOM",
       "company": "EXXON MOBIL CORP",
       "filing_date": "2026-05-04",
@@ -3310,17 +3369,6 @@
       ],
       "category": "other_events",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1326801/000119312526204128/d134616d8k.htm"
-    },
-    {
-      "ticker": "RTX",
-      "company": "RTX Corp",
-      "filing_date": "2026-05-04",
-      "form": "8-K",
-      "items": [
-        "5.07"
-      ],
-      "category": "vote_results",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/101829/000114036126018932/ef20072402_8k.htm"
     },
     {
       "ticker": "AXP",
@@ -3431,5 +3479,5 @@
     }
   ],
   "methodology": "SEC Form 8-K current reports \u2014 the legally mandated material-event disclosure (public domain, 17 U.S.C. \u00a7105), due within 4 business days of the event. Panel streams a bounded 50 large-cap issuer set (5 mega-cap seed + v2 20 + v3 25 across financials, payments, healthcare, staples, energy, industrials, tech/comm \u2014 breadth expansions 2026-08-22; still bounded, NOT full market; XOM carries both its pre-succession CIK and the 2026-07-01 8-K12B successor entity) since 2026-05-01; each row links the EDGAR primary document. Items are regex-extracted from the primary doc (nbsp/thin-space entities normalized) and mapped to ONE category by a rare-material-first precedence (delisting > merger completion > control change > non-reliance > officer changes > ... > exhibits); the full item list is preserved per row. Documents whose items cannot be extracted are counted as unclassified \u2014 never guessed. Filing-date point-in-time; 8-K/A amendments are new accessions (immutable). Display-only, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-10-28T12:07:08.476669+00:00"
+  "snapshot_ts": "2026-10-29T11:58:13.697956+00:00"
 }

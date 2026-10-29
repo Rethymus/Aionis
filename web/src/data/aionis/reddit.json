@@ -10,47 +10,61 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-10-28T11:00:30+00:00",
-  "n_snapshots": 46,
+  "latest_snapshot_ts": "2026-10-29T10:53:26+00:00",
+  "n_snapshots": 47,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
-      "ticker": "AAPL",
+      "ticker": "DASH",
       "mentions": 1,
-      "sentiment": 0.369,
+      "sentiment": -0.035,
       "bull_ratio": null,
       "score_sum": 0
     },
     {
-      "ticker": "NVDA",
+      "ticker": "MSFT",
       "mentions": 1,
-      "sentiment": 0.369,
+      "sentiment": 0.02,
       "bull_ratio": null,
       "score_sum": 0
     },
     {
-      "ticker": "TSLA",
+      "ticker": "GOOGL",
       "mentions": 1,
-      "sentiment": 0.369,
+      "sentiment": 0.02,
       "bull_ratio": null,
       "score_sum": 0
     },
     {
-      "ticker": "LMT",
+      "ticker": "META",
       "mentions": 1,
-      "sentiment": 0.374,
+      "sentiment": 0.02,
       "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "GOOG",
+      "mentions": 1,
+      "sentiment": -0.049,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "SNDK",
+      "mentions": 1,
+      "sentiment": -0.461,
+      "bull_ratio": 0.0,
       "score_sum": 0
     }
   ],
   "pressure": {
     "status": "accumulating",
     "by_ticker": {},
-    "n_snapshots": 46,
-    "latest_date": "2026-10-28",
+    "n_snapshots": 47,
+    "latest_date": "2026-10-29",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-10-28T12:07:27.510639+00:00"
+  "snapshot_ts": "2026-10-29T11:58:32.330630+00:00"
 }
