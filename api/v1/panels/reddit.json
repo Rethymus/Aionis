@@ -10,51 +10,79 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-10-29T10:53:26+00:00",
-  "n_snapshots": 47,
+  "latest_snapshot_ts": "2026-10-30T10:38:20+00:00",
+  "n_snapshots": 48,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
-      "ticker": "DASH",
-      "mentions": 1,
-      "sentiment": -0.035,
-      "bull_ratio": null,
+      "ticker": "GOOG",
+      "mentions": 4,
+      "sentiment": -0.428,
+      "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "AMZN",
+      "mentions": 4,
+      "sentiment": -0.397,
+      "bull_ratio": 0.333,
       "score_sum": 0
     },
     {
       "ticker": "MSFT",
-      "mentions": 1,
-      "sentiment": 0.02,
-      "bull_ratio": null,
+      "mentions": 3,
+      "sentiment": -0.568,
+      "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "INTC",
+      "mentions": 2,
+      "sentiment": -0.924,
+      "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "META",
+      "mentions": 2,
+      "sentiment": 0.032,
+      "bull_ratio": 1.0,
       "score_sum": 0
     },
     {
       "ticker": "GOOGL",
       "mentions": 1,
-      "sentiment": 0.02,
+      "sentiment": -0.873,
+      "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "NVDA",
+      "mentions": 1,
+      "sentiment": -0.709,
+      "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "PLTR",
+      "mentions": 1,
+      "sentiment": -0.709,
+      "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "EBAY",
+      "mentions": 1,
+      "sentiment": -0.052,
       "bull_ratio": null,
       "score_sum": 0
     },
     {
-      "ticker": "META",
+      "ticker": "AAPL",
       "mentions": 1,
-      "sentiment": 0.02,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "GOOG",
-      "mentions": 1,
-      "sentiment": -0.049,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "SNDK",
-      "mentions": 1,
-      "sentiment": -0.461,
+      "sentiment": -0.838,
       "bull_ratio": 0.0,
       "score_sum": 0
     }
@@ -62,9 +90,9 @@
   "pressure": {
     "status": "accumulating",
     "by_ticker": {},
-    "n_snapshots": 47,
-    "latest_date": "2026-10-29",
+    "n_snapshots": 48,
+    "latest_date": "2026-10-30",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-10-29T11:58:32.330630+00:00"
+  "snapshot_ts": "2026-10-30T11:30:13.538464+00:00"
 }
