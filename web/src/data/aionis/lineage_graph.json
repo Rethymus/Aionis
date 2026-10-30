@@ -1,14 +1,14 @@
 {
  "status": "ok",
- "as_of": "2026-10-28",
+ "as_of": "2026-10-29",
  "source_panels": [
   "form13f",
   "def14a_persons",
   "stakes_13g",
   "smart_money"
  ],
- "n_nodes": 109,
- "n_edges": 842,
+ "n_nodes": 108,
+ "n_edges": 820,
  "nodes": [
   {
    "id": "i:0000807249",
@@ -844,6 +844,22 @@
    }
   },
   {
+   "id": "p:ANDREW GOWASACK PRESIDENT",
+   "type": "person",
+   "label": "Andrew Gowasack President",
+   "zh_label": null,
+   "lanes": [
+    "def14a"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 1,
+    "co_target": 0
+   }
+  },
+  {
    "id": "p:BRIAN G. SWEENEY",
    "type": "person",
    "label": "Brian G. Sweeney",
@@ -876,9 +892,9 @@
    }
   },
   {
-   "id": "p:FERNANDO V. LARA CELIS",
+   "id": "p:FINANCIAL OFFICER",
    "type": "person",
-   "label": "Fernando V. Lara Celis",
+   "label": "Financial Officer",
    "zh_label": null,
    "lanes": [
     "def14a"
@@ -887,7 +903,7 @@
    "manager_routable": false,
    "degree": {
     "co_hold": 0,
-    "co_board": 4,
+    "co_board": 1,
     "co_target": 0
    }
   },
@@ -904,22 +920,6 @@
    "degree": {
     "co_hold": 0,
     "co_board": 1,
-    "co_target": 0
-   }
-  },
-  {
-   "id": "p:HENRY A. BUTLER",
-   "type": "person",
-   "label": "Henry A. Butler",
-   "zh_label": null,
-   "lanes": [
-    "def14a"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 4,
     "co_target": 0
    }
   },
@@ -1036,38 +1036,6 @@
    }
   },
   {
-   "id": "p:RAYMOND D. ROBERTS",
-   "type": "person",
-   "label": "Raymond D. Roberts",
-   "zh_label": null,
-   "lanes": [
-    "def14a"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 4,
-    "co_target": 0
-   }
-  },
-  {
-   "id": "p:ROBERT A. JAKUSZEWSKI",
-   "type": "person",
-   "label": "Robert A. Jakuszewski",
-   "zh_label": null,
-   "lanes": [
-    "def14a"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 4,
-    "co_target": 0
-   }
-  },
-  {
    "id": "p:RONGGUO WEI",
    "type": "person",
    "label": "Rongguo Wei",
@@ -1096,22 +1064,6 @@
    "degree": {
     "co_hold": 0,
     "co_board": 9,
-    "co_target": 0
-   }
-  },
-  {
-   "id": "p:TED R. MUNSELLE",
-   "type": "person",
-   "label": "Ted R. Munselle",
-   "zh_label": null,
-   "lanes": [
-    "def14a"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 4,
     "co_target": 0
    }
   },
@@ -1176,7 +1128,39 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 12
+    "co_target": 9
+   }
+  },
+  {
+   "id": "s:AHMED FOUAD",
+   "type": "staker",
+   "label": "AHMED FOUAD",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
+   }
+  },
+  {
+   "id": "s:ALTA PARTNERS LLC",
+   "type": "staker",
+   "label": "Alta Partners LLC",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
    }
   },
   {
@@ -1199,6 +1183,22 @@
    "id": "s:BLACKROCK PORTFOLIO MANAGEMENT LLC",
    "type": "staker",
    "label": "BlackRock Portfolio Management LLC",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
+   }
+  },
+  {
+   "id": "s:BROWN ROBERT G/",
+   "type": "staker",
+   "label": "BROWN ROBERT G/",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1336,7 +1336,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 3
+    "co_target": 2
    }
   },
   {
@@ -1353,38 +1353,6 @@
     "co_hold": 0,
     "co_board": 0,
     "co_target": 1
-   }
-  },
-  {
-   "id": "s:EXPRO GROUP HOLDINGS N.V.",
-   "type": "staker",
-   "label": "EXPRO GROUP HOLDINGS N.V.",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 5
-   }
-  },
-  {
-   "id": "s:EXXON MOBIL CORP",
-   "type": "staker",
-   "label": "EXXON MOBIL CORP",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 5
    }
   },
   {
@@ -1436,22 +1404,6 @@
    }
   },
   {
-   "id": "s:GOLD RESOURCE CORP",
-   "type": "staker",
-   "label": "GOLD RESOURCE CORP",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 5
-   }
-  },
-  {
    "id": "s:HERZFELD ERIK MERVIN",
    "type": "staker",
    "label": "Herzfeld Erik Mervin",
@@ -1496,23 +1448,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 5
-   }
-  },
-  {
-   "id": "s:ISHARES, INC.",
-   "type": "staker",
-   "label": "iShares, Inc.",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 5
+    "co_target": 1
    }
   },
   {
@@ -1535,6 +1471,22 @@
    "id": "s:LORBER HOWARD M",
    "type": "staker",
    "label": "LORBER HOWARD M",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
+   }
+  },
+  {
+   "id": "s:LUCKY MARK BURDON",
+   "type": "staker",
+   "label": "Lucky Mark Burdon",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1596,9 +1548,25 @@
    }
   },
   {
-   "id": "s:POMPLIANO ANTHONY JOHN III",
+   "id": "s:PRINCIPAL LIFE INSURANCE CO",
    "type": "staker",
-   "label": "Pompliano Anthony John III",
+   "label": "PRINCIPAL LIFE INSURANCE CO",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
+   }
+  },
+  {
+   "id": "s:ROYCE & ASSOCIATES LP",
+   "type": "staker",
+   "label": "ROYCE & ASSOCIATES LP",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1688,7 +1656,23 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 3
+    "co_target": 2
+   }
+  },
+  {
+   "id": "s:SP/R, INC. DEFINED BENEFIT PENSION TRUST",
+   "type": "staker",
+   "label": "SP/R, Inc. Defined Benefit Pension Trust",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
    }
   },
   {
@@ -1724,9 +1708,9 @@
    }
   },
   {
-   "id": "s:YANG TING",
+   "id": "s:TAYLOR PAUL RICHARD",
    "type": "staker",
-   "label": "Yang Ting",
+   "label": "Taylor Paul Richard",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1736,7 +1720,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 3
+    "co_target": 1
    }
   },
   {
@@ -1752,7 +1736,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 3
+    "co_target": 2
    }
   }
  ],
@@ -1979,6 +1963,19 @@
    "truncated": false
   },
   {
+   "a": "p:ANDREW GOWASACK PRESIDENT",
+   "b": "p:FINANCIAL OFFICER",
+   "type": "co_board",
+   "w": 1,
+   "shared": [
+    {
+     "company": "T Stamp Inc",
+     "tk": "IDAI"
+    }
+   ],
+   "truncated": false
+  },
+  {
    "a": "p:BRIAN G. SWEENEY",
    "b": "p:CHARLES P. DOLAN",
    "type": "co_board",
@@ -2229,129 +2226,6 @@
     {
      "company": "Madison Square Garden Entertainment Corp.",
      "tk": "MSGE"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "p:FERNANDO V. LARA CELIS",
-   "b": "p:HENRY A. BUTLER",
-   "type": "co_board",
-   "w": 2,
-   "shared": [
-    {
-     "company": "AMERICAN REALTY INVESTORS INC",
-     "tk": "ARL"
-    },
-    {
-     "company": "TRANSCONTINENTAL REALTY INVESTORS INC",
-     "tk": "TCI"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "p:FERNANDO V. LARA CELIS",
-   "b": "p:RAYMOND D. ROBERTS",
-   "type": "co_board",
-   "w": 2,
-   "shared": [
-    {
-     "company": "AMERICAN REALTY INVESTORS INC",
-     "tk": "ARL"
-    },
-    {
-     "company": "TRANSCONTINENTAL REALTY INVESTORS INC",
-     "tk": "TCI"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "p:FERNANDO V. LARA CELIS",
-   "b": "p:ROBERT A. JAKUSZEWSKI",
-   "type": "co_board",
-   "w": 1,
-   "shared": [
-    {
-     "company": "TRANSCONTINENTAL REALTY INVESTORS INC",
-     "tk": "TCI"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "p:FERNANDO V. LARA CELIS",
-   "b": "p:TED R. MUNSELLE",
-   "type": "co_board",
-   "w": 2,
-   "shared": [
-    {
-     "company": "AMERICAN REALTY INVESTORS INC",
-     "tk": "ARL"
-    },
-    {
-     "company": "TRANSCONTINENTAL REALTY INVESTORS INC",
-     "tk": "TCI"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "p:HENRY A. BUTLER",
-   "b": "p:RAYMOND D. ROBERTS",
-   "type": "co_board",
-   "w": 3,
-   "shared": [
-    {
-     "company": "AMERICAN REALTY INVESTORS INC",
-     "tk": "ARL"
-    },
-    {
-     "company": "INCOME OPPORTUNITY REALTY INVESTORS INC /TX/",
-     "tk": "IOR"
-    },
-    {
-     "company": "TRANSCONTINENTAL REALTY INVESTORS INC",
-     "tk": "TCI"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "p:HENRY A. BUTLER",
-   "b": "p:ROBERT A. JAKUSZEWSKI",
-   "type": "co_board",
-   "w": 2,
-   "shared": [
-    {
-     "company": "INCOME OPPORTUNITY REALTY INVESTORS INC /TX/",
-     "tk": "IOR"
-    },
-    {
-     "company": "TRANSCONTINENTAL REALTY INVESTORS INC",
-     "tk": "TCI"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "p:HENRY A. BUTLER",
-   "b": "p:TED R. MUNSELLE",
-   "type": "co_board",
-   "w": 3,
-   "shared": [
-    {
-     "company": "AMERICAN REALTY INVESTORS INC",
-     "tk": "ARL"
-    },
-    {
-     "company": "INCOME OPPORTUNITY REALTY INVESTORS INC /TX/",
-     "tk": "IOR"
-    },
-    {
-     "company": "TRANSCONTINENTAL REALTY INVESTORS INC",
-     "tk": "TCI"
     }
    ],
    "truncated": false
@@ -2787,61 +2661,6 @@
     {
      "company": "Madison Square Garden Entertainment Corp.",
      "tk": "MSGE"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "p:RAYMOND D. ROBERTS",
-   "b": "p:ROBERT A. JAKUSZEWSKI",
-   "type": "co_board",
-   "w": 2,
-   "shared": [
-    {
-     "company": "INCOME OPPORTUNITY REALTY INVESTORS INC /TX/",
-     "tk": "IOR"
-    },
-    {
-     "company": "TRANSCONTINENTAL REALTY INVESTORS INC",
-     "tk": "TCI"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "p:RAYMOND D. ROBERTS",
-   "b": "p:TED R. MUNSELLE",
-   "type": "co_board",
-   "w": 3,
-   "shared": [
-    {
-     "company": "AMERICAN REALTY INVESTORS INC",
-     "tk": "ARL"
-    },
-    {
-     "company": "INCOME OPPORTUNITY REALTY INVESTORS INC /TX/",
-     "tk": "IOR"
-    },
-    {
-     "company": "TRANSCONTINENTAL REALTY INVESTORS INC",
-     "tk": "TCI"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "p:ROBERT A. JAKUSZEWSKI",
-   "b": "p:TED R. MUNSELLE",
-   "type": "co_board",
-   "w": 2,
-   "shared": [
-    {
-     "company": "INCOME OPPORTUNITY REALTY INVESTORS INC /TX/",
-     "tk": "IOR"
-    },
-    {
-     "company": "TRANSCONTINENTAL REALTY INVESTORS INC",
-     "tk": "TCI"
     }
    ],
    "truncated": false
@@ -23544,34 +23363,6 @@
   },
   {
    "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:EXPRO GROUP HOLDINGS N.V.",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "BlackRock, Inc.",
-     "tk": "BLK",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:EXXON MOBIL CORP",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "BlackRock, Inc.",
-     "tk": "BLK",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
    "b": "s:FLYNN JAMES E",
    "type": "co_target",
    "w": 1,
@@ -23580,20 +23371,6 @@
      "target": "Climb Bio, Inc.",
      "tk": "CLYM",
      "forms": "SC 13G"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:GOLD RESOURCE CORP",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "BlackRock, Inc.",
-     "tk": "BLK",
-     "forms": "SC 13G|SC 13G/A"
     }
    ],
    "truncated": false
@@ -23614,28 +23391,28 @@
   },
   {
    "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:ISHARES, INC.",
+   "b": "s:PRINCIPAL LIFE INSURANCE CO",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "BlackRock, Inc.",
-     "tk": "BLK",
-     "forms": "SC 13G|SC 13G/A"
+     "target": "Ares Dynamic Credit Allocation Fund, Inc.",
+     "tk": "ARDC",
+     "forms": "SC 13G/A"
     }
    ],
    "truncated": false
   },
   {
    "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:POMPLIANO ANTHONY JOHN III",
+   "b": "s:ROYCE & ASSOCIATES LP",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "Silvia, Inc.",
-     "tk": "BRR",
-     "forms": "SC 13D/A|SC 13G"
+     "target": "Andersen Group Inc.",
+     "tk": "ANDG",
+     "forms": "SC 13G/A"
     }
    ],
    "truncated": false
@@ -23669,6 +23446,20 @@
    "truncated": false
   },
   {
+   "a": "s:AHMED FOUAD",
+   "b": "s:ALTA PARTNERS LLC",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Robin Energy Ltd.",
+     "tk": "RBNE",
+     "forms": "SC 13G"
+    }
+   ],
+   "truncated": false
+  },
+  {
    "a": "s:ASCENT PARTNERS FUND LLC",
    "b": "s:CORVUS CAPITAL LTD.",
    "type": "co_target",
@@ -23678,6 +23469,20 @@
      "target": "CDT Equity Inc.",
      "tk": "CDT",
      "forms": "SC 13D/A|SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:BROWN ROBERT G/",
+   "b": "s:SP/R, INC. DEFINED BENEFIT PENSION TRUST",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "SPAR Group, Inc.",
+     "tk": "SGRP",
+     "forms": "SC 13D/A|SC 13G"
     }
    ],
    "truncated": false
@@ -23768,20 +23573,6 @@
   },
   {
    "a": "s:DAI JUNYI",
-   "b": "s:YANG TING",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Indaptus Therapeutics, Inc.",
-     "tk": "INDP",
-     "forms": "SC 13D/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:DAI JUNYI",
    "b": "s:YAO YUN",
    "type": "co_target",
    "w": 1,
@@ -23809,104 +23600,6 @@
    "truncated": false
   },
   {
-   "a": "s:EXPRO GROUP HOLDINGS N.V.",
-   "b": "s:EXXON MOBIL CORP",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "BlackRock, Inc.",
-     "tk": "BLK",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:EXPRO GROUP HOLDINGS N.V.",
-   "b": "s:GOLD RESOURCE CORP",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "BlackRock, Inc.",
-     "tk": "BLK",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:EXPRO GROUP HOLDINGS N.V.",
-   "b": "s:ISHARES TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "BlackRock, Inc.",
-     "tk": "BLK",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:EXPRO GROUP HOLDINGS N.V.",
-   "b": "s:ISHARES, INC.",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "BlackRock, Inc.",
-     "tk": "BLK",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:EXXON MOBIL CORP",
-   "b": "s:GOLD RESOURCE CORP",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "BlackRock, Inc.",
-     "tk": "BLK",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:EXXON MOBIL CORP",
-   "b": "s:ISHARES TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "BlackRock, Inc.",
-     "tk": "BLK",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:EXXON MOBIL CORP",
-   "b": "s:ISHARES, INC.",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "BlackRock, Inc.",
-     "tk": "BLK",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
    "a": "s:GLENBROOK CAPITAL MANAGEMENT",
    "b": "s:LEBEAU JUSTIN MICHAEL",
    "type": "co_target",
@@ -23916,34 +23609,6 @@
      "target": "SenesTech, Inc.",
      "tk": "SNES",
      "forms": "SC 13D|SC 13D/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:GOLD RESOURCE CORP",
-   "b": "s:ISHARES TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "BlackRock, Inc.",
-     "tk": "BLK",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:GOLD RESOURCE CORP",
-   "b": "s:ISHARES, INC.",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "BlackRock, Inc.",
-     "tk": "BLK",
-     "forms": "SC 13G|SC 13G/A"
     }
    ],
    "truncated": false
@@ -23963,15 +23628,15 @@
    "truncated": false
   },
   {
-   "a": "s:ISHARES TRUST",
-   "b": "s:ISHARES, INC.",
+   "a": "s:LUCKY MARK BURDON",
+   "b": "s:TAYLOR PAUL RICHARD",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "BlackRock, Inc.",
-     "tk": "BLK",
-     "forms": "SC 13G|SC 13G/A"
+     "target": "VISIUM TECHNOLOGIES, INC.",
+     "tk": "VISM",
+     "forms": "SC 13D/A"
     }
    ],
    "truncated": false
@@ -24020,34 +23685,6 @@
   },
   {
    "a": "s:SINO LION VENTURES LTD",
-   "b": "s:YANG TING",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Indaptus Therapeutics, Inc.",
-     "tk": "INDP",
-     "forms": "SC 13D/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:SINO LION VENTURES LTD",
-   "b": "s:YAO YUN",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Indaptus Therapeutics, Inc.",
-     "tk": "INDP",
-     "forms": "SC 13D/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:YANG TING",
    "b": "s:YAO YUN",
    "type": "co_target",
    "w": 1,
@@ -24240,7 +23877,7 @@
    "counts": {
     "managers": 1,
     "persons": 0,
-    "stakers": 6
+    "stakers": 2
    },
    "stock_routable": true
   },
@@ -24357,8 +23994,36 @@
    "stock_routable": false
   },
   {
+   "tk": "GOSS",
+   "name": "Gossamer Bio, Inc.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
    "tk": "GPI",
    "name": "GROUP 1 AUTOMOTIVE INC",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "H",
+   "name": "Hyatt Hotels Corp",
    "in": [
     "13f",
     "13dg"
@@ -24595,6 +24260,20 @@
    "stock_routable": false
   },
   {
+   "tk": "TMUS",
+   "name": "T-Mobile US, Inc.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": true
+  },
+  {
    "tk": "TSM",
    "name": "TAIWAN SEMICONDUCTOR MANUFACTURING CO LTD",
    "in": [
@@ -24609,6 +24288,20 @@
    "stock_routable": false
   },
   {
+   "tk": "WFC",
+   "name": "WELLS FARGO & COMPANY/MN",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 4,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": true
+  },
+  {
    "tk": "WVE",
    "name": "Wave Life Sciences, Inc.",
    "in": [
@@ -24621,35 +24314,21 @@
     "stakers": 1
    },
    "stock_routable": false
-  },
-  {
-   "tk": "WY",
-   "name": "WEYERHAEUSER CO",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 1,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": true
   }
  ],
  "components": {
-  "n": 18,
+  "n": 21,
   "largest": 44
  },
  "windows": {
   "form13f_quarter": "2026-06-30",
   "stakes_visible_dates": {
    "start": "2026-10-27",
-   "end": "2026-10-28"
+   "end": "2026-10-29"
   },
   "smart_money_visible_dates": {
-   "start": "2026-10-20",
-   "end": "2026-10-28"
+   "start": "2026-10-21",
+   "end": "2026-10-29"
   }
  },
  "coverage": {
@@ -24659,7 +24338,7 @@
    "isolated_managers": 0
   },
   "def14a": {
-   "basis": "top_persons export: 50 most-seated of 680 upstream persons; 113/150 filings with persons (75.3%)",
+   "basis": "top_persons export: 50 most-seated of 723 upstream persons; 116/150 filings with persons (77.3%)",
    "same_name_merges_possible": true
   },
   "13dg": {
@@ -24668,5 +24347,5 @@
   }
  },
  "methodology": "Force-camp relationship graph DERIVED at export time from four COMMITTED panels (form13f x def14a_persons x stakes_13g union smart_money) \u2014 zero new fetches, display-only. Edges are pairwise projections over as-filed disclosure facts: co_hold = two curated managers' VISIBLE BOOKS (latest quarter, up to 50 positions each; the full books are larger) share a position key (ticker, else CUSIP); co_board = two proxy-statement top persons seat the same company (exact company-name match resolves the ticker); co_target = two different filers INDEPENDENTLY SEPARATELY FILED stakes converging on the same target issuer within the visible SC 13D/13G windows. Identity rule: a window filer merges into an institution node ONLY when its trimmed-uppercase name equals a curated manager's name exactly \u2014 no fuzzy matching, no name list. The three overlaps are factual coincidences of separate filings: joint filings stay verbatim (members NOT DECOMPOSED), no COORDINATION is implied and no consortium claim is made. Weights are integer counts of shared items (lists capped at 8, truncated flag set beyond). Coverage is bounded by construction \u2014 see the coverage.basis strings (visible books, a 50-person proxy export over the newest filings, latest filing windows only). A restatement of public SEC EDGAR disclosures only: NO PRICES, NO RETURNS, no performance claims; never part of any OOS pipeline.",
- "snapshot_ts": "2026-10-29T11:58:58.370139+00:00"
+ "snapshot_ts": "2026-10-30T11:30:36.109280+00:00"
 }

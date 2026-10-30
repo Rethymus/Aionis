@@ -198,16 +198,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/12927/000162828026058481/ba-20260819.htm"
     },
     {
-      "company": "ADVANCED MICRO DEVICES INC",
-      "ticker": "AMD",
-      "filing_date": "2026-08-19",
-      "items": [
-        "5.02",
-        "9.01"
-      ],
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000163/amd-20260817.htm"
-    },
-    {
       "company": "HONEYWELL INTERNATIONAL INC",
       "ticker": "HON",
       "filing_date": "2026-08-19",
@@ -217,6 +207,16 @@
         "9.01"
       ],
       "doc_url": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000130/hon-20260819.htm"
+    },
+    {
+      "company": "ADVANCED MICRO DEVICES INC",
+      "ticker": "AMD",
+      "filing_date": "2026-08-19",
+      "items": [
+        "5.02",
+        "9.01"
+      ],
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000163/amd-20260817.htm"
     },
     {
       "company": "HOME DEPOT, INC.",
@@ -258,16 +258,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000160/crm-20260805.htm"
     },
     {
-      "company": "JOHNSON & JOHNSON",
-      "ticker": "JNJ",
-      "filing_date": "2026-08-04",
-      "items": [
-        "5.02",
-        "9.01"
-      ],
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/200406/000020040626000167/jnj-20260804.htm"
-    },
-    {
       "company": "MCDONALDS CORP",
       "ticker": "MCD",
       "filing_date": "2026-08-04",
@@ -277,6 +267,16 @@
         "9.01"
       ],
       "doc_url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000069/mcd-20260803.htm"
+    },
+    {
+      "company": "JOHNSON & JOHNSON",
+      "ticker": "JNJ",
+      "filing_date": "2026-08-04",
+      "items": [
+        "5.02",
+        "9.01"
+      ],
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/200406/000020040626000167/jnj-20260804.htm"
     },
     {
       "company": "NETFLIX INC",
@@ -451,25 +451,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000059/goog-20260602.htm"
     },
     {
-      "company": "Mastercard Inc",
-      "ticker": "MA",
-      "filing_date": "2026-06-02",
-      "items": [
-        "5.02",
-        "9.01"
-      ],
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1141391/000114139126000037/ma-20260529.htm"
-    },
-    {
-      "company": "Salesforce, Inc.",
-      "ticker": "CRM",
-      "filing_date": "2026-06-02",
-      "items": [
-        "5.02"
-      ],
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000138/crm-20260527.htm"
-    },
-    {
       "company": "TEXAS INSTRUMENTS INC",
       "ticker": "TXN",
       "filing_date": "2026-06-02",
@@ -488,6 +469,25 @@
         "9.01"
       ],
       "doc_url": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000068/hon-20260601.htm"
+    },
+    {
+      "company": "Mastercard Inc",
+      "ticker": "MA",
+      "filing_date": "2026-06-02",
+      "items": [
+        "5.02",
+        "9.01"
+      ],
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1141391/000114139126000037/ma-20260529.htm"
+    },
+    {
+      "company": "Salesforce, Inc.",
+      "ticker": "CRM",
+      "filing_date": "2026-06-02",
+      "items": [
+        "5.02"
+      ],
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000138/crm-20260527.htm"
     },
     {
       "company": "Salesforce, Inc.",
@@ -591,15 +591,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/34088/000003408826000069/xom-20260428.htm"
     },
     {
-      "company": "CISCO SYSTEMS, INC.",
-      "ticker": "CSCO",
-      "filing_date": "2026-05-01",
-      "items": [
-        "5.02"
-      ],
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000057/csco-20260427.htm"
-    },
-    {
       "company": "INTERNATIONAL BUSINESS MACHINES CORP",
       "ticker": "IBM",
       "filing_date": "2026-05-01",
@@ -610,6 +601,15 @@
         "9.01"
       ],
       "doc_url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000043/ibm-20260428.htm"
+    },
+    {
+      "company": "CISCO SYSTEMS, INC.",
+      "ticker": "CSCO",
+      "filing_date": "2026-05-01",
+      "items": [
+        "5.02"
+      ],
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000057/csco-20260427.htm"
     },
     {
       "company": "DEERE & CO",
@@ -663,5 +663,5 @@
     "UNION PACIFIC CORP": 1
   },
   "methodology": "SEC Form 8-K Item 5.02 officer/director-change filings \u2014 DERIVED from the committed form8k panel (category 'officer_changes'; public domain, 17 U.S.C. \u00a7105, filed-date PIT). v1 is FILING-STREAM level: one row per 8-K accession with the company, filing date, full item list and EDGAR primary-document link. Person-level extraction (who, which role, appointed vs departed) is DEFERRED: parsing names from 8-K free text is unreliable and an honest omission beats a guessed name \u2014 the same v1 boundary as the /congress PTR panel. Inherits the /events panel's bounded 50-issuer universe and its 2026-05-01..2026-10-16 window. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-10-29T11:58:39.371902+00:00"
+  "snapshot_ts": "2026-10-30T11:30:20.579889+00:00"
 }
