@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (10-31 11:58，轮 250-续)【10-31 影子 runbook 实弹完成——五步全过、READINESS PASS、账本零写入、GO 证据包产出（hourly 首班 04:06 活火，06:2x 次班并发吸收）：**
+  **A 部分**：⓪a EXIT 0（up_to_date）；⓪b EXIT 0（**585/585 符号、43 会话追加零 all-NaN、面板边=2026-10-30、PIT 503/503 零残差、冻结基底 27c63577 前后不变**、跨两小时配额窗断点续传）；① EXIT 0（593 批零失败）；② EXIT 0；③ 双调用如实：`--run-date 2026-10-31` no-op（周六非 NYSE 会话——runbook 日期形缺陷如实记录）+ `--run-date 2026-10-30` 会话修正形 **READINESS PASS → dry-run 密封**（config d592b65c/scores sha 7ea73b05，NO-LEDGER 分数不落盘）。GLM 抽取段 53×429（拥塞）——144/144 事件带原文，readiness event-text 门通过。**NO-LEDGER 核验 PASS**：账本基线 ec6d2892/71 行执行后逐字节一致。**B 部分**：`reports/audits/2026-10-31-headline-goe-evaluation.md`（六判据：1/2/3/5/6 PASS、4 NOT-APPLICABLE[点火后判据]；建议 GO——序贯设计内置止损；附加披露：GLM 429/日期形缺陷/影子密封不自动转正）。**C 部分**：标记 data/ops/shadow_1031.done 已写（PASS+基线 sha+证据路径）。**判据 1 终态：8/31 PASS + 9/30 PASS（标注补跑）+ 10/31 PASS（dry-run）= 三会话点全梯通过**。**边界**：研究 lane（NO-LEDGER 协议动作）；ledger 零写入；冻结基底未动；**未揭盲**。
+
 - **active (10-11 11:00，轮 251）（验证 线）：验证器第八查——retry_soft 记录良构性（新面自审模式再应用）：**
   轮 246 策略的 state 记录此前对验证器不可见。第八查：ABSENT=PASS（未跑不罚）；PRESENT 须含 at+residual_soft_fails 并**直报裁决**（RESOLVED vs STILL FAILING）——业主一眼可见重试是否解决。实弹：10-09 记录读出 `['news_feed_fetch…'] 23:06 -> RESOLVED`（同晚化解首次进入 checkpoint 输出本身）。**边界**：验证 lane；0 ledger/0 frozen/0 OOS。
 
