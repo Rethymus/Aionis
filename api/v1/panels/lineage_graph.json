@@ -1,14 +1,14 @@
 {
  "status": "ok",
- "as_of": "2026-10-29",
+ "as_of": "2026-10-30",
  "source_panels": [
   "form13f",
   "def14a_persons",
   "stakes_13g",
   "smart_money"
  ],
- "n_nodes": 108,
- "n_edges": 820,
+ "n_nodes": 99,
+ "n_edges": 813,
  "nodes": [
   {
    "id": "i:0000807249",
@@ -780,22 +780,6 @@
    }
   },
   {
-   "id": "p:ALI PERVAIZ",
-   "type": "person",
-   "label": "Ali Pervaiz",
-   "zh_label": null,
-   "lanes": [
-    "def14a"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 1,
-    "co_target": 0
-   }
-  },
-  {
    "id": "p:ALINA DULIMOF",
    "type": "person",
    "label": "Alina Dulimof",
@@ -847,6 +831,38 @@
    "id": "p:ANDREW GOWASACK PRESIDENT",
    "type": "person",
    "label": "Andrew Gowasack President",
+   "zh_label": null,
+   "lanes": [
+    "def14a"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 1,
+    "co_target": 0
+   }
+  },
+  {
+   "id": "p:ANDREW J. VUONO",
+   "type": "person",
+   "label": "Andrew J. Vuono",
+   "zh_label": null,
+   "lanes": [
+    "def14a"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 1,
+    "co_target": 0
+   }
+  },
+  {
+   "id": "p:ANDREW J. WILDER",
+   "type": "person",
+   "label": "Andrew J. Wilder",
    "zh_label": null,
    "lanes": [
     "def14a"
@@ -1015,7 +1031,7 @@
    "manager_routable": false,
    "degree": {
     "co_hold": 0,
-    "co_board": 10,
+    "co_board": 9,
     "co_target": 0
    }
   },
@@ -1128,13 +1144,13 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 9
+    "co_target": 3
    }
   },
   {
-   "id": "s:AHMED FOUAD",
+   "id": "s:BERJAYA SHIPPING LTD",
    "type": "staker",
-   "label": "AHMED FOUAD",
+   "label": "Berjaya Shipping Ltd",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1148,41 +1164,9 @@
    }
   },
   {
-   "id": "s:ALTA PARTNERS LLC",
+   "id": "s:BOVOPOULOS ANDREAS",
    "type": "staker",
-   "label": "Alta Partners LLC",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:ASCENT PARTNERS FUND LLC",
-   "type": "staker",
-   "label": "Ascent Partners Fund LLC",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:BLACKROCK PORTFOLIO MANAGEMENT LLC",
-   "type": "staker",
-   "label": "BlackRock Portfolio Management LLC",
+   "label": "Bovopoulos Andreas",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1240,7 +1224,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 2
+    "co_target": 1
    }
   },
   {
@@ -1276,38 +1260,6 @@
    }
   },
   {
-   "id": "s:CLARION PARTNERS REAL ESTATE INCOME FUND INC.",
-   "type": "staker",
-   "label": "Clarion Partners Real Estate Income Fund Inc.",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:CORVUS CAPITAL LTD.",
-   "type": "staker",
-   "label": "Corvus Capital Ltd.",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
    "id": "s:CYBERLINK INTERNATIONAL TECHNOLOGY CORP.",
    "type": "staker",
    "label": "CyberLink International Technology Corp.",
@@ -1324,9 +1276,9 @@
    }
   },
   {
-   "id": "s:DAI JUNYI",
+   "id": "s:FAKHOURY RANNI EMAD",
    "type": "staker",
-   "label": "Dai Junyi",
+   "label": "Fakhoury Ranni Emad",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1340,41 +1292,9 @@
    }
   },
   {
-   "id": "s:DOCLER HOLDING S.A R.L.",
+   "id": "s:FIRST TRUST PORTFOLIOS LP",
    "type": "staker",
-   "label": "Docler Holding S.a r.l.",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:FIG BUYER GP, LLC",
-   "type": "staker",
-   "label": "FIG Buyer GP, LLC",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:FLYNN JAMES E",
-   "type": "staker",
-   "label": "Flynn James E",
+   "label": "FIRST TRUST PORTFOLIOS LP",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1400,55 +1320,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:HERZFELD ERIK MERVIN",
-   "type": "staker",
-   "label": "Herzfeld Erik Mervin",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:HERZFELD THOMAS J",
-   "type": "staker",
-   "label": "HERZFELD THOMAS J",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:ISHARES TRUST",
-   "type": "staker",
-   "label": "iSHARES TRUST",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
+    "co_target": 2
    }
   },
   {
@@ -1464,7 +1336,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 1
+    "co_target": 2
    }
   },
   {
@@ -1516,9 +1388,9 @@
    }
   },
   {
-   "id": "s:NORTH ROCK DIGITAL, LP",
+   "id": "s:PERCEPTIVE ADVISORS LLC",
    "type": "staker",
-   "label": "North Rock Digital, LP",
+   "label": "PERCEPTIVE ADVISORS LLC",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1532,9 +1404,9 @@
    }
   },
   {
-   "id": "s:PERCEPTIVE ADVISORS LLC",
+   "id": "s:PRINCIPAL GLOBAL INVESTORS",
    "type": "staker",
-   "label": "PERCEPTIVE ADVISORS LLC",
+   "label": "PRINCIPAL GLOBAL INVESTORS",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1612,73 +1484,9 @@
    }
   },
   {
-   "id": "s:SIMPSON ANDREW",
-   "type": "staker",
-   "label": "Simpson Andrew",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
    "id": "s:SINHA SUMANT",
    "type": "staker",
    "label": "Sinha Sumant",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 2
-   }
-  },
-  {
-   "id": "s:SINO LION VENTURES LTD",
-   "type": "staker",
-   "label": "SINO LION VENTURES Ltd",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 2
-   }
-  },
-  {
-   "id": "s:SP/R, INC. DEFINED BENEFIT PENSION TRUST",
-   "type": "staker",
-   "label": "SP/R, Inc. Defined Benefit Pension Trust",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:SQUADRON CAPITAL MANAGEMENT LLC",
-   "type": "staker",
-   "label": "Squadron Capital Management LLC",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1724,9 +1532,41 @@
    }
   },
   {
-   "id": "s:YAO YUN",
+   "id": "s:TURCOM INTERNATIONAL LTD",
    "type": "staker",
-   "label": "Yao Yun",
+   "label": "Turcom International Ltd",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
+   }
+  },
+  {
+   "id": "s:VANGUARD CAPITAL MANAGEMENT LLC",
+   "type": "staker",
+   "label": "VANGUARD CAPITAL MANAGEMENT LLC",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 4
+   }
+  },
+  {
+   "id": "s:VANGUARD PORTFOLIO MANAGEMENT LLC",
+   "type": "staker",
+   "label": "VANGUARD PORTFOLIO MANAGEMENT LLC",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1737,6 +1577,22 @@
     "co_hold": 0,
     "co_board": 0,
     "co_target": 2
+   }
+  },
+  {
+   "id": "s:VILLANI KIMBERLY MARION",
+   "type": "staker",
+   "label": "Villani Kimberly Marion",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
    }
   }
  ],
@@ -1911,19 +1767,6 @@
    "truncated": false
   },
   {
-   "a": "p:ALI PERVAIZ",
-   "b": "p:PAY VERSUS PERFORMANCE",
-   "type": "co_board",
-   "w": 1,
-   "shared": [
-    {
-     "company": "ACCURAY INC",
-     "tk": "ARAY"
-    }
-   ],
-   "truncated": false
-  },
-  {
    "a": "p:ALINA DULIMOF",
    "b": "p:AMIR STERNHELL",
    "type": "co_board",
@@ -1971,6 +1814,19 @@
     {
      "company": "T Stamp Inc",
      "tk": "IDAI"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:ANDREW J. VUONO",
+   "b": "p:ANDREW J. WILDER",
+   "type": "co_board",
+   "w": 1,
+   "shared": [
+    {
+     "company": "NAPCO SECURITY TECHNOLOGIES, INC",
+     "tk": "NSSC"
     }
    ],
    "truncated": false
@@ -23321,69 +23177,13 @@
   },
   {
    "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:BLACKROCK PORTFOLIO MANAGEMENT LLC",
+   "b": "s:BOVOPOULOS ANDREAS",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "Fulcrum Therapeutics, Inc.",
-     "tk": "FULC",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:CANADA PENSION PLAN INVESTMENT BOARD",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "ReNew Energy Global plc",
-     "tk": "RNW",
-     "forms": "SC 13D/A|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:CLARION PARTNERS REAL ESTATE INCOME FUND INC.",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "FRANKLIN TEMPLETON INC",
-     "tk": "BEN",
-     "forms": "SC 13D/A|SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:FLYNN JAMES E",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Climb Bio, Inc.",
-     "tk": "CLYM",
-     "forms": "SC 13G"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:ISHARES TRUST",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "BlackRock, Inc.",
-     "tk": "BLK",
+     "target": "Cosmos Health Inc.",
+     "tk": "COSM",
      "forms": "SC 13G|SC 13G/A"
     }
    ],
@@ -23405,77 +23205,35 @@
   },
   {
    "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:ROYCE & ASSOCIATES LP",
+   "b": "s:VANGUARD PORTFOLIO MANAGEMENT LLC",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "Andersen Group Inc.",
-     "tk": "ANDG",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:SINHA SUMANT",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "ReNew Energy Global plc",
-     "tk": "RNW",
+     "target": "People Inc",
+     "tk": "PPLI",
      "forms": "SC 13D/A|SC 13G/A"
     }
    ],
    "truncated": false
   },
   {
-   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:SQUADRON CAPITAL MANAGEMENT LLC",
+   "a": "s:BERJAYA SHIPPING LTD",
+   "b": "s:TURCOM INTERNATIONAL LTD",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "Contineum Therapeutics, Inc.",
-     "tk": "CTNM",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:AHMED FOUAD",
-   "b": "s:ALTA PARTNERS LLC",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Robin Energy Ltd.",
-     "tk": "RBNE",
+     "target": "CBL International Ltd",
+     "tk": "BANL",
      "forms": "SC 13G"
     }
    ],
    "truncated": false
   },
   {
-   "a": "s:ASCENT PARTNERS FUND LLC",
-   "b": "s:CORVUS CAPITAL LTD.",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "CDT Equity Inc.",
-     "tk": "CDT",
-     "forms": "SC 13D/A|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
    "a": "s:BROWN ROBERT G/",
-   "b": "s:SP/R, INC. DEFINED BENEFIT PENSION TRUST",
+   "b": "s:VILLANI KIMBERLY MARION",
    "type": "co_target",
    "w": 1,
    "shared": [
@@ -23558,43 +23316,43 @@
    "truncated": false
   },
   {
-   "a": "s:DAI JUNYI",
-   "b": "s:SINO LION VENTURES LTD",
+   "a": "s:FAKHOURY RANNI EMAD",
+   "b": "s:GLENBROOK CAPITAL MANAGEMENT",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "Indaptus Therapeutics, Inc.",
-     "tk": "INDP",
-     "forms": "SC 13D/A"
+     "target": "SenesTech, Inc.",
+     "tk": "SNES",
+     "forms": "SC 13D/A|SC 13G"
     }
    ],
    "truncated": false
   },
   {
-   "a": "s:DAI JUNYI",
-   "b": "s:YAO YUN",
+   "a": "s:FAKHOURY RANNI EMAD",
+   "b": "s:LEBEAU JUSTIN MICHAEL",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "Indaptus Therapeutics, Inc.",
-     "tk": "INDP",
-     "forms": "SC 13D/A"
+     "target": "SenesTech, Inc.",
+     "tk": "SNES",
+     "forms": "SC 13D|SC 13G"
     }
    ],
    "truncated": false
   },
   {
-   "a": "s:DOCLER HOLDING S.A R.L.",
-   "b": "s:FIG BUYER GP, LLC",
+   "a": "s:FIRST TRUST PORTFOLIOS LP",
+   "b": "s:VANGUARD CAPITAL MANAGEMENT LLC",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "Playboy, Inc.",
-     "tk": "PLBY",
-     "forms": "SC 13D/A|SC 13G/A"
+     "target": "Vistance Networks, Inc.",
+     "tk": "VISN",
+     "forms": "SC 13G|SC 13G/A"
     }
    ],
    "truncated": false
@@ -23609,20 +23367,6 @@
      "target": "SenesTech, Inc.",
      "tk": "SNES",
      "forms": "SC 13D|SC 13D/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:HERZFELD ERIK MERVIN",
-   "b": "s:HERZFELD THOMAS J",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Herzfeld Credit Income Fund, Inc",
-     "tk": "HERZ",
-     "forms": "SC 13D/A"
     }
    ],
    "truncated": false
@@ -23656,20 +23400,6 @@
    "truncated": false
   },
   {
-   "a": "s:NORTH ROCK DIGITAL, LP",
-   "b": "s:SIMPSON ANDREW",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "HeartSciences Inc.",
-     "tk": "HSCS",
-     "forms": "SC 13D/A|SC 13G"
-    }
-   ],
-   "truncated": false
-  },
-  {
    "a": "s:PERCEPTIVE ADVISORS LLC",
    "b": "s:SERMONIX PHARMACEUTICALS, INC.",
    "type": "co_target",
@@ -23684,18 +23414,81 @@
    "truncated": false
   },
   {
-   "a": "s:SINO LION VENTURES LTD",
-   "b": "s:YAO YUN",
+   "a": "s:PRINCIPAL GLOBAL INVESTORS",
+   "b": "s:VANGUARD CAPITAL MANAGEMENT LLC",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "Indaptus Therapeutics, Inc.",
-     "tk": "INDP",
-     "forms": "SC 13D/A"
+     "target": "COLLEGIUM PHARMACEUTICAL, INC",
+     "tk": "COLL",
+     "forms": "SC 13G/A"
     }
    ],
    "truncated": false
+  },
+  {
+   "a": "s:ROYCE & ASSOCIATES LP",
+   "b": "s:VANGUARD CAPITAL MANAGEMENT LLC",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Andersen Group Inc.",
+     "tk": "ANDG",
+     "forms": "SC 13G|SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:VANGUARD CAPITAL MANAGEMENT LLC",
+   "b": "s:VANGUARD PORTFOLIO MANAGEMENT LLC",
+   "type": "co_target",
+   "w": 23,
+   "shared": [
+    {
+     "target": "ADI GLOBAL DISTRIBUTION INC.",
+     "tk": "ADIG",
+     "forms": "SC 13G"
+    },
+    {
+     "target": "Construction Partners, Inc.",
+     "tk": "ROAD",
+     "forms": "SC 13G"
+    },
+    {
+     "target": "LEVI STRAUSS & CO",
+     "tk": "LEVI",
+     "forms": "SC 13G"
+    },
+    {
+     "target": "Midera Food Processing, Inc.",
+     "tk": "MFP",
+     "forms": "SC 13G"
+    },
+    {
+     "target": "Mobility Global Inc.",
+     "tk": "MBGL",
+     "forms": "SC 13G"
+    },
+    {
+     "target": "BRANDYWINE REALTY TRUST",
+     "tk": "BDN",
+     "forms": "SC 13G/A"
+    },
+    {
+     "target": "Everpure, Inc.",
+     "tk": "P",
+     "forms": "SC 13G/A"
+    },
+    {
+     "target": "FMC CORP",
+     "tk": "FMC",
+     "forms": "SC 13G/A"
+    }
+   ],
+   "truncated": true
   }
  ],
  "bridges": [
@@ -23728,8 +23521,8 @@
    "stock_routable": false
   },
   {
-   "tk": "ABSI",
-   "name": "Absci Corp",
+   "tk": "ABR",
+   "name": "ARBOR REALTY TRUST INC",
    "in": [
     "13f",
     "13dg"
@@ -23742,22 +23535,36 @@
    "stock_routable": false
   },
   {
-   "tk": "ADI",
-   "name": "ANALOG DEVICES INC",
+   "tk": "AGX",
+   "name": "ARGAN INC",
    "in": [
     "13f",
     "13dg"
    ],
    "counts": {
-    "managers": 1,
+    "managers": 3,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "AKAM",
+   "name": "AKAMAI TECHNOLOGIES INC",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 2,
     "persons": 0,
     "stakers": 1
    },
    "stock_routable": true
   },
   {
-   "tk": "ALSN",
-   "name": "Allison Transmission Holdings Inc",
+   "tk": "ALNY",
+   "name": "ALNYLAM PHARMACEUTICALS, INC.",
    "in": [
     "13f",
     "13dg"
@@ -23770,8 +23577,8 @@
    "stock_routable": false
   },
   {
-   "tk": "AN",
-   "name": "AUTONATION, INC.",
+   "tk": "ARES",
+   "name": "Ares Management Corp",
    "in": [
     "13f",
     "13dg"
@@ -23782,20 +23589,6 @@
     "stakers": 1
    },
    "stock_routable": false
-  },
-  {
-   "tk": "APTV",
-   "name": "Aptiv PLC",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 1,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": true
   },
   {
    "tk": "ASH",
@@ -23812,22 +23605,8 @@
    "stock_routable": false
   },
   {
-   "tk": "ATI",
-   "name": "ATI INC",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 2,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
-  },
-  {
-   "tk": "BAC",
-   "name": "BANK OF AMERICA CORP /DE/",
+   "tk": "AUR",
+   "name": "Aurora Innovation, Inc.",
    "in": [
     "13f",
     "13dg"
@@ -23837,17 +23616,17 @@
     "persons": 0,
     "stakers": 1
    },
-   "stock_routable": true
+   "stock_routable": false
   },
   {
-   "tk": "BBIO",
-   "name": "BridgeBio Pharma, Inc.",
+   "tk": "BE",
+   "name": "Bloom Energy Corp",
    "in": [
     "13f",
     "13dg"
    ],
    "counts": {
-    "managers": 2,
+    "managers": 5,
     "persons": 0,
     "stakers": 1
    },
@@ -23868,8 +23647,22 @@
    "stock_routable": false
   },
   {
-   "tk": "BLK",
-   "name": "BlackRock, Inc.",
+   "tk": "BLDR",
+   "name": "Builders FirstSource, Inc.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 3,
+    "persons": 0,
+    "stakers": 2
+   },
+   "stock_routable": true
+  },
+  {
+   "tk": "CART",
+   "name": "Maplebear Inc.",
    "in": [
     "13f",
     "13dg"
@@ -23877,13 +23670,13 @@
    "counts": {
     "managers": 1,
     "persons": 0,
-    "stakers": 2
+    "stakers": 1
    },
-   "stock_routable": true
+   "stock_routable": false
   },
   {
-   "tk": "BTDR",
-   "name": "Bitdeer Technologies Group",
+   "tk": "CHTR",
+   "name": "CHARTER COMMUNICATIONS, INC. /MO/",
    "in": [
     "13f",
     "13dg"
@@ -23893,11 +23686,39 @@
     "persons": 0,
     "stakers": 1
    },
+   "stock_routable": true
+  },
+  {
+   "tk": "DBX",
+   "name": "DROPBOX, INC.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
    "stock_routable": false
   },
   {
-   "tk": "CDW",
-   "name": "CDW Corp",
+   "tk": "DKNG",
+   "name": "DraftKings Inc.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "EQT",
+   "name": "EQT Corp",
    "in": [
     "13f",
     "13dg"
@@ -23908,62 +23729,6 @@
     "stakers": 1
    },
    "stock_routable": true
-  },
-  {
-   "tk": "CORZ",
-   "name": "Core Scientific, Inc./tx",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 1,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
-  },
-  {
-   "tk": "CP",
-   "name": "CANADIAN PACIFIC KANSAS CITY LTD/CN",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 1,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
-  },
-  {
-   "tk": "CTNM",
-   "name": "Contineum Therapeutics, Inc.",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 1,
-    "persons": 0,
-    "stakers": 2
-   },
-   "stock_routable": false
-  },
-  {
-   "tk": "DCO",
-   "name": "DUCOMMUN INC /DE/",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 2,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
   },
   {
    "tk": "ESTC",
@@ -23980,8 +23745,78 @@
    "stock_routable": false
   },
   {
-   "tk": "FER",
-   "name": "Ferrovial N.V.",
+   "tk": "ETSY",
+   "name": "ETSY INC",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 3,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "EYE",
+   "name": "National Vision Holdings, Inc.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 2
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "FERG",
+   "name": "Ferguson Enterprises Inc. /DE/",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 4,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "FIVN",
+   "name": "Five9, Inc.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 2
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "FWONA",
+   "name": "Liberty Media Corp",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 5,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "GIS",
+   "name": "GENERAL MILLS INC",
    "in": [
     "13f",
     "13dg"
@@ -23991,7 +23826,7 @@
     "persons": 0,
     "stakers": 1
    },
-   "stock_routable": false
+   "stock_routable": true
   },
   {
    "tk": "GOSS",
@@ -24036,36 +23871,50 @@
    "stock_routable": false
   },
   {
-   "tk": "HTZ",
-   "name": "HERTZ GLOBAL HOLDINGS, INC",
+   "tk": "HAS",
+   "name": "HASBRO, INC.",
    "in": [
     "13f",
     "13dg"
    ],
    "counts": {
-    "managers": 2,
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": true
+  },
+  {
+   "tk": "HLF",
+   "name": "HERBALIFE LTD.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
     "persons": 0,
     "stakers": 1
    },
    "stock_routable": false
   },
   {
-   "tk": "LBTYA",
-   "name": "Liberty Global Ltd.",
+   "tk": "HRI",
+   "name": "HERC HOLDINGS INC",
    "in": [
     "13f",
     "13dg"
    ],
    "counts": {
-    "managers": 2,
+    "managers": 1,
     "persons": 0,
-    "stakers": 1
+    "stakers": 2
    },
    "stock_routable": false
   },
   {
-   "tk": "LLYVA",
-   "name": "Liberty Live Holdings, Inc.",
+   "tk": "ILMN",
+   "name": "ILLUMINA, INC.",
    "in": [
     "13f",
     "13dg"
@@ -24078,14 +23927,42 @@
    "stock_routable": false
   },
   {
-   "tk": "MAT",
-   "name": "MATTEL INC /DE/",
+   "tk": "INOD",
+   "name": "INNODATA INC",
    "in": [
     "13f",
     "13dg"
    ],
    "counts": {
     "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "MATW",
+   "name": "MATTHEWS INTERNATIONAL CORP",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "MDLN",
+   "name": "Medline Inc.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 2,
     "persons": 0,
     "stakers": 1
    },
@@ -24106,6 +23983,34 @@
    "stock_routable": true
   },
   {
+   "tk": "MLM",
+   "name": "MARTIN MARIETTA MATERIALS INC",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 2
+   },
+   "stock_routable": true
+  },
+  {
+   "tk": "MOH",
+   "name": "MOLINA HEALTHCARE, INC.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": true
+  },
+  {
    "tk": "MSFT",
    "name": "MICROSOFT CORP",
    "in": [
@@ -24118,6 +24023,20 @@
     "stakers": 0
    },
    "stock_routable": true
+  },
+  {
+   "tk": "NBIX",
+   "name": "NEUROCRINE BIOSCIENCES INC",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
   },
   {
    "tk": "NEE",
@@ -24134,8 +24053,8 @@
    "stock_routable": true
   },
   {
-   "tk": "NRG",
-   "name": "NRG ENERGY, INC.",
+   "tk": "NWL",
+   "name": "NEWELL BRANDS INC.",
    "in": [
     "13f",
     "13dg"
@@ -24145,7 +24064,7 @@
     "persons": 0,
     "stakers": 1
    },
-   "stock_routable": true
+   "stock_routable": false
   },
   {
    "tk": "ODC",
@@ -24162,8 +24081,50 @@
    "stock_routable": false
   },
   {
-   "tk": "OR",
-   "name": "OR Royalties Inc.",
+   "tk": "P",
+   "name": "Everpure, Inc.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 2
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "PCG",
+   "name": "PG&E Corp",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 3,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": true
+  },
+  {
+   "tk": "PINS",
+   "name": "PINTEREST, INC.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 3,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "POOL",
+   "name": "POOL CORP",
    "in": [
     "13f",
     "13dg"
@@ -24173,7 +24134,7 @@
     "persons": 0,
     "stakers": 1
    },
-   "stock_routable": false
+   "stock_routable": true
   },
   {
    "tk": "PPLI",
@@ -24185,13 +24146,13 @@
    "counts": {
     "managers": 2,
     "persons": 0,
-    "stakers": 1
+    "stakers": 2
    },
    "stock_routable": false
   },
   {
-   "tk": "QNT",
-   "name": "Quantinuum Inc.",
+   "tk": "RCKT",
+   "name": "ROCKET PHARMACEUTICALS, INC.",
    "in": [
     "13f",
     "13dg"
@@ -24204,8 +24165,22 @@
    "stock_routable": false
   },
   {
-   "tk": "SAM",
-   "name": "BOSTON BEER CO INC",
+   "tk": "RDDT",
+   "name": "Reddit, Inc.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 4,
+    "persons": 0,
+    "stakers": 2
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "RVMD",
+   "name": "Revolution Medicines, Inc.",
    "in": [
     "13f",
     "13dg"
@@ -24218,22 +24193,8 @@
    "stock_routable": false
   },
   {
-   "tk": "SPHR",
-   "name": "Sphere Entertainment Co.",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 2,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
-  },
-  {
-   "tk": "TDAY",
-   "name": "USA TODAY Co., Inc.",
+   "tk": "SDHC",
+   "name": "Smith Douglas Homes Corp.",
    "in": [
     "13f",
     "13dg"
@@ -24246,14 +24207,56 @@
    "stock_routable": false
   },
   {
-   "tk": "TEM",
-   "name": "Tempus AI, Inc.",
+   "tk": "SLB",
+   "name": "SLB LIMITED/NV",
    "in": [
     "13f",
     "13dg"
    ],
    "counts": {
-    "managers": 2,
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": true
+  },
+  {
+   "tk": "SMCI",
+   "name": "Super Micro Computer, Inc.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": true
+  },
+  {
+   "tk": "SUNB",
+   "name": "Sunbelt Rentals Holdings, Inc.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "SWX",
+   "name": "Southwest Gas Holdings, Inc.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 3,
     "persons": 0,
     "stakers": 1
    },
@@ -24274,8 +24277,64 @@
    "stock_routable": true
   },
   {
-   "tk": "TSM",
-   "name": "TAIWAN SEMICONDUCTOR MANUFACTURING CO LTD",
+   "tk": "TOST",
+   "name": "Toast, Inc.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "TSCO",
+   "name": "TRACTOR SUPPLY CO /DE/",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": true
+  },
+  {
+   "tk": "TTD",
+   "name": "Trade Desk, Inc.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 2
+   },
+   "stock_routable": true
+  },
+  {
+   "tk": "UPBD",
+   "name": "UPBOUND GROUP, INC.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "VOYA",
+   "name": "Voya Financial, Inc.",
    "in": [
     "13f",
     "13dg"
@@ -24302,8 +24361,8 @@
    "stock_routable": true
   },
   {
-   "tk": "WVE",
-   "name": "Wave Life Sciences, Inc.",
+   "tk": "ZM",
+   "name": "Zoom Communications, Inc.",
    "in": [
     "13f",
     "13dg"
@@ -24317,18 +24376,18 @@
   }
  ],
  "components": {
-  "n": 21,
+  "n": 18,
   "largest": 44
  },
  "windows": {
   "form13f_quarter": "2026-06-30",
   "stakes_visible_dates": {
-   "start": "2026-10-27",
-   "end": "2026-10-29"
+   "start": "2026-10-29",
+   "end": "2026-10-30"
   },
   "smart_money_visible_dates": {
-   "start": "2026-10-21",
-   "end": "2026-10-29"
+   "start": "2026-10-22",
+   "end": "2026-10-30"
   }
  },
  "coverage": {
@@ -24338,7 +24397,7 @@
    "isolated_managers": 0
   },
   "def14a": {
-   "basis": "top_persons export: 50 most-seated of 723 upstream persons; 116/150 filings with persons (77.3%)",
+   "basis": "top_persons export: 50 most-seated of 749 upstream persons; 116/150 filings with persons (77.3%)",
    "same_name_merges_possible": true
   },
   "13dg": {
@@ -24347,5 +24406,5 @@
   }
  },
  "methodology": "Force-camp relationship graph DERIVED at export time from four COMMITTED panels (form13f x def14a_persons x stakes_13g union smart_money) \u2014 zero new fetches, display-only. Edges are pairwise projections over as-filed disclosure facts: co_hold = two curated managers' VISIBLE BOOKS (latest quarter, up to 50 positions each; the full books are larger) share a position key (ticker, else CUSIP); co_board = two proxy-statement top persons seat the same company (exact company-name match resolves the ticker); co_target = two different filers INDEPENDENTLY SEPARATELY FILED stakes converging on the same target issuer within the visible SC 13D/13G windows. Identity rule: a window filer merges into an institution node ONLY when its trimmed-uppercase name equals a curated manager's name exactly \u2014 no fuzzy matching, no name list. The three overlaps are factual coincidences of separate filings: joint filings stay verbatim (members NOT DECOMPOSED), no COORDINATION is implied and no consortium claim is made. Weights are integer counts of shared items (lists capped at 8, truncated flag set beyond). Coverage is bounded by construction \u2014 see the coverage.basis strings (visible books, a 50-person proxy export over the newest filings, latest filing windows only). A restatement of public SEC EDGAR disclosures only: NO PRICES, NO RETURNS, no performance claims; never part of any OOS pipeline.",
- "snapshot_ts": "2026-10-30T11:30:36.109280+00:00"
+ "snapshot_ts": "2026-11-02T11:32:33.579703+00:00"
 }
