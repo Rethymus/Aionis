@@ -222,6 +222,39 @@ Settings → Billing 结清/解锁。
 不等晚间 lane，推一个空提交即可：`git commit --allow-empty -m "chore(site):
 redeploy after billing unlock" && git push`。
 
+### 解锁后一键恢复（recovery automation，2026-11-06 立案）
+
+Billing 解锁本身零动作（Settings → Billing 结清即恢复）；恢复的最后一公里是
+让部署链重新跑起来。三条路径按需取用：
+
+1. **被动等通道（默认，零操作）**：下一次 evening lane 的 push（Task
+   Scheduler 18:05 起每小时）照常触发 `publish-site.yml` + `Tests`，线上
+   站点自动追平，doctor 第 7 层随之转 PASS。无需任何手工命令。
+2. **立即验证（不等晚间 lane）**：对最新一次红 run 重跑——
+
+   ```bash
+   gh run list --limit 5        # 找最新红 Tests / Publish site (gh-pages) 的 run id
+   gh run rerun --failed <run-id>
+   ```
+
+   幂等性：rerun 对**同一 commit** 重跑——`publish-site.yml` 重新构建同一
+   sha 并 rsync 到 gh-pages；若站点内容无变化，`git diff --cached --quiet`
+   直接 "No site changes — nothing to publish"（exit 0），**不产生重复
+   部署**。若 main 在冻结期前进过，rerun 发布的是该 run 自己的 sha（数据
+   截至该提交），之后的增量仍由下一次 18:05 push 补齐。
+3. **冻结未解除期间的替代发布（本地冻结通道）**：
+   `uv run python scripts/ops_freeze_deploy.py --dry-run`（预检 + 同步，
+   不推送；确认输出后由业主决定是否 `--deploy` 真推 gh-pages——见脚本
+   docstring。前置自检会拦下"本地 out 比线上旧一个月"的回退陷阱， FAIL 时
+   先按提示 `pnpm build` 再试）。
+
+**解锁时刻的自动检测**（夜报班用）：
+`uv run python scripts/ops_freeze_deploy.py --check-recovery` —— 读最新
+`Tests` run 结论：conclusion=success → 打印「已恢复，可停止使用冻结通道」
+并**退出 2**（夜报捕获退出码 2 即宣告恢复、停止冻结通道播报）；仍锁定
+（failure）或无法判定（gh 失败 / 无 run）→ **退出 0** 继续播报。对应测试：
+`tests/test_ops_freeze_deploy.py` 的三种 gh 状态分支。
+
 ## Manual operations
 
 ```bash
