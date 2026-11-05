@@ -2903,3 +2903,5 @@ dashboard realizing `docs/dashboard-v2-design.md`'s 5 dimensions on deterministi
   - **轮 110（2026-10-02）**：夜报班升级——每晩 --doctor 六层体检（凭据/调度器/钩子失效的最早信号，PAT 过期类问题从"人工发现"变为"当晚报出"）+ marker ci 字段进一行总结（CI(own): success/success）+ 月报口径纳入 doctor 趋势。即刻于今晚 23:35 生效。
   - **轮 111（2026-10-02）**：runbook 失败模式表同步至轮 110 能力面（push-only 恢复/doctor/ci(own)/防丢守卫/镜像钉/重试六行新增）——第二月运维手册不再过时。
   - **轮 111 收官（10-02 20:04 核验）**：own-commit CI 核验首夜实弹——通道 78.9 分钟完成（0b3a9a98，57 文件，软失败仅 ticker_metadata），推送后自行轮询本提交的双 CI 结论至收敛并持久化进 SUMMARY 与 marker：`ci: {publish-site: success, Tests: success}`（有界等待含 Tests ~4 分钟全程）。轮 107 特性生产验证闭环。
+
+  - **轮 118 观测（2026-11-05 深夜）**：GitHub 计费锁定 #2 发生（Tests 4 秒红：account locked due to billing issue；publish-site 同锁）——08-20→09-01 冻结翻版。影响链：本地通道不受影响（11-05 晚 fetch+export 已完成、修复提交 5a1075f65 已推送成功=git push 走 PAT 不走 Actions）；**线上站点部署冻结**（publish-site 无法运行，站点停 11-02 数据直至业主解锁）；**绊网失明**（staleness-check 也是 Actions——冻结期 5 天 Issue 警报不会开，夜报班成为唯一报警层）。业主动作：解锁账单/spending limit（09-01 先例）。修复提交 5a1075f65（cap 600+form8k 专模块+三日数据）待解锁后 CI/发布自愈。
