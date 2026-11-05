@@ -32,6 +32,7 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
+import form8k from "@/data/aionis/form8k";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/i18n/provider";
@@ -745,7 +746,7 @@ function ArkCard() {
  *  one category, one label across pages) + MM/DD; row links the primary doc. */
 function Events8kCard() {
   const { t } = useI18n();
-  const f = aionis.form8k;
+  const f = form8k;
   const rows = f.status === "ok" ? f.events.slice(0, 8) : [];
   if (rows.length === 0) return null;
   return (

@@ -1,12 +1,12 @@
 {
   "status": "ok",
-  "as_of": "2026-10-30",
+  "as_of": "2026-11-04",
   "window": {
     "start": "2026-05-01",
-    "end": "2026-10-30"
+    "end": "2026-11-04"
   },
   "issuers": 50,
-  "total": 300,
+  "total": 312,
   "unclassified": 11,
   "by_category": {
     "agreement_termination": 2,
@@ -17,16 +17,161 @@
     "financial_obligation": 7,
     "major_agreement": 7,
     "merger_completion": 1,
-    "officer_changes": 61,
+    "officer_changes": 62,
     "other": 3,
-    "other_events": 42,
-    "reg_fd": 27,
-    "results": 96,
+    "other_events": 46,
+    "reg_fd": 28,
+    "results": 102,
     "security_terms": 4,
     "unclassified": 11,
     "vote_results": 25
   },
   "events": [
+    {
+      "ticker": "MSFT",
+      "company": "MICROSOFT CORP",
+      "filing_date": "2026-11-04",
+      "form": "8-K",
+      "items": [
+        "8.01",
+        "9.01"
+      ],
+      "category": "other_events",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526447173/d178557d8k.htm"
+    },
+    {
+      "ticker": "ORCL",
+      "company": "ORACLE CORP",
+      "filing_date": "2026-11-04",
+      "form": "8-K",
+      "items": [
+        "8.01",
+        "9.01"
+      ],
+      "category": "other_events",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526447507/d131790d8k.htm"
+    },
+    {
+      "ticker": "QCOM",
+      "company": "QUALCOMM INC/DE",
+      "filing_date": "2026-11-04",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/804328/000080432826000127/qcom-20261104.htm"
+    },
+    {
+      "ticker": "MCD",
+      "company": "MCDONALDS CORP",
+      "filing_date": "2026-11-04",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000080/mcd-20261104.htm"
+    },
+    {
+      "ticker": "PFE",
+      "company": "PFIZER INC",
+      "filing_date": "2026-11-03",
+      "form": "8-K",
+      "items": [
+        "5.02",
+        "9.01"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000132/pfe-20261030.htm"
+    },
+    {
+      "ticker": "PFE",
+      "company": "PFIZER INC",
+      "filing_date": "2026-11-03",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000125/pfe-20261103.htm"
+    },
+    {
+      "ticker": "PG",
+      "company": "PROCTER & GAMBLE Co",
+      "filing_date": "2026-11-03",
+      "form": "8-K",
+      "items": [
+        "8.01",
+        "9.01"
+      ],
+      "category": "other_events",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/80424/000162828026069608/pg-20261103.htm"
+    },
+    {
+      "ticker": "AMD",
+      "company": "ADVANCED MICRO DEVICES INC",
+      "filing_date": "2026-11-03",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "7.01",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/amd-20261103.htm"
+    },
+    {
+      "ticker": "DD",
+      "company": "DuPont de Nemours, Inc.",
+      "filing_date": "2026-11-03",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1666700/000166670026000058/dd-20261103.htm"
+    },
+    {
+      "ticker": "AAPL",
+      "company": "Apple Inc.",
+      "filing_date": "2026-11-02",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000024/aapl-20261102.htm"
+    },
+    {
+      "ticker": "PG",
+      "company": "PROCTER & GAMBLE Co",
+      "filing_date": "2026-11-02",
+      "form": "8-K",
+      "items": [
+        "8.01",
+        "9.01"
+      ],
+      "category": "other_events",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/80424/000162828026068909/pg-20261102.htm"
+    },
+    {
+      "ticker": "DE",
+      "company": "DEERE & CO",
+      "filing_date": "2026-11-02",
+      "form": "8-K",
+      "items": [
+        "7.01",
+        "9.01"
+      ],
+      "category": "reg_fd",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/315189/000110465926120813/de-20261102x8k.htm"
+    },
     {
       "ticker": "PG",
       "company": "PROCTER & GAMBLE Co",
@@ -3626,5 +3771,5 @@
     }
   ],
   "methodology": "SEC Form 8-K current reports \u2014 the legally mandated material-event disclosure (public domain, 17 U.S.C. \u00a7105), due within 4 business days of the event. Panel streams a bounded 50 large-cap issuer set (5 mega-cap seed + v2 20 + v3 25 across financials, payments, healthcare, staples, energy, industrials, tech/comm \u2014 breadth expansions 2026-08-22; still bounded, NOT full market; XOM carries both its pre-succession CIK and the 2026-07-01 8-K12B successor entity) since 2026-05-01; each row links the EDGAR primary document. Items are regex-extracted from the primary doc (nbsp/thin-space entities normalized) and mapped to ONE category by a rare-material-first precedence (delisting > merger completion > control change > non-reliance > officer changes > ... > exhibits); the full item list is preserved per row. Documents whose items cannot be extracted are counted as unclassified \u2014 never guessed. Filing-date point-in-time; 8-K/A amendments are new accessions (immutable). Display-only, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-11-02T11:31:55.376580+00:00"
+  "snapshot_ts": "2026-11-05T15:39:51.214503+00:00"
 }

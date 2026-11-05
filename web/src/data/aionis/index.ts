@@ -44,7 +44,6 @@ import modelInventoryJson from "./model_inventory.json";
 import dataHealthJson from "./data_health.json";
 import apiCatalogJson from "./api_catalog.json";
 import panelChangesJson from "./panel_changes.json";
-import form8kJson from "./form8k.json";
 import partyIndexJson from "./party_index.json";
 import arkJson from "./ark.json";
 import themeEtfsJson from "./theme_etfs.json";
@@ -665,33 +664,6 @@ export type ApiCatalog = {
 
 
 
-export type Form8kEvent = {
-  ticker: string;
-  company: string;
-  filing_date: string;
-  form: string;
-  // Legally mandated 8-K item numbers, e.g. ["2.01", "9.01"] — regex-extracted
-  // from the primary document, sorted unique.
-  items: string[];
-  // ONE category per filing (rare-material-first precedence); "unclassified"
-  // when items could not be extracted (counted, never guessed).
-  category: string;
-  doc_url: string;
-};
-
-export type Form8k = {
-  status: string;
-  as_of: string | null;
-  window: { start: string; end: string };
-  issuers: number;
-  total: number;
-  unclassified: number;
-  by_category: Record<string, number>;
-  events: Form8kEvent[];
-  methodology: string;
-  snapshot_ts?: string;
-};
-
 
 
 
@@ -948,6 +920,8 @@ export type Def14aPersons = {
 };
 
 
+
+export type { Form8k, Form8kEvent } from "./form8k";
 
 export type ExecutivesEvent = {
   company: string;
@@ -1444,7 +1418,6 @@ export const aionis = {
   dataHealth: dataHealthJson as DataHealth,
   apiCatalog: apiCatalogJson as ApiCatalog,
   panelChanges: panelChangesJson as PanelChanges,
-  form8k: form8kJson as Form8k,
   partyIndex: partyIndexJson as PartyIndex,
   ark: arkJson as Ark,
   themeEtfs: themeEtfsJson as ThemeEtfs,

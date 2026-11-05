@@ -1,25 +1,25 @@
 {
   "status": "ok",
-  "as_of": "2026-10-30",
+  "as_of": "2026-11-04",
   "window": {
     "start": "2026-04-27",
-    "end": "2026-10-30"
+    "end": "2026-11-04"
   },
-  "issuers": 645,
-  "total": 1505,
+  "issuers": 647,
+  "total": 1513,
   "by_status": {
-    "filed": 1230,
-    "priced": 275
+    "filed": 1236,
+    "priced": 277
   },
   "by_form": {
-    "424B4": 275,
-    "S-1": 511,
-    "S-1/A": 719
+    "424B4": 277,
+    "S-1": 515,
+    "S-1/A": 721
   },
   "offer_price_parsed": 65,
   "offer_price_meta": {
     "target_cap_docs": 80,
-    "priced_filings": 275,
+    "priced_filings": 277,
     "newest_targeted": 80,
     "attempted": 80,
     "fetch_failed": 0,
@@ -29,16 +29,88 @@
       "low": 0,
       "none": 15
     },
-    "coverage_pct_of_priced": 23.6,
+    "coverage_pct_of_priced": 23.5,
     "requests": {
       "task_budget": 170,
-      "cumulative_walk": 267,
+      "cumulative_walk": 271,
       "walk_cap": 156,
-      "last_walk": 6
+      "last_walk": 0
     },
-    "target_as_of": "2026-10-30"
+    "target_as_of": "2026-11-04"
   },
   "filings": [
+    {
+      "company": "GeoVax Labs, Inc.",
+      "ticker": "GOVX",
+      "filed_date": "2026-11-04",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/832489/000143774926034729/0001437749-26-034729-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Churchill Capital Corp XIV",
+      "ticker": "",
+      "filed_date": "2026-11-04",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2128984/000121390026115921/0001213900-26-115921-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "reAlpha Tech Corp.",
+      "ticker": "AIRE",
+      "filed_date": "2026-11-04",
+      "form": "424B4",
+      "status": "priced",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1859199/000121390026115755/0001213900-26-115755-index.htm",
+      "offer_price": 0.4
+    },
+    {
+      "company": "Research Alliance Corp III",
+      "ticker": "RACC",
+      "filed_date": "2026-11-04",
+      "form": "424B4",
+      "status": "priced",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2118032/000119312526447320/0001193125-26-447320-index.htm",
+      "offer_price": 10.0
+    },
+    {
+      "company": "Canary Staked INJ ETF",
+      "ticker": "",
+      "filed_date": "2026-11-02",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2073616/000199937126024117/0001999371-26-024117-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Anthropic, PBC",
+      "ticker": "",
+      "filed_date": "2026-11-02",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026068676/0001628280-26-068676-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "SunPower Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-02",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1838987/000121390026114542/0001213900-26-114542-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Ja-Lika Corp",
+      "ticker": "",
+      "filed_date": "2026-11-02",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2158764/000117152026000318/0001171520-26-000318-index.htm",
+      "offer_price": null
+    },
     {
       "company": "Exascale Labs Holdings Inc.",
       "ticker": "",
@@ -5032,7 +5104,7 @@
       "form": "424B4",
       "status": "priced",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2123955/000121390026086694/0001213900-26-086694-index.htm",
-      "offer_price": 10.0
+      "offer_price": null
     },
     {
       "company": "Ticketplus Ltd.",
@@ -5041,7 +5113,7 @@
       "form": "424B4",
       "status": "priced",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2104296/000121390026086641/0001213900-26-086641-index.htm",
-      "offer_price": 8.0
+      "offer_price": null
     },
     {
       "company": "iSpecimen Inc.",
@@ -10766,80 +10838,8 @@
       "status": "filed",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2123613/000119312526239298/0001193125-26-239298-index.htm",
       "offer_price": null
-    },
-    {
-      "company": "Firefly Aerospace Inc.",
-      "ticker": "FLY",
-      "filed_date": "2026-05-26",
-      "form": "S-1",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1860160/000119312526239249/0001193125-26-239249-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Safepoint Holdings, Inc.",
-      "ticker": "SFPT",
-      "filed_date": "2026-05-26",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1653827/000119312526237987/0001193125-26-237987-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "WhiteHawk Income Corp",
-      "ticker": "WHK",
-      "filed_date": "2026-05-26",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1921603/000119312526237902/0001193125-26-237902-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "INNIO Holding GmbH",
-      "ticker": "INIO",
-      "filed_date": "2026-05-26",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2109150/000119312526237848/0001193125-26-237848-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Applied Aerospace & Defense, Inc.",
-      "ticker": "AADX",
-      "filed_date": "2026-05-26",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2118195/000119312526237828/0001193125-26-237828-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "ERock, Inc.",
-      "ticker": "EROC",
-      "filed_date": "2026-05-26",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2110029/000119312526237760/0001193125-26-237760-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Columbus Circle Capital Corp III",
-      "ticker": "CCCT",
-      "filed_date": "2026-05-26",
-      "form": "S-1",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2123471/000118518526002099/0001185185-26-002099-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Sunshine Silver Mining & Refining Co",
-      "ticker": "SSMR",
-      "filed_date": "2026-05-26",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2091017/000114036126022717/0001140361-26-022717-index.htm",
-      "offer_price": null
     }
   ],
   "methodology": "US IPO registration/pricing stream \u2014 SEC EDGAR EFTS whole-market form-level queries (public domain, 17 U.S.C. \u00a7105), fixed ~120-day window, filed-date point-in-time, one row per accession (an S-1/A amendment is a new filing, never a silent overwrite). Status is derived from the immutable form type: S-1 / S-1/A = filed (registration statement on file); 424B4 = priced (the statutory final prospectus under Securities Act Rule 424(b)(4) is filed after pricing \u2014 its appearance marks a priced offering). Offer price is a BOUNDED second-stage extraction, not full coverage: only the newest \u226480 priced (424B4) filings are walked politely (\u22652.1 s spacing, hard request budget disclosed in offer_price_meta.requests), their EDGAR index + primary document fetched, and the cover page regex-parsed with graded confidence \u2014 EXACT (single final printed price \u2192 exported), LOW (draft/range wording near the label \u2192 value withheld, counted, never guessed) and NO-MATCH; every unparsed row stays offer_price=null with its EDGAR index link. Share count, proceeds, and expected listing date are NOT extracted at any tier. Honest scope disclosures: (2) the 424B4 form-level catch includes priced follow-on offerings by already-listed issuers (e.g. S-3 shelf takedowns), not only first-day IPOs \u2014 this panel is the registration/pricing STREAM, not a curated IPO list; (3) no company-level state machine is applied (rows are filing-level). Ticker is parsed from the EDGAR display name where present; pre-symbol S-1 filers carry none (empty, never guessed). Counts are FILING counts, not company counts. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-11-02T11:31:55.635633+00:00"
+  "snapshot_ts": "2026-11-05T13:19:59.059223+00:00"
 }

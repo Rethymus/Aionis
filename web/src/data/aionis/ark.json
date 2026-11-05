@@ -1,144 +1,144 @@
 {
   "status": "ok",
-  "as_of": "2026-11-02",
+  "as_of": "2026-11-05",
   "n_funds": 8,
   "n_funds_expected": 8,
   "funds": [
     {
       "ticker": "ARKK",
       "fund": "ARKK",
-      "as_of": "2026-11-02",
+      "as_of": "2026-11-05",
       "n_positions": 42,
       "skipped_rows": 5,
       "top": [
         {
           "ticker": "TSLA",
           "company": "TESLA INC",
-          "weight_pct": 11.2,
-          "market_value": 690963636.3
+          "weight_pct": 10.92,
+          "market_value": 665696913.7
         },
         {
           "ticker": "SPCX",
           "company": "SPACE EXPLORATION TECHN-CL A",
-          "weight_pct": 6.05,
-          "market_value": 372990103.04
+          "weight_pct": 6.67,
+          "market_value": 406824190.8
         },
         {
           "ticker": "TEM",
           "company": "TEMPUS AI INC-CL A",
-          "weight_pct": 5.73,
-          "market_value": 353173927.22
-        },
-        {
-          "ticker": "CRSP",
-          "company": "CRISPR THERAPEUTICS AG",
-          "weight_pct": 4.49,
-          "market_value": 276733132.98
+          "weight_pct": 5.92,
+          "market_value": 360725102.65
         },
         {
           "ticker": "CRCL",
           "company": "CIRCLE INTERNET GROUP INC",
-          "weight_pct": 4.48,
-          "market_value": 276613590.24
+          "weight_pct": 4.8,
+          "market_value": 292704844.96
+        },
+        {
+          "ticker": "CRSP",
+          "company": "CRISPR THERAPEUTICS AG",
+          "weight_pct": 4.57,
+          "market_value": 278643678.73
         },
         {
           "ticker": "COIN",
           "company": "COINBASE GLOBAL INC -CLASS A",
-          "weight_pct": 3.78,
-          "market_value": 232957525.3
+          "weight_pct": 4.08,
+          "market_value": 248519994.0
         },
         {
           "ticker": "TWST",
           "company": "TWIST BIOSCIENCE CORP",
-          "weight_pct": 3.33,
-          "market_value": 205649824.56
+          "weight_pct": 3.25,
+          "market_value": 198292422.1
         },
         {
           "ticker": "SHOP",
           "company": "SHOPIFY INC - CLASS A",
-          "weight_pct": 3.1,
-          "market_value": 190920402.3
-        },
-        {
-          "ticker": "NVDA",
-          "company": "NVIDIA CORP",
-          "weight_pct": 2.96,
-          "market_value": 182555660.48
+          "weight_pct": 3.2,
+          "market_value": 195242407.32
         },
         {
           "ticker": "HOOD",
           "company": "ROBINHOOD MARKETS INC - A",
-          "weight_pct": 2.82,
-          "market_value": 174012520.53
+          "weight_pct": 2.94,
+          "market_value": 178967342.27
+        },
+        {
+          "ticker": "NVDA",
+          "company": "NVIDIA CORP",
+          "weight_pct": 2.93,
+          "market_value": 178532370.66
         }
       ]
     },
     {
       "ticker": "ARKQ",
       "fund": "ARKQ",
-      "as_of": "2026-11-02",
+      "as_of": "2026-11-05",
       "n_positions": 36,
       "skipped_rows": 2,
       "top": [
         {
           "ticker": "TSLA",
           "company": "TESLA INC",
-          "weight_pct": 12.97,
-          "market_value": 226192107.69
+          "weight_pct": 12.87,
+          "market_value": 217920857.31
         },
         {
           "ticker": "SPCX",
           "company": "SPACE EXPLORATION TECHN-CL A",
-          "weight_pct": 8.23,
-          "market_value": 143577840.0
+          "weight_pct": 9.06,
+          "market_value": 153484669.76
         },
         {
           "ticker": "NVDA",
           "company": "NVIDIA CORP",
-          "weight_pct": 5.78,
-          "market_value": 100842089.92
+          "weight_pct": 5.82,
+          "market_value": 98619661.14
         },
         {
           "ticker": "KTOS",
           "company": "KRATOS DEFENSE & SECURITY",
-          "weight_pct": 5.61,
-          "market_value": 97836769.24
+          "weight_pct": 5.06,
+          "market_value": 85622054.56
         },
         {
           "ticker": "PLTR",
           "company": "PALANTIR TECHNOLOGIES INC-A",
-          "weight_pct": 5.05,
-          "market_value": 88030355.4
+          "weight_pct": 4.95,
+          "market_value": 83866693.3
         },
         {
           "ticker": "GOOG",
           "company": "ALPHABET INC-CL C",
-          "weight_pct": 4.16,
-          "market_value": 72539465.94
-        },
-        {
-          "ticker": "RKLB",
-          "company": "ROCKET LAB CORP",
-          "weight_pct": 3.86,
-          "market_value": 67329283.84
-        },
-        {
-          "ticker": "TER",
-          "company": "TERADYNE INC",
-          "weight_pct": 3.68,
-          "market_value": 64214652.28
+          "weight_pct": 3.96,
+          "market_value": 67088284.9
         },
         {
           "ticker": "AMZN",
           "company": "AMAZON.COM INC",
-          "weight_pct": 3.6,
-          "market_value": 62835661.9
+          "weight_pct": 3.86,
+          "market_value": 65359314.52
         },
         {
-          "ticker": "AVAV",
-          "company": "AEROVIRONMENT INC",
-          "weight_pct": 3.46,
-          "market_value": 60422075.42
+          "ticker": "RKLB",
+          "company": "ROCKET LAB CORP",
+          "weight_pct": 3.8,
+          "market_value": 64425992.96
+        },
+        {
+          "ticker": "TER",
+          "company": "TERADYNE INC",
+          "weight_pct": 3.47,
+          "market_value": 58742703.56
+        },
+        {
+          "ticker": "LHX",
+          "company": "L3HARRIS TECHNOLOGIES INC",
+          "weight_pct": 3.33,
+          "market_value": 56364878.7
         }
       ]
     },
@@ -214,345 +214,345 @@
     {
       "ticker": "ARKG",
       "fund": "ARKG",
-      "as_of": "2026-11-02",
+      "as_of": "2026-11-05",
       "n_positions": 34,
       "skipped_rows": 2,
       "top": [
         {
           "ticker": "TEM",
           "company": "TEMPUS AI INC-CL A",
-          "weight_pct": 8.5,
-          "market_value": 188258546.14
-        },
-        {
-          "ticker": "TWST",
-          "company": "TWIST BIOSCIENCE CORP",
-          "weight_pct": 8.25,
-          "market_value": 182543530.14
+          "weight_pct": 9.2,
+          "market_value": 201449688.86
         },
         {
           "ticker": "TXG",
           "company": "10X GENOMICS INC-CLASS A",
-          "weight_pct": 8.03,
-          "market_value": 177744063.87
+          "weight_pct": 7.99,
+          "market_value": 174958499.2
         },
         {
-          "ticker": "ABSI",
-          "company": "ABSCI CORP",
-          "weight_pct": 5.47,
-          "market_value": 121109915.22
+          "ticker": "TWST",
+          "company": "TWIST BIOSCIENCE CORP",
+          "weight_pct": 7.95,
+          "market_value": 174119266.32
         },
         {
           "ticker": "CRSP",
           "company": "CRISPR THERAPEUTICS AG",
-          "weight_pct": 5.29,
-          "market_value": 117171268.2
+          "weight_pct": 5.51,
+          "market_value": 120586097.78
+        },
+        {
+          "ticker": "ABSI",
+          "company": "ABSCI CORP",
+          "weight_pct": 5.32,
+          "market_value": 116556275.36
         },
         {
           "ticker": "GH",
           "company": "GUARDANT HEALTH INC",
-          "weight_pct": 5.04,
-          "market_value": 111613218.0
+          "weight_pct": 4.91,
+          "market_value": 107555725.8
         },
         {
           "ticker": "NTRA",
           "company": "NATERA INC",
-          "weight_pct": 4.79,
-          "market_value": 106013569.8
-        },
-        {
-          "ticker": "CDNA",
-          "company": "CAREDX INC",
-          "weight_pct": 4.38,
-          "market_value": 97009453.61
+          "weight_pct": 4.67,
+          "market_value": 102265684.87
         },
         {
           "ticker": "LLY",
           "company": "ELI LILLY & CO",
-          "weight_pct": 4.33,
-          "market_value": 95876735.44
+          "weight_pct": 4.48,
+          "market_value": 98008632.82
         },
         {
           "ticker": "ILMN",
           "company": "ILLUMINA INC",
-          "weight_pct": 4.09,
-          "market_value": 90475262.14
+          "weight_pct": 4.25,
+          "market_value": 93022534.42
+        },
+        {
+          "ticker": "CDNA",
+          "company": "CAREDX INC",
+          "weight_pct": 4.19,
+          "market_value": 91627473.78
         }
       ]
     },
     {
       "ticker": "ARKF",
       "fund": "ARKF",
-      "as_of": "2026-11-02",
+      "as_of": "2026-11-05",
       "n_positions": 34,
       "skipped_rows": 6,
       "top": [
         {
-          "ticker": "SHOP",
-          "company": "SHOPIFY INC - CLASS A",
-          "weight_pct": 8.9,
-          "market_value": 64786976.28
-        },
-        {
           "ticker": "XYZ",
           "company": "BLOCK INC",
-          "weight_pct": 8.67,
-          "market_value": 63126547.3
+          "weight_pct": 9.58,
+          "market_value": 70889077.17
+        },
+        {
+          "ticker": "SHOP",
+          "company": "SHOPIFY INC - CLASS A",
+          "weight_pct": 8.47,
+          "market_value": 62659357.74
         },
         {
           "ticker": "CRCL",
           "company": "CIRCLE INTERNET GROUP INC",
-          "weight_pct": 5.82,
-          "market_value": 42382147.86
+          "weight_pct": 5.98,
+          "market_value": 44208897.48
         },
         {
           "ticker": "COIN",
           "company": "COINBASE GLOBAL INC -CLASS A",
-          "weight_pct": 5.01,
-          "market_value": 36477676.66
+          "weight_pct": 5.14,
+          "market_value": 38055891.0
         },
         {
           "ticker": "HOOD",
           "company": "ROBINHOOD MARKETS INC - A",
-          "weight_pct": 4.83,
-          "market_value": 35134696.02
+          "weight_pct": 4.86,
+          "market_value": 35952519.69
         },
         {
           "ticker": "META",
           "company": "META PLATFORMS INC-CLASS A",
-          "weight_pct": 4.79,
-          "market_value": 34890842.66
-        },
-        {
-          "ticker": "PLTR",
-          "company": "PALANTIR TECHNOLOGIES INC-A",
-          "weight_pct": 4.54,
-          "market_value": 33062473.8
+          "weight_pct": 4.72,
+          "market_value": 34915860.0
         },
         {
           "ticker": "TOST",
           "company": "TOAST INC-CLASS A",
-          "weight_pct": 4.38,
-          "market_value": 31863934.08
+          "weight_pct": 4.47,
+          "market_value": 33074876.07
+        },
+        {
+          "ticker": "PLTR",
+          "company": "PALANTIR TECHNOLOGIES INC-A",
+          "weight_pct": 4.17,
+          "market_value": 30853631.5
         },
         {
           "ticker": "AMZN",
           "company": "AMAZON.COM INC",
-          "weight_pct": 3.77,
-          "market_value": 27443403.35
+          "weight_pct": 4.01,
+          "market_value": 29671123.99
         },
         {
-          "ticker": "NVDA",
-          "company": "NVIDIA CORP",
-          "weight_pct": 3.07,
-          "market_value": 22335637.44
+          "ticker": "MELI",
+          "company": "MERCADOLIBRE INC",
+          "weight_pct": 3.08,
+          "market_value": 22776769.08
         }
       ]
     },
     {
       "ticker": "ARKX",
       "fund": "ARKX",
-      "as_of": "2026-11-02",
+      "as_of": "2026-11-05",
       "n_positions": 32,
       "skipped_rows": 2,
       "top": [
         {
           "ticker": "SPCX",
           "company": "SPACE EXPLORATION TECHN-CL A",
-          "weight_pct": 10.35,
-          "market_value": 70870937.92
+          "weight_pct": 10.77,
+          "market_value": 69788803.6
         },
         {
           "ticker": "LHX",
           "company": "L3HARRIS TECHNOLOGIES INC",
-          "weight_pct": 7.74,
-          "market_value": 52999635.54
-        },
-        {
-          "ticker": "KTOS",
-          "company": "KRATOS DEFENSE & SECURITY",
-          "weight_pct": 6.07,
-          "market_value": 41529704.09
+          "weight_pct": 7.47,
+          "market_value": 48402289.26
         },
         {
           "ticker": "DE",
           "company": "DEERE & CO",
-          "weight_pct": 6.02,
-          "market_value": 41237378.52
+          "weight_pct": 6.22,
+          "market_value": 40309929.0
+        },
+        {
+          "ticker": "KTOS",
+          "company": "KRATOS DEFENSE & SECURITY",
+          "weight_pct": 5.48,
+          "market_value": 35474180.4
         },
         {
           "ticker": "AVAV",
           "company": "AEROVIRONMENT INC",
-          "weight_pct": 5.78,
-          "market_value": 39550365.98
-        },
-        {
-          "ticker": "RKLB",
-          "company": "ROCKET LAB CORP",
-          "weight_pct": 5.16,
-          "market_value": 35304462.18
-        },
-        {
-          "ticker": "NVDA",
-          "company": "NVIDIA CORP",
-          "weight_pct": 5.14,
-          "market_value": 35219157.92
+          "weight_pct": 5.35,
+          "market_value": 34660269.15
         },
         {
           "ticker": "AMZN",
           "company": "AMAZON.COM INC",
-          "weight_pct": 4.57,
-          "market_value": 31317364.65
+          "weight_pct": 5.22,
+          "market_value": 33835291.58
+        },
+        {
+          "ticker": "NVDA",
+          "company": "NVIDIA CORP",
+          "weight_pct": 5.19,
+          "market_value": 33619638.57
+        },
+        {
+          "ticker": "RKLB",
+          "company": "ROCKET LAB CORP",
+          "weight_pct": 5.09,
+          "market_value": 32972728.07
         },
         {
           "ticker": "TSLA",
           "company": "TESLA INC",
-          "weight_pct": 4.01,
-          "market_value": 27435761.82
+          "weight_pct": 3.98,
+          "market_value": 25801181.77
         },
         {
-          "ticker": "TRMB",
-          "company": "TRIMBLE INC",
-          "weight_pct": 3.94,
-          "market_value": 26951139.04
+          "ticker": "PLTR",
+          "company": "PALANTIR TECHNOLOGIES INC-A",
+          "weight_pct": 3.85,
+          "market_value": 24966725.3
         }
       ]
     },
     {
       "ticker": "PRNT",
       "fund": "PRNT",
-      "as_of": "2026-11-02",
+      "as_of": "2026-11-05",
       "n_positions": 43,
       "skipped_rows": 2,
       "top": [
         {
           "ticker": "XRAY UW",
           "company": "DENTSPLY SIRONA INC",
-          "weight_pct": 5.65,
-          "market_value": 3136237.23
-        },
-        {
-          "ticker": "DSY FP",
-          "company": "DASSAULT SYSTEMES SE",
-          "weight_pct": 5.55,
-          "market_value": 3077118.55
+          "weight_pct": 6.21,
+          "market_value": 3504819.15
         },
         {
           "ticker": "ADSK",
           "company": "AUTODESK INC",
-          "weight_pct": 5.3,
-          "market_value": 2939906.58
+          "weight_pct": 5.64,
+          "market_value": 3181120.02
         },
         {
-          "ticker": "SNPS",
-          "company": "SYNOPSYS INC",
-          "weight_pct": 5.25,
-          "market_value": 2910404.64
-        },
-        {
-          "ticker": "PTC",
-          "company": "PTC INC",
-          "weight_pct": 5.16,
-          "market_value": 2862118.98
+          "ticker": "DSY FP",
+          "company": "DASSAULT SYSTEMES SE",
+          "weight_pct": 5.61,
+          "market_value": 3165554.53
         },
         {
           "ticker": "SIE",
           "company": "SIEMENS AG-REG",
-          "weight_pct": 5.03,
-          "market_value": 2792787.06
+          "weight_pct": 5.17,
+          "market_value": 2914287.59
         },
         {
-          "ticker": "STMN SE",
-          "company": "STRAUMANN HOLDING AG-REG",
-          "weight_pct": 4.14,
-          "market_value": 2297185.47
+          "ticker": "SNPS",
+          "company": "SYNOPSYS INC",
+          "weight_pct": 5.11,
+          "market_value": 2881400.8
+        },
+        {
+          "ticker": "PTC",
+          "company": "PTC INC",
+          "weight_pct": 5.06,
+          "market_value": 2856849.66
         },
         {
           "ticker": "XMTR",
           "company": "XOMETRY INC-A",
-          "weight_pct": 4.02,
-          "market_value": 2231023.95
+          "weight_pct": 4.79,
+          "market_value": 2704386.96
+        },
+        {
+          "ticker": "STMN SE",
+          "company": "STRAUMANN HOLDING AG-REG",
+          "weight_pct": 4.53,
+          "market_value": 2555302.24
         },
         {
           "ticker": "BICO",
           "company": "BICO GROUP AB",
-          "weight_pct": 4.0,
-          "market_value": 2218310.81
+          "weight_pct": 3.92,
+          "market_value": 2210212.09
         },
         {
-          "ticker": "DDD",
-          "company": "3D SYSTEMS CORP",
-          "weight_pct": 3.87,
-          "market_value": 2145006.3
+          "ticker": "HPQ",
+          "company": "HP INC",
+          "weight_pct": 3.83,
+          "market_value": 2162562.22
         }
       ]
     },
     {
       "ticker": "IZRL",
       "fund": "IZRL",
-      "as_of": "2026-11-02",
+      "as_of": "2026-11-05",
       "n_positions": 65,
       "skipped_rows": 2,
       "top": [
         {
+          "ticker": "PERI",
+          "company": "PERION NETWORK LTD",
+          "weight_pct": 2.09,
+          "market_value": 2565933.55
+        },
+        {
           "ticker": "RDWR",
           "company": "RADWARE LTD",
-          "weight_pct": 1.97,
-          "market_value": 2493944.18
+          "weight_pct": 1.94,
+          "market_value": 2379993.0
+        },
+        {
+          "ticker": "MDWD UQ",
+          "company": "MEDIWOUND LTD",
+          "weight_pct": 1.93,
+          "market_value": 2369355.2
+        },
+        {
+          "ticker": "TATTF",
+          "company": "TAT TECHNOLOGIES LTD",
+          "weight_pct": 1.93,
+          "market_value": 2365682.58
+        },
+        {
+          "ticker": "CLBT",
+          "company": "CELLEBRITE DI LTD",
+          "weight_pct": 1.84,
+          "market_value": 2255945.56
+        },
+        {
+          "ticker": "NYAX",
+          "company": "NAYAX LTD",
+          "weight_pct": 1.84,
+          "market_value": 2261286.37
+        },
+        {
+          "ticker": "PGY",
+          "company": "PAGAYA TECHNOLOGIES LTD -A",
+          "weight_pct": 1.8,
+          "market_value": 2205128.72
+        },
+        {
+          "ticker": "SOFW",
+          "company": "SOFWAVE MEDICAL LTD",
+          "weight_pct": 1.8,
+          "market_value": 2204690.36
         },
         {
           "ticker": "CHKP",
           "company": "CHECK POINT SOFTWARE TECH",
           "weight_pct": 1.79,
-          "market_value": 2266591.11
+          "market_value": 2196556.41
         },
         {
-          "ticker": "MDWD UQ",
-          "company": "MEDIWOUND LTD",
-          "weight_pct": 1.76,
-          "market_value": 2219184.8
-        },
-        {
-          "ticker": "PGY",
-          "company": "PAGAYA TECHNOLOGIES LTD -A",
-          "weight_pct": 1.76,
-          "market_value": 2217815.13
-        },
-        {
-          "ticker": "CGNT",
-          "company": "COGNYTE SOFTWARE LTD",
-          "weight_pct": 1.75,
-          "market_value": 2203932.99
-        },
-        {
-          "ticker": "CLBT",
-          "company": "CELLEBRITE DI LTD",
-          "weight_pct": 1.75,
-          "market_value": 2205127.8
-        },
-        {
-          "ticker": "NYAX",
-          "company": "NAYAX LTD",
-          "weight_pct": 1.74,
-          "market_value": 2200761.48
-        },
-        {
-          "ticker": "SOFW",
-          "company": "SOFWAVE MEDICAL LTD",
-          "weight_pct": 1.71,
-          "market_value": 2164071.55
-        },
-        {
-          "ticker": "ESLT",
-          "company": "ELBIT SYSTEMS LTD",
-          "weight_pct": 1.7,
-          "market_value": 2152877.9
-        },
-        {
-          "ticker": "ONE",
-          "company": "ONE SOFTWARE TECHNOLOGIES LT",
-          "weight_pct": 1.7,
-          "market_value": 2146160.83
+          "ticker": "DRTS",
+          "company": "ALPHA TAU MEDICAL LTD",
+          "weight_pct": 1.77,
+          "market_value": 2174874.48
         }
       ]
     }
@@ -568,19 +568,7 @@
         "ARKF",
         "ARKX"
       ],
-      "max_weight_pct": 5.78
-    },
-    {
-      "ticker": "PLTR",
-      "company": "PALANTIR TECHNOLOGIES INC-A",
-      "funds": [
-        "ARKK",
-        "ARKQ",
-        "ARKW",
-        "ARKF",
-        "ARKX"
-      ],
-      "max_weight_pct": 5.05
+      "max_weight_pct": 5.82
     },
     {
       "ticker": "AMZN",
@@ -592,7 +580,19 @@
         "ARKF",
         "ARKX"
       ],
-      "max_weight_pct": 4.57
+      "max_weight_pct": 5.22
+    },
+    {
+      "ticker": "PLTR",
+      "company": "PALANTIR TECHNOLOGIES INC-A",
+      "funds": [
+        "ARKK",
+        "ARKQ",
+        "ARKW",
+        "ARKF",
+        "ARKX"
+      ],
+      "max_weight_pct": 4.95
     },
     {
       "ticker": "AMD",
@@ -615,7 +615,7 @@
         "ARKW",
         "ARKX"
       ],
-      "max_weight_pct": 12.97
+      "max_weight_pct": 12.87
     },
     {
       "ticker": "SPCX",
@@ -626,7 +626,7 @@
         "ARKW",
         "ARKX"
       ],
-      "max_weight_pct": 10.35
+      "max_weight_pct": 10.77
     },
     {
       "ticker": "GOOG",
@@ -637,7 +637,7 @@
         "ARKW",
         "ARKX"
       ],
-      "max_weight_pct": 4.16
+      "max_weight_pct": 3.96
     },
     {
       "ticker": "TSM",
@@ -648,7 +648,7 @@
         "ARKW",
         "ARKX"
       ],
-      "max_weight_pct": 2.86
+      "max_weight_pct": 2.87
     },
     {
       "ticker": "DASH",
@@ -659,17 +659,7 @@
         "ARKF",
         "ARKX"
       ],
-      "max_weight_pct": 1.86
-    },
-    {
-      "ticker": "SHOP",
-      "company": "SHOPIFY INC - CLASS A",
-      "funds": [
-        "ARKK",
-        "ARKW",
-        "ARKF"
-      ],
-      "max_weight_pct": 8.9
+      "max_weight_pct": 2.13
     },
     {
       "ticker": "XYZ",
@@ -679,7 +669,17 @@
         "ARKW",
         "ARKF"
       ],
-      "max_weight_pct": 8.67
+      "max_weight_pct": 9.58
+    },
+    {
+      "ticker": "SHOP",
+      "company": "SHOPIFY INC - CLASS A",
+      "funds": [
+        "ARKK",
+        "ARKW",
+        "ARKF"
+      ],
+      "max_weight_pct": 8.47
     },
     {
       "ticker": "LHX",
@@ -689,17 +689,7 @@
         "ARKX",
         "PRNT"
       ],
-      "max_weight_pct": 7.74
-    },
-    {
-      "ticker": "KTOS",
-      "company": "KRATOS DEFENSE & SECURITY",
-      "funds": [
-        "ARKK",
-        "ARKQ",
-        "ARKX"
-      ],
-      "max_weight_pct": 6.07
+      "max_weight_pct": 7.47
     },
     {
       "ticker": "CRCL",
@@ -709,27 +699,17 @@
         "ARKW",
         "ARKF"
       ],
-      "max_weight_pct": 5.82
+      "max_weight_pct": 5.98
     },
     {
-      "ticker": "SNPS",
-      "company": "SYNOPSYS INC",
-      "funds": [
-        "ARKQ",
-        "ARKX",
-        "PRNT"
-      ],
-      "max_weight_pct": 5.25
-    },
-    {
-      "ticker": "RKLB",
-      "company": "ROCKET LAB CORP",
+      "ticker": "KTOS",
+      "company": "KRATOS DEFENSE & SECURITY",
       "funds": [
         "ARKK",
         "ARKQ",
         "ARKX"
       ],
-      "max_weight_pct": 5.16
+      "max_weight_pct": 5.48
     },
     {
       "ticker": "COIN",
@@ -739,7 +719,27 @@
         "ARKW",
         "ARKF"
       ],
-      "max_weight_pct": 5.01
+      "max_weight_pct": 5.14
+    },
+    {
+      "ticker": "SNPS",
+      "company": "SYNOPSYS INC",
+      "funds": [
+        "ARKQ",
+        "ARKX",
+        "PRNT"
+      ],
+      "max_weight_pct": 5.11
+    },
+    {
+      "ticker": "RKLB",
+      "company": "ROCKET LAB CORP",
+      "funds": [
+        "ARKK",
+        "ARKQ",
+        "ARKX"
+      ],
+      "max_weight_pct": 5.09
     },
     {
       "ticker": "HOOD",
@@ -749,7 +749,7 @@
         "ARKW",
         "ARKF"
       ],
-      "max_weight_pct": 4.83
+      "max_weight_pct": 4.86
     },
     {
       "ticker": "META",
@@ -759,19 +759,19 @@
         "ARKW",
         "ARKF"
       ],
-      "max_weight_pct": 4.79
+      "max_weight_pct": 4.72
     },
     {
-      "ticker": "TER",
-      "company": "TERADYNE INC",
+      "ticker": "ACHR",
+      "company": "ARCHER AVIATION INC-A",
       "funds": [
         "ARKK",
         "ARKQ",
         "ARKX"
       ],
-      "max_weight_pct": 3.68
+      "max_weight_pct": 3.62
     }
   ],
   "methodology": "ARK Invest daily fund holdings, from ARK's own official Full Holdings CSVs on assets.ark-funds.com (free, public, published each trading day after close). The eight endpoint URLs were extracted once via browser from each fund page's live DOM (2026-08-23) \u2014 the fund pages are a JS shell with no href in raw HTML; a fund rename surfaces as an honest per-fund failure, never a silent gap. Rows: official weight/market value as published; skipped rows are counted and disclosed (the trailing disclaimer footer, warrant/unit rows with no ticker, CASHX cash rows). Top-10 per fund by weight; family overlap lists tickers held by 2+ ARK funds. ARK keeps no CSV history \u2014 the dated local snapshots are the only time series. Display-only, exploratory; no prices, no returns, no performance claim; NOT part of any research or OOS pipeline.",
-  "snapshot_ts": "2026-11-02T11:32:12.161905+00:00"
+  "snapshot_ts": "2026-11-05T13:20:16.880878+00:00"
 }

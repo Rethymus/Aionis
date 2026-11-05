@@ -80,7 +80,7 @@ EXPECTED_PANELS: dict[str, tuple[str, str, str]] = {
     "macro_drivers": ("macroDrivers", "macro_drivers.json", "daily"),
     "taco": ("taco", "taco.json", "daily"),
     "form4": ("form4", "form4.json", "daily"),
-    "form8k": ("form8k", "form8k.json", "daily"),
+    "form8k": ("form8k.ts", "form8k.json", "daily"),
     "news_feed": ("newsFeed", "news_feed.json", "daily"),
     "executives": ("executives", "executives.json", "daily"),
     "ipo": ("form-ipo.ts", "ipo.json", "daily"),

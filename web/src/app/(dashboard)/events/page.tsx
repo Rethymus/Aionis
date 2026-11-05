@@ -2,6 +2,7 @@
 
 import { SegmentHeader } from "@/components/segment-header";
 import { EventsView } from "@/components/events/events-view";
+import form8k from "@/data/aionis/form8k";
 import { aionis } from "@/data/aionis";
 
 export default function EventsPage() {
@@ -10,10 +11,10 @@ export default function EventsPage() {
       <SegmentHeader
         segment="evidence"
         introKey="events.intro"
-        asOf={aionis.form8k.as_of ?? undefined}
+        asOf={form8k.as_of ?? undefined}
         countHint={
-          aionis.form8k.status === "ok"
-            ? `${aionis.form8k.total} · ${aionis.form8k.window.start} → ${aionis.form8k.window.end} · ${aionis.form8k.issuers} issuers`
+          form8k.status === "ok"
+            ? `${form8k.total} · ${form8k.window.start} → ${form8k.window.end} · ${form8k.issuers} issuers`
             : undefined
         }
       />

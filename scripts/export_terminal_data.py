@@ -4978,10 +4978,12 @@ def export_form8k() -> None:
     events = []
     # Bounded 50-issuer universe (~2.6k events/yr worst case); the cap is a
     # long-term growth guard, NOT a display slice — by_category/unclassified
-    # count the full frame, so a cap hit would desync counts vs the visible
-    # list and the contract test (len(events) == total) fails LOUDLY rather
-    # than silently truncating.
-    for _, r in df.head(300).iterrows():
+    # count the full frame, so a cap hit desyncs counts vs the visible list
+    # and the contract test (len(events) == total) fails LOUDLY rather than
+    # silently truncating. It fired 2026-11-03..05 at 300 (frame hit 312);
+    # maintainer action = raise the bound (600, ~6 months headroom), never
+    # silently truncate.
+    for _, r in df.head(600).iterrows():
         events.append({
             "ticker": str(r["ticker"]),
             "company": str(r["company"]),

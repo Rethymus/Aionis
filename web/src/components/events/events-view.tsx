@@ -10,6 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import form8k from "@/data/aionis/form8k";
 import { Badge } from "@/components/ui/badge";
 import {
   Table,
@@ -178,7 +179,7 @@ function StreamSection() {
 
 export function EventsView() {
   const { t } = useI18n();
-  const f = aionis.form8k;
+  const f = form8k;
   const PAGE_SIZE = 50;
   const [cat, setCat] = useState<string>("all");
   const { visibleCount, reset, loadMore } = usePaged(PAGE_SIZE);

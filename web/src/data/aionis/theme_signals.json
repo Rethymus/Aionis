@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "as_of_date": "2026-09-16",
+  "as_of_date": "2026-11-04",
   "groups": [
     "price",
     "fundamentals",
@@ -48,7 +48,7 @@
       ],
       "group": "fundamentals",
       "latest_mean": 0.1638,
-      "trailing_mean": 0.0869
+      "trailing_mean": 0.0988
     },
     "profit_margin": {
       "signal": "profit_margin",
@@ -91,12 +91,12 @@
       ],
       "group": "fundamentals",
       "latest_mean": 0.2758,
-      "trailing_mean": 0.3357
+      "trailing_mean": 0.2873
     },
     "revenue_growth_12m": {
       "signal": "revenue_growth_12m",
       "polarity": "bullish_high",
-      "direction": "bearish",
+      "direction": "bullish",
       "strength": null,
       "mean": 0.0,
       "n": 477,
@@ -133,8 +133,8 @@
         }
       ],
       "group": "fundamentals",
-      "latest_mean": 0.0047,
-      "trailing_mean": 0.031
+      "latest_mean": 0.0,
+      "trailing_mean": -0.0172
     },
     "leverage": {
       "signal": "leverage",
@@ -177,7 +177,7 @@
       ],
       "group": "fundamentals",
       "latest_mean": 0.2544,
-      "trailing_mean": 0.2533
+      "trailing_mean": 0.2536
     },
     "debt_to_equity": {
       "signal": "debt_to_equity",
@@ -220,9 +220,9 @@
       ],
       "group": "fundamentals",
       "latest_mean": 1.6875,
-      "trailing_mean": 0.4926
+      "trailing_mean": 0.9154
     }
   },
   "methodology": "Theme-signal operationalization (display-only, NOT a research claim). Direction from a documented polarity heuristic (e.g. momentum/ROE high = bullish; volatility/leverage high = bearish). Strength = |mean cross-sectional z-score| clipped to [0,3]. Favored = top-5 tickers by the raw signal at the latest realized month. For 'bearish_high' signals, favored = most-exposed, NOT a buy recommendation. Reads only the frozen panel's latest cross-section; the model and OOS scores are untouched.",
-  "snapshot_ts": "2026-11-02T11:31:51.638108+00:00"
+  "snapshot_ts": "2026-11-05T13:19:54.765874+00:00"
 }

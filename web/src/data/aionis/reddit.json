@@ -10,26 +10,136 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-11-02T10:31:00+00:00",
-  "n_snapshots": 49,
+  "latest_snapshot_ts": "2026-11-05T13:14:51+00:00",
+  "n_snapshots": 58,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
+      "ticker": "NVDA",
+      "mentions": 4,
+      "sentiment": -0.397,
+      "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "AMZN",
+      "mentions": 3,
+      "sentiment": -0.341,
+      "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "GOOGL",
+      "mentions": 2,
+      "sentiment": -0.484,
+      "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "INTC",
+      "mentions": 2,
+      "sentiment": 0.103,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "MSFT",
+      "mentions": 2,
+      "sentiment": -0.484,
+      "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
       "ticker": "GOOG",
       "mentions": 1,
-      "sentiment": -0.895,
+      "sentiment": -0.927,
+      "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "NFLX",
+      "mentions": 1,
+      "sentiment": -0.002,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "TSLA",
+      "mentions": 1,
+      "sentiment": 0.003,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "SBUX",
+      "mentions": 1,
+      "sentiment": 0.045,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "COST",
+      "mentions": 1,
+      "sentiment": 0.045,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "AAPL",
+      "mentions": 1,
+      "sentiment": 0.045,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "AVGO",
+      "mentions": 1,
+      "sentiment": 0.045,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "META",
+      "mentions": 1,
+      "sentiment": -0.967,
+      "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "ORCL",
+      "mentions": 1,
+      "sentiment": -0.967,
       "bull_ratio": 0.0,
       "score_sum": 0
     }
   ],
   "pressure": {
-    "status": "accumulating",
-    "by_ticker": {},
-    "n_snapshots": 49,
-    "latest_date": "2026-11-02",
+    "status": "ok",
+    "by_ticker": {
+      "META": {
+        "ticker": "META",
+        "latest_mentions": 1,
+        "velocity": 1.3333,
+        "crowding_z": -0.3934,
+        "bull_bear_lean": -0.3123,
+        "grade": "surge",
+        "n_days": 14
+      },
+      "GOOGL": {
+        "ticker": "GOOGL",
+        "latest_mentions": 2,
+        "velocity": 11.0,
+        "crowding_z": 1.9322,
+        "bull_bear_lean": -0.3958,
+        "grade": "surge",
+        "n_days": 15
+      }
+    },
+    "n_snapshots": 58,
+    "latest_date": "2026-11-05",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-11-02T11:32:12.397236+00:00"
+  "snapshot_ts": "2026-11-05T13:20:17.154898+00:00"
 }
