@@ -454,7 +454,7 @@ def test_push_only_recovery_push_failure_raises(monkeypatch) -> None:
 
 
 def test_doctor_all_layers_pass(monkeypatch, tmp_path) -> None:
-    """Mocked six-layer stack: exit 0 and a 6/6 summary line."""
+    """Mocked seven-layer stack: exit 0 and a 7/7 summary line."""
     def _ok(args, **k):
         s = "True" if "ScheduledTask" in str(args) else (
             "abc123 main" if "ls-remote" in args else "gh ok")
@@ -475,6 +475,9 @@ def test_doctor_all_layers_pass(monkeypatch, tmp_path) -> None:
     (fake / ".env").write_text(
         "TIINGO_API_KEY=x" + chr(10) + "FRED_API_KEY=y" + chr(10),
         encoding="utf-8")
+    _repo_data_health(fake, _FIXED_SNAPSHOT)
+    monkeypatch.setattr(lane, "_fetch_live_snapshot",
+                        lambda: _live_payload(_FIXED_SNAPSHOT))
     monkeypatch.setattr(lane, "ROOT", fake)
     try:
         assert lane.doctor() == 0
@@ -577,9 +580,30 @@ def _fake_marker(tmp_path: Path) -> dict:
     return state
 
 
+_FIXED_SNAPSHOT = "2026-11-05T13:20:58.252918+00:00"  # real repo format
+
+
+def _repo_data_health(tmp_path: Path, ts: str) -> None:
+    """Write a data_health.json carrying `ts` under tmp ROOT (doctor layer 7
+    reads ROOT/web/src/data/aionis/data_health.json)."""
+    import json as _json
+
+    d = tmp_path / "web" / "src" / "data" / "aionis"
+    d.mkdir(parents=True, exist_ok=True)
+    (d / "data_health.json").write_text(
+        _json.dumps({"status": "ok", "snapshot_ts": ts}), encoding="utf-8")
+
+
+def _live_payload(ts: str) -> str:
+    import json as _json
+
+    return _json.dumps({"status": "ok", "snapshot_ts": ts})
+
+
 def _mock_preflight_stack(monkeypatch, tmp_path) -> None:
-    """All-pass six-layer stack: mocked subprocesses, forced Windows branch,
-    tmp ROOT carrying a valid hook config + the two required .env keys."""
+    """All-pass seven-layer stack: mocked subprocesses, forced Windows branch,
+    tmp ROOT carrying a valid hook config + the two required .env keys, and a
+    layer-7 live fetch that matches the repo snapshot."""
     import json as _json
 
     def _ok(args, **k):
@@ -599,6 +623,9 @@ def _mock_preflight_stack(monkeypatch, tmp_path) -> None:
     (tmp_path / ".env").write_text(
         "TIINGO_API_KEY=x" + chr(10) + "FRED_API_KEY=y" + chr(10),
         encoding="utf-8")
+    _repo_data_health(tmp_path, _FIXED_SNAPSHOT)
+    monkeypatch.setattr(lane, "_fetch_live_snapshot",
+                        lambda: _live_payload(_FIXED_SNAPSHOT))
     monkeypatch.setattr(lane, "ROOT", tmp_path)
 
 
@@ -623,15 +650,16 @@ def test_status_json_stdout_parses_and_carries_marker_keys(
     assert "✓" in out  # ensure_ascii=False — not \uXXXX-escaped
 
 
-def test_collect_layers_six_json_serializable_layers(monkeypatch, tmp_path) -> None:
-    """collect_layers (the doctor() refactor seam) returns the six preflight
+def test_collect_layers_seven_json_serializable_layers(
+        monkeypatch, tmp_path) -> None:
+    """collect_layers (the doctor() refactor seam) returns the seven preflight
     layers as (name, ok, detail) tuples under mocked subprocesses, and the
     tuples survive a JSON round-trip."""
     import json as _json
 
     _mock_preflight_stack(monkeypatch, tmp_path)
     layers = lane.collect_layers()
-    assert len(layers) == 6
+    assert len(layers) == 7
     for name, ok, detail in layers:
         assert isinstance(name, str)
         assert isinstance(ok, bool)
@@ -644,7 +672,7 @@ def test_collect_layers_six_json_serializable_layers(monkeypatch, tmp_path) -> N
 
 def test_doctor_json_stdout_shape(monkeypatch, tmp_path, capsys) -> None:
     """--doctor --json prints ONLY the machine document {"layers":
-    [{name, ok, detail}...], "passed": N, "total": 6} — no human [PASS]/
+    [{name, ok, detail}...], "passed": N, "total": 7} — no human [PASS]/
     [FAIL] lines interleaved, so stdout stays json.loads-able; exit code is
     still 0 only when every layer passes."""
     import json as _json
@@ -655,9 +683,99 @@ def test_doctor_json_stdout_shape(monkeypatch, tmp_path, capsys) -> None:
     assert lane.main() == 0
     out = capsys.readouterr().out
     payload = _json.loads(out)
-    assert payload["total"] == 6
-    assert payload["passed"] == 6
-    assert len(payload["layers"]) == 6
+    assert payload["total"] == 7
+    assert payload["passed"] == 7
+    assert len(payload["layers"]) == 7
     for layer in payload["layers"]:
         assert set(layer) == {"name", "ok", "detail"}
         assert layer["ok"] is True
+
+
+# --- doctor layer 7: site-repo drift (the billing-freeze blind spot) ------------
+
+
+def test_layer7_fails_when_live_lags_repo_beyond_48h(
+        monkeypatch, tmp_path) -> None:
+    """The freeze signature: origin/main advances nightly (repo snapshot
+    fresh) while the deployed site stays on its last pre-freeze snapshot.
+    Lag beyond 48h must FAIL with the 'deploy frozen?' message (the real
+    2026-11-05 gap was ~3.1 days)."""
+    _repo_data_health(tmp_path, "2026-11-05T13:20:58.252918+00:00")
+    monkeypatch.setattr(lane, "ROOT", tmp_path)
+    monkeypatch.setattr(
+        lane, "_fetch_live_snapshot",
+        lambda: _live_payload("2026-11-02T11:32:33.889178+00:00"))
+    ok, detail = lane._site_repo_drift_check()
+    assert not ok
+    assert "live site lags repo by" in detail
+    assert "deploy frozen?" in detail
+
+
+def test_layer7_passes_when_live_matches_or_newer(
+        monkeypatch, tmp_path) -> None:
+    """Normal operation: the Pages deploy carries tonight's snapshot (equal)
+    or raced past the commit (newer) — both PASS."""
+    _repo_data_health(tmp_path, _FIXED_SNAPSHOT)
+    monkeypatch.setattr(lane, "ROOT", tmp_path)
+    monkeypatch.setattr(lane, "_fetch_live_snapshot",
+                        lambda: _live_payload(_FIXED_SNAPSHOT))
+    ok, detail = lane._site_repo_drift_check()
+    assert ok
+    assert "live matches repo" in detail
+    monkeypatch.setattr(
+        lane, "_fetch_live_snapshot",
+        lambda: _live_payload("2026-11-06T01:00:00+00:00"))
+    ok, detail = lane._site_repo_drift_check()
+    assert ok
+    assert "newer" in detail
+
+
+def test_layer7_tolerates_sub_48h_deploy_lag(monkeypatch, tmp_path) -> None:
+    """A fresh commit against a Pages deploy that has not caught up yet (or a
+    weekend) is normal: lag inside the 48h window must NOT fail."""
+    _repo_data_health(tmp_path, _FIXED_SNAPSHOT)
+    monkeypatch.setattr(lane, "ROOT", tmp_path)
+    monkeypatch.setattr(  # 36h behind the repo snapshot
+        lane, "_fetch_live_snapshot",
+        lambda: _live_payload("2026-11-04T01:20:58.252918+00:00"))
+    ok, detail = lane._site_repo_drift_check()
+    assert ok
+    assert "within 48h tolerance" in detail
+
+
+def test_layer7_fails_honestly_when_live_unreachable(
+        monkeypatch, tmp_path) -> None:
+    """Network unreachable is a FAIL with the reason (honest signal first) —
+    the exception is caught inside the layer, never escapes."""
+    _repo_data_health(tmp_path, _FIXED_SNAPSHOT)
+    monkeypatch.setattr(lane, "ROOT", tmp_path)
+
+    def _boom():
+        raise RuntimeError("curl exit 7: Failed to connect")
+
+    monkeypatch.setattr(lane, "_fetch_live_snapshot", _boom)
+    ok, detail = lane._site_repo_drift_check()
+    assert not ok
+    assert ("live site unreachable or invalid — deploy may be frozen "
+            "(billing?)") in detail
+    assert "curl exit 7" in detail
+
+
+def test_layer7_fails_on_invalid_live_payload(monkeypatch, tmp_path) -> None:
+    """A reachable URL serving garbage (or JSON without snapshot_ts) is the
+    same honest FAIL class as unreachable — no crash, no PASS."""
+    _repo_data_health(tmp_path, _FIXED_SNAPSHOT)
+    monkeypatch.setattr(lane, "ROOT", tmp_path)
+    monkeypatch.setattr(lane, "_fetch_live_snapshot",
+                        lambda: "<html>404 Not Found</html>")
+    ok, detail = lane._site_repo_drift_check()
+    assert not ok
+    assert "live site unreachable or invalid" in detail
+    # Valid JSON but the snapshot_ts field is absent — same honest FAIL.
+    monkeypatch.setattr(
+        lane, "_fetch_live_snapshot",
+        lambda: '{"status": "ok", "data_date": "2026-11-05"}')
+    ok, detail = lane._site_repo_drift_check()
+    assert not ok
+    assert "live site unreachable or invalid" in detail
+    assert "no parseable snapshot_ts" in detail

@@ -53,7 +53,7 @@ import re
 import subprocess
 import sys
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -765,19 +765,99 @@ def _emit_json(payload: object) -> None:
         print(text)
 
 
+# L7 — site-repo drift (the billing-freeze blind spot, added 2026-11-06).
+# When GitHub is billing-locked EVERY Actions run dies in ~4s (lock #2,
+# 2026-11-05: Tests + Publish site both red in 3-4s) — including the weekly
+# staleness tripwire itself, which is an Actions workflow. Nothing cloud-side
+# can observe the freeze: the live Pages site keeps serving its last deploy
+# while origin/main advances every evening (git push needs no Actions
+# minutes). The only surviving signal is a LOCAL probe of the deployed site.
+SITE_DATA_HEALTH_URL = ("https://rethymus.github.io/Aionis/"
+                        "api/v1/panels/data_health.json")
+SITE_DRIFT_LAG_HOURS = 48  # live lags repo beyond this => deploy frozen
+
+
+def _fetch_live_snapshot() -> str:
+    """Fetch the LIVE site's data_health payload via curl (subprocess, 15s
+    cap). Injectable seam: tests monkeypatch this instead of shelling out."""
+    out = subprocess.run(
+        ["curl", "-fsS", "--max-time", "15", SITE_DATA_HEALTH_URL],
+        capture_output=True, text=True, encoding="utf-8", errors="replace",
+        timeout=20)
+    if out.returncode != 0:
+        raise RuntimeError(f"curl exit {out.returncode}: "
+                           f"{(out.stderr or '').strip()[-120:]}")
+    return out.stdout
+
+
+def _parse_snapshot_ts(payload: str) -> datetime | None:
+    """snapshot_ts from a data_health JSON payload; None when the payload is
+    unparseable or lacks the field (an honest FAIL downstream, never a
+    crash). Naive stamps are read as UTC (the lane's export convention)."""
+    try:
+        data = json.loads(payload)
+    except ValueError:
+        return None
+    raw = data.get("snapshot_ts") if isinstance(data, dict) else None
+    if not raw:
+        return None
+    try:
+        ts = datetime.fromisoformat(str(raw).replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if ts.tzinfo is None:
+        ts = ts.replace(tzinfo=timezone.utc)
+    return ts
+
+
+def _site_repo_drift_check() -> tuple[bool, str]:
+    """Layer 7 logic: the LIVE deployed site's snapshot_ts must not lag the
+    repo's committed one beyond SITE_DRIFT_LAG_HOURS. Every failure mode
+    (network unreachable, invalid payload, missing repo file) returns a FAIL
+    tuple carrying the reason — an honest red beats a crashed doctor, so all
+    exceptions are caught by design."""
+    try:
+        repo_ts = _parse_snapshot_ts(
+            (ROOT / "web/src/data/aionis" / "data_health.json")
+            .read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError) as exc:
+        return False, f"repo data_health unreadable: {exc}"
+    if repo_ts is None:
+        return False, "repo data_health has no parseable snapshot_ts"
+    try:
+        live_ts = _parse_snapshot_ts(_fetch_live_snapshot())
+    except Exception as exc:  # noqa: BLE001 — unreachable network is a FAIL
+        return False, ("live site unreachable or invalid — deploy may be "
+                       f"frozen (billing?): {exc}")
+    if live_ts is None:
+        return False, ("live site unreachable or invalid — deploy may be "
+                       "frozen (billing?): no parseable snapshot_ts")
+    lag_h = (repo_ts - live_ts).total_seconds() / 3600
+    if lag_h > SITE_DRIFT_LAG_HOURS:
+        return False, (f"live site lags repo by {lag_h / 24:.1f} days — "
+                       f"deploy frozen? (live={live_ts.isoformat()} "
+                       f"repo={repo_ts.isoformat()})")
+    if lag_h < -0.01:
+        return True, f"live is {-lag_h:.1f}h newer than repo"
+    if lag_h < 0.01:
+        return True, f"live matches repo (snapshot_ts={live_ts.isoformat()})"
+    return True, (f"live lags repo by {lag_h:.1f}h "
+                  f"(within {SITE_DRIFT_LAG_HOURS}h tolerance)")
+
+
 def collect_layers() -> list[tuple[str, bool, str]]:
-    """The six read-only preflight checks (round 109) as data — one
-    (name, ok, detail) tuple per layer, in order. Pure collection, no
-    printing: doctor() renders the human PASS/FAIL text from these tuples
-    and --doctor --json renders the machine document from the same source,
-    so the two surfaces can never disagree."""
+    """The seven read-only preflight checks (round 109; layer 7 site-repo
+    drift added 2026-11-06) as data — one (name, ok, detail) tuple per layer,
+    in order. Pure collection, no printing: doctor() renders the human
+    PASS/FAIL text from these tuples and --doctor --json renders the machine
+    document from the same source, so the two surfaces can never disagree."""
     checks: list[tuple[str, bool, str]] = []
 
     # L1 marker + guard sanity (pure logic, no side effects)
     state = load_state()
     decision = guard_decision(datetime.now(), state)
     checks.append((
-        "1/6 guard+marker", state.get("date") is not None,
+        "1/7 guard+marker", state.get("date") is not None,
         f"marker date={state.get('date')} status={state.get('status')} "
         f"guard-now={decision.split(':')[0]}"))
 
@@ -789,11 +869,11 @@ def collect_layers() -> list[tuple[str, bool, str]]:
              "-ErrorAction SilentlyContinue) -ne $null"],
             capture_output=True, text=True, timeout=30)
         ok2 = out.returncode == 0 and "True" in out.stdout
-        checks.append(("2/6 task scheduler", ok2,
+        checks.append(("2/7 task scheduler", ok2,
                        "registered" if ok2 else "NOT registered"))
     else:
         checks.append(
-            ("2/6 task scheduler", False, "non-Windows host (manual cron?)"))
+            ("2/7 task scheduler", False, "non-Windows host (manual cron?)"))
 
     # L3 SessionStart hook config (committed file, correct event+matcher)
     try:
@@ -803,18 +883,18 @@ def collect_layers() -> list[tuple[str, bool, str]]:
         ok3 = (cfg.get("hooks", {}).get("enabled") is True and bool(ev)
                and "startup" in ev[0].get("matcher", ""))
         checks.append((
-            "3/6 sessionstart hook", ok3,
+            "3/7 sessionstart hook", ok3,
             f"enabled={cfg.get('hooks', {}).get('enabled')} "
             f"matcher={ev[0].get('matcher') if ev else 'none'}"))
     except (OSError, ValueError, IndexError) as exc:
-        checks.append(("3/6 sessionstart hook", False, f"{exc}"))
+        checks.append(("3/7 sessionstart hook", False, f"{exc}"))
 
     # L4 git push credential (read-only ls-remote with the stored cred)
     out = subprocess.run(["git", "ls-remote", "--heads", "origin", "main"],
                          cwd=ROOT, capture_output=True, text=True, timeout=30)
     ok4 = out.returncode == 0
     checks.append((
-        "4/6 push credential",
+        "4/7 push credential",
         ok4 and out.stdout.startswith(tuple("0123456789abcdef")),
         "ls-remote ok" if ok4 else out.stderr.strip()[-80:]))
 
@@ -822,7 +902,7 @@ def collect_layers() -> list[tuple[str, bool, str]]:
     out = subprocess.run(["gh", "run", "list", "--limit", "1"],
                          cwd=ROOT, capture_output=True, text=True, timeout=30)
     ok5 = out.returncode == 0
-    checks.append(("5/6 gh auth", ok5,
+    checks.append(("5/7 gh auth", ok5,
                    "gh ok" if ok5 else out.stderr.strip()[-80:]))
 
     # L6 runtime env: .env keys present (names only, never values)
@@ -835,19 +915,25 @@ def collect_layers() -> list[tuple[str, bool, str]]:
     except OSError:
         pass
     need = {"TIINGO_API_KEY", "FRED_API_KEY"}
-    checks.append(("6/6 api env", need <= names,
+    checks.append(("6/7 api env", need <= names,
                    f"present={sorted(need & names)} "
                    f"missing={sorted(need - names)}"))
+
+    # L7 site-repo drift (the billing-freeze blind spot): the only layer that
+    # reaches OUT to the deployed site — see _site_repo_drift_check.
+    ok7, detail7 = _site_repo_drift_check()
+    checks.append(("7/7 site-repo drift", ok7, detail7))
     return checks
 
 
 def doctor(as_json: bool = False) -> int:
-    """Read-only six-layer preflight (round 109): one command the owner (or
-    any future session) runs to verify the whole lane stack after machine
-    changes, credential renewals, or before a renewal decision. Human mode
-    prints PASS/FAIL per layer; --json emits exactly one machine document
-    ({"layers": [{name, ok, detail}...], "passed": N, "total": 6}) instead.
-    Exit 0 only if every layer passes (both modes)."""
+    """Read-only seven-layer preflight (round 109; layer 7 site-repo drift
+    added 2026-11-06): one command the owner (or any future session) runs to
+    verify the whole lane stack after machine changes, credential renewals,
+    or before a renewal decision. Human mode prints PASS/FAIL per layer;
+    --json emits exactly one machine document ({"layers":
+    [{name, ok, detail}...], "passed": N, "total": 7}) instead. Exit 0 only
+    if every layer passes (both modes)."""
     checks = collect_layers()
     failed = [n for n, ok, _ in checks if not ok]
     if as_json:
@@ -877,7 +963,7 @@ def main() -> int:
     group.add_argument("--run", action="store_true", help="run the evening lane")
     group.add_argument("--status", action="store_true", help="print marker state")
     group.add_argument("--doctor", action="store_true",
-                       help="read-only six-layer lane preflight")
+                       help="read-only seven-layer lane preflight")
     parser.add_argument("--json", action="store_true",
                         help="with --status/--doctor: emit machine-readable "
                              "JSON (UTF-8, ensure_ascii=False) to stdout")

@@ -154,7 +154,7 @@ Worker (display-only), unchanged.
 | multi-day outage | — | Actions tab → "Refresh terminal data" → Run workflow (workflow_dispatch kept; 7 network steps retry ×3, round 106) |
 | one-shot research automation missed (host asleep) | hourly guard + done-marker (round 105 pattern) | late manual execution stays valid (proven 10-02) |
 | runner image drift (e.g. ubuntu-latest→26.04) | all 7 workflows pinned `ubuntu-24.04` (rounds 107/108b) | revisit the pin deliberately on each changelog sweep |
-| unknown "is the stack healthy?" | `--doctor` six-layer read-only preflight (round 109) | 6/6 = walk away; any FAIL → named layer + 需人审 in that night's report |
+| unknown "is the stack healthy?" | `--doctor` seven-layer read-only preflight (round 109; layer 7 = site-repo drift, 2026-11-06) | 7/7 = walk away; any FAIL → named layer + 需人审 in that night's report |
 
 ### Data snapshot audit step (round 225, soft)
 
@@ -181,6 +181,47 @@ pairs. Addresses the round-155 reflection gap: the audit chain previously
 existed only in this repo + GitHub. Run after any ledger-touching event or
 add to a weekly schedule.
 
+## GitHub 计费冻结应对（billing lock playbook，2026-11-06 立案）
+
+先例：2026-08-20→09-01 首次冻结（结清后恢复）；2026-11 复发（"billing lock
+#2"，commit `18001a804`）。冻结是**账户级**的——连公开仓库的 Actions 也一并
+停止，"转 Public 免修账单"不成立（state/current.md §10 结论）；唯一出路是
+Settings → Billing 结清/解锁。
+
+**症状**（2026-11-05 实测 `gh run list`）：`Tests` 与 `Publish site (gh-pages)`
+的 run 在 **3-4 秒**内 conclusion=failure（正常要数分钟），run 详情是 billing
+类注解。看到"全仓库所有 workflow 集体秒红"即可定性为计费冻结——不要浪费
+时间排查代码或 runner。
+
+**影响面**：
+
+- **全停**：`Tests`、`publish-site.yml`（发布）、`staleness-check.yml`（周绊网）
+  及其余全部 workflow。绊网本身就是 Actions workflow——**Actions 全停时绊网
+  也停**，云端信号全部失效，这正是冻结期的监测盲区（第 7 层为根治而设）。
+- **不受影响**：本地 evening lane（SessionStart hook + Task Scheduler，纯本地
+  进程）照常 fetch/export/gate/commit/**push**——push 走业主 PAT，不消耗
+  Actions 分钟。后果是 origin/main 每晚前进、线上站点停在最后一次成功部署
+  （11-02），**仓库-站点漂移**随天数累积。
+
+**冻结期监控**（Actions 全停后，本地探测是唯一信号）：
+
+- `--doctor` 第 7 层（site-repo drift）：本地 curl 线上
+  `api/v1/panels/data_health.json` 的 `snapshot_ts`，与仓库
+  `web/src/data/aionis/data_health.json` 的同名时间戳对比。线上缺失/解析失败
+  → FAIL（"live site unreachable or invalid — deploy may be frozen
+  (billing?)"）；线上落后仓库 >48 小时 → FAIL（"live site lags repo by N
+  days — deploy frozen?"）；一致或线上更新 → PASS。网络不可达按 FAIL 诚实
+  上报（fail-honest），异常在层内捕获、doctor 永不崩溃。
+- 夜报（23:35 cron）随报 doctor 结果（round 110 起）：连续数晚**第 7 层 FAIL
+  且其余 6 层全绿** = 典型"本地栈健康、发布被冻结"签名，提醒业主去修
+  Billing（2026-11-06 实测即此形态）。
+
+**恢复**：Settings → Billing 解锁（09-01 先例：结清后即刻恢复）。**无需手工
+重部署**——`publish-site.yml` 由 push 触发，下一次 evening lane 的 push 照常
+构建并发布，线上站点自动追平（第 7 层随之转 PASS）。若想解锁后立即验证而
+不等晚间 lane，推一个空提交即可：`git commit --allow-empty -m "chore(site):
+redeploy after billing unlock" && git push`。
+
 ## Manual operations
 
 ```bash
@@ -189,14 +230,16 @@ uv run python scripts/ops_local_refresh.py --guard         # what triggers would
 uv run python scripts/ops_local_refresh.py --run --force   # bypass guard (human)
 uv run python scripts/ops_evening_hook.py                  # simulate the hook (silent)
 uv run pytest -q tests/test_ops_local_refresh.py           # lane logic tests
-uv run python scripts/ops_local_refresh.py --doctor       # six-layer preflight
+uv run python scripts/ops_local_refresh.py --doctor       # seven-layer preflight
 ```
 
-`--doctor` (round 109): one read-only command that verifies the whole stack —
-marker/guard sanity, Task Scheduler registration, SessionStart hook config,
-git push credential (ls-remote), gh auth, and the two API env keys (names
-only). Run it after any machine/credential change or before a renewal
-decision; live result at introduction: 6/6 pass.
+`--doctor` (round 109; layer 7 added 2026-11-06): one read-only command that
+verifies the whole stack — marker/guard sanity, Task Scheduler registration,
+SessionStart hook config, git push credential (ls-remote), gh auth, the two
+API env keys (names only), and site-repo drift (layer 7: the LIVE Pages
+snapshot vs the committed one — see the billing-freeze playbook below). Run
+it after any machine/credential change or before a renewal decision; live
+result at introduction: 6/6 pass (6 layers then).
 
 In-chat: the workspace command **/refresh-data** runs the guard and (on RUN, or
 SKIP + an explicit "force" from the owner) executes the lane — same red lines.
