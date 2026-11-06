@@ -24,11 +24,25 @@ name: Vintage Drift Probe
 # pins the model in CI — repin via the LLM_MODEL repository variable if the
 # extraction model ever changes (and only with an explicit contracts
 # amendment, never silently).
+#
+# REPAIR_PROBE follow-up (2026-11-06): first post-fix scheduled run =
+# 2026-12-03 06:00 UTC. The 2026-11-03 alarm ran under the stale-fallback
+# regime (fix landed 2026-11-06, round 122), so 12-03 is the first clean
+# reading under the pinned-model probe — treat its verdict, not November's,
+# as the REPAIR_PROBE confirmation.
+#
+# Permissions (2026-11-06 audit): pinned to contents:read + issues:write —
+# the prior state was the implicit repo-default grant (broader than needed);
+# scope mirrors the staleness-check lane. Triggers/schedule untouched.
 
 on:
   workflow_dispatch:
   schedule:
     - cron: '0 6 3 * *'  # monthly, the 3rd at 06:00 UTC
+
+permissions:
+  contents: read
+  issues: write
 
 jobs:
   drift:

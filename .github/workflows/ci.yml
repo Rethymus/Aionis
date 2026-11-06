@@ -9,13 +9,40 @@ name: Tests
 # LF-normalizing every integrity hash (git-blob form, platform-stable) and by
 # explicit skip-with-reason guards on local-artifact contracts. `uv run ruff
 # check` is clean repo-wide.
+#
+# PATHS + PERMISSIONS (2026-11-06 audit): on.push filters to the code surfaces
+# this gate actually exercises — src/ scripts/ tests/ + dependency pins + this
+# file, PLUS the i18n orphan gate's web inputs (web/src web/scripts
+# web/package.json web/pnpm-lock.yaml; pnpm install + scripts/i18n-audit.mjs
+# run in web/ and audit web/src/**). main-branch traffic here is >half
+# docs/state commits, which no longer burn Actions minutes. pull_request
+# deliberately keeps NO paths filter:
+# path-filtered PR checks strand the merge in "Expected — Waiting for status"
+# when a PR touches only filtered-out files (documented GitHub pitfall).
+# workflow_dispatch stays as the full-coverage fallback (run any docs/state
+# commit through the gate manually if ever needed). Top-level permissions
+# pinned to contents:read — pytest/ruff/i18n-audit write nothing to the repo.
 
 on:
   push:
     branches: [main]
+    paths:
+      - 'src/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - 'pyproject.toml'
+      - 'uv.lock'
+      - '.github/workflows/ci.yml'
+      - 'web/src/**'
+      - 'web/scripts/**'
+      - 'web/package.json'
+      - 'web/pnpm-lock.yaml'
   pull_request:
     branches: [main]
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   tests:

@@ -1,5 +1,16 @@
 name: Deploy Static Site to GitHub Pages
 
+# ═══ DISABLED-SINCE-2026-09 (round 86) — DO NOT MANUALLY ENABLE ═══
+# This workflow is disabled_manually at the GitHub workflow-state level and is
+# retained as a DORMANT RECORD ONLY. The repo's Pages is served by the LEGACY
+# gh-pages branch channel (build_type=legacy, source=gh-pages; rounds 50/53
+# canonical), and this workflow's actions/deploy-pages mode is incompatible
+# with that legacy configuration — see state/current.md round-85/86 forensics
+# ("禁用是合理残留"). Live publishing runs through publish-site.yml (code
+# pushes) and the gh-pages publish chain inside refresh-terminal-data.yml
+# (data commits). Deleting the file needs owner sign-off — tracked as a
+# suggestion only, not enacted (2026-11-06 audit).
+
 on:
   push:
     branches:
