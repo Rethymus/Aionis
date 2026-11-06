@@ -13,7 +13,15 @@ estimate is EMPIRICAL: it is not a vendor declaration and must never be
 recorded as one (see config/e3_live_contracts.yaml governance notes).
 
 Usage:
-    uv run python scripts/probe_provider_cutoff.py [--model glm-4-flash]
+    uv run python scripts/probe_provider_cutoff.py [--model <pinned-id>]
+
+The probed model MUST be the pinned extraction model (settings.llm_model /
+LLM_MODEL in .env) — the same model the frozen cutoff was measured on.
+Fail-closed (2026-11-06): with no LLM_MODEL configured and no explicit
+--model, the script exits 1 instead of falling back to a hardcoded id.
+The stale hardcoded fallback ('glm-4-flash') is what made the three monthly
+CI drift alarms of 2026-09/10/11 interrogate a model the frozen contract
+never described (see state/handoff.md round-112 correction).
 
 Politeness: 1.5s between calls (model APIs are exempt from the 2s host
 spacing rule; bounded to <=20 calls total). Security: the endpoint host is
@@ -252,13 +260,24 @@ def _panel_events(n: int = 3) -> list[tuple[str, str]]:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--model", default=settings.llm_model or "glm-4-flash")
+    # Fail-closed model pin: default is the pinned extraction model ONLY —
+    # never a hardcoded id. Unset -> exit 1 below (mirrors the missing-frozen-
+    # cutoff refusal in check_drift: probing the WRONG model is worse than
+    # not probing, because its verdict poisons the drift alarm channel).
+    ap.add_argument("--model", default=settings.llm_model,
+                    help="pinned model id to probe (default: settings.llm_model; "
+                         "no hardcoded fallback — unset exits 1)")
     ap.add_argument(
         "--check-drift", action="store_true",
         help="P1-5 periodic drift alarm: 3-call ladder vs the frozen cutoff "
              "(exit 1 on unsafe drift / invalid probe / inconclusive)",
     )
     args = ap.parse_args()
+
+    if not args.model:
+        print("pinned model id not configured — refusing to probe a fallback "
+              "model (set LLM_MODEL or pass --model explicitly)", flush=True)
+        raise SystemExit(1)
 
     if args.check_drift:
         raise SystemExit(check_drift(args.model))

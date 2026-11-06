@@ -16,6 +16,14 @@ name: Vintage Drift Probe
 # With NO key configured the step skips with an explicit notice (a missing
 # secret is an operational gap, not a test failure) — add the secret to
 # activate the probe.
+#
+# Model pin (2026-11-06 wiring fix): the probe must interrogate the SAME
+# model the frozen cutoff was measured on (glm-4.7-flash, see
+# reports/evidence/provider-cutoff-probe.json + .env LLM_MODEL). The script
+# itself is fail-closed (no hardcoded fallback), so this env line is what
+# pins the model in CI — repin via the LLM_MODEL repository variable if the
+# extraction model ever changes (and only with an explicit contracts
+# amendment, never silently).
 
 on:
   workflow_dispatch:
@@ -42,6 +50,10 @@ jobs:
         env:
           AIONIS_GLM_API_KEY: ${{ secrets.AIONIS_GLM_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          # Pin the probed model to the frozen-contract era model — the 3
+          # monthly unsafe-drift alarms of 2026-09/10/11 probed glm-4-flash
+          # (stale script default) because this line was missing.
+          LLM_MODEL: ${{ vars.LLM_MODEL || 'glm-4.7-flash' }}
         run: |
           if [ -n "$AIONIS_GLM_API_KEY" ]; then
             export OPENAI_API_KEY="$AIONIS_GLM_API_KEY"

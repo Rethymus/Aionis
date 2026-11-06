@@ -30,11 +30,16 @@ class Provider:
 
 
 # Static catalog. Policy terms from each platform's free-tier docs (2026-07).
+# glm model pin is fail-closed (2026-11-06): settings.llm_model ONLY, no
+# hardcoded fallback — the stale 'glm-4-flash' fallback silently routed
+# extraction through a model id the frozen vintage contract never described
+# whenever LLM_MODEL was unset (same wiring defect as the CI drift probe).
 _CATALOG: list[dict] = [
     {
         "name": "glm", "base_url": settings.llm_base_url or "https://open.bigmodel.cn/api/paas/v4",
-        "api_key": settings.openai_api_key, "model": settings.llm_model or "glm-4-flash",
-        "priority": 1, "rpm": 30, "note": "GLM-4-Flash, free, concurrency-limited",
+        "api_key": settings.openai_api_key, "model": settings.llm_model,
+        "priority": 1, "rpm": 30,
+        "note": "GLM pinned via LLM_MODEL (fail-closed, no fallback id), free",
     },
     {
         "name": "siliconflow", "base_url": "https://api.siliconflow.cn/v1",
@@ -62,6 +67,15 @@ def build_providers(only_enabled: bool = True) -> list[Provider]:
             continue
         if not key:
             continue
+        model = d.get("model")
+        if not model:
+            # Fail-closed: a present key with no pinned model id must never
+            # route extraction through a guessed/hardcoded model id.
+            raise ValueError(
+                f"provider {d['name']!r} has an API key but no pinned model "
+                "id (LLM_MODEL unset) — refusing to route extraction through "
+                "a hardcoded fallback model"
+            )
         out.append(
             Provider(
                 name=d["name"], base_url=d["base_url"], api_key=key, model=d["model"],

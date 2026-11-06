@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (11-06，handoff 轮 121)【vintage 探针布线修复——轮 112「研究信号」定性作废：三连 unsafe-drift 判的是错误模型】**
+  三次月度 CI 探针（9/3、10/3、11/3）artifact 均 model=glm-4-flash（陈默认）≠冻结边界实测模型 glm-4.7-flash；活体差分证实冻结模型仍 stable（anchor=known/post=unknown/control=unknown）。修复：vintage-probe.yml 注入 LLM_MODEL；probe + providers.py fail-closed（无 pinned model id 即拒跑/拒路由，陈默认不可静默使用）。实测：本地 --check-drift **stable/exit 0**（artifact model=glm-4.7-flash）；+5 测试，相关面 7 文件 129 测试全绿（原记 80，2026-11-06 独立复核以同 grep 相关面实测更正为 129）；ruff 过。作废证据归档 reports/evidence/vintage-drift-ci-*.json。**待业主**：billing 解锁 + 修复推送后 workflow_dispatch 重跑核对。**边界**：0 frozen/prereg/ledger 改动（冻结 YAML 未动）。详见 handoff 轮 121。
+
 - **active (10-31 11:58，轮 250-续)【10-31 影子 runbook 实弹完成——五步全过、READINESS PASS、账本零写入、GO 证据包产出（hourly 首班 04:06 活火，06:2x 次班并发吸收）：**
   **A 部分**：⓪a EXIT 0（up_to_date）；⓪b EXIT 0（**585/585 符号、43 会话追加零 all-NaN、面板边=2026-10-30、PIT 503/503 零残差、冻结基底 27c63577 前后不变**、跨两小时配额窗断点续传）；① EXIT 0（593 批零失败）；② EXIT 0；③ 双调用如实：`--run-date 2026-10-31` no-op（周六非 NYSE 会话——runbook 日期形缺陷如实记录）+ `--run-date 2026-10-30` 会话修正形 **READINESS PASS → dry-run 密封**（config d592b65c/scores sha 7ea73b05，NO-LEDGER 分数不落盘）。GLM 抽取段 53×429（拥塞）——144/144 事件带原文，readiness event-text 门通过。**NO-LEDGER 核验 PASS**：账本基线 ec6d2892/71 行执行后逐字节一致。**B 部分**：`reports/audits/2026-10-31-headline-goe-evaluation.md`（六判据：1/2/3/5/6 PASS、4 NOT-APPLICABLE[点火后判据]；建议 GO——序贯设计内置止损；附加披露：GLM 429/日期形缺陷/影子密封不自动转正）。**C 部分**：标记 data/ops/shadow_1031.done 已写（PASS+基线 sha+证据路径）。**判据 1 终态：8/31 PASS + 9/30 PASS（标注补跑）+ 10/31 PASS（dry-run）= 三会话点全梯通过**。**边界**：研究 lane（NO-LEDGER 协议动作）；ledger 零写入；冻结基底未动；**未揭盲**。
 

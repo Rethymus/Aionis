@@ -105,6 +105,44 @@ def test_drift_skips_green_without_key(tmp_path: Path, monkeypatch: pytest.Monke
     assert probe.check_drift("m") == 0  # CI wiring: absent secret skips
 
 
+# --- fail-closed model pin (2026-11-06 wiring fix) --------------------------
+# The three monthly CI unsafe-drift alarms of 2026-09/10/11 all interrogated
+# 'glm-4-flash' — the script's stale hardcoded --model default — because the
+# workflow never injected LLM_MODEL. The probe must refuse to run unpinned
+# rather than silently ask the wrong model.
+
+
+def test_probe_fails_closed_without_pinned_model(
+    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str],
+) -> None:
+    def _must_not_ask(*a: object, **k: object) -> str:
+        raise AssertionError("_ask must not fire without a pinned model id")
+
+    monkeypatch.setattr(probe.settings, "llm_model", None)
+    monkeypatch.setattr(probe, "_ask", _must_not_ask)
+    monkeypatch.setattr(sys, "argv", ["probe", "--check-drift"])
+    with pytest.raises(SystemExit) as ei:
+        probe.main()
+    assert ei.value.code == 1
+    assert ("pinned model id not configured — refusing to probe a fallback "
+            "model") in capsys.readouterr().out
+
+
+def test_probe_explicit_model_flag_beats_missing_setting(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    captured: dict[str, str] = {}
+    monkeypatch.setattr(probe.settings, "llm_model", None)
+    monkeypatch.setattr(probe, "check_drift",
+                        lambda m: captured.update(model=m) or 0)
+    monkeypatch.setattr(sys, "argv",
+                        ["probe", "--check-drift", "--model", "glm-4.7-flash"])
+    with pytest.raises(SystemExit) as ei:
+        probe.main()
+    assert ei.value.code == 0
+    assert captured["model"] == "glm-4.7-flash"
+
+
 # --- committed panel contract ------------------------------------------------
 
 
