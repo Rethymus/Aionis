@@ -10,23 +10,37 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-11-09T10:25:52+00:00",
-  "n_snapshots": 60,
+  "latest_snapshot_ts": "2026-11-10T10:38:22+00:00",
+  "n_snapshots": 61,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
-      "ticker": "SMCI",
-      "mentions": 2,
-      "sentiment": 0.056,
-      "bull_ratio": 1.0,
+      "ticker": "NVDA",
+      "mentions": 5,
+      "sentiment": -0.201,
+      "bull_ratio": 0.0,
       "score_sum": 0
     },
     {
-      "ticker": "CVS",
+      "ticker": "GOOG",
       "mentions": 1,
-      "sentiment": -0.379,
+      "sentiment": 0.075,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "SNDK",
+      "mentions": 1,
+      "sentiment": -0.439,
+      "bull_ratio": null,
+      "score_sum": 0
+    },
+    {
+      "ticker": "MRNA",
+      "mentions": 1,
+      "sentiment": -0.15,
       "bull_ratio": null,
       "score_sum": 0
     }
@@ -37,16 +51,16 @@
       "GOOGL": {
         "ticker": "GOOGL",
         "latest_mentions": 2,
-        "velocity": 4.5,
+        "velocity": 0.6,
         "crowding_z": 1.8452,
         "bull_bear_lean": -0.4205,
-        "grade": "surge",
+        "grade": "elevated",
         "n_days": 14
       }
     },
-    "n_snapshots": 60,
-    "latest_date": "2026-11-09",
+    "n_snapshots": 61,
+    "latest_date": "2026-11-10",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-11-09T11:19:37.318465+00:00"
+  "snapshot_ts": "2026-11-10T11:26:29.514467+00:00"
 }

@@ -1,12 +1,12 @@
 {
   "status": "ok",
-  "as_of": "2026-11-05",
+  "as_of": "2026-11-09",
   "window": {
     "start": "2026-05-01",
-    "end": "2026-11-05"
+    "end": "2026-11-09"
   },
   "issuers": 50,
-  "total": 316,
+  "total": 321,
   "unclassified": 11,
   "by_category": {
     "agreement_termination": 2,
@@ -17,16 +17,75 @@
     "financial_obligation": 7,
     "major_agreement": 7,
     "merger_completion": 1,
-    "officer_changes": 64,
+    "officer_changes": 66,
     "other": 3,
-    "other_events": 48,
+    "other_events": 50,
     "reg_fd": 28,
-    "results": 102,
+    "results": 103,
     "security_terms": 4,
     "unclassified": 11,
     "vote_results": 25
   },
   "events": [
+    {
+      "ticker": "AAPL",
+      "company": "Apple Inc.",
+      "filing_date": "2026-11-09",
+      "form": "8-K",
+      "items": [
+        "8.01",
+        "9.01"
+      ],
+      "category": "other_events",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/320193/000114036126042798/ef20085077_8k.htm"
+    },
+    {
+      "ticker": "BRK-B",
+      "company": "BERKSHIRE HATHAWAY INC",
+      "filing_date": "2026-11-09",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526452530/brka-20261107.htm"
+    },
+    {
+      "ticker": "UNH",
+      "company": "UNITEDHEALTH GROUP INC",
+      "filing_date": "2026-11-09",
+      "form": "8-K",
+      "items": [
+        "5.02",
+        "9.01"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/731766/000073176626000274/unh-20261103.htm"
+    },
+    {
+      "ticker": "TXN",
+      "company": "TEXAS INSTRUMENTS INC",
+      "filing_date": "2026-11-09",
+      "form": "8-K",
+      "items": [
+        "8.01",
+        "9.01"
+      ],
+      "category": "other_events",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/97476/000119312526453606/d180182d8k.htm"
+    },
+    {
+      "ticker": "NKE",
+      "company": "NIKE, Inc.",
+      "filing_date": "2026-11-09",
+      "form": "8-K",
+      "items": [
+        "5.02"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000197/nke-20261104.htm"
+    },
     {
       "ticker": "MSFT",
       "company": "MICROSOFT CORP",
@@ -3818,5 +3877,5 @@
     }
   ],
   "methodology": "SEC Form 8-K current reports \u2014 the legally mandated material-event disclosure (public domain, 17 U.S.C. \u00a7105), due within 4 business days of the event. Panel streams a bounded 50 large-cap issuer set (5 mega-cap seed + v2 20 + v3 25 across financials, payments, healthcare, staples, energy, industrials, tech/comm \u2014 breadth expansions 2026-08-22; still bounded, NOT full market; XOM carries both its pre-succession CIK and the 2026-07-01 8-K12B successor entity) since 2026-05-01; each row links the EDGAR primary document. Items are regex-extracted from the primary doc (nbsp/thin-space entities normalized) and mapped to ONE category by a rare-material-first precedence (delisting > merger completion > control change > non-reliance > officer changes > ... > exhibits); the full item list is preserved per row. Documents whose items cannot be extracted are counted as unclassified \u2014 never guessed. Filing-date point-in-time; 8-K/A amendments are new accessions (immutable). Display-only, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-11-09T11:19:19.269895+00:00"
+  "snapshot_ts": "2026-11-10T11:26:11.594304+00:00"
 }

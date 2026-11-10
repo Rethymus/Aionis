@@ -1,19 +1,15 @@
 {
   "status": "ok",
-  "as_of": "2026-11-08T16:00:00Z",
+  "as_of": "2026-11-10T05:00:00Z",
   "window": {
-    "start": "2026-10-10",
-    "end": "2026-11-08"
+    "start": "2026-10-15",
+    "end": "2026-11-10"
   },
   "query": "(\"stock market\" OR \"S&P 500\" OR \"Federal Reserve\") sourcelang:eng | sourcelang:zho domainis:wallstreetcn.com",
-  "total": 1099,
-  "n_sources": 307,
-  "n_zho": 232,
+  "total": 1101,
+  "n_sources": 303,
+  "n_zho": 239,
   "by_day": [
-    {
-      "date": "2026-10-10",
-      "count": 5
-    },
     {
       "date": "2026-10-15",
       "count": 42
@@ -85,9 +81,76 @@
     {
       "date": "2026-11-08",
       "count": 2
+    },
+    {
+      "date": "2026-11-10",
+      "count": 7
     }
   ],
   "items": [
+    {
+      "seendate": "2026-11-10T05:00:00Z",
+      "title": "\u4e2d\u56fd10\u6708\u51fa\u53e3\u540c\u6bd4\u589e\u957f35 . 2 %\uff0c AI\u786c\u4ef6\u70ed\u6f6e\u4e3a\u4e3b\u5f15\u64ce \uff0c \u8fdb\u53e3\u540c\u6bd4\u589e\u957f41 . 6 %",
+      "url": "https://wallstreetcn.com/articles/3785621",
+      "domain": "wallstreetcn.com",
+      "language": "Chinese",
+      "lang": "zho",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-11-10T05:00:00Z",
+      "title": "\u4e16\u754c\u5bf9\u9ec4\u4ec1\u52cb\u4f9d\u8d56\u8fc7\u6df1 \uff0c \u82f1\u4f1f\u8fbe\u5e94\u964d\u4f4e\u5355\u4e00CEO\u98ce\u9669",
+      "url": "https://wallstreetcn.com/articles/3785624",
+      "domain": "wallstreetcn.com",
+      "language": "Chinese",
+      "lang": "zho",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-11-10T05:00:00Z",
+      "title": "Seedream 5 . 5\u63d0\u901f \uff0c \u5b57\u8282\u56fe\u50cfAI\u6253\u901a\u8c46\u5305 \u3001 \u5373\u68a6\u4e0e\u4e91\u670d\u52a1",
+      "url": "https://wallstreetcn.com/articles/3785555",
+      "domain": "wallstreetcn.com",
+      "language": "Chinese",
+      "lang": "zho",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-11-10T05:00:00Z",
+      "title": "\u80fd\u63a7\u5236\u673a\u5668\u4eba\u62e7\u74f6\u76d6 \u3001 \u89e3\u9b54\u65b9\u548c\u753b\u753b \uff01 Fable 5 . 2\u7684\u5177\u8eab\u667a\u80fd\u80fd\u529b\u5b9e\u73b0  \u60ca\u4eba\u8dc3\u8fc1",
+      "url": "https://wallstreetcn.com/articles/3785622",
+      "domain": "wallstreetcn.com",
+      "language": "Chinese",
+      "lang": "zho",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-11-10T05:00:00Z",
+      "title": "AI\u98ce\u66b4\u91cd\u5934\u620f \uff1a \u80a1\u4ef7\u63a5\u8fd1\u8170\u65a9 \uff0c AI\u4e91\u53cc\u96c4  CoreWeave\u548cNebius\u8d22\u62a5\u8981\u6765\u4e86",
+      "url": "https://wallstreetcn.com/articles/3785618",
+      "domain": "wallstreetcn.com",
+      "language": "Chinese",
+      "lang": "zho",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-11-10T05:00:00Z",
+      "title": "\u4fe1\u5fc3\u4e3a0 \uff01 \u9ad8\u76db\u89e3\u8bfb\u5bf9\u51b2\u57fa\u91d1\u4ed3\u4f4d \uff1a \u6295\u964d\u5f0f\u6e05\u4ed3 \uff0c \u75ab\u60c5\u4ee5\u6765\u6700\u5927\u4e8f\u635f",
+      "url": "https://wallstreetcn.com/articles/3785614",
+      "domain": "wallstreetcn.com",
+      "language": "Chinese",
+      "lang": "zho",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-11-10T05:00:00Z",
+      "title": "\u5927\u6469  \u5185\u5b58\u6b7b\u795e  Shawn Kim\u518d\u53d1\u8b66\u544a \uff01 \u771f\u6b63\u7684\u70b8\u5f39\u662f  2028\u76c8\u5229\u60ac\u5d16 \uff0c \u5168\u9762\u4e0b\u8c03\u5185\u5b58\u80a1\u76ee\u6807\u4ef7",
+      "url": "https://wallstreetcn.com/articles/3785625",
+      "domain": "wallstreetcn.com",
+      "language": "Chinese",
+      "lang": "zho",
+      "sourcecountry": "China"
+    },
     {
       "seendate": "2026-11-08T16:00:00Z",
       "title": "\u9a6c\u65af\u514b\u4e2d\u9009\u540e\u8981\u88ab  \u79cb\u540e\u7b97\u8d26 \uff1f \u5fb7\u94f6 \uff1a \u7b97\u529b\u8d8a\u7d27\u5f20SpaceX\u8d8a\u8d5a\u94b1 \uff0c \u653f\u6cbb\u98ce\u9669\u88ab\u9ad8\u4f30",
@@ -1374,71 +1437,8 @@
       "language": "English",
       "lang": "eng",
       "sourcecountry": "Israel"
-    },
-    {
-      "seendate": "2026-10-25T12:45:00Z",
-      "title": "Reviewing Nexus Advanced Technologies ( NXAT ) and The Competition",
-      "url": "https://www.themarketsdaily.com/2026/10/25/reviewing-nexus-advanced-technologies-nxat-and-the-competition.html",
-      "domain": "themarketsdaily.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-25T12:45:00Z",
-      "title": "If the Stock Market Crashes , This Is the First ETF Im Loading Up On",
-      "url": "https://www.aol.com/articles/stock-market-crashes-first-etf-115000000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-25T12:30:00Z",
-      "title": "With Oil Prices Rising , Bitcoin Remains Stuck Below $85 , 000 . Here Why Im Still Buying Bitcoin Right Now .",
-      "url": "https://www.fool.com/investing/2026/10/25/with-oil-prices-rising-bitcoin-just-dipped-below-8/",
-      "domain": "fool.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-25T12:30:00Z",
-      "title": "The week ahead in numbers : Govt H1 fiscal data , factory output , HUL Q2 earnings",
-      "url": "https://www.livemint.com/economy/india-economic-data-hul-q2-results-fed-boj-meetings-11792915815219.html",
-      "domain": "livemint.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-10-25T12:30:00Z",
-      "title": "Head to Head Review : Royalty Pharma ( NASDAQ : RPRX ) versus Biofrontera ( NASDAQ : BFRI )",
-      "url": "https://www.themarketsdaily.com/2026/10/25/head-to-head-review-royalty-pharma-nasdaqrprx-versus-biofrontera-nasdaqbfri.html",
-      "domain": "themarketsdaily.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-25T12:30:00Z",
-      "title": "iShares S & P 100 ETF $OEF Shares Newly Acquired by NTV Asset Management LLC",
-      "url": "https://www.themarketsdaily.com/2026/10/25/ishares-sp-100-etf-oef-shares-newly-acquired-by-ntv-asset-management-llc.html",
-      "domain": "themarketsdaily.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-25T12:30:00Z",
-      "title": "Prediction : Here What $500 Invested in Archer Aviation Will Be Worth in 5 Years",
-      "url": "https://www.fool.com/investing/2026/10/25/prediction-heres-what-500-invested-in-archer-aviat/",
-      "domain": "fool.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
     }
   ],
   "methodology": "GDELT Doc 2.0 artlist \u2014 a machine index of worldwide news. TWO bounded requests per refresh (one per LANGUAGE LANE, the two fixed queries above, <=200 records each, >=15s host spacing; GDELT open data: URL/title/date/domain are facts, article copyright stays with the publishers), sort=datedesc (machine ordering, not editorial). The Chinese lane is domain-anchored on wallstreetcn.com (\u534e\u5c14\u8857\u89c1\u95fb \u2014 a \u8d22\u8054\u793e-style 7\u00d724 financial newswire): \u8d22\u8054\u793e itself has ZERO GDELT crawl coverage and CJK phrase queries are rejected by the API ('phrase too short'), so a domain seed is the only proven form (probe evidence in docs/data-intake-gdelt-news-feed.md). lang = the ingest-resolved lane (API language field first, request provenance fallback; never guessed from title bytes). seendate is GDELT's first-seen UTC stamp (15-min resolution) \u2014 the display freshness anchor. Rows are metadata + outbound links only: no article text is stored, summarized or fabricated; missing source fields are shown empty, never guessed. Dedup key = exact URL WITHIN a lane; the two languages are different articles and are never collapsed across lanes. Coverage = whatever GDELT's crawl saw; gaps are gaps. The payload caps the item list at 150 newest while by_day/total cover the full trailing 30-day cache window. Display-only, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-11-09T11:19:19.394644+00:00"
+  "snapshot_ts": "2026-11-10T11:26:11.722842+00:00"
 }

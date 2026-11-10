@@ -1,20 +1,20 @@
 {
   "status": "ok",
-  "as_of": "2026-11-06",
+  "as_of": "2026-11-09",
   "window": {
     "start": "2026-04-27",
-    "end": "2026-11-06"
+    "end": "2026-11-09"
   },
-  "issuers": 652,
-  "total": 1532,
+  "issuers": 655,
+  "total": 1537,
   "by_status": {
-    "filed": 1253,
+    "filed": 1258,
     "priced": 279
   },
   "by_form": {
     "424B4": 279,
-    "S-1": 520,
-    "S-1/A": 733
+    "S-1": 523,
+    "S-1/A": 735
   },
   "offer_price_parsed": 65,
   "offer_price_meta": {
@@ -34,11 +34,56 @@
       "task_budget": 170,
       "cumulative_walk": 275,
       "walk_cap": 156,
-      "last_walk": 2
+      "last_walk": 0
     },
     "target_as_of": "2026-11-06"
   },
   "filings": [
+    {
+      "company": "ZA Acquisition Corp. I",
+      "ticker": "",
+      "filed_date": "2026-11-09",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2127714/000121390026117086/0001213900-26-117086-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Blue Laser Fusion, Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-09",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1938570/000119312526453492/0001193125-26-453492-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Research Alliance Corp V",
+      "ticker": "",
+      "filed_date": "2026-11-09",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2137779/000119312526452284/0001193125-26-452284-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Rezera Inc.",
+      "ticker": "RZRA",
+      "filed_date": "2026-11-09",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2141583/000110465926124074/0001104659-26-124074-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "ConnectM Technology Solutions, Inc.",
+      "ticker": "CNTM",
+      "filed_date": "2026-11-09",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1895249/000110465926124071/0001104659-26-124071-index.htm",
+      "offer_price": null
+    },
     {
       "company": "EXOZYMES INC.",
       "ticker": "EXOZ",
@@ -10793,53 +10838,8 @@
       "status": "filed",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2107730/000119312526243167/0001193125-26-243167-index.htm",
       "offer_price": null
-    },
-    {
-      "company": "Dravica Corp",
-      "ticker": "",
-      "filed_date": "2026-05-28",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2106607/000117152026000115/0001171520-26-000115-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "GridAI Technologies Corp.",
-      "ticker": "GRDX",
-      "filed_date": "2026-05-28",
-      "form": "S-1",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1604191/000110465926067071/0001104659-26-067071-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "DISCIPLINED GROWTH ACQUISITION Corp",
-      "ticker": "DGAC",
-      "filed_date": "2026-05-28",
-      "form": "424B4",
-      "status": "priced",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2111038/000118518526002141/0001185185-26-002141-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Luvulis Corp",
-      "ticker": "",
-      "filed_date": "2026-05-27",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2123169/000212316926000004/0002123169-26-000004-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Futurewave Acquisition Corp",
-      "ticker": "FWAC",
-      "filed_date": "2026-05-27",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2116105/000182912626005680/0001829126-26-005680-index.htm",
-      "offer_price": null
     }
   ],
   "methodology": "US IPO registration/pricing stream \u2014 SEC EDGAR EFTS whole-market form-level queries (public domain, 17 U.S.C. \u00a7105), fixed ~120-day window, filed-date point-in-time, one row per accession (an S-1/A amendment is a new filing, never a silent overwrite). Status is derived from the immutable form type: S-1 / S-1/A = filed (registration statement on file); 424B4 = priced (the statutory final prospectus under Securities Act Rule 424(b)(4) is filed after pricing \u2014 its appearance marks a priced offering). Offer price is a BOUNDED second-stage extraction, not full coverage: only the newest \u226480 priced (424B4) filings are walked politely (\u22652.1 s spacing, hard request budget disclosed in offer_price_meta.requests), their EDGAR index + primary document fetched, and the cover page regex-parsed with graded confidence \u2014 EXACT (single final printed price \u2192 exported), LOW (draft/range wording near the label \u2192 value withheld, counted, never guessed) and NO-MATCH; every unparsed row stays offer_price=null with its EDGAR index link. Share count, proceeds, and expected listing date are NOT extracted at any tier. Honest scope disclosures: (2) the 424B4 form-level catch includes priced follow-on offerings by already-listed issuers (e.g. S-3 shelf takedowns), not only first-day IPOs \u2014 this panel is the registration/pricing STREAM, not a curated IPO list; (3) no company-level state machine is applied (rows are filing-level). Ticker is parsed from the EDGAR display name where present; pre-symbol S-1 filers carry none (empty, never guessed). Counts are FILING counts, not company counts. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-11-09T11:19:19.588192+00:00"
+  "snapshot_ts": "2026-11-10T11:26:11.888920+00:00"
 }

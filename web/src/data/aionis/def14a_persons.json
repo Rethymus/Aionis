@@ -1,28 +1,28 @@
 {
   "status": "ok",
-  "as_of": "2026-11-06",
+  "as_of": "2026-11-09",
   "n_filings_target": 150,
   "n_filings_processed": 150,
-  "n_with_persons": 118,
-  "coverage_pct": 78.7,
-  "n_persons_distinct": 751,
+  "n_with_persons": 117,
+  "coverage_pct": 78.0,
+  "n_persons_distinct": 727,
   "by_role": {
-    "ceo": 193,
-    "cfo": 107,
-    "coo": 57,
+    "ceo": 179,
+    "cfo": 104,
+    "coo": 60,
     "cto": 21,
-    "chairman": 153,
-    "president": 134,
-    "vice_president": 94,
-    "treasurer": 25,
-    "secretary": 50,
-    "director": 533,
-    "officer": 147
+    "chairman": 140,
+    "president": 125,
+    "vice_president": 81,
+    "treasurer": 21,
+    "secretary": 47,
+    "director": 507,
+    "officer": 132
   },
   "confidence": {
     "section_age_rows": 104,
-    "section_name_roles": 14,
-    "unparsed_no_persons": 32,
+    "section_name_roles": 13,
+    "unparsed_no_persons": 33,
     "fetch_or_doc_errors": 0
   },
   "boards": [
@@ -77,6 +77,16 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/103595/000114036126040712/ny20082116x1_def14a.htm"
     },
     {
+      "company": "Shutterstock, Inc.",
+      "ticker": "SSTK",
+      "issuer_cik": "1549346",
+      "n_persons": 14,
+      "n_directors": 11,
+      "n_officers": 8,
+      "filed_date": "2026-11-09",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1549346/000114036126042777/edge20081807x1_def14a.htm"
+    },
+    {
       "company": "Guidewire Software, Inc.",
       "ticker": "GWRE",
       "issuer_cik": "1528396",
@@ -97,26 +107,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1005731/000143774926033419/idt20261014_def14a.htm"
     },
     {
-      "company": "FLEXSTEEL INDUSTRIES INC",
-      "ticker": "FLXS",
-      "issuer_cik": "37472",
-      "n_persons": 13,
-      "n_directors": 8,
-      "n_officers": 7,
-      "filed_date": "2026-10-23",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/37472/000114036126040658/ny20081112x1_def14a.htm"
-    },
-    {
-      "company": "1 800 FLOWERS COM INC",
-      "ticker": "FLWS",
-      "issuer_cik": "1084869",
-      "n_persons": 13,
-      "n_directors": 8,
-      "n_officers": 12,
-      "filed_date": "2026-10-23",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1084869/000108486926000042/flws-20261022.htm"
-    },
-    {
       "company": "BILL Holdings, Inc.",
       "ticker": "BILL",
       "issuer_cik": "1786352",
@@ -125,16 +115,6 @@
       "n_officers": 8,
       "filed_date": "2026-10-27",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1786352/000178635226000004/bill-20261026.htm"
-    },
-    {
-      "company": "Madison Square Garden Entertainment Corp.",
-      "ticker": "MSGE",
-      "issuer_cik": "1952073",
-      "n_persons": 12,
-      "n_directors": 10,
-      "n_officers": 12,
-      "filed_date": "2026-10-22",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1952073/000162828026066898/msge-20261021.htm"
     },
     {
       "company": "THOR INDUSTRIES INC",
@@ -215,16 +195,6 @@
       "n_officers": 8,
       "filed_date": "2026-10-23",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1820953/000162828026067042/afrm-20261021.htm"
-    },
-    {
-      "company": "Lucky Strike Entertainment Corp",
-      "ticker": "LUCK",
-      "issuer_cik": "1840572",
-      "n_persons": 10,
-      "n_directors": 10,
-      "n_officers": 9,
-      "filed_date": "2026-10-23",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1840572/000110465926118471/tm2627905-1_def14a.htm"
     },
     {
       "company": "Airship AI Holdings, Inc.",
@@ -447,14 +417,14 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1937653/000119312526431936/d168077ddef14a.htm"
     },
     {
-      "company": "ATLANTIC AMERICAN CORP",
-      "ticker": "AAME",
-      "issuer_cik": "8177",
-      "n_persons": 8,
-      "n_directors": 8,
-      "n_officers": 5,
-      "filed_date": "2026-10-23",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/8177/000114036126040638/ny20063217x1_def14a.htm"
+      "company": "REVIVA PHARMACEUTICALS HOLDINGS, INC.",
+      "ticker": "RVPH",
+      "issuer_cik": "1742927",
+      "n_persons": 7,
+      "n_directors": 5,
+      "n_officers": 3,
+      "filed_date": "2026-11-09",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1742927/000143774926035893/rvph20261103_def14a.htm"
     },
     {
       "company": "Dominari Holdings Inc.",
@@ -637,6 +607,16 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1831096/000119312526429516/geg-20261023.htm"
     },
     {
+      "company": "VIVOS INC",
+      "ticker": "RDGL",
+      "issuer_cik": "1449349",
+      "n_persons": 6,
+      "n_directors": 3,
+      "n_officers": 5,
+      "filed_date": "2026-11-09",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1449349/000149315226050741/formdef14a.htm"
+    },
+    {
       "company": "NOCERA, INC.",
       "ticker": "NCRA",
       "issuer_cik": "1756180",
@@ -697,24 +677,14 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1844392/000121390026112160/ea0309459-def14a_marpai.htm"
     },
     {
-      "company": "OLB GROUP, INC.",
-      "ticker": "OLB",
-      "issuer_cik": "1314196",
-      "n_persons": 6,
+      "company": "Anteris Technologies Global Corp.",
+      "ticker": "AVR",
+      "issuer_cik": "2011514",
+      "n_persons": 5,
       "n_directors": 4,
-      "n_officers": 3,
-      "filed_date": "2026-10-23",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1314196/000118518526004974/olbgroupdef14a102226.htm"
-    },
-    {
-      "company": "Sky Quarry Inc.",
-      "ticker": "SKYQ",
-      "issuer_cik": "1812447",
-      "n_persons": 6,
-      "n_directors": 5,
-      "n_officers": 3,
-      "filed_date": "2026-10-23",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1812447/000109690626001622/skyq_def14a.htm"
+      "n_officers": 4,
+      "filed_date": "2026-11-09",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2011514/000114036126042624/ny20071206x3_def14a.htm"
     },
     {
       "company": "MARCHEX INC",
@@ -927,6 +897,26 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1511737/000151173726000063/ubnt-20261023.htm"
     },
     {
+      "company": "NeoVolta Inc.",
+      "ticker": "",
+      "issuer_cik": "1748137",
+      "n_persons": 3,
+      "n_directors": 1,
+      "n_officers": 3,
+      "filed_date": "2026-11-09",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1748137/000168316826008444/neovolta_def14a.htm"
+    },
+    {
+      "company": "COHU INC",
+      "ticker": "COHU",
+      "issuer_cik": "21535",
+      "n_persons": 3,
+      "n_directors": 1,
+      "n_officers": 2,
+      "filed_date": "2026-11-09",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/21535/000143774926035662/cohu20261028_def14a.htm"
+    },
+    {
       "company": "WRAP TECHNOLOGIES, INC.",
       "ticker": "WRAP",
       "issuer_cik": "1702924",
@@ -1005,16 +995,6 @@
       "n_officers": 2,
       "filed_date": "2026-10-23",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1001907/000143774926033333/astc20260909_def14a.htm"
-    },
-    {
-      "company": "RAVE RESTAURANT GROUP, INC.",
-      "ticker": "RAVE",
-      "issuer_cik": "718332",
-      "n_persons": 3,
-      "n_directors": 3,
-      "n_officers": 2,
-      "filed_date": "2026-10-23",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/718332/000114036126040557/ny20083144x1_def14a.htm"
     },
     {
       "company": "Beam Global",
@@ -1117,6 +1097,16 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1888654/000119312526431898/feam-20261026.htm"
     },
     {
+      "company": "Wintergreen Acquisition Corp.",
+      "ticker": "",
+      "issuer_cik": "2053927",
+      "n_persons": 1,
+      "n_directors": 0,
+      "n_officers": 1,
+      "filed_date": "2026-11-09",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2053927/000182912626012146/wintergreenacq_def14a.htm"
+    },
+    {
       "company": "New ERA Energy & Digital, Inc.",
       "ticker": "",
       "issuer_cik": "2028336",
@@ -1216,43 +1206,14 @@
         "vice_president",
         "director"
       ],
-      "n_companies": 4,
+      "n_companies": 5,
       "n_director_seats": 1,
       "companies": [
+        "NeoVolta Inc.",
         "T Stamp Inc",
         "BONK, INC.",
         "CIMPRESS plc",
         "Greenwich LifeSciences, Inc."
-      ]
-    },
-    {
-      "name": "Pay Ratio",
-      "roles": [
-        "director",
-        "officer"
-      ],
-      "n_companies": 4,
-      "n_director_seats": 1,
-      "companies": [
-        "Stitch Fix, Inc.",
-        "THOR INDUSTRIES INC",
-        "MSG Knickerbockers Corp.",
-        "Madison Square Garden Entertainment Corp."
-      ]
-    },
-    {
-      "name": "Pay Versus Performance",
-      "roles": [
-        "ceo",
-        "director"
-      ],
-      "n_companies": 4,
-      "n_director_seats": 2,
-      "companies": [
-        "MSG Knickerbockers Corp.",
-        "FACTSET RESEARCH SYSTEMS INC",
-        "Zymeworks Inc.",
-        "Madison Square Garden Entertainment Corp."
       ]
     },
     {
@@ -1269,39 +1230,31 @@
       ]
     },
     {
-      "name": "Brian G. Sweeney",
+      "name": "Pay Ratio",
       "roles": [
-        "ceo",
-        "cfo",
-        "coo",
-        "chairman",
-        "president",
-        "vice_president",
-        "director"
+        "director",
+        "officer"
       ],
-      "n_companies": 2,
-      "n_director_seats": 2,
+      "n_companies": 3,
+      "n_director_seats": 1,
       "companies": [
-        "MSG Knickerbockers Corp.",
-        "Madison Square Garden Entertainment Corp."
+        "Stitch Fix, Inc.",
+        "THOR INDUSTRIES INC",
+        "MSG Knickerbockers Corp."
       ]
     },
     {
-      "name": "Charles P. Dolan",
+      "name": "Pay Versus Performance",
       "roles": [
         "ceo",
-        "cfo",
-        "coo",
-        "chairman",
-        "president",
-        "vice_president",
         "director"
       ],
-      "n_companies": 2,
+      "n_companies": 3,
       "n_director_seats": 2,
       "companies": [
         "MSG Knickerbockers Corp.",
-        "Madison Square Garden Entertainment Corp."
+        "FACTSET RESEARCH SYSTEMS INC",
+        "Zymeworks Inc."
       ]
     },
     {
@@ -1335,42 +1288,6 @@
       ]
     },
     {
-      "name": "James L. Dolan",
-      "roles": [
-        "ceo",
-        "cfo",
-        "coo",
-        "chairman",
-        "president",
-        "vice_president",
-        "director"
-      ],
-      "n_companies": 2,
-      "n_director_seats": 2,
-      "companies": [
-        "MSG Knickerbockers Corp.",
-        "Madison Square Garden Entertainment Corp."
-      ]
-    },
-    {
-      "name": "Paul J. Dolan",
-      "roles": [
-        "ceo",
-        "cfo",
-        "coo",
-        "chairman",
-        "president",
-        "vice_president",
-        "director"
-      ],
-      "n_companies": 2,
-      "n_director_seats": 2,
-      "companies": [
-        "MSG Knickerbockers Corp.",
-        "Madison Square Garden Entertainment Corp."
-      ]
-    },
-    {
       "name": "Pay Versus Performance Disclosure",
       "roles": [
         "director",
@@ -1384,59 +1301,6 @@
       ]
     },
     {
-      "name": "Quentin F. Dolan",
-      "roles": [
-        "ceo",
-        "cfo",
-        "chairman",
-        "president",
-        "vice_president",
-        "director"
-      ],
-      "n_companies": 2,
-      "n_director_seats": 2,
-      "companies": [
-        "MSG Knickerbockers Corp.",
-        "Madison Square Garden Entertainment Corp."
-      ]
-    },
-    {
-      "name": "Ryan T. Dolan",
-      "roles": [
-        "ceo",
-        "cfo",
-        "coo",
-        "chairman",
-        "president",
-        "vice_president",
-        "director"
-      ],
-      "n_companies": 2,
-      "n_director_seats": 2,
-      "companies": [
-        "MSG Knickerbockers Corp.",
-        "Madison Square Garden Entertainment Corp."
-      ]
-    },
-    {
-      "name": "Thomas C. Dolan",
-      "roles": [
-        "ceo",
-        "cfo",
-        "coo",
-        "chairman",
-        "president",
-        "vice_president",
-        "director"
-      ],
-      "n_companies": 2,
-      "n_director_seats": 2,
-      "companies": [
-        "MSG Knickerbockers Corp.",
-        "Madison Square Garden Entertainment Corp."
-      ]
-    },
-    {
       "name": "Acting Chief Executive Officer",
       "roles": [
         "director"
@@ -1445,19 +1309,6 @@
       "n_director_seats": 1,
       "companies": [
         "TREASURE GLOBAL INC"
-      ]
-    },
-    {
-      "name": "Adam Hanft",
-      "roles": [
-        "ceo",
-        "president",
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "1 800 FLOWERS COM INC"
       ]
     },
     {
@@ -1484,17 +1335,6 @@
       "n_director_seats": 1,
       "companies": [
         "Digi Power X Inc."
-      ]
-    },
-    {
-      "name": "Adolfo Villagomez",
-      "roles": [
-        "ceo"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 0,
-      "companies": [
-        "1 800 FLOWERS COM INC"
       ]
     },
     {
@@ -1602,7 +1442,7 @@
       ]
     },
     {
-      "name": "Alexander D. Evans",
+      "name": "Alfonse Upshaw",
       "roles": [
         "ceo",
         "chairman",
@@ -1611,29 +1451,7 @@
       "n_companies": 1,
       "n_director_seats": 1,
       "companies": [
-        "Lucky Strike Entertainment Corp"
-      ]
-    },
-    {
-      "name": "Alexander Monje",
-      "roles": [
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "Sky Quarry Inc."
-      ]
-    },
-    {
-      "name": "Alexander Zelikovsky",
-      "roles": [
-        "officer"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 0,
-      "companies": [
-        "1 800 FLOWERS COM INC"
+        "Shutterstock, Inc."
       ]
     },
     {
@@ -1645,17 +1463,6 @@
       "n_director_seats": 0,
       "companies": [
         "UNITED NATURAL FOODS INC"
-      ]
-    },
-    {
-      "name": "Alina Dulimof",
-      "roles": [
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "OLB GROUP, INC."
       ]
     },
     {
@@ -1719,17 +1526,6 @@
       ]
     },
     {
-      "name": "Amir Sternhell",
-      "roles": [
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "OLB GROUP, INC."
-      ]
-    },
-    {
       "name": "Amit Mital",
       "roles": [
         "director"
@@ -1751,17 +1547,6 @@
       "n_director_seats": 1,
       "companies": [
         "NOCERA, INC."
-      ]
-    },
-    {
-      "name": "Anand S. Kangala",
-      "roles": [
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "FLEXSTEEL INDUSTRIES INC"
       ]
     },
     {
@@ -1867,14 +1652,176 @@
       "companies": [
         "Vivos Therapeutics, Inc."
       ]
+    },
+    {
+      "name": "Anne G. Saunders",
+      "roles": [
+        "officer"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 0,
+      "companies": [
+        "WD 40 CO"
+      ]
+    },
+    {
+      "name": "Annex B. The Nominating",
+      "roles": [
+        "director"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "Stone Point Credit Corp"
+      ]
+    },
+    {
+      "name": "Annie E. Casey Foundation",
+      "roles": [
+        "coo",
+        "vice_president",
+        "director"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "Stride, Inc."
+      ]
+    },
+    {
+      "name": "Anthony Cannestra",
+      "roles": [
+        "director"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "Blaize Holdings, Inc."
+      ]
+    },
+    {
+      "name": "Anthony J. Vinciquerra",
+      "roles": [
+        "director"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "MSG Knickerbockers Corp."
+      ]
+    },
+    {
+      "name": "Anthony W. Parker",
+      "roles": [
+        "director"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "Oil-Dri Corp of America"
+      ]
+    },
+    {
+      "name": "Anthony W. Parker Vice",
+      "roles": [
+        "vice_president",
+        "secretary"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 0,
+      "companies": [
+        "Oil-Dri Corp of America"
+      ]
+    },
+    {
+      "name": "Antonio Bonchristiano",
+      "roles": [
+        "director"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "IZEA Worldwide, Inc."
+      ]
+    },
+    {
+      "name": "Appendix A. During",
+      "roles": [
+        "director"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "VILLAGE SUPER MARKET INC"
+      ]
+    },
+    {
+      "name": "Appointed Michael Mo",
+      "roles": [
+        "ceo",
+        "chairman",
+        "director"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "KULR Technology Group, Inc."
+      ]
+    },
+    {
+      "name": "Approve Auditor Appointment",
+      "roles": [
+        "officer"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 0,
+      "companies": [
+        "IBEX Ltd"
+      ]
+    },
+    {
+      "name": "Arnold M. Reichman",
+      "roles": [
+        "director",
+        "officer"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "BRIDGEWAY FUNDS INC"
+      ]
+    },
+    {
+      "name": "Arthur F. Backal",
+      "roles": [
+        "ceo",
+        "president",
+        "director"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "Cantor Fitzgerald Income Trust, Inc."
+      ]
+    },
+    {
+      "name": "Arthur T. Dean",
+      "roles": [
+        "director"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "Safe Pro Group Inc."
+      ]
     }
   ],
   "request_accounting": {
-    "n_http_requests_last_fetch": 14,
+    "n_http_requests_last_fetch": 16,
     "budget_seconds": 2700,
     "budget_hit": false,
-    "fetched_at": "2026-11-09T10:13:08.561628+00:00"
+    "fetched_at": "2026-11-10T10:16:29.512498+00:00"
   },
-  "methodology": "DEF 14A person-level panel (\u8463\u4e8b/\u9ad8\u7ba1\u4eba\u7ea7\u6863\u6848) over the NEWEST 150 proxy filings of the /executives DEF 14A stream \u2014 a bounded lane: each filing's primary document resolved from its EDGAR filing index (<= 2 GETs per filing, idempotent per-accession caches, >= 2.1s spacing, hard 45-minute wall-clock budget; the last fetch spent 14 HTTP requests and did not hit the budget). Parsing is CONSERVATIVE and TIERED: (1) section_age_rows (HIGH) \u2014 the classic 'Name (Age) Title Since' roster row in any spelling, a 2-4 token capitalized name with a standalone age bounded 30-99 and a role word witnessed on the same row, also reconstructed from word-fragmented inline-XBRL layouts by anchor-delimiting the joined stream; (2) section_name_roles (MEDIUM) \u2014 'First M. Last' (middle-initial) + a role word inside a located directors/executives section. Everything else yields persons=[] and parsed=false \u2014 an honest NULL, never a guessed name (\u5b81\u53ef null \u4e0d\u731c\u6d4b); coverage below counts only what was processed (118/150 filings with persons = 78.7%), never an extrapolation. Roles are canonical role WORDS witnessed near the person's row or bio \u2014 they may include past or external-company titles (e.g. a director who is CEO of another firm), displayed as text-witnessed hints not employment records; boards-card director/officer counts are independent sets (a CEO-director counts in both). Distinct-person identity keys on the normalized full name across filings \u2014 same-name merges may join namesakes and hyphenated/apostrophe/initials-first names (JW Roth) are conservatively MISSED, both disclosed. Display-only, exploratory, NOT a research claim.",
-  "snapshot_ts": "2026-11-09T11:19:19.998276+00:00"
+  "methodology": "DEF 14A person-level panel (\u8463\u4e8b/\u9ad8\u7ba1\u4eba\u7ea7\u6863\u6848) over the NEWEST 150 proxy filings of the /executives DEF 14A stream \u2014 a bounded lane: each filing's primary document resolved from its EDGAR filing index (<= 2 GETs per filing, idempotent per-accession caches, >= 2.1s spacing, hard 45-minute wall-clock budget; the last fetch spent 16 HTTP requests and did not hit the budget). Parsing is CONSERVATIVE and TIERED: (1) section_age_rows (HIGH) \u2014 the classic 'Name (Age) Title Since' roster row in any spelling, a 2-4 token capitalized name with a standalone age bounded 30-99 and a role word witnessed on the same row, also reconstructed from word-fragmented inline-XBRL layouts by anchor-delimiting the joined stream; (2) section_name_roles (MEDIUM) \u2014 'First M. Last' (middle-initial) + a role word inside a located directors/executives section. Everything else yields persons=[] and parsed=false \u2014 an honest NULL, never a guessed name (\u5b81\u53ef null \u4e0d\u731c\u6d4b); coverage below counts only what was processed (117/150 filings with persons = 78.0%), never an extrapolation. Roles are canonical role WORDS witnessed near the person's row or bio \u2014 they may include past or external-company titles (e.g. a director who is CEO of another firm), displayed as text-witnessed hints not employment records; boards-card director/officer counts are independent sets (a CEO-director counts in both). Distinct-person identity keys on the normalized full name across filings \u2014 same-name merges may join namesakes and hyphenated/apostrophe/initials-first names (JW Roth) are conservatively MISSED, both disclosed. Display-only, exploratory, NOT a research claim.",
+  "snapshot_ts": "2026-11-10T11:26:12.251404+00:00"
 }
