@@ -181,6 +181,70 @@ pairs. Addresses the round-155 reflection gap: the audit chain previously
 existed only in this repo + GitHub. Run after any ledger-touching event or
 add to a weekly schedule.
 
+## 失败处置矩阵与节奏（值班协议落点，2026-11-11 轮 126）
+
+> 分工：上游「Failure modes & recovery」表管**通道行为与恢复机制**；本节管
+> **值班分诊与节奏固化**——信号出现后归哪类、谁在哪个节奏里做什么。
+> 本节为纯文档（值班协议层），不新增任何自动化、班次、常驻进程或稳态 token。
+> 矩阵的规则建模借 StackStorm `trigger→criteria→action` 三元组
+> （Apache-2.0；仅借鉴模式，**不部署平台**）。super-agent 三映射的出处见
+> `reports/design/2026-11-11-super-agent-integration.md` §2/§4。
+
+### Fast Path 分诊（2026-11-11 轮 126，可运行）
+
+确定性 Python 先滤噪、LLM 只接分诊后的真问题——分诊在 23:35 唯一 LLM 会话**之前**
+完成（`ops_local_refresh.py` 收尾处 gh 只读探针 + `triage_ci`/`triage_state`），稳态
+token 不增反降（夜报上下文更小）。三分类语义：
+
+| 分类 | 规则 | 处置 |
+|---|---|---|
+| `platform-failure` | CI run **<60s 红** 且平台签名确认（注解含 billing issue，或 job **零步定义**=billing 锁签名） | 归并一条已知线，**不进夜报正文细节**（钥匙在业主，见 billing playbook） |
+| `infra-transient` | `soft_fails`/persistent 软失败、push 瞬态错误（既有 retry-soft / push-only recovery 面） | 走既有重试面，夜报一行如实 |
+| `code-defect` | 其余一切（含**无法测量/未确认**的快速红——宁进人眼不猜） | 进夜报+按处置矩阵行动 |
+
+- 快速红若无平台签名确认，**保守归 `code-defect`**（人审），绝不猜测归类。
+- 夜报上下文包：`uv run python scripts/ops_local_refresh.py --triage`（只读+刷新
+  `runs/ops_local_refresh/<date>/night_package.json`）——近 24h 事实内联、历史深度
+  只留路径引用（Inline & Spill）。SessionStart 钩子在 SKIP 路径（含 23:35 报告
+  会话自身的启动）零网络刷新该包，报告会话总能读到当晚最新分诊。
+- `--status`/SUMMARY 自 2026-11-11 起带 `ci_triage` 字段；marker 的陈旧 `note`
+  在每次 attempt 启动时清除（轮 99 时代残留曾存活至 2026-11 marker）。
+
+### 处置矩阵（trigger → criteria → action）
+
+| Trigger（信号） | Criteria（归类规则） | Action（处置+落点） |
+|---|---|---|
+| 晚间通道 `soft_fails` 非空（429/帽类/单源抖动） | 软失败=设计内自愈，CI 语义继续 | 零动作；夜报如实列名。**连续 ≥2 晚同类**才升级为 Thread 叙述并处方修复（先例：retry-soft 机制） |
+| 通道 HARD-FAIL（契约门/守卫自锁，如 form8k cap 类） | **门按设计工作**——拒绝放行是防泄漏胜利，不是事故 | 禁止「顺手放宽门」：修帽/修门=显式提交+测试钉（先例 `5a1075f650`）；当晚 attempt-cap 自锁等次日自动重试 |
+| Actions **全体** 3-4 秒内 failure | billing 注解 / job 零步执行 = 计费冻结签名 | 业主钥匙（见下方 billing playbook）；本地通道与 PAT push 不受影响，照常运行 |
+| 单一 workflow 红、非秒级 | 真实缺陷或时变断言腐烂 | 归入 CI-红 Thread（见下）逐条修复；修复必须带测试钉（先例：news_feed 时间炸弹、IPO 帽感知） |
+| ledger 异常（行数缩/历史前缀变/孤儿行） | append-only 受威胁或 worktree 孤儿 | **立即呈报业主裁决**（归并/弃置均不可逆）；工程侧零代办，严禁任何自动「清理」（先例：-wj 孤儿 2 行，轮 120） |
+| 数据快照绊网 HISTORY REWRITTEN | 上游改史（CRSP 类教训） | soft-fail 记录+晨报可见，通道不阻塞；基线刷新=有意变更专用流程（见上节）+探索性账本行 |
+
+### 四档节奏表
+
+| 节奏 | 内容 | 载体 |
+|---|---|---|
+| **晚间** | 分诊（上表）+ 23:35 夜报班（全牌核验+doctor 七层+ci(own) 一行总结；**唯一稳态 LLM 会话**） | SessionStart 钩子 + Windows 计划任务 18:05-23:05 兜底 |
+| **每周** | **Watchdog 外部核对**（`uv run python scripts/monthly_review.py --weekly`：7 工作流健康分诊+ledger config_committed-before-result 抽查+原地打转检测；零 Actions 依赖，冻结期照常工作）+ staleness 绊网（周一 02:17 UTC 整点错开）+ 发布链健康步；解锁后首个周一有 billing 滞留误红风险（见 playbook） | 本地 `--weekly`（只读）+ `staleness-check.yml`（Actions；冻结期此信号全停，Watchdog 顶上） |
+| **每月** | 复盘教训循环：`scripts/monthly_review.py`（执行率/可靠性/软失败热点/发布链健康）+ 教训沉淀为 runbook 行/守卫测试（「每课一守卫」惯例） | 月报 rides 23:35 夜报班，零新增会话 |
+| **值班协议** | 钥匙区盯守：GitHub billing 解锁、freeze 通道真推许可、账本孤儿裁决——清单见 `reports/design/2026-11-11-super-agent-integration.md` §5；任何钥匙到位后按 playbook 顺序动作 | 人工（业主）；值班自动化只呈报不代决 |
+
+### 值班协议行为准则（super-agent 三映射，纯文档采纳）
+
+1. **Inline & Spill（夜报=自包含上下文包）**：近 24h 变更内联进夜报正文；月报、
+   ADR、设计报告一律只留**路径引用**不内联——防 handoff/state 膨胀
+   （出处：https://zhuanlan.zhihu.com/p/2099987320443237060 与
+   https://mp.weixin.qq.com/s/lcIkBMOKHSvkRYELgkduMg 的 Aionis 映射）。
+2. **Thread 稳定 ID 归组**：CI-红、守卫失败、ledger 异常各归一条 Thread 叙述——
+   夜报与 handoff 按类**续写**既有 Thread，不逐条新起会话/小节
+   （出处：https://zhuanlan.zhihu.com/p/2099987320443237060 与
+   https://linux.do/t/topic/3109398）。
+3. **投机执行红线**：23:35 夜报班**可以预草** handoff/复盘文本（供人工验收后
+   采用）；但**任何触及 `runs/ledger.jsonl` 或冻结配置的写入必须人工确认 +
+   显式 ledger 行**——杜绝「静默修复」改账本，守 `config_committed` BEFORE
+   result 红线（出处：https://mp.weixin.qq.com/s/lcIkBMOKHSvkRYELgkduMg）。
+
 ## GitHub 计费冻结应对（billing lock playbook，2026-11-06 立案）
 
 先例：2026-08-20→09-01 首次冻结（结清后恢复）；2026-11 复发（"billing lock
@@ -215,6 +279,16 @@ Settings → Billing 结清/解锁。
 - 夜报（23:35 cron）随报 doctor 结果（round 110 起）：连续数晚**第 7 层 FAIL
   且其余 6 层全绿** = 典型"本地栈健康、发布被冻结"签名，提醒业主去修
   Billing（2026-11-06 实测即此形态）。
+- `--doctor` 第 8 层（marker deadman，2026-11-11 轮 126）：healthchecks.io
+  Period+Grace 语义（BSD-3-Clause，仅借协议）——最近 ok_committed 晚间
+  marker 过期（Period=1 个工作日晚，Grace=1 个工作日；周末 SKIP:weekend
+  不计时，条件性假日跳过由 Grace 吸收）即 FAIL："lane silently dead"。
+  这是**结果层**（层 1-7 查部件，层 8 查产出），本地判定不受计费锁影响。
+  远端镜像=`staleness-check.yml` 的 `marker-deadman` job（cron 已升为每日
+  02:37 UTC，读 main 上最新 `chore(data): evening terminal refresh` 提交日
+  应用同一规则；**verification-pending**：billing 解锁后首跑核验，见上
+  playbook 顺序；锁定期间 Actions 不运行=无误报，解锁日滞留红按轮 125
+  操作顺序重跑一次再判）。
 
 **恢复**：Settings → Billing 解锁（09-01 先例：结清后即刻恢复）。**无需手工
 重部署**——`publish-site.yml` 由 push 触发，下一次 evening lane 的 push 照常

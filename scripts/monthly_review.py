@@ -391,6 +391,362 @@ def monthrange_len(month: str) -> int:
     return monthrange(y, m)[1]
 
 
+# ----------------------------------------------------- weekly Watchdog (126)
+# External control loop, round 126 (super-agent落点三): deterministic checks
+# run from OUTSIDE the lane and the Actions stack. Round 118 recorded the
+# blind spot this cures — "绊网失明": staleness-check is itself an Actions
+# workflow, so a billing freeze blinds every cloud tripwire and the nightly
+# report became the only alarm layer. The Watchdog has zero Actions
+# dependency (gh is read-only and optional). Failure classification reuses
+# the Fast-Path triage rules from scripts/ops_local_refresh.py (single
+# source of truth); the trigger→criteria→action modelling per
+# docs/ops-local-refresh.md §失败处置矩阵与节奏.
+
+WATCHDOG_WORKFLOWS = (
+    "ci.yml", "deploy-pages.yml", "e3-forward.yml", "publish-site.yml",
+    "refresh-terminal-data.yml", "staleness-check.yml", "vintage-probe.yml",
+)
+LEDGER_PATH = Path("runs") / "ledger.jsonl"
+# Result-bearing confirmatory families: a row here MUST be preceded by a
+# config_committed row with the same config_sig (the pre-registration
+# "config_committed BEFORE result" invariant, spot-checked). The E3 forward
+# lane uses its own forward_iset_frozen family and the pre-2026-07-28 rows
+# predate the event convention — both out of scope by design (verified
+# against the real 71-row ledger before pinning the rule).
+RESULT_FAMILIES = frozenset({"confirmatory:first", "oos_result"})
+_HARD_FAIL_STEP_RE = re.compile(r"HARD-FAIL: hard-fail step '([^']+)'")
+_HARD_FAIL_GATE_RE = re.compile(r"HARD-FAIL: (strict-JSON gate)")
+
+
+def _watchdog_run_rows(workflow: str, repo: Path) -> list[dict] | None:
+    """Latest rows for one workflow (newest first), or None when gh is
+    unreachable — unverified is reported, never scored as a failure."""
+    try:
+        proc = subprocess.run(
+            ["gh", "run", "list", "--workflow", workflow, "--limit", "5",
+             "--json",
+             "databaseId,workflowName,conclusion,createdAt,updatedAt"],
+            cwd=str(repo), capture_output=True, text=True, encoding="utf-8",
+            errors="replace", timeout=GH_TIMEOUT_S)
+        if proc.returncode != 0:
+            return None
+        rows = json.loads(proc.stdout)
+        return rows if isinstance(rows, list) else None
+    except (OSError, ValueError, subprocess.TimeoutExpired):
+        return None
+
+
+def classify_workflow(workflow: str, repo: Path, fetcher=None,
+                      jobs_sig=None) -> dict:
+    """Latest-run state for one workflow; reds go through the Fast-Path
+    triage rules. Injected `fetcher`/`jobs_sig` keep tests hermetic."""
+    if fetcher is None:
+        fetcher = _watchdog_run_rows
+    if jobs_sig is None:
+        import ops_local_refresh as lane
+        jobs_sig = lane._gh_jobs_signature
+    rows = fetcher(workflow, repo)
+    if rows is None:
+        return {"wf": workflow, "state": "unverified"}
+    if not rows:
+        return {"wf": workflow, "state": "no-runs"}
+    latest = rows[0]
+    conclusion = latest.get("conclusion")
+    if conclusion != "failure":
+        return {"wf": workflow, "state": str(conclusion or "other")}
+    run_id = latest.get("databaseId")
+    if jobs_sig is not None and run_id:
+        try:
+            jobs = jobs_sig(int(run_id))
+        except (TypeError, ValueError):
+            jobs = None
+    else:
+        jobs = None
+    import ops_local_refresh as lane
+    return {"wf": workflow, "state": "failure",
+            "bucket": lane.classify_run_row(latest, jobs)}
+
+
+def ledger_spot_check(repo: Path) -> tuple[list[str], dict]:
+    """Read-only integrity spot-check of the append-only audit log:
+    JSONL parses; result-family rows are preceded by a config_committed row
+    with the same config_sig; config_committed rows carry a frozen config."""
+    findings: list[str] = []
+    path = repo / LEDGER_PATH
+    if not path.is_file():
+        return ([f"{LEDGER_PATH}: missing — the append-only audit log must "
+                 "exist"], {})
+    raw = path.read_bytes()
+    if not raw.endswith(b"\n"):
+        findings.append(f"{LEDGER_PATH}: file does not end with a newline")
+    committed: dict[str, int] = {}
+    stats = {"rows": 0, "config_committed": 0, "result_family": 0,
+             "pre_convention": 0}
+    for i, line in enumerate(
+            raw.decode("utf-8", errors="replace").splitlines(), 1):
+        if not line.strip():
+            continue
+        try:
+            row = json.loads(line)
+        except ValueError as exc:
+            findings.append(f"{LEDGER_PATH}:{i}: unparseable JSONL ({exc})")
+            continue
+        if not isinstance(row, dict):
+            findings.append(f"{LEDGER_PATH}:{i}: row is not an object")
+            continue
+        stats["rows"] += 1
+        sig = row.get("config_sig")
+        event = row.get("event")
+        if event == "config_committed":
+            stats["config_committed"] += 1
+            if not row.get("config"):
+                findings.append(f"{LEDGER_PATH}:{i}: config_committed row "
+                                "without a frozen config object")
+            if isinstance(sig, str) and sig:
+                committed.setdefault(sig, i)
+        elif event in RESULT_FAMILIES:
+            stats["result_family"] += 1
+            if not (isinstance(sig, str) and sig):
+                findings.append(f"{LEDGER_PATH}:{i}: {event} row without a "
+                                "config_sig")
+            elif sig not in committed:
+                findings.append(
+                    f"{LEDGER_PATH}:{i}: {event} row has no earlier "
+                    "config_committed row with its config_sig — "
+                    "config_committed-BEFORE-result violated")
+        elif event is None:
+            stats["pre_convention"] += 1
+    return findings, stats
+
+
+def spin_detection(repo: Path, max_evenings: int = 14) -> tuple[list[str], int]:
+    """Same failing step on >=2 consecutive LOGGED evenings = spinning in
+    place (原地打转) — report to human. The 11-03..05 form8k cap self-lock
+    is exactly the pattern this surfaces. Returns (findings, scanned)."""
+    log_root = repo / LOG_SUBDIR
+    if not log_root.is_dir():
+        return [], 0
+    evenings: list[tuple[str, set[str]]] = []
+    scanned = 0
+    for day_dir in sorted((p for p in log_root.iterdir() if p.is_dir()),
+                          reverse=True):
+        log_file = day_dir / "run.log"
+        if not log_file.is_file():
+            continue
+        try:
+            text = log_file.read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            continue
+        scanned += 1
+        names = set(_HARD_FAIL_STEP_RE.findall(text))
+        names |= set(_HARD_FAIL_GATE_RE.findall(text))
+        if names:
+            evenings.append((day_dir.name, names))
+            if len(evenings) >= max_evenings:
+                break
+    findings: list[str] = []
+    if len(evenings) >= 2:
+        common = set(evenings[0][1])
+        dates = [evenings[0][0]]
+        for day, names in evenings[1:]:
+            common &= names
+            if not common:
+                break
+            dates.append(day)
+        if common and len(dates) >= 2:
+            findings.append(
+                "spin (原地打转): " + ", ".join(sorted(common))
+                + " failing on consecutive logged evenings "
+                + ", ".join(reversed(dates)) + " — human disposition needed "
+                "(docs/ops-local-refresh.md 处置矩阵)")
+    return findings, scanned
+
+
+def run_weekly(repo: Path, now: datetime | None = None, fetcher=None,
+               jobs_sig=None) -> tuple[str, int]:
+    """The --weekly mode: render the external-audit report and return
+    (markdown, exit_code). 0 = clean; 1 = findings needing human attention;
+    gh-unreachable checks are reported as 未能核对, never scored as failures."""
+    now = now or datetime.now()
+    lines: list[str] = [
+        "# Weekly Watchdog — external audit (outside lane + Actions stack)",
+        "",
+        f"> Generated {now.isoformat(timespec='seconds')} by "
+        "`scripts/monthly_review.py --weekly` — deterministic, read-only; "
+        "zero Actions dependency (round 118's freeze blind-spot cure).",
+        "",
+    ]
+    findings: list[str] = []
+    infos = [classify_workflow(wf, repo, fetcher=fetcher, jobs_sig=jobs_sig)
+             for wf in WATCHDOG_WORKFLOWS]
+    lines += ["## 1. Workflow health (latest run, 7 workflows)", "",
+              "| Workflow | latest | triage bucket |", "|---|---|---|"]
+    platform_reds: list[str] = []
+    for info in infos:
+        bucket = info.get("bucket") or "—"
+        if info["state"] == "failure" and bucket == "platform-failure":
+            platform_reds.append(info["wf"])
+        if info["state"] == "failure" and bucket == "code-defect":
+            findings.append(f"workflow real red (code-defect): {info['wf']}")
+        lines.append(f"| {info['wf']} | {info['state']} | {bucket} |")
+    lines.append("")
+    if len(platform_reds) >= 2:
+        lines.append(
+            "- billing-lock signature (≥2 workflows fast-red platform): "
+            + ", ".join(platform_reds)
+            + " — account-level platform failure, OWNER KEY (billing "
+              "playbook); merged here, not itemized.")
+        findings.append("platform-failure: billing lock — owner key needed")
+    elif platform_reds:
+        lines.append(f"- platform-failure red on {platform_reds[0]} — owner "
+                     "key (billing playbook) if it persists.")
+        findings.append(f"platform-failure: {platform_reds[0]}")
+    lines.append("")
+
+    ledger_findings, ledger_stats = ledger_spot_check(repo)
+    lines += ["## 2. Ledger integrity spot-check "
+              f"({LEDGER_PATH}, {ledger_stats.get('rows', 0)} rows)", ""]
+    if not ledger_stats:
+        lines.append("- ledger not found (see findings)")
+    else:
+        lines += [
+            f"- rows {ledger_stats['rows']} · config_committed "
+            f"{ledger_stats['config_committed']} · result-family "
+            f"{ledger_stats['result_family']} · pre-convention-era "
+            f"{ledger_stats['pre_convention']} (no event field — out of "
+              "scope by design)",
+            "- invariant: every result-family row preceded by "
+              "config_committed with the same config_sig → "
+              + ("**OK**" if not ledger_findings else "**VIOLATED**"),
+        ]
+    lines.append("")
+    findings += [f"ledger: {x}" for x in ledger_findings]
+
+    spin, scanned = spin_detection(repo)
+    lines += [f"## 3. Spin detection (same hard-fail step ≥2 consecutive "
+              f"logged evenings; scanned {scanned} recent evening log(s))",
+              ""]
+    lines += [f"- {x}" for x in spin] if spin else \
+        ["- no spin detected"]
+    lines.append("")
+    findings += spin
+
+    lines += [f"## Findings requiring human attention: {len(findings)}", ""]
+    lines += [f"- {x}" for x in findings] if findings else \
+        ["- none — walk away"]
+    return "\n".join(lines) + "\n", (1 if findings else 0)
+
+
+# ------------------------------------------------- Reflexion lessons (126)
+# Protocol borrowed from noahshinn/reflexion (MIT, verified via gh api
+# 2026-11-11): attempt → score against the pre-registered standard → textual
+# lesson → inject into the next attempt. Borrowed as PROTOCOL ONLY (the repo
+# itself is archived research scripts; no package, no dependency). The
+# monthly review seeds the lessons deterministically; the month-end LLM
+# session composes the text and writes it back via --append-lessons-from
+# into state/handoff.md — where every session already reads first
+# (AGENTS.md session protocol step 1), which is the "inject next cycle" leg.
+# Budget: still the single 23:35 LLM session; lessons are generated only at
+# month-end / on failure.
+
+LESSON_HEADER_RE = re.compile(
+    r"<!--\s*monthly-reflexion-lessons\s+month=(\d{4}-\d{2})[^>]*-->")
+
+
+def latest_lessons_block(handoff_text: str) -> tuple[str, str] | None:
+    """(month, block) of the most recent lessons block in the handoff, or
+    None. A block runs from its header to the next header (or EOF)."""
+    matches = list(LESSON_HEADER_RE.finditer(handoff_text))
+    if not matches:
+        return None
+    last = matches[-1]
+    end = matches[-1].end()
+    nxt = LESSON_HEADER_RE.search(handoff_text, end)
+    block = handoff_text[last.start(): nxt.start() if nxt
+                         else len(handoff_text)].rstrip()
+    return last.group(1), block
+
+
+def append_lessons(text: str, month: str, handoff_path: Path) -> int:
+    """Reflexion step-4 writeback: append this month's lesson block to
+    state/handoff.md. APPEND-ONLY by construction — existing bytes are never
+    rewritten (the handoff is history, not a scratchpad); one block per
+    month (same-month re-append is refused: return 2)."""
+    if not MONTH_RE.match(month):
+        raise ValueError(f"bad month '{month}' (want YYYY-MM)")
+    try:
+        datetime.strptime(month, "%Y-%m")
+    except ValueError as exc:
+        raise ValueError(f"bad month '{month}' (not a real year-month)") from exc
+    body = text.strip("\n")
+    if not body.strip():
+        raise ValueError("lesson text is empty")
+    existing = (handoff_path.read_text(encoding="utf-8")
+                if handoff_path.exists() else "")
+    for m in LESSON_HEADER_RE.finditer(existing):
+        if m.group(1) == month:
+            print(f"refuse: handoff already carries a lessons block for "
+                  f"{month} — revise next month or amend by hand",
+                  file=sys.stderr)
+            return 2
+    header = (f"<!-- monthly-reflexion-lessons month={month} "
+              "source=scripts/monthly_review.py --append-lessons-from "
+              "(Reflexion protocol borrowed from noahshinn/reflexion, MIT: "
+              "attempt, score vs prereg standard, textual lesson, inject "
+              "next cycle; protocol-only, no dependency) -->")
+    with handoff_path.open("a", encoding="utf-8") as fh:
+        if existing and not existing.endswith("\n"):
+            fh.write("\n")
+        fh.write(f"{header}\n{body.rstrip()}\n")
+    return 0
+
+
+def lesson_seeds(month: str, repo: Path, errors: list[str]) -> dict:
+    """Deterministic month-end incident facts (no LLM): the Reflexion
+    'score the attempt' step reads these, never guesses. Failed evenings
+    surface as weekday-misses (a hard-fail evening writes no SUMMARY — the
+    existing missing-weekday enumeration is the failure signal)."""
+    days, push_only = collect_log_days(repo, month, errors)
+    persistent = [(d["date"], d["persistent_soft_fails"]) for d in days
+                  if d["persistent_soft_fails"]]
+    spin, scanned = spin_detection(repo)
+    return {"month": month, "days_with_summary": len(days),
+            "persistent_soft_fails": persistent,
+            "missing_weekdays": missing_weekdays(
+                month, {d["date"] for d in days}),
+            "spin_findings": spin, "push_only": push_only}
+
+
+def render_reflexion_section(seeds: dict, prior: tuple[str, str] | None,
+                             errors: list[str]) -> str:
+    out = ["## 5. Reflexion seeds (round 126 — month-end lesson candidates; "
+           "facts only, the lesson PROSE is the month-end session's job)", ""]
+    out.append(f"- evenings with a SUMMARY: {seeds['days_with_summary']}")
+    out.append(f"- weekday evenings without a SUMMARY (includes hard-fail "
+               f"evenings — each needs a human reason): "
+               f"{seeds['missing_weekdays'] or 'none'}")
+    out.append(f"- persistent soft-fails: "
+               f"{seeds['persistent_soft_fails'] or 'none'}")
+    out.append(f"- spin findings: {seeds['spin_findings'] or 'none'}")
+    out.append(f"- push_only_recovery events: {seeds['push_only']}")
+    if errors:
+        out.append(f"- collection anomalies: {errors}")
+    out += ["", "## 6. Lessons carried from state/handoff.md (the 'inject "
+               "into next cycle' leg — sessions read the handoff first per "
+               "AGENTS.md)", ""]
+    if prior:
+        out.append(f"Latest block: month={prior[0]}")
+        out.append("")
+        out.append("```")
+        out += prior[1].splitlines()
+        out.append("```")
+    else:
+        out.append("- none yet (no monthly-reflexion-lessons block in the "
+                   "handoff)")
+    out.append("")
+    return "\n".join(out)
+
+
 # ----------------------------------------------------------------------- main
 
 def _month_type(text: str) -> str:
@@ -412,6 +768,21 @@ def main(argv: list[str] | None = None) -> int:
                         help="write the markdown here (default: stdout)")
     parser.add_argument("--repo", default=None,
                         help="repo root (default: this script's parent dir)")
+    parser.add_argument("--weekly", action="store_true",
+                        help="Watchdog external-audit mode (round 126): "
+                             "7-workflow health with billing-lock triage + "
+                             "ledger config_committed-before-result "
+                             "spot-check + spin detection; exit 1 on "
+                             "findings. Read-only, zero Actions dependency.")
+    parser.add_argument("--lessons", action="store_true",
+                        help="with the monthly flow: add Reflexion lesson "
+                             "seeds + the latest lessons block carried from "
+                             "state/handoff.md (round 126)")
+    parser.add_argument("--append-lessons-from", default=None, metavar="FILE",
+                        help="append the lesson text in FILE to "
+                             "state/handoff.md as this month's "
+                             "monthly-reflexion-lessons block (append-only, "
+                             "one block per month; exit 2 on duplicate)")
     args = parser.parse_args(argv)
     try:  # keep CJK (未能核对) intact even on a legacy GBK console
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # type: ignore[union-attr]
@@ -419,12 +790,32 @@ def main(argv: list[str] | None = None) -> int:
         pass
     repo = Path(args.repo).resolve() if args.repo else ROOT
     month = args.month or default_month()
+    if args.weekly:
+        markdown, code = run_weekly(repo)
+        if args.out:
+            out_path = Path(args.out)
+            out_path.parent.mkdir(parents=True, exist_ok=True)
+            out_path.write_text(markdown, encoding="utf-8")
+            print(f"wrote {out_path}", file=sys.stderr)
+        else:
+            print(markdown, end="")
+        return code
+    if args.append_lessons_from:
+        text = Path(args.append_lessons_from).read_text(encoding="utf-8")
+        return append_lessons(text, month,
+                              repo / "state" / "handoff.md")
     errors: list[str] = []
     days, push_only = collect_log_days(repo, month, errors)
     gh = {wf: collect_gh(wf, month, repo) for wf in GH_WORKFLOWS}
     health = collect_health(repo, errors)
     markdown = render(month, days, push_only, gh, health, errors,
                       datetime.now().isoformat(timespec="seconds"))
+    if args.lessons:
+        seeds = lesson_seeds(month, repo, errors)
+        prior = latest_lessons_block(
+            (repo / "state" / "handoff.md").read_text(encoding="utf-8")
+            if (repo / "state" / "handoff.md").exists() else "")
+        markdown += "\n" + render_reflexion_section(seeds, prior, [])
     if args.out:
         out_path = Path(args.out)
         out_path.parent.mkdir(parents=True, exist_ok=True)
