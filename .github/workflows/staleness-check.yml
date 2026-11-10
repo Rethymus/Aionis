@@ -16,9 +16,17 @@ name: Staleness check (terminal data)
 
 on:
   schedule:
-    - cron: '17 2 * * 1'  # Mondays 02:17 UTC — OFF the hour: GitHub docs
-      # say the top of the hour is the highest-load window (scikit-learn's
-      # nightly runs :30 for the same reason)
+    - cron: '37 2 * * *'  # DAILY 02:37 UTC (round 126) — OFF the hour: GitHub
+      # docs say the top of the hour is the highest-load window (scikit-learn's
+      # nightly runs :30 for the same reason). Was weekly Monday ('17 2 * * 1');
+      # now daily so the marker-deadman job below gets a working-day pulse.
+      # VERIFICATION-PENDING (billing lock #2, 2026-11-05): this schedule and
+      # the new marker-deadman job cannot be live-verified until the owner
+      # unlocks billing — first post-unlock run per docs/ops-local-refresh.md
+      # billing playbook; handoff round 125's first-Monday billing-residue
+      # note applies to ANY first post-unlock run (rerun once, then judge).
+      # The deadman job itself is billing-independent (reads git history via
+      # API); during a lock the workflow simply does not run (no false reds).
   workflow_dispatch: {}
 
 permissions:
@@ -30,6 +38,67 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  marker-deadman:
+    # Round 126 remote mirror of --doctor layer 8 (scripts/ops_local_refresh.py
+    # marker_deadman): healthchecks.io Period+Grace semantics (BSD-3-Clause,
+    # protocol borrow only). Period = one working-day evening; Grace = one
+    # working day; weekend SKIP:weekend doesn't tick. Remote observable = the
+    # latest `chore(data): evening terminal refresh` commit date on main
+    # (the local marker file is gitignored — git history is the honest remote
+    # proxy). Zero Actions dependency is impossible here BY DESIGN (this IS
+    # an Actions job) — it is the mirror, the local doctor layer 8 is the
+    # primary and keeps working through any billing freeze.
+    runs-on: ubuntu-24.04  # pinned: ubuntu-latest migrates to 26.04 (GH changelog 2026-09-17) — pin for month-stability
+    timeout-minutes: 5
+    steps:
+      - name: Lane marker deadman (Period=1 working day, Grace=1 working day)
+        run: |
+          python3 - <<'EOF'
+          import os, subprocess, datetime
+
+          api = (f"repos/{os.environ['GITHUB_REPOSITORY']}"
+                 "/commits?per_page=30")
+          out = subprocess.run(
+              ["gh", "api", api, "--jq",
+               '[.[] | select(.commit.message | '
+               'startswith("chore(data): evening terminal refresh"))][0]'
+               '.commit.author.date'],
+              capture_output=True, text=True)
+          latest = out.stdout.strip()
+          if out.returncode != 0 or not latest:
+              # No lane commit in the last 30 commits, or gh failed: the
+              # honest default is FAIL with the reason (never a silent pass).
+              print(f"::error::lane marker deadman: no "
+                    f"'chore(data): evening terminal refresh' commit found "
+                    f"in the last 30 commits (or gh failed: {out.stderr[:120]})")
+              raise SystemExit(1)
+          last = datetime.date.fromisoformat(latest[:10])
+          today = datetime.date.today()
+
+          def next_working_day(d):
+              d += datetime.timedelta(days=1)
+              while d.weekday() >= 5:  # Mon-Fri clock; holiday absence is
+                  d += datetime.timedelta(days=1)  # absorbed by Grace
+              return d
+
+          due = next_working_day(last)
+          grace = next_working_day(due)
+          print(f"last lane commit={last} due={due} grace={grace} today={today}")
+          if today > grace:
+              days = (today - due).days
+              weeks, rem = divmod(days, 7)
+              missed = (weeks * 5 + sum(1 for i in range(rem)
+                                        if (due.weekday() + i) % 7 < 5))
+              print(f"::error::lane marker deadman FIRED: last ok evening "
+                    f"{last}, due {due}, grace until {grace} — missed "
+                    f"{missed} working evening(s); the lane is silently dead "
+                    f"(see docs/ops-local-refresh.md)")
+              raise SystemExit(1)
+          print("deadman OK: within Period+Grace")
+          EOF
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   check:
     runs-on: ubuntu-24.04  # pinned: ubuntu-latest migrates to 26.04 (GH changelog 2026-09-17) — pin for month-stability
     timeout-minutes: 5

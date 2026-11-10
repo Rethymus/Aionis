@@ -53,7 +53,7 @@ import re
 import subprocess
 import sys
 import time
-from datetime import datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -497,6 +497,205 @@ def verify_own_commit_ci(sha: str, max_wait_s: int = 360) -> dict:
             for k in wanted}
 
 
+# ------------------------------------------------- Fast-Path failure triage
+# Round 126 (super-agent落点二): deterministic pre-LLM noise filter. The 11-05
+# billing lock (#2) kept every Actions workflow instantly red for days —
+# unclassified, that noise would burn the 23:35 report + duty attention every
+# evening. Three buckets: platform-failure (owner key), infra-transient
+# (existing retry-soft surface), code-defect (report + disposition). The
+# trigger→criteria→action modelling per docs/ops-local-refresh.md
+# §失败处置矩阵与节奏; pattern borrowed from StackStorm (Apache-2.0), no platform.
+
+TRIAGE_PLATFORM = "platform-failure"
+TRIAGE_INFRA = "infra-transient"
+TRIAGE_CODE = "code-defect"
+
+# Billing-locked runs die in ~3-4s (measured 2026-11-05/11: gh run list);
+# real Tests/publish-site runs take minutes. Fast reds need a *confirmed*
+# platform signature — an unconfirmed fast red stays code-defect (human eyes;
+# conservative by design, never guess).
+TRIAGE_PLATFORM_MAX_S = 60
+_TRIAGE_BILLING_RE = re.compile(r"billing", re.IGNORECASE)
+_PUSH_TRANSIENT_RE = re.compile(r"push failed", re.IGNORECASE)
+
+
+def classify_run_row(row: dict, jobs: dict | None) -> str:
+    """Pure rule: one gh run row + optional jobs probe -> triage bucket.
+
+    platform-failure requires BOTH a fast failure (<TRIAGE_PLATFORM_MAX_S)
+    and a platform signature from the jobs probe (billing annotation, or
+    zero defined steps — the billing-lock signature: the job never starts).
+    Missing/unmeasurable anything -> code-defect."""
+    try:
+        t0 = datetime.fromisoformat(str(row["createdAt"]).replace("Z", "+00:00"))
+        t1 = datetime.fromisoformat(str(row["updatedAt"]).replace("Z", "+00:00"))
+    except (KeyError, TypeError, ValueError):
+        return TRIAGE_CODE
+    if (t1 - t0).total_seconds() >= TRIAGE_PLATFORM_MAX_S:
+        return TRIAGE_CODE
+    if jobs is None:
+        return TRIAGE_CODE
+    if jobs.get("billing_annotation") or jobs.get("n_steps_defined") == 0:
+        return TRIAGE_PLATFORM
+    return TRIAGE_CODE
+
+
+def _gh_repo_slug() -> str | None:
+    try:
+        out = subprocess.run(
+            ["gh", "repo", "view", "--json", "nameWithOwner",
+             "--jq", ".nameWithOwner"],
+            cwd=ROOT, capture_output=True, text=True, timeout=20)
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+    slug = out.stdout.strip()
+    return slug if out.returncode == 0 and slug else None
+
+
+def _gh_run_rows(sha: str) -> dict:
+    """gh run list rows with timing, scoped to OUR commit (read-only; {}
+    on any gh failure — triage must never break the lane or guess)."""
+    try:
+        out = subprocess.run(
+            ["gh", "run", "list", "--commit", sha, "--limit", "10",
+             "--json",
+             "databaseId,workflowName,conclusion,createdAt,updatedAt"],
+            cwd=ROOT, capture_output=True, text=True, timeout=20)
+        if out.returncode != 0:
+            return {}
+        return {r["workflowName"]: r for r in json.loads(out.stdout)}
+    except (OSError, ValueError, subprocess.TimeoutExpired, KeyError):
+        return {}
+
+
+def _gh_jobs_signature(run_id: int) -> dict | None:
+    """Read-only probe of one run's jobs: defined-step count + billing
+    annotation. None when gh is unavailable (caller stays conservative)."""
+    slug = _gh_repo_slug()
+    if slug is None:
+        return None
+    try:
+        out = subprocess.run(
+            ["gh", "api", f"repos/{slug}/actions/runs/{run_id}/jobs",
+             "--jq", "[.jobs[] | {id, steps: (.steps // [] | length)}]"],
+            cwd=ROOT, capture_output=True, text=True, timeout=20)
+        if out.returncode != 0:
+            return None
+        jobs = json.loads(out.stdout)
+        # Defensive parse (gh/jq shape drift must degrade to None, not crash):
+        n_steps = sum(
+            int(s[0]) if isinstance(s := j.get("steps"), list) and s
+            else int(s or 0)
+            for j in jobs)
+    except (OSError, ValueError, subprocess.TimeoutExpired,
+            KeyError, TypeError):
+        return None
+    billing = False
+    for job in jobs:
+        try:
+            ann = subprocess.run(
+                ["gh", "api",
+                 f"repos/{slug}/check-runs/{job['id']}/annotations",
+                 "--jq", "[.[].message]"],
+                cwd=ROOT, capture_output=True, text=True, timeout=20)
+            if ann.returncode == 0 and any(
+                    _TRIAGE_BILLING_RE.search(str(m))
+                    for m in json.loads(ann.stdout)):
+                billing = True
+                break
+        except (OSError, ValueError, subprocess.TimeoutExpired,
+                KeyError, TypeError):
+            continue
+    return {"n_steps_defined": n_steps, "billing_annotation": billing}
+
+
+def triage_ci(ci: dict, sha: str | None) -> dict:
+    """Classify the lane's own red CI conclusions (round 126). gh probes are
+    read-only and non-fatal; runs once per evening after verify_own_commit_ci.
+    Returns {"<workflow>": bucket} for failure conclusions only."""
+    out: dict[str, str] = {}
+    if not isinstance(ci, dict):
+        return out
+    has_red = any(v == "failure" for v in ci.values())
+    rows = _gh_run_rows(sha) if (sha and has_red) else {}
+    for workflow, conclusion in ci.items():
+        if conclusion != "failure":
+            continue
+        row = rows.get(workflow) or {}
+        run_id = row.get("databaseId")
+        jobs = _gh_jobs_signature(int(run_id)) if run_id else None
+        out[workflow] = classify_run_row(row, jobs)
+    return out
+
+
+def triage_state(state: dict) -> dict:
+    """Three-bucket triage of the whole marker (gh-free, instant): the
+    pre-computed per-workflow buckets from state['ci_triage'], soft/persistent
+    soft-fails and push-transient errors -> infra-transient (the existing
+    --retry-soft / push-only recovery surface), everything else -> code-defect."""
+    infra: list[str] = [str(x) for x in (state.get("soft_fails") or [])]
+    infra += [f"persistent:{x}"
+              for x in (state.get("persistent_soft_fails") or [])]
+    code: list[str] = []
+    platform: list[str] = []
+    err = str(state.get("error") or "")
+    if err:
+        if _PUSH_TRANSIENT_RE.search(err):
+            infra.append("lane-error:push-transient")
+        else:
+            code.append(f"lane-error:{err[:120]}")
+    for workflow, bucket in (state.get("ci_triage") or {}).items():
+        line = f"ci:{workflow}"
+        if bucket == TRIAGE_PLATFORM:
+            platform.append(line)
+        elif bucket == TRIAGE_CODE:
+            code.append(line)
+    return {TRIAGE_PLATFORM: platform, TRIAGE_INFRA: infra,
+            TRIAGE_CODE: code}
+
+
+def build_night_package(state: dict, now: datetime) -> dict:
+    """Inline & Spill night-report context package (round 126): today's lane
+    facts inline, historical depth as path references only. Pure-local and
+    network-free so the SessionStart hook can refresh it in milliseconds."""
+    return {
+        "date": state.get("date"),
+        "generated_at": now.isoformat(timespec="seconds"),
+        "lane": {k: state.get(k) for k in (
+            "status", "commit", "pushed", "n_files", "soft_fails",
+            "persistent_soft_fails", "ci", "ci_triage", "backup", "error",
+            "push_only_recovery") if state.get(k)},
+        "threads": triage_state(state),
+        "refs": {
+            "runbook": "docs/ops-local-refresh.md",
+            "failure_matrix":
+                "docs/ops-local-refresh.md (§失败处置矩阵与节奏)",
+            "monthly_review": "scripts/monthly_review.py",
+            "monthly_reports": "reports/audits/",
+            "design_report":
+                "reports/design/2026-11-11-super-agent-integration.md",
+        },
+    }
+
+
+def write_night_package(now: datetime, state: dict | None = None) -> dict:
+    """Refresh runs/ops_local_refresh/<date>/night_package.json (best-effort,
+    local-only; failure never breaks a caller). `state` overrides the marker —
+    --triage passes its gh-enriched copy so the persisted package matches what
+    was printed; the hook omits it (pure-local marker projection)."""
+    package = build_night_package(state if state is not None else load_state(),
+                                  now)
+    try:
+        day_dir = LOG_DIR / (package["date"] or now.strftime("%Y-%m-%d"))
+        day_dir.mkdir(parents=True, exist_ok=True)
+        (day_dir / "night_package.json").write_text(
+            json.dumps(package, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8")
+    except OSError:
+        pass
+    return package
+
+
 # ------------------------------------------------------------------------- main
 
 LANE_COMMIT_PREFIX = "chore(data): evening terminal refresh"
@@ -620,6 +819,16 @@ def do_retry_soft() -> int:
         return 0
 
 
+def begin_attempt(state: dict, today: str, attempts: int, force: bool) -> None:
+    """Attempt-start marker update (round 126): a `note` belongs to the
+    attempt that wrote it — the round-99-era note ('lane redundant … killed
+    by round-99') survived into 2026-11 markers because nothing ever cleared
+    it. Clearing here means any new attempt supersedes old explanations."""
+    state.update({"date": today, "attempts": attempts, "status": "running",
+                  "started_at_epoch": time.time(), "force": force})
+    state.pop("note", None)
+
+
 def do_run(force: bool) -> int:
     now = datetime.now()
     state = load_state()
@@ -636,8 +845,7 @@ def do_run(force: bool) -> int:
     day_dir = LOG_DIR / today
     day_dir.mkdir(parents=True, exist_ok=True)
     with (day_dir / "run.log").open("a", encoding="utf-8") as fh:
-        state.update({"date": today, "attempts": attempts, "status": "running",
-                      "started_at_epoch": time.time(), "force": force})
+        begin_attempt(state, today, attempts, force)
         save_state(state)
         log(f"=== evening lane start {datetime.now().isoformat()} "
             f"(attempt {attempts}/{MAX_ATTEMPTS_PER_EVENING}) ===", fh)
@@ -723,22 +931,26 @@ def do_run(force: bool) -> int:
             log(f"audit-chain backup: {backup_note}", fh)
             ci = (verify_own_commit_ci(sha) if pushed
                   else {"note": "no push"})
+            ci_triage = triage_ci(ci, sha) if pushed else {}
             state.pop("error", None)  # stale failure text must not survive a success
             state.update({"status": status, "commit": sha, "pushed": pushed,
                           "n_files": n_files, "soft_fails": soft_fails,
-                          "ci": ci, "backup": backup_note,
+                          "ci": ci, "ci_triage": ci_triage,
+                          "backup": backup_note,
                           "persistent_soft_fails": persistent,
                           "finished_at": datetime.now().isoformat()})
             save_state(state)
             summary = {
                 "date": today, "status": status, "commit": sha, "pushed": pushed,
                 "n_files": n_files, "soft_fails": soft_fails,
-                "ledger": ledger_note, "ci": ci, "backup": backup_note,
+                "ledger": ledger_note, "ci": ci, "ci_triage": ci_triage,
+                "backup": backup_note,
                 "persistent_soft_fails": persistent,
                 "wall_minutes": round((time.time() - t0) / 60, 1),
             }
             log(f"SUMMARY {json.dumps(summary, ensure_ascii=False)}", fh)
             print(f"SUMMARY {json.dumps(summary, ensure_ascii=False)}")
+            write_night_package(datetime.now())
             return 0
         except Exception as exc:  # noqa: BLE001 — unattended lane: always mark + report
             state.update({"status": "failed", "error": str(exc)[:800],
@@ -746,6 +958,7 @@ def do_run(force: bool) -> int:
             save_state(state)
             log(f"HARD-FAIL: {exc}", fh)
             print(f"FAILED: {exc}")
+            write_night_package(datetime.now())
             return 1
 
 
@@ -845,19 +1058,125 @@ def _site_repo_drift_check() -> tuple[bool, str]:
                   f"(within {SITE_DRIFT_LAG_HOURS}h tolerance)")
 
 
+# ------------------------------------------------ layer 8: marker deadman
+# Round 126 (super-agent落点三收尾): the owner's "定时任务失效" worry is at
+# bottom "the lane silently died". Layers 1-7 check the stack's PARTS; layer 8
+# checks the OUTCOME — the ok_committed marker must keep arriving per working
+# evening. Period+Grace semantics borrowed from healthchecks/healthchecks
+# (BSD-3-Clause, docs/data-license-allowlist.md:20; ping protocol semantics
+# only — no self-hosted Django, no background process, no pings leaving the
+# machine). Local layer: verifiable immediately, immune to the billing lock.
+DEADMAN_GRACE_WORKING_DAYS = 1
+_DEADMAN_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+
+def _next_working_day(d: date) -> date:
+    """Next Mon-Fri day after `d`. US holidays deliberately NOT excluded:
+    the lane's holiday skip is conditional (guard skips only with zero
+    pending catch-up), and a single-day holiday absence is absorbed by the
+    Grace day — paging on a holiday cluster is the honest false-positive
+    trade for a deadman."""
+    d += timedelta(days=1)
+    while d.weekday() >= 5:
+        d += timedelta(days=1)
+    return d
+
+
+def _working_days_between(start: date, end: date) -> int:
+    """Mon-Fri count in [start, end) — start counts, end doesn't."""
+    days = (end - start).days
+    if days <= 0:
+        return 0
+    weeks, rem = divmod(days, 7)
+    return weeks * 5 + sum(
+        1 for i in range(rem) if (start.weekday() + i) % 7 < 5)
+
+
+def _last_ok_committed_date(log_dir: Path, state: dict) -> str | None:
+    """Newest ok_committed evening date from the run logs (a later failed
+    evening must not hide the last success), falling back to the marker
+    when it is itself ok_committed."""
+    if log_dir.is_dir():
+        for day_dir in sorted((p for p in log_dir.iterdir() if p.is_dir()),
+                              reverse=True):
+            log_file = day_dir / "run.log"
+            if not log_file.is_file():
+                continue
+            try:
+                text = log_file.read_text(encoding="utf-8", errors="replace")
+            except OSError:
+                continue
+            for line in reversed(text.splitlines()):
+                if "SUMMARY" not in line:
+                    continue
+                try:
+                    payload = json.loads(line.split("SUMMARY", 1)[1])
+                except ValueError:
+                    continue
+                if (isinstance(payload, dict)
+                        and payload.get("status") == "ok_committed"
+                        and isinstance(payload.get("date"), str)
+                        and _DEADMAN_DATE_RE.match(payload["date"])):
+                    return payload["date"]
+    if (state.get("status") == "ok_committed"
+            and isinstance(state.get("date"), str)
+            and _DEADMAN_DATE_RE.match(state["date"])):
+        return state["date"]
+    return None
+
+
+def marker_deadman(now: datetime, state: dict,
+                   log_dir: Path | None = None) -> tuple[bool, str]:
+    """Layer 8 (round 126): deadman switch over the ok_committed marker.
+
+    healthchecks.io Period+Grace semantics (BSD-3-Clause; protocol borrow
+    only): Period = one working-day evening (the lane's Mon-Fri schedule),
+    Grace = DEADMAN_GRACE_WORKING_DAYS working day(s). Weekend
+    SKIP:weekend is design behavior and does not tick the clock; a
+    conditional holiday skip is absorbed by Grace. A currently-RUNNING lane
+    pacifies the deadman (alive right now)."""
+    if state.get("status") == "running":
+        return True, ("lane running now (alive) — deadman pacified "
+                      f"(started_at_epoch={state.get('started_at_epoch')})")
+    last_ok = _last_ok_committed_date(
+        log_dir if log_dir is not None else LOG_DIR, state)
+    if last_ok is None:
+        return False, ("no ok_committed evening found (marker + run logs) "
+                       "— lane never succeeded or state lost")
+    try:
+        last = datetime.strptime(last_ok, "%Y-%m-%d").date()
+    except ValueError:
+        return False, f"marker date unparseable: {last_ok!r}"
+    today = now.date()
+    if last > today:
+        return True, (f"last ok_committed {last_ok} is in the future "
+                      "(host clock skew) — treated as fresh")
+    due = _next_working_day(last)
+    grace = _next_working_day(due)
+    if today > grace:
+        missed = _working_days_between(due, today)
+        return False, (f"last ok_committed {last_ok} — due {due}, grace "
+                       f"until {grace}; missed {missed} working evening(s) "
+                       "(deadman: Period+Grace exceeded — lane silently "
+                       "dead?)")
+    return True, (f"last ok_committed {last_ok}; due {due}; grace until "
+                  f"{grace} (within Period+Grace)")
+
+
 def collect_layers() -> list[tuple[str, bool, str]]:
-    """The seven read-only preflight checks (round 109; layer 7 site-repo
-    drift added 2026-11-06) as data — one (name, ok, detail) tuple per layer,
-    in order. Pure collection, no printing: doctor() renders the human
-    PASS/FAIL text from these tuples and --doctor --json renders the machine
-    document from the same source, so the two surfaces can never disagree."""
+    """The eight read-only preflight checks (round 109; layer 7 site-repo
+    drift added 2026-11-06; layer 8 marker deadman added 2026-11-11) as
+    data — one (name, ok, detail) tuple per layer, in order. Pure
+    collection, no printing: doctor() renders the human PASS/FAIL text from
+    these tuples and --doctor --json renders the machine document from the
+    same source, so the two surfaces can never disagree."""
     checks: list[tuple[str, bool, str]] = []
 
     # L1 marker + guard sanity (pure logic, no side effects)
     state = load_state()
     decision = guard_decision(datetime.now(), state)
     checks.append((
-        "1/7 guard+marker", state.get("date") is not None,
+        "1/8 guard+marker", state.get("date") is not None,
         f"marker date={state.get('date')} status={state.get('status')} "
         f"guard-now={decision.split(':')[0]}"))
 
@@ -869,11 +1188,11 @@ def collect_layers() -> list[tuple[str, bool, str]]:
              "-ErrorAction SilentlyContinue) -ne $null"],
             capture_output=True, text=True, timeout=30)
         ok2 = out.returncode == 0 and "True" in out.stdout
-        checks.append(("2/7 task scheduler", ok2,
+        checks.append(("2/8 task scheduler", ok2,
                        "registered" if ok2 else "NOT registered"))
     else:
         checks.append(
-            ("2/7 task scheduler", False, "non-Windows host (manual cron?)"))
+            ("2/8 task scheduler", False, "non-Windows host (manual cron?)"))
 
     # L3 SessionStart hook config (committed file, correct event+matcher)
     try:
@@ -883,18 +1202,18 @@ def collect_layers() -> list[tuple[str, bool, str]]:
         ok3 = (cfg.get("hooks", {}).get("enabled") is True and bool(ev)
                and "startup" in ev[0].get("matcher", ""))
         checks.append((
-            "3/7 sessionstart hook", ok3,
+            "3/8 sessionstart hook", ok3,
             f"enabled={cfg.get('hooks', {}).get('enabled')} "
             f"matcher={ev[0].get('matcher') if ev else 'none'}"))
     except (OSError, ValueError, IndexError) as exc:
-        checks.append(("3/7 sessionstart hook", False, f"{exc}"))
+        checks.append(("3/8 sessionstart hook", False, f"{exc}"))
 
     # L4 git push credential (read-only ls-remote with the stored cred)
     out = subprocess.run(["git", "ls-remote", "--heads", "origin", "main"],
                          cwd=ROOT, capture_output=True, text=True, timeout=30)
     ok4 = out.returncode == 0
     checks.append((
-        "4/7 push credential",
+        "4/8 push credential",
         ok4 and out.stdout.startswith(tuple("0123456789abcdef")),
         "ls-remote ok" if ok4 else out.stderr.strip()[-80:]))
 
@@ -902,7 +1221,7 @@ def collect_layers() -> list[tuple[str, bool, str]]:
     out = subprocess.run(["gh", "run", "list", "--limit", "1"],
                          cwd=ROOT, capture_output=True, text=True, timeout=30)
     ok5 = out.returncode == 0
-    checks.append(("5/7 gh auth", ok5,
+    checks.append(("5/8 gh auth", ok5,
                    "gh ok" if ok5 else out.stderr.strip()[-80:]))
 
     # L6 runtime env: .env keys present (names only, never values)
@@ -915,24 +1234,32 @@ def collect_layers() -> list[tuple[str, bool, str]]:
     except OSError:
         pass
     need = {"TIINGO_API_KEY", "FRED_API_KEY"}
-    checks.append(("6/7 api env", need <= names,
+    checks.append(("6/8 api env", need <= names,
                    f"present={sorted(need & names)} "
                    f"missing={sorted(need - names)}"))
 
     # L7 site-repo drift (the billing-freeze blind spot): the only layer that
     # reaches OUT to the deployed site — see _site_repo_drift_check.
     ok7, detail7 = _site_repo_drift_check()
-    checks.append(("7/7 site-repo drift", ok7, detail7))
+    checks.append(("7/8 site-repo drift", ok7, detail7))
+
+    # L8 marker deadman (round 126): the OUTCOME check — the ok_committed
+    # marker must keep arriving per working evening (healthchecks Period+
+    # Grace semantics; weekend SKIP:weekend doesn't tick). Catches "the lane
+    # silently died" regardless of which part broke. See marker_deadman.
+    ok8, detail8 = marker_deadman(datetime.now(), state)
+    checks.append(("8/8 evening marker deadman", ok8, detail8))
     return checks
 
 
 def doctor(as_json: bool = False) -> int:
-    """Read-only seven-layer preflight (round 109; layer 7 site-repo drift
-    added 2026-11-06): one command the owner (or any future session) runs to
+    """Read-only eight-layer preflight (round 109; layer 7 site-repo drift
+    added 2026-11-06, layer 8 marker deadman added 2026-11-11): one command
+    the owner (or any future session) runs to
     verify the whole lane stack after machine changes, credential renewals,
     or before a renewal decision. Human mode prints PASS/FAIL per layer;
     --json emits exactly one machine document ({"layers":
-    [{name, ok, detail}...], "passed": N, "total": 7}) instead. Exit 0 only
+    [{name, ok, detail}...], "passed": N, "total": 8}) instead. Exit 0 only
     if every layer passes (both modes)."""
     checks = collect_layers()
     failed = [n for n, ok, _ in checks if not ok]
@@ -963,25 +1290,45 @@ def main() -> int:
     group.add_argument("--run", action="store_true", help="run the evening lane")
     group.add_argument("--status", action="store_true", help="print marker state")
     group.add_argument("--doctor", action="store_true",
-                       help="read-only seven-layer lane preflight")
+                       help="read-only eight-layer lane preflight")
+    group.add_argument("--triage", action="store_true",
+                       help="read-only Fast-Path failure triage: three-bucket "
+                            "classification + night-report context package "
+                            "(gh probes red CI runs; refreshes night_package.json)")
     parser.add_argument("--json", action="store_true",
-                        help="with --status/--doctor: emit machine-readable "
-                             "JSON (UTF-8, ensure_ascii=False) to stdout")
+                        help="with --status/--doctor/--triage: emit "
+                             "machine-readable JSON (UTF-8, ensure_ascii=False) "
+                             "to stdout")
     parser.add_argument("--force", action="store_true",
                         help="with --run: bypass the guard (human use only)")
     args = parser.parse_args()
     if args.retry_soft:
         return do_retry_soft()
-    if not (args.guard or args.run or args.status or args.doctor):
+    if not (args.guard or args.run or args.status or args.doctor
+            or args.triage):
         parser.error("one of the arguments --guard --run --status --doctor "
-                     "is required (or --retry-soft)")
-    if args.json and not (args.status or args.doctor):
-        parser.error("--json is only meaningful with --status or --doctor")
+                     "--triage is required (or --retry-soft)")
+    if args.json and not (args.status or args.doctor or args.triage):
+        parser.error("--json is only meaningful with --status, --doctor "
+                     "or --triage")
     if args.guard:
         print(guard_decision(datetime.now(), load_state()))
         return 0
     if args.doctor:
         return doctor(as_json=args.json)
+    if args.triage:
+        state = load_state()
+        ci = state.get("ci")
+        if isinstance(ci, dict) and any(v == "failure" for v in ci.values()):
+            # fresh read-only gh enrichment; unmeasurable reds stay code-defect
+            state["ci_triage"] = triage_ci(ci, state.get("commit"))
+        package = build_night_package(state, datetime.now())
+        if args.json:
+            _emit_json(package)
+        else:
+            print(json.dumps(package, ensure_ascii=False, indent=2))
+        write_night_package(datetime.now(), state)
+        return 0
     if args.status:
         if args.json:
             _emit_json(load_state())

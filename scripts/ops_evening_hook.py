@@ -61,6 +61,12 @@ def main() -> int:
         day_dir.mkdir(parents=True, exist_ok=True)
         with (day_dir / "hook-spawn.log").open("a", encoding="utf-8") as fh:
             fh.write(f"[{now.isoformat()}] hook skip: {decision}\n")
+        # Fast-Path injection (round 126): the 23:35 night-report session
+        # itself triggers this hook on a SKIP decision ("already done today")
+        # — refresh the triaged context package right before that session
+        # reads it. Pure-local (marker read + one file write, no network),
+        # keeps the launcher inside its seconds contract, best-effort.
+        lane.write_night_package(now)
         return 0
     day_dir = lane.LOG_DIR / now.strftime("%Y-%m-%d")
     day_dir.mkdir(parents=True, exist_ok=True)

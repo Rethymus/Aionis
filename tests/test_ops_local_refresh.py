@@ -453,8 +453,26 @@ def test_push_only_recovery_push_failure_raises(monkeypatch) -> None:
 # --- --doctor preflight (round 109) ---------------------------------------------
 
 
+def _fresh_ok_evening(tmp_path: Path, monkeypatch) -> str:
+    """A same-day ok_committed run.log so doctor layer 8 (marker deadman,
+    round 126) passes under mocks — a real freshness check would honestly
+    fail on the old stale-date fixture."""
+    import json as _json
+    today = datetime.now().strftime("%Y-%m-%d")
+    log_dir = tmp_path / "runs" / "ops_local_refresh" / today
+    log_dir.mkdir(parents=True)
+    summary = {"date": today, "status": "ok_committed", "commit": "a" * 40}
+    (log_dir / "run.log").write_text(
+        f"[21:00:00] SUMMARY {_json.dumps(summary, ensure_ascii=False)}\n",
+        encoding="utf-8")
+    monkeypatch.setattr(lane, "LOG_DIR",
+                        tmp_path / "runs" / "ops_local_refresh")
+    return today
+
+
 def test_doctor_all_layers_pass(monkeypatch, tmp_path) -> None:
-    """Mocked seven-layer stack: exit 0 and a 7/7 summary line."""
+    """Mocked eight-layer stack: exit 0 (the 8/8 deadman gets a fresh
+    same-day ok evening via _fresh_ok_evening)."""
     def _ok(args, **k):
         s = "True" if "ScheduledTask" in str(args) else (
             "abc123 main" if "ls-remote" in args else "gh ok")
@@ -465,6 +483,7 @@ def test_doctor_all_layers_pass(monkeypatch, tmp_path) -> None:
     # scheduler branch so the mocked powershell query is what executes
     monkeypatch.setattr(lane, "load_state",
                         lambda: {"date": "2026-10-01", "status": "ok_committed"})
+    _fresh_ok_evening(tmp_path, monkeypatch)
     import json as _json
     real_root = lane.ROOT
     fake = tmp_path
@@ -601,9 +620,10 @@ def _live_payload(ts: str) -> str:
 
 
 def _mock_preflight_stack(monkeypatch, tmp_path) -> None:
-    """All-pass seven-layer stack: mocked subprocesses, forced Windows branch,
-    tmp ROOT carrying a valid hook config + the two required .env keys, and a
-    layer-7 live fetch that matches the repo snapshot."""
+    """All-pass eight-layer stack: mocked subprocesses, forced Windows branch,
+    tmp ROOT carrying a valid hook config + the two required .env keys, a
+    layer-7 live fetch that matches the repo snapshot, and a fresh same-day
+    ok evening for the layer-8 deadman."""
     import json as _json
 
     def _ok(args, **k):
@@ -616,6 +636,7 @@ def _mock_preflight_stack(monkeypatch, tmp_path) -> None:
     # scheduler branch so the mocked powershell query is what executes
     monkeypatch.setattr(lane, "load_state",
                         lambda: {"date": "2026-10-01", "status": "ok_committed"})
+    _fresh_ok_evening(tmp_path, monkeypatch)
     (tmp_path / ".zcode").mkdir()
     (tmp_path / ".zcode" / "config.json").write_text(_json.dumps({
         "hooks": {"enabled": True, "events": {"SessionStart": [
@@ -652,14 +673,14 @@ def test_status_json_stdout_parses_and_carries_marker_keys(
 
 def test_collect_layers_seven_json_serializable_layers(
         monkeypatch, tmp_path) -> None:
-    """collect_layers (the doctor() refactor seam) returns the seven preflight
+    """collect_layers (the doctor() refactor seam) returns the eight preflight
     layers as (name, ok, detail) tuples under mocked subprocesses, and the
     tuples survive a JSON round-trip."""
     import json as _json
 
     _mock_preflight_stack(monkeypatch, tmp_path)
     layers = lane.collect_layers()
-    assert len(layers) == 7
+    assert len(layers) == 8
     for name, ok, detail in layers:
         assert isinstance(name, str)
         assert isinstance(ok, bool)
@@ -672,7 +693,7 @@ def test_collect_layers_seven_json_serializable_layers(
 
 def test_doctor_json_stdout_shape(monkeypatch, tmp_path, capsys) -> None:
     """--doctor --json prints ONLY the machine document {"layers":
-    [{name, ok, detail}...], "passed": N, "total": 7} — no human [PASS]/
+    [{name, ok, detail}...], "passed": N, "total": 8} — no human [PASS]/
     [FAIL] lines interleaved, so stdout stays json.loads-able; exit code is
     still 0 only when every layer passes."""
     import json as _json
@@ -683,9 +704,10 @@ def test_doctor_json_stdout_shape(monkeypatch, tmp_path, capsys) -> None:
     assert lane.main() == 0
     out = capsys.readouterr().out
     payload = _json.loads(out)
-    assert payload["total"] == 7
-    assert payload["passed"] == 7
-    assert len(payload["layers"]) == 7
+    assert payload["total"] == 8
+    assert payload["passed"] == 8
+    assert len(payload["layers"]) == 8
+    assert payload["layers"][-1]["name"] == "8/8 evening marker deadman"
     for layer in payload["layers"]:
         assert set(layer) == {"name", "ok", "detail"}
         assert layer["ok"] is True
