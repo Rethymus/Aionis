@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (11-12，handoff 轮 130-续4)【purgedcv-diagnostics-oracle：tests/test_cv_split_audit.py 新增 5 用例——purgedcv.diagnostics 三原语（组不交/无时域泄漏/embargo 受尊重）交叉审计 cv.py 与 two_arm.compute_shared_folds 两条真实切分构造（embargo_sessions=21 生产语义），负控 3 例证 oracle 非空洞；audit_splitter 不在安装版 0.1.2 如实修正、不升级依赖，零研究面改动 0 ledger/0 frozen/0 OOS】**
+  正向 2 例（cv 直连+two_arm 共享折，后者按公共 ref_layout 契约重建 pt/et/groups/embargo_td=32 天>21 天钉会话历法）+负控 3 例（三异常各自开火，embargo 非对称语义实证）。验证实跑：新文件 5 passed、相邻被测面 test_cv/test_two_arm/test_learner_rank_objective 37 passed、ruff 绿、purgedcv 0.1.2 MIT 复测、零新依赖。详见 handoff 轮 130-续4。
+
 - **active (11-12，handoff 轮 130-续3)【env-example-provider-key：.env.example 补 PROVIDER= 活动空占位+取值注释，活动键名 diff 与真实 .env 10=10 对齐——findings[6] 审计可施工项清偿，0 ledger/0 frozen/0 OOS】**
   取值枚举（openai/router/glm/siliconflow/modelscope，`make_llm_client` llm_client.py:305-311 实读）+空值 falsy 兜底 router 与 glm 须钉 LLM_MODEL（providers.py:70-78 fail-closed 原文）注明；凭据字面量零写入（Mimosa 约束）。验证实跑：活动键名 diff 10=10 IDENTICAL、剥 `\r` 值非空 grep 零命中、precommit 守卫套件 4 绿、ruff 绿。详见 handoff 轮 130-续3。
 
