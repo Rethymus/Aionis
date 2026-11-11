@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (11-12，handoff 轮 130-续2)【backlog-candidates-register：候选区登记研究面/代码级候选五条（purgedcv effective_n_trials/min_track_record_length[0.1.2 MIT 实测导出]、langextract 试点限 fixtures 标注层、HLZ t≥3.0 RESULTS 并列呈现不改门、fja05680/sp500 双源审计 M 只认 MIT 原仓、Jev {answer,p}+Brier 式对账带诚实边界）——全部不上施工，研究面逐条注明须 mission 指名+预注册+config_committed，0 ledger/0 frozen/0 OOS】**
+  `state/backlog.md` 开放候选区 append 五条（HTML 注释定界），每条含来源/许可/触发条件/预注册要求。验证实跑：`backlog_open_candidates` 实测 12 开放候选（7+5 逐条在列）、`scan_proposal_keys` 无幻影键、`--propose` 实弹 exit 0（7 卡全为既有信号，新条目零误发——pickaxe 无日期不猜）、git status 恰 1 文件零自动写、ruff 通过。purgedcv 许可/version/导出名本会话亲测（0.1.2/MIT/恰两函数）。详见 handoff 轮 130-续2。
+
 - **active (11-12，handoff 轮 130-续)【Jev 专题协议级沉淀（业主点名）：消歧义 Jev=TypeSafe AI System One 判别式决策模型（2026-09-15/RLCD）与 LeCun JEPA 无关 → backlog 名词指认资料区；判别层（确定性规则引擎）/生成层（月末 LLM 会话）分层固化入值班协议，不引入外部判别 API；iterate 轮报（2026-11-12-iterate-round.md 新建）Jev 独立章节两栏分析——代码级 rejected（白名单零命中/违 provider 红线/稳态 token），0 ledger/0 frozen/0 OOS】**
   三落点：①`state/backlog.md` 名词指认资料区（propose 引擎不解析该区，`backlog_open_candidates`/`PROPOSAL_KEY_RE` 实读证实）；②`docs/ops-local-refresh.md` 值班协议「判别层/生成层分层」小节（判别=零 LLM 规则引擎[锚 :849/:1275]，生成=单场 23:35 会话[锚 :1035/:1179]，System1/2 仅分层类比命名，「内部世界模型」不采用）；③`reports/audits/2026-11-12-iterate-round.md` 新建——Jev 章节两栏表（同构仅两点 vs 过度类比）+代码级 rejected 四依据+锚点四条。验证实跑：monthly 三套件 72 绿、`--propose` 实弹 exit 0 零自动写（刷新指令 0 条=无幻影键）、ruff All checks passed、白名单 grep 零命中。代码级候选见同批 backlog-candidates-register 条。详见 handoff 轮 130-续。
 
