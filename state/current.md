@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (11-12，handoff 轮 130-续3)【env-example-provider-key：.env.example 补 PROVIDER= 活动空占位+取值注释，活动键名 diff 与真实 .env 10=10 对齐——findings[6] 审计可施工项清偿，0 ledger/0 frozen/0 OOS】**
+  取值枚举（openai/router/glm/siliconflow/modelscope，`make_llm_client` llm_client.py:305-311 实读）+空值 falsy 兜底 router 与 glm 须钉 LLM_MODEL（providers.py:70-78 fail-closed 原文）注明；凭据字面量零写入（Mimosa 约束）。验证实跑：活动键名 diff 10=10 IDENTICAL、剥 `\r` 值非空 grep 零命中、precommit 守卫套件 4 绿、ruff 绿。详见 handoff 轮 130-续3。
+
 - **active (11-12，handoff 轮 130-续2)【backlog-candidates-register：候选区登记研究面/代码级候选五条（purgedcv effective_n_trials/min_track_record_length[0.1.2 MIT 实测导出]、langextract 试点限 fixtures 标注层、HLZ t≥3.0 RESULTS 并列呈现不改门、fja05680/sp500 双源审计 M 只认 MIT 原仓、Jev {answer,p}+Brier 式对账带诚实边界）——全部不上施工，研究面逐条注明须 mission 指名+预注册+config_committed，0 ledger/0 frozen/0 OOS】**
   `state/backlog.md` 开放候选区 append 五条（HTML 注释定界），每条含来源/许可/触发条件/预注册要求。验证实跑：`backlog_open_candidates` 实测 12 开放候选（7+5 逐条在列）、`scan_proposal_keys` 无幻影键、`--propose` 实弹 exit 0（7 卡全为既有信号，新条目零误发——pickaxe 无日期不猜）、git status 恰 1 文件零自动写、ruff 通过。purgedcv 许可/version/导出名本会话亲测（0.1.2/MIT/恰两函数）。详见 handoff 轮 130-续2。
 
