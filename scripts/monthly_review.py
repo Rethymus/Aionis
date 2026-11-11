@@ -1037,6 +1037,76 @@ def run_propose(repo: Path, now: datetime | None = None,
 
 LESSON_HEADER_RE = re.compile(
     r"<!--\s*monthly-reflexion-lessons\s+month=(\d{4}-\d{2})[^>]*-->")
+# gen2 item 4 (lessons contract): an entry is a bullet whose text starts with
+# `event: <OP>`; the op verdicts borrow mem0's ADD/UPDATE/DELETE/NONE
+# taxonomy (mem0ai/mem0, Apache-2.0, protocol-only, no package). UPDATE/
+# DELETE are REFERENCE-STYLE marks — they name the id they retire
+# (supersedes/voids month=YYYY-MM#n) and never rewrite old block bytes,
+# isomorphic to the ledger's new-row-not-overwrite. evidence: lines are
+# Inline & Spill path references (run.log / audit reports), append-only.
+EVENT_OP_RE = re.compile(r"^\s*[-*]\s*event:\s*(ADD|UPDATE|DELETE|NONE)\b")
+EVENT_REF_RE = re.compile(
+    r"\b(supersedes|voids)\s+month=(\d{4}-\d{2})#(\d+)\b")
+LESSONS_CONTRACT_NOTE = ("写回契约：每条教训 event: 四操作（ADD / "
+                         "UPDATE[supersedes month=YYYY-MM#n] / DELETE[voids "
+                         "month=YYYY-MM#n] / NONE）+ 计划形「下次 X 触发时做 "
+                         "Y」非事件描述 + evidence: 路径引用 —— docs/"
+                         "ops-local-refresh.md §lessons 块格式")
+
+
+def _lessons_blocks(handoff_text: str) -> list[tuple[str, str]]:
+    """All (month, block) lessons blocks in file order."""
+    matches = list(LESSON_HEADER_RE.finditer(handoff_text))
+    return [(m.group(1),
+             handoff_text[m.start():matches[i + 1].start() if i + 1
+                          < len(matches) else len(handoff_text)].rstrip())
+            for i, m in enumerate(matches)]
+
+
+def _parse_lesson_entries(block: str) -> list[dict]:
+    """Contract entries of one block: bullets starting `event: <OP>` plus
+    their attached (evidence:) lines. The n-th entry of a block is addressable
+    as month#n — the id UPDATE/DELETE marks reference."""
+    entries: list[dict] = []
+    for line in block.splitlines():
+        m = EVENT_OP_RE.match(line)
+        if m:
+            entries.append({"op": m.group(1), "lines": [line.rstrip()]})
+        elif entries and line.strip():
+            entries[-1]["lines"].append(line.rstrip())
+    return entries
+
+
+def active_lessons_view(handoff_text: str) -> tuple[str, list[str]] | None:
+    """gen2 item 4: the ACTIVE lessons aggregate (replaces single-block
+    lookback) — (latest_month, rendered active entry lines). Active = the
+    whole latest block + every historical entry NOT retired by a later
+    reference-style mark. Marks are permanent, ledger-like: the id an
+    UPDATE/DELETE names stays retired even if the marking entry is itself
+    superseded later (its own replacement carries the lesson forward)."""
+    blocks = _lessons_blocks(handoff_text)
+    if not blocks:
+        return None
+    retired: set[tuple[str, int]] = set()
+    for _month, block in blocks:
+        for entry in _parse_lesson_entries(block):
+            ref = EVENT_REF_RE.search(" ".join(entry["lines"]))
+            if entry["op"] in ("UPDATE", "DELETE") and ref:
+                retired.add((ref.group(2), int(ref.group(3))))
+    latest_month, latest_block = blocks[-1]
+
+    def _render(month: str, idx: int, entry: dict) -> str:
+        head = entry["lines"][0].lstrip().lstrip("-*").strip()
+        return f"[{month}#{idx}] {head}"
+
+    lines = [_render(month, idx, entry)
+             for month, block in blocks[:-1]
+             for idx, entry in enumerate(_parse_lesson_entries(block), 1)
+             if (month, idx) not in retired]
+    lines += [_render(latest_month, idx, entry)
+              for idx, entry in enumerate(_parse_lesson_entries(latest_block),
+                                          1)]
+    return latest_month, lines
 
 
 def latest_lessons_block(handoff_text: str) -> tuple[str, str] | None:
@@ -1057,7 +1127,16 @@ def append_lessons(text: str, month: str, handoff_path: Path) -> int:
     """Reflexion step-4 writeback: append this month's lesson block to
     state/handoff.md. APPEND-ONLY by construction — existing bytes are never
     rewritten (the handoff is history, not a scratchpad); one block per
-    month (same-month re-append is refused: return 2)."""
+    month (same-month re-append is refused: return 2).
+
+    gen2 item 4 contract (Reflexion prompts.py:113 port, plan-form): every
+    lesson must be an ACTIONABLE PLAN — 「下次 X 触发时做 Y」, never a bare
+    event description — and the block must carry >=1 `event:` line in the
+    four-op verdict taxonomy (ADD / UPDATE[supersedes] / DELETE[voids] /
+    NONE, mem0 Apache-2.0 protocol-only) plus `evidence:` path references.
+    A body with zero event: lines breaks the aggregate-view semantics and is
+    refused (return 3) so the FIRST block ever written already carries the
+    right contract (落差缺口 4)."""
     if not MONTH_RE.match(month):
         raise ValueError(f"bad month '{month}' (want YYYY-MM)")
     try:
@@ -1067,6 +1146,13 @@ def append_lessons(text: str, month: str, handoff_path: Path) -> int:
     body = text.strip("\n")
     if not body.strip():
         raise ValueError("lesson text is empty")
+    if not _parse_lesson_entries(body):
+        print("refuse: no `event:` line in the lesson text — every entry "
+              "needs an ADD/UPDATE/DELETE/NONE verdict line (plan-form "
+              "「下次 X 触发时做 Y」 + evidence: path refs; docs/"
+              "ops-local-refresh.md §lessons 块格式)",
+              file=sys.stderr)
+        return 3
     existing = (handoff_path.read_text(encoding="utf-8")
                 if handoff_path.exists() else "")
     for m in LESSON_HEADER_RE.finditer(existing):
@@ -1079,7 +1165,10 @@ def append_lessons(text: str, month: str, handoff_path: Path) -> int:
               "source=scripts/monthly_review.py --append-lessons-from "
               "(Reflexion protocol borrowed from noahshinn/reflexion, MIT: "
               "attempt, score vs prereg standard, textual lesson, inject "
-              "next cycle; protocol-only, no dependency) -->")
+              "next cycle; protocol-only, no dependency) "
+              "contract=计划形「下次 X 触发时做 Y」非事件描述; event: "
+              "ADD|UPDATE(supersedes month=YYYY-MM#n)|DELETE(voids "
+              "month=YYYY-MM#n)|NONE; evidence: 路径引用 -->")
     with handoff_path.open("a", encoding="utf-8") as fh:
         if existing and not existing.endswith("\n"):
             fh.write("\n")
@@ -1087,11 +1176,17 @@ def append_lessons(text: str, month: str, handoff_path: Path) -> int:
     return 0
 
 
+WATCHDOG_BOUNDED_QUESTION = ("spin/persistent 是否原地打转或偏离值班目标？"
+                             "（月末会话一行结论，勿展开成新会话）")
+
+
 def lesson_seeds(month: str, repo: Path, errors: list[str]) -> dict:
     """Deterministic month-end incident facts (no LLM): the Reflexion
     'score the attempt' step reads these, never guesses. Failed evenings
     surface as weekday-misses (a hard-fail evening writes no SUMMARY — the
-    existing missing-weekday enumeration is the failure signal)."""
+    existing missing-weekday enumeration is the failure signal). gen2 item 4
+    adds the Watchdog's model-judgment half as a BOUNDED question key — one
+    line, answered by the month-end session, zero new sessions."""
     days, push_only = collect_log_days(repo, month, errors)
     persistent = [(d["date"], d["persistent_soft_fails"]) for d in days
                   if d["persistent_soft_fails"]]
@@ -1100,10 +1195,12 @@ def lesson_seeds(month: str, repo: Path, errors: list[str]) -> dict:
             "persistent_soft_fails": persistent,
             "missing_weekdays": missing_weekdays(
                 month, {d["date"] for d in days}),
-            "spin_findings": spin, "push_only": push_only}
+            "spin_findings": spin, "push_only": push_only,
+            "watchdog_bounded_question": WATCHDOG_BOUNDED_QUESTION}
 
 
-def render_reflexion_section(seeds: dict, prior: tuple[str, str] | None,
+def render_reflexion_section(seeds: dict,
+                             prior: tuple[str, list[str]] | None,
                              errors: list[str]) -> str:
     out = ["## 5. Reflexion seeds (round 126 — month-end lesson candidates; "
            "facts only, the lesson PROSE is the month-end session's job)", ""]
@@ -1115,20 +1212,27 @@ def render_reflexion_section(seeds: dict, prior: tuple[str, str] | None,
                f"{seeds['persistent_soft_fails'] or 'none'}")
     out.append(f"- spin findings: {seeds['spin_findings'] or 'none'}")
     out.append(f"- push_only_recovery events: {seeds['push_only']}")
+    out.append(f"- watchdog bounded question: "
+               f"{seeds.get('watchdog_bounded_question') or '—'} "
+               f"(本月 spin {len(seeds['spin_findings'])} 条 / persistent "
+               f"晚 {len(seeds['persistent_soft_fails'])})")
     if errors:
         out.append(f"- collection anomalies: {errors}")
-    out += ["", "## 6. Lessons carried from state/handoff.md (the 'inject "
-               "into next cycle' leg — sessions read the handoff first per "
-               "AGENTS.md)", ""]
+    out += ["", "## 6. Active lessons carried from state/handoff.md "
+               "(聚合视图=最新块+未被 supersede/void 的历史条目，gen2 条目 4；"
+               "the 'inject into next cycle' leg — sessions read the handoff "
+               "first per AGENTS.md)", ""]
     if prior:
-        out.append(f"Latest block: month={prior[0]}")
+        out.append(f"Latest block month={prior[0]}; active entries "
+                   f"{len(prior[1])}:")
         out.append("")
         out.append("```")
-        out += prior[1].splitlines()
+        out += prior[1]
         out.append("```")
     else:
         out.append("- none yet (no monthly-reflexion-lessons block in the "
                    "handoff)")
+    out += ["", f"- {LESSONS_CONTRACT_NOTE}"]
     out.append("")
     return "\n".join(out)
 
@@ -1174,13 +1278,18 @@ def main(argv: list[str] | None = None) -> int:
                              "instructions). Output: stdout or --out.")
     parser.add_argument("--lessons", action="store_true",
                         help="with the monthly flow: add Reflexion lesson "
-                             "seeds + the latest lessons block carried from "
-                             "state/handoff.md (round 126)")
+                             "seeds + the ACTIVE lessons aggregate carried "
+                             "from state/handoff.md (round 126 + gen2 item "
+                             "4). Month-end session guidance: 写块遵循契约 "
+                             "—— 每条 event: 四操作（ADD/UPDATE[supersedes]/"
+                             "DELETE[voids]/NONE）+ 计划形「下次 X 触发时做 "
+                             "Y」+ evidence: 路径引用（runbook §lessons 块格式）")
     parser.add_argument("--append-lessons-from", default=None, metavar="FILE",
                         help="append the lesson text in FILE to "
                              "state/handoff.md as this month's "
                              "monthly-reflexion-lessons block (append-only, "
-                             "one block per month; exit 2 on duplicate)")
+                             "one block per month; exit 2 on duplicate, "
+                             "exit 3 when no event: line — contract gate)")
     args = parser.parse_args(argv)
     try:  # keep CJK (未能核对) intact even on a legacy GBK console
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # type: ignore[union-attr]
@@ -1235,7 +1344,7 @@ def main(argv: list[str] | None = None) -> int:
                       datetime.now().isoformat(timespec="seconds"))
     if args.lessons:
         seeds = lesson_seeds(month, repo, errors)
-        prior = latest_lessons_block(
+        prior = active_lessons_view(
             (repo / "state" / "handoff.md").read_text(encoding="utf-8")
             if (repo / "state" / "handoff.md").exists() else "")
         markdown += "\n" + render_reflexion_section(seeds, prior, [])

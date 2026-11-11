@@ -229,32 +229,54 @@ def test_lessons_append_creates_block_and_is_append_only(tmp_path: Path) -> None
     handoff = tmp_path / "handoff.md"
     handoff.write_text("existing history line\n", encoding="utf-8")
     before = handoff.read_bytes()
-    code = mr.append_lessons("- lesson one\n- lesson two", "2026-11", handoff)
+    body = ("- event: ADD — 下次 form8k 越帽触发时先查 cap 表再放宽\n"
+            "  evidence: runs/ops_local_refresh/2026-11-05/run.log")
+    code = mr.append_lessons(body, "2026-11", handoff)
     assert code == 0
     after = handoff.read_bytes()
     assert after.startswith(before)  # APPEND-ONLY: prefix bytes untouched
     text = after.decode("utf-8")
-    assert "month=2026-11" in text and "lesson one" in text
+    assert "month=2026-11" in text and "下次 form8k" in text
+    # gen2 item 4: the block header itself carries the contract (first
+    # block ever written already self-documents it — 落差缺口 4)
+    assert "contract=计划形" in text
+    assert "event: ADD" in text
+    assert "supersedes month=YYYY-MM#n" in text
     # file still ends with a newline (handoff hygiene)
     assert text.endswith("\n")
+
+
+def test_lessons_no_event_line_refused_exit_three(tmp_path: Path) -> None:
+    """Contract gate (gen2 item 4): a body with zero `event:` lines breaks
+    the aggregate-view semantics — refused with guidance, nothing written."""
+    handoff = tmp_path / "handoff.md"
+    handoff.write_text("history\n", encoding="utf-8")
+    before = handoff.read_bytes()
+    assert mr.append_lessons("- a bare event description, no verdict",
+                             "2026-11", handoff) == 3
+    assert handoff.read_bytes() == before
 
 
 def test_lessons_same_month_duplicate_refused(tmp_path: Path) -> None:
     handoff = tmp_path / "handoff.md"
     handoff.write_text("history\n", encoding="utf-8")
-    assert mr.append_lessons("first", "2026-11", handoff) == 0
+    assert mr.append_lessons("- event: ADD — first", "2026-11", handoff) == 0
     before = handoff.read_bytes()
-    assert mr.append_lessons("second", "2026-11", handoff) == 2
+    assert mr.append_lessons("- event: ADD — second", "2026-11", handoff) == 2
     assert handoff.read_bytes() == before  # refusal wrote nothing
 
 
 def test_lessons_different_month_appends(tmp_path: Path) -> None:
     handoff = tmp_path / "handoff.md"
     handoff.write_text("history\n", encoding="utf-8")
-    assert mr.append_lessons("nov lessons", "2026-11", handoff) == 0
-    assert mr.append_lessons("dec lessons", "2026-12", handoff) == 0
-    month, block = mr.latest_lessons_block(handoff.read_text(encoding="utf-8"))
-    assert month == "2026-12" and "dec lessons" in block
+    assert mr.append_lessons("- event: ADD — nov lessons", "2026-11",
+                             handoff) == 0
+    assert mr.append_lessons("- event: ADD — dec lessons", "2026-12",
+                             handoff) == 0
+    month, lines = mr.active_lessons_view(handoff.read_text(encoding="utf-8"))
+    assert month == "2026-12"
+    assert any("nov lessons" in ln for ln in lines)  # unmarked -> still active
+    assert any("dec lessons" in ln for ln in lines)
 
 
 def test_lessons_empty_text_and_bad_month_rejected(tmp_path: Path) -> None:
@@ -263,11 +285,39 @@ def test_lessons_empty_text_and_bad_month_rejected(tmp_path: Path) -> None:
     with pytest.raises(ValueError):
         mr.append_lessons("   \n", "2026-11", handoff)
     with pytest.raises(ValueError):
-        mr.append_lessons("text", "2026-13", handoff)
+        mr.append_lessons("- event: ADD — text", "2026-13", handoff)
 
 
-def test_latest_lessons_block_none_when_absent() -> None:
-    assert mr.latest_lessons_block("no blocks here\n") is None
+def test_active_lessons_view_none_when_absent() -> None:
+    assert mr.active_lessons_view("no blocks here\n") is None
+
+
+def test_active_lessons_view_four_ops_aggregate() -> None:
+    """The gen2 item 4 named fixture: ADD survives; UPDATE supersedes its
+    target (the marker itself carries the lesson forward); DELETE voids;
+    NONE records the duplicate without rewriting; latest block shown whole;
+    reference-style marks never rewrite old bytes."""
+    handoff_text = (
+        "history\n"
+        "<!-- monthly-reflexion-lessons month=2026-10 -->\n"
+        "- event: ADD — lesson-A\n"
+        "  evidence: runs/x/run.log\n"
+        "- event: ADD — lesson-B\n"
+        "- event: ADD — lesson-C\n"
+        "<!-- monthly-reflexion-lessons month=2026-11 -->\n"
+        "- event: UPDATE (supersedes month=2026-10#2) — lesson-B2\n"
+        "- event: DELETE (voids month=2026-10#3) — lesson-C obsolete\n"
+        "- event: NONE — duplicate of 2026-10#1, not rewritten\n"
+        "- event: ADD — lesson-D\n")
+    month, lines = mr.active_lessons_view(handoff_text)
+    assert month == "2026-11"
+    joined = "\n".join(lines)
+    assert "[2026-10#1] event: ADD — lesson-A" in joined  # ADD survives
+    assert "lesson-B\n" not in joined and "[2026-10#2]" not in joined
+    assert "lesson-B2" in joined  # the UPDATE entry itself is active
+    assert "lesson-C\n" not in joined and "[2026-10#3]" not in joined  # voided
+    assert "NONE — duplicate" in joined and "lesson-D" in joined
+    assert len(lines) == 5  # 10#1 + the four latest-block entries
 
 
 def test_reflexion_seeds_and_render(tmp_path: Path) -> None:
@@ -278,29 +328,43 @@ def test_reflexion_seeds_and_render(tmp_path: Path) -> None:
     assert seeds["month"] == "2026-11"
     assert seeds["days_with_summary"] == 1  # the hard-fail evening has none
     assert "2026-11-05" in seeds["missing_weekdays"]  # the failure signal
-    section = mr.render_reflexion_section(
-        seeds, ("2026-10", "<!-- header -->\n- prior lesson"), [])
+    # gen2 item 4: the Watchdog bounded-question key rides the seeds
+    assert "原地打转" in seeds["watchdog_bounded_question"]
+    prior = ("2026-10", ["[2026-10#1] event: ADD — prior lesson"])
+    section = mr.render_reflexion_section(seeds, prior, [])
     assert "Reflexion seeds" in section and "spin findings: none" in section
-    assert "month=2026-10" in section and "prior lesson" in section
+    assert "watchdog bounded question" in section
+    assert "Latest block month=2026-10; active entries 1" in section
+    assert "prior lesson" in section
+    assert "写回契约" in section  # the month-end guidance line
     empty = mr.render_reflexion_section(seeds, None, [])
-    assert "none yet" in empty
+    assert "none yet" in empty and "写回契约" in empty
 
 
 def test_cli_append_lessons_from_end_to_end(tmp_path: Path) -> None:
     repo = tmp_path
     (repo / "state").mkdir()
     lesson_file = tmp_path / "lesson.txt"
-    lesson_file.write_text("- the 11-05 lock taught: raise the cap early\n",
-                           encoding="utf-8")
+    lesson_file.write_text(
+        "- event: ADD — 下次 11-05 类锁定发生时 raise the cap early\n"
+        "  evidence: runs/ops_local_refresh/2026-11-05/run.log\n",
+        encoding="utf-8")
     rc = mr.main(["--append-lessons-from", str(lesson_file),
                   "--month", "2026-11", "--repo", str(repo)])
     assert rc == 0
     text = (repo / "state" / "handoff.md").read_text(encoding="utf-8")
     assert "month=2026-11" in text and "raise the cap early" in text
+    assert "event: ADD" in text  # the block carries its verdict line
     # duplicate refusal surfaces as exit 2
     rc2 = mr.main(["--append-lessons-from", str(lesson_file),
                    "--month", "2026-11", "--repo", str(repo)])
     assert rc2 == 2
+    # contract gate surfaces as exit 3
+    bad = tmp_path / "bad.txt"
+    bad.write_text("- bare description without verdict\n", encoding="utf-8")
+    rc3 = mr.main(["--append-lessons-from", str(bad),
+                   "--month", "2026-12", "--repo", str(repo)])
+    assert rc3 == 3
 
 
 def test_cli_weekly_end_to_end_on_tmp_repo(tmp_path: Path) -> None:
