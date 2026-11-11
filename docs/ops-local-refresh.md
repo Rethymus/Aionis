@@ -226,9 +226,16 @@ token 不增反降（夜报上下文更小）。三分类语义：
 | 节奏 | 内容 | 载体 |
 |---|---|---|
 | **晚间** | 分诊（上表）+ 23:35 夜报班（全牌核验+doctor 八层+ci(own) 一行总结；**唯一稳态 LLM 会话**） | SessionStart 钩子 + Windows 计划任务 18:05-23:05 兜底 |
-| **每周** | **Watchdog 外部核对**（`uv run python scripts/monthly_review.py --weekly`：7 工作流健康分诊+ledger config_committed-before-result 抽查+原地打转检测；零 Actions 依赖，冻结期照常工作）+ staleness 绊网（每日 02:37 UTC，离整点；round 126 每日化）+ 发布链健康步；解锁日有 billing 滞留红（锁中存量零步红 + 当日一条）：rerun 一次再判（见 playbook） | 本地 `--weekly`（只读）+ `staleness-check.yml`（Actions；冻结期此信号全停，Watchdog 顶上） |
-| **每月** | 复盘教训循环：`scripts/monthly_review.py`（执行率/可靠性/软失败热点/发布链健康）+ 教训沉淀为 runbook 行/守卫测试（「每课一守卫」惯例） | 月报 rides 23:35 夜报班，零新增会话 |
+| **每周** | **Watchdog 外部核对**（`uv run python scripts/monthly_review.py --weekly`：7 工作流健康分诊+ledger config_committed-before-result 抽查+原地打转检测+提案闭环对账[gen2 条目 3 并入]；零 Actions 依赖，冻结期照常工作）+ staleness 绊网（每日 02:37 UTC，离整点；round 126 每日化）+ 发布链健康步；解锁日有 billing 滞留红（锁中存量零步红 + 当日一条）：rerun 一次再判（见 playbook） | **固定载体=每周五晚 23:35 夜报班前置确定性步 `--weekly`**（零 LLM，exit 码与发现进夜报正文；默认落盘锚点 `runs/ops_local_refresh/<date>/weekly_watchdog.md` 由 gen2 条目 3 代码默认值承载，`--out` 可覆盖——治「--weekly 无固定触发载体与落盘锚点」缺口，不长新班次）+ 夜报班提示词模板补一行「周五先跑 --weekly」（ZCode 工作区自动化配置，非仓库文件，工程侧零代码）+ `staleness-check.yml`（Actions；冻结期此信号全停，Watchdog 顶上） |
+| **每月** | 复盘教训循环：`scripts/monthly_review.py`（执行率/可靠性/软失败热点/发布链健康）+ **`--propose` 前置步**（gen2 自进化引擎：确定性规则表零 LLM 产提案卡片 stdout/--out，产物由人工/月末会话粘贴 `state/backlog.md` 候选区——引擎对 backlog **只读**；治「月度产出不回流 backlog、改进提案无固定入口」缺口）+ 教训沉淀为 runbook 行/守卫测试（「每课一守卫」惯例；块内格式契约见下节）+ **月末会话对四档机制本身的有界复盘问题**（「四档接线/watchdog 是否原地打转或偏离值班目标？」一行结论，与 gen2 条目 4 watchdog 问题同款形态） | 月报 rides 23:35 夜报班，零新增会话；`--propose` 为月末会话前确定性执行，同样零 LLM |
 | **值班协议** | 钥匙区盯守：GitHub billing 解锁、freeze 通道真推许可、账本孤儿裁决——清单见 `reports/design/2026-11-11-super-agent-integration.md` §5；任何钥匙到位后按 playbook 顺序动作 | 人工（业主）；值班自动化只呈报不代决 |
+
+**稳态 token 预算声明（gen2 轮 128 入册）**：上表的 gen2 接线全部跑在**既有班次内**
+——LLM 调用面维持两班不变（23:35 夜报单会话 + 月末复盘会话）；`--weekly` /
+`--propose` / 提案闭环对账 / threads 折叠全部为确定性步骤**零 LLM**；platform-failure
+折叠（gen2 条目 2）使夜报上下文净降。**零新班次、零常驻进程、零新依赖**。引擎
+「循环不停」≠自主无限制：每环写权限止于候选文件与 state 记录（出处：
+`reports/design/2026-11-11-super-agent-gen2.md` §4 守护 / §6）。
 
 ### 值班协议行为准则（super-agent 三映射，纯文档采纳）
 
@@ -238,13 +245,46 @@ token 不增反降（夜报上下文更小）。三分类语义：
    https://mp.weixin.qq.com/s/lcIkBMOKHSvkRYELgkduMg 的 Aionis 映射；
    微信正文 2026-11-11 复核实测可读：curl HTTP 200、js_content×18）。
 2. **Thread 稳定 ID 归组**：CI-红、守卫失败、ledger 异常各归一条 Thread 叙述——
-   夜报与 handoff 按类**续写**既有 Thread，不逐条新起会话/小节
+   夜报与 handoff 按类**续写**既有 Thread，不逐条新起会话/小节；轮 128 起续写
+   引用下方登记表的稳定 ID（机器可查）
    （出处：https://zhuanlan.zhihu.com/p/2099987320443237060 与
    https://linux.do/t/topic/3109398）。
 3. **投机执行红线**：23:35 夜报班**可以预草** handoff/复盘文本（供人工验收后
    采用）；但**任何触及 `runs/ledger.jsonl` 或冻结配置的写入必须人工确认 +
    显式 ledger 行**——杜绝「静默修复」改账本，守 `config_committed` BEFORE
-   result 红线（出处：https://mp.weixin.qq.com/s/lcIkBMOKHSvkRYELgkduMg）。
+   result 红线（出处：https://mp.weixin.qq.com/s/lcIkBMOKHSvkRYELgduMg）。
+
+**Thread 稳定 ID 登记表（gen2 轮 128 起）**——「按类续写」由人工纪律变为**机器可查**
+（grep 可验）：夜报包 threads 桶（gen2 条目 2 起逐条挂 ID）与 handoff 轮次条目引用
+同一组 ID 续写，不另起编号体系。
+
+| 稳定 ID | 归入信号（对应上方分诊/处置矩阵） | 实例后缀 |
+|---|---|---|
+| `thread:ci-red` | 单一 workflow 红、非秒级（code-defect 桶） | `thread:ci-red:<workflow>` |
+| `thread:guard-fail` | 契约门/守卫自锁（HARD-FAIL 桶） | `thread:guard-fail:<step>` |
+| `thread:platform-billing` | 全体秒级红/零步红（platform-failure 桶 → 钥匙区，见 `reports/design/2026-11-11-super-agent-integration.md` §5；归并单线不展开） | —（按类归并，不逐 workflow） |
+| `thread:ledger-anomaly` | 行数缩/历史前缀变/孤儿行（业主裁决区） | — |
+| `thread:spin` | 原地打转（`--weekly` spin 命中；连续 ≥2 晚同类软失败升级的 Thread 叙述） | — |
+
+**handoff 轮次记录规范（轮 128 起）**：轮次条目涉及上述五类信号时，条目内**引用对应
+thread: 稳定 ID 续写**（如「续 `thread:platform-billing`：…」），不逐条新起小节——
+按类续写自此可由 grep 验证，不再依赖人工纪律（出处：
+`reports/design/2026-11-11-super-agent-gen2.md` §5 条目 1 / §6）。
+
+### lessons 块格式（月度教训写回契约，gen2 条目 4 钉契）
+
+月度复盘教训经 `--append-lessons-from` append-only 写回 handoff（轮 126-续3）。
+2026-11 月底首块写入前，块内契约按 gen2 条目 4 钉死如下（协议借 noahshinn/reflexion
+MIT 与 mem0ai/mem0 Apache-2.0，**仅借协议不装包**）：
+
+- **计划形契约**：每条教训必须是可执行动作计划——「下次 X 触发时做 Y」，非事件
+  描述（Reflexion 计划形提示词移植）。
+- **`event:` 行（四操作裁决，mem0 分类学）**：`ADD`（新教训）/ `UPDATE`
+  （`supersedes month=YYYY-MM#条目`）/ `DELETE`（`voids month=…`）/ `NONE`
+  （重复已录，不重写）。append-only 语义下 UPDATE/DELETE 均为**引用式标记**，
+  不改旧块字节——与 ledger「新行不覆盖」同构。
+- **`evidence:` 行**：指向 run.log / 审计报告的**路径引用**（Inline & Spill：附录式
+  挂新块，不回填历史块）。
 
 ## GitHub 计费冻结应对（billing lock playbook，2026-11-06 立案）
 
