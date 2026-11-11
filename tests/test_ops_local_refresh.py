@@ -825,3 +825,64 @@ def test_layer7_fails_on_invalid_live_payload(monkeypatch, tmp_path) -> None:
     assert not ok
     assert "live site unreachable or invalid" in detail
     assert "no parseable snapshot_ts" in detail
+
+
+# --------------------------------------------------------------- round 129
+# Owner pause order 2026-11-11: GitHub Actions fully disabled (billing lock)
+# — the own-commit poll must short-circuit to paused() instead of burning
+# its bounded window nightly, and stay fail-open when the state is unreadable.
+
+def test_own_commit_ci_paused_short_circuit(monkeypatch) -> None:
+    """Both lane workflows non-active -> paused marker, zero run-list polls."""
+    calls: list[list[str]] = []
+
+    def _fake_run(args, **_kw):
+        calls.append(list(args))
+        if args[1:3] == ["repo", "view"]:
+            return subprocess.CompletedProcess(
+                args, 0, "Rethymus/Aionis\n", "")
+        return subprocess.CompletedProcess(
+            args, 0, "disabled_manually\n", "")
+
+    monkeypatch.setattr(lane.subprocess, "run", _fake_run)
+    out = lane.verify_own_commit_ci("deadbeef", max_wait_s=0)
+    assert out == {"Publish site (gh-pages)": "paused(actions-disabled)",
+                   "Tests": "paused(actions-disabled)"}
+    # state probed (repo view + 2x workflow api), never the run list
+    assert any(a[1:3] == ["repo", "view"] for a in calls)
+    assert sum(a[1] == "api" for a in calls) == 2
+    assert not any(a[1] == "run" for a in calls)
+
+
+def test_own_commit_ci_partial_reenable_keeps_honest_poll(
+        monkeypatch) -> None:
+    """Unlock-transition: one workflow re-enabled -> poll still runs (False
+    from _actions_paused) and lands on the existing not-observed fail-open."""
+    seen_api = {"n": 0}
+
+    def _fake_run(args, **_kw):
+        if args[1:3] == ["repo", "view"]:
+            return subprocess.CompletedProcess(
+                args, 0, "Rethymus/Aionis\n", "")
+        if args[1] == "api":
+            seen_api["n"] += 1
+            state = "active" if seen_api["n"] == 1 else "disabled_manually"
+            return subprocess.CompletedProcess(args, 0, state + "\n", "")
+        return subprocess.CompletedProcess(args, 1, "", "gh down")
+
+    monkeypatch.setattr(lane.subprocess, "run", _fake_run)
+    out = lane.verify_own_commit_ci("deadbeef", max_wait_s=0)
+    assert out == {"Publish site (gh-pages)": "not-observed",
+                   "Tests": "not-observed"}
+
+
+def test_own_commit_ci_state_unreadable_fails_open(monkeypatch) -> None:
+    """gh repo view failing -> _actions_paused() is None -> pre-129 poll
+    behaviour (bounded miss -> not-observed), never a paused marker."""
+    monkeypatch.setattr(
+        lane.subprocess, "run",
+        lambda args, **_kw: subprocess.CompletedProcess(args, 1, "", "boom"))
+    assert lane._actions_paused() is None
+    out = lane.verify_own_commit_ci("deadbeef", max_wait_s=0)
+    assert out == {"Publish site (gh-pages)": "not-observed",
+                   "Tests": "not-observed"}

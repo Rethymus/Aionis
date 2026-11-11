@@ -149,7 +149,7 @@ Worker (display-only), unchanged.
 | transient push failure (commit landed, push didn't) | **push-only recovery** (round 104): next hourly fire pushes the existing gate-verified commit — no re-fetch; mixed non-lane commits → full run | automatic; ~60 min saved per occurrence |
 | push rejected (remote ahead) | `pull --rebase --autostash` first; conflict → fail loudly | human resolves; never force |
 | PAT/credential expiry | push fails → attempt-cap locks; **`--doctor` layer 4 flags it**; nightly report carries doctor results (round 110) | refresh Windows credential; `--run --force` |
-| data pushed but CI red on OUR commit | lane polls its own sha's publish-site+Tests conclusions (`ci` in marker+SUMMARY, round 107); nightly one-liner shows `CI(own):` | inspect the named workflow; human review |
+| data pushed but CI red on OUR commit | lane polls its own sha's publish-site+Tests conclusions (`ci` in marker+SUMMARY, round 107); 2026-11-11 起 Actions 停用期记 `paused(actions-disabled)`（轮 129 短接）；nightly one-liner shows `CI(own):` | inspect the named workflow; human review |
 | machine off all evening | fires lost | next evening catches up (increments are idempotent) |
 | multi-day outage | — | Actions tab → "Refresh terminal data" → Run workflow (workflow_dispatch kept; 7 network steps retry ×3, round 106) |
 | one-shot research automation missed (host asleep) | hourly guard + done-marker (round 105 pattern) | late manual execution stays valid (proven 10-02) |
@@ -292,6 +292,30 @@ MIT 与 mem0ai/mem0 Apache-2.0，**仅借协议不装包**）：
 #2"，commit `18001a804`）。冻结是**账户级**的——连公开仓库的 Actions 也一并
 停止，"转 Public 免修账单"不成立（state/current.md §10 结论）；唯一出路是
 Settings → Billing 结清/解锁。
+
+**2026-11-11 业主停用令（Actions pause order）**：锁定期间业主指示本项目
+**暂不再启用 GitHub Actions，相关任务一并暂停**。已执行（全部可逆）：
+
+- `gh workflow disable` ×6：Tests、Publish site、Staleness check、Vintage
+  Drift Probe、E3 Forward、Refresh terminal data（deploy-pages 此前已停；
+  Dependabot 与 pages-build-deployment 是 GitHub 服务本体、不占 Actions
+  用量，保持原样）。停用走 API 开关，**零文件改动**，hygiene 守卫不受影响。
+- 晚间通道 own-commit CI 轮询加停用感知（轮 129）：`_actions_paused()` 探测
+  ci.yml+publish-site.yml 双双非 active 时，`verify_own_commit_ci` 直接记
+  `paused(actions-disabled)`，不再每夜空烧 6 分钟有界窗口；单边重启用
+  （解锁过渡期）保持诚实轮询；探测失败 fail-open 回退旧行为。23:35 夜报班
+  提示词同步（CI(own)=paused 不判红；发布链=冻结；出现意外新 run 报"需人审"）。
+- staleness-check 的**远端** marker-deadman 随停用暂停；本地层（doctor 第
+  7/8 层 + 夜报班）是停用期唯一监测信号，照常运转。
+
+**恢复清单（业主 billing 解锁后，钥匙在业主）**：① `gh workflow enable`
+逐条恢复六工作流（Tests→publish-site→staleness→其余）；② 按
+reports/audits/2026-11-11-env-testpipeline-round.md 的解锁日首验清单执行
+（node24 首跑全绿核对、YAML 卫生守卫 CI/本地同绿、滞留红 rerun 一次再判、
+refresh 双缓存 GC、Pages billing usage、freeze 通道 --check-recovery 三态）；
+③ publish-site 的 node20 残余钉点须在首推前重钉（解锁日首推即触发）；④
+本停用段（2026-11-11 起）在月报 Actions 分钟口径中记为零。停用期间**绝不**
+自行 enable——夜报班红线已加。
 
 **症状**（2026-11-05 实测 `gh run list`）：`Tests` 与 `Publish site (gh-pages)`
 的 run 在 **3-4 秒**内 conclusion=failure（正常要数分钟），run 详情是 billing

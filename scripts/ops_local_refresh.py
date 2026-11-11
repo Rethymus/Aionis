@@ -462,6 +462,35 @@ def commit_and_push(fh) -> tuple[str, str | None, bool, int]:
     return "ok_committed", sha, True, len(staged)
 
 
+def _actions_paused() -> bool | None:
+    """Round 129 (owner pause order 2026-11-11): True when BOTH lane-relevant
+    workflows (Tests + Publish site) are non-active (disabled_manually &c) —
+    the own-commit poll below would then never see a run for our sha and burn
+    its full bounded window every evening. False = at least one active
+    (unlock-transition: keep the honest poll for whichever still runs).
+    None = state unreadable — fail-open to the poll exactly as before."""
+    try:
+        nwo = subprocess.run(
+            ["gh", "repo", "view", "--json", "nameWithOwner",
+             "-q", ".nameWithOwner"],
+            cwd=ROOT, capture_output=True, text=True, timeout=20)
+        if nwo.returncode != 0 or not nwo.stdout.strip():
+            return None
+        repo = nwo.stdout.strip()
+        states: list[str] = []
+        for wf_file in ("ci.yml", "publish-site.yml"):
+            out = subprocess.run(
+                ["gh", "api",
+                 f"repos/{repo}/actions/workflows/{wf_file}", "-q", ".state"],
+                cwd=ROOT, capture_output=True, text=True, timeout=20)
+            if out.returncode != 0:
+                return None
+            states.append(out.stdout.strip())
+        return all(s and s != "active" for s in states)
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+
+
 def verify_own_commit_ci(sha: str, max_wait_s: int = 360) -> dict:
     """Zero-token red-card detection (round 107): poll OUR commit's CI runs.
 
@@ -485,6 +514,10 @@ def verify_own_commit_ci(sha: str, max_wait_s: int = 360) -> dict:
 
     deadline = time.time() + max_wait_s
     wanted = ("Publish site (gh-pages)", "Tests")
+    if _actions_paused():
+        # Owner pause order 2026-11-11: no run can ever appear for our sha —
+        # record the pause instead of burning the bounded window nightly.
+        return {k: "paused(actions-disabled)" for k in wanted}
     while time.time() < deadline:
         runs = _runs_for(sha)
         done = {k: runs[k].get("conclusion") for k in wanted if k in runs}
