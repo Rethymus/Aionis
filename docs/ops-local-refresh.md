@@ -325,7 +325,9 @@ Settings → Billing 结清/解锁。
 reports/audits/2026-11-11-env-testpipeline-round.md 的解锁日首验清单执行
 （node24 首跑全绿核对、YAML 卫生守卫 CI/本地同绿、滞留红 rerun 一次再判、
 refresh 双缓存 GC、Pages billing usage、freeze 通道 --check-recovery 三态）；
-③ publish-site 的 node20 残余钉点须在首推前重钉（解锁日首推即触发）；④
+③ ~~publish-site 的 node20 残余钉点须在首推前重钉~~（轮 130 已清偿：:46/:50
+重钉至 pnpm v6.1.1 / setup-node v7.1.0 node24 SHA，与 ci.yml/deploy-pages.yml
+同款，YAML 卫生守卫 23 用例复跑全绿）；④
 本停用段（2026-11-11 起）在月报 Actions 分钟口径中记为零。停用期间**绝不**
 自行 enable——夜报班红线已加。
 
