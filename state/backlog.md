@@ -32,6 +32,30 @@
   数据最坏陈旧 24h+（如 GDELT 源缓存夜）。变更为"软败步骤选择性重跑"影响通道核心语义（幂等性/记账/
   push 边界），需 owner 对通道策略表态后专轮设计。**M**。
 
+<!-- 以下五条=2026-11-12 iterate 轮 backlog-candidates-register 登记（研究面/代码级候选，
+     全部不上施工：研究面须 mission 指名+预注册+config_committed，见各条触发条件） -->
+
+- **purgedcv effective_n_trials / min_track_record_length（DSR n_trials 升级 + SR 最短跟踪记录）。**
+  安装版 purgedcv 0.1.2 顶层已导出两函数名（2026-11-12 实测 `import purgedcv; dir()`；License MIT），
+  能力在但语义属**研究面**（DSR/SPA 判定族=src/aionis/eval/ 面）。**触发条件：mission 明确指名研究面** +
+  新预注册（N 计数口径随 config 冻结入 prereg 附录）+ `config_committed` ledger 行——三者缺一不上施工。
+  来源：iterate 轮外向调研条目 2；与前沿吸收 #10（DSR 试验计数通缩+minTRL）同族。
+- **langextract 结构化抽取辅助试点。** Apache-2.0（白名单内），但 extraction 面属研究管线
+  （src/aionis/extraction/）——**试点限 tests/fixtures 标注层**（labeled fixture 合规域），绝不入真实
+  抽取管线；扩至真实抽取须预注册 + mission 指名 + 新 ledger 行。来源：iterate 轮外向调研条目 3。
+- **Harvey-Liu-Zhu t≥3.0 门槛入 docs/RESULTS.md（稳健性并列呈现）。** 多重检验视角与既有两尾预注册
+  判定**并列呈现**候选，append-only 勘误语义，**不改判定门**（主检验=预注册两尾不变，HLZ 仅附录
+  视角）。触发条件：业主对 RESULTS.md 呈现面点头。来源：iterate 轮外向调研条目 4。
+- **fja05680/sp500 PIT 成员双源对照。** constituents_on 单源的双源审计候选（scripts/ 审计类，不改
+  研究管线）；**只认 MIT 原仓**，fork/转载不认。**M**。触发条件：审计轮 mission 指名。来源：iterate
+  轮外向调研条目 4。
+- **Jev 代码级候选（{answer,p} 输出契约 + --propose 预测陈述字段 + Brier 式月末对账）。** 判别层输出
+  附概率陈述、提案卡带预测字段、月末对账命中记录（裁决与两栏分析见
+  `reports/audits/2026-11-12-iterate-round.md` Jev 章节）。**诚实边界**：GLM 概率未校准、仅路由用——
+  不得作校准概率消费；月度小样本对账仅**记录性**校准，禁任何统计显著性声称。触发条件：mission 指名 +
+  预注册（涉 eval 呈现面）；provider 红线不变（不接 Jev API/typesafe-sdk）。来源：iterate 轮 Jev 专题
+  （backlog-candidates-register 条）。
+
 ## 前沿吸收（轮 127，2026-11-11；来源=reports/audits/2026-11-11-env-testpipeline-round.md §6b——两路前沿调研中 high 但 L 规模/存疑/触红线者，逐条含来源 URL）
 
 > 实施前逐条过 7-gate（docs/data-intake-rubric.md）与许可证白名单（MIT/Apache/BSD）。
