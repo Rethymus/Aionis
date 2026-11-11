@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (11-12，handoff 轮 130 收尾)【round 130/130-续~续4 五条目收官：publish-site node24 重钉清偿 / Jev 协议级沉淀 / 候选区登记五条 / .env PROVIDER 对齐 / 切分审计 oracle——统一门禁（全量 pytest+ruff）全绿（主会话侧门禁脚本执行），0 ledger/0 frozen/0 OOS】**
+  五工作项提交 `2b09cf011b`/`db10a085a1`/`a2b671c33d`/`76eff25380`/`64746bb34b` + 对应 state 五笔；逐条验证记录见 handoff 轮 130/130-续~续4（施工会话各自实跑面均绿；统一门禁结果由主会话门禁脚本入册）。推送经 `git pull --rebase` 后 push origin main。
+
 - **active (11-12，handoff 轮 130-续4)【purgedcv-diagnostics-oracle：tests/test_cv_split_audit.py 新增 5 用例——purgedcv.diagnostics 三原语（组不交/无时域泄漏/embargo 受尊重）交叉审计 cv.py 与 two_arm.compute_shared_folds 两条真实切分构造（embargo_sessions=21 生产语义），负控 3 例证 oracle 非空洞；audit_splitter 不在安装版 0.1.2 如实修正、不升级依赖，零研究面改动 0 ledger/0 frozen/0 OOS】**
   正向 2 例（cv 直连+two_arm 共享折，后者按公共 ref_layout 契约重建 pt/et/groups/embargo_td=32 天>21 天钉会话历法）+负控 3 例（三异常各自开火，embargo 非对称语义实证）。验证实跑：新文件 5 passed、相邻被测面 test_cv/test_two_arm/test_learner_rank_objective 37 passed、ruff 绿、purgedcv 0.1.2 MIT 复测、零新依赖。详见 handoff 轮 130-续4。
 
