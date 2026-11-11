@@ -517,6 +517,9 @@ TRIAGE_CODE = "code-defect"
 TRIAGE_PLATFORM_MAX_S = 60
 _TRIAGE_BILLING_RE = re.compile(r"billing", re.IGNORECASE)
 _PUSH_TRANSIENT_RE = re.compile(r"push failed", re.IGNORECASE)
+# gen2 item 2 (night-package-threading): contract-gate hard-fails carry the
+# step name in this shape (do_run raises f"hard-fail step '{name}': {detail}").
+_HARDFAIL_STEP_RE = re.compile(r"hard-fail step '([^']+)'")
 
 
 def classify_run_row(row: dict, jobs: dict | None) -> str:
@@ -632,7 +635,16 @@ def triage_state(state: dict) -> dict:
     """Three-bucket triage of the whole marker (gh-free, instant): the
     pre-computed per-workflow buckets from state['ci_triage'], soft/persistent
     soft-fails and push-transient errors -> infra-transient (the existing
-    --retry-soft / push-only recovery surface), everything else -> code-defect."""
+    --retry-soft / push-only recovery surface), everything else -> code-defect.
+
+    gen2 item 2 (night-package-threading): entries carry Thread stable IDs
+    (the registry in docs/ops-local-refresh.md §值班协议行为准则) so
+    handoff round entries and the --propose engine dedup keys can reference
+    them — platform reds FOLD into one counted line (batching: N workflows
+    -> 1 line, a steady-state token cut; owner-key area, never itemized),
+    code-bucket CI reds become thread:ci-red:<workflow>, and contract-gate
+    hard-fail lane errors become thread:guard-fail:<step>. Unshaped lane
+    errors keep the conservative lane-error:<text> line (never guessed)."""
     infra: list[str] = [str(x) for x in (state.get("soft_fails") or [])]
     infra += [f"persistent:{x}"
               for x in (state.get("persistent_soft_fails") or [])]
@@ -643,21 +655,56 @@ def triage_state(state: dict) -> dict:
         if _PUSH_TRANSIENT_RE.search(err):
             infra.append("lane-error:push-transient")
         else:
-            code.append(f"lane-error:{err[:120]}")
+            step = _HARDFAIL_STEP_RE.search(err)
+            code.append(f"thread:guard-fail:{step.group(1)}" if step
+                        else f"lane-error:{err[:120]}")
     for workflow, bucket in (state.get("ci_triage") or {}).items():
-        line = f"ci:{workflow}"
         if bucket == TRIAGE_PLATFORM:
-            platform.append(line)
+            platform.append(workflow)
         elif bucket == TRIAGE_CODE:
-            code.append(line)
+            code.append(f"thread:ci-red:{workflow}")
+    if platform:
+        platform = [f"thread:platform-billing: {len(platform)}× "
+                    f"{TRIAGE_PLATFORM} → §5 钥匙区"]
     return {TRIAGE_PLATFORM: platform, TRIAGE_INFRA: infra,
             TRIAGE_CODE: code}
+
+
+def _monthly_reports_ref() -> dict:
+    """One-hop summary (chain of recall, gen2 item 2) for the monthly-review
+    reports: newest *monthly-review*.md by name + its H1 as the one-line
+    state — the month-end session learns "which report is latest" without a
+    tool round-trip. Bounded local IO (dir glob + first ~40 lines of ONE
+    file), network-free, honest absence when none exist yet."""
+    audits = ROOT / "reports" / "audits"
+    reports = sorted(audits.glob("*monthly-review*.md")) if audits.is_dir() \
+        else []
+    if not reports:
+        return {"path": "reports/audits/", "status": "尚无月报在册"}
+    latest = reports[-1]
+    title = ""
+    try:
+        with latest.open("r", encoding="utf-8") as fh:
+            for _, line in zip(range(40), fh, strict=False):
+                if line.startswith("# "):
+                    title = line[2:].strip()
+                    break
+    except OSError:
+        title = ""
+    status = f"最新月报 {latest.name}"
+    if title:
+        status += f"：{title}"
+    return {"path": "reports/audits/", "status": status}
 
 
 def build_night_package(state: dict, now: datetime) -> dict:
     """Inline & Spill night-report context package (round 126): today's lane
     facts inline, historical depth as path references only. Pure-local and
-    network-free so the SessionStart hook can refresh it in milliseconds."""
+    network-free so the SessionStart hook can refresh it in milliseconds.
+
+    gen2 item 2: refs upgraded from bare paths to {path, status} one-hop
+    summaries (chain of recall) — path + ONE line of latest state, still
+    never an inlined document body."""
     return {
         "date": state.get("date"),
         "generated_at": now.isoformat(timespec="seconds"),
@@ -667,13 +714,29 @@ def build_night_package(state: dict, now: datetime) -> dict:
             "push_only_recovery") if state.get(k)},
         "threads": triage_state(state),
         "refs": {
-            "runbook": "docs/ops-local-refresh.md",
-            "failure_matrix":
-                "docs/ops-local-refresh.md (§失败处置矩阵与节奏)",
-            "monthly_review": "scripts/monthly_review.py",
-            "monthly_reports": "reports/audits/",
-            "design_report":
-                "reports/design/2026-11-11-super-agent-integration.md",
+            "runbook": {
+                "path": "docs/ops-local-refresh.md",
+                "status": "晚间通道 runbook：失败处置矩阵/四档节奏/thread "
+                          "稳定 ID 登记表/lessons 契约在册",
+            },
+            "failure_matrix": {
+                "path": "docs/ops-local-refresh.md (§失败处置矩阵与节奏)",
+                "status": "trigger→criteria→action 处置矩阵 + Fast Path "
+                          "三分类（platform/infra/code）",
+            },
+            "monthly_review": {
+                "path": "scripts/monthly_review.py",
+                "status": "月评 CLI：--weekly 看门狗 / --lessons 月度复盘 / "
+                          "--append-lessons-from 教训写回",
+            },
+            "monthly_reports": _monthly_reports_ref(),
+            "design_report": {
+                "path":
+                    "reports/design/2026-11-11-super-agent-integration.md",
+                "status": "super-agent 整合报告（P0 laneFailing=false；"
+                          "钥匙区 §5）；续作 gen2 施工清单="
+                          "reports/design/2026-11-11-super-agent-gen2.md",
+            },
         },
     }
 

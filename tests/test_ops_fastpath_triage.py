@@ -75,16 +75,38 @@ def test_triage_state_push_transient_vs_contract_gate() -> None:
     assert "lane-error:push-transient" in t_push[lane.TRIAGE_INFRA]
     t_gate = lane.triage_state({"error": "hard-fail step 'json validity + "
                                           "contract gate': AssertionError"})
-    assert t_gate[lane.TRIAGE_CODE] and "contract gate" in \
-        t_gate[lane.TRIAGE_CODE][0]
+    assert t_gate[lane.TRIAGE_CODE] == [
+        "thread:guard-fail:json validity + contract gate"]
 
 
 def test_triage_state_routes_ci_buckets() -> None:
+    """gen2 item 2: code-bucket reds carry thread:ci-red:<workflow>; the
+    platform bucket folds to one counted line (registry: docs/ops-
+    local-refresh.md §值班协议行为准则)."""
     t = lane.triage_state({"ci_triage": {"Tests": "platform-failure",
                                          "Publish site (gh-pages)":
                                              "code-defect"}})
-    assert t[lane.TRIAGE_PLATFORM] == ["ci:Tests"]
-    assert "ci:Publish site (gh-pages)" in t[lane.TRIAGE_CODE]
+    assert t[lane.TRIAGE_PLATFORM] == [
+        "thread:platform-billing: 1× platform-failure → §5 钥匙区"]
+    assert t[lane.TRIAGE_CODE] == ["thread:ci-red:Publish site (gh-pages)"]
+
+
+def test_platform_bucket_folds_n_workflows_to_one_line() -> None:
+    """Batching: N billing-locked workflows -> ONE counted line, the nightly
+    steady-state token cut (gen2 item 2; the 11-05 lock red 3+ workflows)."""
+    t = lane.triage_state({"ci_triage": {"Tests": "platform-failure",
+                                         "Publish site (gh-pages)":
+                                             "platform-failure",
+                                         "vintage probe": "platform-failure"}})
+    assert t[lane.TRIAGE_PLATFORM] == [
+        "thread:platform-billing: 3× platform-failure → §5 钥匙区"]
+
+
+def test_unshaped_lane_error_stays_conservative_line() -> None:
+    """No step name to hang a thread:guard-fail ID on -> keep the honest
+    lane-error line (never guess an ID)."""
+    t = lane.triage_state({"error": "weird unclassified crash"})
+    assert t[lane.TRIAGE_CODE] == ["lane-error:weird unclassified crash"]
 
 
 def test_triage_ci_skips_gh_without_reds(monkeypatch) -> None:
@@ -136,9 +158,41 @@ def test_package_inlines_today_and_spills_history(monkeypatch) -> None:
          "error": "hard-fail step 'x': boom", "ci_triage": {}},
         datetime(2026, 11, 11, 23, 35))
     assert failed["lane"]["error"].startswith("hard-fail")
-    # Inline & Spill: refs are PATHS, never inlined document bodies.
+    # Inline & Spill: refs are {path, status} one-hop summaries — a path plus
+    # ONE line of state, never an inlined document body (gen2 item 2).
     for ref in pkg["refs"].values():
-        assert ref.endswith((".md", ".py", "/")) or "§" in ref
+        assert set(ref) == {"path", "status"}
+        assert ref["path"].endswith((".md", ".py", "/")) or "§" in ref["path"]
+        assert ref["status"]
+
+
+def test_refs_one_hop_summaries_are_local_and_bounded(
+        monkeypatch, tmp_path) -> None:
+    """monthly_reports ref = newest report by name + its H1 as the one-line
+    state (chain of recall); honest absence when no report exists yet."""
+    audits = tmp_path / "reports" / "audits"
+    audits.mkdir(parents=True)
+    (audits / "2026-10-06-evening-lane-monthly-review.md").write_text(
+        "# Monthly review: evening data lane (month 1)\n", encoding="utf-8")
+    (audits / "2026-11-06-evening-lane-monthly-review.md").write_text(
+        "# Monthly review: evening data lane (month 2)\n", encoding="utf-8")
+    monkeypatch.setattr(lane, "ROOT", tmp_path)
+    pkg = lane.build_night_package({"date": "2026-11-11"},
+                                   datetime(2026, 11, 11, 23, 35))
+    mr = pkg["refs"]["monthly_reports"]
+    assert mr["path"] == "reports/audits/"
+    assert "2026-11-06-evening-lane-monthly-review.md" in mr["status"]
+    assert "month 2" in mr["status"]
+    # design_report one-hop: points at its gen2 continuation (same round).
+    assert "super-agent-gen2" in pkg["refs"]["design_report"]["status"]
+
+
+def test_refs_monthly_reports_absent_is_honest(monkeypatch, tmp_path) -> None:
+    monkeypatch.setattr(lane, "ROOT", tmp_path)  # no reports/audits at all
+    pkg = lane.build_night_package({"date": "2026-11-11"},
+                                   datetime(2026, 11, 11, 23, 35))
+    assert pkg["refs"]["monthly_reports"] == {"path": "reports/audits/",
+                                              "status": "尚无月报在册"}
 
 
 def test_write_night_package_best_effort(monkeypatch, tmp_path) -> None:
@@ -151,8 +205,7 @@ def test_write_night_package_best_effort(monkeypatch, tmp_path) -> None:
     out = tmp_path / "2026-11-11" / "night_package.json"
     assert out.exists()
     loaded = json.loads(out.read_text(encoding="utf-8"))
-    assert loaded["threads"][lane.TRIAGE_CODE] == ["lane-error:hard-fail "
-                                                   "step 'x': boom"]
+    assert loaded["threads"][lane.TRIAGE_CODE] == ["thread:guard-fail:x"]
     assert pkg["date"] == "2026-11-11"
 
 
@@ -171,7 +224,8 @@ def test_write_night_package_state_override_matches_triage_printout(
     loaded = json.loads(
         (tmp_path / "2026-11-10" / "night_package.json").read_text(
             encoding="utf-8"))
-    assert loaded["threads"][lane.TRIAGE_PLATFORM] == ["ci:Tests"]
+    assert loaded["threads"][lane.TRIAGE_PLATFORM] == [
+        "thread:platform-billing: 1× platform-failure → §5 钥匙区"]
 
 
 def test_hook_skip_path_refreshes_package(monkeypatch, tmp_path, capsys) -> None:
