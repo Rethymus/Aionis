@@ -32,6 +32,24 @@
   数据最坏陈旧 24h+（如 GDELT 源缓存夜）。变更为"软败步骤选择性重跑"影响通道核心语义（幂等性/记账/
   push 边界），需 owner 对通道策略表态后专轮设计。**M**。
 
+## 前沿吸收（轮 127，2026-11-11；来源=reports/audits/2026-11-11-env-testpipeline-round.md §6b——两路前沿调研中 high 但 L 规模/存疑/触红线者，逐条含来源 URL）
+
+> 实施前逐条过 7-gate（docs/data-intake-rubric.md）与许可证白名单（MIT/Apache/BSD）。
+
+1. **哈希链账本 + 一次性 holdout 回执 + 门合取**（https://arxiv.org/abs/2611.06607；MIT 参考实现 github.com/henryzhangpku/autonomous-quant-researcher）——**触红线**：`runs/ledger.jsonl` 语义零改动、receipt 属 scripts/phase_*。
+2. **动量倾斜归因预注册**（https://doi.org/10.1016/j.jfds.2026.100207；SSRN 7010050）——下一 phase 预注册，owner 研究决策。
+3. **知识截止/结果感知新门**（https://www.ravenpack.com/blog/insights-and-limitations-in-stock-price-prediction-using-llms；arXiv:2401.03737）——需改 docs/data-intake-rubric.md，非运维轮可触碰面。
+4. **purged-CV 第二实现一致性测试**（https://github.com/eslazarev/purged-cross-validation，MIT 64★）——**存疑**：PyPI 可安装性未验证；CPCV/PBO 仅诊断、不作主分割器。
+5. **time-machine 时间桩 conftest**（https://adamj.eu/tech/2026/08/03/python-time-machine-o1-freezegun-on；MIT v3.6.0）——8 个 src 模块墙钟语义分批。
+6. **pytest-randomly**（https://github.com/pytest-dev/pytest-randomly，MIT v5.1.0）——2430 用例随机序体检 + 豁免治理。
+7. **pytest-xdist -n auto --dist loadfile + faulthandler_timeout=300**（https://docs.pytest.org/en/stable/explanation/flaky.html，MIT v3.8.0）——需 H6 位一致豁免组设计。
+8. **抽取错误分类学人工审计**（https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6496861）——人工标注成本 L；审计集与 prompt 调整隔离。
+9. **组合级 FDR 读数**（https://people.duke.edu/~charvey/Research/Published_Papers/P143_False_and_missed.pdf）——docs/RESULTS.md 报告层，不回溯改 α。
+10. **DSR 试验计数通缩 + minTRL**（https://arxiv.org/html/2512.12924v1）——N 随 config 冻结，仅预注册附录。
+11. **时序共形区间**（https://arxiv.org/html/2507.05470v1）——稳健性视角，不变更主检验。
+12. **actionlint + zizmor 常驻静态校验**（https://github.com/rhysd/actionlint；https://github.com/zizmorcore/zizmor，均 MIT）——二进制未装未跑；如集成 doctor 需条件存在守卫，保守后置。
+13. **act 本地 dry-run**（https://github.com/nektos/act，MIT）——解锁前预检工具，不入 repo 依赖。
+
 ## Owner-gated（预注册级 GO 才可动；权威 spec 在 tasks/active/）
 
 - **Strong-baseline ladder.** RES-01/02/03/10（momentum/FF5-cross-sectional/rank-label/LLM-eval）。
