@@ -21,12 +21,15 @@ name: Vintage Drift Probe
 # model the frozen cutoff was measured on (glm-4.7-flash, see
 # reports/evidence/provider-cutoff-probe.json + .env LLM_MODEL). The script
 # itself is fail-closed (no hardcoded fallback), so this env line is what
-# pins the model in CI — repin via the LLM_MODEL repository variable if the
+# pins the model in CI — repin via the LLM_MODEL repository SECRET if the
 # extraction model ever changes (and only with an explicit contracts
-# amendment, never silently).
+# amendment, never silently). 2026-11-11 (round 127): LLM_MODEL exists as a
+# repo secret but NOT as a repository variable (gh secret list / gh variable
+# list), so the old vars.LLM_MODEL read was permanently empty — this env
+# line now reads secrets.LLM_MODEL.
 #
 # REPAIR_PROBE follow-up (2026-11-06): first post-fix scheduled run =
-# 2026-12-03 06:00 UTC. The 2026-11-03 alarm ran under the stale-fallback
+# 2026-12-03 06:23 UTC (cron moved off the hour, round 127). The 2026-11-03 alarm ran under the stale-fallback
 # regime (fix landed 2026-11-06, round 122), so 12-03 is the first clean
 # reading under the pinned-model probe — treat its verdict, not November's,
 # as the REPAIR_PROBE confirmation.
@@ -38,7 +41,7 @@ name: Vintage Drift Probe
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 6 3 * *'  # monthly, the 3rd at 06:00 UTC
+    - cron: '23 6 3 * *'  # monthly, the 3rd at 06:23 UTC — off the hour (round 127)
 
 permissions:
   contents: read
@@ -53,12 +56,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Set up uv
-        uses: astral-sh/setup-uv@162b8acf397cb069dec09a3f5a9847cf71cfa46a # v1
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3 — node24 re-pin (round 127; v1 was node20, removed from runners 2026-09)
         with:
           version: "latest"
+          enable-cache: false  # v1 default was false; v10 default 'auto' would silently enable
 
       - name: Install dependencies
-        run: uv sync --all-extras
+        run: uv sync --all-extras --frozen
 
       - name: Run drift probe (skips without a configured key)
         env:
@@ -67,7 +71,7 @@ jobs:
           # Pin the probed model to the frozen-contract era model — the 3
           # monthly unsafe-drift alarms of 2026-09/10/11 probed glm-4-flash
           # (stale script default) because this line was missing.
-          LLM_MODEL: ${{ vars.LLM_MODEL || 'glm-4.7-flash' }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL || 'glm-4.7-flash' }}
         run: |
           if [ -n "$AIONIS_GLM_API_KEY" ]; then
             export OPENAI_API_KEY="$AIONIS_GLM_API_KEY"
@@ -76,11 +80,11 @@ jobs:
             echo "::notice::No provider key configured (AIONIS_GLM_API_KEY / OPENAI_API_KEY absent) — vintage drift probe SKIPPED. Add the repository secret to activate."
             exit 0
           fi
-          uv run python scripts/probe_provider_cutoff.py --check-drift
+          uv run --frozen python scripts/probe_provider_cutoff.py --check-drift
 
       - name: Upload drift verdict
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2 — node24 SHA-pin (round 127; was unpinned TAG)
         with:
           name: provider-cutoff-drift
           path: runs/provider_cutoff_drift.json

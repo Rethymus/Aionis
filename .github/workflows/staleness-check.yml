@@ -26,7 +26,11 @@ on:
       # billing playbook; handoff round 125's first-Monday billing-residue
       # note applies to ANY first post-unlock run (rerun once, then judge).
       # The deadman job itself is billing-independent (reads git history via
-      # API); during a lock the workflow simply does not run (no false reds).
+      # API). CORRECTED 2026-11-11 (round 127): "during a lock the workflow
+      # simply does not run" was FALSIFIED — under billing lock #2 the
+      # schedule still triggers and fails in seconds with ZERO steps (e.g.
+      # run 42596200442, 2026-11-09). Treat such zero-step reds as lock
+      # residue: rerun once after the unlock, then judge.
   workflow_dispatch: {}
 
 permissions:
