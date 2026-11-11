@@ -283,6 +283,25 @@ thread: 稳定 ID 续写**（如「续 `thread:platform-billing`：…」），�
 按类续写自此可由 grep 验证，不再依赖人工纪律（出处：
 `reports/design/2026-11-11-super-agent-gen2.md` §5 条目 1 / §6）。
 
+### 判别层/生成层分层（值班协议认知固化，2026-11-12 轮 130-续；Jev 专题条目 4，docs-only）
+
+值班协议按两层固化——System 1/2 仅作快/慢分层的认知类比**命名**，止步于分层事实，
+不宣称认知架构（「内部世界模型」叙事不采用）：
+
+- **判别层（确定性规则引擎，快、零 LLM）**：`--weekly` 看门狗、`--propose` 提案
+  引擎（`scripts/monthly_review.py:1275` docstring：zero LLM, zero network）、
+  Fast Path `--triage` 分诊、夜报包组装——规则表判别红牌/信号；引擎不归类者交
+  人工归类（`monthly_review.py:849`）。
+- **生成层（月末 LLM 会话，慢、唯一生成面）**：月末复盘/教训撰写/Watchdog 有界
+  问题作答（`WATCHDOG_BOUNDED_QUESTION`，`monthly_review.py:1179`）；预算仍为
+  单场 23:35 LLM 会话（`monthly_review.py:1035` Budget 注）——分层**不新增**
+  会话/进程/依赖。
+- **不引入外部判别 API**：判别层只由本地确定性代码构成；接入 Jev API /
+  typesafe-sdk 违 provider 红线（LLM pool = GLM/SiliconFlow/ModelScope ONLY，
+  AGENTS.md）且无许可证白名单轮子支撑（`docs/data-license-allowlist.md` 零命中）。
+  消歧义结论与同构/过度类比两栏裁决见 `reports/audits/2026-11-12-iterate-round.md`
+  Jev 章节；Jev 指认规则见 `state/backlog.md`「名词指认资料」区。
+
 ### lessons 块格式（月度教训写回契约，gen2 条目 4 钉契）
 
 月度复盘教训经 `--append-lessons-from` append-only 写回 handoff（轮 126-续3）。

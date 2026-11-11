@@ -50,6 +50,21 @@
 12. **actionlint + zizmor 常驻静态校验**（https://github.com/rhysd/actionlint；https://github.com/zizmorcore/zizmor，均 MIT）——二进制未装未跑；如集成 doctor 需条件存在守卫，保守后置。
 13. **act 本地 dry-run**（https://github.com/nektos/act，MIT）——解锁前预检工具，不入 repo 依赖。
 
+## 名词指认资料（Jev 指认规则；2026-11-12 轮 130-续入册，杜绝 JEPA 混读）
+
+> 本区为名词指认参考，**非任务候选**——propose 引擎不解析本区（`backlog_open_candidates`
+> 仅读「开放候选」节内 bullet，prop: 前缀标记扫描本区无命中；`scripts/monthly_review.py:697`
+> 解析语义实读证实）。**Jev = TypeSafe 公司 AI System One 判别式决策模型**
+> （discriminative decision model；2026-09-15 发布，RLCD 训练）；**与 LeCun 的
+> JEPA（Joint-Embedding Predictive Architecture）无关**——两名词不得混读/互替。
+> 裁决边界：协议级同构仅采两点（判别/生成分层、预测误差=改进信号），落点 docs+state
+> （`docs/ops-local-refresh.md` 值班协议「判别层/生成层分层」小节 +
+> `reports/audits/2026-11-12-iterate-round.md` Jev 章节）；「内部世界模型」叙事不采用
+> （过度类比贴金）；**代码级 rejected**——无白名单轮子支撑（`docs/data-license-allowlist.md`
+> grep 零命中）且接入 Jev API/typesafe-sdk 违 provider 红线（LLM pool =
+> GLM/SiliconFlow/ModelScope ONLY，AGENTS.md）；代码级候选见同批
+> backlog-candidates-register 条。
+
 ## Owner-gated（预注册级 GO 才可动；权威 spec 在 tasks/active/）
 
 - **Strong-baseline ladder.** RES-01/02/03/10（momentum/FF5-cross-sectional/rank-label/LLM-eval）。
