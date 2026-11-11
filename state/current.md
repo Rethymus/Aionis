@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (11-12，handoff 轮 130-续)【Jev 专题协议级沉淀（业主点名）：消歧义 Jev=TypeSafe AI System One 判别式决策模型（2026-09-15/RLCD）与 LeCun JEPA 无关 → backlog 名词指认资料区；判别层（确定性规则引擎）/生成层（月末 LLM 会话）分层固化入值班协议，不引入外部判别 API；iterate 轮报（2026-11-12-iterate-round.md 新建）Jev 独立章节两栏分析——代码级 rejected（白名单零命中/违 provider 红线/稳态 token），0 ledger/0 frozen/0 OOS】**
+  三落点：①`state/backlog.md` 名词指认资料区（propose 引擎不解析该区，`backlog_open_candidates`/`PROPOSAL_KEY_RE` 实读证实）；②`docs/ops-local-refresh.md` 值班协议「判别层/生成层分层」小节（判别=零 LLM 规则引擎[锚 :849/:1275]，生成=单场 23:35 会话[锚 :1035/:1179]，System1/2 仅分层类比命名，「内部世界模型」不采用）；③`reports/audits/2026-11-12-iterate-round.md` 新建——Jev 章节两栏表（同构仅两点 vs 过度类比）+代码级 rejected 四依据+锚点四条。验证实跑：monthly 三套件 72 绿、`--propose` 实弹 exit 0 零自动写（刷新指令 0 条=无幻影键）、ruff All checks passed、白名单 grep 零命中。代码级候选见同批 backlog-candidates-register 条。详见 handoff 轮 130-续。
+
 - **active (11-11，handoff 轮 130)【零报错收口：publish-site :46/:50 node24 重钉+恢复清单③划记复核提交 `2b09cf011b` ——轮 127 遗留最后可清项清偿，门禁全绿（ruff+YAML 卫生守卫 23+全量 pytest exit 0），0 ledger/0 frozen/0 OOS】**
   上轮工作树遗留两文件（publish-site.yml:46/:50 重钉 pnpm v6.1.1/setup-node v7.1.0 node24 SHA + runbook 恢复清单③划记）复核后原子提交：SHA 与 ci.yml:74/79、deploy-pages.yml:37/42、refresh-terminal-data.yml:381/387 grep 实证同款、四文件 `node-version: 22` 一致（node24 指 action 运行时）；划记文案「YAML 卫生守卫 23 用例复跑全绿」由本会话 `uv run pytest -q tests/test_workflow_yaml_hygiene.py`（23 绿）背书；全量 `uv run pytest -q` exit 0/2517 结果字符全点/[100%]（pytest 9.1.1 无汇总尾行，逐行求和口径）+`uv run ruff check` All checks passed；动工前 `--status` 确认晚间通道已收工（ok_committed 8605bd45b3，非运行中）。轮 127 遗留呈报的「publish-site 重钉须下一轮或业主点头」至此清偿，解锁日首推触发时已是 node24 钉点。详见 handoff 轮 130。
 
