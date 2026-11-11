@@ -1,14 +1,14 @@
 {
  "status": "ok",
- "as_of": "2026-11-09",
+ "as_of": "2026-11-10",
  "source_panels": [
   "form13f",
   "def14a_persons",
   "stakes_13g",
   "smart_money"
  ],
- "n_nodes": 92,
- "n_edges": 773,
+ "n_nodes": 88,
+ "n_edges": 765,
  "nodes": [
   {
    "id": "i:0000807249",
@@ -699,22 +699,6 @@
    }
   },
   {
-   "id": "p:ADAM M. KLEINMAN",
-   "type": "person",
-   "label": "Adam M. Kleinman",
-   "zh_label": null,
-   "lanes": [
-    "def14a"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 1,
-    "co_target": 0
-   }
-  },
-  {
    "id": "p:ADAM ROSSMAN",
    "type": "person",
    "label": "Adam Rossman",
@@ -743,6 +727,22 @@
    "degree": {
     "co_hold": 0,
     "co_board": 2,
+    "co_target": 0
+   }
+  },
+  {
+   "id": "p:ALAN BLACK",
+   "type": "person",
+   "label": "Alan Black",
+   "zh_label": null,
+   "lanes": [
+    "def14a"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 1,
     "co_target": 0
    }
   },
@@ -807,6 +807,22 @@
    "degree": {
     "co_hold": 0,
     "co_board": 2,
+    "co_target": 0
+   }
+  },
+  {
+   "id": "p:ALLEN SALMASI",
+   "type": "person",
+   "label": "Allen Salmasi",
+   "zh_label": null,
+   "lanes": [
+    "def14a"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 1,
     "co_target": 0
    }
   },
@@ -1051,22 +1067,6 @@
    }
   },
   {
-   "id": "p:PAY VERSUS PERFORMANCE DISCLOSURE",
-   "type": "person",
-   "label": "Pay Versus Performance Disclosure",
-   "zh_label": null,
-   "lanes": [
-    "def14a"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 1,
-    "co_target": 0
-   }
-  },
-  {
    "id": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
    "type": "staker",
    "label": "(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
@@ -1079,29 +1079,13 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 10
+    "co_target": 4
    }
   },
   {
-   "id": "s:AGRICULTURE & NATURAL SOLUTIONS ACQUISITION CORP",
+   "id": "s:ADVENT INTERNATIONAL, L.P.",
    "type": "staker",
-   "label": "Agriculture & Natural Solutions Acquisition Corp",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 3
-   }
-  },
-  {
-   "id": "s:AMPLIFY INVESTMENTS, LLC",
-   "type": "staker",
-   "label": "Amplify Investments, LLC",
+   "label": "ADVENT INTERNATIONAL, L.P.",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1115,25 +1099,9 @@
    }
   },
   {
-   "id": "s:BLUE & SILVER VENTURES, LTD.",
+   "id": "s:BLEICHROEDER LP",
    "type": "staker",
-   "label": "Blue & Silver Ventures, Ltd.",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 2
-   }
-  },
-  {
-   "id": "s:BLUEROCK ACQUISITION CORP. II",
-   "type": "staker",
-   "label": "Bluerock Acquisition Corp. II",
+   "label": "Bleichroeder LP",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1159,23 +1127,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:CHART INDUSTRIES INC",
-   "type": "staker",
-   "label": "CHART INDUSTRIES INC",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
+    "co_target": 2
    }
   },
   {
@@ -1191,29 +1143,13 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 2
-   }
-  },
-  {
-   "id": "s:CROSSINGBRIDGE ADVISORS, LLC",
-   "type": "staker",
-   "label": "Crossingbridge Advisors, LLC",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
     "co_target": 1
    }
   },
   {
-   "id": "s:DAVIS SELECTED ADVISERS",
+   "id": "s:ESPERION THERAPEUTICS, INC.",
    "type": "staker",
-   "label": "DAVIS SELECTED ADVISERS",
+   "label": "Esperion Therapeutics, Inc.",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1287,13 +1223,13 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 2
+    "co_target": 1
    }
   },
   {
-   "id": "s:HARRADEN CIRCLE INVESTMENTS, LLC",
+   "id": "s:HERZFELD ERIK MERVIN",
    "type": "staker",
-   "label": "Harraden Circle Investments, LLC",
+   "label": "Herzfeld Erik Mervin",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1307,9 +1243,25 @@
    }
   },
   {
-   "id": "s:LIVE OAK ACQUISITION CORP. VI",
+   "id": "s:HERZFELD THOMAS J",
    "type": "staker",
-   "label": "Live Oak Acquisition Corp. VI",
+   "label": "HERZFELD THOMAS J",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
+   }
+  },
+  {
+   "id": "s:INVESCO ACTIVELY MANAGED EXCHANGE-TRADED FUND TRUST",
+   "type": "staker",
+   "label": "INVESCO ACTIVELY MANAGED EXCHANGE-TRADED FUND TRUST",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1320,92 +1272,60 @@
     "co_hold": 0,
     "co_board": 0,
     "co_target": 2
+   }
+  },
+  {
+   "id": "s:INVESCO EXCHANGE-TRADED FUND TRUST II",
+   "type": "staker",
+   "label": "Invesco Exchange-Traded Fund Trust II",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 2
+   }
+  },
+  {
+   "id": "s:LM ASSET MANAGEMENT INC.",
+   "type": "staker",
+   "label": "LM Asset Management Inc.",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
+   }
+  },
+  {
+   "id": "s:MATUSZEWSKI JASON",
+   "type": "staker",
+   "label": "Matuszewski Jason",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
    }
   },
   {
    "id": "s:MONARCH ALTERNATIVE CAPITAL LP",
    "type": "staker",
    "label": "Monarch Alternative Capital LP",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:NEW PROVIDENCE ACQUISITION CORP. III",
-   "type": "staker",
-   "label": "New Providence Acquisition Corp. III",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 3
-   }
-  },
-  {
-   "id": "s:NOOR SHAIN",
-   "type": "staker",
-   "label": "Noor Shain",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:OAK WOODS ACQUISITION CORP",
-   "type": "staker",
-   "label": "Oak Woods Acquisition Corp",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 3
-   }
-  },
-  {
-   "id": "s:POMPLIANO ANTHONY JOHN III",
-   "type": "staker",
-   "label": "Pompliano Anthony John III",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:PRIVATE MANAGEMENT GROUP INC",
-   "type": "staker",
-   "label": "PRIVATE MANAGEMENT GROUP INC",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1447,13 +1367,29 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 1
+    "co_target": 2
    }
   },
   {
    "id": "s:SEVENTH HOKAGE MANAGEMENT LTD",
    "type": "staker",
    "label": "Seventh Hokage Management Ltd",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
+   }
+  },
+  {
+   "id": "s:SMITH-VAN VURST ANDREW",
+   "type": "staker",
+   "label": "SMITH-VAN VURST ANDREW",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1484,19 +1420,6 @@
   }
  ],
  "edges": [
-  {
-   "a": "p:ADAM M. KLEINMAN",
-   "b": "p:PAY VERSUS PERFORMANCE DISCLOSURE",
-   "type": "co_board",
-   "w": 1,
-   "shared": [
-    {
-     "company": "Great Elm Group, Inc.",
-     "tk": null
-    }
-   ],
-   "truncated": false
-  },
   {
    "a": "p:ADAM ROSSMAN",
    "b": "p:ALEC AMAR",
@@ -1545,6 +1468,19 @@
     {
      "company": "Stride, Inc.",
      "tk": "LRN"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "p:ALAN BLACK",
+   "b": "p:ALLEN SALMASI",
+   "type": "co_board",
+   "w": 1,
+   "shared": [
+    {
+     "company": "VEEA INC.",
+     "tk": null
     }
    ],
    "truncated": false
@@ -22344,13 +22280,13 @@
   },
   {
    "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:AGRICULTURE & NATURAL SOLUTIONS ACQUISITION CORP",
+   "b": "s:ADVENT INTERNATIONAL, L.P.",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "BERKLEY W R CORP",
-     "tk": "WRB",
+     "target": "Intuitive Machines, Inc.",
+     "tk": "LUNR",
      "forms": "SC 13G|SC 13G/A"
     }
    ],
@@ -22358,21 +22294,7 @@
   },
   {
    "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:BLUEROCK ACQUISITION CORP. II",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "BARCLAYS PLC",
-     "tk": "BCS",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:CHART INDUSTRIES INC",
+   "b": "s:ESPERION THERAPEUTICS, INC.",
    "type": "co_target",
    "w": 1,
    "shared": [
@@ -22386,182 +22308,56 @@
   },
   {
    "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:DAVIS SELECTED ADVISERS",
+   "b": "s:INVESCO ACTIVELY MANAGED EXCHANGE-TRADED FUND TRUST",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "MGM Resorts International",
-     "tk": "MGM",
+     "target": "Invesco Ltd.",
+     "tk": "IVZ",
+     "forms": "SC 13G|SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
+   "b": "s:INVESCO EXCHANGE-TRADED FUND TRUST II",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Invesco Ltd.",
+     "tk": "IVZ",
+     "forms": "SC 13G|SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:BLEICHROEDER LP",
+   "b": "s:BODFORD ALVIN M.",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Guerrilla RF, Inc.",
+     "tk": "GUER",
      "forms": "SC 13D/A|SC 13G/A"
     }
    ],
    "truncated": false
   },
   {
-   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:HARRADEN CIRCLE INVESTMENTS, LLC",
+   "a": "s:BLEICHROEDER LP",
+   "b": "s:SALEM INVESTMENT PARTNERS V, LIMITED PARTNERSHIP",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "Calisa Acquisition Corp",
-     "tk": "ALIS",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:LIVE OAK ACQUISITION CORP. VI",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "BARCLAYS PLC",
-     "tk": "BCS",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:NEW PROVIDENCE ACQUISITION CORP. III",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "BERKLEY W R CORP",
-     "tk": "WRB",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:OAK WOODS ACQUISITION CORP",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "BERKLEY W R CORP",
-     "tk": "WRB",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:PRIVATE MANAGEMENT GROUP INC",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "Cable One, Inc.",
-     "tk": "CABO",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:REDWOOD CAPITAL MANAGEMENT, LLC",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "MERCER INTERNATIONAL INC.",
-     "tk": "MERC",
-     "forms": "SC 13D|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:AGRICULTURE & NATURAL SOLUTIONS ACQUISITION CORP",
-   "b": "s:NEW PROVIDENCE ACQUISITION CORP. III",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "BERKLEY W R CORP",
-     "tk": "WRB",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:AGRICULTURE & NATURAL SOLUTIONS ACQUISITION CORP",
-   "b": "s:OAK WOODS ACQUISITION CORP",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "BERKLEY W R CORP",
-     "tk": "WRB",
-     "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:AMPLIFY INVESTMENTS, LLC",
-   "b": "s:CROSSINGBRIDGE ADVISORS, LLC",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "NEIGHBORHOOD INTELLIGENCE, INC.",
-     "tk": "NXH",
-     "forms": "SC 13G|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:BLUE & SILVER VENTURES, LTD.",
-   "b": "s:CREDENZA, INC.",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "GameSquare Holdings, Inc.",
-     "tk": "GAME",
-     "forms": "SC 13D|SC 13D/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:BLUE & SILVER VENTURES, LTD.",
-   "b": "s:GOFF JOHN C",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "GameSquare Holdings, Inc.",
-     "tk": "GAME",
-     "forms": "SC 13D/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:BLUEROCK ACQUISITION CORP. II",
-   "b": "s:LIVE OAK ACQUISITION CORP. VI",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "BARCLAYS PLC",
-     "tk": "BCS",
-     "forms": "SC 13G"
+     "target": "Guerrilla RF, Inc.",
+     "tk": "GUER",
+     "forms": "SC 13D/A|SC 13G/A"
     }
    ],
    "truncated": false
@@ -22623,29 +22419,57 @@
    "truncated": false
   },
   {
-   "a": "s:NEW PROVIDENCE ACQUISITION CORP. III",
-   "b": "s:OAK WOODS ACQUISITION CORP",
+   "a": "s:HERZFELD ERIK MERVIN",
+   "b": "s:HERZFELD THOMAS J",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "BERKLEY W R CORP",
-     "tk": "WRB",
-     "forms": "SC 13G|SC 13G/A"
+     "target": "Herzfeld Credit Income Fund, Inc",
+     "tk": "HERZ",
+     "forms": "SC 13D/A"
     }
    ],
    "truncated": false
   },
   {
-   "a": "s:NOOR SHAIN",
-   "b": "s:POMPLIANO ANTHONY JOHN III",
+   "a": "s:INVESCO ACTIVELY MANAGED EXCHANGE-TRADED FUND TRUST",
+   "b": "s:INVESCO EXCHANGE-TRADED FUND TRUST II",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "Silvia, Inc.",
-     "tk": "BRR",
-     "forms": "SC 13D|SC 13D/A"
+     "target": "Invesco Ltd.",
+     "tk": "IVZ",
+     "forms": "SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:LM ASSET MANAGEMENT INC.",
+   "b": "s:REDWOOD CAPITAL MANAGEMENT, LLC",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "MERCER INTERNATIONAL INC.",
+     "tk": "MERC",
+     "forms": "SC 13D|SC 13G"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:MATUSZEWSKI JASON",
+   "b": "s:SMITH-VAN VURST ANDREW",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "BioStem Technologies, Inc.",
+     "tk": "BSEM",
+     "forms": "SC 13G"
     }
    ],
    "truncated": false
@@ -22667,8 +22491,8 @@
  ],
  "bridges": [
   {
-   "tk": "AUR",
-   "name": "Aurora Innovation, Inc.",
+   "tk": "ACHR",
+   "name": "Archer Aviation Inc.",
    "in": [
     "13f",
     "13dg"
@@ -22679,6 +22503,34 @@
     "stakers": 1
    },
    "stock_routable": false
+  },
+  {
+   "tk": "ADMA",
+   "name": "ADMA BIOLOGICS, INC.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "ALGN",
+   "name": "ALIGN TECHNOLOGY INC",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": true
   },
   {
    "tk": "BAC",
@@ -22695,20 +22547,6 @@
    "stock_routable": true
   },
   {
-   "tk": "BE",
-   "name": "Bloom Energy Corp",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 5,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
-  },
-  {
    "tk": "BILL",
    "name": "BILL Holdings, Inc.",
    "in": [
@@ -22723,78 +22561,8 @@
    "stock_routable": false
   },
   {
-   "tk": "BNKK",
-   "name": "BONK, INC.",
-   "in": [
-    "def14a",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 0,
-    "persons": 1,
-    "stakers": 1
-   },
-   "stock_routable": false
-  },
-  {
-   "tk": "BSX",
-   "name": "BOSTON SCIENTIFIC CORP",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 4,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": true
-  },
-  {
-   "tk": "BTDR",
-   "name": "Bitdeer Technologies Group",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 2,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
-  },
-  {
-   "tk": "CBRS",
-   "name": "Cerebras Systems Inc.",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 3,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
-  },
-  {
-   "tk": "CIFR",
-   "name": "Cipher Digital Inc.",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 2,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
-  },
-  {
-   "tk": "CORZ",
-   "name": "Core Scientific, Inc./tx",
+   "tk": "CMI",
+   "name": "CUMMINS INC",
    "in": [
     "13f",
     "13dg"
@@ -22804,11 +22572,11 @@
     "persons": 0,
     "stakers": 1
    },
-   "stock_routable": false
+   "stock_routable": true
   },
   {
-   "tk": "CTNM",
-   "name": "Contineum Therapeutics, Inc.",
+   "tk": "CRSP",
+   "name": "CRISPR Therapeutics AG",
    "in": [
     "13f",
     "13dg"
@@ -22835,8 +22603,22 @@
    "stock_routable": false
   },
   {
-   "tk": "DAL",
-   "name": "DELTA AIR LINES, INC.",
+   "tk": "DINO",
+   "name": "HF Sinclair Corp",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "DXCM",
+   "name": "DEXCOM INC",
    "in": [
     "13f",
     "13dg"
@@ -22849,8 +22631,8 @@
    "stock_routable": true
   },
   {
-   "tk": "DOLE",
-   "name": "Dole plc",
+   "tk": "ECHO",
+   "name": "EchoStar CORP",
    "in": [
     "13f",
     "13dg"
@@ -22863,14 +22645,14 @@
    "stock_routable": false
   },
   {
-   "tk": "ETSY",
-   "name": "ETSY INC",
+   "tk": "ESI",
+   "name": "Element Solutions Inc",
    "in": [
     "13f",
     "13dg"
    ],
    "counts": {
-    "managers": 3,
+    "managers": 2,
     "persons": 0,
     "stakers": 1
    },
@@ -22879,20 +22661,6 @@
   {
    "tk": "EXEL",
    "name": "EXELIXIS, INC.",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 1,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
-  },
-  {
-   "tk": "EYE",
-   "name": "National Vision Holdings, Inc.",
    "in": [
     "13f",
     "13dg"
@@ -22917,62 +22685,6 @@
     "stakers": 1
    },
    "stock_routable": true
-  },
-  {
-   "tk": "FWONA",
-   "name": "Liberty Media Corp",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 5,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
-  },
-  {
-   "tk": "GILD",
-   "name": "GILEAD SCIENCES, INC.",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 1,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": true
-  },
-  {
-   "tk": "GLNG",
-   "name": "GOLAR LNG LTD",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 1,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
-  },
-  {
-   "tk": "GOSS",
-   "name": "Gossamer Bio, Inc.",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 1,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
   },
   {
    "tk": "GPGI",
@@ -23031,8 +22743,50 @@
    "stock_routable": true
   },
   {
-   "tk": "LYB",
-   "name": "LyondellBasell Industries N.V.",
+   "tk": "JPM",
+   "name": "JPMORGAN CHASE & CO",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 4,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": true
+  },
+  {
+   "tk": "KTOS",
+   "name": "KRATOS DEFENSE & SECURITY SOLUTIONS, INC.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "LBTYA",
+   "name": "Liberty Global Ltd.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 2,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "LHX",
+   "name": "L3HARRIS TECHNOLOGIES, INC. /DE/",
    "in": [
     "13f",
     "13dg"
@@ -23045,14 +22799,28 @@
    "stock_routable": true
   },
   {
-   "tk": "MET",
-   "name": "METLIFE INC",
+   "tk": "LRN",
+   "name": "Stride, Inc.",
+   "in": [
+    "def14a",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 0,
+    "persons": 3,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "MDT",
+   "name": "Medtronic plc",
    "in": [
     "13f",
     "13dg"
    ],
    "counts": {
-    "managers": 1,
+    "managers": 3,
     "persons": 0,
     "stakers": 1
    },
@@ -23068,13 +22836,13 @@
    "counts": {
     "managers": 2,
     "persons": 0,
-    "stakers": 2
+    "stakers": 1
    },
    "stock_routable": true
   },
   {
-   "tk": "MS",
-   "name": "MORGAN STANLEY",
+   "tk": "MKSI",
+   "name": "MKS INC",
    "in": [
     "13f",
     "13dg"
@@ -23084,11 +22852,25 @@
     "persons": 0,
     "stakers": 1
    },
+   "stock_routable": false
+  },
+  {
+   "tk": "MLM",
+   "name": "MARTIN MARIETTA MATERIALS INC",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
    "stock_routable": true
   },
   {
-   "tk": "NBP",
-   "name": "NovaBridge Biosciences",
+   "tk": "MTRN",
+   "name": "MATERION Corp",
    "in": [
     "13f",
     "13dg"
@@ -23101,14 +22883,28 @@
    "stock_routable": false
   },
   {
-   "tk": "NTRA",
-   "name": "Natera, Inc.",
+   "tk": "NTLA",
+   "name": "Intellia Therapeutics, Inc.",
    "in": [
     "13f",
     "13dg"
    ],
    "counts": {
-    "managers": 4,
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "NVAX",
+   "name": "NOVAVAX INC",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
     "persons": 0,
     "stakers": 1
    },
@@ -23129,8 +22925,36 @@
    "stock_routable": false
   },
   {
-   "tk": "ONT",
-   "name": "Onterris, Inc.",
+   "tk": "OKE",
+   "name": "ONEOK INC /NEW/",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": true
+  },
+  {
+   "tk": "OMC",
+   "name": "OMNICOM GROUP INC.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": true
+  },
+  {
+   "tk": "SDHC",
+   "name": "Smith Douglas Homes Corp.",
    "in": [
     "13f",
     "13dg"
@@ -23143,22 +22967,8 @@
    "stock_routable": false
   },
   {
-   "tk": "PEN",
-   "name": "Penumbra Inc",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 1,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
-  },
-  {
-   "tk": "PPLI",
-   "name": "People Inc",
+   "tk": "STT",
+   "name": "STATE STREET CORP",
    "in": [
     "13f",
     "13dg"
@@ -23168,11 +22978,11 @@
     "persons": 0,
     "stakers": 1
    },
-   "stock_routable": false
+   "stock_routable": true
   },
   {
-   "tk": "PURR",
-   "name": "Hyperliquid Strategies Inc",
+   "tk": "TXT",
+   "name": "TEXTRON INC",
    "in": [
     "13f",
     "13dg"
@@ -23182,35 +22992,7 @@
     "persons": 0,
     "stakers": 1
    },
-   "stock_routable": false
-  },
-  {
-   "tk": "QFIN",
-   "name": "Qfin Holdings, Inc.",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 1,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
-  },
-  {
-   "tk": "TEM",
-   "name": "Tempus AI, Inc.",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 2,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
+   "stock_routable": true
   },
   {
    "tk": "VNOM",
@@ -23227,14 +23009,28 @@
    "stock_routable": false
   },
   {
-   "tk": "VTRS",
-   "name": "Viatris Inc",
+   "tk": "WOLF",
+   "name": "WOLFSPEED, INC.",
    "in": [
     "13f",
     "13dg"
    ],
    "counts": {
-    "managers": 2,
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
+   "tk": "WTW",
+   "name": "WILLIS TOWERS WATSON PLC",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
     "persons": 0,
     "stakers": 1
    },
@@ -23242,18 +23038,18 @@
   }
  ],
  "components": {
-  "n": 17,
+  "n": 18,
   "largest": 43
  },
  "windows": {
   "form13f_quarter": "2026-06-30",
   "stakes_visible_dates": {
-   "start": "2026-11-06",
-   "end": "2026-11-09"
+   "start": "2026-11-10",
+   "end": "2026-11-10"
   },
   "smart_money_visible_dates": {
-   "start": "2026-11-04",
-   "end": "2026-11-09"
+   "start": "2026-11-06",
+   "end": "2026-11-10"
   }
  },
  "coverage": {
@@ -23263,7 +23059,7 @@
    "isolated_managers": 0
   },
   "def14a": {
-   "basis": "top_persons export: 50 most-seated of 727 upstream persons; 117/150 filings with persons (78.0%)",
+   "basis": "top_persons export: 50 most-seated of 708 upstream persons; 115/150 filings with persons (76.7%)",
    "same_name_merges_possible": true
   },
   "13dg": {
@@ -23272,5 +23068,5 @@
   }
  },
  "methodology": "Force-camp relationship graph DERIVED at export time from four COMMITTED panels (form13f x def14a_persons x stakes_13g union smart_money) \u2014 zero new fetches, display-only. Edges are pairwise projections over as-filed disclosure facts: co_hold = two curated managers' VISIBLE BOOKS (latest quarter, up to 50 positions each; the full books are larger) share a position key (ticker, else CUSIP); co_board = two proxy-statement top persons seat the same company (exact company-name match resolves the ticker); co_target = two different filers INDEPENDENTLY SEPARATELY FILED stakes converging on the same target issuer within the visible SC 13D/13G windows. Identity rule: a window filer merges into an institution node ONLY when its trimmed-uppercase name equals a curated manager's name exactly \u2014 no fuzzy matching, no name list. The three overlaps are factual coincidences of separate filings: joint filings stay verbatim (members NOT DECOMPOSED), no COORDINATION is implied and no consortium claim is made. Weights are integer counts of shared items (lists capped at 8, truncated flag set beyond). Coverage is bounded by construction \u2014 see the coverage.basis strings (visible books, a 50-person proxy export over the newest filings, latest filing windows only). A restatement of public SEC EDGAR disclosures only: NO PRICES, NO RETURNS, no performance claims; never part of any OOS pipeline.",
- "snapshot_ts": "2026-11-10T11:26:54.272672+00:00"
+ "snapshot_ts": "2026-11-11T11:33:41.327501+00:00"
 }

@@ -1,12 +1,12 @@
 {
   "status": "ok",
-  "as_of": "2026-11-09",
+  "as_of": "2026-11-10",
   "window": {
     "start": "2026-05-01",
-    "end": "2026-11-09"
+    "end": "2026-11-10"
   },
   "issuers": 50,
-  "total": 321,
+  "total": 322,
   "unclassified": 11,
   "by_category": {
     "agreement_termination": 2,
@@ -17,7 +17,7 @@
     "financial_obligation": 7,
     "major_agreement": 7,
     "merger_completion": 1,
-    "officer_changes": 66,
+    "officer_changes": 67,
     "other": 3,
     "other_events": 50,
     "reg_fd": 28,
@@ -27,6 +27,19 @@
     "vote_results": 25
   },
   "events": [
+    {
+      "ticker": "COST",
+      "company": "COSTCO WHOLESALE CORP /NEW",
+      "filing_date": "2026-11-10",
+      "form": "8-K",
+      "items": [
+        "5.02",
+        "8.01",
+        "9.01"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/909832/000090983226000134/cost-20261107.htm"
+    },
     {
       "ticker": "AAPL",
       "company": "Apple Inc.",
@@ -3877,5 +3890,5 @@
     }
   ],
   "methodology": "SEC Form 8-K current reports \u2014 the legally mandated material-event disclosure (public domain, 17 U.S.C. \u00a7105), due within 4 business days of the event. Panel streams a bounded 50 large-cap issuer set (5 mega-cap seed + v2 20 + v3 25 across financials, payments, healthcare, staples, energy, industrials, tech/comm \u2014 breadth expansions 2026-08-22; still bounded, NOT full market; XOM carries both its pre-succession CIK and the 2026-07-01 8-K12B successor entity) since 2026-05-01; each row links the EDGAR primary document. Items are regex-extracted from the primary doc (nbsp/thin-space entities normalized) and mapped to ONE category by a rare-material-first precedence (delisting > merger completion > control change > non-reliance > officer changes > ... > exhibits); the full item list is preserved per row. Documents whose items cannot be extracted are counted as unclassified \u2014 never guessed. Filing-date point-in-time; 8-K/A amendments are new accessions (immutable). Display-only, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-11-10T11:26:11.594304+00:00"
+  "snapshot_ts": "2026-11-11T11:32:50.831352+00:00"
 }
