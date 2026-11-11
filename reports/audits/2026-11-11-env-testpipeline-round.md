@@ -151,3 +151,9 @@ GT-Score 适应度目标（arXiv:2602.00080，优化目标=数据窥探新轴）
 5. 行号漂移时以实测 grep/sed 重新锚定，不按本报告行号盲改。
 6. token 经济：不新增任何 LLM 调用面；.env.example 只补 key 名不写值。
 7. deploy-pages.yml dormant **补钉不删**；refresh 的 `uv cache prune --ci` 步骤为可选（依重钉后 setup-uv 版本能力，不确定则不加）。
+
+---
+
+## 漂移注记（append-only，2026-11-11 gen2 复核意见 2/3）
+
+:46 与 :116（§6b 条目 6）的 **2430 用例 / 174 个 tests/ 文件**为**轮 127 决策时点基线**（提交 `15cfcba7f4`），原句一律不回改（§8 第 4 条 append-only 原则）。截至 `390d7d7002` 实测：**2482 / 176（+52/+2）**，构成：propose +20（`tests/test_monthly_review_propose.py` 新套件，gen2 条目 3）+ hygiene +23（`tests/test_workflow_yaml_hygiene.py` 新套件，本报告 item 5 落地）+ lane 40→43（`tests/test_ops_local_refresh.py`）+ watchdog 23→25（`tests/test_monthly_review_watchdog.py`）+ fastpath 17→21（`tests/test_ops_fastpath_triage.py`）；+2 文件即上述两个新套件文件。核验口径同 §2（`uv run pytest --collect-only -q tests/` 逐文件求和，pytest 9.1.1 无汇总尾行）；2026-11-11 施工会话复测逐项吻合——总数 **2482**、文件 **176**、五套件 **20/23/43/25/21**、构成和 **52**——且 `git diff 390d7d7002..HEAD -- tests/` 为空（其后仅 lane 数据提交 `8605bd45b3`，计数不受影响）。
