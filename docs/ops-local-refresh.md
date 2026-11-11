@@ -154,7 +154,7 @@ Worker (display-only), unchanged.
 | multi-day outage | — | Actions tab → "Refresh terminal data" → Run workflow (workflow_dispatch kept; 7 network steps retry ×3, round 106) |
 | one-shot research automation missed (host asleep) | hourly guard + done-marker (round 105 pattern) | late manual execution stays valid (proven 10-02) |
 | runner image drift (e.g. ubuntu-latest→26.04) | all 7 workflows pinned `ubuntu-24.04` (rounds 107/108b) | revisit the pin deliberately on each changelog sweep |
-| unknown "is the stack healthy?" | `--doctor` seven-layer read-only preflight (round 109; layer 7 = site-repo drift, 2026-11-06) | 7/7 = walk away; any FAIL → named layer + 需人审 in that night's report |
+| unknown "is the stack healthy?" | `--doctor` eight-layer read-only preflight (round 109; layer 7 = site-repo drift 2026-11-06, layer 8 = marker deadman 2026-11-11) | 8/8 = walk away; any FAIL → named layer + 需人审 in that night's report |
 
 ### Data snapshot audit step (round 225, soft)
 
@@ -225,8 +225,8 @@ token 不增反降（夜报上下文更小）。三分类语义：
 
 | 节奏 | 内容 | 载体 |
 |---|---|---|
-| **晚间** | 分诊（上表）+ 23:35 夜报班（全牌核验+doctor 七层+ci(own) 一行总结；**唯一稳态 LLM 会话**） | SessionStart 钩子 + Windows 计划任务 18:05-23:05 兜底 |
-| **每周** | **Watchdog 外部核对**（`uv run python scripts/monthly_review.py --weekly`：7 工作流健康分诊+ledger config_committed-before-result 抽查+原地打转检测；零 Actions 依赖，冻结期照常工作）+ staleness 绊网（周一 02:17 UTC 整点错开）+ 发布链健康步；解锁后首个周一有 billing 滞留误红风险（见 playbook） | 本地 `--weekly`（只读）+ `staleness-check.yml`（Actions；冻结期此信号全停，Watchdog 顶上） |
+| **晚间** | 分诊（上表）+ 23:35 夜报班（全牌核验+doctor 八层+ci(own) 一行总结；**唯一稳态 LLM 会话**） | SessionStart 钩子 + Windows 计划任务 18:05-23:05 兜底 |
+| **每周** | **Watchdog 外部核对**（`uv run python scripts/monthly_review.py --weekly`：7 工作流健康分诊+ledger config_committed-before-result 抽查+原地打转检测；零 Actions 依赖，冻结期照常工作）+ staleness 绊网（每日 02:37 UTC，离整点；round 126 每日化）+ 发布链健康步；解锁日有 billing 滞留红（锁中存量零步红 + 当日一条）：rerun 一次再判（见 playbook） | 本地 `--weekly`（只读）+ `staleness-check.yml`（Actions；冻结期此信号全停，Watchdog 顶上） |
 | **每月** | 复盘教训循环：`scripts/monthly_review.py`（执行率/可靠性/软失败热点/发布链健康）+ 教训沉淀为 runbook 行/守卫测试（「每课一守卫」惯例） | 月报 rides 23:35 夜报班，零新增会话 |
 | **值班协议** | 钥匙区盯守：GitHub billing 解锁、freeze 通道真推许可、账本孤儿裁决——清单见 `reports/design/2026-11-11-super-agent-integration.md` §5；任何钥匙到位后按 playbook 顺序动作 | 人工（业主）；值班自动化只呈报不代决 |
 
@@ -235,7 +235,8 @@ token 不增反降（夜报上下文更小）。三分类语义：
 1. **Inline & Spill（夜报=自包含上下文包）**：近 24h 变更内联进夜报正文；月报、
    ADR、设计报告一律只留**路径引用**不内联——防 handoff/state 膨胀
    （出处：https://zhuanlan.zhihu.com/p/2099987320443237060 与
-   https://mp.weixin.qq.com/s/lcIkBMOKHSvkRYELgkduMg 的 Aionis 映射）。
+   https://mp.weixin.qq.com/s/lcIkBMOKHSvkRYELgkduMg 的 Aionis 映射；
+   微信正文 2026-11-11 复核实测可读：curl HTTP 200、js_content×18）。
 2. **Thread 稳定 ID 归组**：CI-红、守卫失败、ledger 异常各归一条 Thread 叙述——
    夜报与 handoff 按类**续写**既有 Thread，不逐条新起会话/小节
    （出处：https://zhuanlan.zhihu.com/p/2099987320443237060 与
@@ -337,7 +338,7 @@ uv run python scripts/ops_local_refresh.py --guard         # what triggers would
 uv run python scripts/ops_local_refresh.py --run --force   # bypass guard (human)
 uv run python scripts/ops_evening_hook.py                  # simulate the hook (silent)
 uv run pytest -q tests/test_ops_local_refresh.py           # lane logic tests
-uv run python scripts/ops_local_refresh.py --doctor       # seven-layer preflight
+uv run python scripts/ops_local_refresh.py --doctor       # eight-layer preflight
 ```
 
 `--doctor` (round 109; layer 7 added 2026-11-06): one read-only command that

@@ -641,7 +641,8 @@ def run_weekly(repo: Path, now: datetime | None = None, fetcher=None,
 # Protocol borrowed from noahshinn/reflexion (MIT, verified via gh api
 # 2026-11-11): attempt → score against the pre-registered standard → textual
 # lesson → inject into the next attempt. Borrowed as PROTOCOL ONLY (the repo
-# itself is archived research scripts; no package, no dependency). The
+# is stale — unmaintained since 2025-01 per gh api, but NOT archived;
+# no package, no dependency). The
 # monthly review seeds the lessons deterministically; the month-end LLM
 # session composes the text and writes it back via --append-lessons-from
 # into state/handoff.md — where every session already reads first
