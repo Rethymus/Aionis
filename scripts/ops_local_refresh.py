@@ -759,7 +759,8 @@ def build_night_package(state: dict, now: datetime) -> dict:
             },
             "monthly_review": {
                 "path": "scripts/monthly_review.py",
-                "status": "月评 CLI：--weekly 看门狗 / --lessons 月度复盘 / "
+                "status": "月评 CLI：--weekly 看门狗 / --propose 确定性提案"
+                          "（S/M/L 卡，零 LLM 零网络） / --lessons 月度复盘 / "
                           "--append-lessons-from 教训写回",
             },
             "monthly_reports": _monthly_reports_ref(),
