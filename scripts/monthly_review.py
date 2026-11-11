@@ -33,6 +33,8 @@ Usage:
   uv run python scripts/monthly_review.py --month 2026-10        # explicit month
   uv run python scripts/monthly_review.py --month 2026-09 \\
       --out reports/audits/2026-10-06-monthly-lane-data.md       # write to file
+  uv run python scripts/monthly_review.py --weekly    # Watchdog (+anchor)
+  uv run python scripts/monthly_review.py --propose   # proposal cards (0 LLM)
 
 Exit codes: 0 = at least one SUMMARY collected for the month and no internal
 anomaly; 1 = zero SUMMARYs, or an internal anomaly (unreadable run.log, corrupt
@@ -42,6 +44,7 @@ an exit-1 condition.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import subprocess
@@ -631,10 +634,392 @@ def run_weekly(repo: Path, now: datetime | None = None, fetcher=None,
     lines.append("")
     findings += spin
 
+    recon_findings, recon_stats = proposal_reconciliation(repo)
+    lines += ["## 4. Proposal-closure reconciliation "
+              "(backlog 候选 key: prop:* → tasks/ 三区一致性，只读)",
+              "",
+              f"- backlog 在册提案键 {recon_stats['backlog_keys']} · tasks 侧在册 "
+              + " · ".join(f"{z} {recon_stats['zones'][z]}"
+                          for z in TASKS_ZONES),
+              "- invariants: 一个提案键至多存在于一个 tasks 区 · 已 completed "
+              "的提案其 backlog 行须人工划线销项 → "
+              + ("**OK**" if not recon_findings else "**DRIFT**")]
+    if recon_findings:
+        lines += [f"- {x}" for x in recon_findings]
+    lines.append("")
+    findings += [f"proposal-recon: {x}" for x in recon_findings]
+
     lines += [f"## Findings requiring human attention: {len(findings)}", ""]
     lines += [f"- {x}" for x in findings] if findings else \
         ["- none — walk away"]
     return "\n".join(lines) + "\n", (1 if findings else 0)
+
+
+# -------------------------- propose engine + closure recon (gen2 item 3)
+# The self-evolution engine MVP: signal -> audit -> proposal -> OWNER GATE
+# (WORKFLOW §6 milestone boundary) -> dispatch (orchestrate_dispatch.py
+# --task --lane, :192-199) -> build -> verify (pytest+ruff+closure recon) ->
+# sediment (--append-lessons-from). This module carries the deterministic
+# middle: EXISTING signals x rule table -> S/M/L proposal cards with evidence
+# pointers + prop: dedup keys (thread: IDs where the registry maps one) —
+# ZERO LLM, ZERO new collection, ZERO network (git pickaxe is read-only and
+# injectable; unavailable = honest absence, never a guess). Guards (gen2
+# report §4, tightened this round): the engine is READ-ONLY on
+# state/backlog.md and tasks/ — output goes to stdout/--out for a human or
+# the month-end session to paste into the backlog candidates section; a key
+# already present (backlog or any tasks zone) degrades to a timestamp-
+# refresh instruction, never a duplicate card and never an auto-write; any
+# future research-face rule MUST set research=True so the card carries the
+# forced 7-gate/prereg/ledger-row/owner-gate annotation.
+
+BACKLOG_PATH = Path("state") / "backlog.md"
+TASKS_ZONES = ("active", "completed", "rejected")
+WEEKLY_ANCHOR_NAME = "weekly_watchdog.md"
+PROPOSAL_KEY_RE = re.compile(r"key:\s*(prop:[0-9A-Za-z:\-_]+)")
+PLATFORM_COUNT_RE = re.compile(r"(\d+)×")
+BACKLOG_AGING_DAYS = 90
+PERSISTENT_MIN_EVENINGS = 3
+PROPOSAL_RESEARCH_GATE = ("research-gate: 7-gate 数据准入 + 预注册 + 新 ledger 行 "
+                          "+ 业主研究门 —— 引擎只呈报，绝不执行")
+
+
+def _slug(text: str) -> str:
+    """Stable ASCII slug for dedup keys (CJK-only text falls back to a
+    deterministic sha1 prefix — never an empty key)."""
+    s = re.sub(r"[^0-9A-Za-z]+", "-", text).strip("-")[:40]
+    return s or hashlib.sha256(text.encode("utf-8")).hexdigest()[:8]
+
+
+def scan_proposal_keys(text: str) -> set[str]:
+    """Every `key: prop:...` marker present in a markdown text."""
+    return set(PROPOSAL_KEY_RE.findall(text))
+
+
+def backlog_open_candidates(text: str) -> list[str]:
+    """First lines of OPEN candidate bullets in the 开放候选 section
+    (struck-through ~~ bullets are closed history — excluded)."""
+    heads: list[str] = []
+    in_section = False
+    for line in text.splitlines():
+        if line.startswith("## "):
+            in_section = "开放候选" in line
+            continue
+        if not in_section or not line.startswith("- "):
+            continue
+        head = line[2:].strip()
+        if head.startswith("~~") or not head:
+            continue
+        heads.append(head)
+    return heads
+
+
+def _git_pickaxe_date(repo: Path, needle: str) -> str | None:
+    """ISO date of the last commit whose state/backlog.md diff changed the
+    occurrence count of `needle` (= when that candidate last moved), or None
+    when git/history is unavailable — aging unknown, no card, no guess."""
+    try:
+        proc = subprocess.run(
+            ["git", "log", "-1", "--format=%cI", f"-S{needle}", "--",
+             str(BACKLOG_PATH)],
+            cwd=str(repo), capture_output=True, text=True, encoding="utf-8",
+            errors="replace", timeout=10)
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+    if proc.returncode != 0:
+        return None
+    return proc.stdout.strip() or None
+
+
+def latest_day_file(repo: Path, name: str) -> tuple[str, str] | None:
+    """(date, text) of the newest runs/ops_local_refresh/<date>/<name> across
+    day directories, or None. Parse failures skip to the next-newest day —
+    the returned date keeps any staleness visible in the evidence line."""
+    root = repo / LOG_SUBDIR
+    if not root.is_dir():
+        return None
+    for day_dir in sorted((p for p in root.iterdir() if p.is_dir()),
+                          reverse=True):
+        f = day_dir / name
+        if not f.is_file():
+            continue
+        try:
+            return day_dir.name, f.read_text(encoding="utf-8",
+                                             errors="replace")
+        except OSError:
+            continue
+    return None
+
+
+def _weekly_finding_lines(anchor_text: str) -> list[str]:
+    """Bullet lines under '## Findings requiring human attention' in a
+    persisted weekly anchor (empty when the section says none)."""
+    out: list[str] = []
+    in_section = False
+    for line in anchor_text.splitlines():
+        if line.startswith("## "):
+            in_section = "Findings requiring human attention" in line
+            continue
+        if in_section and line.startswith("- "):
+            if "none — walk away" not in line:
+                out.append(line[2:].strip())
+    return out
+
+
+def proposal_reconciliation(repo: Path) -> tuple[list[str], dict]:
+    """Read-only closure check (the engine's verify leg, run inside --weekly):
+    proposal keys pasted into state/backlog.md vs their dispatch state in
+    tasks/{active,completed,rejected}/. Invariants: one key lives in at most
+    ONE tasks zone; a completed proposal's backlog line must be struck
+    through (~~) or gone — a still-open line for completed work is drift for
+    a human to strike by hand (the engine never edits the backlog)."""
+    stats: dict = {"backlog_keys": 0, "task_keys": 0,
+                   "zones": {z: 0 for z in TASKS_ZONES}}
+    findings: list[str] = []
+    backlog_file = repo / BACKLOG_PATH
+    backlog_text = (backlog_file.read_text(encoding="utf-8",
+                                           errors="replace")
+                    if backlog_file.is_file() else "")
+    backlog_keys = scan_proposal_keys(backlog_text)
+    stats["backlog_keys"] = len(backlog_keys)
+    zone_hits: dict[str, list[str]] = {}
+    for zone in TASKS_ZONES:
+        zone_dir = repo / "tasks" / zone
+        if not zone_dir.is_dir():
+            continue
+        for task_file in sorted(zone_dir.glob("*.md")):
+            try:
+                text = task_file.read_text(encoding="utf-8",
+                                           errors="replace")
+            except OSError:
+                continue
+            hits = scan_proposal_keys(text)
+            for key in hits:
+                zone_hits.setdefault(key, []).append(zone)
+            stats["zones"][zone] += len(hits)
+    stats["task_keys"] = len(zone_hits)
+    for key, zones in sorted(zone_hits.items()):
+        if len(set(zones)) > 1:
+            findings.append(f"{key} appears in multiple tasks zones: "
+                            + ", ".join(sorted(set(zones))))
+    for key in sorted(backlog_keys):
+        if "completed" in zone_hits.get(key, []):
+            for line in backlog_text.splitlines():
+                if key in line and "~~" not in line:
+                    findings.append(
+                        f"{key} completed (tasks/completed) but its backlog "
+                        "line is still open — strike it by hand (the engine "
+                        "never edits the backlog)")
+                    break
+    return findings, stats
+
+
+def _card_from_weekly_finding(line: str, day: str) -> dict:
+    ev = [f"runs/ops_local_refresh/{day}/{WEEKLY_ANCHOR_NAME}: {line}"]
+    m = re.match(r"workflow real red \(code-defect\): (.+)", line)
+    if m:
+        wf = m.group(1).strip()
+        return {"key": f"prop:ci-red:{_slug(wf)}", "size": "M",
+                "thread": f"thread:ci-red:{wf}",
+                "title": f"修复 CI 红：{wf}",
+                "action": "按处置矩阵修复并带测试钉（先例：news_feed 时间炸弹、"
+                          "IPO 帽感知）",
+                "evidence": ev}
+    if line.startswith("platform-failure"):
+        return {"key": "prop:platform-billing", "size": "S",
+                "thread": "thread:platform-billing",
+                "title": "billing 钥匙区（只呈报不催办）",
+                "action": "业主解锁后按 runbook『解锁后一键恢复』顺序行动；"
+                          "工程侧零代办",
+                "evidence": ev}
+    if line.startswith("spin"):
+        return {"key": "prop:spin", "size": "M", "thread": "thread:spin",
+                "title": "诊断连败步骤根因（spin）",
+                "action": "诊断连续晚失败根因并处方修复；修复须显式提交+测试钉"
+                          "（先例 5a1075f650）",
+                "evidence": ev}
+    if line.startswith("ledger: "):
+        return {"key": "prop:ledger-anomaly", "size": "S",
+                "thread": "thread:ledger-anomaly",
+                "title": "账本异常呈报（业主裁决区）",
+                "action": "立即呈报业主裁决——归并/弃置均不可逆，工程侧零代办"
+                          "（处置矩阵）",
+                "evidence": ev}
+    return {"key": f"prop:weekly:{_slug(line[:40])}", "size": "S",
+            "thread": None, "title": "--weekly 发现待人工处置",
+            "action": "核对 weekly_watchdog.md 该发现并处方（引擎不归类=人工归类）",
+            "evidence": ev}
+
+
+def _collect_proposal_signals(repo: Path, month: str, now: datetime,
+                              git_log=None) -> dict[str, dict]:
+    """The rule table: five EXISTING signal classes -> pre-dedup cards,
+    merged by prop: key (same-key signals join evidence, never duplicate)."""
+    raw: list[dict] = []
+    # R1 spin (local run logs; the 11-03..05 form8k shape)
+    spin, _scanned = spin_detection(repo)
+    for s in spin:
+        raw.append({"key": "prop:spin", "size": "M", "thread": "thread:spin",
+                    "title": "诊断连败步骤根因（spin）",
+                    "action": "诊断连续晚失败根因并处方修复；修复须显式提交+"
+                              "测试钉（先例 5a1075f650）",
+                    "evidence": [s]})
+    # R2 platform reds from the latest night package (folded thread line)
+    pkg = latest_day_file(repo, "night_package.json")
+    if pkg is not None:
+        day, text = pkg
+        try:
+            threads = (json.loads(text).get("threads") or {})
+        except ValueError:
+            threads = {}
+        for line in threads.get("platform-failure") or []:
+            m = PLATFORM_COUNT_RE.search(line)
+            ev = [f"runs/ops_local_refresh/{day}/night_package.json: {line}"]
+            if m and int(m.group(1)) >= 2:
+                ev.append("≥2 工作流同晚平台红 = billing 锁签名（billing "
+                          "playbook）")
+            raw.append({"key": "prop:platform-billing", "size": "S",
+                        "thread": "thread:platform-billing",
+                        "title": "billing 钥匙区（只呈报不催办）",
+                        "action": "业主解锁后按 runbook『解锁后一键恢复』顺序"
+                                  "行动；工程侧零代办",
+                        "evidence": ev})
+    # R3 persistent soft-fails on >=3 evenings of the month (SUMMARYs)
+    errors: list[str] = []
+    days, _push = collect_log_days(repo, month, errors)
+    name_dates: dict[str, list[str]] = {}
+    for d in days:
+        for name in d["persistent_soft_fails"]:
+            name_dates.setdefault(str(name), []).append(d["date"])
+    for name, dates in sorted(name_dates.items()):
+        if len(dates) >= PERSISTENT_MIN_EVENINGS:
+            raw.append({"key": f"prop:persistent:{_slug(name)}", "size": "S",
+                        "thread": None,
+                        "title": f"persistent 软失败 ≥{PERSISTENT_MIN_EVENINGS}"
+                                 f" 晚：{name}",
+                        "action": "核对 docs/source-redundancy.md 对应源剧本"
+                                  "（备役/帽/礼貌参数），必要时专轮处方",
+                        "evidence": [f"{month} SUMMARY persistent_soft_fails: "
+                                     + ", ".join(dates)]})
+    # R4 backlog candidate aging (git pickaxe; unavailable = no card)
+    backlog_file = repo / BACKLOG_PATH
+    if backlog_file.is_file():
+        text = backlog_file.read_text(encoding="utf-8", errors="replace")
+        runner = git_log or _git_pickaxe_date
+        for head in backlog_open_candidates(text):
+            iso = runner(repo, head[:60])
+            if not iso:
+                continue
+            try:
+                moved = datetime.fromisoformat(iso)
+            except ValueError:
+                continue
+            if moved.tzinfo is not None:  # git %cI is offset-aware
+                moved = moved.astimezone().replace(tzinfo=None)
+            age = (now - moved).days
+            if age > BACKLOG_AGING_DAYS:
+                raw.append({
+                    "key": f"prop:backlog-aging:{_slug(head)}", "size": "S",
+                    "thread": None,
+                    "title": "backlog 候选 >"
+                             f"{BACKLOG_AGING_DAYS} 天未动："
+                             + head.replace("**", "")[:60],
+                    "action": "里程碑边界再裁决（accept/defer/reject）或销项"
+                              "——backlog deadman（治落差缺口 2）",
+                    "evidence": [f"state/backlog.md『{head[:60]}』最后变更 "
+                                 f"{iso[:10]}（git pickaxe，只读）"]})
+    # R5 findings from the latest persisted --weekly anchor (Friday carrier)
+    anchor = latest_day_file(repo, WEEKLY_ANCHOR_NAME)
+    if anchor is not None:
+        day, text = anchor
+        raw += [_card_from_weekly_finding(line, day)
+                for line in _weekly_finding_lines(text)]
+    cards: dict[str, dict] = {}
+    for card in raw:
+        first = cards.setdefault(card["key"], card)
+        if first is not card:
+            first["evidence"] = first["evidence"] + card["evidence"]
+    return cards
+
+
+def render_card(card: dict) -> list[str]:
+    """One paste-ready proposal card (the backlog candidates format)."""
+    out = [f"- **[{card['size']}] {card['title']}**（key: {card['key']}）"]
+    if card.get("thread"):
+        out.append(f"  - thread: {card['thread']}（续写该 Thread，不新起小节）")
+    out += [f"  - evidence: {e}" for e in card["evidence"]]
+    out.append(f"  - proposal: {card['action']}")
+    if card.get("research"):
+        out.append(f"  - {PROPOSAL_RESEARCH_GATE}")
+    out.append("  - disposition: 里程碑边界 accept → tasks/active/ + "
+               "orchestrate_dispatch --lane executor · defer 留候选区 · "
+               "reject → tasks/rejected/")
+    return out
+
+
+def run_propose(repo: Path, now: datetime | None = None,
+                month: str | None = None,
+                git_log=None) -> tuple[str, int]:
+    """The --propose mode: deterministic signal x rule table -> proposal
+    cards, deduped READ-ONLY against state/backlog.md and tasks/ (present
+    keys degrade to refresh instructions — the engine never writes either).
+    Returns (markdown, n_new_cards)."""
+    now = now or datetime.now()
+    month = month or now.strftime("%Y-%m")
+    all_cards = _collect_proposal_signals(repo, month, now, git_log=git_log)
+    backlog_file = repo / BACKLOG_PATH
+    backlog_text = (backlog_file.read_text(encoding="utf-8",
+                                           errors="replace")
+                    if backlog_file.is_file() else "")
+    present = scan_proposal_keys(backlog_text)
+    dispatched: dict[str, str] = {}
+    for zone in TASKS_ZONES:
+        zone_dir = repo / "tasks" / zone
+        if not zone_dir.is_dir():
+            continue
+        for task_file in sorted(zone_dir.glob("*.md")):
+            try:
+                text = task_file.read_text(encoding="utf-8",
+                                           errors="replace")
+            except OSError:
+                continue
+            for key in scan_proposal_keys(text):
+                dispatched.setdefault(key, zone)
+    new_cards, refresh = [], []
+    for key in sorted(all_cards):
+        if key in dispatched:
+            refresh.append(f"{key} 已在 tasks/{dispatched[key]}/ 在册（已派发"
+                           "）——勿重复提案")
+        elif key in present:
+            refresh.append(f"{key} 已在 state/backlog.md 候选区在册——请人工"
+                           "更新该条时间戳/状态（引擎只读不代写）")
+        else:
+            new_cards.append(all_cards[key])
+    lines = [
+        "# Proposal cards — 确定性提案引擎（--propose，gen2 条目 3）",
+        "",
+        f"> Generated {now.isoformat(timespec='seconds')} by "
+        "`scripts/monthly_review.py --propose` — 零 LLM、零网络（git 仅只读 "
+        "pickaxe，不可用=不猜）；引擎对 state/backlog.md 与 tasks/ **只读**，"
+        "产物经人工/月末会话粘贴候选区，同键在册→刷新指令，绝不自动写。",
+        "",
+        f"## 提案卡片（{len(new_cards)} 张）",
+        "",
+    ]
+    for card in new_cards:
+        lines += render_card(card)
+    if not new_cards:
+        lines.append("- 无提案——无信号或全部已在册（零提案=合法态，非失败）")
+    lines += ["", f"## 刷新指令（{len(refresh)} 条，人工执行——引擎不自动写）",
+              ""]
+    lines += [f"- {r}" for r in refresh] if refresh else \
+        ["- 无（无在册重复键）"]
+    lines += ["", "## 信号面备注", "",
+              f"- persistent 统计窗口：{month}（SUMMARY 晚数见月报）",
+              f"- weekly 锚点：runs/ops_local_refresh/<date>/"
+              f"{WEEKLY_ANCHOR_NAME}（无锚点=本周期 --weekly 未跑；固定载体="
+              "每周五夜报班前置步）",
+              f"- backlog 老化阈值：>{BACKLOG_AGING_DAYS} 天（git pickaxe 测得）"]
+    return "\n".join(lines) + "\n", len(new_cards)
 
 
 # ------------------------------------------------- Reflexion lessons (126)
@@ -773,8 +1158,20 @@ def main(argv: list[str] | None = None) -> int:
                         help="Watchdog external-audit mode (round 126): "
                              "7-workflow health with billing-lock triage + "
                              "ledger config_committed-before-result "
-                             "spot-check + spin detection; exit 1 on "
-                             "findings. Read-only, zero Actions dependency.")
+                             "spot-check + spin detection + proposal-closure "
+                             "reconciliation; exit 1 on findings. Read-only, "
+                             "zero Actions dependency. Default anchoring: also "
+                             "writes runs/ops_local_refresh/<today>/"
+                             "weekly_watchdog.md (gen2 item 3; --out replaces "
+                             "the anchor).")
+    parser.add_argument("--propose", action="store_true",
+                        help="deterministic proposal engine (gen2 item 3): "
+                             "existing signals x rule table -> S/M/L proposal "
+                             "cards with evidence pointers + prop: dedup keys "
+                             "(thread: IDs where mapped); zero LLM, zero "
+                             "network; READ-ONLY on state/backlog.md and "
+                             "tasks/ (in-flight keys degrade to refresh "
+                             "instructions). Output: stdout or --out.")
     parser.add_argument("--lessons", action="store_true",
                         help="with the monthly flow: add Reflexion lesson "
                              "seeds + the latest lessons block carried from "
@@ -800,7 +1197,32 @@ def main(argv: list[str] | None = None) -> int:
             print(f"wrote {out_path}", file=sys.stderr)
         else:
             print(markdown, end="")
+            # gen2 item 3: the default on-disk anchor (audit trail + the
+            # --propose R5 signal source). Best-effort like night_package.
+            anchor = (repo / LOG_SUBDIR
+                      / datetime.now().strftime("%Y-%m-%d")
+                      / WEEKLY_ANCHOR_NAME)
+            try:
+                anchor.parent.mkdir(parents=True, exist_ok=True)
+                anchor.write_text(markdown, encoding="utf-8")
+                print(f"anchored {anchor}", file=sys.stderr)
+            except OSError as exc:
+                print(f"anchor write failed ({exc}): {anchor}",
+                      file=sys.stderr)
         return code
+    if args.propose:
+        # The month-end carrier: cards for the month now ENDING (--month
+        # overrides; unlike the review, propose looks at the current month).
+        propose_month = args.month or datetime.now().strftime("%Y-%m")
+        markdown, n_cards = run_propose(repo, month=propose_month)
+        if args.out:
+            out_path = Path(args.out)
+            out_path.parent.mkdir(parents=True, exist_ok=True)
+            out_path.write_text(markdown, encoding="utf-8")
+            print(f"wrote {out_path}", file=sys.stderr)
+        else:
+            print(markdown, end="")
+        return 0
     if args.append_lessons_from:
         text = Path(args.append_lessons_from).read_text(encoding="utf-8")
         return append_lessons(text, month,
