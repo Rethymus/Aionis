@@ -452,13 +452,37 @@ def test_push_only_recovery_push_failure_raises(monkeypatch) -> None:
 
 # --- --doctor preflight (round 109) ---------------------------------------------
 
+_FROZEN_NOW: datetime | None = None  # set by _fresh_ok_evening (round 127)
+
+
+class _SharedClock(datetime):
+    """Real datetime except now(), which returns _FROZEN_NOW. _fresh_ok_evening
+    monkeypatches this onto lane.datetime so the doctor fixture (log-dir date)
+    and doctor layer 8 (marker_deadman's injected clock,
+    scripts/ops_local_refresh.py:1250) share ONE clock read — a midnight
+    crossing between fixture write and layer read can no longer desynchronize
+    the two surfaces (round 127 flaky-risk fix). Only the doctor tests patch
+    this; the only other clock consumer under collect_layers is layer 1's
+    guard_decision (detail text, not the pass/fail bit)."""
+
+    @classmethod
+    def now(cls, tz=None):  # type: ignore[override]
+        assert _FROZEN_NOW is not None, "_fresh_ok_evening must run first"
+        return _FROZEN_NOW
+
 
 def _fresh_ok_evening(tmp_path: Path, monkeypatch) -> str:
     """A same-day ok_committed run.log so doctor layer 8 (marker deadman,
     round 126) passes under mocks — a real freshness check would honestly
-    fail on the old stale-date fixture."""
+    fail on the old stale-date fixture. Round 127: the log-dir date comes
+    from a single clock read shared with the lane via _SharedClock, so
+    fixture and layer cannot disagree across midnight."""
     import json as _json
-    today = datetime.now().strftime("%Y-%m-%d")
+    global _FROZEN_NOW
+    _FROZEN_NOW = datetime.now().replace(hour=21, minute=0, second=0,
+                                         microsecond=0)
+    monkeypatch.setattr(lane, "datetime", _SharedClock)
+    today = _FROZEN_NOW.strftime("%Y-%m-%d")
     log_dir = tmp_path / "runs" / "ops_local_refresh" / today
     log_dir.mkdir(parents=True)
     summary = {"date": today, "status": "ok_committed", "commit": "a" * 40}

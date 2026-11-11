@@ -12,8 +12,6 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-import pytest
-
 ROOT = Path(__file__).resolve().parents[1]
 _SCRIPTS = ROOT / "scripts"
 for _p in (_SCRIPTS,):
@@ -210,13 +208,17 @@ def test_note_pop_leaves_no_stale_note_marker() -> None:
     assert state["status"] == "running" and state["attempts"] == 1
 
 
-def test_stale_note_residue_is_real_marker_fact() -> None:
-    """The motivating residue exists on this machine's real marker (P0 发现④);
-    the fix pops it on the next attempt start. Read-only, skipped if absent."""
+def test_stale_note_residue_absent_or_is_round99() -> None:
+    """Round-99-era note residue must never survive on the live marker:
+    begin_attempt pops any note at attempt start (round 126 fix), so a
+    note-free marker IS the fix holding and an absent marker IS the
+    fixed-state equivalent. Round 127: positive assertion, no skip — the
+    one-time acceptance skips (P0 发现④) would idle forever once the
+    residue was gone. A NON-round-99 note is a NEW residue → fail loudly."""
     marker = ROOT / "data" / "ops" / "local_refresh_state.json"
     if not marker.exists():
-        pytest.skip("local marker not present in this checkout")
+        return  # no marker = nothing for the fix to be accountable for
     live = json.loads(marker.read_text(encoding="utf-8"))
-    if "note" not in live:
-        pytest.skip("marker already note-free (fix has taken effect)")
-    assert "round-99" in str(live["note"])
+    assert "note" not in live or "round-99" in str(live["note"]), (
+        "live marker holds a non-round-99 note — a new residue that "
+        "begin_attempt should have popped; investigate the lane")
