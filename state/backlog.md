@@ -74,6 +74,27 @@
 12. **actionlint + zizmor 常驻静态校验**（https://github.com/rhysd/actionlint；https://github.com/zizmorcore/zizmor，均 MIT）——二进制未装未跑；如集成 doctor 需条件存在守卫，保守后置。
 13. **act 本地 dry-run**（https://github.com/nektos/act，MIT）——解锁前预检工具，不入 repo 依赖。
 
+### 2026-11-12 增补（轮 131-续，定夺框架条目 5；四条真增量候选——仅索引不装包，任何装包须业主点头；研究面若采纳照旧须预注册 + mission 指名）
+
+> 四条与在册 #1-13、2026-11-12 backlog-candidates-register 五条（本文件 :38-57）、延伸索引④⑤⑥
+> （:108-127）零重叠——本日实读复核；与 #11 时序共形区间不同族（变点检测≠区间估计）。
+> 7-gate（docs/data-intake-rubric.md）与许可证白名单（MIT/Apache/BSD）照旧逐条过。
+
+14. **uv lock --check（doctor 第 9 层候选，high）**——lockfile 与 pyproject 脱钩即报错，护 H6
+    version-pinned（uv.lock）语义与 1308 限额续跑后环境一致性；uv 已是项目工具链**零新依赖零新许可证面**
+    （来源锚：<https://docs.astral.sh/uv/reference/cli/>——前次调研 fox_fetch 全文核实
+    --check/--locked/--frozen 语义，2026-11-12 fetch 复核页面可达；本地 `uv lock --help` 实测
+    `--check`="Check if the lockfile is up-to-date"，`uv lock --check` 实跑 exit=0）。落点：
+    `scripts/ops_local_refresh.py` `collect_layers()` :1263-1352——本日实读复核 L1-L8 八层，现无锁文件层。
+15. **river PageHinkley 变点提示（medium）**——限审计/呈现面「给人看」的变点提示，**不入研究管线**；
+    若将来触碰研究面（如 IC 序列变点）须预注册（github.com/online-ml/river，BSD-3-Clause——GitHub API
+    已核实 6146★、2026-11-10 活跃）。红线注记：n=1 月度 p 记录**禁检测拟合**；min_instances 等
+    量级参数须明示**不调参**。与 #11 时序共形区间不同族（变点检测≠区间估计）。
+16. **duckdb 跨源 SQL 对账（medium）**——跨 parquet/CSV/JSON 源一次性 SQL 对账；使用形态限 `uvx`
+    一次性 CLI——**不入 pyproject、不常驻进程**（github.com/duckdb/duckdb，MIT——已核实 43028★）。
+17. **ty 类型检查（low）**——低 churn 模块试点**前须业主点头**；**不得入门禁**（gate 语义零改动）
+    （github.com/astral-sh/ty，MIT——已核实）。
+
 ## 名词指认资料（Jev 指认规则；2026-11-12 轮 130-续入册，杜绝 JEPA 混读）
 
 > 本区为名词指认参考，**非任务候选**——propose 引擎不解析本区（`backlog_open_candidates`
