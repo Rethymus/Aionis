@@ -1,13 +1,13 @@
 {
   "status": "ok",
-  "as_of": "2026-11-10T05:00:00Z",
+  "as_of": "2026-11-12T07:00:00Z",
   "window": {
     "start": "2026-10-15",
-    "end": "2026-11-10"
+    "end": "2026-11-12"
   },
   "query": "(\"stock market\" OR \"S&P 500\" OR \"Federal Reserve\") sourcelang:eng | sourcelang:zho domainis:wallstreetcn.com",
-  "total": 1101,
-  "n_sources": 303,
+  "total": 1301,
+  "n_sources": 351,
   "n_zho": 239,
   "by_day": [
     {
@@ -85,1360 +85,1368 @@
     {
       "date": "2026-11-10",
       "count": 7
+    },
+    {
+      "date": "2026-11-11",
+      "count": 45
+    },
+    {
+      "date": "2026-11-12",
+      "count": 155
     }
   ],
   "items": [
     {
-      "seendate": "2026-11-10T05:00:00Z",
-      "title": "\u4e2d\u56fd10\u6708\u51fa\u53e3\u540c\u6bd4\u589e\u957f35 . 2 %\uff0c AI\u786c\u4ef6\u70ed\u6f6e\u4e3a\u4e3b\u5f15\u64ce \uff0c \u8fdb\u53e3\u540c\u6bd4\u589e\u957f41 . 6 %",
-      "url": "https://wallstreetcn.com/articles/3785621",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-10T05:00:00Z",
-      "title": "\u4e16\u754c\u5bf9\u9ec4\u4ec1\u52cb\u4f9d\u8d56\u8fc7\u6df1 \uff0c \u82f1\u4f1f\u8fbe\u5e94\u964d\u4f4e\u5355\u4e00CEO\u98ce\u9669",
-      "url": "https://wallstreetcn.com/articles/3785624",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-10T05:00:00Z",
-      "title": "Seedream 5 . 5\u63d0\u901f \uff0c \u5b57\u8282\u56fe\u50cfAI\u6253\u901a\u8c46\u5305 \u3001 \u5373\u68a6\u4e0e\u4e91\u670d\u52a1",
-      "url": "https://wallstreetcn.com/articles/3785555",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-10T05:00:00Z",
-      "title": "\u80fd\u63a7\u5236\u673a\u5668\u4eba\u62e7\u74f6\u76d6 \u3001 \u89e3\u9b54\u65b9\u548c\u753b\u753b \uff01 Fable 5 . 2\u7684\u5177\u8eab\u667a\u80fd\u80fd\u529b\u5b9e\u73b0  \u60ca\u4eba\u8dc3\u8fc1",
-      "url": "https://wallstreetcn.com/articles/3785622",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-10T05:00:00Z",
-      "title": "AI\u98ce\u66b4\u91cd\u5934\u620f \uff1a \u80a1\u4ef7\u63a5\u8fd1\u8170\u65a9 \uff0c AI\u4e91\u53cc\u96c4  CoreWeave\u548cNebius\u8d22\u62a5\u8981\u6765\u4e86",
-      "url": "https://wallstreetcn.com/articles/3785618",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-10T05:00:00Z",
-      "title": "\u4fe1\u5fc3\u4e3a0 \uff01 \u9ad8\u76db\u89e3\u8bfb\u5bf9\u51b2\u57fa\u91d1\u4ed3\u4f4d \uff1a \u6295\u964d\u5f0f\u6e05\u4ed3 \uff0c \u75ab\u60c5\u4ee5\u6765\u6700\u5927\u4e8f\u635f",
-      "url": "https://wallstreetcn.com/articles/3785614",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-10T05:00:00Z",
-      "title": "\u5927\u6469  \u5185\u5b58\u6b7b\u795e  Shawn Kim\u518d\u53d1\u8b66\u544a \uff01 \u771f\u6b63\u7684\u70b8\u5f39\u662f  2028\u76c8\u5229\u60ac\u5d16 \uff0c \u5168\u9762\u4e0b\u8c03\u5185\u5b58\u80a1\u76ee\u6807\u4ef7",
-      "url": "https://wallstreetcn.com/articles/3785625",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-08T16:00:00Z",
-      "title": "\u9a6c\u65af\u514b\u4e2d\u9009\u540e\u8981\u88ab  \u79cb\u540e\u7b97\u8d26 \uff1f \u5fb7\u94f6 \uff1a \u7b97\u529b\u8d8a\u7d27\u5f20SpaceX\u8d8a\u8d5a\u94b1 \uff0c \u653f\u6cbb\u98ce\u9669\u88ab\u9ad8\u4f30",
-      "url": "https://wallstreetcn.com/articles/3785492",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-08T16:00:00Z",
-      "title": "Anthropic\u65a5\u8d4434\u4ebf\u7f8e\u5143\u91c7\u8d2d\u71c3\u6c14\u53d1\u7535\u8bbe\u5907 \uff0c \u4e3a\u6570\u636e\u4e2d\u5fc3\u4f9b\u7535",
-      "url": "https://wallstreetcn.com/articles/3785493",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-06T07:15:00Z",
-      "title": "\u7279\u6717\u666e \uff1a \u7f8e\u80a1\u7ecf\u5386\u53f2\u4e0a\u6700\u7cdf\u4ea4\u6613\u65e5\u4e4b\u4e00 \uff0c \u90fd\u602a\u6c11\u4e3b\u515a",
-      "url": "https://wallstreetcn.com/articles/3785344",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-06T04:30:00Z",
-      "title": "\u8d44\u91d1\u5de8\u53d8 \uff01 \u9999\u6e2f\u53ca\u90e8\u5206\u4e0a\u6d77\u6295\u8d44\u8005\u5bf9\u5b58\u50a8\u663e\u8457\u8f6c\u7a7a",
-      "url": "https://wallstreetcn.com/articles/3785324",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-06T04:30:00Z",
-      "title": "\u6807\u666e\u5355\u65e5\u84b8\u53d12 . 8\u4e07\u4ebf \uff0c BTIG\u8b66\u544a \uff1a \u8fd9\u4e0d\u662f\u5e95\u90e8 \uff0c \u771f\u6b63\u7684\u629b\u552e\u624d\u521a\u5f00\u573a",
-      "url": "https://wallstreetcn.com/articles/3785331",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-06T04:30:00Z",
-      "title": "\u7f8e\u80a1\u8e29\u8e0f\u98ce\u66b4 \uff01 \u91cf\u5316+\u6760\u6746ETF\u4e00\u5929\u629b\u552e700\u4ebf\u7f8e\u5143 \uff0c \u8fd8\u6709500\u4ebf\u7f8e\u5143\u5356\u76d8\u5728\u8def\u4e0a",
-      "url": "https://wallstreetcn.com/articles/3785319",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-06T04:30:00Z",
-      "title": "\u6cb9\u4ef7\u66b4\u8dcc20 %\uff0c \u91d1\u4ef7\u4e3a\u4f55\u9006\u52bf\u5927\u6da8 \uff1f \u9ad8\u76db \uff1a \u9ec4\u91d1\u6210\u4e3a  \u53cd\u5411\u77f3\u6cb9\u4ea4\u6613",
-      "url": "https://wallstreetcn.com/articles/3785336",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-06T04:30:00Z",
-      "title": "\u53e6\u8f9f\u8e4a\u5f84 \uff01 \u76d1\u7ba1\u538b\u529b\u4e0b \uff0c \u82f1\u4f1f\u8fbe\u7b79\u5212  \u65e7\u697c\u6539\u9020  \u6570\u636e\u4e2d\u5fc3 \uff0c \u89c4\u6a21\u8fbe1\u5409\u74e6",
-      "url": "https://wallstreetcn.com/articles/3785329",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-06T04:30:00Z",
-      "title": "\u76c8\u4e8f\u540c\u6e90 \uff01 \u7eb3\u6307\u80a1\u707e \uff0c \u5bf9\u51b2\u57fa\u91d1\u7eb7\u73b0\u5de8\u4e8f \u3001 \u5173\u95e8",
-      "url": "https://wallstreetcn.com/articles/3785318",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-06T04:30:00Z",
-      "title": "\u521b\u4e1a\u677f\u8dcc3 . 5 %\uff0c AI\u786c\u4ef6\u9886\u8dcc \u3001 \u6613\u4e2d\u5929  \u518d\u5ea6\u96c6\u4f53\u8c03\u6574 \uff0c \u5149\u4f0f \u3001 \u519c\u4e1a\u9006\u52bf\u6d3b\u8dc3 \uff0c \u6052\u6307 \u3001 \u6052\u79d1\u6307\u5747\u8dcc\u8d851 %",
-      "url": "https://wallstreetcn.com/articles/3785325",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-06T04:30:00Z",
-      "title": "\u6d1b\u6749\u77f6 \u3001 \u7ebd\u7ea6\u76f8\u7ee7\u7ad9\u8fb9 \uff01 \u7f8e\u56fd\u6700\u5927\u7684\u4e24\u5ea7\u57ce\u5e02\u5df2\u6295  \u793e\u4f1a\u4e3b\u4e49",
-      "url": "https://wallstreetcn.com/articles/3785309",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-06T04:30:00Z",
-      "title": "\u5149\u8f6e\u667a\u80fd\u4e0e\u5b87\u6811\u79d1\u6280\u8fbe\u6210\u6218\u7565\u5408\u4f5c \uff0c \u5e74\u5185\u5df2\u62ab\u9732\u878d\u8d44\u91d1\u989d\u5408\u8ba120\u4ebf\u5143",
-      "url": "https://wallstreetcn.com/articles/3785341",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-06T04:30:00Z",
-      "title": "\u7f8e\u56fd\u8ddd\u4e0b\u4e00\u573a\u91d1\u878d\u5371\u673a\u8fd8\u6709\u591a\u8fdc \uff1f - \u534e\u5c14\u8857\u89c1\u95fb",
-      "url": "https://wallstreetcn.com/articles/3785328",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-06T04:30:00Z",
-      "title": "\u5fae\u8f6f\u5bf9  \u65b0\u4e91  \u62bc\u6ce8\u5fc3\u751f\u6094\u610f \uff0c \u52a0\u5f3a\u5ba1\u67e5\u5e76\u9000\u51fa\u90e8\u5206\u6570\u636e\u4e2d\u5fc3\u9879\u76ee",
-      "url": "https://wallstreetcn.com/articles/3785307",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-06T04:30:00Z",
-      "title": "\u5171\u548c\u515a\u60e8\u8d25\u4e2d\u9009 \uff0c \u7279\u6717\u666e\u8fd8\u80fd\u575a\u6301\u5173\u7a0e\u5417 \uff1f 2029\u5e74\u524d \uff0c \u4e0d\u8981\u6307\u671b\u6709\u4ec0\u4e48\u53d8\u5316",
-      "url": "https://wallstreetcn.com/articles/3785322",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-06T04:30:00Z",
-      "title": "\u7f8e\u56fd\u6570\u636e\u4e2d\u5fc3\u4e00\u7ebf\u8c08  \u5efa\u8bbe\u98ce\u9669 \uff1a \u884c\u653f\u8bb8\u53ef \u3001 \u6280\u672f\u5de5\u4eba \u3001 \u4fdd\u9669 \u3001 \u7535\u529b\u6ce2\u52a8",
-      "url": "https://wallstreetcn.com/articles/3785323",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-06T04:30:00Z",
-      "title": "\u9694\u591c\u7f8e\u80a1\u5d29\u76d8 \uff1a \u4e00\u573a\u75311000\u4ebf\u7f8e\u5143  \u62a2\u8dd1  \u5f15\u7206\u7684\u53cd\u8eab\u6027\u98ce\u66b4",
-      "url": "https://wallstreetcn.com/articles/3785338",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-06T04:30:00Z",
-      "title": "\u79d1\u6280\u80a1  \u8840\u6d17  \u540e \uff0c Anthropic IPO\u9762\u4e34\u5371\u673a \uff1a \u8fd8\u503c1 . 5\u4e07\u4ebf\u7f8e\u5143\u5417 \uff1f \u8fd8\u5e94\u8be5\u6b64\u523b\u4e0a\u5e02\u5417 \uff1f",
-      "url": "https://wallstreetcn.com/articles/3785326",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-06T04:30:00Z",
-      "title": "\u9a6c\u65af\u514b  \u8f93\u6389  \u4e2d\u9009 \uff0c SpaceX\u4e94\u5e74\u671fCDS\u8fde\u521b\u5386\u53f2\u65b0\u9ad8",
-      "url": "https://wallstreetcn.com/articles/3785320",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-05T22:00:00Z",
-      "title": "\u7f8e\u8054\u50a8\u9e70\u58f0\u518d\u8d77 \uff01 Hammack\u79f0\u5229\u7387\u9700\u5347\u81f3\u9650\u5236\u6027\u6c34\u5e73 \uff0c \u503e\u5411\u4e8e\u66f4\u9891\u7e41 \u3001 \u5c0f\u5e45\u52a0\u606f",
-      "url": "https://wallstreetcn.com/articles/3785299",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-05T22:00:00Z",
-      "title": "Anthropic\u63a8\u51fa\u4e2a\u4eba\u8d22\u52a1\u529f\u80fd \uff1a Claude\u53ef\u63a5\u5165\u94f6\u884c\u8d26\u6237 \uff0c \u56de\u7b54\u7528\u6237\u7406\u8d22\u95ee\u9898",
-      "url": "https://wallstreetcn.com/articles/3785298",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-05T07:15:00Z",
-      "title": "Asian shares mostly advance following US midterms , though Kospi falls on selling of chipmakers",
-      "url": "https://www.dailygazette.com/leader_herald/ap/business/asian-shares-mostly-advance-following-us-midterms-though-kospi-falls-on-selling-of-chipmakers/article_49fd62b6-abc8-54bf-aee9-951a9fa82235.html",
-      "domain": "dailygazette.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-04T01:30:00Z",
-      "title": "Dividend investing in 2026 : 5 stocks to know",
-      "url": "https://www.livemint.com/market/stock-market-news/dividend-investing-in-2026-5-stocks-to-know-11793705770748.html",
-      "domain": "livemint.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-04T01:30:00Z",
-      "title": "France 24 Links Trump Tariffs to Rising U . S . Small - Business Bankruptcies",
-      "url": "https://econotimes.com/France-24-Links-Trump-Tariffs-to-Rising-U-S-Small-Business-Bankruptcies-1770383",
-      "domain": "econotimes.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-04T01:30:00Z",
-      "title": "The S & P 500 Fell in Both September and October for Only the 17th Time Since 1950 . Here What Usually Followed .",
-      "url": "https://www.fool.com/investing/2026/11/03/the-s-and-p-500-fell-in-both-september-and-october-for-only-the-17th-time-since-1950-here-s-what-usually-followed/?source=iedfolrf0000001",
-      "domain": "fool.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-04T01:30:00Z",
-      "title": "Raja Venkatraman recommends three stocks for 4 November",
-      "url": "https://www.livemint.com/market/stock-market-news/raja-venkatraman-recommends-three-stocks-for-4-november-11793752862815.html",
-      "domain": "livemint.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-04T01:30:00Z",
-      "title": "S & P 500 rises as Nvidia , AI stocks rally despite Apple decline",
-      "url": "https://thebusinessjournal.com/sp-500-rises-nvidia-ai-stocks-apple-wall-street/",
-      "domain": "thebusinessjournal.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-04T01:30:00Z",
-      "title": "China to expand share buyback support , cut relending rate to 1 %",
-      "url": "http://europe.chinadaily.com.cn/a/202611/03/WS6ae94d1fe4b06d4aa0566b65.html",
-      "domain": "europe.chinadaily.com.cn",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-04T01:30:00Z",
-      "title": "Casinos Gaming growth to stall below 1 % as high - end demand weakens",
-      "url": "https://macaudailytimes.com.mo/casinos-gaming-growth-to-stall-below-1-as-high-end-demand-weakens.html",
-      "domain": "macaudailytimes.com.mo",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Macau"
-    },
-    {
-      "seendate": "2026-11-04T01:30:00Z",
-      "title": "President Donald Trump Claims Hell  Veto Everything  if Democrats Retake Congress , and It Has Big Implications for the Stock Market",
-      "url": "https://www.fool.com/investing/2026/11/03/donald-trump-claims-veto-everything-democrats-retake-congress-big-implications-for-stock-market/?source=iedfolrf0000001",
-      "domain": "fool.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-03T11:15:00Z",
-      "title": "Altman \uff1a \u4e00\u4e2a\u4eba\u5982\u4f55\u501f\u52a9 AI \uff0c \u5e72\u5b8c100\u4e2a\u4eba\u7684\u6d3b",
-      "url": "https://wallstreetcn.com/articles/3785083",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-03T11:15:00Z",
-      "title": "\u4f0a\u6717\u519b\u65b9\u63d0\u51fa\u4e94\u9879\u548c\u5e73\u539f\u5219 \uff1a \u89e3\u9664\u5236\u88c1 \u3001 \u6218\u4e89\u8d54\u507f \uff0c \u8fd8\u8981\u970d\u5c14\u6728\u5179\u6d77\u5ce1\u4e3b\u6743 ......",
-      "url": "https://wallstreetcn.com/articles/3785079",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-03T11:15:00Z",
-      "title": "\u56fd\u52a1\u9662 \uff1a \u5b9e\u65bd\u597d\u652f\u6301\u8d44\u672c\u5e02\u573a\u7684\u8d27\u5e01\u653f\u7b56\u5de5\u5177",
-      "url": "https://wallstreetcn.com/articles/3785082",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-03T11:15:00Z",
-      "title": "\u82f9\u679c\u7684\u5b9a\u4ef7\u6743\u518d\u5f3a \uff0c \u4e5f\u625b\u4e0d\u4f4f\u5b58\u50a8\u6da8\u4ef7\u4e86 - \u534e\u5c14\u8857\u89c1\u95fb",
-      "url": "https://wallstreetcn.com/articles/3785075",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-03T11:15:00Z",
-      "title": "DeepSeek\u53c8\u5d29\u4e86 \uff01 - \u534e\u5c14\u8857\u89c1\u95fb",
-      "url": "https://wallstreetcn.com/articles/3785086",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-03T11:15:00Z",
-      "title": "\u7b49\u5f85\u6700\u540e\u4e00\u8dcc \uff1f \u5927\u6469Wilson \uff1a \u65e0\u8bba\u4e2d\u9009\u7ed3\u679c\u5982\u4f55 \uff0c \u90fd\u6216\u662f\u6284\u5e95\u7f8e\u80a1\u7684\u826f\u673a",
-      "url": "https://wallstreetcn.com/articles/3785077",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-03T11:15:00Z",
-      "title": "Anthropic\u8fd8\u5728\u75af\u72c2\u62a2\u7b97\u529b \uff1a 8954\u4ebf\u7f8e\u5143\u627f\u8bfa \uff0c \u8fde\u65e7\u7164\u7535\u5382\u90fd\u4e0d\u653e\u8fc7",
-      "url": "https://wallstreetcn.com/articles/3785084",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-03T11:15:00Z",
-      "title": "\u4e16\u754c\u9ec4\u91d1\u534f\u4f1a \uff1a \u4e0b\u8c03\u5168\u5e74\u9ec4\u91d1\u6295\u8d44\u9700\u6c42\u589e\u957f\u9884\u671f\u81f3200\u5428 \uff0c \u5168\u7403\u592e\u884c\u8d2d\u91d1\u63d0\u901f \u3001 ETF\u6301\u4ed3\u521b\u65b0\u9ad8",
-      "url": "https://wallstreetcn.com/articles/3785076",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-03T11:15:00Z",
-      "title": "Investors ready for possible shake - up in Congress as Election Day arrives",
-      "url": "https://www.theglobeandmail.com/investing/article-investors-ready-for-possible-shake-up-in-congress-as-election-day/",
-      "domain": "theglobeandmail.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Canada"
-    },
-    {
-      "seendate": "2026-11-03T11:15:00Z",
-      "title": "Critical Comparison : TrustCo Bank Corp NY ( NASDAQ : TRST ) versus ServisFirst Bancshares ( NYSE : SFBS )",
-      "url": "https://www.themarketsdaily.com/2026/11/03/critical-comparison-trustco-bank-corp-ny-nasdaqtrst-versus-servisfirst-bancshares-nysesfbs.html",
-      "domain": "themarketsdaily.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-03T11:15:00Z",
-      "title": "China Stock Slump Deepens as Policy Support Fails to Reassure Investors",
-      "url": "https://www.chinamoneynetwork.com/2026/11/03/china-stock-slump-deepens-as-policy-support-fails-to-reassure-investors",
-      "domain": "chinamoneynetwork.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-03T11:15:00Z",
-      "title": "Why AUD / USD Is Facing Its Most Important Test Yet",
-      "url": "https://www.dailyforex.com/forex-technical-analysis/2026/11/audusd-forecast-3-november-2026/251344",
-      "domain": "dailyforex.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United Kingdom"
-    },
-    {
-      "seendate": "2026-11-03T11:15:00Z",
-      "title": "Head - To - Head Review : Invesco ( IVZ ) vs . Its Rivals",
-      "url": "https://www.themarketsdaily.com/2026/11/03/head-to-head-review-invesco-ivz-vs-its-rivals.html",
-      "domain": "themarketsdaily.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-03T11:15:00Z",
-      "title": "Innovator U . S . Equity Ultra Buffer ETF \u2013 November $UNOV Stock Sold by Trek Financial LLC",
-      "url": "https://www.themarketsdaily.com/2026/11/03/innovator-u-s-equity-ultra-buffer-etf-november-unov-stock-sold-by-trek-financial-llc.html",
-      "domain": "themarketsdaily.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-03T11:15:00Z",
-      "title": "Contrasting Euroseas ( NASDAQ : ESEA ) & Diana Shipping ( NYSE : DSX )",
-      "url": "https://www.themarketsdaily.com/2026/11/03/contrasting-euroseas-nasdaqesea-diana-shipping-nysedsx.html",
-      "domain": "themarketsdaily.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-03T11:15:00Z",
-      "title": "Nonso Okpala : Meet the Oracle of Uga and Nigeria Warren Buffett \u2013 THISDAYLIVE",
-      "url": "https://www.thisdaylive.com/2026/11/03/nonso-okpala-meet-the-oracle-of-uga-and-nigerias-warren-buffett/",
-      "domain": "thisdaylive.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Nigeria"
-    },
-    {
-      "seendate": "2026-11-03T11:15:00Z",
-      "title": "EUR / USD Signal 03 / 11 : Rebound Meets Key Resistance at 1 . 1226",
-      "url": "https://www.dailyforex.com/forex-technical-analysis/2026/11/eurusd-signal-3-november-2026/251357",
-      "domain": "dailyforex.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United Kingdom"
-    },
-    {
-      "seendate": "2026-11-03T11:15:00Z",
-      "title": "Premarket : U . S . stock futures mixed as Apple slides , midterms loom",
-      "url": "https://www.theglobeandmail.com/investing/markets/inside-the-market/market-news/article-premarket-stocks-slip-as-ai-jitters-us-midterms-keep-investors-on-edge/",
-      "domain": "theglobeandmail.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Canada"
-    },
-    {
-      "seendate": "2026-11-03T11:15:00Z",
-      "title": "Yum China Board Welcomes New Board Member",
-      "url": "https://www.manilatimes.net/2026/11/03/tmt-newswire/pr-newswire/yum-china-board-welcomes-new-board-member/2460410",
-      "domain": "manilatimes.net",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Philippines"
-    },
-    {
-      "seendate": "2026-11-03T11:15:00Z",
-      "title": "And the winner of The Globe stock - picking contest is ...",
-      "url": "https://www.theglobeandmail.com/investing/article-and-the-winner-of-the-globes-stock-picking-contest-is-nov-2026/",
-      "domain": "theglobeandmail.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Canada"
-    },
-    {
-      "seendate": "2026-11-03T11:15:00Z",
-      "title": "Welch Group LLC Sells 43 , 225 Shares of Schwab US Large - Cap ETF $SCHX",
-      "url": "https://www.themarketsdaily.com/2026/11/03/welch-group-llc-sells-43225-shares-of-schwab-us-large-cap-etf-schx.html",
-      "domain": "themarketsdaily.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-03T11:15:00Z",
-      "title": "Data Science AI Masters ( 2026 ) - From Python To Gen AI",
-      "url": "https://www.chilecomparte.cl/foros/topic/5387196-data-science-ai-masters-2026-from-python-to-gen-ai/",
-      "domain": "chilecomparte.cl",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Chile"
-    },
-    {
-      "seendate": "2026-11-03T11:15:00Z",
-      "title": "Before the Bell : What every Canadian investor needs to know today",
-      "url": "https://www.theglobeandmail.com/investing/markets/inside-the-market/article-before-the-bell-what-every-canadian-investor-needs-to-know-today-1594/",
-      "domain": "theglobeandmail.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Canada"
-    },
-    {
-      "seendate": "2026-11-03T11:15:00Z",
-      "title": "Global markets were already fragile . Big AI bets could break them",
-      "url": "https://www.theglobeandmail.com/investing/article-global-markets-were-already-fragile-big-ai-bets-could-break-them/",
-      "domain": "theglobeandmail.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Canada"
-    },
-    {
-      "seendate": "2026-11-03T02:15:00Z",
-      "title": "442\u53ea\u7ffb\u500d\u57fa  \u5168\u519b\u8986\u6ca1 \uff0c \u57fa\u91d1\u7ecf\u7406\u5728\u53cd\u601d\u4ec0\u4e48 \uff1f",
-      "url": "https://wallstreetcn.com/articles/3785030",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-03T02:15:00Z",
-      "title": "\u5bf9\u51b2\u57fa\u91d1\u5de8\u5934Elliott \uff1a \u5f53\u524d\u5e02\u573a\u4e0e\u5927\u8427\u6761\u524d\u9ad8\u5ea6\u76f8\u4f3c \uff0c \u718a\u5e02\u7684\u6240\u6709\u8b66\u62a5\u5df2\u7ecf\u62c9\u54cd",
-      "url": "https://wallstreetcn.com/articles/3785034",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-03T02:15:00Z",
-      "title": "\u97e9\u56fd\u521b\u7eaa\u5f55\u9884\u7b97\u53d1\u529bAI \uff1a 4 . 7\u4e07\u4ebf\u97e9\u5143\u9020  \u5168\u7403\u6700\u9ad8\u6027\u80fd  \u4e3b\u6743\u6a21\u578b",
-      "url": "https://wallstreetcn.com/articles/3785038",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-03T02:15:00Z",
-      "title": "\u4ee5\u9000\u4e3a\u8fdb \uff1a \u51fa\u53e3\u9000\u7a0e\u7684\u518d\u5b9a\u4ef7 - \u534e\u5c14\u8857\u89c1\u95fb",
-      "url": "https://wallstreetcn.com/articles/3785031",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-03T02:15:00Z",
-      "title": "\u7f8e\u4f0a\u5c55\u73b0  \u8c08\u5224\u610f\u613f \uff0c \u5168\u7403\u80fd\u6e90\u4ef7\u683c\u91cd\u632b \uff0c \u9ec4\u91d1\u5f3a\u52bf\u53cd\u5f39 \u3001 \u521b\u4e24\u4e2a\u6708\u6765\u6700\u5927\u5355\u65e5\u6da8\u5e45",
-      "url": "https://wallstreetcn.com/articles/3785033",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-03T02:15:00Z",
-      "title": "\u534e\u5c14\u8857\u89c1\u95fb\u65e9\u9910FM - Radio | 2026\u5e7411\u67083\u65e5",
-      "url": "https://wallstreetcn.com/articles/3785026",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-03T02:15:00Z",
-      "title": "\u521b\u4e1a\u677f\u6307\u76d8\u521d\u4e00\u5ea6\u8dcc2 % \u540e\u7ffb\u7ea2 \uff0c \u7535\u6c60\u4ea7\u4e1a\u94fe\u7206\u53d1 \uff0c \u7b97\u529b\u786c\u4ef6\u8c03\u6574 \u3001 \u6613\u4e2d\u5929  \u518d\u5927\u8dcc \uff0c \u6052\u79d1\u6307\u6da8\u8d851 %\uff0c \u79d1\u7f51\u80a1\u62c9\u5347",
-      "url": "https://wallstreetcn.com/articles/3785042",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-03T02:15:00Z",
-      "title": "Stock Market Today Live : Gift Nifty points to gap - up opening ; crude oil , US election in focus",
-      "url": "https://www.thehindubusinessline.com/markets/sensex-nifty50-today-stock-market-live-updates-3-november-2026/article71657258.ece",
-      "domain": "thehindubusinessline.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-03T02:15:00Z",
-      "title": "newsroomamerica . com",
-      "url": "https://newsroomamerica.com/?before=119284",
-      "domain": "newsroomamerica.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-03T02:15:00Z",
-      "title": "Stocks to watch , Nov 3 : GRSE , Dr Reddy , Lupin , NBCC , HPCL and others bag major orders , approvals",
-      "url": "https://www.thehindubusinessline.com/markets/buzzing-stocks-grse-dr-reddys-lupin-nbcc-hpcl-belrise-and-datakosa-in-focus/article71659200.ece",
-      "domain": "thehindubusinessline.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-10-27T05:15:00Z",
-      "title": "Head to Head Survey : CureVac ( NASDAQ : CVAC ) vs . Altimmune ( NASDAQ : ALT )",
-      "url": "https://www.dailypolitical.com/2026/10/26/head-to-head-survey-curevac-nasdaqcvac-vs-altimmune-nasdaqalt.html",
-      "domain": "dailypolitical.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-27T05:15:00Z",
-      "title": "Asian Markets Trade Mixed",
-      "url": "https://www.rttnews.com/3703088/asian-markets-trade-mixed.aspx",
-      "domain": "rttnews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-27T05:15:00Z",
-      "title": "US consumer sentiment near record low as inflation fears persist",
-      "url": "http://www.myanmarnews.net/news/279395118/us-consumer-sentiment-near-record-low-as-inflation-fears-persist",
-      "domain": "myanmarnews.net",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Myanmar"
-    },
-    {
-      "seendate": "2026-10-27T05:15:00Z",
-      "title": "Anthropic model accessed publicly available Georgia voter data ; no human authorization",
-      "url": "https://fox56.com/news/nation-world/anthropic-model-accessed-publicly-available-georgia-voter-data-no-human-authorization-artificial-intelligence",
-      "domain": "fox56.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-27T05:15:00Z",
-      "title": "5 things to watch from the Federal Reserve next meeting",
-      "url": "https://www.thesunchronicle.com/business/5-things-to-watch-from-the-federal-reserves-next-meeting/article_7fe45c06-8782-5837-af1d-665ff6a49949.html",
-      "domain": "thesunchronicle.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-27T05:15:00Z",
-      "title": "Anthropic model accessed publicly available Georgia voter data ; no human authorization",
-      "url": "https://fox17.com/news/nation-world/anthropic-model-accessed-publicly-available-georgia-voter-data-no-human-authorization-artificial-intelligence",
-      "domain": "fox17.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-27T05:15:00Z",
-      "title": "RBI steps up liquidity support as tighter cash conditions push up borrowing rates : Report",
-      "url": "http://www.ohiostandard.com/news/279399101/rbi-steps-up-liquidity-support-as-tighter-cash-conditions-push-up-borrowing-rates-report",
-      "domain": "ohiostandard.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-27T05:15:00Z",
-      "title": "Chinese markets lose trillions as race for AI supremacy with US takes its toll",
-      "url": "https://www.theguardian.com/world/2026/oct/27/chinese-markets-lose-trillions-ai-race-beijing",
-      "domain": "theguardian.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United Kingdom"
-    },
-    {
-      "seendate": "2026-10-27T05:15:00Z",
-      "title": "US consumer sentiment stays near record low in October",
-      "url": "http://www.milwaukeesun.com/news/279395118/us-consumer-sentiment-stays-near-record-low-in-october",
-      "domain": "milwaukeesun.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-27T05:15:00Z",
-      "title": "Fusemachines ( NASDAQ : FUSE ) & TSS ( NASDAQ : TSSI ) Financial Contrast",
-      "url": "https://www.dailypolitical.com/2026/10/26/fusemachines-nasdaqfuse-tss-nasdaqtssi-financial-contrast.html",
-      "domain": "dailypolitical.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-27T05:15:00Z",
-      "title": "Sensex falls over 300 points , Nifty slips below 22 , 690 as crude prices hover near USD 115",
-      "url": "http://www.myanmarnews.net/news/279399205/sensex-falls-over-300-points-nifty-slips-below-22690-as-crude-prices-hover-near-usd-115",
-      "domain": "myanmarnews.net",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Myanmar"
-    },
-    {
-      "seendate": "2026-10-27T05:15:00Z",
-      "title": "Sensex falls over 300 points , Nifty slips below 22 , 690 as crude prices hover near USD 115",
-      "url": "http://www.milwaukeesun.com/news/279399205/sensex-falls-over-300-points-nifty-slips-below-22690-as-crude-prices-hover-near-usd-115",
-      "domain": "milwaukeesun.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-27T05:15:00Z",
-      "title": "Indian Shares Marginally Lower In Early Trade ; IT Stocks Underperform",
-      "url": "https://www.rttnews.com/3703096/indian-shares-marginally-lower-in-early-trade-it-stocks-underperform.aspx",
-      "domain": "rttnews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-27T05:15:00Z",
-      "title": "Anthropic model accessed publicly available Georgia voter data ; no human authorization",
-      "url": "https://wgxa.tv/news/nation-world/anthropic-model-accessed-publicly-available-georgia-voter-data-no-human-authorization-artificial-intelligence",
-      "domain": "wgxa.tv",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-27T05:15:00Z",
-      "title": "Anthropic model accessed publicly available Georgia voter data ; no human authorization",
-      "url": "https://ktxs.com/news/nation-world/anthropic-model-accessed-publicly-available-georgia-voter-data-no-human-authorization-artificial-intelligence",
-      "domain": "ktxs.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-27T05:15:00Z",
-      "title": "Reviewing Phunware ( NASDAQ : PHUN ) & NCR Voyix ( NYSE : VYX )",
-      "url": "https://www.dailypolitical.com/2026/10/26/reviewing-phunware-nasdaqphun-ncr-voyix-nysevyx.html",
-      "domain": "dailypolitical.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-27T05:15:00Z",
-      "title": "Brazil Stocks Face Test After 13 . 9 % Plunge | Morning Call , Oct 27",
-      "url": "https://www.riotimesonline.com/brazils-financial-morning-call-for-tuesday-october-27-2026/",
-      "domain": "riotimesonline.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Brazil"
-    },
-    {
-      "seendate": "2026-10-27T05:15:00Z",
-      "title": "RBI steps up liquidity support as tighter cash conditions push up borrowing rates : Report",
-      "url": "http://www.myanmarnews.net/news/279399101/rbi-steps-up-liquidity-support-as-tighter-cash-conditions-push-up-borrowing-rates-report",
-      "domain": "myanmarnews.net",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Myanmar"
-    },
-    {
-      "seendate": "2026-10-27T05:15:00Z",
-      "title": "Brazil Stocks Plunge 13 . 9 % as Fed Week Begins | Global Economy , Oct 27",
-      "url": "https://www.riotimesonline.com/global-economy-briefing-october-27-2026/",
-      "domain": "riotimesonline.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Brazil"
-    },
-    {
-      "seendate": "2026-10-27T05:15:00Z",
-      "title": "Anthropic model accessed publicly available Georgia voter data ; no human authorization",
-      "url": "https://wcti12.com/news/nation-world/anthropic-model-accessed-publicly-available-georgia-voter-data-no-human-authorization-artificial-intelligence",
-      "domain": "wcti12.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-27T05:15:00Z",
-      "title": "US consumer sentiment stays near record low in October",
-      "url": "http://www.ohiostandard.com/news/279395118/us-consumer-sentiment-stays-near-record-low-in-october",
-      "domain": "ohiostandard.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-27T05:15:00Z",
-      "title": "Latin America Mood : Brazil Reels After Lula Win",
-      "url": "https://www.riotimesonline.com/latin-american-pulse-for-tuesday-october-27-2026/",
-      "domain": "riotimesonline.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Brazil"
-    },
-    {
-      "seendate": "2026-10-27T05:15:00Z",
-      "title": "Head to Head Review : Atlantic Union Bankshares ( NYSE : AUB ) and Credit Agricole ( OTCMKTS : CRARY )",
-      "url": "https://www.dailypolitical.com/2026/10/26/head-to-head-review-atlantic-union-bankshares-nyseaub-and-credit-agricole-otcmktscrary.html",
-      "domain": "dailypolitical.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-27T05:15:00Z",
-      "title": "Robinhood Markets ( NASDAQ : HOOD ) Stock Price Breaks Below Two Hundred Day Moving Average on Insider Selling",
-      "url": "https://www.dailypolitical.com/2026/10/26/robinhood-markets-nasdaqhood-stock-price-breaks-below-two-hundred-day-moving-average-on-insider-selling.html",
-      "domain": "dailypolitical.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-27T05:15:00Z",
-      "title": "Australian Market Swings To Modest Gains In Mid - market",
-      "url": "https://www.rttnews.com/3703089/australian-market-swings-to-modest-gains-in-mid-market.aspx",
-      "domain": "rttnews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-26T07:15:00Z",
-      "title": "TOR to be listed on Ghana Stock Exchange \u2013 MD tells visiting IMF team",
-      "url": "https://thechronicle.com.gh/tor-to-be-listed-on-ghana-stock-exchange-md-tells-visiting-imf-team/",
-      "domain": "thechronicle.com.gh",
+      "seendate": "2026-11-12T07:00:00Z",
+      "title": "Jospong takes Africa waste solutions to COP31",
+      "url": "https://thebftonline.com/article/jospong-takes-africa-s-waste-solutions-to-cop31",
+      "domain": "thebftonline.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "Ghana"
     },
     {
-      "seendate": "2026-10-26T07:15:00Z",
-      "title": "Australian Market Swings To Slight Gains In Mid - market",
-      "url": "https://www.rttnews.com/story.aspx?Id=3702660",
-      "domain": "rttnews.com",
+      "seendate": "2026-11-12T07:00:00Z",
+      "title": "This 1 Important Signal Is Now Flashing Red for Ethereum . That Why Im Selling ETH Right Now .",
+      "url": "https://www.fool.com/investing/2026/11/12/this-1-important-signal-is-now-flashing-redgreen-f/?source=iedfolrf0000001",
+      "domain": "fool.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-26T07:15:00Z",
-      "title": "Bitcoin Trades Below $80 , 000 Ahead of Fed Oct . 27 - 28 Meeting",
-      "url": "https://econotimes.com/Bitcoin-Trades-Below-80-000-Ahead-of-Fed-s-Oct-27-28-Meeting-1763376",
+      "seendate": "2026-11-12T07:00:00Z",
+      "title": "Prediction : $1 , 000 Invested in SpaceX Today Will Be Worth This Much by 2029",
+      "url": "https://www.fool.com/investing/2026/11/12/prediction-1000-invested-in-spacex-today-will-be-w/?source=iedfolrf0000001",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T07:00:00Z",
+      "title": "AMC Global Media : 3 Key Takeaways for Long - Term Investors",
+      "url": "https://www.fool.com/earnings/takeaways/2026/11/12/amc-global-media-3-key-takeaways-for-long-term-investors/?source=iedfolrf0000001",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T07:00:00Z",
+      "title": "Skydance : 3 Key Takeaways for Long - Term Investors",
+      "url": "https://www.fool.com/earnings/takeaways/2026/11/12/skydance-3-key-takeaways-for-long-term-investors/?source=iedfolrf0000001",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T07:00:00Z",
+      "title": "Sensex Climbs 773 Points to 82 , 013 . 58 ; Nifty Ends at 25 , 255 on November 12",
+      "url": "https://udaipurkiran.com/sensex-climbs-773-points-to-82013-58-nifty-ends-at-25255-on-november-12/",
+      "domain": "udaipurkiran.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-12T07:00:00Z",
+      "title": "Gabriel Opoku - Asare appointed board Chair of TRMTF",
+      "url": "https://thebftonline.com/article/gabriel-opoku-asare-appointed-board-chair-of-trmtf",
+      "domain": "thebftonline.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Ghana"
+    },
+    {
+      "seendate": "2026-11-12T07:00:00Z",
+      "title": "Micron vs . Sandisk : The AI Memory Supercycle Is Big Enough for Both , but Here the Better Buy .",
+      "url": "https://www.fool.com/investing/2026/11/12/micron-vs-sandisk-the-ai-memory-supercycle-is-big/?source=iedfolrf0000001",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T07:00:00Z",
+      "title": "Kenya : MPs Demand Special Audit of Quickmart Share Sale Over Investor Fears",
+      "url": "https://allafrica.com/stories/202611120035.html",
+      "domain": "allafrica.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Nigeria"
+    },
+    {
+      "seendate": "2026-11-12T07:00:00Z",
+      "title": "China central bank signals easing restraint as growth holds up",
+      "url": "https://www.hindustantimes.com/business/chinas-central-bank-signals-easing-restraint-as-growth-holds-up-101794462764183.html",
+      "domain": "hindustantimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-12T07:00:00Z",
+      "title": "Where Will Robinhood Be in 3 Years ? | The Motley Fool",
+      "url": "https://www.fool.com/investing/2026/11/12/where-will-robinhood-be-in-3-years/?source=iedfolrf0000001",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T07:00:00Z",
+      "title": "Anthropic Plans $64 Billion IPO , Potentially Largest Retail Investment",
+      "url": "https://udaipurkiran.com/anthropic-plans-64-billion-ipo-potentially-largest-retail-investment/",
+      "domain": "udaipurkiran.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-12T06:45:00Z",
+      "title": "Haldiram Plans \u20b910 , 000 Crore IPO in 2027 - TeluguPeople . com News",
+      "url": "https://www.telugupeople.com/news/news.asp?newsId=109317",
+      "domain": "telugupeople.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-12T06:45:00Z",
+      "title": "Memory Chips Are Completely Distorting South Korea Economy",
+      "url": "https://foreignpolicy.com/2026/11/11/south-korea-semiconductor-memory-chips-artificial-intelligence-inflation-affordability/?tpcc=recirc_trending062921",
+      "domain": "foreignpolicy.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T06:45:00Z",
+      "title": "CoreWeave Shares Jump 24 . 7 % as Global Stocks Rise and Dollar Gains",
+      "url": "https://econotimes.com/CoreWeave-Shares-Jump-24-7-as-Global-Stocks-Rise-and-Dollar-Gains-1775692",
       "domain": "econotimes.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-26T07:15:00Z",
-      "title": "KOSPI Slides 1 . 4 % Below 5 , 500 as Foreign Selling Hits Seoul Stocks Ahead of SK Hynix and Samsung Earnings",
-      "url": "https://www.ibtimes.com.au/south-korean-shares-fall-ahead-chip-earnings-1877393",
-      "domain": "ibtimes.com.au",
+      "seendate": "2026-11-12T06:45:00Z",
+      "title": "Mirae Asset plans W1 . 4tr share cancellation despite Q3 loss",
+      "url": "https://www.koreaherald.com/article/10935332",
+      "domain": "koreaherald.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "South Korea"
+    },
+    {
+      "seendate": "2026-11-12T06:45:00Z",
+      "title": "Why is Nvidia so powerful in the AI world , and what could Jensen Huang scandal really cost ?",
+      "url": "https://www.thehindubusinessline.com/info-tech/why-is-nvidia-so-powerful-in-the-ai-world-and-what-could-jensen-huangs-scandal-really-cost/article71692460.ece",
+      "domain": "thehindubusinessline.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-12T06:45:00Z",
+      "title": "Marsh Says Fed Should Ease Up on Banks That Insure AI Loans",
+      "url": "https://www.insurancejournal.com/news/national/2026/11/12/892334.htm",
+      "domain": "insurancejournal.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T05:30:00Z",
+      "title": "Nvidia board meets to decide future of embattled boss",
+      "url": "https://www.northerndailyleader.com.au/story/9390294/nvidia-board-meets-to-decide-future-of-embattled-boss/",
+      "domain": "northerndailyleader.com.au",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "Australia"
     },
     {
-      "seendate": "2026-10-26T07:15:00Z",
-      "title": "42 % of America recent college grads are working jobs that dont need a degree . From Kathmandu to Paris , young people are taking to the streets",
-      "url": "https://fortune.com/2026/10/26/gen-z-underemployment-riots-france-cockroach-india-rebellion/",
-      "domain": "fortune.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-26T07:15:00Z",
-      "title": "Trump DOJ Targets California Ballots , Alaska Count Before Midterms",
-      "url": "https://www.hngn.com/articles/273589/20261025/trumps-doj-targets-california-ballots-alaska-count-before-midterms.htm",
-      "domain": "hngn.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-26T07:15:00Z",
-      "title": "EfTEN United Property Fund announces its second distribution to investors in 2026 , in the amount of 1 , 050 thousand euros",
-      "url": "https://www.manilatimes.net/2026/10/26/tmt-newswire/globenewswire/eften-united-property-fund-announces-its-second-distribution-to-investors-in-2026-in-the-amount-of-1050-thousand-euros/2453639",
-      "domain": "manilatimes.net",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Philippines"
-    },
-    {
-      "seendate": "2026-10-26T07:15:00Z",
-      "title": "Sterling Holds Near $1 . 3373 as FXStreet Flags $1 . 3420 Hurdle",
-      "url": "https://econotimes.com/Sterling-Holds-Near-1-3373-as-FXStreet-Flags-1-3420-Hurdle-1763380",
-      "domain": "econotimes.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-26T07:15:00Z",
-      "title": "Paycom Software ( NYSE : PAYC ) Price Target Raised to $300 . 00",
-      "url": "https://www.themarketsdaily.com/2026/10/26/paycom-software-nysepayc-price-target-raised-to-300-00.html",
-      "domain": "themarketsdaily.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-26T05:00:00Z",
-      "title": "\u5362\u62c9\u610f\u5916\u80dc\u9009\u98a0\u8986  \u535a\u7d22\u7eb3\u7f57\u4ea4\u6613 \uff0c \u5df4\u897f\u80a1\u5e02\u8981\u5d29 \uff1f",
-      "url": "https://wallstreetcn.com/articles/3784440",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-10-26T05:00:00Z",
-      "title": "\u5b87\u6811\u8bc4\u7ea7\u4ece  \u4f4e\u914d  \u5347\u81f3  \u589e\u6301 \uff01 \u6469\u6839\u5927\u901a \uff1a \u7269\u7406AI  \u91c7\u7eb3\u66f2\u7ebf  \u53ef\u80fd\u63d0\u524d",
-      "url": "https://wallstreetcn.com/articles/3784431",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-10-26T05:00:00Z",
-      "title": "\u5d29\u6e83 \uff01 \u7f8e\u56fd\u4f01\u4e1a\u503a\u5e02\u573a  \u5f02\u5e38\u60b2\u89c2 \uff0c \u9ad8\u76db\u627f\u8ba4  \u6216\u8bb8\u8fd8\u6ca1\u5230\u4f4d",
-      "url": "https://wallstreetcn.com/articles/3784422",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-10-26T05:00:00Z",
-      "title": "\u9a6c\u65af\u514b\u79f0SpaceX\u5df2\u5b8c\u6210400\u4ebf\u7f8e\u5143GPU\u503a\u52a1\u878d\u8d44 \uff0c \u4ee5\u53ef\u8d4e\u56de\u503a\u4e3a\u4e3b",
-      "url": "https://wallstreetcn.com/articles/3784441",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-10-26T05:00:00Z",
-      "title": "\u9a6c\u65af\u514b\u91cd\u78c5\u9884\u6d4b \uff1a neocloud\u884c\u4e1a\u5c06\u906d\u9047\u6b7b\u4ea1\u548c\u6574\u5408",
-      "url": "https://wallstreetcn.com/articles/3784434",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-10-26T05:00:00Z",
-      "title": "\u521b\u4e1a\u677f\u8dcc\u8d851 %\uff0c \u5927\u6d88\u8d39\u9006\u52bf\u62c9\u5347 \uff0c \u6613\u4e2d\u5929  \u518d\u8dcc \uff0c \u6052\u6307\u9707\u8361\u6da80 . 4 %\uff0c \u6743\u91cd\u79d1\u7f51\u80a1\u5206\u5316 \u3001 \u8054\u60f3\u96c6\u56e2\u8dcc\u8fd14 %",
-      "url": "https://wallstreetcn.com/articles/3784435",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-10-26T05:00:00Z",
-      "title": "\u9707\u60ca\u5e02\u573a \uff01 \u5df4\u897f\u603b\u7edf\u5362\u62c9\u5728\u4e8c\u8f6e\u9009\u4e3e\u4e2d\u610f\u5916\u9006\u88ad \uff0c \u521b\u7eaa\u5f55\u8d62\u5f97\u7b2c\u56db\u4efb\u671f",
-      "url": "https://wallstreetcn.com/articles/3784425",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-10-26T05:00:00Z",
-      "title": "\u4e3a\u4f55\u539f\u6cb9\u4f9b\u5e94\u589e\u52a0 \uff0c \u6cb9\u4ef7\u7f3a\u964d\u4e0d\u4e0b\u6765 \uff1f - \u534e\u5c14\u8857\u89c1\u95fb",
-      "url": "https://wallstreetcn.com/articles/3784448",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-10-26T05:00:00Z",
-      "title": "\u91d1\u878d\u6761\u4ef6\u6536\u7d27\u2260\u52a0\u606f\u7ed3\u675f \uff01 \u9ad8\u76db\u9884\u8ba1 \uff1a \u7f8e\u8054\u50a810\u6708\u6682\u7f13 \u3001 12\u6708\u52a0\u606f",
-      "url": "https://wallstreetcn.com/articles/3784437",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-10-26T05:00:00Z",
-      "title": "\u4eba\u5f62\u673a\u5668\u4eba\u5927\u8fdb\u5316 \uff01 SuperMimic\u6280\u672f\u8ba9\u8fd0\u52a8\u63a7\u5236\u8bad\u7ec3\u6210\u672c\u9aa4\u964d1000\u500d",
-      "url": "https://wallstreetcn.com/articles/3784444",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-10-26T05:00:00Z",
-      "title": "\u53d1\u884c\u9891\u7e41\u63a8\u8fdf \uff0c \u6e2f\u80a1IPO\u5f00\u59cb  \u4e34\u95e8\u5239\u8f66",
-      "url": "https://wallstreetcn.com/articles/3784450",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-10-26T05:00:00Z",
-      "title": "\u5468\u671f\u80a1\u603b\u5728  \u6700\u4fbf\u5b9c  \u65f6\u89c1\u9876 \u6700\u65e9\u770b\u591aAI\u786c\u4ef6\u7684  \u82af\u7247\u7f51\u7ea2  Citrini \uff0c \u4e3a\u4f55\u6b63\u5728\u6084\u7136\u79bb\u573a",
-      "url": "https://wallstreetcn.com/articles/3784436",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-10-26T05:00:00Z",
-      "title": "\u6d77\u529b\u58eb\u56de\u5e94  16\u4e07\u4ebf\u97e9\u5143\u7279\u522b\u80a1\u606f\u62a5\u9053 \uff1a \u5c06\u4e8e\u5468\u4e09\u516c\u5e03\u80a1\u4e1c\u56de\u62a5\u63aa\u65bd",
-      "url": "https://wallstreetcn.com/articles/3784447",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-10-26T05:00:00Z",
-      "title": "\u4e2d\u91d1 \uff1a AI\u4ece\u4f20\u7edf\u9700\u6c42\u7684  \u670b\u53cb  \u5230  \u654c\u4eba \uff1f",
-      "url": "https://wallstreetcn.com/articles/3784433",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-10-26T05:00:00Z",
-      "title": "\u8d8b\u5883\u79d1\u6280\u83b713\u4ebf\u5143B\u8f6e\u878d\u8d44  \u9ad8\u8d28Token  \u7684\u5438\u5f15\u529b\u9760\u8c31\u5417",
-      "url": "https://wallstreetcn.com/articles/3784449",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-10-26T05:00:00Z",
-      "title": "\u5362\u62c9\u9006\u8f6c\u80dc\u9009 \uff0c \u4f46\u7b2c\u56db\u4efb\u671f\u53ef\u80fd\u66f4\u96be - \u534e\u5c14\u8857\u89c1\u95fb",
-      "url": "https://wallstreetcn.com/articles/3784443",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-10-26T05:00:00Z",
-      "title": "Indian Shares Muted Open as Oil Prices Weigh on Sentiment",
-      "url": "https://en.shafaqna.com/487331/indian-shares-muted-open-oil-prices-fed/",
-      "domain": "en.shafaqna.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Saudi Arabia"
-    },
-    {
-      "seendate": "2026-10-26T05:00:00Z",
-      "title": "Oil Up , Tech Down",
-      "url": "http://www.zerohedge.com/news/2026-10-24/oil-tech-down",
-      "domain": "zerohedge.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-26T05:00:00Z",
-      "title": "Shares fall in Asia after a decline on Wall Street , and oil prices fall more than 1 %",
-      "url": "https://www.2news.com/news/national/shares-fall-in-asia-after-a-decline-on-wall-street-and-oil-prices-fall-more/article_ddc4a005-46f8-542f-8eca-7be2223b5dd5.html",
-      "domain": "2news.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": ""
-    },
-    {
-      "seendate": "2026-10-26T05:00:00Z",
-      "title": "After - Hours Sessions Account for 62 % of Uniswap Tokenized - Stock Activity",
-      "url": "https://econotimes.com/After-Hours-Sessions-Account-for-62-of-Uniswap-Tokenized-Stock-Activity-1763298",
-      "domain": "econotimes.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-26T05:00:00Z",
-      "title": "Global Market : China yuan hits four - year high as dollar weakens ahead of policy meetings",
-      "url": "https://economictimes.indiatimes.com/markets/us-stocks/news/global-market-chinas-yuan-hits-four-year-high-as-dollar-weakens-ahead-of-policy-meetings/articleshow/135202635.cms",
-      "domain": "economictimes.indiatimes.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-10-26T05:00:00Z",
-      "title": "Arrowhead Pharmaceuticals ( NASDAQ : ARWR ) and CRISPR Therapeutics ( NASDAQ : CRSP ) Financial Review",
-      "url": "https://www.themarketsdaily.com/2026/10/26/arrowhead-pharmaceuticals-nasdaqarwr-and-crispr-therapeutics-nasdaqcrsp-financial-review.html",
-      "domain": "themarketsdaily.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-26T05:00:00Z",
-      "title": "Global Market : South Korean shares fall over 1 % as AI trade concerns weigh ; won strengthens",
-      "url": "https://economictimes.indiatimes.com/markets/us-stocks/news/global-market-south-korean-shares-fall-over-1-as-ai-trade-concerns-weigh-won-strengthens/articleshow/135202531.cms",
-      "domain": "economictimes.indiatimes.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-10-26T05:00:00Z",
-      "title": "Critical Review : ASML ( NASDAQ : ASML ) & MaxLinear ( NASDAQ : MXL )",
-      "url": "https://www.themarketsdaily.com/2026/10/26/critical-review-asml-nasdaqasml-maxlinear-nasdaqmxl.html",
-      "domain": "themarketsdaily.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-26T05:00:00Z",
-      "title": "Israel markets see upside in Netanyahu defeat after three - year rally",
-      "url": "https://www.thehindu.com/news/international/israeli-markets-rally-on-netanyahu-defeat-hopes/article71625553.ece",
+      "seendate": "2026-11-12T05:30:00Z",
+      "title": "Stock markets climb in early trade led by foreign fund inflows , lower crude oil prices",
+      "url": "https://www.thehindu.com/business/markets/stock-markets-climb-in-early-trade-led-by-foreign-fund-inflows-lower-crude-oil-prices/article71692361.ece",
       "domain": "thehindu.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "India"
     },
     {
-      "seendate": "2026-10-26T05:00:00Z",
-      "title": "Shares fall in Asia after a decline on Wall Street , and oil prices fall more than 1 %",
-      "url": "https://isp.netscape.com:443/pf/story/0001/20261026/be3a56f58a77c5be863f0289d280be92",
-      "domain": "isp.netscape.com",
+      "seendate": "2026-11-12T05:30:00Z",
+      "title": "Tech Stocks Just Sent a Signal They Have Sent 27 Times Since 1999 . Three Times It Was a Crash . History Says One Move Covers What Comes Next",
+      "url": "https://247wallst.com/investing/2026/11/11/tech-stocks-just-sent-a-signal-they-have-sent-27-times-since-1999-three-times-it-was-a-crash-history-says-one-move-covers-what-comes-next/",
+      "domain": "247wallst.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-26T05:00:00Z",
-      "title": "Oil declines from six - month high as traders assess Mideast risks",
-      "url": "https://www.businesstimes.com.sg/companies-markets/energy-commodities/oil-declines-six-month-high-traders-assess-mideast-risks",
-      "domain": "businesstimes.com.sg",
+      "seendate": "2026-11-12T05:30:00Z",
+      "title": "Wall Street Rallies 1 . 3 % as US Yields Hover at 5 %",
+      "url": "https://www.riotimesonline.com/global-economy-briefing-november-12-2026/",
+      "domain": "riotimesonline.com",
       "language": "English",
       "lang": "eng",
-      "sourcecountry": "Singapore"
+      "sourcecountry": "Brazil"
     },
     {
-      "seendate": "2026-10-26T05:00:00Z",
-      "title": "Critical Comparison : H & R Block ( NYSE : HRB ) versus ADT ( NYSE : ADT )",
-      "url": "https://www.tickerreport.com/banking-finance/13636514/critical-comparison-hr-block-nysehrb-versus-adt-nyseadt.html",
+      "seendate": "2026-11-12T05:30:00Z",
+      "title": "Seoul shares up late Thursday morning amid Nvidia controversies",
+      "url": "https://www.koreatimes.co.kr/economy/20261112/seoul-shares-up-late-thursday-morning-amid-nvidia-controversies",
+      "domain": "koreatimes.co.kr",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "South Korea"
+    },
+    {
+      "seendate": "2026-11-12T05:30:00Z",
+      "title": "Russia Ambassador Alexander Darchiev Dies at 66",
+      "url": "https://www.riotimesonline.com/russia-ambassador-to-us-darchiev-dies-2026/",
+      "domain": "riotimesonline.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Brazil"
+    },
+    {
+      "seendate": "2026-11-12T05:30:00Z",
+      "title": "Brazil Stocks Rise 0 . 4 % Before Key Inflation Data",
+      "url": "https://www.riotimesonline.com/brazils-financial-morning-call-for-thursday-november-12-2026/",
+      "domain": "riotimesonline.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Brazil"
+    },
+    {
+      "seendate": "2026-11-12T05:30:00Z",
+      "title": "AI Trillion - Dollar Ambitions Have a Backyard Problem",
+      "url": "https://www.govinfosecurity.com/blogs/ais-trillion-dollar-ambitions-have-backyard-problem-p-4247",
+      "domain": "govinfosecurity.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T04:00:00Z",
+      "title": "Nvidia Stock Sinks as Jensen Huang Ouster Report Sends Investors Toward AMD , Broadcom",
+      "url": "https://www.aol.com/articles/nvidia-stock-sinks-jensen-huang-022504000.html",
+      "domain": "aol.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T04:00:00Z",
+      "title": "Why India and Pakistan stock markets are rallying after the US midterms",
+      "url": "https://www.channelnewsasia.com/asia/why-india-and-pakistans-stock-markets-are-rallying-after-us-midterms-6544681",
+      "domain": "channelnewsasia.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T04:00:00Z",
+      "title": "United States the People Defeated Trump",
+      "url": "https://www.pressenza.com/2026/11/united-states-the-people-defeated-trump/",
+      "domain": "pressenza.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T04:00:00Z",
+      "title": "Nvidia board meets to decide future of embattled boss",
+      "url": "https://www.dailyliberal.com.au/story/9390294/nvidia-board-meets-to-decide-future-of-embattled-boss/",
+      "domain": "dailyliberal.com.au",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Australia"
+    },
+    {
+      "seendate": "2026-11-12T04:00:00Z",
+      "title": "Indonesia rupiah drops to record low on strong dollar , MSCI woes",
+      "url": "https://www.thestar.com.my/business/business-news/2026/11/12/indonesia-rupiah-drops-to-record-low-on-strong-dollar-msci-woes",
+      "domain": "thestar.com.my",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Malaysia"
+    },
+    {
+      "seendate": "2026-11-12T04:00:00Z",
+      "title": "Nvidia board meets to decide CEO Huang future , source says",
+      "url": "https://www.rappler.com/technology/nvidia-board-meets-decide-jensen-huang-future/",
+      "domain": "rappler.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Philippines"
+    },
+    {
+      "seendate": "2026-11-12T04:00:00Z",
+      "title": "Pixelworks ( PXLW ) Q3 2026 Earnings Call Transcript",
+      "url": "https://www.aol.com/articles/pixelworks-pxlw-q3-2026-earnings-032152000.html",
+      "domain": "aol.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T04:00:00Z",
+      "title": "If SpaceX and Tesla Merge , Here What a $10 , 000 Investment in the Combined Company Could Be Worth by 2030",
+      "url": "https://www.aol.com/articles/spacex-tesla-merge-heres-10-025000000.html",
+      "domain": "aol.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T04:00:00Z",
+      "title": "Stock Market : Nasdaq Charges Higher As CoreWeave Pops ; Nvidia Reverses From Lows",
+      "url": "https://www.investors.com:443/market-trend/the-big-picture/dow-jones-sp500-nasdaq-coreweave-crwv-stock/",
+      "domain": "investors.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T04:00:00Z",
+      "title": "Nvidia board meets to decide CEO Huang future , source says",
+      "url": "https://bworldonline.com/world/2026/11/12/793353/nvidia-board-meets-to-decide-ceo-huangs-future-source-says/",
+      "domain": "bworldonline.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Philippines"
+    },
+    {
+      "seendate": "2026-11-12T04:00:00Z",
+      "title": "Warren Buffett 1991 Playbook Points The Path Forward As Nvidia Reportedly Prepares To Oust Jensen Huang . Buffett Said He Could Forgive Losses , But There Was One Thing He Would Be Ruthless About",
+      "url": "https://www.aol.com/articles/warren-buffett-1991-playbook-points-022606000.html",
+      "domain": "aol.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T04:00:00Z",
+      "title": "Indonesia vice president has resigned , aide says , stoking political uncertainty",
+      "url": "https://www.rappler.com/world/asia-pacific/indonesia-vice-president-gibran-rakabuming-resigns/",
+      "domain": "rappler.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Philippines"
+    },
+    {
+      "seendate": "2026-11-12T04:00:00Z",
+      "title": "Nvidia board meets to decide future of embattled boss",
+      "url": "https://www.maitlandmercury.com.au/story/9390294/nvidia-board-meets-to-decide-future-of-embattled-boss/",
+      "domain": "maitlandmercury.com.au",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Australia"
+    },
+    {
+      "seendate": "2026-11-12T04:00:00Z",
+      "title": "Contrasting Teradyne ( NASDAQ : TER ) and First Solar ( NASDAQ : FSLR )",
+      "url": "https://www.tickerreport.com/banking-finance/13660065/contrasting-teradyne-nasdaqter-and-first-solar-nasdaqfslr.html",
       "domain": "tickerreport.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-26T05:00:00Z",
-      "title": "Contrasting Calix ( NYSE : CALX ) and Aviat Networks ( NASDAQ : AVNW )",
-      "url": "https://www.tickerreport.com/banking-finance/13636513/contrasting-calix-nysecalx-and-aviat-networks-nasdaqavnw.html",
+      "seendate": "2026-11-12T04:00:00Z",
+      "title": "Schwab U . S . Large - Cap Value ETF ( NYSEARCA : SCHV ) Shares Break Above 50 Day Moving Average \u2013 Time to Sell ?",
+      "url": "https://www.tickerreport.com/banking-finance/13660066/schwab-u-s-large-cap-value-etf-nysearcaschv-shares-break-above-50-day-moving-average-time-to-sell.html",
       "domain": "tickerreport.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-26T05:00:00Z",
-      "title": "Reviewing united states Compression Partners ( NYSE : USAC ) & Nabors Industries ( NYSE : NBR )",
-      "url": "https://www.tickerreport.com/banking-finance/13636512/reviewing-usa-compression-partners-nyseusac-nabors-industries-nysenbr.html",
-      "domain": "tickerreport.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-25T19:15:00Z",
-      "title": "Big Tech is cashing in on AI while the rest of corporate America sees no financial returns report outlines how rising token costs threaten to squeeze corporate profit margins",
-      "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/big-tech-is-cashing-in-on-ai-while-the-rest-of-corporate-america-sees-no-financial-returns-report-outlines-how-rising-token-costs-threaten-to-squeeze-corporate-profit-margins",
-      "domain": "tomshardware.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-25T18:00:00Z",
-      "title": "Wealth Column : Making sense of the midterms elections and the markets",
-      "url": "https://www.brainerddispatch.com/opinion/columns/wealth-column-making-sense-of-the-midterms-elections-and-the-markets",
-      "domain": "brainerddispatch.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-25T18:00:00Z",
-      "title": "Who on Air Force One ? Trump midterms entourage includes strategists , aides and aging athletes",
-      "url": "https://mymotherlode.com/news/national/11251295/whos-on-air-force-one-trumps-midterms-entourage-includes-strategists-aides-and-aging-athletes.html",
-      "domain": "mymotherlode.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-25T12:45:00Z",
-      "title": "\u4ef7\u683c\u6253\u6298 \uff0c \u54ea\u4e9b\u80a1\u7968\u8d85\u8dcc\u4e86 \uff1f - \u534e\u5c14\u8857\u89c1\u95fb",
-      "url": "https://wallstreetcn.com/articles/3784416",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-10-25T12:45:00Z",
-      "title": "4 Investments That Could Make Sense If the Federal Reserve Raises Interest Rates",
-      "url": "https://www.aol.com/articles/4-investments-could-sense-federal-113010000.html",
+      "seendate": "2026-11-12T04:00:00Z",
+      "title": "DoubleDown ( DDI ) Q3 2026 Earnings Call Transcript",
+      "url": "https://www.aol.com/articles/doubledown-ddi-q3-2026-earnings-022856000.html",
       "domain": "aol.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-25T12:45:00Z",
-      "title": "Prediction : Here What $500 Invested in Archer Aviation Will Be Worth in 5 Years",
-      "url": "https://www.aol.com/articles/prediction-heres-500-invested-archer-120300000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-25T12:45:00Z",
-      "title": "Retiring soon ? This 1 rising cost is quietly draining Americans getting ready to retire . Protect yourself now",
-      "url": "https://www.aol.com/articles/retiring-soon-1-rising-cost-121500000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-25T12:45:00Z",
-      "title": "JPMorgan sees Bitcoin outrunning traditional assets over the next decade with one caveat",
-      "url": "https://www.aol.com/articles/jpmorgan-sees-bitcoin-outrunning-traditional-110000000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-10-25T12:45:00Z",
-      "title": "Critical Survey : Fatpipe Inc / UT ( NASDAQ : FATN ) & BTC Digital ( NASDAQ : BTCT )",
-      "url": "https://www.themarketsdaily.com/2026/10/25/critical-survey-fatpipe-inc-ut-nasdaqfatn-btc-digital-nasdaqbtct.html",
+      "seendate": "2026-11-12T04:00:00Z",
+      "title": "Dynatrace ( NYSE : DT ) vs . Pegasystems ( NASDAQ : PEGA ) Head to Head Review",
+      "url": "https://www.themarketsdaily.com/2026/11/12/dynatrace-nysedt-vs-pegasystems-nasdaqpega-head-to-head-review.html",
       "domain": "themarketsdaily.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-25T12:45:00Z",
-      "title": "As vote nears , Trump AI gamble fuels economic uncertainty",
-      "url": "https://www.aol.com/articles/vote-nears-trumps-ai-gamble-100000000.html",
-      "domain": "aol.com",
+      "seendate": "2026-11-12T04:00:00Z",
+      "title": "Yatsen ( NYSE : YSG ) & Coty ( NYSE : COTY ) Head - To - Head Analysis",
+      "url": "https://www.dailypolitical.com/2026/11/11/yatsen-nyseysg-coty-nysecoty-head-to-head-analysis.html",
+      "domain": "dailypolitical.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-25T12:45:00Z",
-      "title": "Teacher , 34 , has $140K invested says she may never need to add another dollar to retire with $1 . 5M . Here her math",
-      "url": "https://www.aol.com/articles/teacher-34-140k-invested-says-111500000.html",
-      "domain": "aol.com",
+      "seendate": "2026-11-12T03:45:00Z",
+      "title": "Warren Buffett Says His Favorite Holding Period Is Forever . A Secretary Who Paid $180 for 3 Shares in 1935 and Never Sold Died Worth $7 Million . Here What Her Rule Does for $600 , 000 in One Stock Today",
+      "url": "https://247wallst.com/investing/2026/11/11/warren-buffett-says-his-favorite-holding-period-is-forever-a-secretary-who-paid-180-for-3-shares-in-1935-and-never-sold-died-worth-7-million-heres-what-her-rule-does-for-600000-in-one-stock-to/",
+      "domain": "247wallst.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-25T12:45:00Z",
-      "title": "Euro sinks on French debt worries ; yen gains for week on AI rout",
-      "url": "https://www.businesstimes.com.sg/companies-markets/euro-sinks-french-debt-worries-yen-gains-week-ai-rout",
+      "seendate": "2026-11-12T03:45:00Z",
+      "title": "ANZ says RBA hike bets have cooled , but 3 . 7 % core inflation will keep it cautious",
+      "url": "https://investinglive.com/central-banks/anz-says-rba-hike-bets-have-cooled-but-3-7-core-inflation-will-keep-it-cautious/",
+      "domain": "investinglive.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": ""
+    },
+    {
+      "seendate": "2026-11-12T03:45:00Z",
+      "title": "Ringgit opens almost flat amid cautious sentiment",
+      "url": "https://www.freemalaysiatoday.com/category/business/2026/11/12/ringgit-opens-almost-flat-amid-cautious-sentiment",
+      "domain": "freemalaysiatoday.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Malaysia"
+    },
+    {
+      "seendate": "2026-11-12T03:45:00Z",
+      "title": "CBA Chambers sees room for higher US 10 - year yields despite the slide in oil prices",
+      "url": "https://investinglive.com/stocks/cba-s-chambers-sees-room-for-higher-us-10-year-yields-despite-the-slide-in-oil-prices/",
+      "domain": "investinglive.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": ""
+    },
+    {
+      "seendate": "2026-11-12T03:45:00Z",
+      "title": "If SpaceX and Tesla Merge , Here What a $10 , 000 Investment in the Combined Company Could Be Worth by 2030",
+      "url": "https://www.fool.com/investing/2026/11/11/if-spacex-and-tesla-merge-heres-what-a-10000-inves/?source=iedfolrf0000001",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T03:45:00Z",
+      "title": "Exxon , Chevron , and Shell Just Reported . Here What Each One Said About Where Oil Goes Next .",
+      "url": "https://www.fool.com/investing/2026/11/11/exxon-chevron-and-shell-just-reported-heres-what-e/?source=iedfolrf0000001",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T03:45:00Z",
+      "title": "How Far Could Nvidia Stock Fall if Jensen Huang Resigns ?",
+      "url": "https://www.fool.com/investing/2026/11/11/how-far-could-nvidia-stock-fall-if-jensen-huang-resigns/?source=iedfolrf0000001",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T03:45:00Z",
+      "title": "Anthropic Now Makes Its Own Spreadsheet Software . Here What Id Do With Microsoft Stock .",
+      "url": "https://www.fool.com/investing/2026/11/11/anthropic-now-makes-its-own-spreadsheet-software-here-s-what-i-d-do-with-microsoft-stock/?source=iedfolrf0000001",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T03:45:00Z",
+      "title": "Bursa slips at open despite Wall Street gains",
+      "url": "https://www.freemalaysiatoday.com/category/business/2026/11/12/bursa-slips-at-open-despite-wall-street-gains",
+      "domain": "freemalaysiatoday.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Malaysia"
+    },
+    {
+      "seendate": "2026-11-12T03:45:00Z",
+      "title": "JPMorgan Predicted Strong Wegovy Pill Sales ( and Was Right ). Is Novo Nordisk Stock a Buy Now ?",
+      "url": "https://www.fool.com/investing/2026/11/11/jpmorgan-predicted-strong-wegovy-pill-sales-and-wa/?source=iedfolrf0000001",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T03:45:00Z",
+      "title": "Asian stocks fragile , Nvidia plummets as board to decide CEO fate",
+      "url": "https://www.freemalaysiatoday.com/category/business/2026/11/12/asian-stocks-fragile-nvidia-plummets-as-board-to-decide-ceo-s-fate",
+      "domain": "freemalaysiatoday.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Malaysia"
+    },
+    {
+      "seendate": "2026-11-12T03:45:00Z",
+      "title": "Nvidia board meets to decide future of embattled boss",
+      "url": "https://www.newcastleherald.com.au/story/9390294/nvidia-board-meets-to-decide-future-of-embattled-boss/",
+      "domain": "newcastleherald.com.au",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": ""
+    },
+    {
+      "seendate": "2026-11-12T03:45:00Z",
+      "title": "Indonesia rupiah drops to record low on strong dollar , MSCI woes",
+      "url": "https://www.businesstimes.com.sg/international/asean/indonesia-rupiah-drops-record-low-strong-dollar-msci-woes",
       "domain": "businesstimes.com.sg",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "Singapore"
     },
     {
-      "seendate": "2026-10-25T12:45:00Z",
-      "title": "The Next Palantir ? Why This Under - the - Radar Software Stock Could Be the Biggest Surprise of 2027",
-      "url": "https://www.aol.com/articles/next-palantir-why-under-radar-105000000.html",
-      "domain": "aol.com",
+      "seendate": "2026-11-12T03:45:00Z",
+      "title": "Indonesian rupiah drops to record low on strong dollar , MSCI woes",
+      "url": "https://www.freemalaysiatoday.com/category/business/2026/11/12/indonesian-rupiah-drops-to-record-low-on-strong-dollar-msci-woes",
+      "domain": "freemalaysiatoday.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Malaysia"
+    },
+    {
+      "seendate": "2026-11-12T03:45:00Z",
+      "title": "Warren Buffett 1991 Playbook Points The Path Forward As Nvidia Reportedly Prepares To Oust Jensen Huang . Buffett Said He Could Forgive Losses , But There Was One Thing He Would Be Ruthless About",
+      "url": "https://247wallst.com/investing/2026/11/11/warren-buffetts-1991-playbook-points-the-path-forward-as-nvidia-reportedly-prepares-to-oust-jensen-huang-buffett-said-he-could-forgive-losses-but-there-was-one-thing-he-would-be-ruthless-about/",
+      "domain": "247wallst.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-25T12:45:00Z",
-      "title": "America farmers are flashing warning signals about inflation , and the Fed is paying attention . Protect yourself now",
-      "url": "https://www.aol.com/articles/america-farmers-flashing-warning-signals-114500000.html",
-      "domain": "aol.com",
+      "seendate": "2026-11-12T03:45:00Z",
+      "title": "Nvidia Board Preparing to Oust CEO Huang , Report Says",
+      "url": "https://www.hngn.com/articles/273799/20261111/nvidia-board-preparing-oust-ceo-huang-report-says.htm",
+      "domain": "hngn.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-10-25T12:45:00Z",
-      "title": "Could Hormuz become America Suez ? \u2013 Middle East Monitor",
-      "url": "https://www.middleeastmonitor.com/20261025-could-hormuz-become-americas-suez/",
-      "domain": "middleeastmonitor.com",
+      "seendate": "2026-11-12T03:30:00Z",
+      "title": "Comparing Bristow Group ( VTOL ) and Its Peers",
+      "url": "https://www.dailypolitical.com/2026/11/11/comparing-bristow-group-vtol-and-its-peers.html",
+      "domain": "dailypolitical.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T03:30:00Z",
+      "title": "Healthcare Triangle ( HCTI ) vs . Its Rivals Head - To - Head Contrast",
+      "url": "https://www.tickerreport.com/banking-finance/13660056/healthcare-triangle-hcti-vs-its-rivals-head-to-head-contrast.html",
+      "domain": "tickerreport.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T03:30:00Z",
+      "title": "What Next for the AI Trade After the Midterms ?",
+      "url": "https://www.morningstar.com/stocks/whats-next-ai-trade-after-midterms",
+      "domain": "morningstar.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-11-12T03:30:00Z",
+      "title": "Dovish BOJ Member Urges Caution in Raising Rates Further",
+      "url": "https://www.morningstar.com/news/dow-jones/202611119702/dovish-boj-member-urges-caution-in-raising-rates-further",
+      "domain": "morningstar.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-11-12T03:30:00Z",
+      "title": "Financial Comparison : Beasley Broadcast Group ( NASDAQ : BBGI ) & Scholastic ( NASDAQ : SCHL )",
+      "url": "https://www.tickerreport.com/banking-finance/13660058/financial-comparison-beasley-broadcast-group-nasdaqbbgi-scholastic-nasdaqschl.html",
+      "domain": "tickerreport.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T03:30:00Z",
+      "title": "Roku ( NASDAQ : ROKU ) versus Starz Entertainment ( NASDAQ : STRZ ) Head to Head Comparison",
+      "url": "https://www.themarketsdaily.com/2026/11/12/roku-nasdaqroku-versus-starz-entertainment-nasdaqstrz-head-to-head-comparison.html",
+      "domain": "themarketsdaily.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T03:30:00Z",
+      "title": "Head - To - Head Analysis : TotalEnergies ( NYSE : TTE ) vs . Chord Energy ( NASDAQ : CHRD )",
+      "url": "https://www.tickerreport.com/banking-finance/13660059/head-to-head-analysis-totalenergies-nysette-vs-chord-energy-nasdaqchrd.html",
+      "domain": "tickerreport.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T03:30:00Z",
+      "title": "Critical Contrast : Robinhood Markets ( HOOD ) and Its Rivals",
+      "url": "https://www.themarketsdaily.com/2026/11/12/critical-contrast-robinhood-markets-hood-and-its-rivals.html",
+      "domain": "themarketsdaily.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T03:30:00Z",
+      "title": "Contrasting KDDI ( OTCMKTS : KDDIY ) & Kyivstar Group ( NASDAQ : KYIV )",
+      "url": "https://www.tickerreport.com/banking-finance/13660057/contrasting-kddi-otcmktskddiy-kyivstar-group-nasdaqkyiv.html",
+      "domain": "tickerreport.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T03:30:00Z",
+      "title": "Analyzing Boston Scientific ( BSX ) and The Competition",
+      "url": "https://www.dailypolitical.com/2026/11/11/analyzing-boston-scientific-bsx-and-the-competition.html",
+      "domain": "dailypolitical.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T03:30:00Z",
+      "title": "Analyzing Gran Tierra Energy ( NYSE : GTE ) and Expand Energy ( NASDAQ : EXE )",
+      "url": "https://www.dailypolitical.com/2026/11/11/analyzing-gran-tierra-energy-nysegte-and-expand-energy-nasdaqexe.html",
+      "domain": "dailypolitical.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T03:30:00Z",
+      "title": "Comparing Mazda Motor ( MZDAY ) and Its Rivals",
+      "url": "https://www.themarketsdaily.com/2026/11/12/comparing-mazda-motor-mzday-and-its-rivals.html",
+      "domain": "themarketsdaily.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T03:30:00Z",
+      "title": "Nvidia Board May Meet to Decide Jensen Huang Future After Affair Reports",
+      "url": "https://www.oneindia.com/international/nvidia-board-may-meet-to-decide-jensen-huang-s-future-after-affair-reports-8257379.html",
+      "domain": "oneindia.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-12T03:30:00Z",
+      "title": "Financial Analysis : Uniti Group ( NASDAQ : UNIT ) versus Array Digital Infrastructure ( NYSE : AD )",
+      "url": "https://www.themarketsdaily.com/2026/11/12/financial-analysis-uniti-group-nasdaqunit-versus-array-digital-infrastructure-nysead.html",
+      "domain": "themarketsdaily.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T03:30:00Z",
+      "title": "Critical Review : SelectQuote ( NYSE : SLQT ) and Old Republic International ( NYSE : ORI )",
+      "url": "https://www.themarketsdaily.com/2026/11/12/critical-review-selectquote-nyseslqt-and-old-republic-international-nyseori.html",
+      "domain": "themarketsdaily.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T03:30:00Z",
+      "title": "8 Brilliant Money Rules People Who Are Still Living Large While Everyone Is Struggling Usually Follow",
+      "url": "https://www.yourtango.com/money/people-who-still-living-large-follow-brilliant-money-rules",
+      "domain": "yourtango.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T03:30:00Z",
+      "title": "Reviewing Nuvation Bio ( NYSE : NUVB ) and Relay Therapeutics ( NASDAQ : RLAY )",
+      "url": "https://www.dailypolitical.com/2026/11/11/reviewing-nuvation-bio-nysenuvb-and-relay-therapeutics-nasdaqrlay.html",
+      "domain": "dailypolitical.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T03:30:00Z",
+      "title": "Nvidia board meets to decide future of embattled boss",
+      "url": "https://www.illawarramercury.com.au/story/9390294/nvidia-board-meets-to-decide-future-of-embattled-boss/",
+      "domain": "illawarramercury.com.au",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Australia"
+    },
+    {
+      "seendate": "2026-11-12T03:30:00Z",
+      "title": "Asian Equities Mixed as Markets Weigh Nvidia Leadership Crisis",
+      "url": "https://www.morningstar.com/news/dow-jones/202611119653/asian-equities-mixed-as-markets-weigh-nvidia-leadership-crisis",
+      "domain": "morningstar.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-11-12T03:30:00Z",
+      "title": "Reviewing VSE ( NASDAQ : VSEC ) & EHang ( NASDAQ : EH )",
+      "url": "https://www.dailypolitical.com/2026/11/11/reviewing-vse-nasdaqvsec-ehang-nasdaqeh.html",
+      "domain": "dailypolitical.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T03:30:00Z",
+      "title": "Financial Analysis : Citizens ( CIZN ) vs . Its Rivals",
+      "url": "https://www.tickerreport.com/banking-finance/13660055/financial-analysis-citizens-cizn-vs-its-rivals.html",
+      "domain": "tickerreport.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T03:00:00Z",
+      "title": "Stock Market LIVE : GIFT Nifty signals positive open ; Asian markets advance ; Nvidia drops 7 %",
+      "url": "https://www.business-standard.com/markets/news/stock-market-live-november-12-gift-nifty-nse-bse-sensex-today-nifty50-crude-oil-prices-q2-results-today-126111200066_1.html",
+      "domain": "business-standard.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-12T03:00:00Z",
+      "title": "SPDR Portfolio MSCI Global Stock Market ETF ( NYSEARCA : SPGM ) Shares Break Above Two Hundred Day Moving Average \u2013 Here Why",
+      "url": "https://www.tickerreport.com/banking-finance/13660039/spdr-portfolio-msci-global-stock-market-etf-nysearcaspgm-shares-break-above-two-hundred-day-moving-average-heres-why.html",
+      "domain": "tickerreport.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T03:00:00Z",
+      "title": "Fed chair discloses wife transactions in pet - care investments | The Mighty 790 KFGO",
+      "url": "https://kfgo.com/2026/11/11/fed-chair-discloses-wifes-transactions-in-pet-care-investments/",
+      "domain": "kfgo.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T03:00:00Z",
+      "title": "Asian stocks fragile , Nvidia plummets as board to decide CEO fate - Markets",
+      "url": "http://www.thejakartapost.com/business/2026/11/12/asian-stocks-fragile-nvidia-plummets-as-board-to-decide-ceos-fate",
+      "domain": "thejakartapost.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Indonesia"
+    },
+    {
+      "seendate": "2026-11-12T03:00:00Z",
+      "title": "Invesco S & P 500 Equal Weight Industrials ETF ( NYSEARCA : RSPN ) Shares Cross Above Two Hundred Day Moving Average \u2013 Time to Sell ?",
+      "url": "https://www.tickerreport.com/banking-finance/13660040/invesco-sp-500-equal-weight-industrials-etf-nysearcarspn-shares-cross-above-two-hundred-day-moving-average-time-to-sell.html",
+      "domain": "tickerreport.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T03:00:00Z",
+      "title": "Inflation accelerates , 221 trucking companies go bankrupt and Americans fear a wave of unemployment",
+      "url": "https://www.investmentwatchblog.com/inflation-accelerates-221-trucking-companies-go-bankrupt-and-americans-fear-a-wave-of-unemployment/",
+      "domain": "investmentwatchblog.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T03:00:00Z",
+      "title": "Fed chair discloses wife transactions in pet - care investments",
+      "url": "https://whbl.com/2026/11/11/fed-chair-discloses-wifes-transactions-in-pet-care-investments/",
+      "domain": "whbl.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T03:00:00Z",
+      "title": "MSCI says Indonesia Barito Pacific will be removed from its indexes",
+      "url": "https://www.dealstreetasia.com/stories/msci-barito-pacific-500834",
+      "domain": "dealstreetasia.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-12T03:00:00Z",
+      "title": "Nvidia board meets to decide CEO Huang future , source says",
+      "url": "https://kathmandupost.com/world/2026/11/12/nvidia-board-meets-to-decide-ceo-huang-s-future-source-says",
+      "domain": "kathmandupost.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": ""
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "Head - To - Head Comparison : Cricut ( NASDAQ : CRCT ) vs . Crown Crafts ( NASDAQ : CRWS )",
+      "url": "https://www.tickerreport.com/banking-finance/13660006/head-to-head-comparison-cricut-nasdaqcrct-vs-crown-crafts-nasdaqcrws.html",
+      "domain": "tickerreport.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "Tourmaline Oil ( OTCMKTS : TRMLF ) and Torm ( NASDAQ : TRMD ) Financial Analysis",
+      "url": "https://www.themarketsdaily.com/2026/11/12/tourmaline-oil-otcmktstrmlf-and-torm-nasdaqtrmd-financial-analysis.html",
+      "domain": "themarketsdaily.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "U . S . stocks rebound Wednesday , techs take the lead",
+      "url": "http://www.texasguardian.com/news/279427052/u-s-stocks-rebound-wednesday-techs-take-the-lead",
+      "domain": "texasguardian.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "U . S . Dollar Climbs Amid Rising Expectations Of Fed Rate Hike",
+      "url": "https://www.rttnews.com/3713277/u-s-dollar-climbs-amid-rising-expectations-of-fed-rate-hike.aspx",
+      "domain": "rttnews.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "Autolus Therapeutics ( NASDAQ : AUTL ) and Ironwood Pharmaceuticals ( NASDAQ : IRWD ) Critical Contrast",
+      "url": "https://www.tickerreport.com/banking-finance/13660009/autolus-therapeutics-nasdaqautl-and-ironwood-pharmaceuticals-nasdaqirwd-critical-contrast.html",
+      "domain": "tickerreport.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "Tech Shares May Fuel Continued Strength For Taiwan Stock Market",
+      "url": "https://www.rttnews.com/3713295/tech-shares-may-fuel-continued-strength-for-taiwan-stock-market.aspx",
+      "domain": "rttnews.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "Dow Jones Industrial Average ( DJIA ) and S & P 500 Slide As Rate Hike Odds Hit 100 % On Hotter - Than - Expected Inflation Data",
+      "url": "https://www.foreignpolicyjournal.com/2026/11/11/dow-jones-industrial-average-djia-and-sp-500-slide-as-rate-hike-odds-hit-100-on-hotter-than-expected-inflation-data/",
+      "domain": "foreignpolicyjournal.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "Israel"
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "BT BIG STORY : The Rupee bounces back , but the \u20b9100 threat isnt gone yet",
+      "url": "https://www.businesstoday.in/latest/economy/story/bt-big-story-the-rupee-bounces-back-but-the-rs100-threat-isnt-gone-yet-566935-2026-11-12",
+      "domain": "businesstoday.in",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "Stocks in news : Tata Power , Cupid , Garden Reach , ITC , Aurobindo Pharma and Vodafone Idea",
+      "url": "https://economictimes.indiatimes.com/markets/stocks/news/stocks-in-news-tata-power-cupid-garden-reach-itc-aurobindo-pharma-and-vodafone-idea/articleshow/135744904.cms",
+      "domain": "economictimes.indiatimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "Critical Comparison : Smithfield Foods ( NASDAQ : SFD ) & Nomad Foods ( NYSE : NOMD )",
+      "url": "https://www.tickerreport.com/banking-finance/13660005/critical-comparison-smithfield-foods-nasdaqsfd-nomad-foods-nysenomd.html",
+      "domain": "tickerreport.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "Pre - market action : Here the trade setup for today session",
+      "url": "https://economictimes.indiatimes.com/markets/stocks/news/pre-market-action-heres-the-trade-setup-for-todays-session/articleshow/135751043.cms",
+      "domain": "economictimes.indiatimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "Continued Strength Expected For China Stock Market",
+      "url": "https://www.rttnews.com/3713296/continued-strength-expected-for-china-stock-market.aspx",
+      "domain": "rttnews.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "As higher prices seep into broader economy , Fed considers faster hikes",
+      "url": "https://www.mcall.com/2026/11/11/higher-prices-fed-rate-hikes/",
+      "domain": "mcall.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "Indians buy 30 % more gold after recent price correction",
+      "url": "https://economictimes.indiatimes.com/markets/commodities/news/indians-buy-30-more-gold-after-recent-price-correction/articleshow/135751399.cms",
+      "domain": "economictimes.indiatimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "MARKETS LIVE : US stocks close higher as CoreWeave results revive AI optimism",
+      "url": "https://www.proactiveinvestors.com/companies/news/1101567/markets-live-us-stocks-close-higher-as-coreweave-results-revive-ai-optimism-1101567.html",
+      "domain": "proactiveinvestors.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "Critical Review : Honda Motor ( HMC ) & Its Competitors",
+      "url": "https://www.themarketsdaily.com/2026/11/12/critical-review-honda-motor-hmc-its-competitors.html",
+      "domain": "themarketsdaily.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "Fed chair discloses wife transactions in pet - care investments",
+      "url": "https://ksevradio.com/fed-chair-discloses-wifes-transactions-in-pet-care-investments/",
+      "domain": "ksevradio.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "AI stocks rebound , and Wall Street nearly returns to where it was before last week sell - off",
+      "url": "https://www.kob.com/ap-top-news/ai-stocks-rebound-and-wall-street-nearly-returns-to-where-it-was-before-last-weeks-sell-off/",
+      "domain": "kob.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "Nvidia board meets to decide CEO Huang future , source says",
+      "url": "https://www.internazionale.it/ultime-notizie-reuters/2026/11/12/nvidia-is-preparing-to-oust-ceo-jensen-huang-wsj-reports",
+      "domain": "internazionale.it",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Italy"
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "Gold slips as strong US inflation data bolsters dollar , Fed hike expectations",
+      "url": "https://economictimes.indiatimes.com/markets/commodities/news/gold-slips-as-strong-us-inflation-data-bolsters-dollar-fed-hike-expectations/articleshow/135751745.cms",
+      "domain": "economictimes.indiatimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "U . S . stocks rebound Wednesday , techs take the lead",
+      "url": "http://www.stlouisstar.com/news/279427052/u-s-stocks-rebound-wednesday-techs-take-the-lead",
+      "domain": "stlouisstar.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "Credit card debit climbs to over $1 trillion",
+      "url": "https://www.abccolumbia.com/2026/11/11/credit-card-debit-climbs-to-over-1-trillion/",
+      "domain": "abccolumbia.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "Reviewing Eagle Bancorp ( EGBN ) and Its Peers",
+      "url": "https://www.tickerreport.com/banking-finance/13660007/reviewing-eagle-bancorp-egbn-and-its-peers.html",
+      "domain": "tickerreport.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "Comparing Moog ( NYSE : MOG . B ) & TAT Technologies ( NASDAQ : TATT )",
+      "url": "https://www.themarketsdaily.com/2026/11/12/comparing-moog-nysemog-b-tat-technologies-nasdaqtatt.html",
+      "domain": "themarketsdaily.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "Nvidia preparing to oust embattled chief Huang : report",
+      "url": "https://www.canberratimes.com.au/story/9390294/nvidia-preparing-to-oust-embattled-chief-huang-report/",
+      "domain": "canberratimes.com.au",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Australia"
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "Australian Market Notably Lower",
+      "url": "https://www.rttnews.com/3713315/australian-market-notably-lower.aspx",
+      "domain": "rttnews.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "Financial Comparison : Erste Group Bank ( EBKDY ) versus Its Rivals",
+      "url": "https://www.tickerreport.com/banking-finance/13660008/financial-comparison-erste-group-bank-ebkdy-versus-its-rivals.html",
+      "domain": "tickerreport.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "OFS Capital ( OFS ) and Its Competitors Financial Survey",
+      "url": "https://www.themarketsdaily.com/2026/11/12/ofs-capital-ofs-and-its-competitors-financial-survey.html",
+      "domain": "themarketsdaily.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "Critical Survey : Arc Resources ( OTCMKTS : AETUF ) and Summit Midstream Partners ( NYSE : SMC )",
+      "url": "https://www.themarketsdaily.com/2026/11/12/critical-survey-arc-resources-otcmktsaetuf-and-summit-midstream-partners-nysesmc.html",
+      "domain": "themarketsdaily.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "Singapore Stock Market May Reclaim 5 , 300 - Point Level",
+      "url": "https://www.rttnews.com/3713293/singapore-stock-market-may-reclaim-5300-point-level.aspx",
+      "domain": "rttnews.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "Bank Stocks To Add to Your Watchlist \u2013 November 9th",
+      "url": "https://www.tickerreport.com/banking-finance/13659990/bank-stocks-to-add-to-your-watchlist-november-9th.html",
+      "domain": "tickerreport.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T01:30:00Z",
+      "title": "Dollar near one - month high as yen edges toward 160",
+      "url": "https://economictimes.indiatimes.com/markets/forex/forex-news/dollar-near-one-month-high-as-yen-edges-toward-160/articleshow/135751707.cms",
+      "domain": "economictimes.indiatimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-12T00:30:00Z",
+      "title": "Dell Technologies vs . Taiwan Semiconductor : Which Technology Stock Is a Better Buy for 2027 ?",
+      "url": "https://www.fool.com/coverage/better-buy/2026/11/11/dell-technologies-vs-taiwan-semiconductor-which-technology-stock-is-a-better-buy-for-2027/",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T00:30:00Z",
+      "title": "Airbnb vs . MercadoLibre : Which Consumer Stock Is a Better Buy for 2027 ?",
+      "url": "https://www.fool.com/coverage/better-buy/2026/11/11/airbnb-vs-mercadolibre-which-consumer-stock-is-a-better-buy-for-2027/",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T00:30:00Z",
+      "title": "Canada stock index up 250 points , U . S . stocks also up",
+      "url": "https://www.moneysense.ca/news/canada-stock-index-tsx-us-market-nov-11-2026/",
+      "domain": "moneysense.ca",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Canada"
+    },
+    {
+      "seendate": "2026-11-12T00:30:00Z",
+      "title": "Nasdaq Adds 400 Points as CoreWeave Pops : Stock Market Today",
+      "url": "https://www.kiplinger.com/investing/stocks/nasdaq-adds-400-points-after-coreweave-earnings-stock-market-today",
+      "domain": "kiplinger.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T00:30:00Z",
+      "title": "Why Gevo Stock Rocketed Higher Today | The Motley Fool",
+      "url": "https://www.fool.com/investing/2026/11/11/why-gevo-stock-rocketed-higher-today/",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T00:30:00Z",
+      "title": "U . S . stocks rebound as CoreWeave reignites AI rally - Xinhua",
+      "url": "https://english.news.cn/20261112/19c90cb5ea9d4156a344efccd6841493/c.html",
+      "domain": "english.news.cn",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": ""
+    },
+    {
+      "seendate": "2026-11-12T00:30:00Z",
+      "title": "U . S . stocks rebound Wednesday , techs take the lead",
+      "url": "http://www.albuquerqueexpress.com/news/279427052/u-s-stocks-rebound-wednesday-techs-take-the-lead",
+      "domain": "albuquerqueexpress.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T00:30:00Z",
+      "title": "Nvidia preparing to oust embattled chief Huang : report",
+      "url": "https://www.dailyadvertiser.com.au/story/9390294/nvidia-preparing-to-oust-embattled-chief-huang-report/",
+      "domain": "dailyadvertiser.com.au",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Australia"
+    },
+    {
+      "seendate": "2026-11-12T00:30:00Z",
+      "title": "Which Gold ETF Is the Better Buy : iShare Gold Trust IAU or Sprott Gold Miners SGDM ?",
+      "url": "https://www.fool.com/coverage/etfs/2026/11/11/which-gold-etf-is-the-better-buy-ishares-gold-trust-iau-or-sprott-s-gold-miners-sgdm/",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T00:30:00Z",
+      "title": "Gold Stocks To Keep An Eye On \u2013 November 9th",
+      "url": "https://www.themarketsdaily.com/2026/11/12/gold-stocks-to-keep-an-eye-on-november-9th.html",
+      "domain": "themarketsdaily.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T00:30:00Z",
+      "title": "Veterans Day : Here a list of deals and what open and closed",
+      "url": "https://www.wtae.com/article/veterans-day-deals-whats-open-and-closed/74398744",
+      "domain": "wtae.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T00:30:00Z",
+      "title": "Veterans Day : Here a list of deals and what open and closed",
+      "url": "https://www.kcra.com/article/veterans-day-deals-whats-open-and-closed/74398744",
+      "domain": "kcra.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T00:30:00Z",
+      "title": "Nvidia and Alphabet Just Agreed to Buy $10 Billion Each of Anthropic Stock at Its IPO Price",
+      "url": "https://www.fool.com/investing/2026/11/11/nvidia-and-alphabet-just-agreed-to-buy-usd10-billion-each-of-anthropic-stock-at-its-ipo-price/",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T00:30:00Z",
+      "title": "Nvidia preparing to oust embattled chief Huang : report",
+      "url": "https://www.naroomanewsonline.com.au/story/9390294/nvidia-preparing-to-oust-embattled-chief-huang-report/",
+      "domain": "naroomanewsonline.com.au",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Australia"
+    },
+    {
+      "seendate": "2026-11-12T00:30:00Z",
+      "title": "Analysis | Taylor : Meyer touts deep fixed - income , debt capital markets experience in VR board bid",
+      "url": "https://www.vaildaily.com/opinion/analysis-taylor-meyer-touts-deep-fixed-income-debt-capital-markets-experience-in-vr-board-bid/",
+      "domain": "vaildaily.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T00:30:00Z",
+      "title": "As higher prices seep into broader economy , Fed considers faster hikes",
+      "url": "https://www.timescall.com/2026/11/11/higher-prices-fed-rate-hikes/",
+      "domain": "timescall.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T00:30:00Z",
+      "title": "Stock Market Today , Nov . 11 : Stock Market Today , Nov . 11 : Nasdaq Surges as CoreWeave 25 % Rally Reignites the AI Trade",
+      "url": "https://www.fool.com/coverage/stock-market-today/2026/11/11/stock-market-today-nov-11-stock-market-today-nov-11-nasdaq-surges-as-coreweave-s-25-rally-reignites-the-ai-trade/",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T00:30:00Z",
+      "title": "U . S . stocks rebound as CoreWeave reignites AI rally - Xinhua",
+      "url": "https://english.news.cn/northamerica/20261112/212979287b984de4b2966fb04778bcfa/c.html",
+      "domain": "english.news.cn",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": ""
+    },
+    {
+      "seendate": "2026-11-12T00:30:00Z",
+      "title": "Which Long - Term Bond ETF Is the Better Buy : State Street SPLB or iShare TLT ?",
+      "url": "https://www.fool.com/coverage/etfs/2026/11/11/which-long-term-bond-etf-is-the-better-buy-state-street-s-splb-or-ishares-tlt/",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T00:30:00Z",
+      "title": "Ingram Micro Holding Set to Join S & P SmallCap 600",
+      "url": "https://www.prnewswire.com/news-releases/ingram-micro-holding-set-to-join-sp-smallcap-600-302937055.html",
+      "domain": "prnewswire.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T00:30:00Z",
+      "title": "If You Invest $1 , 200 a year in Kroger Stock , Here the Dividend Income It Could Generate Over 20 Years",
+      "url": "https://www.fool.com/investing/2026/11/11/if-you-invest-1200-a-year-in-kroger-stock-heres-th/",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T00:30:00Z",
+      "title": "USA Rare Earth Earnings Report Left Me With 1 Big Unanswered Question",
+      "url": "https://www.fool.com/investing/2026/11/11/usa-rare-earth-earnings-report-left-me-with-1-big/",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T00:30:00Z",
+      "title": "Five Below vs . GameStop : Which Retailer Stock Is a Better Buy for 2027 ?",
+      "url": "https://www.fool.com/coverage/better-buy/2026/11/11/five-below-vs-gamestop-which-retailer-stock-is-a-better-buy-for-2027/",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T00:30:00Z",
+      "title": "Stock Market Today , Nov . 11 : Advanced Micro Devices Jumps -- and Not Only Because of CoreWeave Results",
+      "url": "https://www.fool.com/coverage/stock-market-today/2026/11/11/stock-market-today-nov-11-advanced-micro-devices-jumps-and-not-only-because-of-coreweave-s-results/",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T00:30:00Z",
+      "title": "Nasdaq Sell - Off : 2 Stocks to Buy on the Dip and Hold for 5 Years",
+      "url": "https://www.fool.com/investing/2026/11/11/nasdaq-sell-off-2-stocks-to-buy-on-the-dip-and-hold-for-5-years/",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T00:30:00Z",
+      "title": "Eli Lilly Just Raised Its 2026 Sales Forecast to as Much as $92 Billion . But Is Viking Therapeutics the Next Big Obesity Winner ?",
+      "url": "https://www.fool.com/investing/2026/11/11/eli-lilly-just-raised-its-2026-sales-forecast-to-a/",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T00:30:00Z",
+      "title": "U . S . stocks rebound Wednesday , techs take the lead",
+      "url": "http://www.baltimorestar.com/news/279427052/u-s-stocks-rebound-wednesday-techs-take-the-lead",
+      "domain": "baltimorestar.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-12T00:30:00Z",
+      "title": "Stock Market Today , Nov . 11 : Intel Climbs on Broader Chip Rally as AI Infrastructure Demand Lifts Semiconductor Stocks",
+      "url": "https://www.fool.com/coverage/stock-market-today/2026/11/11/stock-market-today-nov-11-intel-climbs-on-broader-chip-rally-as-ai-infrastructure-demand-lifts-semiconductor-stocks/",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
     }
   ],
   "methodology": "GDELT Doc 2.0 artlist \u2014 a machine index of worldwide news. TWO bounded requests per refresh (one per LANGUAGE LANE, the two fixed queries above, <=200 records each, >=15s host spacing; GDELT open data: URL/title/date/domain are facts, article copyright stays with the publishers), sort=datedesc (machine ordering, not editorial). The Chinese lane is domain-anchored on wallstreetcn.com (\u534e\u5c14\u8857\u89c1\u95fb \u2014 a \u8d22\u8054\u793e-style 7\u00d724 financial newswire): \u8d22\u8054\u793e itself has ZERO GDELT crawl coverage and CJK phrase queries are rejected by the API ('phrase too short'), so a domain seed is the only proven form (probe evidence in docs/data-intake-gdelt-news-feed.md). lang = the ingest-resolved lane (API language field first, request provenance fallback; never guessed from title bytes). seendate is GDELT's first-seen UTC stamp (15-min resolution) \u2014 the display freshness anchor. Rows are metadata + outbound links only: no article text is stored, summarized or fabricated; missing source fields are shown empty, never guessed. Dedup key = exact URL WITHIN a lane; the two languages are different articles and are never collapsed across lanes. Coverage = whatever GDELT's crawl saw; gaps are gaps. The payload caps the item list at 150 newest while by_day/total cover the full trailing 30-day cache window. Display-only, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-11-11T11:32:50.935103+00:00"
+  "snapshot_ts": "2026-11-12T10:57:48.081516+00:00"
 }

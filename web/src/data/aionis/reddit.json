@@ -10,30 +10,16 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-11-11T10:28:45+00:00",
-  "n_snapshots": 62,
+  "latest_snapshot_ts": "2026-11-12T10:28:24+00:00",
+  "n_snapshots": 63,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
       "ticker": "NVDA",
-      "mentions": 3,
-      "sentiment": -0.329,
-      "bull_ratio": 0.0,
-      "score_sum": 0
-    },
-    {
-      "ticker": "MSFT",
       "mentions": 1,
-      "sentiment": -0.174,
-      "bull_ratio": null,
-      "score_sum": 0
-    },
-    {
-      "ticker": "SNDK",
-      "mentions": 1,
-      "sentiment": -0.944,
+      "sentiment": -0.926,
       "bull_ratio": 0.0,
       "score_sum": 0
     }
@@ -44,16 +30,16 @@
       "GOOGL": {
         "ticker": "GOOGL",
         "latest_mentions": 2,
-        "velocity": -0.375,
+        "velocity": -1.0,
         "crowding_z": 1.8452,
         "bull_bear_lean": -0.4205,
         "grade": "elevated",
         "n_days": 14
       }
     },
-    "n_snapshots": 62,
-    "latest_date": "2026-11-11",
+    "n_snapshots": 63,
+    "latest_date": "2026-11-12",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-11-11T11:33:07.584296+00:00"
+  "snapshot_ts": "2026-11-12T10:58:00.488427+00:00"
 }
