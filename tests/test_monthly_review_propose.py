@@ -354,6 +354,12 @@ def test_parse_bounded_answer_rejects_out_of_range_p() -> None:
 def test_bounded_question_contract_mentions_json() -> None:
     assert '"answer"' in mr.WATCHDOG_BOUNDED_QUESTION
     assert '"p"' in mr.WATCHDOG_BOUNDED_QUESTION
+    # round 131-续 pre-enum：固定选项集 A/B/C，answer 只回标签（审计发现③角度①）
+    assert "A=原地打转" in mr.WATCHDOG_BOUNDED_QUESTION
+    assert "B=偏离值班目标" in mr.WATCHDOG_BOUNDED_QUESTION
+    assert "C=正常" in mr.WATCHDOG_BOUNDED_QUESTION
+    assert "A|B|C" in mr.WATCHDOG_BOUNDED_QUESTION
+    assert "只回选项标签" in mr.WATCHDOG_BOUNDED_QUESTION
 
 
 def test_render_card_prediction_slot_default_unfilled() -> None:

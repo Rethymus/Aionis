@@ -1262,11 +1262,25 @@ def append_lessons(text: str, month: str, handoff_path: Path) -> int:
     return 0
 
 
+# Round 131-续 (pre-enum, audit finding ③ angle-① final step): the question
+# text carries a FIXED option set and the answer convention is label-only
+# (A|B|C) — the「预先枚举+只回选项+置信度」protocol is now complete. Same
+# shape as GLM's official structured-output sentiment example (three-choice
+# enum + 0-1 confidence — see docs/ops-local-refresh.md「判别层/生成层分层」
+# GLM json_object note, provider 池内唯一一手同形支撑) and the lessons
+# event: four-choice contract (EVENT_OP_RE). parse_bounded_answer stays
+# deliberately enum-agnostic: an answer outside {A,B,C} still parses and is
+# recorded honestly (presentation-side tagging only); the format-miss
+# fallback is unchanged. String-constant-level change, zero new call
+# surface — still the existing bounded question inside the single
+# month-end 23:35 session.
 WATCHDOG_BOUNDED_QUESTION = (
     "spin/persistent 是否原地打转或偏离值班目标？（月末会话回答，勿展开成新会话；"
-    "回答格式=单行 JSON {\"answer\": true|false|短枚举, \"p\": 0到1之间的置信度}"
+    "固定选项集 A=原地打转 / B=偏离值班目标 / C=正常——answer 只回选项标签"
+    " A|B|C，不得自由文本；回答格式=单行 JSON {\"answer\": \"A\"|\"B\"|\"C\", "
+    "\"p\": 0到1之间的置信度}"
     "——Jev/System One 校准概率协议的运维层同构，round 131；p 是口头置信度仅记录"
-    "轨迹，禁统计显著性声称，禁再校准拟合）")
+    "轨迹，禁统计显著性声称，禁再校准拟合；输出约十 token 量级）")
 
 
 def parse_bounded_answer(text: str) -> dict:
