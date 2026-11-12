@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (11-12，handoff 轮 131-续)【定夺框架五条目：runbook GLM json_object 枚举协议一手注记+判别/生成成本结构对照/运维调用面盘点表（①②随并行轮 `df5416a893` 同文件入库，HEAD grep 2/2 核实）/ backlog 延伸索引④⑤⑥（lm-evaluation-harness 枚举打分先例+三 provider logprobs 未验证限定 / RouteLLM n=1 禁拟合外部印证 / FlexDM 低置信反转重问=待业主点头默认关闭）/ reconcile_predictions judgments/facts 分账+p>0.6 高带=代码规则门呈现标签（三人工门不绕过）/ WATCHDOG_BOUNDED_QUESTION 固定预枚举 A|B|C——「预先枚举+只回选项+置信度」协议闭合，0 ledger/0 frozen/0 OOS】**
+  工作提交 `a129199e3d`（backlog ④⑤⑥）/`bdece20155`（judgments/facts 分账+render_card 接线+tests）/`d3333a3bf1`（预枚举+tests）+本笔 state；TypeSafe 成本数字系调研转引（未独立抓取，已标「厂商自述、自称偏高端」）。验证实跑：GLM 官方文档 fox_fetch 一手、两仓许可证 GitHub API 复核（MIT/Apache-2.0）、awesome-system-one README 抓取（FlexDM 卡原文+72% vs 21% 警示）、PROPOSAL_KEY_RE 真实正则零命中+--propose exit 0、monthly propose 套件 29 passed×2 时点+ruff 净（统一门禁主会话侧另行入册）。详见 handoff 轮 131-续。
+
 - **active (11-12，handoff 轮 131)【iterate 轮 2 六条落地（Jev 协议级）：{answer,p} bounded question 契约+parse_bounded_answer 三态兜底 / --propose prediction 槽（p 引擎绝不代填）+reconcile_predictions Brier 式对账（(p−y)²+方向命中，pending/未填如实分列）/ runbook 分层引用注记（RLCD 锚+取向差异）/ backlog 阅读索引两 CC0 清单 / 轮 1 报告行号勘误——复活链三次 Model creation failed 后主会话内联收尾（不盲目重试），三 monthly 套件 81 绿+ruff 净，0 ledger/0 frozen/0 OOS】**
   前三条为施工员生前工作树改动复核入册，后三条（代码面）主会话实施；p 仅记录轨迹（禁校准拟合/禁显著性声称），人工裁决门不变；报告 reports/audits/2026-11-12-iterate-round-2.md（含抢救注记）。dwfrun 链遗骸（473d08ee/7a642a78）不再复活，journal 留档。详见 handoff 轮 131。
 
