@@ -105,6 +105,26 @@
 > Line 博文发布，Qwen3.5-9B 后训练单遍判别决策模型）——与 JEPA 无关，同 Jev
 > 指认规则防混读；其 Foundry API 接入与定价模式**不采**（provider 红线 +
 > 无关本地运维）。
+> ④ **lm-evaluation-harness 枚举打分先例**（github.com/EleutherAI/lm-evaluation-harness，
+> MIT——2026-11-12 GitHub API 复核 spdx_id）：multiple_choice 任务类型=选择类任务
+> 「枚举打分、零生成」的长期标准实践（logprobs/loglikelihood 打分路径），与
+> bounded question 枚举协议同向（协议落点 docs/ops-local-refresh.md 值班协议
+> 分层小节）。**限定注记（必录）**：logprobs/loglikelihood 路径在 GLM/
+> SiliconFlow/ModelScope 三 provider 上**未验证、不可假定**；显式 {answer,p}
+> 文本输出是多花 1-2 token 的稳妥等价物——Aionis 取文本输出路径，解析兜底不变。
+> 仅索引不装条目不引包。
+> ⑤ **RouteLLM 阈值校准边界**（github.com/lm-sys/RouteLLM，Apache-2.0——
+> 2026-11-12 GitHub API 复核 spdx_id）：路由阈值校准需**代表性查询分布**——
+> 外部印证 n=1 月度样本禁统计拟合的诚实边界，与本文件上方 2026-11-12 登记候选⑤
+> （Jev 代码级候选）的诚实边界（:54-56：GLM 概率未校准、月度小样本对账仅记录性、
+> 禁显著性声称）同向。仅索引不装条目不引包。
+> ⑥ **「低置信选项反转重问」可选模式备忘**（来源=本索引① awesome-system-one
+> 清单 FlexDM-LoRA 2.1 卡原文「re-reads low-confidence answers with options
+> reversed」，2026-11-12 抓取复核）：对低置信 bounded 回答把选项取反后重问一次
+> 作一致性校验——**待业主点头的可选模式，默认关闭**（重问=该子任务 token 翻倍，
+> 且仍限月末单场会话内，不新增会话）；同清单 open-alternative-jev 卡载弱模型
+> 选项序翻转敏感度警示（同题选项序翻转 72% vs 21%），故反转重问读数须按一致性
+> 证据而非校准证据消费。未经业主点头不实施。
 
 ## Owner-gated（预注册级 GO 才可动；权威 spec 在 tasks/active/）
 
