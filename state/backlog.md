@@ -77,7 +77,7 @@
 ### 2026-11-12 增补（轮 131-续，定夺框架条目 5；四条真增量候选——仅索引不装包，任何装包须业主点头；研究面若采纳照旧须预注册 + mission 指名）
 
 > 四条与在册 #1-13、2026-11-12 backlog-candidates-register 五条（本文件 :38-57）、延伸索引④⑤⑥
-> （:108-127）零重叠——本日实读复核；与 #11 时序共形区间不同族（变点检测≠区间估计）。
+> （:141-160）零重叠——本日实读复核；与 #11 时序共形区间不同族（变点检测≠区间估计）。
 > 7-gate（docs/data-intake-rubric.md）与许可证白名单（MIT/Apache/BSD）照旧逐条过。
 
 14. **uv lock --check（doctor 第 9 层候选，high）**——lockfile 与 pyproject 脱钩即报错，护 H6
@@ -94,6 +94,18 @@
     一次性 CLI——**不入 pyproject、不常驻进程**（github.com/duckdb/duckdb，MIT——已核实 43028★）。
 17. **ty 类型检查（low）**——低 churn 模块试点**前须业主点头**；**不得入门禁**（gate 语义零改动）
     （github.com/astral-sh/ty，MIT——已核实）。
+
+### 2026-11-13 增补（anchor-debt-cleanup 附带根治登记；一条中期候选——仅登记不迁移不装包，任何装包须业主点头）
+
+18. **runbook `:N` 行号锚→标题锚迁移（medium）**——`docs/ops-local-refresh.md` 引用
+    `scripts/monthly_review.py` 等的 `:N` 行号锚随代码顺移反复脱靶（根因=删行/加行顺移；
+    同类漂移已连续多轮——轮 131-续四处括注刷新、轮 132 删 `PREDICTION_LINE_RE` 后 :978
+    之后统一 −3、2026-11-13 本轮八行活锚实测刷新），中期候选=迁移为**标题/符号锚**
+    （def 名/节标题/add_argument 旗标名）并配自动巡检：markdownlint MD051
+    「Link fragments should be valid」（github.com/DavidAnson/markdownlint，MIT——
+    2026-11-13 GitHub API 复核 spdx_id；Rules.md 规则名实测）与 remark-validate-links
+    （github.com/remarkjs/remark-validate-links，MIT——同日 API 复核 spdx_id）。
+    **仅登记不迁移不装包**；迁移施工须 mission 派单，任何装包须业主点头。
 
 ## 名词指认资料（Jev 指认规则；2026-11-12 轮 130-续入册，杜绝 JEPA 混读）
 

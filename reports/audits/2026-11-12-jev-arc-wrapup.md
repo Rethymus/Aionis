@@ -65,6 +65,13 @@ iterate 轮 2 条目 1-3（RLCD 锚+取向差异+阅读索引①②+:697 勘误�
 - **当前在飞**：本轮收官三件施工为工作树未提交态（`docs/ops-local-refresh.md` +17、
   `state/backlog.md` +21、本报告新建），待统一门禁提交——此为演进后的新在飞集，
   如实记录，不与 ahead 4 混读。
+- **终态收敛补记（append-only，2026-11-13 anchor-debt-cleanup 轮实跑）**：上行「当前在飞」
+  三件已随轮 132 收官提交并推送——runbook OTel 注记 `d1f83e41bb`、backlog 前沿增补
+  `7db2bd2b70`、本报告本体 `d3950253a7`（另轮 3 交付载体补写 `bf9813163d`）；本会话实测
+  `git rev-list origin/main..HEAD --count` → **0**（齐平无 ahead）。§五所记 −3 顺移映射
+  （reconcile :981-1042→:978-1039）已在活文档清偿——本轮 runbook OTel 锚实测刷新
+  `:981-1042`→`:978-1039`；本报告时点快照行号一律不回改。本轮补记四文件
+  （runbook/backlog/handoff/本报告）构成演进后的新在飞集，待统一门禁提交。
 
 ## 四、待业主区（钥匙在业主，本报告只列不动）
 
