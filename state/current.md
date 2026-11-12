@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (11-13，handoff 轮 133)【anchor-debt-cleanup 六条复核 low 清偿 + p-trajectory-presentation 护栏注记 + doctor-layer-9 第 9 层 env-lock drift（tests 8→9 同步+runbook 九层口径）——统一门禁全绿，0 ledger/0 frozen/0 OOS】**
+  唯一代码改动=collect_layers() 第 9 层+_env_lock_drift_check helper（uv 读侧双探测零新依赖；--all-extras 必带——bare --locked 系 base-sync 假计划实测坐实；uv 进度行走 stderr 双流解析）。runbook 活锚八行实测刷新+p 轨迹护栏注记（peeking 双锚 arXiv:1512.04922/2210.01948 fetch 复核；图形态待数据面实证、plotly 增强未施工）+九层口径六处；backlog 自指锚修正+标题锚迁移登记 #18；handoff 零残留限定/轮 3 载体归属补记+弧线报告 §三收敛；test_ops_deadman 夹具时间腐烂修复（stash 证明存量）。实弹 doctor 9 层在位（L9 resolved=198/audited=159；L7 冻结签名红属已知）。详见 handoff 轮 133/133-续/133-续2/133 收尾。
+
 - **active (11-12，handoff 轮 132)【round2-lows 轮 2 复核 3 low 清偿：PREDICTION_LINE_RE 死变量删除（monthly_review.py:978，删前全仓 grep 零消费方，:978 后锚点统一 −3）/ 轮 2 报告行号锚复核——交办假设「reconcile :981-1042 报告锚」查无对应物（iterate-round-2 仅 :101 按名提及），报告自身 :15/:70/:74 锚复核仍准（append-only 复核记已入段尾）/ state 记账归属复核——current.md:6-7 轮 131「前三条施工员/后三条主会话」与抢救注记+df5416a893/b298469235 commit 主题三方一致**无缺口无动作**；三 monthly 套件 81 绿（exit 0）+ruff 净，0 ledger/0 frozen/0 OOS】**
   唯一代码改动=删除死变量（diff −3 行=1 代码行+2 空行归并；ops/报告面，不触研究管线）；同轮另有 otel-genai-note（runbook :346-362 OTel 命名锚）/backlog-frontier（前沿四条 :77 小节）/arc-report（jev-arc-wrapup.md 新建）/lane-ledger-repin（原「重钉 11a9d903」处方据实废止——pin 未漂移，sha256=测试钉值）四条目；**统一门禁全绿**；原子分批×5 提交+pull --rebase 后 push（哈希见提交记录）。详见 handoff 轮 132/132-续/132 收尾。
 
