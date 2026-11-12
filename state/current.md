@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (11-12，handoff 轮 132)【round2-lows 轮 2 复核 3 low 清偿：PREDICTION_LINE_RE 死变量删除（monthly_review.py:978，删前全仓 grep 零消费方，:978 后锚点统一 −3）/ 轮 2 报告行号锚复核——交办假设「reconcile :981-1042 报告锚」查无对应物（iterate-round-2 仅 :101 按名提及），报告自身 :15/:70/:74 锚复核仍准（append-only 复核记已入段尾）/ state 记账归属复核——current.md:6-7 轮 131「前三条施工员/后三条主会话」与抢救注记+df5416a893/b298469235 commit 主题三方一致**无缺口无动作**；三 monthly 套件 81 绿（exit 0）+ruff 净，0 ledger/0 frozen/0 OOS】**
+  唯一代码改动=删除死变量（diff −3 行=1 代码行+2 空行归并；ops/报告面，不触研究管线）；同轮另有 otel-genai-note（runbook :346-362 OTel 命名锚）/backlog-frontier（前沿四条 :77 小节）/arc-report（jev-arc-wrapup.md 新建）/lane-ledger-repin（原「重钉 11a9d903」处方据实废止——pin 未漂移，sha256=测试钉值）四条目；**统一门禁全绿**；原子分批×5 提交+pull --rebase 后 push（哈希见提交记录）。详见 handoff 轮 132/132-续/132 收尾。
+
 - **active (11-12，handoff 轮 131-续)【定夺框架五条目：runbook GLM json_object 枚举协议一手注记+判别/生成成本结构对照/运维调用面盘点表（①②随并行轮 `df5416a893` 同文件入库，HEAD grep 2/2 核实）/ backlog 延伸索引④⑤⑥（lm-evaluation-harness 枚举打分先例+三 provider logprobs 未验证限定 / RouteLLM n=1 禁拟合外部印证 / FlexDM 低置信反转重问=待业主点头默认关闭）/ reconcile_predictions judgments/facts 分账+p>0.6 高带=代码规则门呈现标签（三人工门不绕过）/ WATCHDOG_BOUNDED_QUESTION 固定预枚举 A|B|C——「预先枚举+只回选项+置信度」协议闭合，0 ledger/0 frozen/0 OOS】**
   工作提交 `a129199e3d`（backlog ④⑤⑥）/`bdece20155`（judgments/facts 分账+render_card 接线+tests）/`d3333a3bf1`（预枚举+tests）+本笔 state；TypeSafe 成本数字系调研转引（未独立抓取，已标「厂商自述、自称偏高端」）。验证实跑：GLM 官方文档 fox_fetch 一手、两仓许可证 GitHub API 复核（MIT/Apache-2.0）、awesome-system-one README 抓取（FlexDM 卡原文+72% vs 21% 警示）、PROPOSAL_KEY_RE 真实正则零命中+--propose exit 0、monthly propose 套件 29 passed×2 时点+ruff 净（统一门禁主会话侧另行入册）。详见 handoff 轮 131-续。
 
