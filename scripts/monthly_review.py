@@ -781,6 +781,13 @@ def proposal_reconciliation(repo: Path) -> tuple[list[str], dict]:
                     if backlog_file.is_file() else "")
     backlog_keys = scan_proposal_keys(backlog_text)
     stats["backlog_keys"] = len(backlog_keys)
+    # Round 131: Brier-style prediction reconciliation rides the same
+    # read-only sweep (RLCD prediction-error leg; zero writes, zero stats
+    # beyond per-record squared error).
+    pred_lines = reconcile_predictions(
+        backlog_text, datetime.now().strftime("%Y-%m"))
+    stats["prediction_records"] = len(pred_lines)
+    findings += pred_lines
     zone_hits: dict[str, list[str]] = {}
     for zone in TASKS_ZONES:
         zone_dir = repo / "tasks" / zone
@@ -948,12 +955,70 @@ def render_card(card: dict) -> list[str]:
         out.append(f"  - thread: {card['thread']}（续写该 Thread，不新起小节）")
     out += [f"  - evidence: {e}" for e in card["evidence"]]
     out.append(f"  - proposal: {card['action']}")
+    pred = card.get("prediction")
+    if isinstance(pred, dict) and pred.get("claim"):
+        p_val = pred.get("p")
+        p_txt = f"{p_val}" if isinstance(p_val, float) else "待月末会话填写 0..1"
+        out.append(f"  - prediction: {pred['claim']}"
+                   f"（p={p_txt}；due={pred.get('due_month', '—')}；"
+                   "对账记法=该条目追加 → outcome: y=0|1 (YYYY-MM-DD)，"
+                   "resolved 后 reconcile 记 (p−y)²；round 131 Brier 式"
+                   "预测误差=改进信号，RLCD 同构——引擎绝不代填 p，诚实边界"
+                   "照守）")
     if card.get("research"):
         out.append(f"  - {PROPOSAL_RESEARCH_GATE}")
     out.append("  - disposition: 里程碑边界 accept → tasks/active/ + "
                "orchestrate_dispatch --lane executor · defer 留候选区 · "
                "reject → tasks/rejected/")
     return out
+
+
+PREDICTION_LINE_RE = None  # compiled lazily to keep import-time cost zero
+
+
+def reconcile_predictions(backlog_text: str,
+                          now_month: str) -> list[str]:
+    """Round 131 (Brier-style reconciliation, the RLCD 'prediction error =
+    improvement signal' leg): read-only scan of pasted proposal entries in
+    state/backlog.md. A prediction line opens a record (claim, p, due);
+    a later 'outcome: y=0|1 (date)' line on the same entry closes it. Only
+    records with BOTH p filled and outcome recorded score (p-y)^2 — pending
+    (due passed, no outcome) and unfilled (p missing) are listed honestly;
+    nothing is invented, no statistics beyond per-record squared error."""
+    import re as _re
+    lines_out: list[str] = []
+    records: list[dict] = []
+    cur: dict | None = None
+    for line in (backlog_text or "").splitlines():
+        if "prediction:" in line and "（p=" in line:
+            claim = line.split("prediction:", 1)[1].split("（p=", 1)[0].strip()
+            m = _re.search(r"p=([\d.]+)", line)
+            due = _re.search(r"due=(\d{4}-\d{2})", line)
+            cur = {"claim": claim[:80],
+                   "p": float(m.group(1)) if m else None,
+                   "due": due.group(1) if due else None,
+                   "y": None}
+            records.append(cur)
+            continue
+        m = _re.search(r"outcome:\s*y=([01])\s*\((\d{4}-\d{2}-\d{2})\)", line)
+        if m and cur is not None:
+            cur["y"] = int(m.group(1))
+    for r in records:
+        if r["p"] is None:
+            lines_out.append(f"prediction 未填 p（诚实缺省，待月末会话）: "
+                             f"{r['claim']}")
+        elif r["y"] is None:
+            overdue = (r["due"] is not None and r["due"] < now_month)
+            lines_out.append(f"prediction pending outcome: {r['claim']}"
+                             f"（p={r['p']}"
+                             f"{'; due 已过待记 outcome' if overdue else ''}）")
+        else:
+            brier = (r["p"] - r["y"]) ** 2
+            hit = "命中" if (r["p"] >= 0.5) == (r["y"] == 1) else "未命中"
+            lines_out.append(f"prediction resolved: {r['claim']}"
+                             f"（p={r['p']}, y={r['y']}, (p−y)²={brier:.3f},"
+                             f" {hit}）")
+    return lines_out
 
 
 def run_propose(repo: Path, now: datetime | None = None,
@@ -1176,8 +1241,37 @@ def append_lessons(text: str, month: str, handoff_path: Path) -> int:
     return 0
 
 
-WATCHDOG_BOUNDED_QUESTION = ("spin/persistent 是否原地打转或偏离值班目标？"
-                             "（月末会话一行结论，勿展开成新会话）")
+WATCHDOG_BOUNDED_QUESTION = (
+    "spin/persistent 是否原地打转或偏离值班目标？（月末会话回答，勿展开成新会话；"
+    "回答格式=单行 JSON {\"answer\": true|false|短枚举, \"p\": 0到1之间的置信度}"
+    "——Jev/System One 校准概率协议的运维层同构，round 131；p 是口头置信度仅记录"
+    "轨迹，禁统计显著性声称，禁再校准拟合）")
+
+
+def parse_bounded_answer(text: str) -> dict:
+    """Round 131 ({answer, p} contract): parse the month-end session's
+    bounded-question reply — the FIRST JSON object carrying both keys. Zero
+    LLM, pure validation; anything unparsable or out of range degrades to
+    an honest format-miss marker (the plain-text reply stays on record,
+    nothing is invented). p is recorded as spoken confidence only."""
+    import re as _re
+    for m in _re.finditer(r"\{[^{}]*\}", text or ""):
+        try:
+            obj = json.loads(m.group(0))
+        except ValueError:
+            continue
+        if not isinstance(obj, dict) or "answer" not in obj or "p" not in obj:
+            continue
+        try:
+            p = float(obj["p"])
+        except (TypeError, ValueError):
+            return {"ok": False, "reason": "p-not-numeric",
+                    "raw": text[:120]}
+        if not (0.0 <= p <= 1.0):
+            return {"ok": False, "reason": "p-out-of-range",
+                    "raw": text[:120]}
+        return {"ok": True, "answer": obj["answer"], "p": p}
+    return {"ok": False, "reason": "format-miss", "raw": (text or "")[:120]}
 
 
 def lesson_seeds(month: str, repo: Path, errors: list[str]) -> dict:
@@ -1216,6 +1310,8 @@ def render_reflexion_section(seeds: dict,
                f"{seeds.get('watchdog_bounded_question') or '—'} "
                f"(本月 spin {len(seeds['spin_findings'])} 条 / persistent "
                f"晚 {len(seeds['persistent_soft_fails'])})")
+    out.append("  - 回答请落单行 JSON（{answer, p} 契约，round 131）；不合法"
+               "回答由 parse_bounded_answer 判 format-miss 原文保留——不补猜")
     if errors:
         out.append(f"- collection anomalies: {errors}")
     out += ["", "## 6. Active lessons carried from state/handoff.md "

@@ -315,3 +315,82 @@ def test_cli_propose_end_to_end(tmp_path: Path) -> None:
     assert "proposal cards — 确定性提案引擎" in out or \
         "--propose" in out.splitlines()[0]
     assert "prop:platform-billing" in out
+
+
+# --------------------------------------------------------------- round 131
+# {answer, p} bounded-question contract (Jev calibrated-probability proto)
+# + prediction slot on cards + Brier-style reconciliation (RLCD
+# prediction-error leg). Zero LLM: parse/validate/record only, p is never
+# invented by the engine (honesty boundary), no recalibration fitting.
+
+def test_parse_bounded_answer_valid() -> None:
+    ok = mr.parse_bounded_answer(
+        '结论：{"answer": true, "p": 0.8}（本月无打转）')
+    assert ok["ok"] is True and ok["answer"] is True and ok["p"] == 0.8
+
+
+def test_parse_bounded_answer_picks_first_json_with_both_keys() -> None:
+    text = '前置 {"noise": 1} 然后 {"answer": "spin-once", "p": 0.35}'
+    ok = mr.parse_bounded_answer(text)
+    assert ok["ok"] is True and ok["answer"] == "spin-once" and ok["p"] == 0.35
+
+
+def test_parse_bounded_answer_format_miss_keeps_raw() -> None:
+    bad = mr.parse_bounded_answer("就是没打转，感觉挺稳")
+    assert bad["ok"] is False and bad["reason"] == "format-miss"
+    assert "就是没打转" in bad["raw"]
+
+
+def test_parse_bounded_answer_rejects_out_of_range_p() -> None:
+    bad = mr.parse_bounded_answer('{"answer": true, "p": 1.5}')
+    assert bad["ok"] is False and bad["reason"] == "p-out-of-range"
+    bad2 = mr.parse_bounded_answer('{"answer": true, "p": "高"}')
+    assert bad2["ok"] is False and bad2["reason"] == "p-not-numeric"
+
+
+def test_bounded_question_contract_mentions_json() -> None:
+    assert '"answer"' in mr.WATCHDOG_BOUNDED_QUESTION
+    assert '"p"' in mr.WATCHDOG_BOUNDED_QUESTION
+
+
+def test_render_card_prediction_slot_default_unfilled() -> None:
+    card = {"size": "S", "title": "t", "key": "prop:x", "evidence": ["e"],
+            "action": "a",
+            "prediction": {"claim": "billing 12 月内解锁", "due_month": "2026-12"}}
+    lines = mr.render_card(card)
+    joined = "\n".join(lines)
+    assert "prediction: billing 12 月内解锁" in joined
+    assert "待月末会话填写" in joined  # engine never invents p
+    assert "due=2026-12" in joined
+    assert "(p−y)²" in joined
+
+
+def test_render_card_no_prediction_slot_omitted() -> None:
+    card = {"size": "S", "title": "t", "key": "prop:y", "evidence": ["e"],
+            "action": "a"}
+    assert not any("prediction:" in ln for ln in mr.render_card(card))
+
+
+def test_reconcile_predictions_three_states() -> None:
+    backlog = (
+        "- **[S] A**（key: prop:a）\n"
+        "  - prediction: 甲月底前解锁（p=0.7；due=2026-11；对账记法=outcome 行）\n"
+        "  - → outcome: y=1 (2026-11-28)\n"
+        "- **[S] B**（key: prop:b）\n"
+        "  - prediction: 乙季度内回落（p=0.4；due=2026-10；对账记法=outcome 行）\n"
+        "  - → outcome: y=0 (2026-11-02)\n"
+        "- **[S] C**（key: prop:c）\n"
+        "  - prediction: 丙两周内恢复（p=0.9；due=2026-11；对账记法=outcome 行）\n"
+        "- **[S] D**（key: prop:d）\n"
+        "  - prediction: 丁月底前点头（p=待月末会话填写 0..1；due=2026-12；对账记法=outcome 行）\n"
+    )
+    out = "\n".join(mr.reconcile_predictions(backlog, "2026-12"))
+    assert "(p−y)²=0.090" in out          # (0.7-1)^2，方向命中
+    assert "(p−y)²=0.160" in out          # (0.4-0)^2，方向命中（低 p 押不发生）
+    assert "resolved" in out
+    assert "pending outcome: 丙两周内恢复（p=0.9; due 已过待记 outcome）" in out
+    assert "未填 p" in out and "丁月底前点头" in out
+
+
+def test_reconcile_predictions_empty_backlog() -> None:
+    assert mr.reconcile_predictions("", "2026-11") == []
