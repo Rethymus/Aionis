@@ -960,11 +960,13 @@ def render_card(card: dict) -> list[str]:
         p_val = pred.get("p")
         p_txt = f"{p_val}" if isinstance(p_val, float) else "待月末会话填写 0..1"
         out.append(f"  - prediction: {pred['claim']}"
-                   f"（p={p_txt}；due={pred.get('due_month', '—')}；"
+                   f"（judgments: p={p_txt}；facts: "
+                   f"due={pred.get('due_month', '—')}；"
                    "对账记法=该条目追加 → outcome: y=0|1 (YYYY-MM-DD)，"
                    "resolved 后 reconcile 记 (p−y)²；round 131 Brier 式"
                    "预测误差=改进信号，RLCD 同构——引擎绝不代填 p，诚实边界"
-                   "照守）")
+                   "照守；p>0.6 高带=仅自动进入对账候选呈现（代码规则门，"
+                   "见 reconcile_predictions docstring，禁 n=1 拟合））")
     if card.get("research"):
         out.append(f"  - {PROPOSAL_RESEARCH_GATE}")
     out.append("  - disposition: 里程碑边界 accept → tasks/active/ + "
@@ -984,7 +986,22 @@ def reconcile_predictions(backlog_text: str,
     a later 'outcome: y=0|1 (date)' line on the same entry closes it. Only
     records with BOTH p filled and outcome recorded score (p-y)^2 — pending
     (due passed, no outcome) and unfilled (p missing) are listed honestly;
-    nothing is invented, no statistics beyond per-record squared error."""
+    nothing is invented, no statistics beyond per-record squared error.
+
+    Round 131-续 (judgments/facts split — TypeSafe 'Don't Call It a
+    Decision Model' ledger discipline, presentation-level only): every
+    output row separates judgments (the model's spoken p — never
+    engine-filled, never recalibrated) from facts (the code-recorded
+    outcome y / due month), so a mismatch reads as 'which side was wrong'
+    instead of one blended line. Three-band threshold semantics live HERE
+    in the code rule gate, NEVER in any LLM prompt: p>0.6 = high band
+    whose ONLY meaning is auto-entry into this reconciliation candidate
+    listing — no auto-disposition, no gate bypass (the three human gates
+    stand: research-gate PROPOSAL_RESEARCH_GATE, the engine never fills
+    p, ledger/backlog owner adjudication). Band cuts are FIXED
+    presentation constants: the n=1 monthly sample forbids any threshold
+    fitting (RouteLLM anchor — calibration needs a representative query
+    distribution, state/backlog.md 延伸索引⑤)."""
     import re as _re
     lines_out: list[str] = []
     records: list[dict] = []
@@ -1004,20 +1021,24 @@ def reconcile_predictions(backlog_text: str,
         if m and cur is not None:
             cur["y"] = int(m.group(1))
     for r in records:
+        band = ("；高带 p>0.6——仅自动进入对账候选呈现，无任何自动处置"
+                if r["p"] is not None and r["p"] > 0.6 else "")
         if r["p"] is None:
-            lines_out.append(f"prediction 未填 p（诚实缺省，待月末会话）: "
+            lines_out.append(f"prediction 未填 p（judgments: 无——诚实缺省，"
+                             f"待月末会话；facts: due={r['due'] or '—'}）: "
                              f"{r['claim']}")
         elif r["y"] is None:
             overdue = (r["due"] is not None and r["due"] < now_month)
             lines_out.append(f"prediction pending outcome: {r['claim']}"
-                             f"（p={r['p']}"
-                             f"{'; due 已过待记 outcome' if overdue else ''}）")
+                             f"（judgments: p={r['p']}；facts: "
+                             f"due={r['due'] or '—'}、outcome 未记"
+                             f"{'（due 已过）' if overdue else ''}）{band}")
         else:
             brier = (r["p"] - r["y"]) ** 2
             hit = "命中" if (r["p"] >= 0.5) == (r["y"] == 1) else "未命中"
             lines_out.append(f"prediction resolved: {r['claim']}"
-                             f"（p={r['p']}, y={r['y']}, (p−y)²={brier:.3f},"
-                             f" {hit}）")
+                             f"（judgments: p={r['p']}；facts: y={r['y']}；"
+                             f"(p−y)²={brier:.3f}, {hit}）{band}")
     return lines_out
 
 

@@ -322,6 +322,9 @@ def test_cli_propose_end_to_end(tmp_path: Path) -> None:
 # + prediction slot on cards + Brier-style reconciliation (RLCD
 # prediction-error leg). Zero LLM: parse/validate/record only, p is never
 # invented by the engine (honesty boundary), no recalibration fitting.
+# 131-续: reconciliation rows split judgments (model p) vs facts
+# (code-recorded y/due); the p>0.6 high-band tag is a code rule gate,
+# presentation-only — no auto-disposition, no threshold fitting on n=1.
 
 def test_parse_bounded_answer_valid() -> None:
     ok = mr.parse_bounded_answer(
@@ -363,6 +366,8 @@ def test_render_card_prediction_slot_default_unfilled() -> None:
     assert "待月末会话填写" in joined  # engine never invents p
     assert "due=2026-12" in joined
     assert "(p−y)²" in joined
+    # judgments/facts 分账接线（round 131-续）：卡片呈现面同一协议
+    assert "judgments: p=" in joined and "facts: due=" in joined
 
 
 def test_render_card_no_prediction_slot_omitted() -> None:
@@ -388,8 +393,17 @@ def test_reconcile_predictions_three_states() -> None:
     assert "(p−y)²=0.090" in out          # (0.7-1)^2，方向命中
     assert "(p−y)²=0.160" in out          # (0.4-0)^2，方向命中（低 p 押不发生）
     assert "resolved" in out
-    assert "pending outcome: 丙两周内恢复（p=0.9; due 已过待记 outcome）" in out
+    # judgments/facts 分账（round 131-续）：模型判断侧（p）与代码记档事实侧
+    # （y/due）行内分组——错在判断还是记档一眼可辨
+    assert "judgments: p=0.7" in out and "facts: y=1" in out
+    assert ("pending outcome: 丙两周内恢复（judgments: p=0.9；facts: "
+            "due=2026-11、outcome 未记（due 已过））") in out
     assert "未填 p" in out and "丁月底前点头" in out
+    assert "facts: due=2026-12" in out    # 未填 p 行的 facts 侧仍带 due
+    # 三带阈值=代码规则门：高带仅自动进入对账候选呈现，无任何自动处置
+    assert "高带 p>0.6" in out
+    b_line = next(ln for ln in out.splitlines() if "乙季度内回落" in ln)
+    assert "高带" not in b_line           # 中/低带不带任何处置标签
 
 
 def test_reconcile_predictions_empty_backlog() -> None:
