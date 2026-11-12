@@ -121,3 +121,19 @@ resume → dwfrun-7a642a78 amend 复活，均死于第 4 条施工的 ask；同�
 
 billing 解锁（→恢复清单 enable ×6→首验）/ 冻结通道真推 / -wj 账本裁决 /
 Track C d6_go。
+
+## round2-lows 复核记（2026-11-12 轮 132 append-only 补记，上文零回改）
+
+- **交办假设锚「reconcile_predictions 报告锚 :981-1042」——查无对应物（如实）**：
+  本报告全篇 grep（`981|1042|:963|991|1024`）零行号命中；`reconcile_predictions`
+  仅 :101 按函数名提及、无行号锚。原始指向无法从本报告定位，故不补映射、不虚构。
+- **本报告自身行号引用复核（现仍准，无需勘误）**：①:15「原行 286-303」系历史
+  字节域陈述——`git show df5416a893~1:docs/ops-local-refresh.md` 实测 :286=分层
+  小节标题、:303=「不引入外部判别 API」bullet 尾，该域至今未移（本轮两处 append
+  均在其后）；②:70/:74-75 `monthly_review.py:697→:698` 勘误锚仍准（位于本轮
+  删除点 :978 之前，不受顺移影响）。
+- **关联顺移注记（供引用他文者）**：轮 132 round2-lows 删除
+  `monthly_review.py:978` `PREDICTION_LINE_RE` 死变量（删除前全仓 grep 单点命中
+  定义自身、零消费方）后，该文件 :978 之后锚点统一 −3（例：`reconcile_predictions`
+  def :981→:978、`WATCHDOG_BOUNDED_QUESTION` :1277→:1274、`parse_bounded_answer`
+  :1286→:1283）。

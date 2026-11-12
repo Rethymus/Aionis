@@ -975,9 +975,6 @@ def render_card(card: dict) -> list[str]:
     return out
 
 
-PREDICTION_LINE_RE = None  # compiled lazily to keep import-time cost zero
-
-
 def reconcile_predictions(backlog_text: str,
                           now_month: str) -> list[str]:
     """Round 131 (Brier-style reconciliation, the RLCD 'prediction error =
