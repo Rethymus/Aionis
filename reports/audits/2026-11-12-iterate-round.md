@@ -14,6 +14,10 @@ Predictive Architecture）无关**——仓库任何文档/会话/背录不得�
 （指认规则已入册 `state/backlog.md`「名词指认资料」区；propose 引擎候选扫描
 不解析该区，`scripts/monthly_review.py:697` 解析语义实读证实）。
 
+**勘误（append-only，2026-11-12 复核）**：上段 `scripts/monthly_review.py:697`
+行号过时——def `backlog_open_candidates` 行号实读 **:698**（2026-11-12 复核；
+:696-697 为空行）。
+
 ### 同构 vs 过度类比（两栏分析）
 
 | # | 同构成立（仅两点，采纳） | 过度类比（不采用） |

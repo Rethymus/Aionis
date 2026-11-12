@@ -289,18 +289,59 @@ thread: 稳定 ID 续写**（如「续 `thread:platform-billing`：…」），�
 不宣称认知架构（「内部世界模型」叙事不采用）：
 
 - **判别层（确定性规则引擎，快、零 LLM）**：`--weekly` 看门狗、`--propose` 提案
-  引擎（`scripts/monthly_review.py:1275` docstring：zero LLM, zero network）、
+  引擎（`scripts/monthly_review.py:1371` docstring：zero LLM, zero network）、
   Fast Path `--triage` 分诊、夜报包组装——规则表判别红牌/信号；引擎不归类者交
-  人工归类（`monthly_review.py:849`）。
+  人工归类（`monthly_review.py:856`）。
 - **生成层（月末 LLM 会话，慢、唯一生成面）**：月末复盘/教训撰写/Watchdog 有界
-  问题作答（`WATCHDOG_BOUNDED_QUESTION`，`monthly_review.py:1179`）；预算仍为
-  单场 23:35 LLM 会话（`monthly_review.py:1035` Budget 注）——分层**不新增**
+  问题作答（`WATCHDOG_BOUNDED_QUESTION`，`monthly_review.py:1244`）；预算仍为
+  单场 23:35 LLM 会话（`monthly_review.py:1100` Budget 注）——分层**不新增**
   会话/进程/依赖。
 - **不引入外部判别 API**：判别层只由本地确定性代码构成；接入 Jev API /
   typesafe-sdk 违 provider 红线（LLM pool = GLM/SiliconFlow/ModelScope ONLY，
   AGENTS.md）且无许可证白名单轮子支撑（`docs/data-license-allowlist.md` 零命中）。
   消歧义结论与同构/过度类比两栏裁决见 `reports/audits/2026-11-12-iterate-round.md`
   Jev 章节；Jev 指认规则见 `state/backlog.md`「名词指认资料」区。
+- **引用锚与取向注记（2026-11-12 append，仅补引不重做）**：学术锚 RLCD
+  （arXiv:2307.12950，Yang et al.，ICLR 2024）——判别器反馈即改进信号，Jev 消歧
+  报告同构点 2 的机器化依据；官方无公开代码 repo，仅文档引用。外部旁证 Luo 2025
+  （独著，PMC12736879，Sensors）：确定性结构作 LLM 护栏（procedural guardrails）
+  为既有模式——仅借「确定性护栏」模式、非同构证据（该文按快慢轴取
+  FSM=System 1 / LLM=System 2，与本节命名同向，差异在其 LLM 仍在交互环内）。
+  **取向差异（防误引错向）**：多数 2025 实践把 LLM 放快环（System 1 快环）+
+  外部确定性控制当 System 2；Aionis 相反——判别=本地确定性规则引擎占值班环，
+  生成=月末单场 LLM 会话（出环）；引用外部文献一律以本取向为准，勿按外部取向
+  倒读本分层。
+- **GLM json_object 枚举协议一手注记（2026-11-12 append，round 131 {answer,p}
+  协议依据；仅补引不重做）**：生成层有界打分协议与 GLM 官方结构化输出文档的
+  情感分析示例完全同形——官方示例即「sentiment 三选一枚举 + confidence 0-1」
+  （`response_format={"type": "json_object"}` + system 消息内描述期望 JSON 结构；
+  <https://docs.bigmodel.cn/cn/guide/capabilities/struct-output>，provider 池内
+  唯一一手同形支撑）。**限定（防误读为强约束）**：GLM 是 json_object 模式而非
+  strict json_schema 服务端强制——只保证返回可解析 JSON，字段结构靠
+  system/prompt 描述约束（官方 Schema 示例亦以客户端 jsonschema 校验兜底）——
+  故 `parse_bounded_answer` 的 format-miss 诚实降级兜底
+  （`scripts/monthly_review.py:1251-1274`：不可解析/越界均降级为诚实标记、
+  原文留档）**必须保留**，不因官方模式存在而移除。输出为单行 {answer,p}，
+  约十 token 量级，落在既有月末单场 23:35 会话预算内；本注记零新增依赖、
+  零新增调用面，仅描述既有 bounded question 子任务。
+- **判别/生成成本结构对照（量化引用锚，2026-11-12 append，round 131 调研条目 3；
+  仅补引不重做）**：外部锚——TypeSafe 发布博文的成本/延迟对照（**厂商自述、
+  自称偏高端**，仅作量级参照、非独立复核的实证）：LLM output token 成本 ~5x
+  input；确定性代码 70-500ms vs LLM 生成 3-329s；文内自报 193.6x/444.6x 量级差
+  ——与本节「判别=快、确定性、零 token vs 生成=慢、唯一 token 面」取向同向。
+  仓库内先行量化案例可直接并引（一手实测，比厂商自述硬）：2026-09-09 夜报 cron
+  从 12 会话/晚（≈90% SKIP no-op ≈ 250k+ tokens/月）收缩为零 token 执行器 +
+  单场 23:35 会话（本文件 `:50-56`）；token 面收缩 ≈ **−92%**（本文件 `:113`）
+  ——分层取向在仓库已有落地先例，外部博文只补量级感。
+
+**运维调用面盘点（round 131；「任务语境下对 --propose/--triage 降 token」是伪命题
+的如实记录——两者本就零 LLM，无 token 可降）**：
+
+| 调用面 | 构成与锚 | token 面 |
+|---|---|---|
+| 唯一 LLM 面 | 月末单场 23:35 会话：复盘/教训撰写/bounded question 作答（`monthly_review.py:1100` Budget 注） | 运维全部 token 消耗所在 |
+| 零 LLM 确定性面 | `--propose`（`monthly_review.py:1371`：zero LLM, zero network）、`--triage`/`classify_run_row`（`ops_local_refresh.py:558-576` 纯规则分诊）、`--weekly` 看门狗、夜报包组装 | 恒零——「降 token」伪命题 |
+| 可下探面（选择类子任务，三选） | bounded question 枚举化（`monthly_review.py:1244` + `:1251-1274` 解析兜底）；lessons `event:` 四操作定档（`monthly_review.py:1277` lesson_seeds 播种，写入方定档）；propose 卡 S/M/L 定档复核（`monthly_review.py:1367`） | 唯一真实下探面——均在月末单场会话内，枚举/定档化不新增会话 |
 
 ### lessons 块格式（月度教训写回契约，gen2 条目 4 钉契）
 

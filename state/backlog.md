@@ -88,6 +88,23 @@
 > grep 零命中）且接入 Jev API/typesafe-sdk 违 provider 红线（LLM pool =
 > GLM/SiliconFlow/ModelScope ONLY，AGENTS.md）；代码级候选见同批
 > backlog-candidates-register 条。
+>
+> **勘误（append-only，2026-11-12 复核）**：上方段内 `scripts/monthly_review.py:697`
+> 行号过时——def `backlog_open_candidates` 行号实读 **:698**（2026-11-12 复核；
+> :696-697 为空行）。
+>
+> **延伸阅读索引与同批指认（2026-11-12 append，仅索引不装条目）**：
+> ① 阅读索引两清单（均 CC0-1.0，`docs/data-license-allowlist.md` ACCEPTED 表在册）：
+> awesome-system-one（github.com/andyrewlee——System One 模型/agent/SDK/benchmark
+> 总目）与 awesome-jev（github.com/KennethAshley——Jev 生态 410 条 19 类，评测类
+> 含 Brier/ECE 校准条目）；**仅索引用途，不装任何条目、不引任何包**。
+> ② Jeva null-aware 延伸研读：arXiv:2610.18773（Jeva: System One Models from
+> First Principles，2026-10-13 提交，null-aware 为其四结构要求之首）；参考实现
+> typesafe-sdk-python/js（官方仓，MIT）——**只读不引**（接入仍违 provider 红线）。
+> ③ **Microsoft-Decision-1 实体指认**：微软决策评分模型（2026-10-09 官方 Command
+> Line 博文发布，Qwen3.5-9B 后训练单遍判别决策模型）——与 JEPA 无关，同 Jev
+> 指认规则防混读；其 Foundry API 接入与定价模式**不采**（provider 红线 +
+> 无关本地运维）。
 
 ## Owner-gated（预注册级 GO 才可动；权威 spec 在 tasks/active/）
 
