@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (11-12，handoff 轮 131)【iterate 轮 2 六条落地（Jev 协议级）：{answer,p} bounded question 契约+parse_bounded_answer 三态兜底 / --propose prediction 槽（p 引擎绝不代填）+reconcile_predictions Brier 式对账（(p−y)²+方向命中，pending/未填如实分列）/ runbook 分层引用注记（RLCD 锚+取向差异）/ backlog 阅读索引两 CC0 清单 / 轮 1 报告行号勘误——复活链三次 Model creation failed 后主会话内联收尾（不盲目重试），三 monthly 套件 81 绿+ruff 净，0 ledger/0 frozen/0 OOS】**
+  前三条为施工员生前工作树改动复核入册，后三条（代码面）主会话实施；p 仅记录轨迹（禁校准拟合/禁显著性声称），人工裁决门不变；报告 reports/audits/2026-11-12-iterate-round-2.md（含抢救注记）。dwfrun 链遗骸（473d08ee/7a642a78）不再复活，journal 留档。详见 handoff 轮 131。
+
 - **active (11-12，handoff 轮 130 收尾)【round 130/130-续~续4 五条目收官：publish-site node24 重钉清偿 / Jev 协议级沉淀 / 候选区登记五条 / .env PROVIDER 对齐 / 切分审计 oracle——统一门禁（全量 pytest+ruff）全绿（主会话侧门禁脚本执行），0 ledger/0 frozen/0 OOS】**
   五工作项提交 `2b09cf011b`/`db10a085a1`/`a2b671c33d`/`76eff25380`/`64746bb34b` + 对应 state 五笔；逐条验证记录见 handoff 轮 130/130-续~续4（施工会话各自实跑面均绿；统一门禁结果由主会话门禁脚本入册）。推送经 `git pull --rebase` 后 push origin main。
 
