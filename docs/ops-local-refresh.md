@@ -343,6 +343,23 @@ thread: 稳定 ID 续写**（如「续 `thread:platform-billing`：…」），�
 | 零 LLM 确定性面 | `--propose`（`monthly_review.py:1371`：zero LLM, zero network）、`--triage`/`classify_run_row`（`ops_local_refresh.py:558-576` 纯规则分诊）、`--weekly` 看门狗、夜报包组装 | 恒零——「降 token」伪命题 |
 | 可下探面（选择类子任务，三选） | bounded question 枚举化（`monthly_review.py:1244` + `:1251-1274` 解析兜底）；lessons `event:` 四操作定档（`monthly_review.py:1277` lesson_seeds 播种，写入方定档）；propose 卡 S/M/L 定档复核（`monthly_review.py:1367`） | 唯一真实下探面——均在月末单场会话内，枚举/定档化不新增会话 |
 
+**OTel GenAI 语义命名锚注记（外向调研条目 2，2026-11-12 append；纯文档、
+零依赖零服务零新进程）**：OpenTelemetry GenAI 语义约定属性与仓库既有记录
+同构——`gen_ai.evaluation.{name, score.value, score.label}` ↔ bounded
+question 的 `{answer, p}` 判断记录（读侧锚：`scripts/monthly_review.py`
+reconcile_predictions `:981-1042`——name≈claim、score.value≈p、
+score.label≈answer/带位）；`gen_ai.usage.{input_tokens, output_tokens}` ↔
+`src/aionis/extraction/llm_client.py:122-134` 的 prompt_tokens/
+completion_tokens 记账。将来**运维面** LLM 记账文件（夜报/月末会话侧）按
+`gen_ai.*` 命名即获跨观测工具互认；`llm_client.py` 现有字段名**不动**
+（本注记只读引用——研究管线零改动红线，AGENTS.md）。**诚实边界**：GenAI
+属性已自 open-telemetry/semantic-conventions 主仓迁独立新仓（registry 页
+每条属性均标 "Moved"），新仓名先前经 GitHub API 核实 404 未成功——引用锚
+用 opentelemetry.io registry 文档页（CC BY 4.0，
+<https://opentelemetry.io/docs/specs/semconv/registry/attributes/gen-ai/>，
+2026-11-12 fetch 复核可达）+ semantic-conventions 主仓（Apache-2.0，先前
+调研已经 GitHub API 核实）。本注记不装包、不接线、不加进程，仅钉命名锚。
+
 ### lessons 块格式（月度教训写回契约，gen2 条目 4 钉契）
 
 月度复盘教训经 `--append-lessons-from` append-only 写回 handoff（轮 126-续3）。
