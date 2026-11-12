@@ -360,6 +360,29 @@ completion_tokens 记账。将来**运维面** LLM 记账文件（夜报/月末�
 2026-11-12 fetch 复核可达）+ semantic-conventions 主仓（Apache-2.0，先前
 调研已经 GitHub API 核实）。本注记不装包、不接线、不加进程，仅钉命名锚。
 
+**跨月累积 p 呈现护栏注记（p-trajectory-presentation，2026-11-13 append；纯文档、
+零依赖零服务零新进程）**：`reconcile_predictions`（`scripts/monthly_review.py:978-1039`，
+def/return 实测）现仅**单月**呈现——judgments/facts 分账 + p>0.6 高带挂固定呈现标签
+「仅自动进入对账候选呈现，无任何自动处置」（`:1021-1022` 实测原文）；全仓
+`prediction_records` 唯一消费点=stats 计数（`monthly_review.py:789`，scripts/src/
+tests/dashboard 四域 grep 实测），输出经 `proposal_reconciliation`（:768，只读扫
+当月 backlog）进 `--weekly` 面按日落盘——**现无跨月累积 p 呈现面，逐条 p 亦无跨月
+聚合持久化**。将来若做跨月累积 p 轨迹呈现，护栏三条钉死：
+①**只记录不决策**——呈现层只读历史记录，零阈值/自适应/再打分逻辑；n=1 月度样本
+禁统计拟合、禁显著性声称（既有红线，与 backlog 候选⑤诚实边界同向）。
+②**peeking 文献锚（2026-11-13 fetch 双双复核可达）**：arXiv:1512.04922
+（Johari/Pekelis/Walsh，Always Valid Inference——摘要原句：用户「continuously
+monitoring」时常规 p 值/置信区间推断 wholly unreliable，即持续查看抬升假阳率，
+「只记录不决策」的动机锚）与 arXiv:2210.01948（Ramdas/Grünwald/Vovk/Shafer，
+Game-theoretic statistics and safe anytime-valid inference——e-process/置信
+序列于任意停时有效=对照面锚）——两锚仅支撑「为何只记录」，**绝不构成**把
+anytime-valid/e-process 引入 eval 层重算的许可（改推断程序=frozen config 语义
+变更，config_committed 红线，AGENTS.md）。③**图形态待数据面实证**——plotly
+MIT 已在栈（`pyproject.toml:42/:65`，零新依赖），但折线需跨月 p 数据面（逐条 p
+无跨月聚合持久化，本注记不虚构其位置）；数据面现成前止步本注记级，届时限
+dashboard/ 呈现侧折线、**禁回归/拟合线**；`sklearn CalibrationDisplay` 系
+二分类可靠性图（分箱校准语义），与月度 p 轨迹错位，不采用。
+
 ### lessons 块格式（月度教训写回契约，gen2 条目 4 钉契）
 
 月度复盘教训经 `--append-lessons-from` append-only 写回 handoff（轮 126-续3）。
