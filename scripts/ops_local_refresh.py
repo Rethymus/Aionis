@@ -1260,20 +1260,67 @@ def marker_deadman(now: datetime, state: dict,
                   f"{grace} (within Period+Grace)")
 
 
+# ------------------------------------------------ layer 9: env-lock drift
+# Round 133 (定夺框架/backlog #14): H6 version-pinned (uv.lock) guard. `uv
+# lock --check` is the primary verdict (lockfile vs pyproject drift; per uv
+# docs it is equivalent to --locked). `uv sync --all-extras --locked
+# --dry-run` verifies the installed env matches the lock — the --all-extras
+# flag is load-bearing: bare `uv sync --locked --dry-run` plans a base-sync
+# that would uninstall extras packages (measured 2026-11-13 on uv 0.8.13:
+# "Would uninstall 101 packages" listing plotly/pytest/streamlit — a false
+# drift signal, not lock drift; with --all-extras: "Would make no changes").
+# Both probes are read-only; uv is the existing project toolchain — zero new
+# dependencies, zero new license surface (AGENTS.md). Local layer: resolves
+# from uv.lock, no downloads in dry-run.
+def _env_lock_drift_check() -> tuple[bool, str]:
+    """Layer 9 logic: lockfile AND installed env must match uv.lock. Every
+    failure mode (uv missing, timeout, drift) returns a FAIL tuple carrying
+    the reason — an honest red beats a crashed doctor."""
+    try:
+        t0 = time.perf_counter()
+        lock = subprocess.run(["uv", "lock", "--check"], cwd=ROOT,
+                              capture_output=True, text=True, timeout=60)
+        t_lock = time.perf_counter() - t0
+        # uv prints progress lines (Resolved/Audited) on STDERR, not stdout
+        # (measured 2026-11-13: stdout empty) — parse both streams.
+        m = re.search(r"Resolved (\d+) packages?", lock.stdout + lock.stderr)
+        resolved = m.group(1) if m else "?"
+        t0 = time.perf_counter()
+        sync = subprocess.run(
+            ["uv", "sync", "--all-extras", "--locked", "--dry-run"],
+            cwd=ROOT, capture_output=True, text=True, timeout=120)
+        t_sync = time.perf_counter() - t0
+        m2 = re.search(r"Audited (\d+) packages?", sync.stdout + sync.stderr)
+        audited = m2.group(1) if m2 else "?"
+        ok = lock.returncode == 0 and sync.returncode == 0
+        detail = (f"uv lock --check rc={lock.returncode} "
+                  f"resolved={resolved} ({t_lock:.1f}s); "
+                  f"uv sync --all-extras --locked --dry-run "
+                  f"rc={sync.returncode} audited={audited} ({t_sync:.1f}s)")
+        if not ok:
+            tail = (lock.stderr.strip() if lock.returncode != 0
+                    else sync.stderr.strip())[-120:]
+            detail += f" | {tail}" if tail else " | (no stderr)"
+        return ok, detail
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        return False, f"uv probe failed: {exc}"
+
+
 def collect_layers() -> list[tuple[str, bool, str]]:
-    """The eight read-only preflight checks (round 109; layer 7 site-repo
-    drift added 2026-11-06; layer 8 marker deadman added 2026-11-11) as
-    data — one (name, ok, detail) tuple per layer, in order. Pure
-    collection, no printing: doctor() renders the human PASS/FAIL text from
-    these tuples and --doctor --json renders the machine document from the
-    same source, so the two surfaces can never disagree."""
+    """The nine read-only preflight checks (round 109; layer 7 site-repo
+    drift added 2026-11-06; layer 8 marker deadman added 2026-11-11; layer 9
+    env-lock drift added 2026-11-13) as data — one (name, ok, detail) tuple
+    per layer, in order. Pure collection, no printing: doctor() renders the
+    human PASS/FAIL text from these tuples and --doctor --json renders the
+    machine document from the same source, so the two surfaces can never
+    disagree."""
     checks: list[tuple[str, bool, str]] = []
 
     # L1 marker + guard sanity (pure logic, no side effects)
     state = load_state()
     decision = guard_decision(datetime.now(), state)
     checks.append((
-        "1/8 guard+marker", state.get("date") is not None,
+        "1/9 guard+marker", state.get("date") is not None,
         f"marker date={state.get('date')} status={state.get('status')} "
         f"guard-now={decision.split(':')[0]}"))
 
@@ -1285,11 +1332,11 @@ def collect_layers() -> list[tuple[str, bool, str]]:
              "-ErrorAction SilentlyContinue) -ne $null"],
             capture_output=True, text=True, timeout=30)
         ok2 = out.returncode == 0 and "True" in out.stdout
-        checks.append(("2/8 task scheduler", ok2,
+        checks.append(("2/9 task scheduler", ok2,
                        "registered" if ok2 else "NOT registered"))
     else:
         checks.append(
-            ("2/8 task scheduler", False, "non-Windows host (manual cron?)"))
+            ("2/9 task scheduler", False, "non-Windows host (manual cron?)"))
 
     # L3 SessionStart hook config (committed file, correct event+matcher)
     try:
@@ -1299,18 +1346,18 @@ def collect_layers() -> list[tuple[str, bool, str]]:
         ok3 = (cfg.get("hooks", {}).get("enabled") is True and bool(ev)
                and "startup" in ev[0].get("matcher", ""))
         checks.append((
-            "3/8 sessionstart hook", ok3,
+            "3/9 sessionstart hook", ok3,
             f"enabled={cfg.get('hooks', {}).get('enabled')} "
             f"matcher={ev[0].get('matcher') if ev else 'none'}"))
     except (OSError, ValueError, IndexError) as exc:
-        checks.append(("3/8 sessionstart hook", False, f"{exc}"))
+        checks.append(("3/9 sessionstart hook", False, f"{exc}"))
 
     # L4 git push credential (read-only ls-remote with the stored cred)
     out = subprocess.run(["git", "ls-remote", "--heads", "origin", "main"],
                          cwd=ROOT, capture_output=True, text=True, timeout=30)
     ok4 = out.returncode == 0
     checks.append((
-        "4/8 push credential",
+        "4/9 push credential",
         ok4 and out.stdout.startswith(tuple("0123456789abcdef")),
         "ls-remote ok" if ok4 else out.stderr.strip()[-80:]))
 
@@ -1318,7 +1365,7 @@ def collect_layers() -> list[tuple[str, bool, str]]:
     out = subprocess.run(["gh", "run", "list", "--limit", "1"],
                          cwd=ROOT, capture_output=True, text=True, timeout=30)
     ok5 = out.returncode == 0
-    checks.append(("5/8 gh auth", ok5,
+    checks.append(("5/9 gh auth", ok5,
                    "gh ok" if ok5 else out.stderr.strip()[-80:]))
 
     # L6 runtime env: .env keys present (names only, never values)
@@ -1331,32 +1378,38 @@ def collect_layers() -> list[tuple[str, bool, str]]:
     except OSError:
         pass
     need = {"TIINGO_API_KEY", "FRED_API_KEY"}
-    checks.append(("6/8 api env", need <= names,
+    checks.append(("6/9 api env", need <= names,
                    f"present={sorted(need & names)} "
                    f"missing={sorted(need - names)}"))
 
     # L7 site-repo drift (the billing-freeze blind spot): the only layer that
     # reaches OUT to the deployed site — see _site_repo_drift_check.
     ok7, detail7 = _site_repo_drift_check()
-    checks.append(("7/8 site-repo drift", ok7, detail7))
+    checks.append(("7/9 site-repo drift", ok7, detail7))
 
     # L8 marker deadman (round 126): the OUTCOME check — the ok_committed
     # marker must keep arriving per working evening (healthchecks Period+
     # Grace semantics; weekend SKIP:weekend doesn't tick). Catches "the lane
     # silently died" regardless of which part broke. See marker_deadman.
     ok8, detail8 = marker_deadman(datetime.now(), state)
-    checks.append(("8/8 evening marker deadman", ok8, detail8))
+    checks.append(("8/9 evening marker deadman", ok8, detail8))
+
+    # L9 env-lock drift (round 133): the H6 version-pinned guard — lockfile
+    # vs pyproject AND installed env vs lock. See _env_lock_drift_check.
+    ok9, detail9 = _env_lock_drift_check()
+    checks.append(("9/9 env-lock drift", ok9, detail9))
     return checks
 
 
 def doctor(as_json: bool = False) -> int:
-    """Read-only eight-layer preflight (round 109; layer 7 site-repo drift
-    added 2026-11-06, layer 8 marker deadman added 2026-11-11): one command
+    """Read-only nine-layer preflight (round 109; layer 7 site-repo drift
+    added 2026-11-06, layer 8 marker deadman added 2026-11-11, layer 9
+    env-lock drift added 2026-11-13): one command
     the owner (or any future session) runs to
     verify the whole lane stack after machine changes, credential renewals,
     or before a renewal decision. Human mode prints PASS/FAIL per layer;
     --json emits exactly one machine document ({"layers":
-    [{name, ok, detail}...], "passed": N, "total": 8}) instead. Exit 0 only
+    [{name, ok, detail}...], "passed": N, "total": 9}) instead. Exit 0 only
     if every layer passes (both modes)."""
     checks = collect_layers()
     failed = [n for n, ok, _ in checks if not ok]

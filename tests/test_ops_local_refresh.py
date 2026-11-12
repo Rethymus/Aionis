@@ -495,7 +495,7 @@ def _fresh_ok_evening(tmp_path: Path, monkeypatch) -> str:
 
 
 def test_doctor_all_layers_pass(monkeypatch, tmp_path) -> None:
-    """Mocked eight-layer stack: exit 0 (the 8/8 deadman gets a fresh
+    """Mocked nine-layer stack: exit 0 (the 8/9 deadman gets a fresh
     same-day ok evening via _fresh_ok_evening)."""
     def _ok(args, **k):
         s = "True" if "ScheduledTask" in str(args) else (
@@ -644,7 +644,7 @@ def _live_payload(ts: str) -> str:
 
 
 def _mock_preflight_stack(monkeypatch, tmp_path) -> None:
-    """All-pass eight-layer stack: mocked subprocesses, forced Windows branch,
+    """All-pass nine-layer stack: mocked subprocesses, forced Windows branch,
     tmp ROOT carrying a valid hook config + the two required .env keys, a
     layer-7 live fetch that matches the repo snapshot, and a fresh same-day
     ok evening for the layer-8 deadman."""
@@ -697,14 +697,14 @@ def test_status_json_stdout_parses_and_carries_marker_keys(
 
 def test_collect_layers_seven_json_serializable_layers(
         monkeypatch, tmp_path) -> None:
-    """collect_layers (the doctor() refactor seam) returns the eight preflight
+    """collect_layers (the doctor() refactor seam) returns the nine preflight
     layers as (name, ok, detail) tuples under mocked subprocesses, and the
     tuples survive a JSON round-trip."""
     import json as _json
 
     _mock_preflight_stack(monkeypatch, tmp_path)
     layers = lane.collect_layers()
-    assert len(layers) == 8
+    assert len(layers) == 9
     for name, ok, detail in layers:
         assert isinstance(name, str)
         assert isinstance(ok, bool)
@@ -717,7 +717,7 @@ def test_collect_layers_seven_json_serializable_layers(
 
 def test_doctor_json_stdout_shape(monkeypatch, tmp_path, capsys) -> None:
     """--doctor --json prints ONLY the machine document {"layers":
-    [{name, ok, detail}...], "passed": N, "total": 8} — no human [PASS]/
+    [{name, ok, detail}...], "passed": N, "total": 9} — no human [PASS]/
     [FAIL] lines interleaved, so stdout stays json.loads-able; exit code is
     still 0 only when every layer passes."""
     import json as _json
@@ -728,10 +728,11 @@ def test_doctor_json_stdout_shape(monkeypatch, tmp_path, capsys) -> None:
     assert lane.main() == 0
     out = capsys.readouterr().out
     payload = _json.loads(out)
-    assert payload["total"] == 8
-    assert payload["passed"] == 8
-    assert len(payload["layers"]) == 8
-    assert payload["layers"][-1]["name"] == "8/8 evening marker deadman"
+    assert payload["total"] == 9
+    assert payload["passed"] == 9
+    assert len(payload["layers"]) == 9
+    assert payload["layers"][-2]["name"] == "8/9 evening marker deadman"
+    assert payload["layers"][-1]["name"] == "9/9 env-lock drift"
     for layer in payload["layers"]:
         assert set(layer) == {"name", "ok", "detail"}
         assert layer["ok"] is True

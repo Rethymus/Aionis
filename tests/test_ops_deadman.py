@@ -142,24 +142,32 @@ def test_last_ok_falls_back_to_marker_without_logs(tmp_path: Path) -> None:
 
 
 def test_collect_layers_carries_layer_8(monkeypatch, tmp_path: Path) -> None:
-    """The layer is wired into collect_layers with the 8/8 name (mocked
-    subprocess layers + fresh same-day log so every layer passes)."""
+    """The layer is wired into collect_layers with the 8/9 name (layer 8 of
+    9 since the round-133 layer 9 env-lock drift; mocked subprocess layers +
+    fresh same-day log so every layer passes)."""
     def _ok(args, **k):
         return __import__("subprocess").CompletedProcess(args, 0, "gh ok", "")
 
     monkeypatch.setattr(lane, "subprocess", type("S", (), {"run": staticmethod(_ok)}))
     monkeypatch.setattr(lane, "IS_WINDOWS", False)
+    # Fixture date must be TODAY-relative: the deadman compares the seeded
+    # log's ok_committed evening against the real clock (Period+Grace), so a
+    # hardcoded day rots once grace passes (2026-11-10 seeded rotted on
+    # 2026-11-13 — caught while syncing layer-9 pins, proven pre-existing at
+    # HEAD via stash).
+    today = datetime.now().strftime("%Y-%m-%d")
     monkeypatch.setattr(lane, "load_state",
-                        lambda: {"date": "2026-11-10",
+                        lambda: {"date": today,
                                  "status": "ok_committed"})
     log_dir = tmp_path / "logs"
-    _seed_log(log_dir, "2026-11-10")
+    _seed_log(log_dir, today)
     monkeypatch.setattr(lane, "LOG_DIR", log_dir)
     monkeypatch.setattr(lane, "_site_repo_drift_check",
                         lambda: (True, "mocked drift layer"))
     layers = lane.collect_layers()
-    assert layers[-1][0] == "8/8 evening marker deadman"
-    assert layers[-1][1] is True
+    assert layers[-2][0] == "8/9 evening marker deadman"
+    assert layers[-2][1] is True
+    assert layers[-1][0] == "9/9 env-lock drift"
 
 
 # ------------------------------------------------- staleness-check.yml mirror

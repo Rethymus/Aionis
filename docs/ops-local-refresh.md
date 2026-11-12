@@ -154,7 +154,7 @@ Worker (display-only), unchanged.
 | multi-day outage | — | Actions tab → "Refresh terminal data" → Run workflow (workflow_dispatch kept; 7 network steps retry ×3, round 106) |
 | one-shot research automation missed (host asleep) | hourly guard + done-marker (round 105 pattern) | late manual execution stays valid (proven 10-02) |
 | runner image drift (e.g. ubuntu-latest→26.04) | all 7 workflows pinned `ubuntu-24.04` (rounds 107/108b) | revisit the pin deliberately on each changelog sweep |
-| unknown "is the stack healthy?" | `--doctor` eight-layer read-only preflight (round 109; layer 7 = site-repo drift 2026-11-06, layer 8 = marker deadman 2026-11-11) | 8/8 = walk away; any FAIL → named layer + 需人审 in that night's report |
+| unknown "is the stack healthy?" | `--doctor` nine-layer read-only preflight (round 109; layer 7 = site-repo drift 2026-11-06, layer 8 = marker deadman 2026-11-11, layer 9 = env-lock drift 2026-11-13) | 9/9 = walk away; any FAIL → named layer + 需人审 in that night's report |
 
 ### Data snapshot audit step (round 225, soft)
 
@@ -225,7 +225,7 @@ token 不增反降（夜报上下文更小）。三分类语义：
 
 | 节奏 | 内容 | 载体 |
 |---|---|---|
-| **晚间** | 分诊（上表）+ 23:35 夜报班（全牌核验+doctor 八层+ci(own) 一行总结；**唯一稳态 LLM 会话**） | SessionStart 钩子 + Windows 计划任务 18:05-23:05 兜底 |
+| **晚间** | 分诊（上表）+ 23:35 夜报班（全牌核验+doctor 九层+ci(own) 一行总结；**唯一稳态 LLM 会话**） | SessionStart 钩子 + Windows 计划任务 18:05-23:05 兜底 |
 | **每周** | **Watchdog 外部核对**（`uv run python scripts/monthly_review.py --weekly`：7 工作流健康分诊+ledger config_committed-before-result 抽查+原地打转检测+提案闭环对账[gen2 条目 3 并入]；零 Actions 依赖，冻结期照常工作）+ staleness 绊网（每日 02:37 UTC，离整点；round 126 每日化）+ 发布链健康步；解锁日有 billing 滞留红（锁中存量零步红 + 当日一条）：rerun 一次再判（见 playbook） | **固定载体=每周五晚 23:35 夜报班前置确定性步 `--weekly`**（零 LLM，exit 码与发现进夜报正文；默认落盘锚点 `runs/ops_local_refresh/<date>/weekly_watchdog.md` 由 gen2 条目 3 代码默认值承载，`--out` 可覆盖——治「--weekly 无固定触发载体与落盘锚点」缺口，不长新班次）+ 夜报班提示词模板补一行「周五先跑 --weekly」（ZCode 工作区自动化配置，非仓库文件，工程侧零代码）+ `staleness-check.yml`（Actions；冻结期此信号全停，Watchdog 顶上） |
 | **每月** | 复盘教训循环：`scripts/monthly_review.py`（执行率/可靠性/软失败热点/发布链健康）+ **`--propose` 前置步**（gen2 自进化引擎：确定性规则表零 LLM 产提案卡片 stdout/--out，产物由人工/月末会话粘贴 `state/backlog.md` 候选区——引擎对 backlog **只读**；治「月度产出不回流 backlog、改进提案无固定入口」缺口）+ 教训沉淀为 runbook 行/守卫测试（「每课一守卫」惯例；块内格式契约见下节）+ **月末会话对四档机制本身的有界复盘问题**（「四档接线/watchdog 是否原地打转或偏离值班目标？」一行结论，与 gen2 条目 4 watchdog 问题同款形态） | 月报 rides 23:35 夜报班，零新增会话；`--propose` 为月末会话前确定性执行，同样零 LLM |
 | **值班协议** | 钥匙区盯守：GitHub billing 解锁、freeze 通道真推许可、账本孤儿裁决——清单见 `reports/design/2026-11-11-super-agent-integration.md` §5；任何钥匙到位后按 playbook 顺序动作 | 人工（业主）；值班自动化只呈报不代决 |
@@ -418,7 +418,7 @@ Settings → Billing 结清/解锁。
   （解锁过渡期）保持诚实轮询；探测失败 fail-open 回退旧行为。23:35 夜报班
   提示词同步（CI(own)=paused 不判红；发布链=冻结；出现意外新 run 报"需人审"）。
 - staleness-check 的**远端** marker-deadman 随停用暂停；本地层（doctor 第
-  7/8 层 + 夜报班）是停用期唯一监测信号，照常运转。
+  7、8 层 + 夜报班）是停用期唯一监测信号，照常运转。
 
 **恢复清单（业主 billing 解锁后，钥匙在业主）**：① `gh workflow enable`
 逐条恢复六工作流（Tests→publish-site→staleness→其余）；② 按
@@ -456,8 +456,8 @@ refresh 双缓存 GC、Pages billing usage、freeze 通道 --check-recovery 三�
   days — deploy frozen?"）；一致或线上更新 → PASS。网络不可达按 FAIL 诚实
   上报（fail-honest），异常在层内捕获、doctor 永不崩溃。
 - 夜报（23:35 cron）随报 doctor 结果（round 110 起）：连续数晚**第 7 层 FAIL
-  且其余 6 层全绿** = 典型"本地栈健康、发布被冻结"签名，提醒业主去修
-  Billing（2026-11-06 实测即此形态）。
+  且其余各层全绿** = 典型"本地栈健康、发布被冻结"签名，提醒业主去修
+  Billing（2026-11-06 实测即此形态；时点为 7 层期）。
 - `--doctor` 第 8 层（marker deadman，2026-11-11 轮 126）：healthchecks.io
   Period+Grace 语义（BSD-3-Clause，仅借协议）——最近 ok_committed 晚间
   marker 过期（Period=1 个工作日晚，Grace=1 个工作日；周末 SKIP:weekend
@@ -468,6 +468,12 @@ refresh 双缓存 GC、Pages billing usage、freeze 通道 --check-recovery 三�
   应用同一规则；**verification-pending**：billing 解锁后首跑核验，见上
   playbook 顺序；锁定期间 Actions 不运行=无误报，解锁日滞留红按轮 125
   操作顺序重跑一次再判）。
+- `--doctor` 第 9 层（env-lock drift，2026-11-13 轮 133）：H6 version-pinned
+  守卫——`uv lock --check` 主判（lockfile vs pyproject 脱钩即报错）+ `uv sync
+  --all-extras --locked --dry-run` 并行（**--all-extras 必带**：bare
+  `--locked --dry-run` 系 base-sync 语义假计划，实测 2026-11-13 会列
+  "Would uninstall 101 packages"——extras 包假漂移信号，非 lock 漂移）。
+  本地层、读侧探测、零新依赖（uv 为既有项目工具链）。
 
 **恢复**：Settings → Billing 解锁（09-01 先例：结清后即刻恢复）。**无需手工
 重部署**——`publish-site.yml` 由 push 触发，下一次 evening lane 的 push 照常
@@ -516,14 +522,18 @@ uv run python scripts/ops_local_refresh.py --guard         # what triggers would
 uv run python scripts/ops_local_refresh.py --run --force   # bypass guard (human)
 uv run python scripts/ops_evening_hook.py                  # simulate the hook (silent)
 uv run pytest -q tests/test_ops_local_refresh.py           # lane logic tests
-uv run python scripts/ops_local_refresh.py --doctor       # eight-layer preflight
+uv run python scripts/ops_local_refresh.py --doctor       # nine-layer preflight
 ```
 
-`--doctor` (round 109; layer 7 added 2026-11-06): one read-only command that
+`--doctor` (round 109; layer 7 added 2026-11-06, layer 8 marker deadman
+added 2026-11-11, layer 9 env-lock drift added 2026-11-13): one read-only
+command that
 verifies the whole stack — marker/guard sanity, Task Scheduler registration,
 SessionStart hook config, git push credential (ls-remote), gh auth, the two
-API env keys (names only), and site-repo drift (layer 7: the LIVE Pages
-snapshot vs the committed one — see the billing-freeze playbook below). Run
+API env keys (names only), site-repo drift (layer 7: the LIVE Pages
+snapshot vs the committed one — see the billing-freeze playbook below), and
+env-lock drift (layer 9: `uv lock --check` + `uv sync --all-extras --locked
+--dry-run` — the H6 version-pinned guard). Run
 it after any machine/credential change or before a renewal decision; live
 result at introduction: 6/6 pass (6 layers then).
 
