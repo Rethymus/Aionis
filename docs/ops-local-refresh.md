@@ -289,7 +289,7 @@ thread: 稳定 ID 续写**（如「续 `thread:platform-billing`：…」），�
 不宣称认知架构（「内部世界模型」叙事不采用）：
 
 - **判别层（确定性规则引擎，快、零 LLM）**：`--weekly` 看门狗、`--propose` 提案
-  引擎（`scripts/monthly_review.py:1399` docstring：zero LLM, zero network）、
+  引擎（`scripts/monthly_review.py:1399` argparse help：zero LLM, zero network）、
   Fast Path `--triage` 分诊、夜报包组装——规则表判别红牌/信号；引擎不归类者交
   人工归类（`monthly_review.py:856`）。
 - **生成层（月末 LLM 会话，慢、唯一生成面）**：月末复盘/教训撰写/Watchdog 有界
@@ -397,6 +397,40 @@ MIT 与 mem0ai/mem0 Apache-2.0，**仅借协议不装包**）：
   不改旧块字节——与 ledger「新行不覆盖」同构。
 - **`evidence:` 行**：指向 run.log / 审计报告的**路径引用**（Inline & Spill：附录式
   挂新块，不回填历史块）。
+
+### lessons 首跑预演注记（monthend-dryrun，2026-11-13；2026-11 月末首块写入前注意事项）
+
+月末首跑就绪证明（三链实弹 + tmp 隔离写回，载体
+reports/audits/2026-11-13-iterate-round-6.md）落地后的首跑注意事项四条 +
+一条实测格式陷阱：
+
+- **(a) 首次月末对账面为空是预期**：backlog `prediction:` 行现 **0 条**
+  （grep 实测）——预测接线 2026-11-12 起、首批 due 月 2026-11 月末才到期，
+  reconcile_predictions 首跑零记录=机制就绪、数据面从零起，非缺陷（与 iterate
+  轮 5 报告口径一致）。
+- **(b) 聚合视图空态是如实输出**：handoff 现无任何 lessons 块
+  （`monthly-reflexion-lessons` grep 零命中）→ --lessons §6 Active lessons
+  首跑输出 none yet/空态非缺陷。
+- **(c) 缺席工作日=整月口径**：--lessons 无 SUMMARY 工作日列表含当天及未来
+  日期（2026-11-13 实测列至 2026-11-30；collect_log_days 整月遍历）——月中
+  运行看到「未来缺席」非缺陷，月末（11-30 后）运行自然收敛。
+- **(d) --weekly 双红为已知**：vintage-probe code-defect + billing
+  platform-failure（≥2 workflow fast-red 平台签名合并）均已在册已知项
+  （billing playbook 节）——首跑勿当新缺陷处置；判结构健康看 §4 invariants
+  OK。
+- **格式陷阱（tmp 预演首跑实测触发，非预设）**：`event:` 行必须自身是 bullet
+  列表项（`- event: ADD`；EVENT_OP_RE `monthly_review.py:1130` 要求 `[-*]`
+  前缀，entry 以 event 行起头、计划文本与 `evidence:` 作附着行
+  :1149-1160）——--lessons 渲染的写回契约行未写明 bullet 语法，裸写缩进形
+  `  event: ADD` 会被 exit 3 契约门拒。首块组织按 bullet 语法。
+- **诚实边界**：本注记与就绪证明背书的是**机制面**（三链可跑通、写回契约门
+  三态行为正确、append-only 逐字节成立）；不背书月末会话产出教训的质量，也
+  不背书 bounded question 口头 p 的校准度——第三方实证 arXiv:2611.11480
+  （Beyond Ranking: Are Decision Models Calibrated Relevance Scorers?，
+  cs.IR 2026-11-08，本会话 fox_fetch 一手复核可达；与本轮条目 3① 呼应）实测
+  Jev 类决策模型原生概率**过自信**（>0.9 分带仅 66% 相关、需 2 参数校准
+  修复）——正因如此 Aionis 运维层 p 仅记录轨迹、禁再校准拟合与显著性声称
+  （既有红线），首跑勿因「p 看起来偏高/偏低」临时引入校准。
 
 ## GitHub 计费冻结应对（billing lock playbook，2026-11-06 立案）
 
