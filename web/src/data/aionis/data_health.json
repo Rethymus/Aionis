@@ -158,7 +158,7 @@
       "key": "themes",
       "file": "themes.json",
       "category": "daily",
-      "as_of": "2026-11-12",
+      "as_of": "2026-11-13",
       "exported_at": "2026-11-13",
       "present": true,
       "rows": 7
@@ -230,7 +230,7 @@
       "key": "form4",
       "file": "form4.json",
       "category": "daily",
-      "as_of": "2026-11-09",
+      "as_of": "2026-11-12",
       "exported_at": "2026-11-13",
       "present": true,
       "rows": 200
@@ -239,16 +239,16 @@
       "key": "form8k",
       "file": "form8k.json",
       "category": "daily",
-      "as_of": "2026-11-10",
+      "as_of": "2026-11-12",
       "exported_at": "2026-11-13",
       "present": true,
-      "rows": 322
+      "rows": 325
     },
     {
       "key": "news_feed",
       "file": "news_feed.json",
       "category": "daily",
-      "as_of": "2026-11-12T07:00:00Z",
+      "as_of": "2026-11-13T00:45:00Z",
       "exported_at": "2026-11-13",
       "present": true,
       "rows": 150
@@ -257,16 +257,16 @@
       "key": "executives",
       "file": "executives.json",
       "category": "daily",
-      "as_of": "2026-11-10",
+      "as_of": "2026-11-12",
       "exported_at": "2026-11-13",
       "present": true,
-      "rows": 67
+      "rows": 68
     },
     {
       "key": "ipo",
       "file": "ipo.json",
       "category": "daily",
-      "as_of": "2026-11-10",
+      "as_of": "2026-11-12",
       "exported_at": "2026-11-13",
       "present": true,
       "rows": 1200
@@ -275,7 +275,7 @@
       "key": "form_d",
       "file": "form_d.json",
       "category": "daily",
-      "as_of": "2026-11-10",
+      "as_of": "2026-11-12",
       "exported_at": "2026-11-13",
       "present": true,
       "rows": 600
@@ -284,7 +284,7 @@
       "key": "form_def14a",
       "file": "def14a.json",
       "category": "daily",
-      "as_of": "2026-11-10",
+      "as_of": "2026-11-12",
       "exported_at": "2026-11-13",
       "present": true,
       "rows": 600
@@ -293,16 +293,16 @@
       "key": "def14a_persons",
       "file": "def14a_persons.json",
       "category": "daily",
-      "as_of": "2026-11-10",
+      "as_of": "2026-11-12",
       "exported_at": "2026-11-13",
       "present": true,
-      "rows": 115
+      "rows": 120
     },
     {
       "key": "filing_stream",
       "file": "filing_stream.json",
       "category": "daily",
-      "as_of": "2026-11-10",
+      "as_of": "2026-11-12",
       "exported_at": "2026-11-13",
       "present": true,
       "rows": 800
@@ -338,10 +338,10 @@
       "key": "lineage_graph",
       "file": "lineage_graph.json",
       "category": "daily",
-      "as_of": "2026-11-10",
+      "as_of": "2026-11-12",
       "exported_at": "2026-11-13",
       "present": true,
-      "rows": 765
+      "rows": 782
     },
     {
       "key": "reddit",
@@ -350,13 +350,13 @@
       "as_of": null,
       "exported_at": "2026-11-13",
       "present": true,
-      "rows": 1
+      "rows": 4
     },
     {
       "key": "reddit_trending",
       "file": "reddit_trending.json",
       "category": "daily",
-      "as_of": "2026-11-12",
+      "as_of": "2026-11-13",
       "exported_at": "2026-11-13",
       "present": true,
       "rows": 100
@@ -419,7 +419,7 @@
       "key": "smart_money",
       "file": "smart_money.json",
       "category": "cadence",
-      "as_of": "2026-11-10",
+      "as_of": "2026-11-12",
       "exported_at": "2026-11-13",
       "present": true,
       "rows": 120
@@ -428,7 +428,7 @@
       "key": "stakes_13g",
       "file": "stakes_13g.json",
       "category": "daily",
-      "as_of": "2026-11-10",
+      "as_of": "2026-11-12",
       "exported_at": "2026-11-13",
       "present": true,
       "rows": 400
@@ -437,7 +437,7 @@
       "key": "ark",
       "file": "ark.json",
       "category": "daily",
-      "as_of": "2026-11-12",
+      "as_of": "2026-11-13",
       "exported_at": "2026-11-13",
       "present": true,
       "rows": 8
@@ -446,7 +446,7 @@
       "key": "theme_etfs",
       "file": "theme_etfs.json",
       "category": "daily",
-      "as_of": "2026-11-10",
+      "as_of": "2026-11-11",
       "exported_at": "2026-11-13",
       "present": true,
       "rows": 10
@@ -514,21 +514,21 @@
   },
   "source_health": {
     "smart_money": {
-      "ticker_null": 20,
+      "ticker_null": 17,
       "n_recent": 120,
-      "days_since_latest": 3,
+      "days_since_latest": 1,
       "pct_now_null": 0
     },
     "stakes_13g": {
-      "ticker_null": 10,
-      "filer_unresolved": 316,
+      "ticker_null": 16,
+      "filer_unresolved": 154,
       "n_filings": 400,
-      "days_since_latest": 3,
-      "pct_now_null": 3
+      "days_since_latest": 1,
+      "pct_now_null": 7
     },
     "reddit": {
-      "bull_ratio_null": 0,
-      "n_picks": 1
+      "bull_ratio_null": 1,
+      "n_picks": 4
     },
     "cot": {
       "weeks_since_latest": 1
@@ -536,5 +536,5 @@
   },
   "planned": [],
   "methodology": "Freshness/provenance map of every terminal panel. frozen = derived from frozen OOS artifacts (ledger #49 lineage): the daily lane deliberately does NOT advance these \u2014 recomputing them from newer data would be rerun-to-significance. daily = recomputed by each CI refresh from live caches. cadence = advances on its source's publication rhythm (CFTC weekly, price caches ~5-day grace, EDGAR filing rhythm). as_of is read from each panel's own timestamp fields; null = the panel carries no observation date (static research artifact). rows is the len() of the panel's exported row list \u2014 computed from the committed payload, never a declared total; null = index/series panel with no natural row table (the terminal home's directory-scale counts render from it). The only legal way frozen numbers move forward: E3 forward-live accumulation or a new pre-registered phase. source_health quantifies field-level quality on the committed JSONs (smart_money ticker nulls = filings on unlisted targets honestly left empty; reddit bull_ratio nulls = sentiment not yet gradable in the accumulating window; cot staleness in weeks vs the Friday publication rhythm). planned lists panels that are NOT built \u2014 no fetcher, no data, no endpoint payload \u2014 disclosed so the panel count is never mistaken for coverage.",
-  "snapshot_ts": "2026-11-13T02:56:31.229619+00:00"
+  "snapshot_ts": "2026-11-13T11:25:37.269376+00:00"
 }

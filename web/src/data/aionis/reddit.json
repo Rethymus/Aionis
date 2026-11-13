@@ -10,36 +10,47 @@
     "investing"
   ],
   "how_to_activate": "uv run python scripts/reddit_fetch.py (zero-credential; no API key needed)",
-  "latest_snapshot_ts": "2026-11-12T10:28:24+00:00",
-  "n_snapshots": 63,
+  "latest_snapshot_ts": "2026-11-13T10:30:02+00:00",
+  "n_snapshots": 64,
   "transport": "rss",
   "score_available": false,
   "score_note": "upvote score needs PRAW (OAuth); RSS path records 0",
   "picks": [
     {
       "ticker": "NVDA",
-      "mentions": 1,
-      "sentiment": -0.926,
+      "mentions": 5,
+      "sentiment": -0.307,
       "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "TSLA",
+      "mentions": 1,
+      "sentiment": -0.497,
+      "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "CHTR",
+      "mentions": 1,
+      "sentiment": -0.823,
+      "bull_ratio": 0.0,
+      "score_sum": 0
+    },
+    {
+      "ticker": "DELL",
+      "mentions": 1,
+      "sentiment": 0.023,
+      "bull_ratio": null,
       "score_sum": 0
     }
   ],
   "pressure": {
-    "status": "ok",
-    "by_ticker": {
-      "GOOGL": {
-        "ticker": "GOOGL",
-        "latest_mentions": 2,
-        "velocity": -1.0,
-        "crowding_z": 1.8452,
-        "bull_bear_lean": -0.4205,
-        "grade": "elevated",
-        "n_days": 14
-      }
-    },
-    "n_snapshots": 63,
-    "latest_date": "2026-11-12",
+    "status": "accumulating",
+    "by_ticker": {},
+    "n_snapshots": 64,
+    "latest_date": "2026-11-13",
     "note": "GME-style retail pressure (mention velocity \u00d7 crowding-z \u00d7 sentiment). Needs \u226514 days of snapshots to grade; the daily cron accumulates."
   },
-  "snapshot_ts": "2026-11-13T02:56:09.963861+00:00"
+  "snapshot_ts": "2026-11-13T11:25:08.053954+00:00"
 }

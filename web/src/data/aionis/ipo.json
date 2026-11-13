@@ -1,20 +1,20 @@
 {
   "status": "ok",
-  "as_of": "2026-11-10",
+  "as_of": "2026-11-12",
   "window": {
     "start": "2026-04-27",
-    "end": "2026-11-10"
+    "end": "2026-11-12"
   },
   "issuers": 659,
-  "total": 1548,
+  "total": 1554,
   "by_status": {
-    "filed": 1269,
+    "filed": 1275,
     "priced": 279
   },
   "by_form": {
     "424B4": 279,
-    "S-1": 528,
-    "S-1/A": 741
+    "S-1": 529,
+    "S-1/A": 746
   },
   "offer_price_parsed": 65,
   "offer_price_meta": {
@@ -39,6 +39,60 @@
     "target_as_of": "2026-11-06"
   },
   "filings": [
+    {
+      "company": "Rothe Development, Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-12",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2108671/000149315226051345/0001493152-26-051345-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "FireFly Robotics, Inc.",
+      "ticker": "FFLY",
+      "filed_date": "2026-11-12",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1660851/000149315226051283/0001493152-26-051283-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Cycurion, Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-12",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1868419/000149315226051044/0001493152-26-051044-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Nauticus Robotics, Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-12",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1849820/000121390026118997/0001213900-26-118997-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Harbour Island Acquisition Corp. I",
+      "ticker": "HRIA",
+      "filed_date": "2026-11-12",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2131072/000121390026118889/0001213900-26-118889-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Nscale plc",
+      "ticker": "",
+      "filed_date": "2026-11-12",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2110365/000119312526458722/0001193125-26-458722-index.htm",
+      "offer_price": null
+    },
     {
       "company": "Anthropic, PBC",
       "ticker": "ANT",
@@ -10784,62 +10838,8 @@
       "status": "filed",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2101470/000121390026062973/0001213900-26-062973-index.htm",
       "offer_price": null
-    },
-    {
-      "company": "HealthLynked Corp",
-      "ticker": "HLYK",
-      "filed_date": "2026-05-29",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1680139/000121390026062879/0001213900-26-062879-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Long Table Growth Corp.",
-      "ticker": "LTGR",
-      "filed_date": "2026-05-29",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2104177/000121390026062817/0001213900-26-062817-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "JAB Acquisition Corp I",
-      "ticker": "JAB",
-      "filed_date": "2026-05-29",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2128739/000121390026062789/0001213900-26-062789-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Bridge III Acquisition Ltd",
-      "ticker": "BDDD",
-      "filed_date": "2026-05-29",
-      "form": "S-1",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2133836/000121390026062594/0001213900-26-062594-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Grayscale Hyperliquid Staking ETF",
-      "ticker": "HYPG",
-      "filed_date": "2026-05-29",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2107730/000119312526248888/0001193125-26-248888-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Liftoff Mobile, Inc.",
-      "ticker": "LFTO",
-      "filed_date": "2026-05-29",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1850351/000119312526247996/0001193125-26-247996-index.htm",
-      "offer_price": null
     }
   ],
   "methodology": "US IPO registration/pricing stream \u2014 SEC EDGAR EFTS whole-market form-level queries (public domain, 17 U.S.C. \u00a7105), fixed ~120-day window, filed-date point-in-time, one row per accession (an S-1/A amendment is a new filing, never a silent overwrite). Status is derived from the immutable form type: S-1 / S-1/A = filed (registration statement on file); 424B4 = priced (the statutory final prospectus under Securities Act Rule 424(b)(4) is filed after pricing \u2014 its appearance marks a priced offering). Offer price is a BOUNDED second-stage extraction, not full coverage: only the newest \u226480 priced (424B4) filings are walked politely (\u22652.1 s spacing, hard request budget disclosed in offer_price_meta.requests), their EDGAR index + primary document fetched, and the cover page regex-parsed with graded confidence \u2014 EXACT (single final printed price \u2192 exported), LOW (draft/range wording near the label \u2192 value withheld, counted, never guessed) and NO-MATCH; every unparsed row stays offer_price=null with its EDGAR index link. Share count, proceeds, and expected listing date are NOT extracted at any tier. Honest scope disclosures: (2) the 424B4 form-level catch includes priced follow-on offerings by already-listed issuers (e.g. S-3 shelf takedowns), not only first-day IPOs \u2014 this panel is the registration/pricing STREAM, not a curated IPO list; (3) no company-level state machine is applied (rows are filing-level). Ticker is parsed from the EDGAR display name where present; pre-symbol S-1 filers carry none (empty, never guessed). Counts are FILING counts, not company counts. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-11-13T02:55:54.890674+00:00"
+  "snapshot_ts": "2026-11-13T11:24:55.467977+00:00"
 }

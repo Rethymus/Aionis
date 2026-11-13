@@ -132,7 +132,7 @@
       "title": "ADR-004 \u2014 LLM extraction is structural-only (no market_impact)",
       "path": "decisions/ADR-004-llm-structural-only-no-market-impact.md",
       "category": "adr",
-      "date": "2026-07-30",
+      "date": "2026-11-13",
       "n_chars": 1681,
       "summary": "LLM extraction of events could plausibly include a market_impact field (the model's reading of how the market reacted). 1. Full extraction including market_impact.",
       "url": "https://github.com/Rethymus/Aionis/blob/main/decisions/ADR-004-llm-structural-only-no-market-impact.md"
@@ -249,7 +249,7 @@
       "title": "\u6570\u636e\u63a5\u5165 7 \u95e8\uff08Data Intake Rubric\uff09\u2014 \u7b2c\u4e09\u65b9\u6570\u636e\u96c6\u8fdb Aionis \u524d\u7684\u5f3a\u5236\u6e05\u5355",
       "path": "docs/data-intake-rubric.md",
       "category": "rubric",
-      "date": "2026-08-31",
+      "date": "2026-11-13",
       "n_chars": 4858,
       "summary": "\u72b6\u6001\uff1av0.1 \u00b7 2026-07-28 \u00b7 \u6cbb\u7406\u6587\u6863\uff08durable registry \u7684\u4e00\u90e8\u5206\uff09\u3002 \u8303\u56f4\uff1a\u4efb\u4f55\u7b2c\u4e09\u65b9\u6570\u636e\u96c6\uff08\u542b exploratory / \u4e00\u6b21\u6027\u63a2\u67e5\uff09\u8fdb Aionis \u524d\uff0c\u5fc5\u987b\u5168\u90e8 7 \u95e8\u8fc7\u5173\u3002",
       "url": "https://github.com/Rethymus/Aionis/blob/main/docs/data-intake-rubric.md"
@@ -339,8 +339,8 @@
       "title": "Lessons learned",
       "path": "docs/08-lessons.md",
       "category": "theory",
-      "date": "2026-10-03",
-      "n_chars": 3578,
+      "date": "2026-11-13",
+      "n_chars": 3864,
       "summary": "Distilled findings that changed how the project runs. 1. Evidence boundaries matter.",
       "url": "https://github.com/Rethymus/Aionis/blob/main/docs/08-lessons.md"
     },
@@ -754,7 +754,7 @@
       "desc_zh": "\u5934\u6761\u4e3b\u5f20\u7684\u5355\u9875\u901f\u89c8\uff1aIC / CI / p / verdict / SESOI\u2014\u2014web/out/atlas.html \u7684\u53ef\u6eaf\u6e90\u5bf9\u5e94\u7269\u3002",
       "path": "reports/evidence/atlas-claim-v1.html",
       "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/atlas-claim-v1.html",
-      "sha256": "b910fcdebfc38923fa8f9946fc322498b67c4fc565893f819ecd2ee4c64a6b91",
+      "sha256": "3542a362c35e26c36cf2aff52790b2629c22fb71c2a775911ecd5cef3ef7aa46",
       "n_bytes": 24397
     },
     {
@@ -765,7 +765,7 @@
       "desc_zh": "\u6eaf\u6e90\u7814\u7a76\u6863\u6848\uff1a24 \u6761\u6765\u6e90\u767b\u8bb0\u8868 \u2192 \u62a5\u544a \u2192 \u5efa\u6a21\u5206\u6790\u5168\u6d41\u7a0b\uff0c[S#] \u5f15\u7528\u95ed\u5305\u3002",
       "path": "reports/evidence/research-dossier-v1.html",
       "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/research-dossier-v1.html",
-      "sha256": "32dd91296c701ff756132f01dd5dc3ef581c877d2ae648b8b94cefa9ee108d0f",
+      "sha256": "4cd549db7835a5a67241d3d20dd69a039c20418f7e377aff94e6a5044e295a98",
       "n_bytes": 47134
     },
     {
@@ -776,7 +776,7 @@
       "desc_zh": "\u57fa\u672c\u9762\u65f6\u70b9\u4e3b\u5f20\u7684 meta-only \u5361\uff1a\u5dee\u5206\u503c\u3001\u8d26\u672c\u5bf9\u8d26\u3001IC \u5e8f\u5217\u6458\u8981\u3001\u63a7\u5236\u68c0\u9a8c\u3002",
       "path": "reports/evidence/research-dossier-b-v1.html",
       "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/research-dossier-b-v1.html",
-      "sha256": "5ea030dce0c9f4cd7cffda31faaf16e54660c972510b0d3ab3ac4f9d4ba7acff",
+      "sha256": "f78e209ea756e43f904f33af6cede1b07c0955a000042668454b1af46e9b9663",
       "n_bytes": 25101
     },
     {
@@ -787,7 +787,7 @@
       "desc_zh": "\u5173\u7cfb\u7f51\u7edc\u4e3b\u5f20\u7684 meta-only \u5361\uff1a\u5dee\u5206\u503c\u3001\u8d26\u672c\u5bf9\u8d26\u3001IC \u5e8f\u5217\u6458\u8981\u3001\u63a7\u5236\u68c0\u9a8c\u3002",
       "path": "reports/evidence/research-dossier-d-v1.html",
       "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/research-dossier-d-v1.html",
-      "sha256": "0e785d74253bee7bdaf9ccdb9e9a27cfda1db43a7b080cff9d4093b34b547b0b",
+      "sha256": "1139f50290d1117c8c4769cfafd5999ddc2fe05ede0317d6640c214e05bf989c",
       "n_bytes": 25296
     },
     {
@@ -798,10 +798,10 @@
       "desc_zh": "\u8de8\u516c\u53f8\u4f20\u64ad\u4e3b\u5f20\u7684 meta-only \u5361\uff1a\u5dee\u5206\u503c\u3001\u8d26\u672c\u5bf9\u8d26\u3001IC \u5e8f\u5217\u6458\u8981\u3001\u63a7\u5236\u68c0\u9a8c\u3002",
       "path": "reports/evidence/research-dossier-e1-v1.html",
       "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/research-dossier-e1-v1.html",
-      "sha256": "30c13e01bb5e4f5d51a8a5b4ee5271ecd5e54b3c9b399b56cb1b31487c7b0af5",
+      "sha256": "70985356bb09eb4576630cb8f4c59398b8316237883ce97abb27a6a19bed72b8",
       "n_bytes": 25295
     }
   ],
   "methodology": "Layer 1 \u2014 Aionis's OWN method library: catalog of docs/ + decisions/ markdown (repo PolyForm-NC; zero third-party copyright surface). Each entry carries metadata plus a safe teaser slice (first 2-3 sentences, <=240 chars) extracted at export time; the full text stays on GitHub (link-out). Dates are last-commit dates read from the LOCAL git repository (no network). Layer 2 \u2014 a FIXED editorially-curated bookmark list of first-hand public research sources (BIS / Fed FEDS / IMF / NBER / arXiv q-fin / FRASER / FRED-ALFRED / RePEc): link-out + one static sentence each, no fetching, no scraping, no summary APIs \u2014 copyright stays with the authors, we only catalog. Categories are a fixed 5-rail whitelist (preregistration / adr / results / rubric / theory); n_docs reconciles to the sum of the rails. Layer 3 \u2014 generated evidence artifacts: self-contained HTML, byte-stable, sha256 + byte count pinned at export time from the local tracked file so a reader can verify the download against the catalog (a missing file degrades honestly to null \u2014 never fabricated). Superseded artifact versions are retained under reports/evidence/archive/ (move-don't-delete \u2014 the archive only grows). Display-only reference lane \u2014 never part of any research or OOS pipeline.",
-  "snapshot_ts": "2026-11-13T02:56:45.693992+00:00"
+  "snapshot_ts": "2026-11-13T11:26:04.678896+00:00"
 }

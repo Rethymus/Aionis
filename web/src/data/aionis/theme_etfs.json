@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "as_of": "2026-11-10",
+  "as_of": "2026-11-11",
   "n_funds": 10,
   "n_funds_expected": 10,
   "funds": [
@@ -8,69 +8,69 @@
       "ticker": "SOXX",
       "issuer": "iShares (BlackRock)",
       "fund": "iShares Semiconductor ETF",
-      "as_of": "2026-11-10",
+      "as_of": "2026-11-11",
       "n_positions": 30,
-      "skipped_rows": 4,
+      "skipped_rows": 5,
       "top": [
         {
           "ticker": "AMD",
           "company": "ADVANCED MICRO DEVICES",
-          "weight_pct": 10.11,
-          "market_value": 4172121119.84
+          "weight_pct": 10.23,
+          "market_value": 4588563543.6
         },
         {
           "ticker": "AVGO",
           "company": "BROADCOM INC",
-          "weight_pct": 8.3,
-          "market_value": 3426031608.12
-        },
-        {
-          "ticker": "NVDA",
-          "company": "NVIDIA",
-          "weight_pct": 7.11,
-          "market_value": 2934343500.32
+          "weight_pct": 8.14,
+          "market_value": 3651210354.28
         },
         {
           "ticker": "MU",
           "company": "MICRON TECHNOLOGY",
-          "weight_pct": 6.99,
-          "market_value": 2883161353.81
+          "weight_pct": 7.37,
+          "market_value": 3306056424.3
+        },
+        {
+          "ticker": "NVDA",
+          "company": "NVIDIA",
+          "weight_pct": 6.9,
+          "market_value": 3093444719.04
         },
         {
           "ticker": "INTC",
           "company": "INTEL CORPORATION",
-          "weight_pct": 6.0,
-          "market_value": 2475568823.84
+          "weight_pct": 6.08,
+          "market_value": 2727814250.0
         },
         {
           "ticker": "TXN",
           "company": "TEXAS INSTRUMENT",
-          "weight_pct": 5.35,
-          "market_value": 2209591030.68
+          "weight_pct": 5.2,
+          "market_value": 2334498590.79
         },
         {
           "ticker": "ADI",
           "company": "ANALOG DEVICES",
-          "weight_pct": 5.08,
-          "market_value": 2095955481.6
+          "weight_pct": 4.98,
+          "market_value": 2234228055.36
         },
         {
           "ticker": "QCOM",
           "company": "QUALCOMM",
-          "weight_pct": 4.72,
-          "market_value": 1947250583.18
+          "weight_pct": 4.53,
+          "market_value": 2030605499.02
         },
         {
           "ticker": "MPWR",
           "company": "MONOLITHIC POWER SYSTEMS INC",
-          "weight_pct": 4.12,
-          "market_value": 1700522972.0
+          "weight_pct": 4.23,
+          "market_value": 1898157385.75
         },
         {
           "ticker": "KLAC",
           "company": "KLA",
-          "weight_pct": 4.04,
-          "market_value": 1666460862.87
+          "weight_pct": 4.01,
+          "market_value": 1797392145.33
         }
       ]
     },
@@ -78,7 +78,7 @@
       "ticker": "ICLN",
       "issuer": "iShares (BlackRock)",
       "fund": "iShares Global Clean Energy ETF",
-      "as_of": "2026-11-10",
+      "as_of": "2026-11-11",
       "n_positions": 102,
       "skipped_rows": 30,
       "top": [
@@ -86,61 +86,61 @@
           "ticker": "NXT",
           "company": "NEXTPOWER INC",
           "weight_pct": 9.61,
-          "market_value": 199870883.66
+          "market_value": 201412664.67
         },
         {
           "ticker": "FSLR",
           "company": "FIRST SOLAR",
-          "weight_pct": 8.48,
-          "market_value": 176440116.7
+          "weight_pct": 8.28,
+          "market_value": 173642110.65
         },
         {
           "ticker": "IBE",
           "company": "IBERDROLA",
-          "weight_pct": 6.93,
-          "market_value": 144184390.53
-        },
-        {
-          "ticker": "600900",
-          "company": "CHINA YANGTZE POWER LTD A",
-          "weight_pct": 5.51,
-          "market_value": 114745234.06
+          "weight_pct": 6.9,
+          "market_value": 144680013.49
         },
         {
           "ticker": "BE",
           "company": "BLOOM ENERGY CLASS A",
-          "weight_pct": 5.37,
-          "market_value": 111831808.34
+          "weight_pct": 6.02,
+          "market_value": 126337012.69
+        },
+        {
+          "ticker": "600900",
+          "company": "CHINA YANGTZE POWER LTD A",
+          "weight_pct": 5.44,
+          "market_value": 114106116.57
         },
         {
           "ticker": "AXIA3",
           "company": "AXIA ENERGIA SA",
-          "weight_pct": 3.92,
-          "market_value": 81577590.03
+          "weight_pct": 3.94,
+          "market_value": 82595050.77
         },
         {
           "ticker": "VWS",
           "company": "VESTAS WIND SYSTEMS",
-          "weight_pct": 3.31,
-          "market_value": 68919025.1
+          "weight_pct": 3.14,
+          "market_value": 65924529.52
         },
         {
           "ticker": "ORA",
           "company": "ORMAT TECH INC",
           "weight_pct": 3.01,
-          "market_value": 62533961.98
+          "market_value": 63116114.04
         },
         {
           "ticker": "9502",
           "company": "CHUBU ELECTRIC POWER INC",
-          "weight_pct": 2.63,
-          "market_value": 54685433.06
+          "weight_pct": 2.62,
+          "market_value": 54882130.81
         },
         {
           "ticker": "ENPH",
           "company": "ENPHASE ENERGY",
-          "weight_pct": 2.58,
-          "market_value": 53709218.8
+          "weight_pct": 2.62,
+          "market_value": 54991711.0
         }
       ]
     },
@@ -148,69 +148,69 @@
       "ticker": "ARTY",
       "issuer": "iShares (BlackRock)",
       "fund": "iShares Future AI & Tech ETF",
-      "as_of": "2026-11-10",
+      "as_of": "2026-11-11",
       "n_positions": 50,
-      "skipped_rows": 17,
+      "skipped_rows": 20,
       "top": [
         {
           "ticker": "AMD",
           "company": "ADVANCED MICRO DEVICES",
-          "weight_pct": 5.73,
-          "market_value": 196661324.31
+          "weight_pct": 5.83,
+          "market_value": 210586340.4
         },
         {
           "ticker": "AVGO",
           "company": "BROADCOM INC",
-          "weight_pct": 4.96,
-          "market_value": 170326322.76
+          "weight_pct": 4.9,
+          "market_value": 176696369.14
         },
         {
           "ticker": "2330",
           "company": "TAIWAN SEMICONDUCTOR MANUFACTURING",
-          "weight_pct": 4.76,
-          "market_value": 163251422.07
-        },
-        {
-          "ticker": "NVDA",
-          "company": "NVIDIA",
-          "weight_pct": 4.02,
-          "market_value": 137981272.21
-        },
-        {
-          "ticker": "3443",
-          "company": "GLOBAL UNICHIP",
-          "weight_pct": 4.0,
-          "market_value": 137255062.57
-        },
-        {
-          "ticker": "035420",
-          "company": "NAVER",
-          "weight_pct": 3.93,
-          "market_value": 134833902.58
+          "weight_pct": 4.74,
+          "market_value": 171113036.6
         },
         {
           "ticker": "ORCL",
           "company": "ORACLE",
-          "weight_pct": 3.93,
-          "market_value": 134991772.16
+          "weight_pct": 4.27,
+          "market_value": 153933011.96
+        },
+        {
+          "ticker": "3443",
+          "company": "GLOBAL UNICHIP",
+          "weight_pct": 4.18,
+          "market_value": 151026085.37
         },
         {
           "ticker": "MU",
           "company": "MICRON TECHNOLOGY",
-          "weight_pct": 3.8,
-          "market_value": 130350849.37
+          "weight_pct": 4.03,
+          "market_value": 145500164.6
+        },
+        {
+          "ticker": "NVDA",
+          "company": "NVIDIA",
+          "weight_pct": 3.92,
+          "market_value": 141598636.5
         },
         {
           "ticker": "MRVL",
           "company": "MARVELL TECHNOLOGY",
-          "weight_pct": 3.65,
-          "market_value": 125362672.93
+          "weight_pct": 3.79,
+          "market_value": 136757371.2
         },
         {
-          "ticker": "MSFT",
-          "company": "MICROSOFT",
-          "weight_pct": 3.35,
-          "market_value": 114959959.2
+          "ticker": "035420",
+          "company": "NAVER",
+          "weight_pct": 3.76,
+          "market_value": 135851384.78
+        },
+        {
+          "ticker": "CRWV",
+          "company": "COREWEAVE CLASS A",
+          "weight_pct": 3.41,
+          "market_value": 123026130.35
         }
       ]
     },
@@ -218,69 +218,69 @@
       "ticker": "BAI",
       "issuer": "iShares (BlackRock)",
       "fund": "iShares A.I. Innovation and Tech Active ETF",
-      "as_of": "2026-11-10",
-      "n_positions": 52,
-      "skipped_rows": 25,
+      "as_of": "2026-11-11",
+      "n_positions": 51,
+      "skipped_rows": 27,
       "top": [
         {
           "ticker": "AMD",
           "company": "ADVANCED MICRO DEVICES",
-          "weight_pct": 6.37,
-          "market_value": 719602565.57
+          "weight_pct": 6.52,
+          "market_value": 781594368.3
         },
         {
           "ticker": "MU",
           "company": "MICRON TECHNOLOGY",
-          "weight_pct": 5.41,
-          "market_value": 611413477.11
+          "weight_pct": 5.77,
+          "market_value": 692335835.8
         },
         {
           "ticker": "TSM",
           "company": "TAIWAN SEMICONDUCTOR MANUFACTURING",
-          "weight_pct": 5.4,
-          "market_value": 610309990.08
+          "weight_pct": 5.37,
+          "market_value": 643974912.35
         },
         {
           "ticker": "AVGO",
           "company": "BROADCOM INC",
-          "weight_pct": 5.28,
-          "market_value": 596650723.02
+          "weight_pct": 5.24,
+          "market_value": 627956560.88
         },
         {
           "ticker": "NVDA",
           "company": "NVIDIA",
-          "weight_pct": 4.38,
-          "market_value": 495155755.36
+          "weight_pct": 4.3,
+          "market_value": 515501906.07
         },
         {
           "ticker": "SPCX",
           "company": "SPACE EXPLORATION TECHNOLOGIES COR",
-          "weight_pct": 4.21,
-          "market_value": 475906322.07
+          "weight_pct": 3.92,
+          "market_value": 470413593.0
         },
         {
           "ticker": "SNOW",
           "company": "SNOWFLAKE",
-          "weight_pct": 3.34,
-          "market_value": 376738792.24
-        },
-        {
-          "ticker": "MSFT",
-          "company": "MICROSOFT",
           "weight_pct": 3.24,
-          "market_value": 366197747.04
+          "market_value": 388329510.58
         },
         {
           "ticker": "LRCX",
           "company": "LAM RESEARCH",
-          "weight_pct": 3.06,
-          "market_value": 345586053.96
+          "weight_pct": 3.09,
+          "market_value": 370985931.12
+        },
+        {
+          "ticker": "MSFT",
+          "company": "MICROSOFT",
+          "weight_pct": 3.02,
+          "market_value": 362238677.62
         },
         {
           "ticker": "AMZN",
           "company": "AMAZON.COM INC",
-          "weight_pct": 2.98,
-          "market_value": 336678408.24
+          "weight_pct": 2.79,
+          "market_value": 334831745.54
         }
       ]
     },
@@ -727,7 +727,7 @@
         "BAI",
         "AIQ"
       ],
-      "max_weight_pct": 10.11
+      "max_weight_pct": 10.23
     },
     {
       "ticker": "AVGO",
@@ -738,7 +738,18 @@
         "BAI",
         "AIQ"
       ],
-      "max_weight_pct": 8.3
+      "max_weight_pct": 8.14
+    },
+    {
+      "ticker": "MU",
+      "company": "MICRON TECHNOLOGY",
+      "funds": [
+        "SOXX",
+        "ARTY",
+        "BAI",
+        "AIQ"
+      ],
+      "max_weight_pct": 7.37
     },
     {
       "ticker": "SNOW",
@@ -750,17 +761,6 @@
         "CLOU"
       ],
       "max_weight_pct": 7.3
-    },
-    {
-      "ticker": "MU",
-      "company": "MICRON TECHNOLOGY",
-      "funds": [
-        "SOXX",
-        "ARTY",
-        "BAI",
-        "AIQ"
-      ],
-      "max_weight_pct": 6.99
     },
     {
       "ticker": "TSLA",
@@ -785,6 +785,17 @@
       "max_weight_pct": 4.25
     },
     {
+      "ticker": "MRVL",
+      "company": "MARVELL TECHNOLOGY",
+      "funds": [
+        "SOXX",
+        "ARTY",
+        "BAI",
+        "AIQ"
+      ],
+      "max_weight_pct": 3.79
+    },
+    {
       "ticker": "MSFT",
       "company": "MICROSOFT",
       "funds": [
@@ -794,17 +805,6 @@
         "CLOU"
       ],
       "max_weight_pct": 3.77
-    },
-    {
-      "ticker": "MRVL",
-      "company": "MARVELL TECHNOLOGY",
-      "funds": [
-        "SOXX",
-        "ARTY",
-        "BAI",
-        "AIQ"
-      ],
-      "max_weight_pct": 3.65
     },
     {
       "ticker": "OKTA",
@@ -824,7 +824,17 @@
         "BAI",
         "AIQ"
       ],
-      "max_weight_pct": 6.0
+      "max_weight_pct": 6.08
+    },
+    {
+      "ticker": "BE",
+      "company": "BLOOM ENERGY CLASS A",
+      "funds": [
+        "ICLN",
+        "ARTY",
+        "BAI"
+      ],
+      "max_weight_pct": 6.02
     },
     {
       "ticker": "ZS",
@@ -844,16 +854,6 @@
         "BAI",
         "AIQ"
       ],
-      "max_weight_pct": 5.4
-    },
-    {
-      "ticker": "BE",
-      "company": "BLOOM ENERGY CLASS A",
-      "funds": [
-        "ICLN",
-        "ARTY",
-        "BAI"
-      ],
       "max_weight_pct": 5.37
     },
     {
@@ -867,16 +867,6 @@
       "max_weight_pct": 5.28
     },
     {
-      "ticker": "SPCX",
-      "company": "SPACE EXPLORATION TECHNOLOGIES COR",
-      "funds": [
-        "ARTY",
-        "BAI",
-        "AIQ"
-      ],
-      "max_weight_pct": 4.21
-    },
-    {
       "ticker": "ORCL",
       "company": "ORACLE",
       "funds": [
@@ -884,7 +874,27 @@
         "AIQ",
         "CLOU"
       ],
-      "max_weight_pct": 3.93
+      "max_weight_pct": 4.27
+    },
+    {
+      "ticker": "SPCX",
+      "company": "SPACE EXPLORATION TECHNOLOGIES COR",
+      "funds": [
+        "ARTY",
+        "BAI",
+        "AIQ"
+      ],
+      "max_weight_pct": 3.92
+    },
+    {
+      "ticker": "CRWV",
+      "company": "COREWEAVE CLASS A",
+      "funds": [
+        "ARTY",
+        "BAI",
+        "AIQ"
+      ],
+      "max_weight_pct": 3.41
     },
     {
       "ticker": "AKAM",
@@ -904,19 +914,9 @@
         "AIQ",
         "CLOU"
       ],
-      "max_weight_pct": 3.17
-    },
-    {
-      "ticker": "AMZN",
-      "company": "AMAZON.COM INC",
-      "funds": [
-        "BAI",
-        "AIQ",
-        "CLOU"
-      ],
-      "max_weight_pct": 2.98
+      "max_weight_pct": 3.05
     }
   ],
   "methodology": "Thematic ETF daily holdings from the issuers' own official files \u2014 iShares/BlackRock latest-holdings.csv endpoints and Global X (Mirae Asset) dated full-holdings CSVs linked from each fund page (free, public, published every business day; all endpoint URLs verified live 2026-08-23 by downloading each file \u2014 Global X's date-in-filename links are re-extracted from the fund page's own HTML on every fetch, so a rename surfaces as an honest per-fund failure, never a silent gap). Rows: official weight/market value as published; iShares rows are kept for the Equity asset class only (futures/cash/FX legs skipped and counted), Global X rows with no ticker (cash/FX bookkeeping) are skipped and counted. Top-10 per fund by weight; the resonance table lists tickers held by 2+ of these theme ETFs across issuers. Candidates without a reachable free official file were honestly dropped (Amplify BLOK, Invesco, VanEck, First Trust, SPDR-XLS; see docs/data-intake-etf-holdings.md). Neither issuer keeps a CSV history \u2014 the dated local snapshots are the only time series. Display-only, exploratory; no prices, no returns, no performance claim; NOT part of any research or OOS pipeline.",
-  "snapshot_ts": "2026-11-13T02:56:09.845924+00:00"
+  "snapshot_ts": "2026-11-13T11:25:07.911309+00:00"
 }

@@ -1,13 +1,23 @@
 {
   "status": "ok",
-  "as_of": "2026-11-10",
-  "total": 67,
+  "as_of": "2026-11-12",
+  "total": 68,
   "issuers": 38,
   "window": {
     "start": "2026-05-01",
-    "end": "2026-11-10"
+    "end": "2026-11-12"
   },
   "events": [
+    {
+      "company": "NVIDIA CORP",
+      "ticker": "NVDA",
+      "filing_date": "2026-11-12",
+      "items": [
+        "5.02",
+        "9.01"
+      ],
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000082/nvda-20261111.htm"
+    },
     {
       "company": "COSTCO WHOLESALE CORP /NEW",
       "ticker": "COST",
@@ -689,6 +699,7 @@
     "GENERAL ELECTRIC CO": 3,
     "HONEYWELL INTERNATIONAL INC": 3,
     "MICROSOFT CORP": 3,
+    "NVIDIA CORP": 3,
     "ADVANCED MICRO DEVICES INC": 2,
     "Alphabet Inc.": 2,
     "CHEVRON CORP": 2,
@@ -700,7 +711,6 @@
     "INTERNATIONAL BUSINESS MACHINES CORP": 2,
     "MICRON TECHNOLOGY INC": 2,
     "Mastercard Inc": 2,
-    "NVIDIA CORP": 2,
     "PFIZER INC": 2,
     "AMAZON COM INC": 1,
     "Apple Inc.": 1,
@@ -722,6 +732,6 @@
     "UNION PACIFIC CORP": 1,
     "UNITEDHEALTH GROUP INC": 1
   },
-  "methodology": "SEC Form 8-K Item 5.02 officer/director-change filings \u2014 DERIVED from the committed form8k panel (category 'officer_changes'; public domain, 17 U.S.C. \u00a7105, filed-date PIT). v1 is FILING-STREAM level: one row per 8-K accession with the company, filing date, full item list and EDGAR primary-document link. Person-level extraction (who, which role, appointed vs departed) is DEFERRED: parsing names from 8-K free text is unreliable and an honest omission beats a guessed name \u2014 the same v1 boundary as the /congress PTR panel. Inherits the /events panel's bounded 50-issuer universe and its 2026-05-01..2026-11-10 window. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-11-13T02:56:15.447841+00:00"
+  "methodology": "SEC Form 8-K Item 5.02 officer/director-change filings \u2014 DERIVED from the committed form8k panel (category 'officer_changes'; public domain, 17 U.S.C. \u00a7105, filed-date PIT). v1 is FILING-STREAM level: one row per 8-K accession with the company, filing date, full item list and EDGAR primary-document link. Person-level extraction (who, which role, appointed vs departed) is DEFERRED: parsing names from 8-K free text is unreliable and an honest omission beats a guessed name \u2014 the same v1 boundary as the /congress PTR panel. Inherits the /events panel's bounded 50-issuer universe and its 2026-05-01..2026-11-12 window. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
+  "snapshot_ts": "2026-11-13T11:25:13.234171+00:00"
 }
