@@ -243,3 +243,13 @@ L1→L2 需**同时**满足（X/N/Y/M 数值待首月基线数据后由业主入
 - **测试（`tests/test_monthly_review.py` 累计 numstat 223/0，+2 钉）**：有数据（1 条 resolved）→ `resolved_prediction_rows == 1` + 整行指引钉 + 禁令字面钉；空态双面（空 repo + 仅 pending）→ 计数 0 + 降级行整钉 + `INSIGHT_HINT not in text`（不渲染指引）。
 - **门禁实跑（§6）**：动 code 前复跑 `--status` = ok_committed；三套件 `pytest -q` → **rc=0**；`uv run ruff check`（全仓）→ All checks passed；`--lessons` 实弹 **rc=0** 且输出 :78 实为降级行（真实 backlog 双零 resolved → 空态如实，与 §4 基线月声明一致）；`--propose` 实弹 **rc=0**；`grep -c "prediction:"/"outcome:" state/backlog.md` 复核 **0/0** 不变。
 - **行号漂移（环 2 再 +21，:1400 起顺移；B.4 现值→B.5 现值）**：CALIBRATION_FEEDBACK_NOTE 1424→**1427**、render_reflexion_section 1429→**1445**、INSIGHT_HINT **:1439**（新增）、--verify-bounded docstring 1489→**1510** 一带、--propose 零 LLM 声明 1550→**1571**（runbook 自节锚第三次定正）、main 1528→**1549**、旗标块 1530-1568→**1551-1589**（八旗首 :1551、末 :1589）；lesson_seeds :1389 与 :1389 之前诸锚（reconcile :978、_collect :1026、聚合器 :1059、run_propose :1122、append_lessons :1289、render_card :951/:972）**零漂移**。
+
+## 勘误（2026-11-13 append；residuals-cleanup 轮 138，append-only——原文零回改）
+
+- :235「本套件 37 用例」→ 实测 **39 用例**：`uv run python -m pytest tests/test_monthly_review.py -q --co`
+  输出尾行 `tests/test_monthly_review.py: 39`（2026-11-13 勘误批复跑留证；注：后续加回归钉
+  用例数会增，读数以当期命令输出为准）。37 系轮 137 收官时少计笔误；同条 numstat 187/0、
+  +3 钉等其余声明复核不受影响。原行 :235 按勘误批纪律不回改，以本条为准。
+  同批关联勘误：runbook :292/:343 旧锚 `monthly_review.py:1399` → 现值 `:1571`（--propose
+  argparse help 折行处，与 §3 自治梯分级表既有引法一致）；轮 8 报告 numstat 68→69 见该报告
+  文末勘误条。

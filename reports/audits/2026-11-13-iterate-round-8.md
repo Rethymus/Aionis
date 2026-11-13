@@ -55,3 +55,11 @@
 - ZCode 月末提示词模板 {answer,p} 同步确认（轮 7 星报项 a；`.zcode/` 非仓库文件，本轮不碰）。
 - ~~parse_bounded_answer CLI 接线派单与否~~（轮 7 星报项 b）——本轮 mission 已指名并完成（§3），星报关闭。
 - 在册延续：iterate 轮 4 归属（runner 侧）、#18 标题锚迁移（须派单）、装包裁决（river·duckdb·ty·NewsAction·FinCutBench 仅索引）。
+
+## 7. 勘误（2026-11-13 append；residuals-cleanup 轮 138，append-only）
+
+- :34「`git diff --numstat` → `68 0`/`62 0` 双文件纯增」→ 复跑 `git show --numstat da29c32bd6`
+  实测 **`69 0` scripts/monthly_review.py** / `62 0` tests/test_monthly_review_propose.py
+  （2026-11-13 勘误批留证）。提交信息同句「numstat 68 0/62 0」同误——提交信息不可回改，
+  以本条为准；tests 62 一致，本报告与轮 9 报告其余 numstat 声明经审计全核一致。
+  原行 :34 不回改。
