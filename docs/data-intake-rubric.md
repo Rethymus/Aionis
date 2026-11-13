@@ -47,6 +47,12 @@ exploratory；任一门不过 → 仅 exploratory 或 REJECT。
 - **通过**：SEC XBRL——每条 fact 带 `filed` 日期，由构造 PIT ✓。
 - **失败**：某指数 provider 无 vintage 声明（只给一条「现值」序列，无法判断某历史值是何时的）→
   **REJECT**（G2 不可证，无法构造 PIT）。
+- **外部实证引用锚（2026-11-13 append，frontier-citation-anchors；仅引用，不接其数据集）**：
+  arXiv:2611.12966「BuySideFlow: A Point-in-Time Benchmark for LLM Agents in Investment
+  Research」（cs.AI 2026-11-07，fox_fetch 一手复核可达）审计 900 runs——通过结果检查的 380
+  runs 中 **193（50.8%）存在 PIT 违规**，原文明示「output agreement alone does not establish
+  temporal validity」（输出层一致 ≠ 时间层有效）：G2/G3 的 snapshot-vintage 门不可省的独立
+  第三方实证。
 
 ## G3 — No-revision contract（无回改契约——**杀手级泄漏**）
 

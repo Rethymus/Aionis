@@ -20,6 +20,15 @@ how the market reacted).
   encode it, contaminating the label (forward returns).
 - Structural-only keeps the label **independent** of the LLM's price knowledge. See
   `../docs/theory-of-computable-reality.md`.
+- **Citation anchor (2026-11-13, frontier-citation-anchors — citation-only, no package,
+  no integration):** arXiv:2611.03985 *Thinking Fast, Trading Late: System One Decision
+  Models vs the Market* (OLIVIA protocol, cs.AI 2026-11-02; abstract first-hand
+  re-checked this session) — commercial decision models identify **masked** companies
+  in 62–74% of cases against a 28% baseline ("masking hides names, not companies",
+  掩码 ≠ 匿名：掩码防不住记忆化价格反应), and no pre-registered strategy survives costs
+  + deflated Sharpe. External support for keeping LLM extraction structural-only (no
+  `market_impact`). NewsAction repo license MIT (per research-side verification; not
+  installed, not introduced).
 
 ## Cost / applicability
 - **Cost:** discards a potentially signal-rich (but leakage-prone) field.

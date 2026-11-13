@@ -55,6 +55,11 @@
   不得作校准概率消费；月度小样本对账仅**记录性**校准，禁任何统计显著性声称。触发条件：mission 指名 +
   预注册（涉 eval 呈现面）；provider 红线不变（不接 Jev API/typesafe-sdk）。来源：iterate 轮 Jev 专题
   （backlog-candidates-register 条）。
+  延伸索引⑦（2026-11-13 append，frontier-citation-anchors；仅引用不装包不接入）：arXiv:2611.11480
+  「Beyond Ranking: Are Decision Models Calibrated Relevance Scorers?」（cs.IR 2026-11-08，
+  fox_fetch 一手复核可达）实测 Jev 原生概率**过自信**（>0.9 分带仅 66% 相关、需 2 参数校准修复）——
+  上方「GLM 概率未校准/对账仅记录性/禁显著性声称」诚实边界的独立第三方实证；不接 Jev
+  API/typesafe-sdk，provider 红线不变。
 
 ## 前沿吸收（轮 127，2026-11-11；来源=reports/audits/2026-11-11-env-testpipeline-round.md §6b——两路前沿调研中 high 但 L 规模/存疑/触红线者，逐条含来源 URL）
 
