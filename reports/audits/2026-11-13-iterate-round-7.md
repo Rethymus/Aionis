@@ -131,3 +131,13 @@
 - **本轮新增两项（§1 星报）**：(a) ZCode 工作区月末会话提示词模板 {answer,p}
   同步确认；(b) `parse_bounded_answer` CLI 接线是否派单（代码面新增须 mission
   指名）。
+
+## 7. 勘误（2026-11-13 append，round7-lows-cleanup；本报告系时点快照，以上 §1-§6 一律不回改，勘误只追加）
+
+- **:46「主表 24 件」系计数笔误，实为 26 件**：分面 代码 7+测试 2+文档 10+state 3+报告决策 4=26（本会话按最新 HEAD `14015fe4d2` 逐表 `grep -c '^| [A-E][0-9]'` 复测数得 7/2/10/3/4；地图文件 `git log` 仅 `811cedab37` 一笔、工作树==HEAD 干净，计数与施工时点一致）。同源「24 件」共五落点，处置如下：
+  - 活文档已跟改：地图 `reports/design/2026-11-13-jev-artifact-map.md:13`、`state/current.md:3`；
+  - append-only 不回改：`state/handoff.md:2949` 轮 135 块（以轮 136 补记为准，轮 134 low-1 先例同款）；
+  - 时点快照不回改：本报告 :46（以本注记为准）；
+  - **提交信息 `811cedab37`（不可改）之「24 件主表」勘误由本勘误区承载**，落账详见 handoff 轮 136（round7-lows-cleanup）块。
+- **08-lessons 追加实 +6（非审计所引「自报 +8」）**：`git show 811cedab37 --numstat -- docs/08-lessons.md` → `6 0`；「+8」原文经四文档 grep 未定位（在册口径为地图 C10「:68-74」区间记法），详见 handoff 轮 136。
+- **双空面 needle 自污染辨明（防 11-30 首月核对误判）**：`grep -c "monthly-reflexion-lessons" state/handoff.md` 在轮 135 入册后=1（:2949 块自身字面命令引用），非空面破坏；修正判定口径见 handoff 轮 136（对照面 `prediction:` backlog 复跑=0 未污染）。
