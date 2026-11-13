@@ -116,6 +116,31 @@
   **边界注记**：页面无逐件许可声明，star 数与命令页方自述「approximate—check each repo
   before installing」；页内任何工具装包须逐件 7-gate+许可证白名单+业主点头，入册本索引不
   获得装包资格；页内 jgrep 系外向调研 medium 未圈入项，维持原判不新增。
+  延伸索引⑬（2026-11-13 append，frontier-citation-anchors；仅引用零接入）：arXiv:2611.16321
+  （决策信息集中中间层——纯架构效率研究；Aionis 系外部 API 消费者，provider 侧架构不可
+  触碰、无接入面）。adaptation 口径：仅作 Jev 索引延伸登记（架构类目引用），仓库任何
+  「中间层/信息集中」类改动均须 mission 指名+预注册，不入本索引射程。
+  **边界注记**：仅引用零接入；零新依赖零 SDK 零框架；provider 红线不变。
+  延伸索引⑭（2026-11-13 append，frontier-citation-anchors；仅引用零接入）：arXiv:2611.00496
+  （typed 接口生产偏见审计口径）。adaptation 口径：与 bounded answer {answer,p} 固定契约
+  同构——「固定形状输出→事后只读审计」纪律（parse_bounded_answer :1363/--verify-bounded
+  面），只借审计口径不接入其工具链。
+  **边界注记**：仅引用零接入；零新依赖零 SDK 零框架。
+  延伸索引⑮（2026-11-13 append，frontier-citation-anchors；仅引用零接入）：arXiv:2611.09264
+  （数字轻推可操纵 System One 判决的实证）。adaptation 口径：支持环1b 注入纪律——校准
+  反馈只注入 facts only 统计+固定禁令字面（CALIBRATION_FEEDBACK_NOTE
+  monthly_review.py:1427；prohibition≠disposition），数字呈现永不作诱导性轻推。
+  **边界注记**：仅引用零接入；零新依赖零 SDK 零框架；呈现≠校准红线重申。
+  延伸索引⑯（2026-11-13 append，frontier-citation-anchors；仅引用零接入）：arXiv:2611.01015
+  （IJev，Jev 生态条目）——延伸索引登记；具体内容待引用时一手复核，本条不转述不装包。
+  **边界注记**：仅引用零接入；零新依赖零 SDK 零框架。
+  延伸索引⑰（2026-11-13 append，frontier-citation-anchors；仅引用零接入）：arXiv:2610.42148
+  （Flide，Jev 生态条目）——延伸索引登记；具体内容待引用时一手复核，本条不转述不装包。
+  **边界注记**：仅引用零接入；零新依赖零 SDK 零框架。
+  CLE 参照登记（2026-11-13 append，frontier-citation-anchors）：arXiv:2610.33956（continual
+  learning 评估）=飞轮验收口径参照（continual learning，运维面 A/B 设想，未开工）——运维面
+  「带 active lessons vs 清空 lessons」月度对照设想（非研究面对照）；未开工只登记，启用须
+  业主点名+独立 mission。
 
 ## 前沿吸收（轮 127，2026-11-11；来源=reports/audits/2026-11-11-env-testpipeline-round.md §6b——两路前沿调研中 high 但 L 规模/存疑/触红线者，逐条含来源 URL）
 
