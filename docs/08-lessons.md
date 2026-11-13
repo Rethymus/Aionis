@@ -65,6 +65,12 @@
   「2016-2019 数据须先复现已发表符号，才解锁在后续主样本上计算任何 linking
   statistic」——先复制后解锁的门控顺序，与本仓「确认性运行前冻结
   config + 预注册」流程同向对照。**明示：不改任何现有 phase 预注册流程。**
+- **「Only facts can block」判别层阻断先例**（qkal/Canny README，MIT，v0.4.0；
+  jev-artifact-map §2.1 素材，本会话 fox_fetch 一手复核）：「Facts go to code.
+  Judgments go to Jev. Only facts can block.」——确定性钩子以账本可证事实
+  （exit 码/文件变更）才可阻断，LLM 判断仅成注记（Jev never blocks）——与本仓
+  值班协议「判别层零 LLM 阻断」+ exit 码契约门同构先例。**明示：仅引用锚，
+  不改任何在册流程、判定门与红线（不引入外部判别 API 裁定不变）。**
 
 ## See also
 
