@@ -60,6 +60,25 @@
   fox_fetch 一手复核可达）实测 Jev 原生概率**过自信**（>0.9 分带仅 66% 相关、需 2 参数校准修复）——
   上方「GLM 概率未校准/对账仅记录性/禁显著性声称」诚实边界的独立第三方实证；不接 Jev
   API/typesafe-sdk，provider 红线不变。
+  延伸索引⑧（2026-11-13 append，frontier-reading-index；阅读清单锚，不装任何条目不引任何包）：
+  awesome-decision-models（github.com/AnotiaWang——hosted APIs/open-weight 模型/runtimes/SDKs/
+  applications/benchmarks/papers 分节导航，System One/typed-decisions 域；GitHub API 一手复核
+  license spdx=CC0-1.0、715★、pushed 2026-11-13 仍活跃）——按延伸索引① CC0 仅索引用途先例，
+  登记为后续 Jev 生态扫描单一入口（在册① awesome-system-one/② awesome-jev 两清单外覆盖面
+  最全）。**如实标注**：CC0-1.0 非白名单代码许可（MIT/Apache/BSD），仅限阅读清单域；清单内
+  任何条目不得因入册本索引而获得装包资格，装包仍须 7-gate+白名单+业主点头。
+  延伸索引⑨（2026-11-13 append，frontier-reading-index；两篇张力论文并列引用锚，不择优偏引）：
+  arXiv:2611.12521「Can the Confidence and Decisions of System 1 Models Be Trusted?」
+  （cs.LG 2026-11-09）实测 provider confidence=**闭式散度变换**（1−H(p)/ln K；Clef-27B 为
+  normalized margin）而非经验准确率，且一请求捆多问引致跨问定向干扰（Tev1-0.8B 二值翻转
+  11.7-22.4%）；arXiv:2611.15592「Small Heads, Strong Decisions」（cs.AI 2026-11-11）受控
+  同协议重训五种 readout，称一 prompt 读全问与逐问精度**相当**（1.6× 推理加速）——两文对
+  「多问捆绑」结论相反（任务域/模型不同），张力如实并列，不据任何一篇改在册协议。补强对象：
+  上方「GLM 概率未校准/对账仅记录性/禁显著性声称」诚实边界（12521 系 ⑦ 过自信读数的机制侧
+  补强）与 WATCHDOG 单问单发+预枚举设计（`scripts/monthly_review.py:1274-1281`）的独立第三方
+  实证/反向佐证；两篇 abs 页本会话 fox_fetch 复核可达。**注记**：不据此对 GLM 三 provider 概率
+  作任何校准拟合（n=1 月度 p 记录禁检测拟合在册红线，#15 同款口径；WATCHDOG 常量内
+  「禁再校准拟合」措辞同源）。
 
 ## 前沿吸收（轮 127，2026-11-11；来源=reports/audits/2026-11-11-env-testpipeline-round.md §6b——两路前沿调研中 high 但 L 规模/存疑/触红线者，逐条含来源 URL）
 
