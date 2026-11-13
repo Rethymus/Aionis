@@ -693,3 +693,43 @@ push + both CI workflows, and a news_feed as_of freshness probe. Exit 0
 only when every check passes. Discriminance was proven against the
 2026-10-02 run: the two then-unwired items (ticker_metadata cache mode,
 backup field) correctly failed while the rest passed.
+
+## 渐进自治梯（L0-L3 automation ladder，2026-11-13 入册）
+
+蓝本：`reports/design/2026-11-14-personal-training-method-and-automation-ladder.md` §3（定夺轮定案稿）。入册原则：**先入册后启用**——L2 及以上在晋级门槛满足且业主显式扳键前一律不启用；本节只定形，全节引用既有锚不重复展开。
+
+### 分级表
+
+| 级 | 定义 | 状态 | 判据/互锁 |
+|---|---|---|---|
+| **L0 呈现** | 确定性信息呈现：夜报包、`--status`、`--doctor`、runbook 注记。零动作 | 在位 | 无（纯只读） |
+| **L1 自动候选** | 引擎只建议、人裁决：`--propose` 七卡（`run_propose` `monthly_review.py:1122`、零 LLM 零网络声明 :1571；引擎对 backlog/tasks 只读——节奏表 :230「绝不自动写」）+ `--triage` 三分类分诊（`classify_run_row` `ops_local_refresh.py:558-576` 纯规则，三桶常量 :542-544 = platform-failure / infra-transient / code-defect） | **现状（在位）** | 只读 + 人工采纳门 |
+| **L2 校准达标后·可逆运维决策自动执行** | 合格面三件：软败重试升级（`--status` retry_soft 先例）/ 分诊带动作（triage 结论→预设处置映射，处置集封闭枚举）/ propose 自动派发候选（`render_card` `monthly_review.py:951` 的 disposition 行 :972 → `scripts/orchestrate_dispatch.py` 派发路径；仍不写 backlog/tasks 本体） | **未启用（先入册后启用）** | 三互锁（下）+ 量化门槛（下）+ 业主扳键 |
+| **L3 业主定义** | 待定义 | 未定义 | 待业主区（`state/current.md`） |
+
+### 永不合格面（无论校准几级达标，永不自动执行）
+
+外部工程佐证：OpenAI Operator System Card（风险×可逆性判据 + 证券买卖 fully restrict）——分级表必须有硬禁区；「运维面低风险」不得滑坡成研究面豁免。
+
+1. **研究管线**（`src/aionis/`、`scripts/phase_*`、dashboard 研究面）；
+2. **`runs/ledger.jsonl` 写入与一切 frozen config 变更**（config_committed BEFORE result 红线，AGENTS.md）；
+3. **业主钥匙面**（`.env`、billing、推送凭证）；
+4. **交易执行/下单**——Aionis 阶梯**永不含**（量化项目特有条款）。
+
+### L2 三互锁（缺一即不许启用）
+
+1. **attempt-cap**：3 次失败锁死等次日或人工（本档 `SKIP:attempt-cap` :89、:646 一带 push 失败锁定 + 交互恢复路径先例）；
+2. **审计轨迹**：每次自动执行写 handoff 审计行（触发信号 / 所执行动作 / 回滚点三要素）；
+3. **一键回滚**：backup ok + `push_only_recovery`（`--status` 实测字段，2026-11-13 复测在位）；revert 路径随启用入册时写死。
+
+### 晋级门槛（形先入册；L1→L2 需同时满足，数值待基线后业主定标）
+
+X/N/Y/M 数值待首月基线数据后由业主入册——当前 resolved 对账记录 = 0 条（`grep -c "prediction:"` / `grep -c "outcome:" state/backlog.md` 双零，2026-11 = 基线月，设计报告 §4），**不凭空造阈值**（RouteLLM n=1 禁拟合锚，`state/backlog.md:210` 延伸索引⑤）：
+
+- a) 汇总 mean Brier < X，连续 M 个月；
+- b) resolved 对账记录累计 n ≥ N；
+- c) 各桶 Wilson 95% CI 上界 < Y（样本量足以让 CI 收窄到可用）；
+- d) 期间零 insight 违例（无「自动调 p」类指令混入 lessons）；
+- e) **业主显式扳键**（待业主区：L2 启用钥匙）。
+
+口径同构锚：arXiv:2610.18614——晋级看「对月末**结局**校准的置信」（Brier 分桶 + 样本量门槛），不看单条建议自评；trust/abstain/handoff 三态 ≈ 自动执行 / 跳过待人工 / 上抛业主（只借评价口径，Aionis 是月度粒度）。工程同构三原则（Anthropic「Building effective agents」2024-12 原文口径）：最简起步、按需增复杂度（L0 起步逐级不跳级）；checkpoint + stopping conditions（attempt-cap + 人工互锁的直接工程先例）；evaluator-optimizer（每步拿环境 ground truth 反馈再迭代——校准飞轮同构）。**边界：不因此引入任何 SDK / MCP / 框架组件**（provider 红线 + 零新依赖）。
