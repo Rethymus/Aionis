@@ -79,6 +79,43 @@
   实证/反向佐证；两篇 abs 页本会话 fox_fetch 复核可达。**注记**：不据此对 GLM 三 provider 概率
   作任何校准拟合（n=1 月度 p 记录禁检测拟合在册红线，#15 同款口径；WATCHDOG 常量内
   「禁再校准拟合」措辞同源）。
+  延伸索引⑩（2026-11-13 append，frontier-citation-anchors；纯引用锚，不跑分不装包不接入）：
+  S1CogBench（arXiv:2611.00911「What System One Decision Models Can and Cannot Do on
+  Cognitive Experiments」，cs.CL 2026-10-31，Dengzhe Hou/Kazunori D Yamada；repo=
+  github.com/dengzhe-hou/S1CogBench，license spdx=MIT 白名单内，本会话 GitHub API
+  复核一手、pushed 2026-11-13 仍活跃）四重外部印证（abs 页+README :46 本会话逐句复核）：
+  ①「a fast, well-formed decision does not show that the model used the evidence」——
+  **格式合规≠语义合规**，反泄漏核心关切的独立第三方表述；②「aggregate scores hide how
+  decisions respond to conditions」——**总分藏条件响应**，逐条对账呈现（A5
+  `reconcile_predictions` judgments/facts 分账，`scripts/monthly_review.py:978`）不总分管总
+  口径的旁证；③ README :46 逐字：Python 3.12 将内建 float `sum()` 改补偿求和，27 mode 中
+  6 个浮点末位漂移、复现 2026-10-26 CPU validation 须逐位回到 3.11——**H6 位一致+uv.lock
+  钉版纪律的直接外部实证**（解释器小版本即破位一致，钉版非仪式）；④「speed comes mainly
+  from answering without generation」——速度=不生成，判别/生成成本结构对照注记
+  （`docs/ops-local-refresh.md:327`）同向印证。**边界注记**：跑分须接 Jev API=违 provider
+  红线（池仅 GLM/SiliconFlow/ModelScope），repo 仅引用不克隆不装不跑；读数不构成对 GLM
+  三 provider 概率的任何校准拟合动作（#15 同款口径）。
+  延伸索引⑪（2026-11-13 append，frontier-citation-anchors；Apache-2.0 登记仅引用，不装插件
+  不接入）：johantor/brain（github.com/johantor/brain，license spdx=Apache-2.0 白名单内，
+  本会话 GitHub API 复核一手、pushed 2026-11-13 仍活跃）三原则与月度 reflexion/backlog 门禁
+  同构（README 本会话逐行复核）：① shadow 起草+人工 keep/pin/forget（README :11-12「drafts
+  lessons in shadow mode…you keep, pin or forget each one」）≡ backlog 候选区仅登记不动
+  （登记≠采纳，人工门保留）；② 反射输入不存外部文本（:33「cannot plant text that a later
+  reflection reads」防注入边界）≡ 引用面不进判定面在册口径；③ 每 reply 计一次 token
+  （:30「each reply counted once, subagents included」）≡ per-call 用量记账纪律。
+  **边界注记**：仅引用；不装插件不挂 hook；brain 系会话级常驻工具，与 Aionis「无后台长驻
+  进程」红线结构性冲突，永不引入。
+  延伸索引⑫（2026-11-13 append，frontier-citation-anchors；独立生态总目页登记为 Jev 生态
+  扫描第四入口，仅引证不复用）：jevtypesafeai.com/ecosystem（页面自述「independent
+  roundup, not official」、source of truth=typesafe.ai，本会话 fox_fetch 一手复核可达；在册
+  ① awesome-system-one/② awesome-jev/⑧ awesome-decision-models 三清单外第四扫描入口，
+  覆盖 MCP servers/浏览器扩展/CLI/routers/SDK/游戏/providers 网关）。引证两点：
+  （a）context compaction 描述「verbatim, no lossy summary」与活文档取舍纪律（append-only
+  原文留档、勘误不回改、禁有损摘要重写）同向；（b）jev-loop-detector 四态
+  progress/repeating/stuck/escalate 与恢复道惯例同构（推进/重复/卡死/升级）。
+  **边界注记**：页面无逐件许可声明，star 数与命令页方自述「approximate—check each repo
+  before installing」；页内任何工具装包须逐件 7-gate+许可证白名单+业主点头，入册本索引不
+  获得装包资格；页内 jgrep 系外向调研 medium 未圈入项，维持原判不新增。
 
 ## 前沿吸收（轮 127，2026-11-11；来源=reports/audits/2026-11-11-env-testpipeline-round.md §6b——两路前沿调研中 high 但 L 规模/存疑/触红线者，逐条含来源 URL）
 
