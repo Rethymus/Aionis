@@ -2,12 +2,17 @@
 
 The 6th-of-month review used to be gathered by an LLM reading run logs by
 eye; this locks the deterministic replacement. Pure tmp_path fixtures for the
-run.log/markers side; the gh CLI is injected as a fake runner — zero network,
-zero subprocess.
+run.log/markers side; the gh CLI is injected as a fake runner — zero network.
+One exception (flywheel-rehearsal, 2026-11-13): a single subprocess-based pin
+re-runs THIS CLI under a GBK child environment (python -I, PYTHONIOENCODING/
+PYTHONUTF8 stripped) to lock the __main__ stdout+stderr reconfigure — the
+U+2212/U+00B2 literals it must survive are byte-locked elsewhere in this file.
 """
 from __future__ import annotations
 
 import json
+import os
+import subprocess
 import sys
 from pathlib import Path
 
@@ -620,3 +625,49 @@ def test_lessons_insight_hook_skips_without_resolved_rows(
         assert ("- insight 钩子（环 2·蒸馏）: 本月无 resolved 对账行，"
                 "insight 步跳过") in text
         assert mr.INSIGHT_HINT not in text
+
+
+def test_cli_survives_gbk_child_environment(tmp_path: Path) -> None:
+    """flywheel-rehearsal pin (2026-11-13): under a GBK child — python -I
+    ignores PYTHONIOENCODING/PYTHONUTF8, so a stripped-env piped child gets
+    cp936 streams with strict errors — the CLI must still (a) render the
+    --lessons face carrying the U+2212/U+00B2 mean-Brier literal with
+    rc==0 and valid UTF-8 stdout, and (b) emit the --append-lessons-from
+    contract-gate refusal (rc==3) as valid UTF-8 stderr. Measured pre-fix:
+    stdout already survived via main()'s post-parse reconfigure, but stderr
+    carried raw GBK bytes (mojibake to a UTF-8 consumer, and any future
+    non-GBK stderr literal would crash the strict codec); post-fix the
+    __main__ tail reconfigures BOTH streams before main() runs. A bare
+    `python -I -c "print('（p−y）²')"` child crashes first-hand — the
+    environment class is real, the CLI armor is what this pin locks.
+    """
+    repo = tmp_path / "repo"
+    _write_day(repo, "2026-11-05", [_summary_line(date="2026-11-05")])
+    (repo / "state").mkdir()
+    (repo / "state" / "backlog.md").write_text(
+        # canonical pasted-entry shape (see _prediction_backlog_text):
+        # the parser needs "prediction:" + "（p=" on one line
+        "- 甲（prediction: 演练预测甲（p=0.8）due=2026-11）synthetic\n"
+        "  - outcome: y=1 (2026-11-30)\n", encoding="utf-8")
+    (repo / "state" / "handoff.md").write_text("# tmp handoff\n",
+                                               encoding="utf-8")
+    env = {k: v for k, v in os.environ.items()
+           if k.upper() not in ("PYTHONIOENCODING", "PYTHONUTF8",
+                                "PYTHONLEGACYWINDOWSSTDIO")}
+    script = _SCRIPTS / "monthly_review.py"
+    proc = subprocess.run(
+        [sys.executable, "-I", str(script), "--month", "2026-11",
+         "--lessons", "--repo", str(repo)],
+        capture_output=True, env=env, timeout=180)
+    assert proc.returncode == 0
+    out = proc.stdout.decode("utf-8")  # strict: pre-armor GBK bytes would
+    # decode to mojibake, not the literal below
+    assert "(p−y)² 同口径取均值" in out
+    bad = tmp_path / "no-event.md"
+    bad.write_text("无 event 行的教训文本（synthetic）\n", encoding="utf-8")
+    refused = subprocess.run(
+        [sys.executable, "-I", str(script), "--append-lessons-from",
+         str(bad), "--month", "2026-11", "--repo", str(repo)],
+        capture_output=True, env=env, timeout=180)
+    assert refused.returncode == 3
+    refused.stderr.decode("utf-8")  # strict: GBK bytes raise pre-armor

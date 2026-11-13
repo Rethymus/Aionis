@@ -1682,4 +1682,19 @@ def main(argv: list[str] | None = None) -> int:
 
 
 if __name__ == "__main__":
+    # GBK-console armor (flywheel-rehearsal, 2026-11-13): main() already
+    # reconfigures stdout AFTER parse_args, but stderr and the argparse
+    # usage path were only GBK-safe incidentally (measured: under a
+    # `python -I` child with PYTHONIOENCODING/PYTHONUTF8 stripped, stdout
+    # survives via main()'s reconfigure, yet stderr emits raw GBK bytes —
+    # mojibake for any UTF-8 consumer, and any future non-GBK stderr
+    # literal would crash the strict codec). The U+2212/U+00B2 literals
+    # (:966/:1022/:1118) are byte-locked by the ring-1a pin and are NOT
+    # touched — the fix lives on the CLI output surface only: reconfigure
+    # BOTH streams BEFORE main() runs (covers argparse text too).
+    for _stream in (sys.stdout, sys.stderr):
+        try:
+            _stream.reconfigure(encoding="utf-8", errors="replace")
+        except (AttributeError, OSError, ValueError):
+            pass
     raise SystemExit(main())
