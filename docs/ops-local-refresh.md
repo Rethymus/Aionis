@@ -289,7 +289,7 @@ thread: 稳定 ID 续写**（如「续 `thread:platform-billing`：…」），�
 不宣称认知架构（「内部世界模型」叙事不采用）：
 
 - **判别层（确定性规则引擎，快、零 LLM）**：`--weekly` 看门狗、`--propose` 提案
-  引擎（`scripts/monthly_review.py:1399` argparse help：zero LLM, zero network）、
+  引擎（`scripts/monthly_review.py:1571` argparse help：zero LLM, zero network）、
   Fast Path `--triage` 分诊、夜报包组装——规则表判别红牌/信号；引擎不归类者交
   人工归类（`monthly_review.py:856`）。
 - **生成层（月末 LLM 会话，慢、唯一生成面）**：月末复盘/教训撰写/Watchdog 有界
@@ -340,7 +340,7 @@ thread: 稳定 ID 续写**（如「续 `thread:platform-billing`：…」），�
 | 调用面 | 构成与锚 | token 面 |
 |---|---|---|
 | 唯一 LLM 面 | 月末单场 23:35 会话：复盘/教训撰写/bounded question 作答（`monthly_review.py:1118` Budget 注） | 运维全部 token 消耗所在 |
-| 零 LLM 确定性面 | `--propose`（`monthly_review.py:1399`：zero LLM, zero network）、`--triage`/`classify_run_row`（`ops_local_refresh.py:558-576` 纯规则分诊）、`--weekly` 看门狗、夜报包组装 | 恒零——「降 token」伪命题 |
+| 零 LLM 确定性面 | `--propose`（`monthly_review.py:1571`：zero LLM, zero network）、`--triage`/`classify_run_row`（`ops_local_refresh.py:558-576` 纯规则分诊）、`--weekly` 看门狗、夜报包组装 | 恒零——「降 token」伪命题 |
 | 可下探面（选择类子任务，三选） | bounded question 枚举化（`monthly_review.py:1274` + `:1283-1306` 解析兜底）；lessons `event:` 四操作定档（`monthly_review.py:1309` lesson_seeds 播种，写入方定档）；propose 卡 S/M/L 定档复核（`monthly_review.py:823-928`） | 唯一真实下探面——均在月末单场会话内，枚举/定档化不新增会话 |
 
 **OTel GenAI 语义命名锚注记（外向调研条目 2，2026-11-12 append；纯文档、
@@ -733,3 +733,238 @@ X/N/Y/M 数值待首月基线数据后由业主入册——当前 resolved 对�
 - e) **业主显式扳键**（待业主区：L2 启用钥匙）。
 
 口径同构锚：arXiv:2610.18614——晋级看「对月末**结局**校准的置信」（Brier 分桶 + 样本量门槛），不看单条建议自评；trust/abstain/handoff 三态 ≈ 自动执行 / 跳过待人工 / 上抛业主（只借评价口径，Aionis 是月度粒度）。工程同构三原则（Anthropic「Building effective agents」2024-12 原文口径）：最简起步、按需增复杂度（L0 起步逐级不跳级）；checkpoint + stopping conditions（attempt-cap + 人工互锁的直接工程先例）；evaluator-optimizer（每步拿环境 ground truth 反馈再迭代——校准飞轮同构）。**边界：不因此引入任何 SDK / MCP / 框架组件**（provider 红线 + 零新依赖）。
+
+## 首月执行剧本（2026-11-30 月末全链操作手册，2026-11-13 入册）
+
+审计主题②落地：2026-11 是首个带 prediction/outcome 接线的完整月（基线月——本节
+入册当日 `grep -c "prediction:" state/backlog.md` 与 `grep -c "outcome:"` 实测
+**0/0** 双零起跑）。本节把月末全链钉成六步操作手册：每步命令/预期输出/检查点/
+失败处置，吸收调研四检查点（落点汇总见本节末表）。**本节纯 docs：零代码、零新
+旗标、零新班次**——所有命令均为既有 CLI 面（`scripts/monthly_review.py`），证据
+链主载体=强制 `--out` 落盘（见「GBK 坑处置」节）。
+
+### 总览（六步 × 运行日 × LLM 面）
+
+| 步 | 动作 | 运行日 | LLM 面 | 证据载体 |
+|---|---|---|---|---|
+| 1 | `--propose` 打卡（月末前置确定性步） | 11-30 会话前 | 零 | `reports/monthend/2026-11/01-propose-cards.md` |
+| 2 | 月末会话：粘贴卡+填 p+bounded answer+lessons 草稿 | 11-30 | **是（月内唯一）** | backlog 候选区粘贴 + `03-lessons-draft.md` |
+| 3 | `--verify-bounded` 校验（answer 行纯校验） | 11-30 会话尾 | 零 | `04-verify-bounded.md` |
+| 4 | outcome 记录（due 月到点逐条追加） | 12 月末（首轮） | 会话内人裁 | backlog 同条目 `outcome:` 行 |
+| 5 | reconciliation（--weekly 面）+ calibration_summary（--lessons 面） | 每周五/月末 | 零 | `05-weekly-reconcile.md` + `06-monthly-report.md` |
+| 6 | `--append-lessons-from` 写回（insight 沉淀 rides 此通道） | 每月末 | 会话内（草稿撰写） | handoff lessons 块（append-only） |
+
+**--month 语义坑（default_month=上月，`monthly_review.py:81-88`）**：复盘 /
+--lessons / --append-lessons-from 的缺省月=**上一个月**（原设计「新每月 6 日回望
+上月」）；而 `--propose` 缺省=**当前月**（月末载体语义，`monthly_review.py:1615-1617`
+注释钉死）。故 11-30 当天跑步 2 取月报与步 6 写回**必须显式 `--month 2026-11`**
+（缺省会拿到 2026-10、写错月份块）；步 1 propose 无需 --month。
+
+### 步 1 —— `--propose` 打卡（零 LLM，引擎只读）
+
+```bash
+uv run python scripts/monthly_review.py --propose \
+  --out reports/monthend/2026-11/01-propose-cards.md
+```
+
+- **命令语义**：确定性信号×规则表→提案卡（`run_propose` `monthly_review.py:1122`；
+  头部「零 LLM、零网络」声明 :1164；引擎对 backlog/tasks **只读**）。
+- **预期输出**：提案卡 N 张（2026-11-13 基线七卡）+ 刷新指令 0..n 条；每张含
+  `prediction:` 行（p=「待月末会话填写 0..1」——引擎绝不代填，`render_card`
+  :951/:962）与 `disposition:` 三去向行（:972：accept→tasks/active/ · defer 留
+  候选区 · reject→tasks/rejected/）。exit 恒 0。
+- **检查点**：零提案=合法态非失败（无信号或全在册）；去重刷新指令仅人工执行；
+  **不自动写任何文件**（节奏表 :230「绝不自动写」）。
+- **失败处置**：git pickaxe 不可用→老化信号「不可用=不猜」如实降级；--out 笔误
+  未落盘→stdout 仍可读但证据链缺主载体，补 --out 重跑（确定性幂等，零成本）。
+
+### 步 2 —— 月末会话：填 p + bounded answer（11-30，月内唯一 LLM 面）
+
+先取月报+种子（确定性输入，零 LLM）：
+
+```bash
+uv run python scripts/monthly_review.py --month 2026-11 --lessons \
+  --out reports/monthend/2026-11/02-monthly-report.md
+```
+
+- **命令语义**：月报 + §5 Reflexion seeds（`lesson_seeds` :1389：缺席晚/
+  persistent/spin + watchdog bounded question :1354 + 校准事实[环1a 注入] +
+  insight 钩子）+ §6 Active lessons 聚合（`render_reflexion_section` :1445）。
+  正常 exit 0（有 SUMMARY 晚且零采集异常；异常 exit 1 如实，不当缺陷掩埋）。
+- **会话动作三件**（全部在**单场**月末会话内——23:35 班次承载，零新增会话）：
+  1. **粘贴**：步 1 新卡人工粘贴 `state/backlog.md` 候选区（刷新指令按提示人工
+     更新时间戳），并**逐卡填 p**（0..1 口头置信度——judgments 面，引擎永不
+     代填；p>0.6 高带=仅自动进入对账候选呈现，无任何自动处置，:1005）。
+     **对账行形（解析契约）**：入册的 prediction 行须用紧凑契约形
+     `- 甲（prediction: 断言（p=0.8）due=2026-11）`——解析器
+     `_collect_prediction_records` :1036-1042 要求行内**连串 `（p=` 子串**，
+     卡面展示形 `（judgments: p=…` 不含该子串（flywheel-rehearsal 演练实测
+     发现，2026-11-13 勘正），粘贴时须落契约形；outcome 行随后
+     `  - outcome: y=0|1 (YYYY-MM-DD)`。
+  2. **bounded answer**：对 WATCHDOG_BOUNDED_QUESTION（:1354 固定选项 A=原地
+     打转 / B=偏离值班目标 / C=正常）**只回单行 JSON**
+     `{"answer": "A"|"B"|"C", "p": 0到1}`（约十 token 量级；answer 只回选项
+     标签，不得自由文本）。
+  3. **lessons 草稿**：写 `reports/monthend/2026-11/03-lessons-draft.md`——
+     计划形「下次 X 触发时做 Y」+ `- event: ADD|UPDATE|DELETE|NONE`（**必须
+     bullet 语法**：EVENT_OP_RE :1210 要求 `[-*]` 前缀——tmp 预演首跑实测陷阱，
+     见本文件 :421 注记）+ `evidence:` 路径引用；bounded answer 行写进草稿
+     （=步 3 的校验对象）。
+- **检查点**：p 仅记录轨迹，禁再校准拟合/禁显著性声称（红线）；首月如实面——
+  校准事实=`none yet (baseline collection month)`、insight 钩子=「本月无
+  resolved 对账行，insight 步跳过」（零 resolved 降级行）——**两处空态均如实
+  输出，首跑勿当缺陷、勿造数据**（:401 预演注记 (a)/(b) 同口径）。
+- **失败处置**：answer 写偏（自由文本/p 越界）→步 3 逐行抓住（exit 1），改草稿
+  重校验（有界单次重试）；草稿缺 event: 行→步 6 exit 3 契约门拒（回改草稿，
+  绝不回改 handoff）。
+
+### 步 3 —— `--verify-bounded` 校验（零 LLM 零网络，纯校验）
+
+```bash
+uv run python scripts/monthly_review.py \
+  --verify-bounded reports/monthend/2026-11/03-lessons-draft.md \
+  --out reports/monthend/2026-11/04-verify-bounded.md
+```
+
+- **命令语义**：`run_verify_bounded` :1507——逐行扫含 `{"answer","p"}` 双键
+  字面的行（与 WATCHDOG 契约同形），经 `parse_bounded_answer` :1363 判四态：
+  ok / format-miss（raw 原文留档，未虚构）/ p-not-numeric / p-out-of-range。
+- **预期输出**：本月草稿 1 行 answer→`L{n}: **ok** —— answer=… p=…（口头
+  置信度，仅记录轨迹）`，exit 0。**首月预检变体**（对「上月块摘录」跑，
+  :1590-1591 帮助文本示例）：11-30 无上月块→零候选行→`none yet` + exit 0
+  不误报（:1524-1527 设计语义）。
+- **检查点**：任一失败行=exit 1；有界重试一次，仍红→按 AGENTS.md 升级
+  （2 轮失败封顶，不无限迭代）。
+- **失败处置**：format-miss→按单行 JSON 契约改写该行重跑；p 越界→改 p∈[0,1]。
+  **禁改 parse_bounded_answer 语义来「让校验通过」**（宽松化=契约腐蚀）。
+
+### 步 4 —— 下月 outcome 记录（gate 时间纪律）
+
+- **动作**（2026-12 月末会话内，人工裁决）：对 backlog 中 due=2026-11 的
+  `prediction:` 条目，在同一条目追加一行 `→ outcome: y=0|1 (YYYY-MM-DD)`——
+  解析契约 `outcome:\s*y=([01])\s*\((\d{4}-\d{2}-\d{2})\)`
+  （`_collect_prediction_records` :1046）；记法在提案卡面即印（`render_card`
+  :965「对账记法=该条目追加 → outcome: y=0|1 (YYYY-MM-DD)」）。
+- **gate 时间纪律**（四检查点①，FinBench arXiv:2607.16229 同构——报告口径
+  明示 gate 时间，time-gated 评测与月末 outcome 对账同构）：y 按**due 月月末
+  可得事实**裁定，outcome 行必须带**实际记录日期**——hindsight 不入 y（不用
+  事后知识回改早月判断）；due 已过未记=pending 如实分列（对账呈现「due 已过」
+  标记，:1012 一带），不虚构 y。
+- **检查点**：改前后 `grep -c "prediction:" state/backlog.md` /
+  `grep -c "outcome:"` 计数对账（本节入册日基线 0/0）。
+- **失败处置**：outcome 行不进解析（缺日期/缺 `y=` 前缀/写错条目层级→该条
+  停留 pending）→对照 :1046 契约修正格式即可，零工具介入。
+
+### 步 5 —— reconciliation + calibration_summary（两个既有呈现面）
+
+```bash
+# 面一：逐条对账（rides --weekly，每周五已在跑；月末显式重跑留档）
+uv run python scripts/monthly_review.py --weekly \
+  --out reports/monthend/2026-12/05-weekly-reconcile.md
+# 面二：校准聚合（rides --lessons 月报 §5「校准事实」）
+uv run python scripts/monthly_review.py --month 2026-12 --lessons \
+  --out reports/monthend/2026-12/06-monthly-report.md
+```
+
+- **命令语义**：面一 `proposal_reconciliation` :768（run_weekly 内调 :637）内调
+  `reconcile_predictions` :978/:787——逐条 resolved（(p−y)²+方向命中）/
+  pending（due 已过如实标记）/未填 p 分列，judgments/facts 分账；面二
+  `calibration_bucket_summary` :1059——五桶 [0.5,0.6)/…/[0.9,1.0] n/命中/
+  命中率 + Wilson 95% CI + **每桶 p 原值计数**（反聚集）+ 汇总 mean Brier
+  （与逐条 (p−y)² 同口径）；p<0.5/p 未填/pending/越界分列不计桶。
+- **预期输出（首轮 12 月末）**：面一=11 月卡逐条 resolved/pending 行；面二=
+  首个非空桶表（若仍零 resolved=基线延续，如实）。
+- **检查点（四检查点②，p 聚集警讯）**：若 [0.8,0.9)/[0.9,1.0] 桶 p 原值计数
+  呈单值堆积（如 `0.9×N`），系 small-llm-calibration（GitHub license=MIT
+  已核）实证的 verbalized p 聚集 85-95% 高带=崩塌警讯——**记录进 lessons
+  （事实呈现），禁据此调 p 或定阈值**（`CALIBRATION_FEEDBACK_NOTE` :1427
+  固定禁令字面：阈值与处置语义只在代码侧规则门，NEVER in any LLM prompt）。
+- **失败处置**：--weekly exit 1 含对账发现行（pending due 已过=设计内的人工
+  理由项，非通道失败）——逐条给人裁决；桶表空=零 resolved 如实，非缺陷。
+
+### 步 6 —— `--append-lessons-from` 写回 + insight 沉淀
+
+```bash
+uv run python scripts/monthly_review.py \
+  --append-lessons-from reports/monthend/2026-11/03-lessons-draft.md \
+  --month 2026-11
+```
+
+- **命令语义**：`append_lessons` :1289——append-only 写入 `state/handoff.md`
+  本月 `monthly-reflexion-lessons` 块（一簿一月；旧块字节永不回改，
+  UPDATE/DELETE 为 supersedes/voids 引用式标记——与 ledger 新行不覆盖同构）。
+- **insight 沉淀（环2，rides 此通道）**：有 resolved 对账行的月末，会话按
+  `INSIGHT_HINT` :1439 从 resolved 行 + active lessons 蒸馏 **0-2 条** IF-THEN
+  policy 片段写入草稿（片段禁含「自动调 p」指令）。**0-2 条上限的第三方依据**
+  =ERL arXiv:2603.24639（LEARN 每次只抽**少量精炼规则**入 prompt——少而精，
+  非全量倾倒）。11-30 首跑零 resolved→降级行如实（insight 步跳过），**首次
+  insight 生效=12 月末**。
+- **预期输出**：exit 0、stderr 无 refuse；handoff 尾部新增块（header 含
+  `month=2026-11` 与契约字面）。
+- **检查点**：块内 ≥1 条 `- event:` 行（bullet 语法）；`evidence:` 指向
+  `reports/monthend/2026-11/` 各步落盘文件（证据链闭环）。
+- **失败处置**：exit 2=同月块已存在（下月修或人工补——**绝不回改旧块**）；
+  exit 3=零 event: 行（回改草稿重跑，不绕契约门）。
+
+### GBK 坑处置与证据链载体（--out 强制落盘）
+
+- **前科**：2026-09-10/11 GBK 控制台乱码致当晚通道事故（`reports/audits/
+  2026-09-28-interim-coverage-ledger.md:15-16` 在册「GBK era / UTF-8 patch
+  fixed mid-evening」）；`monthly_review.py:1601-1604` 已修 stdout
+  （`sys.stdout.reconfigure(encoding="utf-8", errors="replace")`——legacy
+  GBK 控制台下保 CJK 完整）。
+- **剧本规矩**：即便 stdout 已修，终端显示仍随 codepage 漂——**全链六步一律带
+  `--out` 落盘**：四个 --out 分支均 `write_text(encoding="utf-8")` 且自动建
+  父目录（:1612/:1637/:1657/:1677）。落盘文件=证据链**主载体**，stdout 仅
+  人读辅助。
+- **目录选型**：`--weekly` 默认锚点 `runs/ops_local_refresh/<date>/` 系
+  **gitignored**（`.gitignore:41`，check-ignore 实测）→ 本链证据统一落
+  `reports/monthend/<YYYY-MM>/`（tracked、随提交进版本库；文件名 01-06 编号
+  即步序）。
+
+### 审计轨迹位置一览
+
+| 载体 | 内容 | 写者 |
+|---|---|---|
+| `reports/monthend/<月>/` | 六步 --out 落盘（本剧本强制主载体） | 各步命令 |
+| `state/backlog.md` 候选区 | 提案卡粘贴 + `prediction:` p + `outcome:` 行 | 人工/月末会话 |
+| `state/handoff.md` | `monthly-reflexion-lessons` 块（append-only） | 步 6 |
+| `runs/ops_local_refresh/<date>/weekly_watchdog.md` | --weekly 默认锚（本地、gitignored） | 周五班 |
+| `runs/ledger.jsonl` | **零触碰**（本链运维面，0 ledger——研究面红线不受染） | — |
+
+### oversight 层边界与三互锁自查表（四检查点④：arXiv:2604.23049 HITL 解耦）
+
+**边界**：判别层=`monthly_review.py` 运维面（确定性、零 LLM、对 backlog/tasks
+只读）；生成层=月末 HITL 会话（月内唯一 LLM 面：填 p / 答 bounded question /
+撰 lessons）。HITL 解耦锚（2604.23049）明示 oversight 层与执行层分离——月末链
+中 oversight=月末会话+业主（p 填写、outcome 裁定 y、lessons 定稿、disposition
+三去向均**人裁**），引擎只呈报不代决——与 :697 自治梯 L1「现状」严格一致：
+**本剧本不改任何级的启用状态**（L2 仍先入册后启用）。
+
+**三互锁自查表**（沿 :719-723 L2 三互锁形态；此处为月末链**人工自查**、非 L2
+启用判据）：
+
+| 互锁 | 月末链对应物 | 自查问句 |
+|---|---|---|
+| attempt-cap | 会话失败有界重试（复活链三次 Model creation failed 教训，handoff 轮 131 在册）；步 3 exit 1 有界单次重跑；步 6 exit 2/3 改草稿不硬塞 | 「同一失败是否已重试 ≥2 轮？」→是则升级，不无限迭代 |
+| 审计轨迹三要素 | 触发信号（--propose 卡/weekly findings）/ 所执行动作（粘贴/append/落盘）/ 回滚点（提交前 diff 审阅 + append-only 旧块不动） | 「本步触发-动作-回滚点三件是否都在 reports/monthend/ 与 git diff 里可指认？」 |
+| 一键回滚 | 提交原子性（Conventional Commits 单批）；backlog 粘贴在 commit 前 `git checkout --` 可弃；lessons 块不可回改但可 voids 引用式标记；backup ok + push_only_recovery（--status 实测字段） | 「若本步全错，恢复路径是否一步可达？」 |
+
+### 四检查点落点汇总（调研一手核实；本节为唯一落点表）
+
+| # | 锚 | 一手核实要点 | 落点 |
+|---|---|---|---|
+| ① | FinBench arXiv:2607.16229 | confidence-competence gap 列**头号盯防失败模式**；报告口径明示 gate 时间——time-gated 与月末 outcome 对账同构 | 步 4 gate 时间纪律（y 按 due 月月末事实裁定 + 记录日期显式 + hindsight 不入 y）；盯防面：p 高带而连续未命中=confidence-competence gap 警讯→只记录进 lessons |
+| ② | small-llm-calibration（GitHub license=**MIT** 已核） | verbalized p 聚集于 85-95% 高带=崩塌警讯 | 环1a 每桶 p 原值计数反聚集（:1059 一带）的第三方实证；步 5 检查点（单值堆积→记录、不调 p） |
+| ③ | arXiv:2610.25846 预注册审计 | verbalized **单通道**效度局限 | 只引注作诚实边界：bounded p 系口头置信度仅记录轨迹（:1363 口径）——**不增设第二通道**（不引入 logprobs/二次问答） |
+| ④ | arXiv:2604.23049 HITL 解耦 | oversight 层边界明示 + 三互锁对照 | 上节边界段 + 三互锁自查表 |
+
+次级锚：**ERL arXiv:2603.24639**（LEARN 每次抽少量精炼规则）→ 步 6
+INSIGHT_HINT 0-2 条上限的第三方依据。**CAGE-1 arXiv:2607.03510 本剧本不落**——
+主用途=L2 晋级自检清单，留待晋级轮（:697 自治梯节启用时入册）。
+
+**边界重申**：本节零代码/零依赖/零新班次；六步全在既有 CLI 面与既有会话预算内
+（月末单场 LLM 会话承载步 2/6 的生成面，其余全零 LLM）；研究面 / runs/ledger /
+frozen config 零触碰；待业主区不受本节影响（billing 解锁 / L2 钥匙与定标 /
+ZCode 月末提示词模板 {answer,p} 同步确认等，见 `state/current.md`）。产物提交按
+Conventional Commits 原子批（运维面 lane）。
