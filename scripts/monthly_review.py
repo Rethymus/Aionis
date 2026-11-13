@@ -1378,6 +1378,48 @@ def _month_type(text: str) -> str:
     return text
 
 
+def run_verify_bounded(text: str, source: str) -> tuple[str, int]:
+    """Round 136-续 (bounded-answer-wiring, iterate 轮 8): verify the
+    bounded-answer line(s)
+    in `text` via parse_bounded_answer — zero LLM, zero network, pure
+    validation, read-only. An answer-shaped line = carries both key
+    literals '"answer"' and '"p"' (same shape the WATCHDOG question
+    prescribes). No such line anywhere -> honest 'none yet' (exit 0, not
+    an alarm: the first month has no prior block to verify). Otherwise
+    each hit is parsed per line: raw misses stay on record verbatim,
+    nothing is invented; exit 1 if any hit fails (ok / format-miss /
+    p-not-numeric / p-out-of-range). p stays spoken confidence only —
+    no recalibration fitting (in-册 #15 口径)."""
+    lines = text.splitlines()
+    out = ["## bounded-answer 验证（--verify-bounded；零 LLM 零网络，纯校验）",
+           f"- 输入：{source}（{len(lines)} 行）"]
+    hits = 0
+    code = 0
+    for i, ln in enumerate(lines, 1):
+        if '"answer"' not in ln or '"p"' not in ln:
+            continue
+        hits += 1
+        verdict = parse_bounded_answer(ln)
+        if verdict["ok"]:
+            out.append(f"- L{i}: **ok** —— answer={verdict['answer']!r} "
+                       f"p={verdict['p']}（口头置信度，仅记录轨迹）")
+        else:
+            label = {"format-miss": "format-miss（原文留档，未虚构）",
+                     "p-not-numeric": "p-not-numeric（p 非数值）",
+                     "p-out-of-range": "p-out-of-range（p 越界 [0,1]）"
+                     }.get(verdict["reason"], verdict["reason"])
+            out.append(f"- L{i}: **{label}** —— raw: {verdict.get('raw', '')}")
+            code = 1
+    if not hits:
+        out.append("- **none yet** —— 输入无含 \\{\"answer\",\"p\"\\} 双键的 "
+                   "bounded answer 行（上月块未写/未含答案），如实呈现、"
+                   "不误报、不算失败。")
+    else:
+        out.append(f"- 候选行 {hits}，逐行判定如上（parse_bounded_answer "
+                   "首个双键 JSON 契约，line 级呈现）。")
+    return "\n".join(out) + "\n", code
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--month", type=_month_type, default=None,
@@ -1418,6 +1460,17 @@ def main(argv: list[str] | None = None) -> int:
                              "monthly-reflexion-lessons block (append-only, "
                              "one block per month; exit 2 on duplicate, "
                              "exit 3 when no event: line — contract gate)")
+    parser.add_argument("--verify-bounded", default=None, metavar="FILE",
+                        help="verify the bounded-answer line(s) in FILE "
+                             "(or '-' for stdin) — e.g. last month's "
+                             "monthly-reflexion-lessons block excerpt — "
+                             "through parse_bounded_answer: per-line "
+                             "ok / format-miss / p-not-numeric / "
+                             "p-out-of-range, raw preserved verbatim; "
+                             "no answer-shaped line -> honest 'none yet' "
+                             "(exit 0, not an alarm). Zero LLM, zero "
+                             "network, read-only; exit 1 on any failed "
+                             "line.")
     args = parser.parse_args(argv)
     try:  # keep CJK (未能核对) intact even on a legacy GBK console
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")  # type: ignore[union-attr]
@@ -1464,6 +1517,22 @@ def main(argv: list[str] | None = None) -> int:
         text = Path(args.append_lessons_from).read_text(encoding="utf-8")
         return append_lessons(text, month,
                               repo / "state" / "handoff.md")
+    if args.verify_bounded is not None:
+        if args.verify_bounded == "-":
+            text, source = sys.stdin.read(), "stdin(-)"
+        else:
+            path = Path(args.verify_bounded)
+            text = path.read_text(encoding="utf-8", errors="replace")
+            source = str(path)
+        markdown, code = run_verify_bounded(text, source)
+        if args.out:
+            out_path = Path(args.out)
+            out_path.parent.mkdir(parents=True, exist_ok=True)
+            out_path.write_text(markdown, encoding="utf-8")
+            print(f"wrote {out_path}", file=sys.stderr)
+        else:
+            print(markdown, end="")
+        return code
     errors: list[str] = []
     days, push_only = collect_log_days(repo, month, errors)
     gh = {wf: collect_gh(wf, month, repo) for wf in GH_WORKFLOWS}

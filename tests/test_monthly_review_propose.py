@@ -351,6 +351,68 @@ def test_parse_bounded_answer_rejects_out_of_range_p() -> None:
     assert bad2["ok"] is False and bad2["reason"] == "p-not-numeric"
 
 
+# -------------------------------- round 136-续 bounded-answer-wiring (轮 8)
+# --verify-bounded <file|-> : parse_bounded_answer 的最小生产接线（零 LLM
+# 零网络纯校验）。none-yet=诚实呈现不误报（exit 0）；答案形候选行=双键字面
+# '"answer"'+'\"p\"' 同形；失败行 exit 1，raw 原文留档不虚构。
+
+def test_cli_verify_bounded_ok(tmp_path: Path) -> None:
+    f = tmp_path / "answer.txt"
+    f.write_text('会话结论：{"answer": "C", "p": 0.7}（本月无打转）\n',
+                 encoding="utf-8")
+    buf, err = io.StringIO(), io.StringIO()
+    with redirect_stdout(buf), redirect_stderr(err):
+        rc = mr.main(["--verify-bounded", str(f)])
+    assert rc == 0
+    out = buf.getvalue()
+    assert "**ok**" in out and "'C'" in out and "0.7" in out
+    assert "none yet" not in out
+
+
+def test_cli_verify_bounded_none_yet_not_an_alarm(tmp_path: Path) -> None:
+    f = tmp_path / "block.txt"
+    f.write_text("上月 monthly-reflexion-lessons 块尚未写入（11-30 首月前）。\n",
+                 encoding="utf-8")
+    buf, err = io.StringIO(), io.StringIO()
+    with redirect_stdout(buf), redirect_stderr(err):
+        rc = mr.main(["--verify-bounded", str(f)])
+    assert rc == 0                      # none-yet 不误报、非失败
+    assert "none yet" in buf.getvalue()
+
+
+def test_cli_verify_bounded_format_miss_exit_1(tmp_path: Path) -> None:
+    f = tmp_path / "answer.txt"
+    f.write_text('答案行（JSON 断裂）：{"answer": "C" "p": 0.7}\n',
+                 encoding="utf-8")
+    buf, err = io.StringIO(), io.StringIO()
+    with redirect_stdout(buf), redirect_stderr(err):
+        rc = mr.main(["--verify-bounded", str(f)])
+    assert rc == 1
+    out = buf.getvalue()
+    assert "format-miss" in out and "原文留档" in out
+    assert '{"answer": "C" "p": 0.7}' in out   # raw 逐字保留
+
+
+def test_cli_verify_bounded_stdin_dash(monkeypatch) -> None:
+    monkeypatch.setattr("sys.stdin",
+                        io.StringIO('{"answer": "B", "p": 0.55}\n'))
+    buf, err = io.StringIO(), io.StringIO()
+    with redirect_stdout(buf), redirect_stderr(err):
+        rc = mr.main(["--verify-bounded", "-"])
+    assert rc == 0
+    assert "'B'" in buf.getvalue() and "stdin(-)" in buf.getvalue()
+
+
+def test_cli_verify_bounded_p_not_numeric_exit_1(monkeypatch) -> None:
+    monkeypatch.setattr(
+        "sys.stdin", io.StringIO('回答：{"answer": "A", "p": "高"}\n'))
+    buf, err = io.StringIO(), io.StringIO()
+    with redirect_stdout(buf), redirect_stderr(err):
+        rc = mr.main(["--verify-bounded", "-"])
+    assert rc == 1
+    assert "p-not-numeric" in buf.getvalue()
+
+
 def test_bounded_question_contract_mentions_json() -> None:
     assert '"answer"' in mr.WATCHDOG_BOUNDED_QUESTION
     assert '"p"' in mr.WATCHDOG_BOUNDED_QUESTION
