@@ -999,24 +999,8 @@ def reconcile_predictions(backlog_text: str,
     presentation constants: the n=1 monthly sample forbids any threshold
     fitting (RouteLLM anchor — calibration needs a representative query
     distribution, state/backlog.md 延伸索引⑤)."""
-    import re as _re
     lines_out: list[str] = []
-    records: list[dict] = []
-    cur: dict | None = None
-    for line in (backlog_text or "").splitlines():
-        if "prediction:" in line and "（p=" in line:
-            claim = line.split("prediction:", 1)[1].split("（p=", 1)[0].strip()
-            m = _re.search(r"p=([\d.]+)", line)
-            due = _re.search(r"due=(\d{4}-\d{2})", line)
-            cur = {"claim": claim[:80],
-                   "p": float(m.group(1)) if m else None,
-                   "due": due.group(1) if due else None,
-                   "y": None}
-            records.append(cur)
-            continue
-        m = _re.search(r"outcome:\s*y=([01])\s*\((\d{4}-\d{2}-\d{2})\)", line)
-        if m and cur is not None:
-            cur["y"] = int(m.group(1))
+    records = _collect_prediction_records(backlog_text)
     for r in records:
         band = ("；高带 p>0.6——仅自动进入对账候选呈现，无任何自动处置"
                 if r["p"] is not None and r["p"] > 0.6 else "")
@@ -1037,6 +1021,102 @@ def reconcile_predictions(backlog_text: str,
                              f"（judgments: p={r['p']}；facts: y={r['y']}；"
                              f"(p−y)²={brier:.3f}, {hit}）{band}")
     return lines_out
+
+
+def _collect_prediction_records(backlog_text: str) -> list[dict]:
+    """Round 137 (calibration-aggregator ring 1a, design report
+    reports/design/2026-11-14-personal-training-method-and-automation-ladder.md
+    §2): the reconcile_predictions parse loop lifted VERBATIM so the bucket
+    summary reads the exact same records — one parser, two consumers, zero
+    drift between per-row reconciliation and bucketed aggregation."""
+    import re as _re
+    records: list[dict] = []
+    cur: dict | None = None
+    for line in (backlog_text or "").splitlines():
+        if "prediction:" in line and "（p=" in line:
+            claim = line.split("prediction:", 1)[1].split("（p=", 1)[0].strip()
+            m = _re.search(r"p=([\d.]+)", line)
+            due = _re.search(r"due=(\d{4}-\d{2})", line)
+            cur = {"claim": claim[:80],
+                   "p": float(m.group(1)) if m else None,
+                   "due": due.group(1) if due else None,
+                   "y": None}
+            records.append(cur)
+            continue
+        m = _re.search(r"outcome:\s*y=([01])\s*\((\d{4}-\d{2}-\d{2})\)", line)
+        if m and cur is not None:
+            cur["y"] = int(m.group(1))
+    return records
+
+
+# Calibration band cuts are FIXED presentation constants — the same
+# discipline as the three-band gate above (n=1-era monthly samples forbid
+# threshold fitting; RouteLLM anchor, state/backlog.md 延伸索引⑤). Buckets
+# are presentation buckets ONLY: no p adjustment, no threshold advice.
+_CALIBRATION_BAND_CUTS: tuple[float, ...] = (0.5, 0.6, 0.7, 0.8, 0.9, 1.0)
+
+
+def calibration_bucket_summary(records: list[dict]) -> list[str]:
+    """Round 137 (training-method ring 1a — calibration aggregator, design
+    report §2): RECORDING-ONLY bucketed hit presentation over the records
+    _collect_prediction_records returns. Resolved rows with p>=0.5 land in
+    fixed buckets [0.5,0.6)/.../[0.9,1.0] (top bucket closed at p=1.0):
+    per bucket n / hits / hit rate + Wilson 95% CI (statsmodels
+    proportion_confint — an already-pinned project dependency, zero new)
+    plus raw-p value counts (anti-clustering, arXiv:2609.32470:
+    off-the-shelf verbalized confidence clusters at a few high values — a
+    bucket of identical p's is NOT evidence of calibration). p<0.5
+    resolved, p-missing, and pending rows are listed separately and NEVER
+    bucketed. The summary mean Brier averages the same per-row (p-y)^2 the
+    reconciliation scores (judgments/facts split intact — the engine never
+    recalibrates p). Zero scored rows -> a single honest baseline line, no
+    empty table."""
+    from statsmodels.stats.proportion import proportion_confint
+
+    resolved = [r for r in records
+                if r["p"] is not None and r["y"] is not None]
+    if not resolved:
+        return ["none yet (baseline collection month)"]
+    bucketed = [r for r in resolved if r["p"] >= _CALIBRATION_BAND_CUTS[0]]
+    below = [r for r in resolved if r["p"] < _CALIBRATION_BAND_CUTS[0]]
+    out_of_range = [r for r in resolved if r["p"] > 1.0]
+    pending = [r for r in records if r["p"] is not None and r["y"] is None]
+    missing_p = [r for r in records if r["p"] is None]
+    mean_brier = sum((r["p"] - r["y"]) ** 2 for r in resolved) / len(resolved)
+    lines: list[str] = [
+        "calibration buckets（记录性呈现——呈现≠校准，禁据此调 p 或定阈值；"
+        "桶界为固定呈现常量）:"]
+    n_bands = len(_CALIBRATION_BAND_CUTS) - 1
+    for i in range(n_bands):
+        lo = _CALIBRATION_BAND_CUTS[i]
+        hi = _CALIBRATION_BAND_CUTS[i + 1]
+        last = i == n_bands - 1
+        rows = [r for r in bucketed
+                if lo <= r["p"] < hi or (last and r["p"] == hi)]
+        if not rows:
+            continue
+        hits = sum(1 for r in rows if r["y"] == 1)
+        ci_lo, ci_hi = proportion_confint(hits, len(rows), method="wilson")
+        p_counts: dict[float, int] = {}
+        for r in rows:
+            p_counts[r["p"]] = p_counts.get(r["p"], 0) + 1
+        counts_txt = "、".join(
+            f"{p:g}×{n}" for p, n in sorted(p_counts.items(),
+                                            key=lambda kv: (-kv[1], kv[0])))
+        close = "]" if last else ")"
+        lines.append(
+            f"  - p∈[{lo:.1f},{hi:.1f}{close}: n={len(rows)}、"
+            f"命中 {hits}（{hits / len(rows):.3f}）、"
+            f"Wilson 95% CI ({ci_lo:.4f}, {ci_hi:.4f})、p 原值：{counts_txt}")
+    lines.append(
+        f"  - 分列不计桶：p<0.5 已对账 {len(below)} 条"
+        f"（命中 {sum(1 for r in below if r['y'] == 0)}）、"
+        f"p 未填 {len(missing_p)} 条、pending 未对账 {len(pending)} 条"
+        + (f"、p>1.0 越界 {len(out_of_range)} 条（bounded 契约违例，如实呈现）"
+           if out_of_range else ""))
+    lines.append(f"  - 汇总 mean Brier = {mean_brier:.3f}"
+                 f"（n={len(resolved)}，与逐条 (p−y)² 同口径取均值）")
+    return lines
 
 
 def run_propose(repo: Path, now: datetime | None = None,
@@ -1312,17 +1392,54 @@ def lesson_seeds(month: str, repo: Path, errors: list[str]) -> dict:
     surface as weekday-misses (a hard-fail evening writes no SUMMARY — the
     existing missing-weekday enumeration is the failure signal). gen2 item 4
     adds the Watchdog's model-judgment half as a BOUNDED question key — one
-    line, answered by the month-end session, zero new sessions."""
+    line, answered by the month-end session, zero new sessions. Ring 1b
+    (round 137, design report §2) adds calibration_feedback: the ring-1a
+    aggregator lines over state/backlog.md prediction records, injected as
+    fact statistics only (see CALIBRATION_FEEDBACK_NOTE — never disposition
+    semantics)."""
     days, push_only = collect_log_days(repo, month, errors)
     persistent = [(d["date"], d["persistent_soft_fails"]) for d in days
                   if d["persistent_soft_fails"]]
     spin, scanned = spin_detection(repo)
+    backlog_file = repo / BACKLOG_PATH
+    backlog_text = (backlog_file.read_text(encoding="utf-8",
+                                           errors="replace")
+                    if backlog_file.is_file() else "")
+    pred_records = _collect_prediction_records(backlog_text)
+    calibration = calibration_bucket_summary(pred_records)
+    resolved_rows = sum(1 for r in pred_records
+                        if r["p"] is not None and r["y"] is not None)
     return {"month": month, "days_with_summary": len(days),
             "persistent_soft_fails": persistent,
             "missing_weekdays": missing_weekdays(
                 month, {d["date"] for d in days}),
             "spin_findings": spin, "push_only": push_only,
-            "watchdog_bounded_question": WATCHDOG_BOUNDED_QUESTION}
+            "watchdog_bounded_question": WATCHDOG_BOUNDED_QUESTION,
+            "calibration_feedback": calibration,
+            "resolved_prediction_rows": resolved_rows}
+
+
+# Ring 1b injection discipline (design report §2): the calibration feedback
+# block may carry FACT STATISTICS ONLY. This fixed reminder is the standing
+# restatement of red lines 3/4/5 — a prohibition, never disposition advice;
+# threshold/disposition semantics live in the code rule gate, NEVER in any
+# LLM prompt (same contract as the three-band gate docstring above).
+CALIBRATION_FEEDBACK_NOTE = ("呈现≠校准：以上仅记录性事实统计，CI 宽即小样本——"
+                             "禁据此调 p 或定阈值（阈值与处置语义只在代码侧"
+                             "规则门，NEVER in any LLM prompt）")
+
+# Ring 2 (ExpeL-style zero-gradient experience distillation, design report
+# §2; arXiv:2308.10144 — protocol only, no Faiss / environment-training
+# code): the month-end session distills 0-2 IF-THEN policy fragments from
+# the resolved reconciliation rows + active lessons and writes them back
+# through the EXISTING --append-lessons-from channel (append_lessons
+# contract gate + EVENT_OP_RE four ops) — zero new sessions. Fragments
+# express discipline, NEVER auto-adjust-p instructions (judgments/facts
+# split stands, red line 4).
+INSIGHT_HINT = ("月末会话请从本月 resolved 对账行 + active lessons 聚合抽 0-2 条 "
+                "IF-THEN policy 片段（经 --append-lessons-from 写回）；"
+                "片段禁含『自动调 p』指令（示例口径：IF 高带预测（p>0.8 表达）"
+                "THEN 须附可证伪依据——表达纪律，非调 p）")
 
 
 def render_reflexion_section(seeds: dict,
@@ -1344,6 +1461,15 @@ def render_reflexion_section(seeds: dict,
                f"晚 {len(seeds['persistent_soft_fails'])})")
     out.append("  - 回答请落单行 JSON（{answer, p} 契约，round 131）；不合法"
                "回答由 parse_bounded_answer 判 format-miss 原文保留——不补猜")
+    out.append("- 校准事实（呈现≠校准——环 1b 注入，facts only）:")
+    for ln in seeds["calibration_feedback"]:
+        out.append(f"  - {ln}")
+    out.append(f"  - {CALIBRATION_FEEDBACK_NOTE}")
+    if seeds["resolved_prediction_rows"]:
+        out.append(f"- insight 钩子（环 2·蒸馏）: {INSIGHT_HINT}")
+    else:
+        out.append("- insight 钩子（环 2·蒸馏）: 本月无 resolved 对账行，"
+                   "insight 步跳过")
     if errors:
         out.append(f"- collection anomalies: {errors}")
     out += ["", "## 6. Active lessons carried from state/handoff.md "

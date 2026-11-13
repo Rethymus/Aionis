@@ -397,3 +397,226 @@ def test_main_rejects_bad_month(tmp_path: Path) -> None:
     with pytest.raises(SystemExit) as exc:
         mr.main(["--month", "2026-13", "--repo", str(tmp_path)])
     assert exc.value.code == 2  # argparse error
+
+
+# ---------------------------------------------------------------------------
+# Round 137 — calibration aggregator (training-method ring 1a; design report
+# reports/design/2026-11-14-personal-training-method-and-automation-ladder.md
+# §2). All fixtures below are HERMETIC TEST FIXTURES (labeled synthetic text —
+# never a real backlog file, per the no-mock-data-in-pipeline rule; this is
+# the ops presentation lane, and these pin rendering, not research data).
+# ---------------------------------------------------------------------------
+
+
+def _prediction_backlog_text() -> str:
+    """Synthetic backlog text covering every reconcile row type: resolved
+    p>0.6 (band marker), resolved boundary p=0.6/p=0.5, resolved p<0.5,
+    p-missing, pending not-yet-due, pending overdue."""
+    return "\n".join([
+        "- A（prediction: 通道零软败（p=0.8）due=2026-10）",
+        "  - outcome: y=1 (2026-10-31)",
+        "- B（prediction: 高带测试（p=0.9）due=2026-10）",
+        "  - outcome: y=0 (2026-10-30)",
+        "- C（prediction: 中带（p=0.6）due=2026-10）",
+        "  - outcome: y=1 (2026-10-29)",
+        "- D（prediction: 半带（p=0.5）due=2026-10）",
+        "  - outcome: y=0 (2026-10-28)",
+        "- E（prediction: 反带（p=0.3）due=2026-10）",
+        "  - outcome: y=0 (2026-10-27)",
+        "- F（prediction: 待填（p=待月末）due=2026-10）",
+        "  - outcome: y=1 (2026-10-26)",
+        "- G（prediction: 未到对账（p=0.7）due=2026-11）",
+        "- H（prediction: 已过期未记（p=0.65）due=2026-09）",
+    ])
+
+
+def test_reconcile_rendering_byte_identical_after_ring1a_lift() -> None:
+    """Ring 1a lifted the parse loop into _collect_prediction_records; the
+    per-row reconciliation output is pinned BYTE-FOR-BYTE to the pre-refactor
+    rendering (captured from HEAD 9c498a54cb before the edit — this is the
+    FIRST reconcile pin; none existed before ring 1a)."""
+    expected = [
+        "prediction resolved: 通道零软败（judgments: p=0.8；facts: y=1；"
+        "(p−y)²=0.040, 命中）；高带 p>0.6——仅自动进入对账候选呈现，无任何自动处置",
+        "prediction resolved: 高带测试（judgments: p=0.9；facts: y=0；"
+        "(p−y)²=0.810, 未命中）；高带 p>0.6——仅自动进入对账候选呈现，无任何自动处置",
+        "prediction resolved: 中带（judgments: p=0.6；facts: y=1；(p−y)²=0.160, 命中）",
+        "prediction resolved: 半带（judgments: p=0.5；facts: y=0；(p−y)²=0.250, 未命中）",
+        "prediction resolved: 反带（judgments: p=0.3；facts: y=0；(p−y)²=0.090, 命中）",
+        "prediction 未填 p（judgments: 无——诚实缺省，待月末会话；facts: due=2026-10）: 待填",
+        "prediction pending outcome: 未到对账（judgments: p=0.7；facts: "
+        "due=2026-11、outcome 未记）；高带 p>0.6——仅自动进入对账候选呈现，无任何自动处置",
+        "prediction pending outcome: 已过期未记（judgments: p=0.65；facts: "
+        "due=2026-09、outcome 未记（due 已过））；高带 "
+        "p>0.6——仅自动进入对账候选呈现，无任何自动处置",
+    ]
+    assert mr.reconcile_predictions(_prediction_backlog_text(),
+                                    "2026-10") == expected
+
+
+def test_calibration_summary_empty_account_is_single_honest_line() -> None:
+    assert mr.calibration_bucket_summary([]) == [
+        "none yet (baseline collection month)"]
+    pending_only = mr._collect_prediction_records(
+        "- G（prediction: 未到对账（p=0.7）due=2026-11）")
+    assert mr.calibration_bucket_summary(pending_only) == [
+        "none yet (baseline collection month)"]
+
+
+def test_calibration_summary_one_of_one_wide_wilson_ci() -> None:
+    """n=1 → Wilson 95% CI (0.2065, 1.0000): the wide CI IS the
+    'small-sample forbids threshold fitting' anchor made quantitative
+    (statsmodels proportion_confint(1, 1, method='wilson'))."""
+    records = mr._collect_prediction_records(
+        "- Z（prediction: 单条（p=0.8）due=2026-10）\n"
+        "  - outcome: y=1 (2026-10-31)")
+    out = "\n".join(mr.calibration_bucket_summary(records))
+    assert "p∈[0.8,0.9): n=1、命中 1（1.000）、Wilson 95% CI (0.2065, 1.0000)" in out
+    assert "汇总 mean Brier = 0.040（n=1" in out
+
+
+def test_calibration_summary_bucket_edges_and_separation() -> None:
+    """0.5 ∈ [0.5,0.6); 0.6 ∈ [0.6,0.7) (left-closed half-open — the design
+    pinned boundary); p=0.7 pending and 0.65 pending NEVER bucket; p<0.5 /
+    p-missing listed separately; summary mean Brier = per-row mean over all
+    resolved rows (0.04+0.81+0.16+0.25+0.09)/5 = 0.270."""
+    records = mr._collect_prediction_records(_prediction_backlog_text())
+    out = "\n".join(mr.calibration_bucket_summary(records))
+    assert "p∈[0.5,0.6): n=1、命中 0（0.000）" in out
+    assert "p∈[0.6,0.7): n=1、命中 1（1.000）" in out
+    assert "p∈[0.8,0.9): n=1" in out
+    assert "p∈[0.9,1.0]: n=1、命中 0（0.000）" in out
+    assert "p∈[0.7,0.8)" not in out  # the only p=0.7 row is pending
+    assert "分列不计桶：p<0.5 已对账 1 条（命中 1）、p 未填 1 条、pending 未对账 2 条" in out
+    assert "汇总 mean Brier = 0.270（n=5，与逐条 (p−y)² 同口径取均值）" in out
+
+
+def test_calibration_summary_top_bucket_closed_at_one() -> None:
+    records = mr._collect_prediction_records(
+        "- Z（prediction: 满格（p=1.0）due=2026-10）\n"
+        "  - outcome: y=1 (2026-10-31)")
+    out = "\n".join(mr.calibration_bucket_summary(records))
+    assert "p∈[0.9,1.0]: n=1、命中 1（1.000）、Wilson 95% CI (0.2065, 1.0000)" in out
+
+
+def test_calibration_summary_three_of_five_wilson_anchor() -> None:
+    """3/5 → Wilson 95% CI (0.2307, 0.8824) — pins the design-report §1
+    statsmodels anchor into the rendered bucket line."""
+    ys = [1, 1, 1, 0, 0]
+    text = "\n".join(
+        f"- R{i}（prediction: 第{i}条（p=0.7）due=2026-10）\n"
+        f"  - outcome: y={y} (2026-10-2{i})" for i, y in enumerate(ys))
+    out = "\n".join(mr.calibration_bucket_summary(
+        mr._collect_prediction_records(text)))
+    assert ("p∈[0.7,0.8): n=5、命中 3（0.600）、"
+            "Wilson 95% CI (0.2307, 0.8824)") in out
+
+
+def test_calibration_summary_anti_clustering_p_value_counts() -> None:
+    """arXiv:2609.32470 anti-clustering: a bucket of repeated identical p's
+    renders the raw-p multiplicity so clustering can't read as calibration."""
+    text = "\n".join([
+        "- A（prediction: 同值一（p=0.8）due=2026-10）",
+        "  - outcome: y=1 (2026-10-31)",
+        "- B（prediction: 同值二（p=0.8）due=2026-10）",
+        "  - outcome: y=1 (2026-10-30)",
+        "- C（prediction: 异值（p=0.85）due=2026-10）",
+        "  - outcome: y=0 (2026-10-29)",
+    ])
+    out = "\n".join(mr.calibration_bucket_summary(
+        mr._collect_prediction_records(text)))
+    assert "p 原值：0.8×2、0.85×1" in out
+
+
+def test_lessons_calibration_feedback_empty_backlog_none_yet(
+        tmp_path: Path) -> None:
+    """Ring 1b: an account with zero resolved rows injects the honest
+    baseline line — no fabricated buckets, no invented baseline."""
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    seeds = mr.lesson_seeds("2026-10", repo, [])
+    assert seeds["calibration_feedback"] == [
+        "none yet (baseline collection month)"]
+    text = mr.render_reflexion_section(seeds, None, [])
+    assert "- 校准事实（呈现≠校准——环 1b 注入，facts only）:" in text
+    assert "  - none yet (baseline collection month)" in text
+    assert f"  - {mr.CALIBRATION_FEEDBACK_NOTE}" in text
+
+
+def test_lessons_calibration_feedback_with_data_renders_fact_stats(
+        tmp_path: Path) -> None:
+    """Ring 1b: with resolved rows the injected block carries ONLY the
+    ring-1a aggregator lines (bucket facts + mean Brier) plus the fixed
+    reminder literal."""
+    repo = tmp_path / "repo"
+    (repo / "state").mkdir(parents=True)
+    (repo / "state" / "backlog.md").write_text("\n".join([
+        "- A（prediction: 注入甲（p=0.8）due=2026-10）",
+        "  - outcome: y=1 (2026-10-31)",
+        "- B（prediction: 注入乙（p=0.7）due=2026-10）",
+        "  - outcome: y=0 (2026-10-30)",
+    ]), encoding="utf-8")
+    seeds = mr.lesson_seeds("2026-10", repo, [])
+    text = mr.render_reflexion_section(seeds, None, [])
+    assert ("  - p∈[0.8,0.9): n=1、命中 1（1.000）、"
+            "Wilson 95% CI (0.2065, 1.0000)、p 原值：0.8×1") in text
+    assert ("  - p∈[0.7,0.8): n=1、命中 0（0.000）、"
+            "Wilson 95% CI (0.0000, 0.7935)、p 原值：0.7×1") in text
+    assert "汇总 mean Brier = 0.265（n=2，与逐条 (p−y)² 同口径取均值）" in text
+    assert f"  - {mr.CALIBRATION_FEEDBACK_NOTE}" in text
+
+
+def test_lessons_calibration_feedback_carries_no_disposition_semantics(
+        tmp_path: Path) -> None:
+    """Ring 1b red line: the injected text must contain NO imperative
+    disposition semantics (adjust-p-to / suggested-threshold wording). The
+    fixed reminder is a prohibition restatement, which the banned patterns
+    are chosen not to match."""
+    empty_repo = tmp_path / "empty"
+    empty_repo.mkdir()
+    data_repo = tmp_path / "data"
+    (data_repo / "state").mkdir(parents=True)
+    (data_repo / "state" / "backlog.md").write_text(
+        "- A（prediction: 注入甲（p=0.8）due=2026-10）\n"
+        "  - outcome: y=1 (2026-10-31)", encoding="utf-8")
+    for repo in (empty_repo, data_repo):
+        text = mr.render_reflexion_section(
+            mr.lesson_seeds("2026-10", repo, []), None, [])
+        for banned in ("调 p 至", "建议阈值取", "应调 p", "重标 p", "校准 p 至"):
+            assert banned not in text, f"{banned!r} leaked into {repo.name}"
+
+
+def test_lessons_insight_hook_hint_with_resolved_rows(
+        tmp_path: Path) -> None:
+    """Ring 2: with resolved rows present the bounded one-line hint renders,
+    carrying the prohibition literal (fragments must never contain
+    auto-adjust-p instructions — judgments/facts split stands)."""
+    repo = tmp_path / "repo"
+    (repo / "state").mkdir(parents=True)
+    (repo / "state" / "backlog.md").write_text(
+        "- A（prediction: 蒸馏甲（p=0.8）due=2026-10）\n"
+        "  - outcome: y=1 (2026-10-31)", encoding="utf-8")
+    seeds = mr.lesson_seeds("2026-10", repo, [])
+    assert seeds["resolved_prediction_rows"] == 1
+    text = mr.render_reflexion_section(seeds, None, [])
+    assert f"- insight 钩子（环 2·蒸馏）: {mr.INSIGHT_HINT}" in text
+    assert "片段禁含『自动调 p』指令" in text
+
+
+def test_lessons_insight_hook_skips_without_resolved_rows(
+        tmp_path: Path) -> None:
+    """Ring 2 degradation: zero resolved rows (empty account or pending-only)
+    -> the honest skip line; no hint, no fabricated inputs."""
+    empty = tmp_path / "empty"
+    empty.mkdir()
+    pending = tmp_path / "pending"
+    (pending / "state").mkdir(parents=True)
+    (pending / "state" / "backlog.md").write_text(
+        "- G（prediction: 未到对账（p=0.7）due=2026-11）", encoding="utf-8")
+    for repo in (empty, pending):
+        seeds = mr.lesson_seeds("2026-10", repo, [])
+        assert seeds["resolved_prediction_rows"] == 0
+        text = mr.render_reflexion_section(seeds, None, [])
+        assert ("- insight 钩子（环 2·蒸馏）: 本月无 resolved 对账行，"
+                "insight 步跳过") in text
+        assert mr.INSIGHT_HINT not in text
