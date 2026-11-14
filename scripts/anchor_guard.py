@@ -38,7 +38,12 @@ pure-stdlib re-implementation, no upstream install):
 - Batching whitelist ``SEMANTIC_SCOPE``: only (ledger-src, target-path)
   pairs listed there consume hints; every other anchor keeps v1 behaviour
   even when a hint is present (parsed, then ignored). Migrate in batches —
-  never to hit a quota (不为迁而迁).
+  never to hit a quota (不为迁而迁). The pair keys on the RESOLVED target
+  path (semantic-scope-key-fix): a short-form ``monthly_review.py:1204``
+  anchor resolves via basename to ``scripts/monthly_review.py`` and
+  consumes its hint — pre-fix the anchor's written spelling was compared,
+  so short-form hints were decorative (a wrong symbol on them still
+  judged hit).
 - ``--strict`` unchanged: exits 1 on drifted/lost only; ``semantic`` stays
   fail-soft (hard-gating it remains an owner decision, 待业主区).
 """
@@ -212,16 +217,27 @@ def verify_anchor(a: Anchor, repo: Path, index: dict[str, list[str]]) -> Row:
     # v2: in-bounds hint verification — semantic drift when an expected
     # symbol literal is absent from the target line window. Scoped pairs
     # only (SEMANTIC_SCOPE); everything else stays v1 "in bounds = hit".
-    if a.hints and (_norm_src(a.src, repo), a.target) in SEMANTIC_SCOPE:
-        window = "\n".join(lines[a.start - 1:upper])
-        missing = [h for h in a.hints if h not in window]
-        if missing:
-            return Row(
-                a,
-                STATUS_SEMANTIC,
-                f"{how}, in bounds but hint(s) absent from lines "
-                f"{a.start}-{upper}: {', '.join(missing)}",
-            )
+    # semantic-scope-key-fix: the pair keys on the RESOLVED target path
+    # (resolve_target basename resolution), not the anchor's written
+    # spelling — short-form "monthly_review.py:1204(run_propose)" anchors
+    # inside a scoped pair consume their hints (pre-fix the raw string was
+    # compared, so short-form hints were decorative: a wrong symbol on
+    # them still judged hit).
+    if a.hints:
+        try:
+            tgt_key = path.relative_to(repo).as_posix()
+        except ValueError:  # resolved outside repo: fall back to spelling
+            tgt_key = a.target
+        if (_norm_src(a.src, repo), tgt_key) in SEMANTIC_SCOPE:
+            window = "\n".join(lines[a.start - 1:upper])
+            missing = [h for h in a.hints if h not in window]
+            if missing:
+                return Row(
+                    a,
+                    STATUS_SEMANTIC,
+                    f"{how}, in bounds but hint(s) absent from lines "
+                    f"{a.start}-{upper}: {', '.join(missing)}",
+                )
     return Row(a, STATUS_HIT, f"{how}, within {n_lines} lines")
 
 

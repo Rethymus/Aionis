@@ -138,6 +138,56 @@ def test_hint_ignored_outside_scope(tmp_path: Path) -> None:
     assert summary[ag.STATUS_HIT] == 1
 
 
+def test_scope_key_resolves_short_form_hints(tmp_path: Path, monkeypatch) -> None:
+    """semantic-scope-key-fix: SEMANTIC_SCOPE matching keys on the RESOLVED
+    target path (resolve_target basename resolution), so short-form anchors
+    in a scoped pair consume hints — the auditor's decisive experiment: a
+    wrong hint on a short-form anchor was silently judged hit (decorative
+    hint); it must land semantic. Full-name anchors keep v1.5 verdicts."""
+    (tmp_path / "scripts").mkdir()
+    (tmp_path / "scripts" / "tool.py").write_text(
+        "def render_card(card):\n"
+        "    return card\n"
+        "\n"
+        "def run_propose():\n"
+        "    return 1\n" + "\n" * 10,
+        encoding="utf-8",
+    )
+    src = tmp_path / "ledger.md"
+    src.write_text(
+        "short-wrong tool.py:1(TOTALLY_WRONG_SYMBOL)\n"
+        "short-good tool.py:2(return)\n"
+        "full-wrong scripts/tool.py:1(TOTALLY_WRONG_SYMBOL)\n"
+        "full-good scripts/tool.py:4(run_propose)\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(
+        ag, "SEMANTIC_SCOPE",
+        frozenset({("ledger.md", "scripts/tool.py")}),
+    )
+    summary, rows = ag.run(("ledger.md",), tmp_path)
+    st = _statuses(rows)
+    assert st["tool.py:1"] == ag.STATUS_SEMANTIC  # pre-fix: hit (the bug)
+    assert st["tool.py:2"] == ag.STATUS_HIT  # short form verified, not blanket-failed
+    assert st["scripts/tool.py:1"] == ag.STATUS_SEMANTIC  # full-name reproduction
+    assert st["scripts/tool.py:4"] == ag.STATUS_HIT
+    assert summary[ag.STATUS_SEMANTIC] == 2
+    assert summary[ag.STATUS_HIT] == 2
+
+
+def test_short_form_hint_outside_scope_still_ignored(tmp_path: Path) -> None:
+    """v1 boundary preserved post-fix: outside the whitelist a hint stays
+    ignored even for short-form targets (resolved pair not listed)."""
+    (tmp_path / "scripts").mkdir()
+    (tmp_path / "scripts" / "tool.py").write_text("alpha\nbeta\n", encoding="utf-8")
+    src = tmp_path / "ledger.md"
+    src.write_text("cited tool.py:1(render_card)\n", encoding="utf-8")
+    summary, rows = ag.run((str(src),), tmp_path)  # real scope: docs/ops… pair only
+    assert rows[0].status == ag.STATUS_HIT  # not semantic: pair not in scope
+    assert summary[ag.STATUS_SEMANTIC] == 0
+    assert summary[ag.STATUS_HIT] == 1
+
+
 def test_hint_syntax_parsing() -> None:
     """Hint annotation grammar: ASCII parens after the token; 全角（） glue
     never becomes a hint; comma splits multi-symbol literals."""
