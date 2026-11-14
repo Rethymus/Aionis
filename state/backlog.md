@@ -258,6 +258,111 @@
   内 fragment 链接，不验跨文件 file:line 锚。**边界注记**：仅范式引用零代码复制
   零安装零接入；拒收项沿轮 12 先例入本轮报告不入 backlog；零新依赖零 SDK 零框架；
   研究面零改动。
+  延伸索引㉝（2026-11-15 append，frontier-citation-anchors；仅引用零接入）：arXiv:2607.23802
+  「From RLVR to RLSVR: Task Transformation Induces Self-Verifiable Rewards for Open-Ended
+  LLM Self-Improvement」（Qinsi Wang et al.，cs.AI，v1 2026-07-26/v2 2026-07-31，Comments=
+  COLM 2026——abs 页本日 fox_fetch 一手复核）。核心语义：RLVR 的确定性可验证奖励长期局限于
+  数学/代码域，RLSVR 借自监督 pretext-task 思想以**任务变换**把开放任务改造成可验证代理环境
+  （verifiable proxy environments），由环境内部规则与交互结果自动生成奖励。协议级映射 ≡ 轮
+  14 框架①「insight-quality-gate」质量门（映射落点：三条确定性判据=可证伪 hook/引用对账行
+  id 回查/禁复述 retire，全零 LLM）——「任务变换→确定性可验证判据」= 给开放产出补装确定性
+  判据再消费的协议级正源，与 parse_bounded_answer 三态兜底/prop: 去重键等在册零 LLM 门同族。
+  **不采部分（红线）**：RL 训练循环（策略优化/奖励建模）与 SpyRL 自博弈环境（Who Is the
+  Spy? 社交推理投票奖励）全不采——本仓「训练」=提示词/经验级条件化零微调零 SDK；投票奖励
+  环境属交互式训练面，与稳态 token 不增烧/无长驻进程红线冲突。**边界注记**：仅协议映射引用
+  零接入；零新依赖零 SDK 零框架；研究面零改动。
+
+  延伸索引㉞（2026-11-15 append，frontier-citation-anchors；仅引用零接入；双源合一条目沿 ㉕
+  Hindsight 多锚合一先例）：github.com/argoproj/argo-rollouts（Apache-2.0，本日 GitHub API
+  复核 3623★、pushed 2026-11-13 活跃、archived=false）——AnalysisRun 官方文档本日一手复核
+  **三态 verdict 词汇**（Successful/Failed/Inconclusive，结果分别驱动 continue/abort/pause）
+  供轮 14 框架②「gate-assessment-bridge」桥的判定词汇表（≈ok/fail/not-enough-data，
+  Inconclusive≈数据不足不判→pause，与轮 11 gate 三态同构）；「分析产出证据、晋升单独消费」
+  （analysis 决定 rollout 推进而非替代部署本身）与「门绿≠实践健康」两注记必写。历史副锚：
+  github.com/Netflix/kayenta（Apache-2.0，本日 GitHub API 复核 **archived=true、pushed
+  2025-12-20 停摆**、1304★）——canary 自动判定分析先驱，Argo 官方文档 metric provider 历史
+  清单仍列其名（渊源一手可证），沿 ㉗ A-MEM 停更注记先例只入历史锚不引活代码路径。**不采
+  部分**：K8s 渐进交付运行时（Rollout/流量切分/自动回滚/CRD）全不采——本仓无服务部署面，
+  只取三态判定词汇与「分析与晋升分离」语义；promotion gate 摘要零启用语义（只呈现不启用）。
+  **边界注记**：仅引用零接入；零新依赖零 SDK 零框架；研究面零改动。
+
+  延伸索引㉟（2026-11-15 append，frontier-citation-anchors；仅引用零接入）：arXiv:2508.06433
+  「Memp: Exploring Agent Procedural Memory」（Runnan Fang et al.，cs.CL，v1 2025-08-08/
+  v4 2026-04-15，Comments=ACL 2026 Findings——abs 页本日 fox_fetch 一手复核）+ repo
+  github.com/zjunlp/MemP（MIT，本日 GitHub API 复核 42★、archived=false、**pushed 2026-01-30
+  停更注记**[距本日约 9.5 月未推，沿 ㉗ A-MEM 先例如实注记]）。程序性记忆（step-by-step
+  instructions + script-like abstractions）全生命周期 **Build/Retrieval/Update** + 动态
+  regimen（continuously updates, corrects, and deprecates）供轮 14 框架③
+  「memp-insight-lifecycle」——环 2 片段治理「新登记 vs 既有片段 refinement/deprecate 双
+  路径」的全生命周期语义正源；deprecate ≡ 轮 128-续3 UPDATE(supersedes) 写前接替**成对闭环**
+  （㉗ A-MEM 供「何时该更新」，Memp 补程序性侧 update/correct/deprecate 三操作）。与在册
+  ㉕ Hindsight（陈述性 facts/beliefs）/㉗ A-MEM（笔记型更新语义）/㉛ Mem0（生成侧预检判据）
+  不同族=Memp 管程序性维度（步骤/脚本），记忆光谱程序性缺口补齐=真增量。**不采部分**：
+  online build 在线构建管线不采（蒸馏沿月末 offline 批量，稳态 token 不增烧）；检索/蒸馏
+  实现面（嵌入相似度/迁移实验）不采——判定门零 LLM 零嵌入照守（㉕/㉛ 先例）。**边界注记**：
+  仅引用零接入；零新依赖零 SDK 零框架；研究面零改动。
+  延伸索引㊱（2026-11-15 append，frontier-citation-anchors；仅引用零接入）：arXiv:2510.04618
+  「Agentic Context Engineering: Evolving Contexts for Self-Improving Language Models」
+  （Qizheng Zhang et al.，cs.LG，v1 2025-10-06/v3 2026-03-29，Comments=ICLR 2026——abs 页
+  本日 fox_fetch 一手复核）+ repo github.com/ace-agent/ace（Apache-2.0，本日 GitHub API
+  复核 1455★、archived=false、pushed 2026-08-24 如实记载）。核心语义：contexts 作
+  evolving playbooks 经 **generation/reflection/curation** 三模块累积-反思-整理 ≡ 三环
+  同构正源（与 ㉕ Hindsight retain-recall-reflect 映射互证）；**structured, incremental
+  updates（delta 增量）防 context collapse**（迭代重写侵蚀细节）≡ append-only 接替语义
+  正源——「重写=漂移」反面教材坐实 lessons 块旧条不回改纪律。**不采部分**：不装 ace 包、
+  不引 curator LLM 调用链——curator 反思面属 LLM 调用链，判据实现须**零 LLM 零嵌入**
+  （在册红线）。**边界注记**：仅引用零接入；零新依赖零 SDK 零框架；研究面零改动。
+  延伸索引㊲（2026-11-15 append，frontier-citation-anchors；仅引用零接入）：arXiv:2509.25140
+  「ReasoningBank: Scaling Agent Self-Evolving with Reasoning Memory」（Siru Ouyang et
+  al.，cs.AI，v1 2025-09-29/v2 2026-03-16，Comments=Accepted ICLR 2026——abs 页本日
+  fox_fetch 一手复核）**论文主锚**；社区实现 github.com/thakshak/ReasoningBank（MIT，
+  本日 GitHub API 复核 65★、pushed 2026-02-09 停更注记、**「论文主锚、非官方实现」
+  注记必写**）；同名实现 ChangyWen/ReasoningBank（license=null 本日 API 复核 2★，沿
+  pitmon/㉜ 无 LICENSE 先例**已排除**）。核心语义：从 agent **self-judged** successful
+  and failed experiences 蒸馏可泛化推理策略=**失败侧同权**（对照仅存成功轨迹机制的反
+  面）；Aionis 优势：reconcile 有真实 y（对账 outcome 事实）**无需 self-judge**；RLCD
+  （在册学术锚，runbook 引用形）经验层零梯度转置+失败侧同权语义同向。**失败侧同权升级
+  仅记 backlog 候选，待后续 mission 指名**（接入须业主点名纪律）。**边界注记**：仅引用
+  零接入；零新依赖零 SDK 零框架；研究面零改动。
+  延伸索引㊳（2026-11-15 append，frontier-citation-anchors；仅范式引用零代码复制，
+  **0★ micro-star 如实注记**）：github.com/ayushagarwalhere/docs-drift（MIT，本日
+  GitHub API 复核 0★、pushed 2026-11-01 活跃）——edit-time 钩子（VS Code 编辑器诊断
+  +pre-commit hooks+MCP agent 编辑时检查）+同轮修复+CI CLI 同生态先成答案——「同轮
+  修复」语义由本轮条目 3-5 锚跟改随批采纳（本条目 docs-only）；**「names not meaning」
+  局限注记**（检查类目=CLI flags/env vars/symbols/paths 等名字存在性、不验含义）
+  **写入锚文本**、不动 anchor_guard.py 本体以保持批 1 轮次归属纯净；**不安装插件
+  本体**——VS Code 扩展 Node 运行时与本仓 Python CLI 不匹配，且检查类目**不覆盖
+  backtick file:line 主类**（anchor_guard 主类无重叠=域内供证非替代）。与轮 127 条目
+  名「docs-drift-fixes」同名不同实体辨明（彼=施工条目名、此=上游工具锚）。**边界
+  注记**：仅范式引用零代码复制零安装零接入；零新依赖零 SDK 零框架；研究面零改动。
+  延伸索引㊴（2026-11-15 append，frontier-citation-anchors；仅引用零接入）：
+  github.com/suzgunmirac/dynamic-cheatsheet（MIT，本日 GitHub API 复核 280★、pushed
+  2026-03-12 停更注记[~8 月未推，沿 ㉗ A-MEM 先例]）——**ACE 谱系前身**（Dynamic
+  Cheatsheet: Test-Time Learning with Adaptive Memory）、「记片段不记全程」注脚
+  （curated cheat sheet 记可复用片段而非完整轨迹 ≡ lessons 块片段化纪律同向）。
+  **不采部分**：运行时自演化循环不采——test-time 自我改写属运行时面，与稳态 token
+  不增烧红线冲突。**边界注记**：仅引用零接入；零新依赖零 SDK 零框架；研究面零改动。
+  延伸索引㊵（2026-11-15 append，frontier-citation-anchors；仅引用零接入；license 分层
+  注记）：repo github.com/forecastingresearch/forecastbench（MIT，本日 GitHub API 复核
+  95★、pushed 2026-11-09 活跃）——dynamic、contamination-free 的 LLM 预测基准
+  （human comparison groups 对照组设计远期参照）；**datasets 仓
+  forecastingresearch/forecastbench-datasets=CC BY-SA 4.0 非 allowlist**（本日 API 复核
+  44★；白名单仅 MIT/Apache/BSD）——**不 clone 不入 data/、不接 API 不引入记分流水线**
+  （7-gate license 门）。**边界注记**：仅引用零接入；零新依赖零 SDK 零框架；研究面
+  零改动。
+  延伸索引㊶（2026-11-15 append，frontier-citation-anchors；仅登记候选零接入）：
+  github.com/lycheeverse/lychee（Apache-2.0，本日 GitHub API 复核 4129★、pushed
+  2026-11-13 活跃）——链接检查器（markdown 内 URL/fragment 域）。**仅登记候选**沿 #16
+  duckdb uvx 先例**不入 pyproject**、装包须业主点头；GitHub slug 归一化假阳性先评估
+  （接入前须证明对 runbook 锚域适配）。**边界注记**：仅引用零接入；零新依赖零 SDK
+  零框架；研究面零改动。
+  延伸索引㊷（2026-11-15 append，frontier-citation-anchors；仅引用零接入）：
+  github.com/argoproj/argo-cd（Apache-2.0，本日 GitHub API 复核 24606★、pushed
+  2026-11-14 活跃）——GitOps 常驻交付面；**远期参照**、与 ㉞ Argo Rollouts 同 org
+  不同子项目不同语义轴（Rollouts=渐进交付判定词汇、CD=GitOps 常驻同步）**不构成
+  重登**；**不引入常驻组件**只取「检测分离于修复」语义（drift 检测与修复动作分离 ≡
+  呈报-入册分离、引擎只读不代记同向）。**边界注记**：仅引用零接入；零新依赖零 SDK
+  零框架；研究面零改动。
 
 ## 前沿吸收（轮 127，2026-11-11；来源=reports/audits/2026-11-11-env-testpipeline-round.md §6b——两路前沿调研中 high 但 L 规模/存疑/触红线者，逐条含来源 URL）
 
