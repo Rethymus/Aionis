@@ -729,7 +729,7 @@ backup field) correctly failed while the rest passed.
 | 级 | 定义 | 状态 | 判据/互锁 |
 |---|---|---|---|
 | **L0 呈现** | 确定性信息呈现：夜报包、`--status`、`--doctor`、runbook 注记。零动作 | 在位 | 无（纯只读） |
-| **L1 自动候选** | 引擎只建议、人裁决：`--propose` 七卡（`run_propose` `monthly_review.py:1204(run_propose)`、零 LLM 零网络声明 :1685；引擎对 backlog/tasks 只读——节奏表 :230「绝不自动写」）+ `--triage` 三分类分诊（`classify_run_row` `ops_local_refresh.py:558-576` 纯规则，三桶常量 :542-544 = platform-failure / infra-transient / code-defect） | **现状（在位）** | 只读 + 人工采纳门 |
+| **L1 自动候选** | 引擎只建议、人裁决：`--propose` 七卡（`run_propose` `monthly_review.py:1204(run_propose)`、零 LLM 零网络声明 `scripts/monthly_review.py:1687(zero LLM, zero network)`；引擎对 backlog/tasks 只读——节奏表 :230「绝不自动写」）+ `--triage` 三分类分诊（`classify_run_row` `ops_local_refresh.py:558-576` 纯规则，三桶常量 :542-544 = platform-failure / infra-transient / code-defect） | **现状（在位）** | 只读 + 人工采纳门 |
 | **L2 校准达标后·可逆运维决策自动执行** | 合格面三件：软败重试升级（`--status` retry_soft 先例）/ 分诊带动作（triage 结论→预设处置映射，处置集封闭枚举）/ propose 自动派发候选（`render_card` `monthly_review.py:990(render_card)` 的 disposition 行 :997 → `scripts/orchestrate_dispatch.py` 派发路径；仍不写 backlog/tasks 本体） | **未启用（先入册后启用）** | 三互锁（下）+ 量化门槛（下）+ 业主扳键 |
 | **L3 业主定义** | 待定义 | 未定义 | 待业主区（`state/current.md`） |
 
@@ -762,7 +762,7 @@ X/N/Y/M 数值待首月基线数据后由业主入册——当前 resolved 对�
 
 ### 晋级门槛 gate 数学定义（iterate 轮 11；promotion-gate-function——只算不启用）
 
-可计算函数 `promotion_gate_assessment(records, thresholds)`（`scripts/monthly_review.py:2330(promotion_gate_assessment)`；纯函数零 LLM 零新依赖——statsmodels `proportion_confint` 已 pinned，沿 `calibration_bucket_summary` 先例）：输入 resolved records（`_collect_prediction_records` 四字段形）+ X/N/Y/M 四参数（**数值留待业主定标——函数只收参数、不内嵌魔数；未定标轴→理由行而非布尔**）；输出三态 **met / not-met / not-enough-data** + 逐项理由行。**只算不启用，钥匙在业主（上表 e 项语义不变）；与 OOS 判定零关系——gate 数学仅运维面晋级自检，不触碰任何研究面判定**（常量 `GATE_SCOPE_NOTE` :2054）。
+可计算函数 `promotion_gate_assessment(records, thresholds)`（`scripts/monthly_review.py:2330(promotion_gate_assessment)`；纯函数零 LLM 零新依赖——statsmodels `proportion_confint` 已 pinned，沿 `calibration_bucket_summary` 先例）：输入 resolved records（`_collect_prediction_records` 四字段形）+ X/N/Y/M 四参数（**数值留待业主定标——函数只收参数、不内嵌魔数；未定标轴→理由行而非布尔**）；输出三态 **met / not-met / not-enough-data** + 逐项理由行。**只算不启用，钥匙在业主（上表 e 项语义不变）；与 OOS 判定零关系——gate 数学仅运维面晋级自检，不触碰任何研究面判定**（常量 `scripts/monthly_review.py:2305(GATE_SCOPE_NOTE)`）。
 
 - **X 轴（技能分）**：BSS = 1 − BS/BS_base，其中 BS = mean((p−y)²)、**base = 无条件 base-rate（climatology）预测器「永远输出 p̄」**（p̄=历史命中率；BS_base = mean((p̄−y)²) = p̄(1−p̄)）——X 判据由「汇总 mean Brier < X」数学化为「**BSS > X_min**」（优于 base-rate 基线），非裸 Brier。数学正身：arXiv:2611.14465（BSS 权重语义=比 base rate 有信息量/better-than-chance）。背景锚：arXiv:2610.38211 RainCheck（BSS 相对 climatology 带 95% CI 的报告口径；其 temporal 跌破 climatology=反泄漏立场第三方同构实证）。**边界**：BS_base=0（p̄ 退化为 0 或 1——全部 y 同值或单行）→ BSS 无定义 → 诚实理由行，不造假分。
 - **N 轴（学够了没有）**：累计 resolved 行数 n ≥ N_min；不足 → not-enough-data 理由行（同构『学够了没有』）。
@@ -805,7 +805,7 @@ uv run python scripts/monthly_review.py --propose \
 ```
 
 - **命令语义**：确定性信号×规则表→提案卡（`run_propose` `monthly_review.py:1204`；
-  头部「零 LLM、零网络」声明 :1229；引擎对 backlog/tasks **只读**）。
+  头部「零 LLM、零网络」声明 `scripts/monthly_review.py:1246(LLM, --propose)`；引擎对 backlog/tasks **只读**）。
 - **预期输出**：提案卡 N 张（2026-11-13 基线七卡）+ 刷新指令 0..n 条；每张含
   `prediction:` 行（p=「待月末会话填写 0..1」——引擎绝不代填，`render_card`
   :975/:1208）与 `disposition:` 三去向行（:997：accept→tasks/active/ · defer 留
