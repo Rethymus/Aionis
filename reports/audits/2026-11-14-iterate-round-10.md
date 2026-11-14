@@ -133,3 +133,14 @@ residuals-cleanup 交办指名 handoff **轮 138** 块；其余三条目收官�
 | `eaa7e111a6` | docs(reports) | 两报告文末勘误条（10/0+8/0） |
 | `5479bcb144` | feat(ops) | GBK 甲胄+回归钉（15/0+53/2） |
 | `53b8da4b2b` | docs(state) | 轮 138/139 入册+current 顶部新条 |
+
+## 勘误（2026-11-14 append；round10-hunk-errata，append-only）
+
+:12「`git diff` 单 hunk `@@ -733,3 +733,232 @@`」→ 实测 **`@@ -733,3 +733,238 @@`**。复跑留证
+（2026-11-14 本会话）：`git show e0a825557a -- docs/ops-local-refresh.md | grep '^@@'` 第三 hunk
+header 实测 `@@ -733,3 +733,238 @@`；与全文件 numstat `git show e0a825557a --numstat --
+docs/ops-local-refresh.md` → `237 2` 自洽——237 = 235 纯增（第三 hunk 新侧 238 行含 3 上下文
+行）+ 锚勘误两 hunk（:289/:340 各 `7,7`）每处 1 insert，2 del = 同两 hunk 每处 1 delete。
+同误双落点不可回改：commit message `e0a825557a`（「单 hunk @@-733,3+733,232@@」）与
+handoff 轮 139 块同句——均以本勘误条+handoff 轮 140 块双承载；本报告 :12 原行不回改
+（沿轮 8 报告 §7 勘误先例）。
