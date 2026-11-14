@@ -1256,3 +1256,64 @@ def test_insight_quality_gate_retire_restatement_archive_untouched() -> None:
     text = mr.render_reflexion_section(seeds, active, [])
     archive = text.split("## 6")[1]
     assert "event: ADD IF 满格带表达 THEN 附可证伪依据" in archive
+
+
+def test_gate_bridge_summary_met_state_maps_to_successful() -> None:
+    """Round 14 gate-assessment-bridge (design §5.1 pin 1): a fully
+    calibrated, all-axes-passing fixture maps gate=met to Argo
+    Successful≈ok; the line carries the standing 只呈现零启用 marker and
+    BOTH notes verbatim (evidence-vs-promotion separation, 门绿≠实践
+    健康). Fixture calibrated against statsmodels reality (wilson upper
+    4/6=0.9032 — every populated bucket carries a miss; the round-11
+    hand-math-caught-by-red-test precedent, measured not estimated)."""
+    records = []
+    for due in ("2026-10", "2026-11"):
+        records += [{"claim": "x", "p": 0.9, "due": due, "y": 1},
+                    {"claim": "x", "p": 0.9, "due": due, "y": 1},
+                    {"claim": "x", "p": 0.9, "due": due, "y": 1},
+                    {"claim": "x", "p": 0.9, "due": due, "y": 1},
+                    {"claim": "x", "p": 0.9, "due": due, "y": 0},
+                    {"claim": "x", "p": 0.6, "due": due, "y": 0}]
+    thresholds = {"X_min": 0.05, "N_min": 12, "Y_max": 0.95, "M_min": 2}
+    line = mr.promotion_gate_summary_line(records, thresholds)
+    assert "gate=met［Argo: Successful≈ok］" in line
+    assert "轴判定 N:pass X:pass Y:pass M:pass" in line
+    assert "只呈现零启用" in line
+    assert "分析产出证据、晋升单独消费" in line
+    assert "门绿≠实践健康" in line
+    assert "自动晋升决策绝不实现" in line
+
+
+def test_gate_bridge_summary_not_met_state_maps_to_failed() -> None:
+    """Round 14 pin 2: an objectively failing axis (Y: the widest Wilson
+    upper 0.9032 ≥ Y_max=0.5 — sample too thin to narrow the CI) with all
+    other axes calibrated and passing maps gate=not-met to Argo
+    Failed≈fail (not-met semantics: all axes calibrated, data sufficient,
+    one axis objectively failing)."""
+    records = []
+    for due in ("2026-10", "2026-11"):
+        records += [{"claim": "x", "p": 0.9, "due": due, "y": 1},
+                    {"claim": "x", "p": 0.9, "due": due, "y": 1},
+                    {"claim": "x", "p": 0.9, "due": due, "y": 1},
+                    {"claim": "x", "p": 0.9, "due": due, "y": 1},
+                    {"claim": "x", "p": 0.9, "due": due, "y": 0},
+                    {"claim": "x", "p": 0.6, "due": due, "y": 0}]
+    thresholds = {"X_min": 0.05, "N_min": 12, "Y_max": 0.5, "M_min": 2}
+    line = mr.promotion_gate_summary_line(records, thresholds)
+    assert "gate=not-met［Argo: Failed≈fail］" in line
+    assert "轴判定 N:pass X:pass Y:fail M:pass" in line
+    assert "只呈现零启用" in line
+
+
+def test_gate_bridge_summary_not_enough_data_maps_to_inconclusive() -> None:
+    """Round 14 pin 3: thresholds=None (the run_weekly default — the owner
+    INPUTS contract, no embedded magic numbers) or zero resolved rows -> a
+    mixed undetermined/not-enough-data axis verdict set merges to
+    gate=not-enough-data, mapped to Argo Inconclusive≈not-enough-data
+    (数据不足不判 — the same degradation family as ring-2)."""
+    line = mr.promotion_gate_summary_line([], None)
+    assert "gate=not-enough-data［Argo: Inconclusive≈not-enough-data］" in line
+    assert ("轴判定 N:undetermined X:not-enough-data Y:not-enough-data "
+            "M:not-enough-data") in line
+    assert "只呈现零启用" in line
+    assert "门绿≠实践健康" in line

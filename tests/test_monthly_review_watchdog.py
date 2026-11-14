@@ -377,3 +377,29 @@ def test_cli_weekly_end_to_end_on_tmp_repo(tmp_path: Path) -> None:
         rc = mr.main(["--weekly", "--repo", str(tmp_path)])
     assert rc == 1
     assert "Weekly Watchdog" in buf.getvalue()
+
+
+def test_gate_bridge_summary_does_not_feed_findings(tmp_path: Path) -> None:
+    """Round 14 gate-assessment-bridge negative pin: with REAL findings
+    present (the billing-lock case) the exit code stays 1 and the Findings
+    count line stays driven by the genuine findings bullets only — the gate
+    summary line renders AFTER the count section, outside the counted set,
+    carrying the 自动晋升决策绝不实现 prohibition verbatim."""
+    def fetcher(wf: str, repo: Path) -> list[dict]:
+        return [FAST_BILLING]
+    report, code = mr.run_weekly(tmp_path, datetime(2026, 11, 11, 9, 0),
+                                 fetcher=fetcher, jobs_sig=_ok_jobs)
+    assert code == 1  # real findings, unchanged by the gate line
+    lines_ = report.splitlines()
+    fi = next(i for i, ln in enumerate(lines_)
+              if ln.startswith("## Findings requiring human attention"))
+    gi = next(i for i, ln in enumerate(lines_)
+              if ln.startswith("- promotion gate assessment"))
+    assert gi > fi
+    count = int(lines_[fi].rsplit(": ", 1)[1])
+    bullets = [ln for ln in lines_[fi + 2:gi] if ln.startswith("- ")]
+    assert count == len(bullets)  # the gate line never joins the count
+    gate_line = lines_[gi]
+    assert "只呈现零启用" in gate_line
+    assert "自动晋升决策绝不实现" in gate_line
+    assert "分析产出证据、晋升单独消费" in gate_line

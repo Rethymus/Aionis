@@ -476,3 +476,32 @@ def test_reconcile_predictions_three_states() -> None:
 
 def test_reconcile_predictions_empty_backlog() -> None:
     assert mr.reconcile_predictions("", "2026-11") == []
+
+
+def test_gate_bridge_summary_presentational_only_exit_code_unchanged(
+        tmp_path: Path) -> None:
+    """Round 14 gate-assessment-bridge negative pin (design §5.2 ②④): the
+    summary line rides the --weekly tail but NEVER feeds findings or the
+    exit code — a clean repo still exits 0 with the line present (零启用 in
+    code, not prose); the zero-resolved account renders the honest
+    not-enough-data/Inconclusive state."""
+    (tmp_path / "runs").mkdir()
+    ledger = tmp_path / "runs" / "ledger.jsonl"
+    committed = json.dumps({"ts": "2026-07-28T04:15:16+00:00",
+                            "event": "config_committed",
+                            "config_sig": "c" * 64,
+                            "config": {"horizon": 1}})
+    result = json.dumps({"ts": "2026-08-01T00:00:00+00:00",
+                         "event": "confirmatory:first",
+                         "config_sig": "c" * 64})
+    ledger.write_text(committed + "\n" + result + "\n", encoding="utf-8")
+    report, code = mr.run_weekly(tmp_path, datetime(2026, 11, 11, 9, 0),
+                                 fetcher=lambda wf, repo: [])
+    assert code == 0  # the gate line is NOT a finding — exit stays clean
+    assert "walk away" in report
+    last = report.splitlines()[-1]
+    assert last.startswith(
+        "- promotion gate assessment（round 14 桥·只呈现零启用）")
+    assert "gate=not-enough-data［Argo: Inconclusive≈not-enough-data］" in last
+    assert "分析产出证据、晋升单独消费" in last
+    assert "门绿≠实践健康" in last

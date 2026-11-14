@@ -566,10 +566,16 @@ def spin_detection(repo: Path, max_evenings: int = 14) -> tuple[list[str], int]:
 
 
 def run_weekly(repo: Path, now: datetime | None = None, fetcher=None,
-               jobs_sig=None) -> tuple[str, int]:
+               jobs_sig=None, gate_thresholds: dict | None = None
+               ) -> tuple[str, int]:
     """The --weekly mode: render the external-audit report and return
     (markdown, exit_code). 0 = clean; 1 = findings needing human attention;
-    gh-unreachable checks are reported as 未能核对, never scored as failures."""
+    gh-unreachable checks are reported as 未能核对, never scored as failures.
+    Round 14 (gate-assessment-bridge) appends the promotion-gate summary
+    line at the tail — PRESENTATIONAL ONLY, never counted into findings or
+    the exit code (零启用: the L2 key stays with the owner); gate_thresholds
+    is the pass-through hook for the owner's future calibration (None =
+    all axes honestly uncalibrated)."""
     now = now or datetime.now()
     lines: list[str] = [
         "# Weekly Watchdog — external audit (outside lane + Actions stack)",
@@ -652,6 +658,15 @@ def run_weekly(repo: Path, now: datetime | None = None, fetcher=None,
     lines += [f"## Findings requiring human attention: {len(findings)}", ""]
     lines += [f"- {x}" for x in findings] if findings else \
         ["- none — walk away"]
+    # Round 14 (gate-assessment-bridge): the summary line rides AFTER the
+    # findings section and NEVER joins `findings` — the exit code below is
+    # byte-identical to the pre-round-14 semantics (1 if findings else 0).
+    lines.append("")
+    backlog_file = repo / BACKLOG_PATH
+    backlog_text = (backlog_file.read_text(encoding="utf-8", errors="replace")
+                    if backlog_file.is_file() else "")
+    lines.append(promotion_gate_summary_line(
+        _collect_prediction_records(backlog_text), gate_thresholds))
     return "\n".join(lines) + "\n", (1 if findings else 0)
 
 
@@ -2218,6 +2233,26 @@ ANYTIME_MONITORING_NOTE = ("anytime 注记：月度连续重复查询需 anytime
 GATE_SCOPE_NOTE = ("只算不启用：钥匙在业主（晋级门槛 e 项语义不变）；"
                    "与 OOS 判定零关系——gate 数学仅运维面晋级自检，"
                    "不触碰任何研究面判定")
+# iterate round 14 (gate-assessment-bridge, framework ②; design spec
+# reports/audits/2026-11-15-iterate-round-14.md §5): the two presentation
+# notes fused into one standing constant — (1) analysis produces EVIDENCE,
+# promotion is a SEPARATE consumption act (Argo isomorphism: analysis
+# decides rollout continue/abort/pause, never replaces the deployment);
+# (2) a green gate ≠ a healthy practice (the real Argo case: analysis
+# passed while the canary was still broken — metric pass ≠ delivery
+# health). State vocabulary borrowed from Argo AnalysisRun completion
+# states (Successful/Failed/Inconclusive ≈ ok/fail/not-enough-data;
+# official docs verified verbatim). PRESENTATIONAL ONLY, zero activation —
+# automatic promotion decisions are NEVER implemented, the L2 key stays
+# with the owner (GATE_SCOPE_NOTE semantics unchanged).
+GATE_BRIDGE_NOTE = ("分析产出证据、晋升单独消费——门绿≠实践健康（Argo 实况"
+                    "案例：analysis passed 而 canary 仍 broken）；三态 "
+                    "verdict 词汇沿 Argo AnalysisRun 完成态 "
+                    "Successful/Failed/Inconclusive ≈ ok/fail/"
+                    "not-enough-data（Inconclusive=数据不足不判，环 2 降级"
+                    "+gate not-enough-data 同族）；摘要只呈现零启用——自动"
+                    "晋升决策绝不实现，L2 钥匙在业主（GATE_SCOPE_NOTE 钥匙"
+                    "语义不变）")
 
 
 def promotion_gate_assessment(records: list[dict],
@@ -2368,6 +2403,43 @@ def promotion_gate_assessment(records: list[dict],
     else:
         state = "met"
     return {"state": state, "items": items, "notes": notes}
+
+
+# iterate round 14 (gate-assessment-bridge): state vocabulary mapped from
+# Argo AnalysisRun completion states — official docs verbatim: "Completed
+# runs are considered Successful, Failed, or Inconclusive" driving
+# continue/abort/pause. BORROWED PRESENTATION WORDS ONLY: the K8s
+# progressive-delivery runtime is NOT adopted (延伸索引㉞ boundary); the
+# mapping is a reading aid for humans, never an activation path.
+_GATE_ARGO_STATES = {"met": ("Successful", "ok"),
+                     "not-met": ("Failed", "fail"),
+                     "not-enough-data": ("Inconclusive", "not-enough-data")}
+
+
+def promotion_gate_summary_line(records: list[dict],
+                                thresholds: dict | None = None) -> str:
+    """iterate round 14 (gate-assessment-bridge, framework ②): the FIRST
+    consumer of promotion_gate_assessment — ONE presentational summary line
+    for the --weekly tail. Zero LLM, zero IO, zero activation: the line
+    renders the gate's three-state verdict (met/not-met/not-enough-data
+    mapped to Argo Successful/Failed/Inconclusive ≈ ok/fail/not-enough-data)
+    plus the four per-axis verdicts (N/X/Y/M, gate-internal words pass/fail/
+    undetermined/not-enough-data — never re-translated) and GATE_BRIDGE_NOTE
+    (both notes: evidence-vs-promotion separation, green-gate ≠ healthy
+    practice). thresholds=None (the run_weekly default) keeps every axis
+    honestly uncalibrated -> not-enough-data — the owner INPUTS contract,
+    no embedded magic numbers, no fabricated thresholds. The line NEVER
+    feeds findings or the exit code (零启用 in code, not just prose): the
+    L2 promotion key stays with the owner."""
+    gate = promotion_gate_assessment(records, thresholds)
+    state = gate["state"]
+    argo_word, gloss = _GATE_ARGO_STATES[state]
+    axis_verdicts = {it["axis"]: it["verdict"] for it in gate["items"]}
+    axes = " ".join(f"{a}:{axis_verdicts.get(a, 'not-enough-data')}"
+                    for a in ("N", "X", "Y", "M"))
+    return (f"- promotion gate assessment（round 14 桥·只呈现零启用）: "
+            f"gate={state}［Argo: {argo_word}≈{gloss}］ | 轴判定 {axes} | "
+            f"{GATE_BRIDGE_NOTE}")
 
 
 if __name__ == "__main__":
