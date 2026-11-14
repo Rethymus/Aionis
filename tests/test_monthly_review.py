@@ -437,17 +437,20 @@ def _prediction_backlog_text() -> str:
 
 def test_reconcile_rendering_byte_identical_after_ring1a_lift() -> None:
     """Ring 1a lifted the parse loop into _collect_prediction_records; the
-    per-row reconciliation output is pinned BYTE-FOR-BYTE to the pre-refactor
-    rendering (captured from HEAD 9c498a54cb before the edit — this is the
-    FIRST reconcile pin; none existed before ring 1a)."""
+    per-row reconciliation output is pinned BYTE-FOR-BYTE (ring-1a pin;
+    re-anchored at round 14: resolved rows gain the referencable [YYYY-MM#n]
+    id prefix — one id assigner, zero drift vs the insight gate)."""
     expected = [
-        "prediction resolved: 通道零软败（judgments: p=0.8；facts: y=1；"
+        "[2026-10#1] prediction resolved: 通道零软败（judgments: p=0.8；facts: y=1；"
         "(p−y)²=0.040, 命中）；高带 p>0.6——仅自动进入对账候选呈现，无任何自动处置",
-        "prediction resolved: 高带测试（judgments: p=0.9；facts: y=0；"
+        "[2026-10#2] prediction resolved: 高带测试（judgments: p=0.9；facts: y=0；"
         "(p−y)²=0.810, 未命中）；高带 p>0.6——仅自动进入对账候选呈现，无任何自动处置",
-        "prediction resolved: 中带（judgments: p=0.6；facts: y=1；(p−y)²=0.160, 命中）",
-        "prediction resolved: 半带（judgments: p=0.5；facts: y=0；(p−y)²=0.250, 未命中）",
-        "prediction resolved: 反带（judgments: p=0.3；facts: y=0；(p−y)²=0.090, 命中）",
+        "[2026-10#3] prediction resolved: 中带（judgments: p=0.6；facts: y=1；"
+        "(p−y)²=0.160, 命中）",
+        "[2026-10#4] prediction resolved: 半带（judgments: p=0.5；facts: y=0；"
+        "(p−y)²=0.250, 未命中）",
+        "[2026-10#5] prediction resolved: 反带（judgments: p=0.3；facts: y=0；"
+        "(p−y)²=0.090, 命中）",
         "prediction 未填 p（judgments: 无——诚实缺省，待月末会话；facts: due=2026-10）: 待填",
         "prediction pending outcome: 未到对账（judgments: p=0.7；facts: "
         "due=2026-11、outcome 未记）；高带 p>0.6——仅自动进入对账候选呈现，无任何自动处置",
@@ -1127,3 +1130,129 @@ def test_cli_survives_gbk_child_environment(tmp_path: Path) -> None:
         capture_output=True, env=env, timeout=180)
     assert refused.returncode == 3
     refused.stderr.decode("utf-8")  # strict: GBK bytes raise pre-armor
+
+
+def test_insight_quality_gate_valid_entry_passes_with_ref(
+        tmp_path: Path) -> None:
+    """Round 14 insight-quality-gate (design §4.3 pin 1): a well-formed
+    insight candidate (hook token + IF-THEN body + current-month ref into
+    the resolved id space, no retired overlap) passes with the ref echoed
+    back; verdict shape = the parse_bounded_answer ok/reason/raw family;
+    seeds carry the resolved id space (one parser, N consumers)."""
+    backlog = ("- 甲（prediction: 蒸馏甲（p=0.85）due=2026-11）\n"
+               "  - outcome: y=0 (2026-11-30)\n")
+    records = mr._collect_prediction_records(backlog)
+    ids = mr._resolved_row_ids(records, "2026-11")
+    assert ids == {"2026-11#1"}
+    repo = tmp_path / "repo"
+    (repo / "state").mkdir(parents=True)
+    (repo / "state" / "backlog.md").write_text(backlog, encoding="utf-8")
+    assert mr.lesson_seeds("2026-11", repo, [])["resolved_ids"] == [
+        "2026-11#1"]
+    handoff = (
+        "# handoff\n\n<!-- monthly-reflexion-lessons month=2026-11 -->\n\n"
+        "- event: ADD insight 反例片段 hook=当月 resolved 行 y=0 而 p=0.85 "
+        "的反例；ref=2026-11#1\n"
+        "  IF 高带预测（p=0.85 表达）THEN 须附可证伪依据\n"
+        "  evidence: state/backlog.md\n")
+    blocks = mr._lessons_blocks(handoff)
+    assert blocks[0][0] == "2026-11"
+    entry = mr._parse_lesson_entries(blocks[0][1])[0]
+    verdict = mr.insight_quality_verdict(entry["lines"][0],
+                                         entry["lines"][1:], "2026-11",
+                                         ids, [])
+    assert verdict == {"ok": True, "ref": "2026-11#1"}
+    assert mr.insight_quality_report(handoff, "2026-11", ids) == [
+        "[2026-11#1] 合格 insight"]
+
+
+def test_insight_quality_gate_hook_miss_renders_quality_miss_line() -> None:
+    """Round 14 pin 2: no hook token / empty hook value / no IF-THEN
+    skeleton in the body -> ok=False reason=hook-miss; the render shows the
+    quality-miss report line carrying the 拒入 marker, and the MISS LINE
+    itself embeds no budget note (round-145 negative pin: a miss line
+    claims no INSIGHT 0-2 slot)."""
+    ids = {"2026-11#1"}
+    head_a = "- event: ADD insight 片段无钩子 ref=2026-11#1"
+    assert mr.insight_quality_verdict(
+        head_a, ["IF x THEN y"], "2026-11", ids, []) == {
+            "ok": False, "reason": "hook-miss", "raw": head_a[:120]}
+    head_b = "- event: ADD insight 片段空钩子 hook= ref=2026-11#1"
+    assert mr.insight_quality_verdict(
+        head_b, ["IF x THEN y"], "2026-11", ids, [])["reason"] == "hook-miss"
+    head_c = "- event: ADD insight 片段无骨架 hook=依据 ref=2026-11#1"
+    assert mr.insight_quality_verdict(
+        head_c, ["记录性描述行，非条件句式"], "2026-11", ids, []
+        )["reason"] == "hook-miss"
+    handoff = (
+        "# handoff\n\n<!-- monthly-reflexion-lessons month=2026-11 -->\n\n"
+        "- event: ADD insight 片段无钩子 ref=2026-11#1\n"
+        "  IF x THEN y\n")
+    seeds = _render_seeds(
+        "none yet（基线收集月——无 resolved 对账行可入桶，不造最歪桶）")
+    seeds["insight_quality"] = mr.insight_quality_report(
+        handoff, "2026-11", ids)
+    text = mr.render_reflexion_section(seeds, None, [])
+    miss = [ln for ln in text.splitlines()
+            if "insight quality-miss[hook-miss]" in ln]
+    assert len(miss) == 1
+    assert "（拒入本月蒸馏候选池）" in miss[0]
+    assert mr.FOCUS_FEEDBACK_BUDGET_NOTE not in miss[0]
+
+
+def test_insight_quality_gate_bad_ref_strictly_current_month() -> None:
+    """Round 14 pin 3: pseudo id beyond the resolved id space / cross-month
+    reference / missing ref token all -> ok=False reason=bad-ref (STRICTLY
+    current-month — 宁严勿宽, the same boundary discipline as the dedup
+    same-key rule)."""
+    ids = {"2026-11#1", "2026-11#2"}
+    body = ["IF x THEN y"]
+    pseudo = "- event: ADD insight 甲 hook=依据 ref=2026-11#9"
+    cross = "- event: ADD insight 乙 hook=依据 ref=2026-10#1"
+    missing = "- event: ADD insight 丙 hook=依据（无 ref 令牌）"
+    for head in (pseudo, cross, missing):
+        assert mr.insight_quality_verdict(head, body, "2026-11", ids,
+                                          []) == {
+            "ok": False, "reason": "bad-ref", "raw": head[:120]}
+
+
+def test_insight_quality_gate_retire_restatement_archive_untouched() -> None:
+    """Round 14 pin 4: an insight entry whose whitespace-normalized full
+    text CONTAINS a retired entry's normalized full text -> ok=False
+    reason=retire-restatement (literal substring, zero embeddings; the
+    retirement segment, not the active segment); the §6 archive view stays
+    untouched — the gate filters the distillation pool, never the archive
+    (append-only presentation stands)."""
+    handoff = (
+        "# handoff\n\n<!-- monthly-reflexion-lessons month=2026-11 -->\n\n"
+        "- event: ADD IF 满格带表达 THEN 附可证伪依据\n"
+        "  evidence: state/backlog.md\n"
+        "- event: ADD insight 炒冷饭 hook=复述已退役条目原文 "
+        "ref=2026-11#2\n"
+        "  复述检测：- event: ADD IF 满格带表达 THEN 附可证伪依据 "
+        "evidence: state/backlog.md\n"
+        "- event: DELETE voids month=2026-11#1\n"
+        "  evidence: 复述退役\n")
+    retired = mr._insight_retired_texts(handoff)
+    assert retired == ["- event: ADD IF 满格带表达 THEN 附可证伪依据 "
+                       "evidence: state/backlog.md"]
+    ids = {"2026-11#1", "2026-11#2"}
+    entry = mr._parse_lesson_entries(mr._lessons_blocks(handoff)[0][1])[1]
+    assert mr.insight_quality_verdict(entry["lines"][0],
+                                      entry["lines"][1:], "2026-11",
+                                      ids, retired) == {
+        "ok": False, "reason": "retire-restatement",
+        "raw": entry["lines"][0][:120]}
+    report = mr.insight_quality_report(handoff, "2026-11", ids)
+    assert len(report) == 1
+    assert report[0].startswith(
+        "insight quality-miss[retire-restatement] [2026-11#2]:")
+    assert "（拒入本月蒸馏候选池）" in report[0]
+    active = mr.active_lessons_view(handoff)
+    assert active is not None and len(active[1]) == 3
+    seeds = _render_seeds(
+        "none yet（基线收集月——无 resolved 对账行可入桶，不造最歪桶）")
+    seeds["insight_quality"] = report
+    text = mr.render_reflexion_section(seeds, active, [])
+    archive = text.split("## 6")[1]
+    assert "event: ADD IF 满格带表达 THEN 附可证伪依据" in archive

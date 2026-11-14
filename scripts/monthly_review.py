@@ -1025,6 +1025,7 @@ def reconcile_predictions(backlog_text: str,
     distribution, state/backlog.md 延伸索引⑤)."""
     lines_out: list[str] = []
     records = _collect_prediction_records(backlog_text)
+    resolved_ids_iter = iter(_resolved_row_id_seq(records, now_month))
     for r in records:
         band = ("；高带 p>0.6——仅自动进入对账候选呈现，无任何自动处置"
                 if r["p"] is not None and r["p"] > 0.6 else "")
@@ -1041,7 +1042,8 @@ def reconcile_predictions(backlog_text: str,
         else:
             brier = (r["p"] - r["y"]) ** 2
             hit = "命中" if (r["p"] >= 0.5) == (r["y"] == 1) else "未命中"
-            lines_out.append(f"prediction resolved: {r['claim']}"
+            lines_out.append(f"[{next(resolved_ids_iter)}] prediction "
+                             f"resolved: {r['claim']}"
                              f"（judgments: p={r['p']}；facts: y={r['y']}；"
                              f"(p−y)²={brier:.3f}, {hit}）{band}")
     return lines_out
@@ -1488,6 +1490,7 @@ def lesson_seeds(month: str, repo: Path, errors: list[str],
             "calibration_feedback": calibration,
             "focus_feedback": _focus_feedback_summary(pred_records),
             "resolved_prediction_rows": resolved_rows,
+            "resolved_ids": sorted(_resolved_row_ids(pred_records, month)),
             "overdue_outcome_count": len(overdue_outcomes),
             "calibration_snapshot_line": calibration_month_snapshot(
                 pred_records, month),
@@ -1515,7 +1518,14 @@ CALIBRATION_FEEDBACK_NOTE = ("呈现≠校准：以上仅记录性事实统计�
 INSIGHT_HINT = ("月末会话请从本月 resolved 对账行 + active lessons 聚合抽 0-2 条 "
                 "IF-THEN policy 片段（经 --append-lessons-from 写回）；"
                 "片段禁含『自动调 p』指令（示例口径：IF 高带预测（p>0.8 表达）"
-                "THEN 须附可证伪依据——表达纪律，非调 p）")
+                "THEN 须附可证伪依据——表达纪律，非调 p）。envelope 契约（"
+                "iterate 轮 14 质量门）：每条片段 head 行含 `hook=<可证伪依据>` "
+                "与 `ref=<YYYY-MM#n>`（n=本月对账行 [YYYY-MM#n] id 前缀）+正文 "
+                "IF-THEN 句式；代码侧 insight_quality_verdict 确定性判定"
+                "（hook-miss/bad-ref/retire-restatement 三判据，零 LLM 零嵌入"
+                "——RLSVR arXiv:2607.23802『任务变换→可验证判据』协议映射，"
+                "backlog 延伸索引㉝），不合规条目由 quality-miss 行呈报拒入本月"
+                "蒸馏候选池（§6 档案呈现零回改，append-only）")
 
 
 def render_reflexion_section(seeds: dict,
@@ -1578,6 +1588,14 @@ def render_reflexion_section(seeds: dict,
     else:
         out.append("- insight 钩子（环 2·蒸馏）: 本月无 resolved 对账行，"
                    "insight 步跳过")
+    insight_quality = seeds.get("insight_quality") or []
+    if insight_quality:
+        out.append("- insight 质量门（蒸馏前确定性判定，hook-miss/bad-ref/"
+                   "retire-restatement 三判据 first-miss，零 LLM 零嵌入"
+                   "——RLSVR ㉝ 任务变换→可验证判据；quality-miss 理由行"
+                   "不占 INSIGHT 0-2 条额度，§6 档案呈现零回改）:")
+        for ln in insight_quality:
+            out.append(f"  - {ln}")
     if errors:
         out.append(f"- collection anomalies: {errors}")
     out += ["", "## 6. Active lessons carried from state/handoff.md "
@@ -1775,9 +1793,15 @@ def main(argv: list[str] | None = None) -> int:
                       datetime.now().isoformat(timespec="seconds"))
     if args.lessons:
         seeds = lesson_seeds(month, repo, errors)
-        prior = active_lessons_view(
-            (repo / "state" / "handoff.md").read_text(encoding="utf-8")
-            if (repo / "state" / "handoff.md").exists() else "")
+        handoff_text = ((repo / "state" / "handoff.md")
+                        .read_text(encoding="utf-8")
+                        if (repo / "state" / "handoff.md").exists() else "")
+        prior = active_lessons_view(handoff_text)
+        # round 14 insight-quality-gate: the verdict layer is HERE (the
+        # layer already holding the handoff text) — zero NEW file reads;
+        # resolved ids ride the seeds (one parser, N consumers).
+        seeds["insight_quality"] = insight_quality_report(
+            handoff_text, month, seeds.get("resolved_ids") or ())
         markdown += "\n" + render_reflexion_section(seeds, prior, [])
     if args.out:
         out_path = Path(args.out)
@@ -1880,6 +1904,152 @@ def feedback_dedup_verdict(focus_line: str,
         return None
     key = m.group(0)
     return [ln for ln in active_lines if key in ln]
+
+
+# iterate round 14 (insight-quality-gate, framework ①; design spec
+# reports/audits/2026-11-15-iterate-round-14.md §4 — this block is the
+# post-close implementation). RLSVR protocol mapping (arXiv:2607.23802,
+# backlog 延伸索引㉝): task transformation -> deterministic verifiable
+# criteria attached to open-ended output BEFORE consumption. Three
+# deterministic criteria, first-miss stops; ZERO LLM, ZERO embeddings, ZERO
+# I/O (pure inputs, same contract family as feedback_dedup_verdict above).
+# The gate filters the month's distillation candidate POOL only — the §6
+# archive presentation is never edited by it (append-only stands; a
+# quality-miss line reports, it never deletes). Reference anchors:
+# promptfoo (MIT, 27154★) deterministic-assertion layering = criteria table
+# + reason vocabulary + one parser N consumers; AgentEvolver (Apache-2.0,
+# 1592★) self-attributing = the miss line names the failed criterion + the
+# ref — protocol anchors ONLY, the Node tooling is NOT installed (zero new
+# dependencies; repo has no package.json touch).
+_INSIGHT_ENTRY_RE = re.compile(r"^\s*[-*]\s*event:\s*ADD\b.*\binsight\b")
+_INSIGHT_HOOK_RE = re.compile(r"\bhook=(\S[^；;|]*)")
+_INSIGHT_REF_RE = re.compile(r"\bref=(\d{4}-\d{2})#(\d+)")
+
+
+def _normalize_ws(text: str) -> str:
+    """Whitespace-normalized literal form for substring comparison — the
+    ONLY normalization the retire-restatement criterion applies (zero
+    embeddings, nothing semantic)."""
+    return " ".join((text or "").split())
+
+
+def _resolved_row_id_seq(records: list[dict],
+                         review_month: str) -> list[str]:
+    """THE id assigner for resolved reconciliation rows (one parser, N
+    consumers): p AND y both present -> file-order 1-based id
+    `YYYY-MM#1..k` under the review month. reconcile_predictions renders
+    the same ids as `[YYYY-MM#n]` row prefixes (round 14, referencable
+    rows); _resolved_row_ids is the set form the insight gate checks
+    against — one implementation, zero drift between row ids and the
+    gate's id space."""
+    out: list[str] = []
+    k = 0
+    for r in records:
+        if r["p"] is not None and r["y"] is not None:
+            k += 1
+            out.append(f"{review_month}#{k}")
+    return out
+
+
+def _resolved_row_ids(records: list[dict], review_month: str) -> set[str]:
+    """Set form of _resolved_row_id_seq (design §4.1 resolved_ids — the
+    bad-ref criterion's membership universe)."""
+    return set(_resolved_row_id_seq(records, review_month))
+
+
+def _insight_retired_texts(handoff_text: str) -> list[str]:
+    """Normalized full texts of RETIRED lesson entries — the same
+    reference-mark scan as active_lessons_view (UPDATE/DELETE entries
+    naming month#n via EVENT_REF_RE), mapped to the referenced entries'
+    normalized (head+body) text. Comparison targets the RETIRED segment
+    only: restating an ACTIVE entry is feedback_dedup_verdict's same-bucket
+    jurisdiction — the two gates are orthogonal by design."""
+    blocks = _lessons_blocks(handoff_text)
+    entries: dict[tuple[str, int], list[str]] = {}
+    retired: set[tuple[str, int]] = set()
+    for month, block in blocks:
+        for idx, entry in enumerate(_parse_lesson_entries(block), 1):
+            entries[(month, idx)] = entry["lines"]
+            ref = EVENT_REF_RE.search(" ".join(entry["lines"]))
+            if entry["op"] in ("UPDATE", "DELETE") and ref:
+                retired.add((ref.group(2), int(ref.group(3))))
+    return [_normalize_ws("\n".join(entries[pair]))
+            for pair in sorted(retired) if pair in entries]
+
+
+def insight_quality_verdict(head_line: str, body_lines: list[str],
+                            review_month: str, resolved_ids: set[str],
+                            retired_texts: list[str]) -> dict:
+    """iterate round 14 (insight-quality-gate): deterministic three-criteria
+    verdict over ONE insight candidate entry — first-miss stops. Pure
+    function: every input is passed in by the caller (zero file reads, zero
+    network, zero embeddings — feedback_dedup_verdict contract); the verdict
+    dict shape follows parse_bounded_answer (ok/reason/raw, plus the
+    pass-side ref). Criteria in order:
+    1. hook-miss — no/empty `hook=` token on the head line, or no IF..THEN
+       skeleton in the body (keyword-structure check: the minimal
+       deterministic proxy for a falsifiable hook being present; the engine
+       never judges semantic truth of the claim itself);
+    2. bad-ref — missing `ref=`, a month other than the review month
+       (STRICTLY current-month: cross-month references never resolve — same
+       boundary discipline as the dedup same-key rule, 宁严勿宽), or a
+       pseudo id not in resolved_ids;
+    3. retire-restatement — the whitespace-normalized full entry text
+       CONTAINS any normalized retired entry's full text (literal substring
+       comparison, zero embeddings; the retirement segment, not the active
+       segment).
+    All three pass -> {"ok": True, "ref": "<month#n>"}."""
+    head = head_line or ""
+    body = "\n".join(body_lines or [])
+    m = _INSIGHT_HOOK_RE.search(head)
+    if m is None or not m.group(1).strip() or not re.search(
+            r"\bIF\b[\s\S]*\bTHEN\b", body):
+        return {"ok": False, "reason": "hook-miss", "raw": head[:120]}
+    rm = _INSIGHT_REF_RE.search(head)
+    if (rm is None or rm.group(1) != review_month
+            or f"{rm.group(1)}#{rm.group(2)}" not in resolved_ids):
+        return {"ok": False, "reason": "bad-ref", "raw": head[:120]}
+    whole = _normalize_ws(f"{head}\n{body}")
+    if any(t and t in whole for t in retired_texts):
+        return {"ok": False, "reason": "retire-restatement",
+                "raw": head[:120]}
+    return {"ok": True, "ref": f"{rm.group(1)}#{rm.group(2)}"}
+
+
+def insight_quality_report(handoff_text: str, review_month: str,
+                           resolved_ids) -> list[str]:
+    """Presentation lines for the month's insight quality gate (the render
+    §5 block): every `event: ADD ... insight` candidate in the
+    review-month lessons block(s) gets ONE line — pass:
+    `[month#idx] 合格 insight`; miss: `insight quality-miss[<reason>]
+    [month#idx]: <head 原文截断>（拒入本月蒸馏候选池）`. A miss line does
+    NOT claim an INSIGHT 0-2 budget slot (same degradation precedent as
+    the round-145 refresh reminder — the budget note stays attached to the
+    focus line only). Zero candidates -> [] (honest absence: nothing
+    renders, zero noise). The §6 archive view is NOT touched by this
+    report (engine never writes the handoff; append-only presentation
+    stands)."""
+    ids = set(resolved_ids or ())
+    retired = _insight_retired_texts(handoff_text)
+    lines: list[str] = []
+    for month, block in _lessons_blocks(handoff_text):
+        if month != review_month:
+            continue
+        for idx, entry in enumerate(_parse_lesson_entries(block), 1):
+            head = entry["lines"][0].rstrip()
+            if not _INSIGHT_ENTRY_RE.search(head):
+                continue
+            verdict = insight_quality_verdict(head, entry["lines"][1:],
+                                              review_month, ids, retired)
+            ref = f"{month}#{idx}"
+            if verdict["ok"]:
+                lines.append(f"[{ref}] 合格 insight")
+            else:
+                head_txt = head.lstrip().lstrip("-*").strip()
+                lines.append(f"insight quality-miss[{verdict['reason']}] "
+                             f"[{ref}]: {head_txt[:80]}"
+                             "（拒入本月蒸馏候选池）")
+    return lines
 
 
 # iterate round 12 (cross-month-evolution) — month-attribution = the
