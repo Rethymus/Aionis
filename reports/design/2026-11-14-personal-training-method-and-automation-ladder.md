@@ -253,3 +253,48 @@ L1→L2 需**同时**满足（X/N/Y/M 数值待首月基线数据后由业主入
   同批关联勘误：runbook :292/:343 旧锚 `monthly_review.py:1399` → 现值 `:1571`（--propose
   argparse help 折行处，与 §3 自治梯分级表既有引法一致）；轮 8 报告 numstat 68→69 见该报告
   文末勘误条。
+
+### B.6 环 1b 文献锚注记：arXiv:2609.10996（2026-11-14 append，施工员）——provider 代际必写+self-debate 不采，正文零回改
+
+- **来源与落点**：arXiv:2609.10996「Rethinking Verbalized Confidence for LLM-as-a-Judge: A
+  Compatibility Shift on Post-2025 Proprietary Models」（Yu-Chung Hsiao，cs.CL 2026-09-10；
+  abs 页本日 fox_fetch 一手复核）。**单作者小引文量如实注记**：abs 页 Authors 实测仅一人、
+  引文量未测（abs 页无计量字段）——2026-09 新文按 low 成熟度处理，观点不作定案依据。登记
+  落点：backlog 延伸索引54（state/backlog.md:497）；本条 = 调研条目①指定落点「设计报告
+  §2 环 1b 文献锚注记」的承接——§2 :38-79 与 :55 环 1b 节**零触碰**，注记落附录 B（本文件
+  :199 append-only 纪律、B.4 环 1b as-built 先例 :232）。
+- **① advisory 同构（独立第三方实证）**：摘要逐字「we introduce two new ingredients: an
+  overconfidence advisory and self-debate」——LLM-as-a-Judge 域对过自信出 **prompt 级
+  advisory** ≡ 本仓环 1b 注入语义：`CALIBRATION_FEEDBACK_NOTE`（scripts/monthly_review.py:
+  1550 grep 现值，其上注释 :1547「a prohibition, never disposition advice」）固定禁令字面 =
+  red lines 3/4/5 的呈现（本报告红线 3 :28「校准反馈注入文本只含事实统计」）——prohibition
+  ≠ disposition 的独立第三方同构。
+- **② provider 代际兼容性必写**：摘要逐字「the standard advice to prefer log-probabilities
+  no longer holds on post-2025 models, where verbalized confidence is the better signal.
+  We call this a compatibility shift」+「post-2025 models accommodate these two additions
+  with little balanced-accuracy cost, whereas pre-2025 models pay a measurable
+  penalty」——elicitation/advisory 效果**依赖模型代际**：对 GLM/SiliconFlow/ModelScope 三
+  provider 未验证不可假定（backlog 延伸索引④ lm-evaluation-harness logprobs 必录限定
+  state/backlog.md:580 同向），**池变更须按代际复测**；本仓承载 = 本报告红线 2（:27 provider
+  池约束）+红线 8（:33 token 红线）。**框架④指称如实注记**：交办理由所称「框架④必写项」
+  在本报告与 docs 全仓 grep 未见编号实体——按延伸索引④必录限定+红线 2/8 承载，不臆造对应。
+- **③ self-debate 不采 + 呈现佐证**：self-debate = 每问多次自辩调用（多次推理成本形态；同
+  域 DINCO 成本模型见延伸索引55「10 inference calls」）违本报告红线 8（:33 一切新环节 rides
+  既有月末单场）→ **不采**；摘要逐字「The shift is invisible under accuracy-only
+  reporting」+「improve calibration, score-distribution spread, and robustness to task
+  subjectivity」——单指标 accuracy-only 报告掩蔽兼容性翻转 = 环 1a
+  `calibration_bucket_summary`（scripts/monthly_review.py:1141 grep 现值；五桶
+  [0.5,0.6)…[0.9,1.0] 固定呈现常量）**分桶呈现优于 accuracy-only 单指标**的第三方佐证
+  （分布面 spread 同向）。
+- **边界（零协议变更）**：论文观点不据以改动在册协议——环 1a/1b as-built（B.3/B.4）与 §2
+  语义零改动，本条仅注记；SummEval/AggreFact/HelpSteer2 评测基建零接入不装包；§6 收官门禁
+  （ruff/pytest/--lessons/--propose 实弹）系动 code 条款，本条纯 docs append 不触发，如实
+  注记未跑（本条验证 = 下列实测项）。
+- **行号漂移登记（grep 现值 vs B 节记录值；正文与旧节零回改，沿 B.3/B.4/B.5 登记先例）**：
+  `CALIBRATION_FEEDBACK_NOTE` B.5 记 :1427 → 现值 **:1550**、环 1b 注入节现值 **:1600**
+  （「校准事实（呈现≠校准——环 1b 注入，facts only）」grep 实测）、
+  `calibration_bucket_summary` B.3 记 :1059 → 现值 **:1141**——2026-11-13 后续轮次
+  （patch-card/gate-bridge/insight-lifecycle 等）施工顺移所致。
+- **门禁实测（本条目，纯 docs）**：`git diff --numstat` = **45+/0-** 单文件纯增（本节追加，
+  正文零删除零改写；行尾 CRLF 归一一致 300/300，沿 B.2 行尾一致检查先例）；`uv run python scripts/anchor_guard.py` 读数与本会话前值逐值恒定
+  （reports/ 非语义扫描面）；`uv run ruff check` 全仓 All checks passed。
