@@ -289,12 +289,12 @@ thread: 稳定 ID 续写**（如「续 `thread:platform-billing`：…」），�
 不宣称认知架构（「内部世界模型」叙事不采用）：
 
 - **判别层（确定性规则引擎，快、零 LLM）**：`--weekly` 看门狗、`--propose` 提案
-  引擎（`scripts/monthly_review.py:1580` argparse help：zero LLM, zero network）、
+  引擎（`scripts/monthly_review.py:1679` argparse help：zero LLM, zero network）、
   Fast Path `--triage` 分诊、夜报包组装——规则表判别红牌/信号；引擎不归类者交
-  人工归类（`monthly_review.py:856`）。
+  人工归类（`monthly_review.py:880`）。
 - **生成层（月末 LLM 会话，慢、唯一生成面）**：月末复盘/教训撰写/Watchdog 有界
-  问题作答（`WATCHDOG_BOUNDED_QUESTION`，`monthly_review.py:1274`）；预算仍为
-  单场 23:35 LLM 会话（`monthly_review.py:1118` Budget 注）——分层**不新增**
+  问题作答（`WATCHDOG_BOUNDED_QUESTION`，`monthly_review.py:1413`）；预算仍为
+  单场 23:35 LLM 会话（`monthly_review.py:1257` Budget 注）——分层**不新增**
   会话/进程/依赖。
 - **不引入外部判别 API**：判别层只由本地确定性代码构成；接入 Jev API /
   typesafe-sdk 违 provider 红线（LLM pool = GLM/SiliconFlow/ModelScope ONLY，
@@ -320,7 +320,7 @@ thread: 稳定 ID 续写**（如「续 `thread:platform-billing`：…」），�
   strict json_schema 服务端强制——只保证返回可解析 JSON，字段结构靠
   system/prompt 描述约束（官方 Schema 示例亦以客户端 jsonschema 校验兜底）——
   故 `parse_bounded_answer` 的 format-miss 诚实降级兜底
-  （`scripts/monthly_review.py:1283-1306`：不可解析/越界均降级为诚实标记、
+  （`scripts/monthly_review.py:1422-1445`：不可解析/越界均降级为诚实标记、
   原文留档）**必须保留**，不因官方模式存在而移除。输出为单行 {answer,p}，
   约十 token 量级，落在既有月末单场 23:35 会话预算内；本注记零新增依赖、
   零新增调用面，仅描述既有 bounded question 子任务。
@@ -339,15 +339,15 @@ thread: 稳定 ID 续写**（如「续 `thread:platform-billing`：…」），�
 
 | 调用面 | 构成与锚 | token 面 |
 |---|---|---|
-| 唯一 LLM 面 | 月末单场 23:35 会话：复盘/教训撰写/bounded question 作答（`monthly_review.py:1118` Budget 注） | 运维全部 token 消耗所在 |
-| 零 LLM 确定性面 | `--propose`（`monthly_review.py:1580`：zero LLM, zero network）、`--triage`/`classify_run_row`（`ops_local_refresh.py:558-576` 纯规则分诊）、`--weekly` 看门狗、夜报包组装 | 恒零——「降 token」伪命题 |
-| 可下探面（选择类子任务，三选） | bounded question 枚举化（`monthly_review.py:1274` + `:1283-1306` 解析兜底）；lessons `event:` 四操作定档（`monthly_review.py:1309` lesson_seeds 播种，写入方定档）；propose 卡 S/M/L 定档复核（`monthly_review.py:823-928`） | 唯一真实下探面——均在月末单场会话内，枚举/定档化不新增会话 |
+| 唯一 LLM 面 | 月末单场 23:35 会话：复盘/教训撰写/bounded question 作答（`monthly_review.py:1257` Budget 注） | 运维全部 token 消耗所在 |
+| 零 LLM 确定性面 | `--propose`（`monthly_review.py:1679`：zero LLM, zero network）、`--triage`/`classify_run_row`（`ops_local_refresh.py:558-576` 纯规则分诊）、`--weekly` 看门狗、夜报包组装 | 恒零——「降 token」伪命题 |
+| 可下探面（选择类子任务，三选） | bounded question 枚举化（`monthly_review.py:1413` + `:1422-1445` 解析兜底）；lessons `event:` 四操作定档（`monthly_review.py:1448` lesson_seeds 播种，写入方定档）；propose 卡 S/M/L 定档复核（`monthly_review.py:847-952`） | 唯一真实下探面——均在月末单场会话内，枚举/定档化不新增会话 |
 
 **OTel GenAI 语义命名锚注记（外向调研条目 2，2026-11-12 append；纯文档、
 零依赖零服务零新进程）**：OpenTelemetry GenAI 语义约定属性与仓库既有记录
 同构——`gen_ai.evaluation.{name, score.value, score.label}` ↔ bounded
 question 的 `{answer, p}` 判断记录（读侧锚：`scripts/monthly_review.py`
-reconcile_predictions `:978-1039`——name≈claim、score.value≈p、
+reconcile_predictions `:1002-1074`——name≈claim、score.value≈p、
 score.label≈answer/带位）；`gen_ai.usage.{input_tokens, output_tokens}` ↔
 `src/aionis/extraction/llm_client.py:122-134` 的 prompt_tokens/
 completion_tokens 记账。将来**运维面** LLM 记账文件（夜报/月末会话侧）按
@@ -361,10 +361,10 @@ completion_tokens 记账。将来**运维面** LLM 记账文件（夜报/月末�
 调研已经 GitHub API 核实）。本注记不装包、不接线、不加进程，仅钉命名锚。
 
 **跨月累积 p 呈现护栏注记（p-trajectory-presentation，2026-11-13 append；纯文档、
-零依赖零服务零新进程）**：`reconcile_predictions`（`scripts/monthly_review.py:978-1039`，
+零依赖零服务零新进程）**：`reconcile_predictions`（`scripts/monthly_review.py:1002-1074`，
 def/return 实测）现仅**单月**呈现——judgments/facts 分账 + p>0.6 高带挂固定呈现标签
-「仅自动进入对账候选呈现，无任何自动处置」（`:1021-1022` 实测原文）；全仓
-`prediction_records` 唯一消费点=stats 计数（`monthly_review.py:789`，scripts/src/
+「仅自动进入对账候选呈现，无任何自动处置」（`:986-987` 实测原文）；全仓
+`prediction_records` 唯一消费点=stats 计数（`monthly_review.py:791`，scripts/src/
 tests/dashboard 四域 grep 实测），输出经 `proposal_reconciliation`（:768，只读扫
 当月 backlog）进 `--weekly` 面按日落盘——**现无跨月累积 p 呈现面，逐条 p 亦无跨月
 聚合持久化**。将来若做跨月累积 p 轨迹呈现，护栏三条钉死：
@@ -419,9 +419,9 @@ reports/audits/2026-11-13-iterate-round-6.md）落地后的首跑注意事项四
   （billing playbook 节）——首跑勿当新缺陷处置；判结构健康看 §4 invariants
   OK。
 - **格式陷阱（tmp 预演首跑实测触发，非预设）**：`event:` 行必须自身是 bullet
-  列表项（`- event: ADD`；EVENT_OP_RE `monthly_review.py:1130` 要求 `[-*]`
+  列表项（`- event: ADD`；EVENT_OP_RE `monthly_review.py:1269` 要求 `[-*]`
   前缀，entry 以 event 行起头、计划文本与 `evidence:` 作附着行
-  :1149-1160）——--lessons 渲染的写回契约行未写明 bullet 语法，裸写缩进形
+  :1270-1283）——--lessons 渲染的写回契约行未写明 bullet 语法，裸写缩进形
   `  event: ADD` 会被 exit 3 契约门拒。首块组织按 bullet 语法。
 - **诚实边界**：本注记与就绪证明背书的是**机制面**（三链可跑通、写回契约门
   三态行为正确、append-only 逐字节成立）；不背书月末会话产出教训的质量，也
@@ -703,8 +703,8 @@ backup field) correctly failed while the rest passed.
 | 级 | 定义 | 状态 | 判据/互锁 |
 |---|---|---|---|
 | **L0 呈现** | 确定性信息呈现：夜报包、`--status`、`--doctor`、runbook 注记。零动作 | 在位 | 无（纯只读） |
-| **L1 自动候选** | 引擎只建议、人裁决：`--propose` 七卡（`run_propose` `monthly_review.py:1123`、零 LLM 零网络声明 :1580；引擎对 backlog/tasks 只读——节奏表 :230「绝不自动写」）+ `--triage` 三分类分诊（`classify_run_row` `ops_local_refresh.py:558-576` 纯规则，三桶常量 :542-544 = platform-failure / infra-transient / code-defect） | **现状（在位）** | 只读 + 人工采纳门 |
-| **L2 校准达标后·可逆运维决策自动执行** | 合格面三件：软败重试升级（`--status` retry_soft 先例）/ 分诊带动作（triage 结论→预设处置映射，处置集封闭枚举）/ propose 自动派发候选（`render_card` `monthly_review.py:951` 的 disposition 行 :972 → `scripts/orchestrate_dispatch.py` 派发路径；仍不写 backlog/tasks 本体） | **未启用（先入册后启用）** | 三互锁（下）+ 量化门槛（下）+ 业主扳键 |
+| **L1 自动候选** | 引擎只建议、人裁决：`--propose` 七卡（`run_propose` `monthly_review.py:1181`、零 LLM 零网络声明 :1679；引擎对 backlog/tasks 只读——节奏表 :230「绝不自动写」）+ `--triage` 三分类分诊（`classify_run_row` `ops_local_refresh.py:558-576` 纯规则，三桶常量 :542-544 = platform-failure / infra-transient / code-defect） | **现状（在位）** | 只读 + 人工采纳门 |
+| **L2 校准达标后·可逆运维决策自动执行** | 合格面三件：软败重试升级（`--status` retry_soft 先例）/ 分诊带动作（triage 结论→预设处置映射，处置集封闭枚举）/ propose 自动派发候选（`render_card` `monthly_review.py:975` 的 disposition 行 :997 → `scripts/orchestrate_dispatch.py` 派发路径；仍不写 backlog/tasks 本体） | **未启用（先入册后启用）** | 三互锁（下）+ 量化门槛（下）+ 业主扳键 |
 | **L3 业主定义** | 待定义 | 未定义 | 待业主区（`state/current.md`） |
 
 ### 永不合格面（无论校准几级达标，永不自动执行）
@@ -736,14 +736,14 @@ X/N/Y/M 数值待首月基线数据后由业主入册——当前 resolved 对�
 
 ### 晋级门槛 gate 数学定义（iterate 轮 11；promotion-gate-function——只算不启用）
 
-可计算函数 `promotion_gate_assessment(records, thresholds)`（`scripts/monthly_review.py:1781`；纯函数零 LLM 零新依赖——statsmodels `proportion_confint` 已 pinned，沿 `calibration_bucket_summary` 先例）：输入 resolved records（`_collect_prediction_records` 四字段形）+ X/N/Y/M 四参数（**数值留待业主定标——函数只收参数、不内嵌魔数；未定标轴→理由行而非布尔**）；输出三态 **met / not-met / not-enough-data** + 逐项理由行。**只算不启用，钥匙在业主（上表 e 项语义不变）；与 OOS 判定零关系——gate 数学仅运维面晋级自检，不触碰任何研究面判定**（常量 `GATE_SCOPE_NOTE` :1776）。
+可计算函数 `promotion_gate_assessment(records, thresholds)`（`scripts/monthly_review.py:2053`；纯函数零 LLM 零新依赖——statsmodels `proportion_confint` 已 pinned，沿 `calibration_bucket_summary` 先例）：输入 resolved records（`_collect_prediction_records` 四字段形）+ X/N/Y/M 四参数（**数值留待业主定标——函数只收参数、不内嵌魔数；未定标轴→理由行而非布尔**）；输出三态 **met / not-met / not-enough-data** + 逐项理由行。**只算不启用，钥匙在业主（上表 e 项语义不变）；与 OOS 判定零关系——gate 数学仅运维面晋级自检，不触碰任何研究面判定**（常量 `GATE_SCOPE_NOTE` :2048）。
 
 - **X 轴（技能分）**：BSS = 1 − BS/BS_base，其中 BS = mean((p−y)²)、**base = 无条件 base-rate（climatology）预测器「永远输出 p̄」**（p̄=历史命中率；BS_base = mean((p̄−y)²) = p̄(1−p̄)）——X 判据由「汇总 mean Brier < X」数学化为「**BSS > X_min**」（优于 base-rate 基线），非裸 Brier。数学正身：arXiv:2611.14465（BSS 权重语义=比 base rate 有信息量/better-than-chance）。背景锚：arXiv:2610.38211 RainCheck（BSS 相对 climatology 带 95% CI 的报告口径；其 temporal 跌破 climatology=反泄漏立场第三方同构实证）。**边界**：BS_base=0（p̄ 退化为 0 或 1——全部 y 同值或单行）→ BSS 无定义 → 诚实理由行，不造假分。
 - **N 轴（学够了没有）**：累计 resolved 行数 n ≥ N_min；不足 → not-enough-data 理由行（同构『学够了没有』）。
-- **Y 轴（CI 收窄）**：各已入桶（p≥0.5 固定五桶、n≥1，**空桶不判**）Wilson 95% CI **上界** < Y_max（wilson 法保守侧；全命中桶上界恒为 1.0——「CI 收窄到可用」的设计本意）。**anytime 注记行**：月度连续重复查询需 anytime 校正（arXiv:2610.28979 只借原则）；当前每月 1 点，AsympCS 类渐近校正不成立——局限如实注记，不照搬渐近实现（常量 `ANYTIME_MONITORING_NOTE` :1773）。
+- **Y 轴（CI 收窄）**：各已入桶（p≥0.5 固定五桶、n≥1，**空桶不判**）Wilson 95% CI **上界** < Y_max（wilson 法保守侧；全命中桶上界恒为 1.0——「CI 收窄到可用」的设计本意）。**anytime 注记行**：月度连续重复查询需 anytime 校正（arXiv:2610.28979 只借原则）；当前每月 1 点，AsympCS 类渐近校正不成立——局限如实注记，不照搬渐近实现（常量 `ANYTIME_MONITORING_NOTE` :2045）。
 - **M 轴（连够了没有）**：按 due 月分组、月度 BSS > X_min 的**连续月数** streak ≥ M_min；月度基线退化月（月内 p̄∈{0,1}→月度 BSS 无定义）不计入 streak。
 - 三态判定序：任一轴 undetermined（未定标或数学不可判）或 not-enough-data（N/M 不足）→ **not-enough-data**；四轴全定标且数据充分、任一可算轴客观失败 → **not-met**；全过 → **met**。当前真实态（2026-11 基线月、resolved=0）= **not-enough-data**——首月唯一真实可达分支。
-- tests 六钉 `tests/test_monthly_review.py:729-845`：met 全过 / not-met（Wilson 上界失败）/ N、M 不足 / 退化基线 BSS 无定义 / 未定标理由行+无桶可判 / 真实账本当前态断言；synthetic 夹具经真函数实测锁定（BSS=0.119、最宽 Wilson 上界 0.9433）。
+- tests 六钉 `tests/test_monthly_review.py:969-1065`：met 全过 / not-met（Wilson 上界失败）/ N、M 不足 / 退化基线 BSS 无定义 / 未定标理由行+无桶可判 / 真实账本当前态断言；synthetic 夹具经真函数实测锁定（BSS=0.119、最宽 Wilson 上界 0.9433）。
 
 ## 首月执行剧本（2026-11-30 月末全链操作手册，2026-11-13 入册）
 
@@ -767,7 +767,7 @@ X/N/Y/M 数值待首月基线数据后由业主入册——当前 resolved 对�
 
 **--month 语义坑（default_month=上月，`monthly_review.py:81-88`）**：复盘 /
 --lessons / --append-lessons-from 的缺省月=**上一个月**（原设计「新每月 6 日回望
-上月」）；而 `--propose` 缺省=**当前月**（月末载体语义，`monthly_review.py:1615-1617`
+上月」）；而 `--propose` 缺省=**当前月**（月末载体语义，`monthly_review.py:1737-1739`
 注释钉死）。故 11-30 当天跑步 2 取月报与步 6 写回**必须显式 `--month 2026-11`**
 （缺省会拿到 2026-10、写错月份块）；步 1 propose 无需 --month。
 
@@ -778,11 +778,11 @@ uv run python scripts/monthly_review.py --propose \
   --out reports/monthend/2026-11/01-propose-cards.md
 ```
 
-- **命令语义**：确定性信号×规则表→提案卡（`run_propose` `monthly_review.py:1123`；
-  头部「零 LLM、零网络」声明 :1164；引擎对 backlog/tasks **只读**）。
+- **命令语义**：确定性信号×规则表→提案卡（`run_propose` `monthly_review.py:1181`；
+  头部「零 LLM、零网络」声明 :1223；引擎对 backlog/tasks **只读**）。
 - **预期输出**：提案卡 N 张（2026-11-13 基线七卡）+ 刷新指令 0..n 条；每张含
   `prediction:` 行（p=「待月末会话填写 0..1」——引擎绝不代填，`render_card`
-  :951/:962）与 `disposition:` 三去向行（:972：accept→tasks/active/ · defer 留
+  :975/:1208）与 `disposition:` 三去向行（:997：accept→tasks/active/ · defer 留
   候选区 · reject→tasks/rejected/）。exit 恒 0。
 - **检查点**：零提案=合法态非失败（无信号或全在册）；去重刷新指令仅人工执行；
   **不自动写任何文件**（节奏表 :230「绝不自动写」）。
@@ -798,27 +798,27 @@ uv run python scripts/monthly_review.py --month 2026-11 --lessons \
   --out reports/monthend/2026-11/02-monthly-report.md
 ```
 
-- **命令语义**：月报 + §5 Reflexion seeds（`lesson_seeds` :1390：缺席晚/
-  persistent/spin + watchdog bounded question :1355 + 校准事实[环1a 注入] +
-  insight 钩子）+ §6 Active lessons 聚合（`render_reflexion_section` :1449）。
+- **命令语义**：月报 + §5 Reflexion seeds（`lesson_seeds` :1448：缺席晚/
+  persistent/spin + watchdog bounded question :1413 + 校准事实[环1a 注入] +
+  insight 钩子）+ §6 Active lessons 聚合（`render_reflexion_section` :1521）。
   正常 exit 0（有 SUMMARY 晚且零采集异常；异常 exit 1 如实，不当缺陷掩埋）。
 - **会话动作三件**（全部在**单场**月末会话内——23:35 班次承载，零新增会话）：
   1. **粘贴**：步 1 新卡人工粘贴 `state/backlog.md` 候选区（刷新指令按提示人工
      更新时间戳），并**逐卡填 p**（0..1 口头置信度——judgments 面，引擎永不
-     代填；p>0.6 高带=仅自动进入对账候选呈现，无任何自动处置，:1005）。
+     代填；p>0.6 高带=仅自动进入对账候选呈现，无任何自动处置，:1029）。
      **对账行形（解析契约）**：入册的 prediction 行须用紧凑契约形
      `- 甲（prediction: 断言（p=0.8）due=2026-11）`——解析器
-     `_collect_prediction_records` :1037-1043 要求行内**连串 `（p=` 子串**，
+     `_collect_prediction_records` :1061-1067 要求行内**连串 `（p=` 子串**，
      卡面展示形 `（judgments: p=…` 不含该子串（flywheel-rehearsal 演练实测
      发现，2026-11-13 勘正），粘贴时须落契约形；outcome 行随后
      `  - outcome: y=0|1 (YYYY-MM-DD)`。
-  2. **bounded answer**：对 WATCHDOG_BOUNDED_QUESTION（:1355 固定选项 A=原地
+  2. **bounded answer**：对 WATCHDOG_BOUNDED_QUESTION（:1413 固定选项 A=原地
      打转 / B=偏离值班目标 / C=正常）**只回单行 JSON**
      `{"answer": "A"|"B"|"C", "p": 0到1}`（约十 token 量级；answer 只回选项
      标签，不得自由文本）。
   3. **lessons 草稿**：写 `reports/monthend/2026-11/03-lessons-draft.md`——
      计划形「下次 X 触发时做 Y」+ `- event: ADD|UPDATE|DELETE|NONE`（**必须
-     bullet 语法**：EVENT_OP_RE :1211 要求 `[-*]` 前缀——tmp 预演首跑实测陷阱，
+     bullet 语法**：EVENT_OP_RE :1269 要求 `[-*]` 前缀——tmp 预演首跑实测陷阱，
      见本文件 :421 注记）+ `evidence:` 路径引用；bounded answer 行写进草稿
      （=步 3 的校验对象）。
 - **检查点**：p 仅记录轨迹，禁再校准拟合/禁显著性声称（红线）；首月如实面——
@@ -837,8 +837,8 @@ uv run python scripts/monthly_review.py \
   --out reports/monthend/2026-11/04-verify-bounded.md
 ```
 
-- **命令语义**：`run_verify_bounded` :1516——逐行扫含 `{"answer","p"}` 双键
-  字面的行（与 WATCHDOG 契约同形），经 `parse_bounded_answer` :1364 判四态：
+- **命令语义**：`run_verify_bounded` :1615——逐行扫含 `{"answer","p"}` 双键
+  字面的行（与 WATCHDOG 契约同形），经 `parse_bounded_answer` :1422 判四态：
   ok / format-miss（raw 原文留档，未虚构）/ p-not-numeric / p-out-of-range。
 - **预期输出**：本月草稿 1 行 answer→`L{n}: **ok** —— answer=… p=…（口头
   置信度，仅记录轨迹）`，exit 0。**首月预检变体**（对「上月块摘录」跑，
@@ -854,7 +854,7 @@ uv run python scripts/monthly_review.py \
 - **动作**（2026-12 月末会话内，人工裁决）：对 backlog 中 due=2026-11 的
   `prediction:` 条目，在同一条目追加一行 `→ outcome: y=0|1 (YYYY-MM-DD)`——
   解析契约 `outcome:\s*y=([01])\s*\((\d{4}-\d{2}-\d{2})\)`
-  （`_collect_prediction_records` :1047）；记法在提案卡面即印（`render_card`
+  （`_collect_prediction_records` :1071）；记法在提案卡面即印（`render_card`
   :965「对账记法=该条目追加 → outcome: y=0|1 (YYYY-MM-DD)」）。
 - **gate 时间纪律**（四检查点①，FinBench arXiv:2607.16229 同构——报告口径
   明示 gate 时间，time-gated 评测与月末 outcome 对账同构）：y 按**due 月月末
@@ -864,7 +864,7 @@ uv run python scripts/monthly_review.py \
 - **检查点**：改前后 `grep -c "prediction:" state/backlog.md` /
   `grep -c "outcome:"` 计数对账（本节入册日基线 0/0）。
 - **失败处置**：outcome 行不进解析（缺日期/缺 `y=` 前缀/写错条目层级→该条
-  停留 pending）→对照 :1047 契约修正格式即可，零工具介入。
+  停留 pending）→对照 :1071 契约修正格式即可，零工具介入。
 
 ### 步 5 —— reconciliation + calibration_summary（两个既有呈现面）
 
@@ -878,17 +878,27 @@ uv run python scripts/monthly_review.py --month 2026-12 --lessons \
 ```
 
 - **命令语义**：面一 `proposal_reconciliation` :768（run_weekly 内调 :637）内调
-  `reconcile_predictions` :978/:787——逐条 resolved（(p−y)²+方向命中）/
+  `reconcile_predictions` :1002/:791——逐条 resolved（(p−y)²+方向命中）/
   pending（due 已过如实标记）/未填 p 分列，judgments/facts 分账；面二
-  `calibration_bucket_summary` :1060——五桶 [0.5,0.6)/…/[0.9,1.0] n/命中/
+  `calibration_bucket_summary` :1118——五桶 [0.5,0.6)/…/[0.9,1.0] n/命中/
   命中率 + Wilson 95% CI + **每桶 p 原值计数**（反聚集）+ 汇总 mean Brier
   （与逐条 (p−y)² 同口径）；p<0.5/p 未填/pending/越界分列不计桶。
+- **逾期 outcome 独立统计区（iterate 轮 12 `overdue-outcome-watch`；
+  `overdue_outcome_records` `monthly_review.py:1077`）**：面一 §4 findings
+  尾部新增**独立统计块**——汇总行「N 张预测卡 due 已过仍未记 outcome」+
+  逐卡清单行（claim+due+p），逾期卡不再淹在逐行 findings 流里。语义：
+  todo_or_die（backlog 延伸索引㉘）=到期显式爆发**呈报不阻断**+严格时间门
+  （`due<当前月`，在期卡零噪音）；2611.03928（延伸索引㉚）=零主动查询预算
+  纯呈报审计——outcome 只随月末真实数据到，**绝不提前补查**；逾期即提示
+  **人记** outcome，引擎只读不代记（红线）。零逾期=整块不渲染（诚实缺省）。
+  月报面同步：§5 Reflexion seeds 有一行 facts-only「本月有 N 张预测卡逾期
+  未记 outcome」（零逾期不渲染，沿环 2 降级先例）。
 - **预期输出（首轮 12 月末）**：面一=11 月卡逐条 resolved/pending 行；面二=
   首个非空桶表（若仍零 resolved=基线延续，如实）。
 - **检查点（四检查点②，p 聚集警讯）**：若 [0.8,0.9)/[0.9,1.0] 桶 p 原值计数
   呈单值堆积（如 `0.9×N`），系 small-llm-calibration（GitHub license=MIT
   已核）实证的 verbalized p 聚集 85-95% 高带=崩塌警讯——**记录进 lessons
-  （事实呈现），禁据此调 p 或定阈值**（`CALIBRATION_FEEDBACK_NOTE` :1431
+  （事实呈现），禁据此调 p 或定阈值**（`CALIBRATION_FEEDBACK_NOTE` :1503
   固定禁令字面：阈值与处置语义只在代码侧规则门，NEVER in any LLM prompt）。
 - **失败处置**：--weekly exit 1 含对账发现行（pending due 已过=设计内的人工
   理由项，非通道失败）——逐条给人裁决；桶表空=零 resolved 如实，非缺陷。
@@ -901,11 +911,11 @@ uv run python scripts/monthly_review.py \
   --month 2026-11
 ```
 
-- **命令语义**：`append_lessons` :1290——append-only 写入 `state/handoff.md`
+- **命令语义**：`append_lessons` :1348——append-only 写入 `state/handoff.md`
   本月 `monthly-reflexion-lessons` 块（一簿一月；旧块字节永不回改，
   UPDATE/DELETE 为 supersedes/voids 引用式标记——与 ledger 新行不覆盖同构）。
 - **insight 沉淀（环2，rides 此通道）**：有 resolved 对账行的月末，会话按
-  `INSIGHT_HINT` :1443 从 resolved 行 + active lessons 蒸馏 **0-2 条** IF-THEN
+  `INSIGHT_HINT` :1515 从 resolved 行 + active lessons 蒸馏 **0-2 条** IF-THEN
   policy 片段写入草稿（片段禁含「自动调 p」指令）。**0-2 条上限的第三方依据**
   =ERL arXiv:2603.24639（LEARN 每次只抽**少量精炼规则**入 prompt——少而精，
   非全量倾倒）。11-30 首跑零 resolved→降级行如实（insight 步跳过），**首次
@@ -913,6 +923,25 @@ uv run python scripts/monthly_review.py \
 - **lessons 注入预算口径（LIMBO arXiv:2609.14138 锚，2026-11-14 append，
   frontier-citation-anchors ⑳）**：回放非免费——反哺行（校准事实入 lessons，
   步 5 检查点②）占上一 bullet 的 0-2 条额度中 1 条，注入须显式预算、不超限倾倒。
+- **重点反哺行同桶去重契约（iterate 轮 12 `feedback-dedup-contract`，
+  `feedback_dedup_verdict` `monthly_review.py:1858`；零 LLM 零嵌入确定性实现）**
+  ——月报 §5 重点反哺行渲染前，对 §6 active_lessons 各条做**同桶区间 key
+  预检**，规则表：
+
+  | 判重输入 | 规则 | 结果 |
+  |---|---|---|
+  | 反哺行桶区间字面（如 `p∈[0.9,1.0]`）vs 各 active 条文本 | **同桶字面子串命中** | 无条件降级为「**刷新提示**」+附已有教训 `[month#idx]` 引用；本月事实行仍呈现（写回按 event: NONE[重复已录]/UPDATE 定档——写入方裁决）；**不附**反哺预算注记（刷新提示不占新 insight 额度） |
+  | 异桶（`p∈[0.6,0.7)` 等）或无桶字面的别类教训 | 不同月/不同类**永不判重** | 保留新条原渲染+预算注记照附 |
+  | 基线月（反哺行无桶字面）或 active 为空/无 lessons 块 | 无 key 可比 | 不降级（诚实缺省 none yet 同款） |
+
+  语义三源合一：**Hindsight**（arXiv:2512.12818+vectorize-io/hindsight，backlog
+  延伸索引㉕）=写前过滤前置、同桶 key 才比对——保护跨月时间维度记录不互删、
+  no-change→no-op 省预算；**mem0**（arXiv:2504.19413，延伸索引㉛）=Algorithm 1
+  「无语义等价才 ADD」的**确定性半边**（信息量升格门 InformationContent 比较
+  **不实现**——仅引用锚，启用须业主点名，LatentGym A/B 同款边界）；**A-MEM**
+  （arXiv:2502.12110，延伸索引㉗）=更新优于追加——降级刷新提示即「引用式
+  接替」的呈现半边。**红线**：判重零 LLM 零嵌入（纯字面子串）；既有教训
+  append-only 不删不改（引用式，与 ledger 新行不覆盖同构）。
 - **预期输出**：exit 0、stderr 无 refuse；handoff 尾部新增块（header 含
   `month=2026-11` 与契约字面）。
 - **检查点**：块内 ≥1 条 `- event:` 行（bullet 语法）；`evidence:` 指向
@@ -920,11 +949,40 @@ uv run python scripts/monthly_review.py \
 - **失败处置**：exit 2=同月块已存在（下月修或人工补——**绝不回改旧块**）；
   exit 3=零 event: 行（回改草稿重跑，不绕契约门）。
 
+### 演进视图口径（跨月校准演进，iterate 轮 12 `cross-month-evolution`）
+
+- **属月判据=对账月**（outcome 到达月），与对账时点纪律同族——不按 prediction
+  卡开立月归属（`_collect_prediction_records` 记录 claim/p/due/y 无属月戳=设计
+  决策点，本口径不补戳、不挖史）。
+- **选型否决理由（决策员拍板）**：否决「backlog git 史重算」路径——本仓
+  `prediction:`/`outcome:` 双零 0/0（2026-11-14 复算）无史可挖，且对 append-only
+  长文本挖史脆；**不改 prediction 卡格式**（ZCode 月末提示词模板 {answer,p} 在
+  业主待办区，不耦合）。采「逐月对账行存档」：新 durable 载体
+  `state/calibration-months.md`（append-only tracked registry，ADR-006 合规；
+  2026-11-14 新建，state/ 原仅 backlog/blockers/current/handoff 四文件无既有
+  可复用存档——实测核实）。
+- **快照行入册步（月末会话，人工 append）**：`--lessons` 月报 §5「跨月校准
+  演进」节末渲染「本月快照行」（facts-only 截面：各桶 n/命中率+Brier+BSS 分量
+  ——BSS 与 promotion gate X 轴**同一实现** `_bss_components`，月度切片）。
+  月末会话将该行 **人工 append** 入 `state/calibration-months.md`（呈报-入册
+  分离：引擎只渲染、绝不写 state/ 档案——与 backlog 卡区人工维护同模式）。
+  **零 resolved 月不存档**（基线月无截面可记）。
+- **演进呈现三态**（`calibration_evolution_lines`，入 lesson_seeds §5）：有两月
+  →「上月→本月」两窗口变化行（各桶 `命中率 0.500→0.000（n 2→1）` 方向与幅度、
+  BSS 同款；单侧桶如实命名新入/本月空，不外推）——Evidently（backlog 延伸索引
+  ㉙）reference-vs-current 两窗口范式锚；仅本月 →「first month, no prior」诚实
+  首月；零 resolved →「none yet」。facts/beliefs 分离口径引 Hindsight（延伸索引
+  ㉕）锚：p=演化中信念轨迹、outcome=事实。
+- **呈现边界（红线，`EVOLUTION_SCOPE_NOTE` 固定字面随节渲染）**：仅两窗口变化
+  呈现——**禁趋势拟合/斜率宣称/显著性**；**不设自动判优/劣门**（Evidently
+  auto-Tests 自动派生阈值明确不采；判定门唯一=promotion gate 且只算不启用、
+  钥匙在业主）。
+
 ### GBK 坑处置与证据链载体（--out 强制落盘）
 
 - **前科**：2026-09-10/11 GBK 控制台乱码致当晚通道事故（`reports/audits/
   2026-09-28-interim-coverage-ledger.md:15-16` 在册「GBK era / UTF-8 patch
-  fixed mid-evening」）；`monthly_review.py:1610-1613` 已修 stdout
+  fixed mid-evening」）；`monthly_review.py:1709-1712` 已修 stdout
   （`sys.stdout.reconfigure(encoding="utf-8", errors="replace")`——legacy
   GBK 控制台下保 CJK 完整）。
 - **剧本规矩**：即便 stdout 已修，终端显示仍随 codepage 漂——**全链六步一律带
@@ -969,7 +1027,7 @@ uv run python scripts/monthly_review.py \
 | # | 锚 | 一手核实要点 | 落点 |
 |---|---|---|---|
 | ① | FinBench arXiv:2607.16229 | confidence-competence gap 列**头号盯防失败模式**；报告口径明示 gate 时间——time-gated 与月末 outcome 对账同构 | 步 4 gate 时间纪律（y 按 due 月月末事实裁定 + 记录日期显式 + hindsight 不入 y）；盯防面：p 高带而连续未命中=confidence-competence gap 警讯→只记录进 lessons |
-| ② | small-llm-calibration（GitHub license=**MIT** 已核） | verbalized p 聚集于 85-95% 高带=崩塌警讯 | 环1a 每桶 p 原值计数反聚集（:1059 一带）的第三方实证；步 5 检查点（单值堆积→记录、不调 p） |
+| ② | small-llm-calibration（GitHub license=**MIT** 已核） | verbalized p 聚集于 85-95% 高带=崩塌警讯 | 环1a 每桶 p 原值计数反聚集（:1118 一带）的第三方实证；步 5 检查点（单值堆积→记录、不调 p） |
 | ③ | arXiv:2610.25846 预注册审计 | verbalized **单通道**效度局限 | 只引注作诚实边界：bounded p 系口头置信度仅记录轨迹（:1364 口径）——**不增设第二通道**（不引入 logprobs/二次问答） |
 | ④ | arXiv:2604.23049 HITL 解耦 | oversight 层边界明示 + 三互锁对照 | 上节边界段 + 三互锁自查表 |
 
