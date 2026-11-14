@@ -283,6 +283,20 @@ thread: 稳定 ID 续写**（如「续 `thread:platform-billing`：…」），�
 按类续写自此可由 grep 验证，不再依赖人工纪律（出处：
 `reports/design/2026-11-11-super-agent-gen2.md` §5 条目 1 / §6）。
 
+**handoff 轮次条目三行结构化字段（patch-unit-fields，2026-11-14 轮 147 首例）**
+——hermes-patches 五列卡的 Aionis 化（backlog 延伸索引㉜；Patch/Surface/Purpose/
+Evidence/Rollback 五列中，叙事段承载 Patch/Purpose，结构化三行取 surface/evidence/
+rollback）：报告仍叙事、底账结构化，锚债跟踪从「通读全文」变「按卡检索」。红线：
+**只增不改**——handoff 旧条目零回改（append-only 人读账本不破坏）；新条目在叙事段
+外补三行；evidence 统一四级标签 **Verified / Partially verified / Code present only /
+Risk**（语义同 ㉜：存在≠生效、部分验证≠已验证），口径=「跑过的报 rc、没跑的如实
+not-run」。格式（轮次叙事 bullet 末尾、缩进三行子条目）：
+
+- `surface:` 触碰面清单（文件:行/节，逗号分隔；docs-only 面如实注记）
+- `evidence:` 四级标签（多条目批=逐条目标签）+ 关键实跑命令与 rc；未跑项如实 not-run
+- `rollback:` 回滚方式——docs/state 批=git revert 对应 commit；handoff 条目自身=
+  append-only 勘误节追加不回改（沿轮 8 §7+轮 10/11 hunk errata 先例）
+
 ### 判别层/生成层分层（值班协议认知固化，2026-11-12 轮 130-续；Jev 专题条目 4，docs-only）
 
 值班协议按两层固化——System 1/2 仅作快/慢分层的认知类比**命名**，止步于分层事实，
@@ -842,8 +856,8 @@ uv run python scripts/monthly_review.py \
   ok / format-miss（raw 原文留档，未虚构）/ p-not-numeric / p-out-of-range。
 - **预期输出**：本月草稿 1 行 answer→`L{n}: **ok** —— answer=… p=…（口头
   置信度，仅记录轨迹）`，exit 0。**首月预检变体**（对「上月块摘录」跑，
-  :1599-1600 帮助文本示例）：11-30 无上月块→零候选行→`none yet` + exit 0
-  不误报（:1533-1536 设计语义）。
+  :1699-1700 帮助文本示例）：11-30 无上月块→零候选行→`none yet` + exit 0
+  不误报（:1621-1622 设计语义）。
 - **检查点**：任一失败行=exit 1；有界重试一次，仍红→按 AGENTS.md 升级
   （2 轮失败封顶，不无限迭代）。
 - **失败处置**：format-miss→按单行 JSON 契约改写该行重跑；p 越界→改 p∈[0,1]。

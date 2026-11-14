@@ -231,6 +231,33 @@
   信息量更大才接替，否则维持）。映射 ≡ 在册 `event: NONE`（重复已录不重写）的**判据侧**正源
   ——何时判「等价/更优」；adaptation 口径：lesson 写回前确定性预检语义参照。**边界注记**：判据
   实现须**零 LLM 零嵌入**（确定性文本比对）；仅引用零接入；零新依赖零 SDK 零框架。
+  延伸索引㉜（2026-11-14 append，frontier-citation-anchors；仅范式引用零代码复制，
+  **license=null 如实注记**）：github.com/Cyrene963/hermes-patches（Hermes Agent
+  社区补丁合集；本日 GitHub API 复核 203★/23 fork、pushed 2026-11-12 活跃、
+  license=null——与轮 12 pitmon 无 LICENSE 拒收先例同判：代码零复制，唯业主点名
+  做思路参考故入引用锚）。范式五要素（PATCHES.md 本日一手实读复核，行号为其仓内
+  行号）：①五列卡——`| Patch | Surface | Purpose | Evidence | Rollback |`
+  （PATCHES.md:28），每补丁一行五格：面/目的/证据/回滚缺一不可；②四级证据标签
+  ——Verified working / Partially verified / Code present only / Risk
+  （PATCHES.md:7-10），「存在≠生效、部分验证≠已验证」分层如实；③晋升六步门
+  （PATCHES.md:102-110）——升至 Verified working 前六步全过，第 3 步
+  positive-control（:108，证预期行为真的发生而非函数返回了东西）、第 4 步
+  clean-install（:109，净装路径复现）；④HERMES_INDIVIDUAL_PATCH_ALLOWLIST
+  消费者挑选（PATCHES.md:19，HERMES_APPLY_INDIVIDUAL_PATCHES=0 可全关）；
+  ⑤幂等 apply——先 `git apply --check` 再应用（PATCHES.md:17）。映射 ≡
+  ①证据四级分层同构报告「未跑如实注记」纪律（轮 12 报告先例）与环1b facts-only
+  分层；②positive-control ≡ 负向钉先例（首版误扫禁令被红面抓获——证「禁令真
+  拦得住」而非「测试跑过了」）；③`--check` 先行 ≡ H6 同 sig 重跑位一致（先验
+  可应用性再动手）；④ALLOWLIST 挑选 ≡ 装包须业主点名纪律。chain-guard 辨明：
+  scripts/hermes-patch-chain-guard.sh（PATCHES.md:65）marker 验证的是「补丁生效
+  了」（行为面）而非「补丁打了」（文件面）；commits 频率画像=漂移是常态作业
+  （PATCHES.md 开篇「reason about drift, rollback, and upstream merge state」）。
+  ast-grep（github.com/ast-grep/ast-grep，license spdx=MIT 白名单内，本日 GitHub
+  API 复核 16572★）声明式规则模式注记为**条目 18（runbook `:N` 行号锚→标题锚
+  迁移）增强供证**——覆盖缺口实测成立（外向调研条目 1-4）：MD051 只验 markdown
+  内 fragment 链接，不验跨文件 file:line 锚。**边界注记**：仅范式引用零代码复制
+  零安装零接入；拒收项沿轮 12 先例入本轮报告不入 backlog；零新依赖零 SDK 零框架；
+  研究面零改动。
 
 ## 前沿吸收（轮 127，2026-11-11；来源=reports/audits/2026-11-11-env-testpipeline-round.md §6b——两路前沿调研中 high 但 L 规模/存疑/触红线者，逐条含来源 URL）
 
