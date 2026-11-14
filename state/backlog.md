@@ -399,6 +399,101 @@
   不抹历史 ≡ config_committed 先于结果/禁 rerun-to-significance（AGENTS.md 反泄漏锚）
   同族+勘误追加制（handoff 勘误节先例）同向。**边界注记**：仅引用零接入；零新依赖零
   SDK 零框架；研究面零改动。
+  延伸索引㊻（2026-11-14 append，frontier-citation-anchors；仅引用零接入）：arXiv:
+  2610.33775「The Hitchhiker's Guide to System 1 Models: Fast Decision-Making Beyond
+  LLMS」（Haggai Roitman，cs.AI 2026-10-24 v1/2026-10-29 v2，190 refs；abs 页本日
+  fox_fetch 一手复核）——System 1 决策模型**全景综述**（五族分类学：encoder-based
+  classifiers/reward models/non-autoregressive decision engines/contrastive decision
+  models/extraction models；摘要逐字「analyze Reinforcement Learning for Calibrated
+  Decisions (RLCD)」+「IIA violations, ordinal-scale bias, and few-shot
+  recalibration」+「unified entry point」）——在册四清单（① awesome-system-one/②
+  awesome-jev/⑧ awesome-decision-models/⑫ jevtypesafeai.com/ecosystem 总目页）外
+  **第五扫描入口**。**两语义供引证**：①IIA violations（无关选项独立性违例）现象=
+  WATCHDOG 单问单发+预枚举 A|B|C 有界问必要性的独立第三方理论注记（捆绑多问引致
+  跨问定向干扰，⑨ 张力对同映射不同源不构成重登）；②校准主题贯穿（proper scoring
+  rules+few-shot recalibration under distribution shift）=判别/生成分层值班协议的
+  文献全景背景。**不采部分**：runnable code/model zoo/70+ 开源复现仓一概不装不引；
+  22 自评题与 practitioner's checklist 不入任何门禁。**边界注记**：仅引用零接入；
+  零新依赖零 SDK 零框架；研究面零改动。
+  延伸索引㊼（2026-11-14 append，frontier-citation-anchors；仅引用零接入）：arXiv:
+  2608.27734「What survives honest evaluation? Leakage-safe, search-aware assessment of
+  LLM-driven trading strategy discovery」（Eray Gençay，q-fin.ST 2026-08-27；abs 页
+  本日 fox_fetch 一手复核）——**「结构防泄漏先于统计校正」第三方佐证**：摘要逐字
+  「makes both corrections structural rather than procedural」+「a deliberately leaky
+  oracle posting a Sharpe ratio of 35 survives Deflated Sharpe and
+  probability-of-backtest-overfitting testing completely」——故意泄漏的 oracle 以
+  Sharpe 35 骗过 DSR/PBO=**负控测试文化**（先证检测器抓得住已知坏样本）的独立第三方
+  实证；另「453-stock point-in-time US equity universe」与本仓 PIT 成分股口径同构、
+  「pre-registered hypotheses earn lower evidential bars than brute search」=预注册
+  降低证据门槛的量化表述（两尾预注册锚同向）。**不采部分**：其 registry-validated
+  agent 工具链与评测基建零接入——本仓 DSR 判定族（arch 既有用法）零改动，本条只作
+  docs 引证。**边界注记**：仅引用零接入；零新依赖零 SDK 零框架；研究面零改动。
+  延伸索引㊽（2026-11-14 append，frontier-citation-anchors；仅引用零接入；**同文第二
+  语义防重复登记款**，沿轮 12 Mem0 先例）：arXiv:2611.03985 OLIVIA 协议——在册
+  decisions/ADR-004 Evidence 引用锚已登记第一语义（掩码≠匿名 62-74% vs 28% 基线+无
+  预注册策略穿越成本与 DSR）；本条登记第二语义（abs 页本日 fox_fetch 一手复核逐字）：
+  「an analysis plan frozen by cryptographic hash, and a test period unblinded once
+  through a logged lock」——**加密哈希冻结分析计划+一次性解盲** ≡ config_committed
+  先于结果（冻结 sha256 入 runs/ledger.jsonl 后才观测 OOS 指标）的第三方同构；「the
+  fine-tuned model's signal replicated on two validation quarters (daily information
+  coefficients 0.055 and 0.065) but fell to 0.020 (t = 1.7) on the blinded
+  January-July 2026 test」——**盲测 IC 跌至 0.020 t=1.7 诚实读数**与「null 结果+紧
+  CI 是预期产出」同向。**不采部分**：其决策模型评测与商业模型读数零接入；ADR-004
+  structural-only 裁定不变。**边界注记**：仅引用零接入；零新依赖零 SDK 零框架；
+  研究面零改动。
+  延伸索引㊾（2026-11-14 append，frontier-citation-anchors；仅引用零接入）：arXiv:
+  2610.25784「UniJev: Separating Accuracy from Calibration in Trimodal System One
+  Decision Models」（cs.CV 2026-10-19；abs 页本日 fox_fetch 一手复核）——摘要逐字
+  「the existing RLCD algorithms change accuracy little and have inconsistent effects
+  on visual calibration across recipes」=**训练法不保证校准的诚实读数**（判别层 p
+  记录只对账不校准的第三方依据）；Cora 分桶（「groups current predictions by
+  confidence and optimizes each prediction's confidence toward the empirical
+  accuracy of its bin」）**仅借呈现语言**（五桶呈现+Wilson 区间既有形），**禁拟合**
+  ——n=1 月度 p 记录禁任何校准拟合（#15 同款口径，Cora 本体=拟合动作不采）。
+  **repo license=null 不认**：wjnwjnwj/UniJev 本日 GitHub API 复核 license=null、4★、
+  pushed 2026-10-23——沿白名单纪律**只留论文主锚**，repo 不登记不引用。**边界注记**：
+  仅引用零接入；零新依赖零 SDK 零框架；研究面零改动。
+  延伸索引㊿（2026-11-14 append，frontier-citation-anchors；仅文献理解零装包零权重）：
+  github.com/StartLuxLabs/StartLux-Decision（Apache-2.0 白名单内，本日 GitHub API
+  复核 1745★[交办调研记 1744★，时点差 1 如实注记]、pushed 2026-10-23、archived=
+  false）——0.8B-27B 开放决策模型+推理引擎（repo 自述「a calibrated probability for
+  every option in one pass」+Engine for vLLM, llama.cpp and MLX）——供 Jev 生态
+  「开放权重决策模型」分支的文献理解（单遍逐选项概率输出形态与 WATCHDOG 有界问
+  同形参照）。**零装包零权重零接入**：引擎与模型权重一概不装不引不跑（LLM 池=
+  GLM/SiliconFlow/ModelScope provider 红线不变）。**边界注记**：仅文献理解；零新
+  依赖零 SDK 零框架；研究面零改动。
+  延伸索引51（2026-11-14 append，frontier-citation-anchors；仅引用零接入；**同文第二
+  落点防重复登记款**；**编号接续记法注记：带圈数字止于㊿=50（U+32BF）用尽，自本条起
+  接续记法=「延伸索引」+阿拉伯数字直书 51/52/53…（沿「前沿吸收」节阿拉伯数字风格，
+  前缀消歧不冲突）——记法施工时定、如实记录**）：arXiv:2611.09286 End-of-Day
+  Reversal——在册 docs/08-lessons 门控解锁复制协议条目已登记第一语义（2016-2019
+  先复现已发表符号才解锁主样本 linking statistic）；本条登记第二落点：**先复制后
+  解锁门控 ≡ E3 影子窗同族**（上方 E3 forward-live 条目 calendar-gated 9-30/10-31
+  影子窗——正向实盘是唯一 POWERED 零泄漏路径，影子窗先行=解锁主样本结论前的受控
+  先证，同族的「先证后解锁」结构）。**镜像仓 license=NOASSERTION 不认**（调研侧
+  gh api 读数；施工侧未独立定位镜像仓 slug 如实注记，不影响只留论文主锚判定）。
+  **边界注记**：仅引用零接入；零新依赖零 SDK 零框架；研究面零改动。
+  延伸索引52（2026-11-14 append，frontier-citation-anchors；仅登记候选零接入）：
+  github.com/syrupy-project/syrupy（MIT 白名单内，本日 GitHub API 复核 905★、
+  pushed 2026-11-11 活跃、archived=false；repo 自述「The most popular pytest
+  snapshot plugin」）——pytest 快照测试插件（期望输出落盘快照文件+断言逐字节比对）。
+  **仅登记候选沿 #16 duckdb uvx 先例**（同 ㊶ lychee 形）**不入 pyproject**、装包须
+  业主点头；候选用途=月报渲染输出快照对账钉的备选实现——现有 tests 渲染钉已够用，
+  未获指名不引入。**边界注记**：仅登记候选；零新依赖零 SDK 零框架；研究面零改动。
+  延伸索引53（2026-11-14 append，frontier-citation-anchors；仅引用零接入；low）：arXiv:
+  2611.14325「Point-in-Time Encoders for Earnings Calls」（Alessio Brini，cs.CL
+  2026-11-10，IEEE BigData 2026 LLM4Finance workshop；abs 页本日 fox_fetch 一手
+  复核）+repo github.com/Alessiobrini/point-in-time-encoders-for-earnings-calls
+  （MIT 白名单内，本日 GitHub API 复核 0★、pushed 2026-11-10）——摘要逐字「a
+  backtest needs an encoder that read no text written after the date of each
+  vector」+「we train vintages under four pretraining recipes, with yearly cutoffs
+  from 2010 to 2024, and each vintage reads only text dated on or before its
+  cutoff」=**vintage 训练纪律** ≡ PIT 原则在编码器侧的同构佐证（本仓 fundamentals
+  filed-date/ALFRED as-of vintage 口径的特征侧镜像）；诚实读数同向：「It forecasts
+  returns no better…point-in-time vintages matter most for retrieval and little for
+  forecasts of returns」——PIT 纪律主要救检索、对收益预测增益区间含零（null 友好）。
+  **不采部分**：412,248 calls 语料/33.8M 编码器与四 recipe 不接入不复制（数据 7-gate
+  +研究面零改动）。**边界注记**：仅引用零接入；零新依赖零 SDK 零框架；研究面零改动。
 
 ## 前沿吸收（轮 127，2026-11-11；来源=reports/audits/2026-11-11-env-testpipeline-round.md §6b——两路前沿调研中 high 但 L 规模/存疑/触红线者，逐条含来源 URL）
 
