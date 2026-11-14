@@ -494,6 +494,139 @@
   forecasts of returns」——PIT 纪律主要救检索、对收益预测增益区间含零（null 友好）。
   **不采部分**：412,248 calls 语料/33.8M 编码器与四 recipe 不接入不复制（数据 7-gate
   +研究面零改动）。**边界注记**：仅引用零接入；零新依赖零 SDK 零框架；研究面零改动。
+  延伸索引54（2026-11-14 append，frontier-citation-anchors；仅引用零接入）：arXiv:
+  2609.10996「Rethinking Verbalized Confidence for LLM-as-a-Judge: A Compatibility
+  Shift on Post-2025 Proprietary Models」（Yu-Chung Hsiao，cs.CL 2026-09-10；abs 页
+  本日 fox_fetch 一手复核）——摘要逐字「the standard advice to prefer
+  log-probabilities no longer holds on post-2025 models, where verbalized
+  confidence is the better signal. We call this a compatibility shift」+「post-2025
+  models accommodate these two additions with little balanced-accuracy cost,
+  whereas pre-2025 models pay a measurable penalty」=**compatibility shift 代际
+  注记**：logprobs-vs-verbalized 软信号选型随模型代际翻转、跨代照搬会翻错
+  （provider 池 GLM/SiliconFlow/ModelScope 同域限定；延伸索引④ lm-evaluation-
+  harness logprobs 三 provider 未验证必录限定 :580 同向）。摘要逐字「we introduce
+  two new ingredients: an overconfidence advisory and self-debate」+「improve
+  calibration, score-distribution spread, and robustness to task
+  subjectivity」——**overconfidence advisory ≡ 环 1b CALIBRATION_FEEDBACK_NOTE
+  同构**（monthly_review.py:1550「呈现≠校准」+:1600「环 1b 注入，facts only」——
+  judge 侧对过自信出 advisory ≡ p 记录侧固定注记 facts only）；score-distribution
+  spread=分布面呈现价值佐证（五桶呈现 docs/ops-local-refresh.md:769 p≥0.5 固定
+  五桶 Wilson CI 同向——分布呈现优于单值点读）；「The shift is invisible under
+  accuracy-only reporting」=单指标报告掩蔽效应 ≡ 记录性事实统计多面呈现必要性。
+  **不采部分**：self-debate（多次推理调用，稳态 token 不增烧红线）；
+  SummEval/AggreFact/HelpSteer2 评测基建零接入。**边界注记**：仅引用零接入；
+  零新依赖零 SDK 零框架；研究面零改动。
+  延伸索引55（2026-11-14 append，frontier-citation-anchors；仅引用零接入；论文主
+  锚，repo license=null 不登记）：arXiv:2509.25532「Calibrating Verbalized
+  Confidence with Self-Generated Distractors」（Victor Wang, Elias Stengel-Eskin，
+  cs.CL 2025-09-29 v1/2026-02-27 v2，ICLR 2026；abs 页本日 fox_fetch 一手复核）——
+  摘要逐字「this overconfidence often stems from a given LLM's heightened
+  suggestibility when faced with claims that it encodes little information about;
+  we empirically validate this hypothesis, finding more suggestibility on
+  lower-accuracy claims」=**suggestibility bias 实证**（低准确度 claim 上更易被
+  带偏）——支撑 WATCHDOG 两纪律：①有界问「预先枚举+只回选项+置信度」协议
+  （WATCHDOG_BOUNDED_QUESTION monthly_review.py:1459+固定 A|B|C）不给模型自由
+  生成面；②**干扰项措辞定型**：DINCO 的 distractor=模型自生成（摘要逐字
+  「self-generated distractors (i.e. alternative claims)」措辞运行时可变），本仓
+  反向定型=选项集固定+措辞冻结——suggestibility 实证=自生成面收窄的第三方依据。
+  **不采部分**：方法体（多次推理+归一化）——摘要逐字「DINCO at 10 inference
+  calls」成本模型+「normalizes by the total verbalized confidence」归一化=校准
+  拟合动作，n=1 月度 p 记录禁拟合（#15 口径）+稳态 token 不增烧红线。
+  **repo license=null 不认**：victorwang37/dinco 本日 GitHub API 复核
+  license=null、6★——沿轮 12 pitmon/㉜ 无 LICENSE 先例零复制，只留论文主锚。
+  **边界注记**：仅引用零接入；零新依赖零 SDK 零框架；研究面零改动。
+  延伸索引56（2026-11-14 append，frontier-citation-anchors；仅引用零接入；**自演化
+  综述两篇分立防配套混引款**，与 57 各自独立登记）：arXiv:2507.21046「A Survey of
+  Self-Evolving Agents: What, When, How, and Where to Evolve on the Path to
+  Artificial Super Intelligence」（Huan-ang Gao 等 27 作者，cs.AI 2025-07-28 v1/
+  2026-01-16 v4，TMLR 01/2026、77 pages；abs 页本日 fox_fetch 一手复核）——摘要
+  逐字「categorize adaptation methods by stages (e.g., intra-test-time,
+  inter-test-time)」=**intra/inter-test-time 分期给三环正名**：环 1a/1b（月末单场
+  会话内注入，monthly_review.py:1600 环 1b facts only）≈ intra-test-time 同族，
+  环 2 insight 沉淀（跨月 lessons，monthly_review.py:1637 环 2·蒸馏）≈
+  inter-test-time 同族——本仓适应面全部落在分期内的呈现/沉淀层，运行时自演化
+  循环不采（㊴ Dynamic Cheatsheet 同判：test-time 自我改写属运行时面，稳态 token
+  不增烧红线冲突）。**配属清单 license=null 不认**：XMUDeepLIT/Awesome-Self-
+  Evolving-Agents 本日 GitHub API 复核 license=null、487★——不登记（白名单纪律），
+  沿 ㊾/㉜ 形只留论文主锚。**不采部分**：演化机制本体（memory/tool/architecture
+  演化、reward/feedback 循环）零接入。**边界注记**：仅引用零接入；零新依赖零
+  SDK 零框架；研究面零改动。
+  延伸索引57（2026-11-14 append，frontier-citation-anchors；仅引用零接入+repo 锚
+  清单 MIT 仅索引用途；**自演化综述两篇分立防配套混引款**，与 56 各自独立登记）：
+  arXiv:2508.07407「A Comprehensive Survey of Self-Evolving AI Agents: A New
+  Paradigm Bridging Foundation Models and Lifelong Agentic Systems」（Jinyuan Fang
+  等 15 作者，cs.AI 2025-08-10 v1/2025-08-31 v2；abs 页本日 fox_fetch 一手复核）
+  ——摘要逐字「four key components: System Inputs, Agent System, Environment, and
+  Optimisers」=四组件反馈环框架对读参照（本仓月末链「凭据→呈现→人工 bounded
+  question→outcome 记录→lessons 沉淀」逐环对位，Optimiser=人工裁决非自动优化器
+  ——L2 钥匙在业主语义不变）+「domain-specific evolution strategies developed for
+  specialised fields such as biomedicine, programming, and finance, where
+  optimisation objectives are tightly coupled with domain constraints」=域约束
+  不可被通用方法稀释的反向注记。**repo 锚（CC0 清单先例仅索引用途同款）**：
+  github.com/ANative-Lab/Awesome-Self-Evolving-Agents（MIT 白名单内，本日 GitHub
+  API 复核 2523★、pushed 2026-05-16 停更态[~6 个月未推，沿 ㉗ 先例]）——只作本
+  综述 repo 锚/阅读索引，**清单内条目零装包资格**（延伸索引① CC0 仅索引用途
+  先例 :66-68 同款）。**同 org 实现仓 NOASSERTION 不认**：ANative-Lab/EvoAgentX
+  本日 GitHub API 复核 license=NOASSERTION、3435★——综述清单≠本体实现仓如实
+  辨明，实现仓不装不引。**不采部分**：自演化循环本体零接入。**边界注记**：仅
+  引用零接入；零新依赖零 SDK 零框架；研究面零改动。
+  延伸索引58（2026-11-14 append，frontier-citation-anchors；仅范式引用零代码复制
+  零数据接入）：github.com/patronus-ai/trail-benchmark（TRAIL=Trace Reasoning and
+  Agentic Issue Localization；MIT 白名单内，本日 GitHub API 复核 24★、pushed
+  2025-05-14 停更态[~6 个月未推，沿 ㉗ 先例；archived=false、desc=null 实测]）——
+  README 本日 gh api 一手实测逐字「a benchmark dataset of 148 annotated AI agent
+  execution traces containing 841 errors across reasoning, execution, and planning
+  categories」+「the best model achieving only 11% accuracy」——**分类学词汇表
+  范式**：错误三分类词汇（reasoning/execution/planning）供环 2（insight 蒸馏
+  monthly_review.py:1637）远期「零 LLM 规则归桶/零嵌入」参照（词汇表先查再写
+  规则，零推理零嵌入成本；与 59 CatchBench entrants 含 rule scanners 同域）。
+  **不采部分**：LLM 判官面不采（其 trace debugging 评测由 LLM 出分——LLM 判官
+  与稳态零 LLM 确定性面冲突）；148 轨迹数据集**不 clone 不入 data/**（7-gate
+  snapshot/politeness 门，标注数据本体零接入）。**边界注记**：仅引用零接入；
+  零新依赖零 SDK 零框架；研究面零改动。
+  延伸索引59（2026-11-14 append，frontier-citation-anchors；仅范式引用零代码复制
+  零数据接入）：github.com/yzhao062/catchbench（CatchBench；MIT 白名单内，本日
+  GitHub API 复核 12★、pushed 2026-11-14 当日活跃、archived=false）——README
+  本日 gh api 一手实测逐字「A benchmark for auditing agents across three
+  information states: the declared configuration before a run, a growing prefix
+  while it runs, and the finished trace after it ends」+「The pillars are not
+  three convenient buckets; they are the three information states a run passes」
+  ——**三信息态 ≡ 本仓三态同构**：declared configuration before a run ≡
+  config_committed（冻结 sha256 先于结果入 runs/ledger.jsonl）；growing prefix
+  while it runs ≡ ledger append-only（执行中只增不改）；finished trace after it
+  ends ≡ state/（current/handoff）+门禁读数（事后归因面）——供 ops doctor 九层
+  与审计报告**分态归因语言**（错在声明配置侧/执行前缀侧/事后状态侧一眼可辨，
+  judgments/facts 分账 monthly_review.py:1033 docstring/:1002 行内同族）；
+  entrants 词面实测「LLM judges, rule scanners, structural and graph detectors,
+  and anomaly detectors」——rule scanners=零 LLM 归桶先例同向。**与 ㉜
+  （hermes-patches 五列卡范式）㉞（Argo Rollouts 三态 verdict 词汇）不同轴不构成
+  重登**（信息态=观测时相轴 vs 五列卡=补丁档案轴 vs verdict=判定结果词汇轴）。
+  **不采部分**：benchmark 本体/1187 declared agent configurations 数据/boards
+  零接入不 clone；LLM judge entrant 面不采。**边界注记**：仅引用零接入；零新
+  依赖零 SDK 零框架；研究面零改动。
+  延伸索引60（2026-11-14 append，frontier-citation-anchors；仅引用零接入）：arXiv:
+  2402.19379「Wisdom of the Silicon Crowd: LLM Ensemble Prediction Capabilities
+  Rival Human Crowd Accuracy」（Philipp Schoenegger, Indre Tuminauskaite,
+  Peter S. Park, Philip E. Tetlock，cs.CY 2024-02-29 v1/2024-07-22 v6；abs 页本日
+  fox_fetch 一手复核）——摘要逐字「an LLM ensemble approach consisting of a crowd
+  of twelve LLMs」=**多 LLM 预测聚合文献依据**：三 provider（GLM/SiliconFlow/
+  ModelScope）p 聚合候选——**owner-gated 默认关闭仅呈现层**（聚合是呈现选择非
+  拟合，未获指名不实现）；摘要逐字「We also observe an acquiescence effect, with
+  mean model predictions being significantly above 50%, despite an almost even
+  split of positive and negative resolutions」=**acquiescence effect 佐证 p̄/
+  BS_base 基线纪律**（模型 p 系统性偏置必须经基线读出——monthly_review.py:
+  1128-1130 BS_base=p̄(1-p̄)/BSS=1−BS/BS_base 同向，裸 p 阈值不可靠）；
+  「Our preregistered main analysis shows…」preregistered 主分析先行+exploratory
+  分账=预注册纪律同构（config_committed 先于结果同向）；「Past work …
+  underperform」既有文献结论与本文「not statistically different from the human
+  crowd」**contrarian 报告两面并列**（个体 LLM 弱于人 crowd/聚合 LLM 平齐两面
+  并列，文献逆转型诚实报告先例）；Study 2 逐字「improving accuracy by between
+  17% and 28%: though this leads to less accurate predictions than simply
+  averaging human and machine forecasts」=人机信息注入有效但劣于双方直接平均
+  （两面并列第二落点）。**不采部分**：925 人 crowd 人类预测数据/31 binary
+  questions 零接入；「LLM 可替代人类预测」结论不采（本仓 p 记录=人工裁决面
+  记录非自动预测器）。**边界注记**：仅引用零接入；零新依赖零 SDK 零框架；
+  研究面零改动。
 
 ## 前沿吸收（轮 127，2026-11-11；来源=reports/audits/2026-11-11-env-testpipeline-round.md §6b——两路前沿调研中 high 但 L 规模/存疑/触红线者，逐条含来源 URL）
 
