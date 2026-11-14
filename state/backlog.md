@@ -363,6 +363,42 @@
   重登**；**不引入常驻组件**只取「检测分离于修复」语义（drift 检测与修复动作分离 ≡
   呈报-入册分离、引擎只读不代记同向）。**边界注记**：仅引用零接入；零新依赖零 SDK
   零框架；研究面零改动。
+  延伸索引㊸（2026-11-14 append，frontier-citation-anchors；仅引用零接入）：github.com/
+  fiberplane/drift（MIT，本日 GitHub API 复核 159★、pushed 2026-06-22 起约 5 个月未推——
+  停更态如实注记沿㉗先例；archived=false、实现语言 Zig 实测，Rust 系其解析支持语言列表
+  一员非实现语言）——「Bind docs to code and check for drift」：markdown 锚绑定代码（文件
+  或 AST symbol），`drift link` 对目标打内容签名=tree-sitter 解析的 normalized AST
+  fingerprint（node kinds+token text、无空白无位置数据——重排版不误报，README 原文
+  实测），`drift check` 重算指纹比对、CI 中 stale docs 阻断 merge=锚债由被动勘误翻转
+  为主动拦截 ≡ scripts/anchor_guard.py:11 既有形（本日实测）。**仅借三语义供条目
+  anchor-guard-v2**（落点条目名系交办给定，backlog 在册未见如实注记）：①syntax-aware
+  归一化指纹防重排版误报 ②symbol 级锚收窄到声明子树 ③指纹随 link 落盘（drift.lock
+  佐证在场）。**本体不装**：tree-sitter 解析面+Zig 工具链（zig build 安装面实测）违
+  anchor_guard.py:11 纯 stdlib 零新依赖红线。**边界注记**：仅引用零接入；零新依赖零
+  SDK 零框架；repo 停更如实注记；研究面零改动。
+  延伸索引㊹（2026-11-14 append，frontier-citation-anchors；仅引用零接入，docs 在前）：
+  K8s release-note 约定词面（本日一手复核三层：kubernetes/kubernetes PR 模板
+  .github/PULL_REQUEST_TEMPLATE.md+kubernetes/release cmd/release-notes/README.md+
+  community guide contributors/guide/release-notes.md）——release-note block 默认
+  「NONE」（无 user-facing change 即不进 release notes，排除过滤大小写不敏感 none|n/a
+  实测）+「include the string "action required"」用户行动句式（case insensitive 实测）
+  =patch 卡 surface 字段词面先例；repo github.com/kubernetes/release（Apache-2.0，本日
+  GitHub API 复核 505★、pushed 2026-11-13 活跃）供条目 patch-card-surface-rollback
+  （落点条目名系交办给定，backlog 在册未见如实注记）。**bot 自动消费不采**：
+  release-notes Go CLI+Prow 标注链本体不装不引。**rollback 句式词面未一手坐实**（约定
+  文档三层均无、repo 内仅 changelog_data_test.go 测试数据 1 处实测）——如实留缺口沿
+  轮 15 报告 :48 缺口行先例。**边界注记**：仅引用零接入；零新依赖零 SDK 零框架；
+  研究面零改动。
+  延伸索引㊺（2026-11-14 append，frontier-citation-anchors；仅引用零接入）：github.com/
+  Joe-rq/ReJev（MIT，本日 GitHub API 复核 22★、pushed 2026-10-22 活跃）——Jev-style
+  decision-model 训练复现（MiniCPM5-2B+LoRA，sealed holdout 1892 items/924 groups 带
+  leakage checks 实测）；**第三方反泄漏纪律样本**：README 原文实测「The −2.33pp figure
+  this line used to cite is void (corrected 2026-09-28) — it was measured on a
+  contaminated split」（复现者发现 headline 数字受数据污染即公开作废+clean holdout
+  更正读数 +0.63pp CI[−1.13, +2.37]+勘误指向 technical report §2.3）——原行 void 标注
+  不抹历史 ≡ config_committed 先于结果/禁 rerun-to-significance（AGENTS.md 反泄漏锚）
+  同族+勘误追加制（handoff 勘误节先例）同向。**边界注记**：仅引用零接入；零新依赖零
+  SDK 零框架；研究面零改动。
 
 ## 前沿吸收（轮 127，2026-11-11；来源=reports/audits/2026-11-11-env-testpipeline-round.md §6b——两路前沿调研中 high 但 L 规模/存疑/触红线者，逐条含来源 URL）
 
