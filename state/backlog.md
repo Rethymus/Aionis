@@ -141,6 +141,39 @@
   learning 评估）=飞轮验收口径参照（continual learning，运维面 A/B 设想，未开工）——运维面
   「带 active lessons vs 清空 lessons」月度对照设想（非研究面对照）；未开工只登记，启用须
   业主点名+独立 mission。
+  延伸索引⑱（2026-11-14 append，frontier-citation-anchors；仅引用零接入）：arXiv:2610.38211
+  （RainCheck，high）——BSS 相对 climatology 基线带 95% CI 的报告口径；泄漏感知评估与
+  PurgedGroupKFold+embargo 立场第三方同构。adaptation 口径：环1a 校准聚合
+  （calibration_bucket_summary :1059 五桶+Wilson 95% CI+mean Brier）报告语言参照——相对
+  基线读数带 CI 不裸报点值；PurgedGroupKFold+embargo=在册研究面方法论，仅第三方印证零改动。
+  **边界注记**：仅引用零接入；零新依赖零 SDK 零框架；研究面零改动。
+  延伸索引⑲（2026-11-14 append，frontier-citation-anchors；仅引用零接入）：arXiv:2610.28979
+  （Anytime-Valid，high）——月度连续监控须 anytime 校正+not-enough-data 数学。
+  adaptation 口径：环1 月度连续对账（reconcile/Brier/Wilson 面）统计语言远期参照——连续
+  监控读数须 anytime 校正、样本不足=如实 not-enough-data 不硬判；当前面零改动，启用须
+  业主点名。**边界注记**：仅引用零接入；零新依赖零 SDK 零框架。
+  延伸索引⑳（2026-11-14 append，frontier-citation-anchors；仅引用零接入）：arXiv:2609.14138
+  （LIMBO，high）——回放非免费、注入须显式预算。adaptation 口径：环2/步 6 INSIGHT 注入
+  预算口径锚——反哺行（校准事实入 lessons）占 INSIGHT 0-2 条额度中 1 条（runbook 步 6
+  注记行同批落），lessons 重放不无限倾倒。**边界注记**：仅引用零接入；零新依赖零 SDK
+  零框架。
+  延伸索引㉑（2026-11-14 append，frontier-citation-anchors；仅引用零接入）：arXiv:2611.14465
+  （One Curve，medium）——BSS 权重语义=better-than-chance 数学正身+桶级
+  |桶均 p−桶命中率| 语言。adaptation 口径：环1a 桶表读数语言参照——桶级差距绝对值呈现；
+  BSS 语义仅作理解参照，不作研究面度量改动。**边界注记**：仅引用零接入；零新依赖零 SDK
+  零框架。
+  延伸索引㉒（2026-11-14 append，frontier-citation-anchors；仅引用零接入）：arXiv:2606.15306
+  （LatentGym，medium）——探索/利用分离=环3「注入≠利用」验收观察口径。adaptation
+  口径：注入（lessons/insight 进 prompt）与利用（据此改 p/阈值）分离纪律第三方同构；
+  A/B 启用须业主点名。**边界注记**：仅引用零接入；零新依赖零 SDK 零框架。
+  延伸索引㉓（2026-11-14 append，frontier-citation-anchors；仅引用零接入）：arXiv:2406.07817
+  （nci/scores，Apache-2.0——本轮调研唯一一手核实许可证合规仓库）——isotonic/分位桶+
+  度量名词表。adaptation 口径：只借度量名词表与分桶口径（环1a 校准聚合语言参照），不装包
+  不克隆。**边界注记**：仅引用零接入；零新依赖零 SDK 零框架；白名单内≠装包资格。
+  延伸索引㉔（2026-11-14 append，frontier-citation-anchors；仅引用零接入）：arXiv:2610.29288
+  （Time-Uniform Dependent CLT，low）——序列依赖 CI 稳健化远期方向，仅 backlog 登记。
+  adaptation 口径：环1 序列依赖下 CI 稳健化远期参照，当前 Wilson 面零改动；启用须业主
+  点名+独立 mission。**边界注记**：仅引用零接入；零新依赖零 SDK 零框架。
 
 ## 前沿吸收（轮 127，2026-11-11；来源=reports/audits/2026-11-11-env-testpipeline-round.md §6b——两路前沿调研中 high 但 L 规模/存疑/触红线者，逐条含来源 URL）
 

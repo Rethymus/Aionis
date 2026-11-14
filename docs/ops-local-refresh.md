@@ -897,7 +897,10 @@ uv run python scripts/monthly_review.py \
   `INSIGHT_HINT` :1439 从 resolved 行 + active lessons 蒸馏 **0-2 条** IF-THEN
   policy 片段写入草稿（片段禁含「自动调 p」指令）。**0-2 条上限的第三方依据**
   =ERL arXiv:2603.24639（LEARN 每次只抽**少量精炼规则**入 prompt——少而精，
-  非全量倾倒）。11-30 首跑零 resolved→降级行如实（insight 步跳过），**首次
+  非全量倾倒）。**lessons 注入预算口径（LIMBO arXiv:2609.14138 锚，
+  2026-11-14 append，frontier-citation-anchors ⑳）**：回放非免费——反哺行
+  （校准事实入 lessons，步 5 检查点②）占上面 INSIGHT 0-2 条额度中 1 条，注入
+  须显式预算、不超限倾倒。11-30 首跑零 resolved→降级行如实（insight 步跳过），**首次
   insight 生效=12 月末**。
 - **预期输出**：exit 0、stderr 无 refuse；handoff 尾部新增块（header 含
   `month=2026-11` 与契约字面）。
