@@ -1291,6 +1291,29 @@ LESSONS_CONTRACT_NOTE = ("写回契约：每条教训 event: 四操作（ADD / "
                          "month=YYYY-MM#n] / NONE）+ 计划形「下次 X 触发时做 "
                          "Y」非事件描述 + evidence: 路径引用 —— docs/"
                          "ops-local-refresh.md §lessons 块格式")
+# iterate round 14 (memp-insight-lifecycle, framework ③; design spec
+# reports/audits/2026-11-15-iterate-round-14.md §6.2): the deprecate×
+# supersedes WRITE-READ closed loop as ONE pairing note — Memp's
+# update/correct/deprecate lifecycle vocabulary over the IN-REGISTER four
+# event ops (EVENT_OP_RE untouched — 轮 128-续 semantics stand). Read side
+# (retire set + archive rendering) is the EXISTING active_lessons_view
+# machinery, zero changes; anti-resurrection is the quality gate's
+# retire-restatement criterion (framework ①) — three orthogonal gates.
+# Memory-R1 outcome gating: keep/promote must cite the month's resolved
+# reconciliation outcome evidence (ref=), never self-judgment;
+# NOOP≡NONE aligns Memory-R1's no-op with the round-145 NONE precedent.
+# Offline boundary: Memp online build, Memory-R1 PPO/GRPO training and the
+# LoCoMo/MSC/LongMemEval benchmark infra are NOT adopted (steady-state
+# one-session-per-evening + no-background-process red lines).
+LESSON_LIFECYCLE_NOTE = ("生命周期配对（Memp update/correct/deprecate×在册四操作"
+                         "；轮 14 框架③）：UPDATE[supersedes month=M#n]→retire "
+                         "该 id、replacement 携教训前行；DELETE[voids month=M#n]"
+                         "→同 retire 段=禁复述比对对象——两者须目标 id 真实存在"
+                         "+outcome ref= 在场（Memory-R1 outcome 门控，伪 id→"
+                         "quality-miss[bad-ref]）；ADD+hook/ref 信封→§6 全量呈现"
+                         "+质量门三判据；NONE→旧条照旧（NOOP≡NONE，轮 145 先例）"
+                         "——写侧引用式标记零回改×读侧 retire 集在册零改动×防回潮"
+                         "=禁复述 retire 段，三门正交")
 
 
 def _lessons_blocks(handoff_text: str) -> list[tuple[str, str]]:
@@ -1540,7 +1563,13 @@ INSIGHT_HINT = ("月末会话请从本月 resolved 对账行 + active lessons �
                 "（hook-miss/bad-ref/retire-restatement 三判据，零 LLM 零嵌入"
                 "——RLSVR arXiv:2607.23802『任务变换→可验证判据』协议映射，"
                 "backlog 延伸索引㉝），不合规条目由 quality-miss 行呈报拒入本月"
-                "蒸馏候选池（§6 档案呈现零回改，append-only）")
+                "蒸馏候选池（§6 档案呈现零回改，append-only）。双路径裁决（Memp "
+                "全生命周期映射+Memory-R1 outcome 门控，iterate 轮 14 框架③）："
+                "新教训=event: ADD+信封；新 outcome 证据指向既有片段=UPDATE"
+                "[supersedes month=M#n]（修正接替）或 DELETE[voids month=M#n]"
+                "（退役）——UPDATE/DELETE 须附 outcome ref= 且目标 id 真实存在"
+                "（伪 id=quality-miss）；无证据变化=event: NONE（重复已录不重写"
+                "，NOOP≡NONE）")
 
 
 def render_reflexion_section(seeds: dict,
@@ -1628,6 +1657,7 @@ def render_reflexion_section(seeds: dict,
         out.append("- none yet (no monthly-reflexion-lessons block in the "
                    "handoff)")
     out += ["", f"- {LESSONS_CONTRACT_NOTE}"]
+    out.append(f"- {LESSON_LIFECYCLE_NOTE}")
     out.append("")
     return "\n".join(out)
 
@@ -2031,6 +2061,26 @@ def insight_quality_verdict(head_line: str, body_lines: list[str],
     return {"ok": True, "ref": f"{rm.group(1)}#{rm.group(2)}"}
 
 
+def insight_lifecycle_verdict(entry_lines: list[str],
+                              known_ids: set[tuple[str, int]]) -> dict:
+    """Round 14 §6.2 (memp-insight-lifecycle): the lifecycle gate for
+    UPDATE/DELETE marks written in the review-month block(s) — the
+    deprecate×supersedes closed loop's write-side validation. Reuses the
+    in-register scanners (EVENT_REF_RE for the supersedes/voids target,
+    _INSIGHT_REF_RE for the outcome-evidence token); ZERO new reason
+    vocabulary: a missing/invalid target id or a missing outcome ref=
+    token both degrade to bad-ref (the semantic split lives HERE in the
+    docstring, the four-state word table stands untouched — 轮 128-续
+    EVENT_OP_RE semantics unchanged, this gate only VALIDATES marks)."""
+    head = (entry_lines or [""])[0]
+    mark = EVENT_REF_RE.search(" ".join(entry_lines or []))
+    outcome_ref = _INSIGHT_REF_RE.search(head)
+    if (mark is None or outcome_ref is None
+            or (mark.group(2), int(mark.group(3))) not in known_ids):
+        return {"ok": False, "reason": "bad-ref", "raw": head[:120]}
+    return {"ok": True, "ref": f"{mark.group(2)}#{mark.group(3)}"}
+
+
 def insight_quality_report(handoff_text: str, review_month: str,
                            resolved_ids) -> list[str]:
     """Presentation lines for the month's insight quality gate (the render
@@ -2043,24 +2093,40 @@ def insight_quality_report(handoff_text: str, review_month: str,
     focus line only). Zero candidates -> [] (honest absence: nothing
     renders, zero noise). The §6 archive view is NOT touched by this
     report (engine never writes the handoff; append-only presentation
-    stands)."""
+    stands). Round 14 §6.2 extends the same report to UPDATE/DELETE marks
+    in the review-month block(s) (the lifecycle gate: target id must
+    exist + outcome ref= present — reuse of bad-ref, zero new reason
+    words); a PASSING lifecycle mark renders nothing (zero noise — the
+    mark is already consumed by the archive's retire set)."""
     ids = set(resolved_ids or ())
     retired = _insight_retired_texts(handoff_text)
+    known_ids: set[tuple[str, int]] = set()
+    for month, block in _lessons_blocks(handoff_text):
+        for idx in range(1, len(_parse_lesson_entries(block)) + 1):
+            known_ids.add((month, idx))
     lines: list[str] = []
     for month, block in _lessons_blocks(handoff_text):
         if month != review_month:
             continue
         for idx, entry in enumerate(_parse_lesson_entries(block), 1):
             head = entry["lines"][0].rstrip()
+            ref = f"{month}#{idx}"
+            head_txt = head.lstrip().lstrip("-*").strip()
+            if entry["op"] in ("UPDATE", "DELETE"):
+                verdict = insight_lifecycle_verdict(entry["lines"],
+                                                    known_ids)
+                if not verdict["ok"]:
+                    lines.append(f"insight quality-miss[{verdict['reason']}] "
+                                 f"[{ref}]: {head_txt[:80]}"
+                                 "（拒入本月蒸馏候选池）")
+                continue
             if not _INSIGHT_ENTRY_RE.search(head):
                 continue
             verdict = insight_quality_verdict(head, entry["lines"][1:],
                                               review_month, ids, retired)
-            ref = f"{month}#{idx}"
             if verdict["ok"]:
                 lines.append(f"[{ref}] 合格 insight")
             else:
-                head_txt = head.lstrip().lstrip("-*").strip()
                 lines.append(f"insight quality-miss[{verdict['reason']}] "
                              f"[{ref}]: {head_txt[:80]}"
                              "（拒入本月蒸馏候选池）")

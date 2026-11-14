@@ -1231,7 +1231,7 @@ def test_insight_quality_gate_retire_restatement_archive_untouched() -> None:
         "ref=2026-11#2\n"
         "  复述检测：- event: ADD IF 满格带表达 THEN 附可证伪依据 "
         "evidence: state/backlog.md\n"
-        "- event: DELETE voids month=2026-11#1\n"
+        "- event: DELETE voids month=2026-11#1 ref=2026-11#2\n"
         "  evidence: 复述退役\n")
     retired = mr._insight_retired_texts(handoff)
     assert retired == ["- event: ADD IF 满格带表达 THEN 附可证伪依据 "
@@ -1317,3 +1317,70 @@ def test_gate_bridge_summary_not_enough_data_maps_to_inconclusive() -> None:
             "M:not-enough-data") in line
     assert "只呈现零启用" in line
     assert "门绿≠实践健康" in line
+
+
+def test_gate_lifecycle_update_delete_target_and_outcome_ref() -> None:
+    """Round 14 §6.2 lifecycle gate: UPDATE/DELETE marks in the review-month
+    block(s) must name a REAL target id (EVENT_REF_RE) and carry the
+    outcome-evidence token (ref=, Memory-R1 gating) — pseudo id / missing
+    ref both degrade to quality-miss[bad-ref] (zero new reason words); a
+    PASSING mark renders NOTHING (zero noise — already consumed by the
+    archive retire set)."""
+    handoff = (
+        "# handoff\n\n<!-- monthly-reflexion-lessons month=2026-11 -->\n\n"
+        "- event: ADD IF 中带表达 THEN 先跑 --doctor\n"
+        "  evidence: state/backlog.md\n"
+        "- event: DELETE voids month=2026-11#1 ref=2026-11#1\n"
+        "  evidence: outcome 已否定该条（对账行实据）\n"
+        "- event: UPDATE supersedes month=2026-11#99 ref=2026-11#1\n"
+        "  evidence: 修正形接替\n"
+        "- event: DELETE voids month=2026-11#1\n"
+        "  evidence: 无 outcome ref\n")
+    ids = {"2026-11#1"}
+    report = mr.insight_quality_report(handoff, "2026-11", ids)
+    assert len(report) == 2  # pseudo id + missing ref fire; #2 passes silent
+    assert "quality-miss[bad-ref] [2026-11#3]" in report[0]
+    assert "quality-miss[bad-ref] [2026-11#4]" in report[1]
+    known = {(("2026-11"), 1)}
+    assert mr.insight_lifecycle_verdict(
+        ["- event: DELETE voids month=2026-11#1 ref=2026-11#1"],
+        known) == {"ok": True, "ref": "2026-11#1"}
+    assert mr.insight_lifecycle_verdict(
+        ["- event: UPDATE supersedes month=2026-11#99 ref=2026-11#1"],
+        known) == {"ok": False, "reason": "bad-ref", "raw":
+                   "- event: UPDATE supersedes month=2026-11#99 ref="
+                   "2026-11#1"[:120]}
+    assert mr.insight_lifecycle_verdict(
+        ["- event: DELETE voids month=2026-11#1"],
+        known) == {"ok": False, "reason": "bad-ref",
+                   "raw": "- event: DELETE voids month=2026-11#1"[:120]}
+
+
+def test_lesson_lifecycle_pairing_note_renders_with_noop() -> None:
+    """Round 14 §6.4.3 ①④: the deprecate×supersedes pairing note renders
+    in the §6 archive tail next to the untouched lessons contract note; it
+    carries the Memp vocabulary, the Memory-R1 outcome gate and the
+    NOOP≡NONE alignment (round-145 precedent) — prose guidance only, the
+    gate stays zero-LLM."""
+    seeds = _render_seeds(
+        "none yet（基线收集月——无 resolved 对账行可入桶，不造最歪桶）")
+    text = mr.render_reflexion_section(seeds, None, [])
+    assert f"- {mr.LESSONS_CONTRACT_NOTE}" in text
+    assert f"- {mr.LESSON_LIFECYCLE_NOTE}" in text
+    assert "NOOP≡NONE" in mr.LESSON_LIFECYCLE_NOTE
+    assert "Memp" in mr.LESSON_LIFECYCLE_NOTE
+    assert "Memory-R1 outcome 门控" in mr.LESSON_LIFECYCLE_NOTE
+    assert "三门正交" in mr.LESSON_LIFECYCLE_NOTE
+    archive = text.split("## 6")[1]
+    assert mr.LESSON_LIFECYCLE_NOTE in archive
+
+
+def test_event_op_ref_patterns_zero_drift() -> None:
+    """Round 14 §6 red line: the four-op EVENT_OP_RE and the reference-mark
+    EVENT_REF_RE patterns are BYTE-FROZEN — the lifecycle work only ADDS
+    guidance and validation around them, never edits the in-register
+    operation本体 (轮 128-续 semantics stand)."""
+    assert mr.EVENT_OP_RE.pattern == (
+        r"^\s*[-*]\s*event:\s*(ADD|UPDATE|DELETE|NONE)\b")
+    assert mr.EVENT_REF_RE.pattern == (
+        r"\b(supersedes|voids)\s+month=(\d{4}-\d{2})#(\d+)\b")

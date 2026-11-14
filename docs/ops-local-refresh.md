@@ -303,11 +303,11 @@ not-run」。格式（轮次叙事 bullet 末尾、缩进三行子条目）：
 不宣称认知架构（「内部世界模型」叙事不采用）：
 
 - **判别层（确定性规则引擎，快、零 LLM）**：`--weekly` 看门狗、`--propose` 提案
-  引擎（`scripts/monthly_review.py:1712` argparse help：zero LLM, zero network）、
+  引擎（`scripts/monthly_review.py:1742` argparse help：zero LLM, zero network）、
   Fast Path `--triage` 分诊、夜报包组装——规则表判别红牌/信号；引擎不归类者交
   人工归类（`monthly_review.py:895`）。
 - **生成层（月末 LLM 会话，慢、唯一生成面）**：月末复盘/教训撰写/Watchdog 有界
-  问题作答（`WATCHDOG_BOUNDED_QUESTION`，`monthly_review.py:1430`）；预算仍为
+  问题作答（`WATCHDOG_BOUNDED_QUESTION`，`monthly_review.py:1453`）；预算仍为
   单场 23:35 LLM 会话（`monthly_review.py:1274` Budget 注）——分层**不新增**
   会话/进程/依赖。
 - **不引入外部判别 API**：判别层只由本地确定性代码构成；接入 Jev API /
@@ -334,7 +334,7 @@ not-run」。格式（轮次叙事 bullet 末尾、缩进三行子条目）：
   strict json_schema 服务端强制——只保证返回可解析 JSON，字段结构靠
   system/prompt 描述约束（官方 Schema 示例亦以客户端 jsonschema 校验兜底）——
   故 `parse_bounded_answer` 的 format-miss 诚实降级兜底
-  （`scripts/monthly_review.py:1439-1462`：不可解析/越界均降级为诚实标记、
+  （`scripts/monthly_review.py:1462-1485`：不可解析/越界均降级为诚实标记、
   原文留档）**必须保留**，不因官方模式存在而移除。输出为单行 {answer,p}，
   约十 token 量级，落在既有月末单场 23:35 会话预算内；本注记零新增依赖、
   零新增调用面，仅描述既有 bounded question 子任务。
@@ -354,8 +354,8 @@ not-run」。格式（轮次叙事 bullet 末尾、缩进三行子条目）：
 | 调用面 | 构成与锚 | token 面 |
 |---|---|---|
 | 唯一 LLM 面 | 月末单场 23:35 会话：复盘/教训撰写/bounded question 作答（`monthly_review.py:1274` Budget 注） | 运维全部 token 消耗所在 |
-| 零 LLM 确定性面 | `--propose`（`monthly_review.py:1712`：zero LLM, zero network）、`--triage`/`classify_run_row`（`ops_local_refresh.py:558-576` 纯规则分诊）、`--weekly` 看门狗、夜报包组装 | 恒零——「降 token」伪命题 |
-| 可下探面（选择类子任务，三选） | bounded question 枚举化（`monthly_review.py:1430` + `:1422-1445` 解析兜底）；lessons `event:` 四操作定档（`monthly_review.py:1465` lesson_seeds 播种，写入方定档）；propose 卡 S/M/L 定档复核（`monthly_review.py:862-967`） | 唯一真实下探面——均在月末单场会话内，枚举/定档化不新增会话 |
+| 零 LLM 确定性面 | `--propose`（`monthly_review.py:1742`：zero LLM, zero network）、`--triage`/`classify_run_row`（`ops_local_refresh.py:558-576` 纯规则分诊）、`--weekly` 看门狗、夜报包组装 | 恒零——「降 token」伪命题 |
+| 可下探面（选择类子任务，三选） | bounded question 枚举化（`monthly_review.py:1453` + `:1422-1445` 解析兜底）；lessons `event:` 四操作定档（`monthly_review.py:1488` lesson_seeds 播种，写入方定档）；propose 卡 S/M/L 定档复核（`monthly_review.py:862-967`） | 唯一真实下探面——均在月末单场会话内，枚举/定档化不新增会话 |
 
 **OTel GenAI 语义命名锚注记（外向调研条目 2，2026-11-12 append；纯文档、
 零依赖零服务零新进程）**：OpenTelemetry GenAI 语义约定属性与仓库既有记录
@@ -411,6 +411,18 @@ MIT 与 mem0ai/mem0 Apache-2.0，**仅借协议不装包**）：
   不改旧块字节——与 ledger「新行不覆盖」同构。
 - **`evidence:` 行**：指向 run.log / 审计报告的**路径引用**（Inline & Spill：附录式
   挂新块，不回填历史块）。
+- **片段生命周期双路径（Memp 协议映射+Memory-R1 outcome 门控；iterate 轮 14 框架③）**：
+  月末会话抽片段前先裁决路径——**路径 A 新登记**：本月 resolved 对账行支撑的新教训 →
+  `event: ADD`，每条带 `hook=<可证伪依据> ref=<YYYY-MM#n>` 信封（质量门①三判据把关）；
+  **路径 B 既有片段处置**：新 outcome 证据指向既有片段时 → refinement=`event: UPDATE`
+  （`supersedes month=YYYY-MM#条目`，修正形接替、replacement 携教训前行）或
+  deprecate=`event: DELETE`（`voids month=YYYY-MM#条目`，废弃退役）；无证据变化 →
+  `event: NONE`（重复已录不重写，轮 145 先例）。**片段保留/晋升须引用月度 resolved
+  对账 outcome 证据（`ref=`）而非自评**（Memory-R1 outcome 门控协议映射；
+  arXiv:2508.19828+yansikuan/memory-r1，Apache-2.0/134★——协议级只读参照，PPO/GRPO
+  训练与 LoCoMo/MSC/LongMemEval 评测基建全不采）；UPDATE/DELETE 的 `month#条目` 目标
+  必须真实存在（伪 id=quality-miss[bad-ref]，与①第二判据同一 gate、零新增 reason）。
+  prose 由会话 LLM 生成，门零 LLM 零嵌入零 I/O。
 
 ### lessons 首跑预演注记（monthend-dryrun，2026-11-13；2026-11 月末首块写入前注意事项）
 
@@ -750,7 +762,7 @@ X/N/Y/M 数值待首月基线数据后由业主入册——当前 resolved 对�
 
 ### 晋级门槛 gate 数学定义（iterate 轮 11；promotion-gate-function——只算不启用）
 
-可计算函数 `promotion_gate_assessment(records, thresholds)`（`scripts/monthly_review.py:2258`；纯函数零 LLM 零新依赖——statsmodels `proportion_confint` 已 pinned，沿 `calibration_bucket_summary` 先例）：输入 resolved records（`_collect_prediction_records` 四字段形）+ X/N/Y/M 四参数（**数值留待业主定标——函数只收参数、不内嵌魔数；未定标轴→理由行而非布尔**）；输出三态 **met / not-met / not-enough-data** + 逐项理由行。**只算不启用，钥匙在业主（上表 e 项语义不变）；与 OOS 判定零关系——gate 数学仅运维面晋级自检，不触碰任何研究面判定**（常量 `GATE_SCOPE_NOTE` :2048）。
+可计算函数 `promotion_gate_assessment(records, thresholds)`（`scripts/monthly_review.py:2324`；纯函数零 LLM 零新依赖——statsmodels `proportion_confint` 已 pinned，沿 `calibration_bucket_summary` 先例）：输入 resolved records（`_collect_prediction_records` 四字段形）+ X/N/Y/M 四参数（**数值留待业主定标——函数只收参数、不内嵌魔数；未定标轴→理由行而非布尔**）；输出三态 **met / not-met / not-enough-data** + 逐项理由行。**只算不启用，钥匙在业主（上表 e 项语义不变）；与 OOS 判定零关系——gate 数学仅运维面晋级自检，不触碰任何研究面判定**（常量 `GATE_SCOPE_NOTE` :2048）。
 
 - **X 轴（技能分）**：BSS = 1 − BS/BS_base，其中 BS = mean((p−y)²)、**base = 无条件 base-rate（climatology）预测器「永远输出 p̄」**（p̄=历史命中率；BS_base = mean((p̄−y)²) = p̄(1−p̄)）——X 判据由「汇总 mean Brier < X」数学化为「**BSS > X_min**」（优于 base-rate 基线），非裸 Brier。数学正身：arXiv:2611.14465（BSS 权重语义=比 base rate 有信息量/better-than-chance）。背景锚：arXiv:2610.38211 RainCheck（BSS 相对 climatology 带 95% CI 的报告口径；其 temporal 跌破 climatology=反泄漏立场第三方同构实证）。**边界**：BS_base=0（p̄ 退化为 0 或 1——全部 y 同值或单行）→ BSS 无定义 → 诚实理由行，不造假分。
 - **N 轴（学够了没有）**：累计 resolved 行数 n ≥ N_min；不足 → not-enough-data 理由行（同构『学够了没有』）。
@@ -781,7 +793,7 @@ X/N/Y/M 数值待首月基线数据后由业主入册——当前 resolved 对�
 
 **--month 语义坑（default_month=上月，`monthly_review.py:81-88`）**：复盘 /
 --lessons / --append-lessons-from 的缺省月=**上一个月**（原设计「新每月 6 日回望
-上月」）；而 `--propose` 缺省=**当前月**（月末载体语义，`monthly_review.py:1770-1772`
+上月」）；而 `--propose` 缺省=**当前月**（月末载体语义，`monthly_review.py:1800-1802`
 注释钉死）。故 11-30 当天跑步 2 取月报与步 6 写回**必须显式 `--month 2026-11`**
 （缺省会拿到 2026-10、写错月份块）；步 1 propose 无需 --month。
 
@@ -938,7 +950,7 @@ uv run python scripts/monthly_review.py \
   frontier-citation-anchors ⑳）**：回放非免费——反哺行（校准事实入 lessons，
   步 5 检查点②）占上一 bullet 的 0-2 条额度中 1 条，注入须显式预算、不超限倾倒。
 - **重点反哺行同桶去重契约（iterate 轮 12 `feedback-dedup-contract`，
-  `feedback_dedup_verdict` `monthly_review.py:1897`；零 LLM 零嵌入确定性实现）**
+  `feedback_dedup_verdict` `monthly_review.py:1927`；零 LLM 零嵌入确定性实现）**
   ——月报 §5 重点反哺行渲染前，对 §6 active_lessons 各条做**同桶区间 key
   预检**，规则表：
 
@@ -996,7 +1008,7 @@ uv run python scripts/monthly_review.py \
 
 - **前科**：2026-09-10/11 GBK 控制台乱码致当晚通道事故（`reports/audits/
   2026-09-28-interim-coverage-ledger.md:15-16` 在册「GBK era / UTF-8 patch
-  fixed mid-evening」）；`monthly_review.py:1742-1745` 已修 stdout
+  fixed mid-evening」）；`monthly_review.py:1772-1775` 已修 stdout
   （`sys.stdout.reconfigure(encoding="utf-8", errors="replace")`——legacy
   GBK 控制台下保 CJK 完整）。
 - **剧本规矩**：即便 stdout 已修，终端显示仍随 codepage 漂——**全链六步一律带
