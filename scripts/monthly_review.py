@@ -765,13 +765,17 @@ def _weekly_finding_lines(anchor_text: str) -> list[str]:
     return out
 
 
-def proposal_reconciliation(repo: Path) -> tuple[list[str], dict]:
+def proposal_reconciliation(repo: Path,
+                            now_month: str | None = None) -> tuple[list[str], dict]:
     """Read-only closure check (the engine's verify leg, run inside --weekly):
     proposal keys pasted into state/backlog.md vs their dispatch state in
     tasks/{active,completed,rejected}/. Invariants: one key lives in at most
     ONE tasks zone; a completed proposal's backlog line must be struck
     through (~~) or gone — a still-open line for completed work is drift for
-    a human to strike by hand (the engine never edits the backlog)."""
+    a human to strike by hand (the engine never edits the backlog).
+    Round 12 adds the overdue-outcome watch block: an INDEPENDENT stats
+    section (summary + per-card listing) so overdue cards don't drown in
+    the per-row findings flow (see overdue_outcome_records)."""
     stats: dict = {"backlog_keys": 0, "task_keys": 0,
                    "zones": {z: 0 for z in TASKS_ZONES}}
     findings: list[str] = []
@@ -785,9 +789,29 @@ def proposal_reconciliation(repo: Path) -> tuple[list[str], dict]:
     # read-only sweep (RLCD prediction-error leg; zero writes, zero stats
     # beyond per-record squared error).
     pred_lines = reconcile_predictions(
-        backlog_text, datetime.now().strftime("%Y-%m"))
+        backlog_text, now_month or datetime.now().strftime("%Y-%m"))
     stats["prediction_records"] = len(pred_lines)
     findings += pred_lines
+    # Round 12 (overdue-outcome-watch): INDEPENDENT stats block — summary
+    # line + one listing row per overdue card. Zero overdue -> the block
+    # renders NOTHING (todo_or_die: in-period cards are zero noise;
+    # honest-absence precedent). Presentation only, non-blocking: outcomes
+    # arrive only with real month-end data (2611.03928 zero-query-budget
+    # audit), and the engine never records an outcome for a human.
+    overdue = overdue_outcome_records(
+        _collect_prediction_records(backlog_text),
+        now_month or datetime.now().strftime("%Y-%m"))
+    stats["overdue_outcomes"] = len(overdue)
+    if overdue:
+        findings.append(
+            f"overdue outcome 统计：{len(overdue)} 张预测卡 due 已过仍未记 "
+            "outcome（todo_or_die 呈报不阻断；2611.03928 零查询预算纯呈报"
+            "——outcome 只随月末真实数据到；人补记，引擎只读不代记）:")
+        for r in overdue:
+            findings.append(
+                f"  - overdue: {r['claim']}"
+                f"（facts: due={r['due']}、outcome 未记；judgments: "
+                f"p={r['p'] if r['p'] is not None else '待填'}）")
     zone_hits: dict[str, list[str]] = {}
     for zone in TASKS_ZONES:
         zone_dir = repo / "tasks" / zone
@@ -1050,11 +1074,45 @@ def _collect_prediction_records(backlog_text: str) -> list[dict]:
     return records
 
 
+def overdue_outcome_records(records: list[dict],
+                            now_month: str) -> list[dict]:
+    """Round 12 (overdue-outcome-watch): the prediction cards whose due
+    month has PASSED (due < now_month — the same strict time gate as the
+    per-row '（due 已过）' marker in reconcile_predictions) with no outcome
+    recorded yet. todo_or_die semantics (state/backlog.md 延伸索引㉘):
+    due passed = explicit, loud, NON-BLOCKING surfacing; in-period cards
+    are zero noise and a zero-overdue account renders nothing
+    (honest-absence precedent). 2611.03928 (延伸索引㉚): zero query
+    budget, pure presentation audit — the engine never fetches or records
+    an outcome for a human (read-only red line)."""
+    return [r for r in records
+            if r["y"] is None and r["due"] is not None
+            and r["due"] < now_month]
+
+
 # Calibration band cuts are FIXED presentation constants — the same
 # discipline as the three-band gate above (n=1-era monthly samples forbid
 # threshold fitting; RouteLLM anchor, state/backlog.md 延伸索引⑤). Buckets
 # are presentation buckets ONLY: no p adjustment, no threshold advice.
 _CALIBRATION_BAND_CUTS: tuple[float, ...] = (0.5, 0.6, 0.7, 0.8, 0.9, 1.0)
+
+
+def _bss_components(resolved: list[dict]) -> tuple[float, float, float, float | None] | None:
+    """iterate round 12 (cross-month-evolution): the BSS math lifted VERBATIM
+    from promotion_gate_assessment's X axis so the monthly snapshot and the
+    gate read ONE implementation. BS = mean (p-y)^2; base = the unconditional
+    base-rate climatology predictor 'always output p̄' (p̄ = historical hit
+    rate); BS_base = mean (p̄-y)^2 = p̄(1-p̄); BSS = 1 - BS/BS_base. Returns
+    (bs, bs_base, p_bar, bss) — bss None on the degenerate constant base
+    (BS_base=0, all y identical); None on zero rows."""
+    if not resolved:
+        return None
+    n = len(resolved)
+    bs = sum((r["p"] - r["y"]) ** 2 for r in resolved) / n
+    p_bar = sum(r["y"] for r in resolved) / n
+    bs_base = sum((p_bar - r["y"]) ** 2 for r in resolved) / n
+    bss = (1 - bs / bs_base) if bs_base != 0.0 else None
+    return bs, bs_base, p_bar, bss
 
 
 def calibration_bucket_summary(records: list[dict]) -> list[str]:
@@ -1387,7 +1445,8 @@ def parse_bounded_answer(text: str) -> dict:
     return {"ok": False, "reason": "format-miss", "raw": (text or "")[:120]}
 
 
-def lesson_seeds(month: str, repo: Path, errors: list[str]) -> dict:
+def lesson_seeds(month: str, repo: Path, errors: list[str],
+                 now_month: str | None = None) -> dict:
     """Deterministic month-end incident facts (no LLM): the Reflexion
     'score the attempt' step reads these, never guesses. Failed evenings
     surface as weekday-misses (a hard-fail evening writes no SUMMARY — the
@@ -1399,7 +1458,10 @@ def lesson_seeds(month: str, repo: Path, errors: list[str]) -> dict:
     fact statistics only (see CALIBRATION_FEEDBACK_NOTE — never disposition
     semantics). iterate round 11 adds focus_feedback: the single worst
     bucket (max |桶均 p − 桶命中率|, n>=1) as ONE facts-only line from the
-    same records (see _focus_feedback_summary)."""
+    same records (see _focus_feedback_summary). Round 12
+    (overdue-outcome-watch) adds overdue_outcome_count: facts-only count of
+    prediction cards past due with no outcome yet (todo_or_die 呈报不阻断;
+    the engine never records an outcome — see overdue_outcome_records)."""
     days, push_only = collect_log_days(repo, month, errors)
     persistent = [(d["date"], d["persistent_soft_fails"]) for d in days
                   if d["persistent_soft_fails"]]
@@ -1412,6 +1474,11 @@ def lesson_seeds(month: str, repo: Path, errors: list[str]) -> dict:
     calibration = calibration_bucket_summary(pred_records)
     resolved_rows = sum(1 for r in pred_records
                         if r["p"] is not None and r["y"] is not None)
+    overdue_outcomes = overdue_outcome_records(
+        pred_records, now_month or datetime.now().strftime("%Y-%m"))
+    snap_file = repo / "state" / "calibration-months.md"
+    snap_text = (snap_file.read_text(encoding="utf-8", errors="replace")
+                 if snap_file.is_file() else "")
     return {"month": month, "days_with_summary": len(days),
             "persistent_soft_fails": persistent,
             "missing_weekdays": missing_weekdays(
@@ -1420,7 +1487,12 @@ def lesson_seeds(month: str, repo: Path, errors: list[str]) -> dict:
             "watchdog_bounded_question": WATCHDOG_BOUNDED_QUESTION,
             "calibration_feedback": calibration,
             "focus_feedback": _focus_feedback_summary(pred_records),
-            "resolved_prediction_rows": resolved_rows}
+            "resolved_prediction_rows": resolved_rows,
+            "overdue_outcome_count": len(overdue_outcomes),
+            "calibration_snapshot_line": calibration_month_snapshot(
+                pred_records, month),
+            "calibration_evolution": calibration_evolution_lines(
+                pred_records, snap_text, month)}
 
 
 # Ring 1b injection discipline (design report §2): the calibration feedback
@@ -1469,10 +1541,37 @@ def render_reflexion_section(seeds: dict,
     for ln in seeds["calibration_feedback"]:
         out.append(f"  - {ln}")
     out.append(f"  - {CALIBRATION_FEEDBACK_NOTE}")
-    out.append("- 重点反哺行（最歪桶=|桶均 p−桶命中率| 最大且 n≥1，环 1b 深化，"
-               "facts only）:")
-    out.append(f"  - {seeds['focus_feedback']}")
-    if seeds["resolved_prediction_rows"]:
+    out.append("- 跨月校准演进（两窗口 facts-only；Hindsight ㉕ facts/beliefs 分离"
+               "——p=演化中信念轨迹、outcome=事实）：")
+    for ln in seeds["calibration_evolution"]:
+        out.append(f"  - {ln}")
+    if seeds.get("calibration_snapshot_line"):
+        out.append("  - 本月快照行（月末会话人工 append 入 "
+                   "state/calibration-months.md——呈报-入册分离，引擎不写 "
+                   "state/ 档案，与 backlog 卡区人工维护同模式）:")
+        out.append(f"    {seeds['calibration_snapshot_line']}")
+    out.append(f"  - {EVOLUTION_SCOPE_NOTE}")
+    dedup = feedback_dedup_verdict(
+        seeds["focus_feedback"], prior[1] if prior else None)
+    if dedup:
+        out.append("- 重点反哺行（同桶去重命中——降级为**刷新提示**，feedback-"
+                   "dedup 契约：同桶区间 key 已有 active 教训，旧条 append-only "
+                   "不删不改[mem0 无等价才 ADD 的确定性半边+A-MEM 更新优于追加]）:")
+        for ln in dedup:
+            out.append(f"  - 已有教训：{ln}")
+        out.append(f"  - {seeds['focus_feedback']}（本月事实仍呈现；写回按 "
+                   "event: NONE[重复已录]/UPDATE 定档——写入方裁决，零 LLM 零"
+                   "嵌入判重）")
+    else:
+        out.append("- 重点反哺行（最歪桶=|桶均 p−桶命中率| 最大且 n≥1，环 1b 深化，"
+                   "facts only）:")
+        out.append(f"  - {seeds['focus_feedback']}")
+    if seeds.get("overdue_outcome_count"):
+        out.append(f"- 逾期提示（facts only，todo_or_die 呈报不阻断——引擎只读"
+                   f"不代记 outcome）: 本月有 {seeds['overdue_outcome_count']} 张"
+                   "预测卡逾期未记 outcome（due 已过、y 未记；人补记，"
+                   "2611.03928 零查询预算口径——outcome 只随月末真实数据到）")
+    if seeds["resolved_prediction_rows"] and not dedup:
         out.append(f"  - {FOCUS_FEEDBACK_BUDGET_NOTE}")
     if seeds["resolved_prediction_rows"]:
         out.append(f"- insight 钩子（环 2·蒸馏）: {INSIGHT_HINT}")
@@ -1749,6 +1848,179 @@ def _focus_feedback_summary(records: list[dict]) -> str:
     return worst[1]
 
 
+# iterate round 12 (feedback-dedup-contract) — the dedup key is the LITERAL
+# bucket-interval string rendered by _focus_feedback_summary (fixed
+# presentation cuts, zero LLM / zero embeddings — deterministic substring
+# match, nothing semantic, nothing fitted).
+_FOCUS_BUCKET_RE = re.compile(r"p∈\[(\d\.\d),(\d\.\d)[)\]]")
+
+
+def feedback_dedup_verdict(focus_line: str,
+                           active_lines: list[str] | None) -> list[str] | None:
+    """iterate round 12 (feedback-dedup-contract): deterministic same-bucket
+    pre-check of the focus-feedback line against the active-lessons entries.
+    Semantics anchors — Hindsight pre-write filtering (same-bucket key ONLY:
+    entries from other buckets / other lesson classes can NEVER be judged
+    duplicates, which protects cross-month time-dimension records from
+    mutual deletion; no-change → no-op saves budget), mem0 Algorithm 1
+    'no semantic equivalent → ADD' (arXiv:2504.19413 — the deterministic
+    half only), A-MEM update-over-append (arXiv:2502.12110). ZERO LLM, ZERO
+    embeddings: the dedup key is the literal bucket-interval string (e.g.
+    'p∈[0.8,0.9)') matched as a substring against each active entry line.
+    A hit DOWNGRADES this month's focus line to a 'refresh reminder'
+    carrying the owning [month#idx] references — the old lesson is never
+    edited or retired by this check (append-only, reference-style marks
+    only). The mem0 information-content promotion gate is NOT implemented
+    (citation anchor only — owner-gated, same boundary as LatentGym A/B).
+    Returns the matching entry lines, [] when nothing hits (keep the new
+    line), or None when there is no bucket key to check (baseline month)
+    or no active lessons — both honest no-dedup defaults."""
+    m = _FOCUS_BUCKET_RE.search(focus_line or "")
+    if m is None or not active_lines:
+        return None
+    key = m.group(0)
+    return [ln for ln in active_lines if key in ln]
+
+
+# iterate round 12 (cross-month-evolution) — month-attribution = the
+# reconciliation month (the month the outcome ARRIVES), same family as the
+# reconciliation-time discipline. Presentation ONLY: two-window change
+# lines, never trend fits, never slope claims, never significance, never an
+# auto better/worse gate (Evidently auto-Tests explicitly NOT adopted — the
+# only verdict gate is promotion_gate_assessment, compute-only, owner key).
+EVOLUTION_SCOPE_NOTE = ("演进边界：仅两窗口变化呈现（方向与幅度）——禁趋势拟合/斜率"
+                        "宣称/显著性；不设自动判优/劣门（判定门唯一=promotion gate "
+                        "且只算不启用，钥匙在业主；Evidently auto-Tests 自动派生阈值"
+                        "明确不采）")
+
+
+def _bucket_stats(resolved: list[dict]) -> dict[str, tuple[int, float]]:
+    """Per-bucket (n, hit rate) over the FIXED presentation cuts — the same
+    bucket semantics as calibration_bucket_summary/_focus_feedback_summary
+    (resolved p>=0.5 only, top bucket closed at 1.0, literal keys)."""
+    bucketed = [r for r in resolved if r["p"] >= _CALIBRATION_BAND_CUTS[0]]
+    n_bands = len(_CALIBRATION_BAND_CUTS) - 1
+    stats: dict[str, tuple[int, float]] = {}
+    for i in range(n_bands):
+        lo = _CALIBRATION_BAND_CUTS[i]
+        hi = _CALIBRATION_BAND_CUTS[i + 1]
+        last = i == n_bands - 1
+        rows = [r for r in bucketed
+                if lo <= r["p"] < hi or (last and r["p"] == hi)]
+        if not rows:
+            continue
+        key = (f"p∈[{lo:.1f},{hi:.1f}" + ("]" if last else ")"))
+        hit = sum(1 for r in rows if r["y"] == 1) / len(rows)
+        stats[key] = (len(rows), hit)
+    return stats
+
+
+def calibration_month_snapshot(records: list[dict], month: str) -> str | None:
+    """One month's reconciliation snapshot line — facts-only cross-section:
+    per-bucket n/hit + Brier + BSS components (the SAME math the gate's X
+    axis reads, via _bss_components) + p̄. The month-end session appends this
+    line BY HAND into state/calibration-months.md (report/archive separation:
+    the engine renders it, it NEVER writes the state/ archive — same human
+    gate as the backlog card lane). Zero resolved rows -> None (a baseline
+    month archives nothing; runbook「演进视图口径」)."""
+    resolved = [r for r in records
+                if r["p"] is not None and r["y"] is not None]
+    if not resolved:
+        return None
+    parts = [f"- {month}:"]
+    for key, (n, hit) in _bucket_stats(resolved).items():
+        parts.append(f"{key}: n={n}、hit {hit:.3f}")
+    comp = _bss_components(resolved)
+    bs, _, p_bar, bss = comp  # type: ignore[misc]  # resolved non-empty
+    tail = (f"BSS={bss:.3f}" if bss is not None
+            else f"BSS 无定义（p̄={p_bar:.3f} 退化）")
+    parts.append(f"Brier={bs:.3f}、{tail}、p̄={p_bar:.3f}")
+    return parts[0] + " " + " | ".join(parts[1:])
+
+
+_SNAP_BUCKET_RE = re.compile(
+    r"(p∈\[\d\.\d,\d\.\d[)\]]): n=(\d+)、hit ([\d.]+)")
+_SNAP_TAIL_RE = re.compile(
+    r"Brier=([-\d.]+)、BSS=([-\d.]+)、p̄=([\d.]+)")
+_SNAP_TAIL_DEGEN_RE = re.compile(
+    r"Brier=([-\d.]+)、BSS 无定义（p̄=([\d.]+) 退化）")
+_SNAP_MONTH_RE = re.compile(r"^- (\d{4}-\d{2}): ")
+
+
+def parse_calibration_snapshots(text: str) -> dict[str, dict]:
+    """Deterministic parse of state/calibration-months.md snapshot lines
+    (the append-only durable archive ADR-006 style). Malformed lines are
+    SKIPPED silently-but-visibly (they stay in the file for a human to fix;
+    the parser never guesses). Returns {month: {buckets, brier, bss, p_bar}}
+    — bss None on the degenerate month."""
+    out: dict[str, dict] = {}
+    for line in (text or "").splitlines():
+        m = _SNAP_MONTH_RE.match(line.strip())
+        if m is None:
+            continue
+        month = m.group(1)
+        buckets = {bm.group(1): (int(bm.group(2)), float(bm.group(3)))
+                   for bm in _SNAP_BUCKET_RE.finditer(line)}
+        tm = _SNAP_TAIL_RE.search(line)
+        if tm:
+            out[month] = {"buckets": buckets, "brier": float(tm.group(1)),
+                          "bss": float(tm.group(2)),
+                          "p_bar": float(tm.group(3))}
+            continue
+        dm = _SNAP_TAIL_DEGEN_RE.search(line)
+        if dm:
+            out[month] = {"buckets": buckets, "brier": float(dm.group(1)),
+                          "bss": None, "p_bar": float(dm.group(2))}
+    return out
+
+
+def calibration_evolution_lines(records: list[dict], snapshots_text: str,
+                                month: str) -> list[str]:
+    """Three honest states for the cross-month evolution view (Evidently ㉙
+    reference-vs-current two-window presentation anchor; Hindsight ㉕
+    facts/beliefs split — p is a belief trajectory, outcomes are facts):
+    zero resolved -> none yet; no prior archived month -> first month, no
+    prior; else change lines (direction AND magnitude rendered as bare
+    numbers — 'hit 0.600→0.667 (n 3→6)', BSS likewise; buckets only one
+    side has are named as such, never extrapolated). Never a trend fit,
+    never a slope claim, never significance — EVOLUTION_SCOPE_NOTE is
+    rendered by the caller on every state."""
+    resolved = [r for r in records
+                if r["p"] is not None and r["y"] is not None]
+    if not resolved:
+        return ["none yet（基线收集月——零 resolved 对账行，无演进视图）"]
+    snaps = parse_calibration_snapshots(snapshots_text)
+    prior_months = sorted(m for m in snaps if m < month)
+    if not prior_months:
+        return ["first month, no prior——本月快照行待入册（runbook「演进视图口径」"
+                "步：月末会话人工 append 入 state/calibration-months.md，"
+                "呈报-入册分离，引擎不写 state/ 档案）"]
+    prior_m = prior_months[-1]
+    prior = snaps[prior_m]
+    cur = _bucket_stats(resolved)
+    lines = [f"上月（{prior_m}）→本月（{month}）两窗口对照（facts-only 变化呈现，"
+             "Evidently ㉙ reference-vs-current 范式锚）："]
+    for key in sorted(set(prior["buckets"]) | set(cur)):
+        if key in prior["buckets"] and key in cur:
+            pn, ph = prior["buckets"][key]
+            cn, ch = cur[key]
+            lines.append(f"{key} 桶命中率 {ph:.3f}→{ch:.3f}（n {pn}→{cn}）")
+        elif key in cur:
+            cn, ch = cur[key]
+            lines.append(f"{key} 桶本月新入（n={cn}、hit {ch:.3f}；上月空桶）")
+        else:
+            pn, ph = prior["buckets"][key]
+            lines.append(f"{key} 桶本月空（上月 n={pn}、hit {ph:.3f}）")
+    comp = _bss_components(resolved)
+    _, _, cur_p_bar, cur_bss = comp  # type: ignore[misc]
+    if cur_bss is not None and prior["bss"] is not None:
+        lines.append(f"BSS {prior['bss']:.3f}→{cur_bss:.3f}"
+                     f"（p̄ {prior['p_bar']:.3f}→{cur_p_bar:.3f}）")
+    else:
+        lines.append("BSS 对照侧含无定义（退化基线）——如实呈现不造假分")
+    return lines
+
+
 # iterate round 11 — promotion-gate-function (L2 promotion gate as a
 # COMPUTABLE pure function: the math form of the ladder's 晋级门槛
 # X/N/Y/M, runbook 晋级门槛节). COMPUTE-ONLY, NEVER ACTIVATES: the owner
@@ -1827,15 +2099,13 @@ def promotion_gate_assessment(records: list[dict],
         _axis("X", "BSS 无定义", _th("X_min", x_min), "not-enough-data",
               "零 resolved 对账行（基线收集月）——无可算样本")
     else:
-        bs = sum((r["p"] - r["y"]) ** 2 for r in resolved) / n
-        p_bar = sum(r["y"] for r in resolved) / n
-        bs_base = sum((p_bar - r["y"]) ** 2 for r in resolved) / n
-        if bs_base == 0.0:
+        bs, bs_base, p_bar, _gate_bss = _bss_components(resolved)
+        if _gate_bss is None:
             _axis("X", "BSS 无定义", _th("X_min", x_min), "undetermined",
                   f"BS_base=0（p̄={p_bar:.3f} 退化常数基线，全部 y 同值）"
                   "——BSS 无定义，诚实降级不造假分")
         else:
-            bss = 1 - bs / bs_base
+            bss = _gate_bss
             metric = (f"BSS={bss:.3f}"
                       f"（BS={bs:.3f}，BS_base={bs_base:.3f}，p̄={p_bar:.3f}）")
             if x_min is None:
