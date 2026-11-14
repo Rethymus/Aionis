@@ -331,6 +331,25 @@ def test_render_internal_anomalies_section() -> None:
     assert "corrupt SUMMARY JSON" in md
 
 
+def test_render_card_surface_rollback_bullets_k8s_wording() -> None:
+    """patch-card-surface-rollback: K8s release-note 词面先例（backlog ㊹）——
+    surface=NONE 约定 + action required + rollback 固定句式三词面在场，
+    落位 proposal/prediction（与 research-gate 条件 bullet）之后、
+    disposition 之前；码内边界=不携带 prop: 词面（scan_proposal_keys 零新键）."""
+    card = {"key": "prop:demo", "size": "M", "thread": None,
+            "title": "demo", "action": "do it", "evidence": ["e1"]}
+    lines = mr.render_card(card)
+    surf = [ln for ln in lines if ln.lstrip().startswith("- surface:")]
+    roll = [ln for ln in lines if ln.lstrip().startswith("- rollback:")]
+    assert len(surf) == 1 and len(roll) == 1
+    assert "NONE" in surf[0] and "docs-only" in surf[0]
+    assert "git revert" in roll[0] and "revert 窗口" in roll[0]
+    assert "action required" in roll[0] and "tasks/active/" in roll[0]
+    disp = next(i for i, ln in enumerate(lines) if "disposition:" in ln)
+    assert lines.index(surf[0]) < disp and lines.index(roll[0]) < disp
+    assert mr.scan_proposal_keys("\n".join(lines)) == {"prop:demo"}
+
+
 # --- main wiring (exit codes + --out; gh injected) --------------------------------
 
 

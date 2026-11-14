@@ -1008,6 +1008,12 @@ def render_card(card: dict) -> list[str]:
                    "见 reconcile_predictions docstring，禁 n=1 拟合））")
     if card.get("research"):
         out.append(f"  - {PROPOSAL_RESEARCH_GATE}")
+    out.append("  - surface: NONE=零行为面（docs-only 如实写 NONE）｜行为面必写"
+               "触达文件——K8s release-note 词面先例（backlog ㊹），与五列卡"
+               "缺一不可互补")
+    out.append("  - rollback: docs-only=git revert 平凡；代码条目=revert 窗口"
+               "+连带测试钉；action required=accept 分流即人工执行面（对接 "
+               "disposition accept→tasks/active/，K8s 句式 case insensitive）")
     out.append("  - disposition: 里程碑边界 accept → tasks/active/ + "
                "orchestrate_dispatch --lane executor · defer 留候选区 · "
                "reject → tasks/rejected/")

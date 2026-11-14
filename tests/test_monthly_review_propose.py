@@ -233,6 +233,30 @@ def test_render_card_research_gate_is_forced_when_flagged() -> None:
     assert not any("research-gate" in ln for ln in plain)
 
 
+# ------------------------------------- surface/rollback wording negative pin
+
+def test_propose_surface_rollback_wording_yields_no_cards(tmp_path: Path) -> None:
+    """patch-card-surface-rollback 负向钉（码内边界）：backlog 里的 K8s
+    release-note 词面（surface/rollback/action required）不携带 prop: 键——
+    PROPOSAL_KEY_RE（monthly_review.py:693）只对 `key: prop:` 行 findall，
+    新 bullet 不触发 propose 新卡/refresh/reconcile 分流."""
+    _write_summary(tmp_path, "2026-11-10", [])
+    _write_night_package(tmp_path, "2026-11-10",
+                         {"platform-failure": [], "infra-transient": [],
+                          "code-defect": []})
+    _write_backlog(tmp_path,
+                   "# state/backlog.md\n\n## 开放候选\n\n"
+                   "- surface: NONE=零行为面（docs-only 如实写 NONE）\n"
+                   "- rollback: docs-only=git revert 平凡；action required"
+                   "=accept 分流\n")
+    markdown, n = mr.run_propose(tmp_path, now=NOW, month="2026-11",
+                                 git_log=lambda repo, needle: _old_date(1))
+    assert n == 0
+    assert "无提案——无信号或全部已在册" in markdown
+    assert mr.scan_proposal_keys(
+        "- surface: NONE\n- rollback: action required\ntext") == set()
+
+
 # ------------------------------------------------------- closure recon (§4)
 
 def _write_task(repo: Path, zone: str, name: str, keys: str) -> None:
