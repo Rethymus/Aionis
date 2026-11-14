@@ -1026,9 +1026,10 @@ def reconcile_predictions(backlog_text: str,
 def _collect_prediction_records(backlog_text: str) -> list[dict]:
     """Round 137 (calibration-aggregator ring 1a, design report
     reports/design/2026-11-14-personal-training-method-and-automation-ladder.md
-    §2): the reconcile_predictions parse loop lifted VERBATIM so the bucket
-    summary reads the exact same records — one parser, two consumers, zero
-    drift between per-row reconciliation and bucketed aggregation."""
+    §2): the reconcile_predictions parse loop lifted VERBATIM so every
+    calibration consumer reads the exact same records — one parser, N
+    consumers (reconciliation, bucketed aggregation, focus-feedback
+    selector), zero drift between per-row and aggregated views."""
     import re as _re
     records: list[dict] = []
     cur: dict | None = None
@@ -1396,7 +1397,9 @@ def lesson_seeds(month: str, repo: Path, errors: list[str]) -> dict:
     (round 137, design report §2) adds calibration_feedback: the ring-1a
     aggregator lines over state/backlog.md prediction records, injected as
     fact statistics only (see CALIBRATION_FEEDBACK_NOTE — never disposition
-    semantics)."""
+    semantics). iterate round 11 adds focus_feedback: the single worst
+    bucket (max |桶均 p − 桶命中率|, n>=1) as ONE facts-only line from the
+    same records (see _focus_feedback_summary)."""
     days, push_only = collect_log_days(repo, month, errors)
     persistent = [(d["date"], d["persistent_soft_fails"]) for d in days
                   if d["persistent_soft_fails"]]
@@ -1416,6 +1419,7 @@ def lesson_seeds(month: str, repo: Path, errors: list[str]) -> dict:
             "spin_findings": spin, "push_only": push_only,
             "watchdog_bounded_question": WATCHDOG_BOUNDED_QUESTION,
             "calibration_feedback": calibration,
+            "focus_feedback": _focus_feedback_summary(pred_records),
             "resolved_prediction_rows": resolved_rows}
 
 
@@ -1465,6 +1469,11 @@ def render_reflexion_section(seeds: dict,
     for ln in seeds["calibration_feedback"]:
         out.append(f"  - {ln}")
     out.append(f"  - {CALIBRATION_FEEDBACK_NOTE}")
+    out.append("- 重点反哺行（最歪桶=|桶均 p−桶命中率| 最大且 n≥1，环 1b 深化，"
+               "facts only）:")
+    out.append(f"  - {seeds['focus_feedback']}")
+    if seeds["resolved_prediction_rows"]:
+        out.append(f"  - {FOCUS_FEEDBACK_BUDGET_NOTE}")
     if seeds["resolved_prediction_rows"]:
         out.append(f"- insight 钩子（环 2·蒸馏）: {INSIGHT_HINT}")
     else:
@@ -1681,6 +1690,246 @@ def main(argv: list[str] | None = None) -> int:
     return 0 if (days and not errors) else 1
 
 
+# iterate round 11 — focus-feedback-selector (training-method ring-1b
+# deepening, design report §2). Placed at the file tail per the round-139
+# zero-drift placement precedent: every in-repo anchor above this block
+# keeps its position except for the small interior deltas inside
+# lesson_seeds / render_reflexion_section. The WORST calibration bucket
+# (max |bucket-mean p − bucket hit rate|; n>=1 by construction — empty
+# buckets are never candidates) is lifted into lesson_seeds as ONE
+# facts-only line: bucket range / n / mean p / hit rate / deviation
+# direction. Rule anchor: arXiv:2611.14465 (One Curve — the Murphy
+# reliability term is exactly bucket-level |mean p − hit rate|
+# information). Injection-budget anchor: LIMBO arXiv:2609.14138 (replay
+# is not free — injection needs an explicit budget; the line rides and
+# consumes 1 of the INSIGHT 0-2 fragment slots, runbook 步 6 同口径).
+# CALIBRATION_FEEDBACK_NOTE discipline applies verbatim: FACT STATISTICS
+# ONLY, never disposition (no adjust-p, no threshold advice).
+FOCUS_FEEDBACK_BUDGET_NOTE = ("预算注记：本反哺行占上面 INSIGHT 0-2 条额度中 1 条"
+                              "（LIMBO arXiv:2609.14138 口径锚——回放非免费，"
+                              "注入须显式预算，不无限倾倒）")
+
+
+def _focus_feedback_summary(records: list[dict]) -> str:
+    """iterate round 11 (focus-feedback-selector): the single most-skewed
+    calibration bucket as ONE facts-only line, recomputed from the SAME
+    _collect_prediction_records output the bucket summary reads (one
+    parser, N consumers — never a re-parse of rendered text). Bucket
+    semantics mirror calibration_bucket_summary exactly (fixed
+    presentation cuts, resolved p>=0.5 only, top bucket closed at 1.0);
+    ties break to the LOWEST band (deterministic seeds). Zero populated
+    buckets -> the honest baseline default, no fabricated bucket."""
+    resolved = [r for r in records
+                if r["p"] is not None and r["y"] is not None]
+    bucketed = [r for r in resolved if r["p"] >= _CALIBRATION_BAND_CUTS[0]]
+    n_bands = len(_CALIBRATION_BAND_CUTS) - 1
+    worst: tuple[float, str] | None = None
+    for i in range(n_bands):
+        lo = _CALIBRATION_BAND_CUTS[i]
+        hi = _CALIBRATION_BAND_CUTS[i + 1]
+        last = i == n_bands - 1
+        rows = [r for r in bucketed
+                if lo <= r["p"] < hi or (last and r["p"] == hi)]
+        if not rows:  # n>=1 constraint: empty buckets are never candidates
+            continue
+        mean_p = sum(r["p"] for r in rows) / len(rows)
+        hit_rate = sum(1 for r in rows if r["y"] == 1) / len(rows)
+        skew = abs(mean_p - hit_rate)
+        if worst is None or skew > worst[0]:
+            close = "]" if last else ")"
+            direction = ("高估方向——桶均 p 高于命中率" if mean_p > hit_rate
+                         else "低估方向——桶均 p 低于命中率" if mean_p < hit_rate
+                         else "零偏差")
+            worst = (skew,
+                     f"最歪桶 p∈[{lo:.1f},{hi:.1f}{close}: n={len(rows)}、"
+                     f"桶均 p={mean_p:.3f}、命中率 {hit_rate:.3f}、"
+                     f"|偏差|={skew:.3f}（{direction}）")
+    if worst is None:
+        return "none yet（基线收集月——无 resolved 对账行可入桶，不造最歪桶）"
+    return worst[1]
+
+
+# iterate round 11 — promotion-gate-function (L2 promotion gate as a
+# COMPUTABLE pure function: the math form of the ladder's 晋级门槛
+# X/N/Y/M, runbook 晋级门槛节). COMPUTE-ONLY, NEVER ACTIVATES: the owner
+# key (e-item) stays with the owner; this gate math is an ops-lane
+# promotion SELF-CHECK with ZERO relation to any OOS / research judgment.
+# Zero LLM, zero new dependencies (statsmodels proportion_confint already
+# pinned, same import as calibration_bucket_summary). Threshold VALUES are
+# owner-calibrated INPUTS — passed as parameters, never embedded magic
+# numbers; an uncalibrated axis yields a REASON LINE, never a fabricated
+# boolean. X-axis math: BSS = 1 − BS/BS_base against the base-rate
+# (climatology) predictor "always output p̄" (p̄ = historical hit rate,
+# BS_base = mean((p̄−y)²) = p̄(1−p̄)); anchors: arXiv:2611.14465 (BSS
+# weight semantics = better-than-chance) and arXiv:2610.38211 RainCheck
+# (BSS-vs-climatology reporting; its temporal degradation below
+# climatology = the anti-leakage stance, third-party isomorphic).
+# BS_base=0 (p̄ degenerates to 0 or 1) → BSS undefined → honest reason
+# line, never a fake score. Y-axis: per-bucket Wilson 95% CI UPPER bound
+# (conservative; empty buckets never judged). ANYTIME caveat:
+# arXiv:2610.28979 principle only — monthly repeated querying needs
+# anytime correction, but at one point per month the AsympCS-style
+# asymptotic guarantee does NOT hold; noted honestly, nothing copied.
+ANYTIME_MONITORING_NOTE = ("anytime 注记：月度连续重复查询需 anytime 校正"
+                           "（arXiv:2610.28979 只借原则）；当前每月 1 点，"
+                           "AsympCS 类渐近校正不成立——局限如实注记，不照搬实现")
+GATE_SCOPE_NOTE = ("只算不启用：钥匙在业主（晋级门槛 e 项语义不变）；"
+                   "与 OOS 判定零关系——gate 数学仅运维面晋级自检，"
+                   "不触碰任何研究面判定")
+
+
+def promotion_gate_assessment(records: list[dict],
+                              thresholds: dict | None = None) -> dict:
+    """iterate round 11 (promotion-gate-function): three-state
+    met / not-met / not-enough-data over resolved records
+    (claim/p/due/y — _collect_prediction_records shape). Each X/N/Y/M
+    item carries metric + threshold + verdict + reason line; uncalibrated
+    thresholds (None) yield reason lines, not booleans. not-enough-data
+    covers: zero rows, N<N_min or M<M_min (『学够了没有』isomorphism),
+    and math-undetermined cases (BS_base=0 degenerate base, no populated
+    buckets). not-met requires all axes calibrated, data sufficient, and
+    a computable axis objectively failing. Pure function: no LLM, no IO,
+    no activation — the L2 key stays with the owner."""
+    from statsmodels.stats.proportion import proportion_confint
+
+    th = thresholds or {}
+    x_min, n_min = th.get("X_min"), th.get("N_min")
+    y_max, m_min = th.get("Y_max"), th.get("M_min")
+    resolved = [r for r in records
+                if r["p"] is not None and r["y"] is not None]
+    n = len(resolved)
+    items: list[dict] = []
+    notes = [GATE_SCOPE_NOTE, ANYTIME_MONITORING_NOTE]
+
+    def _axis(axis: str, metric: str, threshold: str, verdict: str,
+              reason: str) -> None:
+        items.append({"axis": axis, "metric": metric,
+                      "threshold": threshold, "verdict": verdict,
+                      "reason": reason})
+
+    def _th(name: str, value) -> str:
+        return f"{name}={value}" if value is not None else f"{name}=未定标"
+
+    # ---- N axis: cumulative resolved rows（『学够了没有』）----
+    if n_min is None:
+        _axis("N", f"n={n}", _th("N_min", n_min), "undetermined",
+              "N_min 未定标——数值待业主入册，不凭空造阈值")
+    elif n < n_min:
+        _axis("N", f"n={n}", _th("N_min", n_min), "not-enough-data",
+              f"n={n} < N_min={n_min}——学够了没有，继续基线收集")
+    else:
+        _axis("N", f"n={n}", _th("N_min", n_min), "pass",
+              f"n={n} ≥ N_min={n_min}")
+
+    # ---- X axis: overall BSS vs base-rate climatology（base=p̄）----
+    bss: float | None = None
+    if n == 0:
+        _axis("X", "BSS 无定义", _th("X_min", x_min), "not-enough-data",
+              "零 resolved 对账行（基线收集月）——无可算样本")
+    else:
+        bs = sum((r["p"] - r["y"]) ** 2 for r in resolved) / n
+        p_bar = sum(r["y"] for r in resolved) / n
+        bs_base = sum((p_bar - r["y"]) ** 2 for r in resolved) / n
+        if bs_base == 0.0:
+            _axis("X", "BSS 无定义", _th("X_min", x_min), "undetermined",
+                  f"BS_base=0（p̄={p_bar:.3f} 退化常数基线，全部 y 同值）"
+                  "——BSS 无定义，诚实降级不造假分")
+        else:
+            bss = 1 - bs / bs_base
+            metric = (f"BSS={bss:.3f}"
+                      f"（BS={bs:.3f}，BS_base={bs_base:.3f}，p̄={p_bar:.3f}）")
+            if x_min is None:
+                _axis("X", metric, _th("X_min", x_min), "undetermined",
+                      "X_min 未定标——数值待业主入册，不凭空造阈值")
+            elif bss > x_min:
+                _axis("X", metric, _th("X_min", x_min), "pass",
+                      f"BSS={bss:.3f} > X_min={x_min}（优于 base-rate 基线）")
+            else:
+                _axis("X", metric, _th("X_min", x_min), "fail",
+                      f"BSS={bss:.3f} ≤ X_min={x_min}（未优于 base-rate 基线）")
+
+    # ---- Y axis: per-bucket Wilson 95% upper bounds ----
+    bucketed = [r for r in resolved if r["p"] >= _CALIBRATION_BAND_CUTS[0]]
+    n_bands = len(_CALIBRATION_BAND_CUTS) - 1
+    worst_bound: tuple[float, str] | None = None
+    for i in range(n_bands):
+        lo = _CALIBRATION_BAND_CUTS[i]
+        hi = _CALIBRATION_BAND_CUTS[i + 1]
+        last = i == n_bands - 1
+        rows = [r for r in bucketed
+                if lo <= r["p"] < hi or (last and r["p"] == hi)]
+        if not rows:  # empty buckets are never judged (n>=1 to bound)
+            continue
+        hits = sum(1 for r in rows if r["y"] == 1)
+        bound = proportion_confint(hits, len(rows), method="wilson")[1]
+        close = "]" if last else ")"
+        tag = f"p∈[{lo:.1f},{hi:.1f}{close}: {hits}/{len(rows)}"
+        if worst_bound is None or bound > worst_bound[0]:
+            worst_bound = (bound, tag)
+    if n == 0:
+        _axis("Y", "无桶可界", _th("Y_max", y_max), "not-enough-data",
+              "零 resolved 对账行（基线收集月）——无可算样本")
+    elif worst_bound is None:
+        _axis("Y", "无桶可界", _th("Y_max", y_max), "undetermined",
+              "无 p≥0.5 可入桶行——Y 轴不可判（诚实降级）")
+    elif y_max is None:
+        _axis("Y", f"最宽上界（{worst_bound[1]}）Wilson 上界 "
+              f"{worst_bound[0]:.4f}", _th("Y_max", y_max), "undetermined",
+              "Y_max 未定标——数值待业主入册，不凭空造阈值")
+    elif worst_bound[0] < y_max:
+        _axis("Y", f"最宽上界（{worst_bound[1]}）Wilson 上界 "
+              f"{worst_bound[0]:.4f}", _th("Y_max", y_max), "pass",
+              f"全部已入桶 Wilson 上界 {worst_bound[0]:.4f} < "
+              f"Y_max={y_max}（空桶不判）")
+    else:
+        _axis("Y", f"最宽上界（{worst_bound[1]}）Wilson 上界 "
+              f"{worst_bound[0]:.4f}", _th("Y_max", y_max), "fail",
+              f"桶（{worst_bound[1]}）Wilson 上界 {worst_bound[0]:.4f} ≥ "
+              f"Y_max={y_max}——样本量尚不足以收窄 CI")
+
+    # ---- M axis: consecutive months with monthly BSS > X_min ----
+    if n == 0:
+        _axis("M", "streak=0", _th("M_min", m_min), "not-enough-data",
+              "零 resolved 对账行（基线收集月）——无可算样本")
+    elif x_min is None:
+        _axis("M", "streak 不可判", _th("M_min", m_min), "undetermined",
+              "X_min 未定标→月度 streak 判据缺失（数值待业主入册）")
+    else:
+        months: dict[str, list[dict]] = {}
+        for r in resolved:
+            months.setdefault(r["due"] or "?", []).append(r)
+        streak = 0
+        for month in sorted(months, reverse=True):
+            rows = months[month]
+            m_bs = sum((r["p"] - r["y"]) ** 2 for r in rows) / len(rows)
+            m_bar = sum(r["y"] for r in rows) / len(rows)
+            m_base = sum((m_bar - r["y"]) ** 2 for r in rows) / len(rows)
+            if m_base == 0.0 or 1 - m_bs / m_base <= x_min:
+                break  # degenerate base or a failing month ends the run
+            streak += 1
+        if m_min is None:
+            _axis("M", f"streak={streak}", _th("M_min", m_min),
+                  "undetermined", "M_min 未定标——数值待业主入册，"
+                  "不凭空造阈值")
+        elif streak < m_min:
+            _axis("M", f"streak={streak}", _th("M_min", m_min),
+                  "not-enough-data",
+                  f"streak={streak} < M_min={m_min}——连够了没有，"
+                  "继续基线收集（月度基线退化月不计入 streak）")
+        else:
+            _axis("M", f"streak={streak}", _th("M_min", m_min), "pass",
+                  f"streak={streak} ≥ M_min={m_min}")
+
+    verdicts = {it["verdict"] for it in items}
+    if "undetermined" in verdicts or "not-enough-data" in verdicts:
+        state = "not-enough-data"
+    elif "fail" in verdicts:
+        state = "not-met"
+    else:
+        state = "met"
+    return {"state": state, "items": items, "notes": notes}
+
+
 if __name__ == "__main__":
     # GBK-console armor (flywheel-rehearsal, 2026-11-13): main() already
     # reconfigures stdout AFTER parse_args, but stderr and the argparse
@@ -1689,7 +1938,8 @@ if __name__ == "__main__":
     # survives via main()'s reconfigure, yet stderr emits raw GBK bytes —
     # mojibake for any UTF-8 consumer, and any future non-GBK stderr
     # literal would crash the strict codec). The U+2212/U+00B2 literals
-    # (:966/:1022/:1118) are byte-locked by the ring-1a pin and are NOT
+    # (:966/:1022/:1119 — iterate round 11 +1 shift) are byte-locked by the
+    # ring-1a pin and are NOT
     # touched — the fix lives on the CLI output surface only: reconfigure
     # BOTH streams BEFORE main() runs (covers argparse text too).
     for _stream in (sys.stdout, sys.stderr):

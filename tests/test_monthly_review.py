@@ -627,6 +627,222 @@ def test_lessons_insight_hook_skips_without_resolved_rows(
         assert mr.INSIGHT_HINT not in text
 
 
+def test_lessons_focus_feedback_selects_worst_bucket(
+        tmp_path: Path) -> None:
+    """iterate round 11 (focus-feedback-selector): the focus line carries
+    the max-|桶均 p − 桶命中率| bucket as facts only (range/n/mean p/hit
+    rate/direction) — synthetic labeled fixture (real resolved rows first
+    arrive 2026-11-30; the baseline month must not fabricate data)."""
+    repo = tmp_path / "repo"
+    (repo / "state").mkdir(parents=True)
+    (repo / "state" / "backlog.md").write_text("\n".join([
+        "- A（prediction: 反哺甲（p=0.8）due=2026-10）",
+        "  - outcome: y=0 (2026-10-31)",  # [0.8,0.9): 桶均 p=.8 命中率 0 → |偏差|=.8
+        "- B（prediction: 反哺乙（p=0.6）due=2026-10）",
+        "  - outcome: y=1 (2026-10-30)",  # [0.6,0.7): |偏差|=.4 → 不入选
+    ]), encoding="utf-8")
+    seeds = mr.lesson_seeds("2026-10", repo, [])
+    assert seeds["focus_feedback"] == (
+        "最歪桶 p∈[0.8,0.9): n=1、桶均 p=0.800、命中率 0.000、"
+        "|偏差|=0.800（高估方向——桶均 p 高于命中率）")
+    text = mr.render_reflexion_section(seeds, None, [])
+    assert "- 重点反哺行（最歪桶=|桶均 p−桶命中率| 最大且 n≥1，环 1b 深化，" \
+           "facts only）:" in text
+    assert f"  - {seeds['focus_feedback']}" in text
+    assert f"  - {mr.FOCUS_FEEDBACK_BUDGET_NOTE}" in text
+
+
+def test_lessons_focus_feedback_n1_and_lowest_band_tie_break() -> None:
+    """n>=1 constraint + determinism: empty bands are never candidates
+    (single populated band wins even at the top, closed bracket), and an
+    exact skew TIE breaks to the LOWEST band — seeds stay deterministic."""
+    only_top = mr._focus_feedback_summary(
+        [{"claim": "n1", "p": 0.95, "due": "2026-10", "y": 0}])
+    assert only_top == ("最歪桶 p∈[0.9,1.0]: n=1、桶均 p=0.950、命中率 0.000、"
+                        "|偏差|=0.950（高估方向——桶均 p 高于命中率）")
+    tie = mr._focus_feedback_summary([
+        {"claim": "t1", "p": 0.55, "due": "2026-10", "y": 1},  # |.55-1|=.45
+        {"claim": "t2", "p": 0.9, "due": "2026-10", "y": 1},   # [0.9,1.0]
+        {"claim": "t3", "p": 1.0, "due": "2026-10", "y": 0},   # |.95-.5|=.45
+    ])
+    assert tie.startswith("最歪桶 p∈[0.5,0.6): n=1、桶均 p=0.550、命中率 1.000、"
+                          "|偏差|=0.450（低估方向——桶均 p 低于命中率）")
+
+
+def test_lessons_focus_feedback_empty_account_honest_default(
+        tmp_path: Path) -> None:
+    """Empty account / pending-only (zero resolved rows): the focus line
+    degrades to the honest baseline default — no fabricated bucket, and
+    the budget note stays out (nothing to budget; mirrors the ring-2
+    insight-hook degradation)."""
+    empty = tmp_path / "empty"
+    empty.mkdir()
+    pending = tmp_path / "pending"
+    (pending / "state").mkdir(parents=True)
+    (pending / "state" / "backlog.md").write_text(
+        "- G（prediction: 未到对账（p=0.7）due=2026-11）", encoding="utf-8")
+    for repo in (empty, pending):
+        seeds = mr.lesson_seeds("2026-10", repo, [])
+        assert seeds["focus_feedback"] == (
+            "none yet（基线收集月——无 resolved 对账行可入桶，不造最歪桶）")
+        text = mr.render_reflexion_section(seeds, None, [])
+        assert "- 重点反哺行（最歪桶=|桶均 p−桶命中率| 最大且 n≥1，环 1b 深化，" \
+               "facts only）:" in text
+        assert mr.FOCUS_FEEDBACK_BUDGET_NOTE not in text
+
+
+def test_lessons_focus_feedback_carries_no_disposition_semantics(
+        tmp_path: Path) -> None:
+    """Ring-1b red line extended to the focus line: facts-only direction
+    wording; the banned disposition patterns must not appear in either
+    empty or populated renderings (same banned list as the ring-1b pin)."""
+    empty_repo = tmp_path / "empty2"
+    empty_repo.mkdir()
+    data_repo = tmp_path / "data2"
+    (data_repo / "state").mkdir(parents=True)
+    (data_repo / "state" / "backlog.md").write_text(
+        "- A（prediction: 反哺丙（p=0.85）due=2026-10）\n"
+        "  - outcome: y=0 (2026-10-31)", encoding="utf-8")
+    for repo in (empty_repo, data_repo):
+        text = mr.render_reflexion_section(
+            mr.lesson_seeds("2026-10", repo, []), None, [])
+        for banned in ("调 p 至", "建议阈值取", "应调 p", "重标 p", "校准 p 至"):
+            assert banned not in text, f"{banned!r} leaked into {repo.name}"
+
+
+def _gate_fixture_rows() -> list[dict]:
+    """Synthetic labeled fixture (real resolved rows first arrive
+    2026-11-30): two months x 15 rows, verified through the real function —
+    overall/monthly BS=0.196 / p̄=0.667 / BS_base=0.222 / BSS=0.119;
+    cumulative buckets 4/10 ([0.5,0.6)) and 8/10 ([0.7,0.8)/[0.8,0.9)),
+    widest Wilson upper 0.9433."""
+    rows = []
+    for month in ("2026-09", "2026-10"):
+        for p, y in ((0.55, 0), (0.55, 0), (0.55, 0), (0.55, 1), (0.55, 1),
+                     (0.75, 1), (0.75, 1), (0.75, 1), (0.75, 1), (0.75, 0),
+                     (0.85, 1), (0.85, 1), (0.85, 1), (0.85, 1), (0.85, 0)):
+            rows.append({"claim": f"g-{month}-{p}", "p": p,
+                         "due": month, "y": y})
+    return rows
+
+
+def test_promotion_gate_met_all_axes_pass() -> None:
+    """iterate round 11: with all four thresholds calibrated and every
+    axis passing the state is met; scope/anytime notes ride along."""
+    out = mr.promotion_gate_assessment(
+        _gate_fixture_rows(),
+        {"X_min": 0.1, "N_min": 30, "Y_max": 0.98, "M_min": 2})
+    assert out["state"] == "met"
+    by_axis = {it["axis"]: it for it in out["items"]}
+    assert by_axis["X"]["metric"].startswith("BSS=0.119")
+    assert by_axis["X"]["verdict"] == "pass"
+    assert by_axis["N"]["verdict"] == "pass"
+    # widest bucket bound 8/10 → 0.9433 < 0.98 (all-hit buckets would be
+    # exactly 1.0 and can never pass — the CI-must-shrink design)
+    assert by_axis["Y"]["verdict"] == "pass"
+    assert by_axis["M"]["metric"] == "streak=2"
+    assert mr.GATE_SCOPE_NOTE in out["notes"]
+    assert mr.ANYTIME_MONITORING_NOTE in out["notes"]
+    assert "与 OOS 判定零关系" in mr.GATE_SCOPE_NOTE
+
+
+def test_promotion_gate_not_met_on_wilson_bound_fail() -> None:
+    """not-met: all axes calibrated and data sufficient, one computable
+    axis objectively fails — here a Y_max=0.9 the widest bucket Wilson
+    upper (8/10 → 0.9433) cannot meet."""
+    out = mr.promotion_gate_assessment(
+        _gate_fixture_rows(),
+        {"X_min": 0.1, "N_min": 30, "Y_max": 0.9, "M_min": 2})
+    assert out["state"] == "not-met"
+    by_axis = {it["axis"]: it for it in out["items"]}
+    assert by_axis["Y"]["verdict"] == "fail"
+    assert "样本量尚不足以收窄 CI" in by_axis["Y"]["reason"]
+    assert by_axis["X"]["verdict"] == "pass"
+    assert by_axis["M"]["verdict"] == "pass"
+
+
+def test_promotion_gate_not_enough_data_n_and_m() -> None:
+    """『学够了没有 / 连够了没有』: N<N_min and M<M_min each degrade to
+    not-enough-data reason lines, never to a fabricated not-met."""
+    rows = _gate_fixture_rows()
+    out_n = mr.promotion_gate_assessment(
+        rows, {"X_min": 0.1, "N_min": 40, "Y_max": 0.98, "M_min": 2})
+    assert out_n["state"] == "not-enough-data"
+    by_axis = {it["axis"]: it for it in out_n["items"]}
+    assert by_axis["N"]["verdict"] == "not-enough-data"
+    assert "学够了没有" in by_axis["N"]["reason"]
+    out_m = mr.promotion_gate_assessment(
+        rows, {"X_min": 0.1, "N_min": 30, "Y_max": 0.98, "M_min": 3})
+    assert out_m["state"] == "not-enough-data"
+    by_axis = {it["axis"]: it for it in out_m["items"]}
+    assert by_axis["M"]["verdict"] == "not-enough-data"
+    assert "连够了没有" in by_axis["M"]["reason"]
+
+
+def test_promotion_gate_degenerate_base_undefined_bss() -> None:
+    """BS_base=0 boundary: p̄ degenerates to 0 or 1 (all y identical, or a
+    single row) -> BSS mathematically undefined -> honest reason line and
+    not-enough-data, never a fabricated score."""
+    th = {"X_min": 0.1, "N_min": 2, "Y_max": 0.9, "M_min": 1}
+    all_hits = [{"claim": "h1", "p": 0.8, "due": "2026-09", "y": 1},
+                {"claim": "h2", "p": 0.9, "due": "2026-09", "y": 1}]
+    out = mr.promotion_gate_assessment(all_hits, th)
+    by_axis = {it["axis"]: it for it in out["items"]}
+    assert by_axis["X"]["verdict"] == "undetermined"
+    assert "BS_base=0" in by_axis["X"]["reason"]
+    assert "退化" in by_axis["X"]["reason"]
+    assert out["state"] == "not-enough-data"
+    single = mr.promotion_gate_assessment(
+        [{"claim": "s1", "p": 0.7, "due": "2026-09", "y": 0}], th)
+    assert single["state"] == "not-enough-data"
+    single_x = {it["axis"]: it for it in single["items"]}["X"]
+    assert single_x["verdict"] == "undetermined"
+    assert "BS_base=0" in single_x["reason"]
+
+
+def test_promotion_gate_uncalibrated_reason_lines_no_bucket() -> None:
+    """Uncalibrated thresholds -> per-axis 未定标 reason lines (never a
+    boolean); all-p<0.5 rows -> Y undetermined (no bucketed rows); both
+    land in not-enough-data while computed metrics stay visible."""
+    out = mr.promotion_gate_assessment(_gate_fixture_rows(), {})
+    assert out["state"] == "not-enough-data"
+    for it in out["items"]:
+        assert it["verdict"] == "undetermined"
+        assert "未定标" in it["reason"] or "X_min 未定标" in it["reason"]
+    x_item = {it["axis"]: it for it in out["items"]}["X"]
+    assert x_item["metric"].startswith("BSS=")  # metric still computed
+    below = [{"claim": f"b{i}", "p": p, "due": "2026-09", "y": y}
+             for i, (p, y) in enumerate(((0.35, 1), (0.35, 0),
+                                         (0.45, 1), (0.45, 0)))]
+    out_b = mr.promotion_gate_assessment(
+        below, {"X_min": 0.1, "N_min": 4, "Y_max": 0.9, "M_min": 1})
+    by_axis = {it["axis"]: it for it in out_b["items"]}
+    assert by_axis["Y"]["verdict"] == "undetermined"
+    assert "无 p≥0.5 可入桶行" in by_axis["Y"]["reason"]
+    assert out_b["state"] == "not-enough-data"
+
+
+def test_promotion_gate_real_backlog_current_state_not_enough_data() -> None:
+    """Current REAL state pin (2026-11 baseline month): the repo backlog
+    has zero prediction/outcome rows (dual-zero), so the gate over the
+    real account returns not-enough-data — the first month's ONLY
+    reachable branch. Uncalibrated call stays not-enough-data for as
+    long as the owner has not calibrated thresholds; the calibrated-call
+    pin flips only when >= N_min resolved rows arrive with passing axes —
+    which is precisely the event the gate exists to detect."""
+    text = (mr.ROOT / mr.BACKLOG_PATH).read_text(encoding="utf-8",
+                                                 errors="replace")
+    records = mr._collect_prediction_records(text)
+    out = mr.promotion_gate_assessment(records, {})
+    assert out["state"] == "not-enough-data", (
+        "uncalibrated gate can never be met until the owner calibrates")
+    out_c = mr.promotion_gate_assessment(
+        records, {"X_min": 0.1, "N_min": 10, "Y_max": 0.9, "M_min": 2})
+    assert out_c["state"] == "not-enough-data", (
+        "baseline-month pin: flips only when the gate's designed event "
+        "(enough resolved rows passing all axes) actually arrives")
+
+
 def test_cli_survives_gbk_child_environment(tmp_path: Path) -> None:
     """flywheel-rehearsal pin (2026-11-13): under a GBK child — python -I
     ignores PYTHONIOENCODING/PYTHONUTF8, so a stripped-env piped child gets
