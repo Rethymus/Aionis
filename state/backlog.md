@@ -174,6 +174,63 @@
   （Time-Uniform Dependent CLT，low）——序列依赖 CI 稳健化远期方向，仅 backlog 登记。
   adaptation 口径：环1 序列依赖下 CI 稳健化远期参照，当前 Wilson 面零改动；启用须业主
   点名+独立 mission。**边界注记**：仅引用零接入；零新依赖零 SDK 零框架。
+  延伸索引㉕（2026-11-14 append，frontier-citation-anchors；仅引用零接入，三源一位=论文+repo+
+  官方博文）：Hindsight——arXiv:2512.12818「Hindsight is 20/20: Building Agent Memory that
+  Retains, Recalls, and Reflects」（cs.CL 2025-12-14，abs 页本日 fox_fetch 一手复核可达；四逻辑
+  网络 world facts/agent experiences/entity summaries/evolving beliefs 区分 evidence 与 inference、
+  三操作 retain/recall/reflect）；repo=github.com/vectorize-io/hindsight（license spdx=MIT 白名单
+  内，本日 GitHub API 复核 60917★、pushed 2026-11-13 活跃、未 archive）。三锚映射：①facts-beliefs
+  分离 ≡ 呈现面 facts-only 统计与判断分层（环1b CALIBRATION_FEEDBACK_NOTE
+  `monthly_review.py:1431` 本日实测；「呈现≠校准」）；②retain/recall/reflect 三操作 ≡ 三环
+  聚合→注入→蒸馏（design 报告 §2）同构；③去重前置过滤（写前先查等价）≡ prop: 去重键+`event:`
+  UPDATE(supersedes)/NONE 引用式接替（`monthly_review.py:1211` EVENT_OP_RE 本日实测）的写前
+  语义。**边界注记**：Hindsight 系 20B 级 backbone 记忆架构，其权重/API=provider 红线（LLM 池仅
+  GLM/SiliconFlow/ModelScope，MIT 合规≠接入资格）；若去重语义被点名借鉴，实现须**零 LLM 零
+  嵌入**（确定性文本键比对，prop: 同款）；仅引用零接入；零新依赖零 SDK 零框架。
+  延伸索引㉖（2026-11-14 append，frontier-citation-anchors；仅引用零接入）：github.com/
+  tigerless-labs/agent-memory（license spdx=MIT 白名单内，本日 GitHub API 复核 4317★、pushed
+  2026-11-12 活跃）。三映射（语义源=iterate 轮 12 调研一手核实）：①sleep-time 整理道（闲时离线
+  整理，整理不在请求路径）≡ 晚间通道离线批处理对照（夜间整理、白天只读消费）；②Markdown 单一
+  事实源 ≡ state/*.md 单一事实源纪律（handoff/current/backlog 不双轨不镜像）；③分级读取（按需
+  分层加载）≡ night_package refs 一跳摘要分层读取（轮 128-续2）同构。**边界注记**：仅引用零
+  接入；零新依赖零 SDK 零框架；不引入其任何服务/常驻组件（无后台长驻进程红线）。
+  延伸索引㉗（2026-11-14 append，frontier-citation-anchors；仅引用零接入）：arXiv:2502.12110
+  （A-MEM，memory evolution 更新优于追加）；repo=github.com/agiresearch/A-MEM（license spdx=MIT
+  白名单内，本日 GitHub API 复核 1214★、**pushed 2025-12-12 起约 11 个月未更新——停更态如实
+  注记**）。映射：新记忆触发旧记忆更新而非无限堆叠 ≡ 轮 128-续3 UPDATE(supersedes) 引用式接替
+  （`docs/ops-local-refresh.md:386` lessons 块格式节）**成对闭环**——A-MEM 供「何时该更新」的
+  语义正源，在册契约供「如何不回改地更新」（append-only 引用式标记，与 ledger 新行不覆盖同构）。
+  **边界注记**：仅引用零接入；零新依赖零 SDK 零框架；repo 停更如实注记。
+  延伸索引㉘（2026-11-14 append，frontier-citation-anchors；仅引用零接入）：github.com/searls/
+  todo_or_die（license spdx=MIT 白名单内，本日 GitHub API 复核 361★、pushed 2026-07-15）——
+  **逾期显式爆发+严格时间门**：TODO 带死线、到期未清即运行时显式报错，不让待办无声滑过。映射 ≡
+  backlog 老化 deadman 开火（--propose 实弹 5 张先例，轮 128-续2）同族语义：逾期=显式信号非静默
+  腐烂。**边界注记**：仅借语义零接入（Ruby gem 非本栈）；零新依赖零 SDK 零框架。
+  延伸索引㉙（2026-11-14 append，frontier-citation-anchors；仅引用零接入）：evidentlyai/evidently
+  （license spdx=Apache-2.0 白名单内，本日 GitHub API 复核 8062★、pushed 2026-09-29 起约 6 周
+  未更新——停更态如实注记）——**reference-vs-current 两窗口呈现范式**：漂移/质量呈现用「参考窗
+  vs 当前窗」并列对照，不裸报单窗点值。映射 ≡ 环1a 校准聚合（calibration_bucket_summary
+  `monthly_review.py:1060` 本日实测）呈现语言参照：参照对象=基线/climatology（p̄、BS_base），
+  当前对象=本月读数，两窗并列。**auto-Tests 自动派生阈值明确不采**（自动阈值=数据拟合，与
+  n=1 月度 p 记录禁检测拟合在册红线冲突）。**边界注记**：仅借呈现范式零装包；零新依赖零 SDK
+  零框架；研究面零改动。
+  延伸索引㉚（2026-11-14 append，frontier-citation-anchors；仅引用零接入）：arXiv:2611.03928
+  「Sequential auditing of connected forecast errors under partial observations」（cs.LG
+  2026-11-02，abs 页本日 fox_fetch 一手复核可达）——**缺失 outcome 审计停止语义**：评估所需
+  true outcome 部分缺失时，审计在「已观测标签足以判定」或「检索预算耗尽」处**显式停止**，缺失
+  本身是一等审计事实而非可忽略噪声。远期参照 ≡ 当前 resolved=0 时环2 insight 降级（「本月无
+  resolved 对账行，insight 步跳过」）与 L2 gate not-enough-data 三态的同族延伸。adaptation
+  口径：远期参照仅登记，启用须业主点名。**边界注记**：仅引用零接入；零新依赖零 SDK 零框架；
+  研究面零改动。
+  延伸索引㉛（2026-11-14 append，frontier-citation-anchors；仅引用零接入，**真增量登记——写回
+  契约已在册不重登**）：arXiv:2504.19413（Mem0 论文侧；mem0ai/mem0 Apache-2.0 四操作写回契约
+  已在册=`docs/ops-local-refresh.md:386` lessons 块格式节[轮 128-续3]+reports/design/
+  2026-11-11-super-agent-gen2.md:95，本日 grep 复核在册态[在册引用形=mem0ai/mem0 仓库名，论文
+  ID 此前未入册]——同 ExpeL 2308.10144 先例不重复登记整源）。真增量仅**生成侧预检两语义**：
+  ①无等价才 ADD（写前检索等价记忆，命中即不新增）；②信息量更大才 UPDATE（候选与在册等价但
+  信息量更大才接替，否则维持）。映射 ≡ 在册 `event: NONE`（重复已录不重写）的**判据侧**正源
+  ——何时判「等价/更优」；adaptation 口径：lesson 写回前确定性预检语义参照。**边界注记**：判据
+  实现须**零 LLM 零嵌入**（确定性文本比对）；仅引用零接入；零新依赖零 SDK 零框架。
 
 ## 前沿吸收（轮 127，2026-11-11；来源=reports/audits/2026-11-11-env-testpipeline-round.md §6b——两路前沿调研中 high 但 L 规模/存疑/触红线者，逐条含来源 URL）
 
