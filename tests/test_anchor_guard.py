@@ -75,6 +75,7 @@ def test_parse_and_verdicts(tmp_path: Path) -> None:
     assert summary[ag.STATUS_DRIFTED] == 1
     assert summary[ag.STATUS_LOST] == 1
     assert summary[ag.STATUS_EXTERNAL] == 1
+    assert summary[ag.STATUS_SEMANTIC] == 0  # v2 fifth state, fixture hint-free
     assert summary["bare"] == 1  # ':77' counted, never verified
 
 
@@ -87,6 +88,88 @@ def test_ambiguous_basename_is_lost(tmp_path: Path) -> None:
     summary, rows = ag.run((str(src),), tmp_path)
     assert summary[ag.STATUS_LOST] == 1
     assert "ambiguous" in rows[0].detail
+
+
+# ------------------------------------------------- v2 semantic-hint states
+
+def test_semantic_hint_hit_and_drift(tmp_path: Path, monkeypatch) -> None:
+    """v2 fifth state: in-bounds + hint absent from window = semantic."""
+    (tmp_path / "scripts").mkdir()
+    (tmp_path / "scripts" / "tool.py").write_text(
+        "def render_card(card):\n"
+        "    return card\n"
+        "\n"
+        "def run_propose():\n"
+        "    return 1\n" + "\n" * 10,
+        encoding="utf-8",
+    )
+    src = tmp_path / "ledger.md"
+    src.write_text(
+        "ok scripts/tool.py:1(render_card)\n"
+        "ok-span scripts/tool.py:1-2(def render_card, return)\n"
+        "miss scripts/tool.py:4(render_card)\n"
+        "miss-span scripts/tool.py:1-3(def render_card, missing_sym)\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(
+        ag, "SEMANTIC_SCOPE",
+        frozenset({("ledger.md", "scripts/tool.py")}),
+    )
+    summary, rows = ag.run(("ledger.md",), tmp_path)  # relative src → scope key
+    st = _statuses(rows)
+    assert st["scripts/tool.py:1"] == ag.STATUS_HIT
+    assert st["scripts/tool.py:1-2"] == ag.STATUS_HIT  # both symbols present
+    assert st["scripts/tool.py:4"] == ag.STATUS_SEMANTIC  # other def lives here
+    assert st["scripts/tool.py:1-3"] == ag.STATUS_SEMANTIC  # AND semantics
+    assert summary[ag.STATUS_SEMANTIC] == 2
+    assert summary[ag.STATUS_HIT] == 2
+
+
+def test_hint_ignored_outside_scope(tmp_path: Path) -> None:
+    """Batch whitelist: unscoped pair keeps v1 behaviour (hint ignored)."""
+    (tmp_path / "scripts").mkdir()
+    (tmp_path / "scripts" / "tool.py").write_text(
+        "alpha\nbeta\n", encoding="utf-8")
+    src = tmp_path / "ledger.md"
+    src.write_text("cited scripts/tool.py:1(render_card)\n", encoding="utf-8")
+    summary, rows = ag.run((str(src),), tmp_path)
+    assert rows[0].status == ag.STATUS_HIT  # not semantic: pair not in scope
+    assert summary[ag.STATUS_SEMANTIC] == 0
+    assert summary[ag.STATUS_HIT] == 1
+
+
+def test_hint_syntax_parsing() -> None:
+    """Hint annotation grammar: ASCII parens after the token; 全角（） glue
+    never becomes a hint; comma splits multi-symbol literals."""
+    a = ag.parse_anchors(
+        "x `scripts/tool.py:5(render_card)` in backticks\n", "s")[0]
+    assert a.hints == ("render_card",)
+    b = ag.parse_anchors("plain scripts/tool.py:5 no hint\n", "s")[0]
+    assert b.hints == ()
+    c = ag.parse_anchors("span scripts/tool.py:1-9(def foo, return)\n", "s")[0]
+    assert c.hints == ("def foo", "return")
+    d = ag.parse_anchors("cjk scripts/tool.py:5（全角括注不是 hint）\n", "s")[0]
+    assert d.hints == ()
+    e = ag.parse_anchors("spaced scripts/tool.py:5 (spaced hint)\n", "s")[0]
+    assert e.hints == ("spaced hint",)
+    f = ag.parse_anchors("multi scripts/tool.py:5(a, b, c)\n", "s")[0]
+    assert f.hints == ("a", "b", "c")
+
+
+def test_strict_ignores_semantic_state(tmp_path: Path, monkeypatch) -> None:
+    """--strict unchanged: exits 1 on drifted/lost only — semantic stays
+    fail-soft (hard-gating it is an owner decision, 待业主区)."""
+    (tmp_path / "scripts").mkdir()
+    (tmp_path / "scripts" / "tool.py").write_text(
+        "alpha\nbeta\n", encoding="utf-8")
+    src = tmp_path / "ledger.md"
+    src.write_text("miss scripts/tool.py:1(gamma)\n", encoding="utf-8")
+    monkeypatch.setattr(
+        ag, "SEMANTIC_SCOPE",
+        frozenset({("ledger.md", "scripts/tool.py")}),
+    )
+    assert ag.main(["--src", "ledger.md"], repo=tmp_path) == 0
+    assert ag.main(["--strict", "--src", "ledger.md"], repo=tmp_path) == 0
 
 
 def test_fix_diagnose_only_writes_nothing(tmp_path: Path, capsys) -> None:
@@ -127,4 +210,5 @@ def test_repo_anchor_baseline() -> None:
     )
     assert bad == KNOWN_BAD
     assert summary[ag.STATUS_DRIFTED] == 0
+    assert summary[ag.STATUS_SEMANTIC] == 0  # v2 batch-1 hints all hit
     assert summary["anchors"] >= len(KNOWN_BAD) + 80  # measured 84 on 2026-11-14
