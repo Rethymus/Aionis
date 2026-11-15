@@ -55,6 +55,19 @@ Values re-verified against live line numbers at migration time (old digits
 had drifted; 7e3a6bbc7b same-shape precedent). Batch 2 (:348-395, :732-769)
 and owner-gated (:488, ops_local_refresh.py pair) stay unmigrated;
 handoff legacy bare stays untouched (append-only, not economical).
+
+Batch 2 migration (2026-11-15, task anchor-batch2-migration): runbook
+sections A (:348-395) and C (:732-769) had 13 bare ``:N`` mentions
+rewritten as explicit ``file:line(hint)`` anchors (same-shape BARE_RE
+count; mission-count discrepancies recorded honestly: A-section
+6/≈11/7 three-way, ~14 vs measured 13 after excluding the owner-gated
+pair). Values re-verified against live line numbers at migration time
+(:2045 drifted to :2302 per 7e3a6bbc7b note; :646 re-located by literal
+grep to :149 push_only_recovery; :1428-1451/:1002-1074/:986-987/:997/
+:768 re-scoped to current symbol lines). Billing :488 pair (:46/:50)
+stays owner-gated per round-18 report sec.3; ops_local_refresh.py
+SEMANTIC_SCOPE pairing still awaits owner. The batch-1 hold note above
+(“Batch 2 ... stay unmigrated”) is superseded by this migration.
 """
 from __future__ import annotations
 
