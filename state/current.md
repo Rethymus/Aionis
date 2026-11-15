@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (11-15，handoff 轮 162)【iterate 轮 19 收官续：backlog 69-73 续编+轮 19 复核 2 low 双勘误+锚迁移批次 2（四批；push 于本批提交后执行）】**：①backlog 69-73 五条（RLCD² 张力对/PRDO 判据/gitleaks-spec-kit-deptry 候选，沿 #16 uvx 形态不入 pyproject）；②轮 19 报告 :1057→:1082、:51 终态 474→493 双勘误+panorama 85 枚扫描两漂移勘误（:702 族→:845 族 +143；:304-305→:319 写作旧值型）；③批次 2 迁移 13 枚 bare→显式（billing :488 两枚 owner-gated 不动）；guard 129→142/127→140/493→480。
+  验证实跑：guard 前后双时点 129/127/0/2/0/493→142/140/0/2/0/480 rc=0（13 枚全 hit 零 semantic）+A/C 区 bare=0+billing 区 bare=2 在位+tests/test_anchor_guard.py 11 passed（live pin +138）+ruff 全仓净+两 abs 页/gh api spdx 一手+numstat 六文件边界+file(1) CRLF/LF 归一。
+
 - **active (11-15，handoff 轮 161)【iterate 轮 19 收官（四批+本收尾批；push 于本批提交后执行）：①panorama 全景盘点报告（轮 1→18 时间线/RLCD 13 函数+3 常量/守卫三层演进/①-60 锚图谱/演化速率——迁移前基线 100/98/0/2/0/503 冻结载体）②backlog 61-68 八引用锚（jevmark/tau2/HDM/projectmem 一手复核；65-67 编号待补如实注记）③runbook :811-944 批次 1 迁移 29 枚 bare→显式锚（guard explicit 100→129/hit 98→127/bare 503→474，drifted/lost/semantic 恒定；hint 全 hit）④轮 19 报告+本 state 批】】**
   验证实跑：guard 129/127/0/2/0/474 rc=0（迁移前后逐值对照）+tests/test_anchor_guard.py 11 passed（live pin 升限 125）+ruff 全仓净+backlog 双零 0/0+三件套（--status ok_committed pushed/--doctor 8/9 唯一红 7/9 billing 冻结签名/gh run list 最新停 2026-11-11T05:32:08Z 停用令持续）。五批=docs(design) panorama/feat(ops) backlog 61-68（76+/0）/docs(ops) runbook 50+/25-+guard 9+/0+test 3+/1-/docs(reports) 轮 19 报告/docs(state) 本批；本批提交后 pull --rebase+push 五批，失败重试一次，结果如实回报主会话。详见 handoff 轮 161+reports/audits/2026-11-16-iterate-round-19.md。
 
