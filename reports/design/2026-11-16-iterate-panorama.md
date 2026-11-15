@@ -134,3 +134,13 @@ main（:1785/:1810/:1830 分派）
 - `git status -sb` → `## main...origin/main` 零偏差（轮 18 收尾批 push 已完成，与 current.md 顶部条计划一致——本会话实测）。
 - 61-68 与 projectmem：grep 零命中实录（§四指针+§五.5）。
 - **边界**：单文件新建 docs(reports) lane；数据源全只读（handoff/current/backlog/审计报告/代码零触碰）；0 ledger 写/0 frozen/0 OOS/研究面零改动；零新依赖零装包；本报告自身不在守卫扫描面（reports/design 非 DEFAULT_SOURCES），落盘后 guard 读数以当期命令输出为准（bare 时点值口径沿轮 15 §九/轮 16 辨明先例）。
+---
+
+## 时序锚复核扫描与勘误（2026-11-15 append，panorama-19low-cleanup；append-only 勘误只追加、正文零回改）
+
+**方法**：anchor_guard 同形正则 BARE_RE（`scripts/anchor_guard.py:89`，`(?<![\w.:-])(?<!\d):(\d{1,5})(?:-(\d{1,5}))?(?!\d)`）实跑扫描本文全文（非逐行肉眼）——**85 枚 bare 命中**，按目标文件归类逐一核对漂移：
+
+- **漂移一（后续 append 型；落盘时点为真值）**：:99 与 :130 引 backlog ①-⑥ 名词指认 blockquote「:702/:706/:709/:713/:721/:726」——`git show e8cc10a143:state/backlog.md` 实证落盘时点 :702 族在位为真；其后 76344da977（61-68 批 +76 行）+backlog 69-73 批（+67 行）两次插入致 **+143 漂移，现值 :845/:849/:852/:856/:864/:869**（本会话 grep 实证，内容逐行对应：阻断引索清单/Jeva null-aware/Microsoft-Decision-1/lm-evaluation-harness/RouteLLM/低置信选项复转）。以现值为准。附注：:99「:58-:630 延伸索引长区」端点 :58 未动、⑦-60 区仍居 :58-:629（:630 现为 61 条首行，区间括住语义仍成立——正则因连字符前缀未计此端点，归类复核补记）。
+- **漂移二（写作时旧值型；落盘时点已不符）**：:39 引「runbook :304-305 已入册『判别器反馈即改进信号』」——`git show e8cc10a143:docs/ops-local-refresh.md` grep 实证**落盘时点即 :319**、现值亦 :319；:304-305 系 f5db3c3527 及更早历史真值（8 个 runbook 触碰提交逐一定位：f5db3c3527=:305、ce52d11d06 起恒 :319），写作引用旧值——**以现值 :319 为准**。
+- **未漂移（实证）**：①monthly_review.py 全族（§二 表 :45-:60+调用链树 :65-:83 共 60 枚）——`git log e8cc10a143..HEAD -- scripts/monthly_review.py` 零提交、`git diff` 为空，目标零改动；②handoff 族（:5 :2916-:2989/:33 :129-:139/:90 :2922 与 :2936/:121 :2932-2989/:130 :2911-:2989）——`git diff e8cc10a143 HEAD --numstat -- state/handoff.md`=4+/0- 纯 EOF append（轮 161），≤:2989 前区零位移（:129-:139 旧 UI 序列 sed 现值在位复核）。
+

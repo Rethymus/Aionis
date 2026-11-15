@@ -77,3 +77,11 @@
 push 实录：本批（批 5）提交后 `git pull --rebase`+`git push` 全部五批一次执行，失败重试一次，结果如实回报主会话（本报告落盘时点 push 尚未执行——tracked 文件不预写 push 结果，沿轮 160 时序诚实边界）。
 
 边界：0 ledger 写/0 frozen/0 OOS/研究面零改动；monthly_review.py 零触碰；零新依赖零装包。
+---
+
+## 勘误（2026-11-15 append，panorama-19low-cleanup；append-only 勘误只追加、正文零回改）
+
+- **:42 防重登锚行值漂移**：正文「防重登锚 2610.25846 实读 `docs/ops-local-refresh.md:1057` 在册」——本会话 grep 现值 **:1082**（arXiv:2610.25846 表格行；批次 1 迁移 32ea562ac7 折行致 +25）。实证边界：`git diff 551b54caef HEAD --stat -- docs/ops-local-refresh.md` 为空=本报告落盘后 runbook 零改动，:1057 系写作时引用迁移前旧值——按「旧值漂移以现值为准」纪律（7e3a6bbc7b:215 同形先例），**以现值 :1082 为准**，正文 :42 不回改。
+- **:51「迁移后终态」自我指涉漂移**：正文「129/127/0/2/0/474 rc=0（§二 迁移后终态）」——本会话亲跑 `uv run python scripts/anchor_guard.py` 现值 **129/127/0/2/0/493 rc=0**：判据四值（explicit/hit/drifted/lost）+semantic 恒定，bare 474→493 系 state append（handoff 轮 161+current 顶部条 :N 提及）自然增长、非恒定判据口径（轮 161 handoff 终读 493 已辨明）。「终态」在 append-only 账本上语义不成立——**以当次实跑现值为准**，正文 :51 不回改。
+- :22 §二 表内 503/474 系迁移前后双时点测量值（历史对照、非终态声称），不在勘误面。
+
