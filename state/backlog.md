@@ -770,6 +770,83 @@
   新装、过时依赖清点零风险），deptry 属第二阶（须装包才可用，故候选登记而非即刻用）。
   **边界**：候选登记≠安装；零装零依赖；与依赖升级决策正交（deptry 只查声明对账不升
   版本；billing 冻结期依赖版本零动）。
+  延伸索引74（2026-11-15 append，frontier-citation-anchors；仅引用零接入；**非
+  allowlist 面=仅链接+短句引注零正文复制沿 68 CC BY-SA 严口径先例**）：Google SRE
+  Workbook ch.9「Incident Response」（sre.google/workbook/incident-response/）
+  +Wheel of Misfortune 正源=第一本书 ch.2「Accelerating SRE On-Call」（sre.
+google/sre-book/accelerating-sre-on-call/，ch.9 页内交叉引用所指）——**本轮彩排
+  方法论正源**，施工侧本日 curl 落盘去标签逐句一手：①ch.9「we practice
+  responding to specific incidents using exercises like Wheel of Misfortune」
+  +「intentionally treating minor problems as major ones requiring a
+  large-scale response」=**低风险演练**（小问题按大响应练）+DiRT program 语境；
+  ②正源「regular disaster role playing…commonly referred to as "Wheel of
+  Misfortune" or "Walk the Plank"」+tabletop RPG 公式（game master 点将
+  primary/secondary on-call 应答入页告警）；③演后复盘闭缺口=ch.10「Hold
+  training exercises…a cast of engineers reenacts a previous postmortem」
+  （重演既往事件≡合成 fixture 受控回放语义）。**辨明（如实注记）**：调研会话
+  引语『role-play…already been solved』中 already been solved 词面在施工侧四页
+  复核（incident-response/postmortem-culture/data-processing/on-call）零命中，
+  最近似原文=「a validation that you could have solved this week's problem if
+  you had been picked」——语义轴（演练用已解决事件回放）成立、词面不坐实，两
+  口径并列登记；SRE 页许可文本施工侧未核到（页面 footer 无 Creative Commons
+  字样 grep 实测），非 allowlist 定性承调研会话判定+68 严口径先例执行。**边界**：
+  仅方法论引用；零装零依赖零接入；彩排施工须另派单。
+  延伸索引75（2026-11-15 append，frontier-citation-anchors；**候选登记零装**沿
+  71-73 形态：uvx 一次性 CLI 不入 pyproject、装须业主点头）：github.com/raimon49/
+  pip-licenses（**MIT**/378★/pushed 2026-11-15 活跃——施工侧本日 gh api 一手
+  复核，与调研会话逐值一致）——**许可红线机械化对账候选**：pyproject+uv.lock
+  全量（含传递）依赖 license 清点 vs docs/data-license-allowlist.md（MIT/
+  Apache/BSD）白名单对账，替代人工逐包 grep；反面对照面=AGENTS.md 排除清单
+  （vectorbt/Commons Clause、backtrader/GPL、mlfinlab/paid、pypbo/AGPL、
+  nautilus_trader/LGPL）。**边界**：候选登记≠安装；对账只读不改依赖（billing
+  冻结期依赖版本零动）；零装零依赖。
+  延伸索引76（2026-11-15 append，frontier-citation-anchors；仅引用零接入；**非
+  allowlist 同 74 仅链接+短句引注**）：Google SRE Workbook ch.13「Data
+  Processing Pipelines」（sre.google/workbook/data-processing/，施工侧本日 curl
+  落盘一手复核）——「Potential Failure Modes→Delayed data」小节三句逐字：「Stale
+  data is almost always better than incorrect data. If your pipeline
+  processes incomplete or corrupt data, errors will propagate downstream.
+  Restoring or reprocessing bad data takes time and can prolong an
+  outage.」=**恢复道选择性重试 owner 讨论的第三方引用**：管线遇阻宁可停等旧
+  数据也不吃坏数据——坏数据下行传播后恢复/重算反而延长故障，对位本仓恢复道「先
+  推已验产物（ops-local-refresh.md:149(push_only_recovery) 先例）、失败步选择性
+  重试而非全量重跑」讨论面。**边界**：仅讨论引用非规范依据（选择性重试未决、
+  业主未裁）；零装零依赖零接入。
+  延伸索引77（2026-11-15 append，frontier-citation-anchors；**候选登记零装+本轮
+  不施工前置未决如实注记**；沿 71-73 装须业主点头）：github.com/pallets-eco/
+  croniter（**MIT**/570★/pushed 2026-11-09——施工侧本日 gh api 一手复核；PyPI
+  当前 7.0.0 本日 pypi.org/pypi/croniter/json 实测；pallets-eco 正仓）——**节奏
+  表对账候选**：cron 表达式解析语义 vs docs/ops-local-refresh.md 四档节奏表人工
+  口径的机械化对账。**本轮不施工如实注记**：调研【不该做】明示 TZ-aware/本地
+  时区口径须业主先行确认——本仓调度现状=Windows 任务计划+Git Bash 本地时区，
+  croniter 默认本地时区，口径未决前任何对账工具都可能引入伪偏差，前置未决故
+  仅登记零动作。**边界**：候选登记≠安装≠施工；billing 冻结期零依赖动；节奏表
+  零改动。
+  延伸索引78（2026-11-15 append，frontier-citation-anchors；仅引用零接入）：
+  arXiv:2506.06326「Memory OS of AI Agent」（Jiazheng Kang 等 4 作者，cs.AI，
+  v1 2025-05-30；abs 页施工侧本日 fox_fetch 一手复核）+repo github.com/BAI-LAB/
+  MemoryOS（**Apache-2.0 白名单内**/1622★/pushed 2026-07-07[约 4 月未推如实
+  注记]——施工侧本日 gh api 一手复核）——**L2 晋级门「层间晋升判据」语义正源**：
+  摘要逐字「three levels of storage units: short-term memory, mid-term memory,
+  and long-term personal memory」+层间晋升两操作「short-term to mid-term
+  updates follow a dialogue-chain-based FIFO principle, while mid-term to
+  long-term updates use a segmented page organization strategy」=「什么内容凭
+  什么判据晋升上一层」的形式化参照，对位本仓 L2 晋级门（:222 三态语境+:562
+  「L2 钥匙在业主语义不变」）判据讨论；在册 ㉗ A-MEM（:198 笔记更新）/㉛ Mem0
+  （:226 写回契约）/Memp（:290 程序性记忆）均非层间晋升轴=真增量不重登。**边界**：
+  仅判据语义引用零装零接入；L2 晋级钥匙在业主语义不变。
+  延伸索引79（2026-11-15 append，frontier-citation-anchors；仅引用零接入）：
+  arXiv:2501.11733「Mobile-Agent-E: Self-Evolving Mobile Assistant for Complex
+  Tasks」（Zhenhailong Wang 等 8 作者，cs.CL，v2 2025-01-28；abs 页施工侧本日
+  fox_fetch 一手复核）——**仅论文锚沿 63 先例**（63「无官方 repo——abs 页 code/
+  data 链接区无实体如实注记」同款；施工侧本日 gh api X-PLUG/Mobile-Agent-E 实测
+  404）：摘要逐字「a persistent long-term memory comprising Tips and Shortcuts.
+  Tips are general guidance and lessons learned from prior tasks…Shortcuts
+  are reusable, executable sequences of atomic operations tailored for
+  specific subroutines」=**Tips/Shortcuts 双层知识库≡lessons/剧本命令序列分层
+  命名**的第三方同构（单条经验教训 vs 可复用原子操作序列两层），供月末 lessons
+  与 runbook 剧本步骤序列两层结构的命名学引用非实现依据。**边界**：仅论文锚零装
+  零接入；移动 agent 执行面与本仓零相关（纯知识分层命名引用）。
 
 ## 前沿吸收（轮 127，2026-11-11；来源=reports/audits/2026-11-11-env-testpipeline-round.md §6b——两路前沿调研中 high 但 L 规模/存疑/触红线者，逐条含来源 URL）
 
