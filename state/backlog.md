@@ -627,6 +627,82 @@
   questions 零接入；「LLM 可替代人类预测」结论不采（本仓 p 记录=人工裁决面
   记录非自动预测器）。**边界注记**：仅引用零接入；零新依赖零 SDK 零框架；
   研究面零改动。
+  延伸索引61（2026-11-15 append，frontier-citation-anchors；仅引用零接入）：github.com/
+  yuan-phd/jevmark（**CAPS/jevmark**；Apache-2.0/0★/pushed 2026-11-11 活跃——本日 gh api
+  一手实测；README 23884 字符本日实读，四组关键句逐字复核在案）——**RLCD 直系第三方
+  复现**（README 逐字 "It re-implements the idea behind TypeSafe AI's Jev"；CAPS 全称
+  =Chosen-Action Proper Scoring，v3 Brier learner 名）四供证：①README 逐字 "**A proper
+  score as a REINFORCE reward is broken.** A wrong action's Brier reward is never below
+  gold's…SST-5 score accuracy fell from 0.636 to 0.111"=**用采样动作自身 Brier/log 分作
+  REINFORCE 奖励不可用**——11 关键函数 Brier/(p−y)² 打分纪律（reconcile :1023+环 1a
+  :1141）的第三方理论警示：打分只作记录性对账，绝不回流为优化信号；②README 逐字
+  "RLCD adds nothing on full labels; it helps when the only feedback is whether the
+  model's own answer was right"=本仓 reconcile **有真实 y**（月末 outcome 人工对账）、
+  无需 self-judge 的诚实读数对照（RLCD 价值域=无标签 self-feedback，本仓不在该域）；③
+  README 逐字 "well calibrated in-domain (ECE 0.013 to 0.015) and overconfident on
+  unfamiliar domains (ECE up to 0.22)"=provider 概率「未校准仅记录」边界佐证（域漂移
+  即过自信——延伸索引54 代际注记同向）；④README 逐字 "every number there is cited to
+  a committed `metrics.json`"≡**config_committed 同构**（数字锚定已提交度规文件）。
+  **不采**：0★ 低成熟度+0.6B 实验规模注记（沿㊾ 单作者先例同判低权重）；repo 零 clone
+  零装；SST-5/schema 实验数据零接入。
+  延伸索引62（2026-11-15 append，frontier-citation-anchors；仅引用零接入）：arXiv:
+  2611.14581「When Evaluators of AI Agents Disagree: An Empirical Study of Native
+  Scoring, LLM Judges, and Commit-Boundary Checks on tau2-bench」（Sungbin Im 单作者
+  低成熟度注记沿㊾ 先例，cs.SE 2026-11-10；abs 页本日 fox_fetch 一手复核）——摘要逐字
+  "the boundary evaluator, a minimal rule-based check of whether a write was expected
+  against whether one occurred in the trace"+"**The boundary evaluator, with no model
+  call, caught all 11**; no judge significantly exceeded it on human labels"（LLM 判官
+  11 禁写漏检 10-11，强判官仍漏 6；2160 episodes tau2-bench airline/retail）+收尾句
+  "The choice of evaluator decides the conclusion; the minimal check exposes the
+  failures the judges miss"=**零模型 commit-boundary 规则检查抓满 LLM 判官漏检**——
+  anchor_guard 纯 stdlib 路线（v1 起零 LLM 零嵌入）+扩面批次 1 迁移设计（runbook :811-944
+  hint 迁移）的依据引证；judge 复读自洽 98.2% vs 与原生评分一致仅 56.2%=自评≠评他佐证。
+  **不采**：tau2-bench 本体/2160 traces/复现包（Zenodo）零 clone 零接入。
+  延伸索引63（2026-11-15 append，frontier-citation-anchors；仅引用零接入）：arXiv:
+  2611.16961「The Value of Thinking: Learning When to Reason in Hybrid Decision
+  Models」（Zhengxu Yu 等 6 作者，cs.AI 2026-11-12；abs 页本日 fox_fetch 一手复核；
+  **无官方 repo**——abs 页 code/data 链接区无实体，如实注记）——摘要逐字
+  "the slow mode runs only where that value exceeds a price λ set per request"+
+  "the utility the slow mode is expected to add over the fast one"=**「思考价值>价格 λ」
+  路由**：token 经济红线（AGENTS.md 稳态不增烧）的学术形正式化——慢模式（长推理）只在
+  期望增值超过价格时触发，与本仓「最便宜够用模型+bounded 单场」同构轴；CDPO
+  （Calibrated Decision Policy Optimisation）系 **RL 训练配方**——仅谱系登记**零采**
+  （本仓零微调红线，设计报告 §7 拒绝面全族）；评测面 JevBench（HDM-4B 0.857 vs Jev
+  0.851）=Jev 指认资料域（backlog :682-:726）关联注记，不接 Jev API 不变。
+  延伸索引64（2026-11-15 append，frontier-citation-anchors；仅引用零接入）：github.com/
+  riponcm/projectmem（MIT/882★/pushed 2026-11-01——本日 gh api 一手实测）——**append-only
+  typed events+确定性投影**同构（事件账本为源、视图可再生≡handoff append-only+current
+  顶部条派生）；调研侧引文 "These histories are candidates for later warnings, not
+  evidence"=**「预警候选≠预警有效」措辞范本**（直供 reports/design/2026-11-16-iterate-
+  panorama.md §五.5——该节 else-分支「未在册不引用」注记因本条入册而过时，以本条为准；
+  panorama §四 61-68 指针引导至此）。**不采**：本体零装零依赖；投影引擎不引入（本仓
+  投影=current.md 顶部条人工顺延，足够）。
+  延伸索引65（2026-11-15 append，frontier-citation-anchors；仅引用零接入；**论文主锚
+  无官方 repo 如实注记沿㊾ 先例**）：DISCERN（双时态文献，调研侧一手判定；arXiv 编号
+  未随交办给定——**按调研实测语义登记不臆造编号，编号待补后追加注记**）——双时态
+  **preserve-at-write / resolve-at-read**（写入时保真快照、读取时按 as-of 解析）≡本仓
+  PIT as-of 镜像（ALFRED as-of vintages/`constituents_on` PIT 成员——写入侧冻结、消费侧
+  时点解析同构；施工侧未复核原文，语义系调研会话一手实测转述如实注记）。
+  延伸索引66（2026-11-15 append，frontier-citation-anchors；仅引用零接入）：Minimal
+  Superior Penalties（调研侧一手判定；编号未随交办，同 65 处理）——**单用 Brier 或 log
+  分不满足 superiority**（不存在单一 Proper Scoring 同时最优）=环 1a 多指标呈现的理论
+  注记：calibration_bucket_summary 五桶+Wilson CI+mean Brier 并列呈现而非单指标判优
+  （EVOLUTION_SCOPE_NOTE 禁判优门同向；设计报告红线 5「呈现≠校准」同族）。施工侧未
+  复核原文，语义系调研会话一手实测转述如实注记。
+  延伸索引67（2026-11-15 append，frontier-citation-anchors；仅引用零接入）：升级可靠性
+  审计（upgrade-dependency reliability audit 文献，调研侧一手判定；编号未随交办同 65
+  处理）——**词法规则检测器在依赖未见改写下 recall 1.00→0.00 崩塌**（规则面=词面锚定，
+  措辞变更即失效）=扩面批次 1「锚词固定+措辞冻结」纪律的第三方警示：hint 迁移后锚词
+  即冻结面（EVENT_OP_RE/EVENT_REF_RE pattern 字节冻结钉同族先例）+词面漂移须以
+  anchor_guard drifted 态显式呈现而非静默漏检。施工侧未复核原文，语义系调研会话一手
+  实测转述如实注记。
+  延伸索引68（2026-11-15 append，frontier-citation-anchors；仅引用零接入；**CC BY-SA
+  4.0 仅链接零正文复制**）：Wikipedia「Jev」条目（en.wikipedia.org，三级源）=**Jev≠JEPA
+  消歧的三级源**（backlog :682 名词指认资料区在册规则的公共百科侧证：Jev=TypeSafe AI
+  System One 判别式决策模型 2026-09-15/RLCD，与 LeCun JEPA 无关——三级源仅供导航，
+  权威指认仍以①-⑥ 指认资料区+轮 1 报告为准）；CC BY-SA 4.0 非 allowlist 许可——**仅
+  链接引用零正文复制零改写派生**（沿 CC0 清单先例「仅索引用途」更严口径：非许可复制
+  面为零）。
 
 ## 前沿吸收（轮 127，2026-11-11；来源=reports/audits/2026-11-11-env-testpipeline-round.md §6b——两路前沿调研中 high 但 L 规模/存疑/触红线者，逐条含来源 URL）
 
