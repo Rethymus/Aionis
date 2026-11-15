@@ -703,6 +703,73 @@
   权威指认仍以①-⑥ 指认资料区+轮 1 报告为准）；CC BY-SA 4.0 非 allowlist 许可——**仅
   链接引用零正文复制零改写派生**（沿 CC0 清单先例「仅索引用途」更严口径：非许可复制
   面为零）。
+  延伸索引69（2026-11-15 append，frontier-citation-anchors；仅引用零接入；**张力对登记沿⑨
+  并列先例不择优偏引**）：arXiv:2610.17309「StartLux-Decision: AutoThink Decision Models
+  with Reinforcement Learning for Calibrated Deliberative Decisions」（Xialie Zhuang 等
+  6 作者，cs.CL，v2 2026-10-20；abs 页本日 fox_fetch 一手复核）——RLCD²（Reinforcement
+  Learning for Calibrated Deliberative Decisions）摘要逐字「uses a frozen model and
+  proper scoring rules to reward improvements in decision probability quality」=**冻结
+  模型+proper scoring 奖励概率（分布）质量**，与在册 61（:630）jevmark README 逐字「A
+  proper score as a REINFORCE reward is broken」（打在采样动作上 .636→.111 崩）构成
+  **张力对**：一侧称打分对象=分布可用作奖励、一侧实证打在采样动作即崩——沿⑨（:70
+  「张力如实并列，不据任何一篇改在册协议」）**两文并列登记不据任何一方改协议**（本仓
+  打分=记录性对账零优化信号，两说均不触发改动）；摘要逐字「applies a soft penalty to
+  overlong reasoning traces」（超长推理软惩罚，推理均长至多 −65%）=**token 经济红线
+  出口极注记**——63（:661）HDM 入口门控「价值>价格才思考」/本条出口惩罚=同一红线的
+  入口/出口两极。**DecisionPivot 语义注记**（同文评测面无独立 URL，并入本条防同源
+  重复登记）：摘要逐字「contrast pairs that differ in a single answer-changing
+  detail」=**单细节翻转对照**≡轮 18 报告 §二决定性实验（semantic scope 键修复 ×5
+  翻转转录）单变量对照同构——一次只翻一个变量、看结论是否随之翻转。repo=
+  StartLux-Decision（㊿ :457 在册 Apache-2.0，2026-11-14 gh api 一手复核——**本轮
+  未重核、沿用㊿ 记录如实注记**；论文题名与 repo 同名，论文↔repo 关联本日 abs 页侧证）。
+  延伸索引70（2026-11-15 append，frontier-citation-anchors；仅引用零接入）：arXiv:
+  2609.38850「Beyond Outcome Rewards: Post-Rationale Distribution Optimization for
+  Selective Prediction in Reasoning Models」（Zhimin Gao 等 5 作者，cs.AI，v2
+  2026-11-01；abs 页本日 fox_fetch 一手复核；官方实现 github.com/ZimmyGao/
+  openjev-rlcd——本日 gh api 一手实测 spdx=MIT/62★/pushed 2026-11-03/archived=false，
+  ZimmyGao=一作 Zhimin Gao 官方实现自洽）——PRDO 摘要逐字「applies a proper score to
+  the answer distribution after each sampled rationale」=**打分对象=答案分布**，与本仓
+  WATCHDOG {answer,p} 消费形态同构（scripts/monthly_review.py:1468
+  parse_bounded_answer——**p 只定 defer 弃答门、不作后处理校准**；abs 侧证「selective
+  deployment requires ranking which answers to accept or defer」=作答/弃门面）；「argmax
+  作决策+max 只作答/弃门」细分与「expected reward linear in u…maximized by putting
+  all probability on one answer」两句系调研会话自论文正文/repo README 引录——**施工侧
+  仅复核 abs 页、摘要未见此两句，沿 65-67「施工侧未复核原文」体例如实注记**；后句与
+  61（:630）合并成完整判据：**打分对象=分布则可用/打在采样动作则崩**（Aionis 消费侧
+  纯对账零优化，仅纪律佐证）；摘要逐字「better selective ranking can coexist with
+  lower full-coverage accuracy」=**选择性弃答面改进≠全覆盖面改进**，与 66（:686 单
+  指标不满足 superiority）同向：分面呈现不判优。
+  延伸索引71（2026-11-15 append，frontier-citation-anchors；**候选登记零装**；沿
+  「前沿吸收」节 #16（duckdb 条）「使用形态限 uvx」形态——不入 pyproject、装须业主
+  点头）：github.com/gitleaks/gitleaks（**MIT**/31038★/pushed 2026-10-28——本日 gh
+  api 一手实测；description 逐字「Find secrets with Gitleaks」）——**Actions 停用期
+  秘钥防线补强候选**（Actions 自 2026-11-11 按业主停用令全面暂停=CI 侧秘钥扫描同步
+  离线；gitleaks 本地跑=零 CI 依赖的秘密扫描，gitignore 红线面 [.env/data/*
+  .parquet] 的第二道本地防线）。**预检注记**：git grep 全仓 gitleaks 仅
+  reports/design/2026-10-07-retakeover-audit.md:125「ruff→守卫→gitleaks 可后补」
+  一处既有先声（本日实测）——审计侧为建议、本条为 backlog 正式候选登记，两处非重复
+  登记。**边界**：候选登记≠安装——零装零依赖零 pyproject 改动；启用沿 #16 先例=uvx
+  按需一次性调用+业主点头前置。
+  延伸索引72（2026-11-15 append，frontier-citation-anchors；**纯引用零装**）：github.
+  com/github/spec-kit（GitHub 官方，**MIT**/149820★/pushed 2026-11-12——本日 gh api
+  一手实测；README 本日 gh api 实读）——**三态证据门**：README :31 逐字「An
+  evidence-backed go, clarify, or stop decision」≡WORKFLOW.md 前 4 阶（opportunity→
+  problem→research→decision 冻结门）同构；README :113 逐字「/speckit-constitution
+  Create principles focused on code quality, testing, and maintainability」≡本仓
+  constitution 同构（WORKFLOW.md 止停条件/预算红线同族）；README :191-192 逐字「pass
+  the handoff summary from decision.md…Stopping with a documented reason」≡handoff
+  append-only 成文产出纪律（每步产出落册可复核）。**纯引用**：工具本体零装零依赖——
+  本仓已有 WORKFLOW.md+state/ 账本等价物，spec-kit 仅作「三态门+constitution+成文
+  产出」既有纪律的第三方外部同构佐证，非缺失补丁。
+  延伸索引73（2026-11-15 append，frontier-citation-anchors；**候选登记零装**；同 71
+  沿「前沿吸收」节 #16 形态不入 pyproject、装须业主点头）：github.com/fpgmaas/deptry
+  （**MIT**/1504★/pushed 2026-11-15 活跃——本日 gh api 一手实测；description 逐字
+  「Find unused, missing and transitive dependencies in a Python project.」）——
+  **依赖健康候选**：pyproject 声明面 vs import 面对账（unused/missing/transitive 三
+  查）；**零成本阶梯先行**=「uv tree --outdated」（本会话实跑 rc=0 供证——uv 自带零
+  新装、过时依赖清点零风险），deptry 属第二阶（须装包才可用，故候选登记而非即刻用）。
+  **边界**：候选登记≠安装；零装零依赖；与依赖升级决策正交（deptry 只查声明对账不升
+  版本；billing 冻结期依赖版本零动）。
 
 ## 前沿吸收（轮 127，2026-11-11；来源=reports/audits/2026-11-11-env-testpipeline-round.md §6b——两路前沿调研中 high 但 L 规模/存疑/触红线者，逐条含来源 URL）
 
