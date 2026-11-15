@@ -808,10 +808,13 @@ uv run python scripts/monthly_review.py --propose \
   头部「零 LLM、零网络」声明 `scripts/monthly_review.py:1246(LLM, --propose)`；引擎对 backlog/tasks **只读**）。
 - **预期输出**：提案卡 N 张（2026-11-13 基线七卡）+ 刷新指令 0..n 条；每张含
   `prediction:` 行（p=「待月末会话填写 0..1」——引擎绝不代填，`render_card`
-  :975/:1208）与 `disposition:` 三去向行（:997：accept→tasks/active/ · defer 留
+  `monthly_review.py:1001-1008(prediction)`、`monthly_review.py:1000(p_txt)`）
+  与 `disposition:` 三去向行（`monthly_review.py:1017-1019(disposition)`：
+  accept→tasks/active/ · defer 留
   候选区 · reject→tasks/rejected/）。exit 恒 0。
 - **检查点**：零提案=合法态非失败（无信号或全在册）；去重刷新指令仅人工执行；
-  **不自动写任何文件**（节奏表 :230「绝不自动写」）。
+  **不自动写任何文件**（节奏表 `ops-local-refresh.md:230(propose)`「绝不自动写」
+  ——230 行现值行内字面=「引擎对 backlog **只读**」，语义同载）。
 - **失败处置**：git pickaxe 不可用→老化信号「不可用=不猜」如实降级；--out 笔误
   未落盘→stdout 仍可读但证据链缺主载体，补 --out 重跑（确定性幂等，零成本）。
 
@@ -824,33 +827,42 @@ uv run python scripts/monthly_review.py --month 2026-11 --lessons \
   --out reports/monthend/2026-11/02-monthly-report.md
 ```
 
-- **命令语义**：月报 + §5 Reflexion seeds（`lesson_seeds` :1448：缺席晚/
-  persistent/spin + watchdog bounded question :1413 + 校准事实[环1a 注入] +
-  insight 钩子）+ §6 Active lessons 聚合（`render_reflexion_section` :1521）。
+- **命令语义**：月报 + §5 Reflexion seeds（`lesson_seeds`
+  `monthly_review.py:1494(lesson_seeds)`：缺席晚/
+  persistent/spin + watchdog bounded question
+  `monthly_review.py:1459(WATCHDOG_BOUNDED_QUESTION)` + 校准事实[环1a 注入] +
+  insight 钩子）+ §6 Active lessons 聚合（`render_reflexion_section`
+  `monthly_review.py:1581(render_reflexion_section)`）。
   正常 exit 0（有 SUMMARY 晚且零采集异常；异常 exit 1 如实，不当缺陷掩埋）。
 - **会话动作三件**（全部在**单场**月末会话内——23:35 班次承载，零新增会话）：
   1. **粘贴**：步 1 新卡人工粘贴 `state/backlog.md` 候选区（刷新指令按提示人工
      更新时间戳），并**逐卡填 p**（0..1 口头置信度——judgments 面，引擎永不
-     代填；p>0.6 高带=仅自动进入对账候选呈现，无任何自动处置，:1029）。
+     代填；p>0.6 高带=仅自动进入对账候选呈现，无任何自动处置，
+     `monthly_review.py:1051-1052(band)`）。
      **对账行形（解析契约）**：入册的 prediction 行须用紧凑契约形
      `- 甲（prediction: 断言（p=0.8）due=2026-11）`——解析器
-     `_collect_prediction_records` :1061-1067 要求行内**连串 `（p=` 子串**，
+     `_collect_prediction_records` `monthly_review.py:1084-1085(prediction)`
+     要求行内**连串 `（p=` 子串**，
      卡面展示形 `（judgments: p=…` 不含该子串（flywheel-rehearsal 演练实测
      发现，2026-11-13 勘正），粘贴时须落契约形；outcome 行随后
      `  - outcome: y=0|1 (YYYY-MM-DD)`。
-  2. **bounded answer**：对 WATCHDOG_BOUNDED_QUESTION（:1413 固定选项 A=原地
+   2. **bounded answer**：对 WATCHDOG_BOUNDED_QUESTION（`monthly_review.py:1459(WATCHDOG_BOUNDED_QUESTION)`
+      固定选项 A=原地
      打转 / B=偏离值班目标 / C=正常）**只回单行 JSON**
      `{"answer": "A"|"B"|"C", "p": 0到1}`（约十 token 量级；answer 只回选项
      标签，不得自由文本）。
   3. **lessons 草稿**：写 `reports/monthend/2026-11/03-lessons-draft.md`——
      计划形「下次 X 触发时做 Y」+ `- event: ADD|UPDATE|DELETE|NONE`（**必须
-     bullet 语法**：EVENT_OP_RE :1269 要求 `[-*]` 前缀——tmp 预演首跑实测陷阱，
-     见本文件 :421 注记）+ `evidence:` 路径引用；bounded answer 行写进草稿
+     bullet 语法**：EVENT_OP_RE `monthly_review.py:1292(EVENT_OP_RE)` 要求
+     `[-*]` 前缀——tmp 预演首跑实测陷阱，
+     见本文件 `ops-local-refresh.md:447-451(event)` 注记——原 421 行系旧值，
+     现值以词面定位）+ `evidence:` 路径引用；bounded answer 行写进草稿
      （=步 3 的校验对象）。
 - **检查点**：p 仅记录轨迹，禁再校准拟合/禁显著性声称（红线）；首月如实面——
   校准事实=`none yet (baseline collection month)`、insight 钩子=「本月无
   resolved 对账行，insight 步跳过」（零 resolved 降级行）——**两处空态均如实
-  输出，首跑勿当缺陷、勿造数据**（:401 预演注记 (a)/(b) 同口径）。
+  输出，首跑勿当缺陷、勿造数据**（`ops-local-refresh.md:433-439(prediction)`
+  预演注记 (a)/(b) 同口径——原 401 行系旧值，现值以词面定位）。
 - **失败处置**：answer 写偏（自由文本/p 越界）→步 3 逐行抓住（exit 1），改草稿
   重校验（有界单次重试）；草稿缺 event: 行→步 6 exit 3 契约门拒（回改草稿，
   绝不回改 handoff）。
@@ -863,13 +875,16 @@ uv run python scripts/monthly_review.py \
   --out reports/monthend/2026-11/04-verify-bounded.md
 ```
 
-- **命令语义**：`run_verify_bounded` :1615——逐行扫含 `{"answer","p"}` 双键
-  字面的行（与 WATCHDOG 契约同形），经 `parse_bounded_answer` :1422 判四态：
+- **命令语义**：`run_verify_bounded` `monthly_review.py:1684(run_verify_bounded)`
+  ——逐行扫含 `{"answer","p"}` 双键
+  字面的行（与 WATCHDOG 契约同形），经 `parse_bounded_answer`
+  `monthly_review.py:1468(parse_bounded_answer)` 判四态：
   ok / format-miss（raw 原文留档，未虚构）/ p-not-numeric / p-out-of-range。
 - **预期输出**：本月草稿 1 行 answer→`L{n}: **ok** —— answer=… p=…（口头
   置信度，仅记录轨迹）`，exit 0。**首月预检变体**（对「上月块摘录」跑，
-  :1699-1700 帮助文本示例）：11-30 无上月块→零候选行→`none yet` + exit 0
-  不误报（:1621-1622 设计语义）。
+  `monthly_review.py:1766-1774(verify-bounded)`
+  帮助文本示例）：11-30 无上月块→零候选行→`none yet` + exit 0
+  不误报（`monthly_review.py:1716-1719(none)` 设计语义）。
 - **检查点**：任一失败行=exit 1；有界重试一次，仍红→按 AGENTS.md 升级
   （2 轮失败封顶，不无限迭代）。
 - **失败处置**：format-miss→按单行 JSON 契约改写该行重跑；p 越界→改 p∈[0,1]。
@@ -880,17 +895,20 @@ uv run python scripts/monthly_review.py \
 - **动作**（2026-12 月末会话内，人工裁决）：对 backlog 中 due=2026-11 的
   `prediction:` 条目，在同一条目追加一行 `→ outcome: y=0|1 (YYYY-MM-DD)`——
   解析契约 `outcome:\s*y=([01])\s*\((\d{4}-\d{2}-\d{2})\)`
-  （`_collect_prediction_records` :1071）；记法在提案卡面即印（`render_card`
-  :965「对账记法=该条目追加 → outcome: y=0|1 (YYYY-MM-DD)」）。
+  （`_collect_prediction_records` `monthly_review.py:1094(outcome)`）；
+  记法在提案卡面即印（`render_card`
+  `monthly_review.py:1004(outcome)`「对账记法=该条目追加 → outcome: y=0|1
+  (YYYY-MM-DD)」）。
 - **gate 时间纪律**（四检查点①，FinBench arXiv:2607.16229 同构——报告口径
   明示 gate 时间，time-gated 评测与月末 outcome 对账同构）：y 按**due 月月末
   可得事实**裁定，outcome 行必须带**实际记录日期**——hindsight 不入 y（不用
   事后知识回改早月判断）；due 已过未记=pending 如实分列（对账呈现「due 已过」
-  标记，:1012 一带），不虚构 y。
+  标记，`monthly_review.py:1058-1062(overdue)` 一带），不虚构 y。
 - **检查点**：改前后 `grep -c "prediction:" state/backlog.md` /
   `grep -c "outcome:"` 计数对账（本节入册日基线 0/0）。
 - **失败处置**：outcome 行不进解析（缺日期/缺 `y=` 前缀/写错条目层级→该条
-  停留 pending）→对照 :1071 契约修正格式即可，零工具介入。
+  停留 pending）→对照 `monthly_review.py:1094(outcome)` 契约修正格式即可，
+  零工具介入。
 
 ### 步 5 —— reconciliation + calibration_summary（两个既有呈现面）
 
@@ -903,10 +921,14 @@ uv run python scripts/monthly_review.py --month 2026-12 --lessons \
   --out reports/monthend/2026-12/06-monthly-report.md
 ```
 
-- **命令语义**：面一 `proposal_reconciliation` :768（run_weekly 内调 :637）内调
-  `reconcile_predictions` :1002/:791——逐条 resolved（(p−y)²+方向命中）/
+- **命令语义**：面一 `proposal_reconciliation`
+  `monthly_review.py:783(proposal_reconciliation)`（run_weekly 内调
+  `monthly_review.py:643(proposal_reconciliation)`）内调
+  `reconcile_predictions` `monthly_review.py:1023(reconcile_predictions)`/
+  `monthly_review.py:806(reconcile_predictions)`——逐条 resolved（(p−y)²+方向命中）/
   pending（due 已过如实标记）/未填 p 分列，judgments/facts 分账；面二
-  `calibration_bucket_summary` :1118——五桶 [0.5,0.6)/…/[0.9,1.0] n/命中/
+  `calibration_bucket_summary` `monthly_review.py:1141(calibration_bucket_summary)`
+  ——五桶 [0.5,0.6)/…/[0.9,1.0] n/命中/
   命中率 + Wilson 95% CI + **每桶 p 原值计数**（反聚集）+ 汇总 mean Brier
   （与逐条 (p−y)² 同口径）；p<0.5/p 未填/pending/越界分列不计桶。
 - **逾期 outcome 独立统计区（iterate 轮 12 `overdue-outcome-watch`；
@@ -924,7 +946,8 @@ uv run python scripts/monthly_review.py --month 2026-12 --lessons \
 - **检查点（四检查点②，p 聚集警讯）**：若 [0.8,0.9)/[0.9,1.0] 桶 p 原值计数
   呈单值堆积（如 `0.9×N`），系 small-llm-calibration（GitHub license=MIT
   已核）实证的 verbalized p 聚集 85-95% 高带=崩塌警讯——**记录进 lessons
-  （事实呈现），禁据此调 p 或定阈值**（`CALIBRATION_FEEDBACK_NOTE` :1503
+  （事实呈现），禁据此调 p 或定阈值**（`CALIBRATION_FEEDBACK_NOTE`
+  `monthly_review.py:1550(CALIBRATION_FEEDBACK_NOTE)`
   固定禁令字面：阈值与处置语义只在代码侧规则门，NEVER in any LLM prompt）。
 - **失败处置**：--weekly exit 1 含对账发现行（pending due 已过=设计内的人工
   理由项，非通道失败）——逐条给人裁决；桶表空=零 resolved 如实，非缺陷。
@@ -937,11 +960,13 @@ uv run python scripts/monthly_review.py \
   --month 2026-11
 ```
 
-- **命令语义**：`append_lessons` :1348——append-only 写入 `state/handoff.md`
+- **命令语义**：`append_lessons` `monthly_review.py:1394(append_lessons)`
+  ——append-only 写入 `state/handoff.md`
   本月 `monthly-reflexion-lessons` 块（一簿一月；旧块字节永不回改，
   UPDATE/DELETE 为 supersedes/voids 引用式标记——与 ledger 新行不覆盖同构）。
 - **insight 沉淀（环2，rides 此通道）**：有 resolved 对账行的月末，会话按
-  `INSIGHT_HINT` :1515 从 resolved 行 + active lessons 蒸馏 **0-2 条** IF-THEN
+  `INSIGHT_HINT` `monthly_review.py:1562(INSIGHT_HINT)` 从 resolved 行 +
+  active lessons 蒸馏 **0-2 条** IF-THEN
   policy 片段写入草稿（片段禁含「自动调 p」指令）。**0-2 条上限的第三方依据**
   =ERL arXiv:2603.24639（LEARN 每次只抽**少量精炼规则**入 prompt——少而精，
   非全量倾倒）。11-30 首跑零 resolved→降级行如实（insight 步跳过），**首次

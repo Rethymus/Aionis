@@ -46,6 +46,15 @@ pure-stdlib re-implementation, no upstream install):
   judged hit).
 - ``--strict`` unchanged: exits 1 on drifted/lost only; ``semantic`` stays
   fail-soft (hard-gating it remains an owner decision, 待业主区).
+
+Batch 1 migration (2026-11-15, task anchor-batch1-migration): the runbook
+first-month playbook section (:811-944 as of pre-migration HEAD) had its
+29 bare ``:N`` mentions rewritten as explicit ``file:line(hint)`` anchors
+(audit-counted 29 bare + 1 pre-existing explicit; guard-identical regex).
+Values re-verified against live line numbers at migration time (old digits
+had drifted; 7e3a6bbc7b same-shape precedent). Batch 2 (:348-395, :732-769)
+and owner-gated (:488, ops_local_refresh.py pair) stay unmigrated;
+handoff legacy bare stays untouched (append-only, not economical).
 """
 from __future__ import annotations
 

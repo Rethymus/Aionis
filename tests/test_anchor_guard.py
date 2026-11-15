@@ -261,4 +261,6 @@ def test_repo_anchor_baseline() -> None:
     assert bad == KNOWN_BAD
     assert summary[ag.STATUS_DRIFTED] == 0
     assert summary[ag.STATUS_SEMANTIC] == 0  # v2 batch-1 hints all hit
-    assert summary["anchors"] >= len(KNOWN_BAD) + 80  # measured 84 on 2026-11-14
+    # measured 84 on 2026-11-14; 129 on 2026-11-15 after runbook batch-1
+    # migration rewrote 29 bare :N as explicit hinted anchors (all hit).
+    assert summary["anchors"] >= len(KNOWN_BAD) + 125
