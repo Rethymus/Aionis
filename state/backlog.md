@@ -919,6 +919,64 @@ google/sre-book/accelerating-sre-on-call/，ch.9 页内交叉引用所指）—�
   调研员完整报告为准；施工侧检索实证调研员报告未落盘（近 12h 全树文件检索+.omc/.mimosa
   标识符 grep 除本会话自身 baseline 镜像外零命中），本批仅登记交办文给定三候选 86-88（逐条
   复核全过，零弃登面、零臆测补登）；调研员其余未在册条目如有，待其报告落盘或重新派单补登。
+  延伸索引89（2026-11-17 append，frontier-citation-anchors；仅引用零接入；**同文第二语义
+  防重复登记款，沿 ㊽（:431）/轮 12 Mem0 先例——第一语义已在册 ㊼（:418）=结构防泄漏先于
+  统计校正+Sharpe-35 泄漏 oracle 骗过 DSR/PBO 负控+453 股 PIT universe+预注册降证据门槛，
+  本条零重复登记第一语义**）：arXiv:2608.27734（Gençay，q-fin.ST 2026-08-27；abs 页本日
+  fox_fetch 一手复核）第二语义=**隐式试验计数通缩（trial-count deflation）**：摘要逐字
+  「the system records every strategy evaluation its search performs and deflates all
+  reported performance by that trial count」+「neither look-ahead bias nor the intensity
+  of the search behind the reported result is corrected for」——搜索强度逐次记录+按试验
+  计数通缩=训练轨迹搜索强度可审计的外部正源（replay 调参治理 §4 审计面+铁律 3 检索正源）；
+  adaptation（仓库同构非论文原文）：tuning-log 隐式试验计数器（轮 24 批①
+  scripts/replay_blackbox.py：prompt 模板/桶宽/top-N/阈值改动次数累计）=按改动次数审计
+  搜索强度（呈现/审计面，非绩效通缩数值接入）。**不采部分**：registry-validated 工具链与
+  通缩判定数值零接入（㊼ 裁定不变）。**边界注记**：仅引用零接入；零新依赖零 SDK 零框架；
+  研究面零改动。
+  延伸索引90（2026-11-17 append，frontier-citation-anchors；仅引用零接入；**编号化首次
+  登记——引用锚空间既有三处非 rc=1 如实辨明：docs/frontier_positioning.md:86（「LLMs
+  don't help TS forecasting」短引）/docs/theory-of-computable-reality.md:37/reports/
+  design/2026-08-03-citation-integrity-audit.md:36（✅ 逐字相符核验在案），编号索引此前
+  未登记，沿 ㊽ 编号化已引文献+既有引用如实注记先例**）：arXiv:2406.16964「Are Language
+  Models Actually Useful for Time Series Forecasting?」（Tan/Merrill/Gupta/Althoff/
+  Hartvigsen，NeurIPS 2024 Spotlight，v1 2024-06-22/v2 2024-10-26；abs 页本日 fox_fetch
+  一手复核逐字）——**LLM 时序预测无用正源**：「removing the LLM component or replacing
+  it with a basic attention layer does not degrade forecasting performance -- in most
+  cases, the results even improve!」+「pretrained LLMs do no better than models trained
+  from scratch」——LLM 组件去除不降性能=方向增益缺失的文献面；adaptation（仓库同构非论文
+  原文，replay 设计 §9 预期管理同构）：sign 预测≈掷硬币下 p→0.5 收敛/T0 climatology
+  BSS≡0=诚实成功的外部反证正源——文献面支持「不追方向命中、只追校准」（replay 铁律 1）。
+  **不采部分**：其 ablation 方法论/TS 编码器对比零接入。**边界**：官方仓 API 三处 404
+  仅论文引用（调研给定，本批未复验仓库态）；仅引用零接入；零新依赖零 SDK 零框架；研究面
+  零改动。
+  延伸索引91（2026-11-17 append，frontier-citation-anchors；仅引用零接入；**编号化首次
+  登记——引用锚空间既有三处非 rc=1 如实辨明：docs/frontier_positioning.md:34/docs/
+  quant-selection-research.md:157（in-sample P1 vs 后-cutoff P2 alpha-decay 记忆子门
+  计划+benstaf/lookaheadbench 无 LICENSE→重写方法不 vendor 既定裁定）/reports/design/
+  2026-08-03-citation-integrity-audit.md:21（✅ 完全相符核验在案），编号索引此前未登记，
+  沿 ㊽ 先例**）：arXiv:2601.13770「Look-Ahead-Bench: a Standardized Benchmark of
+  Look-ahead Bias in Point-in-Time LLMs for Finance」（Mostapha Benhenda（LAGA），v1
+  2026-01-20；abs 页本日 fox_fetch 一手复核逐字）——**PIT LLM 前视偏差标准化+regime-decay
+  诊断正源**：「a standardized benchmark measuring look-ahead bias in Point-in-Time (PiT)
+  Large Language Models (LLMs)」+「To distinguish genuine predictive capability from
+  memorization-based performance, we analyze performance decay across temporally distinct
+  market regimes」+「Results reveal significant lookahead bias in standard LLMs, as
+  measured with alpha decay」——标准 LLM 类参数化前视跨 regime 可量测=掩蔽结构性不可假设
+  消除的外部正源（replay 铁律 3 掩蔽证明依据）+regime-decay alpha decay=记忆审计信号
+  （「没偷看」须可审计事实非声称）。**不采部分**：Pitinf 模型族/评测基建零接入（无 LICENSE
+  重写不 vendor 沿 :157 既定裁定）。**边界注记**：仅引用零接入；零新依赖零 SDK 零框架；
+  研究面零改动。
+  ——本批辨明（frontier-anchors-89-91，2026-11-17）：交办文称调研三 ID 为真增量、须
+  「git grep ID 全仓 rc=1 才登记」；施工侧实跑全仓 grep 三 ID 均 rc=0 有命中
+  （2608.27734=backlog ㊼:418 既有编号登记+scripts/replay_blackbox.py docstring 本会话
+  批①新增；2406.16964=docs 两处+audit 表 :36；2601.13770=docs 两处+audit 表 :21+
+  scripts docstring 批①新增），与「新增量」前提矛盾如实辨明：①2608.27734 已编号在册
+  （㊼）→按 ㊽ 同文第二语义先例仅登记第二语义（隐式试验计数通缩，abs 页新增逐字引文），
+  第一语义零重复；②2406.16964/2601.13770 编号索引此前未登记（编号化首次）但引用锚空间
+  既有引用非 rc=1，沿 ㊽「编号化已引文献+既有引用如实注记」先例登记并在条目内辨明——
+  若业主裁定应弃登，勘误按 append-only 追加不回改。调研 JSON 截断：本批仅登记交办给定
+  三 ID；调研完整输出如有 ①-88 外其余真增量，待调研员报告落盘或重新派单补登（沿 86-88
+  批辨明先例）；rejected 清单调研员未落盘，零弃登面如实注记。
 
 ## 前沿吸收（轮 127，2026-11-11；来源=reports/audits/2026-11-11-env-testpipeline-round.md §6b——两路前沿调研中 high 但 L 规模/存疑/触红线者，逐条含来源 URL）
 
