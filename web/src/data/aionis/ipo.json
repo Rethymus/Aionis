@@ -1,44 +1,161 @@
 {
   "status": "ok",
-  "as_of": "2026-11-12",
+  "as_of": "2026-11-13",
   "window": {
     "start": "2026-04-27",
-    "end": "2026-11-12"
+    "end": "2026-11-13"
   },
-  "issuers": 659,
-  "total": 1554,
+  "issuers": 665,
+  "total": 1567,
   "by_status": {
-    "filed": 1275,
-    "priced": 279
+    "filed": 1282,
+    "priced": 285
   },
   "by_form": {
-    "424B4": 279,
-    "S-1": 529,
-    "S-1/A": 746
+    "424B4": 285,
+    "S-1": 534,
+    "S-1/A": 748
   },
-  "offer_price_parsed": 65,
+  "offer_price_parsed": 62,
   "offer_price_meta": {
     "target_cap_docs": 80,
-    "priced_filings": 279,
+    "priced_filings": 285,
     "newest_targeted": 80,
     "attempted": 80,
     "fetch_failed": 0,
     "fetch_errors": {},
     "confidence": {
-      "exact": 65,
+      "exact": 62,
       "low": 0,
-      "none": 15
+      "none": 18
     },
-    "coverage_pct_of_priced": 23.3,
+    "coverage_pct_of_priced": 21.8,
     "requests": {
       "task_budget": 170,
-      "cumulative_walk": 275,
+      "cumulative_walk": 287,
       "walk_cap": 156,
-      "last_walk": 0
+      "last_walk": 12
     },
-    "target_as_of": "2026-11-06"
+    "target_as_of": "2026-11-13"
   },
   "filings": [
+    {
+      "company": "ELT Design Holdings Ltd",
+      "ticker": "",
+      "filed_date": "2026-11-13",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2088223/000208822326000004/0002088223-26-000004-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Wella Co",
+      "ticker": "WELA",
+      "filed_date": "2026-11-13",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2125056/000162828026073693/0001628280-26-073693-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "SHF Holdings, Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-13",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1854963/000149315226051855/0001493152-26-051855-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Compute AI Acquisition Corp.",
+      "ticker": "",
+      "filed_date": "2026-11-13",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2158099/000149315226051694/0001493152-26-051694-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "CloudDepots Holdings Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-13",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2108686/000121390026119865/0001213900-26-119865-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Tattvance Corp",
+      "ticker": "",
+      "filed_date": "2026-11-13",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2153476/000117152026000334/0001171520-26-000334-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "WESTWATER RESOURCES, INC.",
+      "ticker": "WWR",
+      "filed_date": "2026-11-13",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/839470/000110465926127070/0001104659-26-127070-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "HomesToLife Ltd",
+      "ticker": "HTLM",
+      "filed_date": "2026-11-13",
+      "form": "424B4",
+      "status": "priced",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2023153/000149315226051860/0001493152-26-051860-index.htm",
+      "offer_price": 0.9
+    },
+    {
+      "company": "707 Cayman Holdings Ltd.",
+      "ticker": "JEM",
+      "filed_date": "2026-11-13",
+      "form": "424B4",
+      "status": "priced",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2018222/000149315226051641/0001493152-26-051641-index.htm",
+      "offer_price": 2.6
+    },
+    {
+      "company": "ABVC BIOPHARMA, INC.",
+      "ticker": "",
+      "filed_date": "2026-11-13",
+      "form": "424B4",
+      "status": "priced",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1173313/000121390026119791/0001213900-26-119791-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "ABVC BIOPHARMA, INC.",
+      "ticker": "",
+      "filed_date": "2026-11-13",
+      "form": "424B4",
+      "status": "priced",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1173313/000121390026119790/0001213900-26-119790-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "ABVC BIOPHARMA, INC.",
+      "ticker": "",
+      "filed_date": "2026-11-13",
+      "form": "424B4",
+      "status": "priced",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1173313/000121390026119789/0001213900-26-119789-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "ABVC BIOPHARMA, INC.",
+      "ticker": "",
+      "filed_date": "2026-11-13",
+      "form": "424B4",
+      "status": "priced",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1173313/000121390026119788/0001213900-26-119788-index.htm",
+      "offer_price": null
+    },
     {
       "company": "Rothe Development, Inc.",
       "ticker": "",
@@ -5005,7 +5122,7 @@
       "form": "424B4",
       "status": "priced",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2140030/000121390026089123/0001213900-26-089123-index.htm",
-      "offer_price": 10.0
+      "offer_price": null
     },
     {
       "company": "SunScout Holding Ltd",
@@ -5014,7 +5131,7 @@
       "form": "424B4",
       "status": "priced",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2101240/000121390026088617/0001213900-26-088617-index.htm",
-      "offer_price": 5.0
+      "offer_price": null
     },
     {
       "company": "Silexion Therapeutics Corp",
@@ -5023,7 +5140,7 @@
       "form": "424B4",
       "status": "priced",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2022416/000117891326004116/0001178913-26-004116-index.htm",
-      "offer_price": 0.65
+      "offer_price": null
     },
     {
       "company": "CURIS INC",
@@ -5032,7 +5149,7 @@
       "form": "424B4",
       "status": "priced",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1108205/000110820526000116/0001108205-26-000116-index.htm",
-      "offer_price": 1.5
+      "offer_price": null
     },
     {
       "company": "SharonAI Holdings Inc.",
@@ -5113,7 +5230,7 @@
       "form": "424B4",
       "status": "priced",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1903784/000118518526003448/0001185185-26-003448-index.htm",
-      "offer_price": 13.0
+      "offer_price": null
     },
     {
       "company": "Karman Line Acquisition Corp.",
@@ -10721,125 +10838,8 @@
       "status": "filed",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2109150/000119312526249005/0001193125-26-249005-index.htm",
       "offer_price": null
-    },
-    {
-      "company": "Innovative Digital Investors Acquisition Corp.",
-      "ticker": "IDIA",
-      "filed_date": "2026-06-01",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1997389/000110465926068822/0001104659-26-068822-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Boumarang Inc.",
-      "ticker": "",
-      "filed_date": "2026-06-01",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2034161/000109690626000901/0001096906-26-000901-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Zhongchao Inc.",
-      "ticker": "ZCMD",
-      "filed_date": "2026-06-01",
-      "form": "424B4",
-      "status": "priced",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1785566/000121390026063256/0001213900-26-063256-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Tribeca Strategic Acquisition Corp.",
-      "ticker": "BID",
-      "filed_date": "2026-06-01",
-      "form": "424B4",
-      "status": "priced",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2094919/000121390026063058/0001213900-26-063058-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "GENERATION INCOME PROPERTIES, INC.",
-      "ticker": "",
-      "filed_date": "2026-06-01",
-      "form": "424B4",
-      "status": "priced",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1651721/000119312526250992/0001193125-26-250992-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Forgent Power Solutions, Inc.",
-      "ticker": "FPS",
-      "filed_date": "2026-06-01",
-      "form": "424B4",
-      "status": "priced",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2080126/000119312526249223/0001193125-26-249223-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Firefly Aerospace Inc.",
-      "ticker": "FLY",
-      "filed_date": "2026-06-01",
-      "form": "424B4",
-      "status": "priced",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1860160/000119312526249159/0001193125-26-249159-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Palermo Technologies Inc.",
-      "ticker": "",
-      "filed_date": "2026-05-29",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2101355/000209757026000018/0002097570-26-000018-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Kodiak AI, Inc.",
-      "ticker": "",
-      "filed_date": "2026-05-29",
-      "form": "S-1",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1853138/000162828026039200/0001628280-26-039200-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "BullFrog AI Holdings, Inc.",
-      "ticker": "",
-      "filed_date": "2026-05-29",
-      "form": "S-1",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1829247/000149315226026390/0001493152-26-026390-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "BIOVENTRIX, INC.",
-      "ticker": "",
-      "filed_date": "2026-05-29",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1283259/000149315226026355/0001493152-26-026355-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "iShares Bitcoin Premium Income ETF",
-      "ticker": "",
-      "filed_date": "2026-05-29",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2089969/000143774926018892/0001437749-26-018892-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Wilco 63 Corp",
-      "ticker": "WLCO",
-      "filed_date": "2026-05-29",
-      "form": "S-1",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2101470/000121390026062973/0001213900-26-062973-index.htm",
-      "offer_price": null
     }
   ],
   "methodology": "US IPO registration/pricing stream \u2014 SEC EDGAR EFTS whole-market form-level queries (public domain, 17 U.S.C. \u00a7105), fixed ~120-day window, filed-date point-in-time, one row per accession (an S-1/A amendment is a new filing, never a silent overwrite). Status is derived from the immutable form type: S-1 / S-1/A = filed (registration statement on file); 424B4 = priced (the statutory final prospectus under Securities Act Rule 424(b)(4) is filed after pricing \u2014 its appearance marks a priced offering). Offer price is a BOUNDED second-stage extraction, not full coverage: only the newest \u226480 priced (424B4) filings are walked politely (\u22652.1 s spacing, hard request budget disclosed in offer_price_meta.requests), their EDGAR index + primary document fetched, and the cover page regex-parsed with graded confidence \u2014 EXACT (single final printed price \u2192 exported), LOW (draft/range wording near the label \u2192 value withheld, counted, never guessed) and NO-MATCH; every unparsed row stays offer_price=null with its EDGAR index link. Share count, proceeds, and expected listing date are NOT extracted at any tier. Honest scope disclosures: (2) the 424B4 form-level catch includes priced follow-on offerings by already-listed issuers (e.g. S-3 shelf takedowns), not only first-day IPOs \u2014 this panel is the registration/pricing STREAM, not a curated IPO list; (3) no company-level state machine is applied (rows are filing-level). Ticker is parsed from the EDGAR display name where present; pre-symbol S-1 filers carry none (empty, never guessed). Counts are FILING counts, not company counts. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-11-13T11:24:55.467977+00:00"
+  "snapshot_ts": "2026-11-16T11:43:57.564173+00:00"
 }

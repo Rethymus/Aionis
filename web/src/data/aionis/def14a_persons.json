@@ -1,28 +1,28 @@
 {
   "status": "ok",
-  "as_of": "2026-11-12",
+  "as_of": "2026-11-13",
   "n_filings_target": 150,
   "n_filings_processed": 150,
-  "n_with_persons": 120,
-  "coverage_pct": 80.0,
-  "n_persons_distinct": 721,
+  "n_with_persons": 118,
+  "coverage_pct": 78.7,
+  "n_persons_distinct": 701,
   "by_role": {
-    "ceo": 171,
+    "ceo": 170,
     "cfo": 103,
-    "coo": 52,
+    "coo": 51,
     "cto": 20,
-    "chairman": 142,
-    "president": 117,
-    "vice_president": 78,
-    "treasurer": 26,
-    "secretary": 46,
-    "director": 509,
-    "officer": 127
+    "chairman": 140,
+    "president": 114,
+    "vice_president": 75,
+    "treasurer": 25,
+    "secretary": 45,
+    "director": 493,
+    "officer": 118
   },
   "confidence": {
-    "section_age_rows": 105,
-    "section_name_roles": 15,
-    "unparsed_no_persons": 30,
+    "section_age_rows": 104,
+    "section_name_roles": 14,
+    "unparsed_no_persons": 32,
     "fetch_or_doc_errors": 0
   },
   "boards": [
@@ -65,16 +65,6 @@
       "n_officers": 10,
       "filed_date": "2026-10-27",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1636519/000162828026067420/msgs-20261027.htm"
-    },
-    {
-      "company": "VILLAGE SUPER MARKET INC",
-      "ticker": "VLGEA",
-      "issuer_cik": "103595",
-      "n_persons": 15,
-      "n_directors": 11,
-      "n_officers": 10,
-      "filed_date": "2026-10-26",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/103595/000114036126040712/ny20082116x1_def14a.htm"
     },
     {
       "company": "Shutterstock, Inc.",
@@ -347,16 +337,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/107687/000114036126041701/ny20077222x2_def14a.htm"
     },
     {
-      "company": "Vivos Therapeutics, Inc.",
-      "ticker": "VVOS",
-      "issuer_cik": "1716166",
-      "n_persons": 8,
-      "n_directors": 7,
-      "n_officers": 2,
-      "filed_date": "2026-10-29",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1716166/000149315226049258/formdef14a.htm"
-    },
-    {
       "company": "enVVeno Medical Corp",
       "ticker": "NVNO",
       "issuer_cik": "1661053",
@@ -365,6 +345,16 @@
       "n_officers": 6,
       "filed_date": "2026-10-29",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1661053/000114036126041182/ny20083629x1_def14a.htm"
+    },
+    {
+      "company": "Vivos Therapeutics, Inc.",
+      "ticker": "VVOS",
+      "issuer_cik": "1716166",
+      "n_persons": 8,
+      "n_directors": 7,
+      "n_officers": 2,
+      "filed_date": "2026-10-29",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1716166/000149315226049258/formdef14a.htm"
     },
     {
       "company": "PRECISION OPTICS CORPORATION, INC.",
@@ -405,16 +395,6 @@
       "n_officers": 3,
       "filed_date": "2026-10-26",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/918965/000119312526432018/d137557ddef14a.htm"
-    },
-    {
-      "company": "Zymeworks Inc.",
-      "ticker": "ZYME",
-      "issuer_cik": "1937653",
-      "n_persons": 8,
-      "n_directors": 7,
-      "n_officers": 2,
-      "filed_date": "2026-10-26",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1937653/000119312526431936/d168077ddef14a.htm"
     },
     {
       "company": "Sunshine Biopharma Inc.",
@@ -497,16 +477,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1641631/000149315226049442/formdef14a.htm"
     },
     {
-      "company": "Nakamoto Inc.",
-      "ticker": "",
-      "issuer_cik": "1946573",
-      "n_persons": 7,
-      "n_directors": 7,
-      "n_officers": 3,
-      "filed_date": "2026-10-29",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1946573/000149315226049268/formdef14a.htm"
-    },
-    {
       "company": "CISCO SYSTEMS, INC.",
       "ticker": "CSCO",
       "issuer_cik": "858877",
@@ -515,6 +485,16 @@
       "n_officers": 3,
       "filed_date": "2026-10-29",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/858877/000130817926000439/csco-20261029.htm"
+    },
+    {
+      "company": "Nakamoto Inc.",
+      "ticker": "",
+      "issuer_cik": "1946573",
+      "n_persons": 7,
+      "n_directors": 7,
+      "n_officers": 3,
+      "filed_date": "2026-10-29",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1946573/000149315226049268/formdef14a.htm"
     },
     {
       "company": "BRIDGEWAY FUNDS INC",
@@ -657,6 +637,16 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1854445/000149315226048521/formdef14a.htm"
     },
     {
+      "company": "BranchOut Food Inc.",
+      "ticker": "BOF",
+      "issuer_cik": "1962481",
+      "n_persons": 5,
+      "n_directors": 4,
+      "n_officers": 4,
+      "filed_date": "2026-11-13",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1962481/000149315226051709/formdef14a.htm"
+    },
+    {
       "company": "RCM TECHNOLOGIES, INC.",
       "ticker": "RCMT",
       "issuer_cik": "700841",
@@ -707,16 +697,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1666244/000119312526443775/d507574ddef14a.htm"
     },
     {
-      "company": "BONK, INC.",
-      "ticker": "BNKK",
-      "issuer_cik": "1760903",
-      "n_persons": 5,
-      "n_directors": 4,
-      "n_officers": 4,
-      "filed_date": "2026-10-29",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1760903/000149315226049249/formdef14a.htm"
-    },
-    {
       "company": "VASO Corp",
       "ticker": "VASO",
       "issuer_cik": "839087",
@@ -725,6 +705,16 @@
       "n_officers": 3,
       "filed_date": "2026-10-29",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/839087/000121390026113710/ea0309090-def14a_vaso.htm"
+    },
+    {
+      "company": "BONK, INC.",
+      "ticker": "BNKK",
+      "issuer_cik": "1760903",
+      "n_persons": 5,
+      "n_directors": 4,
+      "n_officers": 4,
+      "filed_date": "2026-10-29",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1760903/000149315226049249/formdef14a.htm"
     },
     {
       "company": "Cineverse Corp.",
@@ -747,14 +737,14 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1972529/000121390026112714/ea0308840-02.htm"
     },
     {
-      "company": "ESPEY MFG & ELECTRONICS CORP",
-      "ticker": "ESP",
-      "issuer_cik": "33533",
-      "n_persons": 5,
-      "n_directors": 5,
-      "n_officers": 1,
-      "filed_date": "2026-10-26",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/33533/000117494726000933/esp-20260630.htm"
+      "company": "Nu-Med Plus, Inc.",
+      "ticker": "NUMD",
+      "issuer_cik": "1543637",
+      "n_persons": 4,
+      "n_directors": 4,
+      "n_officers": 3,
+      "filed_date": "2026-11-13",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1543637/000157587226000788/numd012_def14a.htm"
     },
     {
       "company": "Ensysce Biosciences, Inc.",
@@ -1007,6 +997,16 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1930021/000121390026112475/ea0308446-01.htm"
     },
     {
+      "company": "American Well Corp",
+      "ticker": "AMWL",
+      "issuer_cik": "1393584",
+      "n_persons": 2,
+      "n_directors": 1,
+      "n_officers": 2,
+      "filed_date": "2026-11-13",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1393584/000139358426000028/amwl-20261113.htm"
+    },
+    {
       "company": "Beam Global",
       "ticker": "BEEM",
       "issuer_cik": "1398805",
@@ -1095,16 +1095,6 @@
       "n_officers": 1,
       "filed_date": "2026-10-26",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/880406/000139834426018812/fp0101463-1_def14a.htm"
-    },
-    {
-      "company": "5E Advanced Materials, Inc.",
-      "ticker": "",
-      "issuer_cik": "1888654",
-      "n_persons": 2,
-      "n_directors": 2,
-      "n_officers": 1,
-      "filed_date": "2026-10-26",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1888654/000119312526431898/feam-20261026.htm"
     },
     {
       "company": "AMC Robotics Corp",
@@ -1215,16 +1205,6 @@
       "n_officers": 0,
       "filed_date": "2026-10-26",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1905956/000121390026112539/ea0309695-def14a_treasure.htm"
-    },
-    {
-      "company": "TScan Therapeutics, Inc.",
-      "ticker": "TCRX",
-      "issuer_cik": "1783328",
-      "n_persons": 1,
-      "n_directors": 0,
-      "n_officers": 1,
-      "filed_date": "2026-10-26",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1783328/000119312526431045/d121298ddef14a.htm"
     }
   ],
   "top_persons": [
@@ -1274,17 +1254,17 @@
       ]
     },
     {
-      "name": "Pay Versus Performance",
+      "name": "Executive Officer",
       "roles": [
-        "ceo",
-        "director"
+        "cfo",
+        "coo",
+        "vice_president"
       ],
-      "n_companies": 3,
-      "n_director_seats": 2,
+      "n_companies": 2,
+      "n_director_seats": 0,
       "companies": [
-        "MSG Knickerbockers Corp.",
-        "FACTSET RESEARCH SYSTEMS INC",
-        "Zymeworks Inc."
+        "BranchOut Food Inc.",
+        "TRIO-TECH INTERNATIONAL"
       ]
     },
     {
@@ -1315,6 +1295,19 @@
       "companies": [
         "NRX Pharmaceuticals, Inc.",
         "Stride, Inc."
+      ]
+    },
+    {
+      "name": "Pay Versus Performance",
+      "roles": [
+        "ceo",
+        "director"
+      ],
+      "n_companies": 2,
+      "n_director_seats": 1,
+      "companies": [
+        "MSG Knickerbockers Corp.",
+        "FACTSET RESEARCH SYSTEMS INC"
       ]
     },
     {
@@ -1766,17 +1759,6 @@
       ]
     },
     {
-      "name": "Appendix A. During",
-      "roles": [
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "VILLAGE SUPER MARKET INC"
-      ]
-    },
-    {
       "name": "Appointed Michael Mo",
       "roles": [
         "ceo",
@@ -1838,11 +1820,11 @@
     }
   ],
   "request_accounting": {
-    "n_http_requests_last_fetch": 14,
+    "n_http_requests_last_fetch": 12,
     "budget_seconds": 2700,
     "budget_hit": false,
-    "fetched_at": "2026-11-13T10:11:27.736993+00:00"
+    "fetched_at": "2026-11-16T10:21:21.826326+00:00"
   },
-  "methodology": "DEF 14A person-level panel (\u8463\u4e8b/\u9ad8\u7ba1\u4eba\u7ea7\u6863\u6848) over the NEWEST 150 proxy filings of the /executives DEF 14A stream \u2014 a bounded lane: each filing's primary document resolved from its EDGAR filing index (<= 2 GETs per filing, idempotent per-accession caches, >= 2.1s spacing, hard 45-minute wall-clock budget; the last fetch spent 14 HTTP requests and did not hit the budget). Parsing is CONSERVATIVE and TIERED: (1) section_age_rows (HIGH) \u2014 the classic 'Name (Age) Title Since' roster row in any spelling, a 2-4 token capitalized name with a standalone age bounded 30-99 and a role word witnessed on the same row, also reconstructed from word-fragmented inline-XBRL layouts by anchor-delimiting the joined stream; (2) section_name_roles (MEDIUM) \u2014 'First M. Last' (middle-initial) + a role word inside a located directors/executives section. Everything else yields persons=[] and parsed=false \u2014 an honest NULL, never a guessed name (\u5b81\u53ef null \u4e0d\u731c\u6d4b); coverage below counts only what was processed (120/150 filings with persons = 80.0%), never an extrapolation. Roles are canonical role WORDS witnessed near the person's row or bio \u2014 they may include past or external-company titles (e.g. a director who is CEO of another firm), displayed as text-witnessed hints not employment records; boards-card director/officer counts are independent sets (a CEO-director counts in both). Distinct-person identity keys on the normalized full name across filings \u2014 same-name merges may join namesakes and hyphenated/apostrophe/initials-first names (JW Roth) are conservatively MISSED, both disclosed. Display-only, exploratory, NOT a research claim.",
-  "snapshot_ts": "2026-11-13T11:24:55.840718+00:00"
+  "methodology": "DEF 14A person-level panel (\u8463\u4e8b/\u9ad8\u7ba1\u4eba\u7ea7\u6863\u6848) over the NEWEST 150 proxy filings of the /executives DEF 14A stream \u2014 a bounded lane: each filing's primary document resolved from its EDGAR filing index (<= 2 GETs per filing, idempotent per-accession caches, >= 2.1s spacing, hard 45-minute wall-clock budget; the last fetch spent 12 HTTP requests and did not hit the budget). Parsing is CONSERVATIVE and TIERED: (1) section_age_rows (HIGH) \u2014 the classic 'Name (Age) Title Since' roster row in any spelling, a 2-4 token capitalized name with a standalone age bounded 30-99 and a role word witnessed on the same row, also reconstructed from word-fragmented inline-XBRL layouts by anchor-delimiting the joined stream; (2) section_name_roles (MEDIUM) \u2014 'First M. Last' (middle-initial) + a role word inside a located directors/executives section. Everything else yields persons=[] and parsed=false \u2014 an honest NULL, never a guessed name (\u5b81\u53ef null \u4e0d\u731c\u6d4b); coverage below counts only what was processed (118/150 filings with persons = 78.7%), never an extrapolation. Roles are canonical role WORDS witnessed near the person's row or bio \u2014 they may include past or external-company titles (e.g. a director who is CEO of another firm), displayed as text-witnessed hints not employment records; boards-card director/officer counts are independent sets (a CEO-director counts in both). Distinct-person identity keys on the normalized full name across filings \u2014 same-name merges may join namesakes and hyphenated/apostrophe/initials-first names (JW Roth) are conservatively MISSED, both disclosed. Display-only, exploratory, NOT a research claim.",
+  "snapshot_ts": "2026-11-16T11:43:58.058756+00:00"
 }
