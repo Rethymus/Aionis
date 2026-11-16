@@ -189,6 +189,7 @@ add to a weekly schedule.
 > 矩阵的规则建模借 StackStorm `trigger→criteria→action` 三元组
 > （Apache-2.0；仅借鉴模式，**不部署平台**）。super-agent 三映射的出处见
 > `reports/design/2026-11-11-super-agent-integration.md` §2/§4。
+> 新轮次值班条目必带 surface/evidence/rollback 三行字段（轮 147 首例起已是事实纪律，2026-11-16 成文固化；存量条目 append-only 不回改，集中补录待派单指名）。
 
 ### Fast Path 分诊（2026-11-11 轮 126，可运行）
 
