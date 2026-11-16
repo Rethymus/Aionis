@@ -176,8 +176,10 @@ uv run python scripts/backup_audit_chain.py [--out D:/backups]
 ```
 
 Creates a timestamped raw copy of `runs/ledger.jsonl` + a full git bundle
-(all refs) in `data/backups/` (gitignored). Retention: 30 most recent
-pairs. Addresses the round-155 reflection gap: the audit chain previously
+(all refs) in `data/backups/` (gitignored). Retention: bundles keep=2 (owner
+storage discipline — 2026-11-16 evening manual cleanup 29 bundles 2.4G →
+2 / 410M, automated same day), ledgers keep=30. Addresses the round-155
+reflection gap: the audit chain previously
 existed only in this repo + GitHub. Run after any ledger-touching event or
 add to a weekly schedule.
 

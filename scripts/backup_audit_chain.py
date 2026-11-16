@@ -32,6 +32,20 @@ ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_OUT = ROOT / "data" / "backups"
 
 
+def prune_sorted(out_dir: Path, pattern: str, keep: int) -> list[Path]:
+    """Delete all but the newest ``keep`` files matching ``pattern``.
+
+    Filenames embed fixed-width timestamps (``YYYYMMDD-HHMMSS``), so a
+    lexicographic sort is chronological. Returns the deleted paths.
+    ``keep <= 0`` deletes everything matching (never the default).
+    """
+    files = sorted(out_dir.glob(pattern))
+    doomed = files[:-keep] if keep > 0 else files
+    for old in doomed:
+        old.unlink(missing_ok=True)
+    return doomed
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--out", type=Path, default=DEFAULT_OUT,
@@ -61,16 +75,18 @@ def main() -> int:
     else:
         print(f"repo bundle: {bundle} ({bundle.stat().st_size:,} bytes)")
 
-    # 3. Prune: keep the most recent 30 backup pairs (runs nightly → ~1 month)
-    old_ledgers = sorted(args.out.glob("ledger-*.jsonl"))
-    for old in old_ledgers[:-30]:
-        old.unlink(missing_ok=True)
-    old_bundles = sorted(args.out.glob("repo-bundle-*.bundle"))
-    for old in old_bundles[:-30]:
-        old.unlink(missing_ok=True)
+    # 3. Prune (owner storage discipline, mission bundle-keep2-rolling
+    # 2026-11-16): bundles keep=2 — automates the 2026-11-16 evening manual
+    # cleanup (29 bundles / 2.4G -> 2 / 410M); ledgers keep=30 (tiny files,
+    # policy unchanged). Filename-timestamp sort, newest kept.
+    pruned_bundles = prune_sorted(args.out, "repo-bundle-*.bundle", keep=2)
+    prune_sorted(args.out, "ledger-*.jsonl", keep=30)
+    if pruned_bundles:
+        names = ", ".join(p.name for p in pruned_bundles[-3:])
+        print(f"pruned {len(pruned_bundles)} old bundle(s): {names}")
 
     print(f"backup complete: {args.out} "
-          f"(retention: 30 most recent pairs)")
+          f"(retention: bundles keep=2 / ledgers keep=30)")
     return 0
 
 
