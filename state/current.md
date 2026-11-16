@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (11-16，handoff 轮 163)【iterate 轮 22 四条目：rehearsal-consume 彩排等待态+backlog 80-85+许可对账重做+字段纪律成文（四批；push 于本批提交后执行）】**：①轮 21 彩排等待态三证复核零代码零代做（报告 §一-§六；handoff 163↔iterate 22 漂移 1 注记）；②backlog 80-85 六条 39+/0−+12 标识符预检 rc=1+拒收七项辨明（§七）；③许可对账零装只读重做：158 已装外部 PASS 153/表外 5/缺口 26 待业主/排除清单五项 NONE（§八）；④字段纪律 python -I 解析 101 块恰 10 块带三字段（首例轮 147 起 10/10）+runbook :192 单行成文（§九）。
+  验证实跑：guard 多时点 146/144/0/2/0/535 rc=0 恒定+gh api license 三处一手（sumleo MIT/JevAdvBench MIT/双零结果）+python -I 解析 101/10+许可零痕迹三证+file(1) CRLF 五文件+numstat 边界四批。
+
 - **active (11-15，handoff 轮 162)【iterate 轮 19 收官续：backlog 69-73 续编+轮 19 复核 2 low 双勘误+锚迁移批次 2（四批；push 于本批提交后执行）】**：①backlog 69-73 五条（RLCD² 张力对/PRDO 判据/gitleaks-spec-kit-deptry 候选，沿 #16 uvx 形态不入 pyproject）；②轮 19 报告 :1057→:1082、:51 终态 474→493 双勘误+panorama 85 枚扫描两漂移勘误（:702 族→:845 族 +143；:304-305→:319 写作旧值型）；③批次 2 迁移 13 枚 bare→显式（billing :488 两枚 owner-gated 不动）；guard 129→142/127→140/493→480。
   验证实跑：guard 前后双时点 129/127/0/2/0/493→142/140/0/2/0/480 rc=0（13 枚全 hit 零 semantic）+A/C 区 bare=0+billing 区 bare=2 在位+tests/test_anchor_guard.py 11 passed（live pin +138）+ruff 全仓净+两 abs 页/gh api spdx 一手+numstat 六文件边界+file(1) CRLF/LF 归一。
 
