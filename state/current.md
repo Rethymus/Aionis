@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (11-16，handoff 轮 165)【iterate 门禁修复收尾：ledger 钉 re-pin（gate-ledger-repin；单修复批+state 批）】**：pytest 唯一 FAILED=ledger sha256 钉过期（并行会话 data_ingest 1 行 append 致）——numstat 1/0 纯增验证+data_ingest 族不触不变量→:1538 钉 42bd3d5a…+Re-pinned 注记；ledger 行归属写入会话本批不夹带；tsc npx ENOENT 不判失败。
+  验证实跑：单测 rc=0+全量 pytest -q rc=0+ruff rc=0+numstat 1/0+旧钉八提交 sha256 扫描定位。详见 handoff 轮 165。
+
 - **active (11-16，handoff 轮 164)【iterate 轮 21 三批收官补位（backlog 74-79 六条 d76551e1dd+pip-licenses 只读对账+首月剧本九段彩排+轮 21 报告；handoff 163↔iterate 22 已占用、164↔21 补位并行时序辨明；批②③零仓内改动）】**：①backlog 74-79（SRE Drills/Stale data/pip-licenses/croniter 不施工 TZ 前置/MemoryOS 层间晋升/Mobile-Agent-E 论文锚）；②157 dist 许可对账无强 copyleft 表外 8 处交业主（MPL-2.0×2 讨论点）；③九段彩排六齿轮+verify-bounded 首次 populated 联动全段命中+演后复盘 IF-THEN 错位修正自校（fixture 缺陷非代码缺陷，monthly_review.py 零改动）。
   验证实跑：九件例行核查本会话亲跑（doctor 8/9 唯一红 billing 预期/gh 停 2026-11-11/guard 535→545 双时点判据四值恒定/pytest 11+134 rc=0/ruff 净/双零 0/0）+彩排 md5+前缀逐字+tmp rc=2 零残留。详见 handoff 轮 164+reports/audits/2026-11-16-iterate-round-21.md。
 
