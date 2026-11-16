@@ -886,6 +886,39 @@ google/sre-book/accelerating-sre-on-call/，ch.9 页内交叉引用所指）—�
   ① awesome-system-one/② awesome-jev/⑧ awesome-decision-models/⑫ jevtypesafeai
   四清单+㊻（:411）第五之后顺延）。**边界**：许可未核到=非 allowlist 定性沿 68/74
   先例执行；候选≠启用，扫描接入须业主点头；零装零依赖。
+  延伸索引86（2026-11-16 append，frontier-citation-anchors；仅引用零接入；**标识符预检=非纯
+  rc=1：git grep -i threadpoolctl 全仓 5 命中全部在 uv.lock（转递依赖既有声明=预期区分），
+  引用锚空间（backlog/reports/docs）rc=1 真增量**）：github.com/joblib/threadpoolctl
+  （**BSD-3-Clause**/440★/pushed 2026-11-05——施工侧本日 gh api 一手复核逐值一致：
+  license=BSD-3-Clause/stars=440/pushed=2026-11-05T11:30:48Z，desc=「Python helpers to
+  limit the number of threads used in native libraries that handle their own internal
+  threadpool (BLAS and OpenMP implementations)」）——**H6 位一致原生线程池盲区审计候选**：
+  src/aionis/eval/learner.py:1 已钉 n_jobs=1（本会话实读），而 numpy/scipy BLAS/OpenMP 原生
+  线程池未设限未观测；threadpoolctl 可枚举/限制之；uv.lock :4096/:4154 系 scipy/numpy 族
+  转递依赖既有声明（marker 按 python_full_version 分支）。**边界**：本轮仅登记；doctor 呈现层
+  threadpool_info 集成留后续业主点头不做；零新装零新依赖（转递在案=既有态）零 clone。
+  延伸索引87（2026-11-16 append，frontier-citation-anchors；仅引用零接入；**官网无逐字许可
+  声明→沿 68（:699）/74/85 严口径仅链接+短句引注零正文复制**）：reforms.cs.princeton.edu
+  （REFORMS 检查表=ML-based science 共识报告标准）+ Science Advances 2024 DOI
+  10.1126/sciadv.adk3452（免费全文 PMC11092361=调研会话给定，本批未复验）——施工侧本日
+  官网实读复核逐值一致：**32 items/8 sections/19 researchers consensus**+Data leakage 与
+  Computational reproducibility 两节在 8 节之列+页面零 license 声明实测——**AGENTS.md
+  反泄漏锚第三方表述**（Data leakage 节=泄漏语义共识外源；Computational reproducibility
+  节≈H6 同配置重跑位一致外框架）。**边界**：仅链接+短句引注零正文复制（非 allowlist 定性
+  沿 68/74/85 先例）；不入任何门禁脚本不改判定门；零装零依赖零 clone。
+  延伸索引88（2026-11-16 append，frontier-citation-anchors；仅引用零接入）：arXiv:2512.14609
+  （Pohle/Wermuth/Weiß《Asymptotic Inference for Rank Correlations》——施工侧本日 arXiv abs
+  页实读复核逐值一致：Marc-Oliver Pohle/Jan-Lukas Wermuth/Christian H. Weiß 三作者+v1
+  2025-12-16/v2 2026-02-10）——**rank-IC 标准误方法论正源**：Kendall tau/Spearman rho/
+  gamma/tau-b/grade correlation 渐近分布+U-statistics 相合方差估计+CI 构造（iid/离散/时序
+  三情形，abs 页实读）=月度截面 rank-IC 的 SE/CI 呈现面方法论候选；沿 :46-48
+  Harvey-Liu-Zhu『并列呈现不改判定门』先例（主检验=预注册两尾不变，HLZ 视角 append-only
+  勘误语义）。**边界**：仅引用零接入；呈现面启用须业主对 RESULTS.md 点头（沿 HLZ 触发条件
+  先例）；零装零依赖零 clone。
+  ——本批辨明（frontier-anchors-86-plus，2026-11-16）：交办文称调研 JSON 在提示中截断、以
+  调研员完整报告为准；施工侧检索实证调研员报告未落盘（近 12h 全树文件检索+.omc/.mimosa
+  标识符 grep 除本会话自身 baseline 镜像外零命中），本批仅登记交办文给定三候选 86-88（逐条
+  复核全过，零弃登面、零臆测补登）；调研员其余未在册条目如有，待其报告落盘或重新派单补登。
 
 ## 前沿吸收（轮 127，2026-11-11；来源=reports/audits/2026-11-11-env-testpipeline-round.md §6b——两路前沿调研中 high 但 L 规模/存疑/触红线者，逐条含来源 URL）
 
