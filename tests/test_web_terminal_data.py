@@ -1544,7 +1544,20 @@ def test_ledger_append_only_not_mutated_by_export() -> None:
     # (numstat 1/0). LF-normalized digest per :1485 unchanged semantics;
     # the appended row carries a CRLF tail in the working copy which the
     # normalization already covers.
-    assert digest == "42bd3d5a5a168ac92acbebbb57d324fa0840986b6d30c8ca53c08ece52c1c6de", (
+    # Re-pinned 2026-11-17 (gate-fix session, phantom-pin correction): the
+    # 2026-11-16 pin (42bd3d5a) covered an UNCOMMITTED parallel-session
+    # working-copy row (reddit_sentiment ts 2026-11-16T10:42:10Z) whose
+    # writing session never committed it; that row is now absent from the
+    # working copy (ts grep = 0 hits; the older reddit_sentiment rows
+    # remain). The committed audit chain is intact: git log --all --
+    # runs/ledger.jsonl last touch = 003906a3e5 (round 248b), working copy
+    # == HEAD byte-identical (git diff --numstat empty), and the
+    # LF-normalized digest equals the pre-row value ec6d2892... recorded in
+    # the 2026-11-16 note above. Re-pin to the committed truth — 0
+    # insertions, 0 deletions vs the committed chain; a phantom-pin
+    # correction, NOT an accepted ledger mutation. If the writing session
+    # re-lands that row in a commit, re-pin on that new append-only diff.
+    assert digest == "ec6d28921a68f377d79f8f78151311b9382bf69abc75e5d58b5cb706516cca10", (
         f"ledger sha256 changed to {digest}; re-verify append-only then re-pin"
     )
 
