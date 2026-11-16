@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (11-16，handoff 轮 166)【11-16 晚业主交办四项实录补录（owner-ops-ledger-replay；state 补录批）】**：①dependabot 根除（.github/dependabot.yml 删除 18e14aacae+远端 5 dependabot 分支+PR 关闭+本地旧实验分支除名+Contributors 定格 Rethymus 1330/dependabot[bot] 4；main 历史改写按 AGENTS.md 红线拒绝）②gh-pages 事故-恢复（Pages API 404→凭证 dbf104f9 本地重建+112 提交全量推送→legacy Pages built→站点 200）③本地发布链零 Actions 贯通（pnpm@10.34.6 frozen install→build 1421 SSG 页 exit 0→sitemap-parity 1508 URL PASS→.nojekyll PASS→robocopy /MIR 230.97MB→e36dd85407 push gh-pages→线上 data_health.json snapshot_ts=2026-11-16T11:44:59Z 56/56 panels）④磁盘治理（.git 8.5G→239M/backups 29→2 bundle/runs 1.3G→346M/web/out 258M 清除/data/cache 6.1G 有意保留=冷启动惩罚 75-150min 注记/磁盘空闲 114G）；tip SHA 12 枚凭证逐值入条目。
+  验证实跑：--status 通道未运行（ok_committed b6999384b）+git log 18e14aacae/b6999384b 在链+gh-pages tip=e36dd85407、父=dbf104f9+.github 仅 workflows+branch 仅 main/gh-pages+凭证 SHA 可达性（5475f6d1/dbf104f9 可达、9 枚 gc 后不可达）+线上 200+snapshot_ts 本地/线上逐值一致。详见 handoff 轮 166。
+
 - **active (11-16，handoff 轮 165)【iterate 门禁修复收尾：ledger 钉 re-pin（gate-ledger-repin；单修复批+state 批）】**：pytest 唯一 FAILED=ledger sha256 钉过期（并行会话 data_ingest 1 行 append 致）——numstat 1/0 纯增验证+data_ingest 族不触不变量→:1538 钉 42bd3d5a…+Re-pinned 注记；ledger 行归属写入会话本批不夹带；tsc npx ENOENT 不判失败。
   验证实跑：单测 rc=0+全量 pytest -q rc=0+ruff rc=0+numstat 1/0+旧钉八提交 sha256 扫描定位。详见 handoff 轮 165。
 
