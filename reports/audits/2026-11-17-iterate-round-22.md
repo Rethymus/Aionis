@@ -88,3 +88,11 @@
 **成文固化（定夺框架⑱）**：docs/ops-local-refresh.md 值班协议节节首 blockquote 尾单行纯增（:192，1+/0-）——「新轮次值班条目必带 surface/evidence/rollback 三行字段（轮 147 首例起已是事实纪律，2026-11-16 成文固化；存量条目 append-only 不回改，集中补录待派单指名）」——事实纪律自 147 起已存在，本行仅将其固化为准入约定零新增。**门禁**：runbook 在 anchor_guard 扫描面 DEFAULT_SOURCES——施工前后双跑 guard 六值 146/144/0/2/0/535 rc=0 逐值恒定（新增行零锚模式）+file(1) CRLF 保持。
 
 **存量不回改与补录待指名**：91 存量块 append-only 红线零触碰（本会话 state/handoff.md 零改动，git status 实证）；同 anchor_guard KNOWN_BAD lost=2 冻结先例口径（存量真值保留不修正）。集中补录条目沿轮 159 补录先例可承载，但待 mission 指名（轮 15 报告 §九同口径），本轮不做。**边界**：runbook 单行+本报告单节两处；0 ledger/0 frozen/0 OOS/研究面零改动。
+
+## §十 勘误段（append-only；§一-§九 原节零回改；2026-11-16 append，沿轮 2 line-ref-erratum 先例）
+
+本段=复核勘误批（errata-reports-r21-r22）append 产物：以下三处误植以本段为准，原文零回改（append-only 红线）。
+
+- **勘误一（:47）**——拒收七项第 5 条「hermes-patches——license=null 维持**⑬**」中圈号系误植，应为 **㉜**：hermes-patches 在册条=延伸索引㉜（state/backlog.md:234 头行，2026-11-14 append，license=null 如实注记在档，本会话 sed 实读复验）；⑬=延伸索引⑬（state/backlog.md:119）=arXiv:2611.16321，与 hermes-patches 无关。:47 行内「backlog :234」指针本身无误，仅圈号错。
+- **勘误二（:82+:88，两处）**——§九节题「（定夺框架**⑱**；2026-11-16 append；…）」与 §九「**成文固化（定夺框架⑱）**」段首，两处圈号 **⑱ 均系误植，应为 ②**（patch-unit-fields 条目=定夺框架②；§一「定夺框架①」指认无误不动）。⑱ 非定夺框架有效条目号——定夺框架五条目=轮 131-组（2026-11-12）落地，handoff :2935 在档。
+- **门禁（本会话实跑）**：本节单文件 append——git diff --numstat 实证纯增零删除（§一-§九 原节零触碰）+file(1) CRLF 保持；勘误依据实测三件：state/backlog.md:234（㉜ 头行）/:119（⑬=arXiv:2611.16321）本会话实读+定夺框架条目号 handoff :2935/:2937 实读。

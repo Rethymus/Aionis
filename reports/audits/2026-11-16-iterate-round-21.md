@@ -65,3 +65,11 @@
 push 实录：批① d76551e1dd 本会话提交后待 push 期间，iterate 轮 22 收尾批（efa3c87a7f）先行 push 携其上线（本报告落盘时 `git status -sb`=**零偏差** 实测）；批④（本报告+state 轮 164+current 顶部条）提交后单独 `git pull --rebase`+push 一次，失败重试一次，结果如实回报（沿轮 160-162 时序诚实边界，tracked 文件不预写 push 结果）。
 
 边界：0 ledger/0 frozen/0 OOS/研究面零改动；monthly_review.py/ops_local_refresh.py 零触碰；零新依赖零装包（uvx 隔离一次性）零 clone；本报告不在守卫扫描面（reports/audits 非扫描源）。
+
+## §七 勘误段（append-only；§一-§六 原节零回改；2026-11-16 append，沿轮 2 line-ref-erratum 先例）
+
+本段=复核勘误批（errata-reports-r21-r22）append 产物：以下两处以本段为准，原文零回改（append-only 红线）。
+
+- **勘误一（:63）**——§六 提交清单表格批④落点「本报告+handoff **轮 163**（append）+current 顶部条」中轮号系笔误，应为 **handoff 轮 164**：以本报告辨明段（:5「本批 handoff 条目以现值为准顺延轮 164 补位；handoff 序列 163↔iterate 22、164↔iterate 21」）与 handoff 落盘（state/handoff.md:3002 轮 164 头行=「iterate 轮 21 三批收官补位」，本会话实读）为准；轮 163=iterate 22 会话占用。
+- **勘误二（handoff :3007 surface 行跨文件勘正注记）**——handoff 轮 165 surface 行「tests/test_web_terminal_data.py（re-pin 1 处+注记 9 行；**11+/2-**）」中 numstat 值实测为 **10+/1-**（本会话 `git show 845452da2b --numstat -- tests/test_web_terminal_data.py` 实测输出 `10  1`）。handoff :3007 原文 append-only 不回改，以本段为准；新 handoff 条目承载注记随本轮 state 收尾批落盘（不在本批触碰点内，如实注明）。
+- **门禁（本会话实跑）**：本节单文件 append——git diff --numstat 实证纯增零删除（§一-§六 原节零触碰）+file(1) CRLF 保持；勘误依据实测三件：本报告 :5 辨明段/:63 表格批④、handoff :3002（轮 164 头行）/:3007（surface 行 11+/2- 原文）本会话实读+845452da2b numstat 实测。
