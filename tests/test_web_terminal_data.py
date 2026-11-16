@@ -1535,7 +1535,16 @@ def test_ledger_append_only_not_mutated_by_export() -> None:
     # them). The September shadow month now has readiness-PASS + commit:
     # criterion-1 arithmetic becomes 8/31 PASS + 9/30 PASS (marked re-run)
     # + 10/31 live. 2 insertions, 0 deletions verified via git diff.
-    assert digest == "ec6d28921a68f377d79f8f78151311b9382bf69abc75e5d58b5cb706516cca10", (
+    # Re-pinned 2026-11-16 (gate-fix session): vs the round-248b pin
+    # (003906a3e5), the growth is exactly ONE appended data_ingest row —
+    # reddit_sentiment RSS-atom+FinBERT exploratory ingest (ts 2026-11-16
+    # 10:42:10Z, zero-credential, forward_only, 7-gate fields present;
+    # appended by a parallel session, uncommitted working-copy state at
+    # re-pin time) — 1 insertion, 0 deletions verified via git diff
+    # (numstat 1/0). LF-normalized digest per :1485 unchanged semantics;
+    # the appended row carries a CRLF tail in the working copy which the
+    # normalization already covers.
+    assert digest == "42bd3d5a5a168ac92acbebbb57d324fa0840986b6d30c8ca53c08ece52c1c6de", (
         f"ledger sha256 changed to {digest}; re-verify append-only then re-pin"
     )
 
