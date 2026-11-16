@@ -847,6 +847,45 @@ google/sre-book/accelerating-sre-on-call/，ch.9 页内交叉引用所指）—�
   命名**的第三方同构（单条经验教训 vs 可复用原子操作序列两层），供月末 lessons
   与 runbook 剧本步骤序列两层结构的命名学引用非实现依据。**边界**：仅论文锚零装
   零接入；移动 agent 执行面与本仓零相关（纯知识分层命名引用）。
+  延伸索引80（2026-11-16 append，frontier-citation-anchors；仅引用零接入）：arXiv:
+  2609.29429（RLCDAlignBench，「Just Ask Jev」）+官方 repo github.com/sumleo/
+  RLCDAlignBench（**MIT**/31★/pushed 2026-09-25——施工侧本日 gh api 一手复核
+  license=MIT，与调研会话逐值一致）——**WATCHDOG 问句设计首篇实证基准**：『Question
+  wording matters little, while context matters more』+单通用问零样本 AUROC 0.886+63×
+  成本读数（调研会话给定读数）。在册㊻（:402）IIA 系理论注记非重登——本条=㊻ 理论
+  轴的首个实证基准数据点，互补不重复。**边界**：仅引用零接入；MIT 已核实≠装包资格
+  （装包仍须 7-gate+白名单+业主点头）；零新依赖零 clone。
+  延伸索引81（2026-11-16 append，frontier-citation-anchors；仅引用零接入）：arXiv:
+  2609.31142（JevAdvBench）+官方 repo github.com/JevAdvBench/JevAdvBench
+  （org 与基准同名；**MIT**/2★/pushed 2026-09-28——施工侧本日 gh api search
+  定位+一手复核 license=MIT，与调研会话已核实口径一致，repo slug 本日补齐）——
+  **对位 H6 确定性基底的读数设计**：『0.8 阈值下 23.5% 执行决策是错的』
+  『不应只凭置信行动』+identical re-runs flip 0.17% vs attacks flip
+  46.3%（同配置重跑翻转率 vs 攻击翻转率对照，调研会话给定读数）——重跑近零漂移
+  与攻击高翻转两读数对位本仓 H6 同配重跑位等契约（确定性基底第三方
+  对照）。**边界**：仅引用零接入；零装零依赖零 clone。
+  延伸索引82（2026-11-16 append，frontier-citation-anchors；仅引用零接入）：arXiv:
+  2610.36689（PsyJev/JA-RLCD）——**无官方 repo 如实注记**：gh api search『PsyJev』
+  『JA-RLCD』双查零结果（施工侧本日复核，与调研会话一致）——**张力谱系第四数据
+  点**：61（:630）jevmark↔69（:706）RLCD²↔70（:725）PRDO 概率（分布）质量张力
+  轴（:712 语义），沿⑨（:70）并列引用锚体例并列登记不择优偏引。**边界**：仅引用
+  零接入；无 repo=无可装面，零 clone。
+  延伸索引83（2026-11-16 append，frontier-citation-anchors；仅引用零接入）：arXiv:
+  2611.13777（Omni-JEV）——**无 repo 如实注记**（gh api search『Omni-JEV』零官方
+  命中；同名第三方 OmniJev 仓均官方性未证不采，辨明入轮 22 报告拒收节）——
+  **分布族选择→分类 vs 概率质量权衡维度延伸**（调研会话给定维度）。**边界**：仅引用零
+  接入；零装零依赖零 clone。
+  延伸索引84（2026-11-16 append，frontier-citation-anchors；仅引用零接入）：arXiv:
+  2609.28940（Pentest Harness）——**无 repo 如实注记**——**自证自判风险三连**
+  （self-certify/self-judge 风险面），在册 62（:648）tau2 判官漏检同轴新数据点+基准不外推
+  +小样本显著性诚实（调研会话给定三条读数）。**边界**：仅引用零接入；
+  渗透域语义仅作风险面类比引证，零工具零脚本零 clone。
+  延伸索引85（2026-11-16 append，frontier-citation-anchors；仅引用零接入；**社区
+  活页站点许可未标明→沿 68（:699）严口径仅链接+短句引注零正文复制**）：jev.
+  meetcoding.cn（社区活页站点，调研会话 low 判定）——**第六扫描入口候选**（在册
+  ① awesome-system-one/② awesome-jev/⑧ awesome-decision-models/⑫ jevtypesafeai
+  四清单+㊻（:411）第五之后顺延）。**边界**：许可未核到=非 allowlist 定性沿 68/74
+  先例执行；候选≠启用，扫描接入须业主点头；零装零依赖。
 
 ## 前沿吸收（轮 127，2026-11-11；来源=reports/audits/2026-11-11-env-testpipeline-round.md §6b——两路前沿调研中 high 但 L 规模/存疑/触红线者，逐条含来源 URL）
 
