@@ -1092,3 +1092,52 @@ INSIGHT_HINT 0-2 条上限的第三方依据。**CAGE-1 arXiv:2607.03510 本剧�
 frozen config 零触碰；待业主区不受本节影响（billing 解锁 / L2 钥匙与定标 /
 ZCode 月末提示词模板 {answer,p} 同步确认等，见 `state/current.md`）。产物提交按
 Conventional Commits 原子批（运维面 lane）。
+
+## 本地发布链（Actions 停用期；2026-11-16 交办批 publish-site-local-script）
+
+2026-11-16 晚手工实测验证链（58 files → pnpm frozen install → 1421 SSG 页 →
+sitemap-parity 1508 URL PASS → .nojekyll PASS → robocopy /MIR → e36dd85407 push
+gh-pages → legacy Pages built → 线上 data_health snapshot 实证）固化为一键脚本：
+`scripts/publish_site_local.py`（stdlib-only 零新依赖；stdout/stderr UTF-8 reconfigure
+沿轮 139 甲胄先例）。配套 `tests/test_publish_site_local.py`：tmp 隔离、零网络、
+零真 push，钉纯函数（robocopy/rsync 命令组装形、镜像退出码语义、退出码映射、
+竞态判定、commit 消息形）+ fake runner 驱动的 --dry-run 零副作用流。
+
+**命令**：
+
+```
+uv run python scripts/publish_site_local.py [--build] [--worktree PATH] [--dry-run] [--no-clean-out]
+```
+
+**门语义（fail-closed；退出码 0 成功 / 1 失败 / 2 竞态中止 / 3 前置门拒绝）**：
+
+- **前置门**：主仓工作树存在未暂存 tracked 变更 → 拒绝（rc=3），发布链在脏树上不启动。
+- **--build 可选**：web/ 下 `npx pnpm@10.34.6 install --frozen-lockfile` 仅
+  web/node_modules 缺失时执行，随后 build；无 --build 且 web/out 缺失 → 指引报错
+  退出（rc=1，指明 --build 或手工构建两条路）。
+- **质量门**：`node scripts/sitemap-parity.mjs`（cwd=web）+ web/out/.nojekyll 在位，
+  任一失败 rc=1（无 .nojekyll 时 legacy Jekyll 会丢整个 _next/ 资产树）。
+- **镜像**：Windows 主路径 robocopy /MIR web\out → data/ops/gh_pages_worktree
+  /XF .git .nojekyll（rc<8=成功；镜像后 .git 在位守卫兜底）；非 Windows 退路
+  rsync -a --delete --exclude .git --exclude .nojekyll；--worktree 覆写目标路径。
+- **竞态门（push 前）**：`git ls-remote origin gh-pages` tip ≠ 本地 worktree HEAD →
+  中止 rc=2（绝不 force；远端 ref 缺失=创建态放行；ls-remote 不可达 fail-closed rc=1）。
+- **提交推送**：worktree 内 git add -A，有变化才 commit
+  （`deploy: main@<main头7位> — site publish (local lane)`）+ push origin gh-pages；
+  零变化则跳过推送与清理（远端已等价）。
+- **--clean-out 默认开**：push 成功后删 web/out（业主存储纪律）——--no-clean-out 保留。
+- **--dry-run**：全链只读诊断（前置门/质量门/竞态门实探；镜像/提交/推送/清理仅打印
+  计划），零写盘零 push，退出码=实跑将得值。
+
+**与 publish-site.yml 关系**：Actions 停用期本链承担其 CODE-push 发布职能
+（2026-11-16 晚手工链即本流程首次全链实测）；Actions 恢复后二者同推 gh-pages，
+竞态门即互斥防护——远端推进未同步到本地 worktree 即 rc=2 中止，pull --ff-only
+拉齐后重跑；恢复后建议本地 lane 停用或仅限手工单发，避免双写。
+
+**L1 注记（自动候选，不接线）**：本脚本可自动挂入夜间通道尾做 --dry-run 巡检
+（发布链健康一键确认），启用钥匙在业主；本轮零通道改动（ops_local_refresh.py
+零触碰），稳态 token 不增。
+
+**边界**：纯运维面 lane；0 ledger/0 frozen/0 OOS/研究面零改动；本节新增行零行号
+锚模式（guard 六值不变随批实证）；验收面=pytest 新测试文件 10 用例 + ruff 全仓净 +
+真仓 --dry-run smoke（out 缺失指引路径实测）。
