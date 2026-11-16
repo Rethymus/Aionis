@@ -291,9 +291,16 @@ def parse_blackbox_reply(text: str) -> dict:
     """Parse the single-line {answer, p} contract. Extends
     monthly_review.parse_bounded_answer with the replay-specific strictness that
     answer must be a JSON boolean (probe-grade honesty: unparsable ⇒ format-miss
-    marker, raw text stays on record, nothing invented)."""
+    marker, raw text stays on record, nothing invented). Tolerance delta
+    (tuning-log 2026-11-17, chunk-2016 checkpoint): a JSON string "true"/"false"
+    is coerced to the boolean with an explicit answer_coerced_from_string marker
+    on the returned dict — the model's intent is unambiguous, and the coercion is
+    logged, never silent."""
     r = mr.parse_bounded_answer(text)
     if r.get("ok") and not isinstance(r["answer"], bool):
+        if r["answer"] in ("true", "false"):
+            return {"ok": True, "answer": r["answer"] == "true", "p": r["p"],
+                    "answer_coerced_from_string": True}
         return {"ok": False, "reason": "answer-not-bool", "raw": r.get("raw", "")}
     return r
 

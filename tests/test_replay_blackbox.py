@@ -155,6 +155,19 @@ def test_parse_blackbox_reply_contract():
         assert not r["ok"] and r["reason"] == reason, (text, r)
 
 
+def test_parse_blackbox_reply_string_bool_coercion_logged():
+    """Tolerance delta (tuning-log 2026-11-17): exact "true"/"false" strings
+    coerce to booleans WITH an explicit marker; anything else stays a miss."""
+    r = rb.parse_blackbox_reply('{"answer":"false","p":0.5}')
+    assert r["ok"] and r["answer"] is False and r["p"] == pytest.approx(0.5)
+    assert r["answer_coerced_from_string"] is True
+    r2 = rb.parse_blackbox_reply('{"answer":"true","p":0.7}')
+    assert r2["ok"] and r2["answer"] is True
+    assert r2["answer_coerced_from_string"] is True
+    assert not rb.parse_blackbox_reply('{"answer":"False","p":0.5}')["ok"]
+    assert not rb.parse_blackbox_reply('{"answer":"yes","p":0.5}')["ok"]
+
+
 # ---------------------------------------------------------------------------
 # bucket aggregation via the monthly_review engine (single implementation)
 # ---------------------------------------------------------------------------
