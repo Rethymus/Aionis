@@ -1,5 +1,8 @@
 # state/current.md — read first each session
 
+- **active (11-16，handoff 轮 164)【iterate 轮 21 三批收官补位（backlog 74-79 六条 d76551e1dd+pip-licenses 只读对账+首月剧本九段彩排+轮 21 报告；handoff 163↔iterate 22 已占用、164↔21 补位并行时序辨明；批②③零仓内改动）】**：①backlog 74-79（SRE Drills/Stale data/pip-licenses/croniter 不施工 TZ 前置/MemoryOS 层间晋升/Mobile-Agent-E 论文锚）；②157 dist 许可对账无强 copyleft 表外 8 处交业主（MPL-2.0×2 讨论点）；③九段彩排六齿轮+verify-bounded 首次 populated 联动全段命中+演后复盘 IF-THEN 错位修正自校（fixture 缺陷非代码缺陷，monthly_review.py 零改动）。
+  验证实跑：九件例行核查本会话亲跑（doctor 8/9 唯一红 billing 预期/gh 停 2026-11-11/guard 535→545 双时点判据四值恒定/pytest 11+134 rc=0/ruff 净/双零 0/0）+彩排 md5+前缀逐字+tmp rc=2 零残留。详见 handoff 轮 164+reports/audits/2026-11-16-iterate-round-21.md。
+
 - **active (11-16，handoff 轮 163)【iterate 轮 22 四条目：rehearsal-consume 彩排等待态+backlog 80-85+许可对账重做+字段纪律成文（四批；push 于本批提交后执行）】**：①轮 21 彩排等待态三证复核零代码零代做（报告 §一-§六；handoff 163↔iterate 22 漂移 1 注记）；②backlog 80-85 六条 39+/0−+12 标识符预检 rc=1+拒收七项辨明（§七）；③许可对账零装只读重做：158 已装外部 PASS 153/表外 5/缺口 26 待业主/排除清单五项 NONE（§八）；④字段纪律 python -I 解析 101 块恰 10 块带三字段（首例轮 147 起 10/10）+runbook :192 单行成文（§九）。
   验证实跑：guard 多时点 146/144/0/2/0/535 rc=0 恒定+gh api license 三处一手（sumleo MIT/JevAdvBench MIT/双零结果）+python -I 解析 101/10+许可零痕迹三证+file(1) CRLF 五文件+numstat 边界四批。
 
