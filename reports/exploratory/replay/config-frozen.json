@@ -1,0 +1,107 @@
+{
+  "kind": "replay-blackbox-config-frozen",
+  "exploratory": true,
+  "label": "EXPLORATORY REPLAY — not a claim, not a gate (design: reports/design/2026-11-17-replay-training-ignition.md; zero runs/ledger.jsonl writes; research face untouched)",
+  "design_ref": "reports/design/2026-11-17-replay-training-ignition.md",
+  "frozen_at": "2026-11-16T17:38:22+00:00",
+  "windows": {
+    "training": {
+      "from": "2016-01",
+      "to": "2025-12",
+      "months": 120
+    },
+    "frozen_validation": {
+      "from": "2026-01",
+      "to": "2026-10",
+      "months": 10
+    },
+    "online_start": "2026-11-30"
+  },
+  "cut": {
+    "train_to": "2025-12",
+    "val_from": "2026-01",
+    "note": "改动须在看到任何 y 之前（设计 §1）；改窗口/切点=重新 freeze"
+  },
+  "provider": {
+    "name": "glm",
+    "model_at_freeze": "glm-4.7-flash",
+    "temperature": 0.1,
+    "json_mode": true,
+    "reply_contract": "single-line JSON {\"answer\": bool, \"p\": float 0..1}; p = P(answer correct)",
+    "model_note": "model id is settings-pinned (fail-closed); the run manifest records the model actually used"
+  },
+  "claim_form": {
+    "claim_template": "{month} 月 realized rank-IC 为正",
+    "due": "t",
+    "answered_at": "t-1",
+    "v1_single_family": true
+  },
+  "p_mapping": {
+    "rule": "p = p_raw if answer is True else 1 - p_raw",
+    "semantics": "after mapping, p = P(IC_t > 0) — the calibration target"
+  },
+  "y_source": {
+    "kind": "ic_parquet",
+    "path": "runs\\results\\d31580630ff35326557dda9f50832c7af3625dd6507e47e252ea01800372a12c\\ic_state.parquet",
+    "column": "ic",
+    "sha256_at_freeze": "cb8c0858d587d14be0f06072a0923c83c45236ffc1d4f41749be9f16bb8d8044",
+    "note": "confirmatory 冻结产物；更换 y 源=重新 freeze（record-once）"
+  },
+  "bounded_context": {
+    "contract": "ONLY a self-produced rolling summary of the realized-IC series strictly before t; NO open macro narrative, NO calendar-anchored narrative (arXiv:2601.13770 look-ahead tightening)",
+    "masking": "structural, not assumed: rows ≤ t-1 asserted (exit 7 on violation) + per-month context snapshot SHA256 archived (design §2 铁律 3); GLM is standard-LLM-class whose parametric look-ahead cannot be assumed away — mitigation = the claim targets an internal, non-public IC series + bounded self-produced context",
+    "recent_k": 12,
+    "fields": [
+      "rows_used",
+      "mean_ic",
+      "std_ic",
+      "hit_rate_ic_pos",
+      "last_k"
+    ]
+  },
+  "injection_budget": {
+    "top_n_lessons": 3,
+    "source": "--lessons JSON list (v1: externally driven; cross-chunk accumulation outside the engine)"
+  },
+  "prompt_template": {
+    "system": "You are the blackbox predictor in a calibration replay drill\n(EXPLORATORY REPLAY — not a claim, not a gate).\n\nEach turn gives ONE claim about month t and a BOUNDED context: rolling statistics\nof the realized rank-IC series STRICTLY BEFORE t (self-produced; the engine\nasserts every context row is < t). Hard rules:\n- Reply with a SINGLE LINE of JSON, exactly:\n  {\"answer\": <true|false>, \"p\": <number between 0 and 1>}\n- \"answer\" = your judgment on the claim; \"p\" = your probability that your answer\n  is correct.\n- Use ONLY the provided bounded context. The realized rank-IC is an internal,\n  project-computed quantity no external corpus contains: do NOT substitute macro\n  narratives, market memory, or calendar reasoning for it.\n- No prose outside the JSON. No tools. No follow-up questions.\n",
+    "user": "Claim: @CLAIM@   (due month: @MONTH@; you answer at the t-1 information boundary)\n\nBounded context — realized rank-IC history strictly before @MONTH@ (self-produced):\n@CONTEXT@\n\nActive lessons (top-@TOPN@, distilled from EARLIER chunks only; never future data):\n@LESSONS@\n\nAnswer now with a single line of JSON: {\"answer\": <true|false>, \"p\": <0..1>}\n"
+  },
+  "bucket_cuts": [
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.9,
+    1.0
+  ],
+  "aggregation": {
+    "engine": "scripts/monthly_review.py calibration_bucket_summary/_bss_components (single implementation, verbatim reuse)"
+  },
+  "tuning_log": {
+    "template": "tuning-log.md",
+    "knobs": [
+      "prompt_template",
+      "bucket_cuts",
+      "top_n_lessons",
+      "bounded_context",
+      "thresholds"
+    ],
+    "implicit_trial_counter": "arXiv:2608.27734 — cumulative change counts per knob class, incl. implicit trials"
+  },
+  "engine_discipline": {
+    "zero_ledger_writes": true,
+    "utf8_reconfigure": true,
+    "exit_codes": {
+      "0": "ok",
+      "2": "usage/config-args invalid",
+      "3": "config-frozen missing/corrupt",
+      "4": "y-source missing/coverage hole",
+      "5": "T0 BSS != 0 (engine bug)",
+      "6": "blackbox reply contract failure",
+      "7": "masking assertion failure (future rows in context)",
+      "8": "freeze refused (config exists; record-once)"
+    },
+    "llm_note": "engine arithmetic deterministic; LLM replies NOT bit-reproducible — archive-only, no recompute (design §2 铁律 3 诚实注记)"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "kind": "replay-run-manifest",
+  "exploratory": true,
+  "label": "EXPLORATORY REPLAY — not a claim, not a gate (design: reports/design/2026-11-17-replay-training-ignition.md; zero runs/ledger.jsonl writes; research face untouched)",
+  "tier": "t0",
+  "window": {
+    "from": "2016-01",
+    "to": "2026-05",
+    "months": 125
+  },
+  "n_records": 125,
+  "p_bar": 0.496,
+  "bss_check": {
+    "bs": 0.249984,
+    "bs_base": 0.249984,
+    "p_bar": 0.496,
+    "bss": 0.0
+  },
+  "honest_notes": [
+    "BSS≡0 is constructive (model p ≡ p̄), NOT skill",
+    "zero runs/ledger.jsonl writes",
+    "zero LLM calls"
+  ]
+}
