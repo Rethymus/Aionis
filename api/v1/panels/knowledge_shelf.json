@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "as_of": "2026-10-10",
+  "as_of": "2026-11-16",
   "n_docs": 75,
   "n_categories": 5,
   "categories": {
@@ -132,8 +132,8 @@
       "title": "ADR-004 \u2014 LLM extraction is structural-only (no market_impact)",
       "path": "decisions/ADR-004-llm-structural-only-no-market-impact.md",
       "category": "adr",
-      "date": "2026-07-30",
-      "n_chars": 1085,
+      "date": "2026-11-13",
+      "n_chars": 1681,
       "summary": "LLM extraction of events could plausibly include a market_impact field (the model's reading of how the market reacted). 1. Full extraction including market_impact.",
       "url": "https://github.com/Rethymus/Aionis/blob/main/decisions/ADR-004-llm-structural-only-no-market-impact.md"
     },
@@ -249,8 +249,8 @@
       "title": "\u6570\u636e\u63a5\u5165 7 \u95e8\uff08Data Intake Rubric\uff09\u2014 \u7b2c\u4e09\u65b9\u6570\u636e\u96c6\u8fdb Aionis \u524d\u7684\u5f3a\u5236\u6e05\u5355",
       "path": "docs/data-intake-rubric.md",
       "category": "rubric",
-      "date": "2026-08-31",
-      "n_chars": 4517,
+      "date": "2026-11-13",
+      "n_chars": 4858,
       "summary": "\u72b6\u6001\uff1av0.1 \u00b7 2026-07-28 \u00b7 \u6cbb\u7406\u6587\u6863\uff08durable registry \u7684\u4e00\u90e8\u5206\uff09\u3002 \u8303\u56f4\uff1a\u4efb\u4f55\u7b2c\u4e09\u65b9\u6570\u636e\u96c6\uff08\u542b exploratory / \u4e00\u6b21\u6027\u63a2\u67e5\uff09\u8fdb Aionis \u524d\uff0c\u5fc5\u987b\u5168\u90e8 7 \u95e8\u8fc7\u5173\u3002",
       "url": "https://github.com/Rethymus/Aionis/blob/main/docs/data-intake-rubric.md"
     },
@@ -339,8 +339,8 @@
       "title": "Lessons learned",
       "path": "docs/08-lessons.md",
       "category": "theory",
-      "date": "2026-10-03",
-      "n_chars": 2808,
+      "date": "2026-11-13",
+      "n_chars": 3864,
       "summary": "Distilled findings that changed how the project runs. 1. Evidence boundaries matter.",
       "url": "https://github.com/Rethymus/Aionis/blob/main/docs/08-lessons.md"
     },
@@ -618,8 +618,8 @@
       "title": "Ops: local evening refresh lane (the \"temporary server\")",
       "path": "docs/ops-local-refresh.md",
       "category": "theory",
-      "date": "2026-10-08",
-      "n_chars": 16752,
+      "date": "2026-11-16",
+      "n_chars": 52215,
       "summary": "Since 2026-09-06. Owner decision: no paid server \u2014 the developer machine, woken on Beijing trading-day evenings via a ZCode workspace automation, IS the cron server for the terminal's daily data refresh. Target: run unattended \u22651 month.",
       "url": "https://github.com/Rethymus/Aionis/blob/main/docs/ops-local-refresh.md"
     },
@@ -754,7 +754,7 @@
       "desc_zh": "\u5934\u6761\u4e3b\u5f20\u7684\u5355\u9875\u901f\u89c8\uff1aIC / CI / p / verdict / SESOI\u2014\u2014web/out/atlas.html \u7684\u53ef\u6eaf\u6e90\u5bf9\u5e94\u7269\u3002",
       "path": "reports/evidence/atlas-claim-v1.html",
       "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/atlas-claim-v1.html",
-      "sha256": "9283958fe72d54c68af8c91e1b7386ccd9a3418371fde7f8e5450e90e213880a",
+      "sha256": "d7afb5bbd000637653e2af90a9161a2fda3086366563e0a7261ebe3ca48abe66",
       "n_bytes": 24397
     },
     {
@@ -765,8 +765,8 @@
       "desc_zh": "\u6eaf\u6e90\u7814\u7a76\u6863\u6848\uff1a24 \u6761\u6765\u6e90\u767b\u8bb0\u8868 \u2192 \u62a5\u544a \u2192 \u5efa\u6a21\u5206\u6790\u5168\u6d41\u7a0b\uff0c[S#] \u5f15\u7528\u95ed\u5305\u3002",
       "path": "reports/evidence/research-dossier-v1.html",
       "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/research-dossier-v1.html",
-      "sha256": "cc9c619e9bf22b880981b50ee17ed65da041da895c926b9d976ea6ed76ae5580",
-      "n_bytes": 47388
+      "sha256": "1ae6682b953ae4d32f21fd8691aef825d8244a883be6ae2d04e246c97946c143",
+      "n_bytes": 47134
     },
     {
       "id": "research-dossier-b-v1",
@@ -776,7 +776,7 @@
       "desc_zh": "\u57fa\u672c\u9762\u65f6\u70b9\u4e3b\u5f20\u7684 meta-only \u5361\uff1a\u5dee\u5206\u503c\u3001\u8d26\u672c\u5bf9\u8d26\u3001IC \u5e8f\u5217\u6458\u8981\u3001\u63a7\u5236\u68c0\u9a8c\u3002",
       "path": "reports/evidence/research-dossier-b-v1.html",
       "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/research-dossier-b-v1.html",
-      "sha256": "b2a76fa47445bc1460819ab709c5acce14657c84ea94d2b0a10019af6c0049a1",
+      "sha256": "952139da17dcdd081e6f659b3a7c2719063c889b894126e9813f965b52502c17",
       "n_bytes": 25101
     },
     {
@@ -787,7 +787,7 @@
       "desc_zh": "\u5173\u7cfb\u7f51\u7edc\u4e3b\u5f20\u7684 meta-only \u5361\uff1a\u5dee\u5206\u503c\u3001\u8d26\u672c\u5bf9\u8d26\u3001IC \u5e8f\u5217\u6458\u8981\u3001\u63a7\u5236\u68c0\u9a8c\u3002",
       "path": "reports/evidence/research-dossier-d-v1.html",
       "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/research-dossier-d-v1.html",
-      "sha256": "4f6e7d430409a3c8b93e3f1a315c1650abacaa67eb760c0ffcc23c42a82acc70",
+      "sha256": "eaa5e2056dff12d17a6362eb74ff9e14702d56bee7df0b9890bb249554b3256f",
       "n_bytes": 25296
     },
     {
@@ -798,10 +798,10 @@
       "desc_zh": "\u8de8\u516c\u53f8\u4f20\u64ad\u4e3b\u5f20\u7684 meta-only \u5361\uff1a\u5dee\u5206\u503c\u3001\u8d26\u672c\u5bf9\u8d26\u3001IC \u5e8f\u5217\u6458\u8981\u3001\u63a7\u5236\u68c0\u9a8c\u3002",
       "path": "reports/evidence/research-dossier-e1-v1.html",
       "url": "https://github.com/Rethymus/Aionis/blob/main/reports/evidence/research-dossier-e1-v1.html",
-      "sha256": "7b2f3b387c52d738d67ce4b43bb299aac22fb910e9259761b9a9adbc75144e2a",
+      "sha256": "ae9f75ff870553b3b7e5de351d8bd31528ce7cb3b3824c2d5a66e2c5a4dc1ecc",
       "n_bytes": 25295
     }
   ],
   "methodology": "Layer 1 \u2014 Aionis's OWN method library: catalog of docs/ + decisions/ markdown (repo PolyForm-NC; zero third-party copyright surface). Each entry carries metadata plus a safe teaser slice (first 2-3 sentences, <=240 chars) extracted at export time; the full text stays on GitHub (link-out). Dates are last-commit dates read from the LOCAL git repository (no network). Layer 2 \u2014 a FIXED editorially-curated bookmark list of first-hand public research sources (BIS / Fed FEDS / IMF / NBER / arXiv q-fin / FRASER / FRED-ALFRED / RePEc): link-out + one static sentence each, no fetching, no scraping, no summary APIs \u2014 copyright stays with the authors, we only catalog. Categories are a fixed 5-rail whitelist (preregistration / adr / results / rubric / theory); n_docs reconciles to the sum of the rails. Layer 3 \u2014 generated evidence artifacts: self-contained HTML, byte-stable, sha256 + byte count pinned at export time from the local tracked file so a reader can verify the download against the catalog (a missing file degrades honestly to null \u2014 never fabricated). Superseded artifact versions are retained under reports/evidence/archive/ (move-don't-delete \u2014 the archive only grows). Display-only reference lane \u2014 never part of any research or OOS pipeline.",
-  "snapshot_ts": "2026-11-02T11:32:50.852469+00:00"
+  "snapshot_ts": "2026-11-16T11:45:36.673700+00:00"
 }
