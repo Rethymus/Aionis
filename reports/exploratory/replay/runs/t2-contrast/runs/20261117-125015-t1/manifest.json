@@ -1,0 +1,42 @@
+{
+  "kind": "replay-run-manifest",
+  "exploratory": true,
+  "label": "EXPLORATORY REPLAY — not a claim, not a gate (design: reports/design/2026-11-17-replay-training-ignition.md; zero runs/ledger.jsonl writes; research face untouched)",
+  "tier": "t1",
+  "window": {
+    "from": "2026-02",
+    "to": "2026-02",
+    "months": 1
+  },
+  "chunks": [
+    [
+      "2026-02",
+      "2026-02"
+    ]
+  ],
+  "n_records": 1,
+  "params": {},
+  "lessons_provided": 0,
+  "lessons_injected_top_n": 3,
+  "honest_notes": [
+    "engine arithmetic deterministic; LLM replies NOT bit-reproducible (archive-only, no recompute — design §2 铁律 3)",
+    "masking structural: rows ≤ t-1 asserted per month + snapshot SHA256 archived",
+    "zero runs/ledger.jsonl writes"
+  ],
+  "config_sha256": "257165bf245706946e5e7e775fac00f493cdc4b0e2769aa3d0b8ec8510285a67",
+  "provider_used": {
+    "name": "siliconflow",
+    "model": "Qwen/Qwen2.5-7B-Instruct"
+  },
+  "provider_override": {
+    "kind": "provider-contrast-override",
+    "from_frozen": "glm",
+    "to": "siliconflow",
+    "note": "T2 provider-contrast arm: run-time override of the frozen provider for the execution only; config-frozen bytes untouched (same config_sha256 as the GLM arm); contrast arm carries ZERO lessons (lessons identity is GLM-bound); EXPLORATORY REPLAY — not a claim, not a gate"
+  },
+  "token_usage": {
+    "prompt_tokens": 594,
+    "completion_tokens": 18,
+    "n_calls": 1
+  }
+}

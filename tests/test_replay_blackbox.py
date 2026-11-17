@@ -431,3 +431,32 @@ def test_main_t1_params_and_lessons_validation(tmp_path: Path, ic_parquet: Path)
     arr.write_text('["a", 2]', encoding="utf-8")
     assert rb.main(["--tier", "t1", "--out", str(out), "--from", "2016-01",
                     "--to", "2016-03", "--lessons", str(arr)]) == rb.EXIT_USAGE
+
+
+# ---------------------------------------------------------------------------
+# T2 provider-contrast arm: --provider resolution + zero-lessons red line
+# ---------------------------------------------------------------------------
+
+def test_provider_resolution_default_and_override():
+    # No CLI flag → frozen provider (glm), no override marker.
+    assert rb.resolve_effective_provider("glm", None) == ("glm", None)
+    # Explicit flag EQUAL to the frozen name → still no override marker.
+    assert rb.resolve_effective_provider("glm", "glm") == ("glm", None)
+    # Differing flag → run-time override meta (frozen bytes untouched).
+    name, meta = rb.resolve_effective_provider("glm", "siliconflow")
+    assert name == "siliconflow"
+    assert meta["kind"] == "provider-contrast-override"
+    assert meta["from_frozen"] == "glm" and meta["to"] == "siliconflow"
+    assert "ZERO lessons" in meta["note"] and "EXPLORATORY REPLAY" in meta["note"]
+
+
+def test_main_provider_contrast_refuses_lessons(tmp_path: Path, ic_parquet: Path):
+    out = tmp_path / "out"
+    rb.freeze(out, _config(tmp_path, ic_parquet))
+    lessons = tmp_path / "lessons.json"
+    lessons.write_text('["some lesson"]', encoding="utf-8")
+    # Contrast arm red line: --lessons + differing --provider → EXIT_USAGE,
+    # refused BEFORE any provider/network work.
+    assert rb.main(["--tier", "t1", "--out", str(out), "--from", "2016-01",
+                    "--to", "2016-03", "--provider", "siliconflow",
+                    "--lessons", str(lessons)]) == rb.EXIT_USAGE

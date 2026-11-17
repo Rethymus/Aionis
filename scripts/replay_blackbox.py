@@ -106,6 +106,13 @@ Y_SOURCE_DEFAULT = (
 
 MONTH_RE = re.compile(r"^\d{4}-(0[1-9]|1[0-2])$")
 
+# T2 provider-contrast arm (mission 2026-11-17): --provider choices. The
+# frozen config's provider (glm) stays the default and its BYTES never
+# change; a differing --provider is a run-time override recorded in the run
+# manifest. Contrast arm red lines: ZERO lessons (identity is GLM-bound —
+# structurally refused below), EXPLORATORY REPLAY products only.
+PROVIDER_CHOICES = ("glm", "siliconflow")
+
 PROMPT_SYSTEM = """\
 You are the blackbox predictor in a calibration replay drill
 (EXPLORATORY REPLAY — not a claim, not a gate).
@@ -665,14 +672,36 @@ def run_t1(config: dict, series: dict[str, float], from_ym: str, to_ym: str,
 # real GLM ask wrapper (lazy imports — module stays importable without settings)
 # ---------------------------------------------------------------------------
 
-def _make_ask(config: dict) -> tuple[Callable[[str, str], str], dict, str]:
-    """GLM via the OpenAI-compatible client, JSON mode temp 0.1 (the client pins
-    both), bounded single retry + token accounting — llm_memory_probe 先例."""
+def resolve_effective_provider(frozen_name: str,
+                               cli_provider: str | None) -> tuple[str, dict | None]:
+    """--provider resolution (T2 contrast arm): the frozen config's provider is
+    the default; an explicit --provider that DIFFERS from the frozen name is a
+    run-time override — the frozen config bytes are never touched, and the
+    override is recorded in the manifest for honest side-by-side reading."""
+    if cli_provider is None or cli_provider == frozen_name:
+        return frozen_name, None
+    return cli_provider, {
+        "kind": "provider-contrast-override",
+        "from_frozen": frozen_name,
+        "to": cli_provider,
+        "note": ("T2 provider-contrast arm: run-time override of the frozen "
+                 "provider for the execution only; config-frozen bytes "
+                 "untouched (same config_sha256 as the GLM arm); contrast "
+                 "arm carries ZERO lessons (lessons identity is GLM-bound); "
+                 "EXPLORATORY REPLAY — not a claim, not a gate"),
+    }
+
+
+def _make_ask(config: dict,
+              provider_name: str | None = None) -> tuple[Callable[[str, str], str], dict, str]:
+    """LLM ask via the OpenAI-compatible client, JSON mode temp 0.1 (the client
+    pins both), bounded single retry + token accounting — llm_memory_probe 先例.
+    ``provider_name`` overrides the frozen config's provider (T2 contrast)."""
     sys.path.insert(0, str(REPO_ROOT / "src"))
     from aionis.extraction.llm_client import OpenAICompatClient
     from aionis.extraction.providers import build_providers
 
-    name = config["provider"]["name"]
+    name = provider_name or config["provider"]["name"]
     provs = [p for p in build_providers(only_enabled=True)
              if p.name == name and p.api_key]
     if not provs:
@@ -781,18 +810,30 @@ def _cmd_run(args: argparse.Namespace, out_dir: Path) -> int:
                 raise ReplayError(EXIT_USAGE, f"--lessons not valid JSON: {exc}") from exc
             if not isinstance(lessons, list) or not all(isinstance(s, str) for s in lessons):
                 raise ReplayError(EXIT_USAGE, "--lessons must be a JSON array of strings")
-        ask, usage, model = _make_ask(cfg)
+        effective_provider, provider_override = resolve_effective_provider(
+            cfg["provider"]["name"], args.provider)
+        if provider_override and lessons:
+            raise ReplayError(
+                EXIT_USAGE,
+                "--lessons refused on a --provider contrast arm: ZERO lessons "
+                "(lessons identity is GLM-bound; T2 contrast arm red line)")
+        ask, usage, model = _make_ask(cfg, provider_name=effective_provider)
         result = run_t1(cfg, series, from_ym, to_ym, run_dir, ask=ask,
                         lessons=lessons, params_meta=params_meta)
         manifest = result["manifest"]
         manifest["config_sha256"] = config_sha
-        manifest["provider_used"] = {"name": cfg["provider"]["name"], "model": model}
+        manifest["provider_used"] = {"name": effective_provider, "model": model}
+        if provider_override:
+            manifest["provider_override"] = provider_override
         manifest["token_usage"] = usage
         (run_dir / "manifest.json").write_text(
             json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         print(f"[replay] T1 replay [{from_ym}..{to_ym}]: {len(result['records'])} months, "
               f"{usage['n_calls']} LLM calls, tokens p/c={usage['prompt_tokens']}/"
               f"{usage['completion_tokens']} → {run_dir}")
+        if provider_override:
+            print(f"[replay] provider-contrast override: {provider_override['from_frozen']} "
+                  f"→ {effective_provider} (frozen config bytes untouched; zero lessons)")
     print(f"[replay] {EXPLORATORY_LABEL}")
     return EXIT_OK
 
@@ -820,6 +861,11 @@ def main(argv: list[str] | None = None) -> int:
                         help="T1: versioned params JSON (--from/--to/--params 注入)")
     parser.add_argument("--lessons", default=None,
                         help="T1: JSON array of lesson strings (injected top-N)")
+    parser.add_argument("--provider", choices=list(PROVIDER_CHOICES), default=None,
+                        help="provider override for the execution (default: the "
+                             "frozen config's provider, glm — unchanged; a differing "
+                             "--provider marks a T2 provider-contrast arm: same frozen "
+                             "config bytes, ZERO lessons, EXPLORATORY REPLAY only)")
     parser.add_argument("--ic-parquet", dest="ic_parquet", default=Y_SOURCE_DEFAULT,
                         help="FREEZE-TIME y source selection (frozen thereafter; "
                              "default = Phase D confirmatory treatment IC)")

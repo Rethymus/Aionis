@@ -65,3 +65,54 @@ stale）、today total=70.8M tokens/384 requests——GLM 侧限速与业主自�
 年界检查点（调参判读，LLM 语义）在 12 个月齐后由后续批次触发，零 LLM 循环只积累
 月记录不越权调参。设计 §4「调参只在年界检查点」语义不变——检查点触发时点后移
 到月记录齐备。铁律不变：校准拟合非方向命中/掩蔽证明/EXPLORATORY/零账本。
+
+## 推进器使用说明（t1-advance-formalize，2026-11-17 append）
+
+月级断点累积已由 `scripts/t1_advance.py` 正式化（主会话后台循环 exec_68ca17cc
+同参）：读 `t1-monthly-plan.txt`（120 月清单，必须与冻结 config-frozen.json 训练窗
+逐月一致，不一致=exit 4 拒跑）→ 逐月调用 replay_blackbox 单月窗（`--from m --to m`，
+冻结 config 原字节、provider=glm 钉定、零 lessons）→ 成功月记录落
+`runs/t1-monthly-advance/<ts>-t1/` → 计数并语义化退出。
+
+```bash
+# 只读状态（数 advance 目录月记录 vs 计划，永不调用引擎）
+uv run python scripts/t1_advance.py --status
+
+# 推进一次（从断点月起逐月；GLM 失败即停=窗口耗尽信号，绝不重跑到通过）
+uv run python scripts/t1_advance.py                # 全量推进至窗口耗尽/计划完成
+uv run python scripts/t1_advance.py --stop-after 3 # 每次至多 3 个新月（礼貌阀门）
+```
+
+退出码：**0** 计划完成（或完成后的幂等 no-op 再入）· **1** 部分推进（--stop-after
+预算到、仍有待办月）· **2** 窗口耗尽（引擎调用失败中止——1305/1302/超时即窗口
+信号；零推进或推进后遇失败均归此码，stdout 注明本次推进数）· **3** 计划/配置参数错
+· **4** 计划与冻结训练窗不一致。幂等语义沿晚间通道先例：已齐月记录的月份跳过
+（断点=首缺月），计划全齐后重复触发=只读 no-op exit 0；无常驻进程、无锁——每次
+调用是短命进程，重复触发只是廉价 no-op。
+
+**年界检查点**仍是后续批次的人工/主会话语义动作（12 个月齐后判读 tuning-log、
+蒸馏 lessons）——推进器只积累月记录，不越权调参（铁律：调参只在年界检查点）。
+
+### Windows 计划任务挂载模板（形态沿晚间通道先例；**挂载动作待业主执行，本批不代做**）
+
+晚间通道先例（docs/ops-local-refresh.md）：每日多次重复触发 + StartWhenAvailable
+开机补跑 + 幂等 guard 让多余触发变 no-op。t1_advance 同款形态（示例：晚间
+19:35–23:35 每 2 小时一触，每触至多 1 新月=每窗口节奏一次有效调用，GLM 限速下
+自然退避；频率与帽值由业主定夺）：
+
+```powershell
+# 管理员 PowerShell —— 业主执行；命令形参可按窗口节奏调整
+$act = New-ScheduledTaskAction -Execute "F:\ZCodeData\Aionis\.venv\Scripts\python.exe" `
+  -Argument "F:\ZCodeData\Aionis\scripts\t1_advance.py --stop-after 1" `
+  -WorkingDirectory "F:\ZCodeData\Aionis"
+$trg = @(19,21,23) | ForEach-Object {
+  New-ScheduledTaskTrigger -Daily -At "$($_):35" }
+$set = New-ScheduledTaskSettingsSet -StartWhenAvailable -ExecutionTimeLimit (New-TimeSpan -Minutes 30)
+Register-ScheduledTask -TaskName "Aionis T1 monthly advance" -Action $act -Trigger $trg -Settings $set
+```
+
+- `--stop-after 1`：每触发至多推进 1 个月（贴 GLM「窗内 3-8 调后硬锁」实测节奏的
+  保守取值；业主可去掉该阀改全量推进）。退出码 2（窗口耗尽）在 Task Scheduler 里
+  只是「上次运行结果 0x2」——不是故障，是诚实断点信号，等下一触发再试。
+- 卸载：`Unregister-ScheduledTask -TaskName "Aionis T1 monthly advance"`。
+- 计划完成后（`--status` 显示 120/120）触发变只读 no-op，可留着或卸载由业主定。
