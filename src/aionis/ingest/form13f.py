@@ -48,6 +48,7 @@ import requests
 import structlog
 
 from aionis.config import settings
+from aionis.ingest._xml_guard import XmlDtdForbiddenError, fromstring_no_dtd
 from aionis.ingest.http_policy import HTTPStatusError
 from aionis.ingest.universe import _policy_get
 
@@ -123,8 +124,8 @@ def parse_infotable_xml(xml_text: str) -> list[Form13fHolding]:
         log.warning("form13f_empty_xml")
         return []
     try:
-        root = ET.fromstring(xml_text)
-    except ET.ParseError as exc:
+        root = fromstring_no_dtd(xml_text)
+    except (ET.ParseError, XmlDtdForbiddenError) as exc:
         log.warning("form13f_xml_parse_error", error=str(exc))
         return []
 

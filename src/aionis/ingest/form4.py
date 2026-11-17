@@ -46,6 +46,8 @@ from dataclasses import dataclass
 import pandas as pd
 import structlog
 
+from aionis.ingest._xml_guard import XmlDtdForbiddenError, fromstring_no_dtd
+
 log = structlog.get_logger()
 
 
@@ -110,8 +112,8 @@ def parse_form4_xml(xml_text: str) -> list[Form4Transaction]:
         return []
 
     try:
-        root = ET.fromstring(xml_text)
-    except ET.ParseError as exc:
+        root = fromstring_no_dtd(xml_text)
+    except (ET.ParseError, XmlDtdForbiddenError) as exc:
         log.warning("form4_xml_parse_error", error=str(exc))
         return []
 

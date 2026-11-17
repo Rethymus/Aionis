@@ -39,11 +39,11 @@ import zipfile
 from dataclasses import dataclass
 from datetime import date, datetime
 from pathlib import Path
-from xml.etree import ElementTree
 
 import pandas as pd
 import structlog
 
+from aionis.ingest._xml_guard import fromstring_no_dtd
 from aionis.ingest.form4_efts import _UA, _cache_dir
 from aionis.ingest.universe import _policy_get
 
@@ -85,7 +85,7 @@ def parse_fd_xml(xml_text: str, *, filing_year: int) -> pd.DataFrame:
     verified 2026-08-21 response shape.
     """
     rows: list[dict] = []
-    root = ElementTree.fromstring(xml_text)
+    root = fromstring_no_dtd(xml_text)
     for m in root.iter("Member"):
         def _t(tag: str, m=m) -> str:
             node = m.find(tag)
