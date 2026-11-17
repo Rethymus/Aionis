@@ -31,6 +31,7 @@ import requests
 import structlog
 
 from aionis.config import settings
+from aionis.ingest._url_guard import assert_safe_url
 from aionis.ingest.http_policy import HttpRequestPolicy, RetryPolicy
 
 log = structlog.get_logger()
@@ -49,6 +50,15 @@ _PB_TARBALL = (
 _PB_PARQUET_NAME = "universe_pierrebrunelle.parquet"
 
 _HTTP_POLICY = HttpRequestPolicy(retry_exceptions=(requests.RequestException,))
+# SSRF guard pass-1 close: this module's two pinned constituent-source hosts.
+# NOTE the guard is wired at THIS module's own two fetch call sites below,
+# NOT inside the shared ``_policy_get`` helper — that choke point is also the
+# approved exit for many other modules (alpaca / fundamentals / stakes_13d /
+# form4_efts / macro_* / ff5_residual / …), so guarding it here would change
+# fetch semantics for callers outside this module (their hosts are not this
+# module's business). Call-site wiring keeps the close mechanical: exactly
+# the hosts hardcoded in THIS file.
+ALLOWED_HOSTS = frozenset({"raw.githubusercontent.com", "codeload.github.com"})
 
 
 def _policy_get(
@@ -153,6 +163,7 @@ def load_hanshof_membership(
     text = csv.read_text() if csv.exists() else None
     if text is None:
         log.info("universe_fetch_hanshof", url=_HANSHOF_URL)
+        assert_safe_url(_HANSHOF_URL, ALLOWED_HOSTS)  # SSRF guard, fail-closed
         r = _policy_get(_HANSHOF_URL, headers={"User-Agent": "aionis/0.1"}, timeout=120)
         r.raise_for_status()
         text = r.text
@@ -182,6 +193,7 @@ def load_pierrebrunelle_membership(
         files = _read_spy_files_from_tarball(tgz)
     else:
         log.info("universe_fetch_pierrebrunelle")
+        assert_safe_url(_PB_TARBALL, ALLOWED_HOSTS)  # SSRF guard, fail-closed
         r = _policy_get(_PB_TARBALL, headers={"User-Agent": "aionis/0.1"}, timeout=180)
         r.raise_for_status()
         tgz.write_bytes(r.content)

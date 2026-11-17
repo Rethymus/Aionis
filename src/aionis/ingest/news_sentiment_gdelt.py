@@ -45,12 +45,16 @@ import pandas as pd
 import requests
 import structlog
 
+from aionis.ingest._url_guard import assert_safe_url
 from aionis.ingest.http_policy import HostSpacingPolicy, HttpRequestPolicy, RetryPolicy
 
 log = structlog.get_logger()
 
 # --- GDELT Doc 2.0 constants -------------------------------------------------
 _GDELT_DOC_URL = "https://api.gdeltproject.org/api/v2/doc/doc"
+# SSRF guard pass-1 close: this module (and news_feed, which imports the
+# endpoint constant above) only ever requests this host.
+ALLOWED_HOSTS = frozenset({"api.gdeltproject.org"})
 _USER_AGENT = (
     "Aionis-research/0.1 (point-in-time quant research; contact: aionis@example.com)"
 )
@@ -223,6 +227,9 @@ def _gdelt_timeline(query_string: str, mode: str) -> dict:
     """
     url = f"{_GDELT_DOC_URL}?query={query_string}&mode={mode}&format=json"
     headers = {"User-Agent": _USER_AGENT}
+    # SSRF guard (fail-closed): scheme+host allowlist, then every resolved
+    # A/AAAA record against the deny table — see aionis.ingest._url_guard.
+    assert_safe_url(url, ALLOWED_HOSTS)
 
     def operation() -> requests.Response:
         return requests.get(url, headers=headers, timeout=60)

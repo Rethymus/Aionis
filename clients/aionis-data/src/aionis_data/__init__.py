@@ -31,10 +31,13 @@ Offline/testing: inject your own loader — no network in tests::
 """
 from __future__ import annotations
 
+import ipaddress
 import json
+import socket
 import urllib.request
 from collections.abc import Callable
 from typing import Any
+from urllib.parse import urlsplit
 
 DEFAULT_BASE_URL = "https://rethymus.github.io/Aionis/api/v1"
 DEFAULT_TIMEOUT_S = 30.0
@@ -42,9 +45,87 @@ DEFAULT_TIMEOUT_S = 30.0
 FetchJson = Callable[[str], Any]
 
 
+# --- SSRF guard (stdlib-only twin of aionis.ingest._url_guard) ---------------
+# This package is dependency-free by design, so the guard is re-implemented
+# with the stdlib instead of importing the main repo's module. KEEP IN SYNC
+# with src/aionis/ingest/_url_guard.py — the root repo's
+# tests/test_url_guard.py pins the two deny tables equal so drift fails CI.
+
+_ALLOW_SCHEMES = frozenset({"http", "https"})
+_ALLOW_HOSTS = frozenset({"rethymus.github.io"})  # DEFAULT_BASE_URL's host
+_DENIED_NETWORKS = tuple(
+    ipaddress.ip_network(cidr)
+    for cidr in (
+        "127.0.0.0/8",  # IPv4 loopback
+        "0.0.0.0/8",  # "this network" — 0.0.0.0 reaches loopback on many stacks
+        "10.0.0.0/8",  # RFC1918 private
+        "172.16.0.0/12",  # RFC1918 private
+        "192.168.0.0/16",  # RFC1918 private
+        "169.254.0.0/16",  # link-local; 169.254.169.254 = cloud metadata endpoint
+        "100.64.0.0/10",  # carrier-grade NAT — is_private is False (pinned test)
+        "224.0.0.0/4",  # multicast
+        "fc00::/7",  # IPv6 unique-local
+        "fe80::/10",  # IPv6 link-local
+        "::ffff:0:0/96",  # IPv4-mapped IPv6
+        "64:ff9b::/96",  # NAT64 well-known prefix
+    )
+)
+
+
+class UrlGuardError(ValueError):
+    """Outbound URL refused by the client-side SSRF guard (fail-closed)."""
+
+
+def _assert_safe_url(url: str) -> None:
+    """Dual-pass, fail-closed: scheme + pinned-host allowlist, then EVERY
+    A/AAAA record the host resolves to must fall outside the deny table
+    (DNS-rebinding defense; IPv4-mapped forms normalized before compare).
+
+    Honest limit: the subsequent ``urlopen`` performs its own resolution, so
+    a TOCTOU window remains — this narrows, not eliminates (same stance as
+    the canonical guard; see its docstring).
+    """
+    try:
+        parts = urlsplit(url)
+        host = parts.hostname
+        port = parts.port
+    except ValueError as exc:
+        raise UrlGuardError(f"unparseable URL {url!r}: {exc}") from exc
+    if parts.scheme not in _ALLOW_SCHEMES:
+        raise UrlGuardError(f"scheme {parts.scheme!r} not in {sorted(_ALLOW_SCHEMES)}")
+    if host not in _ALLOW_HOSTS:
+        raise UrlGuardError(f"host {host!r} not in {sorted(_ALLOW_HOSTS)}")
+    try:
+        records = socket.getaddrinfo(
+            host, port, family=socket.AF_UNSPEC, type=socket.SOCK_STREAM
+        )
+    except OSError as exc:
+        raise UrlGuardError(f"DNS failure for {host!r} ({exc!r}) — fail closed") from exc
+    if not records:
+        # An empty resolution (incl. OS buffer-pressure shapes like ENOBUFS
+        # surfacing as []) is refused, not passed — aligned with the canonical
+        # guard; noted honestly, no absolute-safety claim (TOCTOU remains).
+        raise UrlGuardError(f"{host!r} resolved to zero addresses — fail closed")
+    for rec in records:
+        addr = ipaddress.ip_address(rec[4][0])
+        candidates = [addr]
+        mapped = addr.ipv4_mapped if isinstance(addr, ipaddress.IPv6Address) else None
+        if mapped is not None:
+            candidates.append(mapped)
+        for cand in candidates:
+            for net in _DENIED_NETWORKS:
+                if cand in net:
+                    raise UrlGuardError(
+                        f"{host!r} resolves to denied address {rec[4][0]} ({net})"
+                    )
+
+
 def _default_fetch_json(url: str, timeout: float = DEFAULT_TIMEOUT_S) -> Any:
     """stdlib-only fetch (requests is available in the main repo; the client
     itself avoids a hard dependency by using urllib — one less intake)."""
+    # SSRF guard (fail-closed): pinned host allowlist + resolved-IP deny
+    # table — see the stdlib-only twin block above.
+    _assert_safe_url(url)
     with urllib.request.urlopen(url, timeout=timeout) as resp:  # noqa: S310
         return json.loads(resp.read().decode("utf-8"))
 

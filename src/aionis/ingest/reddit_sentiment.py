@@ -64,11 +64,16 @@ import structlog
 
 from aionis.config import settings
 from aionis.ingest import universe
+from aionis.ingest._url_guard import assert_safe_url
 from aionis.ingest.http_policy import HostSpacingPolicy, HTTPStatusError
 
 log = structlog.get_logger()
 
 _HOST_SPACING_POLICY = universe._HTTP_POLICY.spacing
+# SSRF guard pass-1 close: the RSS transport (this module's wired network
+# exit) only ever requests the public Atom feed host; PRAW's OAuth transport
+# is driven by praw's own session and is outside this wiring.
+ALLOWED_HOSTS = frozenset({"www.reddit.com"})
 
 # --- tunables -----------------------------------------------------------------
 
@@ -458,6 +463,9 @@ def _fetch_feed(url: str, user_agent: str):
     429/5xx plus transient connection errors."""
     from aionis.ingest.http_policy import HttpRequestPolicy, RetryPolicy
 
+    # SSRF guard (fail-closed): scheme+host allowlist, then every resolved
+    # A/AAAA record against the deny table — see aionis.ingest._url_guard.
+    assert_safe_url(url, ALLOWED_HOSTS)
     policy = HttpRequestPolicy(
         spacing=_HOST_SPACING_POLICY,
         retry=RetryPolicy(max_retries=2),

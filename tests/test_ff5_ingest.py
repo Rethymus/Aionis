@@ -10,6 +10,7 @@ memory and requests.get is monkeypatched.
 from __future__ import annotations
 
 import io
+import socket
 import threading
 import zipfile
 from dataclasses import dataclass, field
@@ -18,6 +19,7 @@ import pandas as pd
 import pytest
 import requests
 
+from aionis.ingest import _url_guard
 from aionis.ingest.ff5 import (
     ALL_COLS,
     FACTOR_COLS,
@@ -257,6 +259,14 @@ def test_fetch_uses_politeness_and_bounded_retry(
         return next(responses)
 
     monkeypatch.setattr(requests, "get", fake_get)
+    # Hermetic DNS for the SSRF guard (a public address passes the deny table).
+    monkeypatch.setattr(
+        _url_guard,
+        "_getaddrinfo",
+        lambda *a, **k: [
+            (socket.AF_INET, socket.SOCK_STREAM, 6, "", ("93.184.216.34", 443))
+        ],
+    )
     policy = HttpRequestPolicy(
         clock=fake.monotonic,
         sleeper=fake.sleep,
@@ -282,6 +292,14 @@ def test_fetch_fails_closed_on_persistent_5xx(
         return next(responses)
 
     monkeypatch.setattr(requests, "get", fake_get)
+    # Hermetic DNS for the SSRF guard (a public address passes the deny table).
+    monkeypatch.setattr(
+        _url_guard,
+        "_getaddrinfo",
+        lambda *a, **k: [
+            (socket.AF_INET, socket.SOCK_STREAM, 6, "", ("93.184.216.34", 443))
+        ],
+    )
     policy = HttpRequestPolicy(
         clock=fake.monotonic,
         sleeper=fake.sleep,

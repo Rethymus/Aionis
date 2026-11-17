@@ -33,7 +33,15 @@ from datetime import datetime
 
 import requests
 
+from aionis.ingest._url_guard import assert_safe_url
 from aionis.ingest.http_policy import HttpRequestPolicy, RetryPolicy
+
+# SSRF guard pass-1 close: the three hosts this module can request — iShares
+# pinned latest-holdings CSVs, Global X fund pages, Global X dated CSVs
+# (hrefs extracted from those same pages' HTML by _GX_CSV_RE below).
+ALLOWED_HOSTS = frozenset(
+    {"www.ishares.com", "www.globalxetfs.com", "assets.globalxetfs.com"}
+)
 
 # Each entry: issuer + official fund name (for display), a parser tag, and
 # either a direct file URL (iShares) or the fund page whose HTML carries the
@@ -123,6 +131,7 @@ _EQUITY = "Equity"
 
 
 def _get(url: str, total_attempts: int = 3) -> requests.Response:
+    assert_safe_url(url, ALLOWED_HOSTS)
     retry = RetryPolicy(max_retries=total_attempts - 1, backoff_base=2.0)
     return _POLICY.request(
         url, lambda: requests.get(url, headers=_UA, timeout=30), retry=retry

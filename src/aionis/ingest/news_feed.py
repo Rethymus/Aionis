@@ -82,10 +82,12 @@ import structlog
 # Reuse the sibling GDELT module's endpoint / UA / polite policy so the two
 # api.gdeltproject.org consumers share one discipline (precedent: form8k
 # importing _policy_get from form4_efts).
+from aionis.ingest._url_guard import assert_safe_url
 from aionis.ingest.http_policy import HTTPStatusError
 from aionis.ingest.news_sentiment_gdelt import (
     _GDELT_DOC_URL,
     _USER_AGENT,
+    ALLOWED_HOSTS,
     _policy,
 )
 
@@ -249,6 +251,9 @@ def fetch_articles(
         "format": "json",
     }
     url = f"{_GDELT_DOC_URL}?{urlencode(params)}"
+    # SSRF guard (fail-closed): scheme+host allowlist, then every resolved
+    # A/AAAA record against the deny table — see aionis.ingest._url_guard.
+    assert_safe_url(url, ALLOWED_HOSTS)
 
     def operation() -> requests.Response:
         return requests.get(url, headers={"User-Agent": _USER_AGENT}, timeout=60)

@@ -21,7 +21,11 @@ import time
 
 import requests
 
+from aionis.ingest._url_guard import assert_safe_url
 from aionis.ingest.http_policy import HttpRequestPolicy, RetryPolicy
+
+# SSRF guard pass-1 close: all eight pinned CSV endpoints live on this host.
+ALLOWED_HOSTS = frozenset({"assets.ark-funds.com"})
 
 # Browser-verified 2026-08-23 from each fund page's live DOM (see docstring).
 FUND_CSV_URLS: dict[str, str] = {
@@ -41,6 +45,7 @@ _DATE_RE = re.compile(r"\d{2}/\d{2}/\d{4}")
 
 
 def _get(url: str, total_attempts: int = 3) -> requests.Response:
+    assert_safe_url(url, ALLOWED_HOSTS)
     retry = RetryPolicy(max_retries=total_attempts - 1, backoff_base=2.0)
     return _POLICY.request(
         url, lambda: requests.get(url, headers=_UA, timeout=30), retry=retry

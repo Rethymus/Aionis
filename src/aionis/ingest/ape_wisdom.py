@@ -27,18 +27,22 @@ import time
 
 import requests
 
+from aionis.ingest._url_guard import assert_safe_url
 from aionis.ingest.http_policy import HttpRequestPolicy, RetryPolicy
 
 BASE = "https://apewisdom.io/api/v1.0"
 # The stocks filter is the only endpoint verified to carry data; all-posts
 # and crypto return {"count":0,...} envelopes (kept as a fact, not a swap).
 STOCKS_URL = f"{BASE}/filter/stocks"
+# SSRF guard pass-1 close: every URL this module fetches lives on this host.
+ALLOWED_HOSTS = frozenset({"apewisdom.io"})
 
 _POLICY = HttpRequestPolicy(retry_exceptions=(requests.RequestException,))
 _UA = {"User-Agent": "Aionis-Research/1.0 (educational; contact via repo)"}
 
 
 def _get(url: str, total_attempts: int = 3) -> requests.Response:
+    assert_safe_url(url, ALLOWED_HOSTS)
     retry = RetryPolicy(max_retries=total_attempts - 1, backoff_base=2.0)
     return _POLICY.request(
         url, lambda: requests.get(url, headers=_UA, timeout=30), retry=retry

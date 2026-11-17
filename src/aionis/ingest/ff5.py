@@ -38,6 +38,7 @@ import pandas as pd
 import requests
 import structlog
 
+from aionis.ingest._url_guard import assert_safe_url
 from aionis.ingest.http_policy import HttpRequestPolicy
 
 log = structlog.get_logger()
@@ -46,6 +47,8 @@ FF5_DAILY_ZIP_URL = (
     "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/"
     "F-F_Research_Data_5_Factors_2x3_daily_CSV.zip"
 )
+# SSRF guard pass-1 close: the pinned bulk-ZIP endpoint's host.
+ALLOWED_HOSTS = frozenset({"mba.tuck.dartmouth.edu"})
 
 # Stable FF5 daily factor set (Fama-French, 2015; same family as
 # aionis.eval.ff5_residual). Values are decimal returns (e.g. 0.0012 = 0.12%).
@@ -193,6 +196,9 @@ def fetch_ff5_daily_snapshot(
         return df, sha
 
     fetcher = policy or HttpRequestPolicy()
+    # SSRF guard (fail-closed): scheme+host allowlist, then every resolved
+    # A/AAAA record against the deny table — see aionis.ingest._url_guard.
+    assert_safe_url(url, ALLOWED_HOSTS)
     resp = fetcher.request(url, lambda: requests.get(url, timeout=60))
     df = parse_ff5_daily_csv(resp.content)
     csv_path.write_text(df.to_csv(index=False))
