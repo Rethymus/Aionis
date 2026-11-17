@@ -1,0 +1,36 @@
+{
+  "kind": "replay-run-manifest",
+  "exploratory": true,
+  "label": "EXPLORATORY REPLAY — not a claim, not a gate (design: reports/design/2026-11-17-replay-training-ignition.md; zero runs/ledger.jsonl writes; research face untouched)",
+  "tier": "t1",
+  "window": {
+    "from": "2026-04",
+    "to": "2026-04",
+    "months": 1
+  },
+  "chunks": [
+    [
+      "2026-04",
+      "2026-04"
+    ]
+  ],
+  "n_records": 1,
+  "params": {},
+  "lessons_provided": 0,
+  "lessons_injected_top_n": 3,
+  "honest_notes": [
+    "engine arithmetic deterministic; LLM replies NOT bit-reproducible (archive-only, no recompute — design §2 铁律 3)",
+    "masking structural: rows ≤ t-1 asserted per month + snapshot SHA256 archived",
+    "zero runs/ledger.jsonl writes"
+  ],
+  "config_sha256": "257165bf245706946e5e7e775fac00f493cdc4b0e2769aa3d0b8ec8510285a67",
+  "provider_used": {
+    "name": "glm",
+    "model": "glm-4.7-flash"
+  },
+  "token_usage": {
+    "prompt_tokens": 564,
+    "completion_tokens": 1597,
+    "n_calls": 1
+  }
+}
