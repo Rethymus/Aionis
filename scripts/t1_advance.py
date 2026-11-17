@@ -123,6 +123,19 @@ def check_plan_against_config(plan: list[str], config_path: Path) -> None:
 # pure: progress parsing (advance 目录月记录 vs 计划)
 # ---------------------------------------------------------------------------
 
+def _advance_run_dirs(advance_root: Path) -> list[Path]:
+    """advance 根下全部 ``*-t1`` run 目录——引擎真实布局是
+    ``<advance_root>/runs/<ts>-t1/``（replay_blackbox ``_cmd_run`` 拼 ``runs/``），
+    兼容旧式根层直放 ``<advance_root>/<ts>-t1/``。"""
+    candidates: list[Path] = []
+    for parent in (advance_root / "runs", advance_root):
+        if parent.is_dir():
+            candidates.extend(
+                p for p in parent.iterdir() if p.is_dir() and p.name.endswith("-t1")
+            )
+    return sorted(candidates)
+
+
 def scan_progress(advance_root: Path) -> dict[str, list[str]]:
     """advance 根 → {month: [run_dir_name, …]}（每目录内非 header 月记录 ≥1 才计）。
 
@@ -132,8 +145,7 @@ def scan_progress(advance_root: Path) -> dict[str, list[str]]:
     done: dict[str, list[str]] = {}
     if not advance_root.exists():
         return done
-    for run_dir in sorted(p for p in advance_root.iterdir()
-                          if p.is_dir() and p.name.endswith("-t1")):
+    for run_dir in _advance_run_dirs(advance_root):
         recs_path = run_dir / "month-records.jsonl"
         if not recs_path.exists():
             continue

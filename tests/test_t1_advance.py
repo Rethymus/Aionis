@@ -103,6 +103,23 @@ def test_scan_progress_missing_root_and_corrupt_lines(tmp_path: Path):
     assert ta.scan_progress(root) == {"2016-01": ["20261117-100000-t1"]}
 
 
+def test_scan_progress_engine_nested_runs_layout(tmp_path: Path):
+    # 引擎真实布局：<advance_root>/runs/<ts>-t1/（replay_blackbox _cmd_run 拼
+    # runs/）。缺陷回归钉：轮 25 初版只扫根层，致主会话循环已落的 2 个真实月
+    # 记录被 --status 数成 0/120、下次循环将重答已齐月（浪费配额）。
+    root = tmp_path / "adv"
+    _mk_run_dir(root / "runs", "20261117-151603-t1", ["2016-01"])
+    _mk_run_dir(root / "runs", "20261117-151756-t1", ["2016-02"])
+    _mk_run_dir(root / "runs", "20261117-151939-t1", None)  # header-only 断点
+    progress = ta.scan_progress(root)
+    assert progress == {
+        "2016-01": ["20261117-151603-t1"],
+        "2016-02": ["20261117-151756-t1"],
+    }
+    # 断点判定随之正确：续跑点=2016-03，而非重答 2016-01。
+    assert ta.next_pending(["2016-01", "2016-02", "2016-03"], progress) == ["2016-03"]
+
+
 def test_next_pending_keeps_plan_order_and_picks_first_gap():
     plan = ["2016-01", "2016-02", "2016-03", "2016-04"]
     progress = {"2016-01": ["a-t1"], "2016-04": ["b-t1"]}
