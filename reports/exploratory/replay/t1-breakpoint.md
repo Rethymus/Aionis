@@ -116,3 +116,53 @@ Register-ScheduledTask -TaskName "Aionis T1 monthly advance" -Action $act -Trigg
   只是「上次运行结果 0x2」——不是故障，是诚实断点信号，等下一触发再试。
 - 卸载：`Unregister-ScheduledTask -TaskName "Aionis T1 monthly advance"`。
 - 计划完成后（`--status` 显示 120/120）触发变只读 no-op，可留着或卸载由业主定。
+
+## 已挂载：Windows 计划任务「Aionis T1 monthly advance」（schtasks-mount，2026-11-18 append）
+
+业主 2026-11-18 交办由施工员代挂（挂载动作从上节「待业主执行」转为受令执行），
+走 **PowerShell Register-ScheduledTask 路径**（schtasks CLI 无 StartWhenAvailable
+旗标，未退回 CLI）。实录如下：
+
+- **任务名** `\Aionis T1 monthly advance`；**挂载时点** 2026-11-18 23:21:23
+  （`-Once -At (Get-Date)` → 注册时刻即 StartBoundary）；State=Ready。
+- **Action**：`C:\Windows\System32\wscript.exe //B "F:\ZCodeData\Aionis\data\ops\t1_advance_hidden.vbs"`
+  ——隐藏 vbs（data/ gitignored，新建）沿晚间通道先例
+  （scripts/ops_local_refresh_hidden.vbs）：内部绝对路径 + `sh.CurrentDirectory`
+  （wscript 不继承任务 WorkingDirectory）、`sh.Run(cmd,0,True)` 保持 Running 态供
+  IgnoreNew 竞态防护；**退出码传播**：`rc=sh.Run(...)` + `WScript.Quit rc` 使 python
+  退出码成为任务上次运行结果（0x2 诚实断点信号可观测，上节 :115-116 语义成立）。
+- **参数**：`t1_advance.py --stop-after 2`（每触发至多 2 新月；429/1305/超时优雅
+  退出远小于限时限额）。
+- **触发器**：`-Once -At (Get-Date) -RepetitionInterval (New-TimeSpan -Minutes 30)`
+  **无 RepetitionDuration（=无限重复）**。**偏离注记**：交办模板的
+  `-RepetitionDuration ([TimeSpan]::MaxValue)` 字面量在本机（Win11 26100）被 CIM
+  序列化为 `P99999999DT23H59M59S`，Task Scheduler XML schema 拒收
+  （HRESULT 0x80041318「XML 包含格式不正确或超出范围的值」，实错在案）；按
+  Microsoft schema 无限重复的正式表示 = Repetition 仅含 Interval 不含 Duration
+  （触发器对象实测 `Duration=[]`，注册后 XML 导出 Repetition 块仅
+  `<Interval>PT30M</Interval>`）——语义等价于无限重复（不停于期限），
+  StartWhenAvailable 补跑语义不变，`StopAtDurationEnd` 显式 false。
+- **Settings**：`-StartWhenAvailable`（错过触发补跑；默认 10 分钟队列延迟）+
+  `-MultipleInstances IgnoreNew`（手动批与计划触发同月竞态缓解）+
+  `-AllowStartIfOnBatteries -DontStopIfGoingOnBatteries`（笔记本场景）+
+  `-ExecutionTimeLimit (New-TimeSpan -Minutes 60)`（仅兜底挂死）。XML 导出核验：
+  `DisallowStartIfOnBatteries=false`/`StopIfGoingOnBatteries=false`（=允许电池启动
+  不断电）、`ExecutionTimeLimit PT1H`、`MultipleInstancesPolicy IgnoreNew`、
+  `StartWhenAvailable=true` 全部在案。
+- **验证三连（一手实跑 2026-11-18）**：
+  1. `schtasks //query //tn "\Aionis T1 monthly advance" //fo LIST`：在册就绪，
+     下次运行 2026/11/18 23:51:23（30 分钟节奏生效）；
+  2. 手动 `schtasks //run`（LastRunTime 23:22:02）：运行约 10 分钟后 State=Ready，
+     **LastTaskResult = 2**——退出码 2（窗口耗尽）显示 0x2，不是故障 = PASS 语义
+     正确（诚实断点信号，等下一触发再试）；
+  3. `uv run python scripts/t1_advance.py --status` 前后对比：2020 块 **6/12 →
+     7/12**（总 54/120 → 55/120；初稿误记 66/67 系四整年加总笔误，收档前就地
+     修正——54=4×12+6、55=4×12+7，与 epoch1-calibration 54/120 及本批 mission
+     54→~59 口径互证）。新月记录 2020-07 完整档
+     `reports/exploratory/replay/runs/t1-monthly-advance/runs/20261118-152203-t1/`
+     （目录名 UTC；manifest.json+chunk-summaries+month-records，window=2020-07→
+     2020-07）；同触发内下月 2020-08 尝试留 header-only 断点档
+     `20261118-152243-t1/`（仅 header，无 manifest）——独立完整月记录语义零拼接
+     零复用不变。
+- 卸载：`Unregister-ScheduledTask -TaskName "Aionis T1 monthly advance"`；
+  计划完成后（`--status` 120/120）触发变只读 no-op，可留或卸载由业主定。
