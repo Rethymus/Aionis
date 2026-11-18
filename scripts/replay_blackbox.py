@@ -45,6 +45,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import re
 import sys
 import time
@@ -322,6 +323,46 @@ def map_p(answer: bool, p: float) -> float:
     return p if answer else 1.0 - p
 
 
+def apply_calibration_mapping(p: float, mapping: tuple[float, float]) -> float:
+    """--params calibration_mapping 前向应用：p' = σ(a·p + b)（Platt 2 参数单调映射，
+    holdout-pairing/mapping-forward-only，2026-11-18）。单调（a>0，调用方已校验）
+    ⇒ 方向/排序零变化（铁律 1 天然满足）。仅 forward 生效——epoch-1 历史记录零回填
+    （mission 明令）；--provider 对比臂拒用（arm identity=raw，同 ZERO-lessons 红线）。"""
+    a, b = mapping
+    return 1.0 / (1.0 + math.exp(-(a * p + b)))
+
+
+def load_lessons_file(path: Path) -> list[str]:
+    """--lessons 装载器：.json = 字符串数组（原 v1 契约）；.md = 按行首编号条目解析
+    （tuning-verdict lessons 库形态 `N. **标题**——正文〔数据面〕`，折行以空白归并）。
+    两者都要求 ≥1 条非空字符串，否则 EXIT_USAGE（空注入=静默误配，拒绝）。"""
+    text = path.read_text(encoding="utf-8")
+    if path.suffix.lower() == ".json":
+        try:
+            lessons = json.loads(text)
+        except ValueError as exc:
+            raise ReplayError(EXIT_USAGE, f"--lessons not valid JSON: {exc}") from exc
+        if not isinstance(lessons, list) or not all(isinstance(s, str) for s in lessons):
+            raise ReplayError(EXIT_USAGE, "--lessons must be a JSON array of strings")
+    elif path.suffix.lower() == ".md":
+        starts = list(re.finditer(r"(?m)^\d+\. ", text))
+        if not starts:
+            raise ReplayError(EXIT_USAGE,
+                              f"--lessons md has no numbered entries: {path}")
+        lessons = []
+        for i, m in enumerate(starts):
+            end = starts[i + 1].start() if i + 1 < len(starts) else len(text)
+            lessons.append(" ".join(text[m.start():end].split()))
+    else:
+        raise ReplayError(EXIT_USAGE,
+                          "--lessons must be .json (string array) or .md (numbered "
+                          "entries); got suffix " + path.suffix)
+    lessons = [s.strip() for s in lessons if s and s.strip()]
+    if not lessons:
+        raise ReplayError(EXIT_USAGE, f"--lessons resolved to zero entries: {path}")
+    return lessons
+
+
 # ---------------------------------------------------------------------------
 # climatology aggregation + T0 (design §6 T0: BSS ≡ 0 constructive)
 # ---------------------------------------------------------------------------
@@ -585,9 +626,18 @@ def run_t0(config: dict, series: dict[str, float], from_ym: str, to_ym: str,
 def run_t1(config: dict, series: dict[str, float], from_ym: str, to_ym: str,
            run_dir: Path, *, ask: Callable[[str, str], str],
            lessons: list[str] | None = None,
-           params_meta: dict | None = None) -> dict:
+           params_meta: dict | None = None,
+           mapping: tuple[float, float] | None = None) -> dict:
     """T1 year-boundary chunked monthly loop (design §6), injected ask() (the
-    real GLM wrapper lives in _make_ask; tests inject fakes — zero network)."""
+    real GLM wrapper lives in _make_ask; tests inject fakes — zero network).
+
+    mapping=--params calibration_mapping (a, b)：前向 Platt 单调映射，p'=σ(a·map_p+b)
+    （holdout-pairing，2026-11-18）。record 新增 p_pre_mapping 字段（仅映射启用时），
+    p_raw 语义不变（=模型原始输出）。a>0 校验在此防御性复验（CLI 层已拒）。"""
+    if mapping is not None and not mapping[0] > 0:
+        raise ReplayError(EXIT_USAGE,
+                          f"calibration_mapping not monotone (a={mapping[0]!r}; "
+                          "a>0 required)")
     lessons = list(lessons or [])
     months_all = month_range(from_ym, to_ym)
     missing = [m for m in months_all if m not in series]
@@ -623,6 +673,10 @@ def run_t1(config: dict, series: dict[str, float], from_ym: str, to_ym: str,
                     f"reply contract failure for {month}: reason={reply.get('reason')} "
                     f"raw[:120]={reply.get('raw', '')!r}")
             p = map_p(reply["answer"], reply["p"])
+            p_pre_mapping: float | None = None
+            if mapping is not None:
+                p_pre_mapping = p
+                p = apply_calibration_mapping(p, mapping)
             y = y_from_ic(series[month])
             rec = {
                 "month": month, "tier": "t1", "chunk": cf[:4],
@@ -637,6 +691,8 @@ def run_t1(config: dict, series: dict[str, float], from_ym: str, to_ym: str,
                 "reply_raw": raw,
                 "label": EXPLORATORY_LABEL,
             }
+            if p_pre_mapping is not None:
+                rec["p_pre_mapping"] = p_pre_mapping
             _append_jsonl(jsonl, rec)
             chunk_records.append(rec)
         summaries.append(f"## chunk {cf[:4]} [{cf}..{ct}] — {len(chunk_records)} months")
@@ -793,6 +849,7 @@ def _cmd_run(args: argparse.Namespace, out_dir: Path) -> int:
               f"months, p̄={p_bar:.4f}, BSS≡0 PASS → {run_dir}")
     else:
         params_meta: dict = {}
+        mapping: tuple[float, float] | None = None
         if args.params:
             try:
                 params = json.loads(Path(args.params).read_text(encoding="utf-8"))
@@ -802,14 +859,29 @@ def _cmd_run(args: argparse.Namespace, out_dir: Path) -> int:
                 raise ReplayError(EXIT_USAGE, "--params must be a JSON object")
             sha, ppath = version_params(params, out_dir)
             params_meta = {"sha256": sha, "path": str(ppath), "params": params}
+            cm = params.get("calibration_mapping")
+            if cm is not None:
+                if not isinstance(cm, dict):
+                    raise ReplayError(EXIT_USAGE,
+                                      "--params calibration_mapping must be an object")
+                try:
+                    a = float(cm["a"])
+                    b = float(cm["b"])
+                except (KeyError, TypeError, ValueError) as exc:
+                    raise ReplayError(EXIT_USAGE,
+                                      f"--params calibration_mapping invalid: {exc}"
+                                      ) from exc
+                if not a > 0:
+                    raise ReplayError(EXIT_USAGE,
+                                      f"--params calibration_mapping not monotone "
+                                      f"(a={a!r}; a>0 required — order-preserving is "
+                                      "the 铁律 1 guard)")
+                mapping = (a, b)
+                params_meta["calibration_mapping"] = {"a": a, "b": b,
+                                                      "forward_only": True}
         lessons: list[str] = []
         if args.lessons:
-            try:
-                lessons = json.loads(Path(args.lessons).read_text(encoding="utf-8"))
-            except ValueError as exc:
-                raise ReplayError(EXIT_USAGE, f"--lessons not valid JSON: {exc}") from exc
-            if not isinstance(lessons, list) or not all(isinstance(s, str) for s in lessons):
-                raise ReplayError(EXIT_USAGE, "--lessons must be a JSON array of strings")
+            lessons = load_lessons_file(Path(args.lessons))
         effective_provider, provider_override = resolve_effective_provider(
             cfg["provider"]["name"], args.provider)
         if provider_override and lessons:
@@ -817,11 +889,25 @@ def _cmd_run(args: argparse.Namespace, out_dir: Path) -> int:
                 EXIT_USAGE,
                 "--lessons refused on a --provider contrast arm: ZERO lessons "
                 "(lessons identity is GLM-bound; T2 contrast arm red line)")
+        if provider_override and mapping is not None:
+            raise ReplayError(
+                EXIT_USAGE,
+                "--params calibration_mapping refused on a --provider contrast arm: "
+                "identity arm (mapping is fitted on the frozen provider's outputs; "
+                "T2 contrast arm red line)")
         ask, usage, model = _make_ask(cfg, provider_name=effective_provider)
         result = run_t1(cfg, series, from_ym, to_ym, run_dir, ask=ask,
-                        lessons=lessons, params_meta=params_meta)
+                        lessons=lessons, params_meta=params_meta, mapping=mapping)
         manifest = result["manifest"]
         manifest["config_sha256"] = config_sha
+        if mapping is not None:
+            manifest["calibration_mapping_applied"] = {
+                "a": mapping[0], "b": mapping[1], "forward_only": True,
+                "params_sha256": params_meta["sha256"],
+                "form": "p' = σ(a·map_p + b); p_raw unchanged; p_pre_mapping recorded",
+                "note": "holdout-pairing mapping-forward-only (2026-11-18); epoch-1 "
+                        "historical records untouched",
+            }
         manifest["provider_used"] = {"name": effective_provider, "model": model}
         if provider_override:
             manifest["provider_override"] = provider_override

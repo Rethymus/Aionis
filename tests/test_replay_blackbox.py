@@ -10,6 +10,7 @@ The tmp IC parquet is a labeled test fixture, never research-pipeline data.
 from __future__ import annotations
 
 import json
+import math
 import sys
 from pathlib import Path
 
@@ -460,3 +461,81 @@ def test_main_provider_contrast_refuses_lessons(tmp_path: Path, ic_parquet: Path
     assert rb.main(["--tier", "t1", "--out", str(out), "--from", "2016-01",
                     "--to", "2016-03", "--provider", "siliconflow",
                     "--lessons", str(lessons)]) == rb.EXIT_USAGE
+
+
+# ---------------------------------------------------------------------------
+# holdout-pairing（2026-11-18）: --params calibration_mapping forward-only 应用
+# + --lessons .md 编号条目装载
+# ---------------------------------------------------------------------------
+
+def test_t1_calibration_mapping_applied_and_recorded(tmp_path: Path, ic_parquet: Path):
+    series = rb.load_ic_series(ic_parquet)
+    cfg = _config(tmp_path, ic_parquet)
+
+    def fake_ask(system: str, user: str) -> str:
+        month = user.split("due month: ")[1].split(";")[0]
+        idx = list(series).index(month)
+        return '{"answer": true, "p": 0.6}' if idx % 2 == 0 else \
+            '{"answer": false, "p": 0.3}'
+
+    mapping = (2.0, -1.0)
+    result = rb.run_t1(cfg, series, "2016-01", "2016-03", tmp_path / "run",
+                       ask=fake_ask, mapping=mapping)
+    recs = result["records"]
+    assert len(recs) == 3
+    for i, rec in enumerate(recs):
+        base = rb.map_p(rec["answer"], rec["p_raw"])
+        expected = 1.0 / (1.0 + math.exp(-(mapping[0] * base + mapping[1])))
+        assert rec["p"] == pytest.approx(expected)
+        assert rec["p_raw"] == (0.6 if i % 2 == 0 else 0.3)  # p_raw 语义不变
+        assert rec["p_pre_mapping"] == pytest.approx(base)
+        assert rec["err"] == pytest.approx((rec["p"] - rec["y"]) ** 2)
+    assert recs[0]["p"] == pytest.approx(0.549834, abs=1e-5)   # σ(2·0.6−1)
+    assert recs[1]["p"] == pytest.approx(0.598688, abs=1e-5)   # σ(2·0.7−1)
+    # 无映射对照：记录形状零变化（epoch-1 历史逐字节兼容）
+    result0 = rb.run_t1(cfg, series, "2016-01", "2016-02", tmp_path / "run0",
+                        ask=fake_ask)
+    assert all("p_pre_mapping" not in r for r in result0["records"])
+    assert all("p_pre_mapping" in r for r in recs)
+
+
+def test_t1_calibration_mapping_rejected_non_monotone(tmp_path: Path, ic_parquet: Path):
+    series = rb.load_ic_series(ic_parquet)
+    cfg = _config(tmp_path, ic_parquet)
+    with pytest.raises(rb.ReplayError) as ei:
+        rb.run_t1(cfg, series, "2016-01", "2016-02", tmp_path / "run",
+                  ask=lambda s, u: '{"answer": true, "p": 0.6}',
+                  mapping=(-1.0, 0.0))
+    assert ei.value.exit_code == rb.EXIT_USAGE
+
+
+def test_load_lessons_md_numbered_entries(tmp_path: Path):
+    md = tmp_path / "lessons.md"
+    md.write_text(
+        "# lessons 库\n\n**准入判据**（元说明，非条目）\n\n"
+        "1. **端点置信慎用**——端点值慎用。\n"
+        "   〔数据面：2017-02、2017-05〕\n"
+        "2. **高置信带**——频率差约 0.09，同类情境收半档。〔2016-05、2016-10〕\n",
+        encoding="utf-8")
+    lessons = rb.load_lessons_file(md)
+    assert len(lessons) == 2
+    assert lessons[0].startswith("1. **端点置信慎用**") and "数据面" in lessons[0]
+    assert lessons[1].startswith("2. **高置信带**")
+    empty = tmp_path / "empty.md"
+    empty.write_text("# 无编号条目的文档\n\n正文段落。\n", encoding="utf-8")
+    with pytest.raises(rb.ReplayError) as ei:
+        rb.load_lessons_file(empty)
+    assert ei.value.exit_code == rb.EXIT_USAGE
+
+
+def test_main_provider_contrast_refuses_mapping(tmp_path: Path, ic_parquet: Path):
+    out = tmp_path / "out"
+    rb.freeze(out, _config(tmp_path, ic_parquet))
+    params = tmp_path / "params.json"
+    params.write_text(json.dumps(
+        {"kind": "replay-params-current",
+         "calibration_mapping": {"a": 2.0, "b": -1.0}}), encoding="utf-8")
+    # 对比臂红线：映射随冻结 provider 输出拟合——--provider 差异臂必须 identity。
+    assert rb.main(["--tier", "t1", "--out", str(out), "--from", "2016-01",
+                    "--to", "2016-03", "--provider", "siliconflow",
+                    "--params", str(params)]) == rb.EXIT_USAGE
