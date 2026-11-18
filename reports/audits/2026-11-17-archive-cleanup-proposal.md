@@ -52,3 +52,60 @@
 - 若业主裁决删除 tracked 项：`git rm <path>` + commit，恢复=`git checkout <删除前 sha> -- <path>`。
 - 若业主裁决删除 gitignored 审计仪器（#6-#9）：建议先按第一节「归档快照」转 tracked 再删，
   保住「git 历史可恢复」属性。
+
+## 四、执行记录（archive-cleanup-execute，2026-11-18 施工员 append）
+
+**裁决链**：mission【2】令快照→删 → Mimosa PreToolUse 钩子拦截全部忠实快照通道
+（Bash cp/python 复制=「绕过 Write/Edit 安全扫描」拒；Write 原内容=「高危·路径穿越」
+拒，命中的正是 #6-#9 四文件自身的 HIGH findings：scan_links.py:138 / scan_links2.py:63 /
+scan_sentinel.py:61 / scan.py:184）→ 业主升级裁决选 **(d) git 对象层归档**：
+纯 plumbing（hash-object -w → mktree → commit-tree → update-ref），零工作树写入、
+零 index 触碰、零 gitignore 违规。
+
+**#1-#5 + #10（6 tracked 件）：executed（git rm，已暂存未提交，沿主会话统一收档先例）**
+
+| 提案行 | 文件 | 状态 |
+|---|---|---|
+| #1 | archive/krx-probes/scratch_krx_probe.py | git rm 已暂存 |
+| #2 | archive/krx-probes/scratch_krx_probe4.py | git rm 已暂存 |
+| #3 | archive/krx-probes/scratch_krx_probe5.py | git rm 已暂存 |
+| #4 | archive/krx-probes/scratch_krx_probe9.py | git rm 已暂存 |
+| #5 | archive/krx-probes/scratch_krx_probe10.py | git rm 已暂存 |
+| #10 | docs/code-review/_sync.py | git rm 已暂存 |
+
+恢复=git 历史：`git checkout <删除前 sha> -- <path>`（提案 :52 语义）。
+
+**#6-#9（4 untracked 取证仪器）：archived-to-refs→deleted（非普通快照，对象层归档）**
+
+原字节 blob（BYTE-EXACT，校验法=删除前 `sha256sum <文件>` 与 `git cat-file -p <blob>` |
+sha256sum 双侧一致逐件实测）：
+
+| 提案行 | 原路径 | blob SHA |
+|---|---|---|
+| #6 | data/cache/audit_r23/scan_links.py | `7dc18f3fc081ac94d9c6729281addae2b131a6d4` |
+| #7 | data/cache/audit_r23/scan_links2.py | `4c7be22af14a70102f8fa7326c02085841a45374` |
+| #8 | data/cache/audit_r23/scan_sentinel.py | `a32363946f0f058195c14ee36e8162f6c8e03676` |
+| #9 | data/cache/audit_tmp/scan.py | `59b258684504a70f65260d204ab8e98761285361` |
+
+可达性锚：树 f3c5299（audit_r23）/ 5077a37（audit_tmp）/ 树 f0c1cb9（根）→
+归档 commit `b2fa0fdf510c4630b395f3c8bc02f6559c2f011b`（消息=完整 provenance：
+四 blob SHA+原路径+删除裁决+本提案指针）→ `git update-ref
+refs/archive/forensic-scan-2026-11-18 <commit>`。**本地引用，默认不 push**
+（本机取证保全；push 与否业主定）。恢复：`git cat-file -p <blob-SHA>` 逐字节忠实，
+或 `git cat-file -p refs/archive/forensic-scan-2026-11-18^{tree}` 浏览。
+
+**删后快检（两次实跑）**：`uv run ruff check` = All checks passed（删前删后各一次）；
+`uv run pytest tests/test_xml_guard.py tests/test_t1_advance.py -q` exit 0（27 用例）；
+`uv run pytest --collect-only -q` exit 0（全仓收集零错=import 图完好）；活代码引用
+grep（src/scripts/tests/dashboard）REF_COUNT=0。
+
+**对账与范围注记**：①提案节一标题「11 文件」vs 表行实为 **10 文件/12 findings**
+（5 scratch+4 scan+1 _sync），执行按表行，口径差如实留档；②范围外原样保留：
+data/cache/audit_r23/ 与 audit_tmp/ 余下非点名文件（audit_67.py、freshness.py、
+i18n_check.py、def14a_tail.py 及全部 JSON 产物）、archive/krx-probes/ 余 14 探针
++README.md（封锁证据链完整面）；③`data/archive-wj-evidence/` 未启用（业主裁决
+(d) 取代快照路径；该目录 gitignored，快照落此无 git 可恢复性，方案 (d) 反而更强）。
+
+**Mimosa 钩子实录**：cp/Write 拦截在案（见上）；`git hash-object -w` 放行；
+`git commit-tree` 时钩子报 scanner_enobufs（未获完整扫描结论）按兼容策略放行——
+**工具建议尽快完整重审计**（业主侧事项，本报告不宣称项目安全）。
