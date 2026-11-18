@@ -1,13 +1,34 @@
 {
   "status": "ok",
-  "as_of": "2026-11-16",
-  "total": 69,
+  "as_of": "2026-11-17",
+  "total": 71,
   "issuers": 39,
   "window": {
     "start": "2026-05-01",
-    "end": "2026-11-16"
+    "end": "2026-11-17"
   },
   "events": [
+    {
+      "company": "JPMORGAN CHASE & CO",
+      "ticker": "JPM",
+      "filing_date": "2026-11-17",
+      "items": [
+        "5.02",
+        "9.01"
+      ],
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961726000407/jpm-20261117.htm"
+    },
+    {
+      "company": "HOME DEPOT, INC.",
+      "ticker": "HD",
+      "filing_date": "2026-11-17",
+      "items": [
+        "5.02",
+        "7.01",
+        "9.01"
+      ],
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/354950/000035495026000182/hd-20261113.htm"
+    },
     {
       "company": "Walmart Inc.",
       "ticker": "WMT",
@@ -707,6 +728,7 @@
     "Salesforce, Inc.": 4,
     "ADOBE INC.": 3,
     "GENERAL ELECTRIC CO": 3,
+    "HOME DEPOT, INC.": 3,
     "HONEYWELL INTERNATIONAL INC": 3,
     "MICROSOFT CORP": 3,
     "NVIDIA CORP": 3,
@@ -717,8 +739,8 @@
     "COSTCO WHOLESALE CORP /NEW": 2,
     "DEERE & CO": 2,
     "GENERAL DYNAMICS CORP": 2,
-    "HOME DEPOT, INC.": 2,
     "INTERNATIONAL BUSINESS MACHINES CORP": 2,
+    "JPMORGAN CHASE & CO": 2,
     "MICRON TECHNOLOGY INC": 2,
     "Mastercard Inc": 2,
     "PFIZER INC": 2,
@@ -730,7 +752,6 @@
     "COCA COLA CO": 1,
     "EXXON MOBIL CORP": 1,
     "JOHNSON & JOHNSON": 1,
-    "JPMORGAN CHASE & CO": 1,
     "MCDONALDS CORP": 1,
     "Merck & Co., Inc.": 1,
     "NETFLIX INC": 1,
@@ -743,6 +764,6 @@
     "UNITEDHEALTH GROUP INC": 1,
     "Walmart Inc.": 1
   },
-  "methodology": "SEC Form 8-K Item 5.02 officer/director-change filings \u2014 DERIVED from the committed form8k panel (category 'officer_changes'; public domain, 17 U.S.C. \u00a7105, filed-date PIT). v1 is FILING-STREAM level: one row per 8-K accession with the company, filing date, full item list and EDGAR primary-document link. Person-level extraction (who, which role, appointed vs departed) is DEFERRED: parsing names from 8-K free text is unreliable and an honest omission beats a guessed name \u2014 the same v1 boundary as the /congress PTR panel. Inherits the /events panel's bounded 50-issuer universe and its 2026-05-01..2026-11-16 window. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-11-17T11:44:57.316050+00:00"
+  "methodology": "SEC Form 8-K Item 5.02 officer/director-change filings \u2014 DERIVED from the committed form8k panel (category 'officer_changes'; public domain, 17 U.S.C. \u00a7105, filed-date PIT). v1 is FILING-STREAM level: one row per 8-K accession with the company, filing date, full item list and EDGAR primary-document link. Person-level extraction (who, which role, appointed vs departed) is DEFERRED: parsing names from 8-K free text is unreliable and an honest omission beats a guessed name \u2014 the same v1 boundary as the /congress PTR panel. Inherits the /events panel's bounded 50-issuer universe and its 2026-05-01..2026-11-17 window. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
+  "snapshot_ts": "2026-11-18T11:12:53.844679+00:00"
 }

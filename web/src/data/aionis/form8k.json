@@ -1,12 +1,12 @@
 {
   "status": "ok",
-  "as_of": "2026-11-16",
+  "as_of": "2026-11-17",
   "window": {
     "start": "2026-05-01",
-    "end": "2026-11-16"
+    "end": "2026-11-17"
   },
   "issuers": 50,
-  "total": 330,
+  "total": 336,
   "unclassified": 12,
   "by_category": {
     "agreement_termination": 2,
@@ -17,16 +17,89 @@
     "financial_obligation": 7,
     "major_agreement": 8,
     "merger_completion": 1,
-    "officer_changes": 69,
+    "officer_changes": 71,
     "other": 4,
-    "other_events": 51,
-    "reg_fd": 28,
-    "results": 104,
+    "other_events": 52,
+    "reg_fd": 29,
+    "results": 106,
     "security_terms": 4,
     "unclassified": 12,
     "vote_results": 25
   },
   "events": [
+    {
+      "ticker": "NVDA",
+      "company": "NVIDIA CORP",
+      "filing_date": "2026-11-17",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/nvda-20261117.htm"
+    },
+    {
+      "ticker": "JPM",
+      "company": "JPMORGAN CHASE & CO",
+      "filing_date": "2026-11-17",
+      "form": "8-K",
+      "items": [
+        "5.02",
+        "9.01"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961726000407/jpm-20261117.htm"
+    },
+    {
+      "ticker": "HD",
+      "company": "HOME DEPOT, INC.",
+      "filing_date": "2026-11-17",
+      "form": "8-K",
+      "items": [
+        "2.02",
+        "9.01"
+      ],
+      "category": "results",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/354950/000035495026000184/hd-20261117.htm"
+    },
+    {
+      "ticker": "HD",
+      "company": "HOME DEPOT, INC.",
+      "filing_date": "2026-11-17",
+      "form": "8-K",
+      "items": [
+        "5.02",
+        "7.01",
+        "9.01"
+      ],
+      "category": "officer_changes",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/354950/000035495026000182/hd-20261113.htm"
+    },
+    {
+      "ticker": "MCD",
+      "company": "MCDONALDS CORP",
+      "filing_date": "2026-11-17",
+      "form": "8-K",
+      "items": [
+        "8.01",
+        "9.01"
+      ],
+      "category": "other_events",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/63908/000110465926129050/tm2630018d1_8k.htm"
+    },
+    {
+      "ticker": "NKE",
+      "company": "NIKE, Inc.",
+      "filing_date": "2026-11-17",
+      "form": "8-K",
+      "items": [
+        "7.01",
+        "9.01"
+      ],
+      "category": "reg_fd",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000207/nke-20261117.htm"
+    },
     {
       "ticker": "WMT",
       "company": "Walmart Inc.",
@@ -3983,5 +4056,5 @@
     }
   ],
   "methodology": "SEC Form 8-K current reports \u2014 the legally mandated material-event disclosure (public domain, 17 U.S.C. \u00a7105), due within 4 business days of the event. Panel streams a bounded 50 large-cap issuer set (5 mega-cap seed + v2 20 + v3 25 across financials, payments, healthcare, staples, energy, industrials, tech/comm \u2014 breadth expansions 2026-08-22; still bounded, NOT full market; XOM carries both its pre-succession CIK and the 2026-07-01 8-K12B successor entity) since 2026-05-01; each row links the EDGAR primary document. Items are regex-extracted from the primary doc (nbsp/thin-space entities normalized) and mapped to ONE category by a rare-material-first precedence (delisting > merger completion > control change > non-reliance > officer changes > ... > exhibits); the full item list is preserved per row. Documents whose items cannot be extracted are counted as unclassified \u2014 never guessed. Filing-date point-in-time; 8-K/A amendments are new accessions (immutable). Display-only, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-11-17T11:44:36.201811+00:00"
+  "snapshot_ts": "2026-11-18T11:12:28.550876+00:00"
 }

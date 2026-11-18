@@ -1,16 +1,64 @@
 {
   "status": "ok",
-  "as_of": "2026-11-16",
+  "as_of": "2026-11-17",
   "window": {
     "start": "2026-04-27",
-    "end": "2026-11-16"
+    "end": "2026-11-17"
   },
-  "issuers": 1886,
-  "total": 2005,
+  "issuers": 1891,
+  "total": 2011,
   "by_form": {
-    "DEF 14A": 2005
+    "DEF 14A": 2011
   },
   "filings": [
+    {
+      "company": "MANGOCEUTICALS, INC.",
+      "ticker": "MGRX",
+      "filed_date": "2026-11-17",
+      "form": "DEF 14A",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1938046/000149315226052901/0001493152-26-052901-index.htm"
+    },
+    {
+      "company": "Global Interactive Technologies, Inc.",
+      "ticker": "GITS",
+      "filed_date": "2026-11-17",
+      "form": "DEF 14A",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1911545/000149315226052711/0001493152-26-052711-index.htm"
+    },
+    {
+      "company": "CREATIVE REALITIES, INC.",
+      "ticker": "CREX",
+      "filed_date": "2026-11-17",
+      "form": "DEF 14A",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1356093/000143774926037407/0001437749-26-037407-index.htm"
+    },
+    {
+      "company": "XAI CLO & Income Opportunities Fund",
+      "ticker": "",
+      "filed_date": "2026-11-17",
+      "form": "DEF 14A",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2000645/000121390026121490/0001213900-26-121490-index.htm"
+    },
+    {
+      "company": "FLYEXCLUSIVE INC.",
+      "ticker": "",
+      "filed_date": "2026-11-17",
+      "form": "DEF 14A",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1843973/000119312526465491/0001193125-26-465491-index.htm"
+    },
+    {
+      "company": "Global Crossing Airlines Group Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-17",
+      "form": "DEF 14A",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1846084/000114036126044461/0001140361-26-044461-index.htm"
+    },
     {
       "company": "AFA ASSET BASED LENDING FUND",
       "ticker": "",
@@ -4762,56 +4810,8 @@
       "form": "DEF 14A",
       "status": "new",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1422892/000121390026094212/0001213900-26-094212-index.htm"
-    },
-    {
-      "company": "VALIC Co I",
-      "ticker": "",
-      "filed_date": "2026-08-27",
-      "form": "DEF 14A",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/719423/000119312526369912/0001193125-26-369912-index.htm"
-    },
-    {
-      "company": "TurnOnGreen, Inc.",
-      "ticker": "",
-      "filed_date": "2026-08-26",
-      "form": "DEF 14A",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1349706/000121465926010914/0001214659-26-010914-index.htm"
-    },
-    {
-      "company": "CITIUS ONCOLOGY, INC.",
-      "ticker": "CTOR",
-      "filed_date": "2026-08-26",
-      "form": "DEF 14A",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1851484/000121390026093757/0001213900-26-093757-index.htm"
-    },
-    {
-      "company": "Cardiff Oncology, Inc.",
-      "ticker": "CRDF",
-      "filed_date": "2026-08-26",
-      "form": "DEF 14A",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1213037/000119312526368249/0001193125-26-368249-index.htm"
-    },
-    {
-      "company": "Cottonwood Communities, Inc.",
-      "ticker": "",
-      "filed_date": "2026-08-25",
-      "form": "DEF 14A",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1692951/000169295126000158/0001692951-26-000158-index.htm"
-    },
-    {
-      "company": "374Water Inc.",
-      "ticker": "SCWO",
-      "filed_date": "2026-08-25",
-      "form": "DEF 14A",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/933972/000165495426007870/0001654954-26-007870-index.htm"
     }
   ],
   "methodology": "US DEF 14A definitive proxy statements (\u4ee3\u7406\u59d4\u6258\u4e66 \u2014 the board/executive governance stream) \u2014 SEC EDGAR EFTS whole-market form-level queries (public domain, 17 U.S.C. \u00a7105), fixed ~120-day window, filed-date point-in-time, one row per accession (an amendment would be a new filing, never a silent overwrite). forms=DEF%2014A (live-probed 2026-08-23: 1,387 filings, every row form DEF 14A; proxy amendments are in practice filed as DEFA14A additional materials \u2014 a separate root form outside this panel's scope, and the DEF 14A/A -> amendment arm is kept as defense-in-depth). Status from the immutable form type: DEF 14A = new definitive proxy statement. Honest v1 limits, disclosed not papered over: (1) director/executive names, compensation, and beneficial ownership live INSIDE the proxy statement's primary HTML document and are not parsed \u2014 person-level extraction is deferred (each filing is thousands of lines of HTML; resolving + parsing one per filing would cost ~1,400 extra requests for the window); the amounts are not extracted either \u2014 each row links the filing's EDGAR index page, which lists every document; (2) the ticker is parsed from the EDGAR display name and is empty for ~25% of filers (honest, never guessed); (3) DEF 14A volume is strongly seasonal (Jan-Apr proxy season), so the growing fixed-anchor window will eventually approach EFTS's 10,000-hit cap \u2014 the fetch splits adaptively near it (not triggered at the 2026-08-23 probe). Visible rows capped at 600 newest for payload size (total/by_form count the full aggregate). Display-only, exploratory, NOT a research claim.",
-  "snapshot_ts": "2026-11-17T11:44:36.920815+00:00"
+  "snapshot_ts": "2026-11-18T11:12:29.145953+00:00"
 }

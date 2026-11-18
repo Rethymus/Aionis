@@ -1,28 +1,28 @@
 {
   "status": "ok",
-  "as_of": "2026-11-16",
+  "as_of": "2026-11-17",
   "n_filings_target": 150,
   "n_filings_processed": 150,
-  "n_with_persons": 115,
-  "coverage_pct": 76.7,
-  "n_persons_distinct": 713,
+  "n_with_persons": 114,
+  "coverage_pct": 76.0,
+  "n_persons_distinct": 701,
   "by_role": {
-    "ceo": 171,
-    "cfo": 101,
-    "coo": 49,
-    "cto": 21,
-    "chairman": 150,
-    "president": 113,
-    "vice_president": 82,
+    "ceo": 167,
+    "cfo": 98,
+    "coo": 46,
+    "cto": 20,
+    "chairman": 153,
+    "president": 106,
+    "vice_president": 81,
     "treasurer": 25,
-    "secretary": 49,
-    "director": 499,
-    "officer": 126
+    "secretary": 48,
+    "director": 492,
+    "officer": 125
   },
   "confidence": {
     "section_age_rows": 99,
-    "section_name_roles": 16,
-    "unparsed_no_persons": 35,
+    "section_name_roles": 15,
+    "unparsed_no_persons": 36,
     "fetch_or_doc_errors": 0
   },
   "boards": [
@@ -127,6 +127,16 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1786352/000178635226000004/bill-20261026.htm"
     },
     {
+      "company": "FLYEXCLUSIVE INC.",
+      "ticker": "",
+      "issuer_cik": "1843973",
+      "n_persons": 11,
+      "n_directors": 11,
+      "n_officers": 8,
+      "filed_date": "2026-11-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1843973/000119312526465491/flyx-20261117.htm"
+    },
+    {
       "company": "THOR INDUSTRIES INC",
       "ticker": "THO",
       "issuer_cik": "730263",
@@ -155,16 +165,6 @@
       "n_officers": 7,
       "filed_date": "2026-10-27",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1879403/000121390026112913/ea0309665-def14a_stratum.htm"
-    },
-    {
-      "company": "Stride, Inc.",
-      "ticker": "LRN",
-      "issuer_cik": "1157408",
-      "n_persons": 11,
-      "n_directors": 9,
-      "n_officers": 6,
-      "filed_date": "2026-10-27",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1157408/000114036126040889/ny20083582x1_def14a.htm"
     },
     {
       "company": "Ainos, Inc.",
@@ -407,6 +407,16 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1262976/000126297626000032/cmpr-20261027.htm"
     },
     {
+      "company": "Global Crossing Airlines Group Inc.",
+      "ticker": "",
+      "issuer_cik": "1846084",
+      "n_persons": 7,
+      "n_directors": 6,
+      "n_officers": 1,
+      "filed_date": "2026-11-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1846084/000114036126044461/ny20083137x1_def14a.htm"
+    },
+    {
       "company": "Sunshine Biopharma Inc.",
       "ticker": "",
       "issuer_cik": "1402328",
@@ -537,36 +547,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1897245/000149315226048698/formdef14a.htm"
     },
     {
-      "company": "Galaxy Gaming, Inc.",
-      "ticker": "GLXZ",
-      "issuer_cik": "13156",
-      "n_persons": 7,
-      "n_directors": 4,
-      "n_officers": 6,
-      "filed_date": "2026-10-27",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/13156/000114036126040884/ef20084396_def14a.htm"
-    },
-    {
-      "company": "Terra Innovatum Global N.V.",
-      "ticker": "NKLR",
-      "issuer_cik": "2067627",
-      "n_persons": 7,
-      "n_directors": 7,
-      "n_officers": 4,
-      "filed_date": "2026-10-27",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2067627/000114036126040808/ny20082129x4_def14a.htm"
-    },
-    {
-      "company": "KULR Technology Group, Inc.",
-      "ticker": "KULR",
-      "issuer_cik": "1662684",
-      "n_persons": 7,
-      "n_directors": 5,
-      "n_officers": 5,
-      "filed_date": "2026-10-27",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1662684/000110465926119222/tm2628331d1_def14a.htm"
-    },
-    {
       "company": "SOLESENCE, INC.",
       "ticker": "SLSN",
       "issuer_cik": "883107",
@@ -635,6 +615,16 @@
       "n_officers": 6,
       "filed_date": "2026-10-27",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1819142/000181914226000060/ses-20261210xdef14a.htm"
+    },
+    {
+      "company": "MANGOCEUTICALS, INC.",
+      "ticker": "MGRX",
+      "issuer_cik": "1938046",
+      "n_persons": 5,
+      "n_directors": 4,
+      "n_officers": 3,
+      "filed_date": "2026-11-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1938046/000149315226052901/formdef14a.htm"
     },
     {
       "company": "TOFUTTI BRANDS INC",
@@ -847,16 +837,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1327567/000130817926000432/panw-20261027.htm"
     },
     {
-      "company": "AUTOZONE INC",
-      "ticker": "AZO",
-      "issuer_cik": "866787",
-      "n_persons": 4,
-      "n_directors": 2,
-      "n_officers": 3,
-      "filed_date": "2026-10-27",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/866787/000110465926119175/azo-20261216xdef14a.htm"
-    },
-    {
       "company": "RingCentral, Inc.",
       "ticker": "RNG",
       "issuer_cik": "1384905",
@@ -1067,6 +1047,16 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1016504/000143774926033764/inbp20261023_def14a.htm"
     },
     {
+      "company": "Global Interactive Technologies, Inc.",
+      "ticker": "GITS",
+      "issuer_cik": "1911545",
+      "n_persons": 1,
+      "n_directors": 0,
+      "n_officers": 1,
+      "filed_date": "2026-11-17",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1911545/000149315226052711/formdef14a.htm"
+    },
+    {
       "company": "FARADAY FUTURE INTELLIGENT ELECTRIC INC.",
       "ticker": "FFAI",
       "issuer_cik": "1805521",
@@ -1212,6 +1202,19 @@
       ]
     },
     {
+      "name": "Executive Officer",
+      "roles": [
+        "cfo",
+        "director"
+      ],
+      "n_companies": 2,
+      "n_director_seats": 1,
+      "companies": [
+        "MANGOCEUTICALS, INC.",
+        "BranchOut Food Inc."
+      ]
+    },
+    {
       "name": "Frederic W. Cook",
       "roles": [
         "ceo",
@@ -1225,20 +1228,6 @@
       "companies": [
         "New ERA Energy & Digital, Inc.",
         "UNITED NATURAL FOODS INC"
-      ]
-    },
-    {
-      "name": "George W. Bush",
-      "roles": [
-        "ceo",
-        "chairman",
-        "president"
-      ],
-      "n_companies": 2,
-      "n_director_seats": 1,
-      "companies": [
-        "NRX Pharmaceuticals, Inc.",
-        "Stride, Inc."
       ]
     },
     {
@@ -1277,17 +1266,6 @@
       ]
     },
     {
-      "name": "Aida M. Alvarez",
-      "roles": [
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "Stride, Inc."
-      ]
-    },
-    {
       "name": "Aidy Chou",
       "roles": [
         "ceo",
@@ -1309,6 +1287,17 @@
       "n_director_seats": 1,
       "companies": [
         "Fatpipe Inc/UT"
+      ]
+    },
+    {
+      "name": "Alan Bird",
+      "roles": [
+        "director"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "Global Crossing Airlines Group Inc."
       ]
     },
     {
@@ -1357,16 +1346,14 @@
       ]
     },
     {
-      "name": "Alessandro Petruzzi",
+      "name": "Alex P. Hamilton",
       "roles": [
-        "ceo",
-        "president",
         "director"
       ],
       "n_companies": 1,
       "n_director_seats": 1,
       "companies": [
-        "Terra Innovatum Global N.V."
+        "MANGOCEUTICALS, INC."
       ]
     },
     {
@@ -1525,6 +1512,17 @@
       ]
     },
     {
+      "name": "Andrew Axelrod",
+      "roles": [
+        "director"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "Global Crossing Airlines Group Inc."
+      ]
+    },
+    {
       "name": "Andrew Boyd",
       "roles": [
         "director",
@@ -1656,19 +1654,6 @@
       ]
     },
     {
-      "name": "Annie E. Casey Foundation",
-      "roles": [
-        "coo",
-        "vice_president",
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "Stride, Inc."
-      ]
-    },
-    {
       "name": "Anthony Cannestra",
       "roles": [
         "director"
@@ -1737,19 +1722,6 @@
       ]
     },
     {
-      "name": "Appointed Michael Mo",
-      "roles": [
-        "ceo",
-        "chairman",
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "KULR Technology Group, Inc."
-      ]
-    },
-    {
       "name": "Approve Auditor Appointment",
       "roles": [
         "officer"
@@ -1784,14 +1756,25 @@
       "companies": [
         "Cantor Fitzgerald Income Trust, Inc."
       ]
+    },
+    {
+      "name": "Arthur T. Dean",
+      "roles": [
+        "director"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "Safe Pro Group Inc."
+      ]
     }
   ],
   "request_accounting": {
-    "n_http_requests_last_fetch": 30,
+    "n_http_requests_last_fetch": 12,
     "budget_seconds": 2700,
     "budget_hit": false,
-    "fetched_at": "2026-11-17T10:17:41.366921+00:00"
+    "fetched_at": "2026-11-18T10:19:07.097061+00:00"
   },
-  "methodology": "DEF 14A person-level panel (\u8463\u4e8b/\u9ad8\u7ba1\u4eba\u7ea7\u6863\u6848) over the NEWEST 150 proxy filings of the /executives DEF 14A stream \u2014 a bounded lane: each filing's primary document resolved from its EDGAR filing index (<= 2 GETs per filing, idempotent per-accession caches, >= 2.1s spacing, hard 45-minute wall-clock budget; the last fetch spent 30 HTTP requests and did not hit the budget). Parsing is CONSERVATIVE and TIERED: (1) section_age_rows (HIGH) \u2014 the classic 'Name (Age) Title Since' roster row in any spelling, a 2-4 token capitalized name with a standalone age bounded 30-99 and a role word witnessed on the same row, also reconstructed from word-fragmented inline-XBRL layouts by anchor-delimiting the joined stream; (2) section_name_roles (MEDIUM) \u2014 'First M. Last' (middle-initial) + a role word inside a located directors/executives section. Everything else yields persons=[] and parsed=false \u2014 an honest NULL, never a guessed name (\u5b81\u53ef null \u4e0d\u731c\u6d4b); coverage below counts only what was processed (115/150 filings with persons = 76.7%), never an extrapolation. Roles are canonical role WORDS witnessed near the person's row or bio \u2014 they may include past or external-company titles (e.g. a director who is CEO of another firm), displayed as text-witnessed hints not employment records; boards-card director/officer counts are independent sets (a CEO-director counts in both). Distinct-person identity keys on the normalized full name across filings \u2014 same-name merges may join namesakes and hyphenated/apostrophe/initials-first names (JW Roth) are conservatively MISSED, both disclosed. Display-only, exploratory, NOT a research claim.",
-  "snapshot_ts": "2026-11-17T11:44:37.084121+00:00"
+  "methodology": "DEF 14A person-level panel (\u8463\u4e8b/\u9ad8\u7ba1\u4eba\u7ea7\u6863\u6848) over the NEWEST 150 proxy filings of the /executives DEF 14A stream \u2014 a bounded lane: each filing's primary document resolved from its EDGAR filing index (<= 2 GETs per filing, idempotent per-accession caches, >= 2.1s spacing, hard 45-minute wall-clock budget; the last fetch spent 12 HTTP requests and did not hit the budget). Parsing is CONSERVATIVE and TIERED: (1) section_age_rows (HIGH) \u2014 the classic 'Name (Age) Title Since' roster row in any spelling, a 2-4 token capitalized name with a standalone age bounded 30-99 and a role word witnessed on the same row, also reconstructed from word-fragmented inline-XBRL layouts by anchor-delimiting the joined stream; (2) section_name_roles (MEDIUM) \u2014 'First M. Last' (middle-initial) + a role word inside a located directors/executives section. Everything else yields persons=[] and parsed=false \u2014 an honest NULL, never a guessed name (\u5b81\u53ef null \u4e0d\u731c\u6d4b); coverage below counts only what was processed (114/150 filings with persons = 76.0%), never an extrapolation. Roles are canonical role WORDS witnessed near the person's row or bio \u2014 they may include past or external-company titles (e.g. a director who is CEO of another firm), displayed as text-witnessed hints not employment records; boards-card director/officer counts are independent sets (a CEO-director counts in both). Distinct-person identity keys on the normalized full name across filings \u2014 same-name merges may join namesakes and hyphenated/apostrophe/initials-first names (JW Roth) are conservatively MISSED, both disclosed. Display-only, exploratory, NOT a research claim.",
+  "snapshot_ts": "2026-11-18T11:12:29.249012+00:00"
 }
