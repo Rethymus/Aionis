@@ -106,3 +106,21 @@
   协议（触发条件/最差 12 月清单/命令形/通缩注记四项/禁止回填/判读门槛）落
   `runs/t1-epoch2-selective/SKIPPED.md`。双判据预注册面不变（本核验不触发 thresholds
   计数变化——零阈值改动）。
+
+- **2026-11-18 X-N-Y-M PROVISIONAL 定标注册（append-only 登记，非调参 delta）**：
+  mission【3】业主给定四轴候选值显式落盘——**X_min=0**（BSS>0 即 met=任何优于
+  p̄-气候基线的正技巧；y≡0 简并窗 BS_base=p̄(1−p̄)=0 ⇒ BSS 无定义不可判，如实
+  注记——holdout 五窗实例 runs/post-training-holdout/report.md@5aa9bb7aa9）/
+  **N_min=40 月**（训练窗 120 月的 1/3 量级；注册时点参考态 epoch1 断点快照
+  54/120=45% 已过线，epoch1-calibration.md@1db78970c6）/**Y_max=0.90**（量纲
+  显式=比例：判据=各已入桶命中率 Wilson 95% CI 上界<0.90，比例上界比比例量纲
+  合法、全命中桶上界恒 1.0=CI 收窄设计本意 docs/ops-local-refresh.md:772；
+  statsmodels 0.14.6 proportion_confint(method='wilson') 在栈实测可用零新依赖
+  [本会话实测 hi(8/10)=0.9433]+arXiv:2610.28979 anytime 注记锚）/**M_min=2 连月**
+  （月度退化月断 streak；单月/单窗=方向性读数不可判据，holdout report :67-68
+  先例）。完整表落设计文档附录节
+  `reports/design/2026-11-17-replay-training-ignition.md`（PROVISIONAL 标签+
+  生效条件=真实 2-3 月数据复核+业主终采）。**非 delta 声明**：PROVISIONAL 未
+  生效——零阈值写入、`promotion_gate_assessment`（monthly_review.py:2330）维持
+  未定标理由行态、零接线、L2 不启用（L2 钥匙≠定标钥匙，零自动化执行解锁）
+  ——thresholds 计数器 3 不变（无活动阈值改动）。

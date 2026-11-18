@@ -129,3 +129,24 @@ confidence 单通道效度）。
 本文档 docs-only（`reports/design/` lane）；轮 24 施工前 `test -f` 实证不存在。
 ledger/frozen/OOS/研究面零改动；零装包零新依赖（T0/T1 全部复用现有引擎与 provider 池）；
 引擎侧改动（若覆盖审计要求回放装载器）限于 `scripts/` ops lane，逐条 mission 指名。
+
+## 附录：X-N-Y-M PROVISIONAL 定标注册（2026-11-18，mission【3】xny-provisional）
+
+**定性**：PROVISIONAL 注册——四轴候选值由业主给定（mission【3】），本节将其显式化
+落盘，**生效条件=真实 2-3 月数据复核 + 业主终采**；注册动作零自动化解锁
+（L2 钥匙≠定标钥匙：`promotion_gate_assessment`（scripts/monthly_review.py:2330，
+纯函数零 IO）thresholds 形参维持未定标态=逐轴理由行非布尔，本注册不写任何调用点
+/params/配置——runbook L2 三互锁「缺一即不许启用」不变）。§4「X-N-Y-M 定标」
+悬置项自此有正式落盘候选值。
+
+| 轴 | PROVISIONAL 值 | 量纲/判据语义 | 依据与数据版本锚 |
+|---|---|---|---|
+| X_min | 0 | BSS（=1−BS/BS_base，base=p̄ 无条件气候预测器、BS_base=p̄(1−p̄)）> 0 即 met——任何优于气候基线的正技巧即达标（最诚实最低技能线） | 简并窗如实注记：y≡0 ⇒ p̄∈{0,1} ⇒ BS_base=0 ⇒ BSS 无定义→not-enough-data 理由行不可判（实锚：holdout 五窗 y≡0、RES=UNC=0、REL=BS，runs/post-training-holdout/report.md@5aa9bb7aa9 :44-47） |
+| N_min | 40 月 | 已对账（resolved：p 与 y 双非空）月记录数 ≥40 | 训练窗 120 月的 1/3 量级=「学够了没有」最低样本线；注册时点参考态：epoch1 断点快照 54/120=45% 已过此线（epoch1-calibration.md@1db78970c6 :5） |
+| Y_max | 0.90 | **量纲=比例**：判据=各已入桶（p≥0.5 固定五桶、n≥1，空桶不判）命中率 Wilson 95% CI **上界** < 0.90——比例的上界比比例，量纲合法；全命中桶上界恒 1.0（=「CI 收窄到可用」设计本意，docs/ops-local-refresh.md:772） | 方法在栈实测：statsmodels 0.14.6 `proportion_confint(method='wilson')` 可用零新依赖（本会话实测 hi(8/10)=0.9433，与轮 141 promotion-gate 夹具最宽上界吻合）；anytime 注记沿 `ANYTIME_MONITORING_NOTE`（monthly_review.py:2302；arXiv:2610.28979 只借原则、每月 1 点 AsympCS 渐近校正不成立） |
+| M_min | 2 连月 | 月度 BSS > X_min **连续**月数 streak ≥2（月度退化月断 streak——promotion_gate_assessment 既有语义） | 单月/单窗读数=方向性不可判据（holdout report@5aa9bb7aa9 :67-68「n=5 方向性读数…不构成推断」直接先例）；2 连月=最小连续性滤单月噪声 |
+
+**数据版本锚汇总**：`reports/exploratory/replay/epoch1-calibration.md@1db78970c6`
++ `reports/exploratory/replay/runs/post-training-holdout/report.md@5aa9bb7aa9`。
+**不变式重申**：本注册=文档面；零阈值写入、零接线、研究面/冻结 config/ledger
+零触碰；注册行同步落 `tuning-log.md`（登记非 delta，thresholds 计数器不变）。
