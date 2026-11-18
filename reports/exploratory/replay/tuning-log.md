@@ -99,3 +99,10 @@
     epoch-2 任何数据 ✓。
   - 复核结论：delta ②③④ 准入，弃用 A-D 如实留档（见弃用行节）；无一笔改写既有
     历史；本检查点收档。
+
+- **2026-11-18 epoch2-selective 门槛核验（append-only 登记）**：mission【4】最差
+  ≤12 月带 params+lessons 重答——`t1_advance.py --status` 实测 **54/120 < 100 月**
+  门槛不满足（窗开但计数面不足）→ **如实跳过重答**，零引擎调用零 LLM 消耗；后续
+  协议（触发条件/最差 12 月清单/命令形/通缩注记四项/禁止回填/判读门槛）落
+  `runs/t1-epoch2-selective/SKIPPED.md`。双判据预注册面不变（本核验不触发 thresholds
+  计数变化——零阈值改动）。
