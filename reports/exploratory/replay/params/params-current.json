@@ -1,0 +1,47 @@
+{
+  "kind": "replay-params-current",
+  "exploratory": true,
+  "label": "EXPLORATORY REPLAY — not a claim, not a gate (design: reports/design/2026-11-17-replay-training-ignition.md; zero runs/ledger.jsonl writes; research face untouched)",
+  "created": "2026-11-18",
+  "mission": "tuning-verdict（mission【2】②-④+调研三条收紧；工程师批 2026-11-18）",
+  "calibration_mapping": {
+    "form": "p' = 1 / (1 + exp(-(a*p + b)))  — Platt 2 参数单调映射",
+    "a": 2.802739,
+    "b": -1.617083,
+    "fit": {
+      "library": "scikit-learn 1.9.0（BSD-3，已在栈零新依赖）",
+      "call": "LogisticRegression(C=inf, solver='lbfgs', max_iter=10000).fit(p.reshape(-1,1), y)",
+      "determinism": "lbfgs 确定性 + bootstrap rng seed=0（H6 同源纪律）",
+      "fit_window": { "from": "2016-01", "to": "2020-06", "n_months": 54 },
+      "fit_data": "runs/t1-monthly-advance/runs/*-t1/month-records.jsonl 非 header 月记录 (p,y)；去重=首见优先（实测无重复月）；逐值 err=(p-y)^2 与引擎记录交叉核验一致"
+    },
+    "monotone": {
+      "a_gt_zero": true,
+      "spearman_rank_preservation": 1.0,
+      "construction": "a>0 ⇒ 映射严格递增 ⇒ 方向/排序零变化（铁律 1 天然满足）；构造性证明=值桶分区不变 ⇒ RES 0.099040 映射前后相等（epoch1-calibration.md 口径）"
+    },
+    "range": { "p_in": [0.0, 0.9], "p_out": [0.1656, 0.7121] },
+    "bootstrap_ci95": {
+      "n_resamples": 2000,
+      "seed": 0,
+      "converged": 2000,
+      "a": [-1.002502, 9.874640],
+      "b": [-6.002006, 0.761656],
+      "honest_note": "CI 宽=54 点小样本如实报区间：a 的 95% 区间含负值（符号在样本内不定）——点估计冻结、前向验证归 epoch-2，本 CI 即不可过度声称的护栏"
+    },
+    "in_sample_display_only": {
+      "bs": [0.250207, 0.239952],
+      "rel_value_bin": [0.099590, 0.089335],
+      "res_value_bin": [0.099040, 0.099040],
+      "note": "in-sample 拟合=乐观偏置，仅展示面；真实校准效应以前向 holdout/epoch-2 判读为准"
+    },
+    "effective_scope": "FORWARD ONLY — holdout / epoch-2。epoch-1 已落盘历史月记录零回填零改写（append-only 断点语义，mission 明令）；本文件为冻结系数工件，引擎接线（读本文件做前向映射）属 epoch-2 引擎批，当前零消费者（如实状态）",
+    "forbidden": "禁止以本映射重算/改写 epoch-1 任何已落盘 (p,y) 记录或报告的历史数字"
+  },
+  "references": {
+    "config_frozen_sha256_untouched": "edbfbaa5767bc3f476b541a1aeffc48b1beab85a026739df690332fd579837e0",
+    "evidence_report": "reports/exploratory/replay/epoch1-calibration.md（54/120 断点快照）",
+    "tuning_log": "reports/exploratory/replay/tuning-log.md（delta ②③④ 与防博弈判据预注册）",
+    "anti_gaming_prereg": "2611.14539 方差稀释博弈调研 → tuning-log 检查点状态节两行判据（高水位/方差下限），预注册先于 epoch-2 任何数据"
+  }
+}
