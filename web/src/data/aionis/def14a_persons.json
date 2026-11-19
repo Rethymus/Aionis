@@ -1,28 +1,28 @@
 {
   "status": "ok",
-  "as_of": "2026-11-17",
+  "as_of": "2026-11-18",
   "n_filings_target": 150,
   "n_filings_processed": 150,
-  "n_with_persons": 114,
-  "coverage_pct": 76.0,
-  "n_persons_distinct": 701,
+  "n_with_persons": 113,
+  "coverage_pct": 75.3,
+  "n_persons_distinct": 691,
   "by_role": {
-    "ceo": 167,
-    "cfo": 98,
-    "coo": 46,
+    "ceo": 164,
+    "cfo": 96,
+    "coo": 45,
     "cto": 20,
-    "chairman": 153,
-    "president": 106,
+    "chairman": 148,
+    "president": 104,
     "vice_president": 81,
-    "treasurer": 25,
-    "secretary": 48,
-    "director": 492,
-    "officer": 125
+    "treasurer": 23,
+    "secretary": 47,
+    "director": 483,
+    "officer": 123
   },
   "confidence": {
-    "section_age_rows": 99,
+    "section_age_rows": 98,
     "section_name_roles": 15,
-    "unparsed_no_persons": 36,
+    "unparsed_no_persons": 37,
     "fetch_or_doc_errors": 0
   },
   "boards": [
@@ -155,16 +155,6 @@
       "n_officers": 6,
       "filed_date": "2026-10-30",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1704720/000119312526441853/d71618ddef14a.htm"
-    },
-    {
-      "company": "Stratum Holdings Corp.",
-      "ticker": "",
-      "issuer_cik": "1879403",
-      "n_persons": 11,
-      "n_directors": 8,
-      "n_officers": 7,
-      "filed_date": "2026-10-27",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1879403/000121390026112913/ea0309665-def14a_stratum.htm"
     },
     {
       "company": "Ainos, Inc.",
@@ -547,6 +537,16 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1897245/000149315226048698/formdef14a.htm"
     },
     {
+      "company": "Apimeds Pharmaceuticals US, Inc.",
+      "ticker": "APUS",
+      "issuer_cik": "1894525",
+      "n_persons": 6,
+      "n_directors": 2,
+      "n_officers": 4,
+      "filed_date": "2026-11-18",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1894525/000121390026121888/ea0312658-01.htm"
+    },
+    {
       "company": "SOLESENCE, INC.",
       "ticker": "SLSN",
       "issuer_cik": "883107",
@@ -725,16 +725,6 @@
       "n_officers": 5,
       "filed_date": "2026-10-28",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1173204/000119312526436230/cnvs-20261028.htm"
-    },
-    {
-      "company": "Armlogi Holding Corp.",
-      "ticker": "BTOC",
-      "issuer_cik": "1972529",
-      "n_persons": 5,
-      "n_directors": 5,
-      "n_officers": 5,
-      "filed_date": "2026-10-27",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1972529/000121390026112714/ea0308840-02.htm"
     },
     {
       "company": "FF EAI Robotics Ecosystem Inc.",
@@ -1266,19 +1256,6 @@
       ]
     },
     {
-      "name": "Aidy Chou",
-      "roles": [
-        "ceo",
-        "chairman",
-        "director"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 1,
-      "companies": [
-        "Armlogi Holding Corp."
-      ]
-    },
-    {
       "name": "Ajay Tandon",
       "roles": [
         "director"
@@ -1354,17 +1331,6 @@
       "n_director_seats": 1,
       "companies": [
         "MANGOCEUTICALS, INC."
-      ]
-    },
-    {
-      "name": "Alex Santos",
-      "roles": [
-        "cto"
-      ],
-      "n_companies": 1,
-      "n_director_seats": 0,
-      "companies": [
-        "Stratum Holdings Corp."
       ]
     },
     {
@@ -1463,6 +1429,17 @@
       "n_director_seats": 1,
       "companies": [
         "RTB Digital, Inc."
+      ]
+    },
+    {
+      "name": "Amardeep Singh",
+      "roles": [
+        "cto"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 0,
+      "companies": [
+        "Apimeds Pharmaceuticals US, Inc."
       ]
     },
     {
@@ -1767,14 +1744,25 @@
       "companies": [
         "Safe Pro Group Inc."
       ]
+    },
+    {
+      "name": "Asset Management Tanya Mollova",
+      "roles": [
+        "director"
+      ],
+      "n_companies": 1,
+      "n_director_seats": 1,
+      "companies": [
+        "Franklin BSP Real Estate Debt, Inc."
+      ]
     }
   ],
   "request_accounting": {
-    "n_http_requests_last_fetch": 12,
+    "n_http_requests_last_fetch": 4,
     "budget_seconds": 2700,
     "budget_hit": false,
-    "fetched_at": "2026-11-18T10:19:07.097061+00:00"
+    "fetched_at": "2026-11-19T10:18:52.904087+00:00"
   },
-  "methodology": "DEF 14A person-level panel (\u8463\u4e8b/\u9ad8\u7ba1\u4eba\u7ea7\u6863\u6848) over the NEWEST 150 proxy filings of the /executives DEF 14A stream \u2014 a bounded lane: each filing's primary document resolved from its EDGAR filing index (<= 2 GETs per filing, idempotent per-accession caches, >= 2.1s spacing, hard 45-minute wall-clock budget; the last fetch spent 12 HTTP requests and did not hit the budget). Parsing is CONSERVATIVE and TIERED: (1) section_age_rows (HIGH) \u2014 the classic 'Name (Age) Title Since' roster row in any spelling, a 2-4 token capitalized name with a standalone age bounded 30-99 and a role word witnessed on the same row, also reconstructed from word-fragmented inline-XBRL layouts by anchor-delimiting the joined stream; (2) section_name_roles (MEDIUM) \u2014 'First M. Last' (middle-initial) + a role word inside a located directors/executives section. Everything else yields persons=[] and parsed=false \u2014 an honest NULL, never a guessed name (\u5b81\u53ef null \u4e0d\u731c\u6d4b); coverage below counts only what was processed (114/150 filings with persons = 76.0%), never an extrapolation. Roles are canonical role WORDS witnessed near the person's row or bio \u2014 they may include past or external-company titles (e.g. a director who is CEO of another firm), displayed as text-witnessed hints not employment records; boards-card director/officer counts are independent sets (a CEO-director counts in both). Distinct-person identity keys on the normalized full name across filings \u2014 same-name merges may join namesakes and hyphenated/apostrophe/initials-first names (JW Roth) are conservatively MISSED, both disclosed. Display-only, exploratory, NOT a research claim.",
-  "snapshot_ts": "2026-11-18T11:12:29.249012+00:00"
+  "methodology": "DEF 14A person-level panel (\u8463\u4e8b/\u9ad8\u7ba1\u4eba\u7ea7\u6863\u6848) over the NEWEST 150 proxy filings of the /executives DEF 14A stream \u2014 a bounded lane: each filing's primary document resolved from its EDGAR filing index (<= 2 GETs per filing, idempotent per-accession caches, >= 2.1s spacing, hard 45-minute wall-clock budget; the last fetch spent 4 HTTP requests and did not hit the budget). Parsing is CONSERVATIVE and TIERED: (1) section_age_rows (HIGH) \u2014 the classic 'Name (Age) Title Since' roster row in any spelling, a 2-4 token capitalized name with a standalone age bounded 30-99 and a role word witnessed on the same row, also reconstructed from word-fragmented inline-XBRL layouts by anchor-delimiting the joined stream; (2) section_name_roles (MEDIUM) \u2014 'First M. Last' (middle-initial) + a role word inside a located directors/executives section. Everything else yields persons=[] and parsed=false \u2014 an honest NULL, never a guessed name (\u5b81\u53ef null \u4e0d\u731c\u6d4b); coverage below counts only what was processed (113/150 filings with persons = 75.3%), never an extrapolation. Roles are canonical role WORDS witnessed near the person's row or bio \u2014 they may include past or external-company titles (e.g. a director who is CEO of another firm), displayed as text-witnessed hints not employment records; boards-card director/officer counts are independent sets (a CEO-director counts in both). Distinct-person identity keys on the normalized full name across filings \u2014 same-name merges may join namesakes and hyphenated/apostrophe/initials-first names (JW Roth) are conservatively MISSED, both disclosed. Display-only, exploratory, NOT a research claim.",
+  "snapshot_ts": "2026-11-19T11:18:05.862689+00:00"
 }

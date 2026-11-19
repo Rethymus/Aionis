@@ -1,20 +1,20 @@
 {
   "status": "ok",
-  "as_of": "2026-11-17",
+  "as_of": "2026-11-18",
   "window": {
     "start": "2026-04-27",
-    "end": "2026-11-17"
+    "end": "2026-11-18"
   },
-  "issuers": 670,
-  "total": 1581,
+  "issuers": 671,
+  "total": 1585,
   "by_status": {
-    "filed": 1293,
+    "filed": 1297,
     "priced": 288
   },
   "by_form": {
     "424B4": 288,
-    "S-1": 538,
-    "S-1/A": 755
+    "S-1": 540,
+    "S-1/A": 757
   },
   "offer_price_parsed": 63,
   "offer_price_meta": {
@@ -39,6 +39,42 @@
     "target_as_of": "2026-11-16"
   },
   "filings": [
+    {
+      "company": "Glow Holdings, Inc.",
+      "ticker": "GLOH",
+      "filed_date": "2026-11-18",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1114859/000168316826008934/0001683168-26-008934-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Sunshine Biopharma Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-18",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1402328/000168316826008932/0001683168-26-008932-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "LIS Technologies Inc",
+      "ticker": "LIS",
+      "filed_date": "2026-11-18",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1973276/000149315226052907/0001493152-26-052907-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Yesway, Inc.",
+      "ticker": "YSWY",
+      "filed_date": "2026-11-18",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1859836/000110465926129338/0001104659-26-129338-index.htm",
+      "offer_price": null
+    },
     {
       "company": "Expion Energy, Inc.",
       "ticker": "XPON",
@@ -10802,44 +10838,8 @@
       "status": "filed",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2131853/000121390026064137/0001213900-26-064137-index.htm",
       "offer_price": null
-    },
-    {
-      "company": "BlockchAIn Digital Infrastructure, Inc.",
-      "ticker": "AIB",
-      "filed_date": "2026-06-02",
-      "form": "S-1",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2070542/000121390026063747/0001213900-26-063747-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Phoenix Energy One, LLC",
-      "ticker": "",
-      "filed_date": "2026-06-02",
-      "form": "S-1",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1818643/000119312526253767/0001193125-26-253767-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Liftoff Mobile, Inc.",
-      "ticker": "LFTO",
-      "filed_date": "2026-06-02",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1850351/000119312526253016/0001193125-26-253016-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "WhiteHawk Income Corp",
-      "ticker": "WHK",
-      "filed_date": "2026-06-02",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1921603/000119312526252895/0001193125-26-252895-index.htm",
-      "offer_price": null
     }
   ],
   "methodology": "US IPO registration/pricing stream \u2014 SEC EDGAR EFTS whole-market form-level queries (public domain, 17 U.S.C. \u00a7105), fixed ~120-day window, filed-date point-in-time, one row per accession (an S-1/A amendment is a new filing, never a silent overwrite). Status is derived from the immutable form type: S-1 / S-1/A = filed (registration statement on file); 424B4 = priced (the statutory final prospectus under Securities Act Rule 424(b)(4) is filed after pricing \u2014 its appearance marks a priced offering). Offer price is a BOUNDED second-stage extraction, not full coverage: only the newest \u226480 priced (424B4) filings are walked politely (\u22652.1 s spacing, hard request budget disclosed in offer_price_meta.requests), their EDGAR index + primary document fetched, and the cover page regex-parsed with graded confidence \u2014 EXACT (single final printed price \u2192 exported), LOW (draft/range wording near the label \u2192 value withheld, counted, never guessed) and NO-MATCH; every unparsed row stays offer_price=null with its EDGAR index link. Share count, proceeds, and expected listing date are NOT extracted at any tier. Honest scope disclosures: (2) the 424B4 form-level catch includes priced follow-on offerings by already-listed issuers (e.g. S-3 shelf takedowns), not only first-day IPOs \u2014 this panel is the registration/pricing STREAM, not a curated IPO list; (3) no company-level state machine is applied (rows are filing-level). Ticker is parsed from the EDGAR display name where present; pre-symbol S-1 filers carry none (empty, never guessed). Counts are FILING counts, not company counts. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-11-18T11:12:28.864846+00:00"
+  "snapshot_ts": "2026-11-19T11:18:05.441369+00:00"
 }
