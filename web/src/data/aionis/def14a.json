@@ -1,16 +1,72 @@
 {
   "status": "ok",
-  "as_of": "2026-11-18",
+  "as_of": "2026-11-19",
   "window": {
     "start": "2026-04-27",
-    "end": "2026-11-18"
+    "end": "2026-11-19"
   },
-  "issuers": 1893,
-  "total": 2013,
+  "issuers": 1900,
+  "total": 2020,
   "by_form": {
-    "DEF 14A": 2013
+    "DEF 14A": 2020
   },
   "filings": [
+    {
+      "company": "CIM GROUP, INC.",
+      "ticker": "CMRF",
+      "filed_date": "2026-11-19",
+      "form": "DEF 14A",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1498547/000149854726000082/0001498547-26-000082-index.htm"
+    },
+    {
+      "company": "ALPHATIME ACQUISITION CORP",
+      "ticker": "",
+      "filed_date": "2026-11-19",
+      "form": "DEF 14A",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1889106/000149315226053321/0001493152-26-053321-index.htm"
+    },
+    {
+      "company": "Soulpower Acquisition Corp.",
+      "ticker": "",
+      "filed_date": "2026-11-19",
+      "form": "DEF 14A",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2025608/000149315226053311/0001493152-26-053311-index.htm"
+    },
+    {
+      "company": "Nexentis Technologies Inc.",
+      "ticker": "NXTS",
+      "filed_date": "2026-11-19",
+      "form": "DEF 14A",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1789192/000149315226053248/0001493152-26-053248-index.htm"
+    },
+    {
+      "company": "EON Resources Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-19",
+      "form": "DEF 14A",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1842556/000143774926037734/0001437749-26-037734-index.htm"
+    },
+    {
+      "company": "Ambow Education Holding Ltd.",
+      "ticker": "AMBO",
+      "filed_date": "2026-11-19",
+      "form": "DEF 14A",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1494558/000121390026122228/0001213900-26-122228-index.htm"
+    },
+    {
+      "company": "Greenland Technologies Holding Corp.",
+      "ticker": "GTEC",
+      "filed_date": "2026-11-19",
+      "form": "DEF 14A",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1735041/000121390026122014/0001213900-26-122014-index.htm"
+    },
     {
       "company": "USCF ETF Trust",
       "ticker": "",
@@ -4754,64 +4810,8 @@
       "form": "DEF 14A",
       "status": "new",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/748691/000119312526373092/0001193125-26-373092-index.htm"
-    },
-    {
-      "company": "PROCTER & GAMBLE Co",
-      "ticker": "PG",
-      "filed_date": "2026-08-28",
-      "form": "DEF 14A",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/80424/000119312526372211/0001193125-26-372211-index.htm"
-    },
-    {
-      "company": "FREQUENCY ELECTRONICS INC",
-      "ticker": "FEIM",
-      "filed_date": "2026-08-28",
-      "form": "DEF 14A",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/39020/000118518526003746/0001185185-26-003746-index.htm"
-    },
-    {
-      "company": "CBRE GLOBAL REAL ESTATE INCOME FUND",
-      "ticker": "IGR",
-      "filed_date": "2026-08-28",
-      "form": "DEF 14A",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1268884/000113322826011815/0001133228-26-011815-index.htm"
-    },
-    {
-      "company": "NN INC",
-      "ticker": "NNBR",
-      "filed_date": "2026-08-28",
-      "form": "DEF 14A",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/918541/000091854126000083/0000918541-26-000083-index.htm"
-    },
-    {
-      "company": "MILLERKNOLL, INC.",
-      "ticker": "MLKN",
-      "filed_date": "2026-08-28",
-      "form": "DEF 14A",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/66382/000006638226000143/0000066382-26-000143-index.htm"
-    },
-    {
-      "company": "KOSS CORP",
-      "ticker": "KOSS",
-      "filed_date": "2026-08-28",
-      "form": "DEF 14A",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/56701/000005670126000036/0000056701-26-000036-index.htm"
-    },
-    {
-      "company": "Belpointe PREP, LLC",
-      "ticker": "OZ",
-      "filed_date": "2026-08-27",
-      "form": "DEF 14A",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1807046/000149315226040394/0001493152-26-040394-index.htm"
     }
   ],
   "methodology": "US DEF 14A definitive proxy statements (\u4ee3\u7406\u59d4\u6258\u4e66 \u2014 the board/executive governance stream) \u2014 SEC EDGAR EFTS whole-market form-level queries (public domain, 17 U.S.C. \u00a7105), fixed ~120-day window, filed-date point-in-time, one row per accession (an amendment would be a new filing, never a silent overwrite). forms=DEF%2014A (live-probed 2026-08-23: 1,387 filings, every row form DEF 14A; proxy amendments are in practice filed as DEFA14A additional materials \u2014 a separate root form outside this panel's scope, and the DEF 14A/A -> amendment arm is kept as defense-in-depth). Status from the immutable form type: DEF 14A = new definitive proxy statement. Honest v1 limits, disclosed not papered over: (1) director/executive names, compensation, and beneficial ownership live INSIDE the proxy statement's primary HTML document and are not parsed \u2014 person-level extraction is deferred (each filing is thousands of lines of HTML; resolving + parsing one per filing would cost ~1,400 extra requests for the window); the amounts are not extracted either \u2014 each row links the filing's EDGAR index page, which lists every document; (2) the ticker is parsed from the EDGAR display name and is empty for ~25% of filers (honest, never guessed); (3) DEF 14A volume is strongly seasonal (Jan-Apr proxy season), so the growing fixed-anchor window will eventually approach EFTS's 10,000-hit cap \u2014 the fetch splits adaptively near it (not triggered at the 2026-08-23 probe). Visible rows capped at 600 newest for payload size (total/by_form count the full aggregate). Display-only, exploratory, NOT a research claim.",
-  "snapshot_ts": "2026-11-19T11:18:05.746576+00:00"
+  "snapshot_ts": "2026-11-20T11:18:20.186032+00:00"
 }

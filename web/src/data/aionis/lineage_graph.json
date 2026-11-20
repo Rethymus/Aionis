@@ -1,14 +1,14 @@
 {
  "status": "ok",
- "as_of": "2026-11-18",
+ "as_of": "2026-11-19",
  "source_panels": [
   "form13f",
   "def14a_persons",
   "stakes_13g",
   "smart_money"
  ],
- "n_nodes": 123,
- "n_edges": 792,
+ "n_nodes": 126,
+ "n_edges": 790,
  "nodes": [
   {
    "id": "i:0000807249",
@@ -748,22 +748,6 @@
    }
   },
   {
-   "id": "p:ALAN D. SCHWARTZ",
-   "type": "person",
-   "label": "Alan D. Schwartz",
-   "zh_label": null,
-   "lanes": [
-    "def14a"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 2,
-    "co_target": 0
-   }
-  },
-  {
    "id": "p:ALEC AMAR",
    "type": "person",
    "label": "Alec Amar",
@@ -872,6 +856,22 @@
    "degree": {
     "co_hold": 0,
     "co_board": 2,
+    "co_target": 0
+   }
+  },
+  {
+   "id": "p:AMITAY WEISS",
+   "type": "person",
+   "label": "Amitay Weiss",
+   "zh_label": null,
+   "lanes": [
+    "def14a"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 1,
     "co_target": 0
    }
   },
@@ -1004,22 +1004,6 @@
    }
   },
   {
-   "id": "p:ANTHONY J. VINCIQUERRA",
-   "type": "person",
-   "label": "Anthony J. Vinciquerra",
-   "zh_label": null,
-   "lanes": [
-    "def14a"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 2,
-    "co_target": 0
-   }
-  },
-  {
    "id": "p:ANTHONY W. PARKER",
    "type": "person",
    "label": "Anthony W. Parker",
@@ -1048,6 +1032,22 @@
    "degree": {
     "co_hold": 0,
     "co_board": 2,
+    "co_target": 0
+   }
+  },
+  {
+   "id": "p:ASAF ITZHAIK",
+   "type": "person",
+   "label": "Asaf Itzhaik",
+   "zh_label": null,
+   "lanes": [
+    "def14a"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 1,
     "co_target": 0
    }
   },
@@ -1127,7 +1127,7 @@
    "manager_routable": false,
    "degree": {
     "co_hold": 0,
-    "co_board": 4,
+    "co_board": 2,
     "co_target": 0
    }
   },
@@ -1228,6 +1228,22 @@
    }
   },
   {
+   "id": "s:AMERICAN VENTURES LLC, SERIES XIX SKBL",
+   "type": "staker",
+   "label": "American Ventures LLC, Series XIX SKBL",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
+   }
+  },
+  {
    "id": "s:ARISTEIA CAPITAL, L.L.C.",
    "type": "staker",
    "label": "ARISTEIA CAPITAL, L.L.C.",
@@ -1324,6 +1340,22 @@
    }
   },
   {
+   "id": "s:CITADEL SECURITIES GP LLC",
+   "type": "staker",
+   "label": "Citadel Securities GP LLC",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
+   }
+  },
+  {
    "id": "s:CLEAR STREET GROUP INC.",
    "type": "staker",
    "label": "Clear Street Group Inc.",
@@ -1391,6 +1423,22 @@
    "id": "s:FITZGERALD CHARLES",
    "type": "staker",
    "label": "Fitzgerald Charles",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
+   }
+  },
+  {
+   "id": "s:FRAMEWORK VENTURES IV L.P.",
+   "type": "staker",
+   "label": "Framework Ventures IV L.P.",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1516,6 +1564,22 @@
    }
   },
   {
+   "id": "s:JANE STREET GROUP, LLC",
+   "type": "staker",
+   "label": "JANE STREET GROUP, LLC",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
+   }
+  },
+  {
    "id": "s:KWOK YIU FAI",
    "type": "staker",
    "label": "Kwok Yiu Fai",
@@ -1596,22 +1660,6 @@
    }
   },
   {
-   "id": "s:LIU YIF",
-   "type": "staker",
-   "label": "Liu Yif",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 2
-   }
-  },
-  {
    "id": "s:LOGOS GLOBAL MANAGEMENT LP",
    "type": "staker",
    "label": "Logos Global Management LP",
@@ -1676,9 +1724,9 @@
    }
   },
   {
-   "id": "s:MILNES RYAN",
+   "id": "s:MOREHEAD DANIEL WAYNE",
    "type": "staker",
-   "label": "Milnes Ryan",
+   "label": "Morehead Daniel Wayne",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1756,9 +1804,9 @@
    }
   },
   {
-   "id": "s:PAVLOVSKI CHRISTOPHER",
+   "id": "s:PETRUS TRUST COMPANY, LTA",
    "type": "staker",
-   "label": "Pavlovski Christopher",
+   "label": "Petrus Trust Company, LTA",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1772,9 +1820,9 @@
    }
   },
   {
-   "id": "s:PETRUS TRUST COMPANY, LTA",
+   "id": "s:PHILADELPHIA FINANCIAL MANAGEMENT OF SAN FRANCISCO, LLC",
    "type": "staker",
-   "label": "Petrus Trust Company, LTA",
+   "label": "Philadelphia Financial Management of San Francisco, LLC",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1801,6 +1849,22 @@
     "co_hold": 0,
     "co_board": 0,
     "co_target": 3
+   }
+  },
+  {
+   "id": "s:R01 FUND LP",
+   "type": "staker",
+   "label": "R01 Fund LP",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
    }
   },
   {
@@ -1839,6 +1903,22 @@
    "id": "s:SIRENIA CAPITAL MANAGEMENT LP",
    "type": "staker",
    "label": "Sirenia Capital Management LP",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
+   }
+  },
+  {
+   "id": "s:SOLANA ROCKET HOLDINGS LTD",
+   "type": "staker",
+   "label": "Solana Rocket Holdings Ltd",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1946,38 +2026,6 @@
     "co_board": 0,
     "co_target": 1
    }
-  },
-  {
-   "id": "s:ZHANG ZACK",
-   "type": "staker",
-   "label": "Zhang Zack",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 2
-   }
-  },
-  {
-   "id": "s:ZHAO ILEANA",
-   "type": "staker",
-   "label": "ZHAO ILEANA",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 2
-   }
   }
  ],
  "edges": [
@@ -2028,32 +2076,6 @@
    "shared": [
     {
      "company": "VEEA INC.",
-     "tk": null
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "p:ALAN D. SCHWARTZ",
-   "b": "p:ANTHONY J. VINCIQUERRA",
-   "type": "co_board",
-   "w": 1,
-   "shared": [
-    {
-     "company": "MSG Knickerbockers Corp.",
-     "tk": null
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "p:ALAN D. SCHWARTZ",
-   "b": "p:PAY RATIO",
-   "type": "co_board",
-   "w": 1,
-   "shared": [
-    {
-     "company": "MSG Knickerbockers Corp.",
      "tk": null
     }
    ],
@@ -2164,6 +2186,19 @@
    "truncated": false
   },
   {
+   "a": "p:AMITAY WEISS",
+   "b": "p:ASAF ITZHAIK",
+   "type": "co_board",
+   "w": 1,
+   "shared": [
+    {
+     "company": "Nexentis Technologies Inc.",
+     "tk": "NXTS"
+    }
+   ],
+   "truncated": false
+  },
+  {
    "a": "p:ANDRE SOKHN",
    "b": "p:ANDREW M. KELLER",
    "type": "co_board",
@@ -2211,19 +2246,6 @@
     {
      "company": "NAPCO SECURITY TECHNOLOGIES, INC",
      "tk": "NSSC"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "p:ANTHONY J. VINCIQUERRA",
-   "b": "p:PAY RATIO",
-   "type": "co_board",
-   "w": 1,
-   "shared": [
-    {
-     "company": "MSG Knickerbockers Corp.",
-     "tk": null
     }
    ],
    "truncated": false
@@ -23025,6 +23047,20 @@
    "truncated": false
   },
   {
+   "a": "s:AMERICAN VENTURES LLC, SERIES XIX SKBL",
+   "b": "s:PHILADELPHIA FINANCIAL MANAGEMENT OF SAN FRANCISCO, LLC",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Skyline Builders Group Holding Ltd",
+     "tk": "KAZR",
+     "forms": "SC 13G|SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
    "a": "s:ARISTEIA CAPITAL, L.L.C.",
    "b": "s:GLAZER CAPITAL, LLC",
    "type": "co_target",
@@ -23100,6 +23136,20 @@
      "target": "Neuronetics, Inc.",
      "tk": "STIM",
      "forms": "SC 13D/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:CITADEL SECURITIES GP LLC",
+   "b": "s:JANE STREET GROUP, LLC",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "IREN Ltd",
+     "tk": "IREN",
+     "forms": "SC 13G"
     }
    ],
    "truncated": false
@@ -23184,6 +23234,20 @@
      "target": "FrontView REIT, Inc.",
      "tk": "FVR",
      "forms": "SC 13D/A|SC 13G"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:FRAMEWORK VENTURES IV L.P.",
+   "b": "s:R01 FUND LP",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Stablecoin Development Corp",
+     "tk": "SDEV",
+     "forms": "SC 13D/A"
     }
    ],
    "truncated": false
@@ -23357,34 +23421,6 @@
    "truncated": false
   },
   {
-   "a": "s:LIU YIF",
-   "b": "s:ZHANG ZACK",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "AIFU Inc.",
-     "tk": "AIFU",
-     "forms": "SC 13D/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:LIU YIF",
-   "b": "s:ZHAO ILEANA",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "AIFU Inc.",
-     "tk": "AIFU",
-     "forms": "SC 13D/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
    "a": "s:LOGOS GLOBAL MANAGEMENT LP",
    "b": "s:VENROCK HEALTHCARE CAPITAL PARTNERS III, L.P.",
    "type": "co_target",
@@ -23413,15 +23449,15 @@
    "truncated": false
   },
   {
-   "a": "s:MILNES RYAN",
-   "b": "s:PAVLOVSKI CHRISTOPHER",
+   "a": "s:MOREHEAD DANIEL WAYNE",
+   "b": "s:SOLANA ROCKET HOLDINGS LTD",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "RUM Group Inc.",
-     "tk": "RUM",
-     "forms": "SC 13D/A"
+     "target": "Solana Co",
+     "tk": "HSDT",
+     "forms": "SC 13D/A|SC 13G/A"
     }
    ],
    "truncated": false
@@ -23439,23 +23475,23 @@
     }
    ],
    "truncated": false
-  },
-  {
-   "a": "s:ZHANG ZACK",
-   "b": "s:ZHAO ILEANA",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "AIFU Inc.",
-     "tk": "AIFU",
-     "forms": "SC 13D/A"
-    }
-   ],
-   "truncated": false
   }
  ],
  "bridges": [
+  {
+   "tk": "AAOI",
+   "name": "APPLIED OPTOELECTRONICS, INC.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
   {
    "tk": "ADMA",
    "name": "ADMA BIOLOGICS, INC.",
@@ -23653,6 +23689,20 @@
    "stock_routable": false
   },
   {
+   "tk": "LQDA",
+   "name": "Liquidia Corp",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
    "tk": "MANE",
    "name": "Veradermics, Inc",
    "in": [
@@ -23731,20 +23781,6 @@
    ],
    "counts": {
     "managers": 1,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
-  },
-  {
-   "tk": "SBGI",
-   "name": "Sinclair, Inc.",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 2,
     "persons": 0,
     "stakers": 1
    },
@@ -23864,18 +23900,18 @@
   }
  ],
  "components": {
-  "n": 30,
+  "n": 33,
   "largest": 48
  },
  "windows": {
   "form13f_quarter": "2026-06-30",
   "stakes_visible_dates": {
    "start": "2026-11-16",
-   "end": "2026-11-18"
+   "end": "2026-11-19"
   },
   "smart_money_visible_dates": {
-   "start": "2026-11-12",
-   "end": "2026-11-18"
+   "start": "2026-11-13",
+   "end": "2026-11-19"
   }
  },
  "coverage": {
@@ -23885,7 +23921,7 @@
    "isolated_managers": 0
   },
   "def14a": {
-   "basis": "top_persons export: 50 most-seated of 691 upstream persons; 113/150 filings with persons (75.3%)",
+   "basis": "top_persons export: 50 most-seated of 687 upstream persons; 113/150 filings with persons (75.3%)",
    "same_name_merges_possible": true
   },
   "13dg": {
@@ -23894,5 +23930,5 @@
   }
  },
  "methodology": "Force-camp relationship graph DERIVED at export time from four COMMITTED panels (form13f x def14a_persons x stakes_13g union smart_money) \u2014 zero new fetches, display-only. Edges are pairwise projections over as-filed disclosure facts: co_hold = two curated managers' VISIBLE BOOKS (latest quarter, up to 50 positions each; the full books are larger) share a position key (ticker, else CUSIP); co_board = two proxy-statement top persons seat the same company (exact company-name match resolves the ticker); co_target = two different filers INDEPENDENTLY SEPARATELY FILED stakes converging on the same target issuer within the visible SC 13D/13G windows. Identity rule: a window filer merges into an institution node ONLY when its trimmed-uppercase name equals a curated manager's name exactly \u2014 no fuzzy matching, no name list. The three overlaps are factual coincidences of separate filings: joint filings stay verbatim (members NOT DECOMPOSED), no COORDINATION is implied and no consortium claim is made. Weights are integer counts of shared items (lists capped at 8, truncated flag set beyond). Coverage is bounded by construction \u2014 see the coverage.basis strings (visible books, a 50-person proxy export over the newest filings, latest filing windows only). A restatement of public SEC EDGAR disclosures only: NO PRICES, NO RETURNS, no performance claims; never part of any OOS pipeline.",
- "snapshot_ts": "2026-11-19T11:18:49.647423+00:00"
+ "snapshot_ts": "2026-11-20T11:18:58.233481+00:00"
 }
