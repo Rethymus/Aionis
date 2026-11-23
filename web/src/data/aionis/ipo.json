@@ -1,25 +1,25 @@
 {
   "status": "ok",
-  "as_of": "2026-11-19",
+  "as_of": "2026-11-20",
   "window": {
     "start": "2026-04-27",
-    "end": "2026-11-19"
+    "end": "2026-11-20"
   },
-  "issuers": 673,
-  "total": 1595,
+  "issuers": 679,
+  "total": 1606,
   "by_status": {
-    "filed": 1304,
-    "priced": 291
+    "filed": 1314,
+    "priced": 292
   },
   "by_form": {
-    "424B4": 291,
-    "S-1": 543,
-    "S-1/A": 761
+    "424B4": 292,
+    "S-1": 550,
+    "S-1/A": 764
   },
   "offer_price_parsed": 65,
   "offer_price_meta": {
     "target_cap_docs": 80,
-    "priced_filings": 291,
+    "priced_filings": 292,
     "newest_targeted": 80,
     "attempted": 80,
     "fetch_failed": 0,
@@ -32,13 +32,112 @@
     "coverage_pct_of_priced": 22.3,
     "requests": {
       "task_budget": 170,
-      "cumulative_walk": 299,
+      "cumulative_walk": 301,
       "walk_cap": 156,
-      "last_walk": 6
+      "last_walk": 2
     },
-    "target_as_of": "2026-11-19"
+    "target_as_of": "2026-11-20"
   },
   "filings": [
+    {
+      "company": "ALPHA DIGITAL VOLTZ INC.",
+      "ticker": "ADVI",
+      "filed_date": "2026-11-20",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1985554/000168316826008986/0001683168-26-008986-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "TruGolf Holdings, Inc.",
+      "ticker": "TRUG",
+      "filed_date": "2026-11-20",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1857086/000149315226053580/0001493152-26-053580-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "bioAffinity Technologies, Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-20",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1712762/000149315226053519/0001493152-26-053519-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "LIS Technologies Inc",
+      "ticker": "LIS",
+      "filed_date": "2026-11-20",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1973276/000149315226053406/0001493152-26-053406-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "BIO KEY INTERNATIONAL INC",
+      "ticker": "BKYI",
+      "filed_date": "2026-11-20",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1019034/000143774926037921/0001437749-26-037921-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Inmune Bio Inc.",
+      "ticker": "INMB",
+      "filed_date": "2026-11-20",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1711754/000121390026122693/0001213900-26-122693-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "ContextLogic Holdings Inc.",
+      "ticker": "LOGC",
+      "filed_date": "2026-11-20",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2064307/000119312526470479/0001193125-26-470479-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Aptevo Therapeutics Inc.",
+      "ticker": "APVO",
+      "filed_date": "2026-11-20",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1671584/000119312526470268/0001193125-26-470268-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "ConnectM Technology Solutions, Inc.",
+      "ticker": "CNTM",
+      "filed_date": "2026-11-20",
+      "form": "S-1/A",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1895249/000110465926130675/0001104659-26-130675-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Forge Nano Holdings, Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-20",
+      "form": "S-1",
+      "status": "filed",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2101833/000110465926130613/0001104659-26-130613-index.htm",
+      "offer_price": null
+    },
+    {
+      "company": "Fitness Champs Holdings Ltd",
+      "ticker": "FCHL",
+      "filed_date": "2026-11-20",
+      "form": "424B4",
+      "status": "priced",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2023796/000149315226053458/0001493152-26-053458-index.htm",
+      "offer_price": 0.35
+    },
     {
       "company": "SB Energy, Inc.",
       "ticker": "SBE",
@@ -5221,7 +5320,7 @@
       "form": "424B4",
       "status": "priced",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2134856/000182912626009017/0001829126-26-009017-index.htm",
-      "offer_price": 10.0
+      "offer_price": null
     },
     {
       "company": "VARSAL TECH, INC.",
@@ -10739,107 +10838,8 @@
       "status": "filed",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1817004/000149315226027137/0001493152-26-027137-index.htm",
       "offer_price": null
-    },
-    {
-      "company": "TEN Holdings, Inc.",
-      "ticker": "XHLD",
-      "filed_date": "2026-06-03",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2030954/000149315226027129/0001493152-26-027129-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Rubber Leaf Inc",
-      "ticker": "RLEA",
-      "filed_date": "2026-06-03",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1893657/000149315226027102/0001493152-26-027102-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "East West Ave Acquisition Corp.",
-      "ticker": "EWAV",
-      "filed_date": "2026-06-03",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2100704/000149315226026951/0001493152-26-026951-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Texas Precious Metals Trust",
-      "ticker": "",
-      "filed_date": "2026-06-03",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2087989/000143774926019444/0001437749-26-019444-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Texas Precious Metals Trust",
-      "ticker": "",
-      "filed_date": "2026-06-03",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2087989/000143774926019436/0001437749-26-019436-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "BlockchAIn Digital Infrastructure, Inc.",
-      "ticker": "AIB",
-      "filed_date": "2026-06-03",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2070542/000121390026064725/0001213900-26-064725-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Norient Acquisition",
-      "ticker": "NORT",
-      "filed_date": "2026-06-03",
-      "form": "S-1",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2135939/000121390026064339/0001213900-26-064339-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Gores Holdings XI, Inc.",
-      "ticker": "GHXI",
-      "filed_date": "2026-06-03",
-      "form": "S-1",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2086438/000119312526255548/0001193125-26-255548-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Grayscale BNB ETF",
-      "ticker": "GBNB",
-      "filed_date": "2026-06-03",
-      "form": "S-1/A",
-      "status": "filed",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2106762/000119312526254665/0001193125-26-254665-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Aeon Acquisition I Corp.",
-      "ticker": "AESP",
-      "filed_date": "2026-06-03",
-      "form": "424B4",
-      "status": "priced",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2082526/000149315226027037/0001493152-26-027037-index.htm",
-      "offer_price": null
-    },
-    {
-      "company": "Keystone Acquisition Corp.",
-      "ticker": "KEYY",
-      "filed_date": "2026-06-03",
-      "form": "424B4",
-      "status": "priced",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2102771/000121390026064746/0001213900-26-064746-index.htm",
-      "offer_price": null
     }
   ],
   "methodology": "US IPO registration/pricing stream \u2014 SEC EDGAR EFTS whole-market form-level queries (public domain, 17 U.S.C. \u00a7105), fixed ~120-day window, filed-date point-in-time, one row per accession (an S-1/A amendment is a new filing, never a silent overwrite). Status is derived from the immutable form type: S-1 / S-1/A = filed (registration statement on file); 424B4 = priced (the statutory final prospectus under Securities Act Rule 424(b)(4) is filed after pricing \u2014 its appearance marks a priced offering). Offer price is a BOUNDED second-stage extraction, not full coverage: only the newest \u226480 priced (424B4) filings are walked politely (\u22652.1 s spacing, hard request budget disclosed in offer_price_meta.requests), their EDGAR index + primary document fetched, and the cover page regex-parsed with graded confidence \u2014 EXACT (single final printed price \u2192 exported), LOW (draft/range wording near the label \u2192 value withheld, counted, never guessed) and NO-MATCH; every unparsed row stays offer_price=null with its EDGAR index link. Share count, proceeds, and expected listing date are NOT extracted at any tier. Honest scope disclosures: (2) the 424B4 form-level catch includes priced follow-on offerings by already-listed issuers (e.g. S-3 shelf takedowns), not only first-day IPOs \u2014 this panel is the registration/pricing STREAM, not a curated IPO list; (3) no company-level state machine is applied (rows are filing-level). Ticker is parsed from the EDGAR display name where present; pre-symbol S-1 filers carry none (empty, never guessed). Counts are FILING counts, not company counts. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-11-20T11:18:19.906303+00:00"
+  "snapshot_ts": "2026-11-23T11:17:18.511742+00:00"
 }
