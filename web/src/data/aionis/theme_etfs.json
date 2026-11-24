@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "as_of": "2026-11-20",
+  "as_of": "2026-11-23",
   "n_funds": 10,
   "n_funds_expected": 10,
   "funds": [
@@ -8,69 +8,69 @@
       "ticker": "SOXX",
       "issuer": "iShares (BlackRock)",
       "fund": "iShares Semiconductor ETF",
-      "as_of": "2026-11-20",
+      "as_of": "2026-11-23",
       "n_positions": 30,
       "skipped_rows": 5,
       "top": [
         {
           "ticker": "AMD",
           "company": "ADVANCED MICRO DEVICES",
-          "weight_pct": 9.9,
-          "market_value": 3219563437.48
+          "weight_pct": 9.3,
+          "market_value": 3487014894.16
         },
         {
           "ticker": "AVGO",
           "company": "BROADCOM INC",
-          "weight_pct": 9.03,
-          "market_value": 2936453013.75
-        },
-        {
-          "ticker": "MU",
-          "company": "MICRON TECHNOLOGY",
-          "weight_pct": 6.81,
-          "market_value": 2214451655.85
-        },
-        {
-          "ticker": "INTC",
-          "company": "INTEL CORPORATION",
-          "weight_pct": 6.29,
-          "market_value": 2045854777.92
+          "weight_pct": 8.17,
+          "market_value": 3065889078.05
         },
         {
           "ticker": "NVDA",
           "company": "NVIDIA",
-          "weight_pct": 6.25,
-          "market_value": 2031192017.37
+          "weight_pct": 7.22,
+          "market_value": 2707097449.05
+        },
+        {
+          "ticker": "MU",
+          "company": "MICRON TECHNOLOGY",
+          "weight_pct": 7.12,
+          "market_value": 2672039535.9
+        },
+        {
+          "ticker": "INTC",
+          "company": "INTEL CORPORATION",
+          "weight_pct": 6.43,
+          "market_value": 2412651115.92
         },
         {
           "ticker": "TXN",
           "company": "TEXAS INSTRUMENT",
-          "weight_pct": 5.55,
-          "market_value": 1805645423.75
+          "weight_pct": 5.39,
+          "market_value": 2020693495.27
         },
         {
           "ticker": "ADI",
           "company": "ANALOG DEVICES",
-          "weight_pct": 5.25,
-          "market_value": 1706234833.6
+          "weight_pct": 5.05,
+          "market_value": 1893664781.25
         },
         {
           "ticker": "QCOM",
           "company": "QUALCOMM",
-          "weight_pct": 4.83,
-          "market_value": 1570995450.36
+          "weight_pct": 4.68,
+          "market_value": 1756404067.32
         },
         {
           "ticker": "NXPI",
           "company": "NXP SEMICONDUCTORS NV",
-          "weight_pct": 4.5,
-          "market_value": 1462524595.85
+          "weight_pct": 4.3,
+          "market_value": 1614104010.65
         },
         {
           "ticker": "MPWR",
           "company": "MONOLITHIC POWER SYSTEMS INC",
-          "weight_pct": 4.11,
-          "market_value": 1337123560.5
+          "weight_pct": 4.22,
+          "market_value": 1583040780.72
         }
       ]
     },
@@ -746,7 +746,7 @@
         "BAI",
         "AIQ"
       ],
-      "max_weight_pct": 9.9
+      "max_weight_pct": 9.3
     },
     {
       "ticker": "AVGO",
@@ -757,7 +757,7 @@
         "BAI",
         "AIQ"
       ],
-      "max_weight_pct": 9.03
+      "max_weight_pct": 8.17
     },
     {
       "ticker": "SNOW",
@@ -779,7 +779,7 @@
         "BAI",
         "AIQ"
       ],
-      "max_weight_pct": 6.81
+      "max_weight_pct": 7.12
     },
     {
       "ticker": "TSLA",
@@ -843,7 +843,7 @@
         "BAI",
         "AIQ"
       ],
-      "max_weight_pct": 6.29
+      "max_weight_pct": 6.43
     },
     {
       "ticker": "ZS",
@@ -927,5 +927,5 @@
     }
   ],
   "methodology": "Thematic ETF daily holdings from the issuers' own official files \u2014 iShares/BlackRock latest-holdings.csv endpoints and Global X (Mirae Asset) dated full-holdings CSVs linked from each fund page (free, public, published every business day; all endpoint URLs verified live 2026-08-23 by downloading each file \u2014 Global X's date-in-filename links are re-extracted from the fund page's own HTML on every fetch, so a rename surfaces as an honest per-fund failure, never a silent gap). Rows: official weight/market value as published; iShares rows are kept for the Equity asset class only (futures/cash/FX legs skipped and counted), Global X rows with no ticker (cash/FX bookkeeping) are skipped and counted. Top-10 per fund by weight; the resonance table lists tickers held by 2+ of these theme ETFs across issuers. Candidates without a reachable free official file were honestly dropped (Amplify BLOK, Invesco, VanEck, First Trust, SPDR-XLS; see docs/data-intake-etf-holdings.md). Neither issuer keeps a CSV history \u2014 the dated local snapshots are the only time series. Display-only, exploratory; no prices, no returns, no performance claim; NOT part of any research or OOS pipeline.",
-  "snapshot_ts": "2026-11-23T11:17:40.625775+00:00"
+  "snapshot_ts": "2026-11-24T11:14:16.659242+00:00"
 }

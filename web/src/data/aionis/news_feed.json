@@ -1,31 +1,15 @@
 {
   "status": "ok",
-  "as_of": "2026-11-20T06:45:00Z",
+  "as_of": "2026-11-24T07:45:00Z",
   "window": {
-    "start": "2026-10-21",
-    "end": "2026-11-20"
+    "start": "2026-10-25",
+    "end": "2026-11-24"
   },
   "query": "(\"stock market\" OR \"S&P 500\" OR \"Federal Reserve\") sourcelang:eng | sourcelang:zho domainis:wallstreetcn.com",
-  "total": 1424,
-  "n_sources": 435,
-  "n_zho": 154,
+  "total": 925,
+  "n_sources": 337,
+  "n_zho": 80,
   "by_day": [
-    {
-      "date": "2026-10-21",
-      "count": 222
-    },
-    {
-      "date": "2026-10-22",
-      "count": 223
-    },
-    {
-      "date": "2026-10-23",
-      "count": 223
-    },
-    {
-      "date": "2026-10-24",
-      "count": 31
-    },
     {
       "date": "2026-10-25",
       "count": 129
@@ -89,1360 +73,1364 @@
     {
       "date": "2026-11-20",
       "count": 219
+    },
+    {
+      "date": "2026-11-24",
+      "count": 200
     }
   ],
   "items": [
     {
-      "seendate": "2026-11-20T06:45:00Z",
-      "title": "Asian shares head for worst week since 2020 as AI rout deepens",
-      "url": "https://www.asiaone.com:443/money/asian-shares-head-worst-week-2020-ai-rout-deepens",
-      "domain": "asiaone.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Singapore"
-    },
-    {
-      "seendate": "2026-11-20T06:45:00Z",
-      "title": "Gold Plunges from Record High as Rising Interest Rates Reshape Global Investment Appeal",
-      "url": "https://slguardian.org/gold-plunges-from-record-high-as-rising-interest-rates-reshape-global-investment-appeal/",
-      "domain": "slguardian.org",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Sri Lanka"
-    },
-    {
-      "seendate": "2026-11-20T06:45:00Z",
-      "title": "Trillion - Dollar Debut # 1887",
-      "url": "https://geeknewscentral.com/2026/11/19/trillion-dollar-debut-1887/",
-      "domain": "geeknewscentral.com",
+      "seendate": "2026-11-24T07:45:00Z",
+      "title": "Asian stocks rally after Wall Street rebound as Jensen Huang returns as Nvidia CEO",
+      "url": "https://mymotherlode.com/news/national/11335708/asian-stocks-rally-after-wall-street-rebound-as-jensen-huang-returns-as-nvidias-ceo.html",
+      "domain": "mymotherlode.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-11-20T06:45:00Z",
-      "title": "Anthropic raises record $81 billion in stock market debut as shares close 17 percent higher",
-      "url": "https://cphpost.dk/2026-11-20/global/anthropic-raises-record-81-billion-in-stock-market-debut-as-shares-close-17-percent-higher/",
-      "domain": "cphpost.dk",
+      "seendate": "2026-11-24T07:45:00Z",
+      "title": "US recession fears rise as falling household wealth and market turmoil point to 25 % risk : Report",
+      "url": "http://www.greekherald.com/news/279451643/us-recession-fears-rise-as-falling-household-wealth-and-market-turmoil-point-to-25-risk-report",
+      "domain": "greekherald.com",
       "language": "English",
       "lang": "eng",
-      "sourcecountry": "Denmark"
+      "sourcecountry": "Greece"
     },
     {
-      "seendate": "2026-11-20T06:45:00Z",
-      "title": "ASX Runners of the Week : Black Rock , Mayne Pharma & Metal Hawk",
-      "url": "https://www.smh.com.au/business/companies/asx-runners-of-the-week-black-rock-mayne-pharma-and-metal-hawk-20261120-p61g1o.html",
-      "domain": "smh.com.au",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Australia"
-    },
-    {
-      "seendate": "2026-11-20T06:45:00Z",
-      "title": "Rupee breaches $93 mark , hits 7 month high as FPIs pump $12 billion into Indian stocks",
-      "url": "https://www.businesstoday.in/india/story/rupee-breaches-93-mark-hits-7-month-high-as-fpis-pump-12-billion-into-indian-stocks-568697-2026-11-20",
-      "domain": "businesstoday.in",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T06:45:00Z",
-      "title": "Gold Crashes 5 % to $3 , 538 as Waller Floats 50bp December Hike",
-      "url": "http://www.zerohedge.com/news/2026-11-19/gold-crashes-5-3538-waller-floats-50bp-december-hike",
-      "domain": "zerohedge.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T06:45:00Z",
-      "title": "Anthropic makes a $1 . 8 trillion debut : What investors should watch next",
-      "url": "https://www.business-standard.com/world-news/anthropic-ipo-stock-market-debut-valuation-investors-what-to-watch-next-126112000351_1.html",
-      "domain": "business-standard.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T06:45:00Z",
-      "title": "Indian Shares Off Day Lows As IT Stocks Surge",
-      "url": "https://www.rttnews.com/3716595/indian-shares-off-day-s-lows-as-it-stocks-surge.aspx",
-      "domain": "rttnews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T06:45:00Z",
-      "title": "Wall Street tumbles as investors seek cover amid growing uncertainty",
-      "url": "http://www.milwaukeesun.com/news/279444422/wall-street-tumbles-as-investors-seek-cover-amid-growing-uncertainty",
-      "domain": "milwaukeesun.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T06:45:00Z",
-      "title": "The Final Dollar Spike Before the Crack - Up Boom",
-      "url": "http://www.zerohedge.com/news/2026-11-19/final-dollar-spike-crack-boom",
-      "domain": "zerohedge.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T06:30:00Z",
-      "title": "India bonds set for opening gains , tracking Treasuries ; debt auction to curb moves",
-      "url": "https://www.thehindubusinessline.com/markets/india-bonds-set-for-opening-gains-tracking-treasuries-debt-auction-to-curb-moves/article71723022.ece",
-      "domain": "thehindubusinessline.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T06:30:00Z",
-      "title": "Indian Jewellery Stocks Extend Slide as Gold , Silver Prices Fall",
-      "url": "https://econotimes.com/Indian-Jewellery-Stocks-Extend-Slide-as-Gold-Silver-Prices-Fall-1780044",
-      "domain": "econotimes.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T06:30:00Z",
-      "title": "Dilip Buildcon share price surges 7 % on \u20b9419 - crore Gurugram Metro order win",
-      "url": "https://www.business-standard.com/markets/news/dilip-buildcon-share-price-surges-7-on-419-crore-gurugram-metro-order-win-126112000240_1.html",
-      "domain": "business-standard.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T06:30:00Z",
-      "title": "Asian stocks head for worst week since 2020 as AI rally loses steam",
-      "url": "https://www.business-standard.com/markets/news/asian-stocks-head-for-worst-week-since-2020-as-ai-rally-loses-steam-126112000154_1.html",
-      "domain": "business-standard.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T06:30:00Z",
-      "title": "Titan , Muthoot Finance , Kalyan Jewellers fall up to 4 % as Gold prices slide",
-      "url": "https://www.business-standard.com/markets/news/titan-muthoot-finance-kalyan-jewellers-fall-up-to-4-as-gold-prices-slide-126112000238_1.html",
-      "domain": "business-standard.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T06:15:00Z",
-      "title": "AP News Summary at 12 : 47 a . m . EST",
-      "url": "http://www.cecildaily.com/ap/nation/ap-news-summary-at-12-47-a-m-est/article_bdb7b0d8-a8bd-5798-ab24-48734f5c5470.html",
-      "domain": "cecildaily.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T06:15:00Z",
-      "title": "BT Opening Bell : Sensex , Nifty open lower amid bloodbath in global markets",
-      "url": "https://www.businesstoday.in/markets/stocks/story/bt-opening-bell-sensex-nifty-open-lower-amid-bloodbath-in-global-markets-568659-2026-11-20",
-      "domain": "businesstoday.in",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T06:15:00Z",
-      "title": "Asia shares drop on AI worries , echoing Wall Street decline despite the strong Anthropic debut",
-      "url": "http://www.cecildaily.com/ap/world/asia-shares-drop-on-ai-worries-echoing-wall-streets-decline-despite-the-strong-anthropic-debut/article_9ab3e714-fe37-5ba2-ab3a-1c95f6267006.html",
-      "domain": "cecildaily.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T06:15:00Z",
-      "title": "Anthropic IPO Turns Over 5 , 000 Employees Into Millionaires , $81 Billion Blockbuster Listing Creates Massive Wealth",
-      "url": "https://www.freepressjournal.in/business/anthropic-ipo-turns-over-5000-employees-into-millionaires-81-billion-blockbuster-listing-creates-massive-wealth",
-      "domain": "freepressjournal.in",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T06:15:00Z",
-      "title": "Gold Faces Worst Weekly Decline Since March Amid Rate - Hike Speculations , ETRetail",
-      "url": "https://retail.economictimes.indiatimes.com/news/apparel-fashion/jewellery/gold-set-for-worst-week-since-march-as-rate-hike-expectations-grow/136010603",
-      "domain": "retail.economictimes.indiatimes.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T06:15:00Z",
-      "title": "Wall Street tumbles to its longest losing streak since 2024 as the Dow drops 1 , 100 points",
-      "url": "http://www.greenevillesun.com/business/ap_business/wall-street-tumbles-to-its-longest-losing-streak-since-2024-as-the-dow-drops-1/article_98ecda96-9f0c-545d-b251-b73410ba4b14.html",
-      "domain": "greenevillesun.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T06:15:00Z",
-      "title": "Spirit Airlines collapse exposes cracks in the budget airline model",
-      "url": "https://www.oneidadispatch.com/2026/05/06/spirit-airlines-collapse-exposes-cracks-in-the-budget-airline-model/",
-      "domain": "oneidadispatch.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T06:15:00Z",
-      "title": "Foreign investors sell W26tr of Korean stocks in October",
-      "url": "https://www.koreaherald.com/article/10944123",
-      "domain": "koreaherald.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "South Korea"
-    },
-    {
-      "seendate": "2026-11-20T06:15:00Z",
-      "title": "AP News in Brief at 12 : 04 a . m . EST",
-      "url": "http://www.thegazette.com/news/national/ap-news-in-brief-at-12-04-a-m-est/article_dad23d14-6f03-5d88-bfa0-92bf22262ae6.html",
-      "domain": "thegazette.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T06:15:00Z",
-      "title": "AP News in Brief at 12 : 04 a . m . EST",
-      "url": "https://www.winknews.com/news/international/ap-news-in-brief-at-12-04-a-m-est/article_27bde2fb-f172-5eb9-92c5-959ca99d4f51.html",
-      "domain": "winknews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T06:15:00Z",
-      "title": "Anthropic $1 . 7 Trillion IPO Draws Protest Over  Terrifying  Prospect of AI Beyond Human Control",
-      "url": "https://www.ibtimes.co.uk/anthropic-ipo-protests-ai-recursive-self-improvement-ban-1833526",
-      "domain": "ibtimes.co.uk",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United Kingdom"
-    },
-    {
-      "seendate": "2026-11-20T06:15:00Z",
-      "title": "What does Project 2025 say about the FAA and banking ?",
-      "url": "https://www.wlwt.com/article/project-2025-faa-and-banking/74483942",
-      "domain": "wlwt.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T05:45:00Z",
-      "title": "Sensex and Nifty Decline Amid Profit - Taking and Weak Global Trends",
-      "url": "https://dailypioneer.com/business/stock-markets-fall-in-early-trade-amid-profit-taking-weak-global-trends",
-      "domain": "dailypioneer.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T05:45:00Z",
-      "title": "Anthropic IPO Creates 5 , 100 Paper Millionaires , 600 Employees Hold Over $100M in Equity",
-      "url": "https://dailypioneer.com/business/anthropic-ipo-employee-millionaires-wealth",
-      "domain": "dailypioneer.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T05:45:00Z",
-      "title": "Asia shares drop on AI worries , echoing Wall Street decline despite the strong Anthropic debut",
-      "url": "https://www.stcatharinesstandard.ca/business/asia-shares-drop-on-ai-worries-echoing-wall-street-s-decline-despite-the-strong-anthropic-debut/article_7cd09d41-bbc2-5a2d-a0f1-3ab596597a0e.html",
+      "seendate": "2026-11-24T07:45:00Z",
+      "title": "Nvidia comeback bet : Why Jensen Huang return calmed markets , for now",
+      "url": "https://www.stcatharinesstandard.ca/business/nvidia-s-comeback-bet-why-jensen-huang-s-return-calmed-markets-for-now/article_ce5a14e5-645b-5fd6-a212-35bbe422cfd9.html",
       "domain": "stcatharinesstandard.ca",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "Canada"
     },
     {
-      "seendate": "2026-11-20T05:45:00Z",
-      "title": "Anthropic IPO Makes Nearly Entire Workforce Millionaires , 600 Employees Cross $100 Mn",
-      "url": "https://www.businessworld.in/article/anthropic-ipo-makes-nearly-entire-workforce-millionaires-600-employees-cross-100-mn-634443",
-      "domain": "businessworld.in",
+      "seendate": "2026-11-24T07:45:00Z",
+      "title": "Stock market closed for Guru Nanak Jayanti , know what traders can access on MCX from 5 pm",
+      "url": "https://www.ibtimes.co.in/stock-market-closed-guru-nanak-jayanti-know-what-traders-can-access-mcx-5-pm-908627",
+      "domain": "ibtimes.co.in",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "India"
     },
     {
-      "seendate": "2026-11-20T05:45:00Z",
-      "title": "US mortgage rates up for the first time in five weeks ; housing starts rise",
-      "url": "https://www.businesstimes.com.sg/international/us-mortgage-rates-first-time-five-weeks-housing-starts-rise",
-      "domain": "businesstimes.com.sg",
+      "seendate": "2026-11-24T07:45:00Z",
+      "title": "US recession fears rise as falling household wealth and market turmoil point to 25 % risk : Report",
+      "url": "http://www.zimbabwestar.com/news/279451643/us-recession-fears-rise-as-falling-household-wealth-and-market-turmoil-point-to-25-risk-report",
+      "domain": "zimbabwestar.com",
       "language": "English",
       "lang": "eng",
-      "sourcecountry": "Singapore"
+      "sourcecountry": "Zimbabwe"
     },
     {
-      "seendate": "2026-11-20T05:45:00Z",
-      "title": "Sensex slides over 600 points in early deals , Nifty below 25 , 500 as global weakness weighs",
-      "url": "https://www.prokerala.com/news/articles/a1838868.html",
-      "domain": "prokerala.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T05:30:00Z",
-      "title": "Jim Cramer sends strong signal to Costco investors",
-      "url": "https://www.aol.com/articles/jim-cramer-sends-strong-signal-011700000.html",
-      "domain": "aol.com",
+      "seendate": "2026-11-24T07:45:00Z",
+      "title": "Nvidia comeback bet : Why Jensen Huang return calmed markets , for now | Ap - business",
+      "url": "https://www.wfmz.com/business/nvidia-s-comeback-bet-why-jensen-huang-s-return-calmed-markets-for-now/article_f5a98898-aa5c-56e3-8fa0-ce529a5247b8.html",
+      "domain": "wfmz.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-11-20T05:30:00Z",
-      "title": "Brazil Markets Closed as Dollar Hits 5 . 93 Reals | Morning Call , Nov 20",
-      "url": "https://www.riotimesonline.com/brazils-financial-morning-call-for-friday-november-20-2026/",
-      "domain": "riotimesonline.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Brazil"
-    },
-    {
-      "seendate": "2026-11-20T05:30:00Z",
-      "title": "A scandal causes problems for Recep Tayyip Erdogan",
-      "url": "https://www.hindustantimes.com/world-news/a-scandal-causes-problems-for-recep-tayyip-erdogan-101795143757005.html",
-      "domain": "hindustantimes.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T05:30:00Z",
-      "title": "Ashton Kutcher Calls Anthropic IPO a  Manifestation of Trust  as Gene Munster Warns Against AI  Groupthink",
-      "url": "https://www.aol.com/articles/ashton-kutcher-calls-anthropic-ipo-040629000.html",
-      "domain": "aol.com",
+      "seendate": "2026-11-24T07:45:00Z",
+      "title": "Nvidia board reinstates Jensen Huang as CEO just days after rejecting his offer to return",
+      "url": "https://www.eldoradonews.com/news/2026/nov/23/nvidia-board-reinstates-jensen-huang-as-ceo-just/",
+      "domain": "eldoradonews.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-11-20T05:30:00Z",
-      "title": "What does Project 2025 say about the FAA and banking ?",
-      "url": "https://www.wyff4.com/article/project-2025-faa-and-banking/74483942",
-      "domain": "wyff4.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T05:30:00Z",
-      "title": "$20 billion each ! Meet the Anthropic co - founders who struck gold with IPO",
-      "url": "https://timesofindia.indiatimes.com/business/international-business/20-billion-each-meet-the-anthropic-co-founders-who-struck-gold-with-ipo/articleshow/136013944.cms",
-      "domain": "timesofindia.indiatimes.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T05:30:00Z",
-      "title": "Michael Burry sees a serious problem Wall Street may be overlooking",
-      "url": "https://www.aol.com/articles/michael-burry-sees-serious-problem-010700000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T05:30:00Z",
-      "title": "Dow drops below Pam Bondi threshold of 50 , 000 as Nvidia shares slide",
-      "url": "https://www.aol.com/articles/dow-drops-below-pam-bondi-043636000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T05:30:00Z",
-      "title": "Stock markets fall in early trade amid profit - taking , weak global trends",
-      "url": "https://www.newindianexpress.com/business/2026/Nov/20/stock-markets-fall-in-early-trade-amid-profit-taking-weak-global-trends-2",
-      "domain": "newindianexpress.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T05:30:00Z",
-      "title": "What does Project 2025 say about the FAA and banking ?",
-      "url": "https://www.gulfcoastnewsnow.com/article/project-2025-faa-and-banking/74483942",
-      "domain": "gulfcoastnewsnow.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": ""
-    },
-    {
-      "seendate": "2026-11-20T05:30:00Z",
-      "title": "Benchmark indices bounce back despite sell - off in Asian markets",
-      "url": "https://www.newindianexpress.com/business/2026/Nov/20/benchmark-indices-bounce-back-despitesell-off-in-asian-markets",
-      "domain": "newindianexpress.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T05:30:00Z",
-      "title": "AP News in Brief at 12 : 04 a . m . EST \u2013 Winnipeg Free Press",
-      "url": "https://www.winnipegfreepress.com/world/2026/11/20/ap-news-in-brief-at-1204-a-m-est-507",
-      "domain": "winnipegfreepress.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Canada"
-    },
-    {
-      "seendate": "2026-11-20T05:30:00Z",
-      "title": "What does Project 2025 say about the FAA and banking ?",
-      "url": "https://www.wxii12.com/article/project-2025-faa-and-banking/74483942",
-      "domain": "wxii12.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T05:30:00Z",
-      "title": "Anthropic opens at $111 . 50 on Nasdaq , surges 34 . 34 % over IPO price ; market cap hits $1 . 44 trillion",
-      "url": "https://timesofoman.com/article/179380-anthropic-opens-at-11150-on-nasdaq-surges-3434-over-ipo-price-market-cap-hits-144-trillion",
-      "domain": "timesofoman.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Oman"
-    },
-    {
-      "seendate": "2026-11-20T05:30:00Z",
-      "title": "Asia shares drop on AI worries , echoing Wall Street decline despite the strong Anthropic debut",
-      "url": "http://www.stardem.com/ap/world/asia-shares-drop-on-ai-worries-echoing-wall-streets-decline-despite-the-strong-anthropic-debut/article_bd76a2c3-b9c6-5e5c-96e4-acefda142225.html",
-      "domain": "stardem.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T05:15:00Z",
-      "title": "Wall Street tumbles as investors seek cover amid growing uncertainty",
-      "url": "http://www.mexicostar.com/news/279444422/wall-street-tumbles-as-investors-seek-cover-amid-growing-uncertainty",
-      "domain": "mexicostar.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Mexico"
-    },
-    {
-      "seendate": "2026-11-20T05:15:00Z",
-      "title": "Stock markets fall in early trade amid profit - taking , weak global trends",
-      "url": "https://www.thehindu.com/business/markets/stock-markets-fall-in-early-trade-amid-profit-taking-weak-global-trends/article71723143.ece",
-      "domain": "thehindu.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T05:15:00Z",
-      "title": "Anthropic IPO creates over 5 , 000 of its employees millionaires",
-      "url": "https://ianslive.in/anthropic-ipo-creates-over-5000-employee-millionaires--20261120100105",
-      "domain": "ianslive.in",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T05:15:00Z",
-      "title": "What does Project 2025 say about the FAA and banking ?",
-      "url": "https://www.wisn.com/article/project-2025-faa-and-banking/74483942",
-      "domain": "wisn.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T05:15:00Z",
-      "title": "Asian stocks plunge as Anthropic fails to dispel AI fears",
-      "url": "https://www.channelnewsasia.com/business/asian-stocks-nikkei-kospi-fall-anthropic-ipo-6568101",
-      "domain": "channelnewsasia.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T05:15:00Z",
-      "title": "\u8dcc\u78343600 \uff0c \u9ec4\u91d1\u52bf\u521b3\u6708\u6765\u6700\u60e8\u4e00\u5468 - \u534e\u5c14\u8857\u89c1\u95fb",
-      "url": "https://wallstreetcn.com/articles/3786342",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-20T05:15:00Z",
-      "title": "\u9996\u53d124\u5c0f\u65f6\u9500\u91cf\u6216\u8fbe\u5230\u5b63\u5ea6\u9884\u6d4b \uff01 GTA 6\u8ba9\u5927\u6469\u60ca\u53f9",
-      "url": "https://wallstreetcn.com/articles/3786337",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-20T04:30:00Z",
-      "title": "Australian Market Significantly Lower",
-      "url": "https://www.rttnews.com/story.aspx?Id=3716570",
-      "domain": "rttnews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T04:30:00Z",
-      "title": "Indian Shares Seen Lower As AI Selloff Deepens",
-      "url": "https://www.rttnews.com/story.aspx?Id=3716586",
-      "domain": "rttnews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T04:30:00Z",
-      "title": "Anthropic $1 . 5 trillion debut rewrites venture capital playbook",
-      "url": "https://www.thehindubusinessline.com/info-tech/anthropics-15-trillion-debut-rewrites-venture-capitals-playbook/article71722476.ece",
-      "domain": "thehindubusinessline.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T04:30:00Z",
-      "title": "Indonesia Stock Market Tipped To Open In The Red",
-      "url": "https://www.rttnews.com/story.aspx?Id=3716555",
-      "domain": "rttnews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T04:30:00Z",
-      "title": "First Tick : Top global cues to watch in today trade",
-      "url": "https://www.moneycontrol.com/news/business/stocks/first-tick-top-global-cues-to-watch-in-today-s-trade-40-14084560.html",
-      "domain": "moneycontrol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T04:30:00Z",
-      "title": "Thai Stock Market May See Renewed Selling Pressure On Friday",
-      "url": "https://www.rttnews.com/story.aspx?Id=3716556",
-      "domain": "rttnews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T04:30:00Z",
-      "title": "South Korea Stock Market and the Nikkei 225 Sink More Than 4 % as the AI Selloff Spreads From Wall Street . Here How Much of a Target - Date Fund Is in Samsung , SK Hynix and TSMC",
-      "url": "https://247wallst.com/investing/2026/11/19/south-koreas-stock-market-and-the-nikkei-225-sink-more-than-4-as-the-ai-selloff-spreads-from-wall-street-heres-how-much-of-a-target-date-fund-is-in-samsung-sk-hynix-and-tsmc/",
-      "domain": "247wallst.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T04:30:00Z",
-      "title": "Australian Market Extends Early Losses In Mid - market",
-      "url": "https://www.rttnews.com/story.aspx?Id=3716594",
-      "domain": "rttnews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T04:30:00Z",
-      "title": "Anthropic historic stock market debut : key takeaways , and what comes next for the AI industry",
-      "url": "https://www.aol.co.uk/articles/anthropic-historic-stock-market-debut-033345000.html",
-      "domain": "aol.co.uk",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United Kingdom"
-    },
-    {
-      "seendate": "2026-11-20T04:30:00Z",
-      "title": "China Stock Market Tipped To Open Under Water On Friday",
-      "url": "https://www.rttnews.com/story.aspx?Id=3716550",
-      "domain": "rttnews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T04:30:00Z",
-      "title": "Singapore Stock Market May Hand Back Thursday Gains",
-      "url": "https://www.rttnews.com/story.aspx?Id=3716548",
-      "domain": "rttnews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T04:30:00Z",
-      "title": "Gold prices plunge over 7 % this week , set for worst fall since March as Fed rate hike fears , AI selloff bite",
-      "url": "https://www.moneycontrol.com/news/business/commodities/gold-prices-plunge-over-7-this-week-set-for-worst-fall-since-march-as-fed-rate-hike-fears-ai-selloff-bite-14085245.html",
-      "domain": "moneycontrol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T04:30:00Z",
-      "title": "Anthropic listing extends Nasdaq dominant run against arch - rival NYSE",
-      "url": "https://www.thehindubusinessline.com/markets/anthropic-listing-extends-nasdaqs-dominant-run-against-arch-rival-nyse/article71721998.ece",
-      "domain": "thehindubusinessline.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T04:30:00Z",
-      "title": "Fed tells regional staff to expect lower pay hikes in 2027",
-      "url": "https://www.moneycontrol.com/world/fed-tells-regional-staff-to-expect-lower-pay-hikes-in-2027-article-14085240.html",
-      "domain": "moneycontrol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T04:30:00Z",
-      "title": "Stocks to Watch Today : Coal India , Ashoka Buildcon , Signature Global , Voltas , Paytm , Dilip Buildcon , Atul , IIFL Capital Services in focus on 20 November",
-      "url": "https://www.moneycontrol.com/news/business/markets/stocks-to-watch-today-coal-india-ashoka-buildcon-signature-global-voltas-paytm-dilip-buildcon-atul-iifl-capital-services-in-focus-on-20-november-14085227.html",
-      "domain": "moneycontrol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T04:30:00Z",
-      "title": "The Motley Fool Stock Advisor Review : Is It Good For a Beginner ?",
-      "url": "http://www.sanantoniopost.com/news/279444067/the-motley-fool-stock-advisor-review-is-it-good-for-a-beginner",
-      "domain": "sanantoniopost.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T04:30:00Z",
-      "title": "Currency Check | Rupee opens higher at 93 . 20 per dollar ; Asian peers trade mixed",
-      "url": "https://www.moneycontrol.com/news/business/stocks/currency-check-rupee-opens-higher-at-93-20-per-dollar-asian-peers-trade-mixed-14085266.html",
-      "domain": "moneycontrol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T04:30:00Z",
-      "title": "GIFT Nifty plunges over 200 pts , signals sharp fall for Sensex , Nifty as Nasdaq sinks 2 . 3 %, Asian markets crash",
-      "url": "https://www.moneycontrol.com/news/business/markets/gift-nifty-plunges-over-200-pts-signals-sharp-fall-for-sensex-nifty-as-nasdaq-sinks-2-3-asian-markets-crash-14085307.html",
-      "domain": "moneycontrol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T04:30:00Z",
-      "title": "Canadian Dollar Gains as Gulf Tensions Keep Oil Prices Elevated",
-      "url": "https://econotimes.com/Canadian-Dollar-Gains-as-Gulf-Tensions-Keep-Oil-Prices-Elevated-1780021",
-      "domain": "econotimes.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T04:30:00Z",
-      "title": "TOBY SHAPSHAK | The affair that blew up the AI industry",
-      "url": "https://www.businessday.co.za/opinion/2026-11-20-toby-shapshak-the-affair-that-blew-up-the-ai-industry/",
-      "domain": "businessday.co.za",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "South Africa"
-    },
-    {
-      "seendate": "2026-11-20T04:30:00Z",
-      "title": "Gold set for worst week since March as rate - hike expectations grow",
-      "url": "https://www.thehindubusinessline.com/markets/gold/gold-set-for-worst-week-since-march-as-rate-hike-expectations-grow/article71722965.ece",
-      "domain": "thehindubusinessline.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T04:30:00Z",
-      "title": "Japanese Market Sharply Lower ; Plunging 3 . 7 %",
-      "url": "https://www.rttnews.com/story.aspx?Id=3716573",
-      "domain": "rttnews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T04:30:00Z",
-      "title": "Anthropic $1 . 8 trillion IPO debut takes a turn as Apple plans rival AI agent",
-      "url": "https://www.moneycontrol.com/news/business/ipo/anthropic-s-1-8-trillion-ipo-debut-takes-a-turn-as-apple-plans-rival-ai-agent-14085246.html",
-      "domain": "moneycontrol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T04:30:00Z",
-      "title": "Bonds vs equities : India stock market rally faces valuation test",
-      "url": "https://www.thehindubusinessline.com/markets/bonds-vs-equities-indias-stock-market-rally-faces-valuation-test/article71722968.ece",
-      "domain": "thehindubusinessline.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T04:30:00Z",
-      "title": "Anthropic Australian data centre overwhelmingly opposed by residents",
-      "url": "https://www.thestar.com.my/tech/tech-news/2026/11/20/anthropic039s-australian-data-centre-overwhelmingly-opposed-by-residents",
-      "domain": "thestar.com.my",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Malaysia"
-    },
-    {
-      "seendate": "2026-11-20T04:15:00Z",
-      "title": "Anthropic listing extends Nasdaq winning streak against arch - rival NYSE",
-      "url": "https://www.dealstreetasia.com/stories/anthropic-listing-extends-nasdaqs-winning-streak-against-arch-rival-nyse-501684",
-      "domain": "dealstreetasia.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T03:45:00Z",
-      "title": "Japan core inflation accelerates in October , cementing rate hike expectations",
-      "url": "https://www.aol.com/articles/japans-core-inflation-accelerates-october-234336000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T03:45:00Z",
-      "title": "Wall Street continues on losing streak as Dow drops 1 , 100 points",
-      "url": "https://www.ironmountaindailynews.com/news/business/2026/11/wall-street-continues-on-losing-streak-as-dow-drops-1100-points/",
-      "domain": "ironmountaindailynews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T03:45:00Z",
-      "title": "Wall Street is loaded up on margin debt . Three more rate hikes on the way . Banks started DUMPING AI debt !",
-      "url": "https://www.investmentwatchblog.com/wall-street-is-loaded-up-on-margin-debt-three-more-rate-hikes-on-the-way-banks-started-dumping-ai-debt/",
-      "domain": "investmentwatchblog.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T03:45:00Z",
-      "title": "South Korea Stock Market Sinks 4 . 6 % as KOSPI Heavyweights SK Hynix and Samsung Fall 6 % After Wall Street AI Selloff",
-      "url": "https://www.aol.com/articles/south-korea-stock-market-sinks-030704000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T03:45:00Z",
-      "title": "Anthropic Mega IPO Lives Up to Wall Street Hype but Fails to Revive AI Trade",
-      "url": "https://www.hindustantimes.com/world-news/anthropics-mega-ipo-lives-up-to-wall-street-hype-but-fails-to-revive-ai-trade-101795144395029.html",
-      "domain": "hindustantimes.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T03:45:00Z",
-      "title": "History Says This Brilliant ETF Could Help You Turn $500 Per Month Into $784 , 100 While Barely Lifting a Finger .",
-      "url": "https://www.aol.com/articles/history-says-brilliant-etf-could-014802000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T03:45:00Z",
-      "title": "Disney Just Raised Its Dividend 33 % and Guided to Double - Digit EPS Growth . Here What Its Results Mean for Investors .",
-      "url": "https://www.aol.com/articles/disney-just-raised-dividend-33-020518000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T03:45:00Z",
-      "title": "Super Creepy  The World Ahead 2027  Magazine Cover Published By The Economist Shows They Expect War , Pestilence And Financial Turmoil Next Year",
-      "url": "https://www.investmentwatchblog.com/super-creepy-the-world-ahead-2027-magazine-cover-published-by-the-economist-shows-they-expect-war-pestilence-and-financial-turmoil-next-year/",
-      "domain": "investmentwatchblog.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T03:45:00Z",
-      "title": "Top stocks to buy today : Stock market recommendations for November 20 , 2026 ; check list",
-      "url": "https://timesofindia.indiatimes.com/business/india-business/top-stock-recommendations-for-november-20-2026-shree-cement-hyundai-motor-india-adani-power-stocks-to-buy-today/articleshow/136011005.cms",
-      "domain": "timesofindia.indiatimes.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T03:45:00Z",
-      "title": "St . Louis Fed representative says near - term economic outlook is positive",
-      "url": "https://www.kfvs12.com/2026/11/20/st-louis-fed-representative-says-near-term-economic-outlook-is-positive/",
-      "domain": "kfvs12.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T03:45:00Z",
-      "title": "If AI lifts productivity , will demand sustain growth ?",
-      "url": "https://www.thehindu.com/premium/if-ai-lifts-productivity-will-demand-sustain-growth/article71720146.ece",
-      "domain": "thehindu.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T03:45:00Z",
-      "title": "Exclusive - Citi underestimated risky assets by $35 billion after incorrectly recording trades , sources say",
-      "url": "https://www.aol.com/articles/exclusive-citi-incorrectly-booked-trades-233828000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T03:45:00Z",
-      "title": "The Fed could talk itself into an emergency rate cut - Investment Watch Blog",
-      "url": "https://www.investmentwatchblog.com/the-fed-could-talk-itself-into-an-emergency-rate-cut/",
-      "domain": "investmentwatchblog.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T03:45:00Z",
-      "title": "Dollar near 19 - month peak as AI jitters sap risk appetite",
-      "url": "https://www.aol.com/articles/dollar-near-19-month-peak-014722000.html",
-      "domain": "aol.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T03:45:00Z",
-      "title": "Urban Company shares in focus as home services platform raises Rs 2 , 500 crore via QIP",
-      "url": "https://www.businesstoday.in/markets/stocks/story/urban-company-shares-in-focus-as-home-services-platform-raises-rs-2500-crore-via-qip-568652-2026-11-20",
-      "domain": "businesstoday.in",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T03:45:00Z",
-      "title": "Anthropic pulled off the biggest IPO ever . What that means , by the numbers",
-      "url": "https://www.wellandtribune.ca/business/anthropic-pulled-off-the-biggest-ipo-ever-what-that-means-by-the-numbers/article_94f2d36e-5f55-5dc4-84ec-9353d3c01365.html",
-      "domain": "wellandtribune.ca",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Canada"
-    },
-    {
-      "seendate": "2026-11-20T03:45:00Z",
-      "title": "Anthropic Australian data centre overwhelmingly opposed by residents",
-      "url": "https://ksevradio.com/anthropics-australian-data-centre-overwhelmingly-opposed-by-residents/",
-      "domain": "ksevradio.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T03:45:00Z",
-      "title": "South Korean shares hit 10 - month low as US tech sell - off rattles Asian markets",
-      "url": "https://www.hindustantimes.com/business/south-korean-shares-hit-10-month-low-as-us-tech-sell-off-after-anthropic-ipo-debut-rattles-asian-markets-101795141394053.html",
-      "domain": "hindustantimes.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "India"
-    },
-    {
-      "seendate": "2026-11-20T03:30:00Z",
-      "title": "House Democrats eye stock trading ban as early priority next Congress",
-      "url": "https://www.twincities.com/2026/11/19/congress-stock-trading-ban/",
-      "domain": "twincities.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T03:30:00Z",
-      "title": "AP News Summary at 10 : 00 p . m . EST",
-      "url": "http://www.hngnews.com/nation_world/ap-news-summary-at-10-00-p-m-est/article_23c66a30-b59b-5eee-a5a1-f012cd5c1737.html",
-      "domain": "hngnews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T03:30:00Z",
-      "title": "What does Project 2025 say about the FAA and banking ?",
-      "url": "https://www.wmtw.com/article/project-2025-faa-and-banking/74483942",
-      "domain": "wmtw.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T03:30:00Z",
-      "title": "AP News in Brief at 9 : 04 p . m . EST",
-      "url": "http://www.hngnews.com/nation_world/ap-news-in-brief-at-9-04-p-m-est/article_b79c1981-5e12-5073-95cc-92630c2fb61f.html",
-      "domain": "hngnews.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T03:30:00Z",
-      "title": "Next DC shareholder revolt : Data centre giant says Jemena knows it  screwed up",
-      "url": "https://www.watoday.com.au/technology/furious-investors-revolt-over-executive-pay-at-data-centre-giant-20261120-p61fv0.html",
-      "domain": "watoday.com.au",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Australia"
-    },
-    {
-      "seendate": "2026-11-20T03:30:00Z",
-      "title": "Gold , Silver Fall as Fed Rate - Hike Expectations Weigh on Metals",
-      "url": "https://econotimes.com/Gold-Silver-Fall-as-Fed-Rate-Hike-Expectations-Weigh-on-Metals-1780011",
-      "domain": "econotimes.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T03:30:00Z",
-      "title": "Stock Market Declines Marginally as Investor Profit - taking Persist \u2013 THISDAYLIVE",
-      "url": "https://www.thisdaylive.com/2026/11/20/stock-market-declines-marginally-as-investors-profit-taking-persist/",
-      "domain": "thisdaylive.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Nigeria"
-    },
-    {
-      "seendate": "2026-11-20T03:15:00Z",
-      "title": "Wheat Fund Rises 1 . 4 % as Soybeans Slip | Grains Wrap , Nov 19",
-      "url": "https://www.riotimesonline.com/grains-soy-corn-latam-thursday-november-19-2026/",
-      "domain": "riotimesonline.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Brazil"
-    },
-    {
-      "seendate": "2026-11-20T03:15:00Z",
-      "title": "Gold extends losses below $3 , 700 , pressured by rate - hike bets",
-      "url": "https://seekingalpha.com/news/4674964-gold-extends-losses-below-3700-pressured-by-rate-hike-bets",
-      "domain": "seekingalpha.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T02:45:00Z",
-      "title": "Wall Street Slump Continues as Dow Falls Over 1 , 100 Points | NewsRadio 1450 / 1370 WKIP",
-      "url": "https://1450wkip.iheart.com/content/2026-11-19-wall-street-slump-continues-as-dow-falls-over-1100-points/",
-      "domain": "1450wkip.iheart.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T02:45:00Z",
-      "title": "Wall Street Slump Continues as Dow Falls Over 1 , 100 Points | WJBO Newsradio 1150 AM & 98 . 7 FM",
-      "url": "https://wjbo.iheart.com/content/2026-11-19-wall-street-slump-continues-as-dow-falls-over-1100-points/",
-      "domain": "wjbo.iheart.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T02:45:00Z",
-      "title": "Wall Street Slump Continues as Dow Falls Over 1 , 100 Points",
-      "url": "https://hallelujah955.iheart.com/content/2026-11-19-wall-street-slump-continues-as-dow-falls-over-1100-points/",
-      "domain": "hallelujah955.iheart.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T02:45:00Z",
-      "title": "What does Project 2025 say about the FAA and banking ? \u2013 PolitiFact",
-      "url": "https://politifact.com/article/2026/nov/19/what-does-project-2025-say-about-the-faa-and-banking/",
-      "domain": "politifact.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T02:45:00Z",
-      "title": "Ringgit opens almost flat against greenback",
-      "url": "https://www.freemalaysiatoday.com/category/business/2026/11/20/ringgit-opens-almost-flat-against-greenback-3",
-      "domain": "freemalaysiatoday.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Malaysia"
-    },
-    {
-      "seendate": "2026-11-20T02:45:00Z",
-      "title": "Wall Street Slump Continues as Dow Falls Over 1 , 100 Points",
-      "url": "https://wsfcam.iheart.com/content/2026-11-19-wall-street-slump-continues-as-dow-falls-over-1100-points/",
-      "domain": "wsfcam.iheart.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T02:45:00Z",
-      "title": "10 Stocks Posting Monster Gains Amid Market Downfall",
-      "url": "https://www.insidermonkey.com/news/10-stocks-posting-monster-gains-amid-market-downfall-1867854/",
-      "domain": "insidermonkey.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T02:45:00Z",
-      "title": "House Democrats eye stock trading ban as early priority next Congress",
-      "url": "https://www.journal-advocate.com/2026/11/19/congress-stock-trading-ban/",
-      "domain": "journal-advocate.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T02:45:00Z",
-      "title": "Editorial : The fiscal hole Newsom leaves behind",
-      "url": "https://www.presstelegram.com/2026/11/19/editorial-the-fiscal-hole-newsom-leaves-behind/",
-      "domain": "presstelegram.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T02:45:00Z",
-      "title": "Editorial : The fiscal hole Newsom leaves behind",
-      "url": "https://www.sgvtribune.com/2026/11/19/editorial-the-fiscal-hole-newsom-leaves-behind/",
-      "domain": "sgvtribune.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T02:45:00Z",
-      "title": "What Anthropic $81 billion IPO could mean for the Bay Area",
-      "url": "https://www.eastbaytimes.com/2026/11/19/anthropic-ipo-bay-area-economy/",
-      "domain": "eastbaytimes.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T02:45:00Z",
-      "title": "Dollar near 19 - month peak as AI jitters sap risk appetite",
-      "url": "https://www.freemalaysiatoday.com/category/business/2026/11/20/dollar-near-19-month-peak-as-ai-jitters-sap-risk-appetite",
-      "domain": "freemalaysiatoday.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Malaysia"
-    },
-    {
-      "seendate": "2026-11-20T02:45:00Z",
-      "title": "House Democrats eye stock trading ban as early priority next Congress",
-      "url": "https://www.republicanherald.com/2026/11/19/congress-stock-trading-ban/",
-      "domain": "republicanherald.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T02:45:00Z",
-      "title": "\u7f8e\u56fd\u8d22\u653f\u90e8\u53d1\u884c  9\u5929\u671f\u7968\u636e \uff0c \u4e0a\u4e00\u6b21\u662f\u57282008\u5e747\u6708",
-      "url": "https://wallstreetcn.com/articles/3786324",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-20T02:45:00Z",
-      "title": "\u7f55\u89c1 \uff01 CoreWeave\u8054\u5408\u521b\u59cb\u4eba3000\u4e07\u7f8e\u5143\u4e70\u5165\u81ea\u5df1\u503a\u5238",
-      "url": "https://wallstreetcn.com/articles/3786328",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-20T02:45:00Z",
-      "title": "\u9996\u5ea6\u7a81\u78341\u4e07\u4ebf\u7f8e\u5143 \uff01 AI\u52a0\u6301 \uff0c \u97e9\u56fd\u51fa\u53e3\u521b\u4e0b\u65b0\u7eaa\u5f55",
-      "url": "https://wallstreetcn.com/articles/3786327",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-20T02:45:00Z",
-      "title": "Anthropic  \u8d85\u7ea7IPO \uff1a \u8fc7\u534a\u673a\u6784\u6295\u8d44\u8005  \u4e00\u80a1\u672a\u5f97 \uff0c \u6563\u6237  \u51f6\u731b\u4e70\u5356",
-      "url": "https://wallstreetcn.com/articles/3786325",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-20T02:45:00Z",
-      "title": "Trendforce\u770b\u8dcc2027\u5e74NAND\u95ea\u5b58\u4ef7\u683c \uff0c \u56e0\u4e2d\u56fd\u4e91\u5382\u780d\u5355\u5f71\u54cd\u8d85\u8fc7\u5317\u7f8e\u9700\u6c42\u589e\u957f",
-      "url": "https://wallstreetcn.com/articles/3786329",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-20T02:45:00Z",
-      "title": "\u9ed1\u8272\u661f\u671f\u4e94 \uff01 \u65e5\u97e9\u80a1\u6307\u8dcc\u8fd15 %\uff0c \u8f6f\u94f6\u5927\u8dcc15 %\uff0c SK\u6d77\u529b\u58eb\u8dcc\u8d857 %\uff0c \u9ec4\u91d1\u8dcc\u78343600",
-      "url": "https://wallstreetcn.com/articles/3786330",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-20T02:45:00Z",
-      "title": "Anthropic\u5f00\u76d8\u5927\u6da8 \uff0c \u4e00\u5207\u770b\u4f3c\u5b8c\u7f8e \uff01 \u968f\u540e\u98ce\u4e91\u7a81\u53d8 \uff0c \u7f8e\u80a1\u8df3\u6c34 \uff0c \u53d1\u751f\u4e86\u4ec0\u4e48 \uff1f",
-      "url": "https://wallstreetcn.com/articles/3786326",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-20T02:45:00Z",
-      "title": "\u963f\u91cc \u3001 \u817e\u8baf\u91ca\u653e\u540c\u4e00\u4e2a\u4fe1\u53f7 \uff1a \u8d44\u672c\u5f00\u652f\u57282028\u5e74\u540e\u4e0b\u964d \uff0c \u56fd\u4ea7\u7b97\u529b\u9a71\u52a8\u63a8\u7406",
-      "url": "https://wallstreetcn.com/articles/3786331",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-20T02:45:00Z",
-      "title": "A\u80a1\u4e09\u5927\u80a1\u6307\u65e9\u76d8\u4e0b\u8dcc \uff0c \u521b\u4e1a\u677f\u8dcc\u8fd13 %\uff0c \u94f6\u884c \u3001 \u7164\u70ad\u9006\u52bf\u8d70\u5f3a \uff0c \u6052\u79d1\u6307\u8dcc\u8d853 %\uff0c \u6743\u91cd\u79d1\u7f51\u80a1\u666e\u904d\u4e0b\u8dcc",
-      "url": "https://wallstreetcn.com/articles/3786333",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-20T02:45:00Z",
-      "title": "\u8fde\u7eed\u7b2c18\u4e2a\u6708\u7ef4\u6301\u4e0d\u53d8 \uff01 11\u6708LPR\u62a5\u4ef7\u51fa\u7089 \uff1a 5\u5e74\u671f\u4ee5\u4e0a3 . 5 %\uff0c 1\u5e74\u671f3 %",
-      "url": "https://wallstreetcn.com/articles/3786332",
-      "domain": "wallstreetcn.com",
-      "language": "Chinese",
-      "lang": "zho",
-      "sourcecountry": "China"
-    },
-    {
-      "seendate": "2026-11-20T02:30:00Z",
-      "title": "With Mortgage Rates Rising , Should You Hibernate Until Spring ?",
-      "url": "https://carrollspaper.com/news/national/with-mortgage-rates-rising-should-you-hibernate-until-spring/article_02cd30c1-e2a7-5592-97a5-c2c0f9f5d743.html",
-      "domain": "carrollspaper.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T02:30:00Z",
-      "title": "History Says This Brilliant ETF Could Help You Turn $500 Per Month Into $784 , 100 While Barely Lifting a Finger .",
-      "url": "https://www.fool.com/investing/2026/11/19/history-says-this-brilliant-etf-could-help-you-turn-usd500-per-month-into-usd784-100-while-barely-lifting-a-finger/?source=iedfolrf0000001",
+      "seendate": "2026-11-24T07:45:00Z",
+      "title": "Prediction : 1  Magnificent Seven  Stock That Will Lag the Market in 2027",
+      "url": "https://www.fool.com/investing/2026/11/24/prediction-1-magnificent-seven-stock-that-will-lag-the-market-in-2027/?source=iedfolrf0000001",
       "domain": "fool.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
     },
     {
-      "seendate": "2026-11-20T02:30:00Z",
-      "title": "Ringgit opens almost flat against greenback",
-      "url": "https://www.thestar.com.my/business/business-news/2026/11/20/ringgit-opens-almost-flat-against-greenback",
-      "domain": "thestar.com.my",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Malaysia"
-    },
-    {
-      "seendate": "2026-11-20T02:30:00Z",
-      "title": "Gold Slips Below $3 , 700 as Fed Signals More Rate Hikes",
-      "url": "https://econotimes.com/Gold-Slips-Below-3-700-as-Fed-Signals-More-Rate-Hikes-1779983",
-      "domain": "econotimes.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T02:30:00Z",
-      "title": "Editorial : The fiscal hole Newsom leaves behind",
-      "url": "https://www.dailybulletin.com/2026/11/19/editorial-the-fiscal-hole-newsom-leaves-behind/",
-      "domain": "dailybulletin.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T02:30:00Z",
-      "title": "Anthropic IPO : Biggest debut ever by the numbers",
-      "url": "https://www.straitstimes.com/business/anthropic-pulled-off-the-biggest-ipo-ever-what-that-means-by-the-numbers",
-      "domain": "straitstimes.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Singapore"
-    },
-    {
-      "seendate": "2026-11-20T02:30:00Z",
-      "title": "Disney Just Raised Its Dividend 33 % and Guided to Double - Digit EPS Growth . Here What Its Results Mean for Investors .",
-      "url": "https://www.fool.com/investing/2026/11/19/disney-just-raised-its-dividend-33-and-guided-to-double-digit-eps-growth-here-s-what-its-results-mean-for-investors/?source=iedfolrf0000001",
-      "domain": "fool.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T02:30:00Z",
-      "title": "US stocks fall as Anthropic IPO fails to lift AI stocks",
-      "url": "https://www.straitstimes.com/business/companies-markets/wall-street-ends-sharply-lower-as-anthropics-debut-fails-to-revive-ai-fervour",
-      "domain": "straitstimes.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Singapore"
-    },
-    {
-      "seendate": "2026-11-20T02:30:00Z",
-      "title": "Bullish : 3 Key Takeaways for Long - Term Investors",
-      "url": "https://www.fool.com/earnings/takeaways/2026/11/19/bullish-3-key-takeaways-for-long-term-investors/?source=iedfolrf0000001",
-      "domain": "fool.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T02:30:00Z",
-      "title": "Asian stocks fall as AI trade fears hit markets",
-      "url": "https://www.straitstimes.com/business/asian-stocks-fall-anthropic-slips-in-after-hours-markets-wrap",
-      "domain": "straitstimes.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Singapore"
-    },
-    {
-      "seendate": "2026-11-20T02:30:00Z",
-      "title": "Bursa opens lower on renewed global risk aversion",
-      "url": "https://www.freemalaysiatoday.com/category/business/2026/11/20/bursa-opens-lower-on-renewed-global-risk-aversion",
-      "domain": "freemalaysiatoday.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Malaysia"
-    },
-    {
-      "seendate": "2026-11-20T02:30:00Z",
-      "title": "Why Universal Technical Institute Stock Tanked on Thursday",
-      "url": "https://www.fool.com/investing/2026/11/19/why-universal-technical-institute-stock-tanked-on-thursday/?source=iedfolrf0000001",
-      "domain": "fool.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T02:30:00Z",
-      "title": "Wall Street Slump Continues as Dow Falls Over 1 , 100 Points",
-      "url": "https://talkradio1080.iheart.com/content/2026-11-19-wall-street-slump-continues-as-dow-falls-over-1100-points/",
-      "domain": "talkradio1080.iheart.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T02:30:00Z",
-      "title": "The S & P 500 Just Fell 4 Straight Weeks From a Record High . Here Why Im Buying the Dip .",
-      "url": "https://www.fool.com/investing/2026/11/19/the-s-and-p-500-just-fell-4-straight-weeks-from-a-record-high-here-s-why-i-m-buying-the-dip/?source=iedfolrf0000001",
-      "domain": "fool.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T02:30:00Z",
-      "title": "Analysis - Anthropic listing extends Nasdaq dominant run against arch - rival NYSE",
-      "url": "https://www.thestar.com.my/tech/tech-news/2026/11/20/analysis-anthropic-listing-extends-nasdaq039s-dominant-run-against-arch-rival-nyse",
-      "domain": "thestar.com.my",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "Malaysia"
-    },
-    {
-      "seendate": "2026-11-20T02:30:00Z",
-      "title": "IBM Stock Is Down About 23 % in 2026 . Here Where I Think It Will Be in 2030 .",
-      "url": "https://www.fool.com/investing/2026/11/19/ibm-stock-is-down-about-23-in-2026-here-s-where-i-think-it-will-be-in-2030/?source=iedfolrf0000001",
-      "domain": "fool.com",
-      "language": "English",
-      "lang": "eng",
-      "sourcecountry": "United States"
-    },
-    {
-      "seendate": "2026-11-20T02:30:00Z",
-      "title": "Anthropic IPO raises $81 billion at $1 . 75 trillion valuation : Numbers that explain the record listing",
-      "url": "https://www.livemint.com/companies/news/anthropic-ipo-raises-81-billion-at-1-75-trillion-valuation-numbers-that-explain-the-record-listing-11795138451629.html",
+      "seendate": "2026-11-24T07:45:00Z",
+      "title": "Gold Rate Today Maharashtra 24 Nov 22K , 24K Prices : Mumbai , Thane , Pune , Nagpur , Nashik , Aurangabad , Kolhapur , Solapur",
+      "url": "https://www.livemint.com/money/gold-rate-today-maharashtra-24-nov-22k-24k-prices-mumbai-thane-pune-nagpur-nashik-aurangabad-kolhapur-solapur-11795500693178.html",
       "domain": "livemint.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "India"
     },
     {
-      "seendate": "2026-11-20T02:30:00Z",
-      "title": "Wall Street Slump Continues as Dow Falls Over 1 , 100 Points",
-      "url": "https://woc1420.iheart.com/content/2026-11-19-wall-street-slump-continues-as-dow-falls-over-1100-points/",
-      "domain": "woc1420.iheart.com",
+      "seendate": "2026-11-24T07:45:00Z",
+      "title": "PYMNTS | How a 10 % Credit Card Rate Cap Could Change Rewards Funding",
+      "url": "https://www.pymnts.com/credit-cards/2026/how-10percent-credit-card-rate-cap-could-change-rewards-funding/",
+      "domain": "pymnts.com",
       "language": "English",
       "lang": "eng",
       "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T07:45:00Z",
+      "title": "Not Starlink . Not Starship . This SpaceX Business Could Be Worth $80 Billion on Its Own .",
+      "url": "https://www.fool.com/investing/2026/11/24/not-starlink-not-starship-this-spacex-business-could-be-worth-usd80-billion-on-its-own/?source=iedfolrf0000001",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T07:45:00Z",
+      "title": "Nvidia comeback bet : Why Jensen Huang return calmed markets , for now",
+      "url": "https://www.niagarafallsreview.ca/business/nvidia-s-comeback-bet-why-jensen-huang-s-return-calmed-markets-for-now/article_d190566b-3b35-5771-88fc-5e80690fd1e7.html",
+      "domain": "niagarafallsreview.ca",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Canada"
+    },
+    {
+      "seendate": "2026-11-24T07:45:00Z",
+      "title": "Nvidia Has Incredible News for Artificial Intelligence ( AI ) Investors . Here Is My Top Stock to Buy Before It Is Too Late",
+      "url": "https://www.fool.com/investing/2026/11/24/nvidia-has-incredible-news-for-artificial-intelligence-ai-investors-here-is-my-top-stock-to-buy-before-it-is-too-late/?source=iedfolrf0000001",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T07:45:00Z",
+      "title": "Trump intervention on behalf of Jensen Huang gives Democrats another 2028 target",
+      "url": "https://www.stcatharinesstandard.ca/business/trump-s-intervention-on-behalf-of-jensen-huang-gives-democrats-another-2028-target/article_dd943c81-9ddd-586e-b4bb-a5b8d7eaa39d.html",
+      "domain": "stcatharinesstandard.ca",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Canada"
+    },
+    {
+      "seendate": "2026-11-24T07:45:00Z",
+      "title": "Technology promised ease . Now it making many americans uneasy .",
+      "url": "https://www.texarkanagazette.com/news/2026/nov/23/technology-promised-ease-now-its-making-many/",
+      "domain": "texarkanagazette.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T07:15:00Z",
+      "title": "Nvidia reinstates CEO Jensen Huang , why Arizona is watching",
+      "url": "https://www.azfamily.com/2026/11/24/nvidia-reinstates-ceo-jensen-huang-why-arizona-is-watching/",
+      "domain": "azfamily.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T07:15:00Z",
+      "title": "Trump intervention on behalf of Jensen Huang gives Democrats another 2028 target",
+      "url": "https://www.durangoherald.com/articles/associated-press/trumps-intervention-on-behalf-of-jensen-huang-gives-democrats-another-2028-target/",
+      "domain": "durangoherald.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T07:15:00Z",
+      "title": "Nvidia share price could double as Jensen Huang returns as CEO , says deVere Group Nigel Green . Here why",
+      "url": "https://economictimes.indiatimes.com/markets/stocks/news/nvidia-share-price-could-double-as-jensen-huang-returns-as-ceo-says-devere-groups-nigel-green-heres-why/articleshow/136121626.cms",
+      "domain": "economictimes.indiatimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-24T07:15:00Z",
+      "title": "When elephants dance , everyone moves to give space : Uday Kotak on Huang reinstatement",
+      "url": "http://www.pakistantelegraph.com/news/279451423/when-elephants-dance-everyone-moves-to-give-space-uday-kotak-on-huang-reinstatement",
+      "domain": "pakistantelegraph.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Pakistan"
+    },
+    {
+      "seendate": "2026-11-24T07:15:00Z",
+      "title": "Gold edges higher after steep weekly losses",
+      "url": "https://www.hurriyetdailynews.com/gold-edges-higher-after-steep-weekly-losses-229773",
+      "domain": "hurriyetdailynews.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Turkey"
+    },
+    {
+      "seendate": "2026-11-24T07:15:00Z",
+      "title": "Kospi roars back with Huang Nvidia comeback",
+      "url": "https://www.koreaherald.com:443/article/10947595",
+      "domain": "koreaherald.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "South Korea"
+    },
+    {
+      "seendate": "2026-11-24T07:15:00Z",
+      "title": "Nvidia comeback bet : Why Jensen Huang return calmed markets , for now",
+      "url": "https://www.durangoherald.com/articles/associated-press/nvidias-comeback-bet-why-jensen-huangs-return-calmed-markets-for-now/",
+      "domain": "durangoherald.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T07:15:00Z",
+      "title": "Nvidia Reinstates Jensen Huang as President , CEO and Board Member \u2013 NaturalNews . com",
+      "url": "https://www.naturalnews.com/2026-11-23-nvidia-reinstates-jensen-huang-president-ceo-board.html",
+      "domain": "naturalnews.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T07:15:00Z",
+      "title": "Trump Rewrites the Lame - Duck Rules with Flex on Nvidia CEO",
+      "url": "https://english.aawsat.com/world/5344931-trump-rewrites-lame-duck-rules-flex-nvidia-ceo",
+      "domain": "english.aawsat.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Syria"
+    },
+    {
+      "seendate": "2026-11-24T07:15:00Z",
+      "title": "Nvidia comeback bet : Why Jensen Huang return calmed markets , for now | Nation",
+      "url": "http://www.stardem.com/ap/nation/nvidia-s-comeback-bet-why-jensen-huang-s-return-calmed-markets-for-now/article_3cd73cce-8afd-57f8-a09f-801f58112d83.html",
+      "domain": "stardem.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T07:15:00Z",
+      "title": "Trump intervention on behalf of Jensen Huang gives Democrats another 2028 target",
+      "url": "https://www.wellandtribune.ca/business/trump-s-intervention-on-behalf-of-jensen-huang-gives-democrats-another-2028-target/article_3467f3f9-2220-5cfa-95b8-66f7aed19ecb.html",
+      "domain": "wellandtribune.ca",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Canada"
+    },
+    {
+      "seendate": "2026-11-24T07:15:00Z",
+      "title": "Gold Edges Lower as Markets Await US Inflation Data",
+      "url": "https://english.aawsat.com/business/5344936-gold-edges-lower-markets-await-us-inflation-data",
+      "domain": "english.aawsat.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Syria"
+    },
+    {
+      "seendate": "2026-11-24T07:15:00Z",
+      "title": "Trump intervention on behalf of Jensen Huang gives Democrats another 2028 target",
+      "url": "http://www.stardem.com/ap/nation/trumps-intervention-on-behalf-of-jensen-huang-gives-democrats-another-2028-target/article_6679105b-3979-552d-9242-fdb9f5c23089.html",
+      "domain": "stardem.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T07:15:00Z",
+      "title": "Why Trump wanted Jensen Huang back as Nvidia CEO",
+      "url": "https://www.hurriyetdailynews.com/why-trump-wanted-jensen-huang-back-as-nvidia-ceo-229774",
+      "domain": "hurriyetdailynews.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Turkey"
+    },
+    {
+      "seendate": "2026-11-24T07:15:00Z",
+      "title": "Trump rewrites the lame - duck rules with flex on Nvidia CEO",
+      "url": "https://www.channelnewsasia.com/world/trump-lame-duck-flex-nvidia-ceo-jensen-huang-6575306",
+      "domain": "channelnewsasia.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T07:15:00Z",
+      "title": "[ Column ] Thank you for fighting the good fight against Trump , America",
+      "url": "https://www.hani.co.kr/arti/english_edition/english_editorials/1288856.html",
+      "domain": "hani.co.kr",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "South Korea"
+    },
+    {
+      "seendate": "2026-11-24T07:15:00Z",
+      "title": "Legarda : Confront waste , ease costs , build Filipino industries to strengthen economy",
+      "url": "https://www.manilatimes.net/2026/11/24/tmt-newswire/legarda-confront-waste-ease-costs-build-filipino-industries-to-strengthen-economy/2476838",
+      "domain": "manilatimes.net",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Philippines"
+    },
+    {
+      "seendate": "2026-11-24T07:15:00Z",
+      "title": "Trump intervention on behalf of Jensen Huang gives Democrats another 2028 target",
+      "url": "https://santamariatimes.com/ap/business/trumps-intervention-on-behalf-of-jensen-huang-gives-democrats-another-2028-target/article_bd87d1c1-8fc8-5bf6-9cb7-e2f328cea0da.html",
+      "domain": "santamariatimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T07:15:00Z",
+      "title": "Asian Stocks Rally as Huang Return to Nvidia Revives the AI Trade",
+      "url": "https://english.aawsat.com/business/5344926-asian-stocks-rally-huang%E2%80%99s-return-nvidia-revives-ai-trade",
+      "domain": "english.aawsat.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Syria"
+    },
+    {
+      "seendate": "2026-11-24T07:15:00Z",
+      "title": "Mahanadi Coalfields IPO Subscribed 1 . 52 Times Amid Concerns",
+      "url": "https://udaipurkiran.com/mahanadi-coalfields-ipo-subscribed-1-52-times-amid-concerns/",
+      "domain": "udaipurkiran.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-24T06:30:00Z",
+      "title": "MSCI denies Indonesia market downgrade assurances",
+      "url": "https://www.straitstimes.com/asia/se-asia/msci-denies-assurances-to-indonesia-over-market-downgrade-says-review-remains-unchanged",
+      "domain": "straitstimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Singapore"
+    },
+    {
+      "seendate": "2026-11-24T06:30:00Z",
+      "title": "Trump tough - on - China talk always just an act",
+      "url": "https://www.ironmountaindailynews.com/opinion/2026/11/trumps-tough-on-china-talk-always-just-an-act/",
+      "domain": "ironmountaindailynews.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T06:30:00Z",
+      "title": "Trump intervention on behalf of Jensen Huang gives Democrats another 2028 target",
+      "url": "http://www.rockymounttelegram.com/news/national/trumps-intervention-on-behalf-of-jensen-huang-gives-democrats-another-2028-target/article_31eb4101-50f8-5fcf-bdc7-10cb2287ad8e.html",
+      "domain": "rockymounttelegram.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T06:30:00Z",
+      "title": "When elephants dance , everyone moves to give space : Uday Kotak on Huang reinstatement",
+      "url": "http://www.iraqsun.com/news/279451423/when-elephants-dance-everyone-moves-to-give-space-uday-kotak-on-huang-reinstatement",
+      "domain": "iraqsun.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Iraq"
+    },
+    {
+      "seendate": "2026-11-24T06:30:00Z",
+      "title": "Gold Rate Today , November 24 : Gold Prices Rebound After Sharp Crash ; 24K Gold Rises to \u20b91 . 26 Lakh , 22K at \u20b91 . 16 Lakh ; Check City - Wise Rates",
+      "url": "https://www.jagranjosh.com/general-knowledge/gold-rate-today-november-24-gold-prices-rebound-after-sharp-crash-24k-gold-rises-to-126-lakh-22k-at-116-lakh-check-citywise-rates-1820014085-1",
+      "domain": "jagranjosh.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-24T06:30:00Z",
+      "title": "Could High - Frequency Trading Slow Down the Real Economy ?",
+      "url": "https://internationalbanker.com/brokerage/could-high-frequency-trading-slow-down-the-real-economy/",
+      "domain": "internationalbanker.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-11-24T06:30:00Z",
+      "title": "Dow Jones Top Financial Services Headlines at 12 AM ET : Strategy and Crypto Stocks Rally as Bitcoin Rebounds Past $63 , 000 . Is the Jump Temporary ? | Julius ...",
+      "url": "https://www.morningstar.com/news/dow-jones/2026112439/dow-jones-top-financial-services-headlines-at-12-am-et-strategy-and-crypto-stocks-rally-as-bitcoin-rebounds-past-63000-is-the-jump-temporary-julius",
+      "domain": "morningstar.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-11-24T06:30:00Z",
+      "title": "Monday Blues : Profit - booking Puts Brakes on Bull Run",
+      "url": "https://economictimes.indiatimes.com/epaper/delhicapital/2026/nov/24/et-front/monday-blues-profit-booking-puts-brakes-on-bull-run/articleshow/136114048.cms",
+      "domain": "economictimes.indiatimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-24T06:30:00Z",
+      "title": "When elephants dance , everyone moves to give space : Uday Kotak on Huang reinstatement",
+      "url": "http://www.milwaukeesun.com/news/279451423/when-elephants-dance-everyone-moves-to-give-space-uday-kotak-on-huang-reinstatement",
+      "domain": "milwaukeesun.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T06:30:00Z",
+      "title": "Frontier Nuclear Announces Receipt of Nasdaq Notice Regarding Delayed Filing of Annual Report on Form 20 - F",
+      "url": "https://www.cantechletter.com/newswires/frontier-nuclear-announces-receipt-of-nasdaq-notice-regarding-delayed-filing-of-annual-report-on-form-20-f/",
+      "domain": "cantechletter.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Canada"
+    },
+    {
+      "seendate": "2026-11-24T06:30:00Z",
+      "title": "Nvidia comeback bet : Why Jensen Huang return calmed markets , for now | Nation",
+      "url": "http://www.rockymounttelegram.com/news/national/nvidia-s-comeback-bet-why-jensen-huang-s-return-calmed-markets-for-now/article_963bd1de-d7e8-59aa-a262-92b1b7e53fac.html",
+      "domain": "rockymounttelegram.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T06:30:00Z",
+      "title": "Asian stocks rally after Wall Street rebound as Jensen Huang returns as Nvidia CEO :: WRAL . com",
+      "url": "https://www.wral.com/news/ap/feec0-asian-stocks-rally-after-wall-street-rebound-as-jensen-huang-returns-as-nvidia-s-ceo/",
+      "domain": "wral.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T06:30:00Z",
+      "title": "EMEA Morning Briefing : Jensen Huang Return to Nvidia Sparks AI Rally",
+      "url": "https://www.morningstar.com/news/dow-jones/2026112445/emea-morning-briefing-jensen-huangs-return-to-nvidia-sparks-ai-rally",
+      "domain": "morningstar.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-11-24T06:30:00Z",
+      "title": "AI drives dollar - Shafaqna English | International Shia News & Fatwas",
+      "url": "https://en.shafaqna.com/494496/ai-drives-dollar/",
+      "domain": "en.shafaqna.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Saudi Arabia"
+    },
+    {
+      "seendate": "2026-11-24T06:30:00Z",
+      "title": "University Further Reduces Deficit as UCMed Runs Largest - Ever Surplus",
+      "url": "https://chicagomaroon.com/54952/news/university-continues-to-reduce-deficit-as-ucmed-runs-largest-ever-surplus/",
+      "domain": "chicagomaroon.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T06:15:00Z",
+      "title": "MSCI says no decision made on Indonesia market downgrade proposal",
+      "url": "https://www.businesstimes.com.sg/international/asean/msci-says-no-decision-made-indonesia-market-downgrade-proposal",
+      "domain": "businesstimes.com.sg",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Singapore"
+    },
+    {
+      "seendate": "2026-11-24T06:15:00Z",
+      "title": "Nvidia comeback bet : Why Jensen Huang return calmed markets , for now | Nation & World",
+      "url": "https://www.ktvo.com/news/nation-world/nvidia-s-comeback-bet-why-jensen-huang-s-return-calmed-markets-for-now/article_a7c2b61e-c0c9-5e20-9fd2-27263ce45a2c.html",
+      "domain": "ktvo.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T06:15:00Z",
+      "title": "SharkNinja to join S & P 500 ; Paycom and Guardian shift indexes",
+      "url": "https://seekingalpha.com/news/4675975-sharkninja-to-join-sp-500-paycom-and-guardian-shift-indexes",
+      "domain": "seekingalpha.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T06:15:00Z",
+      "title": "Hong Kong Stock Market Poised To Open To The Upside",
+      "url": "https://www.rttnews.com/story.aspx?Id=3717267",
+      "domain": "rttnews.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T06:15:00Z",
+      "title": "Asian stocks rally after Wall Street rebound as Jensen Huang returns as Nvidia CEO",
+      "url": "https://www.ksat.com/business/2026/11/24/asian-stocks-rally-after-wall-street-rebound-as-jensen-huang-returns-as-nvidias-ceo/",
+      "domain": "ksat.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T06:15:00Z",
+      "title": "Thai Stock Market May Tick Higher Again On Tuesday",
+      "url": "https://www.rttnews.com/story.aspx?Id=3717270",
+      "domain": "rttnews.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T06:15:00Z",
+      "title": "Australian Market Extends Early Strong Gains In Mid - market",
+      "url": "https://www.rttnews.com/story.aspx?Id=3717323",
+      "domain": "rttnews.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T06:15:00Z",
+      "title": "Trump intervention on behalf of Jensen Huang gives Democrats another 2028 target",
+      "url": "https://www.ktvo.com/news/nation-world/trumps-intervention-on-behalf-of-jensen-huang-gives-democrats-another-2028-target/article_36af9a58-8655-51b8-b74e-1eaffebcecfc.html",
+      "domain": "ktvo.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T06:15:00Z",
+      "title": "Bursa Malaysia stays higher as tech stocks drive positive sentiment",
+      "url": "https://www.thestar.com.my/business/business-news/2026/11/24/bursa-malaysia-stays-higher-as-tech-stocks-drive-positive-sentiment",
+      "domain": "thestar.com.my",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Malaysia"
+    },
+    {
+      "seendate": "2026-11-24T06:15:00Z",
+      "title": "KOSPI Jumps 7 . 5 %, Nikkei Gains 5 % As Jensen Huang Reinstatement At Nvidia Fuels AI Stock Rally",
+      "url": "https://www.freepressjournal.in/business/kospi-jumps-75-nikkei-gains-5-as-jensen-huangs-reinstatement-at-nvidia-fuels-ai-stock-rally",
+      "domain": "freepressjournal.in",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-24T06:15:00Z",
+      "title": "ICYMI : China 90 billion yuan rescue : record state ETF buying struggles to halt AI sell - off",
+      "url": "https://investinglive.com/stock-market-update/icymi-china-s-90-billion-yuan-rescue-record-state-etf-buying-struggles-to-halt-ai-sell-off/",
+      "domain": "investinglive.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": ""
+    },
+    {
+      "seendate": "2026-11-24T06:15:00Z",
+      "title": "Wall Street catches Jensen Huang fever , but is this all a dead cat bounce ?",
+      "url": "https://investinglive.com/stocks/wall-street-catches-jensen-huang-fever-but-is-this-all-a-dead-cat-bounce/",
+      "domain": "investinglive.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": ""
+    },
+    {
+      "seendate": "2026-11-24T05:15:00Z",
+      "title": "Asian stocks rally after Wall Street rebound as Jensen Huang returns as Nvidia CEO | World News",
+      "url": "http://www.thegazette.com/news/world/asian-stocks-rally-after-wall-street-rebound-as-jensen-huang-returns-as-nvidia-s-ceo/article_94740cc8-d0c4-5e46-b00f-cb99732875a6.html",
+      "domain": "thegazette.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T05:15:00Z",
+      "title": "Asian stocks rally after Wall Street rebound as Jensen Huang returns as Nvidia CEO | News",
+      "url": "http://www.wdtimes.com/news/world/asian-stocks-rally-after-wall-street-rebound-as-jensen-huang-returns-as-nvidia-s-ceo/article_f60054c1-1fe0-5ae9-b220-8d4f328a1e42.html",
+      "domain": "wdtimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T05:15:00Z",
+      "title": "Gold , silver prices today 24 Nov , Tuesday : Check 24K , 22K gold , 999 silver rates in Delhi , Mumbai , Kolkata and others",
+      "url": "https://www.livemint.com/money/personal-finance/gold-silver-prices-today-24-nov-tuesday-check-24k-22k-gold-999-silver-rates-in-delhi-mumbai-kolkata-and-others-11795491016117.html",
+      "domain": "livemint.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-24T05:15:00Z",
+      "title": "Israeli capital markets offer Australian investors opportunity to diversify",
+      "url": "http://www.jpost.com/conferences/article-915838",
+      "domain": "jpost.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Israel"
+    },
+    {
+      "seendate": "2026-11-24T05:15:00Z",
+      "title": "Why Donald Trump is taking credit for Jensen Huang reinstatement as Nvidia CEO",
+      "url": "https://www.abc.net.au/news/2026-11-24/trump-influence-on-jensen-huang-nvidia/107419642",
+      "domain": "abc.net.au",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Australia"
+    },
+    {
+      "seendate": "2026-11-24T05:15:00Z",
+      "title": "Trump owned at least $12 million in Nvidia stock at the end of last year",
+      "url": "https://abcnews.com/US/trump-owned-12-million-nvidia-stock-end-year/story?id=138393684",
+      "domain": "abcnews.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T05:15:00Z",
+      "title": "Asian stocks rally after Wall Street rebound as Jensen Huang returns as Nvidia CEO",
+      "url": "https://www.aol.com/articles/asian-stocks-rally-wall-street-033125000.html",
+      "domain": "aol.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T05:15:00Z",
+      "title": "AP News in Brief at 11 : 04 p . m . EST",
+      "url": "http://www.thegazette.com/news/national/ap-news-in-brief-at-11-04-p-m-est/article_0e4687f7-1b2e-5d84-a88b-131fb42d37a8.html",
+      "domain": "thegazette.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T05:15:00Z",
+      "title": "It wasnt just Trump : Vance also  personally  pushed for Nvidia to reinstall Jensen Huang",
+      "url": "https://www.independent.co.uk/news/world/americas/us-politics/jd-vance-nvidia-jensen-huang-trump-b3090282.html",
+      "domain": "independent.co.uk",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United Kingdom"
+    },
+    {
+      "seendate": "2026-11-24T05:15:00Z",
+      "title": "Asian stocks rally after Wall Street rebound as Jensen Huang returns as Nvidia CEO | News",
+      "url": "http://www.dailyadvance.com/news/world/asian-stocks-rally-after-wall-street-rebound-as-jensen-huang-returns-as-nvidia-s-ceo/article_764fb088-0ee0-52c9-9978-9e87e9b990c4.html",
+      "domain": "dailyadvance.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T05:15:00Z",
+      "title": "Dividend , Buyback , rights issue record date Nov 25 : Zee , Vraj Iron , Bonlon , and more : 5 stocks to turn ex - date tomorrow",
+      "url": "https://www.livemint.com/market/stock-market-news/dividend-buyback-rights-issue-record-date-nov-25-zee-vraj-iron-bonlon-and-more-5-stocks-to-turn-ex-date-tomorrow-11795491976798.html",
+      "domain": "livemint.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-24T05:15:00Z",
+      "title": "US markets rebound sharply as Nvidia soars on Huang return ; Nasdaq rallies 6 . 5 pc",
+      "url": "https://ianslive.in/us-markets-rebound-sharply-as-nvidia-soars-on-huangs-return--20261124094716",
+      "domain": "ianslive.in",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-24T05:15:00Z",
+      "title": "Only a handful of stocks near 52 - week highs despite November rebound",
+      "url": "https://www.livemint.com/market/stock-market-news/indian-stock-market-rally-november-sensex-bse-500-11795489292786.html",
+      "domain": "livemint.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-24T05:15:00Z",
+      "title": "Persistent Systems , Ather Energy shares : Top 2 stocks to buy on 25 Nov ; check expected returns , stop loss , target price",
+      "url": "https://www.livemint.com/market/stock-market-news/persistent-systems-ather-energy-shares-top-2-stocks-to-buy-on-25-nov-check-expected-returns-stop-loss-target-price-11795486721247.html",
+      "domain": "livemint.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-24T05:15:00Z",
+      "title": "Vanguard , Fidelity clash on hidden 401 ( k )- to - IRA rollover cash",
+      "url": "https://www.aol.com/articles/vanguard-fidelity-clash-hidden-401-012056000.html",
+      "domain": "aol.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T05:15:00Z",
+      "title": "Why Donald Trump believed he needed to get Jensen Huang back on top at AI behemoth Nvidia",
+      "url": "https://www.republicanherald.com/2026/11/23/trump-nvidia-intervention/",
+      "domain": "republicanherald.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T05:15:00Z",
+      "title": "Why Donald Trump believed he needed to get Jensen Huang back on top at AI behemoth Nvidia",
+      "url": "https://www.thereporteronline.com/2026/11/23/trump-nvidia-intervention/",
+      "domain": "thereporteronline.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T05:15:00Z",
+      "title": "Stocks climb as Huang stunning return to Nvidia lifts optimism",
+      "url": "https://arynews.tv/stocks-climb-as-huangs-stunning-return-to-nvidia-lifts-optimism",
+      "domain": "arynews.tv",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Pakistan"
+    },
+    {
+      "seendate": "2026-11-24T04:45:00Z",
+      "title": "Chile Stocks Rise 0 . 96 % as Peso Firms | Chile Market Report , Nov 23",
+      "url": "https://www.riotimesonline.com/chile-markets-ipsa-peso-monday-november-23-2026/",
+      "domain": "riotimesonline.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Brazil"
+    },
+    {
+      "seendate": "2026-11-24T04:45:00Z",
+      "title": "Asian stocks rally after Wall Street rebound as Jensen Huang returns as Nvidia CEO | News",
+      "url": "http://www.goskagit.com/news/world/asian-stocks-rally-after-wall-street-rebound-as-jensen-huang-returns-as-nvidia-s-ceo/article_fa0f4980-a300-535b-9c45-c4f16a0ba108.html",
+      "domain": "goskagit.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T04:45:00Z",
+      "title": "US markets rebound sharply as Nvidia soars on Huang return ; Nasdaq rallies 6 . 5 pc",
+      "url": "https://www.prokerala.com/news/articles/a1840372.html",
+      "domain": "prokerala.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-24T04:45:00Z",
+      "title": "US Stocks Jump 4 . 73 % as Treasury Yield Hits 4 . 95 %",
+      "url": "https://www.riotimesonline.com/global-economy-briefing-november-24-2026/",
+      "domain": "riotimesonline.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Brazil"
+    },
+    {
+      "seendate": "2026-11-24T04:45:00Z",
+      "title": "Nvidia Market Capitalization Rises by Nearly $1 Trillion Following Jensen Huang Return",
+      "url": "http://www.bgnes.com/economy/nvidia-s-market-capitalization-rises-by-nearly-1-trillion-following-jensen-huang-s-return",
+      "domain": "bgnes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Bulgaria"
+    },
+    {
+      "seendate": "2026-11-24T04:45:00Z",
+      "title": "Brazil Stocks Fall 0 . 95 % as Petrobras Plans Payout",
+      "url": "https://www.riotimesonline.com/brazils-financial-morning-call-for-tuesday-november-24-2026/",
+      "domain": "riotimesonline.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Brazil"
+    },
+    {
+      "seendate": "2026-11-24T04:45:00Z",
+      "title": "When elephants dance , everyone moves to give space : Uday Kotak on Huang reinstatement",
+      "url": "http://www.asiabulletin.com/news/279451423/when-elephants-dance-everyone-moves-to-give-space-uday-kotak-on-huang-reinstatement",
+      "domain": "asiabulletin.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "China"
+    },
+    {
+      "seendate": "2026-11-24T04:45:00Z",
+      "title": "Gold Rises 2 . 33 % to US$3 , 609 as Stocks Rally | Gold & Silver , Nov 23",
+      "url": "https://www.riotimesonline.com/gold-silver-precious-metals-monday-november-23-2026/",
+      "domain": "riotimesonline.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Brazil"
+    },
+    {
+      "seendate": "2026-11-24T04:45:00Z",
+      "title": "Asian stocks rally after Wall Street rebound as Jensen Huang returns as Nvidia CEO",
+      "url": "https://www.stcatharinesstandard.ca/business/asian-stocks-rally-after-wall-street-rebound-as-jensen-huang-returns-as-nvidia-s-ceo/article_e8a0ea9a-2e00-50d3-b773-4fe5c07ffa8b.html",
+      "domain": "stcatharinesstandard.ca",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Canada"
+    },
+    {
+      "seendate": "2026-11-24T04:45:00Z",
+      "title": "Copper Fund Gains 2 . 70 % as Miners Surge | Copper Wrap , Nov 23",
+      "url": "https://www.riotimesonline.com/copper-markets-latam-monday-november-23-2026/",
+      "domain": "riotimesonline.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Brazil"
+    },
+    {
+      "seendate": "2026-11-24T04:45:00Z",
+      "title": "When elephants dance , everyone moves to give space : Uday Kotak on Huang reinstatement",
+      "url": "https://news.webindia123.com/news/Articles/Business/20261124/4523714.html",
+      "domain": "news.webindia123.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-24T04:45:00Z",
+      "title": "Democrat Conflicting AI Camps",
+      "url": "https://foreignpolicy.com/2026/11/23/democratic-party-ai-race-china-regulation-nvidia-data-centers/?tpcc=recirc_trending062921",
+      "domain": "foreignpolicy.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T04:45:00Z",
+      "title": "Consumer sentiment in S . Korea falls for 2nd month in Nov",
+      "url": "https://www.prokerala.com/news/articles/a1840368.html",
+      "domain": "prokerala.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-24T04:45:00Z",
+      "title": "Zinc Miner Nexa Jumps 9 . 70 % as Stocks Rally | Zinc Wrap , Nov 23",
+      "url": "https://www.riotimesonline.com/zinc-markets-latam-monday-november-23-2026/",
+      "domain": "riotimesonline.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Brazil"
+    },
+    {
+      "seendate": "2026-11-24T04:45:00Z",
+      "title": "Trump rewrites the lame - duck rules with flex on Nvidia CEO",
+      "url": "https://bdnews24.com/world/americas/yrgjemrs83",
+      "domain": "bdnews24.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Bangladesh"
+    },
+    {
+      "seendate": "2026-11-24T04:45:00Z",
+      "title": "Huang Nvidia Return Boosts Asian Markets \u2013 Chennaionline",
+      "url": "https://www.chennaionline.com/news/huangs-nvidia-return-boosts-asian-markets/",
+      "domain": "chennaionline.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-24T04:45:00Z",
+      "title": "Lithium Stocks Jump 5 . 23 % as Wall Street Rallies",
+      "url": "https://www.riotimesonline.com/lithium-markets-latam-monday-november-23-2026/",
+      "domain": "riotimesonline.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Brazil"
+    },
+    {
+      "seendate": "2026-11-24T04:45:00Z",
+      "title": "S\u00e3o Paulo Daily Brief : free Tuesday at MASP",
+      "url": "https://www.riotimesonline.com/sao-paulo-daily-brief-for-tuesday-november-24-2026/",
+      "domain": "riotimesonline.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Brazil"
+    },
+    {
+      "seendate": "2026-11-24T04:45:00Z",
+      "title": "Vale Shares Rise 3 . 27 % as China Steel Stays Weak",
+      "url": "https://www.riotimesonline.com/iron-ore-markets-latam-monday-november-23-2026/",
+      "domain": "riotimesonline.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Brazil"
+    },
+    {
+      "seendate": "2026-11-24T04:45:00Z",
+      "title": "Steel Stocks Rise 4 . 18 % as Gerdau , Ternium Rebound",
+      "url": "https://www.riotimesonline.com/steel-markets-latam-monday-november-23-2026/",
+      "domain": "riotimesonline.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Brazil"
+    },
+    {
+      "seendate": "2026-11-24T04:45:00Z",
+      "title": "Rio museum day : Tuesday 24 November brief",
+      "url": "https://www.riotimesonline.com/rio-de-janeiro-daily-brief-for-tuesday-november-24-2026/",
+      "domain": "riotimesonline.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Brazil"
+    },
+    {
+      "seendate": "2026-11-24T04:45:00Z",
+      "title": "Colombian Peso Slips as Dollar Tops 3 , 500 | Colombia Market Report \u2026",
+      "url": "https://www.riotimesonline.com/colombia-markets-colcap-peso-monday-november-23-2026/",
+      "domain": "riotimesonline.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Brazil"
+    },
+    {
+      "seendate": "2026-11-24T04:45:00Z",
+      "title": "What Jensen Huang return as Nvidia CEO means",
+      "url": "https://www.bnnbloomberg.ca/business/artificial-intelligence/2026/11/24/what-jensen-huangs-return-as-nvidia-ceo-means-for-investors/",
+      "domain": "bnnbloomberg.ca",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Canada"
+    },
+    {
+      "seendate": "2026-11-24T04:45:00Z",
+      "title": "US Oil Fund Falls 4 . 49 % as Supply Returns",
+      "url": "https://www.riotimesonline.com/oil-markets-latam-monday-november-23-2026/",
+      "domain": "riotimesonline.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Brazil"
+    },
+    {
+      "seendate": "2026-11-24T04:30:00Z",
+      "title": "Stock Market Holiday Today : Is Market Closed on November 24 for Guru Nanak Jayanti ? Check Trading Timings and Market Schedule",
+      "url": "https://www.jagranjosh.com/general-knowledge/stock-market-holiday-today-is-market-closed-on-november-24-for-guru-nanak-jayanti-check-trading-timings-and-market-schedule-1820014084-1",
+      "domain": "jagranjosh.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-24T03:30:00Z",
+      "title": "Why Donald Trump believed he needed to get Jensen Huang back on top at AI behemoth Nvidia",
+      "url": "https://isp.netscape.com:443/pf/story/0001/20261123/e5ab261b27bf80d1562a345923bf6a59",
+      "domain": "isp.netscape.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T03:30:00Z",
+      "title": "Why Donald Trump believed he needed to get Jensen Huang back on top at AI behemoth Nvidia",
+      "url": "https://isp.netscape.com:443/news/story/0001/20261123/e5ab261b27bf80d1562a345923bf6a59",
+      "domain": "isp.netscape.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T03:30:00Z",
+      "title": "SpaceX Stock Is Down 39 % From Its High . Here What Has to Happen Before Id Buy .",
+      "url": "https://www.fool.com/investing/2026/11/23/spacex-stock-is-down-39-from-its-high-here-s-what-has-to-happen-before-i-d-buy/?source=iedfolrf0000001",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T03:30:00Z",
+      "title": "Six key questions raised by Jensen Huang return to Nvidia",
+      "url": "https://www.cnbc.com/2026/11/24/nvidia-jensen-huang-politics-market.html",
+      "domain": "cnbc.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T03:30:00Z",
+      "title": "Nvidia board unanimously reinstates Jensen Huang as CEO",
+      "url": "https://macaudailytimes.com.mo/nvidia-board-unanimously-reinstates-jensen-huang-as-ceo.html",
+      "domain": "macaudailytimes.com.mo",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Macau"
+    },
+    {
+      "seendate": "2026-11-24T03:30:00Z",
+      "title": "Huang stunning return to Nvidia sparks relief rally in battered AI stocks",
+      "url": "https://www.dealstreetasia.com/stories/huang-nvidia-return-ai-stock-rally-502010",
+      "domain": "dealstreetasia.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-24T03:30:00Z",
+      "title": "Trump rewrites the lame - duck rules with flex on Nvidia CEO",
+      "url": "https://lufkindailynews.com/news_reuters/top_news/trump-rewrites-the-lame-duck-rules-with-flex-on-nvidia-ceo/article_bbea98ab-972c-5423-b195-6b2bc19b3342.html",
+      "domain": "lufkindailynews.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T03:30:00Z",
+      "title": "How to Invest in Humanoid Robots : 3 Stocks to Watch",
+      "url": "https://www.fool.com/investing/2026/11/23/how-to-invest-in-humanoid-robots-3-stocks-to-watch/?source=iedfolrf0000001",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T03:30:00Z",
+      "title": "How to protect your retirement savings if the AI boom fizzles - Shelbyville Times - Gazette",
+      "url": "http://www.t-g.com/premium/theconversation/stories/how-to-protect-your-retirement-savings-if-the-ai-boom-fizzles,239301",
+      "domain": "t-g.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T03:30:00Z",
+      "title": "Assurant : 3 Key Takeaways for Long - Term Investors",
+      "url": "https://www.fool.com/earnings/takeaways/2026/11/23/assurant-3-key-takeaways-for-long-term-investors/?source=iedfolrf0000001",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T03:30:00Z",
+      "title": "Why Donald Trump believed he needed to get Jensen Huang back on top at AI behemoth Nvidia",
+      "url": "https://www.winchesterstar.com/associated_press/washington/why-donald-trump-believed-he-needed-to-get-jensen-huang-back-on-top-at-ai/article_77554b10-4f5e-59dc-bfdc-6c7f47785610.html",
+      "domain": "winchesterstar.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T03:30:00Z",
+      "title": "2 Asset Manager Stocks to Buy That Each Oversee More Than $1 Trillion",
+      "url": "https://www.fool.com/investing/2026/11/23/2-asset-manager-stocks-to-buy-that-each-oversee-mo/?source=iedfolrf0000001",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T03:30:00Z",
+      "title": "Anthropic Stock Fell About 20 % From Its First Trade in Its First 2 Days . Here the Price at Which Id Buy It .",
+      "url": "https://www.fool.com/investing/2026/11/23/anthropic-stock-fell-about-20-from-its-first-trade-in-its-first-2-days-here-s-the-price-at-which-i-d-buy-it/?source=iedfolrf0000001",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T03:30:00Z",
+      "title": "Nvidia rejoices at Jensen Huang second coming as White House takes victory lap | Nvidia",
+      "url": "https://www.theguardian.com/technology/2026/nov/23/nvidia-jensen-huang-return-ceo",
+      "domain": "theguardian.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United Kingdom"
+    },
+    {
+      "seendate": "2026-11-24T03:30:00Z",
+      "title": "Quaker Chemical : 3 Key Takeaways for Long - Term Investors",
+      "url": "https://www.fool.com/earnings/takeaways/2026/11/23/quaker-chemical-3-key-takeaways-for-long-term-investors/?source=iedfolrf0000001",
+      "domain": "fool.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T03:30:00Z",
+      "title": "Trump flexes influence after midterm losses with intervention at Nvidia",
+      "url": "https://bworldonline.com/world/2026/11/24/796227/trump-flexes-influence-after-midterm-losses-with-intervention-at-nvidia/",
+      "domain": "bworldonline.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Philippines"
+    },
+    {
+      "seendate": "2026-11-24T03:30:00Z",
+      "title": "Gold ticks higher as buyers return - Shafaqna English | International Shia News & Fatwas",
+      "url": "https://en.shafaqna.com/494390/gold-ticks-higher-as-buyers-return/",
+      "domain": "en.shafaqna.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Saudi Arabia"
+    },
+    {
+      "seendate": "2026-11-24T03:30:00Z",
+      "title": "Why Donald Trump believed he needed to get Jensen Huang back on top at AI behemoth Nvidia",
+      "url": "https://www.sun-sentinel.com/2026/11/23/trump-nvidia-intervention/",
+      "domain": "sun-sentinel.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T03:15:00Z",
+      "title": "Why Donald Trump believed he needed to get Jensen Huang back on top at AI behemoth Nvidia",
+      "url": "https://www.pilotonline.com/2026/11/23/trump-nvidia-intervention/",
+      "domain": "pilotonline.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T03:15:00Z",
+      "title": "Kansas City Newsman Rebukes MAGA Over Huang Comeback",
+      "url": "https://www.tonyskansascity.com/2026/11/kansas-city-newsman-rebukes-maga-over.html",
+      "domain": "tonyskansascity.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T03:15:00Z",
+      "title": "Why Donald Trump believed he needed to get Jensen Huang back on top at AI behemoth Nvidia",
+      "url": "https://www.coloradohometownweekly.com/2026/11/23/trump-nvidia-intervention/",
+      "domain": "coloradohometownweekly.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T03:15:00Z",
+      "title": "Nvidia Chief Return Triggers Historic US Stock Market Surge",
+      "url": "https://primamedia.ru/news/2691410/",
+      "domain": "primamedia.ru",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Russia"
+    },
+    {
+      "seendate": "2026-11-24T03:15:00Z",
+      "title": "Why Donald Trump believed he needed to get Jensen Huang back on top at AI behemoth Nvidia",
+      "url": "https://www.denverpost.com/2026/11/23/trump-nvidia-intervention/",
+      "domain": "denverpost.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T03:15:00Z",
+      "title": "Asia shares climb as Huang retakes Nvidia helm - Shafaqna English | International Shia News & Fatwas",
+      "url": "https://en.shafaqna.com/494381/asia-shares-climb-as-huang-retakes-nvidia-helm/",
+      "domain": "en.shafaqna.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Saudi Arabia"
+    },
+    {
+      "seendate": "2026-11-24T03:15:00Z",
+      "title": "Why Donald Trump believed he needed to get Jensen Huang back on top at AI behemoth Nvidia",
+      "url": "https://www.mendocinobeacon.com/2026/11/23/trump-nvidia-intervention/",
+      "domain": "mendocinobeacon.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T03:15:00Z",
+      "title": "AP News in Brief at 9 : 04 p . m . EST",
+      "url": "http://www.idahostatejournal.com/news/national/ap-news-in-brief-at-9-04-p-m-est/article_2535ab40-b3ff-574d-9abd-579fdc8d85cd.html",
+      "domain": "idahostatejournal.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T02:45:00Z",
+      "title": "Asian stocks rally as Huang Nvidia return revives AI trade",
+      "url": "https://www.channelnewsasia.com/business/asian-stocks-rally-jensen-huang-nvidia-return-revives-ai-trade-6576636",
+      "domain": "channelnewsasia.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T02:45:00Z",
+      "title": "With Jensen Huang , Trump Strikes Another Blow for Billionaire Impunity",
+      "url": "https://www.sfexaminer.com/with-jensen-huang-trump-strikes-another-blow-for-billionaire-impunity/article_25385f12-507d-5aa9-8e74-37fa0178cccc.html",
+      "domain": "sfexaminer.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T02:45:00Z",
+      "title": "Why Donald Trump believed he needed to get Jensen Huang back on top at AI behemoth Nvidia",
+      "url": "https://mymotherlode.com/news/national/11334854/why-donald-trump-believed-he-needed-to-get-jensen-huang-back-on-top-at-ai-behemoth-nvidia.html",
+      "domain": "mymotherlode.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T02:45:00Z",
+      "title": "Why Donald Trump believed he needed to get Jensen Huang back on top at AI behemoth Nvidia",
+      "url": "https://www.montereyherald.com/2026/11/23/trump-nvidia-intervention/",
+      "domain": "montereyherald.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T02:45:00Z",
+      "title": "Asian markets follow Wall Street : Nikkei , Kospi jump up to 8 % as Jensen Huang return sparks rally in AI stocks",
+      "url": "https://www.livemint.com/market/stock-market-news/asian-markets-follow-wall-street-nikkei-kospi-jump-up-to-8-as-jensen-huang-s-return-sparks-rally-in-ai-stocks-11795485047635.html",
+      "domain": "livemint.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-24T02:45:00Z",
+      "title": "Stock market open today or not ? BSE , NSE closed on 24 Nov for Guru Nanak Jayanti ? Check holiday calendar",
+      "url": "https://www.livemint.com/market/stock-market-news/stock-market-open-today-or-not-bse-nse-closed-on-24-nov-for-guru-nanak-jayanti-check-holiday-calendar-11795480929821.html",
+      "domain": "livemint.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-24T02:45:00Z",
+      "title": "Why Donald Trump believed he needed to get Jensen Huang back on top at AI behemoth Nvidia",
+      "url": "https://economictimes.indiatimes.com/news/international/world-news/trumps-bold-maneuver-reinstating-jensen-huang-to-lead-nvidia-amid-ai-race-with-china/articleshow/136116930.cms",
+      "domain": "economictimes.indiatimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-24T02:45:00Z",
+      "title": "Why Donald Trump believed he needed to get Jensen Huang back on top at AI behemoth Nvidia",
+      "url": "https://www.pressdemocrat.com/2026/11/23/trump-nvidia-intervention/",
+      "domain": "pressdemocrat.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T02:45:00Z",
+      "title": "Iran War Funding in Dispute as Congress Races to Avoid Shutdown",
+      "url": "https://www.thefiscaltimes.com:443/newsletter/20261123-Iran-War-Funding-Dispute-Congress-Races-Avoid-Shutdown",
+      "domain": "thefiscaltimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T02:45:00Z",
+      "title": "Why Donald Trump believed he needed to get Jensen Huang back on top at AI behemoth Nvidia",
+      "url": "https://www.paradisepost.com/2026/11/23/trump-nvidia-intervention/",
+      "domain": "paradisepost.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T02:45:00Z",
+      "title": "Main problem is not money ; it how to ...: CA explains how to invest Rs 5 lakh in stocks , gold , FDs and bonds to build wealth and minimise risk",
+      "url": "https://timesofindia.indiatimes.com/life-style/people/main-problem-is-not-money-its-how-to-ca-explains-how-to-invest-rs-5-lakh-in-stocks-gold-fds-and-bonds-to-build-wealth-and-minimise-risk/articleshow/136097130.cms",
+      "domain": "timesofindia.indiatimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "India"
+    },
+    {
+      "seendate": "2026-11-24T02:45:00Z",
+      "title": "US stocks surge and recover half of last week plunge after Jensen Huang returns as Nvidia CEO",
+      "url": "https://www.manilatimes.net/2026/11/24/business/foreign-business/us-stocks-surge-and-recover-half-of-last-weeks-plunge-after-jensen-huang-returns-as-nvidias-ceo/2476751",
+      "domain": "manilatimes.net",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Philippines"
+    },
+    {
+      "seendate": "2026-11-24T02:45:00Z",
+      "title": "US 10 - year Treasury yield falls 0 . 23 percentage point in week",
+      "url": "https://econotimes.com/US-10-year-Treasury-yield-falls-0-23-percentage-point-in-week-1780606",
+      "domain": "econotimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T02:45:00Z",
+      "title": "Why Donald Trump believed he needed to get Jensen Huang back on top at AI behemoth Nvidia",
+      "url": "https://www.dailyherald.com/2026/11/23/trump-nvidia-intervention/",
+      "domain": "dailyherald.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T02:45:00Z",
+      "title": "US recession gauges show no signals across four measures",
+      "url": "https://econotimes.com/US-recession-gauges-show-no-signals-across-four-measures-1780602",
+      "domain": "econotimes.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T02:30:00Z",
+      "title": "XCF Global Advances Renewable Fuels Growth Strategy and Plans OTC Transition Following Nasdaq Delisting Notice",
+      "url": "http://www.newjerseytelegraph.com/news/279451225/xcf-global-advances-renewable-fuels-growth-strategy-and-plans-otc-transition-following-nasdaq-delisting-notice",
+      "domain": "newjerseytelegraph.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T02:30:00Z",
+      "title": "Dollar climbs as renewed AI euphoria fuels Fed hike bets",
+      "url": "https://www.aol.com/articles/dollar-climbs-renewed-ai-euphoria-011359000.html",
+      "domain": "aol.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T02:30:00Z",
+      "title": "If a Stock Market Crash Is Coming , Warren Buffett Says This Is the Best Move Investors Should Make",
+      "url": "https://www.aol.com/articles/stock-market-crash-coming-warren-012002000.html",
+      "domain": "aol.com",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "United States"
+    },
+    {
+      "seendate": "2026-11-24T02:30:00Z",
+      "title": "GLOBAL MARKETS - Asian Stocks Rally as Huang Nvidia Return Revives AI Trade",
+      "url": "https://english.kontan.co.id/news/global-markets-asian-stocks-rally-as-huangs-nvidia-return-revives-ai-trade",
+      "domain": "english.kontan.co.id",
+      "language": "English",
+      "lang": "eng",
+      "sourcecountry": "Indonesia"
     }
   ],
   "methodology": "GDELT Doc 2.0 artlist \u2014 a machine index of worldwide news. TWO bounded requests per refresh (one per LANGUAGE LANE, the two fixed queries above, <=200 records each, >=15s host spacing; GDELT open data: URL/title/date/domain are facts, article copyright stays with the publishers), sort=datedesc (machine ordering, not editorial). The Chinese lane is domain-anchored on wallstreetcn.com (\u534e\u5c14\u8857\u89c1\u95fb \u2014 a \u8d22\u8054\u793e-style 7\u00d724 financial newswire): \u8d22\u8054\u793e itself has ZERO GDELT crawl coverage and CJK phrase queries are rejected by the API ('phrase too short'), so a domain seed is the only proven form (probe evidence in docs/data-intake-gdelt-news-feed.md). lang = the ingest-resolved lane (API language field first, request provenance fallback; never guessed from title bytes). seendate is GDELT's first-seen UTC stamp (15-min resolution) \u2014 the display freshness anchor. Rows are metadata + outbound links only: no article text is stored, summarized or fabricated; missing source fields are shown empty, never guessed. Dedup key = exact URL WITHIN a lane; the two languages are different articles and are never collapsed across lanes. Coverage = whatever GDELT's crawl saw; gaps are gaps. The payload caps the item list at 150 newest while by_day/total cover the full trailing 30-day cache window. Display-only, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-11-23T11:17:18.348270+00:00"
+  "snapshot_ts": "2026-11-24T11:13:56.124589+00:00"
 }
