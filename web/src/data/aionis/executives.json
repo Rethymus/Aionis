@@ -1,13 +1,23 @@
 {
   "status": "ok",
-  "as_of": "2026-11-23",
-  "total": 75,
-  "issuers": 39,
+  "as_of": "2026-11-24",
+  "total": 78,
+  "issuers": 41,
   "window": {
     "start": "2026-05-01",
-    "end": "2026-11-23"
+    "end": "2026-11-24"
   },
   "events": [
+    {
+      "company": "QUALCOMM INC/DE",
+      "ticker": "QCOM",
+      "filing_date": "2026-11-24",
+      "items": [
+        "5.02",
+        "9.01"
+      ],
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/804328/000080432826000138/qcom-20261120.htm"
+    },
     {
       "company": "NVIDIA CORP",
       "ticker": "NVDA",
@@ -17,6 +27,25 @@
         "9.01"
       ],
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000090/nvda-20261122.htm"
+    },
+    {
+      "company": "VISA INC.",
+      "ticker": "V",
+      "filing_date": "2026-11-23",
+      "items": [
+        "5.02"
+      ],
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1403161/000140316126000143/v-20261118.htm"
+    },
+    {
+      "company": "COCA COLA CO",
+      "ticker": "KO",
+      "filing_date": "2026-11-23",
+      "items": [
+        "5.02",
+        "9.01"
+      ],
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/21344/000155278126000567/e26458_ko-8k.htm"
     },
     {
       "company": "NIKE, Inc.",
@@ -47,6 +76,16 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/310158/000031015826000255/mrk-20261116.htm"
     },
     {
+      "company": "JPMORGAN CHASE & CO",
+      "ticker": "JPM",
+      "filing_date": "2026-11-17",
+      "items": [
+        "5.02",
+        "9.01"
+      ],
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961726000407/jpm-20261117.htm"
+    },
+    {
       "company": "HOME DEPOT, INC.",
       "ticker": "HD",
       "filing_date": "2026-11-17",
@@ -56,16 +95,6 @@
         "9.01"
       ],
       "doc_url": "https://www.sec.gov/Archives/edgar/data/354950/000035495026000182/hd-20261113.htm"
-    },
-    {
-      "company": "JPMORGAN CHASE & CO",
-      "ticker": "JPM",
-      "filing_date": "2026-11-17",
-      "items": [
-        "5.02",
-        "9.01"
-      ],
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961726000407/jpm-20261117.htm"
     },
     {
       "company": "Walmart Inc.",
@@ -118,6 +147,15 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/320187/000032018726000197/nke-20261104.htm"
     },
     {
+      "company": "MICROSOFT CORP",
+      "ticker": "MSFT",
+      "filing_date": "2026-11-05",
+      "items": [
+        "5.02"
+      ],
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526448357/d177209d8k.htm"
+    },
+    {
       "company": "MICRON TECHNOLOGY INC",
       "ticker": "MU",
       "filing_date": "2026-11-05",
@@ -126,15 +164,6 @@
         "9.01"
       ],
       "doc_url": "https://www.sec.gov/Archives/edgar/data/723125/000110465926123389/tm2629062d1_8k.htm"
-    },
-    {
-      "company": "MICROSOFT CORP",
-      "ticker": "MSFT",
-      "filing_date": "2026-11-05",
-      "items": [
-        "5.02"
-      ],
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526448357/d177209d8k.htm"
     },
     {
       "company": "PFIZER INC",
@@ -464,16 +493,6 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000115/amd-20260626.htm"
     },
     {
-      "company": "COCA COLA CO",
-      "ticker": "KO",
-      "filing_date": "2026-06-25",
-      "items": [
-        "5.02",
-        "9.01"
-      ],
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/21344/000155278126000366/e26287_ko-8k.htm"
-    },
-    {
       "company": "JPMORGAN CHASE & CO",
       "ticker": "JPM",
       "filing_date": "2026-06-25",
@@ -482,6 +501,16 @@
         "9.01"
       ],
       "doc_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961726000241/jpm-20260624.htm"
+    },
+    {
+      "company": "COCA COLA CO",
+      "ticker": "KO",
+      "filing_date": "2026-06-25",
+      "items": [
+        "5.02",
+        "9.01"
+      ],
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/21344/000155278126000366/e26287_ko-8k.htm"
     },
     {
       "company": "NIKE, Inc.",
@@ -529,6 +558,17 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/773840/000077384026000080/hon-20260615.htm"
     },
     {
+      "company": "Alphabet Inc.",
+      "ticker": "GOOGL",
+      "filing_date": "2026-06-11",
+      "items": [
+        "5.02",
+        "5.07",
+        "9.01"
+      ],
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1652044/000119312526267578/d57679d8k.htm"
+    },
+    {
       "company": "ADOBE INC.",
       "ticker": "ADBE",
       "filing_date": "2026-06-11",
@@ -548,17 +588,6 @@
         "9.01"
       ],
       "doc_url": "https://www.sec.gov/Archives/edgar/data/40545/000004054526000039/ge-20260608.htm"
-    },
-    {
-      "company": "Alphabet Inc.",
-      "ticker": "GOOGL",
-      "filing_date": "2026-06-11",
-      "items": [
-        "5.02",
-        "5.07",
-        "9.01"
-      ],
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1652044/000119312526267578/d57679d8k.htm"
     },
     {
       "company": "MICRON TECHNOLOGY INC",
@@ -687,6 +716,19 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000028/nvda-20260507.htm"
     },
     {
+      "company": "BERKSHIRE HATHAWAY INC",
+      "ticker": "BRK-B",
+      "filing_date": "2026-05-07",
+      "items": [
+        "2.02",
+        "5.02",
+        "5.03",
+        "5.07",
+        "9.01"
+      ],
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526212148/d74313d8k.htm"
+    },
+    {
       "company": "Mastercard Inc",
       "ticker": "MA",
       "filing_date": "2026-05-07",
@@ -705,19 +747,6 @@
         "5.07"
       ],
       "doc_url": "https://www.sec.gov/Archives/edgar/data/40545/000004054526000032/ge-20260505.htm"
-    },
-    {
-      "company": "BERKSHIRE HATHAWAY INC",
-      "ticker": "BRK-B",
-      "filing_date": "2026-05-07",
-      "items": [
-        "2.02",
-        "5.02",
-        "5.03",
-        "5.07",
-        "9.01"
-      ],
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1067983/000119312526212148/d74313d8k.htm"
     },
     {
       "company": "EXXON MOBIL CORP",
@@ -774,6 +803,7 @@
     "Alphabet Inc.": 2,
     "CHEVRON CORP": 2,
     "CISCO SYSTEMS, INC.": 2,
+    "COCA COLA CO": 2,
     "COSTCO WHOLESALE CORP /NEW": 2,
     "DEERE & CO": 2,
     "GENERAL DYNAMICS CORP": 2,
@@ -788,7 +818,6 @@
     "BERKSHIRE HATHAWAY INC": 1,
     "BOEING CO": 1,
     "CATERPILLAR INC": 1,
-    "COCA COLA CO": 1,
     "EXXON MOBIL CORP": 1,
     "JOHNSON & JOHNSON": 1,
     "MCDONALDS CORP": 1,
@@ -796,12 +825,14 @@
     "ORACLE CORP": 1,
     "PEPSICO INC": 1,
     "PROCTER & GAMBLE Co": 1,
+    "QUALCOMM INC/DE": 1,
     "RTX Corp": 1,
     "TEXAS INSTRUMENTS INC": 1,
     "UNION PACIFIC CORP": 1,
     "UNITEDHEALTH GROUP INC": 1,
+    "VISA INC.": 1,
     "Walmart Inc.": 1
   },
-  "methodology": "SEC Form 8-K Item 5.02 officer/director-change filings \u2014 DERIVED from the committed form8k panel (category 'officer_changes'; public domain, 17 U.S.C. \u00a7105, filed-date PIT). v1 is FILING-STREAM level: one row per 8-K accession with the company, filing date, full item list and EDGAR primary-document link. Person-level extraction (who, which role, appointed vs departed) is DEFERRED: parsing names from 8-K free text is unreliable and an honest omission beats a guessed name \u2014 the same v1 boundary as the /congress PTR panel. Inherits the /events panel's bounded 50-issuer universe and its 2026-05-01..2026-11-23 window. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
-  "snapshot_ts": "2026-11-24T11:14:24.821561+00:00"
+  "methodology": "SEC Form 8-K Item 5.02 officer/director-change filings \u2014 DERIVED from the committed form8k panel (category 'officer_changes'; public domain, 17 U.S.C. \u00a7105, filed-date PIT). v1 is FILING-STREAM level: one row per 8-K accession with the company, filing date, full item list and EDGAR primary-document link. Person-level extraction (who, which role, appointed vs departed) is DEFERRED: parsing names from 8-K free text is unreliable and an honest omission beats a guessed name \u2014 the same v1 boundary as the /congress PTR panel. Inherits the /events panel's bounded 50-issuer universe and its 2026-05-01..2026-11-24 window. Display-only, exploratory, not a research claim; NOT part of any OOS pipeline.",
+  "snapshot_ts": "2026-11-25T11:36:13.382633+00:00"
 }

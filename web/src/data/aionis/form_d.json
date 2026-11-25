@@ -1,17 +1,2433 @@
 {
   "status": "ok",
-  "as_of": "2026-11-23",
+  "as_of": "2026-11-24",
   "window": {
     "start": "2026-06-25",
-    "end": "2026-11-23"
+    "end": "2026-11-24"
   },
-  "issuers": 24313,
-  "total": 26790,
+  "issuers": 24573,
+  "total": 27092,
   "by_form": {
-    "D": 17232,
-    "D/A": 9558
+    "D": 17402,
+    "D/A": 9690
   },
   "filings": [
+    {
+      "company": "Vandelay Wicker 1616 LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166991/000216699126000001/0002166991-26-000001-index.htm"
+    },
+    {
+      "company": "CLC NextGen LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166932/000216693226000001/0002166932-26-000001-index.htm"
+    },
+    {
+      "company": "Bebemos Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166927/000216692726000001/0002166927-26-000001-index.htm"
+    },
+    {
+      "company": "LONGHORN FUNDING GROUP LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166862/000216686226000001/0002166862-26-000001-index.htm"
+    },
+    {
+      "company": "Cutting Edge Safety, Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166800/000216680026000001/0002166800-26-000001-index.htm"
+    },
+    {
+      "company": "HS Orem Houston, LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166790/000216679026000001/0002166790-26-000001-index.htm"
+    },
+    {
+      "company": "Clasp Legal Technologies, Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166745/000216674526000001/0002166745-26-000001-index.htm"
+    },
+    {
+      "company": "Electrigen Holdings Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166691/000216669126000001/0002166691-26-000001-index.htm"
+    },
+    {
+      "company": "Cinven Panthera S.C.Sp.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166663/000216666326000001/0002166663-26-000001-index.htm"
+    },
+    {
+      "company": "Cinven Leopard S.C.Sp.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166662/000216666226000001/0002166662-26-000001-index.htm"
+    },
+    {
+      "company": "Havenly Spurrier Member LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166637/000216663726000001/0002166637-26-000001-index.htm"
+    },
+    {
+      "company": "Empirical Citivest HB Access Fund, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166635/000216663526000001/0002166635-26-000001-index.htm"
+    },
+    {
+      "company": "Kings Point Flagship Fund, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166632/000216663226000001/0002166632-26-000001-index.htm"
+    },
+    {
+      "company": "Gradies, Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166631/000216663126000001/0002166631-26-000001-index.htm"
+    },
+    {
+      "company": "ANAQUA INVESTMENTS GROUP - BEDROCK ROUND C LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166615/000216661526000001/0002166615-26-000001-index.htm"
+    },
+    {
+      "company": "Tepal Fund LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166603/000216660326000001/0002166603-26-000001-index.htm"
+    },
+    {
+      "company": "Beingness Inc",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166595/000216659526000003/0002166595-26-000003-index.htm"
+    },
+    {
+      "company": "Life Impact Partners 31 LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166586/000216658626000001/0002166586-26-000001-index.htm"
+    },
+    {
+      "company": "Life Impact Partners 32 LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166585/000216658526000001/0002166585-26-000001-index.htm"
+    },
+    {
+      "company": "Life Impact Partners 33 LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166584/000216658426000001/0002166584-26-000001-index.htm"
+    },
+    {
+      "company": "Life Impact Partners 34 LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166583/000216658326000001/0002166583-26-000001-index.htm"
+    },
+    {
+      "company": "Life Impact Partners 35 LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166582/000216658226000001/0002166582-26-000001-index.htm"
+    },
+    {
+      "company": "Life Impact Partners 36 LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166581/000216658126000001/0002166581-26-000001-index.htm"
+    },
+    {
+      "company": "Life Impact Partners 37 LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166580/000216658026000001/0002166580-26-000001-index.htm"
+    },
+    {
+      "company": "Life Impact Partners 38 LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166579/000216657926000001/0002166579-26-000001-index.htm"
+    },
+    {
+      "company": "Life Impact Partners 39 LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166578/000216657826000001/0002166578-26-000001-index.htm"
+    },
+    {
+      "company": "Life Impact Partners 40 LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166577/000216657726000001/0002166577-26-000001-index.htm"
+    },
+    {
+      "company": "Life Impact Partners 41 LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166576/000216657626000001/0002166576-26-000001-index.htm"
+    },
+    {
+      "company": "Life Impact Partners 42 LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166575/000216657526000001/0002166575-26-000001-index.htm"
+    },
+    {
+      "company": "Life Impact Partners 43 LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166574/000216657426000001/0002166574-26-000001-index.htm"
+    },
+    {
+      "company": "MLG/LF Trails Co-Investor LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166570/000216657026000001/0002166570-26-000001-index.htm"
+    },
+    {
+      "company": "Lincoln MHP LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166558/000216655826000001/0002166558-26-000001-index.htm"
+    },
+    {
+      "company": "NJK Sports Venture Fund, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166527/000216652726000001/0002166527-26-000001-index.htm"
+    },
+    {
+      "company": "SHIELD AI II - IC LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166508/000216650826000001/0002166508-26-000001-index.htm"
+    },
+    {
+      "company": "MRES Douglas Station Holdings, LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166504/000216650426000001/0002166504-26-000001-index.htm"
+    },
+    {
+      "company": "Bluegrass Management Fund I LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166503/000216650326000001/0002166503-26-000001-index.htm"
+    },
+    {
+      "company": "JHIC - MODAL I LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166499/000216649926000001/0002166499-26-000001-index.htm"
+    },
+    {
+      "company": "Estadia Technologies, Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166493/000216649326000001/0002166493-26-000001-index.htm"
+    },
+    {
+      "company": "7000 McGregor LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166463/000216646326000001/0002166463-26-000001-index.htm"
+    },
+    {
+      "company": "Woodvale Opportunity Fund 2 Ltd Partners, LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166453/000216645326000001/0002166453-26-000001-index.htm"
+    },
+    {
+      "company": "SOLARI CAPITAL PHYSICAL INTELLIGENCE I, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166421/000216642126000001/0002166421-26-000001-index.htm"
+    },
+    {
+      "company": "ENR Blue Ox SPV LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166328/000216632826000001/0002166328-26-000001-index.htm"
+    },
+    {
+      "company": "Guardian Wealth VC - Hondoq I, LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166174/000216617426000001/0002166174-26-000001-index.htm"
+    },
+    {
+      "company": "GTF TECHNOLOGIES HOLDINGS, INC.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166126/000216612626000001/0002166126-26-000001-index.htm"
+    },
+    {
+      "company": "US Strategic Resources, Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166074/000216607426000001/0002166074-26-000001-index.htm"
+    },
+    {
+      "company": "Axel Ventures Fund LLC - Series 11",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166063/000216606326000001/0002166063-26-000001-index.htm"
+    },
+    {
+      "company": "Hillside Channing Alpha Tech Investors LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165934/000216593426000001/0002165934-26-000001-index.htm"
+    },
+    {
+      "company": "ASA-US Building Blocks Series, LP - ASA-US Brazil Equities",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165886/000216588626000002/0002165886-26-000002-index.htm"
+    },
+    {
+      "company": "Series Greenlight 5, a separate series of BlueIO Growth LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165863/000216586326000001/0002165863-26-000001-index.htm"
+    },
+    {
+      "company": "Climber Capital Master LLC - Series 2",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165851/000216585126000001/0002165851-26-000001-index.htm"
+    },
+    {
+      "company": "OLM INVESTORS 1 A SERIES OF WESTERN FRONTIER MASTER LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165829/000216582926000001/0002165829-26-000001-index.htm"
+    },
+    {
+      "company": "Meitner Energy, Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165821/000216582126000001/0002165821-26-000001-index.htm"
+    },
+    {
+      "company": "ETH Innovation, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165731/000216573126000004/0002165731-26-000004-index.htm"
+    },
+    {
+      "company": "MA-1109 Fund I, a series of MV Funds, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165650/000216565026000001/0002165650-26-000001-index.htm"
+    },
+    {
+      "company": "From the Farm Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165589/000216558926000001/0002165589-26-000001-index.htm"
+    },
+    {
+      "company": "Duke Capital Partners 2610C, A Series of V360 Holdings LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165579/000216557926000001/0002165579-26-000001-index.htm"
+    },
+    {
+      "company": "Sofi Perez 1 & 2 Joint Venture",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165560/000216556026000001/0002165560-26-000001-index.htm"
+    },
+    {
+      "company": "Rizvi AI Special Opportunities LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165399/000216539926000001/0002165399-26-000001-index.htm"
+    },
+    {
+      "company": "Rizvi AI V LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165386/000216538626000001/0002165386-26-000001-index.htm"
+    },
+    {
+      "company": "Streetlight II LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165377/000216537726000002/0002165377-26-000002-index.htm"
+    },
+    {
+      "company": "HOT & STEAMY LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165338/000216533826000001/0002165338-26-000001-index.htm"
+    },
+    {
+      "company": "iCapital-Global Equity Market Neutral Select Access Fund L.P.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165289/000216528926000001/0002165289-26-000001-index.htm"
+    },
+    {
+      "company": "ASA-US Building Blocks Series, LP - ASA-US Brazil Inflation-Linked Government Bond",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165287/000216528726000002/0002165287-26-000002-index.htm"
+    },
+    {
+      "company": "ASA-US Building Blocks Series, LP - ASA-US Brazil Floating Rate Government Bond",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165274/000216527426000002/0002165274-26-000002-index.htm"
+    },
+    {
+      "company": "Ares Private Opportunities",
+      "ticker": "NM",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165173/000216517326000001/0002165173-26-000001-index.htm"
+    },
+    {
+      "company": "NO-1006 Fund I, a series of 640 Oxford Ventures, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165019/000216501926000001/0002165019-26-000001-index.htm"
+    },
+    {
+      "company": "SaaS Ventures CV, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2164888/000216488826000001/0002164888-26-000001-index.htm"
+    },
+    {
+      "company": "LCP Lockbourne Ltd LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2164873/000216487326000001/0002164873-26-000001-index.htm"
+    },
+    {
+      "company": "Dune Research, Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2164668/000216466826000001/0002164668-26-000001-index.htm"
+    },
+    {
+      "company": "SSP 2026 - Private Equity, L.P.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2164557/000216455726000002/0002164557-26-000002-index.htm"
+    },
+    {
+      "company": "Grayhawk SPV I, LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2164523/000216452326000001/0002164523-26-000001-index.htm"
+    },
+    {
+      "company": "Global Equity Market Neutral Alpha & Capital Efficiency Fund, LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2164388/000216438826000001/0002164388-26-000001-index.htm"
+    },
+    {
+      "company": "TAURUS PHYSICAL GOLD, L.P.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2164312/000216431226000001/0002164312-26-000001-index.htm"
+    },
+    {
+      "company": "Ekiden Coinvest I, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2164138/000216413826000001/0002164138-26-000001-index.htm"
+    },
+    {
+      "company": "BQP-QE-1101 Fund I, a series of Platform Funds 2026, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2164126/000216412626000001/0002164126-26-000001-index.htm"
+    },
+    {
+      "company": "UP-1024 Fund I, a series of Roll Up Vehicles, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163964/000216396426000001/0002163964-26-000001-index.htm"
+    },
+    {
+      "company": "Fresh Stop Preferred Investors, LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163877/000216387726000001/0002163877-26-000001-index.htm"
+    },
+    {
+      "company": "Pink Tiger a Series of Shipyard Capital SPV I LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163716/000216371626000001/0002163716-26-000001-index.htm"
+    },
+    {
+      "company": "IREX VI Retail DST",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163630/000216363026000003/0002163630-26-000003-index.htm"
+    },
+    {
+      "company": "Cape Resi Growth Fund I, LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163384/000216338426000001/0002163384-26-000001-index.htm"
+    },
+    {
+      "company": "Power Elements, Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163246/000216324626000001/0002163246-26-000001-index.htm"
+    },
+    {
+      "company": "LV TET a Series of CGF2026 LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163243/000216324326000001/0002163243-26-000001-index.htm"
+    },
+    {
+      "company": "Kaszek Ventures VII, L.P.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163193/000216319326000001/0002163193-26-000001-index.htm"
+    },
+    {
+      "company": "BayPine Allies Co-Invest, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2162941/000216294126000001/0002162941-26-000001-index.htm"
+    },
+    {
+      "company": "Solari Capital Kira III LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2162913/000216291326000001/0002162913-26-000001-index.htm"
+    },
+    {
+      "company": "Solari Capital Kira II LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2162903/000216290326000001/0002162903-26-000001-index.htm"
+    },
+    {
+      "company": "Keep-Warm Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2162887/000216288726000001/0002162887-26-000001-index.htm"
+    },
+    {
+      "company": "One Pen Inc",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2162498/000216249826000001/0002162498-26-000001-index.htm"
+    },
+    {
+      "company": "FDC Sentilink II-A LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2162342/000216234226000001/0002162342-26-000001-index.htm"
+    },
+    {
+      "company": "BI-1022 Fund II, a series of MV Funds, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2162272/000216227226000002/0002162272-26-000002-index.htm"
+    },
+    {
+      "company": "FDC Sentilink II LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2162039/000216203926000001/0002162039-26-000001-index.htm"
+    },
+    {
+      "company": "KV SHIRAKA I L.P.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2161859/000216185926000001/0002161859-26-000001-index.htm"
+    },
+    {
+      "company": "Precision Exchange, Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2161660/000216166026000002/0002161660-26-000002-index.htm"
+    },
+    {
+      "company": "Dominari Master SPV QP LLC, Series II Polymarket",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2161439/000216143926000001/0002161439-26-000001-index.htm"
+    },
+    {
+      "company": "WA-1012 Fund I, a series of Roll Up Vehicles, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2161393/000216139326000002/0002161393-26-000002-index.htm"
+    },
+    {
+      "company": "Solene Capital Master Fund LLC - Series 2",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2161350/000216135026000001/0002161350-26-000001-index.htm"
+    },
+    {
+      "company": "Principal U.S. Data Center Fund III Sidecar, L.P.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2160898/000216089826000001/0002160898-26-000001-index.htm"
+    },
+    {
+      "company": "Principal U.S. Data Center Fund III",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2160896/000216089626000001/0002160896-26-000001-index.htm"
+    },
+    {
+      "company": "JS Venture Fund LLC Series A41",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2160787/000216078726000003/0002160787-26-000003-index.htm"
+    },
+    {
+      "company": "Bracket Capital Growth Partners VII, LP - Series 9",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2160739/000216073926000001/0002160739-26-000001-index.htm"
+    },
+    {
+      "company": "Bracket Capital Growth Partners VII, LP - Series 8",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2160738/000216073826000001/0002160738-26-000001-index.htm"
+    },
+    {
+      "company": "Bracket Capital Growth Partners X, LP - Series 2",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2160731/000216073126000001/0002160731-26-000001-index.htm"
+    },
+    {
+      "company": "Bracket Capital Growth Partners IX, LP - Series 2",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2160730/000216073026000001/0002160730-26-000001-index.htm"
+    },
+    {
+      "company": "JS Venture Fund LLC Series A42",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2160663/000216066326000001/0002160663-26-000001-index.htm"
+    },
+    {
+      "company": "Multi-Asset Strategies - Private Equity Offshore 2027 LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2160503/000216050326000001/0002160503-26-000001-index.htm"
+    },
+    {
+      "company": "LRC Special Opportunities LLC - Series GreaseGiant",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2160119/000216011926000001/0002160119-26-000001-index.htm"
+    },
+    {
+      "company": "310 Huron Investors LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2160094/000216009426000001/0002160094-26-000001-index.htm"
+    },
+    {
+      "company": "8VC BRSC, LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2159613/000215961326000002/0002159613-26-000002-index.htm"
+    },
+    {
+      "company": "Starburst Ventures NP SPV a Series of CGF2026 LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2159420/000215942026000001/0002159420-26-000001-index.htm"
+    },
+    {
+      "company": "Nitro Financing, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2159383/000215938326000002/0002159383-26-000002-index.htm"
+    },
+    {
+      "company": "Gaingels Panacea LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2159366/000215936626000001/0002159366-26-000001-index.htm"
+    },
+    {
+      "company": "Bracket Capital Growth Partners IX, LP - Series 1",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2158596/000215859626000002/0002158596-26-000002-index.htm"
+    },
+    {
+      "company": "Bracket Capital Growth Partners X, LP - Series 1",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2158595/000215859526000002/0002158595-26-000002-index.htm"
+    },
+    {
+      "company": "Percy Warner Mental Health Fund I LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2158524/000215852426000001/0002158524-26-000001-index.htm"
+    },
+    {
+      "company": "Cognitive Reach Labs, Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2157865/000215786526000001/0002157865-26-000001-index.htm"
+    },
+    {
+      "company": "Moon L.P.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2157745/000215774526000001/0002157745-26-000001-index.htm"
+    },
+    {
+      "company": "PE-0920 Fund I, a series of Roll Up Vehicles, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2157232/000215723226000002/0002157232-26-000002-index.htm"
+    },
+    {
+      "company": "ZoneStay, Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2156941/000215694126000001/0002156941-26-000001-index.htm"
+    },
+    {
+      "company": "Wealth Rock LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2156650/000215665026000005/0002156650-26-000005-index.htm"
+    },
+    {
+      "company": "Portfolia Opportunity Fund LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2156053/000215605326000001/0002156053-26-000001-index.htm"
+    },
+    {
+      "company": "Patriot Oil Mills Corp.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2155617/000215561726000003/0002155617-26-000003-index.htm"
+    },
+    {
+      "company": "Squadra UFORCE SPV, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2155000/000215500026000001/0002155000-26-000001-index.htm"
+    },
+    {
+      "company": "Daniel-GR-0904 Fund I, a series of Platform Funds 2026, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2154760/000215476026000002/0002154760-26-000002-index.htm"
+    },
+    {
+      "company": "Lia Angel SPV a Series of CGF2021 LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2153721/000215372126000003/0002153721-26-000003-index.htm"
+    },
+    {
+      "company": "TF Private Investments V LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2153276/000215327626000001/0002153276-26-000001-index.htm"
+    },
+    {
+      "company": "DE-0824 Fund I, a series of JJ Fliegelman Funds, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2153085/000215308526000002/0002153085-26-000002-index.htm"
+    },
+    {
+      "company": "Vested Fund 3 a Series of Vested Private Fund LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2152529/000215252926000001/0002152529-26-000001-index.htm"
+    },
+    {
+      "company": "ADREX Diversified 12 DST",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2152215/000215221526000002/0002152215-26-000002-index.htm"
+    },
+    {
+      "company": "Global Horizons Holdings Ventures LLC - Series 8",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2151955/000215195526000002/0002151955-26-000002-index.htm"
+    },
+    {
+      "company": "Monocle Entertainment I, a series of Monocle Select, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2150414/000215041426000002/0002150414-26-000002-index.htm"
+    },
+    {
+      "company": "TRM Equity Fund III LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2149794/000214979426000002/0002149794-26-000002-index.htm"
+    },
+    {
+      "company": "SVP Ventures, a series of Platform Funds 2026, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2146653/000214665326000003/0002146653-26-000003-index.htm"
+    },
+    {
+      "company": "EquityZen Growth Technology Fund LLC - Series 2417",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2144776/000214477626000002/0002144776-26-000002-index.htm"
+    },
+    {
+      "company": "TF Growth Investments XV LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2142504/000214250426000001/0002142504-26-000001-index.htm"
+    },
+    {
+      "company": "TF Private Investments I LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2142366/000214236626000001/0002142366-26-000001-index.htm"
+    },
+    {
+      "company": "NORLEO SPACE INVESTMENTS LLC - Series 2",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2141515/000214151526000003/0002141515-26-000003-index.htm"
+    },
+    {
+      "company": "Community Ownership for Community Power Fund LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2140572/000214057226000001/0002140572-26-000001-index.htm"
+    },
+    {
+      "company": "ASA-US Building Blocks Series, LP - ASA-US Brazil Fixed Rate Government Bond",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2139050/000213905026000003/0002139050-26-000003-index.htm"
+    },
+    {
+      "company": "AN1, a series of Fluxgate Capital, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2138915/000213891526000003/0002138915-26-000003-index.htm"
+    },
+    {
+      "company": "AGP INVICTA SHIELD AI I LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2138637/000213863726000003/0002138637-26-000003-index.htm"
+    },
+    {
+      "company": "Janus Henderson PMOF Rated Feeder, L.P.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2137882/000213788226000002/0002137882-26-000002-index.htm"
+    },
+    {
+      "company": "Janus Henderson Private Mortgage Opportunities Fund, L.P.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2137877/000213787726000002/0002137877-26-000002-index.htm"
+    },
+    {
+      "company": "Janus Henderson PMOF Cayman Feeder Fund, L.P.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2137874/000213787426000002/0002137874-26-000002-index.htm"
+    },
+    {
+      "company": "Health Wealth Fund One Series 3 LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2128347/000212834726000010/0002128347-26-000010-index.htm"
+    },
+    {
+      "company": "Principal U.S. Data Center Fund III, L.P.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2124399/000212439926000001/0002124399-26-000001-index.htm"
+    },
+    {
+      "company": "Equitybee 22-55765 a Series of Equitybee cFund Master LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2114515/000211451526000004/0002114515-26-000004-index.htm"
+    },
+    {
+      "company": "Morgan Stanley European Direct Lending Fund II Co-Investment Feeder B SCSp RAIF",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2113932/000211393226000001/0002113932-26-000001-index.htm"
+    },
+    {
+      "company": "Inland Long Island Residential DST",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2113730/000211373026000016/0002113730-26-000016-index.htm"
+    },
+    {
+      "company": "Morgan Stanley European Direct Lending Fund II Co-Investment Feeder A SCSp RAIF",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2113714/000211371426000001/0002113714-26-000001-index.htm"
+    },
+    {
+      "company": "Institutional Drilling Fund III LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2107894/000210789426000027/0002107894-26-000027-index.htm"
+    },
+    {
+      "company": "USEDC 2026 Drilling Fund 1 LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2107891/000210789126000034/0002107891-26-000034-index.htm"
+    },
+    {
+      "company": "USEDC 2026 Drilling Fund 1 LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2107891/000210789126000033/0002107891-26-000033-index.htm"
+    },
+    {
+      "company": "USEDC 2026 Drilling Fund 2 LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2107833/000210783326000031/0002107833-26-000031-index.htm"
+    },
+    {
+      "company": "Orchestra Health Technologies, Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2104727/000210472726000004/0002104727-26-000004-index.htm"
+    },
+    {
+      "company": "MVP Ventures Select Fund I AI LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2098545/000209854526000002/0002098545-26-000002-index.htm"
+    },
+    {
+      "company": "Egis Founders Fund IV - 1A LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2098021/000209802126000001/0002098021-26-000001-index.htm"
+    },
+    {
+      "company": "Eastham Capital Fund VII, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2098006/000209800626000002/0002098006-26-000002-index.htm"
+    },
+    {
+      "company": "Stenham RV Solutions Fund I",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2097754/000209775426000001/0002097754-26-000001-index.htm"
+    },
+    {
+      "company": "TownCentre Real Estate Fund II, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2097446/000209744626000001/0002097446-26-000001-index.htm"
+    },
+    {
+      "company": "Xtravaganza Development Ltd Liability Co",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2097440/000209744026000001/0002097440-26-000001-index.htm"
+    },
+    {
+      "company": "MVP Ventures Select Fund I QP LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2096785/000209678526000002/0002096785-26-000002-index.htm"
+    },
+    {
+      "company": "Westwood Energy Secondaries Co-Investment Fund III, LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2094030/000209403026000001/0002094030-26-000001-index.htm"
+    },
+    {
+      "company": "Continuum Holdings, Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2093639/000209363926000001/0002093639-26-000001-index.htm"
+    },
+    {
+      "company": "Physical Dream, Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2084046/000208404626000003/0002084046-26-000003-index.htm"
+    },
+    {
+      "company": "Alpha Partners Global Fund, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2079311/000207931126000001/0002079311-26-000001-index.htm"
+    },
+    {
+      "company": "Kirenaga Aero Notes LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2079218/000207921826000001/0002079218-26-000001-index.htm"
+    },
+    {
+      "company": "A&M Capital Europe II, SCSp",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2078062/000207806226000001/0002078062-26-000001-index.htm"
+    },
+    {
+      "company": "Symbiotic Capital Healthcare Credit Fund II, L.P.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2074678/000207467826000001/0002074678-26-000001-index.htm"
+    },
+    {
+      "company": "GL-Direct Tech Square Ventures Fund III, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2073366/000207336626000001/0002073366-26-000001-index.htm"
+    },
+    {
+      "company": "PGIM Large Cap Private Credit Fund",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2044835/000206235726000615/0002062357-26-000615-index.htm"
+    },
+    {
+      "company": "PGIM Large Cap Private Credit Fund I, L.P.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2044825/000206235726000613/0002062357-26-000613-index.htm"
+    },
+    {
+      "company": "Symbiotic Capital Healthcare Credit Parallel Fund II, L.P.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2060810/000206081026000001/0002060810-26-000001-index.htm"
+    },
+    {
+      "company": "SC Healthcare Credit Parallel Fund II A, L.P.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2060802/000206080226000001/0002060802-26-000001-index.htm"
+    },
+    {
+      "company": "American Atomics Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2080687/000206075526000070/0002060755-26-000070-index.htm"
+    },
+    {
+      "company": "MLG Private Fund VII LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2057495/000205749526000004/0002057495-26-000004-index.htm"
+    },
+    {
+      "company": "CorVita, Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2051333/000205133326000006/0002051333-26-000006-index.htm"
+    },
+    {
+      "company": "Causeway Equity Partners, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2047267/000204726726000002/0002047267-26-000002-index.htm"
+    },
+    {
+      "company": "Stride Astella LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2045876/000204587626000002/0002045876-26-000002-index.htm"
+    },
+    {
+      "company": "Stride Terra LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2045874/000204587426000002/0002045874-26-000002-index.htm"
+    },
+    {
+      "company": "EndoSure, Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2042877/000204287726000003/0002042877-26-000003-index.htm"
+    },
+    {
+      "company": "Pickleball at Riverwalk FundCo, LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2042795/000204279526000001/0002042795-26-000001-index.htm"
+    },
+    {
+      "company": "Canyon FundCo, LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2042789/000204278926000001/0002042789-26-000001-index.htm"
+    },
+    {
+      "company": "Liberty Lift Holding Co., LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2024337/000202433726000002/0002024337-26-000002-index.htm"
+    },
+    {
+      "company": "Lukrom REIT LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2006033/000200603326000003/0002006033-26-000003-index.htm"
+    },
+    {
+      "company": "QQSA INVESTMENTS, LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2004768/000200476826000001/0002004768-26-000001-index.htm"
+    },
+    {
+      "company": "Invesco PCO Evergreen Fund, L.P.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1998046/000199804626000001/0001998046-26-000001-index.htm"
+    },
+    {
+      "company": "BMBC US Fund SPC - Income Value Fund SP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1997358/000199735826000002/0001997358-26-000002-index.htm"
+    },
+    {
+      "company": "Blackstone Multi-Asset Credit Fund",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1994853/000199485326000001/0001994853-26-000001-index.htm"
+    },
+    {
+      "company": "Blackstone Multi-Asset Credit Fund",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1994850/000199485026000001/0001994850-26-000001-index.htm"
+    },
+    {
+      "company": "Blackstone Multi-Asset Credit Fund",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1994731/000199473126000001/0001994731-26-000001-index.htm"
+    },
+    {
+      "company": "Blackstone Multi-Asset Credit Fund",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1994722/000199472226000001/0001994722-26-000001-index.htm"
+    },
+    {
+      "company": "Propel(x) Syndicates LLC - Series 5330",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1979524/000197952426000003/0001979524-26-000003-index.htm"
+    },
+    {
+      "company": "Golden Waves Grain, LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1976648/000197664826000010/0001976648-26-000010-index.htm"
+    },
+    {
+      "company": "Planck Holdings LLC - Series 2023N",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1974622/000197462226000003/0001974622-26-000003-index.htm"
+    },
+    {
+      "company": "Lukrom iFund LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1974080/000197408026000003/0001974080-26-000003-index.htm"
+    },
+    {
+      "company": "Beta.Ventures Fund II, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1956061/000195606126000001/0001956061-26-000001-index.htm"
+    },
+    {
+      "company": "Pine River Multi-Strategy Master Fund Ltd.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1951819/000195181926000002/0001951819-26-000002-index.htm"
+    },
+    {
+      "company": "Pine River Multi-Strategy Fund Ltd.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1951504/000195150426000003/0001951504-26-000003-index.htm"
+    },
+    {
+      "company": "Stellar Wealth Partners India Fund I, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1948357/000194835726000011/0001948357-26-000011-index.htm"
+    },
+    {
+      "company": "BRiX Financial Technologies Corp",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1915831/000191583126000003/0001915831-26-000003-index.htm"
+    },
+    {
+      "company": "Ecolectro, Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1905346/000190534626000001/0001905346-26-000001-index.htm"
+    },
+    {
+      "company": "After Services, Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1903504/000190350426000001/0001903504-26-000001-index.htm"
+    },
+    {
+      "company": "Pine River Precision Fund SPC for the Account of Pine River Municipal Fund S.P.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1850655/000185065526000002/0001850655-26-000002-index.htm"
+    },
+    {
+      "company": "Blackstone Property Partners Asia - A L.P.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1834278/000183427826000001/0001834278-26-000001-index.htm"
+    },
+    {
+      "company": "Arena Capital Fund, LP- Series 17",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1877122/000183307826000041/0001833078-26-000041-index.htm"
+    },
+    {
+      "company": "Arena Capital Fund, LP- Series 16",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1885547/000183307826000040/0001833078-26-000040-index.htm"
+    },
+    {
+      "company": "Arena Capital Fund, L.P.- Series 15",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1848780/000183307826000039/0001833078-26-000039-index.htm"
+    },
+    {
+      "company": "Arena Capital Fund, L.P.- Series 14",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1843908/000183307826000038/0001833078-26-000038-index.htm"
+    },
+    {
+      "company": "Arena Capital Fund, LP- Series 12",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1904845/000183307826000037/0001833078-26-000037-index.htm"
+    },
+    {
+      "company": "Arena Capital Fund, L.P.- Series 11",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1843910/000183307826000036/0001833078-26-000036-index.htm"
+    },
+    {
+      "company": "Arena Capital Fund, LP- Series 10",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1843836/000183307826000035/0001833078-26-000035-index.htm"
+    },
+    {
+      "company": "Arena Capital Fund, L.P.- Series 9",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1843911/000183307826000034/0001833078-26-000034-index.htm"
+    },
+    {
+      "company": "Arena Capital Fund, L.P.- Series 8",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1826726/000183307826000033/0001833078-26-000033-index.htm"
+    },
+    {
+      "company": "Fortitude Gold Corp",
+      "ticker": "FTCO",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1828377/000182837726000004/0001828377-26-000004-index.htm"
+    },
+    {
+      "company": "CONX Corp.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1823000/000182300026000001/0001823000-26-000001-index.htm"
+    },
+    {
+      "company": "MLG Legacy Fund LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1815515/000181551526000003/0001815515-26-000003-index.htm"
+    },
+    {
+      "company": "Altimeter Offshore Ltd.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1833087/000181455426000251/0001814554-26-000251-index.htm"
+    },
+    {
+      "company": "Curex Life Science Fund, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1789886/000178988626000001/0001789886-26-000001-index.htm"
+    },
+    {
+      "company": "Pine River Municipal Master Fund Ltd.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1761122/000176112226000001/0001761122-26-000001-index.htm"
+    },
+    {
+      "company": "Blackstone Property Partners Asia Feeder III",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1756375/000175637526000001/0001756375-26-000001-index.htm"
+    },
+    {
+      "company": "Blackstone Property Partners Asia",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1755813/000175581326000001/0001755813-26-000001-index.htm"
+    },
+    {
+      "company": "Blackstone Property Partners Asia Feeder",
+      "ticker": "OP",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1755812/000175581226000001/0001755812-26-000001-index.htm"
+    },
+    {
+      "company": "Blackstone Property Partners Asia Feeder II L.P.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1755811/000175581126000001/0001755811-26-000001-index.htm"
+    },
+    {
+      "company": "Blackstone Property Partners Asia Feeder I L.P.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1755809/000175580926000001/0001755809-26-000001-index.htm"
+    },
+    {
+      "company": "Standard Cognition, Corp.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1755359/000175535926000005/0001755359-26-000005-index.htm"
+    },
+    {
+      "company": "INKIND CARDS INC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1738975/000173897526000004/0001738975-26-000004-index.htm"
+    },
+    {
+      "company": "TMAM/Pathway Global Opportunities EUR Fund II, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1723479/000172347926000003/0001723479-26-000003-index.htm"
+    },
+    {
+      "company": "Claria Medical, Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1711350/000171135026000004/0001711350-26-000004-index.htm"
+    },
+    {
+      "company": "DocToMe, Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1707127/000170712726000001/0001707127-26-000001-index.htm"
+    },
+    {
+      "company": "Stewards, Inc.",
+      "ticker": "SWRD",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1795851/000166357726000361/0001663577-26-000361-index.htm"
+    },
+    {
+      "company": "Enam India Growth Fund",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1654940/000165494026000001/0001654940-26-000001-index.htm"
+    },
+    {
+      "company": "AKADEUM LIFE SCIENCES, INC.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1622872/000162287226000002/0001622872-26-000002-index.htm"
+    },
+    {
+      "company": "WKW Partners Fund I Limited Partnership",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1570753/000157075326000001/0001570753-26-000001-index.htm"
+    },
+    {
+      "company": "Prodigy Absolute Return Fund, LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1537770/000153777026000002/0001537770-26-000002-index.htm"
+    },
+    {
+      "company": "Rain City Capital, LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1512803/000151280326000001/0001512803-26-000001-index.htm"
+    },
+    {
+      "company": "Vimy Pharmaceuticals Corp.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2159202/000149315226054043/0001493152-26-054043-index.htm"
+    },
+    {
+      "company": "Riemann Computing Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1760855/000149315226054039/0001493152-26-054039-index.htm"
+    },
+    {
+      "company": "JamRock Productions Fund LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2164915/000149315226054017/0001493152-26-054017-index.htm"
+    },
+    {
+      "company": "French Queen Ltd Liability Co",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2164912/000149315226053982/0001493152-26-053982-index.htm"
+    },
+    {
+      "company": "Strake, Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166702/000149315226053885/0001493152-26-053885-index.htm"
+    },
+    {
+      "company": "Rad Technologies Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1810055/000149315226053859/0001493152-26-053859-index.htm"
+    },
+    {
+      "company": "KWG RE Debt Fund, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166987/000147083126001030/0001470831-26-001030-index.htm"
+    },
+    {
+      "company": "Virtu Evergreen Fund, L.P.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1660872/000147083126001029/0001470831-26-001029-index.htm"
+    },
+    {
+      "company": "Ares Real Estate Enhanced Income Fund, L.P.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1757739/000147083126001028/0001470831-26-001028-index.htm"
+    },
+    {
+      "company": "Infinity Holdings",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1802715/000147083126001026/0001470831-26-001026-index.htm"
+    },
+    {
+      "company": "CLEARFLOW, Inc",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1441046/000144104626000003/0001441046-26-000003-index.htm"
+    },
+    {
+      "company": "Nextech Partners Co-Investment SCSp",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2064190/000123191926001638/0001231919-26-001638-index.htm"
+    },
+    {
+      "company": "BDT & MSD Senior Lending - Brown Advisory Founders",
+      "ticker": "TE",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2098760/000123191926001637/0001231919-26-001637-index.htm"
+    },
+    {
+      "company": "BDT & MSD Senior Lending - Brown Advisory Founders, LLLP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2098576/000123191926001636/0001231919-26-001636-index.htm"
+    },
+    {
+      "company": "Nextech IX Carry SCSp",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165259/000123191926001635/0001231919-26-001635-index.htm"
+    },
+    {
+      "company": "Nextech IX SCSp",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2155030/000123191926001634/0001231919-26-001634-index.htm"
+    },
+    {
+      "company": "FirstLook Partners Fund II, L.P.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2137482/000123191926001633/0001231919-26-001633-index.htm"
+    },
+    {
+      "company": "Hopeful Forest, L.P.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2164936/000123191926001630/0001231919-26-001630-index.htm"
+    },
+    {
+      "company": "Sabine Valley #3 Joint Venture",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2164272/000121390026123480/0001213900-26-123480-index.htm"
+    },
+    {
+      "company": "Brij Medical, Inc.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1872429/000114036126045404/0001140361-26-045404-index.htm"
+    },
+    {
+      "company": "Woodies Development Opportunity Fund I, LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166693/000106299326006237/0001062993-26-006237-index.htm"
+    },
+    {
+      "company": "Innovia Private Holdings, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2093098/000101359426001220/0001013594-26-001220-index.htm"
+    },
+    {
+      "company": "Samulya Fund LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165938/000101359426001219/0001013594-26-001219-index.htm"
+    },
+    {
+      "company": "Abbott Select EM III, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166656/000101297526001114/0001012975-26-001114-index.htm"
+    },
+    {
+      "company": "CM Investor, L.P.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2161887/000101297526001113/0001012975-26-001113-index.htm"
+    },
+    {
+      "company": "PineBridge Private Credit IV, L.P.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2070142/000101297526001112/0001012975-26-001112-index.htm"
+    },
+    {
+      "company": "Overstone Fund Plc.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1341344/000101297526001111/0001012975-26-001111-index.htm"
+    },
+    {
+      "company": "OneWell Public Alpha Fund, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2161084/000101297526001110/0001012975-26-001110-index.htm"
+    },
+    {
+      "company": "Maxima Fund IV, L.P.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2084295/000101297526001109/0001012975-26-001109-index.htm"
+    },
+    {
+      "company": "Hark Capital V, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2094987/000101297526001108/0001012975-26-001108-index.htm"
+    },
+    {
+      "company": "Hark V Series Fund, LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2095411/000101297526001107/0001012975-26-001107-index.htm"
+    },
+    {
+      "company": "OSP Burns Holdings, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2095592/000095017226000257/0000950172-26-000257-index.htm"
+    },
+    {
+      "company": "Quantum Light Opportunities LP - Series I",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163410/000095014226003148/0000950142-26-003148-index.htm"
+    },
+    {
+      "company": "Stepstone Senior Corporate Lending Fund IV SCSp SICAV-RAIF",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2164877/000094562126001449/0000945621-26-001449-index.htm"
+    },
+    {
+      "company": "CSC Ranger Holdings, L.P.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163782/000094562126001448/0000945621-26-001448-index.htm"
+    },
+    {
+      "company": "METROPOLITAN LIFE INSURANCE CO",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/937834/000093783426000023/0000937834-26-000023-index.htm"
+    },
+    {
+      "company": "METROPOLITAN LIFE INSURANCE CO",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/937834/000093783426000022/0000937834-26-000022-index.htm"
+    },
+    {
+      "company": "METROPOLITAN LIFE INSURANCE CO",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/937834/000093783426000021/0000937834-26-000021-index.htm"
+    },
+    {
+      "company": "Green Shield Holdings LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2026052/000092963826004400/0000929638-26-004400-index.htm"
+    },
+    {
+      "company": "Good Springs Capital Titan Co-Invest LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2046807/000091957426008234/0000919574-26-008234-index.htm"
+    },
+    {
+      "company": "Ionic Volatility Arbitrage Fund II LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1606566/000090514826005168/0000905148-26-005168-index.htm"
+    },
+    {
+      "company": "Ionic Value Fund LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1832596/000090514826005167/0000905148-26-005167-index.htm"
+    },
+    {
+      "company": "Galvanize Global Equities, LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1954877/000090514826005159/0000905148-26-005159-index.htm"
+    },
+    {
+      "company": "Compass Special Situations IRA Fund LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1517602/000090514826005158/0000905148-26-005158-index.htm"
+    },
+    {
+      "company": "Magnetar Opportunity 2025-3 LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2085903/000090514826005156/0000905148-26-005156-index.htm"
+    },
+    {
+      "company": "Mustang Opportunities Fund LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1892853/000090514826005155/0000905148-26-005155-index.htm"
+    },
+    {
+      "company": "Magnetar AI Ventures Fund LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2032191/000090514826005154/0000905148-26-005154-index.htm"
+    },
+    {
+      "company": "Magnetar Opportunity 5 LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2141522/000090514826005153/0000905148-26-005153-index.htm"
+    },
+    {
+      "company": "Magnetar Relative Value Fund Ltd",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1977007/000090514826005152/0000905148-26-005152-index.htm"
+    },
+    {
+      "company": "Magnetar Investment APPK LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2059391/000090514826005150/0000905148-26-005150-index.htm"
+    },
+    {
+      "company": "Magnetar Waterfront Alternative Credit Fund LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2054274/000090514826005149/0000905148-26-005149-index.htm"
+    },
+    {
+      "company": "Magnetar Opportunity 2025-4 LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2105019/000090514826005148/0000905148-26-005148-index.htm"
+    },
+    {
+      "company": "Magnetar Opportunity 2025-2 LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2104998/000090514826005147/0000905148-26-005147-index.htm"
+    },
+    {
+      "company": "Magnetar AI Opportunity LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/2031002/000090514826005146/0000905148-26-005146-index.htm"
+    },
+    {
+      "company": "Magnetar Systematic Multi-Strategy Fund Ltd",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1759062/000090514826005145/0000905148-26-005145-index.htm"
+    },
+    {
+      "company": "Magnetar Systematic Multi-Strategy Fund LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1714231/000090514826005144/0000905148-26-005144-index.htm"
+    },
+    {
+      "company": "Magnetar Structured Credit Fund LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1438426/000090514826005143/0000905148-26-005143-index.htm"
+    },
+    {
+      "company": "Magnetar SC Fund Ltd",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1498898/000090514826005142/0000905148-26-005142-index.htm"
+    },
+    {
+      "company": "Magnetar PRA Fund Ltd",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1658376/000090514826005141/0000905148-26-005141-index.htm"
+    },
+    {
+      "company": "Magnetar Lake Credit Fund LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1819293/000090514826005140/0000905148-26-005140-index.htm"
+    },
+    {
+      "company": "Magnetar Constellation Fund, Ltd",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1409506/000090514826005139/0000905148-26-005139-index.htm"
+    },
+    {
+      "company": "Magnetar Capital Fund II LP",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1479949/000090514826005138/0000905148-26-005138-index.htm"
+    },
+    {
+      "company": "Magnetar Alpha Star Fund LLC",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1932711/000090514826005137/0000905148-26-005137-index.htm"
+    },
+    {
+      "company": "Canyon Balanced Fund L.P.",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/1296469/000090514826005132/0000905148-26-005132-index.htm"
+    },
+    {
+      "company": "SUMMIT BREWING CO",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D",
+      "status": "new",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/767254/000076725426000002/0000767254-26-000002-index.htm"
+    },
+    {
+      "company": "METROPOLITAN TOWER LIFE INSURANCE CO",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/728240/000072824026000014/0000728240-26-000014-index.htm"
+    },
+    {
+      "company": "METROPOLITAN TOWER LIFE INSURANCE CO",
+      "ticker": "",
+      "filed_date": "2026-11-24",
+      "form": "D/A",
+      "status": "amendment",
+      "doc_url": "https://www.sec.gov/Archives/edgar/data/728240/000072824026000013/0000728240-26-000013-index.htm"
+    },
     {
       "company": "PI Harbor District Portfolio, LLC",
       "ticker": "",
@@ -2395,2424 +4811,8 @@
       "form": "D",
       "status": "new",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/2164211/000216421126000001/0002164211-26-000001-index.htm"
-    },
-    {
-      "company": "L3 Edge Collection I Investors LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2164170/000216417026000001/0002164170-26-000001-index.htm"
-    },
-    {
-      "company": "Script Capital Growth, L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2164006/000216400626000001/0002164006-26-000001-index.htm"
-    },
-    {
-      "company": "Brandon-DY-1022 Fund I, a series of Platform Funds 2026, LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163973/000216397326000001/0002163973-26-000001-index.htm"
-    },
-    {
-      "company": "Madison Sunrise, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163705/000216370526000002/0002163705-26-000002-index.htm"
-    },
-    {
-      "company": "BTRG Kalispell Main Street Holdings, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163599/000216359926000001/0002163599-26-000001-index.htm"
-    },
-    {
-      "company": "MAPLE PRIVACY LABS, INC.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163334/000216333426000001/0002163334-26-000001-index.htm"
-    },
-    {
-      "company": "MMV1 a Series of CGF2026 LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163290/000216329026000001/0002163290-26-000001-index.htm"
-    },
-    {
-      "company": "Proximal DCI a Series of CGF2026 LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163278/000216327826000001/0002163278-26-000001-index.htm"
-    },
-    {
-      "company": "Lucidn III a Series of Entrada Ventures II Master LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163272/000216327226000001/0002163272-26-000001-index.htm"
-    },
-    {
-      "company": "GSBackers Overland AI Fund II a Series of CGF2026 LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163249/000216324926000001/0002163249-26-000001-index.htm"
-    },
-    {
-      "company": "Hyperspace Mach 13 a Series of CGF2026 LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163241/000216324126000001/0002163241-26-000001-index.htm"
-    },
-    {
-      "company": "JTVC - AP 1026 a Series of CGF2026 LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2162459/000216245926000001/0002162459-26-000001-index.htm"
-    },
-    {
-      "company": "Aform Bridge a Series of CGF2026 LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2162449/000216244926000001/0002162449-26-000001-index.htm"
-    },
-    {
-      "company": "RC Enter Sandman, a series of RC MTLC, LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2161974/000216197426000002/0002161974-26-000002-index.htm"
-    },
-    {
-      "company": "AB Angels, a series of Roll Up Vehicles, LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2161932/000216193226000003/0002161932-26-000003-index.htm"
-    },
-    {
-      "company": "FL-0927 Fund I, a series of JMWTX Investments, LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2161909/000216190926000002/0002161909-26-000002-index.htm"
-    },
-    {
-      "company": "UL-1019 Fund II, a series of Multimodal Ventures, LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2161796/000216179626000002/0002161796-26-000002-index.htm"
-    },
-    {
-      "company": "ES III, a series of E Squared Investment Fund, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2161727/000216172726000002/0002161727-26-000002-index.htm"
-    },
-    {
-      "company": "Hyperion VIII a Series of CGF2026 LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2160934/000216093426000001/0002160934-26-000001-index.htm"
-    },
-    {
-      "company": "VIS 1369152 a Series of CGF2026 LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2160926/000216092626000001/0002160926-26-000001-index.htm"
-    },
-    {
-      "company": "Luwian AI Inc",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2160625/000216062526000001/0002160625-26-000001-index.htm"
-    },
-    {
-      "company": "Sandbrook Climate Infrastructure Fund II",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2160340/000216034026000001/0002160340-26-000001-index.htm"
-    },
-    {
-      "company": "PFDSELECT MEDICAL RECEIVABLES 1024, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2160327/000216032726000001/0002160327-26-000001-index.htm"
-    },
-    {
-      "company": "AFC 1026 a Series of CGF2026 LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2160065/000216006526000001/0002160065-26-000001-index.htm"
-    },
-    {
-      "company": "CRE Alpine Partners I, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2159913/000215991326000002/0002159913-26-000002-index.htm"
-    },
-    {
-      "company": "Upwell Cosmetics, PBC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2159576/000215957626000001/0002159576-26-000001-index.htm"
-    },
-    {
-      "company": "SAMNOV B311 a Series of CGF2026 LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2158951/000215895126000001/0002158951-26-000001-index.htm"
-    },
-    {
-      "company": "WH-0921 Fund I, a series of Impellent Ventures Funds, LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2157950/000215795026000002/0002157950-26-000002-index.htm"
-    },
-    {
-      "company": "Tulip 0404 - SN, a series of Tulip 0404 SPV, LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2157912/000215791226000002/0002157912-26-000002-index.htm"
-    },
-    {
-      "company": "Monarch Fund LP/DE",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2157642/000215764226000002/0002157642-26-000002-index.htm"
-    },
-    {
-      "company": "SC-2026 Seed, Friends & Family I, a series of Roll Up Vehicles, LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2157237/000215723726000002/0002157237-26-000002-index.htm"
-    },
-    {
-      "company": "VE-0819 Fund I, a series of Dynamo SPV, LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2156836/000215683626000002/0002156836-26-000002-index.htm"
-    },
-    {
-      "company": "MREF IV, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2155242/000215524226000001/0002155242-26-000001-index.htm"
-    },
-    {
-      "company": "Zeely, Inc.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2155182/000215518226000003/0002155182-26-000003-index.htm"
-    },
-    {
-      "company": "FCP Venture X QP LLC, Series XXIV",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2154962/000215496226000002/0002154962-26-000002-index.htm"
-    },
-    {
-      "company": "Man Numeric Emerging Markets ex China",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2045683/000215415326000016/0002154153-26-000016-index.htm"
-    },
-    {
-      "company": "Index Origin III Entrepreneur Fund",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2153951/000215395126000001/0002153951-26-000001-index.htm"
-    },
-    {
-      "company": "Index Ventures XIII Entrepreneur Fund",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2153950/000215395026000001/0002153950-26-000001-index.htm"
-    },
-    {
-      "company": "GRDNT OPPT II a Series of GRDNT MSTR LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2153641/000215364126000001/0002153641-26-000001-index.htm"
-    },
-    {
-      "company": "MTE Elmside, LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2153115/000215311526000001/0002153115-26-000001-index.htm"
-    },
-    {
-      "company": "Digital Asset Special Investments I, LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2152894/000215289426000002/0002152894-26-000002-index.htm"
-    },
-    {
-      "company": "Digital Asset Strategies I, LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2152893/000215289326000002/0002152893-26-000002-index.htm"
-    },
-    {
-      "company": "Ingenerate Series Opalite Health",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2151551/000215155126000001/0002151551-26-000001-index.htm"
-    },
-    {
-      "company": "INGENERATE SERIES COPYSIGHT",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2151550/000215155026000001/0002151550-26-000001-index.htm"
-    },
-    {
-      "company": "Ingenerate Series Sol-Ti",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2151549/000215154926000001/0002151549-26-000001-index.htm"
-    },
-    {
-      "company": "PQ 202608 a Series of CGF2021 LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2151054/000215105426000001/0002151054-26-000001-index.htm"
-    },
-    {
-      "company": "Gradient Ascent Fund 0, LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2151038/000215103826000005/0002151038-26-000005-index.htm"
-    },
-    {
-      "company": "HU-0814 Fund III, a series of AX-RN-Funds, LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2151034/000215103426000002/0002151034-26-000002-index.htm"
-    },
-    {
-      "company": "Fund FG-HZM a series of Forge Investments",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2149456/000214945626000001/0002149456-26-000001-index.htm"
-    },
-    {
-      "company": "Vectro-WO-0716 Fund I, a series of Platform Funds 2026, LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2149245/000214924526000003/0002149245-26-000003-index.htm"
-    },
-    {
-      "company": "PTACS - Affordable Housing Fund II, L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2148059/000214805926000001/0002148059-26-000001-index.htm"
-    },
-    {
-      "company": "Atlas Carlsbad Village Class A, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2147865/000214786526000002/0002147865-26-000002-index.htm"
-    },
-    {
-      "company": "EquityZen Growth Technology Fund LLC - Series 2428",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2144787/000214478726000001/0002144787-26-000001-index.htm"
-    },
-    {
-      "company": "DPV Aegis I a Series of DataPower Capital Partners LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2144720/000214472026000001/0002144720-26-000001-index.htm"
-    },
-    {
-      "company": "DE-0623 Fund I, a series of Roll Up Vehicles, LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2144512/000214451226000002/0002144512-26-000002-index.htm"
-    },
-    {
-      "company": "NCL Partners Co-Investment Vehicle, L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2142756/000214275626000003/0002142756-26-000003-index.htm"
-    },
-    {
-      "company": "TCW Rescue Financing Fund III Notes LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2139898/000213989826000004/0002139898-26-000004-index.htm"
-    },
-    {
-      "company": "Ground Effect Neuraworx June 2026 a Series of CGF2021 LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2139474/000213947426000002/0002139474-26-000002-index.htm"
-    },
-    {
-      "company": "PLENTI LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2138359/000213835926000002/0002138359-26-000002-index.htm"
-    },
-    {
-      "company": "Markland Development Fund I LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2136852/000213685226000002/0002136852-26-000002-index.htm"
-    },
-    {
-      "company": "Revere Partners Fund III, LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2127569/000212756926000001/0002127569-26-000001-index.htm"
-    },
-    {
-      "company": "MREF III, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2111578/000211157826000001/0002111578-26-000001-index.htm"
-    },
-    {
-      "company": "YHSGR Holdings, Inc.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2100153/000210015326000004/0002100153-26-000004-index.htm"
-    },
-    {
-      "company": "Starframe Fund I LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2099715/000209971526000001/0002099715-26-000001-index.htm"
-    },
-    {
-      "company": "Blue Jasper Digital LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2097447/000209744726000002/0002097447-26-000002-index.htm"
-    },
-    {
-      "company": "Mesirow Specialty Finance Fund VII, L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2097347/000209734726000001/0002097347-26-000001-index.htm"
-    },
-    {
-      "company": "25Madison Propel Fund, L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2097232/000209723226000001/0002097232-26-000001-index.htm"
-    },
-    {
-      "company": "Hypersignal Alpha LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2094068/000209406826000001/0002094068-26-000001-index.htm"
-    },
-    {
-      "company": "Oberland Capital Healthcare Solutions Offshore II LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2091181/000209118126000001/0002091181-26-000001-index.htm"
-    },
-    {
-      "company": "Oberland Capital Healthcare Solutions Co-Invest Offshore II LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2090707/000209070726000001/0002090707-26-000001-index.htm"
-    },
-    {
-      "company": "Oberland Capital Healthcare Solutions Co-Invest II LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2090689/000209068926000001/0002090689-26-000001-index.htm"
-    },
-    {
-      "company": "Oberland Capital Healthcare Solutions II LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2090654/000209065426000001/0002090654-26-000001-index.htm"
-    },
-    {
-      "company": "Crescent Syndicated Credit Solutions Fund, L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2067614/000206761426000001/0002067614-26-000001-index.htm"
-    },
-    {
-      "company": "WTW CSCS Fund",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2064318/000206431826000002/0002064318-26-000002-index.htm"
-    },
-    {
-      "company": "WTW CSCS Fund, L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2064309/000206430926000001/0002064309-26-000001-index.htm"
-    },
-    {
-      "company": "Palumbo International Emerging Healthcare Fund, LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2164227/000206382426000007/0002063824-26-000007-index.htm"
-    },
-    {
-      "company": "Macquarie Energy Transition Infrastructure Fund, L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2062936/000206293626000005/0002062936-26-000005-index.htm"
-    },
-    {
-      "company": "HarbourVest Opportunistic Credit Secondaries Parallel Fund L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2092712/000206235726000611/0002062357-26-000611-index.htm"
-    },
-    {
-      "company": "HarbourVest Opportunistic Credit Secondaries Fund L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2092703/000206235726000609/0002062357-26-000609-index.htm"
-    },
-    {
-      "company": "Litewave.AI, Inc",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2060763/000206076326000007/0002060763-26-000007-index.htm"
-    },
-    {
-      "company": "9005 Sorensen XC Opportunity Fund, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2046439/000204643926000001/0002046439-26-000001-index.htm"
-    },
-    {
-      "company": "Rocket Carwash, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2045955/000204595526000005/0002045955-26-000005-index.htm"
-    },
-    {
-      "company": "Evergreen Partners Holdco, Inc.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2044196/000204419626000003/0002044196-26-000003-index.htm"
-    },
-    {
-      "company": "Klothea Bio, Inc.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2042705/000204270526000007/0002042705-26-000007-index.htm"
-    },
-    {
-      "company": "STAPLE EVERGREEN FUND I, LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2042547/000204254726000002/0002042547-26-000002-index.htm"
-    },
-    {
-      "company": "CCI Climate Opportunities Fund, LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2042521/000204252126000002/0002042521-26-000002-index.htm"
-    },
-    {
-      "company": "Actis Asia Real Estate 3 A SCSp",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2042116/000204211626000001/0002042116-26-000001-index.htm"
-    },
-    {
-      "company": "Actis Asia Real Estate 3 SCSp",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2042111/000204211126000001/0002042111-26-000001-index.htm"
-    },
-    {
-      "company": "Empire Opportunity Fund LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2035768/000203576826000002/0002035768-26-000002-index.htm"
-    },
-    {
-      "company": "BrightAI Corp",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2031706/000203170626000001/0002031706-26-000001-index.htm"
-    },
-    {
-      "company": "Fairly Inc./WY",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2028927/000202892726000006/0002028927-26-000006-index.htm"
-    },
-    {
-      "company": "Augment Collective, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2023866/000202386626000062/0002023866-26-000062-index.htm"
-    },
-    {
-      "company": "Galvanic Fund II, LLLP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2023692/000202369226000004/0002023692-26-000004-index.htm"
-    },
-    {
-      "company": "NIMBLE PRECISION, INC.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2008251/000200825126000002/0002008251-26-000002-index.htm"
-    },
-    {
-      "company": "GreatPoint Ventures Innovation Fund IV, L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2001885/000200188526000001/0002001885-26-000001-index.htm"
-    },
-    {
-      "company": "Raymond Thomas Holdings, Inc.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1980350/000198035026000002/0001980350-26-000002-index.htm"
-    },
-    {
-      "company": "Octagon CLO Investment Grade Income Fund, Ltd.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1979557/000197955726000002/0001979557-26-000002-index.htm"
-    },
-    {
-      "company": "Octagon CLO Investment Grade Income Fund, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1979554/000197955426000002/0001979554-26-000002-index.htm"
-    },
-    {
-      "company": "Trium Khartes Fund Delaware LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1954317/000195431726000002/0001954317-26-000002-index.htm"
-    },
-    {
-      "company": "Matchpoint Therapeutics Inc.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1950915/000195091526000002/0001950915-26-000002-index.htm"
-    },
-    {
-      "company": "Trium Larissa Global Macro Fund Ltd",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1949642/000194964226000002/0001949642-26-000002-index.htm"
-    },
-    {
-      "company": "EQT Exeter Real Estate Income Trust, Inc.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1946997/000194699726000013/0001946997-26-000013-index.htm"
-    },
-    {
-      "company": "Newton Golf Company, Inc.",
-      "ticker": "NWTG",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1934245/000193424526000004/0001934245-26-000004-index.htm"
-    },
-    {
-      "company": "MTNTough Inc.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1928649/000192864926000003/0001928649-26-000003-index.htm"
-    },
-    {
-      "company": "Sea Cliff Offshore Fund, LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1895290/000189529026000001/0001895290-26-000001-index.htm"
-    },
-    {
-      "company": "Ennabl, Inc.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1886670/000188667026000001/0001886670-26-000001-index.htm"
-    },
-    {
-      "company": "Destiny Alternative Fund II LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1855462/000185546226000001/0001855462-26-000001-index.htm"
-    },
-    {
-      "company": "Orange Credit Dislocation Fund, LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1827901/000182790126000003/0001827901-26-000003-index.htm"
-    },
-    {
-      "company": "Cunning Capital Ventures, LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1823980/000182398026000002/0001823980-26-000002-index.htm"
-    },
-    {
-      "company": "FT Real Estate Platform I LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1799541/000179954126000001/0001799541-26-000001-index.htm"
-    },
-    {
-      "company": "Compact Medical Inc.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1794240/000179424026000001/0001794240-26-000001-index.htm"
-    },
-    {
-      "company": "FT Private Investment Platform I LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1755184/000175518426000001/0001755184-26-000001-index.htm"
-    },
-    {
-      "company": "LIFEMARK REINSURANCE Co",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1730395/000173039526000001/0001730395-26-000001-index.htm"
-    },
-    {
-      "company": "FT OFFSHORE I LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1728654/000172865426000001/0001728654-26-000001-index.htm"
-    },
-    {
-      "company": "Funding University, Inc.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1682218/000168221826000004/0001682218-26-000004-index.htm"
-    },
-    {
-      "company": "MR3 Health, Inc.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1649572/000164957226000001/0001649572-26-000001-index.htm"
-    },
-    {
-      "company": "Munee M & A, Inc.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1644516/000164451626000016/0001644516-26-000016-index.htm"
-    },
-    {
-      "company": "Oresund AlphaLife Partners, LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1612920/000161292026000004/0001612920-26-000004-index.htm"
-    },
-    {
-      "company": "Varadero International, Ltd.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1603929/000160392926000001/0001603929-26-000001-index.htm"
-    },
-    {
-      "company": "Capital Group Alternative Strategies Fund, LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1590537/000159053726000001/0001590537-26-000001-index.htm"
-    },
-    {
-      "company": "FT Alternative Platform I LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1576420/000157642026000001/0001576420-26-000001-index.htm"
-    },
-    {
-      "company": "Cunning Capital Partners, LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1571075/000157107526000005/0001571075-26-000005-index.htm"
-    },
-    {
-      "company": "Crescent Capital High Income Fund B, L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1550727/000155072726000001/0001550727-26-000001-index.htm"
-    },
-    {
-      "company": "Pointskash, Inc.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2018041/000149315226053395/0001493152-26-053395-index.htm"
-    },
-    {
-      "company": "VARADERO PARTNERS, L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1488880/000148888026000001/0001488880-26-000001-index.htm"
-    },
-    {
-      "company": "Cendana Sandstorm, L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2041314/000147083126001025/0001470831-26-001025-index.htm"
-    },
-    {
-      "company": "Lithotripsy Institute of Indiana, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1462108/000146210826000002/0001462108-26-000002-index.htm"
-    },
-    {
-      "company": "RATIONAL INVESTMENT GROUP, LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1458302/000145830226000002/0001458302-26-000002-index.htm"
-    },
-    {
-      "company": "Piedmont Partners Fund, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1655272/000139834426020402/0001398344-26-020402-index.htm"
-    },
-    {
-      "company": "CRESCENT SENIOR SECURED FLOATING RATE LOAN FUND",
-      "ticker": "CAYMAN",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1339820/000133982026000001/0001339820-26-000001-index.htm"
-    },
-    {
-      "company": "CRESCENT SENIOR SECURED FLOATING RATE LOAN FUND, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1339274/000133927426000001/0001339274-26-000001-index.htm"
-    },
-    {
-      "company": "Aspect Blue Ridge Fund",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2000873/000131586326000792/0001315863-26-000792-index.htm"
-    },
-    {
-      "company": "776 Fund 1960 Squaw Valley, L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166312/000123191926001622/0001231919-26-001622-index.htm"
-    },
-    {
-      "company": "Perpay, Inc",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1644247/000123191926001619/0001231919-26-001619-index.htm"
-    },
-    {
-      "company": "TRUFFLE HOUND GLOBAL VALUE, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1178144/000117814426000002/0001178144-26-000002-index.htm"
-    },
-    {
-      "company": "Prime Benefit Group LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2067739/000110465926130539/0001104659-26-130539-index.htm"
-    },
-    {
-      "company": "a16z Perennial Opportunities, L.P. - Series IV",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166168/000110465926130296/0001104659-26-130296-index.htm"
-    },
-    {
-      "company": "Blitzoo, Inc.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2050068/000101410826000069/0001014108-26-000069-index.htm"
-    },
-    {
-      "company": "Venture Growth Select II Offshore SICAV-RAIF S.C.Sp.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2127092/000101297526001102/0001012975-26-001102-index.htm"
-    },
-    {
-      "company": "Venture Growth Select Fund II, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2127093/000101297526001101/0001012975-26-001101-index.htm"
-    },
-    {
-      "company": "Global Defense & Security Select Fund Offshore SICAV-RAIF S.C.Sp.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2133514/000101297526001100/0001012975-26-001100-index.htm"
-    },
-    {
-      "company": "Global Defense & Security Select Fund, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2128641/000101297526001099/0001012975-26-001099-index.htm"
-    },
-    {
-      "company": "Global Defense & Security Select Fund Offshore SICAV-RAIF S.C.Sp.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2133514/000101297526001098/0001012975-26-001098-index.htm"
-    },
-    {
-      "company": "Kerrisdale Long Fund, LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1728022/000101297526001095/0001012975-26-001095-index.htm"
-    },
-    {
-      "company": "Vintage 2026 Private Investments Offshore SICAV-RAIF S.C.Sp.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2136319/000101297526001094/0001012975-26-001094-index.htm"
-    },
-    {
-      "company": "Vintage 2026 Private Investments, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2136320/000101297526001092/0001012975-26-001092-index.htm"
-    },
-    {
-      "company": "Vintage Private Equity 2026, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2136317/000101297526001091/0001012975-26-001091-index.htm"
-    },
-    {
-      "company": "Vintage Private Equity 2026 Offshore SICAV-RAIF S.C.Sp.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2136318/000101297526001090/0001012975-26-001090-index.htm"
-    },
-    {
-      "company": "Kerrisdale Alpha Offshore, Ltd.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2161864/000101297526001089/0001012975-26-001089-index.htm"
-    },
-    {
-      "company": "APKF Co-Invest US Feeder SPV 2 LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2160384/000095012726000137/0000950127-26-000137-index.htm"
-    },
-    {
-      "company": "APKF Co-Invest US Feeder SPV 1 LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2160383/000095012726000136/0000950127-26-000136-index.htm"
-    },
-    {
-      "company": "GS Finance Corp.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1419828/000095010326017963/0000950103-26-017963-index.htm"
-    },
-    {
-      "company": "Providence VIII Tetris Co-Investment-D L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2162210/000095010326017918/0000950103-26-017918-index.htm"
-    },
-    {
-      "company": "Providence VIII Tetris Co-Investment-C L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2155463/000095010326017889/0000950103-26-017889-index.htm"
-    },
-    {
-      "company": "ACG Offshore Fund, L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2009872/000093583626000636/0000935836-26-000636-index.htm"
-    },
-    {
-      "company": "ACG US Fund, L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2000250/000093583626000635/0000935836-26-000635-index.htm"
-    },
-    {
-      "company": "LANSDOWNE DEVELOPED MARKETS LONG ONLY FUND LTD",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1569654/000091957426008218/0000919574-26-008218-index.htm"
-    },
-    {
-      "company": "LANSDOWNE DEVELOPED MARKETS LONG ONLY FUND, L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1555901/000091957426008216/0000919574-26-008216-index.htm"
-    },
-    {
-      "company": "LANSDOWNE EUROPEAN LONG ONLY FUND L P",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1370857/000091957426008214/0000919574-26-008214-index.htm"
-    },
-    {
-      "company": "Markley Capital Partners LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1812072/000091957426008212/0000919574-26-008212-index.htm"
-    },
-    {
-      "company": "CC Tekever Holdings, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2044540/000091957426008210/0000919574-26-008210-index.htm"
-    },
-    {
-      "company": "MOON CAPITAL GLOBAL EQUITY PARTNERS OFFSHORE FUND LTD.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1486131/000091957426008208/0000919574-26-008208-index.htm"
-    },
-    {
-      "company": "MOON CAPITAL GLOBAL EQUITY PARTNERS FUND LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1460115/000091957426008206/0000919574-26-008206-index.htm"
-    },
-    {
-      "company": "Overlay Capital Infrastructure Partners PV3, L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2152820/000091406226000059/0000914062-26-000059-index.htm"
-    },
-    {
-      "company": "Qube Fund LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2045396/000090266426004644/0000902664-26-004644-index.htm"
-    },
-    {
-      "company": "Owl Creek Credit Opportunities Fund, Ltd.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1554491/000090266426004643/0000902664-26-004643-index.htm"
-    },
-    {
-      "company": "Owl Creek Credit Opportunities Fund, L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1554485/000090266426004642/0000902664-26-004642-index.htm"
-    },
-    {
-      "company": "Owl Creek Overseas Fund, Ltd.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1178193/000090266426004641/0000902664-26-004641-index.htm"
-    },
-    {
-      "company": "Owl Creek II, L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1178296/000090266426004640/0000902664-26-004640-index.htm"
-    },
-    {
-      "company": "Owl Creek I, L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1178254/000090266426004639/0000902664-26-004639-index.htm"
-    },
-    {
-      "company": "OnyxPoint Multi-Asset Commodity Fund LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2001576/000090266426004638/0000902664-26-004638-index.htm"
-    },
-    {
-      "company": "OnyxPoint Multi-Asset Commodity Offshore Fund LP",
-      "ticker": "",
-      "filed_date": "2026-11-20",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2001437/000090266426004637/0000902664-26-004637-index.htm"
-    },
-    {
-      "company": "CI Mobility 03, a Series of CIM Funds, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166163/000216616326000001/0002166163-26-000001-index.htm"
-    },
-    {
-      "company": "Development Capital VII, L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166153/000216615326000001/0002166153-26-000001-index.htm"
-    },
-    {
-      "company": "Otodata F4 Investment, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166149/000216614926000001/0002166149-26-000001-index.htm"
-    },
-    {
-      "company": "Altum Autonomy Inc.",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166123/000216612326000001/0002166123-26-000001-index.htm"
-    },
-    {
-      "company": "Energize TL SPV LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166095/000216609526000001/0002166095-26-000001-index.htm"
-    },
-    {
-      "company": "SkyKnight Tech Rep Holdings, L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166084/000216608426000001/0002166084-26-000001-index.htm"
-    },
-    {
-      "company": "Micro1AI-3, a series of Jason's Syndicate, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166061/000216606126000001/0002166061-26-000001-index.htm"
-    },
-    {
-      "company": "Shah Physician Syndicate Fund LLC - Series 8",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166027/000216602726000001/0002166027-26-000001-index.htm"
-    },
-    {
-      "company": "EC Urbandale LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166025/000216602526000001/0002166025-26-000001-index.htm"
-    },
-    {
-      "company": "TIS Invesco, LP",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2166013/000216601326000001/0002166013-26-000001-index.htm"
-    },
-    {
-      "company": "ExchangeRight Net-Leased All-Cash 23 DST",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165982/000216598226000001/0002165982-26-000001-index.htm"
-    },
-    {
-      "company": "IFP Co-Investment Fund, LP - Series 14 Tidal Flight",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165978/000216597826000001/0002165978-26-000001-index.htm"
-    },
-    {
-      "company": "Strategic AI Private Opportunities LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165971/000216597126000001/0002165971-26-000001-index.htm"
-    },
-    {
-      "company": "Renovo Kelley Create Aggregator, LP",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165969/000216596926000001/0002165969-26-000001-index.htm"
-    },
-    {
-      "company": "Alkify Inc.",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165965/000216596526000001/0002165965-26-000001-index.htm"
-    },
-    {
-      "company": "Brokermatic AI Corp",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165963/000216596326000001/0002165963-26-000001-index.htm"
-    },
-    {
-      "company": "Elements of the Sea HI LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165962/000216596226000001/0002165962-26-000001-index.htm"
-    },
-    {
-      "company": "NonPublic Space Fund X, a Series of NonPublic Master, LP",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165945/000216594526000001/0002165945-26-000001-index.htm"
-    },
-    {
-      "company": "NZVC-NP Inference Fund V, a Series of NonPublic Master, LP",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165943/000216594326000001/0002165943-26-000001-index.htm"
-    },
-    {
-      "company": "CFM V-Series Fund LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165935/000216593526000001/0002165935-26-000001-index.htm"
-    },
-    {
-      "company": "AGC Thinking Machines I, a Series of AGC Parallax Fund I LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165932/000216593226000001/0002165932-26-000001-index.htm"
-    },
-    {
-      "company": "AGC Rewbi I, a Series of AGC Parallax Fund I LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165925/000216592526000001/0002165925-26-000001-index.htm"
-    },
-    {
-      "company": "Opus XII, a Series of A Master Series, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165915/000216591526000001/0002165915-26-000001-index.htm"
-    },
-    {
-      "company": "Pari Passu Master IV LLC - Series 30",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165911/000216591126000001/0002165911-26-000001-index.htm"
-    },
-    {
-      "company": "Upscalers Atoms, a Series of A Master Series, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165907/000216590726000001/0002165907-26-000001-index.htm"
-    },
-    {
-      "company": "Inference BB XVI, a Series of A Master Series, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165906/000216590626000001/0002165906-26-000001-index.htm"
-    },
-    {
-      "company": "SOJA Ventures Investments LLC, Series PB",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165903/000216590326000001/0002165903-26-000001-index.htm"
-    },
-    {
-      "company": "Zeroe I, a Series of A Master Series, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165900/000216590026000001/0002165900-26-000001-index.htm"
-    },
-    {
-      "company": "HV Partners I, a Series of A Master Series, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165892/000216589226000001/0002165892-26-000001-index.htm"
-    },
-    {
-      "company": "Fernweh Reef Acquisition LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165887/000216588726000001/0002165887-26-000001-index.htm"
-    },
-    {
-      "company": "Rockmont GrowthTech Fund II QP, LP",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165881/000216588126000002/0002165881-26-000002-index.htm"
-    },
-    {
-      "company": "AU Fund I, a Series of A Master Series, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165876/000216587626000001/0002165876-26-000001-index.htm"
-    },
-    {
-      "company": "ClubHaz LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165875/000216587526000001/0002165875-26-000001-index.htm"
-    },
-    {
-      "company": "Ayatris, Inc.",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165861/000216586126000001/0002165861-26-000001-index.htm"
-    },
-    {
-      "company": "MC 1988 IX, a Series of A Master Series, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165859/000216585926000001/0002165859-26-000001-index.htm"
-    },
-    {
-      "company": "Tall Pines MHC LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165841/000216584126000001/0002165841-26-000001-index.htm"
-    },
-    {
-      "company": "Vigo Special Opportunity IV LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165838/000216583826000001/0002165838-26-000001-index.htm"
-    },
-    {
-      "company": "Nominal I, a Series of Cedar Legacy Master LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165833/000216583326000001/0002165833-26-000001-index.htm"
-    },
-    {
-      "company": "NonPublic LLM Fund XXXIX, a Series of 1988 Master, LP",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165826/000216582626000001/0002165826-26-000001-index.htm"
-    },
-    {
-      "company": "Torch Key Caribou, LP",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165809/000216580926000001/0002165809-26-000001-index.htm"
-    },
-    {
-      "company": "Hayfin Maritime Yield Fund II SCSp",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165768/000216576826000001/0002165768-26-000001-index.htm"
-    },
-    {
-      "company": "Initial Conditions Fund I LP",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165761/000216576126000001/0002165761-26-000001-index.htm"
-    },
-    {
-      "company": "AAI Group Holdings, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165759/000216575926000001/0002165759-26-000001-index.htm"
-    },
-    {
-      "company": "Takara Ventures Ltd.",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165741/000216574126000001/0002165741-26-000001-index.htm"
-    },
-    {
-      "company": "Transit Fortress, Inc.",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165732/000216573226000001/0002165732-26-000001-index.htm"
-    },
-    {
-      "company": "Litquidity Ventures Fund LLC - Series 35",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165725/000216572526000001/0002165725-26-000001-index.htm"
-    },
-    {
-      "company": "MAYWIC Select Investments 5 L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165724/000216572426000001/0002165724-26-000001-index.htm"
-    },
-    {
-      "company": "AEP LP 2",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165704/000216570426000001/0002165704-26-000001-index.htm"
-    },
-    {
-      "company": "Saepio BF Strategic Investments LLC - Series 1",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165691/000216569126000001/0002165691-26-000001-index.htm"
-    },
-    {
-      "company": "Swan Lake Mining Co LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165690/000216569026000001/0002165690-26-000001-index.htm"
-    },
-    {
-      "company": "Geist Syndicate Fund LLC - Series 3 SSV Fund I",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165688/000216568826000001/0002165688-26-000001-index.htm"
-    },
-    {
-      "company": "KURD, Inc.",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165676/000216567626000001/0002165676-26-000001-index.htm"
-    },
-    {
-      "company": "SEG Wheel Holdings, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165662/000216566226000001/0002165662-26-000001-index.htm"
-    },
-    {
-      "company": "LaNova AI Solutions, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165659/000216565926000001/0002165659-26-000001-index.htm"
-    },
-    {
-      "company": "Nodes Bio, Inc.",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165657/000216565726000001/0002165657-26-000001-index.htm"
-    },
-    {
-      "company": "Cyberstarts Opportunity A Fund II, L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165635/000216563526000001/0002165635-26-000001-index.htm"
-    },
-    {
-      "company": "ROSECLIFF NEXT GENERATION LP - SERIES BANK",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165575/000216557526000001/0002165575-26-000001-index.htm"
-    },
-    {
-      "company": "Life Impact Partners 22 LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165528/000216552826000001/0002165528-26-000001-index.htm"
-    },
-    {
-      "company": "Life Impact Partners 23 LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165527/000216552726000001/0002165527-26-000001-index.htm"
-    },
-    {
-      "company": "Life Impact Partners 24 LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165526/000216552626000001/0002165526-26-000001-index.htm"
-    },
-    {
-      "company": "Life Impact Partners 25 LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165525/000216552526000001/0002165525-26-000001-index.htm"
-    },
-    {
-      "company": "H.I.G. ERP Meridian Co-Investment, L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165468/000216546826000001/0002165468-26-000001-index.htm"
-    },
-    {
-      "company": "Claimtrax Inc.",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165467/000216546726000001/0002165467-26-000001-index.htm"
-    },
-    {
-      "company": "Retreat BD Holdings LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165387/000216538726000001/0002165387-26-000001-index.htm"
-    },
-    {
-      "company": "AEP V Outpost Sidecar, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165385/000216538526000001/0002165385-26-000001-index.htm"
-    },
-    {
-      "company": "Fort Wayne ALF Property LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165297/000216529726000001/0002165297-26-000001-index.htm"
-    },
-    {
-      "company": "Six Mile Storage LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165279/000216527926000001/0002165279-26-000001-index.htm"
-    },
-    {
-      "company": "Greenbriar Coinvestment API, L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165258/000216525826000001/0002165258-26-000001-index.htm"
-    },
-    {
-      "company": "PARAMETER VENTURES OPPORTUNITIES II LP",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165256/000216525626000001/0002165256-26-000001-index.htm"
-    },
-    {
-      "company": "Soundside Q Holding Co LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165248/000216524826000001/0002165248-26-000001-index.htm"
-    },
-    {
-      "company": "Outsiders Fund SPV I, LP",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165149/000216514926000001/0002165149-26-000001-index.htm"
-    },
-    {
-      "company": "MVA II",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165146/000216514626000001/0002165146-26-000001-index.htm"
-    },
-    {
-      "company": "Univital Inc",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165138/000216513826000001/0002165138-26-000001-index.htm"
-    },
-    {
-      "company": "Little Tomato Tech Corp.",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165078/000216507826000003/0002165078-26-000003-index.htm"
-    },
-    {
-      "company": "Praxos Fund II GP LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2165043/000216504326000001/0002165043-26-000001-index.htm"
-    },
-    {
-      "company": "Praxos Capital Management LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2164920/000216492026000001/0002164920-26-000001-index.htm"
-    },
-    {
-      "company": "Bookman-TA, a series of Platform Funds 2026, LP",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2164895/000216489526000001/0002164895-26-000001-index.htm"
-    },
-    {
-      "company": "Crypto Insights Group Corp.",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2164770/000216477026000002/0002164770-26-000002-index.htm"
-    },
-    {
-      "company": "AU-1104 Fund III, a series of Not Boring Ventures, LP",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2164708/000216470826000001/0002164708-26-000001-index.htm"
-    },
-    {
-      "company": "Horizon II QP, LP",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2164598/000216459826000001/0002164598-26-000001-index.htm"
-    },
-    {
-      "company": "KHK Games Holdings, Inc.",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2164503/000216450326000002/0002164503-26-000002-index.htm"
-    },
-    {
-      "company": "Series Fund X, a series of UM Pre-IPO Portfolio Fund II LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2164437/000216443726000002/0002164437-26-000002-index.htm"
-    },
-    {
-      "company": "LANGHAM PROJECT LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2164191/000216419126000001/0002164191-26-000001-index.htm"
-    },
-    {
-      "company": "Matt-AS-1029 Fund I, a series of Platform Funds 2026, LP",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2164149/000216414926000001/0002164149-26-000001-index.htm"
-    },
-    {
-      "company": "BPRE REIT, Inc.",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2164102/000216410226000001/0002164102-26-000001-index.htm"
-    },
-    {
-      "company": "KU-1002 Fund III, a series of Roll Up Vehicles, LP",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2164031/000216403126000001/0002164031-26-000001-index.htm"
-    },
-    {
-      "company": "FGP Baldwin LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2164017/000216401726000003/0002164017-26-000003-index.htm"
-    },
-    {
-      "company": "Jasper-FL-1026 Fund I, a series of Platform Funds 2026, LP",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163945/000216394526000001/0002163945-26-000001-index.htm"
-    },
-    {
-      "company": "Crucible Capital Fund II, L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163783/000216378326000001/0002163783-26-000001-index.htm"
-    },
-    {
-      "company": "PulsePoint Lake Norman ASC, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163724/000216372426000002/0002163724-26-000002-index.htm"
-    },
-    {
-      "company": "ElmTree Net Lease Fund VI-B, L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163651/000216365126000001/0002163651-26-000001-index.htm"
-    },
-    {
-      "company": "ElmTree Net Lease Fund VI-A, L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163634/000216363426000001/0002163634-26-000001-index.htm"
-    },
-    {
-      "company": "CI Fintech 16, a Series of CIM Funds, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163498/000216349826000001/0002163498-26-000001-index.htm"
-    },
-    {
-      "company": "Gaingels Oso Semi LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163402/000216340226000001/0002163402-26-000001-index.htm"
-    },
-    {
-      "company": "HBC REOF II REIT A LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163366/000216336626000001/0002163366-26-000001-index.htm"
-    },
-    {
-      "company": "Rochefort Virtus 9 Co-Investment Fund LP",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163350/000216335026000001/0002163350-26-000001-index.htm"
-    },
-    {
-      "company": "SFA Credit Fund 2026, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163188/000216318826000002/0002163188-26-000002-index.htm"
-    },
-    {
-      "company": "North Central Florida Surgicenter, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163171/000216317126000001/0002163171-26-000001-index.htm"
-    },
-    {
-      "company": "AAF Ventures SPV 4, L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163061/000216306126000001/0002163061-26-000001-index.htm"
-    },
-    {
-      "company": "Curewell Capital Utah SPV, LP",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2163030/000216303026000002/0002163030-26-000002-index.htm"
-    },
-    {
-      "company": "StepStar Parent REIT LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2162998/000216299826000001/0002162998-26-000001-index.htm"
-    },
-    {
-      "company": "ARS X PLC REIT",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2162679/000216267926000001/0002162679-26-000001-index.htm"
-    },
-    {
-      "company": "BREDIF CRE CLO LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2162668/000216266826000001/0002162668-26-000001-index.htm"
-    },
-    {
-      "company": "Summit-Wold Investment, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2162666/000216266626000001/0002162666-26-000001-index.htm"
-    },
-    {
-      "company": "GCRP Lakeside REIT Holdco, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2162541/000216254126000001/0002162541-26-000001-index.htm"
-    },
-    {
-      "company": "GCDP III REIT Holdco, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2162522/000216252226000001/0002162522-26-000001-index.htm"
-    },
-    {
-      "company": "VU-1019 Fund I, a series of Laird Ventures, LP",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2162464/000216246426000002/0002162464-26-000002-index.htm"
-    },
-    {
-      "company": "AZJAH43 LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2162430/000216243026000001/0002162430-26-000001-index.htm"
-    },
-    {
-      "company": "Starship Ventures SPV XXVIII a series of Starship Ventures Opportunities, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2162427/000216242726000001/0002162427-26-000001-index.htm"
-    },
-    {
-      "company": "NBofI REIT, Inc.",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2162302/000216230226000001/0002162302-26-000001-index.htm"
-    },
-    {
-      "company": "LRC Special Opportunities LLC - Series X-Bow",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2162186/000216218626000001/0002162186-26-000001-index.htm"
-    },
-    {
-      "company": "510N Development, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2162164/000216216426000001/0002162164-26-000001-index.htm"
-    },
-    {
-      "company": "NA-1006 Fund II, a series of Roll Up Vehicles, LP",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2161934/000216193426000002/0002161934-26-000002-index.htm"
-    },
-    {
-      "company": "Alpha-OR-1013 Fund I, a series of Platform Funds 2026, LP",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2161901/000216190126000002/0002161901-26-000002-index.htm"
-    },
-    {
-      "company": "FIVF IV",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2161812/000216181226000001/0002161812-26-000001-index.htm"
-    },
-    {
-      "company": "Standard Fund Series III a Series of CIM Standard Fund-A LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2161571/000216157126000001/0002161571-26-000001-index.htm"
-    },
-    {
-      "company": "Coremarq Properties, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2161477/000216147726000001/0002161477-26-000001-index.htm"
-    },
-    {
-      "company": "MCP REIT V",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2161254/000216125426000001/0002161254-26-000001-index.htm"
-    },
-    {
-      "company": "Groundfloor Mooring SPV I LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2160853/000216085326000001/0002160853-26-000001-index.htm"
-    },
-    {
-      "company": "RNN Ventures Maple AI Seed a series of Allocations 2026 Master, LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2160406/000216040626000001/0002160406-26-000001-index.htm"
-    },
-    {
-      "company": "Highline Capital Group, LP",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2160111/000216011126000001/0002160111-26-000001-index.htm"
-    },
-    {
-      "company": "Spencer Investco, Inc.",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2159762/000215976226000001/0002159762-26-000001-index.htm"
-    },
-    {
-      "company": "IHP Co-Invest V-B, LP",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2159759/000215975926000001/0002159759-26-000001-index.htm"
-    },
-    {
-      "company": "MSOF Lattice Partners, L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2159269/000215926926000001/0002159269-26-000001-index.htm"
-    },
-    {
-      "company": "Liquid 2 Ventures Fund Series-08, L.P.",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2158672/000215867226000001/0002158672-26-000001-index.htm"
-    },
-    {
-      "company": "Photonic Muscle LLC",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2158400/000215840026000002/0002158400-26-000002-index.htm"
-    },
-    {
-      "company": "Jota Holdings Ltd.",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2157976/000215797626000001/0002157976-26-000001-index.htm"
-    },
-    {
-      "company": "Blue Owl Real Estate Exchange VII DST",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D/A",
-      "status": "amendment",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2157974/000215797426000003/0002157974-26-000003-index.htm"
-    },
-    {
-      "company": "Drumbeat-Capital-VSI-Fund I, a series of Drumbeat Capital Funds, LP",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2157903/000215790326000003/0002157903-26-000003-index.htm"
-    },
-    {
-      "company": "Standard Capital Ventures 100B Fund I LP",
-      "ticker": "",
-      "filed_date": "2026-11-19",
-      "form": "D",
-      "status": "new",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2157287/000215728726000002/0002157287-26-000002-index.htm"
     }
   ],
   "methodology": "US Form D exempt-offering notices (\u4e00\u7ea7\u5e02\u573a) \u2014 SEC EDGAR EFTS whole-market form-level queries (public domain, 17 U.S.C. \u00a7105), fixed ~90-day window, filed-date point-in-time, one row per accession (a D/A amendment is a new filing, never a silent overwrite). forms=D expands to D + D/A (live-probed 2026-08-23; volume ~145 notices/day). Status from the immutable form type: D = new exempt-offering notice; D/A = amendment. Honest v1 limits, disclosed not papered over: (1) the offering amount, amount sold, industry, and related persons live INSIDE the filing's primary XML document and are not extracted here \u2014 each row links the filing's EDGAR index page, which lists every document; (2) Form D filers are typically private companies, so the ticker column is almost always empty (the EDGAR display name carries none) \u2014 honest, never guessed; (3) Form D covers Regulation D and other exemptions, including hedge-fund and fund notices \u2014 this panel is the exempt-offering STREAM, not a curated venture-round list; (4) EFTS serves at most 10,000 hits per query \u2014 the first 90-day probe (2026-08-23) hit the cap and received only the newest 41 days, so the fetch now queries a rolling 30-day window (~7,300 filings, under the cap) and the aggregate ACCUMULATES across runs (dedup by accession; the panel's window spans everything ever fetched). Visible rows capped at 600 newest for payload size (total/by_form count the full aggregate). Display-only, exploratory, NOT a research claim.",
-  "snapshot_ts": "2026-11-24T11:13:56.489954+00:00"
+  "snapshot_ts": "2026-11-25T11:35:44.758050+00:00"
 }
