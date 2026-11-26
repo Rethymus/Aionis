@@ -1,14 +1,14 @@
 {
  "status": "ok",
- "as_of": "2026-11-24",
+ "as_of": "2026-11-25",
  "source_panels": [
   "form13f",
   "def14a_persons",
   "stakes_13g",
   "smart_money"
  ],
- "n_nodes": 139,
- "n_edges": 801,
+ "n_nodes": 137,
+ "n_edges": 798,
  "nodes": [
   {
    "id": "i:0000807249",
@@ -1035,22 +1035,6 @@
    }
   },
   {
-   "id": "p:BARRY D. PRESSMAN",
-   "type": "person",
-   "label": "Barry D. Pressman",
-   "zh_label": null,
-   "lanes": [
-    "def14a"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 1,
-    "co_target": 0
-   }
-  },
-  {
    "id": "p:BENNETT WEINTRAUB",
    "type": "person",
    "label": "Bennett Weintraub",
@@ -1118,22 +1102,6 @@
    "id": "p:BORIS EPSHTEYN",
    "type": "person",
    "label": "Boris Epshteyn",
-   "zh_label": null,
-   "lanes": [
-    "def14a"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 1,
-    "co_target": 0
-   }
-  },
-  {
-   "id": "p:BRAD ALLAN WEEKS",
-   "type": "person",
-   "label": "Brad Allan Weeks",
    "zh_label": null,
    "lanes": [
     "def14a"
@@ -1271,7 +1239,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 10
+    "co_target": 9
    }
   },
   {
@@ -1383,7 +1351,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 3
+    "co_target": 5
    }
   },
   {
@@ -1419,9 +1387,9 @@
    }
   },
   {
-   "id": "s:ASTARIS CAPITAL MANAGEMENT LLP",
+   "id": "s:ATG CAPITAL OPPORTUNITIES FUND LP",
    "type": "staker",
-   "label": "Astaris Capital Management LLP",
+   "label": "ATG Capital Opportunities Fund LP",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1515,9 +1483,41 @@
    }
   },
   {
+   "id": "s:BROWN TICE",
+   "type": "staker",
+   "label": "Brown Tice",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
+   }
+  },
+  {
    "id": "s:CASTLEKNIGHT MASTER FUND LP",
    "type": "staker",
    "label": "CastleKnight Master Fund LP",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
+   }
+  },
+  {
+   "id": "s:CAVAN HOLDINGS INC.",
+   "type": "staker",
+   "label": "Cavan Holdings Inc.",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1595,9 +1595,25 @@
    }
   },
   {
-   "id": "s:ECOR1 CAPITAL, LLC",
+   "id": "s:FENG LUO",
    "type": "staker",
-   "label": "EcoR1 Capital, LLC",
+   "label": "Feng Luo",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 2
+   }
+  },
+  {
+   "id": "s:GREENAWALT RYAN",
+   "type": "staker",
+   "label": "Greenawalt Ryan",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1611,9 +1627,9 @@
    }
   },
   {
-   "id": "s:FRAMEWORK VENTURES IV L.P.",
+   "id": "s:HOSSEINION WARREN",
    "type": "staker",
-   "label": "Framework Ventures IV L.P.",
+   "label": "Hosseinion Warren",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1623,7 +1639,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 1
+    "co_target": 2
    }
   },
   {
@@ -1691,22 +1707,6 @@
    }
   },
   {
-   "id": "s:KNUTSEN NYK OFFSHORE TANKERS AS",
-   "type": "staker",
-   "label": "Knutsen NYK Offshore Tankers AS",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
    "id": "s:KOPION ASSET MANAGEMENT, LLC",
    "type": "staker",
    "label": "Kopion Asset Management, LLC",
@@ -1719,45 +1719,13 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 3
-   }
-  },
-  {
-   "id": "s:LAUDER GARY M",
-   "type": "staker",
-   "label": "LAUDER GARY M",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 3
+    "co_target": 1
    }
   },
   {
    "id": "s:LEWIS MICHAEL V",
    "type": "staker",
    "label": "Lewis Michael V",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:LIND GLOBAL FUND II LP",
-   "type": "staker",
-   "label": "Lind Global Fund II LP",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1784,6 +1752,22 @@
     "co_hold": 0,
     "co_board": 0,
     "co_target": 5
+   }
+  },
+  {
+   "id": "s:LUQMAN ELISA V",
+   "type": "staker",
+   "label": "Luqman Elisa V",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 2
    }
   },
   {
@@ -1883,9 +1867,9 @@
    }
   },
   {
-   "id": "s:MOREHEAD DANIEL WAYNE",
+   "id": "s:MILL ROAD CAPITAL III, L.P.",
    "type": "staker",
-   "label": "Morehead Daniel Wayne",
+   "label": "Mill Road Capital III, L.P.",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1918,6 +1902,22 @@
    "id": "s:OA3, LLC",
    "type": "staker",
    "label": "OA3, LLC",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
+   }
+  },
+  {
+   "id": "s:ORBIMED ADVISORS LLC",
+   "type": "staker",
+   "label": "ORBIMED ADVISORS LLC",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -1979,22 +1979,6 @@
    }
   },
   {
-   "id": "s:R01 FUND LP",
-   "type": "staker",
-   "label": "R01 Fund LP",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
    "id": "s:RUBRIC CAPITAL MANAGEMENT LP",
    "type": "staker",
    "label": "Rubric Capital Management LP",
@@ -2011,41 +1995,9 @@
    }
   },
   {
-   "id": "s:SIRENIA CAPITAL MANAGEMENT LP",
-   "type": "staker",
-   "label": "Sirenia Capital Management LP",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
    "id": "s:SMITH PATRICK W",
    "type": "staker",
    "label": "SMITH PATRICK W",
-   "zh_label": null,
-   "lanes": [
-    "13dg"
-   ],
-   "cik": null,
-   "manager_routable": false,
-   "degree": {
-    "co_hold": 0,
-    "co_board": 0,
-    "co_target": 1
-   }
-  },
-  {
-   "id": "s:SOLANA ROCKET HOLDINGS LTD",
-   "type": "staker",
-   "label": "Solana Rocket Holdings Ltd",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -2107,9 +2059,9 @@
    }
   },
   {
-   "id": "s:TPG GP A, LLC",
+   "id": "s:TETHER GLOBAL INVESTMENTS FUND, S.I.C.A.F., S.A.",
    "type": "staker",
-   "label": "TPG GP A, LLC",
+   "label": "Tether Global Investments Fund, S.I.C.A.F., S.A.",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -2123,9 +2075,9 @@
    }
   },
   {
-   "id": "s:TRANSOM CAPITAL PUBLIC FUND, LP",
+   "id": "s:TPAV, LLC",
    "type": "staker",
-   "label": "Transom Capital Public Fund, LP",
+   "label": "TPAV, LLC",
    "zh_label": null,
    "lanes": [
     "13dg"
@@ -2135,7 +2087,23 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 3
+    "co_target": 1
+   }
+  },
+  {
+   "id": "s:TPG GP A, LLC",
+   "type": "staker",
+   "label": "TPG GP A, LLC",
+   "zh_label": null,
+   "lanes": [
+    "13dg"
+   ],
+   "cik": null,
+   "manager_routable": false,
+   "degree": {
+    "co_hold": 0,
+    "co_board": 0,
+    "co_target": 1
    }
   },
   {
@@ -2167,7 +2135,7 @@
    "degree": {
     "co_hold": 0,
     "co_board": 0,
-    "co_target": 3
+    "co_target": 1
    }
   },
   {
@@ -2479,19 +2447,6 @@
     {
      "company": "Blaize Holdings, Inc.",
      "tk": null
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "p:BARRY D. PRESSMAN",
-   "b": "p:BRAD ALLAN WEEKS",
-   "type": "co_board",
-   "w": 1,
-   "shared": [
-    {
-     "company": "VIVOS INC",
-     "tk": "RDGL"
     }
    ],
    "truncated": false
@@ -23179,20 +23134,6 @@
   },
   {
    "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
-   "b": "s:LIND GLOBAL FUND II LP",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "C3is Inc.",
-     "tk": "CISS",
-     "forms": "SC 13D/A|SC 13G"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:(\u7533\u62a5\u4eba\u89c1\u539f\u6587)",
    "b": "s:LOGOS GLOBAL MANAGEMENT LP",
    "type": "co_target",
    "w": 1,
@@ -23361,6 +23302,34 @@
   },
   {
    "a": "s:AMERICAN CENTURY INVESTMENT MANAGEMENT INC",
+   "b": "s:CAVAN HOLDINGS INC.",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "ENTRAVISION COMMUNICATIONS CORP",
+     "tk": "EVC",
+     "forms": "SC 13G|SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:AMERICAN CENTURY INVESTMENT MANAGEMENT INC",
+   "b": "s:TETHER GLOBAL INVESTMENTS FUND, S.I.C.A.F., S.A.",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Gold.com, Inc.",
+     "tk": "GOLD",
+     "forms": "SC 13D/A|SC 13G/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:AMERICAN CENTURY INVESTMENT MANAGEMENT INC",
    "b": "s:WILDFIRE ENERGY I LLC",
    "type": "co_target",
    "w": 1,
@@ -23416,14 +23385,14 @@
    "truncated": false
   },
   {
-   "a": "s:ASTARIS CAPITAL MANAGEMENT LLP",
-   "b": "s:KNUTSEN NYK OFFSHORE TANKERS AS",
+   "a": "s:ATG CAPITAL OPPORTUNITIES FUND LP",
+   "b": "s:BROWN TICE",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "KNOT Offshore Partners LP",
-     "tk": "KNOP",
+     "target": "Empery Digital Inc.",
+     "tk": "EMPD",
      "forms": "SC 13D/A"
     }
    ],
@@ -23528,29 +23497,57 @@
    "truncated": false
   },
   {
-   "a": "s:ECOR1 CAPITAL, LLC",
-   "b": "s:SIRENIA CAPITAL MANAGEMENT LP",
+   "a": "s:FENG LUO",
+   "b": "s:HOSSEINION WARREN",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "ANAPTYSBIO, INC",
-     "tk": "ANAB",
-     "forms": "SC 13D/A|SC 13G/A"
+     "target": "Vesicor Therapeutics Holdings, Inc.",
+     "tk": "BKHA",
+     "forms": "SC 13D"
     }
    ],
    "truncated": false
   },
   {
-   "a": "s:FRAMEWORK VENTURES IV L.P.",
-   "b": "s:R01 FUND LP",
+   "a": "s:FENG LUO",
+   "b": "s:LUQMAN ELISA V",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "Stablecoin Development Corp",
-     "tk": "SDEV",
+     "target": "Vesicor Therapeutics Holdings, Inc.",
+     "tk": "BKHA",
+     "forms": "SC 13D"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:GREENAWALT RYAN",
+   "b": "s:MILL ROAD CAPITAL III, L.P.",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "ALTA EQUIPMENT GROUP INC.",
+     "tk": "ALTG",
      "forms": "SC 13D/A"
+    }
+   ],
+   "truncated": false
+  },
+  {
+   "a": "s:HOSSEINION WARREN",
+   "b": "s:LUQMAN ELISA V",
+   "type": "co_target",
+   "w": 1,
+   "shared": [
+    {
+     "target": "Vesicor Therapeutics Holdings, Inc.",
+     "tk": "BKHA",
+     "forms": "SC 13D"
     }
    ],
    "truncated": false
@@ -23585,34 +23582,6 @@
   },
   {
    "a": "s:KOPION ASSET MANAGEMENT, LLC",
-   "b": "s:LAUDER GARY M",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "SOUNDTHINKING, INC.",
-     "tk": "SSTI",
-     "forms": "SC 13D/A|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:KOPION ASSET MANAGEMENT, LLC",
-   "b": "s:TRANSOM CAPITAL PUBLIC FUND, LP",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "SOUNDTHINKING, INC.",
-     "tk": "SSTI",
-     "forms": "SC 13D/A|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:KOPION ASSET MANAGEMENT, LLC",
    "b": "s:VERADACE CAPITAL MANAGEMENT LLC",
    "type": "co_target",
    "w": 1,
@@ -23621,34 +23590,6 @@
      "target": "SOUNDTHINKING, INC.",
      "tk": "SSTI",
      "forms": "SC 13D/A|SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:LAUDER GARY M",
-   "b": "s:TRANSOM CAPITAL PUBLIC FUND, LP",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "SOUNDTHINKING, INC.",
-     "tk": "SSTI",
-     "forms": "SC 13D/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:LAUDER GARY M",
-   "b": "s:VERADACE CAPITAL MANAGEMENT LLC",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "SOUNDTHINKING, INC.",
-     "tk": "SSTI",
-     "forms": "SC 13D/A"
     }
    ],
    "truncated": false
@@ -23738,15 +23679,15 @@
    "truncated": false
   },
   {
-   "a": "s:MOREHEAD DANIEL WAYNE",
-   "b": "s:SOLANA ROCKET HOLDINGS LTD",
+   "a": "s:ORBIMED ADVISORS LLC",
+   "b": "s:TPAV, LLC",
    "type": "co_target",
    "w": 1,
    "shared": [
     {
-     "target": "Solana Co",
-     "tk": "HSDT",
-     "forms": "SC 13D/A|SC 13G/A"
+     "target": "Clywedog Therapeutics Holdings, Inc.",
+     "tk": "CLYD",
+     "forms": "SC 13D"
     }
    ],
    "truncated": false
@@ -23789,20 +23730,6 @@
      "target": "ASSURED GUARANTY LTD",
      "tk": "AGO",
      "forms": "SC 13G/A"
-    }
-   ],
-   "truncated": false
-  },
-  {
-   "a": "s:TRANSOM CAPITAL PUBLIC FUND, LP",
-   "b": "s:VERADACE CAPITAL MANAGEMENT LLC",
-   "type": "co_target",
-   "w": 1,
-   "shared": [
-    {
-     "target": "SOUNDTHINKING, INC.",
-     "tk": "SSTI",
-     "forms": "SC 13D/A"
     }
    ],
    "truncated": false
@@ -24034,6 +23961,20 @@
    "stock_routable": false
   },
   {
+   "tk": "INTU",
+   "name": "INTUIT INC.",
+   "in": [
+    "13f",
+    "def14a"
+   ],
+   "counts": {
+    "managers": 2,
+    "persons": 1,
+    "stakers": 0
+   },
+   "stock_routable": true
+  },
+  {
    "tk": "LQDA",
    "name": "Liquidia Corp",
    "in": [
@@ -24074,20 +24015,6 @@
     "stakers": 1
    },
    "stock_routable": true
-  },
-  {
-   "tk": "PRMB",
-   "name": "Primo Brands Corp",
-   "in": [
-    "13f",
-    "13dg"
-   ],
-   "counts": {
-    "managers": 1,
-    "persons": 0,
-    "stakers": 1
-   },
-   "stock_routable": false
   },
   {
    "tk": "PSNL",
@@ -24244,6 +24171,20 @@
    "stock_routable": false
   },
   {
+   "tk": "WRD",
+   "name": "WeRide Inc.",
+   "in": [
+    "13f",
+    "13dg"
+   ],
+   "counts": {
+    "managers": 1,
+    "persons": 0,
+    "stakers": 1
+   },
+   "stock_routable": false
+  },
+  {
    "tk": "XTIA",
    "name": "XTI Aerospace, Inc.",
    "in": [
@@ -24259,18 +24200,18 @@
   }
  ],
  "components": {
-  "n": 37,
+  "n": 36,
   "largest": 43
  },
  "windows": {
   "form13f_quarter": "2026-06-30",
   "stakes_visible_dates": {
    "start": "2026-11-16",
-   "end": "2026-11-24"
+   "end": "2026-11-25"
   },
   "smart_money_visible_dates": {
-   "start": "2026-11-18",
-   "end": "2026-11-24"
+   "start": "2026-11-20",
+   "end": "2026-11-25"
   }
  },
  "coverage": {
@@ -24280,7 +24221,7 @@
    "isolated_managers": 0
   },
   "def14a": {
-   "basis": "top_persons export: 50 most-seated of 626 upstream persons; 110/150 filings with persons (73.3%)",
+   "basis": "top_persons export: 50 most-seated of 607 upstream persons; 108/150 filings with persons (72.0%)",
    "same_name_merges_possible": true
   },
   "13dg": {
@@ -24289,5 +24230,5 @@
   }
  },
  "methodology": "Force-camp relationship graph DERIVED at export time from four COMMITTED panels (form13f x def14a_persons x stakes_13g union smart_money) \u2014 zero new fetches, display-only. Edges are pairwise projections over as-filed disclosure facts: co_hold = two curated managers' VISIBLE BOOKS (latest quarter, up to 50 positions each; the full books are larger) share a position key (ticker, else CUSIP); co_board = two proxy-statement top persons seat the same company (exact company-name match resolves the ticker); co_target = two different filers INDEPENDENTLY SEPARATELY FILED stakes converging on the same target issuer within the visible SC 13D/13G windows. Identity rule: a window filer merges into an institution node ONLY when its trimmed-uppercase name equals a curated manager's name exactly \u2014 no fuzzy matching, no name list. The three overlaps are factual coincidences of separate filings: joint filings stay verbatim (members NOT DECOMPOSED), no COORDINATION is implied and no consortium claim is made. Weights are integer counts of shared items (lists capped at 8, truncated flag set beyond). Coverage is bounded by construction \u2014 see the coverage.basis strings (visible books, a 50-person proxy export over the newest filings, latest filing windows only). A restatement of public SEC EDGAR disclosures only: NO PRICES, NO RETURNS, no performance claims; never part of any OOS pipeline.",
- "snapshot_ts": "2026-11-25T11:36:24.005623+00:00"
+ "snapshot_ts": "2026-11-26T11:23:54.092598+00:00"
 }
