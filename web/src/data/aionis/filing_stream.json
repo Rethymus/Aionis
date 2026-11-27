@@ -2,10 +2,10 @@
   "status": "ok",
   "as_of": "2026-11-25",
   "window": {
-    "start": "2026-11-13",
+    "start": "2026-11-16",
     "end": "2026-11-25"
   },
-  "total_merged": 15172,
+  "total_merged": 12616,
   "n_visible": 800,
   "by_form": {
     "4": 228,
@@ -6339,48 +6339,6 @@
       "ticker": "TWST",
       "filed_date": "2026-11-16",
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1581280/000158128026000061/0001581280-26-000061-index.htm"
-    },
-    {
-      "form": "10-K",
-      "who": "Adient plc",
-      "ticker": "ADNT",
-      "filed_date": "2026-11-13",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1670541/000167054126000122/0001670541-26-000122-index.htm"
-    },
-    {
-      "form": "10-K",
-      "who": "Amplara Corp",
-      "ticker": "",
-      "filed_date": "2026-11-13",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2093096/000209309626000020/0002093096-26-000020-index.htm"
-    },
-    {
-      "form": "10-K",
-      "who": "EDGEWELL PERSONAL CARE Co",
-      "ticker": "EPC",
-      "filed_date": "2026-11-13",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1096752/000162828026073923/0001628280-26-073923-index.htm"
-    },
-    {
-      "form": "10-K",
-      "who": "Guru App Factory Corp",
-      "ticker": "GAFC",
-      "filed_date": "2026-11-13",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1989788/000168316826008712/0001683168-26-008712-index.htm"
-    },
-    {
-      "form": "10-K",
-      "who": "Legato Merger Corp. IV",
-      "ticker": "LEGO",
-      "filed_date": "2026-11-13",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/2087450/000182912626012403/0001829126-26-012403-index.htm"
-    },
-    {
-      "form": "10-K",
-      "who": "Tennessee Valley Authority",
-      "ticker": "TVE",
-      "filed_date": "2026-11-13",
-      "doc_url": "https://www.sec.gov/Archives/edgar/data/1376986/000137698626000041/0001376986-26-000041-index.htm"
     }
   ],
   "quarterly_filings": [
@@ -9185,8 +9143,8 @@
       "doc_url": "https://www.sec.gov/Archives/edgar/data/1633369/000121390026120529/0001213900-26-120529-index.htm"
     }
   ],
-  "annual_total": 108,
-  "quarterly_total": 1243,
-  "methodology": "Unified cross-form SEC filing stream v2 \u2014 DIRECT EDGAR queries (public domain, 17 U.S.C. \u00a7105; filed-date PIT), one root form per EFTS query (never a comma list \u2014 efts mis-parses root+/A families): 8-K / 10-K / 10-Q / S-1 family / 4 / D / DEF 14A / DEFA14A / 424B4, each expanding to its /A amendments. v1\u2192v2 migration: v1 (2026-08-23) derived this feed by merging six committed panels \u2014 coverage was bounded by each panel's visible cap (its window spanned only the panels' newest days) and 10-K/10-Q were absent; v2 IS the source query over a trailing 14-day window, so by_form counts the EDGAR window. Form-family completion (2026-08-23): DEF 14A (definitive proxy, space %20-encoded in the EFTS query) and DEFA14A (additional proxy soliciting material \u2014 a SEPARATE root form, the proxy-amendment vehicle in practice) joined the stream alongside 424B4 (the IPO pricing prospectus); measured window volumes 80 / 166 / 21, all far under the split threshold. Request accounting (declared totals / EFTS pages, 138 pages total): 8-K: 2,286 declared / 23 page requests; 10-K: 108 declared / 2 page requests; 10-Q: 1,243 declared / 13 page requests; S-1: 65 declared / 1 page requests; 4: 6,696 declared / 68 page requests (split into 2 half-windows at the 7-day midpoint); D: 2,466 declared / 25 page requests; DEF 14A: 76 declared / 1 page requests; DEFA14A: 137 declared / 2 page requests; 424B4: 14 declared / 1 page requests; SC 13D: 0 declared / 1 page requests; EFTS frozen on Schedule 13 \u2014 shared SC 13D+13G daily-index lane 2,915 rows; SC 13G: 0 declared / 1 page requests; EFTS frozen (probed 0, same shared daily lane). Form 4 is split into two ~7-day half-windows unconditionally (busiest family \u2014 10-15k/14d in filing season would exceed EFTS's 10,000-hit cap); every other form splits adaptively when a declared window total reaches 9,500. SC 13D / SC 13G: EFTS froze on the Schedule 13 family after 2024-12-17 (machine-verified zero on each run), so those rows come from the EDGAR daily crawler index lanes (the same dissemination feed as the smart_money / stakes_13g panels), subject resolved offline by ticker. Honest limits: (1) 13F-HR is excluded (quarterly manager holdings, not company events \u2014 carried by the /filers registry); (2) DEF 14A / DEFA14A ride the stream as index-page rows \u2014 the /executives panel keeps its own DEF 14A deep-dive lane (person-level proxy parsing stays DEFERRED there); (3) Form 4 'who' is the reporting person (the first display_names entry), with the issuer carried as the ticker label from the CURRENT SEC company_tickers snapshot \u2014 a display label, never a research input; (4) the 800-newest visible cap is a payload-size cap (total_merged counts the full window); (5) the 10-K and 10-Q families each carry an OWN deep-cut list (annual_filings / quarterly_filings, newest-first, cap 400 each) sliced from the same parquet, with full-window counts in annual_total / quarterly_total. Display-only, exploratory, NOT a research claim.",
-  "snapshot_ts": "2026-11-26T11:23:18.575880+00:00"
+  "annual_total": 102,
+  "quarterly_total": 756,
+  "methodology": "Unified cross-form SEC filing stream v2 \u2014 DIRECT EDGAR queries (public domain, 17 U.S.C. \u00a7105; filed-date PIT), one root form per EFTS query (never a comma list \u2014 efts mis-parses root+/A families): 8-K / 10-K / 10-Q / S-1 family / 4 / D / DEF 14A / DEFA14A / 424B4, each expanding to its /A amendments. v1\u2192v2 migration: v1 (2026-08-23) derived this feed by merging six committed panels \u2014 coverage was bounded by each panel's visible cap (its window spanned only the panels' newest days) and 10-K/10-Q were absent; v2 IS the source query over a trailing 14-day window, so by_form counts the EDGAR window. Form-family completion (2026-08-23): DEF 14A (definitive proxy, space %20-encoded in the EFTS query) and DEFA14A (additional proxy soliciting material \u2014 a SEPARATE root form, the proxy-amendment vehicle in practice) joined the stream alongside 424B4 (the IPO pricing prospectus); measured window volumes 80 / 166 / 21, all far under the split threshold. Request accounting (declared totals / EFTS pages, 121 pages total): 8-K: 1,973 declared / 20 page requests; 10-K: 102 declared / 2 page requests; 10-Q: 756 declared / 8 page requests; S-1: 58 declared / 1 page requests; 4: 6,036 declared / 62 page requests (split into 2 half-windows at the 7-day midpoint); D: 2,143 declared / 22 page requests; DEF 14A: 70 declared / 1 page requests; DEFA14A: 120 declared / 2 page requests; 424B4: 8 declared / 1 page requests; SC 13D: 0 declared / 1 page requests; EFTS frozen on Schedule 13 \u2014 shared SC 13D+13G daily-index lane 2,070 rows; SC 13G: 0 declared / 1 page requests; EFTS frozen (probed 0, same shared daily lane). Form 4 is split into two ~7-day half-windows unconditionally (busiest family \u2014 10-15k/14d in filing season would exceed EFTS's 10,000-hit cap); every other form splits adaptively when a declared window total reaches 9,500. SC 13D / SC 13G: EFTS froze on the Schedule 13 family after 2024-12-17 (machine-verified zero on each run), so those rows come from the EDGAR daily crawler index lanes (the same dissemination feed as the smart_money / stakes_13g panels), subject resolved offline by ticker. Honest limits: (1) 13F-HR is excluded (quarterly manager holdings, not company events \u2014 carried by the /filers registry); (2) DEF 14A / DEFA14A ride the stream as index-page rows \u2014 the /executives panel keeps its own DEF 14A deep-dive lane (person-level proxy parsing stays DEFERRED there); (3) Form 4 'who' is the reporting person (the first display_names entry), with the issuer carried as the ticker label from the CURRENT SEC company_tickers snapshot \u2014 a display label, never a research input; (4) the 800-newest visible cap is a payload-size cap (total_merged counts the full window); (5) the 10-K and 10-Q families each carry an OWN deep-cut list (annual_filings / quarterly_filings, newest-first, cap 400 each) sliced from the same parquet, with full-window counts in annual_total / quarterly_total. Display-only, exploratory, NOT a research claim.",
+  "snapshot_ts": "2026-11-27T11:07:04.114166+00:00"
 }
